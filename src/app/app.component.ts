@@ -1,4 +1,6 @@
+import { getCurrentUserAction } from './auth/store/actions/getCurrentUser.action';
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'metallinvestbank-web';
+
+  constructor(private store: Store) {
+    this.store.dispatch(getCurrentUserAction())
+  }
 }
