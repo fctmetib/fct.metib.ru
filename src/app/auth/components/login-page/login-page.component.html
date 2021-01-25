@@ -8,13 +8,14 @@
             *ngIf="backendErrors$ | async"
             [backendErrors]="backendErrors$ | async"
           ></metib-backend-error-messages>
+          <h1>Авторизация</h1>
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
               <fieldset>
                 <fieldset class="form-group">
                   <input
                     type="text"
                     class="form-control form-control-lg"
-                    placeholder="Login"
+                    placeholder="Логин"
                     formControlName="login"
                   />
                 </fieldset>
@@ -22,7 +23,7 @@
                   <input
                     type="password"
                     class="form-control form-control-lg"
-                    placeholder="Password"
+                    placeholder="Пароль"
                     formControlName="password"
                   />
                 </fieldset>
@@ -35,7 +36,7 @@
                 </button>
               </fieldset>
             </form>
-        <p><a href="#">Регистрация</a></p>
+        <p><a [routerLink]="['/register']">Регистрация</a></p>
         <p><a href="#">Забыли пароль? </a></p>
       </div>
     </div>

@@ -1,4 +1,4 @@
 export interface PersonNameInterface {
-  first: string
-  last: string
+  First: string
+  Last: string
 }

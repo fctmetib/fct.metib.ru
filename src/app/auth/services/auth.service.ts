@@ -12,9 +12,9 @@ import { LoginRequestInterface } from 'src/app/auth/types/loginRequest.interface
 export class AuthService {
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
-  register(data: RegisterRequestInterface): Observable<CurrentUserInterface> {
+  register(data: RegisterRequestInterface): Observable<AuthResponseInterface> {
     const url = environment.apiUrl + '/user/registration/init';
-    return this.http.post<CurrentUserInterface>(url, data);
+    return this.http.post<AuthResponseInterface>(url, data);
   }
 
   login(data: LoginRequestInterface): Observable<AuthResponseInterface> {

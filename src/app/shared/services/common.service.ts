@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { IpInterface } from './../types/common/ip.interface';
 import { map } from 'rxjs/operators';
 
@@ -11,5 +12,10 @@ export class CommonService {
 
   getIP(): Observable<IpInterface> {
     return this.http.get<IpInterface>('http://api.ipify.org/?format=json');
+  }
+
+  getCaptcha(): Observable<any> {
+    const url = environment.apiUrl + '/captcha';
+    return this.http.get(url, { observe: 'response', responseType: 'arraybuffer' });
   }
 }

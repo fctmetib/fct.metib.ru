@@ -1,0 +1,56 @@
+<div class="p-d-flex p-jc-center">
+
+  <div class="register-body">
+    <div class="register-wrapper">
+      <div class="register-panel"><a class="logo" href="#/"><img alt="metallinvest logo"
+            src="assets/images/logo_big.png"></a>
+        <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
+        </metib-backend-error-messages>
+        <h1>Регистрация</h1>
+        <img [src]="image" alt="" srcset="" height="100" width="300">
+        <a href="#">Обновить картинку</a>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <fieldset>
+            <!-- Profile -->
+            <fieldset class="form-group" formGroupName="profile">
+              <input type="text" class="form-control form-control-lg" placeholder="Логин" formControlName="login" />
+              <input type="text" class="form-control form-control-lg" placeholder="Почта" formControlName="email" />
+              <hr>
+              <select type="checkbox" class="form-control form-control-lg" formControlName="isMale">
+              <option value="true">Мужской</option>
+              <option value="false">Женский</option>
+              </select>
+              <hr>
+              <fieldset class="form-group" formGroupName="name">
+                <input type="text" class="form-control form-control-lg" placeholder="Имя" formControlName="first" />
+                <input type="text" class="form-control form-control-lg" placeholder="Фамилия" formControlName="last" />
+              </fieldset>
+
+              <input type="text" class="form-control form-control-lg" placeholder="Телефон" formControlName="phone" />
+            </fieldset>
+
+            <!-- Password -->
+            <fieldset class="form-group">
+              <input type="password" class="form-control form-control-lg" placeholder="Пароль"
+                formControlName="password" />
+            </fieldset>
+
+            <!-- Captcha -->
+            <fieldset class="form-group" formGroupName="captcha">
+              <input type="text" class="form-control form-control-lg" placeholder="Текст с картинки"
+                formControlName="text" />
+            </fieldset>
+
+
+            <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="isSubmitting$ | async">
+              Зарегистрироваться
+            </button>
+          </fieldset>
+        </form>
+        <p><a [routerLink]="['/login']">Авторизация</a></p>
+      </div>
+    </div>
+  </div>
+
+</div>
