@@ -2,7 +2,6 @@ import { BackendErrorMessagesModule } from './../shared/modules/backendErrorMess
 import { CommonModule } from '@angular/common';
 import { CommonService } from './../shared/services/common.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { PersistanceService } from 'src/app/shared/services/persistance.service';
 import { LoginEffect } from './store/effects/login.effect';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -28,6 +27,6 @@ import { reducers } from './store/reducers';
     LoginPageComponent,
     RegisterPageComponent,
   ],
-  providers: [AuthService, PersistanceService, CommonService],
+  providers: [AuthService, CommonService],
 })
 export class AuthModule {}

@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import {Injectable} from '@angular/core'
 import {createEffect, Actions, ofType} from '@ngrx/effects'
 import {map, catchError, switchMap} from 'rxjs/operators'
@@ -5,7 +6,6 @@ import {of} from 'rxjs'
 
 import {AuthService} from 'src/app/auth/services/auth.service'
 import {CurrentUserInterface} from 'src/app/shared/types/currentUser.interface'
-import {PersistanceService} from 'src/app/shared/services/persistance.service'
 import {
   getCurrentUserAction,
   getCurrentUserSuccessAction,
@@ -19,8 +19,8 @@ export class GetCurrentUserEffect {
     this.actions$.pipe(
       ofType(getCurrentUserAction),
       switchMap(() => {
-        const token = this.persistanceService.get('code')
-        const userId = this.persistanceService.get('userId')
+        const token = this.cookieService.get('code')
+        const userId = +this.cookieService.get('userId');
 
         if (!token) {
           return of(getCurrentUserFailureAction())
@@ -46,7 +46,6 @@ export class GetCurrentUserEffect {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private store: Store,
-    private persistanceService: PersistanceService
+    private cookieService: CookieService
   ) {}
 }

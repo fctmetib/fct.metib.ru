@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import {Injectable} from '@angular/core'
 import {
   HttpInterceptor,
@@ -7,17 +8,15 @@ import {
 } from '@angular/common/http'
 import {Observable} from 'rxjs'
 
-import {PersistanceService} from 'src/app//shared/services/persistance.service'
-
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private persistanceService: PersistanceService) {}
+  constructor(private cookieService: CookieService) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = this.persistanceService.get('code')
+    const token = this.cookieService.get('code')
     request = request.clone({
       setHeaders: {
         Authorization: token ? `Token ${token}` : ''

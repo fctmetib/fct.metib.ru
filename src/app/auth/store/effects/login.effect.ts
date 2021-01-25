@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
 import { AuthResponseInterface } from 'src/app/auth/types/authResponse.interface';
 import { Injectable } from '@angular/core';
@@ -8,7 +9,6 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { PersistanceService } from 'src/app/shared/services/persistance.service';
 import {
   loginAction,
   loginSuccessAction,
@@ -23,8 +23,8 @@ export class LoginEffect {
       switchMap(({ request }) => {
         return this.authService.login(request).pipe(
           map((response: AuthResponseInterface) => {
-            this.persistanceService.set('code', response.Code)
-            this.persistanceService.set('userId', response.UserID)
+            this.cookieService.set('code', response.Code)
+            this.cookieService.set('userId', response.UserID.toString())
 
             return loginSuccessAction();
           }),
@@ -51,7 +51,7 @@ export class LoginEffect {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private persistanceService: PersistanceService,
+    private cookieService: CookieService,
     private router: Router
   ) {}
 }

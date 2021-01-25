@@ -14,7 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
+import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [
     AppComponent
@@ -34,6 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     EffectsModule.forRoot([]),
   ],
   providers: [
+    CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

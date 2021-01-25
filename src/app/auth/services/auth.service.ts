@@ -1,4 +1,4 @@
-import { PersistanceService } from 'src/app/shared/services/persistance.service';
+import { CookieService } from 'ngx-cookie-service';
 import { AuthResponseInterface } from 'src/app/auth/types/authResponse.interface';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -10,7 +10,7 @@ import { LoginRequestInterface } from 'src/app/auth/types/loginRequest.interface
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient, private persistanceService: PersistanceService) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   register(data: RegisterRequestInterface): Observable<CurrentUserInterface> {
     const url = environment.apiUrl + '/user/registration/init';
@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    if (this.persistanceService.get('code')) {
+    if (this.cookieService.get('code')) {
       return true;
     } else {
       return false;
