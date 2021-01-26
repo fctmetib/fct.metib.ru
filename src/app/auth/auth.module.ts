@@ -1,3 +1,4 @@
+import { SuccessMessagesModule } from './../shared/modules/successMessages/successMessages.module';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { RegisterEffect } from './store/effects/register.effect';
@@ -18,6 +19,8 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { reducers } from './store/reducers';
 import {CardModule} from 'primeng/card';
 import {ButtonModule} from 'primeng/button';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 @NgModule({
   imports: [
@@ -26,6 +29,7 @@ import {ButtonModule} from 'primeng/button';
     FormsModule,
     ReactiveFormsModule,
     BackendErrorMessagesModule,
+    SuccessMessagesModule,
     StoreModule.forFeature('auth', reducers),
     EffectsModule.forFeature([
       LoginEffect,
@@ -35,6 +39,8 @@ import {ButtonModule} from 'primeng/button';
     InputTextModule,
     DropdownModule,
     CardModule,
+    MessageModule,
+    MessagesModule,
     ButtonModule
   ],
   declarations: [

@@ -21,7 +21,8 @@ const authReducer = createReducer(
     resetErrorAction,
     (state): AuthStateInterface => ({
       ...state,
-      validationErrors: null
+      validationErrors: null,
+      confirmCode: null
     })
   ),
   on(

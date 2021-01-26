@@ -11,6 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import {CheckboxModule} from 'primeng/checkbox';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {MenubarModule} from 'primeng/menubar';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     ProtectedRoutingModule,
     ReactiveFormsModule,
     CardModule,
+    MenubarModule,
   ],
   providers: []
 })

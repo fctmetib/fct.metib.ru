@@ -3,6 +3,9 @@
     <a class="logo" href="#/"><img alt="metallinvest logo" src="assets/images/logo_big.png"></a>
     <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
     </metib-backend-error-messages>
+
+    <metib-success-messages *ngIf="(confirmationCode$ | async)" [message]="'На указанную почту отправлен код. Пожалуйста, введите его в поле КОД'"></metib-success-messages>
+
     <h1>Регистрация</h1>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- Profile -->
@@ -91,7 +94,7 @@
         </div>
       </div>
 
-      <div class="p-d-flex p-jc-between" *ngIf="!(confirmationCode$ | async)">
+      <div class="p-d-flex p-jc-between">
         <p-button styleClass="p-button-link" [routerLink]="['/login']" label="Авторизация"></p-button>
         <button pButton type="submit" [disabled]="isSubmitting$ | async" label="Завершить регистрацию"></button>
       </div>

@@ -3,6 +3,9 @@
     <a class="logo" href="#/"><img alt="metallinvest logo" src="assets/images/logo_big.png"></a>
     <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
     </metib-backend-error-messages>
+
+    <metib-success-messages *ngIf="successRegistration" [message]="'Регистрация успешно завершена. Войдите в сервис, используя введенные данные.'"></metib-success-messages>
+
     <h1>Авторизация</h1>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="p-fluid p-formgrid p-grid">
