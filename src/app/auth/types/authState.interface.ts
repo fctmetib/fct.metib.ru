@@ -6,4 +6,5 @@ export interface AuthStateInterface {
   isLoggedIn: boolean | null
   validationErrors: string | null
   isLoading: boolean
+  confirmCode: string
 }

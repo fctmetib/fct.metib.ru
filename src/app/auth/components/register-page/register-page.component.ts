@@ -1,6 +1,8 @@
+import { resetErrorAction } from './../../store/actions/common.action';
+import { MaleOptionsInterface } from './../../types/maleOptions.interface';
 import { RegisterConfirmRequestInterface } from './../../types/registerConfirmRequest.interface';
 import { AuthService } from './../../services/auth.service';
-import { registerAction } from './../../store/actions/register.action';
+import { registerAction, registerConfirmAction } from './../../store/actions/register.action';
 import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -12,6 +14,7 @@ import { RegisterRequestInterface } from './../../types/registerRequest.interfac
 import {
   validationErrorsSelector,
   isSubmittingSelector,
+  confirmationCodeSelector,
 } from './../../store/selectors';
 
 @Component({
@@ -22,16 +25,17 @@ import {
 export class RegisterPageComponent {
   form: FormGroup;
   formConfirm: FormGroup;
+  genderOptions: MaleOptionsInterface[] = [];
 
-  isSubmitting$: Observable<boolean> = new Observable<boolean>();
+  isSubmitting$: Observable<boolean>;
   backendErrors$: Observable<string | null>;
+  confirmationCode$: Observable<string | null>;
 
   image: any;
 
   isConfirm: boolean = false;
 
   private captchaCode: string = '';
-  private confirmationCode: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -42,6 +46,8 @@ export class RegisterPageComponent {
   ) {}
 
   ngOnInit(): void {
+    this.store.dispatch(resetErrorAction());
+
     this.initializeForm();
     this.initializeValues();
   }
@@ -49,7 +55,19 @@ export class RegisterPageComponent {
   initializeValues(): void {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
     this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
+    this.confirmationCode$ = this.store.pipe(select(confirmationCodeSelector));
+
     this.updateCaptcha();
+    this.genderOptions = [
+      {
+        name: 'Мужской',
+        value: true,
+      },
+      {
+        name: 'Женский',
+        value: false,
+      },
+    ];
   }
 
   initializeForm(): void {
@@ -71,8 +89,8 @@ export class RegisterPageComponent {
     });
 
     this.formConfirm = this.fb.group({
-      pin: ['', Validators.required]
-    })
+      pin: ['', Validators.required],
+    });
   }
 
   updateCaptcha() {
@@ -109,20 +127,20 @@ export class RegisterPageComponent {
       },
     };
 
-    console.log(request)
-
-    this.authService.register(request).subscribe(resp => {
-      this.confirmationCode = resp.ConfirmationCode
-      this.isConfirm = true
-    })
+    this.store.dispatch(registerAction({ request }));
   }
 
   onConfirmSubmit(): void {
-    const request: RegisterConfirmRequestInterface = {
-      ConfirmationCode: this.confirmationCode,
-      Pin: this.formConfirm.value.pin
-    }
+    let ConfirmationCode = '';
+    this.confirmationCode$.subscribe(c => {
+      ConfirmationCode = c;
+    })
 
-    this.store.dispatch(registerAction({request}));
+    const request: RegisterConfirmRequestInterface = {
+      ConfirmationCode,
+      Pin: this.formConfirm.value.pin,
+    };
+
+    this.store.dispatch(registerConfirmAction({ request }));
   }
 }

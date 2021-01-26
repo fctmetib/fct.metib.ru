@@ -1,45 +1,27 @@
 <div class="p-d-flex p-jc-center">
-
-  <div class="login-body">
-    <div class="login-wrapper">
-      <div class="login-panel"><a class="logo" href="#/"><img alt="metallinvest logo"
-            src="assets/images/logo_big.png"></a>
-            <metib-backend-error-messages
-            *ngIf="backendErrors$ | async"
-            [backendErrors]="backendErrors$ | async"
-          ></metib-backend-error-messages>
-          <h1>Авторизация</h1>
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-              <fieldset>
-                <fieldset class="form-group">
-                  <input
-                    type="text"
-                    class="form-control form-control-lg"
-                    placeholder="Логин"
-                    formControlName="login"
-                  />
-                </fieldset>
-                <fieldset class="form-group">
-                  <input
-                    type="password"
-                    class="form-control form-control-lg"
-                    placeholder="Пароль"
-                    formControlName="password"
-                  />
-                </fieldset>
-                <button
-                  class="btn btn-lg btn-primary pull-xs-right"
-                  type="submit"
-                  [disabled]="isSubmitting$ | async"
-                >
-                  Войти
-                </button>
-              </fieldset>
-            </form>
-        <p><a [routerLink]="['/register']">Регистрация</a></p>
-        <p><a href="#">Забыли пароль? </a></p>
+  <p-card class="auth-body">
+    <a class="logo" href="#/"><img alt="metallinvest logo" src="assets/images/logo_big.png"></a>
+    <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
+    </metib-backend-error-messages>
+    <h1>Авторизация</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+          <label for="login">Логин</label>
+          <input id="login" type="text" pInputText placeholder="Логин" formControlName="login">
+        </div>
+        <div class="p-field p-col">
+          <label for="password">Пароль</label>
+          <input id="password" type="password" pInputText placeholder="Пароль" formControlName="password">
+        </div>
       </div>
-    </div>
-  </div>
-
+      <div class="p-d-flex p-jc-end p-mb-4">
+        <p-button styleClass="p-button-link" label="Забыли пароль?"></p-button>
+      </div>
+      <div class="p-d-flex p-jc-between">
+        <p-button styleClass="p-button-link" [routerLink]="['/register']" label="Регистрация"></p-button>
+        <button pButton type="submit" [disabled]="isSubmitting$ | async" label="Вход"></button>
+      </div>
+    </form>
+  </p-card>
 </div>

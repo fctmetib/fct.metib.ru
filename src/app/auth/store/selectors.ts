@@ -31,3 +31,8 @@ export const currentUserSelector = createSelector(
   authFeatureSelector,
   (authState: AuthStateInterface) => authState.currentUser
 )
+
+export const confirmationCodeSelector = createSelector(
+  authFeatureSelector,
+  (authState: AuthStateInterface) => authState.confirmCode
+)

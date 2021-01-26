@@ -1,3 +1,5 @@
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
 import { RegisterEffect } from './store/effects/register.effect';
 import { GetCurrentUserEffect } from './store/effects/getCurrentUser.effect';
 import { BackendErrorMessagesModule } from './../shared/modules/backendErrorMessages/backendErrorMessages.module';
@@ -11,14 +13,17 @@ import { RegisterPageComponent } from './components/register-page/register-page.
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { AuthLayoutComponent } from './../shared/layouts/auth-layout/auth-layout.component';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth-routing.module';
 import { reducers } from './store/reducers';
+import {CardModule} from 'primeng/card';
+import {ButtonModule} from 'primeng/button';
 
 @NgModule({
   imports: [
     CommonModule,
     AuthRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     BackendErrorMessagesModule,
     StoreModule.forFeature('auth', reducers),
@@ -27,6 +32,10 @@ import { reducers } from './store/reducers';
       GetCurrentUserEffect,
       RegisterEffect,
     ]),
+    InputTextModule,
+    DropdownModule,
+    CardModule,
+    ButtonModule
   ],
   declarations: [
     AuthLayoutComponent,

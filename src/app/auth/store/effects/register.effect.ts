@@ -1,4 +1,5 @@
-import { registerAction, registerSuccessAction, registerFailureAction } from './../actions/register.action';
+import { RegisterReponseInterface } from './../../types/registerResponse.interface';
+import { registerConfirmAction, registerConfirmSuccessAction, registerConfirmFailureAction, registerAction, registerSuccessAction, registerFailureAction } from './../actions/register.action';
 import {Injectable} from '@angular/core'
 import {createEffect, Actions, ofType} from '@ngrx/effects'
 import {map, catchError, switchMap, tap} from 'rxjs/operators'
@@ -15,13 +16,33 @@ export class RegisterEffect {
     this.actions$.pipe(
       ofType(registerAction),
       switchMap(({request}) => {
+        return this.authService.register(request).pipe(
+          map((response: RegisterReponseInterface) => {
+            let confirmCode = response.ConfirmationCode;
+            return registerSuccessAction({ confirmCode });
+          }),
+          catchError((errorResponse: HttpErrorResponse) => {
+            console.log(errorResponse)
+            return of(
+              registerFailureAction({errors: errorResponse.error})
+            )
+          })
+        )
+      })
+    )
+  )
+
+  registerConfirm$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(registerConfirmAction),
+      switchMap(({request}) => {
         return this.authService.registerConfirm(request).pipe(
           map(() => {
-            return registerSuccessAction()
+            return registerConfirmSuccessAction()
           }),
           catchError((errorResponse: HttpErrorResponse) => {
             return of(
-              registerFailureAction({errors: errorResponse.error.errors})
+              registerConfirmFailureAction({errors: errorResponse.error})
             )
           })
         )
@@ -32,7 +53,7 @@ export class RegisterEffect {
   redirectAfterSubmit$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(registerSuccessAction),
+        ofType(registerConfirmSuccessAction),
         tap(() => {
           this.router.navigate(['/login'], {
             queryParams: {

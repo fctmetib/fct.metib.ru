@@ -1,20 +1,29 @@
+import { resetErrorAction } from './actions/common.action';
 import { getCurrentUserAction, getCurrentUserSuccessAction, getCurrentUserFailureAction } from './actions/getCurrentUser.action';
 import {createReducer, on, Action} from '@ngrx/store'
 
 import {AuthStateInterface} from 'src/app/auth/types/authState.interface'
 import { loginAction, loginFailureAction, loginSuccessAction } from './actions/login.action'
-import { registerAction, registerSuccessAction, registerFailureAction } from './actions/register.action';
+import { registerConfirmAction, registerConfirmSuccessAction, registerConfirmFailureAction, registerAction, registerSuccessAction, registerFailureAction } from './actions/register.action';
 
 const initialState: AuthStateInterface = {
   isSubmitting: false,
   isLoading: false,
   currentUser: null,
   validationErrors: null,
-  isLoggedIn: null
+  isLoggedIn: null,
+  confirmCode: null
 }
 
 const authReducer = createReducer(
   initialState,
+  on(
+    resetErrorAction,
+    (state): AuthStateInterface => ({
+      ...state,
+      validationErrors: null
+    })
+  ),
   on(
     registerAction,
     (state): AuthStateInterface => ({
@@ -25,13 +34,38 @@ const authReducer = createReducer(
   ),
   on(
     registerSuccessAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      confirmCode: action.confirmCode
+    })
+  ),
+  on(
+    registerFailureAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      confirmCode: null,
+      validationErrors: action.errors
+    })
+  ),
+  on(
+    registerConfirmAction,
+    (state): AuthStateInterface => ({
+      ...state,
+      isSubmitting: true,
+      validationErrors: null
+    })
+  ),
+  on(
+    registerConfirmSuccessAction,
     (state): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
     })
   ),
   on(
-    registerFailureAction,
+    registerConfirmFailureAction,
     (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,

@@ -1,3 +1,4 @@
+import { resetErrorAction } from './../../store/actions/common.action';
 import { CommonService } from './../../../shared/services/common.service';
 import { isSubmittingSelector, validationErrorsSelector } from './../../store/selectors';
 import { Observable } from 'rxjs';
@@ -24,6 +25,8 @@ export class LoginPageComponent {
   constructor(private fb: FormBuilder, private commonService: CommonService, private store: Store) {}
 
   ngOnInit(): void {
+    this.store.dispatch(resetErrorAction());
+
     this.initializeForm()
     this.initializeValues()
   }
