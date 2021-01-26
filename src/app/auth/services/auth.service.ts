@@ -1,3 +1,5 @@
+import { RegisterConfirmRequestInterface } from './../types/registerConfirmRequest.interface';
+import { RegisterReponseInterface } from './../types/registerResponse.interface';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthResponseInterface } from 'src/app/auth/types/authResponse.interface';
 import { Injectable } from '@angular/core';
@@ -12,9 +14,14 @@ import { LoginRequestInterface } from 'src/app/auth/types/loginRequest.interface
 export class AuthService {
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
-  register(data: RegisterRequestInterface): Observable<AuthResponseInterface> {
+  registerConfirm(data: RegisterConfirmRequestInterface): Observable<{}> {
+    const url = environment.apiUrl + '/user/registration/confirm';
+    return this.http.post<{}>(url, data);
+  }
+
+  register(data: RegisterRequestInterface): Observable<RegisterReponseInterface> {
     const url = environment.apiUrl + '/user/registration/init';
-    return this.http.post<AuthResponseInterface>(url, data);
+    return this.http.post<RegisterReponseInterface>(url, data);
   }
 
   login(data: LoginRequestInterface): Observable<AuthResponseInterface> {

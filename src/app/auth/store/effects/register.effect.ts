@@ -1,5 +1,3 @@
-import { AuthResponseInterface } from 'src/app/auth/types/authResponse.interface';
-import { CookieService } from 'ngx-cookie-service';
 import { registerAction, registerSuccessAction, registerFailureAction } from './../actions/register.action';
 import {Injectable} from '@angular/core'
 import {createEffect, Actions, ofType} from '@ngrx/effects'
@@ -8,7 +6,6 @@ import {HttpErrorResponse} from '@angular/common/http'
 
 
 import {AuthService} from '../../services/auth.service'
-import {CurrentUserInterface} from 'src/app/shared/types/currentUser.interface'
 import {of} from 'rxjs'
 import {Router} from '@angular/router'
 
@@ -18,14 +15,10 @@ export class RegisterEffect {
     this.actions$.pipe(
       ofType(registerAction),
       switchMap(({request}) => {
-        return this.authService.register(request).pipe(
-          map((response: AuthResponseInterface) => {
-            this.cookieService.set('code', response.Code)
-            this.cookieService.set('userId', response.UserID.toString())
-
+        return this.authService.registerConfirm(request).pipe(
+          map(() => {
             return registerSuccessAction()
           }),
-
           catchError((errorResponse: HttpErrorResponse) => {
             return of(
               registerFailureAction({errors: errorResponse.error.errors})
@@ -41,7 +34,11 @@ export class RegisterEffect {
       this.actions$.pipe(
         ofType(registerSuccessAction),
         tap(() => {
-          this.router.navigateByUrl('/dashboard')
+          this.router.navigate(['/login'], {
+            queryParams: {
+              successRegistration: true
+            }
+          })
         })
       ),
     {dispatch: false}
@@ -50,7 +47,6 @@ export class RegisterEffect {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private cookieService: CookieService,
     private router: Router
   ) {}
 }

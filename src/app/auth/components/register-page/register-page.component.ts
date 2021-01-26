@@ -1,15 +1,18 @@
+import { RegisterConfirmRequestInterface } from './../../types/registerConfirmRequest.interface';
+import { AuthService } from './../../services/auth.service';
 import { registerAction } from './../../store/actions/register.action';
 import { Observable } from 'rxjs';
-import { CommonService } from './../../../shared/services/common.service';
-import {
-  validationErrorsSelector,
-  isSubmittingSelector,
-} from './../../store/selectors';
-import { RegisterRequestInterface } from './../../types/registerRequest.interface';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import { CommonService } from './../../../shared/services/common.service';
+import { RegisterRequestInterface } from './../../types/registerRequest.interface';
+import {
+  validationErrorsSelector,
+  isSubmittingSelector,
+} from './../../store/selectors';
 
 @Component({
   selector: 'app-register-page',
@@ -18,17 +21,22 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class RegisterPageComponent {
   form: FormGroup;
+  formConfirm: FormGroup;
+
   isSubmitting$: Observable<boolean> = new Observable<boolean>();
   backendErrors$: Observable<string | null>;
 
-  currentIp: string = '';
   image: any;
 
+  isConfirm: boolean = false;
+
   private captchaCode: string = '';
+  private confirmationCode: string = '';
 
   constructor(
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
+    private authService: AuthService,
     private commonService: CommonService,
     private store: Store
   ) {}
@@ -41,15 +49,7 @@ export class RegisterPageComponent {
   initializeValues(): void {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
     this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
-
-    this.commonService.getCaptcha().subscribe(resp => {
-      var uint8View = new Uint8Array(resp.body);
-      const STRING_CHAR = String.fromCharCode.apply(null, uint8View);
-      let base64String = btoa(STRING_CHAR);
-      this.image = this.sanitizer.bypassSecurityTrustUrl(`data:image/jpg;base64, ` + base64String);
-
-      this.captchaCode = resp.headers.get('X-Captcha-Code')
-    })
+    this.updateCaptcha();
   }
 
   initializeForm(): void {
@@ -69,6 +69,25 @@ export class RegisterPageComponent {
         phone: ['', Validators.required],
       }),
     });
+
+    this.formConfirm = this.fb.group({
+      pin: ['', Validators.required]
+    })
+  }
+
+  updateCaptcha() {
+    this.commonService.getCaptcha().subscribe((resp) => {
+      var uint8View = new Uint8Array(resp.body);
+      const STRING_CHAR = String.fromCharCode.apply(null, uint8View);
+      let base64String = btoa(STRING_CHAR);
+      this.image = this.sanitizer.bypassSecurityTrustUrl(
+        `data:image/jpg;base64, ` + base64String
+      );
+
+      this.captchaCode = resp.headers.get('Content-Disposition');
+      this.captchaCode = this.captchaCode.split('=').pop();
+      this.captchaCode = this.captchaCode.split('.')[0];
+    });
   }
 
   onSubmit(): void {
@@ -77,20 +96,33 @@ export class RegisterPageComponent {
         Code: this.captchaCode,
         Text: this.form.value.captcha.text,
       },
-      Password: '',
+      Password: this.form.value.password,
       Profile: {
-        Email: '',
-        IsMale: false,
-        Login: '',
+        Email: this.form.value.profile.email,
+        IsMale: this.form.value.profile.isMale,
+        Login: this.form.value.profile.login,
         Name: {
-          First: '',
-          Last: '',
+          First: this.form.value.profile.name.first,
+          Last: this.form.value.profile.name.last,
         },
-        Phone: '',
+        Phone: this.form.value.profile.phone,
       },
     };
 
+    console.log(request)
 
-    this.store.dispatch(registerAction({request}))
+    this.authService.register(request).subscribe(resp => {
+      this.confirmationCode = resp.ConfirmationCode
+      this.isConfirm = true
+    })
+  }
+
+  onConfirmSubmit(): void {
+    const request: RegisterConfirmRequestInterface = {
+      ConfirmationCode: this.confirmationCode,
+      Pin: this.formConfirm.value.pin
+    }
+
+    this.store.dispatch(registerAction({request}));
   }
 }

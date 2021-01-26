@@ -1,3 +1,5 @@
+import { RegisterEffect } from './store/effects/register.effect';
+import { GetCurrentUserEffect } from './store/effects/getCurrentUser.effect';
 import { BackendErrorMessagesModule } from './../shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { CommonModule } from '@angular/common';
 import { CommonService } from './../shared/services/common.service';
@@ -20,7 +22,11 @@ import { reducers } from './store/reducers';
     ReactiveFormsModule,
     BackendErrorMessagesModule,
     StoreModule.forFeature('auth', reducers),
-    EffectsModule.forFeature([LoginEffect]),
+    EffectsModule.forFeature([
+      LoginEffect,
+      GetCurrentUserEffect,
+      RegisterEffect,
+    ]),
   ],
   declarations: [
     AuthLayoutComponent,

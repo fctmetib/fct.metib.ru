@@ -8,7 +8,7 @@
         </metib-backend-error-messages>
         <h1>Регистрация</h1>
         <img [src]="image" alt="" srcset="" height="100" width="300">
-        <a href="#">Обновить картинку</a>
+        <button (click)="updateCaptcha()">Обновить картинку</button>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <fieldset>
@@ -18,8 +18,8 @@
               <input type="text" class="form-control form-control-lg" placeholder="Почта" formControlName="email" />
               <hr>
               <select type="checkbox" class="form-control form-control-lg" formControlName="isMale">
-              <option value="true">Мужской</option>
-              <option value="false">Женский</option>
+                <option value="true">Мужской</option>
+                <option value="false">Женский</option>
               </select>
               <hr>
               <fieldset class="form-group" formGroupName="name">
@@ -43,11 +43,21 @@
             </fieldset>
 
 
-            <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="isSubmitting$ | async">
+            <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="isSubmitting$ | async"
+              *ngIf="!isConfirm">
               Зарегистрироваться
             </button>
           </fieldset>
         </form>
+        <form *ngIf="isConfirm" [formGroup]="formConfirm" (ngSubmit)="onConfirmSubmit()">
+          <fieldset class="form-group">
+            <input class="form-control form-control-lg" placeholder="Код" formControlName="pin" />
+          </fieldset>
+          <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="isSubmitting$ | async">
+            Завершить регистрацию
+          </button>
+        </form>
+
         <p><a [routerLink]="['/login']">Авторизация</a></p>
       </div>
     </div>
