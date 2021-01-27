@@ -4,22 +4,38 @@
     <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
     </metib-backend-error-messages>
 
-    <metib-success-messages *ngIf="successRegistration" [message]="'Регистрация успешно завершена. Войдите в сервис, используя введенные данные.'"></metib-success-messages>
+    <metib-success-messages *ngIf="successRegistration"
+      [message]="'Регистрация успешно завершена. Войдите в сервис, используя свои данные.'"></metib-success-messages>
 
     <h1>Авторизация</h1>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="p-fluid p-formgrid p-grid">
         <div class="p-field p-col">
-          <label for="login">Логин</label>
-          <input id="login" type="text" pInputText placeholder="Логин" formControlName="login">
+          <label for="email">Почта</label>
+          <input id="email" type="email" pInputText placeholder="Почта" formControlName="email"
+            [ngClass]="{'ng-invalid ng-dirty': form.get('email').invalid && form.get('email').touched}">
+          <small class="p-error" *ngIf="form.get('email').invalid && form.get('email').touched">
+            <div *ngIf="form.get('email').errors['required']">
+              Поле Email не должно быть пустым
+            </div>
+            <div *ngIf="form.get('email').errors['email']">
+              Введите корректный Email адрес
+            </div>
+          </small>
         </div>
         <div class="p-field p-col">
           <label for="password">Пароль</label>
-          <input id="password" type="password" pInputText placeholder="Пароль" formControlName="password">
+          <input id="password" type="password" pInputText placeholder="Пароль" formControlName="password"
+            [ngClass]="{'ng-invalid ng-dirty': form.get('password').invalid && form.get('password').touched}">
+            <small class="p-error" *ngIf="form.get('password').invalid && form.get('password').touched">
+              <div *ngIf="form.get('password').errors['required']">
+                Поле Пароль не должно быть пустым
+              </div>
+            </small>
         </div>
       </div>
       <div class="p-d-flex p-jc-end p-mb-4">
-        <p-button styleClass="p-button-link" label="Забыли пароль?"></p-button>
+        <p-button styleClass="p-button-link" label="Забыли пароль?" [routerLink]="['/reset-password']"></p-button>
       </div>
       <div class="p-d-flex p-jc-between">
         <p-button styleClass="p-button-link" [routerLink]="['/register']" label="Регистрация"></p-button>

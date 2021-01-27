@@ -1,3 +1,4 @@
+import { HeaderComponent } from './../shared/layouts/protected-layout/header/header.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
@@ -16,6 +17,7 @@ import {MenubarModule} from 'primeng/menubar';
 @NgModule({
   declarations: [
     ProtectedLayoutComponent,
+    HeaderComponent,
     DashboardPageComponent
   ],
   imports: [

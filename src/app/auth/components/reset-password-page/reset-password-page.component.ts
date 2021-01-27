@@ -5,27 +5,23 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 
 import { RegisterConfirmRequestInterface } from './../../types/registerConfirmRequest.interface';
-import { AuthService } from './../../services/auth.service';
-import { registerAction, registerConfirmAction } from './../../store/actions/register.action';
-import { MaleOptionsInterface } from './../../types/maleOptions.interface';
-import { resetMessagesAction } from './../../store/actions/common.action';
+import { registerConfirmAction } from './../../store/actions/register.action';
 import { CommonService } from './../../../shared/services/common.service';
-import { RegisterRequestInterface } from './../../types/registerRequest.interface';
 import {
   validationErrorsSelector,
   isSubmittingSelector,
   confirmationCodeSelector,
 } from './../../store/selectors';
+import { resetMessagesAction } from '../../store/actions/common.action';
 
 @Component({
-  selector: 'app-register-page',
-  templateUrl: './register-page.component.html',
-  styleUrls: ['./register-page.component.scss'],
+  selector: 'app-reset-password-page',
+  templateUrl: './reset-password-page.component.html',
+  styleUrls: ['./reset-password-page.component.scss'],
 })
-export class RegisterPageComponent {
+export class ResetPasswordPageComponent {
   form: FormGroup;
   formConfirm: FormGroup;
-  genderOptions: MaleOptionsInterface[] = [];
 
   isSubmitting$: Observable<boolean>;
   backendErrors$: Observable<string | null>;
@@ -40,7 +36,6 @@ export class RegisterPageComponent {
   constructor(
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
-    private authService: AuthService,
     private commonService: CommonService,
     private store: Store
   ) {}
@@ -56,18 +51,6 @@ export class RegisterPageComponent {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
     this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
     this.confirmationCode$ = this.store.pipe(select(confirmationCodeSelector));
-
-    this.updateCaptcha();
-    this.genderOptions = [
-      {
-        name: 'Мужской',
-        value: true,
-      },
-      {
-        name: 'Женский',
-        value: false,
-      },
-    ];
   }
 
   initializeForm(): void {
@@ -75,17 +58,7 @@ export class RegisterPageComponent {
       captcha: this.fb.group({
         text: ['', Validators.required],
       }),
-      password: ['', Validators.required],
-      profile: this.fb.group({
-        login: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        isMale: ['', Validators.required],
-        name: this.fb.group({
-          first: ['', Validators.required],
-          last: ['', Validators.required],
-        }),
-        phone: ['', Validators.required],
-      }),
+      login: ['', Validators.required],
     });
 
     this.formConfirm = this.fb.group({
@@ -109,25 +82,6 @@ export class RegisterPageComponent {
   }
 
   onSubmit(): void {
-    const request: RegisterRequestInterface = {
-      Captcha: {
-        Code: this.captchaCode,
-        Text: this.form.value.captcha.text,
-      },
-      Password: this.form.value.password,
-      Profile: {
-        Email: this.form.value.profile.email,
-        IsMale: this.form.value.profile.isMale,
-        Login: this.form.value.profile.login,
-        Name: {
-          First: this.form.value.profile.name.first,
-          Last: this.form.value.profile.name.last,
-        },
-        Phone: this.form.value.profile.phone,
-      },
-    };
-
-    this.store.dispatch(registerAction({ request }));
   }
 
   onConfirmSubmit(): void {

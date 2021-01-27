@@ -1,25 +1,26 @@
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { resetErrorAction } from './../../store/actions/common.action';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
+
+import { resetMessagesAction } from './../../store/actions/common.action';
 import { CommonService } from './../../../shared/services/common.service';
 import {
   isSubmittingSelector,
   validationErrorsSelector,
 } from './../../store/selectors';
-import { Observable } from 'rxjs';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
 import { LoginRequestInterface } from '../../types/loginRequest.interface';
 import { loginAction } from '../../store/actions/login.action';
-import { BackendErrorsInterface } from 'src/app/shared/types/common/backendErrors.interface';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
 })
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit {
   form: FormGroup;
+
   isSubmitting$: Observable<boolean> = new Observable<boolean>();
   backendErrors$: Observable<string | null>;
 
@@ -30,12 +31,11 @@ export class LoginPageComponent {
     private fb: FormBuilder,
     private commonService: CommonService,
     private store: Store,
-    private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(resetErrorAction());
+    this.store.dispatch(resetMessagesAction());
 
     this.initializeForm();
     this.initializeValues();
@@ -58,7 +58,7 @@ export class LoginPageComponent {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      login: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }
@@ -66,7 +66,7 @@ export class LoginPageComponent {
   onSubmit(): void {
     const request: LoginRequestInterface = {
       ip: this.currentIp,
-      login: this.form.value.login,
+      login: this.form.value.email,
       password: this.form.value.password,
     };
 

@@ -4,7 +4,8 @@
     <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
     </metib-backend-error-messages>
 
-    <metib-success-messages *ngIf="(confirmationCode$ | async)" [message]="'На указанную почту отправлен код. Пожалуйста, введите его в поле КОД'"></metib-success-messages>
+    <metib-success-messages *ngIf="(confirmationCode$ | async)"
+      [message]="'На указанную почту отправлен код. Пожалуйста, введите его в поле КОД'"></metib-success-messages>
 
     <h1>Регистрация</h1>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -15,11 +16,25 @@
           <div class="p-fluid p-formgrid p-grid">
             <div class="p-field p-col">
               <label for="first">Имя</label>
-              <input id="first" type="text" pInputText placeholder="Имя" formControlName="first">
+              <input id="first" type="text" pInputText placeholder="Имя" formControlName="first"
+                [ngClass]="{'ng-invalid ng-dirty': form.get('profile.name.first').invalid && form.get('profile.name.first').touched}">
+              <small class="p-error"
+                *ngIf="form.get('profile.name.first').invalid && form.get('profile.name.first').touched">
+                <div *ngIf="form.get('profile.name.first').errors['required']">
+                  Поле Имя не должно быть пустым
+                </div>
+              </small>
             </div>
             <div class="p-field p-col">
               <label for="last">Фамилия</label>
-              <input id="last" type="text" pInputText placeholder="Фамилия" formControlName="last">
+              <input id="last" type="text" pInputText placeholder="Фамилия" formControlName="last"
+                [ngClass]="{'ng-invalid ng-dirty': form.get('profile.name.last').invalid && form.get('profile.name.last').touched}">
+              <small class="p-error"
+                *ngIf="form.get('profile.name.last').invalid && form.get('profile.name.last').touched">
+                <div *ngIf="form.get('profile.name.last').errors['required']">
+                  Поле Фамилия не должно быть пустым
+                </div>
+              </small>
             </div>
           </div>
         </div>
@@ -28,29 +43,56 @@
         <div class="p-fluid p-formgrid p-grid">
           <div class="p-field p-col">
             <label for="login">Логин</label>
-            <input id="login" type="text" pInputText placeholder="Логин" formControlName="login">
+            <input id="login" type="text" pInputText placeholder="Логин" formControlName="login"
+              [ngClass]="{'ng-invalid ng-dirty': form.get('profile.login').invalid && form.get('profile.login').touched}">
+            <small class="p-error" *ngIf="form.get('profile.login').invalid && form.get('profile.login').touched">
+              <div *ngIf="form.get('profile.login').errors['required']">
+                Поле Логин не должно быть пустым
+              </div>
+            </small>
           </div>
           <div class="p-field p-col">
             <label for="email">Email</label>
-            <input id="email" type="email" pInputText placeholder="Email" formControlName="email">
+            <input id="email" type="email" pInputText placeholder="Email" formControlName="email"
+              [ngClass]="{'ng-invalid ng-dirty': form.get('profile.email').invalid && form.get('profile.email').touched}">
+            <small class="p-error" *ngIf="form.get('profile.email').invalid && form.get('profile.email').touched">
+              <div *ngIf="form.get('profile.email').errors['required']">
+                Поле Email не должно быть пустым
+              </div>
+              <div *ngIf="form.get('profile.email').errors['email']">
+                Введите корректный Email адрес
+              </div>
+            </small>
           </div>
           <div class="p-field p-col">
             <label for="isMale">Пол</label>
             <p-dropdown id="isMale" [options]="genderOptions" formControlName="isMale" optionLabel="name"
-              [showClear]="false" placeholder="Пол" optionValue="value">
+              [showClear]="false" placeholder="Пол" optionValue="value"
+              [ngClass]="{'ng-invalid ng-dirty': form.get('profile.isMale').invalid && form.get('profile.isMale').touched}">
               <ng-template let-country pTemplate="item">
                 <div class="country-item">
                   <div>{{country.name}}</div>
                 </div>
               </ng-template>
             </p-dropdown>
+            <small class="p-error" *ngIf="form.get('profile.isMale').invalid && form.get('profile.isMale').touched">
+              <div *ngIf="form.get('profile.isMale').errors['required']">
+                Поле Пол не должно быть пустым
+              </div>
+            </small>
           </div>
         </div>
 
         <div class="p-fluid p-formgrid p-grid">
           <div class="p-field p-col">
             <label for="phone">Телефон</label>
-            <input id="phone" type="tel" pInputText placeholder="Телефон" formControlName="phone">
+            <p-inputMask mask="8-999-999-9999" id="phone" type="tel" placeholder="Телефон" formControlName="phone"
+              [ngClass]="{'ng-invalid ng-dirty': form.get('profile.phone').invalid && form.get('profile.phone').touched}"></p-inputMask>
+            <small class="p-error" *ngIf="form.get('profile.phone').invalid && form.get('profile.phone').touched">
+              <div *ngIf="form.get('profile.phone').errors['required']">
+                Поле Телефон не должно быть пустым
+              </div>
+            </small>
           </div>
         </div>
       </div>
@@ -58,7 +100,13 @@
       <div class="p-fluid p-formgrid p-grid">
         <div class="p-field p-col">
           <label for="password">Пароль</label>
-          <input id="password" type="password" pInputText placeholder="Пароль" formControlName="password">
+          <input id="password" type="password" pInputText placeholder="Пароль" formControlName="password"
+            [ngClass]="{'ng-invalid ng-dirty': form.get('password').invalid && form.get('password').touched}">
+          <small class="p-error" *ngIf="form.get('password').invalid && form.get('password').touched">
+            <div *ngIf="form.get('password').errors['required']">
+              Поле Пароль не должно быть пустым
+            </div>
+          </small>
         </div>
       </div>
 
@@ -67,15 +115,21 @@
         <div class="p-fluid p-formgrid p-grid">
           <div class="p-field p-col">
             <label for="text">Текст с Картинки</label>
-            <input id="text" type="text" pInputText formControlName="text">
+            <input id="text" type="text" pInputText formControlName="text"
+              [ngClass]="{'ng-invalid ng-dirty': form.get('captcha.text').invalid && form.get('captcha.text').touched}">
+            <small class="p-error" *ngIf="form.get('captcha.text').invalid && form.get('captcha.text').touched">
+              <div *ngIf="form.get('captcha.text').errors['required']">
+                Поле Текст с Картинки не должно быть пустым
+              </div>
+            </small>
           </div>
         </div>
       </div>
 
-        <div class="p-fluid p-formgrid p-grid">
-          <div class="p-col">
-            <img id="image" [src]="image" height="50" width="200">
-          </div>
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-col">
+          <img id="image" [src]="image" height="50" width="200">
+        </div>
       </div>
       <p-button styleClass="p-button-link p-mb-4" (click)="updateCaptcha()" label="Обновить картинку"></p-button>
 
@@ -90,7 +144,13 @@
       <div class="p-fluid p-formgrid p-grid">
         <div class="p-field p-col">
           <label for="pin">Код</label>
-          <input id="pin" type="text" pInputText placeholder="Код" formControlName="pin">
+          <input id="pin" type="text" pInputText placeholder="Код" formControlName="pin"
+            [ngClass]="{'ng-invalid ng-dirty': form.get('formConfirm.pin').invalid && form.get('formConfirm.pin').touched}">
+          <small class="p-error" *ngIf="form.get('formConfirm.pin').invalid && form.get('formConfirm.pin').touched">
+            <div *ngIf="form.get('formConfirm.pin').errors['required']">
+              Поле Код не должно быть пустым
+            </div>
+          </small>
         </div>
       </div>
 
