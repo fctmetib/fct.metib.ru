@@ -1,3 +1,4 @@
+import { resetPasswordAction, resetPasswordSuccessAction, resetPasswordFailureAction, resetPasswordConfirmAction, resetPasswordConfirmSuccessAction, resetPasswordConfirmFailureAction, resetPasswordCompleteAction, resetPasswordCompleteSuccessAction, resetPasswordCompleteFailureAction } from './actions/resetPassword.action';
 import { createReducer, on, Action } from '@ngrx/store';
 
 
@@ -137,7 +138,87 @@ const authReducer = createReducer(
       isLoggedIn: false,
       currentUser: null,
     })
-  )
+  ),
+
+
+  on(
+    resetPasswordAction,
+    (state): AuthStateInterface => ({
+      ...state,
+      isSubmitting: true,
+      validationErrors: null,
+      confirmCode: null,
+    })
+  ),
+  on(
+    resetPasswordSuccessAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      confirmCode: action.confirmCode,
+    })
+  ),
+  on(
+    resetPasswordFailureAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      confirmCode: null,
+      validationErrors: action.errors,
+    })
+  ),
+
+  on(
+    resetPasswordConfirmAction,
+    (state): AuthStateInterface => ({
+      ...state,
+      isSubmitting: true,
+      validationErrors: null,
+      confirmCode: null,
+    })
+  ),
+  on(
+    resetPasswordConfirmSuccessAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      confirmCode: action.confirmCode,
+    })
+  ),
+  on(
+    resetPasswordConfirmFailureAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      confirmCode: null,
+      validationErrors: action.errors,
+    })
+  ),
+
+  on(
+    resetPasswordCompleteAction,
+    (state): AuthStateInterface => ({
+      ...state,
+      isSubmitting: true,
+      validationErrors: null,
+    })
+  ),
+  on(
+    resetPasswordCompleteSuccessAction,
+    (state): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+    })
+  ),
+  on(
+    resetPasswordCompleteFailureAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      confirmCode: null,
+      validationErrors: action.errors,
+    })
+  ),
 );
 
 export function reducers(state: AuthStateInterface, action: Action) {

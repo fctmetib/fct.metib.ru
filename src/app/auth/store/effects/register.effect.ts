@@ -14,7 +14,7 @@ import {
   registerSuccessAction,
   registerFailureAction,
 } from './../actions/register.action';
-import { RegisterReponseInterface } from './../../types/registerResponse.interface';
+import { RegisterReponseInterface } from '../../types/register/registerResponse.interface';
 
 @Injectable()
 export class RegisterEffect {

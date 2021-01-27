@@ -1,3 +1,4 @@
+import { ResetPasswordEffect } from './store/effects/resetPassword.effect';
 import { ConfirmPasswordPageComponent } from './components/confirm-password-page/confirm-password-page.component';
 import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
 import { CommonModule } from '@angular/common';
@@ -40,6 +41,7 @@ import { AuthRoutingModule } from './auth-routing.module';
       LoginEffect,
       GetCurrentUserEffect,
       RegisterEffect,
+      ResetPasswordEffect
     ]),
     InputTextModule,
     DropdownModule,

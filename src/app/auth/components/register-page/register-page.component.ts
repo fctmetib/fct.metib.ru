@@ -4,13 +4,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 
-import { RegisterConfirmRequestInterface } from './../../types/registerConfirmRequest.interface';
+import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
 import { AuthService } from './../../services/auth.service';
 import { registerAction, registerConfirmAction } from './../../store/actions/register.action';
-import { MaleOptionsInterface } from './../../types/maleOptions.interface';
+import { MaleOptionsInterface } from '../../types/common/maleOptions.interface';
 import { resetMessagesAction } from './../../store/actions/common.action';
 import { CommonService } from './../../../shared/services/common.service';
-import { RegisterRequestInterface } from './../../types/registerRequest.interface';
+import { RegisterRequestInterface } from '../../types/register/registerRequest.interface';
 import {
   validationErrorsSelector,
   isSubmittingSelector,

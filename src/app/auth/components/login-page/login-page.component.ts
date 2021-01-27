@@ -10,7 +10,7 @@ import {
   isSubmittingSelector,
   validationErrorsSelector,
 } from './../../store/selectors';
-import { LoginRequestInterface } from '../../types/loginRequest.interface';
+import { LoginRequestInterface } from '../../types/login/loginRequest.interface';
 import { loginAction } from '../../store/actions/login.action';
 
 @Component({

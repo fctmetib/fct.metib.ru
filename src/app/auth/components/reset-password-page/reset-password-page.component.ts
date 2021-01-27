@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 
-import { RegisterConfirmRequestInterface } from './../../types/registerConfirmRequest.interface';
+import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
 import { registerConfirmAction } from './../../store/actions/register.action';
 import { CommonService } from './../../../shared/services/common.service';
 import {
@@ -51,6 +51,8 @@ export class ResetPasswordPageComponent {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
     this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
     this.confirmationCode$ = this.store.pipe(select(confirmationCodeSelector));
+
+    this.updateCaptcha();
   }
 
   initializeForm(): void {

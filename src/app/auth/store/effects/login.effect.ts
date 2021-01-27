@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
-import { AuthResponseInterface } from 'src/app/auth/types/authResponse.interface';
+import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import {
   loginAction,

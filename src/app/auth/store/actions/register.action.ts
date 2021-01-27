@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 
 import { ActionTypes } from 'src/app/auth/store/actionTypes';
-import { RegisterRequestInterface } from './../../types/registerRequest.interface';
-import { RegisterConfirmRequestInterface } from './../../types/registerConfirmRequest.interface';
+import { RegisterRequestInterface } from '../../types/register/registerRequest.interface';
+import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
 
 export const registerConfirmAction = createAction(
   ActionTypes.REGISTER_CONFIRM,
