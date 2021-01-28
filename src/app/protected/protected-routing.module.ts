@@ -1,5 +1,5 @@
 import { AuthGuard } from './../shared/services/auth.guard';
-import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
+import { CabinetPageComponent } from './cabinet-page/cabinet-page.component';
 import { ProtectedLayoutComponent } from './../shared/layouts/protected-layout/protected-layout.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -11,8 +11,8 @@ const routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'dashboard',
-        component: DashboardPageComponent,
+        path: 'cabinet',
+        component: CabinetPageComponent,
       },
     ],
   },

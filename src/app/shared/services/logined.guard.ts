@@ -22,7 +22,7 @@ export class LoginedGuard implements CanActivate, CanActivateChild {
     if (!this.auth.isAuthenticated()) {
       return of(true);
     } else {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/cabinet']);
       return of(false);
     }
   }

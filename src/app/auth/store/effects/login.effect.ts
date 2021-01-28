@@ -41,7 +41,7 @@ export class LoginEffect {
       this.actions$.pipe(
         ofType(loginSuccessAction),
         tap(() => {
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/cabinet');
         })
       ),
     { dispatch: false }

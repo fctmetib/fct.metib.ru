@@ -1,5 +1,5 @@
+import { CabinetPageComponent } from './cabinet-page/cabinet-page.component';
 import { HeaderComponent } from './../shared/layouts/protected-layout/header/header.component';
-import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -13,12 +13,13 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {MenubarModule} from 'primeng/menubar';
+import {AvatarModule} from 'primeng/avatar';
 
 @NgModule({
   declarations: [
     ProtectedLayoutComponent,
     HeaderComponent,
-    DashboardPageComponent
+    CabinetPageComponent
   ],
   imports: [
     InputTextModule,
@@ -32,6 +33,7 @@ import {MenubarModule} from 'primeng/menubar';
     ReactiveFormsModule,
     CardModule,
     MenubarModule,
+    AvatarModule
   ],
   providers: []
 })

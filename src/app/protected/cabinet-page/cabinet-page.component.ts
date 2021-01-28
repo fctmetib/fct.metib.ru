@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-dashboard-page',
-  templateUrl: './dashboard-page.component.html',
-  styleUrls: ['./dashboard-page.component.scss']
+  selector: 'app-cabinet-page',
+  templateUrl: './cabinet-page.component.html',
+  styleUrls: ['./cabinet-page.component.scss']
 })
-export class DashboardPageComponent {
+export class CabinetPageComponent {
   selectedState: any = null;
 
   states: any[] = [
