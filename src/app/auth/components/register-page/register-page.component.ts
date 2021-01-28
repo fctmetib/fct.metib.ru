@@ -16,6 +16,7 @@ import {
   isSubmittingSelector,
   confirmationCodeSelector,
 } from './../../store/selectors';
+import { ConfirmedValidator } from '../../tools/confirmPassword.tool';
 
 @Component({
   selector: 'app-register-page',
@@ -76,6 +77,7 @@ export class RegisterPageComponent {
         text: ['', Validators.required],
       }),
       password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
       profile: this.fb.group({
         login: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
@@ -86,6 +88,8 @@ export class RegisterPageComponent {
         }),
         phone: ['', Validators.required],
       }),
+    }, {
+      validator: ConfirmedValidator('password', 'confirmPassword')
     });
 
     this.formConfirm = this.fb.group({

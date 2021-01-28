@@ -12,6 +12,7 @@ import {
 import { resetMessagesAction } from '../../store/actions/common.action';
 import { resetPasswordCompleteAction } from '../../store/actions/resetPassword.action';
 import { ResetPasswordCompleteRequestInterface } from './../../types/reset-password/resetPasswordCompleteRequest.interface';
+import { ConfirmedValidator } from '../../tools/confirmPassword.tool';
 
 @Component({
   selector: 'app-confirm-password-page',
@@ -52,8 +53,11 @@ export class ConfirmPasswordPageComponent {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      password: ['', Validators.required],
-    });
+      password: ['', [Validators.required]],
+      confirmPassword: ['']
+    }, {
+      validator: ConfirmedValidator('password', 'confirmPassword')
+    })
   }
 
   onSubmit(): void {
@@ -65,3 +69,4 @@ export class ConfirmPasswordPageComponent {
     this.store.dispatch(resetPasswordCompleteAction({ request }));
   }
 }
+
