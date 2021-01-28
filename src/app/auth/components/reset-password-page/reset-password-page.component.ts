@@ -1,3 +1,8 @@
+import {
+  resetPasswordAction,
+  resetPasswordConfirmAction,
+} from './../../store/actions/resetPassword.action';
+import { ResetPasswordRequestInterface } from './../../types/reset-password/resetPasswordRequest.interface';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
@@ -5,12 +10,12 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
-import { registerConfirmAction } from './../../store/actions/register.action';
 import { CommonService } from './../../../shared/services/common.service';
 import {
   validationErrorsSelector,
   isSubmittingSelector,
   confirmationCodeSelector,
+  successMessageSelector,
 } from './../../store/selectors';
 import { resetMessagesAction } from '../../store/actions/common.action';
 
@@ -26,6 +31,7 @@ export class ResetPasswordPageComponent {
   isSubmitting$: Observable<boolean>;
   backendErrors$: Observable<string | null>;
   confirmationCode$: Observable<string | null>;
+  successMessage$: Observable<string | null>;
 
   image: any;
 
@@ -51,6 +57,7 @@ export class ResetPasswordPageComponent {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
     this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
     this.confirmationCode$ = this.store.pipe(select(confirmationCodeSelector));
+    this.successMessage$ = this.store.pipe(select(successMessageSelector));
 
     this.updateCaptcha();
   }
@@ -84,19 +91,28 @@ export class ResetPasswordPageComponent {
   }
 
   onSubmit(): void {
+    const request: ResetPasswordRequestInterface = {
+      Captcha: {
+        Code: this.captchaCode,
+        Text: this.form.value.captcha.text,
+      },
+      Login: this.form.value.login,
+    };
+
+    this.store.dispatch(resetPasswordAction({ request }));
   }
 
   onConfirmSubmit(): void {
     let ConfirmationCode = '';
-    this.confirmationCode$.subscribe(c => {
+    this.confirmationCode$.subscribe((c) => {
       ConfirmationCode = c;
-    })
+    });
 
     const request: RegisterConfirmRequestInterface = {
       ConfirmationCode,
       Pin: this.formConfirm.value.pin,
     };
 
-    this.store.dispatch(registerConfirmAction({ request }));
+    this.store.dispatch(resetPasswordConfirmAction({ request }));
   }
 }

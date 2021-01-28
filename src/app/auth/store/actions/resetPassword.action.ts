@@ -27,7 +27,7 @@ export const resetPasswordConfirmAction = createAction(
 
 export const resetPasswordConfirmSuccessAction = createAction(
   ActionTypes.RESET_PASSWORD_CONFIRM_SUCCESS,
-  props<{ confirmCode: string }>()
+  props<{ successMessage: string }>()
 );
 
 export const resetPasswordConfirmFailureAction = createAction(

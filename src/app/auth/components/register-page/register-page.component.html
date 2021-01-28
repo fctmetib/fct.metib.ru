@@ -145,9 +145,9 @@
         <div class="p-field p-col">
           <label for="pin">Код</label>
           <input id="pin" type="text" pInputText placeholder="Код" formControlName="pin"
-            [ngClass]="{'ng-invalid ng-dirty': form.get('formConfirm.pin').invalid && form.get('formConfirm.pin').touched}">
-          <small class="p-error" *ngIf="form.get('formConfirm.pin').invalid && form.get('formConfirm.pin').touched">
-            <div *ngIf="form.get('formConfirm.pin').errors['required']">
+            [ngClass]="{'ng-invalid ng-dirty': formConfirm.get('pin').invalid && formConfirm.get('pin').touched}">
+          <small class="p-error" *ngIf="formConfirm.get('pin').invalid && formConfirm.get('pin').touched">
+            <div *ngIf="formConfirm.get('pin').errors['required']">
               Поле Код не должно быть пустым
             </div>
           </small>

@@ -7,7 +7,16 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { ResetPasswordReponseInterface } from '../../types/reset-password/resetPasswordResponse.interface';
-import { resetPasswordAction, resetPasswordSuccessAction, resetPasswordFailureAction, resetPasswordConfirmAction, resetPasswordConfirmSuccessAction, resetPasswordCompleteSuccessAction, resetPasswordCompleteAction, resetPasswordCompleteFailureAction } from './../actions/resetPassword.action';
+import {
+  resetPasswordAction,
+  resetPasswordSuccessAction,
+  resetPasswordFailureAction,
+  resetPasswordConfirmAction,
+  resetPasswordConfirmSuccessAction,
+  resetPasswordCompleteSuccessAction,
+  resetPasswordCompleteAction,
+  resetPasswordCompleteFailureAction,
+} from './../actions/resetPassword.action';
 
 @Injectable()
 export class ResetPasswordEffect {
@@ -22,7 +31,9 @@ export class ResetPasswordEffect {
           }),
           catchError((errorResponse: HttpErrorResponse) => {
             console.log(errorResponse);
-            return of(resetPasswordFailureAction({ errors: errorResponse.error }));
+            return of(
+              resetPasswordFailureAction({ errors: errorResponse.error })
+            );
           })
         );
       })
@@ -34,13 +45,15 @@ export class ResetPasswordEffect {
       ofType(resetPasswordConfirmAction),
       switchMap(({ request }) => {
         return this.authService.resetPasswordConfirm(request).pipe(
-          map((response: ResetPasswordReponseInterface) => {
-            let confirmCode = response.ConfirmationCode;
-            return resetPasswordConfirmSuccessAction({ confirmCode });
+          map((response: string) => {
+            let successMessage = 'На указанную почту отправлена ссылка. Пожалуйста, перейдите по ней, для смены пароля'
+            return resetPasswordConfirmSuccessAction({ successMessage });
           }),
           catchError((errorResponse: HttpErrorResponse) => {
             console.log(errorResponse);
-            return of(resetPasswordFailureAction({ errors: errorResponse.error }));
+            return of(
+              resetPasswordFailureAction({ errors: errorResponse.error })
+            );
           })
         );
       })
@@ -57,14 +70,15 @@ export class ResetPasswordEffect {
           }),
           catchError((errorResponse: HttpErrorResponse) => {
             return of(
-              resetPasswordCompleteFailureAction({ errors: errorResponse.error })
+              resetPasswordCompleteFailureAction({
+                errors: errorResponse.error,
+              })
             );
           })
         );
       })
     )
   );
-
 
   redirectAfterSubmit$ = createEffect(
     () =>
@@ -73,7 +87,7 @@ export class ResetPasswordEffect {
         tap(() => {
           this.router.navigate(['/login'], {
             queryParams: {
-              successRegistration: true,
+              successPasswordReset: true,
             },
           });
         })

@@ -25,7 +25,9 @@ export class LoginPageComponent implements OnInit {
   backendErrors$: Observable<string | null>;
 
   currentIp: string = '';
-  successRegistration: boolean = false;
+
+  alert: boolean = false;
+  alertMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +44,12 @@ export class LoginPageComponent implements OnInit {
 
     this.route.queryParams.subscribe((params: Params) => {
       if (params['successRegistration']) {
-        this.successRegistration = true;
+        this.alert = true;
+        this.alertMessage = 'Регистрация успешно завершена. Войдите в сервис, используя свои данные.'
+      }
+      if (params['successPasswordReset']) {
+        this.alert = true;
+        this.alertMessage = 'Пароль успешно изменен. Войдите в сервис, используя свои данные.'
       }
     });
   }
@@ -58,7 +65,7 @@ export class LoginPageComponent implements OnInit {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      login: ['', [Validators.required]],
       password: ['', Validators.required],
     });
   }
@@ -66,7 +73,7 @@ export class LoginPageComponent implements OnInit {
   onSubmit(): void {
     const request: LoginRequestInterface = {
       ip: this.currentIp,
-      login: this.form.value.email,
+      login: this.form.value.login,
       password: this.form.value.password,
     };
 

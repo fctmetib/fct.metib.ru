@@ -54,9 +54,9 @@ export class AuthService {
    * Called second
    * @param data
    */
-  resetPasswordConfirm(data: ResetPasswordConfirmRequestInterface): Observable<ResetPasswordReponseInterface> {
+  resetPasswordConfirm(data: ResetPasswordConfirmRequestInterface): Observable<string> {
     const url = environment.apiUrl + '/user/password/recovery/confirm';
-    return this.http.post<ResetPasswordReponseInterface>(url, data);
+    return this.http.post<string>(url, data);
   }
 
   /**

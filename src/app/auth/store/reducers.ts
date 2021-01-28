@@ -29,6 +29,7 @@ const initialState: AuthStateInterface = {
   currentUser: null,
   validationErrors: null,
   isLoggedIn: null,
+  successMessage: null,
   confirmCode: null,
 };
 
@@ -48,6 +49,7 @@ const authReducer = createReducer(
       ...state,
       isSubmitting: true,
       validationErrors: null,
+      successMessage: null,
     })
   ),
   on(
@@ -55,6 +57,7 @@ const authReducer = createReducer(
     (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
+      successMessage: null,
       confirmCode: action.confirmCode,
     })
   ),
@@ -64,6 +67,7 @@ const authReducer = createReducer(
       ...state,
       isSubmitting: false,
       confirmCode: null,
+      successMessage: null,
       validationErrors: action.errors,
     })
   ),
@@ -73,6 +77,7 @@ const authReducer = createReducer(
       ...state,
       isSubmitting: true,
       validationErrors: null,
+      successMessage: null,
     })
   ),
   on(
@@ -95,6 +100,7 @@ const authReducer = createReducer(
     (state): AuthStateInterface => ({
       ...state,
       isSubmitting: true,
+      successMessage: null,
       validationErrors: null,
     })
   ),
@@ -111,6 +117,7 @@ const authReducer = createReducer(
     (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
+      successMessage: null,
       validationErrors: action.errors,
     })
   ),
@@ -148,6 +155,7 @@ const authReducer = createReducer(
       isSubmitting: true,
       validationErrors: null,
       confirmCode: null,
+      successMessage: null,
     })
   ),
   on(
@@ -164,6 +172,7 @@ const authReducer = createReducer(
       ...state,
       isSubmitting: false,
       confirmCode: null,
+      successMessage: null,
       validationErrors: action.errors,
     })
   ),
@@ -175,14 +184,16 @@ const authReducer = createReducer(
       isSubmitting: true,
       validationErrors: null,
       confirmCode: null,
+      successMessage: null,
     })
   ),
   on(
     resetPasswordConfirmSuccessAction,
     (state, action): AuthStateInterface => ({
       ...state,
-      isSubmitting: false,
-      confirmCode: action.confirmCode,
+      isSubmitting: true,
+      confirmCode: null,
+      successMessage: action.successMessage,
     })
   ),
   on(
@@ -190,6 +201,7 @@ const authReducer = createReducer(
     (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
+      successMessage: null,
       confirmCode: null,
       validationErrors: action.errors,
     })
@@ -200,12 +212,13 @@ const authReducer = createReducer(
     (state): AuthStateInterface => ({
       ...state,
       isSubmitting: true,
+      successMessage: null,
       validationErrors: null,
     })
   ),
   on(
     resetPasswordCompleteSuccessAction,
-    (state): AuthStateInterface => ({
+    (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
     })
@@ -216,6 +229,7 @@ const authReducer = createReducer(
       ...state,
       isSubmitting: false,
       confirmCode: null,
+      successMessage: null,
       validationErrors: action.errors,
     })
   ),

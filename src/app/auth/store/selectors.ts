@@ -37,3 +37,8 @@ export const confirmationCodeSelector = createSelector(
   authFeatureSelector,
   (authState: AuthStateInterface) => authState.confirmCode
 )
+
+export const successMessageSelector = createSelector(
+  authFeatureSelector,
+  (authState: AuthStateInterface) => authState.successMessage
+)

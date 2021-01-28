@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import {
   validationErrorsSelector,
@@ -9,6 +10,8 @@ import {
   confirmationCodeSelector,
 } from '../../store/selectors';
 import { resetMessagesAction } from '../../store/actions/common.action';
+import { resetPasswordCompleteAction } from '../../store/actions/resetPassword.action';
+import { ResetPasswordCompleteRequestInterface } from './../../types/reset-password/resetPasswordCompleteRequest.interface';
 
 @Component({
   selector: 'app-confirm-password-page',
@@ -22,13 +25,12 @@ export class ConfirmPasswordPageComponent {
   backendErrors$: Observable<string | null>;
   confirmationCode$: Observable<string | null>;
 
-  image: any;
-
-  isConfirm: boolean = false;
+  completionCode: string = '';
 
   constructor(
     private fb: FormBuilder,
-    private store: Store
+    private store: Store,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +38,10 @@ export class ConfirmPasswordPageComponent {
 
     this.initializeForm();
     this.initializeValues();
+
+    this.route.params.subscribe((params: Params) => {
+      this.completionCode = params['id'];
+    });
   }
 
   initializeValues(): void {
@@ -51,5 +57,11 @@ export class ConfirmPasswordPageComponent {
   }
 
   onSubmit(): void {
+    const request: ResetPasswordCompleteRequestInterface = {
+      CompletionCode: this.completionCode,
+      Password: this.form.value.password
+    };
+
+    this.store.dispatch(resetPasswordCompleteAction({ request }));
   }
 }

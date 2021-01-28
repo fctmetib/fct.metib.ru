@@ -4,22 +4,19 @@
     <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
     </metib-backend-error-messages>
 
-    <metib-success-messages *ngIf="successRegistration"
-      [message]="'Регистрация успешно завершена. Войдите в сервис, используя свои данные.'"></metib-success-messages>
+    <metib-success-messages *ngIf="alert"
+      [message]="alertMessage"></metib-success-messages>
 
     <h1>Авторизация</h1>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="p-fluid p-formgrid p-grid">
         <div class="p-field p-col">
-          <label for="email">Почта</label>
-          <input id="email" type="email" pInputText placeholder="Почта" formControlName="email"
-            [ngClass]="{'ng-invalid ng-dirty': form.get('email').invalid && form.get('email').touched}">
-          <small class="p-error" *ngIf="form.get('email').invalid && form.get('email').touched">
-            <div *ngIf="form.get('email').errors['required']">
-              Поле Email не должно быть пустым
-            </div>
-            <div *ngIf="form.get('email').errors['email']">
-              Введите корректный Email адрес
+          <label for="login">Логин</label>
+          <input id="login" type="text" pInputText placeholder="Логин" formControlName="login"
+            [ngClass]="{'ng-invalid ng-dirty': form.get('login').invalid && form.get('login').touched}">
+          <small class="p-error" *ngIf="form.get('login').invalid && form.get('login').touched">
+            <div *ngIf="form.get('login').errors['required']">
+              Поле Логин не должно быть пустым
             </div>
           </small>
         </div>
@@ -42,5 +39,8 @@
         <button pButton type="submit" [disabled]="isSubmitting$ | async" label="Вход"></button>
       </div>
     </form>
+
+    <p-button styleClass="p-button-link" [routerLink]="['/confirm-password/026d9227-ebc1-453d-8d6b-37d4c0d9cde4']" label="[TEST] Новый пароль"></p-button>
+
   </p-card>
 </div>

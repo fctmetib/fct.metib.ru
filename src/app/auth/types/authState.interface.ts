@@ -5,6 +5,7 @@ export interface AuthStateInterface {
   currentUser: CurrentUserInterface | null
   isLoggedIn: boolean | null
   validationErrors: string | null
+  successMessage: string
   isLoading: boolean
   confirmCode: string
 }

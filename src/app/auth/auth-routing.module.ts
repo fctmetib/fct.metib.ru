@@ -28,7 +28,7 @@ const routes = [
         component: ResetPasswordPageComponent
       },
       {
-        path: 'confirm-password',
+        path: 'confirm-password/:id',
         component: ConfirmPasswordPageComponent
       }
     ],
