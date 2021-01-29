@@ -1,3 +1,5 @@
+import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
+import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
@@ -5,7 +7,7 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
+import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
 import {
   getCurrentUserAction,
   getCurrentUserSuccessAction,
@@ -30,7 +32,15 @@ export class GetCurrentUserEffect {
         }
 
         return this.authService.getCurrentUser(userId).pipe(
-          map((currentUser: CurrentUserInterface) => {
+          map((currentUserResponse: CurrentUserGeneralInterface) => {
+            //TODO: Rework it
+            let currentUserFactoring = JSON.parse(localStorage.getItem('currentUserFactoring'));
+
+            let currentUser: CurrentUserInterface = {
+              userGeneral: currentUserResponse,
+              userFactoring: currentUserFactoring
+            }
+
             return getCurrentUserSuccessAction({ currentUser });
           }),
 
@@ -45,6 +55,7 @@ export class GetCurrentUserEffect {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private store: Store,
     private cookieService: CookieService
   ) {}
 }

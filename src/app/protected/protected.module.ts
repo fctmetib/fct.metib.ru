@@ -1,3 +1,4 @@
+import { ClientService } from './services/client.service';
 import { ReportsPageComponent } from './reports-page/reports-page.component';
 import { DocumentsPageComponent } from './documents-page/documents-page.component';
 import { ContractsPageComponent } from './contracts-page/contracts-page.component';
@@ -47,6 +48,8 @@ import {AvatarModule} from 'primeng/avatar';
     DocumentsPageComponent,
     ReportsPageComponent
   ],
-  providers: []
+  providers: [
+    ClientService
+  ]
 })
 export class ProtectedModule { }

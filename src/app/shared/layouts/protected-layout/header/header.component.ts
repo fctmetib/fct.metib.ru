@@ -1,10 +1,10 @@
 import { Store, select } from '@ngrx/store';
-import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { currentUserSelector } from 'src/app/auth/store/selectors';
 
+import { currentUserFactoringSelector } from 'src/app/auth/store/selectors';
+import { CurrentUserFactoringInterface } from '../../../types/currentUserFactoring.interface';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,12 +12,12 @@ import { currentUserSelector } from 'src/app/auth/store/selectors';
 })
 export class HeaderComponent implements OnInit {
   items: MenuItem[];
-  public currentUser$: Observable<CurrentUserInterface | null>;
+  public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
 
   constructor(private store: Store) {}
 
   ngOnInit() {
-    this.currentUser$ = this.store.pipe(select(currentUserSelector));
+    this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
 
     this.items = [
       {
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
         routerLinkActiveOptions: { exact: true }
       },
       {
-        label: 'Счета',
+        label: 'Платежи',
         routerLink: 'invoices',
         routerLinkActiveOptions: { exact: true }
       },
@@ -48,6 +48,11 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Отчеты',
         routerLink: 'reports',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
+        label: 'Заявки',
+        routerLink: '/',
         routerLinkActiveOptions: { exact: true }
       },
     ];

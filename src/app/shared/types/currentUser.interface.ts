@@ -1,10 +1,7 @@
-import { PassportInterface } from './user/passport.interface';
-import { ProfileInterface } from './user/profile.interface';
+import { CurrentUserGeneralInterface } from './currentUserGeneral.interface';
+import { CurrentUserFactoringInterface } from "./currentUserFactoring.interface";
 
 export interface CurrentUserInterface {
-  Id: number
-  Profile: ProfileInterface
-  Passport: PassportInterface
-  PassportFileCode: string
-  Avatar: string
+  userFactoring: CurrentUserFactoringInterface;
+  userGeneral: CurrentUserGeneralInterface
 }

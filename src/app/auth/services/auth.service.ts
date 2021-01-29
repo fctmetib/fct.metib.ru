@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ResetPasswordCompleteRequestInterface } from './../types/reset-password/resetPasswordCompleteRequest.interface';
 import { ResetPasswordConfirmRequestInterface } from './../types/reset-password/resetPasswordConfirmRequest.interface';
 import { ResetPasswordReponseInterface } from './../types/reset-password/resetPasswordResponse.interface';
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { RegisterRequestInterface } from 'src/app/auth/types/register/registerRequest.interface';
-import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
+import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
 import { LoginRequestInterface } from 'src/app/auth/types/login/loginRequest.interface';
 import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
 import { RegisterConfirmRequestInterface } from '../types/register/registerConfirmRequest.interface';
@@ -17,7 +18,7 @@ import { RegisterReponseInterface } from '../types/register/registerResponse.int
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {}
 
   register(
     data: RegisterRequestInterface
@@ -36,9 +37,9 @@ export class AuthService {
     return this.http.post<AuthResponseInterface>(url, data);
   }
 
-  getCurrentUser(id: number): Observable<CurrentUserInterface> {
+  getCurrentUser(id: number): Observable<CurrentUserGeneralInterface> {
     const url = environment.apiUrl + `/user/${id}`;
-    return this.http.get<CurrentUserInterface>(url);
+    return this.http.get<CurrentUserGeneralInterface>(url);
   }
 
   /**
@@ -66,6 +67,12 @@ export class AuthService {
   resetPasswordComplete(data: ResetPasswordCompleteRequestInterface): Observable<{}> {
     const url = environment.apiUrl + '/user/password/recovery/complete';
     return this.http.post<{}>(url, data);
+  }
+
+  public logout(): void {
+    this.cookieService.deleteAll();
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {

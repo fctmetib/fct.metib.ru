@@ -28,9 +28,14 @@ export const isAnonymousSelector = createSelector(
   (authState: AuthStateInterface) => authState.isLoggedIn === false
 )
 
-export const currentUserSelector = createSelector(
+export const currentUserGeneralSelector = createSelector(
   authFeatureSelector,
-  (authState: AuthStateInterface) => authState.currentUser
+  (authState: AuthStateInterface) => authState.currentUserGeneral
+)
+
+export const currentUserFactoringSelector = createSelector(
+  authFeatureSelector,
+  (authState: AuthStateInterface) => authState.currentUserFactoring
 )
 
 export const confirmationCodeSelector = createSelector(

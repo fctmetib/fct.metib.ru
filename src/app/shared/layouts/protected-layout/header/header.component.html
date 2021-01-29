@@ -4,6 +4,6 @@
   </ng-template>
   <ng-template pTemplate="end">
     <p-avatar icon="pi pi-user" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
-    {{(currentUser$ | async).Profile.Name.Last}} {{(currentUser$ | async).Profile.Name.First}}
+    {{(currentUserFactoring$ | async)?.Name}}
   </ng-template>
 </p-menubar>

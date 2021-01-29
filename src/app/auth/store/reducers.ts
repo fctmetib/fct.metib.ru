@@ -26,7 +26,8 @@ import {
 const initialState: AuthStateInterface = {
   isSubmitting: false,
   isLoading: false,
-  currentUser: null,
+  currentUserGeneral: null,
+  currentUserFactoring: null,
   validationErrors: null,
   isLoggedIn: null,
   successMessage: null,
@@ -109,6 +110,7 @@ const authReducer = createReducer(
     (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
+      currentUserFactoring: action.currentUserFactoring,
       isLoggedIn: true,
     })
   ),
@@ -134,7 +136,8 @@ const authReducer = createReducer(
       ...state,
       isLoading: false,
       isLoggedIn: true,
-      currentUser: action.currentUser,
+      currentUserGeneral: action.currentUser.userGeneral,
+      currentUserFactoring: action.currentUser.userFactoring,
     })
   ),
   on(
@@ -143,7 +146,7 @@ const authReducer = createReducer(
       ...state,
       isLoading: false,
       isLoggedIn: false,
-      currentUser: null,
+      currentUserGeneral: null,
     })
   ),
 

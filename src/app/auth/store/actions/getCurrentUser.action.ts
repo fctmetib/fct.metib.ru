@@ -13,3 +13,4 @@ export const getCurrentUserSuccessAction = createAction(
 export const getCurrentUserFailureAction = createAction(
   ActionTypes.GET_CURRENT_USER_FAILURE
 );
+

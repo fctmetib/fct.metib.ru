@@ -27,5 +27,6 @@ export enum ActionTypes {
   GET_CURRENT_USER_SUCCESS = '[Auth] Get current user success',
   GET_CURRENT_USER_FAILURE = '[Auth] Get current user failure',
 
+  SET_CURRENT_USER_FACTORING = '[Auth] Set current user factoring',
   COMMON_RESET_MESSAGES = '[Auth] Common reset messages'
 }

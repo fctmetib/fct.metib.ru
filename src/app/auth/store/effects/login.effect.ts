@@ -1,3 +1,6 @@
+import { CurrentUserFactoringInterface } from '../../../shared/types/currentUserFactoring.interface';
+import { getCurrentUserAction } from './../actions/getCurrentUser.action';
+import { Store, select } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
@@ -25,7 +28,12 @@ export class LoginEffect {
             this.cookieService.set('code', response.Code);
             this.cookieService.set('userId', response.UserID.toString());
 
-            return loginSuccessAction();
+            //TODO: Rework it
+            localStorage.setItem('currentUserFactoring', JSON.stringify(response))
+
+            let currentUserFactoring: CurrentUserFactoringInterface = response;
+
+            return loginSuccessAction( {currentUserFactoring} );
           }),
 
           catchError((errorResponse: HttpErrorResponse) => {
