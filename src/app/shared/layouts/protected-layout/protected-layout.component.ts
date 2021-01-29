@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 @Component({
   selector: 'app-protected-layout',
   templateUrl: './protected-layout.component.html',
@@ -7,6 +8,5 @@ import { Component, OnInit } from '@angular/core';
 export class ProtectedLayoutComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

@@ -1,3 +1,9 @@
+import { ReportsPageComponent } from './reports-page/reports-page.component';
+import { DocumentsPageComponent } from './documents-page/documents-page.component';
+import { ContractsPageComponent } from './contracts-page/contracts-page.component';
+import { InvoicesPageComponent } from './invoices-page/invoices-page.component';
+import { RequestsPageComponent } from './requests-page/requests-page.component';
+import { CommonModule } from '@angular/common';
 import { CabinetPageComponent } from './cabinet-page/cabinet-page.component';
 import { HeaderComponent } from './../shared/layouts/protected-layout/header/header.component';
 import { DropdownModule } from 'primeng/dropdown';
@@ -16,12 +22,8 @@ import {MenubarModule} from 'primeng/menubar';
 import {AvatarModule} from 'primeng/avatar';
 
 @NgModule({
-  declarations: [
-    ProtectedLayoutComponent,
-    HeaderComponent,
-    CabinetPageComponent
-  ],
   imports: [
+    CommonModule,
     InputTextModule,
 		CheckboxModule,
 		ButtonModule,
@@ -34,6 +36,16 @@ import {AvatarModule} from 'primeng/avatar';
     CardModule,
     MenubarModule,
     AvatarModule
+  ],
+  declarations: [
+    ProtectedLayoutComponent,
+    HeaderComponent,
+    CabinetPageComponent,
+    RequestsPageComponent,
+    InvoicesPageComponent,
+    ContractsPageComponent,
+    DocumentsPageComponent,
+    ReportsPageComponent
   ],
   providers: []
 })
