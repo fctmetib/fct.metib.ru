@@ -1,3 +1,4 @@
+import { CryptoService } from './../../../shared/services/common/crypto.service';
 import { CurrentUserFactoringInterface } from '../../../shared/types/currentUserFactoring.interface';
 import { getCurrentUserAction } from './../actions/getCurrentUser.action';
 import { Store, select } from '@ngrx/store';
@@ -25,11 +26,10 @@ export class LoginEffect {
       switchMap(({ request }) => {
         return this.authService.login(request).pipe(
           map((response: AuthResponseInterface) => {
-            this.cookieService.set('code', response.Code);
-            this.cookieService.set('userId', response.UserID.toString());
+            let crptName = this.cryptoService.encrypt('currentUser');
+            let crptInfo = this.cryptoService.encrypt(JSON.stringify(response));
 
-            //TODO: Rework it
-            localStorage.setItem('currentUserFactoring', JSON.stringify(response))
+            this.cookieService.set(crptName, crptInfo)
 
             let currentUserFactoring: CurrentUserFactoringInterface = response;
 
@@ -56,6 +56,7 @@ export class LoginEffect {
   );
 
   constructor(
+    private cryptoService: CryptoService,
     private actions$: Actions,
     private authService: AuthService,
     private cookieService: CookieService,

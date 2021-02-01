@@ -18,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { AuthService } from '../../services/auth.service';
-import { CommonService } from '../../../shared/services/common.service';
+import { CommonService } from '../../../shared/services/common/common.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';

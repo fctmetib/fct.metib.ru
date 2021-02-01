@@ -1,5 +1,5 @@
 import { environment } from 'src/environments/environment';
-import { IpInterface } from './../types/common/ip.interface';
+import { IpInterface } from '../../types/common/ip.interface';
 import { map } from 'rxjs/operators';
 
 import { Observable, of } from 'rxjs';
@@ -10,8 +10,8 @@ import { Injectable } from '@angular/core';
 export class CommonService {
   constructor(private http: HttpClient) {}
 
-  getIP(): Observable<IpInterface> {
-    return this.http.get<IpInterface>('http://api.ipify.org/?format=json');
+  getIP(): Observable<string> {
+    return this.http.get<string>('https://jsonip.com')
   }
 
   getCaptcha(): Observable<any> {

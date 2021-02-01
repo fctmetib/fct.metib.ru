@@ -1,3 +1,5 @@
+import { AuthResponseInterface } from './../../types/login/authResponse.interface';
+import { CryptoService } from './../../../shared/services/common/crypto.service';
 import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
@@ -20,8 +22,13 @@ export class GetCurrentUserEffect {
     this.actions$.pipe(
       ofType(getCurrentUserAction),
       switchMap(() => {
-        const token = this.cookieService.get('code');
-        const userId = +this.cookieService.get('userId');
+        let crptName = this.cryptoService.encrypt('currentUser');
+        let user = JSON.parse(
+          this.cryptoService.decrypt(this.cookieService.get(crptName))
+        ) as AuthResponseInterface;
+
+        const token = user.Code;
+        const userId = +user.UserID;
 
         if (!token) {
           return of(getCurrentUserFailureAction());
@@ -33,13 +40,14 @@ export class GetCurrentUserEffect {
 
         return this.authService.getCurrentUser(userId).pipe(
           map((currentUserResponse: CurrentUserGeneralInterface) => {
-            //TODO: Rework it
-            let currentUserFactoring = JSON.parse(localStorage.getItem('currentUserFactoring'));
+            let currentUserFactoring = JSON.parse(
+              this.cryptoService.decrypt(this.cookieService.get(crptName))
+            ) as AuthResponseInterface;
 
             let currentUser: CurrentUserInterface = {
               userGeneral: currentUserResponse,
-              userFactoring: currentUserFactoring
-            }
+              userFactoring: currentUserFactoring,
+            };
 
             return getCurrentUserSuccessAction({ currentUser });
           }),
@@ -56,6 +64,7 @@ export class GetCurrentUserEffect {
     private actions$: Actions,
     private authService: AuthService,
     private store: Store,
+    private cryptoService: CryptoService,
     private cookieService: CookieService
   ) {}
 }

@@ -1,3 +1,4 @@
+import { CryptoService } from './../../shared/services/common/crypto.service';
 import { Router } from '@angular/router';
 import { ResetPasswordCompleteRequestInterface } from './../types/reset-password/resetPasswordCompleteRequest.interface';
 import { ResetPasswordConfirmRequestInterface } from './../types/reset-password/resetPasswordConfirmRequest.interface';
@@ -18,7 +19,7 @@ import { RegisterReponseInterface } from '../types/register/registerResponse.int
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {}
+  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router, private cryptoService: CryptoService) {}
 
   register(
     data: RegisterRequestInterface
@@ -76,7 +77,8 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    if (this.cookieService.get('code')) {
+    let crptName = this.cryptoService.encrypt('currentUser');
+    if (this.cookieService.get(crptName)) {
       return true;
     } else {
       return false;

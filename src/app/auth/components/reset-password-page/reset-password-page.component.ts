@@ -10,7 +10,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
-import { CommonService } from './../../../shared/services/common.service';
+import { CommonService } from '../../../shared/services/common/common.service';
 import {
   validationErrorsSelector,
   isSubmittingSelector,

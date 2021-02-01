@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 
 import { resetMessagesAction } from './../../store/actions/common.action';
-import { CommonService } from './../../../shared/services/common.service';
+import { CommonService } from '../../../shared/services/common/common.service';
 import {
   isSubmittingSelector,
   validationErrorsSelector,
@@ -59,7 +59,7 @@ export class LoginPageComponent implements OnInit {
     this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
 
     this.commonService.getIP().subscribe((resp) => {
-      this.currentIp = resp.ip;
+      this.currentIp = resp;
     });
   }
 

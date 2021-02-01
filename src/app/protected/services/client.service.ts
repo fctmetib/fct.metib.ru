@@ -9,7 +9,7 @@ import { FactoringInterface } from './../types/factoring.interface';
 
 @Injectable()
 export class ClientService {
-  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
   getFactoring(organizationID: string): Observable<FactoringInterface> {
     const url = environment.apiUrl + `/client/${organizationID}/factoring`;

@@ -1,3 +1,4 @@
+import { CryptoService } from './../shared/services/common/crypto.service';
 import { ResetPasswordEffect } from './store/effects/resetPassword.effect';
 import { ConfirmPasswordPageComponent } from './components/confirm-password-page/confirm-password-page.component';
 import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
@@ -14,7 +15,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 
-import { CommonService } from './../shared/services/common.service';
+import { CommonService } from '../shared/services/common/common.service';
 import { RegisterEffect } from './store/effects/register.effect';
 import { BackendErrorMessagesModule } from './../shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { GetCurrentUserEffect } from './store/effects/getCurrentUser.effect';
@@ -58,6 +59,6 @@ import { AuthRoutingModule } from './auth-routing.module';
     ResetPasswordPageComponent,
     ConfirmPasswordPageComponent
   ],
-  providers: [AuthService, CommonService],
+  providers: [AuthService, CommonService, CryptoService],
 })
 export class AuthModule {}

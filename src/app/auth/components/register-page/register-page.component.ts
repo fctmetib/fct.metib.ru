@@ -9,7 +9,7 @@ import { AuthService } from './../../services/auth.service';
 import { registerAction, registerConfirmAction } from './../../store/actions/register.action';
 import { MaleOptionsInterface } from '../../types/common/maleOptions.interface';
 import { resetMessagesAction } from './../../store/actions/common.action';
-import { CommonService } from './../../../shared/services/common.service';
+import { CommonService } from '../../../shared/services/common/common.service';
 import { RegisterRequestInterface } from '../../types/register/registerRequest.interface';
 import {
   validationErrorsSelector,
