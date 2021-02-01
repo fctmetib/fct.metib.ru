@@ -3,7 +3,6 @@ import { ReportsPageComponent } from './reports-page/reports-page.component';
 import { DocumentsPageComponent } from './documents-page/documents-page.component';
 import { ContractsPageComponent } from './contracts-page/contracts-page.component';
 import { InvoicesPageComponent } from './invoices-page/invoices-page.component';
-import { RequestsPageComponent } from './requests-page/requests-page.component';
 import { CommonModule } from '@angular/common';
 import { CabinetPageComponent } from './cabinet-page/cabinet-page.component';
 import { HeaderComponent } from './../shared/layouts/protected-layout/header/header.component';
@@ -42,7 +41,6 @@ import {AvatarModule} from 'primeng/avatar';
     ProtectedLayoutComponent,
     HeaderComponent,
     CabinetPageComponent,
-    RequestsPageComponent,
     InvoicesPageComponent,
     ContractsPageComponent,
     DocumentsPageComponent,

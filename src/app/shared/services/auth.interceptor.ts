@@ -18,9 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    let crptName = this.cryptoService.encrypt('currentUser');
     let user = JSON.parse(
-      this.cryptoService.decrypt(this.cookieService.get(crptName))
+      this.cryptoService.decrypt(this.cookieService.get('currentUser'))
     ) as AuthResponseInterface;
 
     const token = user.Code;

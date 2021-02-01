@@ -26,10 +26,9 @@ export class LoginEffect {
       switchMap(({ request }) => {
         return this.authService.login(request).pipe(
           map((response: AuthResponseInterface) => {
-            let crptName = this.cryptoService.encrypt('currentUser');
             let crptInfo = this.cryptoService.encrypt(JSON.stringify(response));
 
-            this.cookieService.set(crptName, crptInfo)
+            this.cookieService.set('currentUser', crptInfo)
 
             let currentUserFactoring: CurrentUserFactoringInterface = response;
 

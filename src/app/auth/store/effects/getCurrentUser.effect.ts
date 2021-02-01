@@ -22,9 +22,8 @@ export class GetCurrentUserEffect {
     this.actions$.pipe(
       ofType(getCurrentUserAction),
       switchMap(() => {
-        let crptName = this.cryptoService.encrypt('currentUser');
         let user = JSON.parse(
-          this.cryptoService.decrypt(this.cookieService.get(crptName))
+          this.cryptoService.decrypt(this.cookieService.get('currentUser'))
         ) as AuthResponseInterface;
 
         const token = user.Code;
@@ -41,7 +40,7 @@ export class GetCurrentUserEffect {
         return this.authService.getCurrentUser(userId).pipe(
           map((currentUserResponse: CurrentUserGeneralInterface) => {
             let currentUserFactoring = JSON.parse(
-              this.cryptoService.decrypt(this.cookieService.get(crptName))
+              this.cryptoService.decrypt(this.cookieService.get('currentUser'))
             ) as AuthResponseInterface;
 
             let currentUser: CurrentUserInterface = {

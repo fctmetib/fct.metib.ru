@@ -77,8 +77,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    let crptName = this.cryptoService.encrypt('currentUser');
-    if (this.cookieService.get(crptName)) {
+    if (this.cookieService.get('currentUser')) {
       return true;
     } else {
       return false;
