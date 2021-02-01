@@ -1,39 +1,29 @@
 import { environment } from 'src/environments/environment';
-import {Buffer} from 'buffer/';
-import * as crypto from "crypto-browserify";
-
+import * as CryptoJS from 'crypto-js';
 export class CryptoService {
-  private privateKey: string;
-  private publicKey: string;
-  private enabled: boolean;
+  private KEY: string;
 
   constructor() {
-    this.privateKey = environment.cryptoPrivateKey;
-    this.publicKey = environment.cryptoPublicKey;
-    this.enabled = environment.cryproEnabled;
+    this.KEY = environment.cryptoPrivateKey;
   }
 
-  isEnabled(): boolean {
-    return this.enabled;
+  encrypt(data) {
+    try {
+      return CryptoJS.AES.encrypt(JSON.stringify(data), this.KEY).toString();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  encrypt(plaintext: string): string {
-    if (!this.enabled)
-      return plaintext;
-
-    let buffer = new Buffer(plaintext);
-    let encrypted = crypto.privateEncrypt(this.privateKey, buffer);
-
-    return encrypted.toString('base64');
-  }
-
-  decrypt(cypher: string): string {
-    if (!this.enabled)
-      return cypher;
-
-    let buffer = Buffer.from(cypher, 'base64');
-    let plaintext = crypto.publicDecrypt(this.publicKey, buffer);
-
-    return plaintext.toString('utf8')
+  decrypt(data) {
+    try {
+      const bytes = CryptoJS.AES.decrypt(data, this.KEY);
+      if (bytes.toString()) {
+        return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      }
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
