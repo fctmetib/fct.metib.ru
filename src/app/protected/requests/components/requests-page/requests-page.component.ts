@@ -1,4 +1,11 @@
+import { requestsSelector, errorSelector, isLoadingSelector } from './../../store/selectors';
+import { Observable } from 'rxjs';
+import { RequestsResponseInterface } from './../../types/requestResponse.interface';
+import { Store, select } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { requestsListSelector } from '../../store/selectors';
+import { getRequestsAction } from '../../store/actions/getRequests.action';
 
 @Component({
   selector: 'app-requests-page',
@@ -6,7 +13,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./requests-page.component.scss']
 })
 export class RequestsPageComponent implements OnInit {
-  customers: any[];
+  requests$: Observable<RequestsResponseInterface[] | null>
+  error$: Observable<string | null>
+  isLoading$: Observable<boolean>
+
+
 
   selectedCustomers: any[];
 
@@ -18,9 +29,15 @@ export class RequestsPageComponent implements OnInit {
 
   activityValues: number[] = [0, 100];
 
-  constructor() { }
+  constructor(
+    private store: Store,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.initializeValues()
+    this.fetchFeed()
       // this.customerService.getCustomersLarge().then(customers => {
       //     this.customers = customers;
       //     this.loading = false;
@@ -49,5 +66,21 @@ export class RequestsPageComponent implements OnInit {
           {label: 'Renewal', value: 'renewal'},
           {label: 'Proposal', value: 'proposal'}
       ]
+  }
+
+
+
+  ngOnDestroy(): void {
+
+  }
+
+  initializeValues(): void {
+    this.requests$ = this.store.pipe(select(requestsSelector))
+    this.error$ = this.store.pipe(select(errorSelector))
+    this.isLoading$ = this.store.pipe(select(isLoadingSelector))
+  }
+
+  fetchFeed(): void {
+    this.store.dispatch(getRequestsAction())
   }
 }

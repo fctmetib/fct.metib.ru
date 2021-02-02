@@ -1,9 +1,9 @@
-import { FileModeInterface } from './../../../shared/types/file/file-model.interface';
+import { FileModeInterface } from '../../../shared/types/file/file-model.interface';
 import { DeliveryReferenceInterface } from '../../../shared/types/delivery/delivery-reference.interface';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 import { ClientRequestDocumentInterface } from 'src/app/shared/types/client/client-request-document.interface';
 
-export interface GetRequestsResponseInterface {
+export interface RequestsResponseInterface {
   Number: string;
   Date: Date;
   Delivery: DeliveryReferenceInterface;
