@@ -11,7 +11,9 @@ export class CommonService {
   constructor(private http: HttpClient) {}
 
   getIP(): Observable<string> {
-    return this.http.get<string>('https://jsonip.com')
+    let url = `${environment.apiUrl}/test/ip`;
+    // 'https://jsonip.com'
+    return this.http.get<string>(url)
   }
 
   getCaptcha(): Observable<any> {

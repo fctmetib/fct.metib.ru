@@ -27,7 +27,6 @@ export class LoginEffect {
         return this.authService.login(request).pipe(
           map((response: AuthResponseInterface) => {
             let crptInfo = this.cryptoService.encrypt(JSON.stringify(response));
-
             this.cookieService.set('currentUser', crptInfo)
 
             let currentUserFactoring: CurrentUserFactoringInterface = response;

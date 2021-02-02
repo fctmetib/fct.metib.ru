@@ -1,4 +1,4 @@
-import { AuthResponseInterface } from './../../types/login/authResponse.interface';
+import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
 import { CryptoService } from './../../../shared/services/common/crypto.service';
 import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
 import { Store } from '@ngrx/store';
@@ -22,26 +22,40 @@ export class GetCurrentUserEffect {
     this.actions$.pipe(
       ofType(getCurrentUserAction),
       switchMap(() => {
-        let user = JSON.parse(
-          this.cryptoService.decrypt(this.cookieService.get('currentUser'))
-        ) as AuthResponseInterface;
-
-        const token = user.Code;
-        const userId = +user.UserID;
-
-        if (!token) {
-          return of(getCurrentUserFailureAction());
+        let userCookie = this.cookieService.get('currentUser');
+        let user: AuthResponseInterface;
+        if (userCookie) {
+          user = JSON.parse(
+            this.cryptoService.decrypt(userCookie)
+          ) as AuthResponseInterface;
         }
 
-        if (!userId) {
+        let userId;
+
+        if(user) {
+          const token = user.Code;
+          userId = +user.UserID;
+
+          if (!token) {
+            return of(getCurrentUserFailureAction());
+          }
+
+          if (!userId) {
+            return of(getCurrentUserFailureAction());
+          }
+        } else {
           return of(getCurrentUserFailureAction());
         }
 
         return this.authService.getCurrentUser(userId).pipe(
           map((currentUserResponse: CurrentUserGeneralInterface) => {
-            let currentUserFactoring = JSON.parse(
-              this.cryptoService.decrypt(this.cookieService.get('currentUser'))
-            ) as AuthResponseInterface;
+            let userCookie = this.cookieService.get('currentUser');
+            let currentUserFactoring: AuthResponseInterface;
+            if (userCookie) {
+              currentUserFactoring = JSON.parse(
+                this.cryptoService.decrypt(userCookie)
+              ) as AuthResponseInterface;
+            }
 
             let currentUser: CurrentUserInterface = {
               userGeneral: currentUserResponse,

@@ -1,4 +1,4 @@
-import { RequestsPageComponent } from './requests-page/requests-page.component';
+import { RequestsPageComponent } from './components/requests-page/requests-page.component';
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';

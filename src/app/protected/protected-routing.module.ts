@@ -20,7 +20,7 @@ const routes = [
       },
       {
         path: 'requests',
-        loadChildren: () => import('./requests-module/requests.module').then(m => m.RequestModule),
+        loadChildren: () => import('./requests/requests.module').then(m => m.RequestModule),
       },
       {
         path: 'invoices',
