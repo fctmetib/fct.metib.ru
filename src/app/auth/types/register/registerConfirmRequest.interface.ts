@@ -1,4 +1,3 @@
-export interface RegisterConfirmRequestInterface {
-  ConfirmationCode: string;
-  Pin: string;
-}
+import { ConfirmRequestInterface } from './../../../shared/types/common/confirm-request.interface';
+export interface RegisterConfirmRequestInterface
+  extends ConfirmRequestInterface {}
