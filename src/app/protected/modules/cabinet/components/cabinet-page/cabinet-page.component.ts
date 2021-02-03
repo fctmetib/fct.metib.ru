@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { FactoringInterface } from './../types/factoring.interface';
-import { ClientService } from './../services/client.service';
-import { AuthService } from './../../auth/services/auth.service';
+import { FactoringInterface } from '../../../../types/factoring.interface';
+import { ClientService } from '../../../../services/client.service';
+import { AuthService } from '../../../../../auth/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { currentUserFactoringSelector } from 'src/app/auth/store/selectors';

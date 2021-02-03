@@ -1,15 +1,14 @@
-import { FileModeInterface } from './../../../shared/types/file/file-model.interface';
-import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
-import { ConfirmRequestInterface } from './../../../shared/types/common/confirm-request.interface';
-import { RegisterConfirmRequestInterface } from './../../../auth/types/register/registerConfirmRequest.interface';
-import { ClientRequestSendingInitRequestInterface } from './../../../shared/types/client/client-request-sending-init-request.interface';
-import { ClientRequestInterface } from './../../../shared/types/client/client-request.interface';
-import { ClientRequestStateInterface } from './../../../shared/types/client/client-request-state.interface';
+import { ClientRequestStateInterface } from './../../../../shared/types/client/client-request-state.interface';
+import { ClientRequestSendingInitRequestInterface } from './../../../../shared/types/client/client-request-sending-init-request.interface';
+import { ConfirmRequestInterface } from './../../../../shared/types/common/confirm-request.interface';
+import { ClientRequestInterface } from './../../../../shared/types/client/client-request.interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { RequestsResponseInterface } from '../types/requestResponse.interface';
+import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 
 @Injectable()
 export class RequestsService {

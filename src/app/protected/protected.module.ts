@@ -1,10 +1,5 @@
 import { ClientService } from './services/client.service';
-import { ReportsPageComponent } from './reports-page/reports-page.component';
-import { DocumentsPageComponent } from './documents-page/documents-page.component';
-import { ContractsPageComponent } from './contracts-page/contracts-page.component';
-import { InvoicesPageComponent } from './invoices-page/invoices-page.component';
 import { CommonModule } from '@angular/common';
-import { CabinetPageComponent } from './cabinet-page/cabinet-page.component';
 import { HeaderComponent } from './../shared/layouts/protected-layout/header/header.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
@@ -39,12 +34,7 @@ import {AvatarModule} from 'primeng/avatar';
   ],
   declarations: [
     ProtectedLayoutComponent,
-    HeaderComponent,
-    CabinetPageComponent,
-    InvoicesPageComponent,
-    ContractsPageComponent,
-    DocumentsPageComponent,
-    ReportsPageComponent
+    HeaderComponent
   ],
   providers: [
     ClientService

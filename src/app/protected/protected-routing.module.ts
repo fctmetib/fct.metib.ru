@@ -1,9 +1,4 @@
-import { ReportsPageComponent } from './reports-page/reports-page.component';
-import { DocumentsPageComponent } from './documents-page/documents-page.component';
-import { ContractsPageComponent } from './contracts-page/contracts-page.component';
-import { InvoicesPageComponent } from './invoices-page/invoices-page.component';
 import { AuthGuard } from './../shared/services/auth.guard';
-import { CabinetPageComponent } from './cabinet-page/cabinet-page.component';
 import { ProtectedLayoutComponent } from './../shared/layouts/protected-layout/protected-layout.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -16,27 +11,27 @@ const routes = [
     children: [
       {
         path: 'cabinet',
-        component: CabinetPageComponent,
+        loadChildren: () => import('./modules/cabinet/cabinet.module').then(m => m.CabinetModule),
       },
       {
         path: 'requests',
-        loadChildren: () => import('./requests/requests.module').then(m => m.RequestModule),
+        loadChildren: () => import('./modules/requests/requests.module').then(m => m.RequestModule),
       },
       {
         path: 'invoices',
-        component: InvoicesPageComponent,
+        loadChildren: () => import('./modules/invoices/invoices.module').then(m => m.InvoicesModule),
       },
       {
         path: 'contracts',
-        component: ContractsPageComponent,
+        loadChildren: () => import('./modules/contracts/contracts.module').then(m => m.ContractsModule),
       },
       {
         path: 'documents',
-        component: DocumentsPageComponent,
+        loadChildren: () => import('./modules/documents/documents.module').then(m => m.DocumentsModule),
       },
       {
         path: 'reports',
-        component: ReportsPageComponent,
+        loadChildren: () => import('./modules/reports/reports.module').then(m => m.ReportsModule),
       },
     ],
   },
