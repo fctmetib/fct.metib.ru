@@ -33,6 +33,10 @@ const routes = [
         path: 'reports',
         loadChildren: () => import('./modules/reports/reports.module').then(m => m.ReportsModule),
       },
+      {
+        path: 'demand',
+        loadChildren: () => import('./modules/demand/demand-routing.module').then(m => m.DemandRoutingModule)
+      }
     ],
   },
 ];

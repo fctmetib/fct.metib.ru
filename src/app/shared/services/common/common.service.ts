@@ -1,6 +1,4 @@
 import { environment } from 'src/environments/environment';
-import { IpInterface } from '../../types/common/ip.interface';
-import { map } from 'rxjs/operators';
 
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';

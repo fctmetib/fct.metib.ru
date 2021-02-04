@@ -1,3 +1,4 @@
+import { ClientService } from './services/client.service';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
@@ -39,6 +40,6 @@ import { CabinetPageComponent } from './components/cabinet-page/cabinet-page.com
     CabinetRoutingModule,
   ],
   declarations: [CabinetPageComponent],
-  providers: [],
+  providers: [ClientService],
 })
 export class CabinetModule {}

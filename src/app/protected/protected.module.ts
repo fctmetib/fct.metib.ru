@@ -1,4 +1,4 @@
-import { ClientService } from './services/client.service';
+
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './../shared/layouts/protected-layout/header/header.component';
 import { DropdownModule } from 'primeng/dropdown';
@@ -37,7 +37,6 @@ import {AvatarModule} from 'primeng/avatar';
     HeaderComponent
   ],
   providers: [
-    ClientService
   ]
 })
 export class ProtectedModule { }

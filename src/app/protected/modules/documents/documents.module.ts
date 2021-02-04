@@ -1,3 +1,4 @@
+import { DocumentsService } from './services/documents.service';
 import { DocumentsRoutingModule } from './documents-routing.module';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
@@ -39,6 +40,6 @@ import { DocumentsPageComponent } from './components/documents-page/documents-pa
     DocumentsRoutingModule,
   ],
   declarations: [DocumentsPageComponent],
-  providers: [],
+  providers: [DocumentsService],
 })
 export class DocumentsModule {}

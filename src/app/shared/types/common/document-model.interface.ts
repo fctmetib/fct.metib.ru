@@ -1,6 +1,6 @@
 import { DocumentCardInterface } from './document-card.interface';
 
-export interface DocumentInterface {
+export interface DocumentModelInterface {
   ID: number;
   Card: DocumentCardInterface;
   Code: string;

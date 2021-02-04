@@ -1,4 +1,4 @@
-import { DocumentInterface } from './document.interface';
+import { DocumentModelInterface } from './document-model.interface';
 
 export interface RequestSendInterface {
   ID: number;
@@ -7,5 +7,5 @@ export interface RequestSendInterface {
   Summ: number;
   Debtor: string;
   Delivery: string;
-  Documents: DocumentInterface[]
+  Documents: DocumentModelInterface[]
 }

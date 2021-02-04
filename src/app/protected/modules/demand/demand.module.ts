@@ -1,5 +1,6 @@
-import { ReportService } from './services/report.service';
-import { ReportsRoutingModule } from './reports-routing.module';
+import { DemandService } from './services/demand.service';
+import { DemandRoutingModule } from './demand-routing.module';
+import { DemandPageComponent } from './components/demand-page/demand-page.component';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
@@ -17,7 +18,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
-import { ReportsPageComponent } from './components/reports-page/reports-page.component';
 
 @NgModule({
   imports: [
@@ -33,13 +33,13 @@ import { ReportsPageComponent } from './components/reports-page/reports-page.com
     FormsModule,
     ProgressBarModule,
     MultiSelectModule,
-    ReportsRoutingModule,
+    DemandRoutingModule,
     ReactiveFormsModule,
     CardModule,
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [ReportsPageComponent],
-  providers: [ReportService],
+  declarations: [DemandPageComponent],
+  providers: [DemandService],
 })
-export class ReportsModule {}
+export class DemandModule {}
