@@ -1,9 +1,8 @@
-<p-card class="card">
-  <h1>ООО "Первое решение"</h1>
-  <p><span>ИНН: 7701298966 КПП: 770101001</span> <span>Договор Факторинга: 96/02-2007 от 06.11.2018</span></p>
-  <button pButton label="Выйти" (click)="logout()" ></button>
+<div class="card-content">
   <p-progressSpinner *ngIf="(loading$ | async); else content"></p-progressSpinner>
   <ng-template #content>
     <app-factoring [factoringUser]="(currentUserFactoring$ | async)"></app-factoring>
   </ng-template>
-</p-card>
+
+  <button pButton label="Выйти" (click)="logout()"></button>
+</div>

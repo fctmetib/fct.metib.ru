@@ -13,10 +13,10 @@
     </div>
     <div class="header-block manager-info">
       <div class="manager-info-name">
-        Адиенко Наталья (53-71)
+        [InProgress] Адиенко Наталья (53-71)
       </div>
       <div class="manager-info-email">
-        mann@metib.ru
+        [InProgress] mann@metib.ru
       </div>
     </div>
     <div class="header-block manager-ava">
@@ -31,7 +31,7 @@
         {{(currentUserFactoring$ | async)?.Name}}
       </div>
       <div class="account-info-email">
-        mann@metib.ru
+        {{(currentUser$ | async)?.Profile.Email}}
       </div>
     </div>
   </div>

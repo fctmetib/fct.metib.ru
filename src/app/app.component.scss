@@ -1,12 +1,1 @@
 @import '/src/styles/colors.scss';
-
-:host ::ng-deep .p-card {
-  background: url('../assets/images/mib_logo_background.png') no-repeat center center, $grey-color;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  border-radius: 10px;
-  padding: 34px;
-  box-shadow: none;
-}
