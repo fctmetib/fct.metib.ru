@@ -9,8 +9,8 @@ import { Injectable } from '@angular/core';
 export class ClientService {
   constructor(private http: HttpClient) {}
 
-  getClientFactoringById(id: number): Observable<CustomerInterface> {
-    const url = `${environment.apiUrl}/client/${id}/factoring`;
+  getClientFactoringById(organizationID: number): Observable<CustomerInterface> {
+    const url = `${environment.apiUrl}/client/${organizationID}/factoring`;
     return this.http.get<CustomerInterface>(url);
   }
 

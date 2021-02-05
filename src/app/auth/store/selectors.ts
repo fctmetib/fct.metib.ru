@@ -47,3 +47,8 @@ export const successMessageSelector = createSelector(
   authFeatureSelector,
   (authState: AuthStateInterface) => authState.successMessage
 )
+
+export const isLoadingSelector = createSelector(
+  authFeatureSelector,
+  (authState: AuthStateInterface) => authState.isLoading
+)

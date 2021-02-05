@@ -1,4 +1,5 @@
-import { ClientService } from './services/client.service';
+import { FactoringComponent } from './components/cabinet-page/factoring/factoring.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
@@ -18,6 +19,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { CabinetRoutingModule } from './cabinet-routing.module';
 import { CabinetPageComponent } from './components/cabinet-page/cabinet-page.component';
+import { ClientService } from 'src/app/shared/services/common/client.service';
 
 @NgModule({
   imports: [
@@ -34,12 +36,13 @@ import { CabinetPageComponent } from './components/cabinet-page/cabinet-page.com
     ProgressBarModule,
     MultiSelectModule,
     ReactiveFormsModule,
+    ProgressSpinnerModule,
     CardModule,
     MenubarModule,
     AvatarModule,
     CabinetRoutingModule,
   ],
-  declarations: [CabinetPageComponent],
+  declarations: [CabinetPageComponent, FactoringComponent],
   providers: [ClientService],
 })
 export class CabinetModule {}

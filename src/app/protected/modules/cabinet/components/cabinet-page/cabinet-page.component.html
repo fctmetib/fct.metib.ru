@@ -1,23 +1,8 @@
 <p-card>
   <h2>Факторинг</h2>
   <button pButton label="Выйти" (click)="logout()" ></button>
-  <div class="p-grid">
-    <div class="p-col">
-      <h4>Ваш персональный менеджер</h4>
-      <p-avatar icon="pi pi-user" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
-
-      <p>{{factoring?.Manager?.Name}} {{factoring?.Manager?.Extension}}</p>
-      <p>{{factoring?.Manager?.Email}}</p>
-    </div>
-    <div class="p-col">
-      <h4>Договор Факторинга</h4>
-      <p>{{factoring?.Contract?.Number}} от {{factoring?.Contract?.Date | date:'short'}}</p>
-    </div>
-  </div>
-  <div class="p-grid">
-    <div class="p-col">
-      <h5>Лимит</h5>
-      <p>{{factoring?.Limit}}</p>
-    </div>
-  </div>
+  <p-progressSpinner *ngIf="(loading$ | async); else content"></p-progressSpinner>
+  <ng-template #content>
+    <app-factoring [factoringUser]="(currentUserFactoring$ | async)"></app-factoring>
+  </ng-template>
 </p-card>
