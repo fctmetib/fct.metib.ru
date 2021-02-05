@@ -1,9 +1,38 @@
-<p-menubar [model]="items">
+<!-- <p-menubar [model]="items">
   <ng-template pTemplate="start">
-      <img src="../../../../../assets/images/logo_big.png" height="40" class="p-mr-2">
-  </ng-template>
+ </ng-template>
   <ng-template pTemplate="end">
     <p-avatar icon="pi pi-user" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
     {{(currentUserFactoring$ | async)?.Name}}
   </ng-template>
-</p-menubar>
+</p-menubar> -->
+<div class="header">
+  <div class="manager">
+    <div class="header-block manager-greatings">
+      Ваш менеджер:
+    </div>
+    <div class="header-block manager-info">
+      <div class="manager-info-name">
+        Адиенко Наталья (53-71)
+      </div>
+      <div class="manager-info-email">
+        mann@metib.ru
+      </div>
+    </div>
+    <div class="header-block manager-ava">
+    </div>
+  </div>
+  <div class="account">
+    <div class="header-block account-ava">
+      <img src="/assets/images/mib_ava.png" alt="">
+    </div>
+    <div class="header-block account-owner">
+      <div class="account-info-name">
+        {{(currentUserFactoring$ | async)?.Name}}
+      </div>
+      <div class="account-info-email">
+        mann@metib.ru
+      </div>
+    </div>
+  </div>
+</div>

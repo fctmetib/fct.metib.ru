@@ -1,3 +1,4 @@
+import { MenuItem } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,5 +9,45 @@ import { Component, OnInit } from '@angular/core';
 export class ProtectedLayoutComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {}
+  items: MenuItem[];
+
+  ngOnInit() {
+    this.items = [
+      {
+        label: 'Кабинет',
+        routerLink: 'cabinet',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
+        label: 'Запросы',
+        routerLink: 'requests',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
+        label: 'Платежи',
+        routerLink: 'invoices',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
+        label: 'Договоры',
+        routerLink: 'contracts',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
+        label: 'Документы',
+        routerLink: 'documents',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
+        label: 'Отчеты',
+        routerLink: 'reports',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
+        label: 'Заявки',
+        routerLink: '/',
+        routerLinkActiveOptions: { exact: true }
+      },
+    ];
+  }
 }

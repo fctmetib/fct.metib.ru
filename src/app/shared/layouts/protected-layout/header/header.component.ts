@@ -8,7 +8,7 @@ import { CurrentUserFactoringInterface } from '../../../types/currentUserFactori
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
   items: MenuItem[];
@@ -18,43 +18,5 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
-
-    this.items = [
-      {
-        label: 'Кабинет',
-        routerLink: 'cabinet',
-        routerLinkActiveOptions: { exact: true }
-      },
-      {
-        label: 'Запросы',
-        routerLink: 'requests',
-        routerLinkActiveOptions: { exact: true }
-      },
-      {
-        label: 'Платежи',
-        routerLink: 'invoices',
-        routerLinkActiveOptions: { exact: true }
-      },
-      {
-        label: 'Договоры',
-        routerLink: 'contracts',
-        routerLinkActiveOptions: { exact: true }
-      },
-      {
-        label: 'Документы',
-        routerLink: 'documents',
-        routerLinkActiveOptions: { exact: true }
-      },
-      {
-        label: 'Отчеты',
-        routerLink: 'reports',
-        routerLinkActiveOptions: { exact: true }
-      },
-      {
-        label: 'Заявки',
-        routerLink: '/',
-        routerLinkActiveOptions: { exact: true }
-      },
-    ];
   }
 }

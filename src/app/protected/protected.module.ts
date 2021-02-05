@@ -13,6 +13,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
+import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { AvatarModule } from 'primeng/avatar';
     RadioButtonModule,
     InputTextareaModule,
     DropdownModule,
+    MenuModule,
     FormsModule,
     ProtectedRoutingModule,
     ReactiveFormsModule,

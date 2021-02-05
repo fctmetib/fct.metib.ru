@@ -1,4 +1,34 @@
-.main {
-  margin-top: 20px;
-  width: 960px;
+main {
+  display: flex;
+  height: calc(100vh - 70px);
+
+  .page {
+    width: 100%;
+
+    .container {
+      margin-top: 10px;
+      display: flex;
+      height: calc(100vh - 70px);
+
+      .main-body {
+        width: 100%;
+      }
+    }
+  }
+
+  aside {
+    width: 350px;
+    padding-top: 28px;
+    padding-left: 44px;
+
+    .menu {
+      margin-top: 50px;
+
+    }
+  }
 }
+
+
+
+
+

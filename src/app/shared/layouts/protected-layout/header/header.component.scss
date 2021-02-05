@@ -1,0 +1,62 @@
+@import '/src/styles/colors.scss';
+
+.header {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 9px;
+  padding-right: 10px;
+
+  .manager {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .account {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-block {
+    height: 70px;
+    padding: 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+    &.manager-greatings {
+      color: $white-color;
+      background-color: $main-color;
+    }
+    &.manager-info {
+      border: 1px solid #ECECEC;
+      align-items: flex-start;
+    }
+    &.manager-ava {
+      width: 70px;
+      background: #C4C4C4;
+    }
+
+    &.account-ava {
+      width: 70px;
+      background: $main-color;
+      img {
+        width: 40px;
+        height: 40px;
+
+      }
+    }
+    &.account-owner {
+      align-items: flex-end;
+      border: 1px solid #ECECEC;
+    }
+  }
+}
