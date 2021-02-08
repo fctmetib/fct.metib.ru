@@ -1,25 +1,67 @@
 @import '/src/styles/colors.scss';
 
-* {
+body {
   margin: 0;
   font-family: Ubuntu;
   font-style: normal;
   font-weight: normal;
   color: #000000;
-
 }
 
-.p-menuitem-link-active {
-  background-color: #26b5fd24;
-}
 
 .card-content {
-  background: url('/src/assets/images/mib_logo_background.png') no-repeat center center, $grey-color;
+  background: url('/assets/images/mib_logo_background.png') no-repeat center center, $grey-color;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   border-radius: 10px;
+  margin-bottom: 10px;
   padding: 50px;
   box-shadow: none;
+
+  .header {
+    &.lg {
+      margin-bottom: 48px;
+    }
+
+    h2 {
+      margin-top: 0px;
+      margin-bottom: 10px;
+    }
+
+    .subheader {
+      color: $description-color;
+      &.info {
+        margin-top: 9px;
+        display: flex;
+        color: #102538;
+      }
+    }
+  }
+}
+
+.display-1 {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 41px;
+  margin: 0px;
+}
+
+
+.p-menu {
+  border: unset !important;
+}
+
+.p-menu .p-menuitem-link:not(.p-disabled):hover {
+  background: transparent !important;
+  color: #26b5fd24 !important;
+  font-weight: bold !important;
+}
+
+.p-menuitem-link-active {
+  color: #26b5fd24;
+  font-weight: bold;
 }

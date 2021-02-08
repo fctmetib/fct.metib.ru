@@ -1,36 +1,50 @@
-<div class="p-grid">
-  <div class="p-col">
-    <h1>{{factoring.Title}}</h1>
-    <p>
-      <span>ИНН: {{factoring.Organization.Inn}} КПП: {{factoring.Organization.Inn}}</span>
-      <span> Договор Факторинга: {{factoring.Contract.Number}} от {{factoring.Contract.Date}}</span>
-    </p>
+<div class="header lg">
+  <h1 class="display-1">{{factoring?.Title}}</h1>
+  <div class="subheader info">
+    <div class="organization">ИНН: {{factoring?.Organization.Inn}} КПП: {{factoring?.Organization.Inn}}</div>
+    <div class="contract"> Договор Факторинга: {{factoring?.Contract.Number}} от {{factoring?.Contract.Date}}</div>
   </div>
 </div>
 
 <div class="p-grid">
   <div class="p-col">
     <div class="card-info">
-      {{factoring.Limit}}
-      Лимит
+      <div class="header">
+        {{factoring?.Limit}}
+      </div>
+      <div class="content">
+        Лимит
+      </div>
     </div>
   </div>
   <div class="p-col">
     <div class="card-info">
-      [InProgress] 500 000 000,00₽
-      Лимит
+      <div class="header">
+        [InProgress] 500 000 000,00₽
+      </div>
+      <div class="content">
+        Уступлено
+      </div>
     </div>
   </div>
   <div class="p-col">
     <div class="card-info">
-      [InProgress] 500 000 000,00₽
-      Лимит
+      <div class="header">
+        [InProgress] 500 000 000,00₽
+      </div>
+      <div class="content">
+        Просрочка
+      </div>
     </div>
   </div>
   <div class="p-col">
     <div class="card-info">
-      [InProgress] 500 000 000,00₽
-      Лимит
+      <div class="header">
+        [InProgress] 500 000 000,00₽
+      </div>
+      <div class="content">
+        Свободный лимит
+      </div>
     </div>
   </div>
 </div>
