@@ -1,3 +1,5 @@
+import { CabinetModule } from './modules/cabinet/cabinet.module';
+
 import { GetFactoringEffect } from './store/effects/getFactoring.effect';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -18,8 +20,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
-import { reducers } from '../auth/store/reducers';
 import { ClientService } from '../shared/services/common/client.service';
+import { reducers } from './store/reducers';
 @NgModule({
   imports: [
     CommonModule,
@@ -28,12 +30,10 @@ import { ClientService } from '../shared/services/common/client.service';
     ButtonModule,
     RadioButtonModule,
     InputTextareaModule,
+    EffectsModule.forFeature([GetFactoringEffect]),
+    StoreModule.forFeature('client', reducers),
     DropdownModule,
     MenuModule,
-    StoreModule.forFeature('client', reducers),
-    EffectsModule.forFeature([
-      GetFactoringEffect,
-    ]),
     FormsModule,
     ClientRoutingModule,
     ReactiveFormsModule,

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { CustomerInterface } from './../../../shared/types/customer/customer.interface';
 import {
   getFactoringFailureAction,
@@ -23,7 +24,7 @@ export class GetFactoringEffect {
             return getFactoringSuccessAction({ factoring });
           }),
 
-          catchError(() => {
+          catchError((errorResponse: HttpErrorResponse) => {
             return of(getFactoringFailureAction());
           })
         );

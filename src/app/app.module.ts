@@ -1,3 +1,5 @@
+import { ClientModule } from './client/client.module';
+
 import { AuthInterceptor } from './shared/services/auth.interceptor';
 import { AuthModule } from './auth/auth.module';
 import { environment } from './../environments/environment.prod';
@@ -26,7 +28,6 @@ import { CookieService } from 'ngx-cookie-service';
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    AuthModule,
     StoreModule.forRoot({router: routerReducer}),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
@@ -34,6 +35,8 @@ import { CookieService } from 'ngx-cookie-service';
       logOnly: environment.production
     }),
     EffectsModule.forRoot([]),
+    ClientModule,
+    AuthModule,
   ],
   providers: [
     CookieService,

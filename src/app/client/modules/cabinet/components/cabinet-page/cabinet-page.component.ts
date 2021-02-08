@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { FactoringInterface } from '../../../../types/factoring.interface';
 import { AuthService } from '../../../../../auth/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
@@ -16,10 +15,7 @@ export class CabinetPageComponent implements OnInit {
   public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
   public loading$: Observable<boolean | null>;
 
-  factoring: FactoringInterface;
-
   constructor(
-    private clientService: ClientService,
     private authSerice: AuthService,
     private store: Store
   ) {}

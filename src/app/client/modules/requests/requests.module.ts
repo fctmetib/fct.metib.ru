@@ -21,7 +21,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
-import { reducers } from 'src/app/auth/store/reducers';
+import { reducers } from './store/reducers';
 
 @NgModule({
   imports: [

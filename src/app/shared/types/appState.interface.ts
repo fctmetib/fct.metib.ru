@@ -4,7 +4,7 @@ import { RequestsStateInterface } from 'src/app/client/modules/requests/types/re
 import { ClientStateInterface } from 'src/app/client/types/clientState.interface';
 
 export interface AppStateInterface {
+  client: ClientStateInterface;
   auth: AuthStateInterface;
   requests: RequestsStateInterface;
-  client: ClientStateInterface;
 }

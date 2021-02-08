@@ -13,10 +13,10 @@
     </div>
     <div class="header-block manager-info">
       <div class="manager-info-name">
-        [InProgress] Адиенко Наталья (53-71)
+        {{(factoring$ | async)?.Manager?.Name}}  ({{(factoring$ | async)?.Manager?.Extension}})
       </div>
       <div class="manager-info-email">
-        [InProgress] mann@metib.ru
+        {{(factoring$ | async)?.Manager?.Email}}
       </div>
     </div>
     <div class="header-block manager-ava">
