@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./protected/protected.module').then(m => m.ProtectedModule)
+    loadChildren: () => import('./client/client.module').then(m => m.ClientModule)
   },
 ];
 @NgModule({

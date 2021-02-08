@@ -1,12 +1,12 @@
 import { AuthGuard } from './../shared/services/auth.guard';
-import { ProtectedLayoutComponent } from './../shared/layouts/protected-layout/protected-layout.component';
+import { ClientLayoutComponent } from '../shared/layouts/client-layout/client-layout.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 const routes = [
   {
     path: '',
-    component: ProtectedLayoutComponent,
+    component: ClientLayoutComponent,
     canActivate: [AuthGuard],
     children: [
       {
@@ -45,4 +45,4 @@ const routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ProtectedRoutingModule {}
+export class ClientRoutingModule {}
