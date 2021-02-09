@@ -18,41 +18,62 @@
       </ng-template> -->
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="ID">ID <p-sortIcon field="ID"></p-sortIcon></th>
-          <th pSortableColumn="Delivery.Title">Договор <p-sortIcon field="Delivery.Title"></p-sortIcon></th>
-          <th>Номер</th>
-          <th>Дата</th>
-          <th>Тип</th>
-          <th>Дата Отправки</th>
-          <th>Состояние</th>
-          <th>Покупатель</th>
+          <th pSortableColumn="ID">
+            <div class="m-th">
+              ID <p-sortIcon field="ID"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="Delivery.Title">
+            <div class="m-th">Договор <p-sortIcon field="Delivery.Title"></p-sortIcon>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">Номер</div>
+          </th>
+          <th>
+            <div class="m-th">Дата</div>
+          </th>
+          <th>
+            <div class="m-th">Тип</div>
+          </th>
+          <th>
+            <div class="m-th">Дата Отправки</div>
+          </th>
+          <th>
+            <div class="m-th">Состояние</div>
+          </th>
+          <th>
+            <div class="m-th">Покупатель</div>
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-request>
         <tr>
+          <div class="m-td">
+            <td>
+              {{request.ID}}
+            </td>
+          </div>
           <td>
-            {{request.ID}}
+            <div class="m-td">{{request.Delivery.Title}}</div>
           </td>
           <td>
-            {{request.Delivery.Title}}
+            <div class="m-td"> {{request.Number}}</div>
           </td>
           <td>
-            {{request.Number}}
+            <div class="m-td"> {{request.Date | date: 'short'}}</div>
           </td>
           <td>
-            {{request.Date | date: 'short'}}
+            <div class="m-td"> {{request.Type}}</div>
           </td>
           <td>
-            {{request.Type}}
+            <div class="m-td"> {{request.Date | date: 'short'}}</div>
           </td>
           <td>
-            {{request.Date | date: 'short'}}
+            <div class="m-td"> {{request.Status}}</div>
           </td>
           <td>
-            {{request.Status}}
-          </td>
-          <td>
-            {{request.Delivery.Customer}}
+            <div class="m-td"> {{request.Delivery.Customer}}</div>
           </td>
         </tr>
       </ng-template>
