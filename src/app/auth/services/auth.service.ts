@@ -77,7 +77,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    if (this.cookieService.get('currentUser')) {
+    if (this.cookieService.get('_cu')) {
       return true;
     } else {
       return false;

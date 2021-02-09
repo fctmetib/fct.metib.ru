@@ -23,7 +23,7 @@ export class GetCurrentUserEffect {
     this.actions$.pipe(
       ofType(getCurrentUserAction),
       switchMap(() => {
-        let userCookie = this.cookieService.get('currentUser');
+        let userCookie = this.cookieService.get('_cu');
         let user: AuthResponseInterface;
         if (userCookie) {
           user = JSON.parse(
@@ -50,7 +50,7 @@ export class GetCurrentUserEffect {
 
         return this.authService.getCurrentUser(userId).pipe(
           map((currentUserResponse: CurrentUserGeneralInterface) => {
-            let userCookie = this.cookieService.get('currentUser');
+            let userCookie = this.cookieService.get('_cu');
             let currentUserFactoring: AuthResponseInterface;
             if (userCookie) {
               currentUserFactoring = JSON.parse(

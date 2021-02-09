@@ -21,7 +21,9 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    let userCookie = this.cookieService.get('currentUser');
+    let userCookie = this.cookieService.get('_cu');
+    let bt = this.cookieService.get('_bt');
+
     let user: AuthResponseInterface;
     let token;
     if (userCookie) {
@@ -33,7 +35,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
     request = request.clone({
       setHeaders: {
-        Authorization: token ? `Token ${token}` : '',
+       //Authorization: token ? `Token ${token}` : '',
+        Authorization: bt ? `Basic ${bt}` : ''
       },
     });
 
