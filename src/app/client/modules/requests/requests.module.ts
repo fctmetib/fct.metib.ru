@@ -1,3 +1,4 @@
+import { RequestCreateDialogComponent } from './components/request-create-dialog/request-create-dialog.component';
 import { RequestsService } from './services/requests.service';
 import { GetRequestsEffect } from './store/effects/getRequests.effect';
 import { StoreModule } from '@ngrx/store';
@@ -22,7 +23,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { reducers } from './store/reducers';
-
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 @NgModule({
   imports: [
     CommonModule,
@@ -30,6 +31,7 @@ import { reducers } from './store/reducers';
     CheckboxModule,
     ButtonModule,
     RadioButtonModule,
+    DynamicDialogModule,
     InputTextareaModule,
     SliderModule,
     TableModule,
@@ -45,7 +47,13 @@ import { reducers } from './store/reducers';
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [RequestsPageComponent],
-  providers: [RequestsService],
+  declarations: [
+    RequestsPageComponent,
+    RequestCreateDialogComponent
+  ],
+  providers: [
+    DialogService,
+    RequestsService
+  ],
 })
 export class RequestModule {}

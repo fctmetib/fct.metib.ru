@@ -1,10 +1,17 @@
 <div class="header lg">
+<div class="title">
   <h1 class="display-1">{{(factoring$ | async)?.Title}}</h1>
   <div class="subheader info">
     <div class="organization">ИНН:  {{(factoring$ | async)?.Organization.Inn}} КПП:  [InProgress]</div>
     <div class="contract"> Договор Факторинга:  {{(factoring$ | async)?.Contract.Number}} от  {{(factoring$ | async)?.Contract.Date}}</div>
   </div>
 </div>
+<div class="actions">
+
+</div>
+
+</div>
+
 
 <div class="p-grid">
   <div class="p-col">

@@ -1,6 +1,4 @@
 import { RequestsService } from './../../services/requests.service';
-import { SuccessMessagesModule } from './../../../../shared/modules/successMessages/successMessages.module';
-import { BackendErrorMessagesModule } from './../../../../shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { RequestsRoutingModule } from './../../requests-routing.module';
 import { RequestsPageComponent } from './requests-page.component';
 import { InputMaskModule } from 'primeng/inputmask';
@@ -19,6 +17,8 @@ import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { reducers } from '../../store/reducers';
+import { BackendErrorMessagesModule } from 'src/app/shared/modules/backendErrorMessages/backendErrorMessages.module';
+import { SuccessMessagesModule } from 'src/app/shared/modules/successMessages/successMessages.module';
 
 describe('RequestsPageComponent', () => {
   let component: RequestsPageComponent;

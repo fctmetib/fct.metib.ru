@@ -19,7 +19,7 @@ export class ClientLayoutComponent implements OnInit {
         routerLinkActiveOptions: { exact: true }
       },
       {
-        label: 'Запросы',
+        label: 'Заявки',
         routerLink: 'requests',
         routerLinkActiveOptions: { exact: true }
       },
@@ -44,8 +44,8 @@ export class ClientLayoutComponent implements OnInit {
         routerLinkActiveOptions: { exact: true }
       },
       {
-        label: 'Заявки',
-        routerLink: '/',
+        label: 'Запросы',
+        routerLink: 'demand',
         routerLinkActiveOptions: { exact: true }
       },
     ];

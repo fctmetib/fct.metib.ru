@@ -21,8 +21,18 @@ body {
   box-shadow: none;
 
   .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     &.lg {
       margin-bottom: 48px;
+    }
+
+    .actions>button {
+      background-color: $main-color;
+      border-radius: 10px;
+      padding: 20px;
     }
 
     h2 {
@@ -42,6 +52,14 @@ body {
   }
 }
 
+input {
+  border-radius: 10px !important;
+}
+
+.btn-mib-submit {
+  width: 100%;
+}
+
 .display-1 {
   font-family: Ubuntu;
   font-style: normal;
@@ -50,7 +68,6 @@ body {
   line-height: 41px;
   margin: 0px;
 }
-
 
 .p-menu {
   border: unset !important;
@@ -75,6 +92,7 @@ body {
   width: 100%;
   height: 90px;
   padding: 1rem 1rem;
+  overflow: hidden;
   border: 1px solid #e2e2e2;
   box-sizing: border-box;
   border-radius: 10px;
@@ -91,43 +109,37 @@ body {
   border-radius: 10px;
 }
 
-.p-datatable .p-datatable-thead>tr>th {
-  // outline:  #0C83F1 auto 1px;
-  // -webkit-outline-radius: 10px;
-  // -moz-outline-radius: 10px;
-
-  /* border-radius */
-  // -webkit-border-radius: 10px;
-  // -moz-border-radius: 10px;
-  // border-radius: 10px;
-  // // border: 1px solid #0C83F1 !important;
-  // /* box-shadow */
-  // -webkit-box-shadow: #0074e0 0px 0 2px;
-  // -moz-box-shadow: #0074e0 0 0 2px;
-  // box-shadow: #0074e0 0 0 2px;
-}
-.p-datatable .p-datatable-tbody > tr > td {
-  /* border-radius */
-  // -webkit-border-radius: 10px;
-  // -moz-border-radius: 10px;
-  // border-radius: 10px;
-  // // border: 1px solid #0C83F1 !important;
-  // /* box-shadow */
-  // -webkit-box-shadow: #b4b4b4 0px 0 2px;
-  // -moz-box-shadow: #b4b4b4 0 0 2px;
-  // box-shadow: #b4b4b4 0 0 2px;
-}
-
 .p-paginator {
   background: transparent !important;
 }
 
-.p-datatable .p-datatable-tbody > tr > td {
+.p-datatable .p-datatable-tbody>tr>td {
   border: unset !important;
   padding: unset !important;
 }
 
-.p-datatable .p-datatable-thead > tr > th {
+.p-datatable .p-datatable-thead>tr>th {
+  background: transparent !important;
   border: unset !important;
   padding: unset !important;
+}
+
+.p-dialog-header {
+  position: relative !important;
+  justify-content: center !important;
+
+
+}
+
+.p-dialog .p-dialog-header .p-dialog-title {
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 14px !important;
+  line-height: 16px !important;
+  color: #102538 !important;
+}
+
+.p-dialog .p-dialog-header-icons {
+  position: absolute !important;
+  right: 1.5rem !important;
 }

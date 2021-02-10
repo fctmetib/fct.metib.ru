@@ -26,13 +26,18 @@
     <div class="header-block account-ava">
       <img src="/assets/images/mib_ava.png" alt="">
     </div>
-    <div class="header-block account-owner">
+    <div class="header-block account-owner" (click)="openAccountOwner()" >
       <div class="account-info-name">
         {{(currentUserFactoring$ | async)?.Name}}
       </div>
       <div class="account-info-email">
         {{(currentUser$ | async)?.Profile.Email}}
       </div>
+    </div>
+    <div id="myDropdown" class="dropdown-content">
+      <a href="#">Справка</a>
+      <a href="#">Сменить Пароль</a>
+      <a href="#" (click)="logout()" >Выйти</a>
     </div>
   </div>
 </div>
