@@ -33,8 +33,8 @@
 
 
     &.manager-greatings {
-      color: $white-color;
-      background-color: $main-color;
+      color: $white;
+      background-color: $main;
     }
 
     &.manager-info {
@@ -45,16 +45,22 @@
     &.manager-ava {
       width: 70px;
       background: #C4C4C4;
+      padding: 0px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
 
     &.account-ava {
       width: 70px;
-      background: $main-color;
+      background: $main;
 
       img {
         width: 40px;
         height: 40px;
-
       }
     }
 

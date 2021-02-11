@@ -1,3 +1,5 @@
+import { environment } from './../../../../../environments/environment';
+
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CustomerInterface } from './../../../types/customer/customer.interface';
 import { Store, select } from '@ngrx/store';
@@ -16,7 +18,10 @@ import { factoringSelector } from 'src/app/client/store/selectors';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+
   items: MenuItem[];
+  baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
+
   public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
   public currentUser$: Observable<CurrentUserGeneralInterface | null>;
   public factoring$: Observable<CustomerInterface | null>;

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { getFactoringAction } from './client/store/actions/getFactoring.action';
 import { currentUserFactoringSelector } from './auth/store/selectors';
-
+import * as introJs from 'intro.js/intro.js';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

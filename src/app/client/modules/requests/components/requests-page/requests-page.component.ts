@@ -18,7 +18,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
   templateUrl: './requests-page.component.html',
   styleUrls: ['./requests-page.component.scss'],
 })
-export class RequestsPageComponent implements OnInit, OnDestroy  {
+export class RequestsPageComponent implements OnInit, OnDestroy {
   requests$: Observable<RequestsResponseInterface[] | null>;
   error$: Observable<string | null>;
   isLoading$: Observable<boolean>;
@@ -26,6 +26,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy  {
   displayModal: boolean;
   loading: boolean = true;
   ref: DynamicDialogRef;
+
+  selectedItems: RequestsResponseInterface[];
 
   constructor(
     private store: Store,
@@ -60,13 +62,25 @@ export class RequestsPageComponent implements OnInit, OnDestroy  {
     });
 
     this.ref.onClose.subscribe((data: any) => {
-      console.log('closed')
+      console.log('closed');
     });
   }
 
   OnDestroy() {
     if (this.ref) {
-        this.ref.close();
+      this.ref.close();
     }
-}
+  }
+
+  selectProduct(item: any) {
+    console.log(item);
+  }
+
+  onRowSelect(event) {
+    console.log(event.data);
+  }
+
+  onRowUnselect(event) {
+    console.log(event.data);
+  }
 }

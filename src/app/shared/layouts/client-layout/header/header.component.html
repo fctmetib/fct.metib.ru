@@ -20,6 +20,7 @@
       </div>
     </div>
     <div class="header-block manager-ava">
+      <img src="{{baseAvatarUrl}}/{{(factoring$ | async)?.Manager?.Avatar}}" alt="">
     </div>
   </div>
   <div class="account">
@@ -35,8 +36,8 @@
       </div>
     </div>
     <div id="myDropdown" class="dropdown-content">
-      <a href="#">Справка</a>
-      <a href="#">Сменить Пароль</a>
+      <a>Справка</a>
+      <a>Сменить Пароль</a>
       <a href="#" (click)="logout()" >Выйти</a>
     </div>
   </div>
