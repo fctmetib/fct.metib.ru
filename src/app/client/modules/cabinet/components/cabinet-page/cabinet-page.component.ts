@@ -9,8 +9,7 @@ import {
 } from 'src/app/auth/store/selectors';
 
 import * as introJs from 'intro.js/intro.js';
-// import IntroJS
-// import { IntroJs } from 'intro.js/intro';
+
 @Component({
   selector: 'app-cabinet-page',
   templateUrl: './cabinet-page.component.html',
@@ -51,7 +50,7 @@ export class CabinetPageComponent implements OnInit {
         // {
         //   element: '#step2',
         //   intro:
-        //     'Most people live way too long in the past. The past is a springboard to jump forward from, not a sofa to relax on',
+        //     'Воспользуйтесь...',
         //   position: 'bottom',
         // },
       ],

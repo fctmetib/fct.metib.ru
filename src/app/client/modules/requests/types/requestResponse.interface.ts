@@ -13,5 +13,5 @@ export interface RequestsResponseInterface {
   Shipments: ClientShipmentInterface[];
   Documents: ClientRequestDocumentInterface[];
   Files: FileModeInterface[];
-  Id: number;
+  ID: number;
 }

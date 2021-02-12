@@ -4,14 +4,13 @@ import {
   errorSelector,
   isLoadingSelector,
 } from './../../store/selectors';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { RequestsResponseInterface } from './../../types/requestResponse.interface';
 import { Store, select } from '@ngrx/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { requestsListSelector } from '../../store/selectors';
 import { getRequestsAction } from '../../store/actions/getRequests.action';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SortEvent } from 'primeng/api';
 
 @Component({
   selector: 'app-requests-page',
@@ -29,19 +28,12 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   selectedItems: RequestsResponseInterface[];
 
-  constructor(
-    private store: Store,
-    public dialogService: DialogService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private store: Store, public dialogService: DialogService) {}
 
   ngOnInit() {
     this.initializeValues();
     this.fetch();
   }
-
-  ngOnDestroy(): void {}
 
   initializeValues(): void {
     this.requests$ = this.store.pipe(select(requestsSelector));
@@ -66,10 +58,33 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  OnDestroy() {
-    if (this.ref) {
-      this.ref.close();
-    }
+  customSort(event: SortEvent) {
+    let requests: any[] = [];
+    console.log(event);
+
+
+    requests = [...event.data].sort((data1, data2) => {
+     // console.log(data1['Number'])
+      let value1 = data1[event.field];
+      let value2 = data2[event.field];
+      let result = null;
+
+      if (value1 == null && value2 != null) {
+        result = -1;
+      } else if (value1 != null && value2 == null) {
+        result = 1;
+      } else if (value1 == null && value2 == null) {
+        result = 0;
+      } else if (typeof value1 === 'string' && typeof value2 === 'string') {
+        result = value1.localeCompare(value2);
+      } else {
+        result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
+      }
+
+      return event.order * result;
+    });
+
+    this.requests$ = of(requests);
   }
 
   selectProduct(item: any) {
@@ -82,5 +97,11 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   onRowUnselect(event) {
     console.log(event.data);
+  }
+
+  ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 }
