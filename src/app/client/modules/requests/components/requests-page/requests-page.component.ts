@@ -64,7 +64,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
 
     requests = [...event.data].sort((data1, data2) => {
-     // console.log(data1['Number'])
+      // console.log(data1['Number'])
       let value1 = data1[event.field];
       let value2 = data2[event.field];
       let result = null;
@@ -87,16 +87,12 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     this.requests$ = of(requests);
   }
 
-  selectProduct(item: any) {
-    console.log(item);
-  }
-
   onRowSelect(event) {
-    console.log(event.data);
+    console.log('ROW SELECTED', event.data);
   }
 
   onRowUnselect(event) {
-    console.log(event.data);
+    console.log('ROW UNSELECTED', event.data);
   }
 
   ngOnDestroy() {
