@@ -35,7 +35,7 @@ const routes = [
       },
       {
         path: 'demand',
-        loadChildren: () => import('./modules/demand/demand-routing.module').then(m => m.DemandRoutingModule)
+        loadChildren: () => import('./modules/demand/demand.module').then(m => m.DemandModule)
       }
     ],
   },

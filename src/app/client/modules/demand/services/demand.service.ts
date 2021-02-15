@@ -1,3 +1,5 @@
+import { DemandDraftInterface } from './../types/demand-draft.interface';
+import { CreateDemandMessageRequestInterface } from './../types/requests/create-demand-message-request.interface';
 import { SaveDemandRequestInterface } from './../types/requests/save-demand-request.interface';
 import { DemandDataInterface } from './../types/demand-data.interface';
 import { Injectable } from '@angular/core';
@@ -49,4 +51,38 @@ export class DemandService {
     return this.http.get<any>(url);
   }
 
+  addById(id: number, data: SaveDemandRequestInterface): Observable<DemandInterface> {
+    const url = `${environment.apiUrl}/demand/${id}`;
+    return this.http.post<DemandInterface>(url, data);
+  }
+
+  addMessageByDemandId(id: number, data: CreateDemandMessageRequestInterface): Observable<any> {
+    const url = `${environment.apiUrl}/demand/${id}/message`;
+    return this.http.post<any>(url, data);
+  }
+
+  cancelByDemandId(id: number): Observable<any> {
+    const url = `${environment.apiUrl}/demand/${id}/cancel`;
+    return this.http.post<any>(url, {});
+  }
+
+  getDrafts(): Observable<DemandDraftInterface[]> {
+    const url = `${environment.apiUrl}/demand/draft`;
+    return this.http.get<DemandDraftInterface[]>(url);
+  }
+
+  getDraftById(id: number): Observable<DemandDraftInterface> {
+    const url = `${environment.apiUrl}/demand/draft/${id}`;
+    return this.http.get<DemandDraftInterface>(url);
+  }
+
+  addDraftById(id: number, data: DemandDataInterface): Observable<DemandDraftInterface> {
+    const url = `${environment.apiUrl}/demand/draft/${id}`;
+    return this.http.post<DemandDraftInterface>(url, data);
+  }
+
+  deleteDraftById(id: number): Observable<DemandDraftInterface> {
+    const url = `${environment.apiUrl}/demand/draft/${id}`;
+    return this.http.delete<DemandDraftInterface>(url);
+  }
 }

@@ -1,3 +1,6 @@
+import { GetDemandsEffect } from './store/effects/getDemands.effect';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { DemandService } from './services/demand.service';
 import { DemandRoutingModule } from './demand-routing.module';
 import { DemandPageComponent } from './components/demand-page/demand-page.component';
@@ -18,6 +21,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
+import { reducers } from './store/reducers';
 
 @NgModule({
   imports: [
@@ -31,6 +35,8 @@ import { AvatarModule } from 'primeng/avatar';
     TableModule,
     DropdownModule,
     FormsModule,
+    EffectsModule.forFeature([GetDemandsEffect]),
+    StoreModule.forFeature('demands', reducers),
     ProgressBarModule,
     MultiSelectModule,
     DemandRoutingModule,

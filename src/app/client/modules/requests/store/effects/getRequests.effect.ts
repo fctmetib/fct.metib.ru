@@ -16,7 +16,7 @@ export class GetRequestsEffect {
     this.actions$.pipe(
       ofType(getRequestsAction),
       switchMap(() => {
-        return this.requestInterface.fetch().pipe(
+        return this.requestService.fetch().pipe(
           map((requests: RequestsResponseInterface[]) => {
             return getRequestsSuccessAction({ requests });
           }),
@@ -31,6 +31,6 @@ export class GetRequestsEffect {
 
   constructor(
     private actions$: Actions,
-    private requestInterface: RequestsService
+    private requestService: RequestsService
   ) {}
 }
