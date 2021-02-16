@@ -1,9 +1,10 @@
+import { DemandPageComponent } from './components/demand-page/demand-page.component';
 import { GetDemandsEffect } from './store/effects/getDemands.effect';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { DemandService } from './services/demand.service';
 import { DemandRoutingModule } from './demand-routing.module';
-import { DemandPageComponent } from './components/demand-history-page/demand-history-page.component';
+import { DemandHistoryPageComponent } from './components/demand-history-page/demand-history-page.component';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
@@ -45,7 +46,7 @@ import { reducers } from './store/reducers';
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [DemandPageComponent],
+  declarations: [DemandPageComponent, DemandHistoryPageComponent],
   providers: [DemandService],
 })
 export class DemandModule {}

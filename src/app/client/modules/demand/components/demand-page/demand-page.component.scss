@@ -1,0 +1,15 @@
+@import '../../../../../../../src/styles/_colors.scss';
+
+.demand-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  .demand-action-card {
+    width: 100%;
+
+    .demand-action-content {
+
+    }
+  }
+}

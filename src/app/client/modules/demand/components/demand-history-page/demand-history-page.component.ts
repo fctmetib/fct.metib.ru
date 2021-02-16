@@ -11,7 +11,7 @@ import { demandssSelector, errorSelector, isLoadingSelector } from '../../store/
   templateUrl: './demand-history-page.component.html',
   styleUrls: ['./demand-history-page.component.scss'],
 })
-export class DemandPageComponent implements OnInit {
+export class DemandHistoryPageComponent implements OnInit {
   demands$: Observable<DemandInterface[] | null>;
   error$: Observable<string | null>;
   isLoading$: Observable<boolean>;
