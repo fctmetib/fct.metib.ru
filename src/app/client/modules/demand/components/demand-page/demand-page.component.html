@@ -1,25 +1,26 @@
 <div class="card-content">
   <div class="header lg">
     <div class="title">
-      <h2>История запросов</h2>
+      <h2>Запросы</h2>
       <div class="subheader">
-        Список Истории запросов
+        Список Запросов
       </div>
     </div>
     <div class="actions">
-      <button pButton pRipple type="button" label="История запросов" [routerLink]="['/demand/history']"
-        class="p-button-outlined"></button>
+      <button pButton pRipple type="button" label="История запросов" [routerLink]="['/demand/history']"></button>
     </div>
   </div>
 
-  <div class="demand-actions">
-    <div class="demand-action-card" *ngFor="let action of actions" [routerLink]="[action.url]">
+  <div class="p-grid">
+    <div class="p-col" *ngFor="let action of actions">
+      <div class="demand-action-card can-click" [routerLink]="[action.url]">
         <div class="demand-action-content">
           <div class="text">
             {{action.text}}
           </div>
           <div class="icon arrow_right"></div>
         </div>
+    </div>
     </div>
   </div>
 </div>

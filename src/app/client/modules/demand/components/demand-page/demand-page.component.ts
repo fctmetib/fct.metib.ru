@@ -19,7 +19,7 @@ export class DemandPageComponent implements OnInit {
     this.actions = [
       {
         text: 'Запрос на редактирование профиля',
-        url: 'demand-edit',
+        url: 'actions/edit-profile',
       },
       {
         text: 'Запрос на свободную тему',

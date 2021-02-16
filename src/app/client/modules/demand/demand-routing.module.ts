@@ -1,3 +1,4 @@
+import { DemandActionEditProfilePageComponent } from './components/demand-actions/components/demand-action-edit-profile-page/demand-action-edit-profile-page.component';
 import { DemandPageComponent } from './components/demand-page/demand-page.component';
 import { DemandHistoryPageComponent } from './components/demand-history-page/demand-history-page.component';
 import { NgModule } from '@angular/core';
@@ -15,6 +16,10 @@ const routes = [
         path: 'history',
         component: DemandHistoryPageComponent,
       },
+      {
+        path: 'actions/edit-profile',
+        component: DemandActionEditProfilePageComponent
+      }
     ],
   },
 ];
