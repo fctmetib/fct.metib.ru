@@ -1,0 +1,91 @@
+@import '../../../../../../../src/styles/_colors.scss';
+
+.demand-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  .demand-info {
+    padding-top: 48px;
+    padding-bottom: 48px;
+    padding-left: 30px;
+
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 100%;
+
+    .demand-content {
+      display: flex;
+      align-items: center;
+
+      font-weight: 500;
+      font-size: 24px;
+      margin-bottom: 10px;
+      line-height: 28px;
+      color: $dark-blue;
+
+      .icon {
+        &.arrow_right {
+          margin-left: 13px;
+          background: url('/assets/icons/arrow_right.png') no-repeat center center;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .demand-status-info {
+      display: flex;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+
+      .demand-status {
+        margin-right: 5px;
+
+        &.default {
+          color: $default;
+        }
+
+        &.success {
+          color: $success;
+        }
+
+        &.warning {
+          color: $warning;
+        }
+      }
+    }
+  }
+
+  .demand-manager {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    width: 300px;
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+    text-align: center;
+
+    .demand-manager-date {
+      font-size: 14px;
+      line-height: 16px;
+      margin-bottom: 10px;
+    }
+
+    .demand-manager-info {
+      padding: 14px;
+      font-size: 14px;
+      border: 1px solid $main;
+      box-sizing: border-box;
+      border-radius: 10px;
+      color: $main;
+    }
+  }
+}

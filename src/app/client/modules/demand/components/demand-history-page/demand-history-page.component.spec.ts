@@ -1,6 +1,6 @@
-import { DemandService } from './../../services/demand.service';
-import { DemandRoutingModule } from './../../demand-routing.module';
-import { DemandPageComponent } from './demand-page.component';
+import { DemandService } from '../../services/demand.service';
+import { DemandRoutingModule } from '../../demand-routing.module';
+import { DemandPageComponent } from './demand-history-page.component';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ButtonModule } from 'primeng/button';
 import { MessagesModule } from 'primeng/messages';

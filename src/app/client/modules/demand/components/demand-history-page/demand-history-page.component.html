@@ -1,0 +1,77 @@
+<div class="card-content">
+  <div class="header lg">
+    <div class="title">
+      <h2>История запросов</h2>
+      <div class="subheader">
+        Список Истории запросов
+      </div>
+    </div>
+    <div class="actions">
+      <button pButton pRipple type="button" label="Вернуться к списку запросов" (click)="add()"
+        class="p-button-outlined"></button>
+    </div>
+  </div>
+
+  <div class="demand-list">
+    <div class="demand-item" *ngFor="let demand of (demands$ | async)">
+      <div class="demand-info">
+        <div class="demand-content">
+          <div class="text">
+            №{{demand.ID}} Запрос на свободную тему
+          </div>
+          <div class="icon arrow_right"></div>
+        </div>
+        <div class="demand-status-info">
+          <div [ngSwitch]="demand.Status">
+            <div *ngSwitchCase="'Processing'">
+              <div class="demand-status default">
+                Создан
+              </div>
+            </div>
+            <div *ngSwitchCase="'Completed'">
+              <div class="demand-status success">
+                Создан
+              </div>
+            </div>
+          </div>
+
+          <div class="demand-status-date">
+            {{demand.DateModify | date:'dd.MM.yyyy'}}
+          </div>
+        </div>
+      </div>
+      <div class="demand-manager">
+        <div class="demand-manager-date">
+          {{demand.DateModify | date:'dd.MM.yyyy'}}
+        </div>
+        <div class="demand-manager-info">
+          Менеджер не назначен
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <p-table [value]="(requests$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
+    [rowsPerPageOptions]="[10,25,50]" [loading]="(isLoading$ | async)" [(selection)]="selectedItems" dataKey="ID"
+    styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
+    currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}" (sortFunction)="customSort($event)"
+    [customSort]="true">
+    <ng-template pTemplate="body" let-request>
+      <tr [pSelectableRow]="request">
+        <td>
+          <div class="m-td demand-info">
+            {{request.ID}}
+          </div>
+        </td>
+        <td>
+          <div class="m-td demand-manager">{{request.User}}</div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="2">Нет данных.</td>
+      </tr>
+    </ng-template>
+  </p-table> -->
+</div>
