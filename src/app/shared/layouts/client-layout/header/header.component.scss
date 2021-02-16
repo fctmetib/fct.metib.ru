@@ -103,3 +103,15 @@
     display: block;
   }
 }
+
+.triangle-header {
+  position: absolute;
+  background-image: url('../../../../../assets/template/triangle_header.png');
+  background-repeat: no-repeat;
+  top: 40px;
+  right: 350px;
+  width: 200px;
+  height: 200px;
+}
+
+
