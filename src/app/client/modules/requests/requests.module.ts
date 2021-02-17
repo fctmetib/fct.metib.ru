@@ -1,3 +1,4 @@
+import { DeliveryService } from './../../../shared/services/share/delivery.service';
 import { RequestCreateDialogComponent } from './components/request-create-dialog/request-create-dialog.component';
 import { RequestsService } from './services/requests.service';
 import { GetRequestsEffect } from './store/effects/getRequests.effect';
@@ -13,6 +14,7 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
+import { TabViewModule } from 'primeng/tabview';
 
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,10 +26,12 @@ import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { reducers } from './store/reducers';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+
 @NgModule({
   imports: [
     CommonModule,
     InputTextModule,
+    TabViewModule,
     CheckboxModule,
     ButtonModule,
     RadioButtonModule,
@@ -47,13 +51,7 @@ import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [
-    RequestsPageComponent,
-    RequestCreateDialogComponent
-  ],
-  providers: [
-    DialogService,
-    RequestsService
-  ],
+  declarations: [RequestsPageComponent, RequestCreateDialogComponent],
+  providers: [DialogService, DeliveryService, RequestsService],
 })
 export class RequestModule {}

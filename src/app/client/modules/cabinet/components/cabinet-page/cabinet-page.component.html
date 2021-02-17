@@ -1,7 +1,7 @@
 <div class="card-content">
   <p-progressSpinner *ngIf="(loading$ | async); else content"></p-progressSpinner>
   <ng-template #content>
-    <app-factoring [factoringUser]="(currentUserFactoring$ | async)"></app-factoring>
+    <app-factoring></app-factoring>
   </ng-template>
 
   <button pButton label="Справка" (click)="introMethod()"></button>

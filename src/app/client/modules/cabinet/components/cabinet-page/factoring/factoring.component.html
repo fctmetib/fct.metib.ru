@@ -1,9 +1,9 @@
 <div class="header lg">
 <div class="title">
-  <h1 class="display-1">{{(factoring$ | async)?.Title}}</h1>
+  <h1 class="display-1">{{factoring?.Title}}</h1>
   <div class="subheader info">
-    <div class="organization">ИНН:  {{(factoring$ | async)?.Organization.Inn}} КПП:  [InProgress]</div>
-    <div class="contract"> Договор Факторинга:  {{(factoring$ | async)?.Contract.Number}} от  {{(factoring$ | async)?.Contract.Date | date: 'dd/MM/yyyy'}}</div>
+    <div class="organization">ИНН:  {{factoring?.Organization.Inn}} КПП: {{organization?.KPP}}</div>
+    <div class="contract"> Договор Факторинга:  {{factoring?.Contract.Number}} от  {{factoring?.Contract.Date | date: 'dd/MM/yyyy'}}</div>
   </div>
 </div>
 <div class="actions">
@@ -17,7 +17,7 @@
   <div class="p-col">
     <div class="card-info">
       <div class="header">
-        {{(factoring$ | async)?.Limit | currency:'RUB':'symbol-narrow'}}
+        {{factoring?.Limit | currency:'RUB':'symbol-narrow'}}
       </div>
       <div class="content">
         Лимит

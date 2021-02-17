@@ -1,3 +1,7 @@
+import { OrganizationInterface } from './../../../../../../shared/types/organization/organization.interface';
+import { OrganizationService } from './../../../../../../shared/services/share/organization.service';
+import { DeliveryInterface } from './../../../../../../shared/types/delivery/delivery.interface';
+import { DeliveryService } from './../../../../../../shared/services/share/delivery.service';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
@@ -10,17 +14,34 @@ import { CustomerInterface } from 'src/app/shared/types/customer/customer.interf
   styleUrls: ['./factoring.component.scss'],
 })
 export class FactoringComponent implements OnInit {
-  @Input('factoringUser') factoringUser: CurrentUserFactoringInterface
+  public factoring: CustomerInterface;
 
-  currentUser: CurrentUserFactoringInterface;
-  public factoring$: Observable<CustomerInterface | null>;
+  public organization: OrganizationInterface;
+  public deliveries: DeliveryInterface[] = [];
 
   constructor(
-    private store: Store
+    private store: Store,
+    private deliveryService: DeliveryService,
+    private organizationService: OrganizationService
   ) {}
 
   ngOnInit() {
-    this.currentUser = this.factoringUser;
-    this.factoring$ = this.store.pipe(select(factoringSelector));
+    this.store.pipe(select(factoringSelector)).subscribe(resp => {
+      this.factoring = resp;
+
+      // TODO: Rework it on NgRx style
+      if(resp) {
+        this.deliveryService.getDeliveriesByIdWithStats(resp.Organization.ID.toString()).subscribe(resp => {
+          this.deliveries = resp;
+        });
+
+        this.organizationService.getOrganizationById(resp.Organization.ID).subscribe(resp => {
+          this.organization = resp;
+        });
+      }
+
+    });
+
+
   }
 }

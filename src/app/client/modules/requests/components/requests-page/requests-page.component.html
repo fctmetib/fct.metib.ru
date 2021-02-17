@@ -16,15 +16,6 @@
     styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
     currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}" (sortFunction)="customSort($event)"
     [customSort]="true">
-    <!-- <ng-template pTemplate="caption">
-        <div class="p-d-flex">
-          <span class="p-input-icon-left p-ml-auto">
-            <i class="pi pi-search"></i>
-            <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')"
-              placeholder="Search keyword" />
-          </span>
-        </div>
-      </ng-template> -->
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="ID">
@@ -33,10 +24,9 @@
             <p-sortIcon field="ID"></p-sortIcon>
           </div>
         </th>
-        <th pSortableColumn="Delivery.Title">
+        <th>
           <div class="m-th">
             Договор
-            <p-sortIcon field="Delivery.Title"></p-sortIcon>
           </div>
         </th>
         <th pSortableColumn="Number">
@@ -69,10 +59,9 @@
             <p-sortIcon field="Status"></p-sortIcon>
           </div>
         </th>
-        <th pSortableColumn="Delivery.Debtor">
+        <th>
           <div class="m-th">
             Покупатель
-            <p-sortIcon field="Delivery.Debtor"></p-sortIcon>
           </div>
         </th>
       </tr>

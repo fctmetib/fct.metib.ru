@@ -47,7 +47,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   showCreateRequestDialog() {
     this.ref = this.dialogService.open(RequestCreateDialogComponent, {
-      header: 'Создать Заявку',
+      header: 'Создание/редактирование заявки',
       width: '70%',
       contentStyle: { 'max-height': '500px', overflow: 'auto' },
       baseZIndex: 10000,

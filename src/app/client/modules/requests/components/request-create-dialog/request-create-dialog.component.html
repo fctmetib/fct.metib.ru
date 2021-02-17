@@ -1,18 +1,41 @@
-<div class="p-fluid p-formgrid p-grid form">
-  <div class="p-field p-col-12 p-md-6">
-    <input type="text" pInputText placeholder="Договор Поставки - выпадающий список">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-formgrid p-grid form">
+    <div class="p-field p-col-12 p-md-6">
+      <label for="deliveryID">Договор</label>
+      <p-dropdown id="deliveryID" [options]="deliveries" formControlName="deliveryID" optionLabel="Title"
+        optionValue="ID" (onChange)="onDeliveryChange($event)"></p-dropdown>
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label for="freeDuty">Свободный Лимит</label>
+      <input id="freeDuty" type="text" pInputText placeholder="Свободный Лимит" readonly value="{{freeDuty | currency:'RUB':'symbol-narrow'}}">
+    </div>
+    <div class="p-field p-col-12">
+      <label for="number">Номер Заявки</label>
+      <input id="number" type="text" pInputText placeholder="Номер Заявки" formControlName="number">
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label for="type">Тип</label>
+      <p-dropdown id="type" [options]="deliveries" formControlName="type" optionLabel="Title" optionValue="ID">
+      </p-dropdown>
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label for="date">Дата</label>
+      <input id="date" type="date" pInputText placeholder="Дата" formControlName="date">
+    </div>
   </div>
-  <div class="p-field p-col-12 p-md-6">
-    <input type="text" pInputText placeholder="Свободный Лимит">
-  </div>
-  <div class="p-field p-col-12">
-    <input type="text" pInputText placeholder="Номер Заявки">
-  </div>
-  <div class="p-field p-col-12 p-md-6">
-    <input type="text" pInputText placeholder="Тип Заявки выпадающий список ">
-  </div>
-  <div class="p-field p-col-12 p-md-6">
-    <input type="date" pInputText placeholder="Дата календарь">
-  </div>
-</div>
-<button pButton pRipple type="submit" label="Создать" class="btn-mib-submit"></button>
+  <button pButton pRipple type="submit" label="Создать" class="btn-mib-submit"></button>
+  <p-tabView>
+    <p-tabPanel header="Поставки">
+
+    </p-tabPanel>
+    <p-tabPanel header="Скан-копии накладных">
+
+    </p-tabPanel>
+    <p-tabPanel header="Документы аккредитива">
+
+    </p-tabPanel>
+    <p-tabPanel header="Документы ЭДО">
+
+  </p-tabPanel>
+</p-tabView>
+</form>

@@ -24,9 +24,7 @@ export class ClientLayoutComponent implements OnInit {
         routerLinkActiveOptions: { exact: true }
       },
       {
-        label: 'Платежи',
-        routerLink: 'invoices',
-        routerLinkActiveOptions: { exact: true }
+        label: 'Свободная задолженность'
       },
       {
         label: 'Договоры',
@@ -34,20 +32,29 @@ export class ClientLayoutComponent implements OnInit {
         routerLinkActiveOptions: { exact: true }
       },
       {
-        label: 'Документы',
-        routerLink: 'documents',
+        label: 'Платежи',
+        routerLink: 'invoices',
         routerLinkActiveOptions: { exact: true }
       },
       {
-        label: 'Отчеты',
-        routerLink: 'reports',
-        routerLinkActiveOptions: { exact: true }
+        label: 'Просрочки Покупателя'
       },
       {
         label: 'Запросы',
         routerLink: 'demand',
         routerLinkActiveOptions: { exact: true }
       },
+      {
+        label: 'Документы',
+        routerLink: 'documents',
+        routerLinkActiveOptions: { exact: true }
+      },
+      // {
+      //   label: 'Отчеты',
+      //   routerLink: 'reports',
+      //   routerLinkActiveOptions: { exact: true }
+      // },
+
     ];
   }
 }

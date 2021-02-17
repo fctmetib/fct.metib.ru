@@ -1,3 +1,5 @@
+import { OrganizationService } from './../../../shared/services/share/organization.service';
+import { DeliveryService } from './../../../shared/services/share/delivery.service';
 import { FactoringComponent } from './components/cabinet-page/factoring/factoring.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CommonModule } from '@angular/common';
@@ -43,6 +45,6 @@ import { ClientService } from 'src/app/shared/services/common/client.service';
     CabinetRoutingModule,
   ],
   declarations: [CabinetPageComponent, FactoringComponent],
-  providers: [ClientService],
+  providers: [ClientService, DeliveryService, OrganizationService],
 })
 export class CabinetModule {}
