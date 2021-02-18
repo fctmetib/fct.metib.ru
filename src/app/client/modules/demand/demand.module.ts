@@ -1,3 +1,8 @@
+import { DemandActionVerificationPageComponent } from './components/demand-actions/demand-action-verification-page/demand-action-verification-page.component';
+import { DemandActionSuretyPageComponent } from './components/demand-actions/demand-action-surety-page/demand-action-surety-page.component';
+import { DemandActionRequestSupportPageComponent } from './components/demand-actions/demand-action-request-support-page/demand-action-request-support-page.component';
+import { DemandActionRequestFreePageComponent } from './components/demand-actions/demand-action-request-free-page/demand-action-request-free-page.component';
+import { DemandActionDebitorPageComponent } from './components/demand-actions/demand-action-debitor-page/demand-action-debitor-page.component';
 import { DemandPageComponent } from './components/demand-page/demand-page.component';
 import { GetDemandsEffect } from './store/effects/getDemands.effect';
 import { EffectsModule } from '@ngrx/effects';
@@ -23,6 +28,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { reducers } from './store/reducers';
+import { DemandActionEditProfilePageComponent } from './components/demand-actions/demand-action-edit-profile-page/demand-action-edit-profile-page.component';
+import { DemandActionEDSPageComponent } from './components/demand-actions/demand-action-eds-page/demand-action-eds-page.component';
+import { DemandActionLimitPageComponent } from './components/demand-actions/demand-action-limit-page/demand-action-limit-page.component';
 
 @NgModule({
   imports: [
@@ -46,7 +54,18 @@ import { reducers } from './store/reducers';
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [DemandPageComponent, DemandHistoryPageComponent],
+  declarations: [
+    DemandPageComponent,
+    DemandHistoryPageComponent,
+    DemandActionDebitorPageComponent,
+    DemandActionEditProfilePageComponent,
+    DemandActionEDSPageComponent,
+    DemandActionLimitPageComponent,
+    DemandActionRequestFreePageComponent,
+    DemandActionRequestSupportPageComponent,
+    DemandActionSuretyPageComponent,
+    DemandActionVerificationPageComponent
+  ],
   providers: [DemandService],
 })
 export class DemandModule {}
