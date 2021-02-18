@@ -1,3 +1,6 @@
+import { BackendErrorMessagesModule } from './../../../shared/modules/backendErrorMessages/backendErrorMessages.module';
+import { SuccessMessagesModule } from './../../../shared/modules/successMessages/successMessages.module';
+import { CRUDEffect } from './store/effects/crud.effect';
 import { DeliveryService } from './../../../shared/services/share/delivery.service';
 import { RequestCreateDialogComponent } from './components/request-create-dialog/request-create-dialog.component';
 import { RequestsService } from './services/requests.service';
@@ -26,6 +29,8 @@ import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { reducers } from './store/reducers';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import {ToolbarModule} from 'primeng/toolbar';
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   imports: [
@@ -37,14 +42,18 @@ import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
     RadioButtonModule,
     DynamicDialogModule,
     InputTextareaModule,
+    DialogModule,
     SliderModule,
     TableModule,
     DropdownModule,
     FormsModule,
     ProgressBarModule,
+    ToolbarModule,
     MultiSelectModule,
-    EffectsModule.forFeature([GetRequestsEffect]),
+    EffectsModule.forFeature([GetRequestsEffect, CRUDEffect]),
     StoreModule.forFeature('requests', reducers),
+    BackendErrorMessagesModule,
+    SuccessMessagesModule,
     RequestsRoutingModule,
     ReactiveFormsModule,
     CardModule,

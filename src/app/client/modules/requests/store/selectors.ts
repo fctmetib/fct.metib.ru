@@ -22,3 +22,13 @@ export const requestsSelector = createSelector(
   requestsListSelector,
   (requestsState: RequestsStateInterface) => requestsState.data
 );
+
+export const crudSuccessSelector = createSelector(
+  requestsListSelector,
+  (requestsState: RequestsStateInterface) => requestsState.crudSuccessMessage
+);
+
+export const crudErrorsSelector = createSelector(
+  requestsListSelector,
+  (requestsState: RequestsStateInterface) => requestsState.crudError
+);

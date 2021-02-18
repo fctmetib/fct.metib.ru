@@ -260,3 +260,12 @@ p-inputnumber {
     outline: unset;
   }
 }
+
+.p-dropdown {
+  border-radius: 10px !important;
+}
+
+.p-dropdown .p-dropdown-trigger {
+  background: $main !important;
+  color: $white !important;
+}

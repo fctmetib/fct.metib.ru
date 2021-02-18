@@ -6,11 +6,19 @@ import {
   getRequestsSuccessAction,
   getRequestsFailureAction,
 } from './actions/getRequests.action';
+import {
+  addRequestAction,
+  addRequestFailureAction,
+  addRequestSuccessAction,
+} from './actions/crud.action';
 
 const initialState: RequestsStateInterface = {
   data: null,
   isLoading: false,
   error: null,
+  crudError: null,
+  crudSuccessMessage: null,
+  isSubmitting: false,
 };
 
 const requestsReducer = createReducer(
@@ -35,6 +43,32 @@ const requestsReducer = createReducer(
     (state): RequestsStateInterface => ({
       ...state,
       isLoading: false,
+    })
+  ),
+  on(
+    addRequestAction,
+    (state): RequestsStateInterface => ({
+      ...state,
+      isSubmitting: true,
+      crudSuccessMessage: null,
+      crudError: null,
+    })
+  ),
+  on(
+    addRequestSuccessAction,
+    (state, action): RequestsStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      crudSuccessMessage: 'Успешно',
+    })
+  ),
+  on(
+    addRequestFailureAction,
+    (state, action): RequestsStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      crudSuccessMessage: null,
+      crudError: action.errors,
     })
   ),
   on(routerNavigationAction, (): RequestsStateInterface => initialState)
