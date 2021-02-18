@@ -23,35 +23,35 @@ export class DemandPageComponent implements OnInit {
       },
       {
         text: 'Запрос на свободную тему',
-        url: 'demand-free',
+        url: 'actions/free-request',
       },
       {
         text: 'Запрос в техническую поддержку',
-        url: 'demand-support',
+        url: 'actions/support-request',
       },
       {
         text: 'Запрос на ЭЦП',
-        url: 'demand-dp',
+        url: 'actions/create-eds',
       },
       {
         text: 'Запрос на поручительство',
-        url: 'demand-hr',
+        url: 'actions/surety',
       },
-      {
-        text: 'Запрос на агентский факторинг',
-        url: 'demand-af',
-      },
+      // {
+      //   text: 'Запрос на агентский факторинг',
+      //   url: 'actions/surety',
+      // },
       {
         text: 'Запрос на увеличение лимита',
-        url: 'demand-bl',
+        url: 'actions/update-limit',
       },
       {
         text: 'Запрос на нового дебитора',
-        url: 'demand-nd',
+        url: 'actions/create-debitor',
       },
       {
         text: 'Регистрация канала верификации',
-        url: 'demand-cv',
+        url: 'actions/verify',
       },
     ];
   }
