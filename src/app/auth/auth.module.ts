@@ -1,3 +1,4 @@
+import { CryptoProService } from './../shared/services/common/cryprto-pro.service';
 import { CryptoService } from './../shared/services/common/crypto.service';
 import { ResetPasswordEffect } from './store/effects/resetPassword.effect';
 import { ConfirmPasswordPageComponent } from './components/confirm-password-page/confirm-password-page.component';
@@ -42,7 +43,7 @@ import { AuthRoutingModule } from './auth-routing.module';
       LoginEffect,
       GetCurrentUserEffect,
       RegisterEffect,
-      ResetPasswordEffect
+      ResetPasswordEffect,
     ]),
     InputTextModule,
     DropdownModule,
@@ -57,8 +58,13 @@ import { AuthRoutingModule } from './auth-routing.module';
     LoginPageComponent,
     RegisterPageComponent,
     ResetPasswordPageComponent,
-    ConfirmPasswordPageComponent
+    ConfirmPasswordPageComponent,
   ],
-  providers: [AuthService, CommonService, CryptoService],
+  providers: [
+    AuthService,
+    CommonService,
+    CryptoService,
+    CryptoProService
+  ],
 })
 export class AuthModule {}
