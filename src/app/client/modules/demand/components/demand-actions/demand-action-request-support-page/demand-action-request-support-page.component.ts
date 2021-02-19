@@ -12,4 +12,8 @@ export class DemandActionRequestSupportPageComponent implements OnInit {
   ngOnInit() {}
 
   ngOnDestroy() {}
+
+  a() {
+
+  }
 }

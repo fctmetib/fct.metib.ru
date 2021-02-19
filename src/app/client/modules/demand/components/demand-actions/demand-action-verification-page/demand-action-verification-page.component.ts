@@ -12,4 +12,8 @@ export class DemandActionVerificationPageComponent implements OnInit {
   ngOnInit() {}
 
   ngOnDestroy() {}
+
+  a() {
+
+  }
 }

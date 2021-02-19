@@ -12,4 +12,8 @@ export class DemandActionLimitPageComponent implements OnInit {
   ngOnInit() {}
 
   ngOnDestroy() {}
+
+  a() {
+
+  }
 }

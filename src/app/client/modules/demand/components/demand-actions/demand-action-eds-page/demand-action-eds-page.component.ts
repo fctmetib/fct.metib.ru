@@ -12,4 +12,8 @@ export class DemandActionEDSPageComponent implements OnInit {
   ngOnInit() {}
 
   ngOnDestroy() {}
+
+  a() {
+
+  }
 }

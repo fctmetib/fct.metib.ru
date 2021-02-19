@@ -12,4 +12,8 @@ export class DemandActionRequestFreePageComponent implements OnInit {
   ngOnInit() {}
 
   ngOnDestroy() {}
+
+  a() {
+
+  }
 }

@@ -12,4 +12,8 @@ export class DemandActionSuretyPageComponent implements OnInit {
   ngOnInit() {}
 
   ngOnDestroy() {}
+
+  a() {
+
+  }
 }

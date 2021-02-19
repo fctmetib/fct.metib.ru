@@ -12,4 +12,8 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   ngOnInit() {}
 
   ngOnDestroy() {}
+
+  a() {
+
+  }
 }

@@ -3,3 +3,10 @@
 @import '/src/styles/_components.scss';
 
 
+.mib-toolbar {
+  margin-bottom: 20px;
+
+  button {
+    height: 40px;
+  }
+}
