@@ -10,7 +10,6 @@
   padding-right: 56px;
 
   background: $white;
-  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 
   .demand-action-content {
@@ -29,4 +28,9 @@
       }
     }
   }
+}
+
+.demand-action-card:hover {
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
 }

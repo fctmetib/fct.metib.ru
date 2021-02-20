@@ -1,11 +1,12 @@
 .card-report {
   background: #FFFFFF;
-  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding-left: 20px;
   padding-top: 22px;
   padding-right: 13px;
   padding-bottom: 15px;
+
+  cursor: pointer;
 
   .header {
     font-size: 14px;
@@ -30,4 +31,9 @@
     line-height: 16px;
     color: #989898;
   }
+}
+
+.card-report:hover {
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
 }

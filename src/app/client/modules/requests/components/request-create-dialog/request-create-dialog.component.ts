@@ -13,6 +13,7 @@ import { RequestSourceEnum } from 'src/app/shared/types/enums/request-source.enu
 import { FinanceTypeInterface } from '../../types/common/finance-type.interface';
 import { Observable } from 'rxjs';
 import { addRequestAction } from '../../store/actions/crud.action';
+import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 
 @Component({
   selector: 'app-request-create-dialog',
@@ -24,6 +25,7 @@ export class RequestCreateDialogComponent {
   successMessage$: Observable<string | null>;
 
   form: FormGroup;
+  shipmentForm: FormGroup;
 
   public deliveries: DeliveryInterface[] = [];
   public types: FinanceTypeInterface[] = [
@@ -37,6 +39,7 @@ export class RequestCreateDialogComponent {
     },
   ];
   public freeDuty = 0;
+  public shipments: ClientShipmentInterface[] = [];
 
   addDeliveryDialog: boolean;
 
@@ -63,21 +66,32 @@ export class RequestCreateDialogComponent {
       date: ['', [Validators.required]],
     });
 
+    this.shipmentForm = this.fb.group({
+      accountNumber: ['', [Validators.required]],
+      accountDate: ['', [Validators.required]],
+      invoiceNumber: ['', [Validators.required]],
+      invoiceDate: ['', [Validators.required]],
+      dateShipment: ['', [Validators.required]],
+      summ: [0, [Validators.required]],
+    });
+
     this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
-      this.deliveries = resp;
+      this.deliveries = resp.filter((x) => x.DateTo).reverse();
     });
   }
 
   onSubmit(): void {
+    let selectedDelivery = this.deliveries.find(x => x.ID === this.form.value.deliveryID);
+
     const request: ClientRequestInterface = {
       AgencyFlag: false,
       Date: this.form.value.date,
       DeliveryID: this.form.value.deliveryID,
       Files: [],
       Number: this.form.value.number,
-      Shipments: [],
+      Shipments: this.shipments,
       Source: RequestSourceEnum.Cabinet,
-      Title: '',
+      Title: selectedDelivery.Title,
       Type: this.form.value.type,
     };
 
@@ -102,5 +116,27 @@ export class RequestCreateDialogComponent {
 
   close() {
     this.ref.close('Closed');
+  }
+
+  addShipment() {
+    let shipment: ClientShipmentInterface = {
+      AccountNumber: this.shipmentForm.value.accountNumber,
+      AccountDate: this.shipmentForm.value.accountDate,
+      InvoiceNumber: this.shipmentForm.value.invoiceNumber,
+      InvoiceDate: this.shipmentForm.value.invoiceDate,
+      WaybillNumber: null,
+      WaybillDate: null,
+      DateShipment: this.shipmentForm.value.dateShipment,
+      DatePayment: null,
+      SummToFactor: null,
+      Summ: this.shipmentForm.value.summ,
+      ID: Math.floor(Math.random() * 100),
+    };
+
+    this.shipments.push(shipment);
+    console.log(this.shipments)
+
+    this.shipmentForm.reset();
+    this.hideDialog();
   }
 }
