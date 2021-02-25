@@ -5,7 +5,7 @@
     </div>
     <div class="header-block manager-info">
       <div class="manager-info-name">
-        {{(factoring$ | async)?.Manager?.Name}}  ({{(factoring$ | async)?.Manager?.Extension}})
+        {{(factoring$ | async)?.Manager?.Name}} ({{(factoring$ | async)?.Manager?.Extension}})
       </div>
       <div class="manager-info-email">
         {{(factoring$ | async)?.Manager?.Email}}
@@ -19,18 +19,35 @@
     <div class="header-block account-ava">
       <img src="/assets/images/mib_ava.png" alt="">
     </div>
-    <div class="header-block account-owner" (click)="openAccountOwner()" >
-      <div class="account-info-name">
+    <div class="header-block account-owner clickable" (click)="openAccountOwner()" id="headerBlock">
+      <div class="account-info-name clickable">
         {{(currentUserFactoring$ | async)?.Name}}
       </div>
-      <div class="account-info-email">
+      <div class="account-info-email clickable">
         {{(currentUser$ | async)?.Profile.Email}}
       </div>
     </div>
-    <div id="myDropdown" class="dropdown-content">
-      <a>Справка</a>
-      <a>Сменить Пароль</a>
-      <a href="#" (click)="logout()" >Выйти</a>
+    <div id="dropdownMenu" class="dropdown-content">
+      <div class="items">
+        <div class="item" (click)="getInfo()" >
+          <div class="icon">
+            <img src="../../../../../assets/icons/header-icons/info_icon.svg">
+          </div>
+          <a>Справка</a>
+        </div>
+        <div class="item">
+          <div class="icon grey">
+            <img src="../../../../../assets/icons/header-icons/change_password_icon.svg">
+          </div>
+          <a>Сменить Пароль</a>
+        </div>
+        <div class="item">
+          <div class="icon grey">
+            <img src="../../../../../assets/icons/header-icons/exit_icon.svg">
+          </div>
+          <a href="#" (click)="logout()">Выйти</a>
+        </div>
+      </div>
     </div>
   </div>
   <div class="triangle-header"></div>

@@ -10,7 +10,7 @@ import { Store, select } from '@ngrx/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { getRequestsAction } from '../../store/actions/getRequests.action';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SortEvent } from 'primeng/api';
+import { SortEvent, MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-requests-page',
@@ -25,6 +25,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   displayModal: boolean;
   loading: boolean = true;
   ref: DynamicDialogRef;
+  items: MenuItem[] = [];
 
   selectedItems: RequestsResponseInterface[];
 
@@ -39,6 +40,37 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     this.requests$ = this.store.pipe(select(requestsSelector));
     this.error$ = this.store.pipe(select(errorSelector));
     this.isLoading$ = this.store.pipe(select(isLoadingSelector));
+
+    this.items = [
+      {
+        label: 'Создать',
+        command: () => this.showCreateRequestDialog()
+      },
+      {
+        label: 'Создать из подтверждений',
+        routerLink: ''
+      },
+      {
+        label: 'Сделать коррекцию',
+        routerLink: ''
+      },
+      {
+        label: 'События',
+        routerLink: ''
+      },
+      {
+        label: 'Документы',
+        routerLink: ''
+      },
+      {
+        label: 'Удалить',
+        routerLink: ''
+      },
+      {
+        label: 'Отправить',
+        routerLink: ''
+      }
+    ];
   }
 
   fetch(): void {
@@ -49,7 +81,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     this.ref = this.dialogService.open(RequestCreateDialogComponent, {
       header: 'Создание/редактирование заявки',
       width: '70%',
-      contentStyle: { 'height': '800px', overflow: 'auto' },
+      contentStyle: { height: '800px', overflow: 'auto' },
       baseZIndex: 10000,
     });
 
@@ -61,7 +93,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   customSort(event: SortEvent) {
     let requests: any[] = [];
     console.log(event);
-
 
     requests = [...event.data].sort((data1, data2) => {
       // console.log(data1['Number'])

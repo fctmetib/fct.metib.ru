@@ -1,5 +1,5 @@
 import { MenuItem } from 'primeng/api';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-client-layout',
@@ -16,45 +16,55 @@ export class ClientLayoutComponent implements OnInit {
       {
         label: 'Кабинет',
         routerLink: 'cabinet',
-        routerLinkActiveOptions: { exact: true }
+        routerLinkActiveOptions: { exact: true },
       },
       {
         label: 'Заявки',
         routerLink: 'requests',
-        routerLinkActiveOptions: { exact: true }
+        routerLinkActiveOptions: { exact: true },
       },
       {
-        label: 'Свободная задолженность'
+        label: 'Свободная задолженность',
       },
       {
         label: 'Договоры',
         routerLink: 'contracts',
-        routerLinkActiveOptions: { exact: true }
+        routerLinkActiveOptions: { exact: true },
       },
       {
         label: 'Платежи',
         routerLink: 'invoices',
-        routerLinkActiveOptions: { exact: true }
+        routerLinkActiveOptions: { exact: true },
       },
       {
-        label: 'Просрочки Покупателя'
+        label: 'Просрочки Покупателя',
       },
       {
         label: 'Запросы',
         routerLink: 'demand',
-        routerLinkActiveOptions: { exact: true }
+        routerLinkActiveOptions: { exact: true },
       },
       {
         label: 'Документы',
         routerLink: 'documents',
-        routerLinkActiveOptions: { exact: true }
+        routerLinkActiveOptions: { exact: true },
       },
       // {
       //   label: 'Отчеты',
       //   routerLink: 'reports',
       //   routerLinkActiveOptions: { exact: true }
       // },
-
     ];
+  }
+
+  @HostListener('click', ['$event.target'])
+  closeAccountOwner() {
+    const _event: any = event;
+
+    if (!_event.target.classList.contains("clickable")) {
+      if (document.getElementById('dropdownMenu').classList.contains('show')) {
+        document.getElementById('dropdownMenu').classList.remove('show');
+      }
+    }
   }
 }

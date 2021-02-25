@@ -76,12 +76,18 @@ export class RequestCreateDialogComponent {
     });
 
     this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
-      this.deliveries = resp.filter((x) => x.DateTo).reverse();
+      this.deliveries = resp
+        .sort(
+          (a, b) => new Date(a.DateTo).getTime() - new Date(b.DateTo).getTime()
+        )
+        .reverse();
     });
   }
 
   onSubmit(): void {
-    let selectedDelivery = this.deliveries.find(x => x.ID === this.form.value.deliveryID);
+    let selectedDelivery = this.deliveries.find(
+      (x) => x.ID === this.form.value.deliveryID
+    );
 
     const request: ClientRequestInterface = {
       AgencyFlag: false,
@@ -134,7 +140,7 @@ export class RequestCreateDialogComponent {
     };
 
     this.shipments.push(shipment);
-    console.log(this.shipments)
+    console.log(this.shipments);
 
     this.shipmentForm.reset();
     this.hideDialog();

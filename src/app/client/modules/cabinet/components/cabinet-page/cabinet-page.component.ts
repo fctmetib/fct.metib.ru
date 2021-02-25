@@ -8,16 +8,12 @@ import {
   isLoadingSelector,
 } from 'src/app/auth/store/selectors';
 
-import * as introJs from 'intro.js/intro.js';
-
 @Component({
   selector: 'app-cabinet-page',
   templateUrl: './cabinet-page.component.html',
   styleUrls: ['./cabinet-page.component.scss'],
 })
 export class CabinetPageComponent implements OnInit {
-  introJS = introJs();
-
   public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
   public loading$: Observable<boolean | null>;
 
@@ -32,35 +28,5 @@ export class CabinetPageComponent implements OnInit {
 
   public logout(): void {
     this.authSerice.logout();
-  }
-
-  // Intro method to be called
-  introMethod() {
-    this.introJS.setOptions({
-      steps: [
-        {
-          intro: 'Добро пожаловать в обучение!',
-        },
-        {
-          element: '#step1',
-          intro:
-            "В данной секции отображаются все отчеты. Чтобы перейти к нужному отчету - кликните по нему, один раз.",
-          position: 'right',
-        },
-        // {
-        //   element: '#step2',
-        //   intro:
-        //     'Воспользуйтесь...',
-        //   position: 'bottom',
-        // },
-      ],
-      showProgress: true,
-      skipLabel: 'Пропустить',
-      doneLabel: 'Завершить',
-      nextLabel: 'Круто, дальше!',
-      prevLabel: 'Назад',
-      overlayOpacity: '0.8',
-    });
-    this.introJS.start();
   }
 }

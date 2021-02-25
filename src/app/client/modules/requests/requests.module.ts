@@ -29,8 +29,9 @@ import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { reducers } from './store/reducers';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
-import {ToolbarModule} from 'primeng/toolbar';
-import {DialogModule} from 'primeng/dialog';
+import { ToolbarModule } from 'primeng/toolbar';
+import { DialogModule } from 'primeng/dialog';
+import {TieredMenuModule} from 'primeng/tieredmenu';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import {DialogModule} from 'primeng/dialog';
     CheckboxModule,
     ButtonModule,
     RadioButtonModule,
+    TieredMenuModule,
     DynamicDialogModule,
     InputTextareaModule,
     DialogModule,
