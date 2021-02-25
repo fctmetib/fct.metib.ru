@@ -14,6 +14,7 @@ import { FinanceTypeInterface } from '../../types/common/finance-type.interface'
 import { Observable } from 'rxjs';
 import { addRequestAction } from '../../store/actions/crud.action';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
+import { RequestsResponseInterface } from '../../types/requestResponse.interface';
 
 @Component({
   selector: 'app-request-create-dialog',
@@ -81,7 +82,31 @@ export class RequestCreateDialogComponent {
           (a, b) => new Date(a.DateTo).getTime() - new Date(b.DateTo).getTime()
         )
         .reverse();
+
+      if (this.config.data) {
+        console.log(this.deliveries);
+        let delivery: DeliveryInterface = this.deliveries.find(
+          (x) => x.ID === this.config.data.Delivery.ID
+        );
+        this.freeDuty = delivery.Statistics.DutyDebtor;
+
+        console.log(this.freeDuty)
+      }
     });
+
+    if (this.config.data) {
+      let selectedRow: RequestsResponseInterface = this.config.data;
+      console.log(selectedRow);
+
+      this.shipments = selectedRow.Shipments;
+
+      this.form.patchValue({
+        deliveryID: selectedRow.Delivery.ID,
+        number: selectedRow.Number,
+        type: selectedRow.Type,
+        date: selectedRow.Date,
+      });
+    }
   }
 
   onSubmit(): void {

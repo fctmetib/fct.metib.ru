@@ -79,7 +79,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   showCreateRequestDialog() {
     this.ref = this.dialogService.open(RequestCreateDialogComponent, {
-      header: 'Создание/редактирование заявки',
+      header: 'Создание заявки',
       width: '70%',
       contentStyle: { height: '800px', overflow: 'auto' },
       baseZIndex: 10000,
@@ -119,11 +119,18 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   onRowSelect(event) {
-    console.log('ROW SELECTED', event.data);
-  }
+    let selectedRow = event.data
+    this.ref = this.dialogService.open(RequestCreateDialogComponent, {
+      header: 'Редактирование заявки',
+      width: '70%',
+      contentStyle: { height: '800px', overflow: 'auto' },
+      baseZIndex: 10000,
+      data: selectedRow
+    });
 
-  onRowUnselect(event) {
-    console.log('ROW UNSELECTED', event.data);
+    this.ref.onClose.subscribe((data: any) => {
+      console.log('closed');
+    });
   }
 
   ngOnDestroy() {

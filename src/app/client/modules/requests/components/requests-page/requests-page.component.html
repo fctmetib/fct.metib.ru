@@ -13,17 +13,21 @@
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
       <div class="p-mr-2">Выбрано 0</div>
-      <button #btn type="button" pButton  label="Действие" icon="pi pi-angle-down" (click)="menu.toggle($event)" class="basic" id="step2"></button>
+      <button #btn type="button" pButton label="Действие" icon="pi pi-angle-down" (click)="menu.toggle($event)"
+        class="basic" id="step2"></button>
       <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
     </ng-template>
   </p-toolbar>
   <p-table [value]="(requests$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
     [rowsPerPageOptions]="[10,25,50]" [loading]="(isLoading$ | async)" [(selection)]="selectedItems" dataKey="ID"
-    styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
-    currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}" (sortFunction)="customSort($event)"
-    [customSort]="true">
+    (onRowSelect)="onRowSelect($event)" styleClass="p-datatable-customers mib-table" [paginator]="true"
+    [metaKeySelection]="true" currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}"
+    (sortFunction)="customSort($event)" [customSort]="true">
     <ng-template pTemplate="header">
       <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
         <th pSortableColumn="ID">
           <div class="m-th">
             ID
@@ -74,6 +78,9 @@
     </ng-template>
     <ng-template pTemplate="body" let-request>
       <tr [pSelectableRow]="request">
+        <td>
+          <p-tableCheckbox [value]="request"></p-tableCheckbox>
+        </td>
         <td>
           <div class="m-td">
             {{request.ID}}
