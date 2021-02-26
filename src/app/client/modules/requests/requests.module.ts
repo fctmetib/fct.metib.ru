@@ -32,6 +32,7 @@ import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { DialogModule } from 'primeng/dialog';
 import {TieredMenuModule} from 'primeng/tieredmenu';
+import {FileUploadModule} from 'primeng/fileupload';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import {TieredMenuModule} from 'primeng/tieredmenu';
     DynamicDialogModule,
     InputTextareaModule,
     DialogModule,
+    FileUploadModule,
     SliderModule,
     TableModule,
     DropdownModule,

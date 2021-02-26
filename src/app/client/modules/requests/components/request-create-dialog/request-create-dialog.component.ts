@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 import { addRequestAction } from '../../store/actions/crud.action';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-request-create-dialog',
@@ -40,9 +41,21 @@ export class RequestCreateDialogComponent {
     },
   ];
   public freeDuty = 0;
-  public shipments: ClientShipmentInterface[] = [];
 
-  addDeliveryDialog: boolean;
+  public shipments: ClientShipmentInterface[] = [];
+  public selectedShipments: ClientShipmentInterface[] = [];
+
+  public addDeliveryDialog: boolean;
+
+  //#region dynamic variables
+  public btnSubmitValue = 'Создать';
+  //#endregion
+
+  //#region shipment
+  public currentShipmentID = null;
+  //#endregion
+
+  uploadedFiles: any[] = [];
 
   constructor(
     public ref: DynamicDialogRef,
@@ -84,13 +97,10 @@ export class RequestCreateDialogComponent {
         .reverse();
 
       if (this.config.data) {
-        console.log(this.deliveries);
         let delivery: DeliveryInterface = this.deliveries.find(
           (x) => x.ID === this.config.data.Delivery.ID
         );
         this.freeDuty = delivery.Statistics.DutyDebtor;
-
-        console.log(this.freeDuty)
       }
     });
 
@@ -98,7 +108,9 @@ export class RequestCreateDialogComponent {
       let selectedRow: RequestsResponseInterface = this.config.data;
       console.log(selectedRow);
 
-      this.shipments = selectedRow.Shipments;
+      if (selectedRow.Shipments) {
+        this.shipments = selectedRow.Shipments;
+      }
 
       this.form.patchValue({
         deliveryID: selectedRow.Delivery.ID,
@@ -106,6 +118,8 @@ export class RequestCreateDialogComponent {
         type: selectedRow.Type,
         date: selectedRow.Date,
       });
+
+      this.btnSubmitValue = 'Сохранить';
     }
   }
 
@@ -137,7 +151,28 @@ export class RequestCreateDialogComponent {
     this.freeDuty = delivery.Statistics.DutyDebtor;
   }
 
-  openNew() {
+  close() {
+    this.ref.close('Closed');
+  }
+
+  //#region shipments
+  openNew(isEdit: boolean) {
+    if (isEdit) {
+      let shipment = this.shipments[0];
+      if (shipment) {
+        this.currentShipmentID = shipment.ID;
+        this.shipmentForm.patchValue({
+          accountNumber: shipment.AccountNumber,
+          accountDate: shipment.AccountDate,
+          invoiceNumber: shipment.InvoiceNumber,
+          invoiceDate: shipment.InvoiceDate,
+          dateShipment: shipment.DateShipment,
+          summ: shipment.Summ,
+        });
+      } else {
+        return;
+      }
+    }
     this.addDeliveryDialog = true;
   }
 
@@ -145,8 +180,11 @@ export class RequestCreateDialogComponent {
     this.addDeliveryDialog = false;
   }
 
-  close() {
-    this.ref.close('Closed');
+  deleteShipments() {
+    this.selectedShipments.forEach((selectedShipment) => {
+      this.shipments.splice(this.shipments.indexOf(selectedShipment), 1);
+    });
+    this.selectedShipments = [];
   }
 
   addShipment() {
@@ -164,10 +202,28 @@ export class RequestCreateDialogComponent {
       ID: Math.floor(Math.random() * 100),
     };
 
-    this.shipments.push(shipment);
-    console.log(this.shipments);
+    if (this.currentShipmentID) {
+      shipment.ID = this.currentShipmentID;
+      let shipmentIndex = this.shipments.indexOf(
+        this.shipments.find((x) => x.ID === this.currentShipmentID)
+      );
+      this.shipments[shipmentIndex] = shipment;
+      this.currentShipmentID = null;
+    } else {
+      this.shipments.push(shipment);
+    }
 
     this.shipmentForm.reset();
     this.hideDialog();
   }
+
+  //#endregion
+
+  //#region files
+  onUpload(event) {
+    for (let file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+  }
+  //#endregion
 }

@@ -20,9 +20,10 @@
   </p-toolbar>
   <p-table [value]="(requests$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
     [rowsPerPageOptions]="[10,25,50]" [loading]="(isLoading$ | async)" [(selection)]="selectedItems" dataKey="ID"
-    (onRowSelect)="onRowSelect($event)" styleClass="p-datatable-customers mib-table" [paginator]="true"
+    styleClass="p-datatable-customers mib-table" [paginator]="true"
     [metaKeySelection]="true" currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}"
-    (sortFunction)="customSort($event)" [customSort]="true">
+   >
+   <!-- (sortFunction)="customSort($event)" [customSort]="true" -->
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 3rem">

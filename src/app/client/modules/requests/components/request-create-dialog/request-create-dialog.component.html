@@ -29,7 +29,7 @@
     </div>
     <div class="p-field p-col-12 p-md-6">
       <label for="btn_submit">&nbsp;</label>
-      <button id="btn_submit" pButton pRipple type="submit" label="Создать" class="btn-mib-submit"></button>
+      <button id="btn_submit" pButton pRipple type="submit" label="{{btnSubmitValue}}" class="btn-mib-submit"></button>
     </div>
   </div>
 </form>
@@ -39,12 +39,14 @@
 
     <div class="card">
       <div class="mib-toolbar">
-        <button type="button" pButton pRipple label="Добавить" class="p-mr-2" (click)="openNew()"></button>
-        <button type="button" pButton pRipple label="Редактировать" class="p-mr-2" (click)="openNew()"></button>
-        <button type="button" pButton pRipple label="Удалить (1)" class="p-mr-2" (click)="openNew()"></button>
+        <button type="button" pButton pRipple label="Добавить" class="p-mr-2" (click)="openNew(false)"></button>
+        <button type="button" pButton pRipple label="Редактировать" class="p-mr-2" (click)="openNew(true)"></button>
+        <button type="button" pButton pRipple label="Удалить ({{selectedShipments.length}})" class="p-mr-2"
+          (click)="deleteShipments()"></button>
       </div>
 
-      <p-table [rows]="10" [rowHover]="true" [value]="shipments">
+      <p-table [rows]="10" [rowHover]="true" [value]="shipments" selectionMode="multiple"
+        [(selection)]="selectedShipments">
         <ng-template pTemplate="header">
           <tr>
             <th style="width: 3rem">
@@ -157,6 +159,14 @@
     </form>
   </p-tabPanel>
   <p-tabPanel header="Скан-копии накладных">
+    <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="($event)" chooseLabel="Выбрать файлы"
+      uploadLabel="Загрузить" cancelLabel="Отмена" multiple="multiple" accept="image/*" maxFileSize="1000000">
+      <ng-template pTemplate="content">
+        <ul *ngIf="uploadedFiles.length">
+          <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+        </ul>
+      </ng-template>
+    </p-fileUpload>
 
   </p-tabPanel>
   <p-tabPanel header="Документы аккредитива">

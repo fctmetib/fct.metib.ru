@@ -43,33 +43,37 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
     this.items = [
       {
+        label: 'Редактировать',
+        command: () => this.showEditDialog(),
+      },
+      {
         label: 'Создать',
-        command: () => this.showCreateRequestDialog()
+        command: () => this.showCreateRequestDialog(),
       },
       {
         label: 'Создать из подтверждений',
-        routerLink: ''
+        routerLink: '',
       },
       {
         label: 'Сделать коррекцию',
-        routerLink: ''
+        routerLink: '',
       },
       {
         label: 'События',
-        routerLink: ''
+        routerLink: '',
       },
       {
         label: 'Документы',
-        routerLink: ''
+        routerLink: '',
       },
       {
         label: 'Удалить',
-        routerLink: ''
+        routerLink: '',
       },
       {
         label: 'Отправить',
-        routerLink: ''
-      }
+        routerLink: '',
+      },
     ];
   }
 
@@ -118,19 +122,21 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     this.requests$ = of(requests);
   }
 
-  onRowSelect(event) {
-    let selectedRow = event.data
-    this.ref = this.dialogService.open(RequestCreateDialogComponent, {
-      header: 'Редактирование заявки',
-      width: '70%',
-      contentStyle: { height: '800px', overflow: 'auto' },
-      baseZIndex: 10000,
-      data: selectedRow
-    });
+  showEditDialog() {
+    let selectedRow = this.selectedItems[0];
+    if (selectedRow) {
+      this.ref = this.dialogService.open(RequestCreateDialogComponent, {
+        header: 'Редактирование заявки',
+        width: '70%',
+        contentStyle: { height: '800px', overflow: 'auto' },
+        baseZIndex: 10000,
+        data: selectedRow,
+      });
 
-    this.ref.onClose.subscribe((data: any) => {
-      console.log('closed');
-    });
+      this.ref.onClose.subscribe((data: any) => {
+        console.log('closed');
+      });
+    }
   }
 
   ngOnDestroy() {
