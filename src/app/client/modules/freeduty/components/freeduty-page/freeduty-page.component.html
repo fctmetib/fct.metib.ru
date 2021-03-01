@@ -3,11 +3,133 @@
     <div class="title">
       <h2>Свободная задолженность</h2>
       <div class="subheader">
-        Список Свободных задолжностей
+        Список свободных задолженностей
       </div>
     </div>
     <div class="actions">
     </div>
   </div>
 
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <div class="button-content p-mr-2" (click)="openDateModal()" >
+        {{filterForm.value.dateFrom | date: 'dd.MM.yyyy'}} - {{filterForm.value.dateTo | date: 'dd.MM.yyyy'}}
+      </div>
+      <button type="button" pButton label="Показать всё" class="basic p-mr-2"></button>
+      <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="applyFilters()" ></button>
+      <button type="button" pButton label="Создать заявку (1)" class="basic"></button>
+    </ng-template>
+  </p-toolbar>
+  <p-table [value]="(freeduty$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
+    [rowsPerPageOptions]="[10,25,50]" [loading]="(isLoading$ | async)" [(selection)]="selectedItems" dataKey="ID"
+    styleClass="p-datatable-customers mib-table" [paginator]="true"
+    [metaKeySelection]="true" currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}"
+   >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th>
+          <div class="m-th">
+            ID задолженности
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            Накладная №
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            Дата накладной
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            Дата платежа
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            Сумма остатка задолж.
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            Договор
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            Дебитор
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            Комментарий
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr [pSelectableRow]="item"
+      [ngClass]="{'warn': item.Statistics.PaymentExpire === true, 'success': item.Statistics.ShipmentID}">
+        <td>
+          <p-tableCheckbox [value]="item"></p-tableCheckbox>
+        </td>
+        <td>
+          <div class="m-td">
+            {{item.ID}}
+          </div>
+        </td>
+        <td>
+          <div class="m-td">{{item.Number}}</div>
+        </td>
+        <td>
+          <div class="m-td"> {{item.DateDuty | date: 'short'}}</div>
+        </td>
+        <td>
+          <div class="m-td"> {{item.DatePayment | date: 'short'}}</div>
+        </td>
+        <td>
+          <div class="m-td"> {{item.Summ | currency: 'RUB'}}</div>
+        </td>
+        <td>
+          <div class="m-td"> {{item.Contract.Title}} </div>
+        </td>
+        <td>
+          <div class="m-td"> {{item.Contract.Counterparty}} </div>
+        </td>
+        <td>
+          <div class="m-td"> {{item.Statistics.Comment}} </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">Нет данных.</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
+
+<form [formGroup]="filterForm" (ngSubmit)="saveFilter()">
+  <p-dialog [style]="{width: '450px'}" [(visible)]="filterDialog" header="" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+      <div class="p-field">
+        <label for="dateFrom">Дата с: </label>
+        <input id="dateFrom" type="date" pInputText placeholder="Дата с" formControlName="dateFrom">
+      </div>
+      <div class="p-field">
+        <label for="dateTo">Дата по: </label>
+        <input id="dateTo" type="date" pInputText placeholder="Дата по" formControlName="dateTo">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text" (click)="closeDateModal()" ></button>
+      <button pButton pRipple label="Ок" icon="pi pi-check" class="p-button-text" type="submit"></button>
+    </ng-template>
+  </p-dialog>
+</form>
