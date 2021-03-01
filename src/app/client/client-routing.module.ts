@@ -18,6 +18,10 @@ const routes = [
         loadChildren: () => import('./modules/requests/requests.module').then(m => m.RequestModule),
       },
       {
+        path: 'freeduty',
+        loadChildren: () => import('./modules/freeduty/freeduty.module').then(m => m.FreedutyModule),
+      },
+      {
         path: 'invoices',
         loadChildren: () => import('./modules/invoices/invoices.module').then(m => m.InvoicesModule),
       },

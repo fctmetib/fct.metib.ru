@@ -1,4 +1,3 @@
-import { RequestsService } from './requests.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed, inject } from '@angular/core/testing';
 import {
@@ -10,9 +9,9 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { Router } from '@angular/router';
+import { DutyService } from './duty.service';
 
-describe('RequestsService', () => {
+describe('DutyService', () => {
   let service;
   let httpTestingController: HttpTestingController;
 
@@ -22,12 +21,12 @@ describe('RequestsService', () => {
         HttpClientModule,
         RouterTestingModule,
         HttpClientTestingModule],
-      providers: [RequestsService],
+      providers: [DutyService],
     });
     httpTestingController = TestBed.get(HttpTestingController);
   });
 
-  beforeEach(inject([RequestsService], (s) => {
+  beforeEach(inject([DutyService], (s) => {
     service = s;
   }));
 

@@ -25,6 +25,8 @@ export class ClientLayoutComponent implements OnInit {
       },
       {
         label: 'Свободная задолженность',
+        routerLink: 'freeduty',
+        routerLinkActiveOptions: { exact: true },
       },
       {
         label: 'Договоры',
