@@ -11,12 +11,12 @@ import { HeapDutyImportResultInterface } from '../../types/duty/heap-duty-import
 export class DutyService {
   constructor(private http: HttpClient) {}
 
-  fetch(customerID: number, dateFrom: Date, dateTo: Date, freeDuty: boolean): Observable<DutyInterface[]> {
-    const url = `${environment.apiUrl}/duty/${customerID}/${dateFrom}/${dateTo}/${freeDuty}`;
-    return this.http.get<DutyInterface[]>(url);
-  }
+  // fetch(customerID: number, dateFrom: Date, dateTo: Date, freeDuty: boolean): Observable<DutyInterface[]> {
+  //   const url = `${environment.apiUrl}/duty/${customerID}/${dateFrom}/${dateTo}/${freeDuty}`;
+  //   return this.http.get<DutyInterface[]>(url);
+  // }
 
-  getDutyByFilter(data: DutyFilterRequestInterface): Observable<DutyInterface[]> {
+  fetch(data: DutyFilterRequestInterface): Observable<DutyInterface[]> {
     const url = `${environment.apiUrl}/duty/filter`;
     return this.http.post<DutyInterface[]>(url, data);
   }

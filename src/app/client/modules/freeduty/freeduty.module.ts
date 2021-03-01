@@ -29,6 +29,8 @@ import {TieredMenuModule} from 'primeng/tieredmenu';
 import {FileUploadModule} from 'primeng/fileupload';
 import { DutyService } from 'src/app/shared/services/share/duty.service';
 import { FreedutyPageComponent } from './components/freeduty-page/freeduty-page.component';
+import { GetFreedutyEffect } from './store/effects/getFreeduty.effect';
+import { reducers } from './store/reducers';
 
 @NgModule({
   imports: [
@@ -50,8 +52,8 @@ import { FreedutyPageComponent } from './components/freeduty-page/freeduty-page.
     ProgressBarModule,
     ToolbarModule,
     MultiSelectModule,
-    // EffectsModule.forFeature([GetListEffect, CRUDEffect]),
-    // StoreModule.forFeature('freeduty', reducers),
+    EffectsModule.forFeature([GetFreedutyEffect]),
+    StoreModule.forFeature('freeduty', reducers),
     BackendErrorMessagesModule,
     SuccessMessagesModule,
     FreedutyRoutingModule,
