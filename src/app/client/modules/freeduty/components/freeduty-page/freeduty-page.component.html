@@ -12,19 +12,19 @@
 
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
-      <div class="button-content p-mr-2" (click)="openDateModal()" >
+      <div class="button-content p-mr-2" (click)="openDateModal()">
         {{filterForm.value.dateFrom | date: 'dd.MM.yyyy'}} - {{filterForm.value.dateTo | date: 'dd.MM.yyyy'}}
       </div>
-      <button type="button" pButton label="Показать всё" class="basic p-mr-2" (click)="showAll()" ></button>
-      <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="applyFilters()" ></button>
-      <button type="button" pButton label="Создать заявку ({{selectedItems.length}})" class="basic" (click)="openCreateRequestModal()" ></button>
+      <button type="button" pButton label="Показать всё" class="basic p-mr-2" (click)="showAll()"></button>
+      <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="applyFilters()"></button>
+      <button type="button" pButton label="Создать заявку ({{selectedItems.length}})" class="basic"
+        (click)="openCreateRequestModal()"></button>
     </ng-template>
   </p-toolbar>
   <p-table [value]="(freeduty$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
     [rowsPerPageOptions]="[10,25,50]" [loading]="(isLoading$ | async)" [(selection)]="selectedItems" dataKey="ID"
-    styleClass="p-datatable-customers mib-table" [paginator]="true"
-    [metaKeySelection]="true" currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}"
-   >
+    styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
+    currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 3rem">
@@ -74,7 +74,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-item>
       <tr [pSelectableRow]="item"
-      [ngClass]="{'warn': item.Statistics.PaymentExpire === true, 'success': item.Statistics.ShipmentID}">
+        [ngClass]="{'warn': item.Statistics.PaymentExpire === true, 'success': item.Statistics.ShipmentID}">
         <td>
           <p-tableCheckbox [value]="item"></p-tableCheckbox>
         </td>
@@ -128,85 +128,107 @@
       </div>
     </ng-template>
     <ng-template pTemplate="footer">
-      <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text" (click)="closeDateModal()" ></button>
+      <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text"
+        (click)="closeDateModal()"></button>
       <button pButton pRipple label="Ок" icon="pi pi-check" class="p-button-text" type="submit"></button>
     </ng-template>
   </p-dialog>
 </form>
 
 
-  <p-dialog [style]="{width: '950px'}" [(visible)]="requestsDialog" header="Создать заявку" [modal]="true"
-    styleClass="p-fluid">
-    <ng-template pTemplate="content">
-      <p-table [value]="selectedItemsSorted" dataKey="name">
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width: 3rem"></th>
-                <th>Договор</th>
-                <th>Сумма</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-item let-expanded="expanded">
-            <tr>
-                <td>{{item.contract}}</td>
-                <td>{{item.summ}}</td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="rowexpansion" let-item>
-            <tr>
-                <td colspan="7">
-                    <div class="p-p-3">
-                        <p-table [value]="item.requests" dataKey="id">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Заявка</th>
-                                    <th>Сумма</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-request let-ritems="expanded">
-                                <tr>
-                                    <td>{{request.id}}</td>
-                                    <td>{{request.summ}}</td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="rowexpansion" let-item>
-                              <tr>
-                                  <td colspan="7">
-                                      <div class="p-p-3">
-                                          <p-table [value]="item.ritems" dataKey="id">
-                                              <ng-template pTemplate="header">
-                                                  <tr>
-                                                      <th>ID задолженности</th>
-                                                      <th>Дата задолженности</th>
-                                                      <th>Сумма</th>
-                                                  </tr>
-                                              </ng-template>
-                                              <ng-template pTemplate="body" let-request let-expanded="expanded">
-                                                  <tr>
-                                                      <td>{{request.id}}</td>
-                                                      <td>{{request.date}}</td>
-                                                      <td>{{request.summ}}</td>
-                                                  </tr>
-                                              </ng-template>
-                                              <ng-template pTemplate="emptymessage">
-                                                  <tr>
-                                                      <td colspan="6">Нет данных.</td>
-                                                  </tr>
-                                              </ng-template>
-                                          </p-table>
-                                      </div>
-                                  </td>
-                              </tr>
-                          </ng-template>
-                        </p-table>
-                    </div>
-                </td>
-            </tr>
-        </ng-template>
+<p-dialog [style]="{width: '950px'}" [(visible)]="requestsDialog" header="Создать заявку" [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <p-table [value]="selectedItemsSorted" dataKey="contract">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem"></th>
+          <th>Договор</th>
+          <th>Сумма</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-expanded="expanded">
+        <tr>
+          <td>
+            <button type="button" pButton pRipple [pRowToggler]="item"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+          <td>{{item.contract}}</td>
+          <td>{{item.summ}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-item>
+        <tr>
+          <td colspan="7">
+            <div class="p-p-3">
+              <p-table [value]="item.categories" dataKey="categoryName">
+                <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem"></th>
+          <th>Заявка</th>
+          <th>Сумма</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-category let-expandedCategory="expanded">
+        <tr>
+          <td>
+            <button type="button" pButton pRipple [pRowToggler]="category"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expandedCategory ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+          <td>{{category.categoryName}}</td>
+          <td>{{category.summ}}</td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="rowexpansion" let-category>
+        <tr>
+          <td colspan="7">
+            <div class="p-p-3">
+              <p-table [value]="category.requests" dataKey="id">
+                <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem"></th>
+          <th>Накладная</th>
+          <th>Сумма</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-request>
+        <tr>
+          <td></td>
+          <td>{{request.id}}</td>
+          <td>{{request.summ}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6">There are no id for this product yet.</td>
+        </tr>
+      </ng-template>
     </p-table>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text" (click)="closeRequestsModal()" ></button>
-      <button pButton pRipple label="Создать Заявки" icon="pi pi-check" class="p-button-text" type="button"  (click)="createRequests()"></button>
-    </ng-template>
-  </p-dialog>
+    </div>
+    </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="6">There are no order for this product yet.</td>
+    </tr>
+  </ng-template>
+  </p-table>
+  </div>
+  </td>
+  </tr>
+  </ng-template>
+  </p-table>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text"
+      (click)="closeRequestsModal()"></button>
+    <button pButton pRipple label="Создать Заявки" icon="pi pi-check" class="p-button-text" type="button"
+      (click)="createRequests()"></button>
+  </ng-template>
+</p-dialog>

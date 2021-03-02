@@ -6,15 +6,12 @@ import { environment } from 'src/environments/environment';
 import { DutyInterface } from '../../types/duty/duty.interface';
 import { DutyFilterRequestInterface } from '../../types/duty/duty-filter-request.interface';
 import { HeapDutyImportResultInterface } from '../../types/duty/heap-duty-import-result.interface';
+import { ConfirmRequestInterface } from '../../types/common/confirm-request.interface';
+import { ClientRequestSendingInitRequestInterface } from '../../types/client/client-request-sending-init-request.interface';
 
 @Injectable()
 export class DutyService {
   constructor(private http: HttpClient) {}
-
-  // fetch(customerID: number, dateFrom: Date, dateTo: Date, freeDuty: boolean): Observable<DutyInterface[]> {
-  //   const url = `${environment.apiUrl}/duty/${customerID}/${dateFrom}/${dateTo}/${freeDuty}`;
-  //   return this.http.get<DutyInterface[]>(url);
-  // }
 
   fetch(data: DutyFilterRequestInterface): Observable<DutyInterface[]> {
     const url = `${environment.apiUrl}/duty/filter`;
@@ -30,4 +27,15 @@ export class DutyService {
     const url = `${environment.apiUrl}/duty/import?linkIfExist=${linkIfExist}`;
     return this.http.post<string[]>(url, data);
   }
+
+    //TODO: нужно проверить, что возвращается
+    sendConfirm(data: ConfirmRequestInterface): Observable<any> {
+      const url = `${environment.apiUrl}/request/send/confirm`;
+      return this.http.post<any>(url, data);
+    }
+
+    sendInit(data: number[]): Observable<ClientRequestSendingInitRequestInterface> {
+      const url = `${environment.apiUrl}/request/send/init`;
+      return this.http.post<ClientRequestSendingInitRequestInterface>(url, data);
+    }
 }

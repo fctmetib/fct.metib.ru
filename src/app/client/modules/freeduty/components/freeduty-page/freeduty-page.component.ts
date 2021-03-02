@@ -13,6 +13,8 @@ import {
 } from '../../store/selectors';
 import { DutyInterface } from 'src/app/shared/types/duty/duty.interface';
 import { factoringSelector } from 'src/app/client/store/selectors';
+import { SelectedItemSortedInterface } from '../../types/common/selected-item-sorted.interface';
+import { DutyService } from 'src/app/shared/services/share/duty.service';
 
 @Component({
   selector: 'app-freeduty-page',
@@ -26,7 +28,7 @@ export class FreedutyPageComponent implements OnInit {
   isLoading$: Observable<boolean>;
 
   selectedItems: DutyInterface[] = [];
-  selectedItemsSorted: any[] = [];
+  selectedItemsSorted: SelectedItemSortedInterface[] = [];
 
   filterForm: FormGroup;
 
@@ -38,6 +40,7 @@ export class FreedutyPageComponent implements OnInit {
   constructor(
     private store: Store,
     private fb: FormBuilder,
+    private service: DutyService,
     public dialogService: DialogService,
     public datepipe: DatePipe
   ) {}
@@ -78,13 +81,12 @@ export class FreedutyPageComponent implements OnInit {
     });
   }
 
-
   applyFilters(): void {
     this.fetch(true);
   }
 
   showAll(): void {
-    this.fetch(false)
+    this.fetch(false);
   }
 
   fetch(isFree: boolean): void {
@@ -116,14 +118,78 @@ export class FreedutyPageComponent implements OnInit {
   }
   //#endregion
 
-
   //#region requests modal
   openCreateRequestModal(): void {
     this.requestsDialog = true;
+
+    this.selectedItems.forEach((selectedItem) => {
+      let selectedItemSort = this.selectedItemsSorted.find(
+        (x) => x.contract === selectedItem.Contract.Title
+      );
+      if (selectedItemSort) {
+        selectedItemSort.categories[0].requests.push({
+          id: selectedItem.ID,
+          number: selectedItem.Number,
+          summ: selectedItem.Summ,
+        });
+
+        let requestsSumm = selectedItemSort.categories[0].requests
+          .map((item) => item.summ)
+          .reduce((sum, current) => sum + current, 0);
+
+        selectedItemSort.categories[0].summ = requestsSumm;
+
+        let categoriesSum = selectedItemSort.categories
+          .map((item) => item.summ)
+          .reduce((sum, current) => sum + current, 0);
+
+        selectedItemSort.summ = categoriesSum;
+
+        // let updatedSelectedItemSort: SelectedItemSortedInterface = {};
+
+        // selectedItemSort = updatedSelectedItemSort;
+      } else {
+        this.selectedItemsSorted.push({
+          summ: selectedItem.Summ,
+          categories: [
+            {
+              categoryName: '1',
+              summ: selectedItem.Summ,
+              requests: [
+                {
+                  id: selectedItem.ID,
+                  number: selectedItem.Number,
+                  summ: selectedItem.Summ,
+                },
+              ],
+            },
+          ],
+          contract: selectedItem.Contract.Title,
+        });
+      }
+    });
   }
 
   createRequests(): void {
-    this.closeRequestsModal();
+    let categories = this.selectedItemsSorted.map((i) => i.categories);
+
+    let requestsId = categories.map((c) =>
+      c.map((r) => r.requests.map((i) => i.id))
+    );
+
+    let flattenedRequestsId: number[] = [];
+
+    requestsId.forEach((c) => {
+      c.forEach((i) => {
+        i.forEach((s) => {
+          flattenedRequestsId.push(s);
+        });
+      });
+    });
+
+    this.service.sendInit(flattenedRequestsId).subscribe((resp) => {
+      this.closeRequestsModal();
+    });
   }
 
   closeRequestsModal(): void {

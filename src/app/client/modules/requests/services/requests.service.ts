@@ -48,17 +48,6 @@ export class RequestsService {
     return this.http.post<ClientShipmentInterface[]>(url, {});
   }
 
-  //TODO: нужно проверить, что возвращается
-  sendConfirm(data: ConfirmRequestInterface): Observable<any> {
-    const url = `${environment.apiUrl}/request/send/confirm`;
-    return this.http.post<any>(url, data);
-  }
-
-  sendInit(data: number[]): Observable<ClientRequestSendingInitRequestInterface> {
-    const url = `${environment.apiUrl}/request/send/init`;
-    return this.http.post<ClientRequestSendingInitRequestInterface>(url, data);
-  }
-
   addFreeduty(data: number[]): Observable<RequestsResponseInterface[]> {
     const url = `${environment.apiUrl}/request`;
     return this.http.post<RequestsResponseInterface[]>(url, data);
