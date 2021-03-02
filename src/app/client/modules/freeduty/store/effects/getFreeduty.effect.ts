@@ -14,7 +14,8 @@ export class GetFreedutyEffect {
       ofType(getFreedutyAction),
       switchMap((data) => {
         return this.dutyService.fetch(data.data).pipe(
-          map((list: DutyInterface[]) => {
+          map((resp: DutyInterface[]) => {
+            let list = resp.reverse();
             return getFreedutySuccessAction({ list });
           }),
 

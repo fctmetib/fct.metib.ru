@@ -15,9 +15,9 @@
       <div class="button-content p-mr-2" (click)="openDateModal()" >
         {{filterForm.value.dateFrom | date: 'dd.MM.yyyy'}} - {{filterForm.value.dateTo | date: 'dd.MM.yyyy'}}
       </div>
-      <button type="button" pButton label="Показать всё" class="basic p-mr-2"></button>
+      <button type="button" pButton label="Показать всё" class="basic p-mr-2" (click)="showAll()" ></button>
       <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="applyFilters()" ></button>
-      <button type="button" pButton label="Создать заявку (1)" class="basic"></button>
+      <button type="button" pButton label="Создать заявку ({{selectedItems.length}})" class="basic" (click)="openCreateRequestModal()" ></button>
     </ng-template>
   </p-toolbar>
   <p-table [value]="(freeduty$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
@@ -99,7 +99,7 @@
           <div class="m-td"> {{item.Contract.Title}} </div>
         </td>
         <td>
-          <div class="m-td"> {{item.Contract.Counterparty}} </div>
+          <div class="m-td"> {{item.Contract.Client}} </div>
         </td>
         <td>
           <div class="m-td"> {{item.Statistics.Comment}} </div>
@@ -115,7 +115,7 @@
 </div>
 
 <form [formGroup]="filterForm" (ngSubmit)="saveFilter()">
-  <p-dialog [style]="{width: '450px'}" [(visible)]="filterDialog" header="" [modal]="true"
+  <p-dialog [style]="{width: '450px'}" [(visible)]="filterDialog" header="Укажите период" [modal]="true"
     styleClass="p-fluid">
     <ng-template pTemplate="content">
       <div class="p-field">
@@ -133,3 +133,80 @@
     </ng-template>
   </p-dialog>
 </form>
+
+
+  <p-dialog [style]="{width: '950px'}" [(visible)]="requestsDialog" header="Создать заявку" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+      <p-table [value]="selectedItemsSorted" dataKey="name">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem"></th>
+                <th>Договор</th>
+                <th>Сумма</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-expanded="expanded">
+            <tr>
+                <td>{{item.contract}}</td>
+                <td>{{item.summ}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-item>
+            <tr>
+                <td colspan="7">
+                    <div class="p-p-3">
+                        <p-table [value]="item.requests" dataKey="id">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Заявка</th>
+                                    <th>Сумма</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-request let-ritems="expanded">
+                                <tr>
+                                    <td>{{request.id}}</td>
+                                    <td>{{request.summ}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="rowexpansion" let-item>
+                              <tr>
+                                  <td colspan="7">
+                                      <div class="p-p-3">
+                                          <p-table [value]="item.ritems" dataKey="id">
+                                              <ng-template pTemplate="header">
+                                                  <tr>
+                                                      <th>ID задолженности</th>
+                                                      <th>Дата задолженности</th>
+                                                      <th>Сумма</th>
+                                                  </tr>
+                                              </ng-template>
+                                              <ng-template pTemplate="body" let-request let-expanded="expanded">
+                                                  <tr>
+                                                      <td>{{request.id}}</td>
+                                                      <td>{{request.date}}</td>
+                                                      <td>{{request.summ}}</td>
+                                                  </tr>
+                                              </ng-template>
+                                              <ng-template pTemplate="emptymessage">
+                                                  <tr>
+                                                      <td colspan="6">Нет данных.</td>
+                                                  </tr>
+                                              </ng-template>
+                                          </p-table>
+                                      </div>
+                                  </td>
+                              </tr>
+                          </ng-template>
+                        </p-table>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text" (click)="closeRequestsModal()" ></button>
+      <button pButton pRipple label="Создать Заявки" icon="pi pi-check" class="p-button-text" type="button"  (click)="createRequests()"></button>
+    </ng-template>
+  </p-dialog>
