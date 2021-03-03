@@ -120,6 +120,7 @@ export class FreedutyPageComponent implements OnInit {
 
   //#region requests modal
   openCreateRequestModal(): void {
+    this.selectedItemsSorted = [];
     this.requestsDialog = true;
 
     this.selectedItems.forEach((selectedItem) => {
@@ -128,8 +129,9 @@ export class FreedutyPageComponent implements OnInit {
       );
       if (selectedItemSort) {
         selectedItemSort.categories[0].requests.push({
-          id: selectedItem.ID,
+          id: selectedItem.Contract.ID,
           number: selectedItem.Number,
+          date: selectedItem.DateDuty,
           summ: selectedItem.Summ,
         });
 
@@ -144,10 +146,6 @@ export class FreedutyPageComponent implements OnInit {
           .reduce((sum, current) => sum + current, 0);
 
         selectedItemSort.summ = categoriesSum;
-
-        // let updatedSelectedItemSort: SelectedItemSortedInterface = {};
-
-        // selectedItemSort = updatedSelectedItemSort;
       } else {
         this.selectedItemsSorted.push({
           summ: selectedItem.Summ,
@@ -157,8 +155,9 @@ export class FreedutyPageComponent implements OnInit {
               summ: selectedItem.Summ,
               requests: [
                 {
-                  id: selectedItem.ID,
+                  id: selectedItem.Contract.ID,
                   number: selectedItem.Number,
+                  date: selectedItem.DateDuty,
                   summ: selectedItem.Summ,
                 },
               ],

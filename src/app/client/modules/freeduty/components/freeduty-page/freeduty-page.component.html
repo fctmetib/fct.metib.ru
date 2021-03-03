@@ -143,8 +143,18 @@
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 3rem"></th>
-          <th>Договор</th>
-          <th>Сумма</th>
+          <th class="header-width">
+            <div class="m-th">Договор / Заявка / Накладная</div>
+          </th>
+          <th class="header-width">
+            <div class="m-th">ID задолженности</div>
+          </th>
+          <th class="header-width">
+            <div class="m-th">Дата задолженности</div>
+          </th>
+          <th class="header-width">
+            <div class="m-th">Сумма</div>
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-item let-expanded="expanded">
@@ -154,20 +164,37 @@
               class="p-button-text p-button-rounded p-button-plain"
               [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
-          <td>{{item.contract}}</td>
-          <td>{{item.summ}}</td>
+          <td>
+            <div class="m-td">
+              {{item.contract}}</div>
+          </td>
+          <td>
+            <div class="m-td">
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              Итог - Контракт: {{item.summ | currency:'RUB'}}
+            </div>
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="rowexpansion" let-item>
         <tr>
           <td colspan="7">
-            <div class="p-p-3">
+            <div>
               <p-table [value]="item.categories" dataKey="categoryName">
                 <ng-template pTemplate="header">
         <tr>
           <th style="width: 3rem"></th>
-          <th>Заявка</th>
-          <th>Сумма</th>
+          <th class="header-width"></th>
+          <th class="header-width"></th>
+          <th class="header-width"></th>
+          <th class="header-width"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-category let-expandedCategory="expanded">
@@ -177,33 +204,61 @@
               class="p-button-text p-button-rounded p-button-plain"
               [icon]="expandedCategory ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
-          <td>{{category.categoryName}}</td>
-          <td>{{category.summ}}</td>
+          <td>
+            <div class="m-td">{{category.categoryName}}</div>
+          </td>
+          <td>
+            <div class="m-td">
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+            </div>
+          </td>
+          <td>
+            <div class="m-td">{{category.summ | currency:'RUB'}}</div>
+          </td>
         </tr>
       </ng-template>
 
       <ng-template pTemplate="rowexpansion" let-category>
         <tr>
           <td colspan="7">
-            <div class="p-p-3">
+            <div>
               <p-table [value]="category.requests" dataKey="id">
                 <ng-template pTemplate="header">
         <tr>
           <th style="width: 3rem"></th>
-          <th>Накладная</th>
-          <th>Сумма</th>
+          <th class="header-width"></th>
+          <th class="header-width"></th>
+          <th class="header-width"></th>
+          <th class="header-width"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-request>
         <tr>
           <td></td>
-          <td>{{request.id}}</td>
-          <td>{{request.summ}}</td>
+          <td>
+            <div class="m-td">{{request.id}}</div>
+          </td>
+          <td>
+            <div class="m-td">
+              {{request.number}}
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              {{request.date | date:'MM.dd.yyyy'}}
+            </div>
+          </td>
+          <td>
+            <div class="m-td">{{request.summ | currency:'RUB'}}</div>
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="6">There are no id for this product yet.</td>
+          <td colspan="6">Нет данных.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -214,7 +269,7 @@
 
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td colspan="6">There are no order for this product yet.</td>
+      <td colspan="6">Нет данных.</td>
     </tr>
   </ng-template>
   </p-table>
@@ -223,12 +278,11 @@
   </tr>
   </ng-template>
   </p-table>
-  </ng-template>
 
+
+  </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text"
-      (click)="closeRequestsModal()"></button>
-    <button pButton pRipple label="Создать Заявки" icon="pi pi-check" class="p-button-text" type="button"
+    <button pButton pRipple label="Создать Заявку" class="p-button-text" type="button" class="btn-mib-submit w-100"
       (click)="createRequests()"></button>
   </ng-template>
 </p-dialog>

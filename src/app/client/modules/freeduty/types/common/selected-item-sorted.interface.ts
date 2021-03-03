@@ -10,6 +10,7 @@ export interface SelectedItemSortedInterface {
             id: number;
             number: string;
             summ: number;
+            date: Date
           },
         ],
       },
