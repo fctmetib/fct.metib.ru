@@ -10,6 +10,7 @@ export interface ClientRequestInterface {
   Number: string;
   Title: string;
   Date: Date;
+  ID?: number;
   AgencyFlag: boolean;
   Shipments: ClientShipmentInterface[];
   Files: FileModeInterface[]

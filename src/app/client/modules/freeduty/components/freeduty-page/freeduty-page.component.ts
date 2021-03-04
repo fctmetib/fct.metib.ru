@@ -15,6 +15,9 @@ import { DutyInterface } from 'src/app/shared/types/duty/duty.interface';
 import { factoringSelector } from 'src/app/client/store/selectors';
 import { SelectedItemSortedInterface } from '../../types/common/selected-item-sorted.interface';
 import { DutyService } from 'src/app/shared/services/share/duty.service';
+import { map } from 'rxjs/operators';
+import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-freeduty-page',
@@ -31,11 +34,17 @@ export class FreedutyPageComponent implements OnInit {
   selectedItemsSorted: SelectedItemSortedInterface[] = [];
 
   filterForm: FormGroup;
+  confirmForm: FormGroup;
 
   filterDialog: boolean = false;
   requestsDialog: boolean = false;
+  confirmDialog: boolean = false;
 
   organizationId: number;
+  requestsDialogAlert: string;
+
+  successRequestsDialogMessage: string = null;
+  errorRequestsDialogMessage: string = null;
 
   constructor(
     private store: Store,
@@ -79,6 +88,11 @@ export class FreedutyPageComponent implements OnInit {
         [Validators.required],
       ],
     });
+
+    this.confirmForm = this.fb.group({
+      pin: ['', [Validators.required]],
+      confirmCode: [''],
+    });
   }
 
   applyFilters(): void {
@@ -121,6 +135,9 @@ export class FreedutyPageComponent implements OnInit {
   //#region requests modal
   openCreateRequestModal(): void {
     this.selectedItemsSorted = [];
+    this.successRequestsDialogMessage = null;
+    this.errorRequestsDialogMessage = null;
+
     this.requestsDialog = true;
 
     this.selectedItems.forEach((selectedItem) => {
@@ -129,7 +146,7 @@ export class FreedutyPageComponent implements OnInit {
       );
       if (selectedItemSort) {
         selectedItemSort.categories[0].requests.push({
-          id: selectedItem.Contract.ID,
+          id: selectedItem.ID,
           number: selectedItem.Number,
           date: selectedItem.DateDuty,
           summ: selectedItem.Summ,
@@ -155,7 +172,7 @@ export class FreedutyPageComponent implements OnInit {
               summ: selectedItem.Summ,
               requests: [
                 {
-                  id: selectedItem.Contract.ID,
+                  id: selectedItem.ID,
                   number: selectedItem.Number,
                   date: selectedItem.DateDuty,
                   summ: selectedItem.Summ,
@@ -170,6 +187,9 @@ export class FreedutyPageComponent implements OnInit {
   }
 
   createRequests(): void {
+    this.successRequestsDialogMessage = null;
+    this.errorRequestsDialogMessage = null;
+
     let categories = this.selectedItemsSorted.map((i) => i.categories);
 
     let requestsId = categories.map((c) =>
@@ -186,13 +206,52 @@ export class FreedutyPageComponent implements OnInit {
       });
     });
 
-    this.service.sendInit(flattenedRequestsId).subscribe((resp) => {
-      this.closeRequestsModal();
-    });
+    this.service
+      .createRequestsByDutyIds(flattenedRequestsId)
+      .pipe(
+        map((requests) => {
+          let requestsID = requests.map((x) => x.ID);
+          this.service.sendInit(requestsID).subscribe(
+            (response) => {
+              this.confirmForm.patchValue({
+                confirmCode: response.ConfirmationCode,
+              });
+
+              this.confirmDialog = true;
+            },
+            (err) => {
+              this.errorRequestsDialogMessage = err.error;
+            }
+          );
+        })
+      )
+      .subscribe(
+        (response) => {},
+        (err) => {
+          this.errorRequestsDialogMessage = err.error;
+        }
+      );
+
+    //  this.closeRequestsModal();
   }
 
   closeRequestsModal(): void {
     this.requestsDialog = false;
+  }
+
+  confirm(): void {
+    this.successRequestsDialogMessage = null;
+    this.errorRequestsDialogMessage = null;
+
+    let confirmData: ConfirmRequestInterface = {
+      ConfirmationCode: this.confirmForm.value.confirmCode,
+      Pin: this.confirmForm.value.pin,
+    };
+
+    this.service.sendConfirm(confirmData).subscribe((resp) => {
+      this.confirmDialog = false;
+      this.successRequestsDialogMessage = 'Заявка успешно подтверждена';
+    });
   }
   //#endregion
 }
