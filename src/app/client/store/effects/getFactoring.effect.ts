@@ -9,9 +9,11 @@ import { CookieService } from 'ngx-cookie-service';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, forkJoin } from 'rxjs';
 import { getFactoringAction } from '../actions/getFactoring.action';
 import { ClientService } from 'src/app/shared/services/common/client.service';
+import { OrganizationService } from 'src/app/shared/services/share/organization.service';
+import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
 
 @Injectable()
 export class GetFactoringEffect {
@@ -21,6 +23,14 @@ export class GetFactoringEffect {
       switchMap(({ organizationID }) => {
         return this.clientService.getClientFactoringById(organizationID).pipe(
           map((factoring: CustomerInterface) => {
+            forkJoin({
+              organization: this.organizationService.getOrganizationById(factoring.Organization.ID),
+              deliveries: this.deliveryService.getDeliveriesByIdWithStats(factoring.Organization.ID.toString()),
+            }).subscribe(({deliveries, organization}) => {
+              console.log(deliveries)
+              console.log(organization)
+            })
+
             return getFactoringSuccessAction({ factoring });
           }),
 
@@ -35,5 +45,7 @@ export class GetFactoringEffect {
   constructor(
     private actions$: Actions,
     private clientService: ClientService,
+    private deliveryService: DeliveryService,
+    private organizationService: OrganizationService
   ) {}
 }

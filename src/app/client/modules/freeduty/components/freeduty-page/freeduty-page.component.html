@@ -115,35 +115,36 @@
 </div>
 
 <!-- Filter Form -->
-<form [formGroup]="filterForm" (ngSubmit)="saveFilter()">
-  <p-dialog [style]="{width: '450px'}" [(visible)]="filterDialog" header="Укажите период" [modal]="true"
-    styleClass="p-fluid">
+<form>
+  <p-dialog [style]="{width: '450px'}" [(visible)]="filterDialog" [draggable]="false" [resizable]="false"
+    header="Укажите период" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
-      <div class="p-field">
-        <label for="dateFrom">Дата с: </label>
-        <input id="dateFrom" type="date" pInputText placeholder="Дата с" formControlName="dateFrom">
-      </div>
-      <div class="p-field">
-        <label for="dateTo">Дата по: </label>
-        <input id="dateTo" type="date" pInputText placeholder="Дата по" formControlName="dateTo">
-      </div>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text"
-        (click)="closeDateModal()"></button>
-      <button pButton pRipple label="Ок" icon="pi pi-check" class="p-button-text" type="submit"></button>
+      <form [formGroup]="filterForm" (ngSubmit)="saveFilter()">
+        <div class="p-field">
+          <label for="dateFrom">Дата с: </label>
+          <input id="dateFrom" type="date" pInputText placeholder="Дата с" formControlName="dateFrom">
+        </div>
+        <div class="p-field">
+          <label for="dateTo">Дата по: </label>
+          <input id="dateTo" type="date" pInputText placeholder="Дата по" formControlName="dateTo">
+        </div>
+        <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text"
+          (click)="closeDateModal()"></button>
+        <button pButton pRipple label="Ок" icon="pi pi-check" class="p-button-text" type="submit"></button>
+      </form>
     </ng-template>
   </p-dialog>
 </form>
 
 <!-- Request Form -->
 <p-dialog [style]="{width: '950px'}" [(visible)]="requestsDialog" header="Создать заявку" [modal]="true"
-  styleClass="p-fluid">
+  [draggable]="false" [resizable]="false" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <metib-backend-error-messages *ngIf="errorRequestsDialogMessage" [backendErrors]="errorRequestsDialogMessage">
     </metib-backend-error-messages>
 
-    <metib-success-messages *ngIf="successRequestsDialogMessage" [message]="successRequestsDialogMessage"></metib-success-messages>
+    <metib-success-messages *ngIf="successRequestsDialogMessage" [message]="successRequestsDialogMessage">
+    </metib-success-messages>
     <p-table [value]="selectedItemsSorted" dataKey="contract">
       <ng-template pTemplate="header">
         <tr>
@@ -283,8 +284,6 @@
   </tr>
   </ng-template>
   </p-table>
-
-
   </ng-template>
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Создать Заявку" class="p-button-text" type="button" class="btn-mib-submit w-100"
@@ -296,7 +295,7 @@
 <!-- Confirm Form -->
 <form [formGroup]="confirmForm" (ngSubmit)="confirm()">
   <p-dialog [style]="{width: '450px'}" [(visible)]="confirmDialog" header="Подтверждение" [modal]="true"
-    styleClass="p-fluid">
+    [draggable]="false" [resizable]="false" styleClass="p-fluid">
     <ng-template pTemplate="content">
       <div class="p-field">
         <label for="pin">Пин-код: </label>

@@ -119,11 +119,11 @@
         </ng-template>
       </p-table>
     </div>
-    <form [formGroup]="shipmentForm" (ngSubmit)="addShipment()">
-      <p-dialog [style]="{width: '450px'}" [(visible)]="addDeliveryDialog" header="Накладная" [modal]="true"
-        styleClass="p-fluid">
-        <ng-template pTemplate="content">
 
+    <p-dialog [style]="{width: '650px'}" [(visible)]="addDeliveryDialog" header="Накладная" [modal]="true"
+      [draggable]="false" [resizable]="false" styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="shipmentForm" (ngSubmit)="addShipment()">
           <div class="p-field">
             <label for="accountNumber">Накладная: </label>
             <input id="accountNumber" type="text" pInputText placeholder="Накладная" formControlName="accountNumber">
@@ -149,14 +149,15 @@
             <label for="summ">Сумма: </label>
             <input id="summ" type="number" pInputText placeholder="Сумма" formControlName="summ">
           </div>
-
-        </ng-template>
-        <ng-template pTemplate="footer">
+          <button pButton pRipple label="Сформировать" icon="pi pi-check" class="p-button-text" type="submit"></button>
           <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text"></button>
-          <button pButton pRipple label="Сохранить" icon="pi pi-check" class="p-button-text" type="submit"></button>
-        </ng-template>
-      </p-dialog>
-    </form>
+        </form>
+      </ng-template>
+      <!-- <ng-template pTemplate="footer">
+
+        </ng-template> -->
+    </p-dialog>
+
   </p-tabPanel>
   <p-tabPanel header="Скан-копии накладных">
     <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="($event)" chooseLabel="Выбрать файлы"

@@ -40,6 +40,10 @@ const routes = [
       {
         path: 'demand',
         loadChildren: () => import('./modules/demand/demand.module').then(m => m.DemandModule)
+      },
+      {
+        path: 'delays',
+        loadChildren: () => import('./modules/delays/delays.module').then(m => m.DelaysModule)
       }
     ],
   },

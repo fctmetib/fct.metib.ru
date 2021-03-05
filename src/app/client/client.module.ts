@@ -22,6 +22,8 @@ import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
 import { ClientService } from '../shared/services/common/client.service';
 import { reducers } from './store/reducers';
+import { DeliveryService } from '../shared/services/share/delivery.service';
+import { OrganizationService } from '../shared/services/share/organization.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -42,6 +44,6 @@ import { reducers } from './store/reducers';
     AvatarModule,
   ],
   declarations: [ClientLayoutComponent, HeaderComponent],
-  providers: [ClientService],
+  providers: [ClientService, DeliveryService, OrganizationService],
 })
 export class ClientModule {}

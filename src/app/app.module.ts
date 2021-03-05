@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from './auth/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { CookieService } from 'ngx-cookie-service';
   ],
   providers: [
     CookieService,
+    AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

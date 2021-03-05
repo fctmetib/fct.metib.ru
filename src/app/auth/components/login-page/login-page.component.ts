@@ -51,6 +51,10 @@ export class LoginPageComponent implements OnInit {
         this.alert = true;
         this.alertMessage = 'Пароль успешно изменен. Войдите в сервис, используя свои данные.'
       }
+      if(params['sessionFailed']) {
+        this.alert = true;
+        this.alertMessage = 'Пожалуйста, войдите в систему снова.'
+      }
     });
   }
 

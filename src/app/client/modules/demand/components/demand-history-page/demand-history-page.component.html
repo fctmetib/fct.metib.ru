@@ -17,7 +17,18 @@
       <div class="demand-info">
         <div class="demand-content">
           <div class="text">
-            №{{demand.ID}} Запрос на свободную тему
+            <p>
+              №{{demand.ID}}
+              <span [ngSwitch]="demand.Type">
+                <span *ngSwitchCase="'DigitalSignature'">
+                  Запрос на ЭЦП
+                </span>
+                <span *ngSwitchDefault>
+                  Запрос на свободную тему
+                </span>
+              </span>
+            </p>
+
           </div>
           <div class="icon arrow_right"></div>
         </div>

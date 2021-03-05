@@ -40,6 +40,8 @@ export class ClientLayoutComponent implements OnInit {
       },
       {
         label: 'Просрочки Покупателя',
+        routerLink: 'delays',
+        routerLinkActiveOptions: { exact: true },
       },
       {
         label: 'Запросы',

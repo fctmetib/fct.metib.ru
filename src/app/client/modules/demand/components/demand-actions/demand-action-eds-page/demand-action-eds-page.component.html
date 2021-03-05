@@ -12,4 +12,32 @@
       <button pButton pRipple type="button" label="Создать Запрос" (click)="a()" class="basic"></button>
     </div>
   </div>
+
+  <form action="">
+    <div class="p-fluid p-formgrid p-grid form">
+      <div class="p-field p-col-12 p-md-6">
+        <label for="deliveryID">Договор поставки:</label>
+        <p-dropdown id="deliveryID" [options]="[]" placeholder="Выберите договор" formControlName="deliveryID"
+          optionLabel="Title" optionValue="ID"></p-dropdown>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label for="number">Номер заявки:</label>
+        <input id="number" type="text" pInputText placeholder="Номер Заявки" formControlName="number">
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label for="type">Тип заявки:</label>
+        <p-dropdown id="type" [options]="[]" formControlName="type" optionLabel="name" optionValue="value">
+        </p-dropdown>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label for="date">Дата: </label>
+        <input id="date" type="date" pInputText placeholder="Дата" formControlName="date">
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label for="btn_submit">&nbsp;</label>
+        <button id="btn_submit" pButton pRipple type="submit" label="Сохранить" class="btn-mib-submit"></button>
+      </div>
+    </div>
+  </form>
+
 </div>

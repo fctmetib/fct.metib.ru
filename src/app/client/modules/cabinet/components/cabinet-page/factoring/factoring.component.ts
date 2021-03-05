@@ -2,7 +2,7 @@ import { OrganizationInterface } from './../../../../../../shared/types/organiza
 import { OrganizationService } from './../../../../../../shared/services/share/organization.service';
 import { DeliveryInterface } from './../../../../../../shared/types/delivery/delivery.interface';
 import { DeliveryService } from './../../../../../../shared/services/share/delivery.service';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
@@ -29,16 +29,17 @@ export class FactoringComponent implements OnInit {
     this.store.pipe(select(factoringSelector)).subscribe(resp => {
       this.factoring = resp;
 
-      // TODO: Rework it on NgRx style
-      if(resp) {
-        this.deliveryService.getDeliveriesByIdWithStats(resp.Organization.ID.toString()).subscribe(resp => {
-          this.deliveries = resp;
-        });
 
-        this.organizationService.getOrganizationById(resp.Organization.ID).subscribe(resp => {
-          this.organization = resp;
-        });
-      }
+      // TODO: Rework it on NgRx style
+      // if(resp) {
+      // .subscribe(resp => {
+      //     this.deliveries = resp;
+      //   });
+
+      //  .subscribe(resp => {
+      //     this.organization = resp;
+      //   });
+      // }
 
     });
 
