@@ -11,6 +11,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./client/client.module').then(m => m.ClientModule)
   },
+  {
+    path: '',
+    loadChildren: () => import('./not-verify-client/not-verify-client.module').then(m => m.NotVerifyClientModule)
+  }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

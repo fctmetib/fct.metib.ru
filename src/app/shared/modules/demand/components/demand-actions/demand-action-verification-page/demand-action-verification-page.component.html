@@ -1,0 +1,15 @@
+<div [ngClass]="{'card-content': isUserVerified}">
+  <div class="header lg">
+    <div class="title">
+      <h2>Регистрация канала верификации</h2>
+      <!-- <div class="subheader">
+        Список заявок
+      </div> -->
+    </div>
+    <div class="actions">
+      <button pButton pRipple type="button" label="Вернуться к списку запросов" [routerLink]="['/demand']"
+      class="p-button-outlined"></button>
+      <button pButton pRipple type="button" label="Создать Запрос" (click)="a()" class="basic"></button>
+    </div>
+  </div>
+</div>

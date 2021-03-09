@@ -19,7 +19,12 @@ import { RegisterReponseInterface } from '../types/register/registerResponse.int
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router, private cryptoService: CryptoService) {}
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+    private router: Router,
+    private cryptoService: CryptoService
+  ) {}
 
   register(
     data: RegisterRequestInterface
@@ -47,7 +52,9 @@ export class AuthService {
    * Called first
    * @param data
    */
-  resetPassword(data: ResetPasswordRequestInterface): Observable<ResetPasswordReponseInterface> {
+  resetPassword(
+    data: ResetPasswordRequestInterface
+  ): Observable<ResetPasswordReponseInterface> {
     const url = environment.apiUrl + '/user/password/forget';
     return this.http.post<ResetPasswordReponseInterface>(url, data);
   }
@@ -56,7 +63,9 @@ export class AuthService {
    * Called second
    * @param data
    */
-  resetPasswordConfirm(data: ResetPasswordConfirmRequestInterface): Observable<string> {
+  resetPasswordConfirm(
+    data: ResetPasswordConfirmRequestInterface
+  ): Observable<string> {
     const url = environment.apiUrl + '/user/password/recovery/confirm';
     return this.http.post<string>(url, data);
   }
@@ -65,9 +74,24 @@ export class AuthService {
    * Called last
    * @param data
    */
-  resetPasswordComplete(data: ResetPasswordCompleteRequestInterface): Observable<{}> {
+  resetPasswordComplete(
+    data: ResetPasswordCompleteRequestInterface
+  ): Observable<{}> {
     const url = environment.apiUrl + '/user/password/recovery/complete';
     return this.http.post<{}>(url, data);
+  }
+
+  //#region common logic
+
+  isUserVerified(): boolean {
+    const roles = this.getUserRoles();
+
+    if(roles.includes('Customer') || roles.includes('Debtor') || roles.includes('Staff'))
+    {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public logout(): void {
@@ -83,4 +107,24 @@ export class AuthService {
       return false;
     }
   }
+
+  //#endregion
+
+  //#region private
+
+  /**
+   * This function return current user roles
+   */
+  private getUserRoles(): string[] {
+    // const user: AuthResponseInterface = this.cryptoService.decrypt(
+    //   JSON.parse(this.cookieService.get('_cu'))
+    // );
+    const userCookie = this.cookieService.get('_cu');
+    const user = JSON.parse(
+      this.cryptoService.decrypt(userCookie)
+    ) as AuthResponseInterface;
+    return user.Roles;
+  }
+
+  //#endregion
 }

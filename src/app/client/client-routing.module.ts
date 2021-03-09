@@ -2,12 +2,13 @@ import { AuthGuard } from './../shared/services/auth.guard';
 import { ClientLayoutComponent } from '../shared/layouts/client-layout/client-layout.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { UserVerifyGuard } from '../shared/services/user-verify.guard';
 
 const routes = [
   {
     path: '',
     component: ClientLayoutComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, UserVerifyGuard],
     children: [
       {
         path: 'cabinet',
@@ -39,7 +40,7 @@ const routes = [
       },
       {
         path: 'demand',
-        loadChildren: () => import('./modules/demand/demand.module').then(m => m.DemandModule)
+        loadChildren: () => import('../shared/modules/demand/demand.module').then(m => m.DemandModule)
       },
       {
         path: 'delays',
