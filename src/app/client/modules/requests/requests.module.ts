@@ -18,6 +18,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
 import { TabViewModule } from 'primeng/tabview';
+import { SkeletonModule } from 'primeng/skeleton';
 
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -47,6 +48,7 @@ import {FileUploadModule} from 'primeng/fileupload';
     InputTextareaModule,
     DialogModule,
     FileUploadModule,
+    SkeletonModule,
     SliderModule,
     TableModule,
     DropdownModule,

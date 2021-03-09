@@ -19,11 +19,10 @@
     </ng-template>
   </p-toolbar>
   <p-table [value]="(requests$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
-    [rowsPerPageOptions]="[10,25,50]" [loading]="(isLoading$ | async)" [(selection)]="selectedItems" dataKey="ID"
-    styleClass="p-datatable-customers mib-table" [paginator]="true"
-    [metaKeySelection]="true" currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}"
-   >
-   <!-- (sortFunction)="customSort($event)" [customSort]="true" -->
+    [rowsPerPageOptions]="[10,25,50]" [(selection)]="selectedItems" dataKey="ID"
+    styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
+    currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">
+    <!-- (sortFunction)="customSort($event)" [customSort]="true" -->
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 3rem">
@@ -111,9 +110,145 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-      <tr>
-        <td colspan="8">Нет данных.</td>
-      </tr>
+      <ng-container *ngIf="(requests$ | async); else skeletonRequestsTemplate">
+        <tr>
+          <td colspan="8">Нет данных.</td>
+        </tr>
+      </ng-container>
+      <ng-template #skeletonRequestsTemplate>
+        <tr>
+          <td>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
     </ng-template>
   </p-table>
 </div>

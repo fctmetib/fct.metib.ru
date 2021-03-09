@@ -22,6 +22,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { CabinetRoutingModule } from './cabinet-routing.module';
 import { CabinetPageComponent } from './components/cabinet-page/cabinet-page.component';
 import { ClientService } from 'src/app/shared/services/common/client.service';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { ClientService } from 'src/app/shared/services/common/client.service';
     TableModule,
     DropdownModule,
     FormsModule,
+    SkeletonModule,
     ProgressBarModule,
     MultiSelectModule,
     ReactiveFormsModule,

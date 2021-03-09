@@ -1,15 +1,35 @@
 <div class="header lg">
-<div class="title">
-  <h1 class="display-1">{{factoring?.Title}}</h1>
-  <div class="subheader info">
-    <div class="organization">ИНН:  {{factoring?.Organization.Inn}} КПП: {{organization?.KPP}}</div>
-    <div class="contract"> Договор Факторинга:  {{factoring?.Contract.Number}} от  {{factoring?.Contract.Date | date: 'dd/MM/yyyy'}}</div>
+  <div class="title">
+    <h1 class="display-1">
+      <ng-container *ngIf="factoring; else skeletonFactoringTitleTemplate">
+        {{factoring?.Title}}
+      </ng-container>
+      <ng-template #skeletonFactoringTitleTemplate>
+        <p-skeleton width="20rem"  height="4rem" styleClass="p-mb-2"></p-skeleton>
+      </ng-template>
+    </h1>
+    <div class="subheader info">
+      <div class="organization">
+        <ng-container *ngIf="factoring; else skeletonOrganizationTemplate">
+          ИНН: {{factoring?.Organization.Inn}} КПП: {{organization?.KPP || '-'}}
+        </ng-container>
+        <ng-template #skeletonOrganizationTemplate>
+          <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+        </ng-template>
+      </div>
+      <div class="contract">
+        <ng-container *ngIf="factoring; else skeletonContractTemplate">
+          Договор Факторинга: {{factoring?.Contract.Number}} от {{factoring?.Contract.Date | date:
+            'dd/MM/yyyy'}}
+        </ng-container>
+        <ng-template #skeletonContractTemplate>
+          <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+        </ng-template>
+      </div>
+    </div>
   </div>
-</div>
-<div class="actions">
-
-</div>
-
+  <div class="actions">
+  </div>
 </div>
 
 
@@ -17,7 +37,12 @@
   <div class="p-col">
     <div class="card-info">
       <div class="header normal">
-        {{factoring?.Limit | currency:'RUB':'symbol-narrow'}}
+        <ng-container *ngIf="factoring; else skeletonLimitTemplate">
+          {{factoring?.Limit | currency:'RUB':'symbol-narrow'}}
+        </ng-container>
+        <ng-template #skeletonLimitTemplate>
+          <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+        </ng-template>
       </div>
       <div class="content">
         Лимит
@@ -27,7 +52,8 @@
   <div class="p-col">
     <div class="card-info">
       <div class="header success">
-        [InProgress] 500 000 000,00₽
+        <!-- [InProgress] 500 000 000,00₽ -->
+        <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
       </div>
       <div class="content">
         Уступлено
@@ -37,7 +63,7 @@
   <div class="p-col can-click" [routerLink]="['/delays']">
     <div class="card-info">
       <div class="header warn">
-        [InProgress] 500 000 000,00₽
+        500 000 000,00₽
       </div>
       <div class="content">
         Просрочка
@@ -47,7 +73,7 @@
   <div class="p-col can-click" [routerLink]="['/freeduty']">
     <div class="card-info">
       <div class="header normal">
-        [InProgress] 500 000 000,00₽
+        500 000 000,00₽
       </div>
       <div class="content">
         Свободный лимит

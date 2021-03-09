@@ -13,52 +13,79 @@
   </div>
 
   <div class="demand-list">
-    <div class="demand-item" *ngFor="let demand of (demands$ | async)">
-      <div class="demand-info">
-        <div class="demand-content">
-          <div class="text">
-            <p>
-              №{{demand.ID}}
-              <span [ngSwitch]="demand.Type">
-                <span *ngSwitchCase="'DigitalSignature'">
-                  Запрос на ЭЦП
+    <ng-container *ngIf="(demands$ | async); else skeletonDemandTemplate">
+      <div class="demand-item" *ngFor="let demand of (demands$ | async)">
+        <div class="demand-info">
+          <div class="demand-content">
+            <div class="text">
+              <p>
+                №{{demand.ID}}
+                <span [ngSwitch]="demand.Type">
+                  <span *ngSwitchCase="'DigitalSignature'">
+                    Запрос на ЭЦП
+                  </span>
+                  <span *ngSwitchDefault>
+                    Запрос на свободную тему
+                  </span>
                 </span>
-                <span *ngSwitchDefault>
-                  Запрос на свободную тему
-                </span>
-              </span>
-            </p>
+              </p>
 
+            </div>
+            <div class="icon arrow_right"></div>
           </div>
-          <div class="icon arrow_right"></div>
+          <div class="demand-status-info">
+            <div [ngSwitch]="demand.Status">
+              <div *ngSwitchCase="'Processing'">
+                <div class="demand-status default">
+                  Создан
+                </div>
+              </div>
+              <div *ngSwitchCase="'Completed'">
+                <div class="demand-status success">
+                  Создан
+                </div>
+              </div>
+            </div>
+
+            <div class="demand-status-date">
+              {{demand.DateModify | date:'dd.MM.yyyy'}}
+            </div>
+          </div>
         </div>
-        <div class="demand-status-info">
-          <div [ngSwitch]="demand.Status">
-            <div *ngSwitchCase="'Processing'">
-              <div class="demand-status default">
-                Создан
-              </div>
-            </div>
-            <div *ngSwitchCase="'Completed'">
-              <div class="demand-status success">
-                Создан
-              </div>
-            </div>
-          </div>
-
-          <div class="demand-status-date">
+        <div class="demand-manager">
+          <div class="demand-manager-date">
             {{demand.DateModify | date:'dd.MM.yyyy'}}
           </div>
+          <div class="demand-manager-info">
+            Менеджер не назначен
+          </div>
         </div>
       </div>
-      <div class="demand-manager">
-        <div class="demand-manager-date">
-          {{demand.DateModify | date:'dd.MM.yyyy'}}
+    </ng-container>
+    <ng-template #skeletonDemandTemplate>
+      <div class="demand-item" *ngFor="let demand of [{}, {}, {}]">
+        <div class="demand-info">
+          <div class="demand-content">
+            <div class="text">
+              <p>
+                <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+              </p>
+            </div>
+          </div>
+          <div class="demand-status-info">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+            <div class="demand-status-date">
+              <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+            </div>
+          </div>
         </div>
-        <div class="demand-manager-info">
-          Менеджер не назначен
+        <div class="demand-manager">
+          <div class="demand-manager-date">
+            <p-skeleton></p-skeleton>
+          </div>
+          <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
         </div>
       </div>
-    </div>
+    </ng-template>
   </div>
 </div>

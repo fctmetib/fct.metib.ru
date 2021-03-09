@@ -18,6 +18,7 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
+import { SkeletonModule } from 'primeng/skeleton';
 
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -42,6 +43,7 @@ import { DemandActionLimitPageComponent } from './components/demand-actions/dema
     InputTextareaModule,
     SliderModule,
     TableModule,
+    SkeletonModule,
     DropdownModule,
     FormsModule,
     EffectsModule.forFeature([GetDemandsEffect]),

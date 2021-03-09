@@ -16,7 +16,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './auth/services/auth.service';
 

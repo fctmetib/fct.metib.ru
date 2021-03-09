@@ -23,7 +23,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   isLoading$: Observable<boolean>;
 
   displayModal: boolean;
-  loading: boolean = true;
   ref: DynamicDialogRef;
   items: MenuItem[] = [];
 

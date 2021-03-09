@@ -1,3 +1,4 @@
+import { setLoadingAction } from './actions/loading.action';
 import { ClientStateInterface } from './../types/clientState.interface';
 import { createReducer, on, Action } from '@ngrx/store';
 import {
@@ -37,6 +38,13 @@ const clientReducer = createReducer(
       ...state,
       isLoading: false,
       factoring: null,
+    })
+  ),
+  on(
+    setLoadingAction,
+    (state, action): ClientStateInterface => ({
+      ...state,
+      isLoading: action.isLoading,
     })
   )
 );

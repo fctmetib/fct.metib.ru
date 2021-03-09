@@ -10,6 +10,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientLayoutComponent } from './../shared/layouts/client-layout/client-layout.component';
+import {SkeletonModule} from 'primeng/skeleton';
 
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +25,7 @@ import { ClientService } from '../shared/services/common/client.service';
 import { reducers } from './store/reducers';
 import { DeliveryService } from '../shared/services/share/delivery.service';
 import { OrganizationService } from '../shared/services/share/organization.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -36,6 +38,7 @@ import { OrganizationService } from '../shared/services/share/organization.servi
     StoreModule.forFeature('client', reducers),
     DropdownModule,
     MenuModule,
+    SkeletonModule,
     FormsModule,
     ClientRoutingModule,
     ReactiveFormsModule,

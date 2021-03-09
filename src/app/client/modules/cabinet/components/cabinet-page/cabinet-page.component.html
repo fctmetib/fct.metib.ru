@@ -1,8 +1,8 @@
 <div class="card-content">
-  <p-progressSpinner *ngIf="(loading$ | async); else content"></p-progressSpinner>
-  <ng-template #content>
+  <!-- <p-progressSpinner *ngIf="(loading$ | async); else content"></p-progressSpinner> -->
+  <!-- <ng-template #content> -->
     <app-factoring></app-factoring>
-  </ng-template>
+  <!-- </ng-template> -->
 </div>
 <div class="card-content" id="step1">
   <div class="header lg">
@@ -17,58 +17,18 @@
   </div>
 
   <div class="p-grid">
-    <div class="p-col">
+    <div class="p-col" *ngFor="let reportCard of reportCards" >
       <div class="card-report">
         <div class="header">
           <div class="text">
-            Приём документов
+            {{reportCard.title}}
           </div>
           <div class="icon arrow_right"></div>
         </div>
         <div class="content">
-          Список операций "Прием Документов" в разрезе накладных за указанный период
-        </div>
-      </div>
-    </div>
-    <div class="p-col">
-      <div class="card-report">
-        <div class="header">
-          <div class="text">
-            Приём документов
-          </div>
-          <div class="icon arrow_right"></div>
-        </div>
-        <div class="content">
-          Список операций "Прием Документов" в разрезе накладных за указанный период
-        </div>
-      </div>
-    </div>
-    <div class="p-col">
-      <div class="card-report">
-        <div class="header">
-          <div class="text">
-            Приём документов
-          </div>
-          <div class="icon arrow_right"></div>
-        </div>
-        <div class="content">
-          Список операций "Прием Документов" в разрезе накладных за указанный период
-        </div>
-      </div>
-    </div>
-    <div class="p-col">
-      <div class="card-report">
-        <div class="header">
-          <div class="text">
-            Приём документов
-          </div>
-          <div class="icon arrow_right"></div>
-        </div>
-        <div class="content">
-          Список операций "Прием Документов" в разрезе накладных за указанный период
+          {{reportCard.description}}
         </div>
       </div>
     </div>
   </div>
-
 </div>
