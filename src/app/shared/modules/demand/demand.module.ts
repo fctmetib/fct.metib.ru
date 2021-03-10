@@ -32,13 +32,14 @@ import { reducers } from './store/reducers';
 import { DemandActionEditProfilePageComponent } from './components/demand-actions/demand-action-edit-profile-page/demand-action-edit-profile-page.component';
 import { DemandActionEDSPageComponent } from './components/demand-actions/demand-action-eds-page/demand-action-eds-page.component';
 import { DemandActionLimitPageComponent } from './components/demand-actions/demand-action-limit-page/demand-action-limit-page.component';
-
+import { FileUploadModule } from 'primeng/fileupload';
 @NgModule({
   imports: [
     CommonModule,
     InputTextModule,
     CheckboxModule,
     ButtonModule,
+    FileUploadModule,
     RadioButtonModule,
     InputTextareaModule,
     SliderModule,
@@ -66,7 +67,7 @@ import { DemandActionLimitPageComponent } from './components/demand-actions/dema
     DemandActionRequestFreePageComponent,
     DemandActionRequestSupportPageComponent,
     DemandActionSuretyPageComponent,
-    DemandActionVerificationPageComponent
+    DemandActionVerificationPageComponent,
   ],
   providers: [DemandService],
 })

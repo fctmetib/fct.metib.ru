@@ -1,0 +1,26 @@
+.addon-button {
+  display: flex;
+}
+
+.description {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+
+  /* desc */
+
+  color: #989898;
+}
+
+.small {
+  padding: 5px !important;
+  width: 100px !important;
+}
+
+.addon-text {
+  border: solid 1px #c4c4c4;
+  border-radius: 10px;
+  padding: 20px;
+}

@@ -1,9 +1,9 @@
 export interface PassportInterface {
-  number: string
-  date: Date
-  expire: Date
-  issuerTitle: string
-  issuerCode: string
-  isForeign: boolean
-  nationality: string
+  Number: string;
+  Date: Date;
+  Expire: Date;
+  IssuerTitle: string;
+  IssuerCode: string;
+  IsForeign: boolean;
+  Nationality: string;
 }
