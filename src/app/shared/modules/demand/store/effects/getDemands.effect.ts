@@ -13,7 +13,7 @@ export class GetDemandsEffect {
       ofType(getDemandsAction),
       switchMap(() => {
         return this.demandService.fetch().pipe(
-          map((demands: DemandInterface[]) => {
+          map((demands: DemandInterface<any>[]) => {
             return getDemandsSuccessAction({ demands });
           }),
 

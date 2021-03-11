@@ -1,9 +1,8 @@
-import { DemandDataInterface } from './demand-data.interface';
 
-export interface DemandDraftInterface {
+export interface DemandDraftInterface<T> {
   User: string;
   DateCreated: Date,
   DateModify: Date,
-  Data: DemandDataInterface,
+  Data: T,
   ID: number
 }

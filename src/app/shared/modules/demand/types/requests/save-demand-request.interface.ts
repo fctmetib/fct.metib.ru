@@ -1,6 +1,5 @@
-import { DemandDataInterface } from './../demand-data.interface';
 
-export interface SaveDemandRequestInterface {
-  Data: DemandDataInterface;
+export interface SaveDemandRequestInterface<T> {
+  Data: T;
   DraftID: number;
 }

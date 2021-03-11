@@ -12,107 +12,130 @@
 
   <form [formGroup]="formEDS" (ngSubmit)="onSubmit()">
     <div class="form-actions">
-      <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2" [routerLink]="['/demand']"></button>
+      <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
+        [routerLink]="['/demand']"></button>
       <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"></button>
     </div>
     <div class="p-fluid p-formgrid p-grid form">
       <!-- 1 row -->
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="organizationType">Тип организации</label>
-        <p-dropdown id="organizationType" [options]="[]" placeholder="Выберите Тип организации"
-          formControlName="organizationType" optionLabel="Title" optionValue="ID"></p-dropdown>
+        <p-dropdown id="organizationType" [options]="organizationTypes" placeholder="Выберите Тип организации"
+          formControlName="organizationType" optionLabel="title" optionValue="value"></p-dropdown>
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="organizationLegalForm">Правовая форма</label>
-        <p-dropdown id="organizationLegalForm" [options]="[]" placeholder="Выберите Правовую форму"
-          formControlName="organizationLegalForm" optionLabel="Title" optionValue="ID"></p-dropdown>
+        <p-dropdown id="organizationLegalForm" [options]="ruleTypes" placeholder="Выберите Правовую форму"
+          formControlName="organizationLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="organizationShortName">Краткое наименование организации</label>
-        <p-dropdown id="organizationShortName" [options]="[]" formControlName="organizationShortName" optionLabel="name"
-          optionValue="value">
-        </p-dropdown>
+        <input id="organizationShortName" type="text" pInputText placeholder="Краткое наименование организации"
+          formControlName="organizationShortName">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="organizationFullName">Полное наименование организации</label>
-        <input id="organizationFullName" type="text" pInputText placeholder="Дата"
+        <input id="organizationFullName" type="text" pInputText placeholder="Полное наименование организации"
           formControlName="organizationFullName">
       </div>
       <!-- 2 row -->
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="organizationINN">ИНН</label>
         <input id="organizationINN" type="text" pInputText placeholder="ИНН" formControlName="organizationINN">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="organizationKPP">КПП</label>
         <input id="organizationKPP" type="text" pInputText placeholder="КПП" formControlName="organizationKPP">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="organizationOGRN">ОГРН</label>
         <input id="organizationOGRN" type="text" pInputText placeholder="ОГРН" formControlName="organizationOGRN">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="organizationOKPO">ОКПО</label>
         <input id="organizationOKPO" type="text" pInputText placeholder="ОКПО" formControlName="organizationOKPO">
       </div>
       <!-- 3 row -->
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="organizationPhone">Телефон</label>
         <input id="organizationPhone" type="tel" pInputText placeholder="Телефон" formControlName="organizationPhone">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="organizationEmail">E-mail</label>
         <input id="organizationEmail" type="email" pInputText placeholder="E-mail" formControlName="organizationEmail">
       </div>
-      <div class="p-field p-col-4 p-md-6">
+      <div class="p-field p-col-12 p-md-6">
         <label for="organizationWEB">Адрес сайта</label>
         <input id="organizationWEB" type="text" pInputText placeholder="Адрес сайта" formControlName="organizationWEB">
       </div>
       <!-- 4 row -->
-      <div class="p-field p-col-6 p-md-6">
+      <div class="p-field p-col-12 p-md-6">
         <label for="organizationLegalAddress">Юридический адрес</label>
-        <div class="addon-button">
+        <div class="addon-button p-mb-2">
           <input id="organizationLegalAddress" type="text" pInputText placeholder="Юридический адрес"
             formControlName="organizationLegalAddress">
-          <button  pButton pRipple type="button" label="Изменить" class="p-button-outlined small"></button>
+          <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"></button>
         </div>
 
-        <input type="checkbox" name="" id="" formControlName="organizationIsActualAdressEqual"> Фактический адрес
-        совпадает с юридическим
+        <div class="p-field-checkbox">
+          <p-checkbox formControlName="organizationIsActualAdressEqual" binary="true"
+            inputId="organizationIsActualAdressEqual"></p-checkbox>
+          <label for="organizationIsActualAdressEqual"> Фактический адрес
+            совпадает с юридическим</label>
+        </div>
+
       </div>
-      <div class="p-field p-col-6 p-md-6">
+      <div class="p-field p-col-12 p-md-6">
         <label for="organizationActualAddress">Фактический адрес</label>
-        <div class="addon-button">
+        <div class="addon-button p-mb-2">
           <input id="organizationActualAddress" type="text" pInputText placeholder="Фактический адрес"
             formControlName="organizationActualAddress">
           <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"></button>
         </div>
-        <input type="checkbox" formControlName="organizationIsLegalAdressEqual" name="" id=""> Почтовый адрес совпадает
-        с юридическим
+
+        <div class="p-field-checkbox">
+          <p-checkbox formControlName="organizationIsLegalAdressEqual" binary="true"
+            inputId="organizationIsLegalAdressEqual"></p-checkbox>
+          <label for="organizationIsLegalAdressEqual">Почтовый адрес совпадает
+            с юридическим</label>
+        </div>
+
       </div>
       <!-- 5 row -->
 
-      <div class="p-field p-col-6 p-md-6">
+      <div class="p-field p-col-12 p-md-6">
         <label>
           Прикрепите необходимые файлы
         </label>
         <div class="addon-button">
           <div class="addon-text">
-            Скан-Копия свидетельства ИНН
-            организации</div>
-            <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" [auto]="true" chooseLabel="Выбрать файл"></p-fileUpload>
+            <p>
+              Скан-Копия свидетельства ИНН
+              организации
+            </p>
+          </div>
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'inn')" customUpload="true"
+            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          </p-fileUpload>
+
         </div>
 
       </div>
-      <div class="p-field p-col-6 p-md-6">
+      <div class="p-field p-col-12 p-md-6">
         <label>
+          &nbsp;
         </label>
         <div class="addon-button">
           <div class="addon-text">
-            Скан-Копия свидетельства ОГРН
-            организации
+            <p>
+              Скан-Копия свидетельства ОГРН
+              организации
+            </p>
+
           </div>
-          <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" [auto]="true" chooseLabel="Выбрать файл"></p-fileUpload>
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'ogrn')" customUpload="true"
+            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          </p-fileUpload>
         </div>
       </div>
 
@@ -127,94 +150,135 @@
       </div>
 
       <!-- 6 row -->
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="ownerSurname">Фамилия</label>
         <input id="ownerSurname" type="text" pInputText placeholder="Фамилия" formControlName="ownerSurname">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="ownerName">Имя</label>
         <input id="ownerName" type="text" pInputText placeholder="Имя" formControlName="ownerName">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="ownerMiddlename">Отчество</label>
         <input id="ownerMiddlename" type="text" pInputText placeholder="Отчество" formControlName="ownerMiddlename">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="ownerGender">Пол</label>
-        <p-dropdown id="ownerGender" [options]="[]" formControlName="ownerGender" optionLabel="name"
+        <p-dropdown id="ownerGender" [options]="genderTypes" formControlName="ownerGender" optionLabel="title"
           optionValue="value">
         </p-dropdown>
       </div>
 
       <!-- 7 row -->
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="ownerSNILS">СНИЛС</label>
         <input id="ownerSNILS" type="text" pInputText placeholder="СНИЛС" formControlName="ownerSNILS">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="ownerDateBurn">Дата рождения</label>
         <input id="ownerDateBurn" type="date" pInputText placeholder="Дата рождения" formControlName="ownerDateBurn">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="ownerPlaceBurn">Место рождения</label>
         <input id="ownerPlaceBurn" type="text" pInputText placeholder="Место рождения" formControlName="ownerPlaceBurn">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="ownerPhone">Мобильный телефон</label>
         <input id="ownerPhone" type="tel" pInputText placeholder="Мобильный телефон" formControlName="ownerPhone">
       </div>
 
       <!-- 8 row -->
-      <div class="p-field p-col-6 p-md-6">
+      <div class="p-field p-col-12 p-md-6">
         <label for="ownerWorkPosition">Должность</label>
-        <p-dropdown id="ownerWorkPosition" [options]="[]" placeholder="Выберите Должность"
-          formControlName="ownerWorkPosition" optionLabel="Title" optionValue="ID"></p-dropdown>
+        <p-dropdown id="ownerWorkPosition" [options]="postionTypes" placeholder="Выберите Должность"
+          formControlName="ownerWorkPosition" optionLabel="title" optionValue="value"></p-dropdown>
       </div>
-      <div class="p-field p-col-6 p-md-6">
+      <div class="p-field p-col-12 p-md-6">
         <label for="ownerEmail">E-mail</label>
         <input id="ownerEmail" type="email" pInputText placeholder="E-mail" formControlName="ownerEmail">
       </div>
-
       <!-- 9 row -->
+
+      <div class="p-field p-col-12 p-md-6">
+        <label>
+          Прикрепите необходимые файлы
+        </label>
+        <div class="addon-button">
+          <div class="addon-text">
+            <p>
+              Скан-Копия СНИЛС владельца
+              ключа подписи
+            </p>
+          </div>
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'snils')" customUpload="true"
+            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          </p-fileUpload>
+        </div>
+
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>
+          &nbsp;
+        </label>
+        <div class="addon-button">
+          <div class="addon-text">
+            <p>
+              Скан-Копия приказа о назначении на
+              должность Генерального директора
+            </p>
+
+          </div>
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'director')" customUpload="true"
+            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          </p-fileUpload>
+        </div>
+      </div>
+
+      <!-- 10 row -->
       <div class="p-field p-col-12 p-md-12">
         <label for="ownerGeoPosition">Укажите географическое расположение</label>
-        <p-dropdown id="ownerGeoPosition" [options]="[]" placeholder="Выберите договор"
-          formControlName="ownerGeoPosition" optionLabel="Title" optionValue="ID"></p-dropdown>
+        <p-dropdown id="ownerGeoPosition" [options]="locationTypes" placeholder="Выберите географическое расположение"
+          formControlName="ownerGeoPosition" optionLabel="title" optionValue="value"></p-dropdown>
       </div>
 
       <div class="p-col-12">
-        <div class="d-flex">
-          <div>
+        <div class="d-flex passport-confirm">
+          <div class="passport-owner">
             <h1>Паспортные данные владельца сертификата</h1>
             <p class="description">Заполните паспортные данные</p>
           </div>
 
           <div class="addon-button">
-            <div>
-              Скан-копия паспорта
-              владельца ключа подписи
+            <div class="addon-text">
+              <p>
+                Скан-копия паспорта
+                владельца ключа подписи
+              </p>
+
             </div>
-            <input type="file" name="" id="">
+            <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'passport')" customUpload="true"
+              mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+            </p-fileUpload>
           </div>
 
         </div>
       </div>
 
-      <!-- 10 row -->
-      <div class="p-field p-col-4 p-md-3">
+      <!-- 11 row -->
+      <div class="p-field p-col-12 p-md-3">
         <label for="passportNumber">Серия и номер паспорт</label>
         <input id="passportNumber" type="text" pInputText placeholder="Серия и номер паспорт"
           formControlName="passportNumber">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="passportDate">Дата выдачи</label>
         <input id="passportDate" type="date" pInputText placeholder="Дата выдачи" formControlName="passportDate">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="passportFrom">Кем выдан</label>
         <input id="passportFrom" type="text" pInputText placeholder="Кем выдан" formControlName="passportFrom">
       </div>
-      <div class="p-field p-col-4 p-md-3">
+      <div class="p-field p-col-12 p-md-3">
         <label for="passportCode">Код подразделения</label>
         <input id="passportCode" type="text" pInputText placeholder="Кем подразделения" formControlName="passportCode">
       </div>
@@ -223,18 +287,20 @@
         <h1>Внимание!</h1>
       </div>
 
-      <div>
+      <div class="d-flex p-justify-between">
         <p>1. Перед тем как отправить запрос на ЭЦП, скачайте заявку на выдачу сертификата и распечатайте её на
           принтере. Она обязательно Вам понадобится при сверке документов при получении сертификата!</p>
-        <button>Скачать заявку на выдачу сертификата</button>
+        <button pButton pRipple type="button" label="Скачать заявку на выдачу сертификата"
+          class="btn-mib-submit btn-attention"></button>
       </div>
-      <p>2. После успешного сохранения запроса на ЭЦП, дождитесь приглашения от Калуги-Астрал (по e-mail) в один из
-        центров выдачи сертификатов для сверки документов и получения сертификата</p>
+      <p>2. После успешного сохранения запроса на ЭЦП, дождитесь приглашения от Калуги-Астрал (по e-mail) в <a href="#"> один из
+          центров выдачи сертификатов</a> для сверки документов и получения сертификата</p>
       <p>Вы можете следить за состоянием Вашего запроса из личного кабинета по факторингу в разделе "Запросы"</p>
 
       <div class="p-field p-col-12 p-md-12">
         <label for="btn_submit">&nbsp;</label>
-        <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос" class="btn-mib-submit p-button-outlined"></button>
+        <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
+          class="btn-mib-submit p-button-outlined"></button>
       </div>
     </div>
   </form>

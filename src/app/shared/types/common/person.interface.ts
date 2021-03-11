@@ -1,6 +1,10 @@
 export interface PersonInterface {
-  //TODO: Change on this PersonFullNameInterface
-  Name: any;
+  //TODO: Maybe need to remove
+  Name: {
+    First: string
+    Last: string
+    Second: string
+  };
 
   NameFirst: string;
   NameLast: string;

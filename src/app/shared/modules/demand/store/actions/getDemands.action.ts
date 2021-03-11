@@ -9,7 +9,7 @@ export const getDemandsAction = createAction(
 
 export const getDemandsSuccessAction = createAction(
   ActionTypes.GET_DEMANDS_SUCCESS,
-  props<{demands: DemandInterface[]}>()
+  props<{demands: DemandInterface<any>[]}>()
 )
 
 export const getDemandsFailureAction = createAction(ActionTypes.GET_DEMANDS_FAILURE)

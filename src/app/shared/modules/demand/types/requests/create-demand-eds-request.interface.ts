@@ -1,11 +1,12 @@
+import { FileModeInterface } from './../../../../types/file/file-model.interface';
 import { PersonInterface } from 'src/app/shared/types/common/person.interface';
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
 import { PassportInterface } from './../../../../types/user/passport.interface';
-import { DemandDataInterface } from './../demand-data.interface';
+import { DemandDataBaseInterface } from '../demand-data-base.interface';
 
-export interface CreateDemandEDSRequestInterface extends DemandDataInterface  {
+export interface CreateDemandEDSRequestInterface extends DemandDataBaseInterface {
   Organization: OrganizationDataInterface;
-  Person: PersonInterface;
   Passport: PassportInterface;
+  Person: PersonInterface;
   PersonPosition: string;
 }

@@ -1,7 +1,7 @@
+import { DemandDataBaseInterface } from './../types/demand-data-base.interface';
 import { DemandDraftInterface } from './../types/demand-draft.interface';
 import { CreateDemandMessageRequestInterface } from './../types/requests/create-demand-message-request.interface';
 import { SaveDemandRequestInterface } from './../types/requests/save-demand-request.interface';
-import { DemandDataInterface } from './../types/demand-data.interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -14,36 +14,36 @@ export class DemandService {
 
   //#region REST
 
-  fetch(): Observable<DemandInterface[]> {
+  fetch(): Observable<DemandInterface<any>[]> {
     const url = `${environment.apiUrl}/demand`;
-    return this.http.get<DemandInterface[]>(url);
+    return this.http.get<DemandInterface<any>[]>(url);
   }
 
-  add(data: SaveDemandRequestInterface): Observable<DemandInterface> {
+  add<T>(data: SaveDemandRequestInterface<T>): Observable<DemandInterface<T>> {
     const url = `${environment.apiUrl}/demand`;
-    return this.http.post<DemandInterface>(url, data);
+    return this.http.post<DemandInterface<T>>(url, data);
   }
 
-  getDemandById(id: number): Observable<DemandInterface> {
+  getDemandById(id: number): Observable<DemandInterface<any>> {
     const url = `${environment.apiUrl}/demand/${id}`;
-    return this.http.get<DemandInterface>(url);
+    return this.http.get<DemandInterface<any>>(url);
   }
 
   //#endregion
 
-  getDemandByFilter(filter: string): Observable<DemandDataInterface[]> {
+  getDemandByFilter(filter: string): Observable<DemandDataBaseInterface[]> {
     const url = `${environment.apiUrl}/demand?filter=${filter}`;
-    return this.http.get<DemandDataInterface[]>(url);
+    return this.http.get<DemandDataBaseInterface[]>(url);
   }
 
-  prepareDemandByType(type: string): Observable<DemandDataInterface> {
+  prepareDemandByType(type: string): Observable<DemandDataBaseInterface> {
     const url = `${environment.apiUrl}/demand/prepare/${type}`;
-    return this.http.get<DemandDataInterface>(url);
+    return this.http.get<DemandDataBaseInterface>(url);
   }
 
-  addDemandDocumentById(identifier: string): Observable<DemandDataInterface> {
+  addDemandDocumentById(identifier: string): Observable<DemandDataBaseInterface> {
     const url = `${environment.apiUrl}/demand/document/${identifier}`;
-    return this.http.post<DemandDataInterface>(url, {});
+    return this.http.post<DemandDataBaseInterface>(url, {});
   }
 
   getDocumentByIdByDemandId(id: number, identifier: string): Observable<any> {
@@ -51,9 +51,9 @@ export class DemandService {
     return this.http.get<any>(url);
   }
 
-  addById(id: number, data: SaveDemandRequestInterface): Observable<DemandInterface> {
+  addById<T>(id: number, data: SaveDemandRequestInterface<T>): Observable<DemandInterface<T>> {
     const url = `${environment.apiUrl}/demand/${id}`;
-    return this.http.post<DemandInterface>(url, data);
+    return this.http.post<DemandInterface<T>>(url, data);
   }
 
   addMessageByDemandId(id: number, data: CreateDemandMessageRequestInterface): Observable<any> {
@@ -66,23 +66,23 @@ export class DemandService {
     return this.http.post<any>(url, {});
   }
 
-  getDrafts(): Observable<DemandDraftInterface[]> {
+  getDrafts(): Observable<DemandDraftInterface<any>[]> {
     const url = `${environment.apiUrl}/demand/draft`;
-    return this.http.get<DemandDraftInterface[]>(url);
+    return this.http.get<DemandDraftInterface<any>[]>(url);
   }
 
-  getDraftById(id: number): Observable<DemandDraftInterface> {
+  getDraftById(id: number): Observable<DemandDraftInterface<any>> {
     const url = `${environment.apiUrl}/demand/draft/${id}`;
-    return this.http.get<DemandDraftInterface>(url);
+    return this.http.get<DemandDraftInterface<any>>(url);
   }
 
-  addDraftById(id: number, data: DemandDataInterface): Observable<DemandDraftInterface> {
+  addDraftById(id: number, data: DemandDataBaseInterface): Observable<DemandDraftInterface<any>> {
     const url = `${environment.apiUrl}/demand/draft/${id}`;
-    return this.http.post<DemandDraftInterface>(url, data);
+    return this.http.post<DemandDraftInterface<any>>(url, data);
   }
 
-  deleteDraftById(id: number): Observable<DemandDraftInterface> {
+  deleteDraftById(id: number): Observable<DemandDraftInterface<any>> {
     const url = `${environment.apiUrl}/demand/draft/${id}`;
-    return this.http.delete<DemandDraftInterface>(url);
+    return this.http.delete<DemandDraftInterface<any>>(url);
   }
 }

@@ -13,14 +13,14 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   styleUrls: ['./demand-history-page.component.scss'],
 })
 export class DemandHistoryPageComponent implements OnInit {
-  demands$: Observable<DemandInterface[] | null>;
+  demands$: Observable<DemandInterface<any>[] | null>;
   error$: Observable<string | null>;
   isLoading$: Observable<boolean>;
 
   displayModal: boolean;
   loading: boolean = true;
 
-  selectedItems: DemandInterface[];
+  selectedItems: DemandInterface<any>[];
   isUserVerified: boolean;
 
   constructor(private store: Store, private authService: AuthService) {}
