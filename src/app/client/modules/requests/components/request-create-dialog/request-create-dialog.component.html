@@ -149,8 +149,11 @@
             <label for="summ">Сумма: </label>
             <input id="summ" type="number" pInputText placeholder="Сумма" formControlName="summ">
           </div>
-          <button pButton pRipple label="Сформировать" icon="pi pi-check" class="p-button-text" type="submit"></button>
-          <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text"></button>
+          <div class="modal-actions">
+            <button pButton pRipple label="Сформировать" class="p-button-text save" type="submit"></button>
+            <button pButton pRipple label="Отменить" class="p-button-text cancel"></button>
+          </div>
+
         </form>
       </ng-template>
       <!-- <ng-template pTemplate="footer">

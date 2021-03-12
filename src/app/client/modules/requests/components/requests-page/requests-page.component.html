@@ -21,8 +21,9 @@
   <p-table [value]="(requests$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
     [rowsPerPageOptions]="[10,25,50]" [(selection)]="selectedItems" dataKey="ID"
     styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
+    (sortFunction)="customSort($event)" [customSort]="true"
     currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">
-    <!-- (sortFunction)="customSort($event)" [customSort]="true" -->
+    <!-- -->
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 3rem">
@@ -57,12 +58,12 @@
             <p-sortIcon field="Type"></p-sortIcon>
           </div>
         </th>
-        <th pSortableColumn="Date">
+        <!-- <th pSortableColumn="Date">
           <div class="m-th">
             Дата Отправки
             <p-sortIcon field="Date"></p-sortIcon>
           </div>
-        </th>
+        </th> -->
         <th pSortableColumn="Status">
           <div class="m-th">
             Состояние
@@ -93,14 +94,24 @@
           <div class="m-td"> {{request.Number}}</div>
         </td>
         <td>
-          <div class="m-td"> {{request.Date | date: 'short'}}</div>
+          <div class="m-td"> {{request.Date | date: 'dd.MM.yyyy'}}</div>
         </td>
         <td>
-          <div class="m-td"> {{request.Type}}</div>
+          <div class="m-td">
+            <!-- TODO:: rework it on PIPE -->
+            <div [ngSwitch]="request.Type">
+              <div *ngSwitchCase="'Financing'">
+                С финансированием
+              </div>
+              <div *ngSwitchCase="'NonFinancing'">
+                Без финансирования
+              </div>
+            </div>
+            </div>
         </td>
-        <td>
-          <div class="m-td"> {{request.Date | date: 'short'}}</div>
-        </td>
+        <!-- <td>
+          <div class="m-td"> {{request.Date | date: 'dd.MM.yyyy'}}</div>
+        </td> -->
         <td>
           <div class="m-td"> {{request.Status}}</div>
         </td>
@@ -116,7 +127,7 @@
         </tr>
       </ng-container>
       <ng-template #skeletonRequestsTemplate>
-        <tr>
+        <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
           <td>
           </td>
           <td>
@@ -144,99 +155,11 @@
               <p-skeleton></p-skeleton>
             </div>
           </td>
-          <td>
+          <!-- <td>
             <div class="m-td">
               <p-skeleton></p-skeleton>
             </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
+          </td> -->
           <td>
             <div class="m-td">
               <p-skeleton></p-skeleton>

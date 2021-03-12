@@ -41,10 +41,14 @@ export class DemandPageComponent implements OnInit {
         text: 'Запрос на поручительство',
         url: 'actions/surety',
       },
-      // {
-      //   text: 'Запрос на агентский факторинг',
-      //   url: 'actions/surety',
-      // },
+      {
+        text: 'Запрос на факторинг',
+        url: 'actions/factoring',
+      },
+      {
+        text: 'Запрос на агентский факторинг',
+        url: 'actions/agent-factoring',
+      },
       {
         text: 'Запрос на увеличение лимита',
         url: 'actions/update-limit',
