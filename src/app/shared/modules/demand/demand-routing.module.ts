@@ -10,6 +10,8 @@ import { DemandActionRequestFreePageComponent } from './components/demand-action
 import { DemandActionRequestSupportPageComponent } from './components/demand-actions/demand-action-request-support-page/demand-action-request-support-page.component';
 import { DemandActionSuretyPageComponent } from './components/demand-actions/demand-action-surety-page/demand-action-surety-page.component';
 import { DemandActionVerificationPageComponent } from './components/demand-actions/demand-action-verification-page/demand-action-verification-page.component';
+import { DemandActionAgentFactoringPageComponent } from './components/demand-actions/demand-action-agent-factoring-page/demand-action-agent-factoring-page.component';
+import { DemandActionFactoringPageComponent } from './components/demand-actions/demand-action-factoring-page/demand-action-factoring-page.component';
 
 const routes = [
   {
@@ -46,6 +48,14 @@ const routes = [
       {
         path: 'actions/support-request',
         component: DemandActionRequestSupportPageComponent
+      },
+      {
+        path: 'actions/agent-factoring',
+        component: DemandActionAgentFactoringPageComponent
+      },
+      {
+        path: 'actions/factoring',
+        component: DemandActionFactoringPageComponent
       },
       {
         path: 'actions/surety',
