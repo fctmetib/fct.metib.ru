@@ -15,10 +15,7 @@ export class FileService {
     return this.http.post<FileModeInterface>(url, {});
   }
 
-  uploadFileChunks(file: string, fileName: string, fileSize: string, guid: string): Observable<FileModeInterface> {
-    // const formData = new FormData();
-    // formData.append('file', file);
-
+  uploadFileChunks(file: Uint8Array[], fileName: string, fileSize: string, guid: string): Observable<FileModeInterface> {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Upload-ChunkNumber', '1');
     headers = headers.append('Upload-FileName', fileName);

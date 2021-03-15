@@ -1,6 +1,6 @@
 import { FileModeInterface } from '../../../../../types/file/file-model.interface';
 import { DemandService } from '../../../services/demand.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
@@ -55,7 +55,6 @@ export class DemandActionFactoringPageComponent implements OnInit {
       organizationEmail: ['', [Validators.required]],
       organizationWEB: ['', [Validators.required]],
 
-
       bankBik: ['', [Validators.required]],
       bankCorrespondentAccount: ['', [Validators.required]],
       bankName: ['', [Validators.required]],
@@ -63,7 +62,15 @@ export class DemandActionFactoringPageComponent implements OnInit {
       bankOwnerAccount: ['', [Validators.required]],
       bankComment: ['', [Validators.required]],
 
-      otherBanks: [[]],
+      otherBanks: this.fb.array([
+        this.fb.group({
+          otherBankAccountOpenDate: ['', [Validators.required]],
+          otherBankAccountCloseDate: ['', [Validators.required]],
+          otherBankName: ['', [Validators.required]],
+          otherBankOwnerAccount: ['', [Validators.required]],
+          otherBankTarget: ['', [Validators.required]],
+        }),
+      ]),
 
       factoringProducts: ['', [Validators.required]],
       factoringTradeMarks: ['', [Validators.required]],
@@ -72,18 +79,83 @@ export class DemandActionFactoringPageComponent implements OnInit {
       factoringClients: ['', [Validators.required]],
       factoringWorkers: [0, [Validators.required]],
 
-      factoringPlaces: [[]],
-      factoringCredits: [[]],
-      factoringEDIProviders: [[]],
+      factoringPlaces: this.fb.array([
+        this.fb.group({
+          factoringPlacesAddress: ['', [Validators.required]],
+          factoringPlacesLegalForm: ['', [Validators.required]],
+        }),
+      ]),
+
+      factoringCredits: this.fb.array([
+        this.fb.group({
+          factoringCreditsCreditor: ['', [Validators.required]],
+          factoringPlacesTypeDuty: ['', [Validators.required]],
+          factoringPlacesDateClose: ['', [Validators.required]],
+          factoringPlacesContractSum: ['', [Validators.required]],
+          factoringPlacesBalanceReport: ['', [Validators.required]],
+          factoringPlacesBalanceCurrent: ['', [Validators.required]],
+        }),
+      ]),
+
+      factoringEDIProviders: this.fb.array([
+        this.fb.group({
+          factoringEDIProvidersDebitor: ['', [Validators.required]],
+          factoringEDIProvidersProvider: ['', [Validators.required]],
+        }),
+      ]),
     });
+  }
+
+  onSubmit() {
+    console.log(this.formFactoring.value);
   }
 
   onUpload($event: Event, type: string) {}
 
-  onSubmit() {
-    console.log(this.formFactoring.value);
+  addOtherBank(): void {
+    let otherBanks = this.formFactoring.get('otherBanks') as FormArray;
+    otherBanks.push(
+      this.fb.group({
+        otherBankAccountOpenDate: ['', [Validators.required]],
+        otherBankAccountCloseDate: ['', [Validators.required]],
+        otherBankName: ['', [Validators.required]],
+        otherBankOwnerAccount: ['', [Validators.required]],
+        otherBankTarget: ['', [Validators.required]],
+      })
+    );
+  }
 
-    // let data: SaveDemandRequestInterface<any> = {};
-    // this.demandService.add(data).subscribe((resp) => {});
+  addOtherPlace(): void {
+    let factoringPlaces = this.formFactoring.get('factoringPlaces') as FormArray;
+    factoringPlaces.push(
+      this.fb.group({
+        factoringPlacesAddress: ['', [Validators.required]],
+        factoringPlacesLegalForm: ['', [Validators.required]],
+      }),
+    );
+  }
+
+  addFactoringCredits(): void {
+    let factoringCredits = this.formFactoring.get('factoringCredits') as FormArray;
+    factoringCredits.push(
+      this.fb.group({
+        factoringCreditsCreditor: ['', [Validators.required]],
+        factoringPlacesTypeDuty: ['', [Validators.required]],
+        factoringPlacesDateClose: ['', [Validators.required]],
+        factoringPlacesContractSum: ['', [Validators.required]],
+        factoringPlacesBalanceReport: ['', [Validators.required]],
+        factoringPlacesBalanceCurrent: ['', [Validators.required]],
+      }),
+    );
+  }
+
+  addEDIProvider(): void {
+    let factoringEDIProviders = this.formFactoring.get('factoringEDIProviders') as FormArray;
+    factoringEDIProviders.push(
+      this.fb.group({
+        factoringEDIProvidersDebitor: ['', [Validators.required]],
+        factoringEDIProvidersProvider: ['', [Validators.required]],
+      }),
+    );
   }
 }

@@ -257,14 +257,14 @@ export class RequestCreateDialogComponent {
     }
   }
 
-  private getBase64(file): Observable<string>{
-    return Observable.create((observer: Observer<string>) => {
+  private getBase64(file): Observable<Uint8Array[]>{
+    return Observable.create((observer: Observer<Uint8Array[]>) => {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         observer.next(e.target.result);
         observer.complete();
       };
-      reader.readAsDataURL(file);
+      reader.readAsArrayBuffer(file);
     })
   }
   //#endregion
