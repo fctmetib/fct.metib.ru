@@ -12,50 +12,35 @@ export class FileService {
   //TODO: нужно узнать что передавать
   addFile(): Observable<FileModeInterface> {
     let url = `${environment.apiUrl}/file`;
-    return this.http.post<FileModeInterface>(url, {})
+    return this.http.post<FileModeInterface>(url, {});
   }
 
-  uploadFileChunks(file: File, guid: string): Observable<FileModeInterface> {
+  uploadFileChunks(file: string, fileName: string, fileSize: string, guid: string): Observable<FileModeInterface> {
     // const formData = new FormData();
     // formData.append('file', file);
 
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Upload-ChunkNumber', '1');
-    headers = headers.append('Upload-FileName', file.name);
+    headers = headers.append('Upload-FileName', fileName);
     headers = headers.append('Upload-GUID', guid);
-    headers = headers.append('Upload-TotalSize', file.size.toString());
-
-    let fileUp = this.getBase64(file)
-    console.log(fileUp)
+    headers = headers.append('Upload-TotalSize', fileSize);
 
     let url = `${environment.apiUrl}/file/chunks`;
-     return this.http.post<FileModeInterface>(url, fileUp, {headers});
+    return this.http.post<FileModeInterface>(url, file, { headers });
   }
 
   getFileByCode(code: string): Observable<FileModeInterface> {
     let url = `${environment.apiUrl}/file/${code}`;
-    return this.http.get<FileModeInterface>(url)
+    return this.http.get<FileModeInterface>(url);
   }
 
   getFileContentByCode(code: string): Observable<any> {
     let url = `${environment.apiUrl}/file/${code}/content`;
-    return this.http.get<any>(url)
+    return this.http.get<any>(url);
   }
 
   getFile(): Observable<string> {
     let url = `${environment.apiUrl}/File`;
-    return this.http.get<string>(url)
+    return this.http.get<string>(url);
   }
-
-  getBase64(file) {
-    let reader = new FileReader();
-
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      return reader.result;
-    };
-    reader.onerror = function (error) {
-      console.log('Error: ', error);
-    };
- }
 }

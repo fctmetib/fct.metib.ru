@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RequestSourceEnum } from 'src/app/shared/types/enums/request-source.enum';
 import { FinanceTypeInterface } from '../../types/common/finance-type.interface';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { addRequestAction } from '../../store/actions/crud.action';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
@@ -224,26 +224,48 @@ export class RequestCreateDialogComponent {
   //#endregion
 
   //#region files
+  onSelect(event) {
+    console.log(event);
+  }
+
   onUpload(event) {
     console.log(event);
-    for (let file of event.files) {
+    let files: File[] = event.files;
+
+    for (let file of files) {
       console.log(file);
       let guid = Guid.newGuid();
 
-      this.fileService.uploadFileChunks(file, guid).subscribe(
-        (res) => {
-          console.log(res);
-          this.uploadedFiles.push({
-            Code: res.Code,
-            FileName: res.FileName,
-            ID: res.ID,
-            Identifier: res.Identifier,
-            Size: res.Size,
-          });
-        },
-        (err) => console.log(err)
-      );
+      this.getBase64(file).subscribe(res => {
+        this.fileService
+        .uploadFileChunks(res, file.name, file.size.toString(), guid)
+        .subscribe(
+          (res) => {
+            console.log(res);
+            this.uploadedFiles.push({
+              Code: res.Code,
+              FileName: res.FileName,
+              ID: res.ID,
+              Identifier: res.Identifier,
+              Size: res.Size,
+            });
+          },
+          (err) => console.log(err)
+        );
+      });
+
     }
+  }
+
+  private getBase64(file): Observable<string>{
+    return Observable.create((observer: Observer<string>) => {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        observer.next(e.target.result);
+        observer.complete();
+      };
+      reader.readAsDataURL(file);
+    })
   }
   //#endregion
 }

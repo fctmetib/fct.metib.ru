@@ -163,8 +163,9 @@
 
   </p-tabPanel>
   <p-tabPanel header="Скан-копии накладных">
-    <p-fileUpload (uploadHandler)="onUpload($event)" chooseLabel="Выбрать файлы"
-    name="myfile[]" customUpload="true"
+    <p-fileUpload
+    (onSelect)="onSelect($event)"
+     (uploadHandler)="onUpload($event)" chooseLabel="Выбрать файлы"  customUpload="true"
       uploadLabel="Загрузить" multiple="multiple" maxFileSize="1000000">
       <ng-template pTemplate="content">
         <!-- <ul *ngIf="uploadedFiles.length">
