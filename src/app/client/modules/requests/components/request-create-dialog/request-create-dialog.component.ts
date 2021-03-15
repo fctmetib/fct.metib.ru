@@ -1,3 +1,4 @@
+import { FileModeInterface } from './../../../../../shared/types/file/file-model.interface';
 import {
   crudErrorsSelector,
   crudSuccessSelector,
@@ -16,6 +17,8 @@ import { addRequestAction } from '../../store/actions/crud.action';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
 import { ThrowStmt } from '@angular/compiler';
+import { FileService } from 'src/app/shared/services/common/file.service';
+import { Guid } from 'src/app/shared/classes/common/guid.class';
 
 @Component({
   selector: 'app-request-create-dialog',
@@ -55,11 +58,12 @@ export class RequestCreateDialogComponent {
   public currentShipmentID = null;
   //#endregion
 
-  uploadedFiles: any[] = [];
+  uploadedFiles: FileModeInterface[] = [];
 
   constructor(
     public ref: DynamicDialogRef,
     private fb: FormBuilder,
+    private fileService: FileService,
     private deliveryService: DeliveryService,
     public config: DynamicDialogConfig,
     public store: Store
@@ -221,8 +225,24 @@ export class RequestCreateDialogComponent {
 
   //#region files
   onUpload(event) {
+    console.log(event);
     for (let file of event.files) {
-      this.uploadedFiles.push(file);
+      console.log(file);
+      let guid = Guid.newGuid();
+
+      this.fileService.uploadFileChunks(file, guid).subscribe(
+        (res) => {
+          console.log(res);
+          this.uploadedFiles.push({
+            Code: res.Code,
+            FileName: res.FileName,
+            ID: res.ID,
+            Identifier: res.Identifier,
+            Size: res.Size,
+          });
+        },
+        (err) => console.log(err)
+      );
     }
   }
   //#endregion

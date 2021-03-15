@@ -26,7 +26,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   ref: DynamicDialogRef;
   items: MenuItem[] = [];
 
-  selectedItems: RequestsResponseInterface[];
+  selectedItems: RequestsResponseInterface[] = [];
 
   constructor(private store: Store, public dialogService: DialogService) {}
 

@@ -12,7 +12,7 @@
 
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
-      <div class="p-mr-2">Выбрано 0</div>
+      <div class="p-mr-2">Выбрано {{selectedItems.length}}</div>
       <button #btn type="button" pButton label="Действие" icon="pi pi-angle-down" (click)="menu.toggle($event)"
         class="basic" id="step2"></button>
       <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>

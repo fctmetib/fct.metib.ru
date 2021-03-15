@@ -34,6 +34,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { DialogModule } from 'primeng/dialog';
 import {TieredMenuModule} from 'primeng/tieredmenu';
 import {FileUploadModule} from 'primeng/fileupload';
+import { FileService } from 'src/app/shared/services/common/file.service';
 
 @NgModule({
   imports: [
@@ -67,6 +68,6 @@ import {FileUploadModule} from 'primeng/fileupload';
     AvatarModule,
   ],
   declarations: [RequestsPageComponent, RequestCreateDialogComponent],
-  providers: [DialogService, DeliveryService, RequestsService],
+  providers: [DialogService, DeliveryService, RequestsService, FileService],
 })
 export class RequestModule {}
