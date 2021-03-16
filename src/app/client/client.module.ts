@@ -25,6 +25,7 @@ import { ClientService } from '../shared/services/common/client.service';
 import { reducers } from './store/reducers';
 import { DeliveryService } from '../shared/services/share/delivery.service';
 import { OrganizationService } from '../shared/services/share/organization.service';
+import { MobileHeaderComponent } from '../shared/layouts/client-layout/mobile-header/mobile-header.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,7 @@ import { OrganizationService } from '../shared/services/share/organization.servi
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [ClientLayoutComponent, HeaderComponent],
+  declarations: [ClientLayoutComponent, HeaderComponent, MobileHeaderComponent],
   providers: [ClientService, DeliveryService, OrganizationService],
 })
 export class ClientModule {}

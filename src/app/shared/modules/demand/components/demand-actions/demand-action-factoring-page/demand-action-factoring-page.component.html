@@ -10,6 +10,9 @@
     </div>
   </div>
 
+  <metib-success-messages *ngIf="alert"
+  [message]="alertMessage"></metib-success-messages>
+
   <form [formGroup]="formFactoring" (ngSubmit)="onSubmit()">
     <div class="form-actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"

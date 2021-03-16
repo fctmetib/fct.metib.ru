@@ -21,6 +21,9 @@
               <p>
                 №{{demand.ID}}
                 <span [ngSwitch]="demand.Type">
+                  <span *ngSwitchCase="'Factoring'">
+                    Запрос на Факторинг
+                  </span>
                   <span *ngSwitchCase="'DigitalSignature'">
                     Запрос на ЭЦП
                   </span>
@@ -37,11 +40,21 @@
             <div [ngSwitch]="demand.Status">
               <div *ngSwitchCase="'Processing'">
                 <div class="demand-status default">
-                  Создан
+                  В процессе
                 </div>
               </div>
               <div *ngSwitchCase="'Completed'">
                 <div class="demand-status success">
+                  Завершен
+                </div>
+              </div>
+              <div *ngSwitchCase="'Rejected'">
+                <div class="demand-status warning">
+                  Отклонено
+                </div>
+              </div>
+              <div *ngSwitchCase="'Created'">
+                <div class="demand-status default">
                   Создан
                 </div>
               </div>
@@ -56,9 +69,17 @@
           <div class="demand-manager-date">
             {{demand.DateModify | date:'dd.MM.yyyy'}}
           </div>
-          <div class="demand-manager-info">
-            Менеджер не назначен
+          <div *ngIf="demand.Manager; else noManager">
+            <div class="demand-manager-info">
+              {{demand.Manager.Email}} <br>
+              {{demand.Manager.Name}}
+            </div>
           </div>
+          <ng-template #noManager>
+            <div class="demand-manager-info">
+              Менеджер не назначен
+            </div>
+          </ng-template>
         </div>
       </div>
     </ng-container>

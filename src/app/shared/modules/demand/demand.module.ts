@@ -1,3 +1,4 @@
+import { SuccessMessagesModule } from './../successMessages/successMessages.module';
 import { DemandActionVerificationPageComponent } from './components/demand-actions/demand-action-verification-page/demand-action-verification-page.component';
 import { DemandActionSuretyPageComponent } from './components/demand-actions/demand-action-surety-page/demand-action-surety-page.component';
 import { DemandActionRequestSupportPageComponent } from './components/demand-actions/demand-action-request-support-page/demand-action-request-support-page.component';
@@ -58,6 +59,7 @@ import { FileService } from '../../services/common/file.service';
     MultiSelectModule,
     DemandRoutingModule,
     ReactiveFormsModule,
+    SuccessMessagesModule,
     CardModule,
     MenubarModule,
     AvatarModule,

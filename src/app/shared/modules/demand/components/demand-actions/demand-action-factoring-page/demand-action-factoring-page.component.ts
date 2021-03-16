@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
+import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
+import { CreateDemandFactoringRequestInterface } from '../../../types/requests/create-demand-factoring-request.interface';
 
 @Component({
   selector: 'app-demand-action-factoring-page',
@@ -34,6 +36,9 @@ export class DemandActionFactoringPageComponent implements OnInit {
       value: 'ООО',
     },
   ];
+
+  alert: boolean;
+  alertMessage: string;
 
   constructor(
     private authService: AuthService,
@@ -81,86 +86,221 @@ export class DemandActionFactoringPageComponent implements OnInit {
       factoringCredits: this.fb.array([]),
 
       factoringEDIProviders: this.fb.array([]),
-
-      filesRegulations: this.fb.group({
-        id: [0],
-        code: [''],
-        fileName: [''],
-        size: [0],
-        identifier: ['Regulations'],
-      }),
-
-      fileGenDirPassport: this.fb.group({
-        id: [0],
-        code: [''],
-        fileName: [''],
-        size: [0],
-        identifier: ['GenDirPassport'],
-      }),
-
-      fileGenDirProtocol: this.fb.group({
-        id: [0],
-        code: [''],
-        fileName: [''],
-        size: [0],
-        identifier: ['GenDirProtocol'],
-      }),
-
-      fileGenDirOrder: this.fb.group({
-        id: [0],
-        code: [''],
-        fileName: [''],
-        size: [0],
-        identifier: ['GenDirOrder'],
-      }),
-
-      // TODO: REWORK ON ARRAY
-      // fileBalance: this.fb.array([]),
-      fileBalance: this.fb.group({
-        id: [0],
-        code: [''],
-        fileName: [''],
-        size: [0],
-        identifier: ['Balance'],
-      }),
-
-      // TODO: REWORK ON ARRAY
-      fileOSV: this.fb.group({
-        id: [0],
-        code: [''],
-        fileName: [''],
-        size: [0],
-        identifier: ['OSV'],
-      }),
-
-      fileShareReestr: this.fb.group({
-        id: [0],
-        code: [''],
-        fileName: [''],
-        size: [0],
-        identifier: ['ShareReestr'],
-      }),
-
-      fileShareholders: this.fb.group({
-        id: [0],
-        code: [''],
-        fileName: [''],
-        size: [0],
-        identifier: ['Shareholders'],
-      }),
-
-      fileContractDelivery: this.fb.group({
-        id: [0],
-        code: [''],
-        fileName: [''],
-        size: [0],
-        identifier: ['ContractDelivery'],
-      }),
     });
   }
 
   onSubmit() {
     console.log(this.formFactoring.value);
+
+    //TODO: need to link data with form
+
+    let data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> = {
+      Data: {
+        Anket: {
+          Registration: {
+            Authority: '',
+            Date: new Date(),
+            InitDate: new Date(),
+            Number: '',
+            Place: ''
+          },
+          Resident: {
+            Country: '',
+            ForeignCode: '',
+            IsResident: false
+          },
+          Shareholders: [],
+          Signer: {
+            FactAddress: {
+              Appartment: '',
+              City: '',
+              Country: '',
+              District: '',
+              House: '',
+              Locality: '',
+              PostCode: '',
+              RegionCode: 0,
+              RegionTitle: '',
+              Street: ''
+            },
+            Passport: {
+              Date: new Date(),
+              Expire: new Date(),
+              IsForeign: false,
+              IssuerCode: '',
+              IssuerTitle: '',
+              Nationality: '',
+              Number: ''
+            },
+            Person: {
+              BirthDate: new Date(),
+              BirthPlace: '',
+              Email: '',
+              Gender: 1,
+              Name: {
+                First: '',
+                Last: '',
+                Second: ''
+              },
+              NameFirst: '',
+              NameLast: '',
+              NameSecond: '',
+              Phone: '',
+              SNILS: ''
+            },
+            PositionDate: new Date(),
+            PositionTitle: '',
+            RegistrationAddress: {
+              Appartment: '',
+              City: '',
+              Country: '',
+              District: '',
+              House: '',
+              Locality: '',
+              PostCode: '',
+              RegionCode: 0,
+              RegionTitle: '',
+              Street: ''
+            },
+          },
+          Activities: [],
+          Capital: {
+            Total: 0,
+            Payed: 0,
+          },
+          Licenses: [],
+          Objectives: {
+            BankRelationObjective: 0,
+            BankRelationObjectiveOther: '',
+            FinancialObjective: 0,
+            FinancialObjectiveOther: '',
+            TransactionsContracts: '',
+            TransactionsCount: '',
+            TransactionsSumm: ''
+          },
+          Organization: {
+            Email: '',
+            FactAddress: {
+              Appartment: '',
+              City: '',
+              Country: '',
+              District: '',
+              House: '',
+              Locality: '',
+              PostCode: '',
+              RegionCode: 0,
+              RegionTitle: '',
+              Street: ''
+            },
+            FactAddressEquals: false,
+            ForeignTitle: '',
+            FullTitle: '',
+            LegalAddress: {
+              Appartment: '',
+              City: '',
+              Country: '',
+              District: '',
+              House: '',
+              Locality: '',
+              PostCode: '',
+              RegionCode: 0,
+              RegionTitle: '',
+              Street: ''
+            },
+            LegalForm: '',
+            Phone: '',
+            PostAddress: {
+              Appartment: '',
+              City: '',
+              Country: '',
+              District: '',
+              House: '',
+              Locality: '',
+              PostCode: '',
+              RegionCode: 0,
+              RegionTitle: '',
+              Street: ''
+            },
+            PostAddressEquals: false,
+            Requisites: {
+              INN: '',
+              KPP: '',
+              OGRN: '',
+              OKATO: '',
+              OKPO: ''
+            },
+            ShortTitle: '',
+            Type: 0,
+            Website: ''
+          }
+        },
+        Factoring: {
+          Account: {
+            BIK: '',
+            Bank: '',
+            COR: '',
+            Comment: '',
+            Date: new Date(),
+            Expire: new Date(),
+            Number: ''
+          },
+          AddonAccounts: [
+            {
+              BIK: '',
+              Bank: '',
+              COR: '',
+              Comment: '',
+              Date: new Date(),
+              Expire: new Date(),
+              Number: ''
+            }
+          ],
+          Buyers: '',
+          EDI: [{
+            Company: '',
+            EDIProvider: ''
+          }],
+          FactoringAim: 0,
+          LimitWanted: 0,
+          Obligations: [{
+            Creditor: '',
+            CurrentRest: 0,
+            Date: new Date(),
+            ReportingRest: 0,
+            Summ: 0,
+            Type: ''
+          }],
+          Products: '',
+          Properties: [{
+            Address: {
+              Appartment: '',
+              City: '',
+              Country: '',
+              District: '',
+              House: '',
+              Locality: '',
+              PostCode: '',
+              RegionCode: 0,
+              RegionTitle: '',
+              Street: '',
+            },
+            Comment: '',
+            Type: ''
+          }],
+          StaffAmount: 0,
+          Suppliers: '',
+          Trademarks: ''
+        },
+        Files: this.files,
+        Type: "Factoring"
+      },
+      DraftID: 0
+    };
+
+    this.demandService.add(data).subscribe(resp => {
+      this.alert = true;
+      this.alertMessage = 'Запрос успешно добавлен!'
+    });
   }
 
   onSelect(event, type: string) {
@@ -175,7 +315,13 @@ export class DemandActionFactoringPageComponent implements OnInit {
           .subscribe(
             (res) => {
               console.log(res);
-              this.addFileToForm(res, type);
+              this.files.push({
+                Code: res.Code,
+                FileName: res.FileName,
+                ID: res.ID,
+                Size: res.Size,
+                Identifier: type
+              })
             },
             (err) => console.log(err)
           );
@@ -239,129 +385,5 @@ export class DemandActionFactoringPageComponent implements OnInit {
   remove(i: number, type: string): void {
     let other = this.formFactoring.get(type) as FormArray;
     other.removeAt(i)
-  }
-
-  addFileToForm(data: FileModeInterface, type: string): void {
-    switch (type) {
-      case 'Regulations':
-        this.formFactoring.patchValue({
-          filesRegulations: {
-            id: data.ID,
-            code: data.Code,
-            fileName: data.FileName,
-            size: data.Size,
-          },
-        });
-        break;
-
-      case 'GenDirPassport':
-        this.formFactoring.patchValue({
-          fileGenDirPassport: {
-            id: data.ID,
-            code: data.Code,
-            fileName: data.FileName,
-            size: data.Size,
-          },
-        });
-        break;
-
-      case 'GenDirProtocol':
-        this.formFactoring.patchValue({
-          fileGenDirProtocol: {
-            id: data.ID,
-            code: data.Code,
-            fileName: data.FileName,
-            size: data.Size,
-          },
-        });
-        break;
-
-      case 'GenDirOrder':
-        this.formFactoring.patchValue({
-          fileGenDirOrder: {
-            id: data.ID,
-            code: data.Code,
-            fileName: data.FileName,
-            size: data.Size,
-          },
-        });
-        break;
-
-      case 'Balance':
-        this.formFactoring.patchValue({
-          fileBalance: {
-            id: data.ID,
-            code: data.Code,
-            fileName: data.FileName,
-            size: data.Size,
-          },
-        });
-        break;
-
-      case 'OSV':
-        this.formFactoring.patchValue({
-          fileOSV: {
-            id: data.ID,
-            code: data.Code,
-            fileName: data.FileName,
-            size: data.Size,
-          },
-        });
-        break;
-
-      case 'ShareReestr':
-        this.formFactoring.patchValue({
-          fileShareReestr: {
-            id: data.ID,
-            code: data.Code,
-            fileName: data.FileName,
-            size: data.Size,
-          },
-        });
-        break;
-
-      case 'Shareholders':
-        this.formFactoring.patchValue({
-          fileShareholders: {
-            id: data.ID,
-            code: data.Code,
-            fileName: data.FileName,
-            size: data.Size,
-          },
-        });
-        break;
-
-      case 'ContractDelivery':
-        this.formFactoring.patchValue({
-          fileContractDelivery: {
-            id: data.ID,
-            code: data.Code,
-            fileName: data.FileName,
-            size: data.Size,
-          },
-        });
-        break;
-    }
-  }
-
-  // TODO: LINK IT WITH ARRAY CONTROLS
-  addBalanceFile() {
-    this.fb.group({
-      id: [0],
-      code: [''],
-      fileName: [''],
-      size: [0],
-      identifier: ['Balance'],
-    });
-  }
-
-  addOSVFile() {
-    this.fb.group({
-      id: [0],
-      code: [''],
-      fileName: [''],
-      size: [0],
-      identifier: ['OSV'],
-    });
   }
 }
