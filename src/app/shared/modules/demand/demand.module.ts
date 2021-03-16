@@ -35,6 +35,8 @@ import { DemandActionLimitPageComponent } from './components/demand-actions/dema
 import { FileUploadModule } from 'primeng/fileupload';
 import { DemandActionAgentFactoringPageComponent } from './components/demand-actions/demand-action-agent-factoring-page/demand-action-agent-factoring-page.component';
 import { DemandActionFactoringPageComponent } from './components/demand-actions/demand-action-factoring-page/demand-action-factoring-page.component';
+import { CommonService } from '../../services/common/common.service';
+import { FileService } from '../../services/common/file.service';
 
 @NgModule({
   imports: [
@@ -74,6 +76,6 @@ import { DemandActionFactoringPageComponent } from './components/demand-actions/
     DemandActionSuretyPageComponent,
     DemandActionVerificationPageComponent,
   ],
-  providers: [DemandService],
+  providers: [DemandService, CommonService, FileService],
 })
 export class DemandModule {}

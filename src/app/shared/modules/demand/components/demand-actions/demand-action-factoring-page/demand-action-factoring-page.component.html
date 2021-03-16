@@ -88,45 +88,61 @@
       <div class="p-field p-col-12 p-md-12">
         <h3>Банковские реквизиты остальных счетов</h3>
 
-        <div formArrayName="otherBanks"
+        <div class="mib-formset" formArrayName="otherBanks"
           *ngFor="let item of formFactoring.get('otherBanks')['controls']; let i = index;">
-          <div [formGroupName]="i">
-            <div class="p-fluid p-formgrid p-grid form">
-              <div class="p-field p-col-12 p-md-3">
-                <label for="otherBankAccountOpenDate">Дата открытия счёта</label>
-                <input id="otherBankAccountOpenDate" type="date" pInputText placeholder="Дата открытия счёта"
-                  formControlName="otherBankAccountOpenDate">
-              </div>
-              <div class="p-field p-col-12 p-md-3">
-                <label for="otherBankAccountCloseDate">Дата закрытия счёта</label>
-                <input id="otherBankAccountCloseDate" type="date" pInputText placeholder="Дата закрытия счёта"
-                  formControlName="otherBankAccountCloseDate">
-              </div>
-              <div class="p-field p-col-12 p-md-6">
-                <label for="otherBankName">Название банка</label>
-                <input id="otherBankName" type="text" pInputText placeholder="Название банка"
-                  formControlName="otherBankName">
-              </div>
-              <div class="p-field p-col-12 p-md-6">
-                <label for="otherBankOwnerAccount">Номер счёта</label>
-                <input id="otherBankOwnerAccount" type="text" pInputText placeholder="Номер счёта"
-                  formControlName="otherBankOwnerAccount">
-              </div>
-              <div class="p-field p-col-12 p-md-6">
-                <label for="otherBankTarget">Цель использования</label>
-                <input id="otherBankTarget" type="text" pInputText placeholder="Цель использования"
-                  formControlName="otherBankTarget">
+          <div class="title">
+            <div class="text">
+              Счёт в банке
+            </div>
+            <button class="button warn" (click)="remove(i, 'otherBanks')">
+              Удалить
+            </button>
+          </div>
+          <div class="form">
+            <div [formGroupName]="i">
+              <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-3">
+                  <label for="otherBankAccountOpenDate">Дата открытия счёта</label>
+                  <input id="otherBankAccountOpenDate" type="date" pInputText placeholder="Дата открытия счёта"
+                    formControlName="otherBankAccountOpenDate">
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                  <label for="otherBankAccountCloseDate">Дата закрытия счёта</label>
+                  <input id="otherBankAccountCloseDate" type="date" pInputText placeholder="Дата закрытия счёта"
+                    formControlName="otherBankAccountCloseDate">
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                  <label for="otherBankName">Название банка</label>
+                  <input id="otherBankName" type="text" pInputText placeholder="Название банка"
+                    formControlName="otherBankName">
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                  <label for="otherBankOwnerAccount">Номер счёта</label>
+                  <input id="otherBankOwnerAccount" type="text" pInputText placeholder="Номер счёта"
+                    formControlName="otherBankOwnerAccount">
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                  <label for="otherBankTarget">Цель использования</label>
+                  <input id="otherBankTarget" type="text" pInputText placeholder="Цель использования"
+                    formControlName="otherBankTarget">
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="p-d-flex">
-          Дополнительные счета в других банках
-          <button (click)="addOtherBank()">
-            Добавить счёт в банке
-          </button>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button">
+          <div class="addon-text-small">
+            <p>
+              Дополнительные счета в других банках
+            </p>
+          </div>
+          <button pButton pRipple (click)="addOtherBank()" label="Добавить счёт в банке" type="button"
+            class="basic-small"></button>
         </div>
       </div>
+
 
       <div class="p-field p-col-12 p-md-12">
         <h3>Приложение к Анкете (Факторинг)</h3>
@@ -169,31 +185,46 @@
         <p class="description">По каждому пункту указать, на каких основаниях и на каких условиях Предприятие владеет
           тем или иным объектом недвижимости</p>
 
-
-        <div formArrayName="factoringPlaces"
-        *ngFor="let item of formFactoring.get('factoringPlaces')['controls']; let i = index;">
-        <div [formGroupName]="i">
-          <div class="p-fluid p-formgrid p-grid form">
-            <div class="p-field p-col-12 p-md-6">
-              <label for="factoringPlacesAddress">Адрес объёкта</label>
-              <input id="factoringPlacesAddress" type="text" pInputText placeholder="Адрес объёкта"
-                formControlName="factoringPlacesAddress">
+        <div class="mib-formset" formArrayName="factoringPlaces"
+          *ngFor="let item of formFactoring.get('factoringPlaces')['controls']; let i = index;">
+          <div class="title">
+            <div class="text">
+              Собственность
             </div>
-            <div class="p-field p-col-12 p-md-6">
-              <label for="factoringPlacesLegalForm">Форма владения</label>
-              <input id="factoringPlacesLegalForm" type="text" pInputText placeholder="Форма владения"
-                formControlName="factoringPlacesLegalForm">
+            <button class="button warn" (click)="remove(i, 'factoringPlaces')">
+              Удалить
+            </button>
+          </div>
+          <div class="form">
+            <div [formGroupName]="i">
+              <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-6">
+                  <label for="factoringPlacesAddress">Адрес объёкта</label>
+                  <input id="factoringPlacesAddress" type="text" pInputText placeholder="Адрес объёкта"
+                    formControlName="factoringPlacesAddress">
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                  <label for="factoringPlacesLegalForm">Форма владения</label>
+                  <input id="factoringPlacesLegalForm" type="text" pInputText placeholder="Форма владения"
+                    formControlName="factoringPlacesLegalForm">
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="p-d-flex">
-        Дополнительная недвижимость
-        <button (click)="addOtherPlace()">
-          Добавить недвижимость
-        </button>
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button">
+          <div class="addon-text-small">
+            <p>
+              Дополнительная недвижимость
+            </p>
+          </div>
+          <button pButton pRipple (click)="addOtherPlace()" label="Добавить недвижимость" type="button"
+            class="basic-small"></button>
+        </div>
       </div>
-      </div>
+
 
       <!-- W -->
       <div class="p-field p-col-12 p-md-12">
@@ -201,78 +232,109 @@
         <p class="description">Кредитная история и текущая кредиторская задолженность, в т. ч. ссуды из других
           источников, включая государственные учреждения</p>
 
-          <div formArrayName="factoringCredits"
+        <div class="mib-formset" formArrayName="factoringCredits"
           *ngFor="let item of formFactoring.get('factoringCredits')['controls']; let i = index;">
-          <div [formGroupName]="i">
-            <div class="p-fluid p-formgrid p-grid form">
-              <div class="p-field p-col-12 p-md-3">
-                <label for="factoringCreditsCreditor">Кредитор</label>
-                <input id="factoringCreditsCreditor" type="text" pInputText placeholder="Кредитор"
-                  formControlName="factoringCreditsCreditor">
-              </div>
-              <div class="p-field p-col-12 p-md-3">
-                <label for="factoringPlacesTypeDuty">Тип обязательства</label>
-                <input id="factoringPlacesTypeDuty" type="text" pInputText placeholder="Тип обязательства"
-                  formControlName="factoringPlacesTypeDuty">
-              </div>
-              <div class="p-field p-col-12 p-md-3">
-                <label for="factoringPlacesDateClose">Дата погашения</label>
-                <input id="factoringPlacesDateClose" type="date" pInputText placeholder="Дата погашения"
-                  formControlName="factoringPlacesDateClose">
-              </div>
-              <div class="p-field p-col-12 p-md-3">
-                <label for="factoringPlacesContractSum">Сумма договора</label>
-                <input id="factoringPlacesContractSum" type="text" pInputText placeholder="Сумма договора"
-                  formControlName="factoringPlacesContractSum">
-              </div>
-              <div class="p-field p-col-12 p-md-3">
-                <label for="factoringPlacesBalanceReport">Остаток на дату сдачи отчетности</label>
-                <input id="factoringPlacesBalanceReport" type="text" pInputText placeholder="Остаток на дату сдачи отчетности"
-                  formControlName="factoringPlacesBalanceReport">
-              </div>
-              <div class="p-field p-col-12 p-md-3">
-                <label for="factoringPlacesBalanceCurrent">Остаток на текущую дату</label>
-                <input id="factoringPlacesBalanceCurrent" type="text" pInputText placeholder="Остаток на текущую дату"
-                  formControlName="factoringPlacesBalanceCurrent">
+          <div class="title">
+            <div class="text">
+              Кредит, займ, гарантия, ...
+            </div>
+            <button class="button warn" (click)="remove(i, 'factoringCredits')">
+              Удалить
+            </button>
+          </div>
+          <div class="form">
+            <div [formGroupName]="i">
+              <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-3">
+                  <label for="factoringCreditsCreditor">Кредитор</label>
+                  <input id="factoringCreditsCreditor" type="text" pInputText placeholder="Кредитор"
+                    formControlName="factoringCreditsCreditor">
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                  <label for="factoringPlacesTypeDuty">Тип обязательства</label>
+                  <input id="factoringPlacesTypeDuty" type="text" pInputText placeholder="Тип обязательства"
+                    formControlName="factoringPlacesTypeDuty">
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                  <label for="factoringPlacesDateClose">Дата погашения</label>
+                  <input id="factoringPlacesDateClose" type="date" pInputText placeholder="Дата погашения"
+                    formControlName="factoringPlacesDateClose">
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                  <label for="factoringPlacesContractSum">Сумма договора</label>
+                  <input id="factoringPlacesContractSum" type="text" pInputText placeholder="Сумма договора"
+                    formControlName="factoringPlacesContractSum">
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                  <label for="factoringPlacesBalanceReport">Остаток на дату сдачи отчетности</label>
+                  <input id="factoringPlacesBalanceReport" type="text" pInputText
+                    placeholder="Остаток на дату сдачи отчетности" formControlName="factoringPlacesBalanceReport">
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                  <label for="factoringPlacesBalanceCurrent">Остаток на текущую дату</label>
+                  <input id="factoringPlacesBalanceCurrent" type="text" pInputText placeholder="Остаток на текущую дату"
+                    formControlName="factoringPlacesBalanceCurrent">
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="p-d-flex">
-          Дополнительная задолженность
-          <button (click)="addFactoringCredits()">
-            Добавить задолженность
-          </button>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button">
+          <div class="addon-text-small">
+            <p>
+              Дополнительная задолженность
+            </p>
+          </div>
+          <button pButton pRipple (click)="addFactoringCredits()" label="Добавить задолженность" type="button"
+            class="basic-small"></button>
         </div>
       </div>
+
 
       <!-- W -->
       <div class="p-field p-col-12 p-md-12">
         <h3>Взаимодействие с EDI-провайдерами по электронному документообороту</h3>
 
-        <div formArrayName="factoringEDIProviders"
-        *ngFor="let item of formFactoring.get('factoringEDIProviders')['controls']; let i = index;">
-        <div [formGroupName]="i">
-          <div class="p-fluid p-formgrid p-grid form">
-            <div class="p-field p-col-12 p-md-6">
-              <label for="factoringEDIProvidersDebitor">Дебитор</label>
-              <input id="factoringEDIProvidersDebitor" type="text" pInputText placeholder="Дебитор"
-                formControlName="factoringEDIProvidersDebitor">
+        <div class="mib-formset" formArrayName="factoringEDIProviders"
+          *ngFor="let item of formFactoring.get('factoringEDIProviders')['controls']; let i = index;">
+          <div class="title">
+            <div class="text">
+              EDI
             </div>
-            <div class="p-field p-col-12 p-md-6">
-              <label for="factoringEDIProvidersProvider">EDI-Провайдер</label>
-              <input id="factoringEDIProvidersProvider" type="text" pInputText placeholder="EDI-Провайдер"
-                formControlName="factoringEDIProvidersProvider">
+            <button class="button warn" (click)="remove(i, 'factoringEDIProviders')">
+              Удалить
+            </button>
+          </div>
+          <div class="form">
+            <div [formGroupName]="i">
+              <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-6">
+                  <label for="factoringEDIProvidersDebitor">Дебитор</label>
+                  <input id="factoringEDIProvidersDebitor" type="text" pInputText placeholder="Дебитор"
+                    formControlName="factoringEDIProvidersDebitor">
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                  <label for="factoringEDIProvidersProvider">EDI-Провайдер</label>
+                  <input id="factoringEDIProvidersProvider" type="text" pInputText placeholder="EDI-Провайдер"
+                    formControlName="factoringEDIProvidersProvider">
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="p-d-flex">
-        EDI взаимодействие
-        <button (click)="addEDIProvider()">
-          Добавить взаимодействие
-        </button>
-      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button">
+          <div class="addon-text-small">
+            <p>
+              EDI взаимодействие
+            </p>
+          </div>
+          <button pButton pRipple (click)="addEDIProvider()" label="Добавить взаимодействие" type="button"
+            class="basic-small"></button>
+        </div>
       </div>
 
       <!-- W -->
@@ -287,8 +349,8 @@
               Устав (Со всеми изменениями)
             </p>
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'passport')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, 'Regulations')" customUpload="true"
+            mode="basic" styleClass="mib-upload" maxFileSize="1000000" chooseLabel="Выбрать файл">
           </p-fileUpload>
         </div>
       </div>
@@ -300,8 +362,8 @@
               (Все страницы)
             </p>
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'passport')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, 'GenDirPassport')" customUpload="true"
+            mode="basic" styleClass="mib-upload" maxFileSize="1000000" chooseLabel="Выбрать файл">
           </p-fileUpload>
         </div>
       </div>
@@ -312,8 +374,8 @@
               Протокол/решение о назначении генерального директора
             </p>
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'passport')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, 'GenDirProtocol')" customUpload="true"
+            mode="basic" styleClass="mib-upload" maxFileSize="1000000" chooseLabel="Выбрать файл">
           </p-fileUpload>
         </div>
       </div>
@@ -324,8 +386,8 @@
               Приказ о назначении генерального директора
             </p>
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'passport')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, 'GenDirOrder')" customUpload="true"
+            mode="basic" styleClass="mib-upload" maxFileSize="1000000" chooseLabel="Выбрать файл">
           </p-fileUpload>
         </div>
       </div>
@@ -336,8 +398,8 @@
               Бухгалтерский Баланс
             </p>
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'passport')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, 'Balance')" customUpload="true"
+            mode="basic" styleClass="mib-upload" maxFileSize="1000000" chooseLabel="Выбрать файл">
           </p-fileUpload>
         </div>
       </div>
@@ -348,8 +410,8 @@
               ОСВ (оборотно-сальдовая ведомость)
             </p>
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'passport')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, 'OSV')" customUpload="true"
+            mode="basic" styleClass="mib-upload" maxFileSize="1000000" chooseLabel="Выбрать файл">
           </p-fileUpload>
         </div>
       </div>
@@ -360,8 +422,8 @@
               Паспорта Учредителей
             </p>
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'passport')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, 'Shareholders')" customUpload="true"
+            mode="basic" styleClass="mib-upload" maxFileSize="1000000" chooseLabel="Выбрать файл">
           </p-fileUpload>
         </div>
       </div>
@@ -372,8 +434,8 @@
               Договор поставки
             </p>
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'passport')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, 'ContractDelivery')"
+            customUpload="true" mode="basic" styleClass="mib-upload" maxFileSize="1000000" chooseLabel="Выбрать файл">
           </p-fileUpload>
         </div>
       </div>

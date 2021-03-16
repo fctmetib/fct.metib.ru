@@ -19,6 +19,7 @@ import { RequestsResponseInterface } from '../../types/requestResponse.interface
 import { ThrowStmt } from '@angular/compiler';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
+import { CommonService } from 'src/app/shared/services/common/common.service';
 
 @Component({
   selector: 'app-request-create-dialog',
@@ -66,6 +67,7 @@ export class RequestCreateDialogComponent {
     private fileService: FileService,
     private deliveryService: DeliveryService,
     public config: DynamicDialogConfig,
+    private commonService: CommonService,
     public store: Store
   ) {}
 
@@ -236,7 +238,7 @@ export class RequestCreateDialogComponent {
       console.log(file);
       let guid = Guid.newGuid();
 
-      this.getBase64(file).subscribe(res => {
+      this.commonService.getBase64(file).subscribe(res => {
         this.fileService
         .uploadFileChunks(res, file.name, file.size.toString(), guid)
         .subscribe(
@@ -253,19 +255,7 @@ export class RequestCreateDialogComponent {
           (err) => console.log(err)
         );
       });
-
     }
-  }
-
-  private getBase64(file): Observable<Uint8Array[]>{
-    return Observable.create((observer: Observer<Uint8Array[]>) => {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        observer.next(e.target.result);
-        observer.complete();
-      };
-      reader.readAsArrayBuffer(file);
-    })
   }
   //#endregion
 }
