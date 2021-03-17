@@ -24,42 +24,52 @@ export class DemandPageComponent implements OnInit {
       {
         text: 'Запрос на редактирование профиля',
         url: 'actions/edit-profile',
+        onlyNewClient: false,
       },
       {
         text: 'Запрос на свободную тему',
         url: 'actions/free-request',
+        onlyNewClient: false,
       },
       {
         text: 'Запрос в техническую поддержку',
         url: 'actions/support-request',
+        onlyNewClient: false,
       },
       {
         text: 'Запрос на ЭЦП',
         url: 'actions/create-eds',
+        onlyNewClient: false,
       },
       {
         text: 'Запрос на поручительство',
         url: 'actions/surety',
+        onlyNewClient: false,
       },
       {
         text: 'Запрос на факторинг',
         url: 'actions/factoring',
+        onlyNewClient: false,
       },
       {
         text: 'Запрос на агентский факторинг',
         url: 'actions/agent-factoring',
+        onlyNewClient: false,
       },
       {
         text: 'Запрос на увеличение лимита',
         url: 'actions/update-limit',
+        onlyNewClient: false,
       },
       {
         text: 'Запрос на нового дебитора',
         url: 'actions/create-debitor',
+        onlyNewClient: false,
       },
       {
         text: 'Регистрация канала верификации',
         url: 'actions/verify',
+        onlyNewClient: false,
       },
     ];
   }

@@ -90,6 +90,9 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
     this.ref.onClose.subscribe((data: any) => {
       console.log('closed');
+      if(data.success) {
+        this.fetch();
+      }
     });
   }
 

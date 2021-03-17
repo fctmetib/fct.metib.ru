@@ -6,12 +6,13 @@ import { RequestTypeEnum } from '../enums/request-type.enum';
 export interface ClientRequestInterface {
   DeliveryID: number;
   Type: RequestTypeEnum;
-  Source: RequestSourceEnum,
+  Source?: RequestSourceEnum,
   Number: string;
-  Title: string;
+  Title?: string;
   Date: Date;
   ID?: number;
-  AgencyFlag: boolean;
+  AgencyFlag?: boolean;
   Shipments: ClientShipmentInterface[];
   Files: FileModeInterface[]
 }
+// {"DeliveryID":20940,"Type":"Financing","Number":"","Title":"","Date":"2021-03-17T09:53:34+03:00","Shipments":[],"Files":[]}

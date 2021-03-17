@@ -264,9 +264,10 @@
           <label for="dateTo">Дата по: </label>
           <input id="dateTo" type="date" pInputText placeholder="Дата по" formControlName="dateTo">
         </div>
-        <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text"
-          (click)="closeDateModal()"></button>
-        <button pButton pRipple label="Ок" icon="pi pi-check" class="p-button-text" type="submit"></button>
+        <div class="modal-actions">
+          <button pButton pRipple label="Применить" class="p-button-text save" type="submit"></button>
+          <button pButton pRipple label="Отменить" class="p-button-text cancel"  (click)="closeDateModal()"></button>
+        </div>
       </form>
     </ng-template>
   </p-dialog>

@@ -37,11 +37,11 @@ export class RequestCreateDialogComponent {
   public types: FinanceTypeInterface[] = [
     {
       name: 'Без финансирования',
-      value: 0,
+      value: 'NonFinancing',
     },
     {
       name: 'С финансированием',
-      value: 1,
+      value: 'Financing',
     },
   ];
   public freeDuty = 0;
@@ -61,6 +61,8 @@ export class RequestCreateDialogComponent {
 
   uploadedFiles: FileModeInterface[] = [];
 
+  private isSuccess: boolean = false;
+
   constructor(
     public ref: DynamicDialogRef,
     private fb: FormBuilder,
@@ -74,6 +76,10 @@ export class RequestCreateDialogComponent {
   ngOnInit() {
     this.errorsMessage$ = this.store.pipe(select(crudErrorsSelector));
     this.successMessage$ = this.store.pipe(select(crudSuccessSelector));
+
+    this.successMessage$.subscribe(isSuccess => {
+      this.isSuccess = true;
+    })
 
     this.initializeForm();
   }
@@ -135,14 +141,11 @@ export class RequestCreateDialogComponent {
     );
 
     const request: ClientRequestInterface = {
-      AgencyFlag: false,
-      Date: this.form.value.date,
+      Date: new Date(this.form.value.date),
       DeliveryID: this.form.value.deliveryID,
       Files: [],
       Number: this.form.value.number,
       Shipments: this.shipments,
-      Source: RequestSourceEnum.Cabinet,
-      Title: selectedDelivery.Title,
       Type: this.form.value.type,
     };
 
@@ -158,7 +161,10 @@ export class RequestCreateDialogComponent {
   }
 
   close() {
-    this.ref.close('Closed');
+    let data = {
+      isSuccess: this.isSuccess
+    }
+    this.ref.close(data);
   }
 
   //#region shipments

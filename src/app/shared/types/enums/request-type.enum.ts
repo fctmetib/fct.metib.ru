@@ -1,5 +1,5 @@
 export enum RequestTypeEnum {
-  NonFinancing = 0,
-  Financing = 1,
-  Correction = 2
+  NonFinancing = 'NonFinancing',
+  Financing = 'Financing',
+  Correction = 'Correction'
 }

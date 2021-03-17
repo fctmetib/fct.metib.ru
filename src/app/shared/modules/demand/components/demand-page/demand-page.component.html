@@ -12,15 +12,17 @@
   </div>
 
   <div class="p-grid">
-    <div class="p-col" *ngFor="let action of actions">
-      <div class="demand-action-card can-click" [routerLink]="[action.url]">
-        <div class="demand-action-content">
-          <div class="text">
-            {{action.text}}
+    <ng-container *ngFor="let action of actions">
+      <div *ngIf="!action.onlyNewClient && isUserVerified" class="p-col" >
+        <div class="demand-action-card can-click" [routerLink]="[action.url]">
+          <div class="demand-action-content">
+            <div class="text">
+              {{action.text}}
+            </div>
+            <div class="icon arrow_right"></div>
           </div>
-          <div class="icon arrow_right"></div>
         </div>
-    </div>
-    </div>
+      </div>
+    </ng-container>
   </div>
 </div>
