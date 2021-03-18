@@ -16,6 +16,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
 import { HeaderComponent } from '../shared/layouts/not-verify-client-layout/header/header.component';
+import { MobileHeaderComponent } from '../shared/layouts/not-verify-client-layout/mobile-header/mobile-header.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,7 @@ import { HeaderComponent } from '../shared/layouts/not-verify-client-layout/head
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [NotVerifyClientLayoutComponent, HeaderComponent],
+  declarations: [NotVerifyClientLayoutComponent, HeaderComponent, MobileHeaderComponent],
   providers: [],
 })
 export class NotVerifyClientModule {}

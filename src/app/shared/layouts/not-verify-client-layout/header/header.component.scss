@@ -156,3 +156,14 @@
     }
   }
 }
+
+@media (max-width: 1300px) {
+  .account {
+    display: none !important;
+  }
+
+  .header {
+    justify-content: center !important;
+    text-align: center !important;
+}
+}
