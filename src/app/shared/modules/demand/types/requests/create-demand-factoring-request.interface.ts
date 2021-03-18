@@ -1,4 +1,8 @@
+import { DemandObligationInterface } from './../common/demand-obligation.interface';
+import { DemandEDIInterface } from './../common/demand-edi.interface';
+import { DemandPropertiesInterface } from '../common/demand-properties.interface';
 import { DemandDataBaseInterface } from '../demand-data-base.interface';
+import { DemandAddonAccountInterface } from '../common/demand-addon-account.interface';
 
 export interface CreateDemandFactoringRequestInterface
   extends DemandDataBaseInterface {
@@ -147,51 +151,10 @@ export interface CreateDemandFactoringRequestInterface
     Buyers: string;
     StaffAmount: number;
     LimitWanted: number;
-    EDI: [
-      {
-        Company: string;
-        EDIProvider: string;
-      }
-    ];
-    Properties: [
-      {
-        Type: string;
-        Address: {
-          PostCode: string;
-          Country: string;
-          RegionCode: number;
-          RegionTitle: string;
-          City: string;
-          District: string;
-          Locality: string;
-          Street: string;
-          House: string;
-          Appartment: string;
-        };
-        Comment: string;
-      }
-    ];
-    Obligations: [
-      {
-        Creditor: string;
-        Type: string;
-        Date: Date;
-        Summ: number;
-        ReportingRest: number;
-        CurrentRest: number;
-      }
-    ];
-    AddonAccounts: [
-      {
-        Number: string;
-        BIK: string;
-        COR: string;
-        Bank: string;
-        Date: Date;
-        Expire: Date;
-        Comment: string;
-      }
-    ];
+    EDI: DemandEDIInterface[];
+    Properties: DemandPropertiesInterface[];
+    Obligations: DemandObligationInterface[];
+    AddonAccounts: DemandAddonAccountInterface[];
     FactoringAim: number;
     Account: {
       Number: string;

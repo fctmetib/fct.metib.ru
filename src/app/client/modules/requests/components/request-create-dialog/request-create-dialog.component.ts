@@ -51,6 +51,9 @@ export class RequestCreateDialogComponent {
 
   public addDeliveryDialog: boolean;
 
+  private files: FileModeInterface[] = [];
+  public uploadedFiles: File[] = [];
+
   //#region dynamic variables
   public btnSubmitValue = 'Создать';
   //#endregion
@@ -58,8 +61,6 @@ export class RequestCreateDialogComponent {
   //#region shipment
   public currentShipmentID = null;
   //#endregion
-
-  uploadedFiles: FileModeInterface[] = [];
 
   private isSuccess: boolean = false;
 
@@ -232,34 +233,29 @@ export class RequestCreateDialogComponent {
   //#endregion
 
   //#region files
-  onSelect(event) {
-    console.log(event);
-  }
-
-  onUpload(event) {
-    console.log(event);
+  onSelect(event, type: string) {
     let files: File[] = event.files;
+    this.uploadedFiles = files;
 
     for (let file of files) {
-      console.log(file);
       let guid = Guid.newGuid();
 
-      this.commonService.getBase64(file).subscribe(res => {
+      this.commonService.getBase64(file).subscribe((res) => {
         this.fileService
-        .uploadFileChunks(res, file.name, file.size.toString(), guid)
-        .subscribe(
-          (res) => {
-            console.log(res);
-            this.uploadedFiles.push({
-              Code: res.Code,
-              FileName: res.FileName,
-              ID: res.ID,
-              Identifier: res.Identifier,
-              Size: res.Size,
-            });
-          },
-          (err) => console.log(err)
-        );
+          .uploadFileChunks(res, file.name, file.size.toString(), guid)
+          .subscribe(
+            (res) => {
+              console.log(res);
+              this.files.push({
+                Code: res.Code,
+                FileName: res.FileName,
+                ID: res.ID,
+                Size: res.Size,
+                Identifier: type
+              })
+            },
+            (err) => console.log(err)
+          );
       });
     }
   }

@@ -21,32 +21,32 @@
     </div>
     <div class="p-fluid p-formgrid p-grid form">
       <!-- 1 row -->
-      <div class="p-field p-col-12 p-md-3">
+      <div class="p-field p-col-12 p-md-4 p-lg-3">
         <label for="organizationShortName">Сокращенное наименование</label>
         <input id="organizationShortName" type="text" pInputText placeholder="Сокращенное наименование"
           formControlName="organizationShortName">
       </div>
-      <div class="p-field p-col-12 p-md-3">
+      <div class="p-field p-col-12 p-md-4 p-lg-3">
         <label for="organizationINN">ИНН</label>
         <input id="organizationINN" type="text" pInputText placeholder="ИНН" formControlName="organizationINN">
       </div>
-      <div class="p-field p-col-12 p-md-3">
+      <div class="p-field p-col-12 p-md-4 p-lg-3">
         <label for="organizationType">Тип организации</label>
         <p-dropdown id="organizationType" [options]="organizationTypes" placeholder="Выберите Тип организации"
           formControlName="organizationType" optionLabel="title" optionValue="value"></p-dropdown>
       </div>
-      <div class="p-field p-col-12 p-md-3">
+      <div class="p-field p-col-12 p-md-4 p-lg-3">
         <label for="organizationLegalForm">Правовая форма</label>
         <p-dropdown id="organizationLegalForm" [options]="ruleTypes" placeholder="Выберите Правовую форму"
           formControlName="organizationLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
       </div>
 
       <!-- 2 row -->
-      <div class="p-field p-col-12 p-md-3">
+      <div class="p-field p-col-12 p-md-4 p-lg-3">
         <label for="organizationPhone">Телефон</label>
         <input id="organizationPhone" type="tel" pInputText placeholder="Телефон" formControlName="organizationPhone">
       </div>
-      <div class="p-field p-col-12 p-md-3">
+      <div class="p-field p-col-12 p-md-4 p-lg-3">
         <label for="organizationEmail">E-mail</label>
         <input id="organizationEmail" type="email" pInputText placeholder="E-mail" formControlName="organizationEmail">
       </div>
@@ -83,7 +83,7 @@
         <input id="bankOwnerAccount" type="text" pInputText placeholder="Номер счёта"
           formControlName="bankOwnerAccount">
       </div>
-      <div class="p-field p-col-12 p-md-3">
+      <div class="p-field p-col-12 p-md-6">
         <label for="bankComment">Комментарий</label>
         <input id="bankComment" type="text" pInputText placeholder="Комментарий" formControlName="bankComment">
       </div>
@@ -192,7 +192,7 @@
           *ngFor="let item of formFactoring.get('factoringPlaces')['controls']; let i = index;">
           <div class="title">
             <div class="text">
-              Собственность
+              [WORK IN PROGRESS] Собственность
             </div>
             <button class="button warn" (click)="remove(i, 'factoringPlaces')">
               Удалить
@@ -248,32 +248,32 @@
           <div class="form">
             <div [formGroupName]="i">
               <div class="p-fluid p-formgrid p-grid">
-                <div class="p-field p-col-12 p-md-3">
+                <div class="p-field p-col-12 p-md-4 p-lg-3">
                   <label for="factoringCreditsCreditor">Кредитор</label>
                   <input id="factoringCreditsCreditor" type="text" pInputText placeholder="Кредитор"
                     formControlName="factoringCreditsCreditor">
                 </div>
-                <div class="p-field p-col-12 p-md-3">
+                <div class="p-field p-col-12 p-md-4 p-lg-3">
                   <label for="factoringPlacesTypeDuty">Тип обязательства</label>
                   <input id="factoringPlacesTypeDuty" type="text" pInputText placeholder="Тип обязательства"
                     formControlName="factoringPlacesTypeDuty">
                 </div>
-                <div class="p-field p-col-12 p-md-3">
+                <div class="p-field p-col-12 p-md-4 p-lg-3">
                   <label for="factoringPlacesDateClose">Дата погашения</label>
                   <input id="factoringPlacesDateClose" type="date" pInputText placeholder="Дата погашения"
                     formControlName="factoringPlacesDateClose">
                 </div>
-                <div class="p-field p-col-12 p-md-3">
+                <div class="p-field p-col-12 p-md-4 p-lg-3">
                   <label for="factoringPlacesContractSum">Сумма договора</label>
                   <input id="factoringPlacesContractSum" type="text" pInputText placeholder="Сумма договора"
                     formControlName="factoringPlacesContractSum">
                 </div>
-                <div class="p-field p-col-12 p-md-3">
+                <div class="p-field p-col-12 p-md-4 p-lg-3">
                   <label for="factoringPlacesBalanceReport">Остаток на дату сдачи отчетности</label>
                   <input id="factoringPlacesBalanceReport" type="text" pInputText
                     placeholder="Остаток на дату сдачи отчетности" formControlName="factoringPlacesBalanceReport">
                 </div>
-                <div class="p-field p-col-12 p-md-3">
+                <div class="p-field p-col-12 p-md-4 p-lg-3">
                   <label for="factoringPlacesBalanceCurrent">Остаток на текущую дату</label>
                   <input id="factoringPlacesBalanceCurrent" type="text" pInputText placeholder="Остаток на текущую дату"
                     formControlName="factoringPlacesBalanceCurrent">
@@ -418,7 +418,7 @@
           </p-fileUpload>
         </div>
       </div>
-      <div class="p-field p-col-12 p-md-6">
+      <div class="p-field p-col-12 p-md-6 p-lg-6">
         <div class="addon-button">
           <div class="addon-text">
             <p>

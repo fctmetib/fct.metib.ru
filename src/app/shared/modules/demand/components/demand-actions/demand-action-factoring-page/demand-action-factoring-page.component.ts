@@ -1,3 +1,5 @@
+import { DemandObligationInterface } from './../../../types/common/demand-obligation.interface';
+import { DemandEDIInterface } from './../../../types/common/demand-edi.interface';
 import { FileModeInterface } from './../../../../../types/file/file-model.interface';
 import { CommonService } from './../../../../../services/common/common.service';
 import { DemandService } from '../../../services/demand.service';
@@ -9,6 +11,8 @@ import { FileService } from 'src/app/shared/services/common/file.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { CreateDemandFactoringRequestInterface } from '../../../types/requests/create-demand-factoring-request.interface';
+import { DemandPropertiesInterface } from '../../../types/common/demand-properties.interface';
+import { DemandAddonAccountInterface } from '../../../types/common/demand-addon-account.interface';
 
 @Component({
   selector: 'app-demand-action-factoring-page',
@@ -23,11 +27,11 @@ export class DemandActionFactoringPageComponent implements OnInit {
   organizationTypes: DemandSelectboxInterface[] = [
     {
       title: 'Юридическое лицо',
-      value: 'Юридическое лицо',
+      value: 1,
     },
     {
       title: 'ИП',
-      value: 'ИП',
+      value: 0,
     },
   ];
   ruleTypes: DemandSelectboxInterface[] = [
@@ -57,7 +61,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
 
   initForm() {
     this.formFactoring = this.fb.group({
-      organizationType: ['', [Validators.required]],
+      organizationType: [0, [Validators.required]],
       organizationLegalForm: ['', [Validators.required]],
       organizationShortName: ['', [Validators.required]],
       organizationINN: ['', [Validators.required]],
@@ -92,7 +96,81 @@ export class DemandActionFactoringPageComponent implements OnInit {
   onSubmit() {
     console.log(this.formFactoring.value);
 
+    let listEDI: DemandEDIInterface[] = [];
+    let listObligations: DemandObligationInterface[] = [];
+    let listAddonAccounts: DemandAddonAccountInterface[] = [];
+    let listProperties: DemandPropertiesInterface[] = [{
+      Address: {
+        Appartment: '',
+        City: '',
+        Country: '',
+        District: '',
+        House: '',
+        Locality: '',
+        PostCode: '',
+        RegionCode: 0,
+        RegionTitle: '',
+        Street: '',
+      },
+      Comment: '',
+      Type: 'Own'
+    }];
+
+    // TODO: ADD ADDRESS
+    let properties = this.formFactoring.value.factoringPlaces;
+    properties.forEach(property => {
+      listProperties.push({
+        Address: {
+          Appartment: '',
+          City: '',
+          Country: '',
+          District: '',
+          House: '',
+          Locality: '',
+          PostCode: '',
+          RegionCode: 0,
+          Street: '',
+          RegionTitle: ''
+        },
+        Comment: '',
+        Type: 'Own'
+      })
+    });
+
+    let obligations = this.formFactoring.value.factoringCredits;
+    obligations.forEach(obligation => {
+      listObligations.push({
+        Creditor: obligation.factoringCreditsCreditor,
+        CurrentRest: obligation.factoringPlacesBalanceCurrent,
+        Date: new Date(obligation.factoringPlacesDateClose),
+        ReportingRest: obligation.factoringPlacesBalanceReport,
+        Summ: obligation.factoringPlacesContractSum,
+        Type: obligation.factoringPlacesTypeDuty,
+      })
+    });
+
+    let addonAccounts = this.formFactoring.value.otherBanks;
+    addonAccounts.forEach(addonAccount => {
+      listAddonAccounts.push({
+        BIK:  '',
+        Bank:  addonAccount.otherBankName,
+        COR:  '',
+        Comment:  addonAccount.otherBankTarget,
+        Date:  new Date(addonAccount.otherBankAccountOpenDate),
+        Expire:  new Date(addonAccount.otherBankAccountCloseDate),
+        Number:  addonAccount.otherBankOwnerAccount,
+      })
+    });
+
+    let edis = this.formFactoring.value.factoringEDIProviders;
+    edis.forEach(edi => {
+      listEDI.push({
+        Company: edi.factoringEDIProvidersDebitor,
+        EDIProvider: edi.factoringEDIProvidersProvider
+      })
+    });
     //TODO: need to link data with form
+    //TODO: ADD ADDRESS
 
     let data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> = {
       Data: {
@@ -105,9 +183,9 @@ export class DemandActionFactoringPageComponent implements OnInit {
             Place: ''
           },
           Resident: {
-            Country: '',
+            Country: 'РФ',
             ForeignCode: '',
-            IsResident: false
+            IsResident: true
           },
           Shareholders: [],
           Signer: {
@@ -170,16 +248,16 @@ export class DemandActionFactoringPageComponent implements OnInit {
           },
           Licenses: [],
           Objectives: {
-            BankRelationObjective: 0,
+            BankRelationObjective: 16,
             BankRelationObjectiveOther: '',
-            FinancialObjective: 0,
+            FinancialObjective: 1,
             FinancialObjectiveOther: '',
-            TransactionsContracts: '',
+            TransactionsContracts: 'Договор факторинга',
             TransactionsCount: '',
             TransactionsSumm: ''
           },
           Organization: {
-            Email: '',
+            Email: this.formFactoring.value.organizationEmail,
             FactAddress: {
               Appartment: '',
               City: '',
@@ -207,8 +285,8 @@ export class DemandActionFactoringPageComponent implements OnInit {
               RegionTitle: '',
               Street: ''
             },
-            LegalForm: '',
-            Phone: '',
+            LegalForm: this.formFactoring.value.organizationLegalForm,
+            Phone: this.formFactoring.value.organizationPhone,
             PostAddress: {
               Appartment: '',
               City: '',
@@ -223,73 +301,38 @@ export class DemandActionFactoringPageComponent implements OnInit {
             },
             PostAddressEquals: false,
             Requisites: {
-              INN: '',
+              INN: this.formFactoring.value.organizationINN,
               KPP: '',
               OGRN: '',
               OKATO: '',
               OKPO: ''
             },
-            ShortTitle: '',
-            Type: 0,
-            Website: ''
+            ShortTitle: this.formFactoring.value.organizationShortName,
+            Type: this.formFactoring.value.organizationType,
+            Website: this.formFactoring.value.organizationWEB
           }
         },
         Factoring: {
           Account: {
-            BIK: '',
-            Bank: '',
-            COR: '',
-            Comment: '',
-            Date: new Date(),
-            Expire: new Date(),
-            Number: ''
+            BIK: this.formFactoring.value.bankBik,
+            Bank: this.formFactoring.value.bankName,
+            COR: this.formFactoring.value.bankCorrespondentAccount,
+            Comment: this.formFactoring.value.bankComment,
+            Date: new Date(this.formFactoring.value.bankAccountOpenDate),
+            Expire: null,
+            Number: this.formFactoring.value.bankOwnerAccount
           },
-          AddonAccounts: [
-            {
-              BIK: '',
-              Bank: '',
-              COR: '',
-              Comment: '',
-              Date: new Date(),
-              Expire: new Date(),
-              Number: ''
-            }
-          ],
-          Buyers: '',
-          EDI: [{
-            Company: '',
-            EDIProvider: ''
-          }],
+          AddonAccounts: listAddonAccounts,
+          Buyers: this.formFactoring.value.Clients,
+          EDI: listEDI,
           FactoringAim: 0,
-          LimitWanted: 0,
-          Obligations: [{
-            Creditor: '',
-            CurrentRest: 0,
-            Date: new Date(),
-            ReportingRest: 0,
-            Summ: 0,
-            Type: ''
-          }],
-          Products: '',
-          Properties: [{
-            Address: {
-              Appartment: '',
-              City: '',
-              Country: '',
-              District: '',
-              House: '',
-              Locality: '',
-              PostCode: '',
-              RegionCode: 0,
-              RegionTitle: '',
-              Street: '',
-            },
-            Comment: '',
-            Type: ''
-          }],
-          StaffAmount: 0,
-          Suppliers: '',
-          Trademarks: ''
+          LimitWanted: this.formFactoring.value.factoringFinanceLimit,
+          Obligations: listObligations,
+          Products: this.formFactoring.value.factoringProducts,
+          Properties: listProperties,
+          StaffAmount: this.formFactoring.value.factoringWorkers,
+          Suppliers: this.formFactoring.value.factoringShipments,
+          Trademarks: this.formFactoring.value.factoringTradeMarks
         },
         Files: this.files,
         Type: "Factoring"
