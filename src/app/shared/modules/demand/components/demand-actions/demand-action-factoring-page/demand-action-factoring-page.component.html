@@ -10,8 +10,7 @@
     </div>
   </div>
 
-  <metib-success-messages *ngIf="alert"
-  [message]="alertMessage"></metib-success-messages>
+  <metib-success-messages *ngIf="alert" [message]="alertMessage"></metib-success-messages>
 
   <form [formGroup]="formFactoring" (ngSubmit)="onSubmit()">
     <div class="form-actions">
@@ -33,14 +32,16 @@
       <div class="p-field p-col-12 p-md-4 p-lg-3">
         <label for="organizationType">Тип организации</label>
         <p-dropdown id="organizationType" [options]="organizationTypes" placeholder="Выберите Тип организации"
-          formControlName="organizationType" optionLabel="title" optionValue="value"></p-dropdown>
+          (onChange)="onTypeChanged($event.value)" formControlName="organizationType" optionLabel="title"
+          optionValue="value"></p-dropdown>
       </div>
-      <div class="p-field p-col-12 p-md-4 p-lg-3">
+      <div class="p-field p-col-12 p-md-4 p-lg-3" *ngIf="formFactoring.get('organizationType').value === 1">
         <label for="organizationLegalForm">Правовая форма</label>
         <p-dropdown id="organizationLegalForm" [options]="ruleTypes" placeholder="Выберите Правовую форму"
           formControlName="organizationLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
       </div>
-
+    </div>
+    <div class="p-fluid p-formgrid p-grid form">
       <!-- 2 row -->
       <div class="p-field p-col-12 p-md-4 p-lg-3">
         <label for="organizationPhone">Телефон</label>
@@ -201,15 +202,16 @@
           <div class="form">
             <div [formGroupName]="i">
               <div class="p-fluid p-formgrid p-grid">
-                <div class="p-field p-col-12 p-md-6">
+                <div class="p-field p-col-12 p-md-6" (click)="openAddressForm()">
                   <label for="factoringPlacesAddress">Адрес объёкта</label>
-                  <input id="factoringPlacesAddress" type="text" pInputText placeholder="Адрес объёкта"
+                  <input id="factoringPlacesAddress" type="text" pInputText placeholder="Адрес объёкта" disabled
                     formControlName="factoringPlacesAddress">
                 </div>
                 <div class="p-field p-col-12 p-md-6">
                   <label for="factoringPlacesLegalForm">Форма владения</label>
-                  <input id="factoringPlacesLegalForm" type="text" pInputText placeholder="Форма владения"
-                    formControlName="factoringPlacesLegalForm">
+                  <p-dropdown id="factoringPlacesLegalForm" [options]="typesOfOwner"
+                    placeholder="Выберите Форму владения" formControlName="factoringPlacesLegalForm" optionLabel="title"
+                    optionValue="value"></p-dropdown>
                 </div>
               </div>
             </div>
@@ -453,3 +455,23 @@
   </form>
 
 </div>
+
+
+<!-- Address Form -->
+<!-- TODO: REPLACE IT IN OWN COMPONENT -->
+<form>
+  <p-dialog [style]="{width: '450px'}" [(visible)]="addressDialog" [draggable]="false" [resizable]="false"
+    header="Укажите Адрес" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+      <form [formGroup]="formAddress" (ngSubmit)="saveAddress()">
+        <div class="p-field">
+
+        </div>
+        <div class="modal-actions">
+          <button pButton pRipple label="Применить" class="p-button-text save" type="submit"></button>
+          <button pButton pRipple label="Отменить" class="p-button-text cancel" (click)="closeModal()"></button>
+        </div>
+      </form>
+    </ng-template>
+  </p-dialog>
+</form>

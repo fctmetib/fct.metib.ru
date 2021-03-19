@@ -13,6 +13,7 @@ import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-
 import { CreateDemandFactoringRequestInterface } from '../../../types/requests/create-demand-factoring-request.interface';
 import { DemandPropertiesInterface } from '../../../types/common/demand-properties.interface';
 import { DemandAddonAccountInterface } from '../../../types/common/demand-addon-account.interface';
+import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 
 @Component({
   selector: 'app-demand-action-factoring-page',
@@ -21,28 +22,20 @@ import { DemandAddonAccountInterface } from '../../../types/common/demand-addon-
 })
 export class DemandActionFactoringPageComponent implements OnInit {
   isUserVerified: boolean;
+
   formFactoring: FormGroup;
+  formAddress: FormGroup;
+
   files: FileModeInterface[] = [];
 
-  organizationTypes: DemandSelectboxInterface[] = [
-    {
-      title: 'Юридическое лицо',
-      value: 1,
-    },
-    {
-      title: 'ИП',
-      value: 0,
-    },
-  ];
-  ruleTypes: DemandSelectboxInterface[] = [
-    {
-      title: 'ООО',
-      value: 'ООО',
-    },
-  ];
+  organizationTypes: DemandSelectboxInterface[] = [];
+  ruleTypes: DemandSelectboxInterface[] = [];
+  typesOfOwner: DemandSelectboxInterface[] = [];
 
   alert: boolean;
   alertMessage: string;
+  addressDialog: boolean = false;
+  currentAddressFormId: any ;
 
   constructor(
     private authService: AuthService,
@@ -60,6 +53,12 @@ export class DemandActionFactoringPageComponent implements OnInit {
   ngOnDestroy() {}
 
   initForm() {
+    let mibCommon = new MIBCommon();
+
+    this.organizationTypes = mibCommon.getOrganizations();
+    this.ruleTypes = mibCommon.getLegalForms();
+    this.typesOfOwner = mibCommon.getTypesOfOwner();
+
     this.formFactoring = this.fb.group({
       organizationType: [0, [Validators.required]],
       organizationLegalForm: ['', [Validators.required]],
@@ -99,46 +98,30 @@ export class DemandActionFactoringPageComponent implements OnInit {
     let listEDI: DemandEDIInterface[] = [];
     let listObligations: DemandObligationInterface[] = [];
     let listAddonAccounts: DemandAddonAccountInterface[] = [];
-    let listProperties: DemandPropertiesInterface[] = [{
-      Address: {
-        Appartment: '',
-        City: '',
-        Country: '',
-        District: '',
-        House: '',
-        Locality: '',
-        PostCode: '',
-        RegionCode: 0,
-        RegionTitle: '',
-        Street: '',
-      },
-      Comment: '',
-      Type: 'Own'
-    }];
+    let listProperties: DemandPropertiesInterface[] = [];
 
-    // TODO: ADD ADDRESS
     let properties = this.formFactoring.value.factoringPlaces;
-    properties.forEach(property => {
+    properties.forEach((property) => {
       listProperties.push({
         Address: {
-          Appartment: '',
-          City: '',
-          Country: '',
-          District: '',
-          House: '',
-          Locality: '',
-          PostCode: '',
-          RegionCode: 0,
-          Street: '',
-          RegionTitle: ''
+          Appartment: property.factoringPlacesAddress.Appartment,
+          City: property.factoringPlacesAddress.City,
+          Country: property.factoringPlacesAddress.Country,
+          District: property.factoringPlacesAddress.District,
+          House: property.factoringPlacesAddress.House,
+          Locality: property.factoringPlacesAddress.Locality,
+          PostCode: property.factoringPlacesAddress.PostCode,
+          RegionCode: property.factoringPlacesAddress.RegionCode,
+          Street: property.factoringPlacesAddress.Street,
+          RegionTitle: property.factoringPlacesAddress.RegionTitle,
         },
         Comment: '',
-        Type: 'Own'
-      })
+        Type: property.factoringPlacesLegalForm,
+      });
     });
 
     let obligations = this.formFactoring.value.factoringCredits;
-    obligations.forEach(obligation => {
+    obligations.forEach((obligation) => {
       listObligations.push({
         Creditor: obligation.factoringCreditsCreditor,
         CurrentRest: obligation.factoringPlacesBalanceCurrent,
@@ -146,31 +129,29 @@ export class DemandActionFactoringPageComponent implements OnInit {
         ReportingRest: obligation.factoringPlacesBalanceReport,
         Summ: obligation.factoringPlacesContractSum,
         Type: obligation.factoringPlacesTypeDuty,
-      })
+      });
     });
 
     let addonAccounts = this.formFactoring.value.otherBanks;
-    addonAccounts.forEach(addonAccount => {
+    addonAccounts.forEach((addonAccount) => {
       listAddonAccounts.push({
-        BIK:  '',
-        Bank:  addonAccount.otherBankName,
-        COR:  '',
-        Comment:  addonAccount.otherBankTarget,
-        Date:  new Date(addonAccount.otherBankAccountOpenDate),
-        Expire:  new Date(addonAccount.otherBankAccountCloseDate),
-        Number:  addonAccount.otherBankOwnerAccount,
-      })
+        BIK: '',
+        Bank: addonAccount.otherBankName,
+        COR: '',
+        Comment: addonAccount.otherBankTarget,
+        Date: new Date(addonAccount.otherBankAccountOpenDate),
+        Expire: new Date(addonAccount.otherBankAccountCloseDate),
+        Number: addonAccount.otherBankOwnerAccount,
+      });
     });
 
     let edis = this.formFactoring.value.factoringEDIProviders;
-    edis.forEach(edi => {
+    edis.forEach((edi) => {
       listEDI.push({
         Company: edi.factoringEDIProvidersDebitor,
-        EDIProvider: edi.factoringEDIProvidersProvider
-      })
+        EDIProvider: edi.factoringEDIProvidersProvider,
+      });
     });
-    //TODO: need to link data with form
-    //TODO: ADD ADDRESS
 
     let data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> = {
       Data: {
@@ -180,12 +161,12 @@ export class DemandActionFactoringPageComponent implements OnInit {
             Date: new Date(),
             InitDate: new Date(),
             Number: '',
-            Place: ''
+            Place: '',
           },
           Resident: {
             Country: 'РФ',
             ForeignCode: '',
-            IsResident: true
+            IsResident: true,
           },
           Shareholders: [],
           Signer: {
@@ -199,7 +180,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
               PostCode: '',
               RegionCode: 0,
               RegionTitle: '',
-              Street: ''
+              Street: '',
             },
             Passport: {
               Date: new Date(),
@@ -208,7 +189,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
               IssuerCode: '',
               IssuerTitle: '',
               Nationality: '',
-              Number: ''
+              Number: '',
             },
             Person: {
               BirthDate: new Date(),
@@ -218,13 +199,13 @@ export class DemandActionFactoringPageComponent implements OnInit {
               Name: {
                 First: '',
                 Last: '',
-                Second: ''
+                Second: '',
               },
               NameFirst: '',
               NameLast: '',
               NameSecond: '',
               Phone: '',
-              SNILS: ''
+              SNILS: '',
             },
             PositionDate: new Date(),
             PositionTitle: '',
@@ -238,7 +219,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
               PostCode: '',
               RegionCode: 0,
               RegionTitle: '',
-              Street: ''
+              Street: '',
             },
           },
           Activities: [],
@@ -254,7 +235,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
             FinancialObjectiveOther: '',
             TransactionsContracts: 'Договор факторинга',
             TransactionsCount: '',
-            TransactionsSumm: ''
+            TransactionsSumm: '',
           },
           Organization: {
             Email: this.formFactoring.value.organizationEmail,
@@ -268,7 +249,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
               PostCode: '',
               RegionCode: 0,
               RegionTitle: '',
-              Street: ''
+              Street: '',
             },
             FactAddressEquals: false,
             ForeignTitle: '',
@@ -283,7 +264,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
               PostCode: '',
               RegionCode: 0,
               RegionTitle: '',
-              Street: ''
+              Street: '',
             },
             LegalForm: this.formFactoring.value.organizationLegalForm,
             Phone: this.formFactoring.value.organizationPhone,
@@ -297,7 +278,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
               PostCode: '',
               RegionCode: 0,
               RegionTitle: '',
-              Street: ''
+              Street: '',
             },
             PostAddressEquals: false,
             Requisites: {
@@ -305,12 +286,12 @@ export class DemandActionFactoringPageComponent implements OnInit {
               KPP: '',
               OGRN: '',
               OKATO: '',
-              OKPO: ''
+              OKPO: '',
             },
             ShortTitle: this.formFactoring.value.organizationShortName,
             Type: this.formFactoring.value.organizationType,
-            Website: this.formFactoring.value.organizationWEB
-          }
+            Website: this.formFactoring.value.organizationWEB,
+          },
         },
         Factoring: {
           Account: {
@@ -320,7 +301,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
             Comment: this.formFactoring.value.bankComment,
             Date: new Date(this.formFactoring.value.bankAccountOpenDate),
             Expire: null,
-            Number: this.formFactoring.value.bankOwnerAccount
+            Number: this.formFactoring.value.bankOwnerAccount,
           },
           AddonAccounts: listAddonAccounts,
           Buyers: this.formFactoring.value.Clients,
@@ -332,17 +313,17 @@ export class DemandActionFactoringPageComponent implements OnInit {
           Properties: listProperties,
           StaffAmount: this.formFactoring.value.factoringWorkers,
           Suppliers: this.formFactoring.value.factoringShipments,
-          Trademarks: this.formFactoring.value.factoringTradeMarks
+          Trademarks: this.formFactoring.value.factoringTradeMarks,
         },
         Files: this.files,
-        Type: "Factoring"
+        Type: 'Factoring',
       },
-      DraftID: 0
+      DraftID: 0,
     };
 
-    this.demandService.add(data).subscribe(resp => {
+    this.demandService.add(data).subscribe((resp) => {
       this.alert = true;
-      this.alertMessage = 'Запрос успешно добавлен!'
+      this.alertMessage = 'Запрос успешно добавлен!';
     });
   }
 
@@ -363,8 +344,8 @@ export class DemandActionFactoringPageComponent implements OnInit {
                 FileName: res.FileName,
                 ID: res.ID,
                 Size: res.Size,
-                Identifier: type
-              })
+                Identifier: type,
+              });
             },
             (err) => console.log(err)
           );
@@ -391,7 +372,18 @@ export class DemandActionFactoringPageComponent implements OnInit {
     ) as FormArray;
     factoringPlaces.push(
       this.fb.group({
-        factoringPlacesAddress: ['', [Validators.required]],
+        factoringPlacesAddress: {
+          PostCode:  ['', [Validators.required]],
+          Country: ['', [Validators.required]],
+          RegionCode: [0, [Validators.required]],
+          RegionTitle: ['', [Validators.required]],
+          City: ['', [Validators.required]],
+          District: ['', [Validators.required]],
+          Locality: ['', [Validators.required]],
+          Street: ['', [Validators.required]],
+          House: ['', [Validators.required]],
+          Appartment: ['', [Validators.required]],
+        },
         factoringPlacesLegalForm: ['', [Validators.required]],
       })
     );
@@ -427,6 +419,27 @@ export class DemandActionFactoringPageComponent implements OnInit {
 
   remove(i: number, type: string): void {
     let other = this.formFactoring.get(type) as FormArray;
-    other.removeAt(i)
+    other.removeAt(i);
+  }
+
+  openAddressForm() {
+    this.addressDialog = true;
+  }
+
+  closeModal() {
+    this.addressDialog = false;
+  }
+
+  saveAddress() {
+    this.formAddress.reset();
+    this.currentAddressFormId = null;
+  }
+
+  onTypeChanged(value) {
+    if (value === 0) {
+      this.formFactoring.patchValue({
+        organizationLegalForm: null,
+      });
+    }
   }
 }

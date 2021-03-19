@@ -1,3 +1,4 @@
+import { DialogModule } from 'primeng/dialog';
 import { SuccessMessagesModule } from './../successMessages/successMessages.module';
 import { DemandActionVerificationPageComponent } from './components/demand-actions/demand-action-verification-page/demand-action-verification-page.component';
 import { DemandActionSuretyPageComponent } from './components/demand-actions/demand-action-surety-page/demand-action-surety-page.component';
@@ -61,6 +62,7 @@ import { FileService } from '../../services/common/file.service';
     ReactiveFormsModule,
     SuccessMessagesModule,
     CardModule,
+    DialogModule,
     MenubarModule,
     AvatarModule,
   ],
