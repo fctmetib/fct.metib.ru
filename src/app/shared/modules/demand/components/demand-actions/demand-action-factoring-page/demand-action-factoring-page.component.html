@@ -16,7 +16,8 @@
     <div class="form-actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
         [routerLink]="['/demand']"></button>
-      <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"></button>
+      <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
+        [disabled]="formFactoring.invalid"></button>
     </div>
     <div class="p-fluid p-formgrid p-grid form">
       <!-- 1 row -->
@@ -193,7 +194,7 @@
           *ngFor="let item of formFactoring.get('factoringPlaces')['controls']; let i = index;">
           <div class="title">
             <div class="text">
-              [WORK IN PROGRESS] Собственность
+              Собственность
             </div>
             <button class="button warn" (click)="remove(i, 'factoringPlaces')">
               Удалить
@@ -202,10 +203,14 @@
           <div class="form">
             <div [formGroupName]="i">
               <div class="p-fluid p-formgrid p-grid">
-                <div class="p-field p-col-12 p-md-6" (click)="openAddressForm()">
+                <div class="p-field p-col-12 p-md-6" (click)="openAddressForm(i)">
                   <label for="factoringPlacesAddress">Адрес объёкта</label>
-                  <input id="factoringPlacesAddress" type="text" pInputText placeholder="Адрес объёкта" disabled
-                    formControlName="factoringPlacesAddress">
+                  <div class="addon-button">
+                    <input id="factoringPlacesAddress" type="text" pInputText placeholder="Адрес объёкта" disabled
+                      formControlName="displayAddress">
+                    <button pButton pRipple type="button" label="Изменить" class="p-button-outlined mib-small"
+                      (click)="openAddressForm(i)"></button>
+                  </div>
                 </div>
                 <div class="p-field p-col-12 p-md-6">
                   <label for="factoringPlacesLegalForm">Форма владения</label>
@@ -449,7 +454,7 @@
       <div class="p-field p-col-12 p-md-12">
         <label for="btn_submit">&nbsp;</label>
         <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-          class="btn-mib-submit p-button-outlined"></button>
+          class="btn-mib-submit p-button-outlined" [disabled]="formFactoring.invalid"></button>
       </div>
     </div>
   </form>
@@ -459,19 +464,53 @@
 
 <!-- Address Form -->
 <!-- TODO: REPLACE IT IN OWN COMPONENT -->
-<form>
-  <p-dialog [style]="{width: '450px'}" [(visible)]="addressDialog" [draggable]="false" [resizable]="false"
-    header="Укажите Адрес" [modal]="true" styleClass="p-fluid">
-    <ng-template pTemplate="content">
-      <form [formGroup]="formAddress" (ngSubmit)="saveAddress()">
-        <div class="p-field">
-
-        </div>
-        <div class="modal-actions">
-          <button pButton pRipple label="Применить" class="p-button-text save" type="submit"></button>
-          <button pButton pRipple label="Отменить" class="p-button-text cancel" (click)="closeModal()"></button>
-        </div>
-      </form>
-    </ng-template>
-  </p-dialog>
-</form>
+<p-dialog [style]="{width: '650px'}" [(visible)]="addressDialog" [draggable]="false" [resizable]="false"
+  header="Укажите Адрес" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="formAddress" (ngSubmit)="saveAddress()">
+      <div class="p-field">
+        <label for="PostCode">Почтовый Индекс: </label>
+        <input id="PostCode" type="text" pInputText placeholder="Почтовый Индекс" formControlName="PostCode">
+      </div>
+      <div class="p-field">
+        <label for="Country">Страна: </label>
+        <p-dropdown id="Country" [options]="countryList" placeholder="Страна" formControlName="Country"
+          optionLabel="title" optionValue="value"></p-dropdown>
+      </div>
+      <div class="p-field">
+        <label for="RegionCode">Код региона: </label>
+        <p-dropdown id="RegionCode" [options]="regionList" placeholder="Код региона"
+          (onChange)="onRegionChanged($event.value)" formControlName="RegionCode" optionLabel="title"
+          optionValue="value"></p-dropdown>
+      </div>
+      <div class="p-field">
+        <label for="District">Район: </label>
+        <input id="District" type="text" pInputText placeholder="Район" formControlName="District">
+      </div>
+      <div class="p-field">
+        <label for="City">Город: </label>
+        <input id="City" type="text" pInputText placeholder="Город" formControlName="City">
+      </div>
+      <div class="p-field">
+        <label for="Locality">Населенный пункт: </label>
+        <input id="Locality" type="text" pInputText placeholder="Населенный пункт" formControlName="Locality">
+      </div>
+      <div class="p-field">
+        <label for="Street">Улица: </label>
+        <input id="Street" type="text" pInputText placeholder="Улица" formControlName="Street">
+      </div>
+      <div class="p-field">
+        <label for="House">Дом: </label>
+        <input id="House" type="text" pInputText placeholder="Дом" formControlName="House">
+      </div>
+      <div class="p-field">
+        <label for="Appartment">Офис / Квартира: </label>
+        <input id="Appartment" type="text" pInputText placeholder="Офис / Квартира" formControlName="Appartment">
+      </div>
+      <div class="modal-actions">
+        <button pButton pRipple label="Применить" class="p-button-text save" type="submit"></button>
+        <button pButton pRipple label="Отменить" class="p-button-text cancel" (click)="closeModal()"></button>
+      </div>
+    </form>
+  </ng-template>
+</p-dialog>
