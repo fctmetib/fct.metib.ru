@@ -11,13 +11,15 @@
   </div>
 
   <metib-success-messages *ngIf="alert" [message]="alertMessage"></metib-success-messages>
+  <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
+  </metib-backend-error-messages>
 
   <form [formGroup]="formFactoring" (ngSubmit)="onSubmit()">
     <div class="form-actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
         [routerLink]="['/demand']"></button>
       <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
-        [disabled]="formFactoring.invalid"></button>
+        [disabled]="formFactoring.invalid || (isLoading$ | async)"></button>
     </div>
     <div class="p-fluid p-formgrid p-grid form">
       <!-- 1 row -->
@@ -454,7 +456,8 @@
       <div class="p-field p-col-12 p-md-12">
         <label for="btn_submit">&nbsp;</label>
         <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-          class="btn-mib-submit p-button-outlined" [disabled]="formFactoring.invalid"></button>
+          class="btn-mib-submit p-button-outlined"
+          [disabled]="formFactoring.invalid || (isLoading$ | async)"></button>
       </div>
     </div>
   </form>
