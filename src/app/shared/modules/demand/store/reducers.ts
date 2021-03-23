@@ -1,3 +1,4 @@
+import { createDemandFactoringAction, createDemandFactoringSuccessAction, createDemandFactoringFailureAction } from './actions/createDemand.action';
 import { DemandsStateInterface } from './../types/demandsState.interface';
 import { getDemandsAction, getDemandsSuccessAction, getDemandsFailureAction } from './actions/getDemands.action';
 import { createReducer, on, Action } from '@ngrx/store';
@@ -16,6 +17,7 @@ const demandsReducer = createReducer(
     getDemandsAction,
     (state): DemandsStateInterface => ({
       ...state,
+      error: null,
       isLoading: true,
     })
   ),
@@ -32,6 +34,29 @@ const demandsReducer = createReducer(
     (state): DemandsStateInterface => ({
       ...state,
       isLoading: false,
+    })
+  ),
+  on(
+    createDemandFactoringAction,
+    (state): DemandsStateInterface => ({
+      ...state,
+      error: null,
+      isLoading: true,
+    })
+  ),
+  on(
+    createDemandFactoringSuccessAction,
+    (state, action): DemandsStateInterface => ({
+      ...state,
+      isLoading: false,
+    })
+  ),
+  on(
+    createDemandFactoringFailureAction,
+    (state, action): DemandsStateInterface => ({
+      ...state,
+      isLoading: false,
+      error: action.errors
     })
   ),
   on(routerNavigationAction, (): DemandsStateInterface => initialState)

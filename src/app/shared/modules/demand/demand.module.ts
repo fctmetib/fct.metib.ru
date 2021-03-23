@@ -1,3 +1,4 @@
+import { BackendErrorMessagesModule } from './../backendErrorMessages/backendErrorMessages.module';
 import { DialogModule } from 'primeng/dialog';
 import { SuccessMessagesModule } from './../successMessages/successMessages.module';
 import { DemandActionVerificationPageComponent } from './components/demand-actions/demand-action-verification-page/demand-action-verification-page.component';
@@ -39,6 +40,7 @@ import { DemandActionAgentFactoringPageComponent } from './components/demand-act
 import { DemandActionFactoringPageComponent } from './components/demand-actions/demand-action-factoring-page/demand-action-factoring-page.component';
 import { CommonService } from '../../services/common/common.service';
 import { FileService } from '../../services/common/file.service';
+import { CreateDemandFactoringEffect } from './store/effects/createDemand.effect';
 
 @NgModule({
   imports: [
@@ -54,13 +56,14 @@ import { FileService } from '../../services/common/file.service';
     SkeletonModule,
     DropdownModule,
     FormsModule,
-    EffectsModule.forFeature([GetDemandsEffect]),
+    EffectsModule.forFeature([GetDemandsEffect, CreateDemandFactoringEffect]),
     StoreModule.forFeature('demands', reducers),
     ProgressBarModule,
     MultiSelectModule,
     DemandRoutingModule,
     ReactiveFormsModule,
     SuccessMessagesModule,
+    BackendErrorMessagesModule,
     CardModule,
     DialogModule,
     MenubarModule,

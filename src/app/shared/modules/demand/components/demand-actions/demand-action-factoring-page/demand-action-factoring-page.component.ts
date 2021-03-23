@@ -20,6 +20,10 @@ import { CreateDemandFactoringRequestInterface } from '../../../types/requests/c
 import { DemandPropertiesInterface } from '../../../types/common/demand-properties.interface';
 import { DemandAddonAccountInterface } from '../../../types/common/demand-addon-account.interface';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { createDemandFactoringAction } from '../../../store/actions/createDemand.action';
+import { errorSelector, isLoadingSelector } from '../../../store/selectors';
 
 @Component({
   selector: 'app-demand-action-factoring-page',
@@ -27,28 +31,33 @@ import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
   styleUrls: ['./demand-action-factoring-page.component.scss'],
 })
 export class DemandActionFactoringPageComponent implements OnInit {
-  isUserVerified: boolean;
+  public isUserVerified: boolean;
 
-  formFactoring: FormGroup;
-  formAddress: FormGroup;
+  public formFactoring: FormGroup;
+  public formAddress: FormGroup;
 
-  files: FileModeInterface[] = [];
+  public files: FileModeInterface[] = [];
 
-  organizationTypes: DemandSelectboxInterface[] = [];
-  ruleTypes: DemandSelectboxInterface[] = [];
-  typesOfOwner: DemandSelectboxInterface[] = [];
-  countryList: DemandSelectboxInterface[];
-  regionList: DemandSelectboxInterface[];
+  public organizationTypes: DemandSelectboxInterface[] = [];
+  public ruleTypes: DemandSelectboxInterface[] = [];
+  public typesOfOwner: DemandSelectboxInterface[] = [];
+  public countryList: DemandSelectboxInterface[];
+  public regionList: DemandSelectboxInterface[];
 
-  alert: boolean;
-  alertMessage: string;
-  addressDialog: boolean = false;
-  currentAddressFormId: any;
+  public alert: boolean;
+  public alertMessage: string;
+  public addressDialog: boolean = false;
+
+  private currentAddressFormId: any;
+
+  public isLoading$: Observable<boolean> = new Observable<boolean>();
+  public backendErrors$: Observable<string | null>;
 
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
     private commonService: CommonService,
+    private store: Store,
     private fileService: FileService,
     private demandService: DemandService
   ) {}
@@ -62,9 +71,271 @@ export class DemandActionFactoringPageComponent implements OnInit {
   ngOnDestroy() {}
 
   onSubmit() {
-    console.log(this.formFactoring.value);
+    let data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> = this.prepareData();
+    this.store.dispatch(createDemandFactoringAction({ data }));
+  }
 
+  //#region public page actions
+
+  addOtherBank(): void {
+    let otherBanks = this.formFactoring.get('otherBanks') as FormArray;
+    otherBanks.push(
+      this.fb.group({
+        otherBankAccountOpenDate: ['', [Validators.required]],
+        otherBankAccountCloseDate: ['', [Validators.required]],
+        otherBankName: ['', [Validators.required]],
+        otherBankOwnerAccount: ['', [Validators.required]],
+        otherBankTarget: ['', [Validators.required]],
+      })
+    );
+  }
+
+  addOtherPlace(): void {
+    let factoringPlaces = this.formFactoring.get(
+      'factoringPlaces'
+    ) as FormArray;
+    factoringPlaces.push(
+      this.fb.group({
+        displayAddress: '',
+        factoringPlacesAddress: {
+          PostCode: '',
+          Country: 'Российская Федерация',
+          RegionCode: 77,
+          RegionTitle: '',
+          City: 'Москва',
+          District: '',
+          Locality: '',
+          Street: '',
+          House: '',
+          Appartment: '',
+        },
+        factoringPlacesLegalForm: ['', [Validators.required]],
+      })
+    );
+
+    this.updateDisplayAddress(factoringPlaces.length - 1);
+  }
+
+  addFactoringCredits(): void {
+    let factoringCredits = this.formFactoring.get(
+      'factoringCredits'
+    ) as FormArray;
+    factoringCredits.push(
+      this.fb.group({
+        factoringCreditsCreditor: ['', [Validators.required]],
+        factoringPlacesTypeDuty: ['', [Validators.required]],
+        factoringPlacesDateClose: ['', [Validators.required]],
+        factoringPlacesContractSum: ['', [Validators.required]],
+        factoringPlacesBalanceReport: ['', [Validators.required]],
+        factoringPlacesBalanceCurrent: ['', [Validators.required]],
+      })
+    );
+  }
+
+  addEDIProvider(): void {
+    let factoringEDIProviders = this.formFactoring.get(
+      'factoringEDIProviders'
+    ) as FormArray;
+    factoringEDIProviders.push(
+      this.fb.group({
+        factoringEDIProvidersDebitor: ['', [Validators.required]],
+        factoringEDIProvidersProvider: ['', [Validators.required]],
+      })
+    );
+  }
+
+  remove(i: number, type: string): void {
+    let other = this.formFactoring.get(type) as FormArray;
+    other.removeAt(i);
+  }
+
+  //TODO: Replace it in modules/modals/address-modal
+  openAddressForm(index) {
+    this.currentAddressFormId = index;
+    let addresses = this.formFactoring.value.factoringPlaces;
+    let address = addresses[index].factoringPlacesAddress;
+
+    this.formAddress.patchValue(address);
+    this.addressDialog = true;
+  }
+
+  closeModal() {
+    this.addressDialog = false;
+  }
+
+  saveAddress() {
+    this.formFactoring.value.factoringPlaces[
+      this.currentAddressFormId
+    ].factoringPlacesAddress = this.formAddress.value;
+
+    this.updateDisplayAddress(this.currentAddressFormId);
+
+    this.addressDialog = false;
+    this.formAddress.reset();
+    this.currentAddressFormId = null;
+  }
+
+  onSelect(event, type: string) {
+    let files: File[] = event.files;
+
+    for (let file of files) {
+      let guid = Guid.newGuid();
+
+      this.commonService.getBase64(file).subscribe((res) => {
+        this.fileService
+          .uploadFileChunks(res, file.name, file.size.toString(), guid)
+          .subscribe(
+            (res) => {
+              console.log(res);
+              this.files.push({
+                Code: res.Code,
+                FileName: res.FileName,
+                ID: res.ID,
+                Size: res.Size,
+                Identifier: type,
+              });
+            },
+            (err) => console.log(err)
+          );
+      });
+    }
+  }
+
+  onRegionChanged(value) {
+    if (value) {
+      let regionTitle = this.regionList.find((x) => x.value === value);
+      this.formAddress.patchValue({
+        RegionTitle: regionTitle,
+      });
+    }
+  }
+
+  onTypeChanged(value) {
+    if (value === 0) {
+      this.formFactoring.patchValue({
+        organizationLegalForm: null,
+      });
+    }
+  }
+  //#endregion
+
+  //#region private logic
+
+  private initValues(): void {
+    let mibCommon = new MIBCommon();
+
+    this.organizationTypes = mibCommon.getOrganizations();
+    this.ruleTypes = mibCommon.getLegalForms();
+    this.typesOfOwner = mibCommon.getTypesOfOwner();
+    this.countryList = mibCommon.getCountryList();
+    this.regionList = mibCommon.getRegionList();
+
+    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
+    this.backendErrors$ = this.store.pipe(select(errorSelector));
+
+    // this.demandService.add(data).subscribe((resp) => {
+    //   this.alert = true;
+    //   this.alertMessage = 'Запрос успешно добавлен!';
+    // });
+  }
+
+  private initForm(): void {
+    this.formAddress = this.fb.group({
+      PostCode: ['', [Validators.required]],
+      Country: ['', [Validators.required]],
+      RegionCode: [0, [Validators.required]],
+      RegionTitle: ['', [Validators.required]],
+      City: ['', [Validators.required]],
+      District: ['', [Validators.required]],
+      Locality: ['', [Validators.required]],
+      Street: ['', [Validators.required]],
+      House: ['', [Validators.required]],
+      Appartment: ['', [Validators.required]],
+    });
+
+    this.formFactoring = this.fb.group({
+      organizationType: [0, [Validators.required]],
+      organizationLegalForm: ['', [Validators.required]],
+      organizationShortName: ['', [Validators.required]],
+      organizationINN: ['', [Validators.required]],
+      organizationPhone: ['', [Validators.required]],
+      organizationEmail: ['', [Validators.required]],
+      organizationWEB: ['', [Validators.required]],
+
+      bankBik: ['', [Validators.required]],
+      bankCorrespondentAccount: ['', [Validators.required]],
+      bankName: ['', [Validators.required]],
+      bankAccountOpenDate: ['', [Validators.required]],
+      bankOwnerAccount: ['', [Validators.required]],
+      bankComment: ['', [Validators.required]],
+
+      otherBanks: this.fb.array([]),
+
+      factoringProducts: ['', [Validators.required]],
+      factoringTradeMarks: ['', [Validators.required]],
+      factoringShipments: ['', [Validators.required]],
+      factoringFinanceLimit: ['', [Validators.required]],
+      factoringClients: ['', [Validators.required]],
+      factoringWorkers: [0, [Validators.required]],
+
+      factoringPlaces: this.fb.array([]),
+
+      factoringCredits: this.fb.array([]),
+
+      factoringEDIProviders: this.fb.array([]),
+    });
+  }
+
+  private updateDisplayAddress(index): void {
+    let address = this.formFactoring.value.factoringPlaces[index]
+      .factoringPlacesAddress;
+    let result = '';
+
+    console.log(address);
+
+    if (address.PostCode) {
+      result = result + ' ' + address.PostCode;
+    }
+    if (address.Country) {
+      result = result + ' ' + address.Country;
+    }
+    if (address.RegionCode) {
+      result = result + ' ' + address.RegionCode;
+    }
+    if (address.RegionTitle) {
+      result = result + ' ' + address.RegionTitle;
+    }
+    if (address.City) {
+      result = result + ' ' + address.City;
+    }
+    if (address.District) {
+      result = result + ' ' + address.District;
+    }
+    if (address.Locality) {
+      result = result + ' ' + address.Locality;
+    }
+    if (address.Street) {
+      result = result + ' ' + address.Street;
+    }
+    if (address.House) {
+      result = result + ' ' + address.House;
+    }
+    if (address.Appartment) {
+      result = result + ' ' + address.Appartment;
+    }
+
+    let editeAddress = (<FormArray>(
+      this.formFactoring.controls['factoringPlaces']
+    ))
+      .at(index)
+      .patchValue({
+        displayAddress: result,
+      });
+  }
+
+  private prepareData(): SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> {
     let listEDI: DemandEDIInterface[] = [];
+
     let listObligations: DemandObligationInterface[] = [];
     let listAddonAccounts: DemandAddonAccountInterface[] = [];
     let listProperties: DemandPropertiesInterface[] = [];
@@ -122,7 +393,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
       });
     });
 
-    let data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> = {
+    let result: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> = {
       Data: {
         Anket: {
           Registration: {
@@ -290,261 +561,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
       DraftID: 0,
     };
 
-    this.demandService.add(data).subscribe((resp) => {
-      this.alert = true;
-      this.alertMessage = 'Запрос успешно добавлен!';
-    });
-  }
-
-  //#region public page actions
-
-  addOtherBank(): void {
-    let otherBanks = this.formFactoring.get('otherBanks') as FormArray;
-    otherBanks.push(
-      this.fb.group({
-        otherBankAccountOpenDate: ['', [Validators.required]],
-        otherBankAccountCloseDate: ['', [Validators.required]],
-        otherBankName: ['', [Validators.required]],
-        otherBankOwnerAccount: ['', [Validators.required]],
-        otherBankTarget: ['', [Validators.required]],
-      })
-    );
-  }
-
-  addOtherPlace(): void {
-    let factoringPlaces = this.formFactoring.get(
-      'factoringPlaces'
-    ) as FormArray;
-    factoringPlaces.push(
-      this.fb.group({
-        displayAddress: '',
-        factoringPlacesAddress: {
-          PostCode: '',
-          Country: 'Российская Федерация',
-          RegionCode: 77,
-          RegionTitle: '',
-          City: 'Москва',
-          District: '',
-          Locality: '',
-          Street: '',
-          House: '',
-          Appartment: '',
-        },
-        factoringPlacesLegalForm: ['', [Validators.required]],
-      })
-    );
-
-    this.updateDisplayAddress(factoringPlaces.length - 1);
-  }
-
-  addFactoringCredits(): void {
-    let factoringCredits = this.formFactoring.get(
-      'factoringCredits'
-    ) as FormArray;
-    factoringCredits.push(
-      this.fb.group({
-        factoringCreditsCreditor: ['', [Validators.required]],
-        factoringPlacesTypeDuty: ['', [Validators.required]],
-        factoringPlacesDateClose: ['', [Validators.required]],
-        factoringPlacesContractSum: ['', [Validators.required]],
-        factoringPlacesBalanceReport: ['', [Validators.required]],
-        factoringPlacesBalanceCurrent: ['', [Validators.required]],
-      })
-    );
-  }
-
-  addEDIProvider(): void {
-    let factoringEDIProviders = this.formFactoring.get(
-      'factoringEDIProviders'
-    ) as FormArray;
-    factoringEDIProviders.push(
-      this.fb.group({
-        factoringEDIProvidersDebitor: ['', [Validators.required]],
-        factoringEDIProvidersProvider: ['', [Validators.required]],
-      })
-    );
-  }
-
-  remove(i: number, type: string): void {
-    let other = this.formFactoring.get(type) as FormArray;
-    other.removeAt(i);
-  }
-
-  //TODO: Replace it in modules/modals/address-modal
-  openAddressForm(index) {
-    this.currentAddressFormId = index;
-    let addresses = this.formFactoring.value.factoringPlaces;
-    let address = addresses[index].factoringPlacesAddress;
-
-    this.formAddress.patchValue(address);
-    this.addressDialog = true;
-  }
-
-  closeModal() {
-    this.addressDialog = false;
-  }
-
-  saveAddress() {
-    this.formFactoring.value.factoringPlaces[
-      this.currentAddressFormId
-    ].factoringPlacesAddress = this.formAddress.value;
-
-    this.updateDisplayAddress(this.currentAddressFormId);
-
-    this.addressDialog = false;
-    this.formAddress.reset();
-    this.currentAddressFormId = null;
-  }
-
-  onSelect(event, type: string) {
-    let files: File[] = event.files;
-
-    for (let file of files) {
-      let guid = Guid.newGuid();
-
-      this.commonService.getBase64(file).subscribe((res) => {
-        this.fileService
-          .uploadFileChunks(res, file.name, file.size.toString(), guid)
-          .subscribe(
-            (res) => {
-              console.log(res);
-              this.files.push({
-                Code: res.Code,
-                FileName: res.FileName,
-                ID: res.ID,
-                Size: res.Size,
-                Identifier: type,
-              });
-            },
-            (err) => console.log(err)
-          );
-      });
-    }
-  }
-
-  onRegionChanged(value) {
-    if (value) {
-      let regionTitle = this.regionList.find((x) => x.value === value);
-      this.formAddress.patchValue({
-        RegionTitle: regionTitle,
-      });
-    }
-  }
-
-  onTypeChanged(value) {
-    if (value === 0) {
-      this.formFactoring.patchValue({
-        organizationLegalForm: null,
-      });
-    }
-  }
-  //#endregion
-
-  //#region private logic
-
-  private initValues(): void {
-    let mibCommon = new MIBCommon();
-
-    this.organizationTypes = mibCommon.getOrganizations();
-    this.ruleTypes = mibCommon.getLegalForms();
-    this.typesOfOwner = mibCommon.getTypesOfOwner();
-    this.countryList = mibCommon.getCountryList();
-    this.regionList = mibCommon.getRegionList();
-  }
-
-  private initForm(): void {
-    this.formAddress = this.fb.group({
-      PostCode: ['', [Validators.required]],
-      Country: ['', [Validators.required]],
-      RegionCode: [0, [Validators.required]],
-      RegionTitle: ['', [Validators.required]],
-      City: ['', [Validators.required]],
-      District: ['', [Validators.required]],
-      Locality: ['', [Validators.required]],
-      Street: ['', [Validators.required]],
-      House: ['', [Validators.required]],
-      Appartment: ['', [Validators.required]],
-    });
-
-    this.formFactoring = this.fb.group({
-      organizationType: [0, [Validators.required]],
-      organizationLegalForm: ['', [Validators.required]],
-      organizationShortName: ['', [Validators.required]],
-      organizationINN: ['', [Validators.required]],
-      organizationPhone: ['', [Validators.required]],
-      organizationEmail: ['', [Validators.required]],
-      organizationWEB: ['', [Validators.required]],
-
-      bankBik: ['', [Validators.required]],
-      bankCorrespondentAccount: ['', [Validators.required]],
-      bankName: ['', [Validators.required]],
-      bankAccountOpenDate: ['', [Validators.required]],
-      bankOwnerAccount: ['', [Validators.required]],
-      bankComment: ['', [Validators.required]],
-
-      otherBanks: this.fb.array([]),
-
-      factoringProducts: ['', [Validators.required]],
-      factoringTradeMarks: ['', [Validators.required]],
-      factoringShipments: ['', [Validators.required]],
-      factoringFinanceLimit: ['', [Validators.required]],
-      factoringClients: ['', [Validators.required]],
-      factoringWorkers: [0, [Validators.required]],
-
-      factoringPlaces: this.fb.array([]),
-
-      factoringCredits: this.fb.array([]),
-
-      factoringEDIProviders: this.fb.array([]),
-    });
-  }
-
-  private updateDisplayAddress(index): void {
-    let address = this.formFactoring.value.factoringPlaces[index].factoringPlacesAddress
-    let result = '';
-
-    console.log(address)
-
-    if(address.PostCode) {
-      result = result + ' ' + address.PostCode;
-    }
-    if (address.Country) {
-      result = result + ' ' + address.Country;
-    }
-    if (address.RegionCode) {
-      result = result + ' ' + address.RegionCode;
-    }
-    if (address.RegionTitle) {
-      result = result + ' ' + address.RegionTitle;
-    }
-    if (address.City) {
-      result = result + ' ' + address.City;
-    }
-    if (address.District) {
-      result = result + ' ' + address.District;
-    }
-    if (address.Locality) {
-      result = result + ' ' + address.Locality;
-    }
-    if (address.Street) {
-      result = result + ' ' + address.Street;
-    }
-    if (address.House) {
-      result = result + ' ' + address.House;
-    }
-    if (address.Appartment) {
-      result = result + ' ' + address.Appartment;
-    }
-
-    let editeAddress = (<FormArray>this.formFactoring.controls['factoringPlaces']).at(index).patchValue({
-      displayAddress: result
-    });
-    console.log(editeAddress)
-   // .patchValue('example');
-    // this.formFactoring.patchValue({
-
-    // }) .factoringPlaces[index]. displayAddress = result;
-    // console.log(this.formFactoring.value.factoringPlaces[index].displayAddress)
+    return result;
   }
 
   //#endregion
