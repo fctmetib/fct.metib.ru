@@ -7,6 +7,11 @@ p-calendar,
   background: transparent !important;
 }
 
+p-inputMask {
+  border-radius: 10px !important;
+  background: transparent !important;
+}
+
 .p-dropdown {
   border: unset !important;
 }
@@ -268,4 +273,14 @@ p-inputnumber {
 .p-dropdown .p-dropdown-trigger {
   background: $main !important;
   color: $white !important;
+}
+
+.ng-invalid {
+  border-color: #f44336 !important;
+}
+
+p-inputmask.ng-invalid {
+  input {
+    border-color: #f44336 !important;
+  }
 }

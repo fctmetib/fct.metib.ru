@@ -58,8 +58,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
     private fb: FormBuilder,
     private commonService: CommonService,
     private store: Store,
-    private fileService: FileService,
-    private demandService: DemandService
+    private fileService: FileService
   ) {}
 
   ngOnInit() {
@@ -109,7 +108,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
           House: '',
           Appartment: '',
         },
-        factoringPlacesLegalForm: ['', [Validators.required]],
+        factoringPlacesLegalForm: ['Own', [Validators.required]],
       })
     );
 
@@ -122,12 +121,12 @@ export class DemandActionFactoringPageComponent implements OnInit {
     ) as FormArray;
     factoringCredits.push(
       this.fb.group({
-        factoringCreditsCreditor: ['', [Validators.required]],
-        factoringPlacesTypeDuty: ['', [Validators.required]],
-        factoringPlacesDateClose: ['', [Validators.required]],
-        factoringPlacesContractSum: ['', [Validators.required]],
-        factoringPlacesBalanceReport: ['', [Validators.required]],
-        factoringPlacesBalanceCurrent: ['', [Validators.required]],
+        factoringCreditsCreditor: [''],
+        factoringPlacesTypeDuty: [''],
+        factoringPlacesDateClose: [''],
+        factoringPlacesContractSum: [''],
+        factoringPlacesBalanceReport: [''],
+        factoringPlacesBalanceCurrent: [''],
       })
     );
   }
@@ -232,11 +231,6 @@ export class DemandActionFactoringPageComponent implements OnInit {
 
     this.isLoading$ = this.store.pipe(select(isLoadingSelector));
     this.backendErrors$ = this.store.pipe(select(errorSelector));
-
-    // this.demandService.add(data).subscribe((resp) => {
-    //   this.alert = true;
-    //   this.alertMessage = 'Запрос успешно добавлен!';
-    // });
   }
 
   private initForm(): void {
@@ -255,26 +249,26 @@ export class DemandActionFactoringPageComponent implements OnInit {
 
     this.formFactoring = this.fb.group({
       organizationType: [0, [Validators.required]],
-      organizationLegalForm: ['', [Validators.required]],
+      organizationLegalForm: [''],
       organizationShortName: ['', [Validators.required]],
-      organizationINN: ['', [Validators.required]],
+      organizationINN: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
       organizationPhone: ['', [Validators.required]],
-      organizationEmail: ['', [Validators.required]],
-      organizationWEB: ['', [Validators.required]],
+      organizationEmail: ['', [Validators.required, Validators.email]],
+      organizationWEB: [''],
 
       bankBik: ['', [Validators.required]],
       bankCorrespondentAccount: ['', [Validators.required]],
       bankName: ['', [Validators.required]],
       bankAccountOpenDate: ['', [Validators.required]],
       bankOwnerAccount: ['', [Validators.required]],
-      bankComment: ['', [Validators.required]],
+      bankComment: [''],
 
       otherBanks: this.fb.array([]),
 
       factoringProducts: ['', [Validators.required]],
       factoringTradeMarks: ['', [Validators.required]],
       factoringShipments: ['', [Validators.required]],
-      factoringFinanceLimit: ['', [Validators.required]],
+      factoringFinanceLimit: [''],
       factoringClients: ['', [Validators.required]],
       factoringWorkers: [0, [Validators.required]],
 
@@ -284,6 +278,10 @@ export class DemandActionFactoringPageComponent implements OnInit {
 
       factoringEDIProviders: this.fb.array([]),
     });
+
+    this.formFactoring.markAllAsTouched();
+    this.formFactoring.markAsDirty();
+
   }
 
   private updateDisplayAddress(index): void {
@@ -563,6 +561,5 @@ export class DemandActionFactoringPageComponent implements OnInit {
 
     return result;
   }
-
   //#endregion
 }

@@ -41,6 +41,7 @@ import { DemandActionFactoringPageComponent } from './components/demand-actions/
 import { CommonService } from '../../services/common/common.service';
 import { FileService } from '../../services/common/file.service';
 import { CreateDemandFactoringEffect } from './store/effects/createDemand.effect';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import { CreateDemandFactoringEffect } from './store/effects/createDemand.effect
     ProgressBarModule,
     MultiSelectModule,
     DemandRoutingModule,
+    InputMaskModule,
     ReactiveFormsModule,
     SuccessMessagesModule,
     BackendErrorMessagesModule,
