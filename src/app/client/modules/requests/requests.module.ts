@@ -19,6 +19,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
 import { TabViewModule } from 'primeng/tabview';
 import { SkeletonModule } from 'primeng/skeleton';
+import { CalendarModule } from 'primeng/calendar';
 
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,8 +33,8 @@ import { reducers } from './store/reducers';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { DialogModule } from 'primeng/dialog';
-import {TieredMenuModule} from 'primeng/tieredmenu';
-import {FileUploadModule} from 'primeng/fileupload';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { FileUploadModule } from 'primeng/fileupload';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 
@@ -49,6 +50,7 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
     DynamicDialogModule,
     InputTextareaModule,
     DialogModule,
+    CalendarModule,
     FileUploadModule,
     SkeletonModule,
     SliderModule,
@@ -69,6 +71,12 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
     AvatarModule,
   ],
   declarations: [RequestsPageComponent, RequestCreateDialogComponent],
-  providers: [DialogService, DeliveryService, RequestsService, FileService, CommonService],
+  providers: [
+    DialogService,
+    DeliveryService,
+    RequestsService,
+    FileService,
+    CommonService,
+  ],
 })
 export class RequestModule {}

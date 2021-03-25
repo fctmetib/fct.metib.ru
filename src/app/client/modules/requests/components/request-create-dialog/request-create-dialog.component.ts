@@ -60,6 +60,7 @@ export class RequestCreateDialogComponent {
 
   //#region shipment
   public currentShipmentID = null;
+  public maxDate = new Date();
   //#endregion
 
   private isSuccess: boolean = false;
@@ -89,7 +90,7 @@ export class RequestCreateDialogComponent {
     this.form = this.fb.group({
       deliveryID: [0, [Validators.required]],
       number: ['', [Validators.required]],
-      type: ['', [Validators.required]],
+      type: ['NonFinancing', [Validators.required]],
       date: ['', [Validators.required]],
     });
 
@@ -99,7 +100,7 @@ export class RequestCreateDialogComponent {
       invoiceNumber: ['', [Validators.required]],
       invoiceDate: ['', [Validators.required]],
       dateShipment: ['', [Validators.required]],
-      summ: [0, [Validators.required]],
+      summ: [1, [Validators.required]],
     });
 
     this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
@@ -159,13 +160,6 @@ export class RequestCreateDialogComponent {
       (x) => x.ID === event.value
     );
     this.freeDuty = delivery.Statistics.DutyDebtor;
-  }
-
-  close() {
-    let data = {
-      isSuccess: this.isSuccess
-    }
-    this.ref.close(data);
   }
 
   //#region shipments

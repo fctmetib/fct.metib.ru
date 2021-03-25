@@ -13,7 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { DemandService } from './services/demand.service';
 import { DemandRoutingModule } from './demand-routing.module';
 import { DemandHistoryPageComponent } from './components/demand-history-page/demand-history-page.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -85,6 +85,10 @@ import { InputMaskModule } from 'primeng/inputmask';
     DemandActionSuretyPageComponent,
     DemandActionVerificationPageComponent,
   ],
-  providers: [DemandService, CommonService, FileService],
+  providers: [
+    CurrencyPipe,
+    DemandService,
+    CommonService,
+    FileService],
 })
 export class DemandModule {}

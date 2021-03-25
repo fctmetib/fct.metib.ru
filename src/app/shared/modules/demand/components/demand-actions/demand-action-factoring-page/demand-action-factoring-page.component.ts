@@ -24,6 +24,7 @@ import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { createDemandFactoringAction } from '../../../store/actions/createDemand.action';
 import { errorSelector, isLoadingSelector } from '../../../store/selectors';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-demand-action-factoring-page',
@@ -54,6 +55,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
   public backendErrors$: Observable<string | null>;
 
   constructor(
+    private currencyPipe: CurrencyPipe,
     private authService: AuthService,
     private fb: FormBuilder,
     private commonService: CommonService,
@@ -251,7 +253,14 @@ export class DemandActionFactoringPageComponent implements OnInit {
       organizationType: [0, [Validators.required]],
       organizationLegalForm: [''],
       organizationShortName: ['', [Validators.required]],
-      organizationINN: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
+      organizationINN: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(12),
+        ],
+      ],
       organizationPhone: ['', [Validators.required]],
       organizationEmail: ['', [Validators.required, Validators.email]],
       organizationWEB: [''],
@@ -279,9 +288,24 @@ export class DemandActionFactoringPageComponent implements OnInit {
       factoringEDIProviders: this.fb.array([]),
     });
 
+    this.formFactoring.valueChanges.subscribe((form) => {
+      if (form.factoringFinanceLimit) {
+        this.formFactoring.patchValue(
+          {
+            factoringFinanceLimit: this.currencyPipe.transform(
+              form.factoringFinanceLimit.replace(/\D/g, '').replace(/^0+/, ''),
+              'RUB',
+              'symbol',
+              '1.0-0',
+            ),
+          },
+          { emitEvent: false }
+        );
+      }
+    });
+
     this.formFactoring.markAllAsTouched();
     this.formFactoring.markAsDirty();
-
   }
 
   private updateDisplayAddress(index): void {

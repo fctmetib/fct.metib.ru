@@ -27,6 +27,9 @@ const requestsReducer = createReducer(
     getRequestsAction,
     (state): RequestsStateInterface => ({
       ...state,
+      crudError: null,
+      isSubmitting: false,
+      crudSuccessMessage: null,
       isLoading: true,
     })
   ),

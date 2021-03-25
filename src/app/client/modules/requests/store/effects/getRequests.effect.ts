@@ -9,6 +9,7 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { getRequestsAction } from '../actions/getRequests.action';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class GetRequestsEffect {
@@ -17,10 +18,13 @@ export class GetRequestsEffect {
       ofType(getRequestsAction),
       switchMap(() => {
         return this.requestService.fetch().pipe(
-          map((requests: RequestsResponseInterface[]) => {
+          map((response: RequestsResponseInterface[]) => {
+            let requests = response.sort((a, b) => {
+              return new Date(b.Date).getTime() - new Date(a.Date).getTime();
+            });
+
             return getRequestsSuccessAction({ requests });
           }),
-
           catchError(() => {
             return of(getRequestsFailureAction());
           })
