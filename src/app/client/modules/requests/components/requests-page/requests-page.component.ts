@@ -11,6 +11,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { getRequestsAction } from '../../store/actions/getRequests.action';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SortEvent, MenuItem } from 'primeng/api';
+import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 
 @Component({
   selector: 'app-requests-page',
@@ -97,6 +98,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     let requests: any[] = [];
     console.log(event);
 
+    //TODO: COMPLETE FILTER
+
     requests = [...event.data].sort((data1, data2) => {
       // console.log(data1['Number'])
       let value1 = data1[event.field];
@@ -137,6 +140,38 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+  // init() {
+  //   this.service.sendInit(requestsID).subscribe(
+  //     (response) => {
+  //       this.confirmForm.patchValue({
+  //         confirmCode: response.ConfirmationCode,
+  //       });
+
+  //       this.confirmDialog = true;
+  //     },
+  //     (err) => {
+  //       this.errorRequestsDialogMessage = err.error;
+  //     }
+  //   );
+  // }
+
+
+  confirm(): void {
+    // this.successRequestsDialogMessage = null;
+    // this.errorRequestsDialogMessage = null;
+
+    // let confirmData: ConfirmRequestInterface = {
+    //   ConfirmationCode: this.confirmForm.value.confirmCode,
+    //   Pin: this.confirmForm.value.pin,
+    // };
+
+    // this.service.sendConfirm(confirmData).subscribe((resp) => {
+    //   this.confirmDialog = false;
+    //   this.successRequestsDialogMessage = 'Заявка успешно подтверждена';
+    // });
+  }
+
 
   ngOnDestroy() {
     if (this.ref) {

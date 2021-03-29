@@ -18,6 +18,7 @@ import { DutyService } from 'src/app/shared/services/share/duty.service';
 import { map } from 'rxjs/operators';
 import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-freeduty-page',
@@ -49,6 +50,7 @@ export class FreedutyPageComponent implements OnInit {
   constructor(
     private store: Store,
     private fb: FormBuilder,
+    private router: Router,
     private service: DutyService,
     public dialogService: DialogService,
     public datepipe: DatePipe
@@ -115,6 +117,14 @@ export class FreedutyPageComponent implements OnInit {
 
         this.store.dispatch(getFreedutyAction({ data }));
       }
+    }
+  }
+
+  getFreedutySum(dutyItems: DutyInterface[]) {
+    if(dutyItems) {
+    return dutyItems.reduce((sum, current) =>
+      sum + current.Summ, 0
+    )
     }
   }
 
@@ -206,31 +216,15 @@ export class FreedutyPageComponent implements OnInit {
       });
     });
 
-    this.service
-      .createRequestsByDutyIds(flattenedRequestsId)
-      .pipe(
-        map((requests) => {
-          let requestsID = requests.map((x) => x.ID);
-          this.service.sendInit(requestsID).subscribe(
-            (response) => {
-              this.confirmForm.patchValue({
-                confirmCode: response.ConfirmationCode,
-              });
-
-              this.confirmDialog = true;
-            },
-            (err) => {
-              this.errorRequestsDialogMessage = err.error;
-            }
-          );
-        })
-      )
-      .subscribe(
-        (response) => {},
-        (err) => {
-          this.errorRequestsDialogMessage = err.error;
-        }
-      );
+    this.service.createRequestsByDutyIds(flattenedRequestsId).subscribe(
+      (response) => {
+        this.closeRequestsModal();
+        this.router.navigate(['/requests']);
+      },
+      (err) => {
+        this.errorRequestsDialogMessage = err.error;
+      }
+    );
 
     //  this.closeRequestsModal();
   }
@@ -239,19 +233,5 @@ export class FreedutyPageComponent implements OnInit {
     this.requestsDialog = false;
   }
 
-  confirm(): void {
-    this.successRequestsDialogMessage = null;
-    this.errorRequestsDialogMessage = null;
-
-    let confirmData: ConfirmRequestInterface = {
-      ConfirmationCode: this.confirmForm.value.confirmCode,
-      Pin: this.confirmForm.value.pin,
-    };
-
-    this.service.sendConfirm(confirmData).subscribe((resp) => {
-      this.confirmDialog = false;
-      this.successRequestsDialogMessage = 'Заявка успешно подтверждена';
-    });
-  }
   //#endregion
 }

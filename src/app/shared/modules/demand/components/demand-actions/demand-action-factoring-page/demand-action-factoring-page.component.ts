@@ -236,6 +236,8 @@ export class DemandActionFactoringPageComponent implements OnInit {
   }
 
   private initForm(): void {
+    //TODO: Break on other pages
+
     this.formAddress = this.fb.group({
       PostCode: ['', [Validators.required]],
       Country: ['', [Validators.required]],
@@ -296,7 +298,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
               form.factoringFinanceLimit.replace(/\D/g, '').replace(/^0+/, ''),
               'RUB',
               'symbol',
-              '1.0-0',
+              '1.0-0'
             ),
           },
           { emitEvent: false }

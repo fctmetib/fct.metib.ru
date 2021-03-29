@@ -106,6 +106,12 @@
         </td>
       </tr>
     </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+          <td colspan="5" class="p-text-right"></td>
+          <td>{{getFreedutySum((freeduty$ | async)) | currency:'RUB':'symbol' }}</td>
+      </tr>
+  </ng-template>
     <ng-template pTemplate="emptymessage">
       <ng-container *ngIf="(freeduty$ | async); else skeletonFreedutyTemplate">
         <tr>
@@ -251,25 +257,25 @@
 </div>
 
 <!-- Filter Form -->
-  <p-dialog [style]="{width: '450px'}" [(visible)]="filterDialog" [draggable]="false" [resizable]="false"
-    header="Укажите период" [modal]="true" styleClass="p-fluid">
-    <ng-template pTemplate="content">
-      <form [formGroup]="filterForm" (ngSubmit)="saveFilter()">
-        <div class="p-field">
-          <label for="dateFrom">Дата с: </label>
-          <input id="dateFrom" type="date" pInputText placeholder="Дата с" formControlName="dateFrom">
-        </div>
-        <div class="p-field">
-          <label for="dateTo">Дата по: </label>
-          <input id="dateTo" type="date" pInputText placeholder="Дата по" formControlName="dateTo">
-        </div>
-        <div class="modal-actions">
-          <button pButton pRipple label="Применить" class="p-button-text save" type="submit"></button>
-          <button pButton pRipple label="Отменить" class="p-button-text cancel"  (click)="closeDateModal()"></button>
-        </div>
-      </form>
-    </ng-template>
-  </p-dialog>
+<p-dialog [style]="{width: '450px'}" [(visible)]="filterDialog" [draggable]="false" [resizable]="false"
+  header="Укажите период" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="filterForm" (ngSubmit)="saveFilter()">
+      <div class="p-field">
+        <label for="dateFrom">Дата с: </label>
+        <input id="dateFrom" type="date" pInputText placeholder="Дата с" formControlName="dateFrom">
+      </div>
+      <div class="p-field">
+        <label for="dateTo">Дата по: </label>
+        <input id="dateTo" type="date" pInputText placeholder="Дата по" formControlName="dateTo">
+      </div>
+      <div class="modal-actions">
+        <button pButton pRipple label="Применить" class="p-button-text save" type="submit"></button>
+        <button pButton pRipple label="Отменить" class="p-button-text cancel" (click)="closeDateModal()"></button>
+      </div>
+    </form>
+  </ng-template>
+</p-dialog>
 
 <!-- Request Form -->
 <p-dialog [style]="{width: '950px'}" [(visible)]="requestsDialog" header="Создать заявку" [modal]="true"
@@ -299,7 +305,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-item let-expanded="expanded">
-        <tr>
+        <tr >
           <td>
             <button type="button" pButton pRipple [pRowToggler]="item"
               class="p-button-text p-button-rounded p-button-plain"
@@ -326,11 +332,11 @@
       </ng-template>
       <ng-template pTemplate="rowexpansion" let-item>
         <tr>
-          <td colspan="7">
+          <td colspan="7" class="inner">
             <div>
               <p-table [value]="item.categories" dataKey="categoryName">
                 <ng-template pTemplate="header">
-        <tr>
+        <tr class="empty">
           <th style="width: 3rem"></th>
           <th class="header-width"></th>
           <th class="header-width"></th>
@@ -361,14 +367,13 @@
           </td>
         </tr>
       </ng-template>
-
       <ng-template pTemplate="rowexpansion" let-category>
         <tr>
-          <td colspan="7">
+          <td colspan="7" class="inner">
             <div>
               <p-table [value]="category.requests" dataKey="id">
                 <ng-template pTemplate="header">
-        <tr>
+        <tr class="empty">
           <th style="width: 3rem"></th>
           <th class="header-width"></th>
           <th class="header-width"></th>
@@ -425,21 +430,3 @@
       (click)="createRequests()"></button>
   </ng-template>
 </p-dialog>
-
-
-<!-- Confirm Form -->
-<form [formGroup]="confirmForm" (ngSubmit)="confirm()">
-  <p-dialog [style]="{width: '450px'}" [(visible)]="confirmDialog" header="Подтверждение" [modal]="true"
-    [draggable]="false" [resizable]="false" styleClass="p-fluid">
-    <ng-template pTemplate="content">
-      <div class="p-field">
-        <label for="pin">Пин-код: </label>
-        <input id="pin" type="text" pInputText placeholder="Пин-код" formControlName="pin">
-      </div>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <button pButton pRipple label="Отменить" icon="pi pi-times" class="p-button-text"></button>
-      <button pButton pRipple label="Подтвердить" icon="pi pi-check" class="p-button-text" type="submit"></button>
-    </ng-template>
-  </p-dialog>
-</form>
