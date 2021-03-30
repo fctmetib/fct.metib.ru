@@ -7,9 +7,60 @@
       </div> -->
     </div>
     <div class="actions">
-      <button pButton pRipple type="button" label="Вернуться к списку запросов" [routerLink]="['/demand']"
-      class="p-button-outlined"></button>
-      <button pButton pRipple type="button" label="Создать Запрос" (click)="a()" class="basic"></button>
     </div>
   </div>
+
+  <metib-success-messages *ngIf="alert" [message]="alertMessage"></metib-success-messages>
+  <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
+  </metib-backend-error-messages>
+
+  <form [formGroup]="formFree" (ngSubmit)="onSubmit()">
+    <div class="form-actions">
+      <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
+        [routerLink]="['/demand']"></button>
+      <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
+        [disabled]="formFree.invalid || (isLoading$ | async)"></button>
+    </div>
+    <div class="p-fluid p-formgrid p-grid form">
+      <!-- 1 row -->
+      <div class="p-field p-col-12 p-md-12 p-lg-12">
+        <label for="subject">Тема обращения</label>
+        <input id="subject" type="text" pInputText placeholder="Тема обращения" formControlName="subject">
+        <div *ngIf="formFree.controls['subject'].invalid">
+          <small *ngIf="formFree.controls['subject'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+      <!-- 2 row -->
+      <div class="p-field p-col-12 p-md-12 p-lg-12">
+        <label for="question">Вопрос</label>
+        <textarea id="question" type="text" pInputTextarea placeholder="Вопрос" formControlName="question"  style="resize: none;"></textarea>
+        <div *ngIf="formFree.controls['question'].invalid">
+          <small *ngIf="formFree.controls['question'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+      <!-- 3 row -->
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button">
+          <div class="addon-text">
+            <p>
+              При необходимости прикрепите файлы:
+            </p>
+          </div>
+          <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, '')"
+            customUpload="true" mode="basic" styleClass="mib-upload" maxFileSize="1000000" chooseLabel="Выбрать файл">
+          </p-fileUpload>
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <label for="btn_submit">&nbsp;</label>
+        <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
+          class="btn-mib-submit p-button-outlined" [disabled]="formFree.invalid || (isLoading$ | async)"></button>
+      </div>
+    </div>
+  </form>
 </div>

@@ -1,5 +1,6 @@
 import { MenuItem } from 'primeng/api';
 import { Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-layout',
@@ -7,7 +8,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./client-layout.component.scss'],
 })
 export class ClientLayoutComponent implements OnInit {
-  constructor() {}
+  constructor(private router: Router) {}
+
   items: MenuItem[];
 
   ngOnInit() {
@@ -15,42 +17,42 @@ export class ClientLayoutComponent implements OnInit {
       {
         label: 'Кабинет',
         routerLink: 'cabinet',
-        routerLinkActiveOptions: { exact: true },
+        routerLinkActiveOptions: { exact: false },
       },
       {
         label: 'Заявки',
         routerLink: 'requests',
-        routerLinkActiveOptions: { exact: true },
+        routerLinkActiveOptions: { exact: false },
       },
       {
         label: 'Свободная задолженность',
         routerLink: 'freeduty',
-        routerLinkActiveOptions: { exact: true },
+        routerLinkActiveOptions: { exact: false },
       },
       {
         label: 'Договоры',
         routerLink: 'contracts',
-        routerLinkActiveOptions: { exact: true },
+        routerLinkActiveOptions: { exact: false },
       },
       {
         label: 'Платежи',
         routerLink: 'invoices',
-        routerLinkActiveOptions: { exact: true },
+        routerLinkActiveOptions: { exact: false },
       },
       {
         label: 'Просрочки Покупателя',
         routerLink: 'delays',
-        routerLinkActiveOptions: { exact: true },
+        routerLinkActiveOptions: { exact: false },
       },
       {
         label: 'Запросы',
         routerLink: 'demand',
-        routerLinkActiveOptions: { exact: true },
+        routerLinkActiveOptions: { exact: false },
       },
       {
         label: 'Документы',
         routerLink: 'documents',
-        routerLinkActiveOptions: { exact: true },
+        routerLinkActiveOptions: { exact: false },
       },
       // {
       //   label: 'Отчеты',
@@ -64,10 +66,16 @@ export class ClientLayoutComponent implements OnInit {
   closeAccountOwner() {
     const _event: any = event;
 
-    if (!_event.target.classList.contains("clickable")) {
+    if (!_event.target.classList.contains('clickable')) {
       if (document.getElementById('dropdownMenu').classList.contains('show')) {
         document.getElementById('dropdownMenu').classList.remove('show');
       }
+    }
+  }
+
+  private isActive(base: string): string {
+    if(this.router.url.includes(`/${base}`)) {
+      return 'p-menuitem-link-active';
     }
   }
 }

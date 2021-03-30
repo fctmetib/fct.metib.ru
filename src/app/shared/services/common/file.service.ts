@@ -23,7 +23,7 @@ export class FileService {
     headers = headers.append('Upload-TotalSize', fileSize);
 
     let url = `${environment.apiUrl}/file/chunks`;
-    return this.http.post<FileModeInterface>(url, file, { headers });
+    return this.http.post<FileModeInterface>('http://api-factoring.metib.ru:8094/api/file/chunks', file, { headers });
   }
 
   getFileByCode(code: string): Observable<FileModeInterface> {
