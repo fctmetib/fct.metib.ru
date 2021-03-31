@@ -1,3 +1,6 @@
+import { CookieService } from 'ngx-cookie-service';
+import { CryptoService } from './../../../../../services/common/crypto.service';
+import { DemandService } from './../../../services/demand.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -29,12 +32,17 @@ export class DemandActionEditProfilePageComponent implements OnInit {
 
   public files: FileModeInterface[] = [];
 
+  private currentUserId: string;
+
   constructor(
     private authService: AuthService,
     private commonService: CommonService,
     private fb: FormBuilder,
+    private demandService: DemandService,
     private store: Store,
-    private fileService: FileService
+    private fileService: FileService,
+    private cryptoService: CryptoService,
+    private cookieService: CookieService
   ) {}
 
   ngOnInit() {
@@ -47,36 +55,42 @@ export class DemandActionEditProfilePageComponent implements OnInit {
 
   onSubmit() {
     let data: SaveDemandRequestInterface<any> = this.prepareData();
-    this.store.dispatch(createDemandFactoringAction({ data }));
+
+    this.demandService.add(data).subscribe(resp => {
+      this.alert = true;
+      this.alertMessage = "Запрос успешно создан."
+    });
+
+    // this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
   //#region private logic
   private prepareData(): any {
     let result: SaveDemandRequestInterface<any> = {
       Data: {
-        Avatar: "0fcb8ff7-5480-48ed-9d57-4bfe09c393d8",
+        Avatar: this.files[0]?.Code,
         Passport: {
-          Date: "2021-03-30T16:55:26+03:00",
+          Date: this.formEdit.value.date,
           Expire: null,
           IsForeign: false,
-          IssuerCode: "999",
-          IssuerTitle: "iopiop",
+          IssuerCode: this.formEdit.value.issuerCode,
+          IssuerTitle: this.formEdit.value.issuerTitle,
           Nationality: "RUS",
-          Number: "44444444444444444444",
+          Number: this.formEdit.value.number,
         },
         PassportFileCode: '',
         Profile: {
-          Email: "realtestapp521@yandex.ru",
-          IsMale: true,
+          Email: this.formEdit.value.email,
+          IsMale: this.formEdit.value.isMale,
           Login: "realtestapp521@yandex.ru",
           Name: {
-            First: "realtestapp521",
-            Last: "realtestapp521",
+            First: this.formEdit.value.first,
+            Last: this.formEdit.value.last,
           },
-          Phone: "8-518-851-2825"
+          Phone: this.formEdit.value.phone
         },
         Files: this.files,
-        UserID: 4254,
+        UserID: this.currentUserId,
         Type: 'ProfileChange',
       },
       DraftID: 0,
@@ -105,6 +119,12 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   private initValues(): void {
     this.isLoading$ = this.store.pipe(select(isLoadingSelector));
     this.backendErrors$ = this.store.pipe(select(errorSelector));
+
+    let encryptedJsonCurrentUser = this.cookieService.get('_cu');
+    let currentJsonUser = this.cryptoService.decrypt(encryptedJsonCurrentUser);
+    let currentUser = JSON.parse(currentJsonUser);
+
+    this.currentUserId = currentUser.UserID;
   }
 
   onSelect(event, type: string) {

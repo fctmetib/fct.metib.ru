@@ -1,3 +1,4 @@
+import { DemandService } from './../../../services/demand.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
@@ -32,6 +33,7 @@ export class DemandActionRequestFreePageComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
+    private demandService: DemandService,
     private commonService: CommonService,
     private fileService: FileService,
     private store: Store
@@ -48,7 +50,13 @@ export class DemandActionRequestFreePageComponent implements OnInit {
   onSubmit() {
     //TODO: UPDATE IT
     let data: SaveDemandRequestInterface<any> = this.prepareData();
-    this.store.dispatch(createDemandFactoringAction({ data }));
+
+    this.demandService.add(data).subscribe(resp => {
+      this.alert = true;
+      this.alertMessage = "Запрос успешно создан."
+    });
+
+    // this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
   onSelect(event, type: string) {
