@@ -230,19 +230,6 @@
       </ng-template>
     </p-fileUpload>
   </p-tabPanel>
-  <p-tabPanel header="Документы аккредитива">
-    <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, 'Verification')" customUpload="true"
-      [auto]="true" multiple="multiple" styleClass="mib-upload" maxFileSize="1000000" chooseLabel="Выбрать файлы">
-      <!-- <ng-template pTemplate="content">
-      <ul *ngIf="uploadedFiles.length">
-          <li *ngFor="let file of uploadedFiles">{{file.name}}</li>
-        </ul>
-    </ng-template> -->
-      <ng-template let-file pTemplate="file">
-        <div>{{file.name}}</div>
-      </ng-template>
-    </p-fileUpload>
-  </p-tabPanel>
   <p-tabPanel header="Документы ЭДО">
     <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, 'All')" customUpload="true" [auto]="true"
       multiple="multiple" styleClass="mib-upload" maxFileSize="1000000" chooseLabel="Выбрать файлы">

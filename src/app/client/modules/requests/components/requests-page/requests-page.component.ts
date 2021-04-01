@@ -43,12 +43,12 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
     this.items = [
       {
-        label: 'Редактировать',
-        command: () => this.showEditDialog(),
-      },
-      {
         label: 'Создать',
         command: () => this.showCreateRequestDialog(),
+      },
+      {
+        label: 'Редактировать',
+        command: () => this.showEditDialog(),
       },
       {
         label: 'Создать из подтверждений',

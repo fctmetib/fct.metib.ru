@@ -59,7 +59,7 @@ export class FreedutyPageComponent implements OnInit {
   ngOnInit() {
     this.initializeValues();
     this.initializeForm();
-    this.fetch(false);
+    this.fetch(true);
   }
 
   initializeValues(): void {

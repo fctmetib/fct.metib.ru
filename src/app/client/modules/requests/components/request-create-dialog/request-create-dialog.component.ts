@@ -8,7 +8,7 @@ import { DeliveryInterface } from './../../../../../shared/types/delivery/delive
 import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
 import { ClientRequestInterface } from './../../../../../shared/types/client/client-request.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RequestSourceEnum } from 'src/app/shared/types/enums/request-source.enum';
 import { FinanceTypeInterface } from '../../types/common/finance-type.interface';
@@ -79,9 +79,9 @@ export class RequestCreateDialogComponent {
     this.errorsMessage$ = this.store.pipe(select(crudErrorsSelector));
     this.successMessage$ = this.store.pipe(select(crudSuccessSelector));
 
-    this.successMessage$.subscribe(isSuccess => {
+    this.successMessage$.subscribe((isSuccess) => {
       this.isSuccess = true;
-    })
+    });
 
     this.initializeForm();
   }
@@ -89,7 +89,7 @@ export class RequestCreateDialogComponent {
   initializeForm(): void {
     this.form = this.fb.group({
       deliveryID: [0, [Validators.required]],
-      number: ['', [Validators.required]],
+      number: [''],
       type: ['NonFinancing', [Validators.required]],
       date: ['', [Validators.required]],
     });
@@ -163,6 +163,23 @@ export class RequestCreateDialogComponent {
   }
 
   //#region shipments
+  @HostListener('window:keydown', ['$event'])
+  onKeyPress($event: KeyboardEvent) {
+    if (($event.ctrlKey || $event.metaKey) && $event.keyCode == 86) {
+      /// For IE
+      if (window['clipboardData']) {
+        let value = window['clipboardData'].getData('Text');
+        console.log(value);
+      } else {
+        // for other navigators
+        navigator['clipboard'].readText().then((clipText) => {
+          console.log(clipText);
+        });
+      }
+    }
+    console.log('CTRL +  V');
+  }
+
   openNew(isEdit: boolean) {
     if (isEdit) {
       let shipment = this.shipments[0];
@@ -245,8 +262,8 @@ export class RequestCreateDialogComponent {
                 FileName: res.FileName,
                 ID: res.ID,
                 Size: res.Size,
-                Identifier: type
-              })
+                Identifier: type,
+              });
             },
             (err) => console.log(err)
           );
