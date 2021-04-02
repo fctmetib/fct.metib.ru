@@ -20,6 +20,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
+import { PasteHandler } from 'src/app/shared/classes/common/past-handler.class';
 
 @Component({
   selector: 'app-request-create-dialog',
@@ -138,20 +139,24 @@ export class RequestCreateDialogComponent {
   }
 
   onSubmit(): void {
-    let selectedDelivery = this.deliveries.find(
-      (x) => x.ID === this.form.value.deliveryID
-    );
+    if (this.shipments.length > 0) {
+      let selectedDelivery = this.deliveries.find(
+        (x) => x.ID === this.form.value.deliveryID
+      );
 
-    const request: ClientRequestInterface = {
-      Date: new Date(this.form.value.date),
-      DeliveryID: this.form.value.deliveryID,
-      Files: [],
-      Number: this.form.value.number,
-      Shipments: this.shipments,
-      Type: this.form.value.type,
-    };
+      const request: ClientRequestInterface = {
+        Date: new Date(this.form.value.date),
+        DeliveryID: this.form.value.deliveryID,
+        Files: [],
+        Number: this.form.value.number,
+        Shipments: this.shipments,
+        Type: this.form.value.type,
+      };
 
-    this.store.dispatch(addRequestAction({ request }));
+      this.store.dispatch(addRequestAction({ request }));
+    } else {
+      return;
+    }
   }
 
   onDeliveryChange(event): void {
@@ -166,18 +171,19 @@ export class RequestCreateDialogComponent {
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
     if (($event.ctrlKey || $event.metaKey) && $event.keyCode == 86) {
-      /// For IE
+      let pasteHandler = new PasteHandler();
+
       if (window['clipboardData']) {
         let value = window['clipboardData'].getData('Text');
-        console.log(value);
+        let processedData = pasteHandler.processData(value);
+        this.addRowsFromClipboard(processedData);
       } else {
-        // for other navigators
         navigator['clipboard'].readText().then((clipText) => {
-          console.log(clipText);
+          let processedData = pasteHandler.processData(clipText);
+          this.addRowsFromClipboard(processedData);
         });
       }
     }
-    console.log('CTRL +  V');
   }
 
   openNew(isEdit: boolean) {
@@ -270,5 +276,68 @@ export class RequestCreateDialogComponent {
       });
     }
   }
+  //#endregion
+
+  //#region private
+
+  private addRowsFromClipboard(processedData) {
+    let columns = this.getColumns();
+
+    for (const curentDataRow of processedData) {
+      const rowData: any = {};
+      for (const col of columns) {
+        rowData[col.field] = curentDataRow[col.visibleIndex];
+      }
+
+      let shipment: ClientShipmentInterface = {
+        AccountNumber: rowData.AccountNumber,
+        AccountDate: rowData.AccountDate,
+        InvoiceNumber: rowData.InvoiceNumber,
+        InvoiceDate: rowData.InvoiceDate,
+        WaybillNumber: null,
+        WaybillDate: null,
+        DateShipment: rowData.DateShipment,
+        DatePayment: null,
+        SummToFactor: null,
+        Summ: rowData.Summ,
+        ID: Math.floor(Math.random() * 100),
+      };
+
+      console.log(shipment);
+      this.shipments.push(shipment);
+    }
+  }
+
+  private getColumns() {
+    let columns = [
+      {
+        field: 'InvoiceNumber',
+        visibleIndex: 0,
+      },
+      {
+        field: 'InvoiceDate',
+        visibleIndex: 1,
+      },
+      {
+        field: 'AccountNumber',
+        visibleIndex: 2,
+      },
+      {
+        field: 'AccountDate',
+        visibleIndex: 3,
+      },
+      {
+        field: 'Summ',
+        visibleIndex: 4,
+      },
+      {
+        field: 'DateShipment',
+        visibleIndex: 5,
+      },
+    ];
+
+    return columns;
+  }
+
   //#endregion
 }

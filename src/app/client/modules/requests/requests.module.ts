@@ -37,7 +37,6 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
-
 @NgModule({
   imports: [
     CommonModule,
