@@ -12,6 +12,7 @@ import { getRequestsAction } from '../../store/actions/getRequests.action';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SortEvent, MenuItem } from 'primeng/api';
 import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
+import { RequestsService } from '../../services/requests.service';
 
 @Component({
   selector: 'app-requests-page',
@@ -29,7 +30,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   selectedItems: RequestsResponseInterface[] = [];
 
-  constructor(private store: Store, public dialogService: DialogService) {}
+  constructor(private store: Store, public dialogService: DialogService, private requestService: RequestsService) {}
 
   ngOnInit() {
     this.initializeValues();
@@ -126,19 +127,24 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   showEditDialog() {
     let selectedRow = this.selectedItems[0];
-    if (selectedRow) {
-      this.ref = this.dialogService.open(RequestCreateDialogComponent, {
-        header: 'Редактирование заявки',
-        width: '70%',
-        contentStyle: { height: '800px', overflow: 'auto' },
-        baseZIndex: 10000,
-        data: selectedRow,
-      });
 
-      this.ref.onClose.subscribe((data: any) => {
-        console.log('closed');
-      });
-    }
+    this.requestService.getRequestByIdAndParams(selectedRow.ID, true, true, true).subscribe(resp => {
+      selectedRow = resp;
+
+      if (selectedRow) {
+        this.ref = this.dialogService.open(RequestCreateDialogComponent, {
+          header: 'Редактирование заявки',
+          width: '70%',
+          contentStyle: { height: '800px', overflow: 'auto' },
+          baseZIndex: 10000,
+          data: selectedRow,
+        });
+
+        this.ref.onClose.subscribe((data: any) => {
+          console.log('closed');
+        });
+      }
+    });
   }
 
   // init() {

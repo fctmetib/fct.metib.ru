@@ -10,6 +10,7 @@ import {
   addRequestAction,
   addRequestFailureAction,
   addRequestSuccessAction,
+  setErrorAction,
 } from './actions/crud.action';
 
 const initialState: RequestsStateInterface = {
@@ -71,6 +72,13 @@ const requestsReducer = createReducer(
       ...state,
       isSubmitting: false,
       crudSuccessMessage: null,
+      crudError: action.errors,
+    })
+  ),
+  on(
+    setErrorAction,
+    (state, action): RequestsStateInterface => ({
+      ...state,
       crudError: action.errors,
     })
   ),

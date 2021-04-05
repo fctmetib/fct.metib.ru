@@ -157,7 +157,7 @@
           </div>
           <div class="p-field">
             <label for="accountDate">Дата накладной: </label>
-            <p-calendar id="accountDate" formControlName="accountDate" [maxDate]="maxDate" inputId="min-max"
+            <p-calendar id="accountDate" formControlName="accountDate" [maxDate]="maxDate"
               placeholder="Дата накладной" [readonlyInput]="true"></p-calendar>
             <div *ngIf="shipmentForm.controls['accountDate'].invalid">
               <small *ngIf="shipmentForm.controls['accountDate'].errors.required" class="p-error">
@@ -176,7 +176,7 @@
           </div>
           <div class="p-field">
             <label for="invoiceDate">Дата счета-ф: </label>
-            <p-calendar id="invoiceDate" formControlName="invoiceDate" [maxDate]="maxDate" inputId="min-max"
+            <p-calendar id="invoiceDate" formControlName="invoiceDate" [maxDate]="maxDate"
               placeholder="Дата счета-ф" [readonlyInput]="true"></p-calendar>
             <div *ngIf="shipmentForm.controls['invoiceDate'].invalid">
               <small *ngIf="shipmentForm.controls['invoiceDate'].errors.required" class="p-error">
@@ -187,7 +187,7 @@
 
           <div class="p-field">
             <label for="dateShipment">Дата поставки: </label>
-            <p-calendar id="dateShipment" formControlName="dateShipment" [maxDate]="maxDate" inputId="min-max"
+            <p-calendar id="dateShipment" formControlName="dateShipment" [maxDate]="maxDate"
               placeholder="Дата поставки" [readonlyInput]="true"></p-calendar>
             <div *ngIf="shipmentForm.controls['dateShipment'].invalid">
               <small *ngIf="shipmentForm.controls['dateShipment'].errors.required" class="p-error">

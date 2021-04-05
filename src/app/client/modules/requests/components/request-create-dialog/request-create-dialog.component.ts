@@ -13,7 +13,10 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RequestSourceEnum } from 'src/app/shared/types/enums/request-source.enum';
 import { FinanceTypeInterface } from '../../types/common/finance-type.interface';
 import { Observable, Observer } from 'rxjs';
-import { addRequestAction } from '../../store/actions/crud.action';
+import {
+  addRequestAction,
+  setErrorAction,
+} from '../../store/actions/crud.action';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
 import { ThrowStmt } from '@angular/compiler';
@@ -127,6 +130,8 @@ export class RequestCreateDialogComponent {
         this.shipments = selectedRow.Shipments;
       }
 
+      console.log('GG', selectedRow);
+
       this.form.patchValue({
         deliveryID: selectedRow.Delivery.ID,
         number: selectedRow.Number,
@@ -155,6 +160,8 @@ export class RequestCreateDialogComponent {
 
       this.store.dispatch(addRequestAction({ request }));
     } else {
+      let errors = 'Ошибка! Пожалуйста, добавьте минимум 1 поставку.';
+      this.store.dispatch(setErrorAction({ errors }));
       return;
     }
   }
@@ -188,15 +195,18 @@ export class RequestCreateDialogComponent {
 
   openNew(isEdit: boolean) {
     if (isEdit) {
-      let shipment = this.shipments[0];
+      let shipment = this.selectedShipments[0];
+
+      console.log('GG', shipment);
+
       if (shipment) {
         this.currentShipmentID = shipment.ID;
         this.shipmentForm.patchValue({
-          accountNumber: shipment.AccountNumber,
-          accountDate: shipment.AccountDate,
+          accountNumber: shipment.AccountNumber || '',
+          accountDate: new Date(shipment.AccountDate),
           invoiceNumber: shipment.InvoiceNumber,
-          invoiceDate: shipment.InvoiceDate,
-          dateShipment: shipment.DateShipment,
+          invoiceDate: new Date(shipment.InvoiceDate),
+          dateShipment: new Date(shipment.DateShipment),
           summ: shipment.Summ,
         });
       } else {

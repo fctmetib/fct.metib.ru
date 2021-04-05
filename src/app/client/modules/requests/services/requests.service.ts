@@ -58,9 +58,9 @@ export class RequestsService {
     includeShipments: boolean,
     includeDocuments: boolean,
     includeFiles: boolean
-  ): Observable<RequestsResponseInterface[]> {
+  ): Observable<RequestsResponseInterface> {
     const url = `${environment.apiUrl}/request/${requestID}?includeShipments=${includeShipments}&includeDocuments=${includeDocuments}&includeFiles=${includeFiles}`;
-    return this.http.get<RequestsResponseInterface[]>(url);
+    return this.http.get<RequestsResponseInterface>(url);
   }
 
   getStatesOfRequest(requestID: number): Observable<ClientRequestStateInterface[]> {
