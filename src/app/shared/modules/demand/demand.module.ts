@@ -42,6 +42,7 @@ import { CommonService } from '../../services/common/common.service';
 import { FileService } from '../../services/common/file.service';
 import { CreateDemandFactoringEffect } from './store/effects/createDemand.effect';
 import { InputMaskModule } from 'primeng/inputmask';
+import { RemoveDemandsEffect } from './store/effects/removeDemands.effect';
 
 @NgModule({
   imports: [
@@ -57,7 +58,7 @@ import { InputMaskModule } from 'primeng/inputmask';
     SkeletonModule,
     DropdownModule,
     FormsModule,
-    EffectsModule.forFeature([GetDemandsEffect, CreateDemandFactoringEffect]),
+    EffectsModule.forFeature([GetDemandsEffect, CreateDemandFactoringEffect, RemoveDemandsEffect]),
     StoreModule.forFeature('demands', reducers),
     ProgressBarModule,
     MultiSelectModule,

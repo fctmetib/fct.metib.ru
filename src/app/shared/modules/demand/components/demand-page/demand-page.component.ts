@@ -24,12 +24,12 @@ export class DemandPageComponent implements OnInit {
       {
         text: 'Запрос на редактирование профиля',
         url: 'actions/edit-profile',
-        onlyNewClient: false,
+        onlyNewClient: true,
       },
       {
         text: 'Запрос на свободную тему',
         url: 'actions/free-request',
-        onlyNewClient: false,
+        onlyNewClient: true,
       },
       {
         text: 'Запрос в техническую поддержку',
@@ -39,7 +39,7 @@ export class DemandPageComponent implements OnInit {
       {
         text: 'Запрос на ЭЦП',
         url: 'actions/create-eds',
-        onlyNewClient: false,
+        onlyNewClient: true,
       },
       {
         text: 'Запрос на поручительство',
@@ -49,12 +49,12 @@ export class DemandPageComponent implements OnInit {
       {
         text: 'Запрос на факторинг',
         url: 'actions/factoring',
-        onlyNewClient: false,
+        onlyNewClient: true,
       },
       {
         text: 'Запрос на агентский факторинг',
         url: 'actions/agent-factoring',
-        onlyNewClient: false,
+        onlyNewClient: true,
       },
       {
         text: 'Запрос на увеличение лимита',

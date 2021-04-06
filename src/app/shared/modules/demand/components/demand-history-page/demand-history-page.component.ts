@@ -4,8 +4,14 @@ import { getDemandsAction } from '../../store/actions/getDemands.action';
 import { of, Observable } from 'rxjs';
 import { SortEvent } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
-import { demandssSelector, errorSelector, isLoadingSelector } from '../../store/selectors';
+import {
+  demandssSelector,
+  errorSelector,
+  isLoadingSelector,
+} from '../../store/selectors';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { Router } from '@angular/router';
+import { removeDemandsAction } from '../../store/actions/removeDemands.action';
 
 @Component({
   selector: 'app-demand-history-page',
@@ -23,7 +29,11 @@ export class DemandHistoryPageComponent implements OnInit {
   selectedItems: DemandInterface<any>[];
   isUserVerified: boolean;
 
-  constructor(private store: Store, private authService: AuthService) {}
+  constructor(
+    private store: Store,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.initializeValues();
@@ -41,10 +51,28 @@ export class DemandHistoryPageComponent implements OnInit {
     this.store.dispatch(getDemandsAction());
   }
 
-  add() {
-
+  remove(ID) {
+    this.store.dispatch(removeDemandsAction({ ID }));
   }
 
-  ngOnDestroy() {
+  edit(Type, ID) {
+    switch (Type) {
+      case 'Factoring':
+        this.router.navigate(['/demand/actions/factoring'], {
+          queryParams: {
+            ID: ID,
+          },
+        });
+        break;
+      case 'Question':
+        this.router.navigate(['/demand/actions/free-request'], {
+          queryParams: {
+            ID: ID,
+          },
+        });
+        break;
+    }
   }
+
+  ngOnDestroy() {}
 }

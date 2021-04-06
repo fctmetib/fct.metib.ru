@@ -3,6 +3,7 @@ import { DemandsStateInterface } from './../types/demandsState.interface';
 import { getDemandsAction, getDemandsSuccessAction, getDemandsFailureAction } from './actions/getDemands.action';
 import { createReducer, on, Action } from '@ngrx/store';
 import { routerNavigationAction } from '@ngrx/router-store';
+import { removeDemandsAction, removeDemandsFailureAction, removeDemandsSuccessAction } from './actions/removeDemands.action';
 
 
 const initialState: DemandsStateInterface = {
@@ -57,6 +58,28 @@ const demandsReducer = createReducer(
       ...state,
       isLoading: false,
       error: action.errors
+    })
+  ),
+  on(
+    removeDemandsAction,
+    (state): DemandsStateInterface => ({
+      ...state,
+      error: null,
+      isLoading: true,
+    })
+  ),
+  on(
+    removeDemandsSuccessAction,
+    (state, action): DemandsStateInterface => ({
+      ...state,
+      isLoading: false,
+    })
+  ),
+  on(
+    removeDemandsFailureAction,
+    (state, action): DemandsStateInterface => ({
+      ...state,
+      isLoading: false,
     })
   ),
   on(routerNavigationAction, (): DemandsStateInterface => initialState)

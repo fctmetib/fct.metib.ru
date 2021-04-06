@@ -157,8 +157,8 @@
           </div>
           <div class="p-field">
             <label for="accountDate">Дата накладной: </label>
-            <p-calendar id="accountDate" formControlName="accountDate" [maxDate]="maxDate"
-              placeholder="Дата накладной" [readonlyInput]="true"></p-calendar>
+            <p-calendar id="accountDate" formControlName="accountDate" [maxDate]="maxDate" placeholder="Дата накладной"
+              [readonlyInput]="true"></p-calendar>
             <div *ngIf="shipmentForm.controls['accountDate'].invalid">
               <small *ngIf="shipmentForm.controls['accountDate'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -176,8 +176,8 @@
           </div>
           <div class="p-field">
             <label for="invoiceDate">Дата счета-ф: </label>
-            <p-calendar id="invoiceDate" formControlName="invoiceDate" [maxDate]="maxDate"
-              placeholder="Дата счета-ф" [readonlyInput]="true"></p-calendar>
+            <p-calendar id="invoiceDate" formControlName="invoiceDate" [maxDate]="maxDate" placeholder="Дата счета-ф"
+              [readonlyInput]="true"></p-calendar>
             <div *ngIf="shipmentForm.controls['invoiceDate'].invalid">
               <small *ngIf="shipmentForm.controls['invoiceDate'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -187,8 +187,8 @@
 
           <div class="p-field">
             <label for="dateShipment">Дата поставки: </label>
-            <p-calendar id="dateShipment" formControlName="dateShipment" [maxDate]="maxDate"
-              placeholder="Дата поставки" [readonlyInput]="true"></p-calendar>
+            <p-calendar id="dateShipment" formControlName="dateShipment" [maxDate]="maxDate" placeholder="Дата поставки"
+              [readonlyInput]="true"></p-calendar>
             <div *ngIf="shipmentForm.controls['dateShipment'].invalid">
               <small *ngIf="shipmentForm.controls['dateShipment'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -216,6 +216,25 @@
 
         </ng-template> -->
     </p-dialog>
+
+    <p-dialog header="Header" [(visible)]="rowDataValidateDialog" [style]="{width: '50vw'}" [baseZIndex]="10000"
+      [modal]="true" [draggable]="false" [resizable]="false">
+      <p>Не удалось вставить накладные из буфера обмена!</p>
+      <p>Проверьте порядок колонок:</p>
+      <ul>
+        <li>Номер счета-фактуры</li>
+        <li>Дата счета-фактуры</li>
+        <li>Номер накладной</li>
+        <li>Дата накладной</li>
+        <li>Сумма накладной</li>
+        <li>Дата поставки</li>
+      </ul>
+      <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="rowDataValidateDialog=false" label="ОК" styleClass="p-button-text">
+        </p-button>
+      </ng-template>
+    </p-dialog>
+
   </p-tabPanel>
   <p-tabPanel header="Скан-копии накладных">
     <p-fileUpload chooseIcon="pi pi-paperclip" (onSelect)="onSelect($event, 'Scan')" customUpload="true" [auto]="true"

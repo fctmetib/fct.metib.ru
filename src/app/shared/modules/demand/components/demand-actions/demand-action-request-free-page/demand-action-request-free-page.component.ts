@@ -1,3 +1,4 @@
+import { ActivatedRoute, Params } from '@angular/router';
 import { DemandService } from './../../../services/demand.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -36,6 +37,7 @@ export class DemandActionRequestFreePageComponent implements OnInit {
     private demandService: DemandService,
     private commonService: CommonService,
     private fileService: FileService,
+    private route: ActivatedRoute,
     private store: Store
   ) {}
 
@@ -43,6 +45,14 @@ export class DemandActionRequestFreePageComponent implements OnInit {
     this.isUserVerified = this.authService.isUserVerified();
     this.initForm();
     this.initValues();
+
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['ID']) {
+        this.demandService.getDemandById(params['ID']).subscribe(resp => {
+          console.log(resp)
+        })
+      }
+    });
   }
 
   ngOnDestroy() {}

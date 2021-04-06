@@ -7,6 +7,10 @@
       </div>
     </div>
     <div class="actions">
+      <span class="p-input-icon-right mr-20">
+        <i class="pi pi-search"></i>
+        <input type="text" class="p-inputtext-lg" placeholder="Поиск" pInputText />
+      </span>
       <button pButton pRipple type="button" label="Вернуться к списку запросов" [routerLink]="['/demand']"
         class="p-button-outlined"></button>
     </div>
@@ -16,55 +20,66 @@
     <ng-container *ngIf="(demands$ | async); else skeletonDemandTemplate">
       <div class="demand-item" *ngFor="let demand of (demands$ | async)">
         <div class="demand-info">
-          <div class="demand-content">
-            <div class="text">
-              <p>
-                №{{demand.ID}}
-                <span [ngSwitch]="demand.Type">
-                  <span *ngSwitchCase="'Factoring'">
-                    Запрос на Факторинг
-                  </span>
-                  <span *ngSwitchCase="'DigitalSignature'">
-                    Запрос на ЭЦП
-                  </span>
-                  <span *ngSwitchCase="'ProfileChange'">
-                    Запрос на Редактирование Профиля
-                  </span>
-                  <span *ngSwitchDefault>
-                    Запрос на свободную тему
-                  </span>
-                </span>
-              </p>
+          <div class="demand-card">
+            <div class="demand-card-content">
+              <div class="demand-content">
+                <div class="text">
+                  <p>
+                    №{{demand.ID}}
+                    <span [ngSwitch]="demand.Type">
+                      <span *ngSwitchCase="'Factoring'">
+                        Запрос на Факторинг
+                      </span>
+                      <span *ngSwitchCase="'DigitalSignature'">
+                        Запрос на ЭЦП
+                      </span>
+                      <span *ngSwitchCase="'ProfileChange'">
+                        Запрос на Редактирование Профиля
+                      </span>
+                      <span *ngSwitchCase="'Question'">
+                        Запрос на свободную тему
+                      </span>
+                      <span *ngSwitchDefault>
+                        Запрос на свободную тему
+                      </span>
+                    </span>
+                  </p>
 
-            </div>
-            <div class="icon arrow_right"></div>
-          </div>
-          <div class="demand-status-info">
-            <div [ngSwitch]="demand.Status">
-              <div *ngSwitchCase="'Processing'">
-                <div class="demand-status default">
-                  В процессе
                 </div>
+                <div class="icon arrow_right"></div>
               </div>
-              <div *ngSwitchCase="'Completed'">
-                <div class="demand-status success">
-                  Завершен
+              <div class="demand-status-info">
+                <div [ngSwitch]="demand.Status">
+                  <div *ngSwitchCase="'Processing'">
+                    <div class="demand-status default">
+                      В процессе
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="'Completed'">
+                    <div class="demand-status success">
+                      Завершен
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="'Rejected'">
+                    <div class="demand-status warning">
+                      Отклонено
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="'Created'">
+                    <div class="demand-status default">
+                      Создан
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div *ngSwitchCase="'Rejected'">
-                <div class="demand-status warning">
-                  Отклонено
-                </div>
-              </div>
-              <div *ngSwitchCase="'Created'">
-                <div class="demand-status default">
-                  Создан
-                </div>
-              </div>
-            </div>
 
-            <div class="demand-status-date">
-              {{demand.DateModify | date:'dd.MM.yyyy'}}
+                <div class="demand-status-date">
+                  {{demand.DateModify | date:'dd.MM.yyyy'}}
+                </div>
+              </div>
+            </div>
+            <div class="demand-actions">
+              <button pButton pRipple type="button" label="Удалить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
+              <button pButton pRipple type="button" label="Редактировать" class="p-button-outlined mib-small" (click)="edit(demand.Type, demand.ID)" ></button>
             </div>
           </div>
         </div>
@@ -74,8 +89,7 @@
           </div>
           <div *ngIf="demand.Manager; else noManager">
             <div class="demand-manager-info">
-              {{demand.Manager.Email}} <br>
-              {{demand.Manager.Name}}
+              {{demand.Manager.Name}} ({{demand.Manager.Extension}})
             </div>
           </div>
           <ng-template #noManager>

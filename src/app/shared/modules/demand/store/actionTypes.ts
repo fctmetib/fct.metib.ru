@@ -6,4 +6,8 @@ export enum ActionTypes {
   CREATE_DEMAND_FACTORING = '[Demands] Create demand factoring',
   CREATE_DEMAND_FACTORING_SUCCESS = '[Demands] Create demand factoring success',
   CREATE_DEMAND_FACTORING_FAILURE = '[Demands] Create demand factoring failure',
+
+  REMOVE_DEMANDS = "[Demands] Remove demand",
+  REMOVE_DEMANDS_SUCCESS = '[Demands] Remove demand success',
+  REMOVE_DEMANDS_FAILURE = '[Demands] Remove demand failure',
 }

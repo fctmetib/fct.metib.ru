@@ -13,4 +13,3 @@ export const getDemandsSuccessAction = createAction(
 )
 
 export const getDemandsFailureAction = createAction(ActionTypes.GET_DEMANDS_FAILURE)
-

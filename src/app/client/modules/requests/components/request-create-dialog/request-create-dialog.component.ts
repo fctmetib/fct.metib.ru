@@ -54,6 +54,7 @@ export class RequestCreateDialogComponent {
   public selectedShipments: ClientShipmentInterface[] = [];
 
   public addDeliveryDialog: boolean;
+  public rowDataValidateDialog: boolean;
 
   private files: FileModeInterface[] = [];
   public uploadedFiles: File[] = [];
@@ -67,7 +68,6 @@ export class RequestCreateDialogComponent {
   public maxDate = new Date();
   //#endregion
 
-  private isSuccess: boolean = false;
 
   constructor(
     public ref: DynamicDialogRef,
@@ -82,11 +82,6 @@ export class RequestCreateDialogComponent {
   ngOnInit() {
     this.errorsMessage$ = this.store.pipe(select(crudErrorsSelector));
     this.successMessage$ = this.store.pipe(select(crudSuccessSelector));
-
-    this.successMessage$.subscribe((isSuccess) => {
-      this.isSuccess = true;
-    });
-
     this.initializeForm();
   }
 
@@ -291,6 +286,8 @@ export class RequestCreateDialogComponent {
   //#region private
 
   private addRowsFromClipboard(processedData) {
+    let isError: boolean = null;
+
     let columns = this.getColumns();
 
     for (const curentDataRow of processedData) {
@@ -299,23 +296,59 @@ export class RequestCreateDialogComponent {
         rowData[col.field] = curentDataRow[col.visibleIndex];
       }
 
-      let shipment: ClientShipmentInterface = {
-        AccountNumber: rowData.AccountNumber,
-        AccountDate: rowData.AccountDate,
-        InvoiceNumber: rowData.InvoiceNumber,
-        InvoiceDate: rowData.InvoiceDate,
-        WaybillNumber: null,
-        WaybillDate: null,
-        DateShipment: rowData.DateShipment,
-        DatePayment: null,
-        SummToFactor: null,
-        Summ: rowData.Summ,
-        ID: Math.floor(Math.random() * 100),
-      };
+      if (this.validateRowData(rowData)) {
+        let shipment: ClientShipmentInterface = {
+          AccountNumber: rowData.AccountNumber,
+          AccountDate: rowData.AccountDate,
+          InvoiceNumber: rowData.InvoiceNumber,
+          InvoiceDate: rowData.InvoiceDate,
+          WaybillNumber: null,
+          WaybillDate: null,
+          DateShipment: rowData.DateShipment,
+          DatePayment: null,
+          SummToFactor: null,
+          Summ: rowData.Summ,
+          ID: Math.floor(Math.random() * 100),
+        };
 
-      console.log(shipment);
-      this.shipments.push(shipment);
+        console.log(shipment);
+        this.shipments.push(shipment);
+      } else {
+        isError = true;
+      }
+
+      if(isError) {
+        this.showRowDataValidateMessage()
+      }
     }
+  }
+
+  private validateRowData(rowData): boolean {
+    console.log(rowData)
+
+    if(!rowData.AccountDate)
+    return false;
+
+    if(!rowData.AccountNumber)
+    return false;
+
+    if(!rowData.DateShipment)
+    return false;
+
+    if(!rowData.InvoiceDate)
+    return false;
+
+    if(!rowData.InvoiceNumber)
+    return false;
+
+    if(!rowData.Summ)
+    return false;
+
+    return true;
+  }
+
+  private showRowDataValidateMessage(): void {
+    this.rowDataValidateDialog = true;
   }
 
   private getColumns() {

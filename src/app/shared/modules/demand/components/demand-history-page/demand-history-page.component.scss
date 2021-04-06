@@ -7,11 +7,26 @@
 
   .demand-info {
     padding-left: 30px;
+    padding-right: 20px;
 
     border: 1px solid #D5D5D5;
     box-sizing: border-box;
     border-radius: 10px;
     width: 100%;
+
+    .demand-card {
+      display: flex;
+      justify-content: space-between;
+
+      .demand-actions {
+        display: flex;
+        flex-direction: column;
+
+        button {
+          margin-top: 10px;
+        }
+      }
+    }
 
     .demand-content {
       display: flex;
@@ -19,13 +34,13 @@
 
       font-weight: 500;
       font-size: 1.5rem;
-      margin-bottom: 10px;
       line-height: 1.75rem;
       color: $dark-blue;
 
       .text {
         p {
-        margin-bottom: 0px;
+          margin-bottom: 15px;
+          margin-top: 15px;
         }
       }
 
