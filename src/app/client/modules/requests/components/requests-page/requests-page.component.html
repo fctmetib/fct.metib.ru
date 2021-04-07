@@ -8,161 +8,185 @@
   </p-toolbar>
   <div class="responsive-table">
     <p-table [value]="(requests$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
-    [rowsPerPageOptions]="[10,25,50]" [(selection)]="selectedItems" dataKey="ID"
-    styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
-    (sortFunction)="customSort($event)" [customSort]="true"
-    currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">
-    <!-- -->
-    <ng-template pTemplate="header">
-      <tr>
-        <th style="width: 3rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
-        <th pSortableColumn="ID">
-          <div class="m-th">
-            ID
-            <p-sortIcon field="ID"></p-sortIcon>
-          </div>
-        </th>
-        <th>
-          <div class="m-th">
-            Договор
-          </div>
-        </th>
-        <th pSortableColumn="Number">
-          <div class="m-th">
-            Номер
-            <p-sortIcon field="Number"></p-sortIcon>
-          </div>
-        </th>
-        <th pSortableColumn="Date">
-          <div class="m-th">
-            Дата
-            <p-sortIcon field="Date"></p-sortIcon>
-          </div>
-        </th>
-        <th pSortableColumn="Type">
-          <div class="m-th">
-            Тип
-            <p-sortIcon field="Type"></p-sortIcon>
-          </div>
-        </th>
-        <!-- <th pSortableColumn="Date">
+      [rowsPerPageOptions]="[10,25,50]" [(selection)]="selectedItems" dataKey="ID"
+      styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
+      (sortFunction)="customSort($event)" [customSort]="true"
+      currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">
+      <!-- -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="ID">
+            <div class="m-th">
+              <div>
+                ID
+                <p-sortIcon field="ID"></p-sortIcon>
+              </div>
+
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Договор</div>
+
+            </div>
+          </th>
+          <th pSortableColumn="Number">
+            <div class="m-th">
+              <div>Номер
+                <p-sortIcon field="Number"></p-sortIcon>
+              </div>
+
+            </div>
+          </th>
+          <th pSortableColumn="Date">
+            <div class="m-th">
+              <div>Дата
+                <p-sortIcon field="Date"></p-sortIcon>
+              </div>
+
+            </div>
+          </th>
+          <th pSortableColumn="Type">
+            <div class="m-th">
+              <div>Тип
+                <p-sortIcon field="Type"></p-sortIcon>
+              </div>
+
+            </div>
+          </th>
+          <!-- <th pSortableColumn="Date">
           <div class="m-th">
             Дата Отправки
             <p-sortIcon field="Date"></p-sortIcon>
           </div>
         </th> -->
-        <th pSortableColumn="Status">
-          <div class="m-th">
-            Состояние
-            <p-sortIcon field="Status"></p-sortIcon>
-          </div>
-        </th>
-        <th>
-          <div class="m-th">
-            Покупатель
-          </div>
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-request>
-      <tr [pSelectableRow]="request">
-        <td>
-          <p-tableCheckbox [value]="request"></p-tableCheckbox>
-        </td>
-        <td>
-          <div class="m-td">
-            {{request.ID}}
-          </div>
-        </td>
-        <td>
-          <div class="m-td">{{request.Delivery.Title}}</div>
-        </td>
-        <td>
-          <div class="m-td"> {{request.Number}}</div>
-        </td>
-        <td>
-          <div class="m-td"> {{request.Date | date: 'dd.MM.yyyy'}}</div>
-        </td>
-        <td>
-          <div class="m-td">
-            <!-- TODO:: rework it on PIPE -->
-            <div [ngSwitch]="request.Type">
-              <div *ngSwitchCase="'Financing'">
-                С финансированием
+          <th pSortableColumn="Status">
+            <div class="m-th">
+              <div>Состояние
+                <p-sortIcon field="Status"></p-sortIcon>
               </div>
-              <div *ngSwitchCase="'NonFinancing'">
-                Без финансирования
-              </div>
+
             </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Покупатель</div>
+
             </div>
-        </td>
-        <!-- <td>
-          <div class="m-td"> {{request.Date | date: 'dd.MM.yyyy'}}</div>
-        </td> -->
-        <td>
-          <div class="m-td"> {{request.Status}}</div>
-        </td>
-        <td>
-          <div class="m-td"> {{request.Delivery.Debtor}}</div>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-      <ng-container *ngIf="(requests$ | async); else skeletonRequestsTemplate">
-        <tr>
-          <td colspan="8">Нет данных.</td>
+          </th>
         </tr>
-      </ng-container>
-      <ng-template #skeletonRequestsTemplate>
-        <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
+      </ng-template>
+      <ng-template pTemplate="body" let-request>
+        <tr [pSelectableRow]="request">
           <td>
+            <p-tableCheckbox [value]="request"></p-tableCheckbox>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>{{request.ID}}</div>
+
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>{{request.Delivery.Title}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div> {{request.Number}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>{{request.Date | date: 'dd.MM.yyyy'}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <!-- TODO:: rework it on PIPE -->
+              <div [ngSwitch]="request.Type">
+                <div *ngSwitchCase="'Financing'">
+                  С финансированием
+                </div>
+                <div *ngSwitchCase="'NonFinancing'">
+                  Без финансирования
+                </div>
+              </div>
             </div>
           </td>
           <!-- <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td> -->
+          <div class="m-td"> {{request.Date | date: 'dd.MM.yyyy'}}</div>
+        </td> -->
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>{{request.Status}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>{{request.Delivery.Debtor}}</div>
             </div>
           </td>
         </tr>
       </ng-template>
-    </ng-template>
-  </p-table>
+      <ng-template pTemplate="emptymessage">
+        <ng-container *ngIf="(requests$ | async); else skeletonRequestsTemplate">
+          <tr>
+            <td colspan="8">Нет данных.</td>
+          </tr>
+        </ng-container>
+        <ng-template #skeletonRequestsTemplate>
+          <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
+            <td>
+            </td>
+            <td>
+              <div class="m-td">
+                <p-skeleton></p-skeleton>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <p-skeleton></p-skeleton>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <p-skeleton></p-skeleton>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <p-skeleton></p-skeleton>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <p-skeleton></p-skeleton>
+              </div>
+            </td>
+            <!-- <td>
+            <div class="m-td">
+              <p-skeleton></p-skeleton>
+            </div>
+          </td> -->
+            <td>
+              <div class="m-td">
+                <p-skeleton></p-skeleton>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <p-skeleton></p-skeleton>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </ng-template>
+    </p-table>
   </div>
 </div>
 

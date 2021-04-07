@@ -76,37 +76,37 @@
             </th>
             <th>
               <div class="m-th">
-                ID
+                <div>ID</div>
               </div>
             </th>
             <th>
               <div class="m-th">
-                Накладная
+                <div>Накладная</div>
               </div>
             </th>
             <th>
               <div class="m-th">
-                Дата накладной
+                <div>Дата накладной</div>
               </div>
             </th>
             <th>
               <div class="m-th">
-                Счёт-фактура
+                <div>Счёт-фактура</div>
               </div>
             </th>
             <th>
               <div class="m-th">
-                Дата счёт-фактуры
+                <div>Дата счёт-фактуры</div>
               </div>
             </th>
             <th>
               <div class="m-th">
-                Дата поставки
+                <div>Дата поставки</div>
               </div>
             </th>
             <th>
               <div class="m-th">
-                Сумма
+                <div>Сумма</div>
               </div>
             </th>
           </tr>
@@ -117,25 +117,39 @@
               <p-tableCheckbox [value]="shipment"></p-tableCheckbox>
             </td>
             <td>
-              <div class="m-td">{{shipment.ID}}</div>
+              <div class="m-td">
+                <div>{{shipment.ID}}</div>
+              </div>
             </td>
             <td>
-              <div class="m-td">{{shipment.AccountNumber}}</div>
+              <div class="m-td">
+                <div>{{shipment.AccountNumber}}</div>
+              </div>
             </td>
             <td>
-              <div class="m-td">{{shipment.AccountDate | date:'dd/MM/yyyy'}}</div>
+              <div class="m-td">
+                <div>{{shipment.AccountDate | date:'dd/MM/yyyy'}}</div>
+              </div>
             </td>
             <td>
-              <div class="m-td">{{shipment.InvoiceNumber}}</div>
+              <div class="m-td">
+                <div>{{shipment.InvoiceNumber}}</div>
+              </div>
             </td>
             <td>
-              <div class="m-td">{{shipment.InvoiceDate | date:'dd/MM/yyyy'}}</div>
+              <div class="m-td">
+                <div>{{shipment.InvoiceDate | date:'dd/MM/yyyy'}}</div>
+              </div>
             </td>
             <td>
-              <div class="m-td">{{shipment.DateShipment | date:'dd/MM/yyyy'}}</div>
+              <div class="m-td">
+                <div>{{shipment.DateShipment | date:'dd/MM/yyyy'}}</div>
+              </div>
             </td>
             <td>
-              <div class="m-td">{{shipment.Summ | currency:'RUB':'symbol'}}</div>
+              <div class="m-td">
+                <div>{{shipment.Summ | currency:'RUB':'symbol'}}</div>
+              </div>
             </td>
           </tr>
         </ng-template>

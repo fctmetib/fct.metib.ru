@@ -21,42 +21,42 @@
         </th>
         <th>
           <div class="m-th">
-            ID задолженности
+            <div>ID задолженности</div>
           </div>
         </th>
         <th>
           <div class="m-th">
-            Накладная №
+            <div>Накладная №</div>
           </div>
         </th>
         <th>
           <div class="m-th">
-            Дата накладной
+            <div>Дата накладной</div>
           </div>
         </th>
         <th>
           <div class="m-th">
-            Дата платежа
+            <div>Дата платежа</div>
           </div>
         </th>
         <th>
           <div class="m-th">
-            Сумма остатка задолж.
+            <div>Сумма остатка задолж.</div>
           </div>
         </th>
         <th>
           <div class="m-th">
-            Договор
+            <div>Договор</div>
           </div>
         </th>
         <th>
           <div class="m-th">
-            Дебитор
+            <div>Дебитор</div>
           </div>
         </th>
         <th>
           <div class="m-th">
-            Комментарий
+            <div>Комментарий</div>
           </div>
         </th>
       </tr>
@@ -69,38 +69,54 @@
         </td>
         <td>
           <div class="m-td">
-            {{item.ID}}
+            <div>
+              {{item.ID}}
+            </div>
           </div>
         </td>
         <td>
-          <div class="m-td">{{item.Number}}</div>
+          <div class="m-td">
+            <div>{{item.Number}}</div>
+          </div>
         </td>
         <td>
-          <div class="m-td"> {{item.DateDuty | date: 'dd.MM.yyyy'}}</div>
+          <div class="m-td">
+            <div>{{item.DateDuty | date: 'dd.MM.yyyy'}}</div>
+          </div>
         </td>
         <td>
-          <div class="m-td"> {{item.DatePayment | date: 'dd.MM.yyyy'}}</div>
+          <div class="m-td">
+            <div>{{item.DatePayment | date: 'dd.MM.yyyy'}}</div>
+          </div>
         </td>
         <td>
-          <div class="m-td"> {{item.Summ | currency: 'RUB'}}</div>
+          <div class="m-td">
+            <div>{{item.Summ | currency: 'RUB'}}</div>
+          </div>
         </td>
         <td>
-          <div class="m-td"> {{item.Contract.Title}} </div>
+          <div class="m-td">
+            <div>{{item.Contract.Title}}</div>
+          </div>
         </td>
         <td>
-          <div class="m-td"> {{item.Contract.Client}} </div>
+          <div class="m-td">
+            <div>{{item.Contract.Client}}</div>
+          </div>
         </td>
         <td>
-          <div class="m-td"> {{item.Statistics.Comment}} </div>
+          <div class="m-td">
+            <div>{{item.Statistics.Comment}}</div>
+          </div>
         </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="footer">
       <tr>
-          <td colspan="5" class="p-text-right"></td>
-          <td>{{getFreedutySum((freeduty$ | async)) | currency:'RUB':'symbol' }}</td>
+        <td colspan="5" class="p-text-right"></td>
+        <td>{{getFreedutySum((freeduty$ | async)) | currency:'RUB':'symbol' }}</td>
       </tr>
-  </ng-template>
+    </ng-template>
     <ng-template pTemplate="emptymessage">
       <ng-container *ngIf="(freeduty$ | async); else skeletonFreedutyTemplate">
         <tr>
@@ -280,21 +296,21 @@
         <tr>
           <th style="width: 3rem"></th>
           <th class="header-width">
-            <div class="m-th">Договор / Заявка / Накладная</div>
+            <div class="m-th"> <div>Договор / Заявка / Накладная</div></div>
           </th>
           <th class="header-width">
-            <div class="m-th">ID задолженности</div>
+            <div class="m-th"> <div>ID задолженности</div></div>
           </th>
           <th class="header-width">
-            <div class="m-th">Дата задолженности</div>
+            <div class="m-th"> <div>Дата задолженности</div></div>
           </th>
           <th class="header-width">
-            <div class="m-th">Сумма</div>
+            <div class="m-th"> <div>Сумма</div></div>
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-item let-expanded="expanded">
-        <tr >
+        <tr>
           <td>
             <button type="button" pButton pRipple [pRowToggler]="item"
               class="p-button-text p-button-rounded p-button-plain"
@@ -302,10 +318,8 @@
           </td>
           <td>
             <div class="m-td">
-              {{item.contract}}</div>
-          </td>
-          <td>
-            <div class="m-td">
+              <div>
+                {{item.contract}}</div>
             </div>
           </td>
           <td>
@@ -314,7 +328,13 @@
           </td>
           <td>
             <div class="m-td">
-              Итог - Контракт: {{item.summ | currency:'RUB'}}
+            </div>
+          </td>
+          <td>
+            <div>
+              <div class="m-td">
+                Итог - Контракт: {{item.summ | currency:'RUB'}}
+              </div>
             </div>
           </td>
         </tr>
@@ -341,10 +361,8 @@
               [icon]="expandedCategory ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
           <td>
-            <div class="m-td">{{category.categoryName}}</div>
-          </td>
-          <td>
             <div class="m-td">
+              <div>{{category.categoryName}}</div>
             </div>
           </td>
           <td>
@@ -352,7 +370,13 @@
             </div>
           </td>
           <td>
-            <div class="m-td">{{category.summ | currency:'RUB'}}</div>
+            <div class="m-td">
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>{{category.summ | currency:'RUB'}}</div>
+            </div>
           </td>
         </tr>
       </ng-template>
@@ -374,20 +398,26 @@
         <tr>
           <td></td>
           <td>
-            <div class="m-td">{{request.id}}</div>
-          </td>
-          <td>
             <div class="m-td">
-              {{request.number}}
+              <div>{{request.id}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              {{request.date | date:'MM.dd.yyyy'}}
+              <div>{{request.number}}</div>
+
             </div>
           </td>
           <td>
-            <div class="m-td">{{request.summ | currency:'RUB'}}</div>
+            <div class="m-td">
+              <div>{{request.date | date:'MM.dd.yyyy'}}</div>
+
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>{{request.summ | currency:'RUB'}}</div>
+            </div>
           </td>
         </tr>
       </ng-template>
