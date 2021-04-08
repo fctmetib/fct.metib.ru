@@ -32,6 +32,7 @@ import { DutyService } from 'src/app/shared/services/share/duty.service';
 import { FreedutyPageComponent } from './components/freeduty-page/freeduty-page.component';
 import { GetFreedutyEffect } from './store/effects/getFreeduty.effect';
 import { reducers } from './store/reducers';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { reducers } from './store/reducers';
     TableModule,
     DropdownModule,
     FormsModule,
+    TooltipModule,
     ProgressBarModule,
     ToolbarModule,
     MultiSelectModule,

@@ -66,8 +66,10 @@ export class RequestCreateDialogComponent {
   //#region shipment
   public currentShipmentID = null;
   public maxDate = new Date();
-  //#endregion
 
+  public errorsShipments: number[] = [];
+  public lengthShipments: number = 0;
+  //#endregion
 
   constructor(
     public ref: DynamicDialogRef,
@@ -188,11 +190,17 @@ export class RequestCreateDialogComponent {
     }
   }
 
+  getShipmentsSum(items: ClientShipmentInterface[]) {
+    if(items) {
+    return items.reduce((sum, current) =>
+      sum + current.Summ, 0
+    )
+    }
+  }
+
   openNew(isEdit: boolean) {
     if (isEdit) {
       let shipment = this.selectedShipments[0];
-
-      console.log('GG', shipment);
 
       if (shipment) {
         this.currentShipmentID = shipment.ID;
@@ -286,9 +294,14 @@ export class RequestCreateDialogComponent {
   //#region private
 
   private addRowsFromClipboard(processedData) {
+    this.lengthShipments = 0;
+    this.errorsShipments = [];
+
     let isError: boolean = null;
+    let currentRowIndex: number = 1;
 
     let columns = this.getColumns();
+
 
     for (const curentDataRow of processedData) {
       const rowData: any = {};
@@ -314,35 +327,29 @@ export class RequestCreateDialogComponent {
         console.log(shipment);
         this.shipments.push(shipment);
       } else {
+        this.errorsShipments.push(currentRowIndex);
         isError = true;
       }
-
-      if(isError) {
-        this.showRowDataValidateMessage()
-      }
+      currentRowIndex++;
+    }
+    if (isError) {
+      this.lengthShipments = processedData.length;
+      this.showRowDataValidateMessage();
     }
   }
 
   private validateRowData(rowData): boolean {
-    console.log(rowData)
+    if (!rowData.AccountDate) return false;
 
-    if(!rowData.AccountDate)
-    return false;
+    if (!rowData.AccountNumber) return false;
 
-    if(!rowData.AccountNumber)
-    return false;
+    if (!rowData.DateShipment) return false;
 
-    if(!rowData.DateShipment)
-    return false;
+    if (!rowData.InvoiceDate) return false;
 
-    if(!rowData.InvoiceDate)
-    return false;
+    if (!rowData.InvoiceNumber) return false;
 
-    if(!rowData.InvoiceNumber)
-    return false;
-
-    if(!rowData.Summ)
-    return false;
+    if (!rowData.Summ) return false;
 
     return true;
   }

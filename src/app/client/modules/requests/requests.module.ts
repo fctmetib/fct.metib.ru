@@ -20,6 +20,8 @@ import { SliderModule } from 'primeng/slider';
 import { TabViewModule } from 'primeng/tabview';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CalendarModule } from 'primeng/calendar';
+import { TooltipModule } from 'primeng/tooltip';
+import { AccordionModule } from 'primeng/accordion';
 
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -53,8 +55,10 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
     FileUploadModule,
     SkeletonModule,
     SliderModule,
+    AccordionModule,
     TableModule,
     DropdownModule,
+    TooltipModule,
     FormsModule,
     ProgressBarModule,
     ToolbarModule,

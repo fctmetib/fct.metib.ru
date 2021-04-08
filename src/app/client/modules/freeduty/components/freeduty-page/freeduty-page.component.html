@@ -20,7 +20,7 @@
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
         <th>
-          <div class="m-th">
+          <div class="m-th" tooltipPosition="bottom" pTooltip="ID задолженности">
             <div>ID задолженности</div>
           </div>
         </th>
@@ -30,7 +30,7 @@
           </div>
         </th>
         <th>
-          <div class="m-th">
+          <div class="m-th" tooltipPosition="bottom" pTooltip="Дата накладной" >
             <div>Дата накладной</div>
           </div>
         </th>
@@ -40,7 +40,7 @@
           </div>
         </th>
         <th>
-          <div class="m-th">
+          <div class="m-th" tooltipPosition="bottom" pTooltip="Сумма остатка задолженности">
             <div>Сумма остатка задолж.</div>
           </div>
         </th>
@@ -90,17 +90,17 @@
           </div>
         </td>
         <td>
-          <div class="m-td">
+          <div class="m-td" tooltipPosition="bottom" pTooltip="{{item.Summ | currency: 'RUB'}}">
             <div>{{item.Summ | currency: 'RUB'}}</div>
           </div>
         </td>
         <td>
-          <div class="m-td">
+          <div class="m-td" tooltipPosition="bottom" pTooltip="{{item.Contract.Title}}">
             <div>{{item.Contract.Title}}</div>
           </div>
         </td>
         <td>
-          <div class="m-td">
+          <div class="m-td" tooltipPosition="bottom" pTooltip="{{item.Contract.Client}}">
             <div>{{item.Contract.Client}}</div>
           </div>
         </td>

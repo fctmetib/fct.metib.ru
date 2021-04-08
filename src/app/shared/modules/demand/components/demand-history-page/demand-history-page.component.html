@@ -77,8 +77,15 @@
                 </div>
               </div>
             </div>
-            <div class="demand-actions">
-              <button pButton pRipple type="button" label="Удалить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
+            <div class="demand-actions" *ngIf="demand.Status !== 'Completed'">
+              <ng-container *ngIf="demand.Type; else removeTemplate">
+                <button pButton pRipple type="button" label="Отменить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
+              </ng-container>
+              <ng-template #removeTemplate>
+                <button pButton pRipple type="button" label="Удалить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
+              </ng-template>
+
+
               <button pButton pRipple type="button" label="Редактировать" class="p-button-outlined mib-small" (click)="edit(demand.Type, demand.ID)" ></button>
             </div>
           </div>
