@@ -43,6 +43,8 @@ import { FileService } from '../../services/common/file.service';
 import { CreateDemandFactoringEffect } from './store/effects/createDemand.effect';
 import { InputMaskModule } from 'primeng/inputmask';
 import { RemoveDemandsEffect } from './store/effects/removeDemands.effect';
+import { CryptoProService } from '../../services/common/cryprto-pro.service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   imports: [
@@ -51,6 +53,7 @@ import { RemoveDemandsEffect } from './store/effects/removeDemands.effect';
     CheckboxModule,
     ButtonModule,
     FileUploadModule,
+    ProgressSpinnerModule,
     RadioButtonModule,
     InputTextareaModule,
     SliderModule,
@@ -58,7 +61,11 @@ import { RemoveDemandsEffect } from './store/effects/removeDemands.effect';
     SkeletonModule,
     DropdownModule,
     FormsModule,
-    EffectsModule.forFeature([GetDemandsEffect, CreateDemandFactoringEffect, RemoveDemandsEffect]),
+    EffectsModule.forFeature([
+      GetDemandsEffect,
+      CreateDemandFactoringEffect,
+      RemoveDemandsEffect,
+    ]),
     StoreModule.forFeature('demands', reducers),
     ProgressBarModule,
     MultiSelectModule,
@@ -89,7 +96,9 @@ import { RemoveDemandsEffect } from './store/effects/removeDemands.effect';
   providers: [
     CurrencyPipe,
     DemandService,
+    CryptoProService,
     CommonService,
-    FileService],
+    FileService,
+  ],
 })
 export class DemandModule {}
