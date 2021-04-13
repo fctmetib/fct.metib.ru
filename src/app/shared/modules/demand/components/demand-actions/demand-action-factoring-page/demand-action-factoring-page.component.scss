@@ -16,29 +16,6 @@
   width: 100px !important;
 }
 
-
-
-:host ::ng-deep .mib-upload {
-  height: 100% !important;
-  width: 180px !important;
-  background: transparent !important;
-  border-radius: 10px;
-  color: #102538;
-
-  .pi {
-    color: #0C83F1;
-  }
-}
-
-:host ::ng-deep .mib-upload:hover {
-  background: #0C83F1 !important;
-  color: #fff;
-
-  .pi {
-    color: #fff;
-  }
-}
-
 :host ::ng-deep  .p-fileupload.p-fileupload-basic.p-component {
   height: 100% !important;
 }

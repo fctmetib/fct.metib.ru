@@ -176,13 +176,18 @@ export class DemandActionFactoringPageComponent implements OnInit {
     this.currentAddressFormId = null;
   }
 
+  onBasicUploadAuto() {
+  }
+
   onSelect(event, type: string) {
-    let files: File[] = event.files;
+    console.log('GG')
+    let files: File[] = event.target.files;
 
     for (let file of files) {
       let guid = Guid.newGuid();
 
       this.commonService.getBase64(file).subscribe((res) => {
+
         this.fileService
           .uploadFileChunks(res, file.name, file.size.toString(), guid)
           .subscribe(
@@ -209,6 +214,10 @@ export class DemandActionFactoringPageComponent implements OnInit {
         RegionTitle: regionTitle,
       });
     }
+  }
+
+  removeFile(file: FileModeInterface) {
+
   }
 
   onTypeChanged(value) {
