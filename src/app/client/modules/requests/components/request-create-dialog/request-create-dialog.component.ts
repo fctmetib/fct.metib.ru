@@ -56,7 +56,7 @@ export class RequestCreateDialogComponent {
   public addDeliveryDialog: boolean;
   public rowDataValidateDialog: boolean;
 
-  private files: FileModeInterface[] = [];
+  public files: FileModeInterface[] = [];
   public uploadedFiles: File[] = [];
 
   //#region dynamic variables
@@ -127,8 +127,6 @@ export class RequestCreateDialogComponent {
         this.shipments = selectedRow.Shipments;
       }
 
-      console.log('GG', selectedRow);
-
       this.form.patchValue({
         deliveryID: selectedRow.Delivery.ID,
         number: selectedRow.Number,
@@ -142,14 +140,10 @@ export class RequestCreateDialogComponent {
 
   onSubmit(): void {
     if (this.shipments.length > 0) {
-      let selectedDelivery = this.deliveries.find(
-        (x) => x.ID === this.form.value.deliveryID
-      );
-
       const request: ClientRequestInterface = {
         Date: new Date(this.form.value.date),
         DeliveryID: this.form.value.deliveryID,
-        Files: [],
+        Files: this.files,
         Number: this.form.value.number,
         Shipments: this.shipments,
         Type: this.form.value.type,
@@ -164,7 +158,6 @@ export class RequestCreateDialogComponent {
   }
 
   onDeliveryChange(event): void {
-    console.log(event.value);
     let delivery: DeliveryInterface = this.deliveries.find(
       (x) => x.ID === event.value
     );
@@ -263,8 +256,12 @@ export class RequestCreateDialogComponent {
   //#endregion
 
   //#region files
+  removeFile(file: FileModeInterface) {
+    this.files.splice(this.files.indexOf(this.files.find(x => x === file)), 1);
+  }
+
   onSelect(event, type: string) {
-    let files: File[] = event.files;
+    let files: File[] = event.target.files;;
     this.uploadedFiles = files;
 
     for (let file of files) {
@@ -275,7 +272,6 @@ export class RequestCreateDialogComponent {
           .uploadFileChunks(res, file.name, file.size.toString(), guid)
           .subscribe(
             (res) => {
-              console.log(res);
               this.files.push({
                 Code: res.Code,
                 FileName: res.FileName,
@@ -283,6 +279,7 @@ export class RequestCreateDialogComponent {
                 Size: res.Size,
                 Identifier: type,
               });
+              console.log(this.files);
             },
             (err) => console.log(err)
           );

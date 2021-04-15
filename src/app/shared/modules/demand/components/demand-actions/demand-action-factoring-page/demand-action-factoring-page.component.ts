@@ -180,7 +180,6 @@ export class DemandActionFactoringPageComponent implements OnInit {
   }
 
   onSelect(event, type: string) {
-    console.log('GG')
     let files: File[] = event.target.files;
 
     for (let file of files) {
@@ -217,7 +216,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
   }
 
   removeFile(file: FileModeInterface) {
-
+    this.files.splice(this.files.indexOf(this.files.find(x => x === file)), 1);
   }
 
   onTypeChanged(value) {
