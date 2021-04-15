@@ -26,6 +26,17 @@ export class FileService {
     return this.http.post<FileModeInterface>(url, file, { headers });
   }
 
+  uploadAvatar(file: Uint8Array[], fileName: string, fileSize: string, guid: string): Observable<FileModeInterface> {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Upload-ChunkNumber', '1');
+    headers = headers.append('Upload-FileName', fileName);
+    headers = headers.append('Upload-GUID', guid);
+    headers = headers.append('Upload-TotalSize', fileSize);
+
+    let url = `${environment.apiFileUploadUrl}/avatar`;
+    return this.http.post<FileModeInterface>(url, file, { headers });
+  }
+
   getFileByCode(code: string): Observable<FileModeInterface> {
     let url = `${environment.apiUrl}/file/${code}`;
     return this.http.get<FileModeInterface>(url);

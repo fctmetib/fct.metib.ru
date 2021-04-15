@@ -69,8 +69,13 @@ export class DemandActionRequestFreePageComponent implements OnInit {
     // this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
+  removeFile(file: FileModeInterface) {
+    this.files.splice(this.files.indexOf(this.files.find(x => x === file)), 1);
+  }
+
+
   onSelect(event, type: string) {
-    let files: File[] = event.files;
+    let files: File[] = event.target.files;
 
     for (let file of files) {
       let guid = Guid.newGuid();

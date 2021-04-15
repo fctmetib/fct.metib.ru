@@ -107,17 +107,33 @@
         <label>
           Прикрепите необходимые файлы
         </label>
-        <div class="addon-button">
+        <div class="addon-button mb-20">
           <div class="addon-text">
             <p>
               Скан-Копия свидетельства ИНН
               организации
             </p>
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'inn')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
-          </p-fileUpload>
-
+          <div class="mib-uploader">
+            <input type="file" id="Inn" (change)="onSelect($event, 'Inn')" multiple="true" hidden />
+            <label for="Inn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'Inn'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
         </div>
 
       </div>
@@ -125,17 +141,33 @@
         <label>
           &nbsp;
         </label>
-        <div class="addon-button">
+        <div class="addon-button mb-20">
           <div class="addon-text">
             <p>
               Скан-Копия свидетельства ОГРН
               организации
             </p>
-
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'ogrn')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
-          </p-fileUpload>
+          <div class="mib-uploader">
+            <input type="file" id="Ogrn" (change)="onSelect($event, 'Ogrn')" multiple="true" hidden />
+            <label for="Ogrn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'Ogrn'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
         </div>
       </div>
 
@@ -203,34 +235,66 @@
         <label>
           Прикрепите необходимые файлы
         </label>
-        <div class="addon-button">
+        <div class="addon-button mb-20">
           <div class="addon-text">
             <p>
               Скан-Копия СНИЛС владельца
               ключа подписи
             </p>
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'snils')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
-          </p-fileUpload>
+          <div class="mib-uploader">
+            <input type="file" id="Snils" (change)="onSelect($event, 'Snils')" multiple="true" hidden />
+            <label for="Snils" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
+          </div>
         </div>
-
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'Snils'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
       </div>
       <div class="p-field p-col-12 p-md-6">
         <label>
           &nbsp;
         </label>
-        <div class="addon-button">
+        <div class="addon-button mb-20">
           <div class="addon-text">
             <p>
               Скан-Копия приказа о назначении на
               должность Генерального директора
             </p>
-
           </div>
-          <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'director')" customUpload="true"
-            mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
-          </p-fileUpload>
+          <div class="mib-uploader">
+            <input type="file" id="Director" (change)="onSelect($event, 'Director')" multiple="true" hidden />
+            <label for="Director" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'Director'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
         </div>
       </div>
 
@@ -247,20 +311,34 @@
             <h1>Паспортные данные владельца сертификата</h1>
             <p class="description">Заполните паспортные данные</p>
           </div>
-
-          <div class="addon-button">
+          <div class="addon-button mb-20">
             <div class="addon-text">
               <p>
                 Скан-копия паспорта
                 владельца ключа подписи
               </p>
-
             </div>
-            <p-fileUpload chooseIcon="pi pi-paperclip" (onUpload)="onUpload($event, 'passport')" customUpload="true"
-              mode="basic" styleClass="mib-upload" accept="image/*" maxFileSize="1000000" chooseLabel="Выбрать файл">
-            </p-fileUpload>
+            <div class="mib-uploader">
+              <input type="file" id="Passport" (change)="onSelect($event, 'Passport')" multiple="true" hidden />
+              <label for="Passport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
+            </div>
           </div>
-
+          <div *ngIf="files.length">
+            <ng-container *ngFor="let file of files">
+              <div class="addon-button mb-10" *ngIf="file.Identifier === 'Passport'">
+                <div class="addon-text">
+                  <p>
+                    {{file.FileName}}
+                  </p>
+                </div>
+                <div class="mib-uploader">
+                  <div class="mib-upload-warn" (click)="removeFile(file)">
+                    Удалить
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
         </div>
       </div>
 

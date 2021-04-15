@@ -1,3 +1,4 @@
+import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { FileModeInterface } from './../../../../../types/file/file-model.interface';
 import { PersonInterface } from 'src/app/shared/types/common/person.interface';
 import { PassportInterface } from './../../../../../types/user/passport.interface';
@@ -10,6 +11,8 @@ import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-
 import { OrganizationInterface } from 'src/app/shared/types/organization/organization.interface';
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
+import { CommonService } from 'src/app/shared/services/common/common.service';
+import { FileService } from 'src/app/shared/services/common/file.service';
 
 @Component({
   selector: 'app-demand-action-eds-page',
@@ -60,6 +63,8 @@ export class DemandActionEDSPageComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
+    private commonService: CommonService,
+    private fileService: FileService,
     private demandService: DemandService
   ) {}
 
@@ -107,8 +112,6 @@ export class DemandActionEDSPageComponent implements OnInit {
       passportCode: ['', [Validators.required]],
     });
   }
-
-  onUpload($event: Event, type: string) {}
 
   onSubmit() {
     console.log(this.formEDS.value);
@@ -177,4 +180,36 @@ export class DemandActionEDSPageComponent implements OnInit {
     };
     this.demandService.add(data).subscribe((resp) => {});
   }
+
+  onSelect(event, type: string) {
+    let files: File[] = event.target.files;
+
+    for (let file of files) {
+      let guid = Guid.newGuid();
+
+      this.commonService.getBase64(file).subscribe((res) => {
+
+        this.fileService
+          .uploadFileChunks(res, file.name, file.size.toString(), guid)
+          .subscribe(
+            (res) => {
+              console.log(res);
+              this.files.push({
+                Code: res.Code,
+                FileName: res.FileName,
+                ID: res.ID,
+                Size: res.Size,
+                Identifier: type,
+              });
+            },
+            (err) => console.log(err)
+          );
+      });
+    }
+  }
+
+  removeFile(file: FileModeInterface) {
+    this.files.splice(this.files.indexOf(this.files.find(x => x === file)), 1);
+  }
+
 }

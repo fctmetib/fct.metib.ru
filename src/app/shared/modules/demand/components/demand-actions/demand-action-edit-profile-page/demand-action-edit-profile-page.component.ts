@@ -28,6 +28,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   public isLoading$: Observable<boolean> = new Observable<boolean>();
   public backendErrors$: Observable<string | null>;
 
+  public avatarSource: string = '/assets/images/mib_ava.png';
   public formEdit: FormGroup;
 
   public files: FileModeInterface[] = [];
@@ -56,15 +57,18 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   onSubmit() {
     let data: SaveDemandRequestInterface<any> = this.prepareData();
 
-    this.demandService.add(data).subscribe(resp => {
+    this.demandService.add(data).subscribe((resp) => {
       this.alert = true;
-      this.alertMessage = "Запрос успешно создан."
+      this.alertMessage = 'Запрос успешно создан.';
     });
+  }
 
-    // this.store.dispatch(createDemandFactoringAction({ data }));
+  removeFile(file: FileModeInterface) {
+    this.files.splice(this.files.indexOf(this.files.find(x => x === file)), 1);
   }
 
   //#region private logic
+  //TODO: Get login
   private prepareData(): any {
     let result: SaveDemandRequestInterface<any> = {
       Data: {
@@ -75,19 +79,19 @@ export class DemandActionEditProfilePageComponent implements OnInit {
           IsForeign: false,
           IssuerCode: this.formEdit.value.issuerCode,
           IssuerTitle: this.formEdit.value.issuerTitle,
-          Nationality: "RUS",
+          Nationality: 'RUS',
           Number: this.formEdit.value.number,
         },
         PassportFileCode: '',
         Profile: {
           Email: this.formEdit.value.email,
           IsMale: this.formEdit.value.isMale,
-          Login: "realtestapp521@yandex.ru",
+          Login: 'realtestapp521@yandex.ru',
           Name: {
             First: this.formEdit.value.first,
             Last: this.formEdit.value.last,
           },
-          Phone: this.formEdit.value.phone
+          Phone: this.formEdit.value.phone,
         },
         Files: this.files,
         UserID: this.currentUserId,
@@ -128,27 +132,54 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   }
 
   onSelect(event, type: string) {
-    let files: File[] = event.files;
+    let files: File[] = event.target.files;
 
     for (let file of files) {
       let guid = Guid.newGuid();
 
       this.commonService.getBase64(file).subscribe((res) => {
-        this.fileService
-          .uploadFileChunks(res, file.name, file.size.toString(), guid)
-          .subscribe(
-            (res) => {
-              console.log(res);
-              this.files.push({
-                Code: res.Code,
-                FileName: res.FileName,
-                ID: res.ID,
-                Size: res.Size,
-                Identifier: type,
-              });
-            },
-            (err) => console.log(err)
-          );
+        console.log(type)
+        if (type === 'Avatar') {
+          this.fileService
+            .uploadAvatar(res, file.name, file.size.toString(), guid)
+            .subscribe(
+              (res) => {
+                console.log(res);
+                this.files.push({
+                  Code: res.Code,
+                  FileName: res.FileName,
+                  ID: res.ID,
+                  Size: res.Size,
+                  Identifier: type,
+                });
+
+                {
+                  this.avatarSource = `https://api-factoring.metib.ru/api/avatar/${res.Code}`;
+                }
+              },
+              (err) => console.log(err)
+            );
+        } else {
+          this.fileService
+            .uploadFileChunks(res, file.name, file.size.toString(), guid)
+            .subscribe(
+              (res) => {
+                console.log(res);
+                this.files.push({
+                  Code: res.Code,
+                  FileName: res.FileName,
+                  ID: res.ID,
+                  Size: res.Size,
+                  Identifier: type,
+                });
+
+                {
+                  this.avatarSource = `https://api-factoring.metib.ru/api/avatar/${res.Code}`;
+                }
+              },
+              (err) => console.log(err)
+            );
+        }
       });
     }
   }

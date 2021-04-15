@@ -623,22 +623,22 @@
             <input type="file" id="GenDirProtocol" (change)="onSelect($event, 'GenDirProtocol')" hidden />
             <label for="GenDirProtocol" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
           </div>
-          <div *ngIf="files.length">
-            <ng-container *ngFor="let file of files">
-              <div class="addon-button mb-10" *ngIf="file.Identifier === 'GenDirProtocol'">
-                <div class="addon-text">
-                  <p>
-                    {{file.FileName}}
-                  </p>
-                </div>
-                <div class="mib-uploader">
-                  <div class="mib-upload-warn" (click)="removeFile(file)">
-                    Удалить
-                  </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'GenDirProtocol'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
                 </div>
               </div>
-            </ng-container>
-          </div>
+            </div>
+          </ng-container>
         </div>
       </div>
       <div class="p-field p-col-12 p-md-6">
@@ -710,23 +710,22 @@
             <input type="file" id="OSV" (change)="onSelect($event, 'OSV')" hidden />
             <label for="OSV" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
           </div>
-
-          <div *ngIf="files.length">
-            <ng-container *ngFor="let file of files">
-              <div class="addon-button mb-10" *ngIf="file.Identifier === 'OSV'">
-                <div class="addon-text">
-                  <p>
-                    {{file.FileName}}
-                  </p>
-                </div>
-                <div class="mib-uploader">
-                  <div class="mib-upload-warn" (click)="removeFile(file)">
-                    Удалить
-                  </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'OSV'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
                 </div>
               </div>
-            </ng-container>
-          </div>
+            </div>
+          </ng-container>
         </div>
       </div>
       <div class="p-field p-col-12 p-md-6 p-lg-6">

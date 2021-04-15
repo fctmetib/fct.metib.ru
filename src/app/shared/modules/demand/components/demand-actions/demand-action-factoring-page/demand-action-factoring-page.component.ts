@@ -176,9 +176,6 @@ export class DemandActionFactoringPageComponent implements OnInit {
     this.currentAddressFormId = null;
   }
 
-  onBasicUploadAuto() {
-  }
-
   onSelect(event, type: string) {
     let files: File[] = event.target.files;
 
