@@ -22,3 +22,8 @@ export const demandssSelector = createSelector(
   demandsListSelector,
   (demandsState: DemandsStateInterface) => demandsState.data
 );
+
+export const dataSelector = createSelector(
+  demandsListSelector,
+  (demandsState: DemandsStateInterface) => demandsState.allData
+);

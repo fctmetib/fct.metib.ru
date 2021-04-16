@@ -45,6 +45,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { RemoveDemandsEffect } from './store/effects/removeDemands.effect';
 import { CryptoProService } from '../../services/common/cryprto-pro.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { GetDraftsEffect } from './store/effects/getDrafts.effect';
 
 @NgModule({
   imports: [
@@ -63,6 +64,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     FormsModule,
     EffectsModule.forFeature([
       GetDemandsEffect,
+      GetDraftsEffect,
       CreateDemandFactoringEffect,
       RemoveDemandsEffect,
     ]),

@@ -4,12 +4,15 @@ import { getDemandsAction, getDemandsSuccessAction, getDemandsFailureAction } fr
 import { createReducer, on, Action } from '@ngrx/store';
 import { routerNavigationAction } from '@ngrx/router-store';
 import { removeDemandsAction, removeDemandsFailureAction, removeDemandsSuccessAction } from './actions/removeDemands.action';
+import { getDraftsAction, getDraftsFailureAction, getDraftsSuccessAction } from './actions/getDrafts.action';
 
 
 const initialState: DemandsStateInterface = {
   data: null,
+  drafts: null,
   isLoading: false,
   error: null,
+  allData: null
 };
 
 const demandsReducer = createReducer(
@@ -32,6 +35,29 @@ const demandsReducer = createReducer(
   ),
   on(
     getDemandsFailureAction,
+    (state): DemandsStateInterface => ({
+      ...state,
+      isLoading: false,
+    })
+  ),
+  on(
+    getDraftsAction,
+    (state): DemandsStateInterface => ({
+      ...state,
+      error: null,
+      isLoading: true,
+    })
+  ),
+  on(
+    getDraftsSuccessAction,
+    (state, action): DemandsStateInterface => ({
+      ...state,
+      isLoading: false,
+      drafts: action.demands,
+    })
+  ),
+  on(
+    getDraftsFailureAction,
     (state): DemandsStateInterface => ({
       ...state,
       isLoading: false,

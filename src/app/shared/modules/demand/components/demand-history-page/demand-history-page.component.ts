@@ -1,3 +1,4 @@
+import { dataSelector } from './../../store/selectors';
 import { DemandInterface } from '../../types/demand.interface';
 import { select, Store } from '@ngrx/store';
 import { getDemandsAction } from '../../store/actions/getDemands.action';
@@ -12,6 +13,7 @@ import {
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
 import { removeDemandsAction } from '../../store/actions/removeDemands.action';
+import { getDraftsAction } from '../../store/actions/getDrafts.action';
 
 @Component({
   selector: 'app-demand-history-page',
@@ -20,6 +22,9 @@ import { removeDemandsAction } from '../../store/actions/removeDemands.action';
 })
 export class DemandHistoryPageComponent implements OnInit {
   demands$: Observable<DemandInterface<any>[] | null>;
+
+  allData$: Observable<{data: DemandInterface<any>[], drafts: DemandInterface<any>[]} | null>;
+
   error$: Observable<string | null>;
   isLoading$: Observable<boolean>;
 
@@ -43,12 +48,15 @@ export class DemandHistoryPageComponent implements OnInit {
 
   initializeValues(): void {
     this.demands$ = this.store.pipe(select(demandssSelector));
+    // this.allData$ = this.store.pipe(select(dataSelector));
+
     this.error$ = this.store.pipe(select(errorSelector));
     this.isLoading$ = this.store.pipe(select(isLoadingSelector));
   }
 
   fetch(): void {
     this.store.dispatch(getDemandsAction());
+    this.store.dispatch(getDraftsAction());
   }
 
   remove(ID) {

@@ -5,20 +5,21 @@ import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { map, catchError, switchMap, concatMapTo, concatMap } from 'rxjs/operators';
 import { merge, of } from 'rxjs';
 import { DemandInterface } from '../../types/demand.interface';
+import { getDraftsAction, getDraftsFailureAction, getDraftsSuccessAction } from '../actions/getDrafts.action';
 
 @Injectable()
-export class GetDemandsEffect {
-  getDemands$ = createEffect(() =>
+export class GetDraftsEffect {
+  getDrafts$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(getDemandsAction),
+      ofType(getDraftsAction),
       switchMap(() => {
-        return this.demandService.fetch().pipe(
+        return this.demandService.getDrafts().pipe(
           map((demands: DemandInterface<any>[]) => {
-            return getDemandsSuccessAction({ demands });
+            return getDraftsSuccessAction({ demands });
           }),
 
           catchError(() => {
-            return of(getDemandsFailureAction());
+            return of(getDraftsFailureAction());
           })
         );
       })
