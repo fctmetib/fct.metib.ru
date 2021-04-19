@@ -12,7 +12,6 @@ const initialState: DemandsStateInterface = {
   drafts: null,
   isLoading: false,
   error: null,
-  allData: null
 };
 
 const demandsReducer = createReducer(

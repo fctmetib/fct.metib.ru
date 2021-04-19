@@ -23,7 +23,7 @@ export const demandssSelector = createSelector(
   (demandsState: DemandsStateInterface) => demandsState.data
 );
 
-export const dataSelector = createSelector(
+export const draftsSelector = createSelector(
   demandsListSelector,
-  (demandsState: DemandsStateInterface) => demandsState.allData
+  (demandsState: DemandsStateInterface) => demandsState.drafts
 );

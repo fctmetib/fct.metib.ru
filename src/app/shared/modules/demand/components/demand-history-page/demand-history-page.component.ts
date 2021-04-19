@@ -1,8 +1,10 @@
-import { dataSelector } from './../../store/selectors';
+import { DemandService } from './../../services/demand.service';
+import { DemandDraftInterface } from './../../types/demand-draft.interface';
+import { draftsSelector } from './../../store/selectors';
 import { DemandInterface } from '../../types/demand.interface';
 import { select, Store } from '@ngrx/store';
 import { getDemandsAction } from '../../store/actions/getDemands.action';
-import { of, Observable } from 'rxjs';
+import { of, Observable, merge } from 'rxjs';
 import { SortEvent } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -22,8 +24,7 @@ import { getDraftsAction } from '../../store/actions/getDrafts.action';
 })
 export class DemandHistoryPageComponent implements OnInit {
   demands$: Observable<DemandInterface<any>[] | null>;
-
-  allData$: Observable<{data: DemandInterface<any>[], drafts: DemandInterface<any>[]} | null>;
+  drafts$: Observable<DemandDraftInterface<any>[] | null>;
 
   error$: Observable<string | null>;
   isLoading$: Observable<boolean>;
@@ -34,9 +35,12 @@ export class DemandHistoryPageComponent implements OnInit {
   selectedItems: DemandInterface<any>[];
   isUserVerified: boolean;
 
+  allDemands: DemandInterface<any>[] = [];
+
   constructor(
     private store: Store,
     private authService: AuthService,
+    private demandService: DemandService,
     private router: Router
   ) {}
 
@@ -47,20 +51,100 @@ export class DemandHistoryPageComponent implements OnInit {
   }
 
   initializeValues(): void {
-    this.demands$ = this.store.pipe(select(demandssSelector));
-    // this.allData$ = this.store.pipe(select(dataSelector));
+    // this.demands$ = this.store.pipe(select(demandssSelector));
+    // this.drafts$ = this.store.pipe(select(draftsSelector));
 
-    this.error$ = this.store.pipe(select(errorSelector));
-    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
+    this.loading = true;
+
+    // this.demands$.subscribe((demands) => {
+    //   this.drafts$.subscribe((drafts) => {
+    //     this.allDemands = demands;
+
+    //     if (demands) {
+    //       if (drafts) {
+    //         drafts.forEach((draft) => {
+    //           this.allDemands.push({
+    //             Data: draft.Data,
+    //             DateCreated: draft.DateCreated,
+    //             DateModify: draft.DateModify,
+    //             DateStatus: draft.DateCreated,
+    //             Files: draft.Data.Files,
+    //             ID: draft.ID,
+    //             Manager: null,
+    //             Messages: null,
+    //             Requirements: null,
+    //             Result: null,
+    //             Status: 'draft',
+    //             Steps: null,
+    //             Type: null,
+    //             User: draft.User,
+    //           });
+
+    //           this.allDemands.filter((x) => x.DateCreated);
+    //           console.log('Demands', this.allDemands);
+    //         });
+    //       }
+
+    //       this.loading = false;
+    //     }
+    //   });
+    // });
+
+    // this.error$ = this.store.pipe(select(errorSelector));
+    // this.isLoading$ = this.store.pipe(select(isLoadingSelector));
   }
 
-  fetch(): void {
-    this.store.dispatch(getDemandsAction());
-    this.store.dispatch(getDraftsAction());
+  fetch() {
+    this.loading = true;
+    this.demandService.getDrafts().subscribe((drafts) => {
+      this.demandService.fetch().subscribe((demands) => {
+        this.allDemands = demands;
+
+        if (demands) {
+          if (drafts) {
+            drafts.forEach((draft) => {
+              this.allDemands.push({
+                Data: draft.Data,
+                DateCreated: draft.DateCreated,
+                DateModify: draft.DateModify,
+                DateStatus: draft.DateCreated,
+                Files: draft.Data.Files,
+                ID: draft.ID,
+                Manager: null,
+                Messages: null,
+                Requirements: null,
+                Result: null,
+                Status: 'Draft',
+                Steps: null,
+                Type: draft.Data.Type,
+                User: draft.User,
+              });
+
+              this.allDemands.sort((a, b) => {
+                return (
+                  new Date(b.DateModify).getTime() -
+                  new Date(a.DateModify).getTime()
+                );
+              });
+
+              console.log('Demands', this.allDemands);
+            });
+          }
+        }
+      });
+    });
   }
 
-  remove(ID) {
-    this.store.dispatch(removeDemandsAction({ ID }));
+  remove(Id) {
+    this.demandService.deleteDraftById(Id).subscribe((resp) => {
+      this.allDemands.splice(this.allDemands.findIndex((x) => x.ID === Id));
+    });
+  }
+
+  cancel(Id) {
+    this.demandService.cancelByDemandId(Id).subscribe((resp) => {
+      this.allDemands.splice(this.allDemands.findIndex((x) => x.ID === Id));
+    });
   }
 
   edit(Type, ID) {

@@ -17,8 +17,8 @@
   </div>
 
   <div class="demand-list">
-    <ng-container *ngIf="(demands$ | async); else skeletonDemandTemplate">
-      <div class="demand-item" *ngFor="let demand of (demands$ | async)">
+    <ng-container *ngIf="loading; else skeletonDemandTemplate">
+      <div class="demand-item" *ngFor="let demand of allDemands">
         <div class="demand-info">
           <div class="demand-card">
             <div class="demand-card-content">
@@ -70,6 +70,11 @@
                       Создан
                     </div>
                   </div>
+                  <div *ngSwitchCase="'Draft'">
+                    <div class="demand-status default">
+                      Черновик
+                    </div>
+                  </div>
                 </div>
 
                 <div class="demand-status-date">
@@ -78,14 +83,12 @@
               </div>
             </div>
             <div class="demand-actions" *ngIf="demand.Status !== 'Completed'">
-              <ng-container *ngIf="demand.Type; else removeTemplate">
-                <button pButton pRipple type="button" label="Отменить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
+              <ng-container *ngIf="demand.Status === 'Draft'; else removeTemplate">
+                <button pButton pRipple type="button" label="Удалить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
               </ng-container>
               <ng-template #removeTemplate>
-                <button pButton pRipple type="button" label="Удалить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
+                  <button pButton pRipple type="button" label="Отменить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
               </ng-template>
-
-
               <button pButton pRipple type="button" label="Редактировать" class="p-button-outlined mib-small" (click)="edit(demand.Type, demand.ID)" ></button>
             </div>
           </div>
