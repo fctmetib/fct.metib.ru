@@ -12,6 +12,7 @@ import { FileModeInterface } from 'src/app/shared/types/file/file-model.interfac
 import { createDemandFactoringAction } from '../../../store/actions/createDemand.action';
 import { errorSelector, isLoadingSelector } from '../../../store/selectors';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-demand-action-request-free-page',
@@ -31,11 +32,14 @@ export class DemandActionRequestFreePageComponent implements OnInit {
 
   public files: FileModeInterface[] = [];
 
+  private currentDraftId: number = 0;
+
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
     private demandService: DemandService,
     private commonService: CommonService,
+    private messageService: MessageService,
     private fileService: FileService,
     private route: ActivatedRoute,
     private store: Store
@@ -48,31 +52,35 @@ export class DemandActionRequestFreePageComponent implements OnInit {
 
     this.route.queryParams.subscribe((params: Params) => {
       if (params['ID']) {
-        this.demandService.getDemandById(params['ID']).subscribe(resp => {
-          console.log(resp)
-        })
+        this.demandService.getDemandById(params['ID']).subscribe((resp) => {});
+      }
+      if (params['DraftId']) {
+        this.currentDraftId = params['DraftID'];
       }
     });
+
+    setInterval(() => this.saveDraft(), 30000);
   }
 
   ngOnDestroy() {}
 
-  onSubmit() {
+  public onSubmit() {
     //TODO: UPDATE IT
     let data: SaveDemandRequestInterface<any> = this.prepareData();
 
-    this.demandService.add(data).subscribe(resp => {
+    this.demandService.add(data).subscribe((resp) => {
       this.alert = true;
-      this.alertMessage = "Запрос успешно создан."
+      this.alertMessage = 'Запрос успешно создан.';
     });
-
     // this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
-  removeFile(file: FileModeInterface) {
-    this.files.splice(this.files.indexOf(this.files.find(x => x === file)), 1);
+  public removeFile(file: FileModeInterface) {
+    this.files.splice(
+      this.files.indexOf(this.files.find((x) => x === file)),
+      1
+    );
   }
-
 
   onSelect(event, type: string) {
     let files: File[] = event.target.files;
@@ -101,7 +109,27 @@ export class DemandActionRequestFreePageComponent implements OnInit {
   }
 
   //#region private logic
-  private prepareData(): any {
+  saveDraft() {
+    this.demandService
+      .addDraftById(this.currentDraftId, this.prepareDraft())
+      .subscribe((resp) => {
+        this.currentDraftId = resp.Data.ID;
+        this.showSuccess();
+      });
+  }
+
+  private prepareDraft() {
+    let result: any = {
+      Question: this.formFree.value.question,
+      Subject: this.formFree.value.subject,
+      Files: this.files,
+      Type: 'Question',
+    };
+
+    return result;
+  }
+
+  private prepareData() {
     let result: SaveDemandRequestInterface<any> = {
       Data: {
         Question: this.formFree.value.question,
@@ -109,7 +137,7 @@ export class DemandActionRequestFreePageComponent implements OnInit {
         Files: this.files,
         Type: 'Question',
       },
-      DraftID: 0,
+      DraftID: this.currentDraftId,
     };
 
     return result;
@@ -130,5 +158,12 @@ export class DemandActionRequestFreePageComponent implements OnInit {
     this.backendErrors$ = this.store.pipe(select(errorSelector));
   }
 
+  private showSuccess() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Успешно',
+      detail: 'Черновик успешно сохранен!',
+    });
+  }
   //#endregion
 }

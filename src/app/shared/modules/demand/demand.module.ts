@@ -46,6 +46,8 @@ import { RemoveDemandsEffect } from './store/effects/removeDemands.effect';
 import { CryptoProService } from '../../services/common/cryprto-pro.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { GetDraftsEffect } from './store/effects/getDrafts.effect';
+import {ToastModule} from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   imports: [
@@ -56,6 +58,7 @@ import { GetDraftsEffect } from './store/effects/getDrafts.effect';
     FileUploadModule,
     ProgressSpinnerModule,
     RadioButtonModule,
+    ToastModule,
     InputTextareaModule,
     SliderModule,
     TableModule,
@@ -98,6 +101,7 @@ import { GetDraftsEffect } from './store/effects/getDrafts.effect';
   providers: [
     CurrencyPipe,
     DemandService,
+    MessageService,
     CryptoProService,
     CommonService,
     FileService,
