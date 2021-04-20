@@ -48,7 +48,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { GetDraftsEffect } from './store/effects/getDrafts.effect';
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-
+import {TabViewModule} from 'primeng/tabview';
 @NgModule({
   imports: [
     CommonModule,
@@ -60,6 +60,7 @@ import { MessageService } from 'primeng/api';
     RadioButtonModule,
     ToastModule,
     InputTextareaModule,
+    TabViewModule,
     SliderModule,
     TableModule,
     SkeletonModule,
