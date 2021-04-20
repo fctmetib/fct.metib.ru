@@ -87,7 +87,7 @@
                 <button pButton pRipple type="button" label="Удалить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
               </ng-container>
               <ng-template #removeTemplate>
-                  <button pButton pRipple type="button" label="Отменить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
+                  <button pButton pRipple type="button" label="Отменить" class="p-button-outlined p-button-danger mib-small" (click)="cancel(demand.ID)"></button>
               </ng-template>
               <button pButton pRipple type="button" label="Редактировать" class="p-button-outlined mib-small" (click)="edit(demand.Type, demand.ID)" ></button>
             </div>

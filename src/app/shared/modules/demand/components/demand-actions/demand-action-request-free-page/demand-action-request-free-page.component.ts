@@ -113,8 +113,11 @@ export class DemandActionRequestFreePageComponent implements OnInit {
     this.demandService
       .addDraftById(this.currentDraftId, this.prepareDraft())
       .subscribe((resp) => {
-        this.currentDraftId = resp.Data.ID;
+        console.log(resp)
+        this.currentDraftId = resp.ID;
         this.showSuccess();
+      }, error => {
+        this.showWarn();
       });
   }
 
@@ -163,6 +166,14 @@ export class DemandActionRequestFreePageComponent implements OnInit {
       severity: 'success',
       summary: 'Успешно',
       detail: 'Черновик успешно сохранен!',
+    });
+  }
+
+  private showWarn() {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Ошибка',
+      detail: 'При сохранении Черновика произошла ошибка.',
     });
   }
   //#endregion
