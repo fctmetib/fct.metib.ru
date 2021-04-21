@@ -120,7 +120,7 @@
           </fieldset>
         </p-tabPanel>
         <p-tabPanel header="Подпись файла">
-          <form #signatureForm="ngForm" novalidate (ngSubmit)="createSignature(thumbprint)">
+          <form #signatureForm="ngForm" novalidate (ngSubmit)="createSignatureWithFile(thumbprint)">
             <fieldset>
               <legend>Создание подписи</legend>
               <div class="addon-button mb-20">
@@ -176,9 +176,9 @@
             <textarea id="hash" cols="80" rows="5" [(ngModel)]="hash" [placeholder]="hashStatus"></textarea>
             <pre>{{hashError}}</pre>
 
-            <label for="signature">Подпись (PKCS7):</label><br>
-            <textarea id="signature" name="signature" cols="80" rows="30" [placeholder]="signatureStatus"
-              [(ngModel)]="signature"></textarea>
+            <label for="fileSignature">Подпись (PKCS7):</label><br>
+            <textarea id="fileSignature" name="fileSignature" cols="80" rows="30" [placeholder]="signatureStatus"
+              [(ngModel)]="fileSignature"></textarea>
             <pre>{{signatureError}}</pre>
 
             <p>
