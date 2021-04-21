@@ -15,6 +15,8 @@ import {
 } from 'crypto-pro';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
+import { saveAs, encodeBase64 } from '@progress/kendo-file-saver';
+import * as JSZip from 'jszip';
 
 var cadesplugin;
 @Component({
@@ -148,9 +150,18 @@ export class DemandPageComponent implements OnInit {
   ngOnDestroy() {}
 
   public downloadFile() {
-    this.dyanmicDownloadByHtmlTag({
-      fileName: 'Подпись с файлом',
-      text: this.fileSignature,
+    // this.dyanmicDownloadByHtmlTag({
+    //   fileName: 'Подпись с файлом',
+    //   text: this.fileSignature,
+    // });
+
+    const jszip = new JSZip();
+    jszip.file('key.sig', this.fileSignature);
+    jszip.file('file.jpg', this.file);
+
+    jszip.generateAsync({ type: 'blob' }).then(function(content) {
+      // see FileSaver.js
+      saveAs(content, 'подпись.zip');
     });
   }
 
