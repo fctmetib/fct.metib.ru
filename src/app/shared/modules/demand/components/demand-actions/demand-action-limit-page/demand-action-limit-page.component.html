@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div [ngClass]="{'card-content': isUserVerified}">
   <div class="header lg">
     <div class="title">
@@ -7,9 +8,148 @@
       </div> -->
     </div>
     <div class="actions">
-      <button pButton pRipple type="button" label="Вернуться к списку запросов" [routerLink]="['/demand']"
-      class="p-button-outlined"></button>
-      <button pButton pRipple type="button" label="Создать Запрос" (click)="a()" class="basic"></button>
     </div>
   </div>
+
+  <metib-success-messages *ngIf="alert" [message]="alertMessage"></metib-success-messages>
+  <!-- <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
+  </metib-backend-error-messages> -->
+
+  <form [formGroup]="formFree" (ngSubmit)="onSubmit()">
+    <div class="form-actions">
+      <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
+        [routerLink]="['/demand']"></button>
+      <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
+        [disabled]="formFree.invalid || isLoading"></button>
+    </div>
+    <div class="p-fluid p-formgrid p-grid form">
+      <!-- 1 row -->
+      <div class="p-field p-col-12 p-md-12 p-lg-12">
+        <div>
+          <div>Требуемый лимит</div>
+          <input id="subject" type="number" pInputText placeholder="0" formControlName="subject">
+        </div>
+        <div *ngIf="formFree.controls['subject'].invalid">
+          <small *ngIf="formFree.controls['subject'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+      <!-- 2 row -->
+      <div class="p-field p-col-12 p-md-12 p-lg-12">
+        <label for="question">Комментарий</label>
+        <textarea id="question" type="text" pInputTextarea placeholder="Комментарий" formControlName="question"
+          style="resize: none;"></textarea>
+        <div *ngIf="formFree.controls['question'].invalid">
+          <small *ngIf="formFree.controls['question'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+      <!-- 3 row -->
+      <div class="p-field p-col-12">
+        При необходимости прикрепите файлы:
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button mb-20">
+          <div class="addon-text">
+            <p>
+              Оборотно-сальдовая ведомость по P/C
+              За последние 12 месяцев
+            </p>
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="OSV" (change)="onSelect($event, 'OSV')" multiple="true" hidden />
+            <label for="OSV" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'OSV'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button mb-20">
+          <div class="addon-text">
+            <p>
+              Отчётность на последнюю отчетную
+              дату ББиОПиУ
+            </p>
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="Balance" (change)="onSelect($event, 'Balance')" multiple="true" hidden />
+            <label for="Balance" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'Balance'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button mb-20">
+          <div class="addon-text">
+            <p>
+              Информационное письмо о займах
+              и кредитах на текущую дату
+            </p>
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="Loans" (change)="onSelect($event, 'Loans')" multiple="true" hidden />
+            <label for="Loans" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'Loans'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+
+      <div class="p-field p-col-12 p-md-12">
+        <label for="btn_submit">&nbsp;</label>
+        <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
+          class="btn-mib-submit p-button-outlined" [disabled]="formFree.invalid || isLoading"></button>
+      </div>
+    </div>
+  </form>
 </div>
