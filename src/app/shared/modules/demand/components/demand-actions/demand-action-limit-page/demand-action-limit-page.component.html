@@ -25,23 +25,23 @@
     <div class="p-fluid p-formgrid p-grid form">
       <!-- 1 row -->
       <div class="p-field p-col-12 p-md-12 p-lg-12">
-        <div>
-          <div>Требуемый лимит</div>
-          <input id="subject" type="number" pInputText placeholder="0" formControlName="subject">
+        <div class="addon-input">
+          <div class="text">Требуемый лимит</div>
+          <input id="limit" type="number" pInputText placeholder="0" formControlName="limit">
         </div>
-        <div *ngIf="formFree.controls['subject'].invalid">
-          <small *ngIf="formFree.controls['subject'].errors.required" class="p-error">
+        <div *ngIf="formFree.controls['limit'].invalid">
+          <small *ngIf="formFree.controls['limit'].errors.required" class="p-error">
             Поле должно быть заполнено.
           </small>
         </div>
       </div>
       <!-- 2 row -->
       <div class="p-field p-col-12 p-md-12 p-lg-12">
-        <label for="question">Комментарий</label>
-        <textarea id="question" type="text" pInputTextarea placeholder="Комментарий" formControlName="question"
+        <label for="comment">Комментарий</label>
+        <textarea id="comment" type="text" pInputTextarea placeholder="Комментарий" formControlName="comment"
           style="resize: none;"></textarea>
-        <div *ngIf="formFree.controls['question'].invalid">
-          <small *ngIf="formFree.controls['question'].errors.required" class="p-error">
+        <div *ngIf="formFree.controls['comment'].invalid">
+          <small *ngIf="formFree.controls['comment'].errors.required" class="p-error">
             Поле должно быть заполнено.
           </small>
         </div>

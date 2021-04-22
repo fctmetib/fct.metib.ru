@@ -69,6 +69,72 @@ export class DemandActionLimitPageComponent implements OnInit {
     });
   }
 
+
+  //#region private logic
+  saveDraft() {
+    this.demandService
+      .addDraftById(this.currentDraftId, this.prepareDraft())
+      .subscribe((resp) => {
+        console.log(resp)
+        this.currentDraftId = resp.ID;
+        this.showSuccess();
+      }, error => {
+        this.showWarn();
+      });
+  }
+
+  private prepareDraft() {
+    let result = this.prepareCoreData();
+    return result;
+  }
+
+  private prepareData() {
+    let result: SaveDemandRequestInterface<any> = {
+      Data: this.prepareCoreData(),
+      DraftID: this.currentDraftId,
+    };
+
+    return result;
+  }
+
+  private prepareCoreData() {
+    let data = {
+      Limit: this.formFree.value.limit,
+      Comment: this.formFree.value.comment,
+      Files: this.files,
+      Type: 'Limit',
+    };
+    return data;
+  }
+
+  private initForm(): void {
+    this.formFree = this.fb.group({
+      limit: [0, [Validators.required]],
+      comment: ['', [Validators.required]],
+    });
+
+    this.formFree.markAllAsTouched();
+    this.formFree.markAsDirty();
+  }
+
+  private showSuccess() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Успешно',
+      detail: 'Черновик успешно сохранен!',
+    });
+  }
+
+  private showWarn() {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Ошибка',
+      detail: 'При сохранении Черновика произошла ошибка.',
+    });
+  }
+  //#endregion
+
+  //#region files
   public removeFile(file: FileModeInterface) {
     this.files.splice(
       this.files.indexOf(this.files.find((x) => x === file)),
@@ -102,68 +168,5 @@ export class DemandActionLimitPageComponent implements OnInit {
     }
   }
 
-  //#region private logic
-  saveDraft() {
-    this.demandService
-      .addDraftById(this.currentDraftId, this.prepareDraft())
-      .subscribe((resp) => {
-        console.log(resp)
-        this.currentDraftId = resp.ID;
-        this.showSuccess();
-      }, error => {
-        this.showWarn();
-      });
-  }
-
-  private prepareDraft() {
-    let result: any = {
-      Question: this.formFree.value.question,
-      Subject: this.formFree.value.subject,
-      Files: this.files,
-      Type: 'Question',
-    };
-
-    return result;
-  }
-
-  private prepareData() {
-    let result: SaveDemandRequestInterface<any> = {
-      Data: {
-        Question: this.formFree.value.question,
-        Subject: this.formFree.value.subject,
-        Files: this.files,
-        Type: 'Question',
-      },
-      DraftID: this.currentDraftId,
-    };
-
-    return result;
-  }
-
-  private initForm(): void {
-    this.formFree = this.fb.group({
-      subject: ['', [Validators.required]],
-      question: ['', [Validators.required]],
-    });
-
-    this.formFree.markAllAsTouched();
-    this.formFree.markAsDirty();
-  }
-
-  private showSuccess() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Успешно',
-      detail: 'Черновик успешно сохранен!',
-    });
-  }
-
-  private showWarn() {
-    this.messageService.add({
-      severity: 'warn',
-      summary: 'Ошибка',
-      detail: 'При сохранении Черновика произошла ошибка.',
-    });
-  }
   //#endregion
 }
