@@ -1,5 +1,5 @@
 <div class="card-content" id="step1">
-  <div class="header lg">
+  <!-- <div class="header lg">
     <div class="title">
       <h2>Договоры</h2>
       <div class="subheader">
@@ -8,5 +8,40 @@
     </div>
     <div class="actions">
     </div>
-  </div>
+  </div> -->
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button #btn type="button" pButton label="Действие" icon="pi pi-angle-down" (click)="menu.toggle($event)"
+        class="basic" id="step2"></button>
+      <p-tieredMenu #menu [model]="[]" [popup]="true"></p-tieredMenu>
+    </ng-template>
+  </p-toolbar>
+  <ng-container *ngIf="isLoading; else contentTemplate">
+
+  </ng-container>
+  <ng-template #contentTemplate>
+    <div class="contracts-list">
+      <div class="contract-item" *ngFor="let item of listContracts;">
+        <div class="contract-info item">
+          <div class="contract-name">{{item.Debtor.Title}}</div>
+          <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}</div>
+          <div class="contract-type">{{item.Tariff}}</div>
+        </div>
+        <div class="contract-step item">
+          <div class="price">309 712 133,74₽</div>
+          <div class="description">Уступлено</div>
+        </div>
+        <div class="contract-delay item">
+          <div class="price">{{item.Delay.Count | currency}}</div>
+          <div class="description">Просрочка</div>
+        </div>
+        <div class="contract-limit item">
+          <div class="price">309 712 133,74₽</div>
+          <div class="description">Свободный лимит</div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
 </div>

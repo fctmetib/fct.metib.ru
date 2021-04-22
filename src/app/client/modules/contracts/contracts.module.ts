@@ -1,3 +1,4 @@
+import { DeliveryService } from './../../../shared/services/share/delivery.service';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
@@ -17,6 +18,8 @@ import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { ContractsRoutingModule } from './contracts-routing.module';
 import { ContractsPageComponent } from './components/contracts-page/contracts-page.component';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TieredMenuModule } from 'primeng/tieredmenu';
 
 @NgModule({
   imports: [
@@ -29,6 +32,8 @@ import { ContractsPageComponent } from './components/contracts-page/contracts-pa
     SliderModule,
     TableModule,
     DropdownModule,
+    ToolbarModule,
+    TieredMenuModule,
     FormsModule,
     ProgressBarModule,
     MultiSelectModule,
@@ -39,6 +44,6 @@ import { ContractsPageComponent } from './components/contracts-page/contracts-pa
     ContractsRoutingModule,
   ],
   declarations: [ContractsPageComponent],
-  providers: [],
+  providers: [DeliveryService],
 })
 export class ContractsModule {}
