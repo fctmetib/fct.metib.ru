@@ -1,3 +1,4 @@
+import { DebtorInterface } from './../types/debtor-interface';
 import { DemandDataBaseInterface } from './../types/demand-data-base.interface';
 import { DemandDraftInterface } from './../types/demand-draft.interface';
 import { CreateDemandMessageRequestInterface } from './../types/requests/create-demand-message-request.interface';
@@ -84,5 +85,10 @@ export class DemandService {
   deleteDraftById(id: number): Observable<DemandDraftInterface<any>> {
     const url = `${environment.apiUrl}/demand/draft/${id}`;
     return this.http.delete<DemandDraftInterface<any>>(url);
+  }
+
+  getDebtors(): Observable<DebtorInterface[]> {
+    const url = `${environment.apiUrl}/public/debtors`;
+    return this.http.get<DebtorInterface[]>(url);
   }
 }
