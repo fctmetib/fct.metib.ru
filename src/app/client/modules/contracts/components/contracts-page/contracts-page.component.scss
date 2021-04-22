@@ -1,31 +1,103 @@
+
 .contracts-list {
   .contract-item {
     display: flex;
     width: 100%;
-    height: 250px;
+    height: 150px;
+    margin-bottom: 10px;
 
     .item {
       height: 100%;
       padding: 40px;
       border-radius: 10px;
-      border: 1px solid black;
+      border: 1px solid #D4D4D4;
       width: 100%;
     }
 
     .contract-info {
+      .contract-name {
+        display: flex;
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 8px;
+        align-items: center;
 
+        .icon {
+          &.arrow_right {
+            margin-left: 13px;
+            background: url('/assets/icons/arrow_right.png') no-repeat center center;
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+
+      .contract-number {
+        font-size: 0.875rem;
+        margin-bottom: 9px;
+        color: #989898;
+      }
+
+      .contract-type {
+
+      }
     }
 
     .contract-step {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
+      .price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #69CF74;
+        margin-bottom: 30px
+      }
+
+      .description {
+        font-size: 0.875rem;
+        justify-content: end;
+      }
     }
 
     .contract-delay {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
+      .price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #E74630;
+        margin-bottom: 30px
+      }
+
+      .description {
+        font-size: 0.875rem;
+        justify-content: end;
+      }
     }
 
     .contract-limit {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
+      .price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #0C83F1;
+        margin-bottom: 30px
+      }
+
+      .description {
+        font-size: 0.875rem;
+        justify-content: end;
+      }
     }
   }
 }

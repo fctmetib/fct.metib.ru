@@ -9,11 +9,12 @@
     <div class="actions">
     </div>
   </div> -->
-  <p-toolbar styleClass="p-mb-4">
+  <p-toolbar styleClass="p-mb-4 ml-0">
     <ng-template pTemplate="left">
-      <button #btn type="button" pButton label="Действие" icon="pi pi-angle-down" (click)="menu.toggle($event)"
-        class="basic" id="step2"></button>
-      <p-tieredMenu #menu [model]="[]" [popup]="true"></p-tieredMenu>
+      <button type="button" pButton label="Показать всё" class="basic p-mr-2"></button>
+      <button type="button" pButton label="Обновить лимит" class="basic p-mr-2"></button>
+      <button type="button" pButton label="Реквизиты" class="basic p-mr-2"></button>
+      <button type="button" pButton label="Список накладных" class="basic p-mr-2"></button>
     </ng-template>
   </p-toolbar>
   <ng-container *ngIf="isLoading; else contentTemplate">
@@ -23,7 +24,7 @@
     <div class="contracts-list">
       <div class="contract-item" *ngFor="let item of listContracts;">
         <div class="contract-info item">
-          <div class="contract-name">{{item.Debtor.Title}}</div>
+          <div class="contract-name">{{item.Debtor.Title}}  <div class="icon arrow_right"></div></div>
           <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}</div>
           <div class="contract-type">{{item.Tariff}}</div>
         </div>
