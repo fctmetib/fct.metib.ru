@@ -159,7 +159,7 @@ export class DemandPageComponent implements OnInit {
     jszip.file('key.sig', this.fileSignature);
     jszip.file('file.jpg', this.file);
 
-    jszip.generateAsync({ type: 'blob' }).then(function(content) {
+    jszip.generateAsync({ type: 'blob' }).then(function (content) {
       // see FileSaver.js
       saveAs(content, 'подпись.zip');
     });
@@ -190,8 +190,8 @@ export class DemandPageComponent implements OnInit {
   }
 
   public async createSignatureWithFile(thumbprint) {
-    console.log(thumbprint)
-    console.log(this.file)
+    console.log(thumbprint);
+    console.log(this.file);
     this.hash = null;
     this.hashError = null;
     this.fileSignature = null;
@@ -200,7 +200,7 @@ export class DemandPageComponent implements OnInit {
 
     try {
       this.hash = await createHash(this.file);
-      console.log('HASH', this.hash)
+      console.log('HASH', this.hash);
     } catch (error) {
       this.hashError = error.message;
 
@@ -210,17 +210,20 @@ export class DemandPageComponent implements OnInit {
     this.hashStatus = 'Не вычислен';
     this.signatureStatus = 'Создается...';
 
-   if (this.detachedSignature) {
-    try {
-      this.fileSignature = await createDetachedSignature(thumbprint, this.hash);
-    } catch (error) {
-      this.signatureError = error.message;
+    if (this.detachedSignature) {
+      try {
+        this.fileSignature = await createDetachedSignature(
+          thumbprint,
+          this.hash
+        );
+      } catch (error) {
+        this.signatureError = error.message;
+      }
+
+      this.signatureStatus = 'Не создана';
+
+      return;
     }
-
-    this.signatureStatus = 'Не создана';
-
-    return;
-   }
 
     try {
       this.fileSignature = await createAttachedSignature(thumbprint, this.file);
@@ -338,115 +341,31 @@ export class DemandPageComponent implements OnInit {
   onSelect(event, type: string) {
     let file: File = event.target.files[0];
 
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      let file = reader.result;
-      this.file = file;
-      // this.createSignatureWithFile(file);
-    };
-    reader.readAsArrayBuffer(file);
+    if (type === 'Rar') {
+      let fileData;
+      const jszip = new JSZip();
+      jszip.loadAsync(file).then((zip) => {
+        // <----- HERE
+        Object.keys(zip.files).forEach((filename) => {
+          console.log('ZIP FILES', zip.files);
+          console.log('File Name', filename);
+          console.log('Current File', zip.files[filename])
+          // <----- HERE
+          zip.files[filename].async('string').then((fileData) => {
+            // <----- HERE
+            fileData = fileData + '**$$##$$**' + fileData;
+            console.log('FD', fileData)
+          });
+        });
+      });
+    } else {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        let file = reader.result;
+        this.file = file;
+        // this.createSignatureWithFile(file);
+      };
+      reader.readAsArrayBuffer(file);
+    }
   }
-  // TEST
-
-  //   SignCreate(certSubjectName, dataToSign) {
-  //     var oStore = cadesplugin.CreateObject("CAdESCOM.Store");
-  //     oStore.Open(this.CAPICOM_CURRENT_USER_STORE, this.CAPICOM_MY_STORE,
-  //       this.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
-
-  //     var oCertificates = oStore.Certificates.Find(
-  //       this.CAPICOM_CERTIFICATE_FIND_SUBJECT_NAME, certSubjectName);
-  //     if (oCertificates.Count == 0) {
-  //         alert("Certificate not found: " + certSubjectName);
-  //         return;
-  //     }
-  //     var oCertificate = oCertificates.Item(1);
-  //     var oSigner = cadesplugin.CreateObject("CAdESCOM.CPSigner");
-  //     oSigner.Certificate = oCertificate;
-
-  //     var oSignedData = cadesplugin.CreateObject("CAdESCOM.CadesSignedData");
-  //     oSignedData.ContentEncoding = this.CADESCOM_BASE64_TO_BINARY;
-  //     oSignedData.Content = dataToSign;
-
-  //     try {
-  //         var sSignedMessage = oSignedData.SignCades(oSigner, this.CADESCOM_CADES_BES, true);
-  //     } catch (err) {
-  //         alert("Failed to create signature. Error: " + cadesplugin.getLastError(err));
-  //         return;
-  //     }
-
-  //     oStore.Close();
-
-  //     return sSignedMessage;
-  // }
-
-  // Verify(sSignedMessage, dataToVerify) {
-  //     var oSignedData = cadesplugin.CreateObject("CAdESCOM.CadesSignedData");
-  //     try {
-  //         oSignedData.ContentEncoding = this.CADESCOM_BASE64_TO_BINARY;
-  //         oSignedData.Content = dataToVerify;
-  //         oSignedData.VerifyCades(sSignedMessage, this.CADESCOM_CADES_BES, true);
-  //     } catch (err) {
-  //         alert("Failed to verify signature. Error: " + cadesplugin.getLastError(err));
-  //         return false;
-  //     }
-
-  //     return true;
-  // }
-
-  // onSelect(event, type: string) {
-  //   let files: File[] = event.target.files;
-
-  //   var file: File = files[0];
-
-  //   const reader = new FileReader();
-  //   reader.onload = (e: any) => {
-  //     let file = reader.result;
-  //     this.file = file;
-  //   };
-  //   reader.readAsArrayBuffer(file);
-  // }
-
-  // run(event, type: string) {
-  //   let files: File[] = event.target.files;
-
-  //     // Проверяем, работает ли File API
-  //     if (window.FileReader) {
-  //         // Браузер поддерживает File API.
-  //     } else {
-  //         alert('The File APIs are not fully supported in this browser.');
-  //     }
-
-  //     var oFile = files[0];
-  //     var oFReader = new FileReader();
-
-  //     if (typeof(oFReader.readAsDataURL)!="function") {
-  //         alert("Method readAsDataURL() is not supported in FileReader.");
-  //         return;
-  //     }
-
-  //     oFReader.readAsDataURL(oFile);
-
-  //     oFReader.onload = function(oFREvent) {
-  //         var header = ";base64,";
-  //         var sFileData: string = oFREvent.target.result as string;
-  //         var sBase64Data = sFileData.substr(sFileData.indexOf(header) + header.length);
-
-  //         var oCertName = document.getElementById("CertName");
-  //         var sCertName = oCertName.value; // Здесь следует заполнить SubjectName сертификата
-  //         if ("" == sCertName) {
-  //             alert("Введите имя сертификата (CN).");
-  //             return;
-  //         }
-  //         var signedMessage = this.SignCreate(sCertName, sBase64Data);
-
-  //         // Выводим отделенную подпись в BASE64 на страницу
-  //         // Такая подпись должна проверяться в КриптоАРМ и cryptcp.exe
-  //         document.getElementById("signature").innerHTML = signedMessage;
-
-  //         var verifyResult = Verify(signedMessage, sBase64Data);
-  //         if (verifyResult) {
-  //             alert("Signature verified");
-  //         }
-  //     };
-  //   }
 }
