@@ -13,8 +13,8 @@
     <ng-template pTemplate="left">
       <button type="button" pButton label="Показать всё" class="basic p-mr-2"></button>
       <button type="button" pButton label="Обновить лимит" class="basic p-mr-2"></button>
-      <button type="button" pButton label="Реквизиты" class="basic p-mr-2"></button>
-      <button type="button" pButton label="Список накладных" class="basic p-mr-2"></button>
+      <!-- <button type="button" pButton label="Реквизиты" class="basic p-mr-2"></button>
+      <button type="button" pButton label="Список накладных" class="basic p-mr-2"></button> -->
     </ng-template>
   </p-toolbar>
   <ng-container *ngIf="isLoading; else contentTemplate">
@@ -24,20 +24,25 @@
     <div class="contracts-list">
       <div class="contract-item" *ngFor="let item of listContracts;">
         <div class="contract-info item">
-          <div class="contract-name">{{item.Debtor.Title}}  <div class="icon arrow_right"></div></div>
+          <div class="contract-name">{{item.Debtor.Title}} <div class="icon arrow_right"></div>
+          </div>
           <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}</div>
-          <div class="contract-type">{{item.Tariff}}</div>
+          <div class="contract-type"><span class="main-color">{{item.Tariff}},</span> {{item.Delay.Count}} к.д.</div>
+          <div class="contract-icons">
+            <div class="icon" pTooltip="Реквизиты"><i class="pi pi-book"></i></div>
+          </div>
         </div>
         <div class="contract-step item">
-          <div class="price">309 712 133,74₽</div>
-          <div class="description">Уступлено</div>
+          <div class="price">{{item.Statistics.DutyCustomer | currency:'RUB'}}</div>
+          <div class="description">Уступлено
+            <div class="icon" pTooltip="Список накладных"><i class="pi pi-list"></i></div></div>
         </div>
         <div class="contract-delay item">
-          <div class="price">{{item.Delay.Count | currency:'RUB'}}</div>
+          <div class="price">{{item.Statistics.DutyDebtor | currency:'RUB'}}</div>
           <div class="description">Просрочка</div>
         </div>
         <div class="contract-limit item">
-          <div class="price">309 712 133,74₽</div>
+          <div class="price">{{0 | currency:'RUB'}}</div>
           <div class="description">Свободный лимит</div>
         </div>
       </div>

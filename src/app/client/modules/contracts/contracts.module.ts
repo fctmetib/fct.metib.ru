@@ -20,6 +20,7 @@ import { ContractsRoutingModule } from './contracts-routing.module';
 import { ContractsPageComponent } from './components/contracts-page/contracts-page.component';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import {TooltipModule} from 'primeng/tooltip';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
     TableModule,
     DropdownModule,
     ToolbarModule,
+    TooltipModule,
     TieredMenuModule,
     FormsModule,
     ProgressBarModule,

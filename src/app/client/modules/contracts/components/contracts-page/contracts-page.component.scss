@@ -2,19 +2,38 @@
 .contracts-list {
   .contract-item {
     display: flex;
-    width: 100%;
-    height: 150px;
+  //  width: 100%;
+  //  height: 150px;
     margin-bottom: 10px;
 
     .item {
-      height: 100%;
-      padding: 40px;
+      height: 120px;
+      padding: 20px;
       border-radius: 10px;
       border: 1px solid #D4D4D4;
-      width: 100%;
     }
 
     .contract-info {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .contract-icons {
+        display: flex;
+
+        .icon {
+          margin-right: 10px;
+          font-size: 2rem;
+          color: #0C83F1;
+
+          .icon-own {
+            font-size: 2rem;
+            color: #0C83F1;
+          }
+        }
+      }
+
       .contract-name {
         display: flex;
         font-size: 1.2rem;
@@ -44,35 +63,38 @@
     }
 
     .contract-step {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      text-align: center;
+      width: 40%;
 
       .price {
         font-size: 1.5rem;
         font-weight: 700;
         color: #69CF74;
-        margin-bottom: 30px
+        height: 50px;
       }
 
       .description {
         font-size: 0.875rem;
-        justify-content: end;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .icon {
+          margin-left: 10px;
+          font-size: 2rem;
+          color: #0C83F1;}
       }
     }
 
     .contract-delay {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      text-align: center;
+      width: 40%;
 
       .price {
         font-size: 1.5rem;
         font-weight: 700;
         color: #E74630;
-        margin-bottom: 30px
+        height: 70px;
       }
 
       .description {
@@ -82,16 +104,14 @@
     }
 
     .contract-limit {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      text-align: center;
+      width: 40%;
 
       .price {
         font-size: 1.5rem;
         font-weight: 700;
         color: #0C83F1;
-        margin-bottom: 30px
+        height: 70px;
       }
 
       .description {
@@ -99,5 +119,9 @@
         justify-content: end;
       }
     }
+  }
+
+  .main-color {
+    color: #0C83F1;
   }
 }
