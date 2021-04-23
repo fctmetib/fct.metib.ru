@@ -67,6 +67,9 @@ export class DemandPageComponent implements OnInit {
   public CAPICOM_CERTIFICATE_FIND_SUBJECT_NAME = 1;
   public CADESCOM_BASE64_TO_BINARY = 1;
 
+  public eds: string = '';
+  public filesWithEDS: File[] = [];
+
   constructor(
     private authService: AuthService,
     private cryproService: CryptoProService,
@@ -349,12 +352,26 @@ export class DemandPageComponent implements OnInit {
         Object.keys(zip.files).forEach((filename) => {
           console.log('ZIP FILES', zip.files);
           console.log('File Name', filename);
-          console.log('Current File', zip.files[filename])
+          console.log('Current File', zip.files[filename]);
+
           // <----- HERE
           zip.files[filename].async('string').then((fileData) => {
+            console.log('Type', zip.files[filename].name.split('.')[1])
+            if (zip.files[filename].name.split('.')[1] === 'sig') {
+              this.eds = fileData;
+            } else {
+              const imageBlob = this.dataURItoBlob(fileData);
+              const imageFile = new File(
+                [imageBlob],
+                zip.files[filename].name,
+                { type: zip.files[filename].name.split('.')[1] }
+              );
+
+              this.filesWithEDS.push(imageFile);
+            }
             // <----- HERE
             fileData = fileData + '**$$##$$**' + fileData;
-            console.log('FD', fileData)
+            console.log('FD', fileData);
           });
         });
       });
@@ -367,5 +384,15 @@ export class DemandPageComponent implements OnInit {
       };
       reader.readAsArrayBuffer(file);
     }
+  }
+
+  dataURItoBlob(dataURI) {
+    const arrayBuffer = new ArrayBuffer(dataURI);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < dataURI; i++) {
+      int8Array[i] = dataURI.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array]);
+    return blob;
   }
 }
