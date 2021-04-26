@@ -15,8 +15,10 @@ export class ContractsPageComponent implements OnInit {
   public isLoading: boolean = false;
   public listContracts: DeliveryInterface[] = [];
 
+  public isPagination: boolean = true;
+  public btnShowAllText: string = 'Показать всё';
+
   public listDisplayContracts: DeliveryInterface[] = [];
-  public isPagination: boolean = false;
   public paginationPage: number = 0;
   public paginationRows: number = 10;
 
@@ -26,11 +28,23 @@ export class ContractsPageComponent implements OnInit {
     this.fetch();
   }
 
+  public showAllToggle() {
+    this.isPagination = !this.isPagination;
+
+    if(this.isPagination) {
+      this.btnShowAllText = 'Показать всё';
+      this.paginate();
+    } else {
+      this.listDisplayContracts = this.listContracts;
+      this.btnShowAllText = 'Разбить на страницы';
+    }
+  }
+
   public updateData() {
     this.fetch();
   }
 
-  paginate(event?) {
+  public paginate(event?): void {
     this.listDisplayContracts = [];
     if (event) {
       this.paginationPage = event.page;

@@ -22,7 +22,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import {TooltipModule} from 'primeng/tooltip';
 import {PaginatorModule} from 'primeng/paginator';
-
+import {SkeletonModule} from 'primeng/skeleton';
 @NgModule({
   imports: [
     CommonModule,
@@ -33,6 +33,7 @@ import {PaginatorModule} from 'primeng/paginator';
     InputTextareaModule,
     SliderModule,
     TableModule,
+    SkeletonModule,
     DropdownModule,
     PaginatorModule,
     ToolbarModule,

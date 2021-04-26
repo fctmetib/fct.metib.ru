@@ -11,14 +11,46 @@
   </div> -->
   <p-toolbar styleClass="p-mb-4 ml-0">
     <ng-template pTemplate="left">
-      <button type="button" pButton label="Показать всё" class="basic p-mr-2"></button>
-      <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="updateData()" ></button>
-      <!-- <button type="button" pButton label="Реквизиты" class="basic p-mr-2"></button>
-      <button type="button" pButton label="Список накладных" class="basic p-mr-2"></button> -->
+      <button type="button" pButton label="{{btnShowAllText}}" class="basic p-mr-2" (click)="showAllToggle()"></button>
+      <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="updateData()"></button>
     </ng-template>
   </p-toolbar>
   <ng-container *ngIf="isLoading; else contentTemplate">
-
+    <div class="contracts-list">
+      <div class="contract-item" *ngFor="let i of [1, 2, 3, 4, 5];">
+        <div class="contract-info item">
+          <div class="contract-name">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+          <div class="contract-number">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+          <div class="contract-type">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+        </div>
+        <div class="contract-step item">
+          <div class="price">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+          <div class="description">Уступлено
+            <div class="icon" pTooltip="Список накладных"><i class="pi pi-list"></i></div>
+          </div>
+        </div>
+        <div class="contract-delay item">
+          <div class="price">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+          <div class="description">Просрочка</div>
+        </div>
+        <div class="contract-limit item">
+          <div class="price">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+          <div class="description">Свободный лимит</div>
+        </div>
+      </div>
+    </div>
   </ng-container>
   <ng-template #contentTemplate>
     <div class="contracts-list">
@@ -35,7 +67,8 @@
         <div class="contract-step item">
           <div class="price">{{item.Statistics.DutyCustomer | currency:'RUB'}}</div>
           <div class="description">Уступлено
-            <div class="icon" pTooltip="Список накладных"><i class="pi pi-list"></i></div></div>
+            <div class="icon" pTooltip="Список накладных"><i class="pi pi-list"></i></div>
+          </div>
         </div>
         <div class="contract-delay item">
           <div class="price">{{item.Statistics.DutyDebtor | currency:'RUB'}}</div>
@@ -48,6 +81,6 @@
       </div>
     </div>
   </ng-template>
-  <p-paginator #paginator [rows]="10" totalRecords="{{listContracts.length}}" (onPageChange)="paginate($event)"></p-paginator>
-
+  <p-paginator #paginator [rows]="10" totalRecords="{{listContracts.length}}" (onPageChange)="paginate($event)"
+    [ngStyle]="{'display': isPagination? 'block' : 'none' }"></p-paginator>
 </div>
