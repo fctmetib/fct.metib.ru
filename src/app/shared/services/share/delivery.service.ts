@@ -38,4 +38,9 @@ export class DeliveryService {
     let url = `${environment.apiUrl}/delivery/${id}/accounts`;
     return this.http.get<ClientAccountInterface[]>(url)
   }
+
+  // getShipments(id: string): Observable<ShipmentInterface[]> {
+  //   let url = `${environment.apiUrl}/delivery/${id}/shipments`;
+  //   return this.http.get<ClientAccountInterface[]>(url)
+  // }
 }

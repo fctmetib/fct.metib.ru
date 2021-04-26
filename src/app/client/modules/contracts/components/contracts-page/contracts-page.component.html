@@ -61,7 +61,7 @@
           <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}</div>
           <div class="contract-type"><span class="main-color">{{item.Tariff}},</span> {{item.Delay.Count}} к.д.</div>
           <div class="contract-icons">
-            <div class="icon" pTooltip="Реквизиты" (click)="showPropertyDialog(item.ID)"><i class="pi pi-book"></i>
+            <div class="icon" pTooltip="Реквизиты" (click)="showPropertyDialog(item.Debtor.ID)"><i class="pi pi-book"></i>
             </div>
           </div>
         </div>

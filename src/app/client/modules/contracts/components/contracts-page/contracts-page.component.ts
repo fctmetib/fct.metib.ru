@@ -34,8 +34,7 @@ export class ContractsPageComponent implements OnInit {
 
   showPropertyDialog(id): void {
     this.displayProperty = true;
-    this.deliveryService.getDeliveryAccounts(id).subscribe(resp => {
-
+    this.organizationService.getOrganizationById(44110).subscribe(resp => {
     });
   }
 
