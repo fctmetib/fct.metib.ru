@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ClientAccountInterface } from '../../types/client/client-account.interface';
 
 @Injectable()
 export class DeliveryService {
@@ -23,7 +24,6 @@ export class DeliveryService {
     return this.http.get<DeliveryInterface[]>(url)
   }
 
-
   /**
   * Получает список договоров с статистикой из АПИ
   * @param none
@@ -32,5 +32,10 @@ export class DeliveryService {
   getDeliveriesWithStats(): Observable<DeliveryInterface[]> {
     let url = `${environment.apiUrl}/delivery?includeStatistics=true`;
     return this.http.get<DeliveryInterface[]>(url)
+  }
+
+  getDeliveryAccounts(id: string): Observable<ClientAccountInterface[]> {
+    let url = `${environment.apiUrl}/delivery/${id}/accounts`;
+    return this.http.get<ClientAccountInterface[]>(url)
   }
 }

@@ -61,13 +61,15 @@
           <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}</div>
           <div class="contract-type"><span class="main-color">{{item.Tariff}},</span> {{item.Delay.Count}} к.д.</div>
           <div class="contract-icons">
-            <div class="icon" pTooltip="Реквизиты"><i class="pi pi-book"></i></div>
+            <div class="icon" pTooltip="Реквизиты" (click)="showPropertyDialog(item.ID)"><i class="pi pi-book"></i>
+            </div>
           </div>
         </div>
         <div class="contract-step item">
           <div class="price">{{item.Statistics.DutyCustomer | currency:'RUB'}}</div>
           <div class="description">Уступлено
-            <div class="icon" pTooltip="Список накладных"><i class="pi pi-list"></i></div>
+            <div class="icon" pTooltip="Список накладных" (click)="showShipmentsDialog(item.ID)"><i
+                class="pi pi-list"></i></div>
           </div>
         </div>
         <div class="contract-delay item">
@@ -84,3 +86,20 @@
   <p-paginator #paginator [rows]="10" totalRecords="{{listContracts.length}}" (onPageChange)="paginate($event)"
     [ngStyle]="{'display': isPagination? 'block' : 'none' }"></p-paginator>
 </div>
+
+
+<p-dialog header="Реквизиты" [(visible)]="displayProperty" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false">
+  <p class="p-m-0">Реквизиты.</p>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayProperty=false" label="Закрыть" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog header="Товарные Накладные" [(visible)]="displayShipments" [modal]="true" [style]="{width: '50vw'}"
+  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <p class="p-m-0">Товарные Накладные.</p>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayShipments=false" label="Закрыть" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>

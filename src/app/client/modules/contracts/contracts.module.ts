@@ -20,9 +20,13 @@ import { ContractsRoutingModule } from './contracts-routing.module';
 import { ContractsPageComponent } from './components/contracts-page/contracts-page.component';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TieredMenuModule } from 'primeng/tieredmenu';
-import {TooltipModule} from 'primeng/tooltip';
-import {PaginatorModule} from 'primeng/paginator';
-import {SkeletonModule} from 'primeng/skeleton';
+import { TooltipModule } from 'primeng/tooltip';
+import { PaginatorModule } from 'primeng/paginator';
+import { SkeletonModule } from 'primeng/skeleton';
+import { DialogModule } from 'primeng/dialog';
+import { OrganizationService } from 'src/app/shared/services/share/organization.service';
+import { ContractDetailsPageComponent } from './components/contract-details-page/contract-details-page.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -32,6 +36,7 @@ import {SkeletonModule} from 'primeng/skeleton';
     RadioButtonModule,
     InputTextareaModule,
     SliderModule,
+    DialogModule,
     TableModule,
     SkeletonModule,
     DropdownModule,
@@ -48,7 +53,7 @@ import {SkeletonModule} from 'primeng/skeleton';
     AvatarModule,
     ContractsRoutingModule,
   ],
-  declarations: [ContractsPageComponent],
-  providers: [DeliveryService],
+  declarations: [ContractsPageComponent, ContractDetailsPageComponent],
+  providers: [DeliveryService, OrganizationService],
 })
 export class ContractsModule {}

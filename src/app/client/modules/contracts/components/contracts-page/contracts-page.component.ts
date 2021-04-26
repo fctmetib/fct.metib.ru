@@ -2,6 +2,7 @@ import { DeliveryInterface } from './../../../../../shared/types/delivery/delive
 import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Paginator } from 'primeng/paginator';
+import { OrganizationService } from 'src/app/shared/services/share/organization.service';
 
 @Component({
   selector: 'app-contracts-page',
@@ -22,10 +23,24 @@ export class ContractsPageComponent implements OnInit {
   public paginationPage: number = 0;
   public paginationRows: number = 10;
 
-  constructor(private deliveryService: DeliveryService) {}
+  public displayProperty: boolean = false;
+  public displayShipments: boolean = false;
+
+  constructor(private deliveryService: DeliveryService, private organizationService: OrganizationService) {}
 
   ngOnInit() {
     this.fetch();
+  }
+
+  showPropertyDialog(id): void {
+    this.displayProperty = true;
+    this.deliveryService.getDeliveryAccounts(id).subscribe(resp => {
+
+    });
+  }
+
+  showShipmentsDialog(id): void {
+    this.displayShipments = true;
   }
 
   public showAllToggle() {
@@ -55,12 +70,8 @@ export class ContractsPageComponent implements OnInit {
         currentIndex + event.rows
       );
     } else {
-      console.log('Im here');
-
       let currentIndex = this.paginationPage * this.paginationRows;
       this.updateCurrentPage(currentIndex);
-
-      console.log('Im here', currentIndex);
 
       this.listDisplayContracts = this.listContracts.slice(
         currentIndex,

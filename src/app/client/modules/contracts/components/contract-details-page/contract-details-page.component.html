@@ -1,0 +1,21 @@
+<div class="card-content" id="step1">
+  <p-toolbar styleClass="p-mb-4 ml-0">
+    <ng-template pTemplate="left">
+      <button type="button" pButton label="Вернуться к списку договоров" class="basic p-mr-2" ></button>
+    </ng-template>
+  </p-toolbar>
+  <ng-container *ngIf="isLoading; else contentTemplate">
+
+  </ng-container>
+  <ng-template #contentTemplate>
+
+  </ng-template>
+</div>
+
+<p-dialog header="Товарные Накладные" [(visible)]="displayShipments" [modal]="true" [style]="{width: '50vw'}"
+  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <p class="p-m-0">Товарные Накладные.</p>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayShipments=false" label="Закрыть" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
