@@ -1,6 +1,7 @@
 import { DeliveryInterface } from './../../../../../shared/types/delivery/delivery.interface';
 import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Paginator } from 'primeng/paginator';
 
 @Component({
   selector: 'app-contracts-page',
@@ -8,12 +9,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contracts-page.component.scss'],
 })
 export class ContractsPageComponent implements OnInit {
+
+  @ViewChild('paginator', { static: false }) paginator!: Paginator;
+
   public isLoading: boolean = false;
   public listContracts: DeliveryInterface[] = [];
 
   public listDisplayContracts: DeliveryInterface[] = [];
   public isPagination: boolean = false;
-  public paginationPage: number = 1;
+  public paginationPage: number = 0;
   public paginationRows: number = 10;
 
   constructor(private deliveryService: DeliveryService) {}
@@ -27,31 +31,42 @@ export class ContractsPageComponent implements OnInit {
   }
 
   paginate(event?) {
-    console.log(event);
-    console.log(this.listContracts);
+    this.listDisplayContracts = [];
     if (event) {
       this.paginationPage = event.page;
 
       let currentIndex = event.page * event.rows;
-      this.listDisplayContracts = this.listContracts.slice(currentIndex, currentIndex * event.rows);
+      this.listDisplayContracts = this.listContracts.slice(
+        currentIndex,
+        currentIndex + event.rows
+      );
     } else {
-      let currentIndex = this.paginationPage * this.paginationRows;
-      this.listDisplayContracts = this.listContracts.slice(currentIndex, currentIndex * this.paginationRows);
-    }
+      console.log('Im here');
 
-    console.log(this.listContracts);
-    //event.first = Index of the first record
-    //event.rows = Number of rows to display in new page
-    //event.page = Index of the new page
-    //event.pageCount = Total number of pages
+      let currentIndex = this.paginationPage * this.paginationRows;
+      this.updateCurrentPage(currentIndex);
+
+      console.log('Im here', currentIndex);
+
+      this.listDisplayContracts = this.listContracts.slice(
+        currentIndex,
+        currentIndex + this.paginationRows
+      );
+    }
   }
 
   private fetch() {
     this.isLoading = true;
     this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
-      this.listContracts = resp;
+      this.listContracts = resp.sort((a, b) => {
+        return new Date(b.DateFrom).getTime() - new Date(a.DateFrom).getTime();
+      });
       this.paginate();
       this.isLoading = false;
     });
+  }
+
+  private updateCurrentPage(currentPage: number): void {
+    this.paginator.changePage(currentPage);
   }
 }

@@ -46,9 +46,8 @@
           <div class="description">Свободный лимит</div>
         </div>
       </div>
-      <p-paginator [rows]="10" totalRecords="{{listContracts.length}}" (onPageChange)="paginate($event)"></p-paginator>
     </div>
   </ng-template>
-
+  <p-paginator #paginator [rows]="10" totalRecords="{{listContracts.length}}" (onPageChange)="paginate($event)"></p-paginator>
 
 </div>
