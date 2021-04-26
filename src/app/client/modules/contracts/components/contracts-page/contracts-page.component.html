@@ -12,7 +12,7 @@
   <p-toolbar styleClass="p-mb-4 ml-0">
     <ng-template pTemplate="left">
       <button type="button" pButton label="Показать всё" class="basic p-mr-2"></button>
-      <button type="button" pButton label="Обновить лимит" class="basic p-mr-2"></button>
+      <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="updateData()" ></button>
       <!-- <button type="button" pButton label="Реквизиты" class="basic p-mr-2"></button>
       <button type="button" pButton label="Список накладных" class="basic p-mr-2"></button> -->
     </ng-template>
@@ -22,7 +22,7 @@
   </ng-container>
   <ng-template #contentTemplate>
     <div class="contracts-list">
-      <div class="contract-item" *ngFor="let item of listContracts;">
+      <div class="contract-item" *ngFor="let item of listDisplayContracts;">
         <div class="contract-info item">
           <div class="contract-name">{{item.Debtor.Title}} <div class="icon arrow_right"></div>
           </div>
@@ -46,6 +46,7 @@
           <div class="description">Свободный лимит</div>
         </div>
       </div>
+      <p-paginator [rows]="10" totalRecords="{{listContracts.length}}" (onPageChange)="paginate($event)"></p-paginator>
     </div>
   </ng-template>
 

@@ -21,6 +21,7 @@ import { ContractsPageComponent } from './components/contracts-page/contracts-pa
 import { ToolbarModule } from 'primeng/toolbar';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import {TooltipModule} from 'primeng/tooltip';
+import {PaginatorModule} from 'primeng/paginator';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import {TooltipModule} from 'primeng/tooltip';
     SliderModule,
     TableModule,
     DropdownModule,
+    PaginatorModule,
     ToolbarModule,
     TooltipModule,
     TieredMenuModule,
