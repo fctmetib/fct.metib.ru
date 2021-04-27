@@ -1,3 +1,4 @@
+import { RequestsService } from './../../../requests/services/requests.service';
 import { Router } from '@angular/router';
 import { OrganizationInterface } from './../../../../../shared/types/organization/organization.interface';
 import { DeliveryInterface } from './../../../../../shared/types/delivery/delivery.interface';
@@ -13,7 +14,6 @@ import { ShipmentInterface } from 'src/app/shared/types/common/shipment-interfac
   styleUrls: ['./contracts-page.component.scss'],
 })
 export class ContractsPageComponent implements OnInit {
-
   @ViewChild('paginator', { static: false }) paginator!: Paginator;
 
   public isLoading: boolean = false;
@@ -37,7 +37,7 @@ export class ContractsPageComponent implements OnInit {
       BIK: '',
       Bank: '',
       COR: '',
-      Number: ''
+      Number: '',
     },
     Accountant: '',
     CustomerID: 0,
@@ -57,19 +57,24 @@ export class ContractsPageComponent implements OnInit {
     Signer: {
       FIO: '',
       Position: '',
-      Reason: ''
+      Reason: '',
     },
     State: '',
     Telephone: '',
     Title: '',
-    WebSite: ''
+    WebSite: '',
   };
 
   public isShipmentsError: boolean = false;
   public isShipmentsLoading: boolean = false;
   public currentShipments: ShipmentInterface[] = [];
 
-  constructor(private deliveryService: DeliveryService, private organizationService: OrganizationService, private router: Router) {}
+  constructor(
+    private deliveryService: DeliveryService,
+    private organizationService: OrganizationService,
+    private requestService: RequestsService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.fetch();
@@ -84,29 +89,47 @@ export class ContractsPageComponent implements OnInit {
     this.isOrganizationLoading = true;
     this.isOrganizationError = false;
 
-    this.organizationService.getOrganizationById(id).subscribe(resp => {
-      this.currentOrganization = resp;
-      this.isOrganizationLoading = false;
-    }, error => {
-      this.isOrganizationError = true;
-      this.isOrganizationLoading = false;
-    });
+    this.organizationService.getOrganizationById(id).subscribe(
+      (resp) => {
+        this.currentOrganization = resp;
+        this.isOrganizationLoading = false;
+      },
+      (error) => {
+        this.isOrganizationError = true;
+        this.isOrganizationLoading = false;
+      }
+    );
   }
 
   public showShipmentsDialog(id): void {
     this.displayShipments = true;
-    this.isOrganizationLoading = true;
-    this.isOrganizationError = false;
+    this.isShipmentsLoading = true;
+    this.isShipmentsError = false;
 
-    this.deliveryService.getShipments(id).subscribe(resp => {
+    this.deliveryService.getShipments(id).subscribe(
+      (resp) => {
+        this.currentShipments = resp;
 
-    });
+        // if(this.currentShipments) {
+        //   this.currentShipments.forEach(i => {
+        //     this.requestService.getRequestByIdAndParams(i.Request.ID, true, false, false).subscribe(request => {
+
+        //     });
+            this.isShipmentsLoading = false;
+        //   })
+        // }
+      },
+      (error) => {
+        this.isShipmentsError = true;
+        this.isShipmentsLoading = false;
+      }
+    );
   }
 
   public showAllToggle() {
     this.isPagination = !this.isPagination;
 
-    if(this.isPagination) {
+    if (this.isPagination) {
       this.btnShowAllText = 'Показать всё';
       this.paginate();
     } else {

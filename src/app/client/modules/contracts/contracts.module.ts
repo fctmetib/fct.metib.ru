@@ -27,6 +27,7 @@ import { DialogModule } from 'primeng/dialog';
 import { OrganizationService } from 'src/app/shared/services/share/organization.service';
 import { ContractDetailsPageComponent } from './components/contract-details-page/contract-details-page.component';
 import { BackendErrorMessagesModule } from 'src/app/shared/modules/backendErrorMessages/backendErrorMessages.module';
+import { RequestsService } from '../requests/services/requests.service';
 
 @NgModule({
   imports: [
@@ -56,6 +57,6 @@ import { BackendErrorMessagesModule } from 'src/app/shared/modules/backendErrorM
     ContractsRoutingModule,
   ],
   declarations: [ContractsPageComponent, ContractDetailsPageComponent],
-  providers: [DeliveryService, OrganizationService],
+  providers: [DeliveryService, OrganizationService, RequestsService],
 })
 export class ContractsModule {}

@@ -54,13 +54,15 @@
   <ng-template #contentTemplate>
     <div class="contracts-list">
       <div class="contract-item" *ngFor="let item of listDisplayContracts;">
-        <div class="contract-info item" >
-          <div class="contract-name can-click" (click)="openDetails(item.ID)" >{{item.Debtor.Title}} <div class="icon arrow_right"></div>
+        <div class="contract-info item">
+          <div class="contract-name can-click" (click)="openDetails(item.ID)">{{item.Debtor.Title}} <div
+              class="icon arrow_right"></div>
           </div>
           <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}</div>
           <div class="contract-type"><span class="main-color">{{item.Tariff}},</span> {{item.Delay.Count}} к.д.</div>
           <div class="contract-icons">
-            <div class="icon" pTooltip="Реквизиты" (click)="showPropertyDialog(item.Debtor.ID)"><i class="pi pi-book"></i>
+            <div class="icon" pTooltip="Реквизиты" (click)="showPropertyDialog(item.Debtor.ID)"><i
+                class="pi pi-book"></i>
             </div>
           </div>
         </div>
@@ -94,7 +96,8 @@
   </ng-container>
   <ng-template #organizationTemplate>
     <ng-container *ngIf="isOrganizationError; else noErrorOrganizationTemplate">
-      <metib-backend-error-messages [backendErrors]="'Ошибка! У Вас нет доступа, к этой организации.'"></metib-backend-error-messages>
+      <metib-backend-error-messages [backendErrors]="'Ошибка! У Вас нет доступа, к этой организации.'">
+      </metib-backend-error-messages>
     </ng-container>
     <ng-template #noErrorOrganizationTemplate>
       <p class="p-m-0">
@@ -108,21 +111,118 @@
         Счет для оплаты комиссии: {{currentOrganization.ABSID}} <br>
         Счет для оплаты комиссии Фактор-Клиента: {{currentOrganization.ABSID}} <br>
         Примеры назначения платежа: {{currentOrganization.ABSID}} <br>
-        Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция): {{currentOrganization.ABSID}} <br>
+        Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция):
+        {{currentOrganization.ABSID}} <br>
         Назначение: {{currentOrganization.Description}} </p>
     </ng-template>
-
   </ng-template>
-
-
   <ng-template pTemplate="footer">
     <p-button icon="pi pi-check" (click)="displayProperty=false" label="Закрыть" styleClass="p-button-text"></p-button>
   </ng-template>
 </p-dialog>
 
-<p-dialog header="Товарные Накладные" [(visible)]="displayShipments" [modal]="true" [style]="{width: '50vw'}"
+<p-dialog header="Товарные Накладные" [(visible)]="displayShipments" [modal]="true" [style]="{width: '90vw'}"
   [baseZIndex]="10000" [draggable]="false" [resizable]="false">
-  <p class="p-m-0">Товарные Накладные.</p>
+  <ng-container *ngIf="isShipmentsLoading; else shipmentsTemplate">
+    <p class="p-m-0">Загрузка...</p>
+  </ng-container>
+  <ng-template #shipmentsTemplate>
+    <ng-container *ngIf="isShipmentsError; else noErrorShipmentsTemplate">
+      <metib-backend-error-messages [backendErrors]="'Ошибка!'"></metib-backend-error-messages>
+    </ng-container>
+    <ng-template #noErrorShipmentsTemplate>
+      <p-table [value]="currentShipments" dataKey="ID" styleClass="p-datatable-customers mib-table">
+        <!-- -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th>
+              <div class="m-th">
+                <div>
+                  ID
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Аккаунт</div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Дата дополнения
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Дата оплата
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Дата поставки
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Задолженность дебтора
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Задолженность клиента</div>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-shipment>
+          <tr [pSelectableRow]="shipment">
+            <td>
+              <div class="m-td">
+                <div>{{shipment.ID}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>{{shipment.Account}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div> {{shipment.DateAddon | date:'dd.MM.yyyy'}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>{{shipment.DatePayment | date:'dd.MM.yyyy'}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                {{shipment.DateShipment | date:'dd.MM.yyyy'}}
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div> {{shipment.DutyCustomer}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div> {{shipment.DutyDebtor}}</div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-template>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayProperty=false" label="Закрыть" styleClass="p-button-text"></p-button>
+  </ng-template>
   <ng-template pTemplate="footer">
     <p-button icon="pi pi-check" (click)="displayShipments=false" label="Закрыть" styleClass="p-button-text"></p-button>
   </ng-template>
