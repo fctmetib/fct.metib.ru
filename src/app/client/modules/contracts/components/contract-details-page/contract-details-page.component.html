@@ -1,7 +1,7 @@
 <div class="card-content" id="step1">
   <p-toolbar styleClass="p-mb-4 ml-0">
     <ng-template pTemplate="left">
-      <button type="button" pButton label="Вернуться к списку договоров" class="basic p-mr-2" ></button>
+      <button type="button" pButton label="Вернуться к списку договоров" class="basic p-mr-2" [routerLink]="['/contracts']"></button>
     </ng-template>
   </p-toolbar>
   <ng-container *ngIf="isLoading; else contentTemplate">

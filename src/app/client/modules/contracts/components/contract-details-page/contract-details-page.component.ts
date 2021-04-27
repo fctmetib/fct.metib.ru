@@ -14,6 +14,7 @@ export class ContractDetailsPageComponent implements OnInit {
   constructor(private deliveryService: DeliveryService) {}
 
   ngOnInit() {
+
   //  this.fetch();
   }
 

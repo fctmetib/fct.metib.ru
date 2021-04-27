@@ -26,6 +26,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { DialogModule } from 'primeng/dialog';
 import { OrganizationService } from 'src/app/shared/services/share/organization.service';
 import { ContractDetailsPageComponent } from './components/contract-details-page/contract-details-page.component';
+import { BackendErrorMessagesModule } from 'src/app/shared/modules/backendErrorMessages/backendErrorMessages.module';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { ContractDetailsPageComponent } from './components/contract-details-page
     DialogModule,
     TableModule,
     SkeletonModule,
+    BackendErrorMessagesModule,
     DropdownModule,
     PaginatorModule,
     ToolbarModule,

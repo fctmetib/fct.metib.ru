@@ -34,7 +34,6 @@
             <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
           </div>
           <div class="description">Уступлено
-            <div class="icon" pTooltip="Список накладных"><i class="pi pi-list"></i></div>
           </div>
         </div>
         <div class="contract-delay item">
@@ -55,8 +54,8 @@
   <ng-template #contentTemplate>
     <div class="contracts-list">
       <div class="contract-item" *ngFor="let item of listDisplayContracts;">
-        <div class="contract-info item">
-          <div class="contract-name">{{item.Debtor.Title}} <div class="icon arrow_right"></div>
+        <div class="contract-info item" >
+          <div class="contract-name can-click" (click)="openDetails(item.ID)" >{{item.Debtor.Title}} <div class="icon arrow_right"></div>
           </div>
           <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}</div>
           <div class="contract-type"><span class="main-color">{{item.Tariff}},</span> {{item.Delay.Count}} к.д.</div>
@@ -90,7 +89,20 @@
 
 <p-dialog header="Реквизиты" [(visible)]="displayProperty" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
   [draggable]="false" [resizable]="false">
-  <p class="p-m-0">Реквизиты.</p>
+  <ng-container *ngIf="isOrganizationLoading; else organizationTemplate">
+    <p class="p-m-0">Загрузка...</p>
+  </ng-container>
+  <ng-template #organizationTemplate>
+    <ng-container *ngIf="isOrganizationError; else noErrorOrganizationTemplate">
+      <metib-backend-error-messages [backendErrors]="'Ошибка! У Вас нет доступа, к этой организации.'"></metib-backend-error-messages>
+    </ng-container>
+    <ng-template #noErrorOrganizationTemplate>
+      <p class="p-m-0">Реквизиты.</p>
+    </ng-template>
+
+  </ng-template>
+
+
   <ng-template pTemplate="footer">
     <p-button icon="pi pi-check" (click)="displayProperty=false" label="Закрыть" styleClass="p-button-text"></p-button>
   </ng-template>

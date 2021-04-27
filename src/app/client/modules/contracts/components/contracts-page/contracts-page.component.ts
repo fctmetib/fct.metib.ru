@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { OrganizationInterface } from './../../../../../shared/types/organization/organization.interface';
 import { DeliveryInterface } from './../../../../../shared/types/delivery/delivery.interface';
 import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -26,19 +28,36 @@ export class ContractsPageComponent implements OnInit {
   public displayProperty: boolean = false;
   public displayShipments: boolean = false;
 
-  constructor(private deliveryService: DeliveryService, private organizationService: OrganizationService) {}
+  public isOrganizationError: boolean = false;
+  public isOrganizationLoading: boolean = false;
+  public currentOrganization: OrganizationInterface;
+
+
+  constructor(private deliveryService: DeliveryService, private organizationService: OrganizationService, private router: Router) {}
 
   ngOnInit() {
     this.fetch();
   }
 
-  showPropertyDialog(id): void {
+  public openDetails(id): void {
+    this.router.navigate([`contracts/details/${id}`]);
+  }
+
+  public showPropertyDialog(id): void {
     this.displayProperty = true;
+    this.isOrganizationLoading = true;
+    this.isOrganizationError = false;
+
     this.organizationService.getOrganizationById(44110).subscribe(resp => {
+      this.currentOrganization = resp;
+      this.isOrganizationLoading = false;
+    }, error => {
+      this.isOrganizationError = true;
+      this.isOrganizationLoading = false;
     });
   }
 
-  showShipmentsDialog(id): void {
+  public showShipmentsDialog(id): void {
     this.displayShipments = true;
   }
 
