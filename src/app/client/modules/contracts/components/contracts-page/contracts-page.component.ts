@@ -5,6 +5,7 @@ import { DeliveryService } from './../../../../../shared/services/share/delivery
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Paginator } from 'primeng/paginator';
 import { OrganizationService } from 'src/app/shared/services/share/organization.service';
+import { ShipmentInterface } from 'src/app/shared/types/common/shipment-interface';
 
 @Component({
   selector: 'app-contracts-page',
@@ -30,8 +31,43 @@ export class ContractsPageComponent implements OnInit {
 
   public isOrganizationError: boolean = false;
   public isOrganizationLoading: boolean = false;
-  public currentOrganization: OrganizationInterface;
+  public currentOrganization: OrganizationInterface = {
+    ABSID: 0,
+    Account: {
+      BIK: '',
+      Bank: '',
+      COR: '',
+      Number: ''
+    },
+    Accountant: '',
+    CustomerID: 0,
+    DebtorID: 0,
+    Description: '',
+    Email: '',
+    ID: 0,
+    INN: '',
+    KPP: '',
+    LegalForm: '',
+    OGRN: '',
+    OKATO: '',
+    OKPO: '',
+    OKVED: '',
+    RegDate: new Date(),
+    RegRegion: '',
+    Signer: {
+      FIO: '',
+      Position: '',
+      Reason: ''
+    },
+    State: '',
+    Telephone: '',
+    Title: '',
+    WebSite: ''
+  };
 
+  public isShipmentsError: boolean = false;
+  public isShipmentsLoading: boolean = false;
+  public currentShipments: ShipmentInterface[] = [];
 
   constructor(private deliveryService: DeliveryService, private organizationService: OrganizationService, private router: Router) {}
 
@@ -48,7 +84,7 @@ export class ContractsPageComponent implements OnInit {
     this.isOrganizationLoading = true;
     this.isOrganizationError = false;
 
-    this.organizationService.getOrganizationById(44110).subscribe(resp => {
+    this.organizationService.getOrganizationById(id).subscribe(resp => {
       this.currentOrganization = resp;
       this.isOrganizationLoading = false;
     }, error => {
@@ -59,6 +95,12 @@ export class ContractsPageComponent implements OnInit {
 
   public showShipmentsDialog(id): void {
     this.displayShipments = true;
+    this.isOrganizationLoading = true;
+    this.isOrganizationError = false;
+
+    this.deliveryService.getShipments(id).subscribe(resp => {
+
+    });
   }
 
   public showAllToggle() {

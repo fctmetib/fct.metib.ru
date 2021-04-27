@@ -97,7 +97,19 @@
       <metib-backend-error-messages [backendErrors]="'Ошибка! У Вас нет доступа, к этой организации.'"></metib-backend-error-messages>
     </ng-container>
     <ng-template #noErrorOrganizationTemplate>
-      <p class="p-m-0">Реквизиты.</p>
+      <p class="p-m-0">
+        Банк: {{currentOrganization.Account.Bank}} <br>
+        Получатель: {{currentOrganization.Account.Bank}} <br>
+        Кор/с: {{currentOrganization.Account.COR}} <br>
+        БИК: {{currentOrganization.Account.BIK}} <br>
+        ИНН: {{currentOrganization.INN}} <br>
+        КПП: {{currentOrganization.KPP}} <br>
+        Счет для оплаты задолженности: {{currentOrganization.ABSID}} <br>
+        Счет для оплаты комиссии: {{currentOrganization.ABSID}} <br>
+        Счет для оплаты комиссии Фактор-Клиента: {{currentOrganization.ABSID}} <br>
+        Примеры назначения платежа: {{currentOrganization.ABSID}} <br>
+        Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция): {{currentOrganization.ABSID}} <br>
+        Назначение: {{currentOrganization.Description}} </p>
     </ng-template>
 
   </ng-template>

@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ClientAccountInterface } from '../../types/client/client-account.interface';
+import { ShipmentInterface } from '../../types/common/shipment-interface';
 
 @Injectable()
 export class DeliveryService {
@@ -39,8 +40,8 @@ export class DeliveryService {
     return this.http.get<ClientAccountInterface[]>(url)
   }
 
-  // getShipments(id: string): Observable<ShipmentInterface[]> {
-  //   let url = `${environment.apiUrl}/delivery/${id}/shipments`;
-  //   return this.http.get<ClientAccountInterface[]>(url)
-  // }
+  getShipments(id: string): Observable<ShipmentInterface[]> {
+    let url = `${environment.apiUrl}/delivery/${id}/shipments`;
+    return this.http.get<ShipmentInterface[]>(url)
+  }
 }
