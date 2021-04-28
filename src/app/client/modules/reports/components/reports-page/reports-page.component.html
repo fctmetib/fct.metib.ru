@@ -1,5 +1,5 @@
 <div class="card-content" id="step1">
-  <div class="header lg">
+  <!-- <div class="header lg">
     <div class="title">
       <h2>Отчеты</h2>
       <div class="subheader">
@@ -7,6 +7,21 @@
       </div>
     </div>
     <div class="actions">
+    </div>
+  </div> -->
+  <div class="p-grid">
+    <div class="p-col" *ngFor="let reportCard of reportCards">
+      <div class="card-report">
+        <div class="header">
+          <div class="text">
+            {{reportCard.title}}
+          </div>
+          <div class="icon arrow_right"></div>
+        </div>
+        <div class="content">
+          {{reportCard.description}}
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -54,11 +54,11 @@ export class ClientLayoutComponent implements OnInit {
         routerLink: 'documents',
         routerLinkActiveOptions: { exact: false },
       },
-      // {
-      //   label: 'Отчеты',
-      //   routerLink: 'reports',
-      //   routerLinkActiveOptions: { exact: true }
-      // },
+      {
+        label: 'Отчеты',
+        routerLink: 'reports',
+        routerLinkActiveOptions: { exact: false }
+      },
     ];
   }
 

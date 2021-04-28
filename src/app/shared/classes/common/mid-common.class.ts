@@ -1,3 +1,4 @@
+import { ReportCardInterface } from 'src/app/client/modules/cabinet/types/common/report-card.interface';
 import { DemandSelectboxInterface } from '../../modules/demand/types/common/demand-selectbox.interface';
 
 export class MIBCommon {
@@ -8,6 +9,8 @@ export class MIBCommon {
 
   private countryList: DemandSelectboxInterface[] = [];
   private regionList: DemandSelectboxInterface[] = [];
+
+  private reportList: ReportCardInterface[] = [];
 
   constructor() {
     this.initLists();
@@ -31,6 +34,10 @@ export class MIBCommon {
 
   getRegionList(): DemandSelectboxInterface[] {
     return this.regionList;
+  }
+
+  getReports(): ReportCardInterface[] {
+    return this.reportList;
   }
 
   private initLists() {
@@ -426,6 +433,99 @@ export class MIBCommon {
       {
         value: 99,
         title: 'Иные территории, включая город и космодром Байконур',
+      },
+    ];
+
+    this.reportList = [
+      {
+        title: 'Приём документов',
+        description:
+          'Список операций "Прием Документов" в разрезе накладных за указанный период',
+        link: '',
+      },
+      {
+        title: 'Выплата финансирования',
+        description:
+          'Список операций "Выплата Финансирования" в разрезе накладных за указанный период',
+        link: '',
+      },
+      {
+        title: 'Обработка Платежей',
+        description:
+          'Список операций "Обработка Платежа" в разрезе накладных за указанный период',
+        link: '',
+      },
+      {
+        title: 'Коррекция Поставок',
+        description:
+          'Список операций "Коррекция Поставок" в разрезе накладных за указанный период',
+        link: '',
+      },
+      {
+        title: 'Аккредитив',
+        description:
+          'Список операций пополнения Аккредидитов за указанный период',
+        link: '',
+      },
+      {
+        title: 'Комиссии',
+        description: 'Списания комисии в разрезе накладных за указанный период',
+        link: '',
+      },
+      {
+        title: 'Агрегатный',
+        description:
+          'Агрегатный отчет по накладным с указанием их сосояния на указанную дату',
+        link: '',
+      },
+      {
+        title: 'Просрочки Покупателей',
+        description:
+          'Список накладных, оплата по которым была просрочена (на указанное количество дней) на указанную дату',
+        link: '',
+      },
+      {
+        title: 'История Накладных',
+        description: 'История накладных',
+        link: '',
+      },
+      {
+        title: 'Полученные Платежи',
+        description:
+          'Список полученных платежей по Договорам Поставок за указанный период',
+        link: '',
+      },
+      {
+        title: 'Выписка по счёту',
+        description: 'Список транзакций по расчетному счету',
+        link: '',
+      },
+      {
+        title: 'Агрегатный Сводный',
+        description:
+          'Агрегатный отчет по Договорам Поставок с указанием задолженности по договорам на указанную дату',
+        link: '',
+      },
+      {
+        title: 'Протокол Отчетов',
+        description: 'Список выполненных клиентом отчетов за указанный период',
+        link: '',
+      },
+      {
+        title: 'Счета-Фактуры',
+        description:
+          'Список выставленных Банком счетов-фактур за указанный период',
+        link: '',
+      },
+      {
+        title: 'Реестр Распоряжения',
+        description: 'Детализация реестра распоряжения в виде списка проводок',
+        link: '',
+      },
+      {
+        title: 'Отчеты Дебиторов',
+        description: 'Отчеты, полученные от Дебиторов',
+        link: '',
       },
     ];
   }

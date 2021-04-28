@@ -44,6 +44,10 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
     this.items = [
       {
+        label: 'Создать заявку на агентский факторинг',
+        command: () => this.showCreateAgencyRequestDialog(),
+      },
+      {
         label: 'Создать',
         command: () => this.showCreateRequestDialog(),
       },
@@ -80,6 +84,19 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   fetch(): void {
     this.store.dispatch(getRequestsAction());
+  }
+
+  showCreateAgencyRequestDialog() {
+    this.ref = this.dialogService.open(AgencyRequestCreateDialogComponent, {
+      header: 'Заявка на агентский факторинг',
+      width: '85%',
+      contentStyle: { height: '800px', overflow: 'auto' },
+      baseZIndex: 10000,
+    });
+
+    this.ref.onClose.subscribe((data: any) => {
+      console.log('closed');
+    });
   }
 
   showCreateRequestDialog() {

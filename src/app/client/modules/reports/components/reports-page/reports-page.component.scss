@@ -1,0 +1,40 @@
+.card-report {
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding-left: 20px;
+  padding-top: 22px;
+  padding-right: 13px;
+  padding-bottom: 15px;
+  min-width: 250px;
+  height: 140px;
+  cursor: pointer;
+
+  .header {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    line-height: 16px;
+    color: #102538;
+    margin-bottom: 15px;
+
+    .icon {
+      &.arrow_right {
+        margin-left: 13px;
+        background: url('/assets/icons/arrow_right.png') no-repeat center center;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .content {
+    font-size: 14px;
+    line-height: 16px;
+    color: #989898;
+  }
+}
+
+.card-report:hover {
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
