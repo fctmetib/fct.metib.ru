@@ -25,8 +25,10 @@
     <div class="p-fluid p-formgrid p-grid form">
       <!-- 1 row -->
       <div class="p-field p-col-12 p-md-12 p-lg-12">
-        <h5>Single</h5>
-        <p-dropdown [options]="debtors" formControlName="Id" id="Id" optionLabel="Title" optionValue="ID" [showClear]="true"></p-dropdown>
+        <p-dropdown [options]="debtors" formControlName="Id" id="Id" [filter]="true" filterBy="Title"
+          optionLabel="Title" optionValue="ID" editable="true"
+          (change)="debtorChange()"></p-dropdown>
+          <small id="debtor-help">Выберите дебитора из списка или добавьте своего.</small>
         <div *ngIf="formFree.controls['Id'].invalid">
           <small *ngIf="formFree.controls['Id'].errors.required" class="p-error">
             Поле должно быть заполнено.
@@ -39,7 +41,7 @@
         <div class="addon-button mb-20">
           <div class="addon-text">
             <p>
-               При необходимости прикрепите файлы:
+              При необходимости прикрепите файлы:
             </p>
           </div>
           <div class="mib-uploader">

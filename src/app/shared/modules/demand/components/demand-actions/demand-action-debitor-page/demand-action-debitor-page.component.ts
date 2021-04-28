@@ -31,6 +31,8 @@ export class DemandActionDebitorPageComponent implements OnInit {
   public isLoading: boolean = false;
   public debtors: DebtorInterface[] = [];
 
+  public isNewDebtor: boolean = false;
+
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
@@ -38,7 +40,7 @@ export class DemandActionDebitorPageComponent implements OnInit {
     private commonService: CommonService,
     private messageService: MessageService,
     private fileService: FileService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -56,9 +58,18 @@ export class DemandActionDebitorPageComponent implements OnInit {
 
     setInterval(() => this.saveDraft(), 30000);
 
-    this.demandService.getDebtors().subscribe(resp => {
+    this.demandService.getDebtors().subscribe((resp) => {
       this.debtors = resp;
-    })
+    });
+  }
+
+  public debtorChange() {
+    let selectedDebtor = this.debtors.find(
+      (x) => x.ID === this.formFree.value.Id
+    );
+    if (!selectedDebtor) {
+      this.isNewDebtor = true;
+    }
   }
 
   ngOnDestroy() {}
@@ -74,18 +85,20 @@ export class DemandActionDebitorPageComponent implements OnInit {
     });
   }
 
-
   //#region private logic
   saveDraft() {
     this.demandService
       .addDraftById(this.currentDraftId, this.prepareDraft())
-      .subscribe((resp) => {
-        console.log(resp)
-        this.currentDraftId = resp.ID;
-        this.showSuccess();
-      }, error => {
-        this.showWarn();
-      });
+      .subscribe(
+        (resp) => {
+          console.log(resp);
+          this.currentDraftId = resp.ID;
+          this.showSuccess();
+        },
+        (error) => {
+          this.showWarn();
+        }
+      );
   }
 
   private prepareDraft() {
@@ -103,21 +116,36 @@ export class DemandActionDebitorPageComponent implements OnInit {
   }
 
   private prepareCoreData() {
-    let debtor = this.debtors.find(x => x.ID === this.formFree.value.Id);
-    let data = {
-      ID: debtor.ID,
-      INN: debtor.Inn,
-      IsNew: false,
-      Title: debtor.Title,
-      Files: this.files,
-      Type: 'NewDebtor',
-    };
-    return data;
+    if (this.isNewDebtor) {
+      let data = {
+        ID: 0,
+        INN: this.formFree.value.INN,
+        IsNew: true,
+        Title: this.formFree.value.Id,
+        Files: this.files,
+        Type: 'NewDebtor',
+      };
+      return data;
+    } else {
+      if (this.formFree.value.Id) {
+        let debtor = this.debtors.find((x) => x.ID === this.formFree.value.Id);
+        let data = {
+          ID: debtor.ID,
+          INN: debtor.Inn,
+          IsNew: false,
+          Title: debtor.Title,
+          Files: this.files,
+          Type: 'NewDebtor',
+        };
+        return data;
+      }
+    }
   }
 
   private initForm(): void {
     this.formFree = this.fb.group({
-      Id: [0, [Validators.required]]
+      Id: [0, [Validators.required]],
+      INN: [''],
     });
 
     this.formFree.markAllAsTouched();
@@ -176,5 +204,4 @@ export class DemandActionDebitorPageComponent implements OnInit {
   }
 
   //#endregion
-
 }
