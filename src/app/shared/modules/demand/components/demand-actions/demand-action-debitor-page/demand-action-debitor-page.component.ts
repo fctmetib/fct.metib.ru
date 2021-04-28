@@ -69,6 +69,8 @@ export class DemandActionDebitorPageComponent implements OnInit {
     );
     if (!selectedDebtor) {
       this.isNewDebtor = true;
+    } else {
+      this.isNewDebtor = false;
     }
   }
 
