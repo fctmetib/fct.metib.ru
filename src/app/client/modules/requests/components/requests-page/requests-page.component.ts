@@ -13,6 +13,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SortEvent, MenuItem } from 'primeng/api';
 import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 import { RequestsService } from '../../services/requests.service';
+import { AgencyRequestCreateDialogComponent } from '../agency-request-create-dialog/agency-request-create-dialog.component';
 
 @Component({
   selector: 'app-requests-page',
@@ -44,7 +45,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
     this.items = [
       {
-        label: 'Создать заявку на агентский факторинг',
+        label: 'Создать на агентский',
         command: () => this.showCreateAgencyRequestDialog(),
       },
       {

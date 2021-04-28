@@ -39,6 +39,7 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
+import { AgencyRequestCreateDialogComponent } from './components/agency-request-create-dialog/agency-request-create-dialog.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -73,7 +74,7 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [RequestsPageComponent, RequestCreateDialogComponent],
+  declarations: [RequestsPageComponent, RequestCreateDialogComponent, AgencyRequestCreateDialogComponent],
   providers: [
     DialogService,
     DeliveryService,

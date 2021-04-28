@@ -1,0 +1,17 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <p-accordion>
+    <p-accordionTab header="Договор поставки">
+      <div class="p-fluid p-formgrid p-grid form">
+        <div class="p-field p-col-12 p-md-12">
+          <label for="delivery">Договор поставки:</label>
+          <p-dropdown id="delivery" [options]="deliveries" placeholder="Выберите договор поставки" optionLabel="Title"
+            valueLabel="ID"></p-dropdown>
+        </div>
+        <div class="p-field p-col-6 p-md-6">
+          <label for="disabled-input">Наименование...:</label>
+          <input id="disabled-input" type="text" pInputText [disabled]="true" />
+        </div>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+</form>
