@@ -14,7 +14,6 @@ export class DeliveryService {
   */
   constructor(private http: HttpClient) {}
 
-
   /**
   * Получает список договоров, по ID организации
   * @param ID организации

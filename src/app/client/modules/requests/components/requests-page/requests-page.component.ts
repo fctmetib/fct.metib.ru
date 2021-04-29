@@ -45,7 +45,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
     this.items = [
       {
-        label: 'Создать на агентский',
+        label: 'Агентская заявка',
         command: () => this.showCreateAgencyRequestDialog(),
       },
       {

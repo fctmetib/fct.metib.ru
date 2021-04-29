@@ -1,8 +1,8 @@
+import { DeliveryInterface } from './../../../../../shared/types/delivery/delivery.interface';
 import { Store } from '@ngrx/store';
-import { DeliveryInterface } from '../../../../../shared/types/delivery/delivery.interface';
 import { DeliveryService } from '../../../../../shared/services/share/delivery.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
@@ -29,6 +29,7 @@ export class AgencyRequestCreateDialogComponent {
     private deliveryService: DeliveryService,
     public config: DynamicDialogConfig,
     private commonService: CommonService,
+    private cdr: ChangeDetectorRef,
     public store: Store
   ) {}
 
@@ -39,11 +40,34 @@ export class AgencyRequestCreateDialogComponent {
 
   public onSubmit(): void {}
 
+  public deliveryChanged(i) {
+    console.log(this.requests.at(i).value);
+  }
+
+  public getRequestByIndx(i): DeliveryInterface {
+    let id = this.requests.at(i).value;
+    return this.deliveries.find(x => x.ID === id);
+  }
+
+  public addRequest(): void {
+    this.requests.push(this.fb.control(''));
+  }
+
+  get requests() {
+    return this.form.get('requests') as FormArray;
+  }
+
   private initValues(): void {
     this.deliveryService.getDeliveriesWithStats().subscribe(resp => {
       this.deliveries = resp;
     })
   }
 
-  private initializeForm(): void {}
+  private initializeForm(): void {
+    this.form = this.fb.group({
+      requests: this.fb.array([
+        this.fb.control('')
+      ])
+    });
+  }
 }

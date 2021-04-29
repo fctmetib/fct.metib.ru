@@ -10,7 +10,7 @@ import * as introJs from 'intro.js/intro.js';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'metallinvestbank-web';
+  title = 'Металлинвестбанк Факторинг';
 
   constructor(private store: Store) {
     this.store.dispatch(getCurrentUserAction())

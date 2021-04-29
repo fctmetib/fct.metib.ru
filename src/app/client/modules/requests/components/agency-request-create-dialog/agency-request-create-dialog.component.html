@@ -1,17 +1,48 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <p-accordion>
-    <p-accordionTab header="Договор поставки">
-      <div class="p-fluid p-formgrid p-grid form">
-        <div class="p-field p-col-12 p-md-12">
-          <label for="delivery">Договор поставки:</label>
-          <p-dropdown id="delivery" [options]="deliveries" placeholder="Выберите договор поставки" optionLabel="Title"
-            valueLabel="ID"></p-dropdown>
+  <div formArrayName="requests">
+    <p-accordion>
+      <p-accordionTab header="{{requests.at(i).value.Title || 'Выберите договор поставки...'}}" *ngFor="let request of requests.controls; let i=index">
+        <div class="p-fluid p-formgrid p-grid form">
+          <div class="p-field p-col-12 p-md-12">
+            <label for="delivery">Договор поставки:</label>
+            <p-dropdown id="delivery" [options]="deliveries" placeholder="Выберите договор поставки" optionLabel="Title"
+              (onChange)="deliveryChanged(i)"
+              valueLabel="ID" [formControlName]="i"></p-dropdown>
+          </div>
+          <div class="p-field p-col-6 p-md-6">
+            <label for="disabled-input">Наименование...:</label>
+            <input id="disabled-input" type="text" value="{{requests.at(i).value.Title || '...'}}" pInputText [disabled]="true" />
+          </div>
+          <div class="p-field p-col-6 p-md-6">
+            <label for="disabled-input">Тариф</label>
+            <input id="disabled-input" type="text" value="{{requests.at(i).value.Tariff || '...'}}" pInputText [disabled]="true" />
+          </div>
+          <div class="p-field p-col-6 p-md-6">
+            <label for="disabled-input">Клиент</label>
+            <input id="disabled-input" type="text" value="{{requests.at(i).value.Debtor?.Title || '...'}}" pInputText [disabled]="true" />
+          </div>
+          <div class="p-field p-col-6 p-md-6">
+            <label for="disabled-input">Номер</label>
+            <input id="disabled-input" type="text" value="{{requests.at(i).value.Number || '...'}}" pInputText [disabled]="true" />
+          </div>
+
+          <div class="p-field p-col-6 p-md-6">
+            <label for="disabled-input">Дата с</label>
+            <input id="disabled-input" type="text" value="{{requests.at(i).value.DateFrom || '...'}}" pInputText [disabled]="true" />
+          </div>
+          <div class="p-field p-col-6 p-md-6">
+            <label for="disabled-input">Дата до</label>
+            <input id="disabled-input" type="text" value="{{requests.at(i).value.DateTo || '...'}}" pInputText [disabled]="true" />
+          </div>
         </div>
-        <div class="p-field p-col-6 p-md-6">
-          <label for="disabled-input">Наименование...:</label>
-          <input id="disabled-input" type="text" pInputText [disabled]="true" />
-        </div>
-      </div>
-    </p-accordionTab>
-  </p-accordion>
+      </p-accordionTab>
+    </p-accordion>
+    <div class="p-field p-col-12 p-md-12">
+      <button id="btn_submit" pButton pRipple type="button" label="Добавить заявку" (click)="addRequest()"
+        class="btn-mib-submit p-button-outlined"></button>
+    </div>
+  </div>
+  <div class="p-field p-col-12 p-md-12">
+    <button id="btn_submit" pButton pRipple type="submit" label="Сохранить изменения" class="btn-mib-submit"></button>
+  </div>
 </form>
