@@ -1,3 +1,4 @@
+import { RequestCorrectDialogComponent } from './components/request-correct-dialog/request-correct-dialog.component';
 import { BackendErrorMessagesModule } from './../../../shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { SuccessMessagesModule } from './../../../shared/modules/successMessages/successMessages.module';
 import { CRUDEffect } from './store/effects/crud.effect';
@@ -74,7 +75,7 @@ import { AgencyRequestCreateDialogComponent } from './components/agency-request-
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [RequestsPageComponent, RequestCreateDialogComponent, AgencyRequestCreateDialogComponent],
+  declarations: [RequestsPageComponent, RequestCreateDialogComponent, RequestCorrectDialogComponent, AgencyRequestCreateDialogComponent],
   providers: [
     DialogService,
     DeliveryService,

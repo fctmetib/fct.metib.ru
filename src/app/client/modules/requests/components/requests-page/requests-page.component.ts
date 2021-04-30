@@ -1,3 +1,4 @@
+import { RequestCorrectDialogComponent } from './../request-correct-dialog/request-correct-dialog.component';
 import { RequestCreateDialogComponent } from './../request-create-dialog/request-create-dialog.component';
 import {
   requestsSelector,
@@ -62,7 +63,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       },
       {
         label: 'Сделать коррекцию',
-        routerLink: '',
+        command: () => this.showCorrectionDialog(),
       },
       {
         label: 'События',
@@ -141,6 +142,14 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     });
 
     this.requests$ = of(requests);
+  }
+
+  showCorrectionDialog() {
+    this.ref = this.dialogService.open(RequestCorrectDialogComponent, {
+      header: 'Заявка на коррекцию',
+      width: '70%',
+      baseZIndex: 10000,
+    });
   }
 
   showEditDialog() {
