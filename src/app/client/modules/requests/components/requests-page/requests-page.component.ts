@@ -147,7 +147,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   showCorrectionDialog() {
     this.ref = this.dialogService.open(RequestCorrectDialogComponent, {
       header: 'Заявка на коррекцию',
-      width: '70%',
+      width: '85%',
       baseZIndex: 10000,
     });
   }

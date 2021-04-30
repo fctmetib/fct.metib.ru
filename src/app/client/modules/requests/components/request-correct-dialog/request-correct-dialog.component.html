@@ -1,5 +1,99 @@
 <div class="p-field p-col-12 p-md-12">
   Измените сумму поставок где это необходимо и нажмите "Сохранить изменения"
+  <div class="responsive-table">
+    <p-table [value]="requests" [rows]="10" styleClass="p-datatable-customers mib-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div class="m-th">
+              <div>ID</div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Номер</div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Дата</div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Сумма</div>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-request>
+        <tr [pSelectableRow]="request">
+          <td>
+            <div class="m-td">
+              <div>{{request.ID}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div> {{request.Number}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>{{request.Date | date: 'dd.MM.yyyy'}}</div>
+            </div>
+          </td>
+          <td pEditableColumn>
+            <div class="m-td">
+              <div>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="request.Summ" required>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{request.Summ}}
+                  </ng-template>
+                </p-cellEditor>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <ng-container *ngIf="requests; else skeletonRequestsTemplate">
+          <tr>
+            <td colspan="8">Нет данных.</td>
+          </tr>
+        </ng-container>
+        <ng-template #skeletonRequestsTemplate>
+          <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
+            <td>
+            </td>
+            <td>
+              <div class="m-td">
+                <p-skeleton></p-skeleton>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <p-skeleton></p-skeleton>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <p-skeleton></p-skeleton>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <p-skeleton></p-skeleton>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
 <div class="p-field p-col-12 p-md-12">
   <button id="btn_submit" pButton pRipple type="submit" label="Сохранить изменения" class="btn-mib-submit"></button>

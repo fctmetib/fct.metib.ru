@@ -1,6 +1,7 @@
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { RequestsResponseInterface } from '../../types/requestResponse.interface';
 
 @Component({
   selector: 'app-request-correct-dialog',
@@ -8,6 +9,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
   styleUrls: ['./request-correct-dialog.component.scss'],
 })
 export class RequestCorrectDialogComponent {
+
+  public requests: RequestsResponseInterface[] = [];
 
   constructor(
     public ref: DynamicDialogRef,
@@ -23,6 +26,29 @@ export class RequestCorrectDialogComponent {
 
 
   private initValues(): void {
-
+    this.requests.push({
+      Date: new Date(),
+      Delivery: null,
+      Documents: null,
+      Files: null,
+      ID: 1,
+      Number: '1',
+      Shipments: null,
+      Status: null,
+      Summ: 6127,
+      Type: ''
+    })
+    this.requests.push({
+      Date: new Date(),
+      Delivery: null,
+      Documents: null,
+      Files: null,
+      ID: 2,
+      Number: '2',
+      Shipments: null,
+      Status: null,
+      Summ: 6147,
+      Type: ''
+    })
   }
 }
