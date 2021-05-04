@@ -20,7 +20,10 @@ export class DemandActionDebitorPageComponent implements OnInit {
   isUserVerified: boolean;
 
   public alert: boolean;
+  public errorAlert: boolean;
+
   public alertMessage: string;
+  public errorMessage: string;
 
   public formFree: FormGroup;
 
@@ -77,6 +80,16 @@ export class DemandActionDebitorPageComponent implements OnInit {
   ngOnDestroy() {}
 
   public onSubmit() {
+   this.resetAlerts();
+
+    if(this.isNewDebtor) {
+      if(this.files.length < 1) {
+        this.errorAlert = true;
+        this.errorMessage = 'Для добавления нового дебитора необходимо прикрепить файл.'
+        return;
+      }
+    }
+
     this.isLoading = true;
     let data: SaveDemandRequestInterface<any> = this.prepareData();
 
@@ -205,5 +218,11 @@ export class DemandActionDebitorPageComponent implements OnInit {
     }
   }
 
+  private resetAlerts() {
+    this.alert = false;
+    this.alertMessage = '';
+    this.errorAlert = false;
+    this.errorMessage = '';
+  }
   //#endregion
 }

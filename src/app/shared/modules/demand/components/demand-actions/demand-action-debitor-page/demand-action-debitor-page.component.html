@@ -12,8 +12,8 @@
   </div>
 
   <metib-success-messages *ngIf="alert" [message]="alertMessage"></metib-success-messages>
-  <!-- <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
-  </metib-backend-error-messages> -->
+  <metib-backend-error-messages *ngIf="errorAlert" [backendErrors]="errorMessage">
+  </metib-backend-error-messages>
 
   <form [formGroup]="formFree" (ngSubmit)="onSubmit()">
     <div class="form-actions">
