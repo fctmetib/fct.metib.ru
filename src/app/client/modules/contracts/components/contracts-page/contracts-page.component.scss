@@ -15,11 +15,17 @@
 
     .contract-info {
       width: 100%;
+      min-width: 400px;
       display: flex;
       flex-direction: column;
       justify-content: center;
 
-      .contract-icons {
+      .contract-info-name {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .contract-actions {
         display: flex;
 
         .icon {
@@ -65,12 +71,13 @@
     .contract-step {
       text-align: center;
       width: 40%;
+      min-width: 220px;
 
       .price {
         font-size: 1.5rem;
         font-weight: 700;
         color: #69CF74;
-        height: 50px;
+        height: 70px;
       }
 
       .description {
@@ -89,6 +96,7 @@
     .contract-delay {
       text-align: center;
       width: 40%;
+      min-width: 220px;
 
       .price {
         font-size: 1.5rem;
@@ -106,6 +114,7 @@
     .contract-limit {
       text-align: center;
       width: 40%;
+      min-width: 220px;
 
       .price {
         font-size: 1.5rem;

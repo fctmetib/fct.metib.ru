@@ -1,14 +1,4 @@
 <div class="card-content" id="step1">
-  <!-- <div class="header lg">
-    <div class="title">
-      <h2>Договоры</h2>
-      <div class="subheader">
-        Список Договоров
-      </div>
-    </div>
-    <div class="actions">
-    </div>
-  </div> -->
   <p-toolbar styleClass="p-mb-4 ml-0">
     <ng-template pTemplate="left">
       <button type="button" pButton label="{{btnShowAllText}}" class="basic p-mr-2" (click)="showAllToggle()"></button>
@@ -55,23 +45,27 @@
     <div class="contracts-list">
       <div class="contract-item" *ngFor="let item of listDisplayContracts;">
         <div class="contract-info item">
-          <div class="contract-name can-click" (click)="openDetails(item.ID)">{{item.Debtor.Title}} <div
-              class="icon arrow_right"></div>
+          <div class="contract-info-name">
+            <div class="contract-name can-click" (click)="openDetails(item.ID)">
+              {{item.Debtor.Title}}
+              <div class="icon arrow_right"></div>
+            </div>
+            <div class="contract-actions">
+              <div class="icon" pTooltip="Реквизиты" (click)="showPropertyDialog(item.Debtor.ID)"><i
+                  class="pi pi-book"></i>
+              </div>
+              <div class="icon" pTooltip="Список накладных" (click)="showShipmentsDialog(item.ID)"><i
+                  class="pi pi-list"></i></div>
+            </div>
+
           </div>
+
           <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}</div>
           <div class="contract-type"><span class="main-color">{{item.Tariff}},</span> {{item.Delay.Count}} к.д.</div>
-          <div class="contract-icons">
-            <div class="icon" pTooltip="Реквизиты" (click)="showPropertyDialog(item.Debtor.ID)"><i
-                class="pi pi-book"></i>
-            </div>
-          </div>
         </div>
         <div class="contract-step item">
           <div class="price">{{item.Statistics.DutyCustomer | currency:'RUB'}}</div>
-          <div class="description">Уступлено
-            <div class="icon" pTooltip="Список накладных" (click)="showShipmentsDialog(item.ID)"><i
-                class="pi pi-list"></i></div>
-          </div>
+          <div class="description">Уступлено</div>
         </div>
         <div class="contract-delay item">
           <div class="price">{{item.Statistics.DutyDebtor | currency:'RUB'}}</div>
