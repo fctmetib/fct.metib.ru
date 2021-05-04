@@ -7,6 +7,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Paginator } from 'primeng/paginator';
 import { OrganizationService } from 'src/app/shared/services/share/organization.service';
 import { ShipmentInterface } from 'src/app/shared/types/common/shipment-interface';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'app-contracts-page',
@@ -32,6 +33,7 @@ export class ContractsPageComponent implements OnInit {
 
   public isOrganizationError: boolean = false;
   public isOrganizationLoading: boolean = false;
+  public currentOrganizationContent: any;
   public currentOrganization: OrganizationInterface = {
     ABSID: 0,
     Account: {
@@ -73,6 +75,7 @@ export class ContractsPageComponent implements OnInit {
   constructor(
     private deliveryService: DeliveryService,
     private organizationService: OrganizationService,
+    private _clipboardService: ClipboardService,
     private router: Router
   ) {}
 
@@ -92,6 +95,20 @@ export class ContractsPageComponent implements OnInit {
     this.organizationService.getOrganizationById(id).subscribe(
       (resp) => {
         this.currentOrganization = resp;
+
+        this.currentOrganizationContent = `Банк: ${resp?.Account?.Bank}
+        Получатель: ${resp?.Account?.Bank}
+        Кор/с: ${resp?.Account?.COR}
+        БИК: ${resp?.Account?.BIK}
+        ИНН: ${resp?.INN}
+        КПП: ${resp?.KPP}
+        Счет для оплаты задолженности: ${resp?.ABSID}
+        Счет для оплаты комиссии: ${resp?.ABSID}
+        Счет для оплаты комиссии Фактор-Клиента: ${resp?.ABSID}
+        Примеры назначения платежа: ${resp?.ABSID}
+        Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция):
+        ${resp?.ABSID}
+        Назначение: ${resp?.Description}`;
         this.isOrganizationLoading = false;
       },
       (error) => {
@@ -116,6 +133,10 @@ export class ContractsPageComponent implements OnInit {
         this.isShipmentsLoading = false;
       }
     );
+  }
+
+  copyDynamicText() {
+    this._clipboardService.copyFromContent(this.currentOrganizationContent);
   }
 
   public showAllToggle() {

@@ -28,6 +28,7 @@ import { OrganizationService } from 'src/app/shared/services/share/organization.
 import { ContractDetailsPageComponent } from './components/contract-details-page/contract-details-page.component';
 import { BackendErrorMessagesModule } from 'src/app/shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { RequestsService } from '../requests/services/requests.service';
+import { ClipboardModule } from 'ngx-clipboard';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { RequestsService } from '../requests/services/requests.service';
     ToolbarModule,
     TooltipModule,
     TieredMenuModule,
+    ClipboardModule,
     FormsModule,
     ProgressBarModule,
     MultiSelectModule,

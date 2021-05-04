@@ -94,23 +94,13 @@
     </ng-container>
     <ng-template #noErrorOrganizationTemplate>
       <p class="p-m-0">
-        Банк: {{currentOrganization.Account.Bank}} <br>
-        Получатель: {{currentOrganization.Account.Bank}} <br>
-        Кор/с: {{currentOrganization.Account.COR}} <br>
-        БИК: {{currentOrganization.Account.BIK}} <br>
-        ИНН: {{currentOrganization.INN}} <br>
-        КПП: {{currentOrganization.KPP}} <br>
-        Счет для оплаты задолженности: {{currentOrganization.ABSID}} <br>
-        Счет для оплаты комиссии: {{currentOrganization.ABSID}} <br>
-        Счет для оплаты комиссии Фактор-Клиента: {{currentOrganization.ABSID}} <br>
-        Примеры назначения платежа: {{currentOrganization.ABSID}} <br>
-        Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция):
-        {{currentOrganization.ABSID}} <br>
-        Назначение: {{currentOrganization.Description}} </p>
+        {{currentOrganizationContent}}
+       </p>
     </ng-template>
   </ng-template>
   <ng-template pTemplate="footer">
-    <p-button icon="pi pi-check" (click)="displayProperty=false" label="Закрыть" styleClass="p-button-text"></p-button>
+    <p-button (click)="copyDynamicText()"  label="Скопировать" styleClass="p-button-text"></p-button>
+    <p-button (click)="displayProperty=false" label="Закрыть" styleClass="p-button-text"></p-button>
   </ng-template>
 </p-dialog>
 
