@@ -123,10 +123,17 @@ export class ContractsPageComponent implements OnInit {
 
     if (this.isPagination) {
       this.btnShowAllText = 'Показать всё';
-      this.listContractsFiltered = this.listContracts;
-    } else {
       this.filterByDate();
+
+      let event = {
+        page: 0,
+        rows: 10,
+      };
+
+      this.paginate(event);
+    } else {
       this.btnShowAllText = 'Показать действующие';
+      this.listContractsFiltered = this.listContracts;
     }
   }
 
@@ -174,7 +181,9 @@ export class ContractsPageComponent implements OnInit {
   }
 
   private filterByDate(): void {
-    this.listContractsFiltered = this.listContracts.filter(x => new Date(x.DateTo) > new Date());
-    console.log(this.listContractsFiltered)
+    this.listContractsFiltered = this.listContracts.filter(
+      (x) => new Date(x.DateTo) > new Date()
+    );
+    console.log(this.listContractsFiltered);
   }
 }

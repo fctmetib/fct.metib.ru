@@ -78,8 +78,7 @@
       </div>
     </div>
   </ng-template>
-  <p-paginator #paginator [rows]="10" totalRecords="{{listContracts.length}}" (onPageChange)="paginate($event)"
-    [ngStyle]="{'display': isPagination? 'block' : 'none' }"></p-paginator>
+  <p-paginator #paginator [rows]="10" totalRecords="{{listContractsFiltered.length}}" (onPageChange)="paginate($event)"></p-paginator>
 </div>
 
 
