@@ -18,6 +18,7 @@ export class ContractsPageComponent implements OnInit {
 
   public isLoading: boolean = false;
   public listContracts: DeliveryInterface[] = [];
+  public listContractsFiltered: DeliveryInterface[] = [];
 
   public isPagination: boolean = true;
   public btnShowAllText: string = 'Показать всё';
@@ -72,7 +73,6 @@ export class ContractsPageComponent implements OnInit {
   constructor(
     private deliveryService: DeliveryService,
     private organizationService: OrganizationService,
-    private requestService: RequestsService,
     private router: Router
   ) {}
 
@@ -109,15 +109,7 @@ export class ContractsPageComponent implements OnInit {
     this.deliveryService.getShipments(id).subscribe(
       (resp) => {
         this.currentShipments = resp;
-
-        // if(this.currentShipments) {
-        //   this.currentShipments.forEach(i => {
-        //     this.requestService.getRequestByIdAndParams(i.Request.ID, true, false, false).subscribe(request => {
-
-        //     });
-            this.isShipmentsLoading = false;
-        //   })
-        // }
+        this.isShipmentsLoading = false;
       },
       (error) => {
         this.isShipmentsError = true;
@@ -131,10 +123,10 @@ export class ContractsPageComponent implements OnInit {
 
     if (this.isPagination) {
       this.btnShowAllText = 'Показать всё';
-      this.paginate();
+      this.listContractsFiltered = this.listContracts;
     } else {
-      this.listDisplayContracts = this.listContracts;
-      this.btnShowAllText = 'Разбить на страницы';
+      this.filterByDate();
+      this.btnShowAllText = 'Показать действующие';
     }
   }
 
@@ -148,7 +140,7 @@ export class ContractsPageComponent implements OnInit {
       this.paginationPage = event.page;
 
       let currentIndex = event.page * event.rows;
-      this.listDisplayContracts = this.listContracts.slice(
+      this.listDisplayContracts = this.listContractsFiltered.slice(
         currentIndex,
         currentIndex + event.rows
       );
@@ -156,7 +148,7 @@ export class ContractsPageComponent implements OnInit {
       let currentIndex = this.paginationPage * this.paginationRows;
       this.updateCurrentPage(currentIndex);
 
-      this.listDisplayContracts = this.listContracts.slice(
+      this.listDisplayContracts = this.listContractsFiltered.slice(
         currentIndex,
         currentIndex + this.paginationRows
       );
@@ -169,6 +161,9 @@ export class ContractsPageComponent implements OnInit {
       this.listContracts = resp.sort((a, b) => {
         return new Date(b.DateFrom).getTime() - new Date(a.DateFrom).getTime();
       });
+
+      this.filterByDate();
+
       this.paginate();
       this.isLoading = false;
     });
@@ -176,5 +171,10 @@ export class ContractsPageComponent implements OnInit {
 
   private updateCurrentPage(currentPage: number): void {
     this.paginator.changePage(currentPage);
+  }
+
+  private filterByDate(): void {
+    this.listContractsFiltered = this.listContracts.filter(x => new Date(x.DateTo) > new Date());
+    console.log(this.listContractsFiltered)
   }
 }
