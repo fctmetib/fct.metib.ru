@@ -94,7 +94,9 @@
     </ng-container>
     <ng-template #noErrorOrganizationTemplate>
       <p class="p-m-0">
-        {{currentOrganizationContent}}
+        <ng-container *ngFor="let line of getOrganizationList()">
+          {{line}} <br>
+        </ng-container>
        </p>
     </ng-template>
   </ng-template>

@@ -33,7 +33,7 @@ export class ContractsPageComponent implements OnInit {
 
   public isOrganizationError: boolean = false;
   public isOrganizationLoading: boolean = false;
-  public currentOrganizationContent: any;
+  public currentOrganizationContent: string;
   public currentOrganization: OrganizationInterface = {
     ABSID: 0,
     Account: {
@@ -96,19 +96,19 @@ export class ContractsPageComponent implements OnInit {
       (resp) => {
         this.currentOrganization = resp;
 
-        this.currentOrganizationContent = `Банк: ${resp?.Account?.Bank}
-        Получатель: ${resp?.Account?.Bank}
-        Кор/с: ${resp?.Account?.COR}
-        БИК: ${resp?.Account?.BIK}
-        ИНН: ${resp?.INN}
-        КПП: ${resp?.KPP}
-        Счет для оплаты задолженности: ${resp?.ABSID}
-        Счет для оплаты комиссии: ${resp?.ABSID}
-        Счет для оплаты комиссии Фактор-Клиента: ${resp?.ABSID}
-        Примеры назначения платежа: ${resp?.ABSID}
+        this.currentOrganizationContent = `Банк: ${resp?.Account?.Bank || ''}
+        Получатель: ${resp?.Account?.Bank || ''}
+        Кор/с: ${resp?.Account?.COR || ''}
+        БИК: ${resp?.Account?.BIK || ''}
+        ИНН: ${resp?.INN || ''}
+        КПП: ${resp?.KPP || ''}
+        Счет для оплаты задолженности: ${resp?.ABSID || ''}
+        Счет для оплаты комиссии: ${resp?.ABSID || ''}
+        Счет для оплаты комиссии Фактор-Клиента: ${resp?.ABSID || ''}
+        Примеры назначения платежа: ${resp?.ABSID || ''}
         Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция):
-        ${resp?.ABSID}
-        Назначение: ${resp?.Description}`;
+        ${resp?.ABSID || ''}
+        Назначение: ${resp?.Description || ''}`;
         this.isOrganizationLoading = false;
       },
       (error) => {
@@ -135,7 +135,16 @@ export class ContractsPageComponent implements OnInit {
     );
   }
 
-  copyDynamicText() {
+  public getOrganizationList(): string[] {
+    if(!this.currentOrganizationContent)
+      return;
+
+    let organizationList: string[] = [];
+    organizationList = this.currentOrganizationContent.split("\n");
+    return organizationList;
+  }
+
+  public copyDynamicText() {
     this._clipboardService.copyFromContent(this.currentOrganizationContent);
   }
 
