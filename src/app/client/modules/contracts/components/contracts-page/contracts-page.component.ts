@@ -135,6 +135,22 @@ export class ContractsPageComponent implements OnInit {
     );
   }
 
+  public getAccountInfo(id): string {
+    let foundedObject = this.currentShipments.find(x => x.ID === id);
+
+    let result: string = '';
+    if(foundedObject.Waybill)
+      return foundedObject.Waybill;
+
+    if(foundedObject.Account)
+      return foundedObject.Account;
+
+    if(foundedObject.Request.Number)
+      return foundedObject.Request.Number;
+
+    return result;
+  }
+
   public getOrganizationList(): string[] {
     if(!this.currentOrganizationContent)
       return;
