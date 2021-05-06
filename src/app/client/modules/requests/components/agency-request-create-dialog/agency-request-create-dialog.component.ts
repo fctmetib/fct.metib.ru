@@ -7,6 +7,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
+import { AgencyShipmentsInterface } from '../../types/common/agency-shipments.interface';
 
 @Component({
   selector: 'app-agency-request-create-dialog',
@@ -27,17 +28,16 @@ export class AgencyRequestCreateDialogComponent {
 
   public addDeliveryDialog: boolean;
   public currentShipmentID = null;
-  public shipments: ClientShipmentInterface[] = [];
+  public shipments: AgencyShipmentsInterface[] = [];
   public selectedShipments: ClientShipmentInterface[] = [];
+
+  public currentRequestId: number;
 
   constructor(
     public ref: DynamicDialogRef,
     private fb: FormBuilder,
-    private fileService: FileService,
     private deliveryService: DeliveryService,
     public config: DynamicDialogConfig,
-    private commonService: CommonService,
-    private cdr: ChangeDetectorRef,
     public store: Store
   ) {}
 
@@ -59,10 +59,21 @@ export class AgencyRequestCreateDialogComponent {
 
   public addRequest(): void {
     this.requests.push(this.fb.control(''));
+    let currentIndex = this.requests.controls.length - 1;
+
+
+    console.log('CURRENT INDEX SHIPMENT', currentIndex)
+
+    this.shipments.push({
+      formId: currentIndex,
+      shipmnets: []
+    })
   }
 
 
-  openNew(isEdit: boolean) {
+  openNew(isEdit: boolean, i: number) {
+    this.currentRequestId = i;
+
     if (isEdit) {
       let shipment = this.selectedShipments[0];
 
@@ -87,14 +98,17 @@ export class AgencyRequestCreateDialogComponent {
     this.addDeliveryDialog = false;
   }
 
-  deleteShipments() {
+  deleteShipments(i: number) {
+    let currentShipments = this.shipments.find(x => x.formId === i).shipmnets;
     this.selectedShipments.forEach((selectedShipment) => {
-      this.shipments.splice(this.shipments.indexOf(selectedShipment), 1);
+      this.shipments.splice(currentShipments.indexOf(selectedShipment), 1);
     });
     this.selectedShipments = [];
   }
 
   addShipment() {
+    let currentShipment = this.shipments.find(x => x.formId === this.currentRequestId)
+
     let shipment: ClientShipmentInterface = {
       AccountNumber: this.shipmentForm.value.accountNumber,
       AccountDate: this.shipmentForm.value.accountDate,
@@ -111,20 +125,22 @@ export class AgencyRequestCreateDialogComponent {
 
     if (this.currentShipmentID) {
       shipment.ID = this.currentShipmentID;
-      let shipmentIndex = this.shipments.indexOf(
-        this.shipments.find((x) => x.ID === this.currentShipmentID)
+      let shipmentIndex = currentShipment.shipmnets.indexOf(
+        currentShipment.shipmnets.find((x) => x.ID === this.currentShipmentID)
       );
-      this.shipments[shipmentIndex] = shipment;
+
+      currentShipment.shipmnets[shipmentIndex] = shipment;
       this.currentShipmentID = null;
     } else {
-      this.shipments.push(shipment);
+      currentShipment.shipmnets.push(shipment);
     }
 
     this.shipmentForm.reset();
     this.hideDialog();
   }
 
-  getShipmentsSum(items: ClientShipmentInterface[]) {
+  getShipmentsSum(i: number) {
+    let items = this.shipments.find(x => x.formId === i)?.shipmnets;
     if(items) {
     return items.reduce((sum, current) =>
       sum + current.Summ, 0
@@ -147,6 +163,20 @@ export class AgencyRequestCreateDialogComponent {
       requests: this.fb.array([
         this.fb.control('')
       ])
+    });
+
+    this.shipmentForm = this.fb.group({
+      accountNumber: ['', [Validators.required]],
+      accountDate: ['', [Validators.required]],
+      invoiceNumber: ['', [Validators.required]],
+      invoiceDate: ['', [Validators.required]],
+      dateShipment: ['', [Validators.required]],
+      summ: [1, [Validators.required]],
+    });
+
+    this.shipments.push({
+      formId: 0,
+      shipmnets: []
     });
   }
 }
