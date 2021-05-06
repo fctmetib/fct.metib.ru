@@ -78,7 +78,8 @@
       </div>
     </div>
   </ng-template>
-  <p-paginator #paginator [rows]="10" totalRecords="{{listContractsFiltered.length}}" (onPageChange)="paginate($event)"></p-paginator>
+  <p-paginator #paginator [rows]="10" totalRecords="{{listContractsFiltered.length}}" (onPageChange)="paginate($event)">
+  </p-paginator>
 </div>
 
 
@@ -97,11 +98,11 @@
         <ng-container *ngFor="let line of getOrganizationList()">
           {{line}} <br>
         </ng-container>
-       </p>
+      </p>
     </ng-template>
   </ng-template>
   <ng-template pTemplate="footer">
-    <p-button (click)="copyDynamicText()"  label="Скопировать" styleClass="p-button-text"></p-button>
+    <p-button (click)="copyDynamicText()" label="Скопировать" styleClass="p-button-text"></p-button>
     <p-button (click)="displayProperty=false" label="Закрыть" styleClass="p-button-text"></p-button>
   </ng-template>
 </p-dialog>
@@ -116,88 +117,29 @@
       <metib-backend-error-messages [backendErrors]="'Ошибка!'"></metib-backend-error-messages>
     </ng-container>
     <ng-template #noErrorShipmentsTemplate>
-      <p-table [value]="currentShipments" dataKey="ID" styleClass="p-datatable-customers mib-table">
-        <!-- -->
-        <ng-template pTemplate="header">
+      <p-table [columns]="selectedColumns" [value]="currentShipments" dataKey="ID"
+        styleClass="p-datatable-customers mib-table">
+        <ng-template pTemplate="caption">
+          <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+            selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns">
+          </p-multiSelect>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
           <tr>
-            <th>
+            <th *ngFor="let col of columns">
               <div class="m-th">
                 <div>
-                  ID
+                  {{col.header}}
                 </div>
-              </div>
-            </th>
-            <th>
-              <div class="m-th">
-                <div>Аккаунт</div>
-              </div>
-            </th>
-            <th>
-              <div class="m-th">
-                <div>Дата дополнения
-                </div>
-              </div>
-            </th>
-            <th>
-              <div class="m-th">
-                <div>Дата оплата
-                </div>
-              </div>
-            </th>
-            <th>
-              <div class="m-th">
-                <div>Дата поставки
-                </div>
-              </div>
-            </th>
-            <th>
-              <div class="m-th">
-                <div>Задолженность дебтора
-                </div>
-              </div>
-            </th>
-            <th>
-              <div class="m-th">
-                <div>Задолженность клиента</div>
               </div>
             </th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-shipment>
-          <tr [pSelectableRow]="shipment">
-            <td>
+        <ng-template pTemplate="body" let-product let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
               <div class="m-td">
-                <div>{{shipment.ID}}</div>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <div>{{getAccountInfo(shipment.ID)}}</div>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <div> {{shipment.DateAddon | date:'dd.MM.yyyy'}}</div>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <div>{{shipment.DatePayment | date:'dd.MM.yyyy'}}</div>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                {{shipment.DateShipment | date:'dd.MM.yyyy'}}
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <div> {{shipment.DutyCustomer}}</div>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <div> {{shipment.DutyDebtor}}</div>
+                <div>{{product[col.field]}}</div>
               </div>
             </td>
           </tr>

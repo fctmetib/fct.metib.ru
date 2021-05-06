@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { OrganizationInterface } from './../../../../../shared/types/organization/organization.interface';
 import { DeliveryInterface } from './../../../../../shared/types/delivery/delivery.interface';
 import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Paginator } from 'primeng/paginator';
 import { OrganizationService } from 'src/app/shared/services/share/organization.service';
 import { ShipmentInterface } from 'src/app/shared/types/common/shipment-interface';
@@ -15,6 +15,10 @@ import { ClipboardService } from 'ngx-clipboard';
   styleUrls: ['./contracts-page.component.scss'],
 })
 export class ContractsPageComponent implements OnInit {
+  @Input() get selectedColumns(): any[] {
+    return this._selectedColumns;
+  }
+
   @ViewChild('paginator', { static: false }) paginator!: Paginator;
 
   public isLoading: boolean = false;
@@ -68,6 +72,9 @@ export class ContractsPageComponent implements OnInit {
     WebSite: '',
   };
 
+  public cols: any[];
+  public _selectedColumns: any[];
+
   public isShipmentsError: boolean = false;
   public isShipmentsLoading: boolean = false;
   public currentShipments: ShipmentInterface[] = [];
@@ -81,6 +88,23 @@ export class ContractsPageComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
+
+    this.cols = [
+      { field: 'ID', header: 'ID' },
+      { field: 'Account', header: 'Аккаунт' },
+      { field: 'DateAddon', header: 'Дата дополнения' },
+      { field: 'DatePayment', header: 'Дата оплата' },
+      { field: 'DateShipment', header: 'Дата поставки' },
+      { field: 'DutyCustomer', header: 'Задолженность дебтора' },
+      { field: 'DutyDebtor', header: 'Задолженность клиента' },
+    ];
+
+    this._selectedColumns = this.cols;
+  }
+
+  set selectedColumns(val: any[]) {
+    //restore original order
+    this._selectedColumns = this.cols.filter((col) => val.includes(col));
   }
 
   public openDetails(id): void {
@@ -136,27 +160,23 @@ export class ContractsPageComponent implements OnInit {
   }
 
   public getAccountInfo(id): string {
-    let foundedObject = this.currentShipments.find(x => x.ID === id);
+    let foundedObject = this.currentShipments.find((x) => x.ID === id);
 
     let result: string = '';
-    if(foundedObject.Waybill)
-      return foundedObject.Waybill;
+    if (foundedObject.Waybill) return foundedObject.Waybill;
 
-    if(foundedObject.Account)
-      return foundedObject.Account;
+    if (foundedObject.Account) return foundedObject.Account;
 
-    if(foundedObject.Request.Number)
-      return foundedObject.Request.Number;
+    if (foundedObject.Request.Number) return foundedObject.Request.Number;
 
     return result;
   }
 
   public getOrganizationList(): string[] {
-    if(!this.currentOrganizationContent)
-      return;
+    if (!this.currentOrganizationContent) return;
 
     let organizationList: string[] = [];
-    organizationList = this.currentOrganizationContent.split("\n");
+    organizationList = this.currentOrganizationContent.split('\n');
     return organizationList;
   }
 
