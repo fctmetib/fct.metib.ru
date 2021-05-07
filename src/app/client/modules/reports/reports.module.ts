@@ -19,6 +19,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { ReportsPageComponent } from './components/reports-page/reports-page.component';
 import { ReportViewPageComponent } from './components/report-view-page/report-view-page.component';
+import { ReportInitDialogComponent } from './components/report-init-dialog/report-init-dialog.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,7 @@ import { ReportViewPageComponent } from './components/report-view-page/report-vi
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [ReportsPageComponent, ReportViewPageComponent],
+  declarations: [ReportsPageComponent, ReportViewPageComponent, ReportInitDialogComponent],
   providers: [ReportService],
 })
 export class ReportsModule {}
