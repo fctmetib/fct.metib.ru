@@ -1,0 +1,104 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-formgrid p-grid form">
+
+    <ng-container *ngIf="controlConfig.isEmpty">
+      <p>Для этого отчета не нужны параметры...
+        В отчете будут указаны актуальные данные на текущий момент.</p>
+    </ng-container>
+    
+    <ng-container *ngIf="controlConfig.isDateFrom">
+      <div class="p-field p-col-12 p-md-6">
+        <label for="dateFrom">Дата с: </label>
+        <input id="dateFrom" type="date" pInputText placeholder="Дата с" formControlName="dateFrom">
+        <div *ngIf="form.controls['dateFrom'].invalid">
+          <small *ngIf="form.controls['dateFrom'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="controlConfig.isDateTo">
+      <div class="p-field p-col-12 p-md-6">
+        <label for="dateTo">Дата до: </label>
+        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
+        <div *ngIf="form.controls['dateTo'].invalid">
+          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="controlConfig.isDebitor">
+      <div class="p-field p-col-12 p-md-12">
+        <label for="dateTo">Дебитор: </label>
+        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
+        <div *ngIf="form.controls['dateTo'].invalid">
+          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="controlConfig.isDateTo">
+      <div class="p-field p-col-12 p-md-6">
+        <label for="dateTo">Дата до: </label>
+        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
+        <div *ngIf="form.controls['dateTo'].invalid">
+          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="controlConfig.isDateTo">
+      <div class="p-field p-col-12 p-md-6">
+        <label for="dateTo">Дата до: </label>
+        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
+        <div *ngIf="form.controls['dateTo'].invalid">
+          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="controlConfig.isDateTo">
+      <div class="p-field p-col-12 p-md-6">
+        <label for="dateTo">Дата до: </label>
+        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
+        <div *ngIf="form.controls['dateTo'].invalid">
+          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="controlConfig.isDateTo">
+      <div class="p-field p-col-12 p-md-6">
+        <label for="dateTo">Дата до: </label>
+        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
+        <div *ngIf="form.controls['dateTo'].invalid">
+          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="controlConfig.isDateTo">
+      <div class="p-field p-col-12 p-md-6">
+        <label for="dateTo">Дата до: </label>
+        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
+        <div *ngIf="form.controls['dateTo'].invalid">
+          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+  <div class="modal-actions">
+    <button pButton pRipple label="Сформировать" class="p-button-text save" type="submit"
+      [disabled]="form.invalid"></button>
+  </div>
+</form>
