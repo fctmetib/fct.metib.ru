@@ -1,6 +1,7 @@
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { ControlConfigInterface } from '../../types/common/control-config.interface';
 
 @Component({
   selector: 'app-report-init-dialog',
@@ -9,14 +10,25 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class ReportInitDialogComponent {
 
+  public controlConfig: ControlConfigInterface;
+
   constructor(
-    public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
     public store: Store
   ) {}
 
   ngOnInit() {
+    this.initControlConfig();
+    this.initForm();
   }
 
   public onSubmit(): void {}
+
+  private initControlConfig(): void {
+
+  }
+
+  private initForm(): void {
+
+  }
 }
