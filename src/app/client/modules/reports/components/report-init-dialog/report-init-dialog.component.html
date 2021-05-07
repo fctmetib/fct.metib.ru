@@ -5,7 +5,7 @@
       <p>Для этого отчета не нужны параметры...
         В отчете будут указаны актуальные данные на текущий момент.</p>
     </ng-container>
-    
+
     <ng-container *ngIf="controlConfig.isDateFrom">
       <div class="p-field p-col-12 p-md-6">
         <label for="dateFrom">Дата с: </label>
@@ -31,65 +31,95 @@
 
     <ng-container *ngIf="controlConfig.isDebitor">
       <div class="p-field p-col-12 p-md-12">
-        <label for="dateTo">Дебитор: </label>
-        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
-        <div *ngIf="form.controls['dateTo'].invalid">
-          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+        <label for="debitor">Дебитор (Дропдаун): </label>
+        <input id="debitor" type="text" pInputText placeholder="Дебитор" formControlName="debitor">
+        <div *ngIf="form.controls['debitor'].invalid">
+          <small *ngIf="form.controls['debitor'].errors.required" class="p-error">
             Поле должно быть заполнено.
           </small>
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="controlConfig.isDateTo">
+
+    <ng-container *ngIf="controlConfig.isOnDate">
       <div class="p-field p-col-12 p-md-6">
-        <label for="dateTo">Дата до: </label>
-        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
-        <div *ngIf="form.controls['dateTo'].invalid">
-          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+        <label for="onDate">На Дату: </label>
+        <input id="onDate" type="text" pInputText placeholder="На Дату" formControlName="onDate">
+        <div *ngIf="form.controls['onDate'].invalid">
+          <small *ngIf="form.controls['onDate'].errors.required" class="p-error">
             Поле должно быть заполнено.
           </small>
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="controlConfig.isDateTo">
+
+    <ng-container *ngIf="controlConfig.isStatusRequest">
       <div class="p-field p-col-12 p-md-6">
-        <label for="dateTo">Дата до: </label>
-        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
-        <div *ngIf="form.controls['dateTo'].invalid">
-          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+        <label for="statusRequest">Статус Накладных": </label>
+        <input id="statusRequest" type="text" pInputText placeholder="Статус Накладных" formControlName="statusRequest">
+        <div *ngIf="form.controls['statusRequest'].invalid">
+          <small *ngIf="form.controls['statusRequest'].errors.required" class="p-error">
             Поле должно быть заполнено.
           </small>
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="controlConfig.isDateTo">
+
+    <ng-container *ngIf="controlConfig.isDaysDelay">
       <div class="p-field p-col-12 p-md-6">
-        <label for="dateTo">Дата до: </label>
-        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
-        <div *ngIf="form.controls['dateTo'].invalid">
-          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+        <label for="daysDelay">Количество дней просрочки: </label>
+        <input id="daysDelay" type="text" pInputText placeholder="Количество дней просрочки" formControlName="daysDelay">
+        <div *ngIf="form.controls['daysDelay'].invalid">
+          <small *ngIf="form.controls['daysDelay'].errors.required" class="p-error">
             Поле должно быть заполнено.
           </small>
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="controlConfig.isDateTo">
+
+    <ng-container *ngIf="controlConfig.isNumberOrder">
       <div class="p-field p-col-12 p-md-6">
-        <label for="dateTo">Дата до: </label>
-        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
-        <div *ngIf="form.controls['dateTo'].invalid">
-          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+        <label for="numberOrder">Номер Распоряжения: </label>
+        <input id="numberOrder" type="text" pInputText placeholder="Номер Распоряжения" formControlName="numberOrder">
+        <div *ngIf="form.controls['numberOrder'].invalid">
+          <small *ngIf="form.controls['numberOrder'].errors.required" class="p-error">
             Поле должно быть заполнено.
           </small>
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="controlConfig.isDateTo">
+
+    <ng-container *ngIf="controlConfig.isNumberRequest">
       <div class="p-field p-col-12 p-md-6">
-        <label for="dateTo">Дата до: </label>
-        <input id="dateTo" type="date" pInputText placeholder="Дата до" formControlName="dateTo">
-        <div *ngIf="form.controls['dateTo'].invalid">
-          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+        <label for="numberRequest">Номер Заявки: </label>
+        <input id="numberRequest" type="text" pInputText placeholder="Номер Заявки" formControlName="numberRequest">
+        <div *ngIf="form.controls['numberRequest'].invalid">
+          <small *ngIf="form.controls['numberRequest'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+    </ng-container>
+
+
+    <ng-container *ngIf="controlConfig.isSelectReportDropdown">
+      <div class="p-field p-col-12 p-md-6">
+        <label for="selectReportDropdown">(дропдаун)</label>
+        <input id="selectReportDropdown" type="text" pInputText formControlName="selectReportDropdown">
+        <div *ngIf="form.controls['selectReportDropdown'].invalid">
+          <small *ngIf="form.controls['selectReportDropdown'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="controlConfig.isSelectReportCheckbox">
+      <div class="p-field p-col-12 p-md-6">
+        <label for="selectReportCheckbox">(чекбокс)</label>
+        <input id="selectReportCheckbox" type="text" pInputText formControlName="selectReportCheckbox">
+        <div *ngIf="form.controls['selectReportCheckbox'].invalid">
+          <small *ngIf="form.controls['selectReportCheckbox'].errors.required" class="p-error">
             Поле должно быть заполнено.
           </small>
         </div>

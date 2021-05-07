@@ -1,6 +1,5 @@
-import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ControlConfigReportInterface } from '../../types/common/control-config.interface';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
@@ -22,10 +21,10 @@ export class ReportInitDialogComponent {
   public isEmpty: boolean;
 
   constructor(
+    public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
     private fb: FormBuilder,
     private deliveryService: DeliveryService,
-    public store: Store
   ) {}
 
   ngOnInit() {
@@ -35,6 +34,7 @@ export class ReportInitDialogComponent {
 
   public onSubmit(): void {
     console.log(this.form.value)
+    this.ref.close(this.form.value);
   }
 
   public calculateColumns(currentInput) {
