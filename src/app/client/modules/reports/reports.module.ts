@@ -18,6 +18,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { ReportsPageComponent } from './components/reports-page/reports-page.component';
+import { ReportViewPageComponent } from './components/report-view-page/report-view-page.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,7 @@ import { ReportsPageComponent } from './components/reports-page/reports-page.com
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [ReportsPageComponent],
+  declarations: [ReportsPageComponent, ReportViewPageComponent],
   providers: [ReportService],
 })
 export class ReportsModule {}

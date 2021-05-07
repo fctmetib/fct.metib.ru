@@ -1,3 +1,4 @@
+import { ReportViewPageComponent } from './components/report-view-page/report-view-page.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ReportsPageComponent } from './components/reports-page/reports-page.component';
@@ -10,6 +11,10 @@ const routes = [
         path: '',
         component: ReportsPageComponent,
       },
+      {
+        path: 'report-view/:id',
+        component: ReportViewPageComponent
+      }
     ],
   },
 ];
