@@ -1,7 +1,9 @@
 /**
  * Описание интерфейса
  *
- * @interface ControlConfigInterface
+ * @interface ControlConfigReportInterface
+ * @isEmpty {boolean} отвечает за отображение сообщения "Для этого отчета не нужны параметры...
+В отчете будут указаны актуальные данные на текущий момент."
  * @isDateFrom {boolean} отвечает за отображение поля "Дата С"
  * @isDateTo {boolean} отвечает за отображение поля "Дата По"
  * @isDebitor {boolean} отвечает за отображение поля "Дебитор"
@@ -14,15 +16,16 @@
  * @isSelectReportDropdown {boolean} отвечает за отображение поля с выбором отчетов - дропдаун
  * @isSelectReportCheckbox {boolean} отвечает за отображение поля с выбором отчетов - чекбокс
  */
-export interface ControlConfigInterface {
-  isDateFrom: boolean;
-  isDateTo: boolean;
-  isDebitor: boolean;
-  isOnDate: boolean;
-  isStatusRequest: boolean;
-  isDaysDelay: boolean;
-  isNumberOrder: boolean;
-  isNumberRequest: boolean;
-  isSelectReportDropdown: boolean;
-  isSelectReportCheckbox: boolean;
+export interface ControlConfigReportInterface {
+  isEmpty?: boolean;
+  isDateFrom?: boolean;
+  isDateTo?: boolean;
+  isDebitor?: boolean;
+  isOnDate?: boolean;
+  isStatusRequest?: boolean;
+  isDaysDelay?: boolean;
+  isNumberOrder?: boolean;
+  isNumberRequest?: boolean;
+  isSelectReportDropdown?: boolean;
+  isSelectReportCheckbox?: boolean;
 }

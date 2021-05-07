@@ -442,106 +442,182 @@ export class MIBCommon {
         description:
           'Список операций "Прием Документов" в разрезе накладных за указанный период',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+          isDebitor: true,
+        }
       },
       {
         title: 'Выплата финансирования',
         description:
           'Список операций "Выплата Финансирования" в разрезе накладных за указанный период',
         link: '',
-        type: 'CustomerFinansing'
+        type: 'CustomerFinansing',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+          isDebitor: true,
+        }
       },
       {
         title: 'Обработка Платежей',
         description:
           'Список операций "Обработка Платежа" в разрезе накладных за указанный период',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+          isDebitor: true,
+        }
       },
       {
         title: 'Коррекция Поставок',
         description:
           'Список операций "Коррекция Поставок" в разрезе накладных за указанный период',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+          isDebitor: true,
+        }
       },
       {
         title: 'Аккредитив',
         description:
           'Список операций пополнения Аккредидитов за указанный период',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+          isDebitor: true,
+        }
       },
       {
         title: 'Комиссии',
         description: 'Списания комисии в разрезе накладных за указанный период',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+          isDebitor: true,
+        }
       },
       {
         title: 'Агрегатный',
         description:
           'Агрегатный отчет по накладным с указанием их сосояния на указанную дату',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDebitor: true,
+          isOnDate: true,
+          isStatusRequest: true
+        }
       },
       {
         title: 'Просрочки Покупателей',
         description:
           'Список накладных, оплата по которым была просрочена (на указанное количество дней) на указанную дату',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDaysDelay: true,
+          isDebitor: true,
+          isOnDate: true,
+        }
       },
       {
         title: 'История Накладных',
         description: 'История накладных',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+          isDebitor: true,
+        }
       },
       {
         title: 'Полученные Платежи',
         description:
           'Список полученных платежей по Договорам Поставок за указанный период',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+          isDebitor: true,
+        }
       },
       {
         title: 'Выписка по счёту',
         description: 'Список транзакций по расчетному счету',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+          isNumberOrder: true,
+          isNumberRequest: true,
+        }
       },
       {
         title: 'Агрегатный Сводный',
         description:
           'Агрегатный отчет по Договорам Поставок с указанием задолженности по договорам на указанную дату',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isEmpty: true,
+        }
       },
       {
         title: 'Протокол Отчетов',
         description: 'Список выполненных клиентом отчетов за указанный период',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+          isSelectReportDropdown: true,
+          isSelectReportCheckbox: true
+        }
       },
       {
         title: 'Счета-Фактуры',
         description:
           'Список выставленных Банком счетов-фактур за указанный период',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+        }
       },
       {
         title: 'Реестр Распоряжения',
         description: 'Детализация реестра распоряжения в виде списка проводок',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isNumberOrder: true
+        }
       },
       {
         title: 'Отчеты Дебиторов',
         description: 'Отчеты, полученные от Дебиторов',
         link: '',
-        type: ''
+        type: '',
+        config: {
+          isDateFrom: true,
+          isDateTo: true,
+        }
       },
     ];
   }

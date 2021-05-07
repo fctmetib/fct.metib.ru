@@ -21,6 +21,7 @@ import { ReportsPageComponent } from './components/reports-page/reports-page.com
 import { ReportViewPageComponent } from './components/report-view-page/report-view-page.component';
 import { ReportInitDialogComponent } from './components/report-init-dialog/report-init-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
 
 @NgModule({
   imports: [
@@ -43,6 +44,6 @@ import { DialogService } from 'primeng/dynamicdialog';
     AvatarModule,
   ],
   declarations: [ReportsPageComponent, ReportViewPageComponent, ReportInitDialogComponent],
-  providers: [ReportService, DialogService],
+  providers: [ReportService, DialogService, DeliveryService],
 })
 export class ReportsModule {}

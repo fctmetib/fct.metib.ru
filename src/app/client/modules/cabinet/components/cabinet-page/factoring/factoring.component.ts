@@ -20,9 +20,7 @@ export class FactoringComponent implements OnInit {
   public deliveries: DeliveryInterface[] = [];
 
   constructor(
-    private store: Store,
-    private deliveryService: DeliveryService,
-    private organizationService: OrganizationService
+    private store: Store
   ) {}
 
   ngOnInit() {

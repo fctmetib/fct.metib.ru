@@ -11,7 +11,7 @@
   </div> -->
   <div class="p-grid">
     <div class="p-col" *ngFor="let reportCard of reportCards">
-      <div class="card-report can-click" (click)="show(reportCard.type)" >
+      <div class="card-report can-click" (click)="show(reportCard.title, reportCard.type, reportCard.config)" >
         <div class="header">
           <div class="text">
             {{reportCard.title}}

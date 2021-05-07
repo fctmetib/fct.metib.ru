@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { ReportCardInterface } from '../../../cabinet/types/common/report-card.interface';
+import { ControlConfigReportInterface } from '../../types/common/control-config.interface';
 import { ReportInitDialogComponent } from '../report-init-dialog/report-init-dialog.component';
 
 @Component({
@@ -20,10 +21,10 @@ export class ReportsPageComponent implements OnInit {
     this.reportCards = mibCommon.getReports();
   }
 
-  show(type: string) {
+  show(title: string, type: string, config: ControlConfigReportInterface) {
     this.ref = this.dialogService.open(ReportInitDialogComponent, {
-      header: 'Choose a Product',
-      data: {type: type},
+      header: title,
+      data: {type: type, config: config},
       width: '70%',
       contentStyle: { 'max-height': '500px', overflow: 'auto' },
       baseZIndex: 10000,
