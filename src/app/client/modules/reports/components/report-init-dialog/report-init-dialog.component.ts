@@ -51,6 +51,12 @@ export class ReportInitDialogComponent {
 
     this.deliveryService.getDeliveriesWithStats().subscribe(resp => {
       let debtors = resp.map(x => x.Debtor);
+      debtors.push({
+        Title: 'Все',
+        ID: 0
+      });
+      debtors.reverse();
+
       this.uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
       console.log(this.uniqDebtors)
     })

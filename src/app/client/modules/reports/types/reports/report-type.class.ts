@@ -1,4 +1,16 @@
-export class ReportTypeInterface {
+import { AccountTransactionsReportArgs } from "./account-transactios-report-args.class";
+import { AgregateReportArgs } from "./agregate-report-args.class";
+import { DateReportArgs } from "./date-report-args.class";
+import { DelaysReportArgs } from "./delays-report-args.interface";
+import { IDFilterArgs } from "./id-filter-args.class";
+import { IDReportArgs } from "./id-report-args.class";
+import { PeriodReportArgs } from "./period-report-args.class";
+import { ProtocolReportArgs } from "./protocol-report-artgs.class";
+import { ReportArgs } from "./report-args.class";
+import { ReportTypeInterface } from "./report-type.interface";
+import { StandartReportArgs } from "./standart-report-args.class";
+
+export class ReportType {
   static Types: Array<ReportTypeInterface> = [
     {
       id: 4,
@@ -1123,12 +1135,12 @@ export class ReportTypeInterface {
     },
   ];
 
-  static getType(name: string): ReportType;
-  static getType(id: number): ReportType;
-  static getType(value: any): ReportType {
+  static getType(name: string): ReportTypeInterface;
+  static getType(id: number): ReportTypeInterface;
+  static getType(value: any): ReportTypeInterface {
     if (value && typeof value == "string") {
       for (var i = 0; i < ReportType.Types.length; i++) {
-        var type = ReportType.Types[i];
+        var type: any = ReportType.Types[i];
         if (
           type.type.toLowerCase() == value.toLowerCase() ||
           type.title.toLowerCase() == value.toLowerCase()
@@ -1136,8 +1148,10 @@ export class ReportTypeInterface {
           return type;
       }
     } else if (value && typeof value == "number") {
-      for (var i = 0; i < ReportType.Types.length; i++)
-        if (ReportType.Types[i].id == value) return ReportType.Types[i];
+      for (var i = 0; i < ReportType.Types.length; i++) {
+        let currentType: any = ReportType.Types[i];
+        if (currentType.id === value) return ReportType.Types[i];
+      }
     }
 
     return null;

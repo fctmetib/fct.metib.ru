@@ -548,7 +548,7 @@ export class MIBCommon {
         description:
           'Список полученных платежей по Договорам Поставок за указанный период',
         link: '',
-        type: '',
+        type: 'PaymentsIncome',
         config: {
           isDateFrom: true,
           isDateTo: true,

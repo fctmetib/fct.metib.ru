@@ -1,7 +1,9 @@
+import { ReportType } from './../../types/reports/report-type.class';
 import { ReportService } from './../../services/report.service';
 import { CryptoService } from './../../../../../shared/services/common/crypto.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ReportTypeInterface } from '../../types/reports/report-type.interface';
 
 @Component({
   selector: 'app-report-view-page',
@@ -11,6 +13,10 @@ import { ActivatedRoute, Params } from '@angular/router';
 export class ReportViewPageComponent implements OnInit {
 
   public isError: boolean = false;
+  public reportConfig: ReportTypeInterface;
+  public reportData: any[] = [];
+
+  private data: any;
 
   constructor(
       private route: ActivatedRoute,
@@ -21,15 +27,23 @@ export class ReportViewPageComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe((params: Params) => {
       if (params['dt']) {
-        let data = JSON.parse(this.cryptoService.decrypt(params['dt']));
-        this.fetchReport(data);
+        this.data = JSON.parse(this.cryptoService.decrypt(params['dt']));
+        this.prepareTable();
+        this.fetchReport();
       } else {
         this.isError = true;
       }
     });
   }
 
-  private fetchReport(data) {
+  private prepareTable(): void {
+    this.reportConfig = ReportType.getType(this.data.type)
+
+  }
+
+  private fetchReport(): void {
+    let data = this.data;
+
     let request = {
       CustomerID: 0,
       DateFrom: new Date(data.dateFrom),

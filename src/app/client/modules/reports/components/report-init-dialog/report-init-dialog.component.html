@@ -32,7 +32,7 @@
     <ng-container *ngIf="controlConfig.isDebitor">
       <div class="p-field p-col-12 p-md-12">
         <label for="debitor">Дебитор: </label>
-        <p-dropdown id="debitor" [options]="uniqDebtors" placeholder="Выберите договор" formControlName="debitor"
+        <p-dropdown id="debitor" [options]="uniqDebtors" placeholder="Выберите Дебитора" formControlName="debitor"
         optionLabel="Title" optionValue="ID"></p-dropdown>
 
         <div *ngIf="form.controls['debitor'].invalid">
