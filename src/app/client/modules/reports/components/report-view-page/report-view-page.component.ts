@@ -38,7 +38,7 @@ export class ReportViewPageComponent implements OnInit {
 
   private prepareTable(): void {
     this.reportConfig = ReportType.getType(this.data.type)
-
+    console.log(this.reportConfig)
   }
 
   private fetchReport(): void {
@@ -56,7 +56,7 @@ export class ReportViewPageComponent implements OnInit {
     }
 
     this.reportService.getReport(request).subscribe(resp => {
-
+      this.reportData = resp;
     });
   }
 }
