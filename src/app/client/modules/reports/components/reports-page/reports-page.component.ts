@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { ReportCardInterface } from '../../../cabinet/types/common/report-card.interface';
@@ -14,7 +15,7 @@ export class ReportsPageComponent implements OnInit {
   public reportCards: ReportCardInterface[] = [];
   ref: DynamicDialogRef;
 
-  constructor(public dialogService: DialogService) {}
+  constructor(public dialogService: DialogService, private router: Router) {}
 
   ngOnInit() {
     let mibCommon = new MIBCommon();
@@ -26,13 +27,23 @@ export class ReportsPageComponent implements OnInit {
       header: title,
       data: {type: type, config: config},
       width: '70%',
-      contentStyle: { 'max-height': '500px', overflow: 'auto' },
+      contentStyle: { 'height': '500px', overflow: 'auto' },
       baseZIndex: 10000,
     });
 
     this.ref.onClose.subscribe((data: any) => {
       if (data) {
         console.log(data);
+        this.openReportDetails(data);
+      }
+    });
+  }
+
+  private openReportDetails(data) {
+    let encryptedData = '';
+    this.router.navigate([''], {
+      queryParams: {
+        data: encryptedData
       }
     });
   }

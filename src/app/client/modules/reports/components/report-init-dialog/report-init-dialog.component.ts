@@ -1,3 +1,5 @@
+import { CounterpartyReferenceInterface } from './../../../../../shared/types/counterparty/counterparty-reference.interface';
+import { MibArray } from './../../../../../shared/classes/arrays/mib-array.class';
 import { Component } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ControlConfigReportInterface } from '../../types/common/control-config.interface';
@@ -18,6 +20,7 @@ export class ReportInitDialogComponent {
 
   public controlConfig: ControlConfigReportInterface;
   public deliveryList: DeliveryInterface[] = [];
+  public uniqDebtors: CounterpartyReferenceInterface[] = [];
   public isEmpty: boolean;
 
   constructor(
@@ -47,7 +50,9 @@ export class ReportInitDialogComponent {
     console.log(this.currentData);
 
     this.deliveryService.getDeliveriesWithStats().subscribe(resp => {
-      this.deliveryList = resp;
+      let debtors = resp.map(x => x.Debtor);
+      this.uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
+      console.log(this.uniqDebtors)
     })
   }
 
@@ -59,11 +64,11 @@ export class ReportInitDialogComponent {
     }
 
     if(this.controlConfig.isDateFrom) {
-      this.form.addControl('dateFrom', new FormControl(Date, Validators.required))
+      this.form.addControl('dateFrom', new FormControl('', Validators.required))
     }
 
     if(this.controlConfig.isDateTo) {
-      this.form.addControl('dateTo', new FormControl(Date, Validators.required))
+      this.form.addControl('dateTo', new FormControl('', Validators.required))
     }
 
     if(this.controlConfig.isDebitor) {

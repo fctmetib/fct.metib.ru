@@ -31,8 +31,10 @@
 
     <ng-container *ngIf="controlConfig.isDebitor">
       <div class="p-field p-col-12 p-md-12">
-        <label for="debitor">Дебитор (Дропдаун): </label>
-        <input id="debitor" type="text" pInputText placeholder="Дебитор" formControlName="debitor">
+        <label for="debitor">Дебитор: </label>
+        <p-dropdown id="debitor" [options]="uniqDebtors" placeholder="Выберите договор" formControlName="debitor"
+        optionLabel="Title" optionValue="ID"></p-dropdown>
+
         <div *ngIf="form.controls['debitor'].invalid">
           <small *ngIf="form.controls['debitor'].errors.required" class="p-error">
             Поле должно быть заполнено.
@@ -44,7 +46,7 @@
     <ng-container *ngIf="controlConfig.isOnDate">
       <div class="p-field p-col-12 p-md-6">
         <label for="onDate">На Дату: </label>
-        <input id="onDate" type="text" pInputText placeholder="На Дату" formControlName="onDate">
+        <input id="onDate" type="date" pInputText placeholder="На Дату" formControlName="onDate">
         <div *ngIf="form.controls['onDate'].invalid">
           <small *ngIf="form.controls['onDate'].errors.required" class="p-error">
             Поле должно быть заполнено.
@@ -55,7 +57,7 @@
 
     <ng-container *ngIf="controlConfig.isStatusRequest">
       <div class="p-field p-col-12 p-md-6">
-        <label for="statusRequest">Статус Накладных": </label>
+        <label for="statusRequest">Статус Накладных: </label>
         <input id="statusRequest" type="text" pInputText placeholder="Статус Накладных" formControlName="statusRequest">
         <div *ngIf="form.controls['statusRequest'].invalid">
           <small *ngIf="form.controls['statusRequest'].errors.required" class="p-error">
