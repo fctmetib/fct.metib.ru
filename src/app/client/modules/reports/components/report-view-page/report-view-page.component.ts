@@ -12,6 +12,7 @@ import { ReportTypeInterface } from '../../types/reports/report-type.interface';
 })
 export class ReportViewPageComponent implements OnInit {
 
+  public isLoading: boolean = false;
   public isError: boolean = false;
   public reportConfig: ReportTypeInterface;
   public reportData: any[] = [];
@@ -42,6 +43,7 @@ export class ReportViewPageComponent implements OnInit {
   }
 
   private fetchReport(): void {
+    this.isLoading = true;
     let data = this.data;
 
     let request = {
@@ -57,6 +59,7 @@ export class ReportViewPageComponent implements OnInit {
 
     this.reportService.getReport(request).subscribe(resp => {
       this.reportData = resp;
+      this.isLoading = false;
     });
   }
 }

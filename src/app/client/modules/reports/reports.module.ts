@@ -22,6 +22,7 @@ import { ReportViewPageComponent } from './components/report-view-page/report-vi
 import { ReportInitDialogComponent } from './components/report-init-dialog/report-init-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { DeliveryService } from 'src/app/shared/services/share/delivery.service'
     DropdownModule,
     FormsModule,
     ProgressBarModule,
+    SkeletonModule,
     MultiSelectModule,
     ReportsRoutingModule,
     ReactiveFormsModule,
