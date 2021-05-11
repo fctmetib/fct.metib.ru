@@ -8,13 +8,13 @@ import { Injectable } from '@angular/core';
 export class ReportService {
   constructor(private http: HttpClient) {}
 
-  addReport(data: string): Observable<any> {
+  getReport(data: any): Observable<any> {
     const url = `${environment.apiUrl}/report`;
     return this.http.post<any>(url, data);
   }
 
-  getReport(): Observable<string> {
-    const url = `${environment.apiUrl}/Report`;
-    return this.http.get<string>(url);
-  }
+  // getReport(): Observable<string> {
+  //   const url = `${environment.apiUrl}/Report`;
+  //   return this.http.get<string>(url);
+  // }
 }

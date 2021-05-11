@@ -12,7 +12,7 @@ const routes = [
         component: ReportsPageComponent,
       },
       {
-        path: 'report-view/:id',
+        path: 'report-view',
         component: ReportViewPageComponent
       }
     ],
