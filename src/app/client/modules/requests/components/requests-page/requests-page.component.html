@@ -7,6 +7,7 @@
     </ng-template>
   </p-toolbar>
   <div class="responsive-table">
+    <div *ngFor="let request of requests$ | async"></div>
     <p-table [value]="(requests$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
       [rowsPerPageOptions]="[10,25,50]" [(selection)]="selectedItems" dataKey="ID"
       styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
