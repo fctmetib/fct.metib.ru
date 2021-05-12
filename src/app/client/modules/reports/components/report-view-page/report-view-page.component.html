@@ -8,7 +8,9 @@
           </div>
           <div class="icon arrow_right"></div>
         </div>
-        <div class="content">
+       <div class="content">
+        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+
           <div class="responsive-table">
             <p-table [columns]="reportConfig.columns" [value]="reportData" styleClass="p-datatable-customers mib-table">
               <ng-template pTemplate="header" let-columns>
@@ -41,9 +43,7 @@
                   <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
                     <td *ngFor="let col of reportConfig.columns">
                       <div class="m-td">
-                        <div>
                           <p-skeleton></p-skeleton>
-                        </div>
                       </div>
                     </td>
                   </tr>
