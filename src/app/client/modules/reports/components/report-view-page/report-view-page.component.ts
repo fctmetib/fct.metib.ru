@@ -39,9 +39,16 @@ export class ReportViewPageComponent implements OnInit {
 
   exportExcel() {
     import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.reportData, {
-
+      let exportData: any[] = [];
+      this.reportData.forEach(item => {
+        let object: any = {};
+        this.reportConfig.columns.forEach(column => {
+          object[column.title] = item[column.name]
+        });
+        exportData.push(object);
       });
+
+      const worksheet = xlsx.utils.json_to_sheet(exportData);
       const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
       const excelBuffer: any = xlsx.write(workbook, {
         bookType: "xlsx",
