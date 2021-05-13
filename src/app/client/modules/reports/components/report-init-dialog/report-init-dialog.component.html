@@ -34,11 +34,6 @@
         <label for="debitor">Дебитор: </label>
         <p-dropdown id="debitor" [options]="uniqDebtors" placeholder="Выберите Дебитора" formControlName="debitor"
         optionLabel="Title" optionValue="ID"></p-dropdown>
-        <!-- <div *ngIf="form.controls['debitor'].invalid">
-          <small *ngIf="form.controls['debitor'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div> -->
       </div>
     </ng-container>
 

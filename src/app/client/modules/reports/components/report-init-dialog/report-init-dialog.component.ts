@@ -65,6 +65,9 @@ export class ReportInitDialogComponent {
   private initForm(): void {
     this.form = this.fb.group({});
 
+    // let dateFrom = new Date();
+    //TODO: init протокол отчетов .
+
     if(this.controlConfig.isEmpty) {
       this.isEmpty = true;
     }

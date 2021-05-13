@@ -442,7 +442,7 @@ export class MIBCommon {
         description:
           'Список операций "Прием Документов" в разрезе накладных за указанный период',
         link: '',
-        type: '',
+        type: 'DocumentsIncome',
         config: {
           isDateFrom: true,
           isDateTo: true,
@@ -466,7 +466,7 @@ export class MIBCommon {
         description:
           'Список операций "Обработка Платежа" в разрезе накладных за указанный период',
         link: '',
-        type: '',
+        type: 'PaymentAll',
         config: {
           isDateFrom: true,
           isDateTo: true,
@@ -478,7 +478,7 @@ export class MIBCommon {
         description:
           'Список операций "Коррекция Поставок" в разрезе накладных за указанный период',
         link: '',
-        type: '',
+        type: 'ShipmentCorrection',
         config: {
           isDateFrom: true,
           isDateTo: true,
@@ -490,7 +490,7 @@ export class MIBCommon {
         description:
           'Список операций пополнения Аккредидитов за указанный период',
         link: '',
-        type: '',
+        type: 'Accreditive',
         config: {
           isDateFrom: true,
           isDateTo: true,
@@ -501,7 +501,7 @@ export class MIBCommon {
         title: 'Комиссии',
         description: 'Списания комисии в разрезе накладных за указанный период',
         link: '',
-        type: '',
+        type: 'Commission',
         config: {
           isDateFrom: true,
           isDateTo: true,
@@ -513,7 +513,7 @@ export class MIBCommon {
         description:
           'Агрегатный отчет по накладным с указанием их сосояния на указанную дату',
         link: '',
-        type: '',
+        type: 'Agregate',
         config: {
           isDebitor: true,
           isOnDate: true,
@@ -525,7 +525,7 @@ export class MIBCommon {
         description:
           'Список накладных, оплата по которым была просрочена (на указанное количество дней) на указанную дату',
         link: '',
-        type: '',
+        type: 'DebtorDelay',
         config: {
           isDaysDelay: true,
           isDebitor: true,
@@ -536,7 +536,7 @@ export class MIBCommon {
         title: 'История Накладных',
         description: 'История накладных',
         link: '',
-        type: '',
+        type: 'DebtorDelay',
         config: {
           isDateFrom: true,
           isDateTo: true,
@@ -559,7 +559,7 @@ export class MIBCommon {
         title: 'Выписка по счёту',
         description: 'Список транзакций по расчетному счету',
         link: '',
-        type: '',
+        type: 'ExtractExternal',
         config: {
           isDateFrom: true,
           isDateTo: true,
@@ -572,7 +572,7 @@ export class MIBCommon {
         description:
           'Агрегатный отчет по Договорам Поставок с указанием задолженности по договорам на указанную дату',
         link: '',
-        type: '',
+        type: 'AgregateDelivery',
         config: {
           isEmpty: true,
         }
@@ -581,7 +581,7 @@ export class MIBCommon {
         title: 'Протокол Отчетов',
         description: 'Список выполненных клиентом отчетов за указанный период',
         link: '',
-        type: '',
+        type: 'ReportProtocol',
         config: {
           isDateFrom: true,
           isDateTo: true,
@@ -594,7 +594,7 @@ export class MIBCommon {
         description:
           'Список выставленных Банком счетов-фактур за указанный период',
         link: '',
-        type: '',
+        type: 'Invoices',
         config: {
           isDateFrom: true,
           isDateTo: true,
@@ -604,7 +604,7 @@ export class MIBCommon {
         title: 'Реестр Распоряжения',
         description: 'Детализация реестра распоряжения в виде списка проводок',
         link: '',
-        type: '',
+        type: 'OrderPostings',
         config: {
           isNumberOrder: true
         }
@@ -613,7 +613,7 @@ export class MIBCommon {
         title: 'Отчеты Дебиторов',
         description: 'Отчеты, полученные от Дебиторов',
         link: '',
-        type: '',
+        type: 'DebtorReport',
         config: {
           isDateFrom: true,
           isDateTo: true,
