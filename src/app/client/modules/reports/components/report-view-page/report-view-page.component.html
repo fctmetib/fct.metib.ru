@@ -25,22 +25,34 @@
         styleClass="p-datatable-customers mib-table" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [paginator]="true">
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <th *ngFor="let col of columns">
-              <div class="m-th">
-                <div>{{col.title}}</div>
-              </div>
-            </th>
+            <ng-container *ngFor="let col of columns">
+              <th *ngIf="col.visible">
+                <div class="m-th">
+                  <div>{{col.title}}</div>
+                </div>
+              </th>
+            </ng-container>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
           <tr>
-            <td *ngFor="let col of columns">
-              <div class="m-td">
-                <div>
-                  {{rowData[col.name]}}
+            <ng-container *ngFor="let col of columns">
+              <td *ngIf="col.visible">
+                <div class="m-td">
+                  <div [ngSwitch]="col.type">
+                    <div *ngSwitchCase="'number'">
+                      {{rowData[col.name] | currency:'RUB':'symbol-narrow'}}
+                    </div>
+                    <div *ngSwitchCase="'date'">
+                      {{rowData[col.name] | date:'MM.dd.yyyy'}}
+                    </div>
+                    <div *ngSwitchDefault>
+                      {{rowData[col.name]}}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </td>
+              </td>
+            </ng-container>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

@@ -8,10 +8,9 @@ import { ReportTypeInterface } from '../../types/reports/report-type.interface';
 @Component({
   selector: 'app-report-view-page',
   templateUrl: './report-view-page.component.html',
-  styleUrls: ['./report-view-page.component.scss']
+  styleUrls: ['./report-view-page.component.scss'],
 })
 export class ReportViewPageComponent implements OnInit {
-
   public isLoading: boolean = false;
   public isError: boolean = false;
   public reportConfig: ReportTypeInterface;
@@ -20,10 +19,10 @@ export class ReportViewPageComponent implements OnInit {
   private data: any;
 
   constructor(
-      private route: ActivatedRoute,
-      private reportService: ReportService,
-      private cryptoService: CryptoService
-    ) {}
+    private route: ActivatedRoute,
+    private reportService: ReportService,
+    private cryptoService: CryptoService
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: Params) => {
@@ -38,41 +37,46 @@ export class ReportViewPageComponent implements OnInit {
   }
 
   exportExcel() {
-    import("xlsx").then(xlsx => {
+    import('xlsx').then((xlsx) => {
       let exportData: any[] = [];
-      this.reportData.forEach(item => {
+      this.reportData.forEach((item) => {
         let object: any = {};
-        this.reportConfig.columns.forEach(column => {
-          object[column.title] = item[column.name]
+        this.reportConfig.columns.forEach((column) => {
+          if (column.visible) {
+            object[column.title] = item[column.name];
+          }
         });
         exportData.push(object);
       });
 
       const worksheet = xlsx.utils.json_to_sheet(exportData);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
       const excelBuffer: any = xlsx.write(workbook, {
-        bookType: "xlsx",
-        type: "array"
+        bookType: 'xlsx',
+        type: 'array',
       });
-      this.saveAsExcelFile(excelBuffer, "отчет");
+      this.saveAsExcelFile(excelBuffer, 'отчет');
     });
   }
 
-
   saveAsExcelFile(buffer: any, fileName: string): void {
-    import("file-saver").then(FileSaver => {
-        let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-        let EXCEL_EXTENSION = '.xlsx';
-        const data: Blob = new Blob([buffer], {
-            type: EXCEL_TYPE
-        });
-        FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    import('file-saver').then((FileSaver) => {
+      let EXCEL_TYPE =
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+      let EXCEL_EXTENSION = '.xlsx';
+      const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE,
+      });
+      FileSaver.saveAs(
+        data,
+        fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+      );
     });
-}
+  }
 
   private prepareTable(): void {
-    this.reportConfig = ReportType.getType(this.data.type)
-    console.log(this.reportConfig)
+    this.reportConfig = ReportType.getType(this.data.type);
+    console.log(this.reportConfig);
   }
 
   private fetchReport(): void {
@@ -84,13 +88,13 @@ export class ReportViewPageComponent implements OnInit {
       DateFrom: new Date(data.dateFrom),
       DateTo: new Date(data.dateTo),
       DebtorID: data.debitor,
-      Export: "JSON",
+      Export: 'JSON',
       PayedAgreement: data?.payed ? true : false,
       Title: data.title,
-      Type: data.type
-    }
+      Type: data.type,
+    };
 
-    this.reportService.getReport(request).subscribe(resp => {
+    this.reportService.getReport(request).subscribe((resp) => {
       this.reportData = resp;
       this.isLoading = false;
     });
