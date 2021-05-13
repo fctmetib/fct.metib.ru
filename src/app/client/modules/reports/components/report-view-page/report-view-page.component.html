@@ -11,7 +11,7 @@
         <i class="pi pi-search"></i>
         <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" pInputText />
       </span>
-      <div class="mib-button-icon can-click"  (click)="exportExcel()">
+      <div class="mib-button-icon can-click" (click)="exportExcel()">
         <img src="../../../../../../assets/icons/mib-excel.png" alt="">
       </div>
       <!-- <button type="button" pButton pRipple
@@ -21,7 +21,8 @@
 
   <div class="content">
     <div class="responsive-table">
-      <p-table [columns]="reportConfig.columns" [value]="reportData" styleClass="p-datatable-customers mib-table">
+      <p-table [columns]="reportConfig.columns" [value]="reportData" [showCurrentPageReport]="true"
+        styleClass="p-datatable-customers mib-table" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [paginator]="true">
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th *ngFor="let col of columns">
@@ -52,7 +53,7 @@
             <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
               <td *ngFor="let col of reportConfig.columns">
                 <div class="m-td">
-                  <p-skeleton></p-skeleton>
+                  <p-skeleton width="10rem"></p-skeleton>
                 </div>
               </td>
             </tr>
