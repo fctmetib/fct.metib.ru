@@ -116,3 +116,21 @@ button.basic:hover {
   width: 130px !important;
   padding: 10px !important;
 }
+
+.mib-button-icon {
+  height: 3.375rem;
+  width: 3.375rem;
+
+  border-radius: 10px;
+
+  background-color: $main;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  image {
+    width: 25px;
+    height: 25px;
+  }
+}

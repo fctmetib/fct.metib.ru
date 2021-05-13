@@ -1,58 +1,64 @@
 <div class="card-content" id="step1">
-  <div class="p-grid">
-    <div class="p-col">
-      <div class="card-report">
-        <div class="header">
-          <div class="text">
-            <h1>{{reportConfig.title}}</h1>
-          </div>
-          <div class="icon arrow_right"></div>
-        </div>
-       <div class="content">
-        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
-
-          <div class="responsive-table">
-            <p-table [columns]="reportConfig.columns" [value]="reportData" styleClass="p-datatable-customers mib-table">
-              <ng-template pTemplate="header" let-columns>
-                <tr>
-                  <th *ngFor="let col of columns">
-                    <div class="m-th">
-                      <div>{{col.title}}</div>
-                    </div>
-                  </th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr>
-                  <td *ngFor="let col of columns">
-                    <div class="m-td">
-                      <div>
-                        {{rowData[col.name]}}
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="emptymessage">
-                <ng-container *ngIf="!isLoading; else skeletonRequestsTemplate">
-                  <tr>
-                    <td colspan="8">Нет данных.</td>
-                  </tr>
-                </ng-container>
-                <ng-template #skeletonRequestsTemplate>
-                  <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
-                    <td *ngFor="let col of reportConfig.columns">
-                      <div class="m-td">
-                          <p-skeleton></p-skeleton>
-                      </div>
-                    </td>
-                  </tr>
-                </ng-template>
-              </ng-template>
-            </p-table>
-          </div>
-        </div>
+  <div class="header lg">
+    <div class="title">
+      <h2>Отчет {{reportConfig.title}}</h2>
+      <div class="subheader">
+        Просмотр отчета
       </div>
+    </div>
+    <div class="actions">
+      <span class="p-input-icon-left mr-20">
+        <i class="pi pi-search"></i>
+        <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" pInputText />
+      </span>
+      <div class="mib-button-icon can-click"  (click)="exportExcel()">
+        <img src="../../../../../../assets/icons/mib-excel.png" alt="">
+      </div>
+      <!-- <button type="button" pButton pRipple
+        class="mib-button-icon" pTooltip="XLS" tooltipPosition="bottom"></button> -->
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="responsive-table">
+      <p-table [columns]="reportConfig.columns" [value]="reportData" styleClass="p-datatable-customers mib-table">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              <div class="m-th">
+                <div>{{col.title}}</div>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              <div class="m-td">
+                <div>
+                  {{rowData[col.name]}}
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <ng-container *ngIf="!isLoading; else skeletonRequestsTemplate">
+            <tr>
+              <td colspan="8">Нет данных.</td>
+            </tr>
+          </ng-container>
+          <ng-template #skeletonRequestsTemplate>
+            <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
+              <td *ngFor="let col of reportConfig.columns">
+                <div class="m-td">
+                  <p-skeleton></p-skeleton>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </ng-template>
+      </p-table>
     </div>
   </div>
 </div>
