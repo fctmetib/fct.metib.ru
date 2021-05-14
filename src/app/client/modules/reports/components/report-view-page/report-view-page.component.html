@@ -38,17 +38,18 @@
           <tr>
             <ng-container *ngFor="let col of columns">
               <td *ngIf="col.visible">
-                <div class="m-td">
-                  <div [ngSwitch]="col.type">
-                    <div *ngSwitchCase="'number'">
-                      {{rowData[col.name] | currency:'RUB':'symbol-narrow'}}
-                    </div>
-                    <div *ngSwitchCase="'date'">
-                      {{rowData[col.name] | date:'MM.dd.yyyy'}}
-                    </div>
-                    <div *ngSwitchDefault>
-                      {{rowData[col.name]}}
-                    </div>
+                <div [ngSwitch]="col.type">
+                <div class="m-td" *ngSwitchCase="'number'" style="justify-self: flex-start; flex-direction: row-reverse;">
+                  {{rowData[col.name] | currency:'RUB':'symbol-narrow'}}
+
+                  </div>
+                  <div class="m-td"  *ngSwitchCase="'date'">
+                    {{rowData[col.name] | date:'MM.dd.yyyy'}}
+
+                  </div>
+                  <div class="m-td" *ngSwitchDefault>
+
+                    {{rowData[col.name]}}
                   </div>
                 </div>
               </td>
