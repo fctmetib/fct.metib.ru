@@ -33,7 +33,7 @@
       <div class="p-field p-col-12 p-md-12">
         <label for="debitor">Дебитор: </label>
         <p-dropdown id="debitor" [options]="uniqDebtors" placeholder="Выберите Дебитора" formControlName="debitor"
-        optionLabel="Title" optionValue="ID"></p-dropdown>
+          optionLabel="Title" optionValue="ID"></p-dropdown>
       </div>
     </ng-container>
 
@@ -52,19 +52,16 @@
     <ng-container *ngIf="controlConfig.isStatusRequest">
       <div class="p-field p-col-12 p-md-6">
         <label for="statusRequest">Статус Накладных: </label>
-        <input id="statusRequest" type="text" pInputText placeholder="Статус Накладных" formControlName="statusRequest">
-        <div *ngIf="form.controls['statusRequest'].invalid">
-          <small *ngIf="form.controls['statusRequest'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
+        <p-dropdown id="statusRequest" [options]="statusShipments" placeholder="Выберите Статус Накладных"
+          formControlName="statusRequest" optionLabel="Title" optionValue="ID"></p-dropdown>
       </div>
     </ng-container>
 
     <ng-container *ngIf="controlConfig.isDaysDelay">
       <div class="p-field p-col-12 p-md-6">
         <label for="daysDelay">Количество дней просрочки: </label>
-        <input id="daysDelay" type="text" pInputText placeholder="Количество дней просрочки" formControlName="daysDelay">
+        <input id="daysDelay" type="number" pInputText placeholder="Количество дней просрочки"
+          formControlName="daysDelay">
         <div *ngIf="form.controls['daysDelay'].invalid">
           <small *ngIf="form.controls['daysDelay'].errors.required" class="p-error">
             Поле должно быть заполнено.
@@ -100,24 +97,16 @@
 
     <ng-container *ngIf="controlConfig.isSelectReportDropdown">
       <div class="p-field p-col-12 p-md-6">
-        <label for="selectReportDropdown">(дропдаун)</label>
-        <input id="selectReportDropdown" type="text" pInputText formControlName="selectReportDropdown">
-        <div *ngIf="form.controls['selectReportDropdown'].invalid">
-          <small *ngIf="form.controls['selectReportDropdown'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
+        <p-dropdown id="selectReportDropdown" [options]="createdByList" formControlName="selectReportDropdown"
+          optionLabel="Title" optionValue="ID"></p-dropdown>
       </div>
     </ng-container>
 
     <ng-container *ngIf="controlConfig.isSelectReportCheckbox">
       <div class="p-field p-col-12 p-md-6">
-        <label for="selectReportCheckbox">(чекбокс)</label>
-        <input id="selectReportCheckbox" type="text" pInputText formControlName="selectReportCheckbox">
-        <div *ngIf="form.controls['selectReportCheckbox'].invalid">
-          <small *ngIf="form.controls['selectReportCheckbox'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
+        <div class="p-field-checkbox">
+          <p-checkbox formControlName="selectReportCheckbox" binary="true" inputId="selectReportCheckbox"></p-checkbox>
+          <label for="binary">Только платные отчеты</label>
         </div>
       </div>
     </ng-container>
