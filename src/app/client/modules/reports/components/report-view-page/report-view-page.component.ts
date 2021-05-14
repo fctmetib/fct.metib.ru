@@ -94,12 +94,31 @@ export class ReportViewPageComponent implements OnInit {
     };
 
     switch(data.type) {
+      case 'OrderPostings':
+        request.ID = data.numberOrder;
+        break;
+      case 'ReportProtocol':
+        request.DateFrom = new Date(data.dateFrom);
+        request.DateTo = new Date(data.dateTo);
+        request.CreatedBy = data.selectReportDropdown;
+        request.OnlyPayed = data.selectReportCheckbox;
+        break;
+      case 'AgregateDelivery':
+        request.Date = new Date();
+        break;
       case 'Agregate':
         request.ShipmentStatus = data.statusRequest;
         request.Date = data.onDate;
         break;
       case 'DebtorDelay':
-
+        request.Delay = data.daysDelay;
+        request.Date = data.onDate;
+        break;
+      case 'ExtractExternal':
+        request.DateFrom = new Date(data.dateFrom);
+        request.DateTo = new Date(data.dateTo);
+        request.OrderNumber = data.numberOrder;
+        request.RequestNumber = data.numberRequest;
         break;
       default:
         request.DateFrom = new Date(data.dateFrom);
