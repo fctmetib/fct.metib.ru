@@ -95,7 +95,9 @@ export class ReportInitDialogComponent {
   private initForm(): void {
     this.form = this.fb.group({});
 
-    // let dateFrom = new Date();
+    let dateCurrent = new Date();
+    let dateFrom = new Date();
+    dateFrom.setMonth(dateFrom.getMonth() - 1);
 
     if (this.controlConfig.isEmpty) {
       this.isEmpty = true;
@@ -104,12 +106,12 @@ export class ReportInitDialogComponent {
     if (this.controlConfig.isDateFrom) {
       this.form.addControl(
         'dateFrom',
-        new FormControl('', Validators.required)
+        new FormControl(dateFrom, Validators.required)
       );
     }
 
     if (this.controlConfig.isDateTo) {
-      this.form.addControl('dateTo', new FormControl('', Validators.required));
+      this.form.addControl('dateTo', new FormControl(dateCurrent, Validators.required));
     }
 
     if (this.controlConfig.isDebitor) {
@@ -119,7 +121,7 @@ export class ReportInitDialogComponent {
     if (this.controlConfig.isOnDate) {
       this.form.addControl(
         'onDate',
-        new FormControl(Date, Validators.required)
+        new FormControl(dateCurrent, Validators.required)
       );
     }
 

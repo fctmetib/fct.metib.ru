@@ -23,7 +23,7 @@ import { ReportInitDialogComponent } from './components/report-init-dialog/repor
 import { DialogService } from 'primeng/dynamicdialog';
 import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
 import { SkeletonModule } from 'primeng/skeleton';
-
+import {CalendarModule} from 'primeng/calendar';
 @NgModule({
   imports: [
     CommonModule,
@@ -34,6 +34,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     InputTextareaModule,
     SliderModule,
     TableModule,
+    CalendarModule,
     DropdownModule,
     FormsModule,
     ProgressBarModule,

@@ -82,17 +82,30 @@ export class ReportViewPageComponent implements OnInit {
   private fetchReport(): void {
     this.isLoading = true;
     let data = this.data;
+    console.log('DATATA', data)
 
-    let request = {
+    let request: any = {
       CustomerID: 0,
-      DateFrom: new Date(data.dateFrom),
-      DateTo: new Date(data.dateTo),
       DebtorID: data.debitor,
       Export: 'JSON',
       PayedAgreement: data?.payed ? true : false,
       Title: data.title,
       Type: data.type,
     };
+
+    switch(data.type) {
+      case 'Agregate':
+        request.ShipmentStatus = data.statusRequest;
+        request.Date = data.onDate;
+        break;
+      case 'DebtorDelay':
+
+        break;
+      default:
+        request.DateFrom = new Date(data.dateFrom);
+        request.DateTo = new Date(data.dateTo);
+        break;
+    }
 
     this.reportService.getReport(request).subscribe((resp) => {
       this.reportData = resp;
