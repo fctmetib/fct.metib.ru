@@ -14,7 +14,8 @@
           (ngModelChange)="onSearch($event)" pInputText />
       </span>
       <p-multiSelect [options]="reportConfig.columns" [(ngModel)]="selectedColumns" optionLabel="title"
-        selectedItemsLabel="Выбрано колонок - {0}" class="mr-20" [style]="{minWidth: '200px'}" placeholder="Выберите колонки">
+        selectedItemsLabel="Выбрано колонок - {0}" class="mr-20" [style]="{minWidth: '200px'}"
+        placeholder="Выберите колонки">
       </p-multiSelect>
       <div class="mib-button-icon can-click" (click)="exportExcel()" pTooltip="Экспорт файла Excel">
         <img src="../../../../../../assets/icons/mib-excel.png" alt="">
@@ -22,57 +23,64 @@
     </div>
   </div>
   <div class="content">
-    <div class="responsive-table">
-      <p-table [columns]="reportConfig.columns" [value]="reportData" [showCurrentPageReport]="true"
-        styleClass="p-datatable-customers mib-table" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [paginator]="true">
-        <ng-template pTemplate="header" let-columns>
-          <tr>
-            <ng-container *ngFor="let col of columns">
-              <th *ngIf="col.visible">
-                <div class="m-th">
-                  <div>{{col.title}}</div>
-                </div>
-              </th>
-            </ng-container>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-          <tr>
-            <ng-container *ngFor="let col of columns">
-              <td *ngIf="col.visible">
-                <div [ngSwitch]="col.type">
-                  <div class="m-td" *ngSwitchCase="'number'"
-                    style="justify-self: flex-start; flex-direction: row-reverse;">
-                    {{rowData[col.name] | currency:'RUB':'symbol-narrow'}}
-                  </div>
-                  <div class="m-td" *ngSwitchCase="'date'">
-                    {{rowData[col.name] | date:'MM.dd.yyyy'}}
-                  </div>
-                  <div class="m-td" *ngSwitchDefault>
-                    {{rowData[col.name]}}
-                  </div>
-                </div>
-              </td>
-            </ng-container>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <ng-container *ngIf="!isLoading; else skeletonRequestsTemplate">
-            <tr>
-              <td colspan="8">Нет данных.</td>
-            </tr>
+    <p-table [columns]="reportConfig.columns" [value]="reportData" [showCurrentPageReport]="true" [scrollable]="true"
+      styleClass="p-datatable-customers mib-table" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [paginator]="true">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <ng-container *ngFor="let col of columns">
+            <col *ngIf="col.visible" style="width:270px">
           </ng-container>
-          <ng-template #skeletonRequestsTemplate>
-            <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
-              <td *ngFor="let col of reportConfig.columns">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <ng-container *ngFor="let col of columns">
+            <th *ngIf="col.visible">
+              <div class="m-th" pTooltip="{{col.title}}">
+                <div>{{col.title}}</div>
+              </div>
+            </th>
+          </ng-container>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <ng-container *ngFor="let col of columns">
+            <td *ngIf="col.visible">
+              <div [ngSwitch]="col.type">
+                <div class="m-td" *ngSwitchCase="'number'"  pTooltip="{{rowData[col.name] | currency:'RUB':'symbol-narrow'}}"
+                  style="justify-self: flex-start; flex-direction: row-reverse;">
+                  {{rowData[col.name] | currency:'RUB':'symbol-narrow'}}
+                </div>
+                <div class="m-td" *ngSwitchCase="'date'" pTooltip="{{rowData[col.name] | date:'MM.dd.yyyy'}}">
+                  {{rowData[col.name] | date:'MM.dd.yyyy'}}
+                </div>
+                <div class="m-td" *ngSwitchDefault pTooltip="{{rowData[col.name]}}">
+                  {{rowData[col.name]}}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <ng-container *ngIf="!isLoading; else skeletonRequestsTemplate">
+          <tr>
+            <td colspan="8">Нет данных.</td>
+          </tr>
+        </ng-container>
+        <ng-template #skeletonRequestsTemplate>
+          <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
+            <ng-container *ngFor="let col of reportConfig.columns">
+              <td *ngIf="col.visible">
                 <div class="m-td">
                   <p-skeleton width="10rem"></p-skeleton>
                 </div>
               </td>
-            </tr>
-          </ng-template>
+            </ng-container>
+          </tr>
         </ng-template>
-      </p-table>
-    </div>
+      </ng-template>
+    </p-table>
   </div>
 </div>
