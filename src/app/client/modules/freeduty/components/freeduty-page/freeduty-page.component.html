@@ -11,9 +11,22 @@
     </ng-template>
   </p-toolbar>
   <p-table [value]="(freeduty$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
-    [rowsPerPageOptions]="[10,25,50]" [(selection)]="selectedItems" dataKey="ID"
+    [scrollable]="true" [rowsPerPageOptions]="[10,25,50]" [(selection)]="selectedItems" dataKey="ID"
     styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
     currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col style="width:3rem">
+        <col style="width:180px">
+        <col style="width:180px">
+        <col style="width:180px">
+        <col style="width:180px">
+        <col style="width:180px">
+        <col style="width:180px">
+        <col style="width:180px">
+        <col style="width:180px">
+      </colgroup>
+    </ng-template>
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 3rem">
@@ -30,7 +43,7 @@
           </div>
         </th>
         <th>
-          <div class="m-th" tooltipPosition="bottom" pTooltip="Дата накладной" >
+          <div class="m-th" tooltipPosition="bottom" pTooltip="Дата накладной">
             <div>Дата накладной</div>
           </div>
         </th>
@@ -124,135 +137,63 @@
         </tr>
       </ng-container>
       <ng-template #skeletonFreedutyTemplate>
-        <tr>
+        <tr *ngFor="let item of [{}, {}, {}, {}, {}]">
           <td>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>
+                <p-skeleton width="10rem"></p-skeleton>
+              </div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>
+                <p-skeleton width="10rem"></p-skeleton>
+              </div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>
+                <p-skeleton width="10rem"></p-skeleton>
+              </div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>
+                <p-skeleton width="10rem"></p-skeleton>
+              </div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>
+                <p-skeleton width="10rem"></p-skeleton>
+              </div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>
+                <p-skeleton width="10rem"></p-skeleton>
+              </div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>
+                <p-skeleton width="10rem"></p-skeleton>
+              </div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <p-skeleton></p-skeleton>
+              <div>
+                <p-skeleton width="10rem"></p-skeleton>
+              </div>
             </div>
           </td>
         </tr>
@@ -296,16 +237,24 @@
         <tr>
           <th style="width: 3rem"></th>
           <th class="header-width">
-            <div class="m-th"> <div>Договор / Заявка / Накладная</div></div>
+            <div class="m-th">
+              <div>Договор / Заявка / Накладная</div>
+            </div>
           </th>
           <th class="header-width">
-            <div class="m-th"> <div>ID задолженности</div></div>
+            <div class="m-th">
+              <div>ID задолженности</div>
+            </div>
           </th>
           <th class="header-width">
-            <div class="m-th"> <div>Дата задолженности</div></div>
+            <div class="m-th">
+              <div>Дата задолженности</div>
+            </div>
           </th>
           <th class="header-width">
-            <div class="m-th"> <div>Сумма</div></div>
+            <div class="m-th">
+              <div>Сумма</div>
+            </div>
           </th>
         </tr>
       </ng-template>
