@@ -1,3 +1,6 @@
+import { CounterpartyReferenceInterface } from './../../../../../shared/types/counterparty/counterparty-reference.interface';
+import { MibArray } from './../../../../../shared/classes/arrays/mib-array.class';
+import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { RequestsService } from './../../../requests/services/requests.service';
 import { Router } from '@angular/router';
 import { OrganizationInterface } from './../../../../../shared/types/organization/organization.interface';
@@ -34,6 +37,12 @@ export class ContractsPageComponent implements OnInit {
 
   public displayProperty: boolean = false;
   public displayShipments: boolean = false;
+
+  public debtorsList: CounterpartyReferenceInterface[] = [];
+  public selectedDebtor: CounterpartyReferenceInterface = {
+    ID: 0,
+    Title: 'Все',
+  };
 
   public isOrganizationError: boolean = false;
   public isOrganizationLoading: boolean = false;
@@ -228,6 +237,17 @@ export class ContractsPageComponent implements OnInit {
     }
   }
 
+  public onDebtorChange(value) {
+    if (value === 0) {
+      this.paginate();
+      return;
+    } else {
+      this.listDisplayContracts = this.listContracts.filter(
+        (x) => x.Debtor.ID === value
+      );
+    }
+  }
+
   private fetch() {
     this.isLoading = true;
     this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
@@ -238,6 +258,19 @@ export class ContractsPageComponent implements OnInit {
       this.filterByDate();
 
       this.paginate();
+
+      this.debtorsList = [
+        {
+          ID: 0,
+          Title: 'Все',
+        },
+      ];
+
+      let debtors = this.listContracts.map((x) => x.Debtor);
+      let uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
+
+      this.debtorsList.push(...uniqDebtors);
+
       this.isLoading = false;
     });
   }

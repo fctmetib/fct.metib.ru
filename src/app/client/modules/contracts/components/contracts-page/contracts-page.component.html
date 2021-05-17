@@ -1,6 +1,7 @@
 <div class="card-content" id="step1">
   <p-toolbar styleClass="p-mb-4 ml-0">
     <ng-template pTemplate="left">
+      <p-dropdown [options]="debtorsList" placeholder="Выберите дебитора" optionLabel="Title" optionValue="ID" [ngModel]="selectedDebtor" (ngModelChange)="onDebtorChange($event)"></p-dropdown>
       <button type="button" pButton label="{{btnShowAllText}}" class="basic p-mr-2" (click)="showAllToggle()"></button>
       <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="updateData()"></button>
     </ng-template>
@@ -57,9 +58,7 @@
               <div class="icon" pTooltip="Список накладных" (click)="showShipmentsDialog(item.ID)"><i
                   class="pi pi-list"></i></div>
             </div>
-
           </div>
-
           <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}</div>
           <div class="contract-type"><span class="main-color">{{item.Tariff}},</span> {{item.Delay.Count}} к.д.</div>
         </div>
@@ -121,7 +120,7 @@
         styleClass="p-datatable-customers mib-table">
         <ng-template pTemplate="caption">
           <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
-            selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns">
+            selectedItemsLabel="Выбрано колонок - {0}" [style]="{minWidth: '200px'}" placeholder="Выберите колонки">
           </p-multiSelect>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
