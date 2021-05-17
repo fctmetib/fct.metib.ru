@@ -9,26 +9,11 @@
             <p-dropdown id="delivery" [options]="deliveries" placeholder="Выберите договор поставки" optionLabel="Title"
               (onChange)="deliveryChanged(i)" valueLabel="ID" [formControlName]="i"></p-dropdown>
           </div>
-          <!-- <div class="p-field p-col-12 p-md-6">
-            <label for="freeDuty">Свободный лимит:</label>
-            <input id="freeDuty" type="text" pInputText placeholder="Свободный Лимит" readonly
-              value="{{freeDuty | currency:'RUB':'symbol-narrow'}}">
-          </div> -->
-          <div class="p-field p-col-12 p-md-6">
-            <label for="number">Номер заявки:</label>
-            <input id="number" type="text" pInputText value="{{requests.at(i).value.Number || '...'}}"
-              [disabled]="true">
-          </div>
           <div class="p-field p-col-12 p-md-6">
             <label for="date">Дата: </label>
             <input id="date" type="text" pInputText placeholder="Дата"
               value="{{requests.at(i).value.DateFrom || '...'}}" [disabled]="true">
           </div>
-          <!-- <div class="p-field p-col-12 p-md-6">
-            <label for="btn_submit">&nbsp;</label>
-            <button id="btn_submit" pButton pRipple type="submit" label="{{btnSubmitValue}}" class="btn-mib-submit"
-              [disabled]="form.invalid"></button>
-          </div> -->
         </div>
 
         <div class="card">
@@ -133,40 +118,6 @@
             </ng-template>
           </p-table>
         </div>
-
-        <!-- OLD -> -->
-
-        <!-- <div class="p-fluid p-formgrid p-grid form">
-          <div class="p-field p-col-12 p-md-12">
-            <label for="delivery">Договор поставки:</label>
-
-          </div>
-          <div class="p-field p-col-6 p-md-6">
-            <label for="disabled-input">Наименование...:</label>
-            <input id="disabled-input" type="text"  pInputText [disabled]="true" />
-          </div>
-          <div class="p-field p-col-6 p-md-6">
-            <label for="disabled-input">Тариф</label>
-            <input id="disabled-input" type="text" value="{{requests.at(i).value.Tariff || '...'}}" pInputText [disabled]="true" />
-          </div>
-          <div class="p-field p-col-6 p-md-6">
-            <label for="disabled-input">Клиент</label>
-            <input id="disabled-input" type="text" value="{{requests.at(i).value.Debtor?.Title || '...'}}" pInputText [disabled]="true" />
-          </div>
-          <div class="p-field p-col-6 p-md-6">
-            <label for="disabled-input">Номер</label>
-            <input id="disabled-input" type="text" value="{{requests.at(i).value.Number || '...'}}" pInputText [disabled]="true" />
-          </div>
-
-          <div class="p-field p-col-6 p-md-6">
-            <label for="disabled-input">Дата с</label>
-            <input id="disabled-input" type="text" value="{{requests.at(i).value.DateFrom || '...'}}" pInputText [disabled]="true" />
-          </div>
-          <div class="p-field p-col-6 p-md-6">
-            <label for="disabled-input">Дата до</label>
-            <input id="disabled-input" type="text" value="{{requests.at(i).value.DateTo || '...'}}" pInputText [disabled]="true" />
-          </div>
-        </div> -->
       </p-accordionTab>
     </p-accordion>
     <div class="p-field p-col-12 p-md-12">
@@ -251,7 +202,4 @@
 
   </form>
 </ng-template>
-<!-- <ng-template pTemplate="footer">
-
-</ng-template> -->
 </p-dialog>

@@ -60,16 +60,11 @@ export class AgencyRequestCreateDialogComponent {
   public addRequest(): void {
     this.requests.push(this.fb.control(''));
     let currentIndex = this.requests.controls.length - 1;
-
-
-    console.log('CURRENT INDEX SHIPMENT', currentIndex)
-
     this.shipments.push({
       formId: currentIndex,
       shipmnets: []
     })
   }
-
 
   openNew(isEdit: boolean, i: number) {
     this.currentRequestId = i;
