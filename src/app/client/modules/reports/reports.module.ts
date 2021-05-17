@@ -23,7 +23,11 @@ import { ReportInitDialogComponent } from './components/report-init-dialog/repor
 import { DialogService } from 'primeng/dynamicdialog';
 import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
 import { SkeletonModule } from 'primeng/skeleton';
-import {CalendarModule} from 'primeng/calendar';
+import { CalendarModule } from 'primeng/calendar';
+import { TooltipModule } from 'primeng/tooltip';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -33,6 +37,8 @@ import {CalendarModule} from 'primeng/calendar';
     RadioButtonModule,
     InputTextareaModule,
     SliderModule,
+    ToastModule,
+    TooltipModule,
     TableModule,
     CalendarModule,
     DropdownModule,
@@ -46,7 +52,11 @@ import {CalendarModule} from 'primeng/calendar';
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [ReportsPageComponent, ReportViewPageComponent, ReportInitDialogComponent],
-  providers: [ReportService, DialogService, DeliveryService],
+  declarations: [
+    ReportsPageComponent,
+    ReportViewPageComponent,
+    ReportInitDialogComponent,
+  ],
+  providers: [ReportService, DialogService, DeliveryService, MessageService],
 })
 export class ReportsModule {}

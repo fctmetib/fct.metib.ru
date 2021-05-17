@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="card-content" id="step1">
   <div class="header lg">
     <div class="title">
@@ -15,12 +16,11 @@
       <p-multiSelect [options]="reportConfig.columns" [(ngModel)]="selectedColumns" optionLabel="title"
         selectedItemsLabel="Выбрано колонок - {0}" class="mr-20" [style]="{minWidth: '200px'}" placeholder="Выберите колонки">
       </p-multiSelect>
-      <div class="mib-button-icon can-click" (click)="exportExcel()">
+      <div class="mib-button-icon can-click" (click)="exportExcel()" pTooltip="Экспорт файла Excel">
         <img src="../../../../../../assets/icons/mib-excel.png" alt="">
       </div>
     </div>
   </div>
-
   <div class="content">
     <div class="responsive-table">
       <p-table [columns]="reportConfig.columns" [value]="reportData" [showCurrentPageReport]="true"

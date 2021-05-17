@@ -1,10 +1,11 @@
 import { ReportType } from './../../types/reports/report-type.class';
 import { ReportService } from './../../services/report.service';
 import { CryptoService } from './../../../../../shared/services/common/crypto.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ReportTypeInterface } from '../../types/reports/report-type.interface';
 import { ReportColumntInterface } from '../../types/reports/report-column.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-report-view-page',
@@ -17,12 +18,12 @@ export class ReportViewPageComponent implements OnInit {
   public reportConfig: ReportTypeInterface;
   public reportData: any[] = [];
   public search: string;
-  // public selectedColumns: any[] = [];
-  _selectedColumns: any[] = [];
 
   private data: any;
+  private _selectedColumns: any[] = [];
 
   constructor(
+    private messageService: MessageService,
     private route: ActivatedRoute,
     private reportService: ReportService,
     private cryptoService: CryptoService
@@ -44,17 +45,18 @@ export class ReportViewPageComponent implements OnInit {
     console.log(value);
   }
 
-  @Input() get selectedColumns(): any[] {
+  get selectedColumns(): any[] {
     return this._selectedColumns;
   }
 
   set selectedColumns(val: any[]) {
-    this._selectedColumns = this.reportConfig.columns.filter((col: ReportColumntInterface) => val.includes(col));
-    this.reportConfig.columns.forEach(item => {
-      if(val.includes(item)) {
+    this._selectedColumns = this.reportConfig.columns.filter(
+      (col: ReportColumntInterface) => val.includes(col)
+    );
+    this.reportConfig.columns.forEach((item) => {
+      if (val.includes(item)) {
         item.visible = true;
-      }
-      else {
+      } else {
         item.visible = false;
       }
     });
@@ -100,14 +102,11 @@ export class ReportViewPageComponent implements OnInit {
 
   private prepareTable(): void {
     this.reportConfig = ReportType.getType(this.data.type);
-    this.reportConfig.columns.forEach(column => {
-      if(column.visible) {
+    this.reportConfig.columns.forEach((column) => {
+      if (column.visible) {
         this._selectedColumns.push(column);
-        console.log('COLUMNS', this._selectedColumns);
       }
-    })
-
-    console.log(this.reportConfig);
+    });
   }
 
   private fetchReport(): void {
@@ -157,9 +156,23 @@ export class ReportViewPageComponent implements OnInit {
         break;
     }
 
-    this.reportService.getReport(request).subscribe((resp) => {
-      this.reportData = resp;
-      this.isLoading = false;
+    this.reportService.getReport(request).subscribe(
+      (resp) => {
+        this.reportData = resp;
+        this.isLoading = false;
+      },
+      (error) => {
+        this.showError();
+      }
+    );
+  }
+
+  private showError() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Ошибка!',
+      detail: 'При загрузке отчета произошла ошибка! Пожалуйста, перезагрузите страницу.',
+      sticky: true
     });
   }
 }
