@@ -1,9 +1,10 @@
 import { ReportType } from './../../types/reports/report-type.class';
 import { ReportService } from './../../services/report.service';
 import { CryptoService } from './../../../../../shared/services/common/crypto.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ReportTypeInterface } from '../../types/reports/report-type.interface';
+import { ReportColumntInterface } from '../../types/reports/report-column.interface';
 
 @Component({
   selector: 'app-report-view-page',
@@ -15,6 +16,9 @@ export class ReportViewPageComponent implements OnInit {
   public isError: boolean = false;
   public reportConfig: ReportTypeInterface;
   public reportData: any[] = [];
+  public search: string;
+  // public selectedColumns: any[] = [];
+  _selectedColumns: any[] = [];
 
   private data: any;
 
@@ -36,7 +40,28 @@ export class ReportViewPageComponent implements OnInit {
     });
   }
 
-  exportExcel() {
+  public onSearch(value) {
+    console.log(value);
+  }
+
+  @Input() get selectedColumns(): any[] {
+    return this._selectedColumns;
+  }
+
+  set selectedColumns(val: any[]) {
+    console.log('VAL', val)
+    this._selectedColumns = this.reportConfig.columns.filter((col: ReportColumntInterface) => val.includes(col));
+    this.reportConfig.columns.forEach(item => {
+      if(val.includes(item)) {
+        item.visible = true;
+      }
+      else {
+        item.visible = false;
+      }
+    });
+  }
+
+  public exportExcel() {
     import('xlsx').then((xlsx) => {
       let exportData: any[] = [];
       this.reportData.forEach((item) => {
@@ -44,6 +69,8 @@ export class ReportViewPageComponent implements OnInit {
         this.reportConfig.columns.forEach((column) => {
           if (column.visible) {
             object[column.title] = item[column.name];
+            this._selectedColumns.push(object[column.title]);
+            console.log('COLUMNS', this._selectedColumns);
           }
         });
         exportData.push(object);
@@ -59,7 +86,7 @@ export class ReportViewPageComponent implements OnInit {
     });
   }
 
-  saveAsExcelFile(buffer: any, fileName: string): void {
+  private saveAsExcelFile(buffer: any, fileName: string): void {
     import('file-saver').then((FileSaver) => {
       let EXCEL_TYPE =
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
@@ -82,7 +109,7 @@ export class ReportViewPageComponent implements OnInit {
   private fetchReport(): void {
     this.isLoading = true;
     let data = this.data;
-    console.log('DATATA', data)
+    console.log('DATATA', data);
 
     let request: any = {
       CustomerID: 0,
@@ -93,7 +120,7 @@ export class ReportViewPageComponent implements OnInit {
       Type: data.type,
     };
 
-    switch(data.type) {
+    switch (data.type) {
       case 'OrderPostings':
         request.ID = data.numberOrder;
         break;

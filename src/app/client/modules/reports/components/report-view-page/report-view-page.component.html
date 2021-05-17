@@ -9,8 +9,12 @@
     <div class="actions">
       <span class="p-input-icon-left mr-20">
         <i class="pi pi-search"></i>
-        <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" pInputText />
+        <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" [(ngModel)]="search"
+          (ngModelChange)="onSearch($event)" pInputText />
       </span>
+      <p-multiSelect [options]="reportConfig.columns" [(ngModel)]="selectedColumns" optionLabel="title"
+        selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns">
+      </p-multiSelect>
       <div class="mib-button-icon can-click" (click)="exportExcel()">
         <img src="../../../../../../assets/icons/mib-excel.png" alt="">
       </div>
@@ -39,16 +43,14 @@
             <ng-container *ngFor="let col of columns">
               <td *ngIf="col.visible">
                 <div [ngSwitch]="col.type">
-                <div class="m-td" *ngSwitchCase="'number'" style="justify-self: flex-start; flex-direction: row-reverse;">
-                  {{rowData[col.name] | currency:'RUB':'symbol-narrow'}}
-
+                  <div class="m-td" *ngSwitchCase="'number'"
+                    style="justify-self: flex-start; flex-direction: row-reverse;">
+                    {{rowData[col.name] | currency:'RUB':'symbol-narrow'}}
                   </div>
-                  <div class="m-td"  *ngSwitchCase="'date'">
+                  <div class="m-td" *ngSwitchCase="'date'">
                     {{rowData[col.name] | date:'MM.dd.yyyy'}}
-
                   </div>
                   <div class="m-td" *ngSwitchDefault>
-
                     {{rowData[col.name]}}
                   </div>
                 </div>
