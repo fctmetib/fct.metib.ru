@@ -13,13 +13,11 @@
           (ngModelChange)="onSearch($event)" pInputText />
       </span>
       <p-multiSelect [options]="reportConfig.columns" [(ngModel)]="selectedColumns" optionLabel="title"
-        selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns">
+        selectedItemsLabel="Выбрано колонок - {0}" class="mr-20" [style]="{minWidth: '200px'}" placeholder="Выберите колонки">
       </p-multiSelect>
       <div class="mib-button-icon can-click" (click)="exportExcel()">
         <img src="../../../../../../assets/icons/mib-excel.png" alt="">
       </div>
-      <!-- <button type="button" pButton pRipple
-        class="mib-button-icon" pTooltip="XLS" tooltipPosition="bottom"></button> -->
     </div>
   </div>
 

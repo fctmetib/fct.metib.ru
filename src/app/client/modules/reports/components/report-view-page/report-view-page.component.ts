@@ -49,7 +49,6 @@ export class ReportViewPageComponent implements OnInit {
   }
 
   set selectedColumns(val: any[]) {
-    console.log('VAL', val)
     this._selectedColumns = this.reportConfig.columns.filter((col: ReportColumntInterface) => val.includes(col));
     this.reportConfig.columns.forEach(item => {
       if(val.includes(item)) {
@@ -69,8 +68,6 @@ export class ReportViewPageComponent implements OnInit {
         this.reportConfig.columns.forEach((column) => {
           if (column.visible) {
             object[column.title] = item[column.name];
-            this._selectedColumns.push(object[column.title]);
-            console.log('COLUMNS', this._selectedColumns);
           }
         });
         exportData.push(object);
@@ -103,6 +100,13 @@ export class ReportViewPageComponent implements OnInit {
 
   private prepareTable(): void {
     this.reportConfig = ReportType.getType(this.data.type);
+    this.reportConfig.columns.forEach(column => {
+      if(column.visible) {
+        this._selectedColumns.push(column);
+        console.log('COLUMNS', this._selectedColumns);
+      }
+    })
+
     console.log(this.reportConfig);
   }
 
