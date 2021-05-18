@@ -12,7 +12,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { getRequestsAction } from '../../store/actions/getRequests.action';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SortEvent, MenuItem } from 'primeng/api';
-import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 import { RequestsService } from '../../services/requests.service';
 import { AgencyRequestCreateDialogComponent } from '../agency-request-create-dialog/agency-request-create-dialog.component';
 
@@ -86,6 +85,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   fetch(): void {
+    // TODO: REWORK ON SIMPLE FETCH
     this.store.dispatch(getRequestsAction());
   }
 
@@ -208,13 +208,17 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   public checkSelecteditems() {
     let isFromDuty = this.selectedItems.filter(x => x.ReadOnly)
-    console.log('DAB', isFromDuty)
+    if (isFromDuty.length > 0) {
+      console.log('yes')
+    } else {
+      console.log('no')
+    }
   }
 
   private checkSelectedItem(): boolean {
     let isFromDuty = this.selectedItems.filter(x => x.ReadOnly)
     console.log(isFromDuty)
-    return isFromDuty ? true : false;
+    return isFromDuty.length > 0 ? true : false;
   }
 
   ngOnDestroy() {
