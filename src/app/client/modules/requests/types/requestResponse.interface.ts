@@ -8,6 +8,7 @@ export interface RequestsResponseInterface {
   Date: Date;
   Delivery: DeliveryReferenceInterface;
   Type: string;
+  ReadOnly?: boolean;
   Status: string;
   Summ: number;
   Shipments: ClientShipmentInterface[];

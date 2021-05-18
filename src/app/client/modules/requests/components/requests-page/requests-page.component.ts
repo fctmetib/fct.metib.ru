@@ -52,6 +52,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       {
         label: 'Редактировать',
         command: () => this.showEditDialog(),
+        disabled: this.checkSelectedItem()
       },
       {
         label: 'Агентская заявка',
@@ -205,6 +206,16 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     // });
   }
 
+  public checkSelecteditems() {
+    let isFromDuty = this.selectedItems.filter(x => x.ReadOnly)
+    console.log('DAB', isFromDuty)
+  }
+
+  private checkSelectedItem(): boolean {
+    let isFromDuty = this.selectedItems.filter(x => x.ReadOnly)
+    console.log(isFromDuty)
+    return isFromDuty ? true : false;
+  }
 
   ngOnDestroy() {
     if (this.ref) {
