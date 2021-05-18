@@ -1,27 +1,42 @@
 <div class="p-field p-col-12 p-md-12">
-  Измените сумму поставок где это необходимо и нажмите "Сохранить изменения"
+  <p class="p-text-center">Измените сумму поставок где это необходимо и нажмите "Сохранить изменения"</p>
   <div class="responsive-table">
     <p-table [value]="requests" [rows]="10" styleClass="p-datatable-customers mib-table">
       <ng-template pTemplate="header">
         <tr>
           <th>
             <div class="m-th">
-              <div>ID</div>
+              <div>Счёт-фактура</div>
             </div>
           </th>
           <th>
             <div class="m-th">
-              <div>Номер</div>
+              <div>Сч. фактур дата</div>
             </div>
           </th>
           <th>
             <div class="m-th">
-              <div>Дата</div>
+              <div>Накладная</div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Дата накладной</div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Дата поставки</div>
             </div>
           </th>
           <th>
             <div class="m-th">
               <div>Сумма</div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Сумма(Исх.)</div>
             </div>
           </th>
         </tr>
@@ -35,6 +50,11 @@
           </td>
           <td>
             <div class="m-td">
+              <div>{{request.Date | date: 'dd.MM.yyyy'}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
               <div> {{request.Number}}</div>
             </div>
           </td>
@@ -43,17 +63,32 @@
               <div>{{request.Date | date: 'dd.MM.yyyy'}}</div>
             </div>
           </td>
-          <td pEditableColumn>
+          <td>
             <div class="m-td">
+              <div>{{request.Date | date: 'dd.MM.yyyy'}}</div>
+            </div>
+          </td>
+          <td pEditableColumn>
+            <div class="m-td with-icon can-click">
               <div>
                 <p-cellEditor>
                   <ng-template pTemplate="input">
                     <input pInputText type="text" [(ngModel)]="request.Summ" required>
                   </ng-template>
                   <ng-template pTemplate="output">
-                    {{request.Summ}}
+                    {{request.Summ  | currency:'RUB':'symbol-narrow'}}
                   </ng-template>
                 </p-cellEditor>
+              </div>
+              <div class="icon">
+                <img src="../../../../../../assets/icons/edit_icon.png" alt="">
+              </div>
+            </div>
+          </td>
+          <td pEditableColumn>
+            <div class="m-td">
+              <div>
+                {{request.Summ  | currency:'RUB':'symbol-narrow'}}
               </div>
             </div>
           </td>
