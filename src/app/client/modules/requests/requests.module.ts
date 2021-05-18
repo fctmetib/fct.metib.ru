@@ -41,10 +41,14 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { AgencyRequestCreateDialogComponent } from './components/agency-request-create-dialog/agency-request-create-dialog.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
 @NgModule({
   imports: [
     CommonModule,
     InputTextModule,
+    ToastModule,
     TabViewModule,
     CheckboxModule,
     ButtonModule,
@@ -75,12 +79,18 @@ import { AgencyRequestCreateDialogComponent } from './components/agency-request-
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [RequestsPageComponent, RequestCreateDialogComponent, RequestCorrectDialogComponent, AgencyRequestCreateDialogComponent],
+  declarations: [
+    RequestsPageComponent,
+    RequestCreateDialogComponent,
+    RequestCorrectDialogComponent,
+    AgencyRequestCreateDialogComponent,
+  ],
   providers: [
     DialogService,
     DeliveryService,
     RequestsService,
     FileService,
+    MessageService,
     CommonService,
   ],
 })

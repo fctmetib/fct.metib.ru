@@ -15,9 +15,6 @@ import { DutyInterface } from 'src/app/shared/types/duty/duty.interface';
 import { factoringSelector } from 'src/app/client/store/selectors';
 import { SelectedItemSortedInterface } from '../../types/common/selected-item-sorted.interface';
 import { DutyService } from 'src/app/shared/services/share/duty.service';
-import { map } from 'rxjs/operators';
-import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -35,11 +32,10 @@ export class FreedutyPageComponent implements OnInit {
   selectedItemsSorted: SelectedItemSortedInterface[] = [];
 
   filterForm: FormGroup;
-  confirmForm: FormGroup;
+
 
   filterDialog: boolean = false;
   requestsDialog: boolean = false;
-  confirmDialog: boolean = false;
 
   organizationId: number;
   requestsDialogAlert: string;
@@ -91,10 +87,6 @@ export class FreedutyPageComponent implements OnInit {
       ],
     });
 
-    this.confirmForm = this.fb.group({
-      pin: ['', [Validators.required]],
-      confirmCode: [''],
-    });
   }
 
   applyFilters(): void {

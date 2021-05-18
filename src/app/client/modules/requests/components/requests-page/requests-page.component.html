@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="card-content" id="step1">
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
@@ -195,7 +196,7 @@
 
 
 <!-- Confirm Form -->
-<!-- <form [formGroup]="confirmForm" (ngSubmit)="confirm()">
+<form [formGroup]="confirmForm" (ngSubmit)="confirmSend()">
   <p-dialog [style]="{width: '450px'}" [(visible)]="confirmDialog" header="Подтверждение" [modal]="true"
     [draggable]="false" [resizable]="false" styleClass="p-fluid">
     <ng-template pTemplate="content">
@@ -209,4 +210,4 @@
       <button pButton pRipple label="Подтвердить" icon="pi pi-check" class="p-button-text" type="submit"></button>
     </ng-template>
   </p-dialog>
-</form> -->
+</form>

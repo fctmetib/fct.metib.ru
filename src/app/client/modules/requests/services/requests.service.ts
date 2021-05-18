@@ -26,7 +26,10 @@ export class RequestsService {
     return this.http.post<RequestsResponseInterface>(url, data);
   }
 
-  update(requestID: number, data: ClientRequestInterface): Observable<RequestsResponseInterface> {
+  update(
+    requestID: number,
+    data: ClientRequestInterface
+  ): Observable<RequestsResponseInterface> {
     const url = `${environment.apiUrl}/request/${requestID}`;
     return this.http.post<RequestsResponseInterface>(url, data);
   }
@@ -63,12 +66,16 @@ export class RequestsService {
     return this.http.get<RequestsResponseInterface>(url);
   }
 
-  getStatesOfRequest(requestID: number): Observable<ClientRequestStateInterface[]> {
+  getStatesOfRequest(
+    requestID: number
+  ): Observable<ClientRequestStateInterface[]> {
     const url = `${environment.apiUrl}/request/${requestID}/states`;
     return this.http.get<ClientRequestStateInterface[]>(url);
   }
 
-  getRequestsWithFilter(dateFrom: Date): Observable<RequestsResponseInterface[]> {
+  getRequestsWithFilter(
+    dateFrom: Date
+  ): Observable<RequestsResponseInterface[]> {
     const url = `${environment.apiUrl}/request/filter/${dateFrom}`;
     return this.http.get<RequestsResponseInterface[]>(url);
   }
@@ -79,5 +86,16 @@ export class RequestsService {
     return this.http.get<any[]>(url);
   }
 
+  //TODO: нужно проверить, что возвращается
+  sendConfirm(data: ConfirmRequestInterface): Observable<any> {
+    const url = `${environment.apiUrl}/request/send/confirm`;
+    return this.http.post<any>(url, data);
+  }
 
+  sendInit(
+    data: number[]
+  ): Observable<ClientRequestSendingInitRequestInterface> {
+    const url = `${environment.apiUrl}/request/send/init`;
+    return this.http.post<ClientRequestSendingInitRequestInterface>(url, data);
+  }
 }

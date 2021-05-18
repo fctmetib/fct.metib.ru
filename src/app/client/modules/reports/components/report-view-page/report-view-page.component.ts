@@ -112,7 +112,6 @@ export class ReportViewPageComponent implements OnInit {
   private fetchReport(): void {
     this.isLoading = true;
     let data = this.data;
-    console.log('DATATA', data);
 
     let request: any = {
       CustomerID: 0,

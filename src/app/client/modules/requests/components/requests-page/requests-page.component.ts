@@ -11,9 +11,11 @@ import { Store, select } from '@ngrx/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { getRequestsAction } from '../../store/actions/getRequests.action';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SortEvent, MenuItem } from 'primeng/api';
+import { SortEvent, MenuItem, MessageService } from 'primeng/api';
 import { RequestsService } from '../../services/requests.service';
 import { AgencyRequestCreateDialogComponent } from '../agency-request-create-dialog/agency-request-create-dialog.component';
+import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-requests-page',
@@ -21,17 +23,29 @@ import { AgencyRequestCreateDialogComponent } from '../agency-request-create-dia
   styleUrls: ['./requests-page.component.scss'],
 })
 export class RequestsPageComponent implements OnInit, OnDestroy {
-  requests$: Observable<RequestsResponseInterface[] | null>;
-  error$: Observable<string | null>;
-  isLoading$: Observable<boolean>;
+  public requests$: Observable<RequestsResponseInterface[] | null>;
+  public  error$: Observable<string | null>;
+  public isLoading$: Observable<boolean>;
 
-  displayModal: boolean;
-  ref: DynamicDialogRef;
-  items: MenuItem[] = [];
+  public displayModal: boolean;
+  public ref: DynamicDialogRef;
+  public items: MenuItem[] = [];
 
-  selectedItems: RequestsResponseInterface[] = [];
+  public confirmForm: FormGroup;
+  public confirmDialog: boolean = false;
 
-  constructor(private store: Store, public dialogService: DialogService, private requestService: RequestsService) {}
+  public selectedItems: RequestsResponseInterface[] = [];
+
+  public successRequestsDialogMessage: string = null;
+  public errorRequestsDialogMessage: string = null;
+
+  constructor(
+    private messageService: MessageService,
+    private store: Store,
+    public dialogService: DialogService,
+    private fb: FormBuilder,
+    private requestService: RequestsService
+  ) {}
 
   ngOnInit() {
     this.initializeValues();
@@ -45,43 +59,57 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
     this.items = [
       {
+        id: 'create',
         label: 'Создать',
         command: () => this.showCreateRequestDialog(),
       },
       {
+        id: 'edit',
         label: 'Редактировать',
         command: () => this.showEditDialog(),
-        disabled: this.checkSelectedItem()
       },
       {
+        id: 'agency',
         label: 'Агентская заявка',
         command: () => this.showCreateAgencyRequestDialog(),
       },
       {
+        id: 'createFrom',
         label: 'Создать из подтверждений',
         routerLink: '',
       },
       {
+        id: 'createCorrection',
         label: 'Сделать коррекцию',
         command: () => this.showCorrectionDialog(),
       },
       {
+        id: 'events',
         label: 'События',
         routerLink: '',
       },
       {
+        id: 'documents',
         label: 'Документы',
         routerLink: '',
       },
       {
+        id: 'remove',
         label: 'Удалить',
         routerLink: '',
       },
       {
+        id: 'send',
         label: 'Отправить',
-        routerLink: '',
+        command: () => this.initSend(),
       },
     ];
+
+
+    this.confirmForm = this.fb.group({
+      pin: ['', [Validators.required]],
+      confirmCode: [''],
+    });
   }
 
   fetch(): void {
@@ -156,69 +184,86 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   showEditDialog() {
     let selectedRow = this.selectedItems[0];
 
-    this.requestService.getRequestByIdAndParams(selectedRow.ID, true, true, true).subscribe(resp => {
-      selectedRow = resp;
+    this.requestService
+      .getRequestByIdAndParams(selectedRow.ID, true, true, true)
+      .subscribe((resp) => {
+        selectedRow = resp;
 
-      if (selectedRow) {
-        this.ref = this.dialogService.open(RequestCreateDialogComponent, {
-          header: 'Редактирование заявки',
-          width: '70%',
-          contentStyle: { height: '800px', overflow: 'auto' },
-          baseZIndex: 10000,
-          data: selectedRow,
-        });
+        if (selectedRow) {
+          this.ref = this.dialogService.open(RequestCreateDialogComponent, {
+            header: 'Редактирование заявки',
+            width: '70%',
+            contentStyle: { height: '800px', overflow: 'auto' },
+            baseZIndex: 10000,
+            data: selectedRow,
+          });
 
-        this.ref.onClose.subscribe((data: any) => {
-          console.log('closed');
+          this.ref.onClose.subscribe((data: any) => {
+            console.log('closed');
+          });
+        }
+      });
+  }
+
+  public initSend() {
+    let requestIDs = this.selectedItems.map(x => x.ID);
+    this.requestService.sendInit(requestIDs).subscribe(
+      (response) => {
+        this.confirmForm.patchValue({
+          confirmCode: response.ConfirmationCode,
         });
+        this.confirmDialog = true;
+      },
+      (err) => {
+        this.showError('При отправке кода произошла ошибка.');
+      }
+    );
+  }
+
+  public confirmSend(): void {
+    this.successRequestsDialogMessage = null;
+    this.errorRequestsDialogMessage = null;
+    let confirmData: ConfirmRequestInterface = {
+      ConfirmationCode: this.confirmForm.value.confirmCode,
+      Pin: this.confirmForm.value.pin,
+    };
+    this.requestService.sendConfirm(confirmData).subscribe((resp) => {
+      this.confirmDialog = false;
+      this.successRequestsDialogMessage = 'Заявка успешно подтверждена';
+    });
+  }
+
+  public checkSelecteditems() {
+    // TODO: rework on a better solution
+    this.items.forEach((i) => {
+      if (i.id === 'edit') {
+        i.disabled = this.checkSelectedItemIsReadonly();
+      }
+      if (i.id === 'send') {
+        i.disabled = this.checkSelectedItemIsCreate();
       }
     });
   }
 
-  // init() {
-  //   this.service.sendInit(requestsID).subscribe(
-  //     (response) => {
-  //       this.confirmForm.patchValue({
-  //         confirmCode: response.ConfirmationCode,
-  //       });
-
-  //       this.confirmDialog = true;
-  //     },
-  //     (err) => {
-  //       this.errorRequestsDialogMessage = err.error;
-  //     }
-  //   );
-  // }
-
-
-  confirm(): void {
-    // this.successRequestsDialogMessage = null;
-    // this.errorRequestsDialogMessage = null;
-
-    // let confirmData: ConfirmRequestInterface = {
-    //   ConfirmationCode: this.confirmForm.value.confirmCode,
-    //   Pin: this.confirmForm.value.pin,
-    // };
-
-    // this.service.sendConfirm(confirmData).subscribe((resp) => {
-    //   this.confirmDialog = false;
-    //   this.successRequestsDialogMessage = 'Заявка успешно подтверждена';
-    // });
-  }
-
-  public checkSelecteditems() {
-    let isFromDuty = this.selectedItems.filter(x => x.ReadOnly)
-    if (isFromDuty.length > 0) {
-      console.log('yes')
-    } else {
-      console.log('no')
-    }
-  }
-
-  private checkSelectedItem(): boolean {
-    let isFromDuty = this.selectedItems.filter(x => x.ReadOnly)
-    console.log(isFromDuty)
+  private checkSelectedItemIsReadonly(): boolean {
+    let isFromDuty = this.selectedItems.filter((x) => x.ReadOnly === true);
+    console.log(isFromDuty);
     return isFromDuty.length > 0 ? true : false;
+  }
+
+  private checkSelectedItemIsCreate(): boolean {
+    let isCreated = this.selectedItems.filter((x) => x.Status !== 'Создана');
+    console.log(isCreated);
+    return isCreated.length > 0 ? true : false;
+  }
+
+  private showError(message: string) {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Ошибка!',
+      detail: message,
+      sticky: true
+    });
   }
 
   ngOnDestroy() {
