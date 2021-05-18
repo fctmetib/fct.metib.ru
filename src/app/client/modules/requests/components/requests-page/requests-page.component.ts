@@ -8,7 +8,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { RequestsResponseInterface } from './../../types/requestResponse.interface';
 import { Store, select } from '@ngrx/store';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChildren, Directive } from '@angular/core';
 import { getRequestsAction } from '../../store/actions/getRequests.action';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SortEvent, MenuItem, MessageService } from 'primeng/api';
@@ -16,6 +16,12 @@ import { RequestsService } from '../../services/requests.service';
 import { AgencyRequestCreateDialogComponent } from '../agency-request-create-dialog/agency-request-create-dialog.component';
 import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Directive({
+  selector: '[tableHighlight]'
+})
+
+export class TableHighlightDirective{}
 
 @Component({
   selector: 'app-requests-page',
@@ -38,6 +44,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   public successRequestsDialogMessage: string = null;
   public errorRequestsDialogMessage: string = null;
+
+  @ViewChildren(TableHighlightDirective) tableHighlight: TableHighlightDirective;
 
   constructor(
     private messageService: MessageService,
@@ -243,6 +251,17 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
         i.disabled = this.checkSelectedItemIsCreate();
       }
     });
+  }
+
+  @HostListener('window:mouseup', ['$event'])
+  mouseUp(event){
+    console.log('ff', event.target)
+    console.log(window.getSelection().getRangeAt(0))
+    let container: any = window.getSelection().getRangeAt(0).commonAncestorContainer
+    let children = container.children;
+    console.log(children)
+    let ff = this.tableHighlight;
+    console.log(ff)
   }
 
   private checkSelectedItemIsReadonly(): boolean {
