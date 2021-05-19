@@ -71,6 +71,8 @@ export class RequestCreateDialogComponent {
   public lengthShipments: number = 0;
   //#endregion
 
+  public selectedImages: any[] = [];
+
   constructor(
     public ref: DynamicDialogRef,
     private fb: FormBuilder,

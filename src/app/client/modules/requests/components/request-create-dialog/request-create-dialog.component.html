@@ -271,6 +271,99 @@
         <label for="Scan" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
       </div>
     </div>
+
+    <p-table [value]="files" selectionMode="multiple" [(selection)]="selectedImages" dataKey="ID"
+      styleClass="p-datatable-customers mib-table" [metaKeySelection]="true">
+      <!-- -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                ID
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Договор</div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Номер
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Дата
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Тип
+              </div>
+
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Состояние
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Покупатель</div>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-file>
+        <tr [pSelectableRow]="file">
+          <td>
+            <div class="m-td">
+              <div>
+
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>
+
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>
+
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>
+
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div></div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+
     <div *ngIf="files.length">
       <ng-container *ngFor="let file of files">
         <div class="addon-button mb-10" *ngIf="file.Identifier === 'Scan'">
