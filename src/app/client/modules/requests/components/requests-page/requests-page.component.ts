@@ -241,11 +241,19 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   public checkSelecteditems() {
     // TODO: rework on a better solution
     this.items.forEach((i) => {
-      if (i.id === 'edit') {
-        i.disabled = this.checkSelectedItemIsReadonly();
-      }
       if (i.id === 'send') {
         i.disabled = this.checkSelectedItemIsCreate();
+      }
+      if (i.id === 'remove') {
+        i.disabled = this.checkSelectedItemIsCreate();
+      }
+      if (i.id === 'edit') {
+        i.disabled = this.checkSelectedItemIsReadonly();
+        return;
+      }
+      if (i.id === 'edit') {
+        i.disabled = this.checkSelectedItemIsCreate();
+        return;
       }
     });
   }
