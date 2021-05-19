@@ -58,7 +58,6 @@
 
 <p-tabView>
   <p-tabPanel header="Поставки">
-
     <div class="card">
       <div class="mib-toolbar">
         <button type="button" pButton pRipple label="Добавить" class="p-mr-2" (click)="openNew(false)"></button>
@@ -66,7 +65,6 @@
         <button type="button" pButton pRipple label="Удалить ({{selectedShipments.length}})" class="p-mr-2"
           (click)="deleteShipments()"></button>
       </div>
-
       <p-table [rows]="10" [rowHover]="true" [value]="shipments" selectionMode="multiple"
         [(selection)]="selectedShipments">
         <ng-template pTemplate="header">
@@ -229,12 +227,8 @@
               [disabled]="shipmentForm.invalid"></button>
             <button pButton pRipple label="Отменить" class="p-button-text cancel"></button>
           </div>
-
         </form>
       </ng-template>
-      <!-- <ng-template pTemplate="footer">
-
-        </ng-template> -->
     </p-dialog>
 
     <p-dialog header="Ошибка" [(visible)]="rowDataValidateDialog" [style]="{width: '50vw'}" [baseZIndex]="10000"
@@ -269,7 +263,6 @@
         </p-button>
       </ng-template>
     </p-dialog>
-
   </p-tabPanel>
   <p-tabPanel header="Скан-копии накладных">
     <div>
