@@ -8,8 +8,8 @@
     </ng-template>
   </p-toolbar>
   <div class="responsive-table">
-    <div *ngFor="let request of requests$ | async"></div>
-    <p-table [value]="(requests$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
+    <div *ngFor="let request of requests"></div>
+    <p-table [value]="requests" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
       [rowsPerPageOptions]="[10,25,50]" [(selection)]="selectedItems" dataKey="ID" (onRowSelect)="checkSelecteditems()"
       styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
       (sortFunction)="customSort($event)" [customSort]="true"
@@ -130,7 +130,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
-        <ng-container *ngIf="(requests$ | async); else skeletonRequestsTemplate">
+        <ng-container *ngIf="requests; else skeletonRequestsTemplate">
           <tr>
             <td colspan="8">Нет данных.</td>
           </tr>

@@ -29,9 +29,8 @@ export class TableHighlightDirective{}
   styleUrls: ['./requests-page.component.scss'],
 })
 export class RequestsPageComponent implements OnInit, OnDestroy {
-  public requests$: Observable<RequestsResponseInterface[] | null>;
-  public  error$: Observable<string | null>;
-  public isLoading$: Observable<boolean>;
+  // public requests$: Observable<RequestsResponseInterface[] | null>;
+  public requests: RequestsResponseInterface[];
 
   public displayModal: boolean;
   public ref: DynamicDialogRef;
@@ -61,10 +60,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   initializeValues(): void {
-    this.requests$ = this.store.pipe(select(requestsSelector));
-    this.error$ = this.store.pipe(select(errorSelector));
-    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
-
     this.items = [
       {
         id: 'create',
@@ -113,7 +108,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       },
     ];
 
-
     this.confirmForm = this.fb.group({
       pin: ['', [Validators.required]],
       confirmCode: [''],
@@ -121,8 +115,11 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   fetch(): void {
-    // TODO: REWORK ON SIMPLE FETCH
-    this.store.dispatch(getRequestsAction());
+    this.requestService.fetch().subscribe(resp => {
+      this.requests = resp;
+    }, (error) => {
+      this.showError('При загрузке Заявок произошла ошибка, пожалуйста, перезагузите страницу.')
+    });
   }
 
   showCreateAgencyRequestDialog() {
@@ -178,7 +175,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       return event.order * result;
     });
 
-    this.requests$ = of(requests);
+   this.requests = [...requests]
   }
 
   showCorrectionDialog() {
@@ -253,16 +250,16 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  @HostListener('window:mouseup', ['$event'])
-  mouseUp(event){
-    console.log('ff', event.target)
-    console.log(window.getSelection().getRangeAt(0))
-    let container: any = window.getSelection().getRangeAt(0).commonAncestorContainer
-    let children = container.children;
-    console.log(children)
-    let ff = this.tableHighlight;
-    console.log(ff)
-  }
+  // @HostListener('window:mouseup', ['$event'])
+  // mouseUp(event){
+  //   console.log('ff', event.target)
+  //   console.log(window.getSelection().getRangeAt(0))
+  //   let container: any = window.getSelection().getRangeAt(0).commonAncestorContainer
+  //   let children = container.children;
+  //   console.log(children)
+  //   let ff = this.tableHighlight;
+  //   console.log(ff)
+  // }
 
   private checkSelectedItemIsReadonly(): boolean {
     let isFromDuty = this.selectedItems.filter((x) => x.ReadOnly === true);
