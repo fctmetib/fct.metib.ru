@@ -1,3 +1,4 @@
+import { DemandInterface } from './../../../types/demand.interface';
 import { DemandObligationInterface } from './../../../types/common/demand-obligation.interface';
 import { DemandEDIInterface } from './../../../types/common/demand-edi.interface';
 import { FileModeInterface } from './../../../../../types/file/file-model.interface';
@@ -26,6 +27,7 @@ import { createDemandFactoringAction } from '../../../store/actions/createDemand
 import { errorSelector, isLoadingSelector } from '../../../store/selectors';
 import { CurrencyPipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-demand-action-factoring-page',
@@ -35,43 +37,40 @@ import { MessageService } from 'primeng/api';
 export class DemandActionFactoringPageComponent implements OnInit {
   public isUserVerified: boolean;
 
-  public formFactoring: FormGroup;
-  public formAddress: FormGroup;
-
-  public files: FileModeInterface[] = [];
-
-  public organizationTypes: DemandSelectboxInterface[] = [];
-  public ruleTypes: DemandSelectboxInterface[] = [];
-  public typesOfOwner: DemandSelectboxInterface[] = [];
-  public countryList: DemandSelectboxInterface[];
-  public regionList: DemandSelectboxInterface[];
-
   public alert: boolean;
   public alertMessage: string;
-  public addressDialog: boolean = false;
-
-  private currentAddressFormId: any;
 
   public isLoading$: Observable<boolean> = new Observable<boolean>();
   public backendErrors$: Observable<string | null>;
 
   private currentDraftId: number = 0;
 
+  public currentDemand: any;
+  // Данные из компонента factoring-data
+  public dataDemand: any;
+  public files: any;
+
   constructor(
-    private currencyPipe: CurrencyPipe,
     private authService: AuthService,
-    private fb: FormBuilder,
     private messageService: MessageService,
-    private commonService: CommonService,
     private demandService: DemandService,
+    private route: ActivatedRoute,
     private store: Store,
-    private fileService: FileService
   ) {}
 
   ngOnInit() {
     this.isUserVerified = this.authService.isUserVerified();
-    this.initForm();
-    this.initValues();
+
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['ID']) {
+        this.demandService.getDemandById(params['ID']).subscribe((resp) => {
+          this.currentDemand = resp;
+        });
+      }
+      if (params['DraftId']) {
+        this.currentDraftId = params['DraftID'];
+      }
+    });
 
     setInterval(() => this.saveDraft(), 30000);
   }
@@ -83,154 +82,13 @@ export class DemandActionFactoringPageComponent implements OnInit {
     this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
-  //#region public page actions
-
-  addOtherBank(): void {
-    let otherBanks = this.formFactoring.get('otherBanks') as FormArray;
-    otherBanks.push(
-      this.fb.group({
-        otherBankAccountOpenDate: ['', [Validators.required]],
-        otherBankAccountCloseDate: ['', [Validators.required]],
-        otherBankName: ['', [Validators.required]],
-        otherBankOwnerAccount: ['', [Validators.required]],
-        otherBankTarget: ['', [Validators.required]],
-      })
-    );
+  handleSave(event: any) {
+    this.dataDemand = event;
   }
 
-  addOtherPlace(): void {
-    let factoringPlaces = this.formFactoring.get(
-      'factoringPlaces'
-    ) as FormArray;
-    factoringPlaces.push(
-      this.fb.group({
-        displayAddress: '',
-        factoringPlacesAddress: {
-          PostCode: '',
-          Country: 'Российская Федерация',
-          RegionCode: 77,
-          RegionTitle: '',
-          City: 'Москва',
-          District: '',
-          Locality: '',
-          Street: '',
-          House: '',
-          Appartment: '',
-        },
-        factoringPlacesLegalForm: ['Own', [Validators.required]],
-      })
-    );
-
-    this.updateDisplayAddress(factoringPlaces.length - 1);
+  handleFiles(event: any) {
+    this.files = event;
   }
-
-  addFactoringCredits(): void {
-    let factoringCredits = this.formFactoring.get(
-      'factoringCredits'
-    ) as FormArray;
-    factoringCredits.push(
-      this.fb.group({
-        factoringCreditsCreditor: [''],
-        factoringPlacesTypeDuty: [''],
-        factoringPlacesDateClose: [''],
-        factoringPlacesContractSum: [''],
-        factoringPlacesBalanceReport: [''],
-        factoringPlacesBalanceCurrent: [''],
-      })
-    );
-  }
-
-  addEDIProvider(): void {
-    let factoringEDIProviders = this.formFactoring.get(
-      'factoringEDIProviders'
-    ) as FormArray;
-    factoringEDIProviders.push(
-      this.fb.group({
-        factoringEDIProvidersDebitor: ['', [Validators.required]],
-        factoringEDIProvidersProvider: ['', [Validators.required]],
-      })
-    );
-  }
-
-  remove(i: number, type: string): void {
-    let other = this.formFactoring.get(type) as FormArray;
-    other.removeAt(i);
-  }
-
-  //TODO: Replace it in modules/modals/address-modal
-  openAddressForm(index) {
-    this.currentAddressFormId = index;
-    let addresses = this.formFactoring.value.factoringPlaces;
-    let address = addresses[index].factoringPlacesAddress;
-
-    this.formAddress.patchValue(address);
-    this.addressDialog = true;
-  }
-
-  closeModal() {
-    this.addressDialog = false;
-  }
-
-  saveAddress() {
-    this.formFactoring.value.factoringPlaces[
-      this.currentAddressFormId
-    ].factoringPlacesAddress = this.formAddress.value;
-
-    this.updateDisplayAddress(this.currentAddressFormId);
-
-    this.addressDialog = false;
-    this.formAddress.reset();
-    this.currentAddressFormId = null;
-  }
-
-  onSelect(event, type: string) {
-    let files: File[] = event.target.files;
-
-    for (let file of files) {
-      let guid = Guid.newGuid();
-
-      this.commonService.getBase64(file).subscribe((res) => {
-
-        this.fileService
-          .uploadFileChunks(res, file.name, file.size.toString(), guid)
-          .subscribe(
-            (res) => {
-              console.log(res);
-              this.files.push({
-                Code: res.Code,
-                FileName: res.FileName,
-                ID: res.ID,
-                Size: res.Size,
-                Identifier: type,
-              });
-            },
-            (err) => console.log(err)
-          );
-      });
-    }
-  }
-
-  onRegionChanged(value) {
-    if (value) {
-      let regionTitle = this.regionList.find((x) => x.value === value);
-      this.formAddress.patchValue({
-        RegionTitle: regionTitle,
-      });
-    }
-  }
-
-  removeFile(file: FileModeInterface) {
-    this.files.splice(this.files.indexOf(this.files.find(x => x === file)), 1);
-  }
-
-  onTypeChanged(value) {
-    if (value === 0) {
-      this.formFactoring.patchValue({
-        organizationLegalForm: null,
-      });
-    }
-  }
-  //#endregion
 
   //#region private logic
   saveDraft() {
@@ -242,141 +100,6 @@ export class DemandActionFactoringPageComponent implements OnInit {
         this.showSuccess();
       }, error => {
         this.showWarn();
-      });
-  }
-
-  private initValues(): void {
-    let mibCommon = new MIBCommon();
-
-    this.organizationTypes = mibCommon.getOrganizations();
-    this.ruleTypes = mibCommon.getLegalForms();
-    this.typesOfOwner = mibCommon.getTypesOfOwner();
-    this.countryList = mibCommon.getCountryList();
-    this.regionList = mibCommon.getRegionList();
-
-    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
-    this.backendErrors$ = this.store.pipe(select(errorSelector));
-  }
-
-  private initForm(): void {
-    //TODO: Break on other pages
-
-    this.formAddress = this.fb.group({
-      PostCode: ['', [Validators.required]],
-      Country: ['', [Validators.required]],
-      RegionCode: [0, [Validators.required]],
-      RegionTitle: ['', [Validators.required]],
-      City: ['', [Validators.required]],
-      District: ['', [Validators.required]],
-      Locality: ['', [Validators.required]],
-      Street: ['', [Validators.required]],
-      House: ['', [Validators.required]],
-      Appartment: ['', [Validators.required]],
-    });
-
-    this.formFactoring = this.fb.group({
-      organizationType: [0, [Validators.required]],
-      organizationLegalForm: [''],
-      organizationShortName: ['', [Validators.required]],
-      organizationINN: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(12),
-        ],
-      ],
-      organizationPhone: ['', [Validators.required]],
-      organizationEmail: ['', [Validators.required, Validators.email]],
-      organizationWEB: [''],
-
-      bankBik: ['', [Validators.required]],
-      bankCorrespondentAccount: ['', [Validators.required]],
-      bankName: ['', [Validators.required]],
-      bankAccountOpenDate: ['', [Validators.required]],
-      bankOwnerAccount: ['', [Validators.required]],
-      bankComment: [''],
-
-      otherBanks: this.fb.array([]),
-
-      factoringProducts: ['', [Validators.required]],
-      factoringTradeMarks: ['', [Validators.required]],
-      factoringShipments: ['', [Validators.required]],
-      factoringFinanceLimit: [''],
-      factoringClients: ['', [Validators.required]],
-      factoringWorkers: [0, [Validators.required]],
-
-      factoringPlaces: this.fb.array([]),
-
-      factoringCredits: this.fb.array([]),
-
-      factoringEDIProviders: this.fb.array([]),
-    });
-
-    this.formFactoring.valueChanges.subscribe((form) => {
-      if (form.factoringFinanceLimit) {
-        this.formFactoring.patchValue(
-          {
-            factoringFinanceLimit: this.currencyPipe.transform(
-              form.factoringFinanceLimit.replace(/\D/g, '').replace(/^0+/, ''),
-              'RUB',
-              'symbol',
-              '1.0-0'
-            ),
-          },
-          { emitEvent: false }
-        );
-      }
-    });
-
-    this.formFactoring.markAllAsTouched();
-    this.formFactoring.markAsDirty();
-  }
-
-  private updateDisplayAddress(index): void {
-    let address = this.formFactoring.value.factoringPlaces[index]
-      .factoringPlacesAddress;
-    let result = '';
-
-    console.log(address);
-
-    if (address.PostCode) {
-      result = result + ' ' + address.PostCode;
-    }
-    if (address.Country) {
-      result = result + ' ' + address.Country;
-    }
-    if (address.RegionCode) {
-      result = result + ' ' + address.RegionCode;
-    }
-    if (address.RegionTitle) {
-      result = result + ' ' + address.RegionTitle;
-    }
-    if (address.City) {
-      result = result + ' ' + address.City;
-    }
-    if (address.District) {
-      result = result + ' ' + address.District;
-    }
-    if (address.Locality) {
-      result = result + ' ' + address.Locality;
-    }
-    if (address.Street) {
-      result = result + ' ' + address.Street;
-    }
-    if (address.House) {
-      result = result + ' ' + address.House;
-    }
-    if (address.Appartment) {
-      result = result + ' ' + address.Appartment;
-    }
-
-    let editeAddress = (<FormArray>(
-      this.formFactoring.controls['factoringPlaces']
-    ))
-      .at(index)
-      .patchValue({
-        displayAddress: result,
       });
   }
 
@@ -401,7 +124,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
     let listAddonAccounts: DemandAddonAccountInterface[] = [];
     let listProperties: DemandPropertiesInterface[] = [];
 
-    let properties = this.formFactoring.value.factoringPlaces;
+    let properties = this.dataDemand.factoringPlaces; //.value.factoringPlaces;
     properties.forEach((property) => {
       listProperties.push({
         Address: {
@@ -421,7 +144,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
       });
     });
 
-    let obligations = this.formFactoring.value.factoringCredits;
+    let obligations = this.dataDemand.value.factoringCredits;
     obligations.forEach((obligation) => {
       listObligations.push({
         Creditor: obligation.factoringCreditsCreditor,
@@ -433,7 +156,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
       });
     });
 
-    let addonAccounts = this.formFactoring.value.otherBanks;
+    let addonAccounts = this.dataDemand.value.otherBanks;
     addonAccounts.forEach((addonAccount) => {
       listAddonAccounts.push({
         BIK: '',
@@ -446,7 +169,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
       });
     });
 
-    let edis = this.formFactoring.value.factoringEDIProviders;
+    let edis = this.dataDemand.value.factoringEDIProviders;
     edis.forEach((edi) => {
       listEDI.push({
         Company: edi.factoringEDIProvidersDebitor,
@@ -538,7 +261,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
           TransactionsSumm: '',
         },
         Organization: {
-          Email: this.formFactoring.value.organizationEmail,
+          Email: this.dataDemand.value.organizationEmail,
           FactAddress: {
             Appartment: '',
             City: '',
@@ -566,8 +289,8 @@ export class DemandActionFactoringPageComponent implements OnInit {
             RegionTitle: '',
             Street: '',
           },
-          LegalForm: this.formFactoring.value.organizationLegalForm,
-          Phone: this.formFactoring.value.organizationPhone,
+          LegalForm: this.dataDemand.value.organizationLegalForm,
+          Phone: this.dataDemand.value.organizationPhone,
           PostAddress: {
             Appartment: '',
             City: '',
@@ -582,38 +305,38 @@ export class DemandActionFactoringPageComponent implements OnInit {
           },
           PostAddressEquals: false,
           Requisites: {
-            INN: this.formFactoring.value.organizationINN,
+            INN: this.dataDemand.value.organizationINN,
             KPP: '',
             OGRN: '',
             OKATO: '',
             OKPO: '',
           },
-          ShortTitle: this.formFactoring.value.organizationShortName,
-          Type: this.formFactoring.value.organizationType,
-          Website: this.formFactoring.value.organizationWEB,
+          ShortTitle: this.dataDemand.value.organizationShortName,
+          Type: this.dataDemand.value.organizationType,
+          Website: this.dataDemand.value.organizationWEB,
         },
       },
       Factoring: {
         Account: {
-          BIK: this.formFactoring.value.bankBik,
-          Bank: this.formFactoring.value.bankName,
-          COR: this.formFactoring.value.bankCorrespondentAccount,
-          Comment: this.formFactoring.value.bankComment,
-          Date: new Date(this.formFactoring.value.bankAccountOpenDate),
+          BIK: this.dataDemand.value.bankBik,
+          Bank: this.dataDemand.value.bankName,
+          COR: this.dataDemand.value.bankCorrespondentAccount,
+          Comment: this.dataDemand.value.bankComment,
+          Date: new Date(this.dataDemand.value.bankAccountOpenDate),
           Expire: null,
-          Number: this.formFactoring.value.bankOwnerAccount,
+          Number: this.dataDemand.value.bankOwnerAccount,
         },
         AddonAccounts: listAddonAccounts,
-        Buyers: this.formFactoring.value.Clients,
+        Buyers: this.dataDemand.value.Clients,
         EDI: listEDI,
         FactoringAim: 0,
-        LimitWanted: this.formFactoring.value.factoringFinanceLimit,
+        LimitWanted: this.dataDemand.value.factoringFinanceLimit,
         Obligations: listObligations,
-        Products: this.formFactoring.value.factoringProducts,
+        Products: this.dataDemand.value.factoringProducts,
         Properties: listProperties,
-        StaffAmount: this.formFactoring.value.factoringWorkers,
-        Suppliers: this.formFactoring.value.factoringShipments,
-        Trademarks: this.formFactoring.value.factoringTradeMarks,
+        StaffAmount: this.dataDemand.value.factoringWorkers,
+        Suppliers: this.dataDemand.value.factoringShipments,
+        Trademarks: this.dataDemand.value.factoringTradeMarks,
       },
       Files: this.files,
       Type: 'Factoring',
@@ -621,7 +344,6 @@ export class DemandActionFactoringPageComponent implements OnInit {
 
     return result;
   }
-
 
   private showSuccess() {
     this.messageService.add({

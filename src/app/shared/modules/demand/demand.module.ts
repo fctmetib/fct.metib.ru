@@ -1,3 +1,4 @@
+import { DebitorDataComponent } from './components/demand-actions/demand-action-debitor-page/components/debitor-data/debitor-data.component';
 import { BackendErrorMessagesModule } from './../backendErrorMessages/backendErrorMessages.module';
 import { DialogModule } from 'primeng/dialog';
 import { SuccessMessagesModule } from './../successMessages/successMessages.module';
@@ -49,6 +50,7 @@ import { GetDraftsEffect } from './store/effects/getDrafts.effect';
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import {TabViewModule} from 'primeng/tabview';
+import { FactoringDataComponent } from './components/demand-actions/demand-action-factoring-page/components/factoring-data/factoring-data.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -86,6 +88,7 @@ import {TabViewModule} from 'primeng/tabview';
     AvatarModule,
   ],
   declarations: [
+    // Containers
     DemandPageComponent,
     DemandHistoryPageComponent,
     DemandActionDebitorPageComponent,
@@ -98,6 +101,9 @@ import {TabViewModule} from 'primeng/tabview';
     DemandActionFactoringPageComponent,
     DemandActionSuretyPageComponent,
     DemandActionVerificationPageComponent,
+    // Components
+    DebitorDataComponent,
+    FactoringDataComponent
   ],
   providers: [
     CurrencyPipe,

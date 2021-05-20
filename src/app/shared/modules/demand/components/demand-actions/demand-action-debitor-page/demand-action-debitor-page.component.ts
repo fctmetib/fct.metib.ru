@@ -1,3 +1,4 @@
+import { DemandInterface } from './../../../types/demand.interface';
 import { DebtorInterface } from './../../../types/debtor-interface';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -17,7 +18,7 @@ import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-
   styleUrls: ['./demand-action-debitor-page.component.scss'],
 })
 export class DemandActionDebitorPageComponent implements OnInit {
-  isUserVerified: boolean;
+  public isUserVerified: boolean;
 
   public alert: boolean;
   public errorAlert: boolean;
@@ -36,6 +37,8 @@ export class DemandActionDebitorPageComponent implements OnInit {
 
   public isNewDebtor: boolean = false;
 
+  public currentDemand: DemandInterface<any>;
+
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
@@ -52,7 +55,9 @@ export class DemandActionDebitorPageComponent implements OnInit {
 
     this.route.queryParams.subscribe((params: Params) => {
       if (params['ID']) {
-        this.demandService.getDemandById(params['ID']).subscribe((resp) => {});
+        this.demandService.getDemandById(params['ID']).subscribe((resp) => {
+          this.currentDemand = resp;
+        });
       }
       if (params['DraftId']) {
         this.currentDraftId = params['DraftID'];
