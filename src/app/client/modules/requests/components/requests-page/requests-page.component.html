@@ -76,8 +76,8 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-request>
-        <tr [pSelectableRow]="request">
+      <ng-template pTemplate="body" let-request let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="request" [pSelectableRowIndex]="rowIndex">
           <td>
             <p-tableCheckbox [value]="request"></p-tableCheckbox>
           </td>

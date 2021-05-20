@@ -265,16 +265,11 @@
     </p-dialog>
   </p-tabPanel>
   <p-tabPanel header="Скан-копии накладных">
-    <div>
-      <div class="mib-uploader height-80">
-        <input type="file" id="Scan" multiple="true" (change)="onSelect($event, 'Scan')" hidden />
-        <label for="Scan" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
-      </div>
-      <div class="mib-uploader">
-        <div class="mib-upload-warn" (click)="removeFile()">
-          Удалить
-        </div>
-      </div>
+    <div class="mib-toolbar">
+      <input type="file" id="Scan" multiple="true" (change)="onSelect($event, 'Scan')" hidden />
+      <label for="Scan" pButton pRipple class="p-mr-2 button" label="Добавить"></label>
+      <button type="button" pButton pRipple label="Удалить ({{selectedImages.length}})" class="p-mr-2"
+        (click)="removeFile()"></button>
     </div>
 
     <!-- TODO: REFACTOR IT -->
@@ -351,9 +346,9 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-file>
-        <ng-container *ngIf="file.Identifier === 'Scan'">
-          <tr [pSelectableRow]="file">
+      <ng-template pTemplate="body" let-file let-rowIndex="rowIndex">
+        <ng-container *ngIf="file.Identifier === 'Scan'" >
+          <tr [pSelectableRow]="file" [pSelectableRowIndex]="rowIndex">
             <td>
               <p-tableCheckbox [value]="file"></p-tableCheckbox>
             </td>
@@ -426,16 +421,11 @@
     </p-table>
   </p-tabPanel>
   <p-tabPanel header="Документы ЭДО">
-    <div>
-      <div class="mib-uploader height-80">
-        <input type="file" id="All" multiple="true" (change)="onSelect($event, 'All')" hidden />
-        <label for="All" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
-      </div>
-      <div class="mib-uploader">
-        <div class="mib-upload-warn" (click)="removeFile()">
-          Удалить
-        </div>
-      </div>
+    <div class="mib-toolbar">
+      <input type="file" id="All" multiple="true" (change)="onSelect($event, 'All')" hidden />
+      <label for="All" pButton pRipple class="p-mr-2 button" label="Добавить"></label>
+      <button type="button" pButton pRipple label="Удалить ({{selectedImages.length}})" class="p-mr-2"
+        (click)="removeFile()"></button>
     </div>
 
     <!-- TODO: REFACTOR IT -->
