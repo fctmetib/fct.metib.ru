@@ -172,10 +172,6 @@ export class DemandActionEditProfilePageComponent implements OnInit {
                   Size: res.Size,
                   Identifier: type,
                 });
-
-                {
-                  this.avatarSource = `https://api-factoring.metib.ru/api/avatar/${res.Code}`;
-                }
               },
               (err) => console.log(err)
             );

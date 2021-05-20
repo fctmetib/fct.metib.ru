@@ -139,8 +139,9 @@
         </div>
       </div>
 
-      <hr>
-      <div *ngIf="files.length">
+
+      <div *ngIf="files.length" style="width: 100%;">
+        <h2>Приложенные файлы</h2>
         <ng-container *ngFor="let file of files">
           <div class="addon-button mb-10" *ngIf="file.Identifier === 'Passport'">
             <div class="addon-text">
