@@ -270,8 +270,14 @@
         <input type="file" id="Scan" multiple="true" (change)="onSelect($event, 'Scan')" hidden />
         <label for="Scan" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
       </div>
+      <div class="mib-uploader">
+        <div class="mib-upload-warn" (click)="removeFile()">
+          Удалить
+        </div>
+      </div>
     </div>
 
+    <!-- TODO: REFACTOR IT -->
     <p-table [value]="files" selectionMode="multiple" [(selection)]="selectedImages" dataKey="ID"
       styleClass="p-datatable-customers mib-table" [metaKeySelection]="true">
       <!-- -->
@@ -289,97 +295,135 @@
           </th>
           <th>
             <div class="m-th">
-              <div>Договор</div>
-            </div>
-          </th>
-          <th>
-            <div class="m-th">
-              <div>Номер
+              <div>
+                Номер
               </div>
             </div>
           </th>
           <th>
             <div class="m-th">
-              <div>Дата
+              <div>
+                Название
               </div>
             </div>
           </th>
           <th>
             <div class="m-th">
-              <div>Тип
-              </div>
-
-            </div>
-          </th>
-          <th>
-            <div class="m-th">
-              <div>Состояние
+              <div>
+                Тип
               </div>
             </div>
           </th>
           <th>
             <div class="m-th">
-              <div>Покупатель</div>
+              <div>
+                Статус
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Дата создания
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Активная...
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Фамилия
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Имя
+              </div>
             </div>
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-file>
-        <tr [pSelectableRow]="file">
-          <td>
-            <div class="m-td">
-              <div>
-
+        <ng-container *ngIf="file.Identifier === 'Scan'">
+          <tr [pSelectableRow]="file">
+            <td>
+              <p-tableCheckbox [value]="file"></p-tableCheckbox>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  ID
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <div>
-
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Номер
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <div>
-
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  {{file.FileName}}
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <div>
-
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Тип
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <div></div>
-            </div>
-          </td>
-        </tr>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Статус
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Дата созд...
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Активная...
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Фамилия
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Имя
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
       </ng-template>
     </p-table>
-
-
-    <div *ngIf="files.length">
-      <ng-container *ngFor="let file of files">
-        <div class="addon-button mb-10" *ngIf="file.Identifier === 'Scan'">
-          <div class="addon-text">
-            <p>
-              {{file.FileName}}
-            </p>
-          </div>
-          <div class="mib-uploader">
-            <div class="mib-upload-warn" (click)="removeFile(file)">
-              Удалить
-            </div>
-          </div>
-        </div>
-      </ng-container>
-    </div>
   </p-tabPanel>
   <p-tabPanel header="Документы ЭДО">
     <div>
@@ -387,22 +431,158 @@
         <input type="file" id="All" multiple="true" (change)="onSelect($event, 'All')" hidden />
         <label for="All" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
       </div>
-    </div>
-    <div *ngIf="files.length">
-      <ng-container *ngFor="let file of files">
-        <div class="addon-button mb-10" *ngIf="file.Identifier === 'All'">
-          <div class="addon-text">
-            <p>
-              {{file.FileName}}
-            </p>
-          </div>
-          <div class="mib-uploader">
-            <div class="mib-upload-warn" (click)="removeFile(file)">
-              Удалить
-            </div>
-          </div>
+      <div class="mib-uploader">
+        <div class="mib-upload-warn" (click)="removeFile()">
+          Удалить
         </div>
-      </ng-container>
+      </div>
     </div>
+
+    <!-- TODO: REFACTOR IT -->
+    <p-table [value]="files" selectionMode="multiple" [(selection)]="selectedImages" dataKey="ID"
+      styleClass="p-datatable-customers mib-table" [metaKeySelection]="true">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                ID
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Номер
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Название
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Тип
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Статус
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Дата создания
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Активная...
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Фамилия
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Имя
+              </div>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-file>
+        <ng-container *ngIf="file.Identifier === 'All'">
+          <tr [pSelectableRow]="file">
+            <td>
+              <p-tableCheckbox [value]="file"></p-tableCheckbox>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  ID
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Номер
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  {{file.FileName}}
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Тип
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Статус
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Дата созд...
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Активная...
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Фамилия
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Имя
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-template>
+    </p-table>
   </p-tabPanel>
 </p-tabView>

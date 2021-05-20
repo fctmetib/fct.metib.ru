@@ -258,8 +258,10 @@ export class RequestCreateDialogComponent {
   //#endregion
 
   //#region files
-  removeFile(file: FileModeInterface) {
-    this.files.splice(this.files.indexOf(this.files.find(x => x === file)), 1);
+  removeFile() {
+    this.selectedImages.forEach(i => {
+      this.files.splice(this.files.indexOf(this.files.find(x => x === i)), 1);
+    })
   }
 
   onSelect(event, type: string) {
