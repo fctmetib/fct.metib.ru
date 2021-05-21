@@ -50,6 +50,8 @@ export class DemandActionFactoringPageComponent implements OnInit {
   public dataDemand: any;
   public files: any;
 
+  private _saveDraftAction$: NodeJS.Timeout;
+
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
@@ -72,10 +74,14 @@ export class DemandActionFactoringPageComponent implements OnInit {
       }
     });
 
-    setInterval(() => this.saveDraft(), 30000);
+    this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    if (this._saveDraftAction$) {
+      clearInterval(this._saveDraftAction$);
+    }
+  }
 
   onSubmit() {
     let data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> = this.prepareData();

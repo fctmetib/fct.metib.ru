@@ -1,9 +1,22 @@
 <div class="card-content" id="step1">
-  <p-toolbar styleClass="p-mb-4 ml-0">
+  <p-toolbar styleClass="p-mb-4 ml-0 additional-actions">
     <ng-template pTemplate="left">
-      <p-dropdown [options]="debtorsList" placeholder="Выберите дебитора" optionLabel="Title" optionValue="ID" [ngModel]="selectedDebtor" (ngModelChange)="onDebtorChange($event)"></p-dropdown>
-      <button type="button" pButton label="{{btnShowAllText}}" class="basic p-mr-2" (click)="showAllToggle()"></button>
-      <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="updateData()"></button>
+      <div>
+        <button type="button" pButton label="{{btnShowAllText}}" class="basic p-mr-2"
+          (click)="showAllToggle()"></button>
+        <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="updateData()"></button>
+      </div>
+      <div>
+        <p-dropdown
+          [options]="debtorsList"
+          placeholder="Выберите дебитора"
+          optionLabel="Title"
+          optionValue="ID"
+          [ngModel]="selectedDebtor"
+          (ngModelChange)="onDebtorChange($event)"
+          class="fix-width--200"
+          ></p-dropdown>
+      </div>
     </ng-template>
   </p-toolbar>
   <ng-container *ngIf="isLoading; else contentTemplate">

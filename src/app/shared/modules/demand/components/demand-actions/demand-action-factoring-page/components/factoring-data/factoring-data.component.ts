@@ -148,6 +148,7 @@ export class FactoringDataComponent implements OnInit {
     this.currentAddressFormId = null;
   }
 
+
   onSelect(event, type: string) {
     let files: File[] = event.target.files;
 
