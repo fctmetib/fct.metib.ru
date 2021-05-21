@@ -63,6 +63,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
   ngOnInit() {
     this.isUserVerified = this.authService.isUserVerified();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.route.queryParams.subscribe((params: Params) => {
       if (params['ID']) {
         this.demandService.getDemandById(params['ID']).subscribe((resp) => {
@@ -98,6 +99,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
 
   //#region private logic
   saveDraft() {
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.demandService
       .addDraftById(this.currentDraftId, this.prepareDraft())
       .subscribe((resp) => {

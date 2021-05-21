@@ -167,6 +167,8 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
+    //TODO: REWORK ON SWITCH MAP
       this.commonService.getBase64(file).subscribe((res) => {
 
         this.fileService
@@ -283,6 +285,7 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
 
     // factoringEDIProviders
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.formFactoring.valueChanges.subscribe((form) => {
       if (form.factoringFinanceLimit) {
         this.formFactoring.patchValue(

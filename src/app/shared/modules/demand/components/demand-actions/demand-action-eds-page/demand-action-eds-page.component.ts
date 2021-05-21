@@ -178,6 +178,7 @@ export class DemandActionEDSPageComponent implements OnInit {
         Type: 'DigitalSignature',
       },
     };
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.demandService.add(data).subscribe((resp) => {});
   }
 
@@ -187,8 +188,10 @@ export class DemandActionEDSPageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
       this.commonService.getBase64(file).subscribe((res) => {
 
+    //TODO: ADD LEAK MEMORY PROTECTION
         this.fileService
           .uploadFileChunks(res, file.name, file.size.toString(), guid)
           .subscribe(

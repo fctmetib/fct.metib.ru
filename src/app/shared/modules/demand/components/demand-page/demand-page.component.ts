@@ -84,6 +84,7 @@ export class DemandPageComponent implements OnInit {
     this.displaySystemInfo();
   }
 
+    //TODO: ADD LEAK MEMORY PROTECTION
   openCerts() {
     this.displayModal = true;
     this.isCertsLoading = true;

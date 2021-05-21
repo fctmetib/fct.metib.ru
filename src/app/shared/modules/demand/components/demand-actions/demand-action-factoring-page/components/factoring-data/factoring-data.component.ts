@@ -155,6 +155,7 @@ export class FactoringDataComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
       this.commonService.getBase64(file).subscribe((res) => {
         this.fileService
           .uploadFileChunks(res, file.name, file.size.toString(), guid)
@@ -315,6 +316,7 @@ export class FactoringDataComponent implements OnInit {
       factoringEDIProviders: this.fb.array([]),
     });
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.formFactoring.valueChanges.subscribe((form) => {
       if (form.factoringFinanceLimit) {
         this.formFactoring.patchValue(

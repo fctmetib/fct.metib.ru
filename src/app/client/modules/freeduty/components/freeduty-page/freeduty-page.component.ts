@@ -208,6 +208,7 @@ export class FreedutyPageComponent implements OnInit {
       });
     });
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.service.createRequestsByDutyIds(flattenedRequestsId).subscribe(
       (response) => {
         this.closeRequestsModal();

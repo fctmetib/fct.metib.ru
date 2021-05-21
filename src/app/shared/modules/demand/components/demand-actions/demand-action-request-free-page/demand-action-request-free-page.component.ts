@@ -50,6 +50,7 @@ export class DemandActionRequestFreePageComponent implements OnInit {
     this.initForm();
     this.initValues();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.route.queryParams.subscribe((params: Params) => {
       if (params['ID']) {
         this.demandService.getDemandById(params['ID']).subscribe((resp) => {});
@@ -66,6 +67,7 @@ export class DemandActionRequestFreePageComponent implements OnInit {
 
   public onSubmit() {
     //TODO: UPDATE IT
+    //TODO: ADD LEAK MEMORY PROTECTION
     let data: SaveDemandRequestInterface<any> = this.prepareData();
 
     this.demandService.add(data).subscribe((resp) => {
@@ -88,6 +90,7 @@ export class DemandActionRequestFreePageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
       this.commonService.getBase64(file).subscribe((res) => {
         this.fileService
           .uploadFileChunks(res, file.name, file.size.toString(), guid)
@@ -109,6 +112,7 @@ export class DemandActionRequestFreePageComponent implements OnInit {
   }
 
   //#region private logic
+    //TODO: ADD LEAK MEMORY PROTECTION
   saveDraft() {
     this.demandService
       .addDraftById(this.currentDraftId, this.prepareDraft())

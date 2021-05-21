@@ -6,6 +6,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ReportTypeInterface } from '../../types/reports/report-type.interface';
 import { ReportColumntInterface } from '../../types/reports/report-column.interface';
 import { MenuItem, MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-report-view-page',
@@ -25,6 +26,8 @@ export class ReportViewPageComponent implements OnInit {
   private data: any;
   private _selectedColumns: any[] = [];
 
+  private subscription$: Subscription = new Subscription();
+
   constructor(
     private messageService: MessageService,
     private route: ActivatedRoute,
@@ -33,6 +36,7 @@ export class ReportViewPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.route.queryParams.subscribe((params: Params) => {
       if (params['dt']) {
         this.data = JSON.parse(this.cryptoService.decrypt(params['dt']));
@@ -171,7 +175,7 @@ export class ReportViewPageComponent implements OnInit {
         break;
     }
 
-    this.reportService.getReport(request).subscribe(
+    this.subscription$.add(this.reportService.getReport(request).subscribe(
       (resp) => {
         this.reportData = resp;
         this.isLoading = false;
@@ -179,7 +183,7 @@ export class ReportViewPageComponent implements OnInit {
       (error) => {
         this.showError();
       }
-    );
+    ));
   }
 
   private _sumByAllPages(row: any) {
@@ -198,5 +202,9 @@ export class ReportViewPageComponent implements OnInit {
         'При загрузке отчета произошла ошибка! Пожалуйста, перезагрузите страницу.',
       sticky: true,
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }

@@ -57,6 +57,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   onSubmit() {
     let data: SaveDemandRequestInterface<any> = this.prepareData();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.demandService.add(data).subscribe((resp) => {
       this.alert = true;
       this.alertMessage = 'Запрос успешно создан.';
@@ -137,10 +138,12 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
       this.commonService.getBase64(file).subscribe((res) => {
         console.log(type)
         if (type === 'Avatar') {
           this.fileService
+          //TODO: ADD LEAK MEMORY PROTECTION
             .uploadAvatar(res, file.name, file.size.toString(), guid)
             .subscribe(
               (res) => {
@@ -160,6 +163,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
               (err) => console.log(err)
             );
         } else {
+          //TODO: ADD LEAK MEMORY PROTECTION
           this.fileService
             .uploadFileChunks(res, file.name, file.size.toString(), guid)
             .subscribe(

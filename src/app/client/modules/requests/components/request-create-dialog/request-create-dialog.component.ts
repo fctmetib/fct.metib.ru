@@ -106,6 +106,7 @@ export class RequestCreateDialogComponent {
       summ: [1, [Validators.required]],
     });
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
       this.deliveries = resp
         .sort(
@@ -271,6 +272,7 @@ export class RequestCreateDialogComponent {
     for (let file of files) {
       let guid = Guid.newGuid();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
       this.commonService.getBase64(file).subscribe((res) => {
         this.fileService
           .uploadFileChunks(res, file.name, file.size.toString(), guid)

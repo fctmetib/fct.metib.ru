@@ -94,6 +94,7 @@ export class DemandHistoryPageComponent implements OnInit {
     // this.isLoading$ = this.store.pipe(select(isLoadingSelector));
   }
 
+    //TODO: ADD LEAK MEMORY PROTECTION
   fetch() {
     this.loading = true;
     this.demandService.getDrafts().subscribe((drafts) => {
@@ -135,12 +136,14 @@ export class DemandHistoryPageComponent implements OnInit {
     });
   }
 
+    //TODO: ADD LEAK MEMORY PROTECTION
   remove(Id) {
     this.demandService.deleteDraftById(Id).subscribe((resp) => {
       this.allDemands.splice(this.allDemands.findIndex((x) => x.ID === Id));
     });
   }
 
+    //TODO: ADD LEAK MEMORY PROTECTION
   cancel(Id) {
     this.demandService.cancelByDemandId(Id).subscribe((resp) => {
       this.allDemands.splice(this.allDemands.findIndex((x) => x.ID === Id));

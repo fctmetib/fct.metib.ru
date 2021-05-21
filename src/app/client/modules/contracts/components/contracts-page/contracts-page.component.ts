@@ -125,6 +125,7 @@ export class ContractsPageComponent implements OnInit {
     this.isOrganizationLoading = true;
     this.isOrganizationError = false;
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.organizationService.getOrganizationById(id).subscribe(
       (resp) => {
         this.currentOrganization = resp;
@@ -156,6 +157,7 @@ export class ContractsPageComponent implements OnInit {
     this.isShipmentsLoading = true;
     this.isShipmentsError = false;
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.deliveryService.getShipments(id).subscribe(
       (resp) => {
         this.currentShipments = resp;
@@ -250,6 +252,7 @@ export class ContractsPageComponent implements OnInit {
 
   private fetch() {
     this.isLoading = true;
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
       this.listContracts = resp.sort((a, b) => {
         return new Date(b.DateFrom).getTime() - new Date(a.DateFrom).getTime();

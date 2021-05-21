@@ -147,6 +147,7 @@ export class AgencyRequestCreateDialogComponent {
     return this.form.get('requests') as FormArray;
   }
 
+    //TODO: ADD LEAK MEMORY PROTECTION
   private initValues(): void {
     this.deliveryService.getDeliveriesWithStats().subscribe(resp => {
       this.deliveries = resp;

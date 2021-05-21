@@ -115,6 +115,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   fetch(): void {
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.requestService.fetch().subscribe(resp => {
       this.requests = resp;
     }, (error) => {
@@ -189,6 +190,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   showEditDialog() {
     let selectedRow = this.selectedItems[0];
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.requestService
       .getRequestByIdAndParams(selectedRow.ID, true, true, true)
       .subscribe((resp) => {
@@ -211,6 +213,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   public initSend() {
+    //TODO: ADD LEAK MEMORY PROTECTION
     let requestIDs = this.selectedItems.map(x => x.ID);
     this.requestService.sendInit(requestIDs).subscribe(
       (response) => {
@@ -232,6 +235,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       ConfirmationCode: this.confirmForm.value.confirmCode,
       Pin: this.confirmForm.value.pin,
     };
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.requestService.sendConfirm(confirmData).subscribe((resp) => {
       this.confirmDialog = false;
       this.successRequestsDialogMessage = 'Заявка успешно подтверждена';

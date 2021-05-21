@@ -53,6 +53,7 @@ export class DemandActionDebitorPageComponent implements OnInit {
     this.isUserVerified = this.authService.isUserVerified();
     this.initForm();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.route.queryParams.subscribe((params: Params) => {
       if (params['ID']) {
         this.demandService.getDemandById(params['ID']).subscribe((resp) => {
@@ -64,8 +65,10 @@ export class DemandActionDebitorPageComponent implements OnInit {
       }
     });
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     setInterval(() => this.saveDraft(), 30000);
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.demandService.getDebtors().subscribe((resp) => {
       this.debtors = resp;
     });
@@ -98,6 +101,7 @@ export class DemandActionDebitorPageComponent implements OnInit {
     this.isLoading = true;
     let data: SaveDemandRequestInterface<any> = this.prepareData();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.demandService.add(data).subscribe((resp) => {
       this.alert = true;
       this.alertMessage = 'Запрос успешно создан.';
@@ -107,8 +111,10 @@ export class DemandActionDebitorPageComponent implements OnInit {
 
   //#region private logic
   saveDraft() {
+    //TODO: ADD LEAK MEMORY PROTECTION
     this.demandService
       .addDraftById(this.currentDraftId, this.prepareDraft())
+      //TODO: ADD LEAK MEMORY PROTECTION
       .subscribe(
         (resp) => {
           console.log(resp);
@@ -203,8 +209,10 @@ export class DemandActionDebitorPageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
+    //TODO: ADD LEAK MEMORY PROTECTION
       this.commonService.getBase64(file).subscribe((res) => {
         this.fileService
+        //TODO: ADD LEAK MEMORY PROTECTION
           .uploadFileChunks(res, file.name, file.size.toString(), guid)
           .subscribe(
             (res) => {
