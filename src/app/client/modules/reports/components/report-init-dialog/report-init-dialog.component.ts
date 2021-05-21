@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs';
 import { CounterpartyReferenceInterface } from './../../../../../shared/types/counterparty/counterparty-reference.interface';
 import { MibArray } from './../../../../../shared/classes/arrays/mib-array.class';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ControlConfigReportInterface } from '../../types/common/control-config.interface';
 import {
@@ -17,7 +18,7 @@ import { DeliveryInterface } from 'src/app/shared/types/delivery/delivery.interf
   templateUrl: './report-init-dialog.component.html',
   styleUrls: ['./report-init-dialog.component.scss'],
 })
-export class ReportInitDialogComponent {
+export class ReportInitDialogComponent implements OnDestroy {
   public form: FormGroup;
 
   private inputsCount: number;
@@ -30,6 +31,8 @@ export class ReportInitDialogComponent {
 
   public statusShipments: any = [];
   public createdByList: any = [];
+
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     public ref: DynamicDialogRef,
@@ -57,17 +60,19 @@ export class ReportInitDialogComponent {
     this.controlConfig = this.currentData.config;
     console.log(this.currentData);
 
-    this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
-      let debtors = resp.map((x) => x.Debtor);
-      debtors.push({
-        Title: 'Все',
-        ID: 0,
-      });
-      debtors.reverse();
+    this.subscription$.add(
+      this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
+        let debtors = resp.map((x) => x.Debtor);
+        debtors.push({
+          Title: 'Все',
+          ID: 0,
+        });
+        debtors.reverse();
 
-      this.uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
-      console.log(this.uniqDebtors);
-    });
+        this.uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
+        console.log(this.uniqDebtors);
+      })
+    );
 
     this.createdByList = [
       {
@@ -111,7 +116,10 @@ export class ReportInitDialogComponent {
     }
 
     if (this.controlConfig.isDateTo) {
-      this.form.addControl('dateTo', new FormControl(dateCurrent, Validators.required));
+      this.form.addControl(
+        'dateTo',
+        new FormControl(dateCurrent, Validators.required)
+      );
     }
 
     if (this.controlConfig.isDebitor) {
@@ -166,5 +174,9 @@ export class ReportInitDialogComponent {
         new FormControl(true, Validators.required)
       );
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }

@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ReportTypeInterface } from '../../types/reports/report-type.interface';
 import { ReportColumntInterface } from '../../types/reports/report-column.interface';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-report-view-page',
@@ -18,6 +18,9 @@ export class ReportViewPageComponent implements OnInit {
   public reportConfig: ReportTypeInterface;
   public reportData: any[] = [];
   public search: string;
+
+  public selectedRow: any;
+  public items: MenuItem[];
 
   private data: any;
   private _selectedColumns: any[] = [];
@@ -39,6 +42,19 @@ export class ReportViewPageComponent implements OnInit {
         this.isError = true;
       }
     });
+
+    this.items = [
+      {
+        label: 'Посчитать сумму по текущей странице',
+        icon: 'pi pi-money-bill',
+        command: () => this._sumByCurrentPage(this.selectedRow),
+      },
+      {
+        label: 'Посчитать сумму по всем страницам',
+        icon: 'pi pi-money-bill',
+        command: () => this._sumByAllPages(this.selectedRow),
+      },
+    ];
   }
 
   public onSearch(value) {
@@ -166,12 +182,21 @@ export class ReportViewPageComponent implements OnInit {
     );
   }
 
+  private _sumByAllPages(row: any) {
+
+  }
+
+  private _sumByCurrentPage(row: any) {
+
+  }
+
   private showError() {
     this.messageService.add({
       severity: 'error',
       summary: 'Ошибка!',
-      detail: 'При загрузке отчета произошла ошибка! Пожалуйста, перезагрузите страницу.',
-      sticky: true
+      detail:
+        'При загрузке отчета произошла ошибка! Пожалуйста, перезагрузите страницу.',
+      sticky: true,
     });
   }
 }

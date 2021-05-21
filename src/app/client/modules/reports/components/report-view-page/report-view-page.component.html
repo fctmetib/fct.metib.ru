@@ -1,4 +1,6 @@
 <p-toast></p-toast>
+<p-contextMenu #cm [model]="items"></p-contextMenu>
+
 <div class="card-content" id="step1">
   <div class="header lg">
     <div class="title">
@@ -23,7 +25,13 @@
     </div>
   </div>
   <div class="content">
-    <p-table [columns]="reportConfig.columns" [value]="reportData" [showCurrentPageReport]="true" [scrollable]="true"
+    <p-table
+      [columns]="reportConfig.columns"
+      [value]="reportData"
+      [showCurrentPageReport]="true"
+      [scrollable]="true"
+      [(contextMenuSelection)]="selectedRow"
+      [contextMenu]="cm"
       styleClass="p-datatable-customers mib-table" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [paginator]="true">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
@@ -44,7 +52,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr>
+        <tr [pContextMenuRow]="rowData">
           <ng-container *ngFor="let col of columns">
             <td *ngIf="col.visible">
               <div [ngSwitch]="col.type">

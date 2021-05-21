@@ -27,6 +27,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { ContextMenuModule } from 'primeng/contextmenu';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { MessageService } from 'primeng/api';
     SkeletonModule,
     MultiSelectModule,
     ReportsRoutingModule,
+		ContextMenuModule,
     ReactiveFormsModule,
     CardModule,
     MenubarModule,
