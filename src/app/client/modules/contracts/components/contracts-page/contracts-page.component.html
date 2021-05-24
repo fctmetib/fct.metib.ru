@@ -120,8 +120,14 @@
   </ng-template>
 </p-dialog>
 
-<p-dialog header="Товарные Накладные" [(visible)]="displayShipments" [modal]="true" [style]="{width: '90vw'}"
-  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<p-dialog
+  header="Товарные Накладные"
+  [(visible)]="displayShipments"
+  [modal]="true"
+  [style]="{width: '90vw'}"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false">
   <ng-container *ngIf="isShipmentsLoading; else shipmentsTemplate">
     <p class="p-m-0">Загрузка...</p>
   </ng-container>
@@ -130,8 +136,11 @@
       <metib-backend-error-messages [backendErrors]="'Ошибка!'"></metib-backend-error-messages>
     </ng-container>
     <ng-template #noErrorShipmentsTemplate>
-      <p-table [columns]="selectedColumns" [value]="currentShipments" dataKey="ID"
-        styleClass="p-datatable-customers mib-table">
+      <p-table
+      [columns]="selectedColumns"
+      [value]="currentShipments"
+      dataKey="ID"
+      styleClass="p-datatable-customers mib-table h-500">
         <ng-template pTemplate="caption">
           <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
             selectedItemsLabel="Выбрано колонок - {0}" [style]="{minWidth: '200px'}" placeholder="Выберите колонки">
