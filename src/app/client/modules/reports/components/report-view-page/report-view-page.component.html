@@ -78,7 +78,8 @@
             </td>
           </ng-container>
           <td colspan="{{+selectedColumnIndex}}" class="p-text-right"></td> -->
-          <td>{{ sumCurrentPage ? sumCurrentPage : sumAllPages | currency:'RUB':'symbol' }}</td>
+          <td [colSpan]="getColSpanIndex()"></td>
+          <td style="text-align: right;">{{ sumCurrentPage ? sumCurrentPage : sumAllPages | currency:'RUB':'symbol' }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">

@@ -25,7 +25,7 @@ export class ReportViewPageComponent implements OnInit {
 
   public sumCurrentPage: number;
   public sumAllPages: number;
-  public selectedColumnIndex: number;
+  public selectedColumnIndex: number = 0;
 
   private data: any;
   private _selectedColumns: any[] = [];
@@ -108,6 +108,23 @@ export class ReportViewPageComponent implements OnInit {
     });
   }
 
+  public getColSpanIndex(): number {
+    let selectedColumnName = this.reportConfig.columns[this.selectedColumnIndex].name;
+    let currentColumns = this.reportConfig.columns.filter(x => x.visible === true);
+    return currentColumns.indexOf(currentColumns.find(x => x.name === selectedColumnName));
+  }
+
+  @HostListener('document:contextmenu', ['$event'])
+  public selectColumn($event) {
+    if($event.target.id) {
+      if(+$event.target.id) {
+        if(this.reportConfig.columns[$event.target.id].type === 'number') {
+          this.selectedColumnIndex = $event.target.id;
+        }
+      }
+    }
+  }
+
   private saveAsExcelFile(buffer: any, fileName: string): void {
     import('file-saver').then((FileSaver) => {
       let EXCEL_TYPE =
@@ -183,16 +200,6 @@ export class ReportViewPageComponent implements OnInit {
         this.reportData = resp;
         this.isLoading = false;
       }));
-  }
-
-  @HostListener('document:contextmenu', ['$event'])
-  public selectColumn($event) {
-    if($event.target.id) {
-      this.selectedColumnIndex = $event.target.id;
-      if(+$event.target.id) {
-        console.log(+$event.target.id)
-      }
-    }
   }
 
   private _sumByAllPages(row: any) {

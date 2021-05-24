@@ -23,17 +23,20 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       retry(2),
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
+
         if (error.error instanceof ErrorEvent) {
           // client-side error
           console.warn('ErrorInterceptor. Client-side error');
-          this.showError(error.error.message)
+          errorMessage =error.error.message;
         } else {
           // server-side error
           console.warn('ErrorInterceptor. Server-side error');
           //TODO: if dev env => this.showError(`Error Code: ${error.status}\nMessage: ${error.message}`)
           // ELSE =>
-          this.showError('При загрузке данных произошла ошибка.')
+          errorMessage ='При загрузке данных произошла ошибка.'
         }
+
+        this.showError(errorMessage);
         return throwError(errorMessage);
       })
     );
