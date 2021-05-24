@@ -106,8 +106,6 @@ export class DemandActionFactoringPageComponent implements OnInit {
         console.log(resp)
         this.currentDraftId = resp.ID;
         this.showSuccess();
-      }, error => {
-        this.showWarn();
       });
   }
 
@@ -358,14 +356,6 @@ export class DemandActionFactoringPageComponent implements OnInit {
       severity: 'success',
       summary: 'Успешно',
       detail: 'Черновик успешно сохранен!',
-    });
-  }
-
-  private showWarn() {
-    this.messageService.add({
-      severity: 'warn',
-      summary: 'Ошибка',
-      detail: 'При сохранении Черновика произошла ошибка.',
     });
   }
   //#endregion

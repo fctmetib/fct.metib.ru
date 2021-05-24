@@ -1,7 +1,7 @@
 import { ReportType } from './../../types/reports/report-type.class';
 import { ReportService } from './../../services/report.service';
 import { CryptoService } from './../../../../../shared/services/common/crypto.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ReportTypeInterface } from '../../types/reports/report-type.interface';
 import { ReportColumntInterface } from '../../types/reports/report-column.interface';
@@ -23,6 +23,10 @@ export class ReportViewPageComponent implements OnInit {
   public selectedRow: any;
   public items: MenuItem[];
 
+  public sumCurrentPage: number;
+  public sumAllPages: number;
+  public selectedColumnIndex: number;
+
   private data: any;
   private _selectedColumns: any[] = [];
 
@@ -36,8 +40,7 @@ export class ReportViewPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.route.queryParams.subscribe((params: Params) => {
+    this.subscription$.add(this.route.queryParams.subscribe((params: Params) => {
       if (params['dt']) {
         this.data = JSON.parse(this.cryptoService.decrypt(params['dt']));
         this.prepareTable();
@@ -45,7 +48,7 @@ export class ReportViewPageComponent implements OnInit {
       } else {
         this.isError = true;
       }
-    });
+    }));
 
     this.items = [
       {
@@ -179,29 +182,31 @@ export class ReportViewPageComponent implements OnInit {
       (resp) => {
         this.reportData = resp;
         this.isLoading = false;
-      },
-      (error) => {
-        this.showError();
+      }));
+  }
+
+  @HostListener('document:contextmenu', ['$event'])
+  public selectColumn($event) {
+    if($event.target.id) {
+      this.selectedColumnIndex = $event.target.id;
+      if(+$event.target.id) {
+        console.log(+$event.target.id)
       }
-    ));
+    }
   }
 
   private _sumByAllPages(row: any) {
-
+    this.sumAllPages = this.getDataForSum().reduce((prev, current) => prev + current, 0);
   }
 
   private _sumByCurrentPage(row: any) {
-
+    console.log(row)
   }
 
-  private showError() {
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Ошибка!',
-      detail:
-        'При загрузке отчета произошла ошибка! Пожалуйста, перезагрузите страницу.',
-      sticky: true,
-    });
+  private getDataForSum(): number[] {
+    let columnName = this.reportConfig.columns[this.selectedColumnIndex].name;
+    let dataForSum = this.reportData.map(x => x[columnName]);
+    return dataForSum;
   }
 
   ngOnDestroy() {

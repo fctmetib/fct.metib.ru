@@ -120,11 +120,7 @@ export class DemandActionDebitorPageComponent implements OnInit {
           console.log(resp);
           this.currentDraftId = resp.ID;
           this.showSuccess();
-        },
-        (error) => {
-          this.showWarn();
-        }
-      );
+        });
   }
 
   private prepareDraft() {
@@ -186,13 +182,6 @@ export class DemandActionDebitorPageComponent implements OnInit {
     });
   }
 
-  private showWarn() {
-    this.messageService.add({
-      severity: 'warn',
-      summary: 'Ошибка',
-      detail: 'При сохранении Черновика произошла ошибка.',
-    });
-  }
   //#endregion
 
   //#region files

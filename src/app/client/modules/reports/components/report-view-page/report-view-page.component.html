@@ -53,22 +53,32 @@
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr [pContextMenuRow]="rowData">
-          <ng-container *ngFor="let col of columns">
+          <ng-container *ngFor="let col of columns; index as i">
             <td *ngIf="col.visible">
               <div [ngSwitch]="col.type">
                 <div class="m-td" *ngSwitchCase="'number'"  pTooltip="{{rowData[col.name] | currency:'RUB':'symbol-narrow'}}"
-                  style="justify-self: flex-start; flex-direction: row-reverse;">
+                  style="justify-self: flex-start; flex-direction: row-reverse;" id="{{i}}">
                   {{rowData[col.name] | currency:'RUB':'symbol-narrow'}}
                 </div>
-                <div class="m-td" *ngSwitchCase="'date'" pTooltip="{{rowData[col.name] | date:'MM.dd.yyyy'}}">
+                <div class="m-td" *ngSwitchCase="'date'" pTooltip="{{rowData[col.name] | date:'MM.dd.yyyy'}}" id="{{i}}">
                   {{rowData[col.name] | date:'MM.dd.yyyy'}}
                 </div>
-                <div class="m-td" *ngSwitchDefault pTooltip="{{rowData[col.name]}}">
+                <div class="m-td" *ngSwitchDefault pTooltip="{{rowData[col.name]}}" id="{{i}}">
                   {{rowData[col.name]}}
                 </div>
               </div>
             </td>
           </ng-container>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr *ngIf="selectedColumnIndex">
+          <!-- <ng-container *ngFor="let col of columns; index as i">
+            <td *ngIf="col.visible">
+            </td>
+          </ng-container>
+          <td colspan="{{+selectedColumnIndex}}" class="p-text-right"></td> -->
+          <td>{{ sumCurrentPage ? sumCurrentPage : sumAllPages | currency:'RUB':'symbol' }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">

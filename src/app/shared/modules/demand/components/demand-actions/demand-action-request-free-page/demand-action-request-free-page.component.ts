@@ -90,7 +90,7 @@ export class DemandActionRequestFreePageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
+      //TODO: ADD LEAK MEMORY PROTECTION
       this.commonService.getBase64(file).subscribe((res) => {
         this.fileService
           .uploadFileChunks(res, file.name, file.size.toString(), guid)
@@ -112,16 +112,14 @@ export class DemandActionRequestFreePageComponent implements OnInit {
   }
 
   //#region private logic
-    //TODO: ADD LEAK MEMORY PROTECTION
+  //TODO: ADD LEAK MEMORY PROTECTION
   saveDraft() {
     this.demandService
       .addDraftById(this.currentDraftId, this.prepareDraft())
       .subscribe((resp) => {
-        console.log(resp)
+        console.log(resp);
         this.currentDraftId = resp.ID;
         this.showSuccess();
-      }, error => {
-        this.showWarn();
       });
   }
 
@@ -170,14 +168,6 @@ export class DemandActionRequestFreePageComponent implements OnInit {
       severity: 'success',
       summary: 'Успешно',
       detail: 'Черновик успешно сохранен!',
-    });
-  }
-
-  private showWarn() {
-    this.messageService.add({
-      severity: 'warn',
-      summary: 'Ошибка',
-      detail: 'При сохранении Черновика произошла ошибка.',
     });
   }
   //#endregion

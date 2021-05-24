@@ -118,8 +118,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     //TODO: ADD LEAK MEMORY PROTECTION
     this.requestService.fetch().subscribe(resp => {
       this.requests = resp;
-    }, (error) => {
-      this.showError('При загрузке Заявок произошла ошибка, пожалуйста, перезагузите страницу.')
     });
   }
 
@@ -221,9 +219,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
           confirmCode: response.ConfirmationCode,
         });
         this.confirmDialog = true;
-      },
-      (err) => {
-        this.showError('При отправке кода произошла ошибка.');
       }
     );
   }
@@ -283,15 +278,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     let isCreated = this.selectedItems.filter((x) => x.Status !== 'Создана');
     console.log(isCreated);
     return isCreated.length > 0 ? true : false;
-  }
-
-  private showError(message: string) {
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Ошибка!',
-      detail: message,
-      sticky: true
-    });
   }
 
   ngOnDestroy() {
