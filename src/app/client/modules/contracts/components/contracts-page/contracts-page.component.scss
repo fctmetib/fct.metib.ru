@@ -2,13 +2,10 @@
 .contracts-list {
   .contract-item {
     display: flex;
-  //  width: 100%;
-  //  height: 150px;
     margin-bottom: 10px;
 
     .item {
-      height: 120px;
-      padding: 20px;
+      padding: 12px;
       border-radius: 10px;
       border: 1px solid #D4D4D4;
     }
@@ -62,10 +59,9 @@
         font-size: 0.875rem;
         margin-bottom: 9px;
         color: #989898;
-      }
 
-      .contract-type {
-
+        display: flex;
+        justify-content: space-between;
       }
     }
 
@@ -78,7 +74,7 @@
         font-size: 1.5rem;
         font-weight: 700;
         color: #69CF74;
-        height: 70px;
+        height: 47px;
       }
 
       .description {
@@ -103,7 +99,7 @@
         font-size: 1.5rem;
         font-weight: 700;
         color: #E74630;
-        height: 70px;
+        height: 47px;
       }
 
       .description {
@@ -121,7 +117,7 @@
         font-size: 1.5rem;
         font-weight: 700;
         color: #0C83F1;
-        height: 70px;
+        height: 47px;
       }
 
       .description {

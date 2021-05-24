@@ -24,6 +24,8 @@ export class ContractsPageComponent implements OnInit {
 
   @ViewChild('paginator', { static: false }) paginator!: Paginator;
 
+  public noFilter: boolean = true;
+
   public isLoading: boolean = false;
   public listContracts: DeliveryInterface[] = [];
   public listContractsFiltered: DeliveryInterface[] = [];
@@ -219,6 +221,7 @@ export class ContractsPageComponent implements OnInit {
   }
 
   public paginate(event?): void {
+    this.noFilter = true;
     this.listDisplayContracts = [];
     if (event) {
       this.paginationPage = event.page;
@@ -244,6 +247,7 @@ export class ContractsPageComponent implements OnInit {
       this.paginate();
       return;
     } else {
+      this.noFilter = false;
       this.listDisplayContracts = this.listContracts.filter(
         (x) => x.Debtor.ID === value
       );

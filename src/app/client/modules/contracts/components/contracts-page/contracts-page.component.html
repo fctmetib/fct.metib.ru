@@ -72,8 +72,9 @@
                   class="pi pi-list"></i></div>
             </div>
           </div>
-          <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}</div>
-          <div class="contract-type"><span class="main-color">{{item.Tariff}},</span> {{item.Delay.Count}} к.д.</div>
+          <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}
+            <div class="contract-type"><span class="main-color">{{item.Tariff}},</span> {{item.Delay.Count}} к.д.</div>
+          </div>
         </div>
         <div class="contract-step item">
           <div class="price">{{item.Statistics.DutyCustomer | currency:'RUB'}}</div>
@@ -90,7 +91,7 @@
       </div>
     </div>
   </ng-template>
-  <p-paginator #paginator [rows]="10" totalRecords="{{listContractsFiltered.length}}" (onPageChange)="paginate($event)">
+  <p-paginator #paginator [rows]="10" totalRecords="{{listContractsFiltered.length}}" (onPageChange)="paginate($event)" [ngClass]="{hidden:!noFilter}">
   </p-paginator>
 </div>
 
