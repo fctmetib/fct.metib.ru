@@ -26,13 +26,18 @@
   </div>
   <div class="content">
     <p-table
+      #dt
       [columns]="reportConfig.columns"
       [value]="reportData"
       [showCurrentPageReport]="true"
       [scrollable]="true"
       [(contextMenuSelection)]="selectedRow"
       [contextMenu]="cm"
-      styleClass="p-datatable-customers mib-table" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [paginator]="true">
+      styleClass="p-datatable-customers mib-table"
+      [rows]="10"
+      (onPage)="paginate($event)"
+      [rowsPerPageOptions]="[10,25,50]"
+      [paginator]="true">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
           <ng-container *ngFor="let col of columns">
@@ -73,13 +78,11 @@
       </ng-template>
       <ng-template pTemplate="footer">
         <tr *ngIf="selectedColumnIndex">
-          <!-- <ng-container *ngFor="let col of columns; index as i">
-            <td *ngIf="col.visible">
-            </td>
-          </ng-container>
-          <td colspan="{{+selectedColumnIndex}}" class="p-text-right"></td> -->
           <td [colSpan]="getColSpanIndex()"></td>
-          <td style="text-align: right;">{{ sumCurrentPage ? sumCurrentPage : sumAllPages | currency:'RUB':'symbol' }}</td>
+          <td style="text-align: right;">
+            {{sumCurrentPage ? 'Сумма на этой странице: ' : 'Сумма по всем страницам: '}}
+            {{ (sumCurrentPage ? sumCurrentPage : sumAllPages) | currency:'RUB':'symbol' }}
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">

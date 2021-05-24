@@ -1,12 +1,13 @@
 import { ReportType } from './../../types/reports/report-type.class';
 import { ReportService } from './../../services/report.service';
 import { CryptoService } from './../../../../../shared/services/common/crypto.service';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ReportTypeInterface } from '../../types/reports/report-type.interface';
 import { ReportColumntInterface } from '../../types/reports/report-column.interface';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-report-view-page',
@@ -14,6 +15,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./report-view-page.component.scss'],
 })
 export class ReportViewPageComponent implements OnInit {
+
+  @ViewChild('dt') dataTable: Table;
+
   public isLoading: boolean = false;
   public isError: boolean = false;
   public reportConfig: ReportTypeInterface;
@@ -26,6 +30,9 @@ export class ReportViewPageComponent implements OnInit {
   public sumCurrentPage: number;
   public sumAllPages: number;
   public selectedColumnIndex: number = 0;
+  public currentPage: number = 0;
+  public currentRows: number = 10;
+  public currentFirst: number = 0;
 
   private data: any;
   private _selectedColumns: any[] = [];
@@ -33,7 +40,6 @@ export class ReportViewPageComponent implements OnInit {
   private subscription$: Subscription = new Subscription();
 
   constructor(
-    private messageService: MessageService,
     private route: ActivatedRoute,
     private reportService: ReportService,
     private cryptoService: CryptoService
@@ -54,12 +60,12 @@ export class ReportViewPageComponent implements OnInit {
       {
         label: 'Посчитать сумму по текущей странице',
         icon: 'pi pi-money-bill',
-        command: () => this._sumByCurrentPage(this.selectedRow),
+        command: () => this._sumByCurrentPage(),
       },
       {
         label: 'Посчитать сумму по всем страницам',
         icon: 'pi pi-money-bill',
-        command: () => this._sumByAllPages(this.selectedRow),
+        command: () => this._sumByAllPages(),
       },
     ];
   }
@@ -85,7 +91,7 @@ export class ReportViewPageComponent implements OnInit {
     });
   }
 
-  public exportExcel() {
+  public exportExcel(): void {
     import('xlsx').then((xlsx) => {
       let exportData: any[] = [];
       this.reportData.forEach((item) => {
@@ -115,7 +121,7 @@ export class ReportViewPageComponent implements OnInit {
   }
 
   @HostListener('document:contextmenu', ['$event'])
-  public selectColumn($event) {
+  public selectColumn($event): void {
     if($event.target.id) {
       if(+$event.target.id) {
         if(this.reportConfig.columns[$event.target.id].type === 'number') {
@@ -124,6 +130,13 @@ export class ReportViewPageComponent implements OnInit {
       }
     }
   }
+
+  public paginate(event): void {
+    let pageIndex = event.first / event.rows + 1
+    this.currentFirst = event.first;
+    this.currentPage = pageIndex;
+    this.currentRows = event.rows;
+    }
 
   private saveAsExcelFile(buffer: any, fileName: string): void {
     import('file-saver').then((FileSaver) => {
@@ -202,12 +215,26 @@ export class ReportViewPageComponent implements OnInit {
       }));
   }
 
-  private _sumByAllPages(row: any) {
+  private _sumByAllPages() {
+    this.sumCurrentPage = null;
     this.sumAllPages = this.getDataForSum().reduce((prev, current) => prev + current, 0);
   }
 
-  private _sumByCurrentPage(row: any) {
-    console.log(row)
+  private _sumByCurrentPage() {
+    this.sumAllPages = null;
+    this.sumCurrentPage = this.getDataForPageSum().reduce((prev, current) => prev + current, 0);
+    console.log(this.sumCurrentPage)
+  }
+
+  private getDataForPageSum(): number[] {
+    let startIndex = this.currentFirst;
+    let endIndex = startIndex + this.currentRows;
+
+    let displayData = this.reportData.slice(startIndex, endIndex);
+    console.log('DISA', displayData)
+    let columnName = this.reportConfig.columns[this.selectedColumnIndex].name;
+
+    return displayData.map(x => x[columnName])
   }
 
   private getDataForSum(): number[] {
