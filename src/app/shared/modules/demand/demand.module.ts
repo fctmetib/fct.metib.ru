@@ -51,6 +51,8 @@ import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import {TabViewModule} from 'primeng/tabview';
 import { FactoringDataComponent } from './components/demand-actions/demand-action-factoring-page/components/factoring-data/factoring-data.component';
+import { FactoringFilesComponent } from './components/demand-actions/demand-action-factoring-page/components/factoring-files/factoring-files.component';
+import { FactoringInfoComponent } from './components/demand-actions/demand-action-factoring-page/components/factoring-info/factoring-info.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -103,7 +105,9 @@ import { FactoringDataComponent } from './components/demand-actions/demand-actio
     DemandActionVerificationPageComponent,
     // Components
     DebitorDataComponent,
-    FactoringDataComponent
+    FactoringDataComponent,
+    FactoringFilesComponent,
+    FactoringInfoComponent,
   ],
   providers: [
     CurrencyPipe,

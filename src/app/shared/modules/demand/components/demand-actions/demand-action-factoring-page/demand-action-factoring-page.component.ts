@@ -25,9 +25,10 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
 
   public currentDraftId: number = 0;
   public currentDemand: any;
-  // Данные из компонента factoring-data
-  public dataDemand: any;
+
   public files: any;
+
+  public isEdit: boolean = false;
 
   private subscription$: Subscription = new Subscription();
 
@@ -47,10 +48,12 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
         if (params['ID']) {
           this.demandService.getDemandById(params['ID']).subscribe((resp) => {
             this.currentDemand = resp;
+            this.isEdit = true;
           });
         }
         if (params['DraftId']) {
           this.currentDraftId = params['DraftID'];
+          this.isEdit = true;
         }
       })
     );

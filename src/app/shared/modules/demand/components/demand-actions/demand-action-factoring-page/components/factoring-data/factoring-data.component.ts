@@ -29,6 +29,9 @@ import { DemandPropertiesInterface } from 'src/app/shared/modules/demand/types/c
 })
 export class FactoringDataComponent implements OnInit, OnDestroy {
   @Input()
+  isEdit: boolean;
+
+  @Input()
   currentDemand: any;
 
   @Input()
