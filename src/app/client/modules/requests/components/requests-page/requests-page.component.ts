@@ -293,6 +293,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.subscription$.unsubscribe();
     if (this.ref) {
       this.ref.close();
     }

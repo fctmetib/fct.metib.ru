@@ -8,7 +8,7 @@ import { DeliveryInterface } from './../../../../../shared/types/delivery/delive
 import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
 import { ClientRequestInterface } from './../../../../../shared/types/client/client-request.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RequestSourceEnum } from 'src/app/shared/types/enums/request-source.enum';
 import { FinanceTypeInterface } from '../../types/common/finance-type.interface';
@@ -30,7 +30,7 @@ import { PasteHandler } from 'src/app/shared/classes/common/past-handler.class';
   templateUrl: './request-create-dialog.component.html',
   styleUrls: ['./request-create-dialog.component.scss'],
 })
-export class RequestCreateDialogComponent {
+export class RequestCreateDialogComponent implements OnInit, OnDestroy {
   errorsMessage$: Observable<string | null>;
   successMessage$: Observable<string | null>;
 
@@ -89,6 +89,10 @@ export class RequestCreateDialogComponent {
     this.errorsMessage$ = this.store.pipe(select(crudErrorsSelector));
     this.successMessage$ = this.store.pipe(select(crudSuccessSelector));
     this.initializeForm();
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 
   initializeForm(): void {

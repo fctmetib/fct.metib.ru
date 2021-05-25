@@ -61,7 +61,6 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
       })
     );
 
-    //TODO: CHECK ON DESTROY IN ANOTHER FILES
     this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
 
