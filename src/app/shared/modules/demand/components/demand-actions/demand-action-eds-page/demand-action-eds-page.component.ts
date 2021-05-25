@@ -13,6 +13,8 @@ import { OrganizationDataInterface } from 'src/app/shared/types/organization/org
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demand-action-eds-page',
@@ -60,6 +62,8 @@ export class DemandActionEDSPageComponent implements OnInit {
     },
   ];
 
+  private subscription$: Subscription = new Subscription();
+
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
@@ -73,7 +77,9 @@ export class DemandActionEDSPageComponent implements OnInit {
     this.initForm();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+  }
 
   initForm() {
     this.formEDS = this.fb.group({
@@ -178,8 +184,8 @@ export class DemandActionEDSPageComponent implements OnInit {
         Type: 'DigitalSignature',
       },
     };
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.demandService.add(data).subscribe((resp) => {});
+
+    this.subscription$.add(this.demandService.add(data).subscribe());
   }
 
   onSelect(event, type: string) {
@@ -188,12 +194,19 @@ export class DemandActionEDSPageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-      this.commonService.getBase64(file).subscribe((res) => {
-
-    //TODO: ADD LEAK MEMORY PROTECTION
-        this.fileService
-          .uploadFileChunks(res, file.name, file.size.toString(), guid)
+      this.subscription$.add(
+        this.commonService
+          .getBase64(file)
+          .pipe(
+            switchMap((res) => {
+              return this.fileService.uploadFileChunks(
+                res,
+                file.name,
+                file.size.toString(),
+                guid
+              );
+            })
+          )
           .subscribe(
             (res) => {
               console.log(res);
@@ -206,13 +219,15 @@ export class DemandActionEDSPageComponent implements OnInit {
               });
             },
             (err) => console.log(err)
-          );
-      });
+          )
+      );
     }
   }
 
   removeFile(file: FileModeInterface) {
-    this.files.splice(this.files.indexOf(this.files.find(x => x === file)), 1);
+    this.files.splice(
+      this.files.indexOf(this.files.find((x) => x === file)),
+      1
+    );
   }
-
 }

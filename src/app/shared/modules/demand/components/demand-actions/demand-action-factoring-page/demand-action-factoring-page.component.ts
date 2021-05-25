@@ -21,7 +21,7 @@ import { CreateDemandFactoringRequestInterface } from '../../../types/requests/c
 import { DemandPropertiesInterface } from '../../../types/common/demand-properties.interface';
 import { DemandAddonAccountInterface } from '../../../types/common/demand-addon-account.interface';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { createDemandFactoringAction } from '../../../store/actions/createDemand.action';
 import { errorSelector, isLoadingSelector } from '../../../store/selectors';
@@ -51,6 +51,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
   public files: any;
 
   private _saveDraftAction$: NodeJS.Timeout;
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     private authService: AuthService,
@@ -75,6 +76,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
       }
     });
 
+    //TODO: ADD IT IN ANOTHER FILES
     this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
 
@@ -82,6 +84,7 @@ export class DemandActionFactoringPageComponent implements OnInit {
     if (this._saveDraftAction$) {
       clearInterval(this._saveDraftAction$);
     }
+    this.subscription$.unsubscribe();
   }
 
   onSubmit() {

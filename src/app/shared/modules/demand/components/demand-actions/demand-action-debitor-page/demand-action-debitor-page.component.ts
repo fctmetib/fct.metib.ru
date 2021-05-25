@@ -1,6 +1,6 @@
 import { DemandInterface } from './../../../types/demand.interface';
 import { DebtorInterface } from './../../../types/debtor-interface';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -11,13 +11,15 @@ import { FileService } from 'src/app/shared/services/common/file.service';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { DemandService } from '../../../services/demand.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demand-action-debitor-page',
   templateUrl: './demand-action-debitor-page.component.html',
   styleUrls: ['./demand-action-debitor-page.component.scss'],
 })
-export class DemandActionDebitorPageComponent implements OnInit {
+export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
   public isUserVerified: boolean;
 
   public alert: boolean;
@@ -39,6 +41,8 @@ export class DemandActionDebitorPageComponent implements OnInit {
 
   public currentDemand: DemandInterface<any>;
 
+  private subscription$: Subscription = new Subscription();
+
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
@@ -53,25 +57,26 @@ export class DemandActionDebitorPageComponent implements OnInit {
     this.isUserVerified = this.authService.isUserVerified();
     this.initForm();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.route.queryParams.subscribe((params: Params) => {
-      if (params['ID']) {
-        this.demandService.getDemandById(params['ID']).subscribe((resp) => {
-          this.currentDemand = resp;
-        });
-      }
-      if (params['DraftId']) {
-        this.currentDraftId = params['DraftID'];
-      }
-    });
+    this.subscription$.add(
+      this.route.queryParams.subscribe((params: Params) => {
+        if (params['ID']) {
+          this.demandService.getDemandById(params['ID']).subscribe((resp) => {
+            this.currentDemand = resp;
+          });
+        }
+        if (params['DraftId']) {
+          this.currentDraftId = params['DraftID'];
+        }
+      })
+    );
 
-    //TODO: ADD LEAK MEMORY PROTECTION
     setInterval(() => this.saveDraft(), 30000);
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.demandService.getDebtors().subscribe((resp) => {
-      this.debtors = resp;
-    });
+    this.subscription$.add(
+      this.demandService.getDebtors().subscribe((resp) => {
+        this.debtors = resp;
+      })
+    );
   }
 
   public debtorChange() {
@@ -85,15 +90,18 @@ export class DemandActionDebitorPageComponent implements OnInit {
     }
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+  }
 
   public onSubmit() {
-   this.resetAlerts();
+    this.resetAlerts();
 
-    if(this.isNewDebtor) {
-      if(this.files.length < 1) {
+    if (this.isNewDebtor) {
+      if (this.files.length < 1) {
         this.errorAlert = true;
-        this.errorMessage = 'Для добавления нового дебитора необходимо прикрепить файл.'
+        this.errorMessage =
+          'Для добавления нового дебитора необходимо прикрепить файл.';
         return;
       }
     }
@@ -101,26 +109,26 @@ export class DemandActionDebitorPageComponent implements OnInit {
     this.isLoading = true;
     let data: SaveDemandRequestInterface<any> = this.prepareData();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.demandService.add(data).subscribe((resp) => {
-      this.alert = true;
-      this.alertMessage = 'Запрос успешно создан.';
-      this.isLoading = false;
-    });
+    this.subscription$.add(
+      this.demandService.add(data).subscribe((resp) => {
+        this.alert = true;
+        this.alertMessage = 'Запрос успешно создан.';
+        this.isLoading = false;
+      })
+    );
   }
 
   //#region private logic
   saveDraft() {
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.demandService
-      .addDraftById(this.currentDraftId, this.prepareDraft())
-      //TODO: ADD LEAK MEMORY PROTECTION
-      .subscribe(
-        (resp) => {
+    this.subscription$.add(
+      this.demandService
+        .addDraftById(this.currentDraftId, this.prepareDraft())
+        .subscribe((resp) => {
           console.log(resp);
           this.currentDraftId = resp.ID;
           this.showSuccess();
-        });
+        })
+    );
   }
 
   private prepareDraft() {
@@ -198,11 +206,19 @@ export class DemandActionDebitorPageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-      this.commonService.getBase64(file).subscribe((res) => {
-        this.fileService
-        //TODO: ADD LEAK MEMORY PROTECTION
-          .uploadFileChunks(res, file.name, file.size.toString(), guid)
+      this.subscription$.add(
+        this.commonService
+          .getBase64(file)
+          .pipe(
+            switchMap((res) => {
+              return this.fileService.uploadFileChunks(
+                res,
+                file.name,
+                file.size.toString(),
+                guid
+              );
+            })
+          )
           .subscribe(
             (res) => {
               console.log(res);
@@ -215,8 +231,8 @@ export class DemandActionDebitorPageComponent implements OnInit {
               });
             },
             (err) => console.log(err)
-          );
-      });
+          )
+      );
     }
   }
 

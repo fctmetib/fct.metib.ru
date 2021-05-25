@@ -8,11 +8,12 @@ import { createDemandFactoringAction } from '../../../store/actions/createDemand
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { select, Store } from '@ngrx/store';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { errorSelector, isLoadingSelector } from '../../../store/selectors';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demand-action-edit-profile-page',
@@ -35,6 +36,8 @@ export class DemandActionEditProfilePageComponent implements OnInit {
 
   private currentUserId: string;
 
+  private subscription$: Subscription = new Subscription();
+
   constructor(
     private authService: AuthService,
     private commonService: CommonService,
@@ -52,20 +55,26 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     this.initValues();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+  }
 
   onSubmit() {
     let data: SaveDemandRequestInterface<any> = this.prepareData();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.demandService.add(data).subscribe((resp) => {
-      this.alert = true;
-      this.alertMessage = 'Запрос успешно создан.';
-    });
+    this.subscription$.add(
+      this.demandService.add(data).subscribe((resp) => {
+        this.alert = true;
+        this.alertMessage = 'Запрос успешно создан.';
+      })
+    );
   }
 
   removeFile(file: FileModeInterface) {
-    this.files.splice(this.files.indexOf(this.files.find(x => x === file)), 1);
+    this.files.splice(
+      this.files.indexOf(this.files.find((x) => x === file)),
+      1
+    );
   }
 
   //#region private logic
@@ -138,49 +147,37 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-      this.commonService.getBase64(file).subscribe((res) => {
-        console.log(type)
-        if (type === 'Avatar') {
-          this.fileService
-          //TODO: ADD LEAK MEMORY PROTECTION
-            .uploadAvatar(res, file.name, file.size.toString(), guid)
-            .subscribe(
-              (res) => {
-                console.log(res);
-                this.files.push({
-                  Code: res.Code,
-                  FileName: res.FileName,
-                  ID: res.ID,
-                  Size: res.Size,
-                  Identifier: type,
-                });
-
-                {
-                  this.avatarSource = `https://api-factoring.metib.ru/api/avatar/${res.Code}`;
-                }
-              },
-              (err) => console.log(err)
-            );
-        } else {
-          //TODO: ADD LEAK MEMORY PROTECTION
-          this.fileService
-            .uploadFileChunks(res, file.name, file.size.toString(), guid)
-            .subscribe(
-              (res) => {
-                console.log(res);
-                this.files.push({
-                  Code: res.Code,
-                  FileName: res.FileName,
-                  ID: res.ID,
-                  Size: res.Size,
-                  Identifier: type,
-                });
-              },
-              (err) => console.log(err)
-            );
-        }
-      });
+      this.subscription$.add(
+        this.commonService
+          .getBase64(file)
+          .pipe(
+            switchMap((res) => {
+              console.log(type);
+              return this.fileService.uploadAvatar(
+                res,
+                file.name,
+                file.size.toString(),
+                guid
+              );
+            })
+          )
+          .subscribe(
+            (res) => {
+              if (type === 'Avatar') {
+                this.avatarSource = `https://api-factoring.metib.ru/api/avatar/${res.Code}`;
+              }
+              console.log(res);
+              this.files.push({
+                Code: res.Code,
+                FileName: res.FileName,
+                ID: res.ID,
+                Size: res.Size,
+                Identifier: type,
+              });
+            },
+            (err) => console.log(err)
+          )
+      );
     }
   }
 
