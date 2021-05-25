@@ -1,3 +1,4 @@
+import { DemandAddonAccountInterface } from './../../../../../types/common/demand-addon-account.interface';
 import { CurrencyPipe } from '@angular/common';
 import {
   Component,
@@ -12,10 +13,15 @@ import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
+import { DemandEDIInterface } from 'src/app/shared/modules/demand/types/common/demand-edi.interface';
+import { DemandObligationInterface } from 'src/app/shared/modules/demand/types/common/demand-obligation.interface';
 import { DemandSelectboxInterface } from 'src/app/shared/modules/demand/types/common/demand-selectbox.interface';
+import { CreateDemandFactoringRequestInterface } from 'src/app/shared/modules/demand/types/requests/create-demand-factoring-request.interface';
+import { SaveDemandRequestInterface } from 'src/app/shared/modules/demand/types/requests/save-demand-request.interface';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { DemandPropertiesInterface } from 'src/app/shared/modules/demand/types/common/demand-properties.interface';
 
 @Component({
   selector: 'app-factoring-data',
@@ -25,8 +31,14 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   @Input()
   currentDemand: any;
 
+  @Input()
+  currentDraftId: any;
+
   @Output()
   save: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  create: EventEmitter<any> = new EventEmitter();
 
   public organizationTypes: DemandSelectboxInterface[] = [];
   public ruleTypes: DemandSelectboxInterface[] = [];
@@ -44,6 +56,8 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   private currentAddressFormId: any;
   private subscription$: Subscription = new Subscription();
 
+  private _saveDraftAction$: NodeJS.Timeout;
+
   constructor(
     private commonService: CommonService,
     private fileService: FileService,
@@ -54,13 +68,24 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initForm();
     this.initValues();
+
+    this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+    if (this._saveDraftAction$) {
+      clearInterval(this._saveDraftAction$);
+    }
   }
 
-  onSubmit() {}
+  onSubmit() {
+    this.create.emit(this.prepareData());
+  }
+
+  saveDraft() {
+    this.save.emit(this.prepareDraft());
+  }
 
   //#region public page actions
 
@@ -360,5 +385,248 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
 
     this.formFactoring.markAllAsTouched();
     this.formFactoring.markAsDirty();
+  }
+
+  private prepareDraft(): any {
+    return this.prepareCoreData();
+  }
+
+  private prepareData(): SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> {
+    let data = this.prepareCoreData();
+    let result: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> =
+      {
+        Data: data,
+        DraftID: this.currentDraftId,
+      };
+
+    return result;
+  }
+
+  private prepareCoreData(): CreateDemandFactoringRequestInterface {
+    let listEDI: DemandEDIInterface[] = [];
+
+    let listObligations: DemandObligationInterface[] = [];
+    let listAddonAccounts: DemandAddonAccountInterface[] = [];
+    let listProperties: DemandPropertiesInterface[] = [];
+
+    let properties = this.formFactoring.value.factoringPlaces; //.value.factoringPlaces;
+    properties.forEach((property) => {
+      listProperties.push({
+        Address: {
+          Appartment: property.factoringPlacesAddress.Appartment,
+          City: property.factoringPlacesAddress.City,
+          Country: property.factoringPlacesAddress.Country,
+          District: property.factoringPlacesAddress.District,
+          House: property.factoringPlacesAddress.House,
+          Locality: property.factoringPlacesAddress.Locality,
+          PostCode: property.factoringPlacesAddress.PostCode,
+          RegionCode: property.factoringPlacesAddress.RegionCode,
+          Street: property.factoringPlacesAddress.Street,
+          RegionTitle: property.factoringPlacesAddress.RegionTitle,
+        },
+        Comment: '',
+        Type: property.factoringPlacesLegalForm,
+      });
+    });
+
+    let obligations = this.formFactoring.value.factoringCredits;
+    obligations.forEach((obligation) => {
+      listObligations.push({
+        Creditor: obligation.factoringCreditsCreditor,
+        CurrentRest: obligation.factoringPlacesBalanceCurrent,
+        Date: new Date(obligation.factoringPlacesDateClose),
+        ReportingRest: obligation.factoringPlacesBalanceReport,
+        Summ: obligation.factoringPlacesContractSum,
+        Type: obligation.factoringPlacesTypeDuty,
+      });
+    });
+
+    let addonAccounts = this.formFactoring.value.otherBanks;
+    addonAccounts.forEach((addonAccount) => {
+      listAddonAccounts.push({
+        BIK: '',
+        Bank: addonAccount.otherBankName,
+        COR: '',
+        Comment: addonAccount.otherBankTarget,
+        Date: new Date(addonAccount.otherBankAccountOpenDate),
+        Expire: new Date(addonAccount.otherBankAccountCloseDate),
+        Number: addonAccount.otherBankOwnerAccount,
+      });
+    });
+
+    let edis = this.formFactoring.value.factoringEDIProviders;
+    edis.forEach((edi) => {
+      listEDI.push({
+        Company: edi.factoringEDIProvidersDebitor,
+        EDIProvider: edi.factoringEDIProvidersProvider,
+      });
+    });
+
+    let result: CreateDemandFactoringRequestInterface = {
+      Anket: {
+        Registration: {
+          Authority: '',
+          Date: new Date(),
+          InitDate: new Date(),
+          Number: '',
+          Place: '',
+        },
+        Resident: {
+          Country: 'РФ',
+          ForeignCode: '',
+          IsResident: true,
+        },
+        Shareholders: [],
+        Signer: {
+          FactAddress: {
+            Appartment: '',
+            City: '',
+            Country: '',
+            District: '',
+            House: '',
+            Locality: '',
+            PostCode: '',
+            RegionCode: 0,
+            RegionTitle: '',
+            Street: '',
+          },
+          Passport: {
+            Date: new Date(),
+            Expire: new Date(),
+            IsForeign: false,
+            IssuerCode: '',
+            IssuerTitle: '',
+            Nationality: '',
+            Number: '',
+          },
+          Person: {
+            BirthDate: new Date(),
+            BirthPlace: '',
+            Email: '',
+            Gender: 1,
+            Name: {
+              First: '',
+              Last: '',
+              Second: '',
+            },
+            NameFirst: '',
+            NameLast: '',
+            NameSecond: '',
+            Phone: '',
+            SNILS: '',
+          },
+          PositionDate: new Date(),
+          PositionTitle: '',
+          RegistrationAddress: {
+            Appartment: '',
+            City: '',
+            Country: '',
+            District: '',
+            House: '',
+            Locality: '',
+            PostCode: '',
+            RegionCode: 0,
+            RegionTitle: '',
+            Street: '',
+          },
+        },
+        Activities: [],
+        Capital: {
+          Total: 0,
+          Payed: 0,
+        },
+        Licenses: [],
+        Objectives: {
+          BankRelationObjective: 16,
+          BankRelationObjectiveOther: '',
+          FinancialObjective: 1,
+          FinancialObjectiveOther: '',
+          TransactionsContracts: 'Договор факторинга',
+          TransactionsCount: '',
+          TransactionsSumm: '',
+        },
+        Organization: {
+          Email: this.formFactoring.value.organizationEmail,
+          FactAddress: {
+            Appartment: '',
+            City: '',
+            Country: '',
+            District: '',
+            House: '',
+            Locality: '',
+            PostCode: '',
+            RegionCode: 0,
+            RegionTitle: '',
+            Street: '',
+          },
+          FactAddressEquals: false,
+          ForeignTitle: '',
+          FullTitle: '',
+          LegalAddress: {
+            Appartment: '',
+            City: '',
+            Country: '',
+            District: '',
+            House: '',
+            Locality: '',
+            PostCode: '',
+            RegionCode: 0,
+            RegionTitle: '',
+            Street: '',
+          },
+          LegalForm: this.formFactoring.value.organizationLegalForm,
+          Phone: this.formFactoring.value.organizationPhone,
+          PostAddress: {
+            Appartment: '',
+            City: '',
+            Country: '',
+            District: '',
+            House: '',
+            Locality: '',
+            PostCode: '',
+            RegionCode: 0,
+            RegionTitle: '',
+            Street: '',
+          },
+          PostAddressEquals: false,
+          Requisites: {
+            INN: this.formFactoring.value.organizationINN,
+            KPP: '',
+            OGRN: '',
+            OKATO: '',
+            OKPO: '',
+          },
+          ShortTitle: this.formFactoring.value.organizationShortName,
+          Type: this.formFactoring.value.organizationType,
+          Website: this.formFactoring.value.organizationWEB,
+        },
+      },
+      Factoring: {
+        Account: {
+          BIK: this.formFactoring.value.bankBik,
+          Bank: this.formFactoring.value.bankName,
+          COR: this.formFactoring.value.bankCorrespondentAccount,
+          Comment: this.formFactoring.value.bankComment,
+          Date: new Date(this.formFactoring.value.bankAccountOpenDate),
+          Expire: null,
+          Number: this.formFactoring.value.bankOwnerAccount,
+        },
+        AddonAccounts: listAddonAccounts,
+        Buyers: this.formFactoring.value.Clients,
+        EDI: listEDI,
+        FactoringAim: 0,
+        LimitWanted: this.formFactoring.value.factoringFinanceLimit,
+        Obligations: listObligations,
+        Products: this.formFactoring.value.factoringProducts,
+        Properties: listProperties,
+        StaffAmount: this.formFactoring.value.factoringWorkers,
+        Suppliers: this.formFactoring.value.factoringShipments,
+        Trademarks: this.formFactoring.value.factoringTradeMarks,
+      },
+      Files: this.files,
+      Type: 'Factoring',
+    };
+
+    return result;
   }
 }

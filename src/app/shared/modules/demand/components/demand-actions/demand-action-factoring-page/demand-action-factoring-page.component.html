@@ -3,9 +3,6 @@
   <div class="header lg">
     <div class="title">
       <h2>Запрос на Факторинг</h2>
-      <!-- <div class="subheader">
-        Список заявок
-      </div> -->
     </div>
     <div class="actions">
     </div>
@@ -15,5 +12,5 @@
   <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
   </metib-backend-error-messages>
 
-  <app-factoring-data></app-factoring-data>
+  <app-factoring-data [currentDemand]="currentDemand" [currentDraftId]="currentDraftId" (save)="handleSave($event)" (create)="handleSubmit($event)"></app-factoring-data>
 </div>
