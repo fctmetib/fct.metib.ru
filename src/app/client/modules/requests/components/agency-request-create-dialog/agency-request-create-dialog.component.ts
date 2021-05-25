@@ -2,19 +2,20 @@ import { DeliveryInterface } from './../../../../../shared/types/delivery/delive
 import { Store } from '@ngrx/store';
 import { DeliveryService } from '../../../../../shared/services/share/delivery.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 import { AgencyShipmentsInterface } from '../../types/common/agency-shipments.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-agency-request-create-dialog',
   templateUrl: './agency-request-create-dialog.component.html',
   styleUrls: ['./agency-request-create-dialog.component.scss'],
 })
-export class AgencyRequestCreateDialogComponent {
+export class AgencyRequestCreateDialogComponent implements OnDestroy {
   form: FormGroup;
   shipmentForm: FormGroup;
 
@@ -32,6 +33,7 @@ export class AgencyRequestCreateDialogComponent {
   public selectedShipments: ClientShipmentInterface[] = [];
 
   public currentRequestId: number;
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     public ref: DynamicDialogRef,
@@ -147,11 +149,10 @@ export class AgencyRequestCreateDialogComponent {
     return this.form.get('requests') as FormArray;
   }
 
-    //TODO: ADD LEAK MEMORY PROTECTION
   private initValues(): void {
-    this.deliveryService.getDeliveriesWithStats().subscribe(resp => {
+    this.subscription$.add(this.deliveryService.getDeliveriesWithStats().subscribe(resp => {
       this.deliveries = resp;
-    })
+    }));
   }
 
   private initializeForm(): void {
@@ -174,5 +175,9 @@ export class AgencyRequestCreateDialogComponent {
       formId: 0,
       shipmnets: []
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }

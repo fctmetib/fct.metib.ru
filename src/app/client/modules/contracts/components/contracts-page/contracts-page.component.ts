@@ -6,18 +6,19 @@ import { Router } from '@angular/router';
 import { OrganizationInterface } from './../../../../../shared/types/organization/organization.interface';
 import { DeliveryInterface } from './../../../../../shared/types/delivery/delivery.interface';
 import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Paginator } from 'primeng/paginator';
 import { OrganizationService } from 'src/app/shared/services/share/organization.service';
 import { ShipmentInterface } from 'src/app/shared/types/common/shipment-interface';
 import { ClipboardService } from 'ngx-clipboard';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contracts-page',
   templateUrl: './contracts-page.component.html',
   styleUrls: ['./contracts-page.component.scss'],
 })
-export class ContractsPageComponent implements OnInit {
+export class ContractsPageComponent implements OnInit, OnDestroy {
   @Input() get selectedColumns(): any[] {
     return this._selectedColumns;
   }
@@ -90,6 +91,8 @@ export class ContractsPageComponent implements OnInit {
   public isShipmentsLoading: boolean = false;
   public currentShipments: ShipmentInterface[] = [];
 
+  private subscription$: Subscription = new Subscription();
+
   constructor(
     private deliveryService: DeliveryService,
     private organizationService: OrganizationService,
@@ -127,12 +130,12 @@ export class ContractsPageComponent implements OnInit {
     this.isOrganizationLoading = true;
     this.isOrganizationError = false;
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.organizationService.getOrganizationById(id).subscribe(
-      (resp) => {
-        this.currentOrganization = resp;
+    this.subscription$.add(
+      this.organizationService.getOrganizationById(id).subscribe(
+        (resp) => {
+          this.currentOrganization = resp;
 
-        this.currentOrganizationContent = `Банк: ${resp?.Account?.Bank || ''}
+          this.currentOrganizationContent = `Банк: ${resp?.Account?.Bank || ''}
         Получатель: ${resp?.Account?.Bank || ''}
         Кор/с: ${resp?.Account?.COR || ''}
         БИК: ${resp?.Account?.BIK || ''}
@@ -145,12 +148,13 @@ export class ContractsPageComponent implements OnInit {
         Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция):
         ${resp?.ABSID || ''}
         Назначение: ${resp?.Description || ''}`;
-        this.isOrganizationLoading = false;
-      },
-      (error) => {
-        this.isOrganizationError = true;
-        this.isOrganizationLoading = false;
-      }
+          this.isOrganizationLoading = false;
+        },
+        (error) => {
+          this.isOrganizationError = true;
+          this.isOrganizationLoading = false;
+        }
+      )
     );
   }
 
@@ -159,16 +163,17 @@ export class ContractsPageComponent implements OnInit {
     this.isShipmentsLoading = true;
     this.isShipmentsError = false;
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.deliveryService.getShipments(id).subscribe(
-      (resp) => {
-        this.currentShipments = resp;
-        this.isShipmentsLoading = false;
-      },
-      (error) => {
-        this.isShipmentsError = true;
-        this.isShipmentsLoading = false;
-      }
+    this.subscription$.add(
+      this.deliveryService.getShipments(id).subscribe(
+        (resp) => {
+          this.currentShipments = resp;
+          this.isShipmentsLoading = false;
+        },
+        (error) => {
+          this.isShipmentsError = true;
+          this.isShipmentsLoading = false;
+        }
+      )
     );
   }
 
@@ -256,30 +261,34 @@ export class ContractsPageComponent implements OnInit {
 
   private fetch() {
     this.isLoading = true;
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
-      this.listContracts = resp.sort((a, b) => {
-        return new Date(b.DateFrom).getTime() - new Date(a.DateFrom).getTime();
-      });
 
-      this.filterByDate();
+    this.subscription$.add(
+      this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
+        this.listContracts = resp.sort((a, b) => {
+          return (
+            new Date(b.DateFrom).getTime() - new Date(a.DateFrom).getTime()
+          );
+        });
 
-      this.paginate();
+        this.filterByDate();
 
-      this.debtorsList = [
-        {
-          ID: 0,
-          Title: 'Все',
-        },
-      ];
+        this.paginate();
 
-      let debtors = this.listContracts.map((x) => x.Debtor);
-      let uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
+        this.debtorsList = [
+          {
+            ID: 0,
+            Title: 'Все',
+          },
+        ];
 
-      this.debtorsList.push(...uniqDebtors);
+        let debtors = this.listContracts.map((x) => x.Debtor);
+        let uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
 
-      this.isLoading = false;
-    });
+        this.debtorsList.push(...uniqDebtors);
+
+        this.isLoading = false;
+      })
+    );
   }
 
   private updateCurrentPage(currentPage: number): void {
@@ -291,5 +300,9 @@ export class ContractsPageComponent implements OnInit {
       (x) => new Date(x.DateTo) > new Date()
     );
     console.log(this.listContractsFiltered);
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }

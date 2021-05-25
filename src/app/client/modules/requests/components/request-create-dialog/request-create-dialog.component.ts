@@ -12,7 +12,7 @@ import { Component, HostListener } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RequestSourceEnum } from 'src/app/shared/types/enums/request-source.enum';
 import { FinanceTypeInterface } from '../../types/common/finance-type.interface';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subscription } from 'rxjs';
 import {
   addRequestAction,
   setErrorAction,
@@ -73,6 +73,8 @@ export class RequestCreateDialogComponent {
 
   public selectedImages: any[] = [];
 
+  private subscription$: Subscription = new Subscription();
+
   constructor(
     public ref: DynamicDialogRef,
     private fb: FormBuilder,
@@ -106,21 +108,23 @@ export class RequestCreateDialogComponent {
       summ: [1, [Validators.required]],
     });
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
-      this.deliveries = resp
-        .sort(
-          (a, b) => new Date(a.DateTo).getTime() - new Date(b.DateTo).getTime()
-        )
-        .reverse();
+    this.subscription$.add(
+      this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
+        this.deliveries = resp
+          .sort(
+            (a, b) =>
+              new Date(a.DateTo).getTime() - new Date(b.DateTo).getTime()
+          )
+          .reverse();
 
-      if (this.config.data) {
-        let delivery: DeliveryInterface = this.deliveries.find(
-          (x) => x.ID === this.config.data.Delivery.ID
-        );
-        this.freeDuty = delivery.Statistics.DutyDebtor;
-      }
-    });
+        if (this.config.data) {
+          let delivery: DeliveryInterface = this.deliveries.find(
+            (x) => x.ID === this.config.data.Delivery.ID
+          );
+          this.freeDuty = delivery.Statistics.DutyDebtor;
+        }
+      })
+    );
 
     if (this.config.data) {
       let selectedRow: RequestsResponseInterface = this.config.data;
@@ -187,10 +191,8 @@ export class RequestCreateDialogComponent {
   }
 
   getShipmentsSum(items: ClientShipmentInterface[]) {
-    if(items) {
-    return items.reduce((sum, current) =>
-      sum + current.Summ, 0
-    )
+    if (items) {
+      return items.reduce((sum, current) => sum + current.Summ, 0);
     }
   }
 
@@ -260,36 +262,39 @@ export class RequestCreateDialogComponent {
 
   //#region files
   removeFile() {
-    this.selectedImages.forEach(i => {
-      this.files.splice(this.files.indexOf(this.files.find(x => x === i)), 1);
-    })
+    this.selectedImages.forEach((i) => {
+      this.files.splice(this.files.indexOf(this.files.find((x) => x === i)), 1);
+    });
+
+    this.selectedImages = [];
   }
 
   onSelect(event, type: string) {
-    let files: File[] = event.target.files;;
+    let files: File[] = event.target.files;
     this.uploadedFiles = files;
 
     for (let file of files) {
       let guid = Guid.newGuid();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-      this.commonService.getBase64(file).subscribe((res) => {
-        this.fileService
-          .uploadFileChunks(res, file.name, file.size.toString(), guid)
-          .subscribe(
-            (res) => {
-              this.files.push({
-                Code: res.Code,
-                FileName: res.FileName,
-                ID: res.ID,
-                Size: res.Size,
-                Identifier: type,
-              });
-              console.log(this.files);
-            },
-            (err) => console.log(err)
-          );
-      });
+      this.subscription$.add(
+        this.commonService.getBase64(file).subscribe((res) => {
+          this.fileService
+            .uploadFileChunks(res, file.name, file.size.toString(), guid)
+            .subscribe(
+              (res) => {
+                this.files.push({
+                  Code: res.Code,
+                  FileName: res.FileName,
+                  ID: res.ID,
+                  Size: res.Size,
+                  Identifier: type,
+                });
+                console.log(this.files);
+              },
+              (err) => console.log(err)
+            );
+        })
+      );
     }
   }
   //#endregion
@@ -304,7 +309,6 @@ export class RequestCreateDialogComponent {
     let currentRowIndex: number = 1;
 
     let columns = this.getColumns();
-
 
     for (const curentDataRow of processedData) {
       const rowData: any = {};

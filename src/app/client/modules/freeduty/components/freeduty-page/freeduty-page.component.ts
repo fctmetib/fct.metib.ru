@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DatePipe } from '@angular/common';
 import { DutyFilterRequestInterface } from 'src/app/shared/types/duty/duty-filter-request.interface';
@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./freeduty-page.component.scss'],
   providers: [DatePipe],
 })
-export class FreedutyPageComponent implements OnInit {
+export class FreedutyPageComponent implements OnInit, OnDestroy {
   freeduty$: Observable<DutyInterface[] | null>;
   error$: Observable<string | null>;
   isLoading$: Observable<boolean>;
@@ -42,6 +42,8 @@ export class FreedutyPageComponent implements OnInit {
 
   successRequestsDialogMessage: string = null;
   errorRequestsDialogMessage: string = null;
+
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     private store: Store,
@@ -208,8 +210,7 @@ export class FreedutyPageComponent implements OnInit {
       });
     });
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.service.createRequestsByDutyIds(flattenedRequestsId).subscribe(
+    this.subscription$.add(this.subscription$.add(this.service.createRequestsByDutyIds(flattenedRequestsId).subscribe(
       (response) => {
         this.closeRequestsModal();
         this.router.navigate(['/requests']);
@@ -217,14 +218,15 @@ export class FreedutyPageComponent implements OnInit {
       (err) => {
         this.errorRequestsDialogMessage = err.error;
       }
-    );
-
-    //  this.closeRequestsModal();
+    )));
   }
 
   closeRequestsModal(): void {
     this.requestsDialog = false;
   }
 
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+  }
   //#endregion
 }

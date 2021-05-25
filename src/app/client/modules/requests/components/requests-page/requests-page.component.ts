@@ -5,10 +5,17 @@ import {
   errorSelector,
   isLoadingSelector,
 } from './../../store/selectors';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { RequestsResponseInterface } from './../../types/requestResponse.interface';
 import { Store, select } from '@ngrx/store';
-import { Component, OnInit, OnDestroy, HostListener, ViewChildren, Directive } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  ViewChildren,
+  Directive,
+} from '@angular/core';
 import { getRequestsAction } from '../../store/actions/getRequests.action';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SortEvent, MenuItem, MessageService } from 'primeng/api';
@@ -18,10 +25,9 @@ import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-req
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Directive({
-  selector: '[tableHighlight]'
+  selector: '[tableHighlight]',
 })
-
-export class TableHighlightDirective{}
+export class TableHighlightDirective {}
 
 @Component({
   selector: 'app-requests-page',
@@ -44,7 +50,10 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   public successRequestsDialogMessage: string = null;
   public errorRequestsDialogMessage: string = null;
 
-  @ViewChildren(TableHighlightDirective) tableHighlight: TableHighlightDirective;
+  @ViewChildren(TableHighlightDirective)
+  tableHighlight: TableHighlightDirective;
+
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     private messageService: MessageService,
@@ -115,10 +124,11 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   fetch(): void {
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.requestService.fetch().subscribe(resp => {
-      this.requests = resp;
-    });
+    this.subscription$.add(
+      this.requestService.fetch().subscribe((resp) => {
+        this.requests = resp;
+      })
+    );
   }
 
   showCreateAgencyRequestDialog() {
@@ -174,7 +184,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       return event.order * result;
     });
 
-   this.requests = [...requests]
+    this.requests = [...requests];
   }
 
   showCorrectionDialog() {
@@ -188,38 +198,38 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   showEditDialog() {
     let selectedRow = this.selectedItems[0];
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.requestService
-      .getRequestByIdAndParams(selectedRow.ID, true, true, true)
-      .subscribe((resp) => {
-        selectedRow = resp;
+    this.subscription$.add(
+      this.requestService
+        .getRequestByIdAndParams(selectedRow.ID, true, true, true)
+        .subscribe((resp) => {
+          selectedRow = resp;
 
-        if (selectedRow) {
-          this.ref = this.dialogService.open(RequestCreateDialogComponent, {
-            header: 'Редактирование заявки',
-            width: '70%',
-            contentStyle: { height: '800px', overflow: 'auto' },
-            baseZIndex: 10000,
-            data: selectedRow,
-          });
+          if (selectedRow) {
+            this.ref = this.dialogService.open(RequestCreateDialogComponent, {
+              header: 'Редактирование заявки',
+              width: '70%',
+              contentStyle: { height: '800px', overflow: 'auto' },
+              baseZIndex: 10000,
+              data: selectedRow,
+            });
 
-          this.ref.onClose.subscribe((data: any) => {
-            console.log('closed');
-          });
-        }
-      });
+            this.ref.onClose.subscribe((data: any) => {
+              console.log('closed');
+            });
+          }
+        })
+    );
   }
 
   public initSend() {
-    //TODO: ADD LEAK MEMORY PROTECTION
-    let requestIDs = this.selectedItems.map(x => x.ID);
-    this.requestService.sendInit(requestIDs).subscribe(
-      (response) => {
+    let requestIDs = this.selectedItems.map((x) => x.ID);
+    this.subscription$.add(
+      this.requestService.sendInit(requestIDs).subscribe((response) => {
         this.confirmForm.patchValue({
           confirmCode: response.ConfirmationCode,
         });
         this.confirmDialog = true;
-      }
+      })
     );
   }
 
@@ -230,11 +240,13 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       ConfirmationCode: this.confirmForm.value.confirmCode,
       Pin: this.confirmForm.value.pin,
     };
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.requestService.sendConfirm(confirmData).subscribe((resp) => {
-      this.confirmDialog = false;
-      this.successRequestsDialogMessage = 'Заявка успешно подтверждена';
-    });
+
+    this.subscription$.add(
+      this.requestService.sendConfirm(confirmData).subscribe((resp) => {
+        this.confirmDialog = false;
+        this.successRequestsDialogMessage = 'Заявка успешно подтверждена';
+      })
+    );
   }
 
   public checkSelecteditems() {
