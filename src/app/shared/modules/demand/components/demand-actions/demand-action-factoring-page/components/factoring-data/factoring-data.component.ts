@@ -1,6 +1,15 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { DemandSelectboxInterface } from 'src/app/shared/modules/demand/types/common/demand-selectbox.interface';
@@ -12,7 +21,7 @@ import { FileModeInterface } from 'src/app/shared/types/file/file-model.interfac
   selector: 'app-factoring-data',
   templateUrl: './factoring-data.component.html',
 })
-export class FactoringDataComponent implements OnInit {
+export class FactoringDataComponent implements OnInit, OnDestroy {
   @Input()
   currentDemand: any;
 
@@ -33,17 +42,22 @@ export class FactoringDataComponent implements OnInit {
   public addressDialog: boolean = false;
 
   private currentAddressFormId: any;
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     private commonService: CommonService,
     private fileService: FileService,
     private currencyPipe: CurrencyPipe,
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
     this.initForm();
     this.initValues();
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 
   onSubmit() {}
@@ -148,17 +162,25 @@ export class FactoringDataComponent implements OnInit {
     this.currentAddressFormId = null;
   }
 
-
   onSelect(event, type: string) {
     let files: File[] = event.target.files;
 
     for (let file of files) {
       let guid = Guid.newGuid();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-      this.commonService.getBase64(file).subscribe((res) => {
-        this.fileService
-          .uploadFileChunks(res, file.name, file.size.toString(), guid)
+      this.subscription$.add(
+        this.commonService
+          .getBase64(file)
+          .pipe(
+            switchMap((res) => {
+              return this.fileService.uploadFileChunks(
+                res,
+                file.name,
+                file.size.toString(),
+                guid
+              );
+            })
+          )
           .subscribe(
             (res) => {
               console.log(res);
@@ -171,8 +193,8 @@ export class FactoringDataComponent implements OnInit {
               });
             },
             (err) => console.log(err)
-          );
-      });
+          )
+      );
     }
   }
 
@@ -316,22 +338,25 @@ export class FactoringDataComponent implements OnInit {
       factoringEDIProviders: this.fb.array([]),
     });
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.formFactoring.valueChanges.subscribe((form) => {
-      if (form.factoringFinanceLimit) {
-        this.formFactoring.patchValue(
-          {
-            factoringFinanceLimit: this.currencyPipe.transform(
-              form.factoringFinanceLimit.replace(/\D/g, '').replace(/^0+/, ''),
-              'RUB',
-              'symbol',
-              '1.0-0'
-            ),
-          },
-          { emitEvent: false }
-        );
-      }
-    });
+    this.subscription$.add(
+      this.formFactoring.valueChanges.subscribe((form) => {
+        if (form.factoringFinanceLimit) {
+          this.formFactoring.patchValue(
+            {
+              factoringFinanceLimit: this.currencyPipe.transform(
+                form.factoringFinanceLimit
+                  .replace(/\D/g, '')
+                  .replace(/^0+/, ''),
+                'RUB',
+                'symbol',
+                '1.0-0'
+              ),
+            },
+            { emitEvent: false }
+          );
+        }
+      })
+    );
 
     this.formFactoring.markAllAsTouched();
     this.formFactoring.markAsDirty();

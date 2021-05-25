@@ -1,28 +1,19 @@
 import { DemandService } from './../../services/demand.service';
 import { DemandDraftInterface } from './../../types/demand-draft.interface';
-import { draftsSelector } from './../../store/selectors';
 import { DemandInterface } from '../../types/demand.interface';
-import { select, Store } from '@ngrx/store';
-import { getDemandsAction } from '../../store/actions/getDemands.action';
-import { of, Observable, merge } from 'rxjs';
-import { SortEvent } from 'primeng/api';
-import { Component, OnInit } from '@angular/core';
-import {
-  demandssSelector,
-  errorSelector,
-  isLoadingSelector,
-} from '../../store/selectors';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
-import { removeDemandsAction } from '../../store/actions/removeDemands.action';
-import { getDraftsAction } from '../../store/actions/getDrafts.action';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demand-history-page',
   templateUrl: './demand-history-page.component.html',
   styleUrls: ['./demand-history-page.component.scss'],
 })
-export class DemandHistoryPageComponent implements OnInit {
+export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   demands$: Observable<DemandInterface<any>[] | null>;
   drafts$: Observable<DemandDraftInterface<any>[] | null>;
 
@@ -36,6 +27,8 @@ export class DemandHistoryPageComponent implements OnInit {
   isUserVerified: boolean;
 
   allDemands: DemandInterface<any>[] = [];
+  allDrafts: any[] = [];
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     private store: Store,
@@ -48,6 +41,10 @@ export class DemandHistoryPageComponent implements OnInit {
     this.initializeValues();
     this.fetch();
     this.isUserVerified = this.authService.isUserVerified();
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 
   initializeValues(): void {
@@ -94,60 +91,69 @@ export class DemandHistoryPageComponent implements OnInit {
     // this.isLoading$ = this.store.pipe(select(isLoadingSelector));
   }
 
-    //TODO: ADD LEAK MEMORY PROTECTION
   fetch() {
     this.loading = true;
-    this.demandService.getDrafts().subscribe((drafts) => {
-      this.demandService.fetch().subscribe((demands) => {
-        this.allDemands = demands;
+    this.subscription$.add(
+      this.demandService
+        .getDrafts()
+        .pipe(
+          switchMap((drafts) => {
+            this.allDrafts = drafts;
+            return this.demandService.fetch();
+          })
+        )
+        .subscribe((demands) => {
+          this.allDemands = demands;
 
-        if (demands) {
-          if (drafts) {
-            drafts.forEach((draft) => {
-              this.allDemands.push({
-                Data: draft.Data,
-                DateCreated: draft.DateCreated,
-                DateModify: draft.DateModify,
-                DateStatus: draft.DateCreated,
-                Files: draft.Data.Files,
-                ID: draft.ID,
-                Manager: null,
-                Messages: null,
-                Requirements: null,
-                Result: null,
-                Status: 'Draft',
-                Steps: null,
-                Type: draft.Data.Type,
-                User: draft.User,
+          if (demands) {
+            if (this.allDrafts) {
+              this.allDrafts.forEach((draft) => {
+                this.allDemands.push({
+                  Data: draft.Data,
+                  DateCreated: draft.DateCreated,
+                  DateModify: draft.DateModify,
+                  DateStatus: draft.DateCreated,
+                  Files: draft.Data.Files,
+                  ID: draft.ID,
+                  Manager: null,
+                  Messages: null,
+                  Requirements: null,
+                  Result: null,
+                  Status: 'Draft',
+                  Steps: null,
+                  Type: draft.Data.Type,
+                  User: draft.User,
+                });
+
+                this.allDemands.sort((a, b) => {
+                  return (
+                    new Date(b.DateModify).getTime() -
+                    new Date(a.DateModify).getTime()
+                  );
+                });
+
+                console.log('Demands', this.allDemands);
               });
-
-              this.allDemands.sort((a, b) => {
-                return (
-                  new Date(b.DateModify).getTime() -
-                  new Date(a.DateModify).getTime()
-                );
-              });
-
-              console.log('Demands', this.allDemands);
-            });
+            }
           }
-        }
-      });
-    });
+        })
+    );
   }
 
-    //TODO: ADD LEAK MEMORY PROTECTION
   remove(Id) {
-    this.demandService.deleteDraftById(Id).subscribe((resp) => {
-      this.allDemands.splice(this.allDemands.findIndex((x) => x.ID === Id));
-    });
+    this.subscription$.add(
+      this.demandService.deleteDraftById(Id).subscribe((resp) => {
+        this.allDemands.splice(this.allDemands.findIndex((x) => x.ID === Id));
+      })
+    );
   }
 
-    //TODO: ADD LEAK MEMORY PROTECTION
   cancel(Id) {
-    this.demandService.cancelByDemandId(Id).subscribe((resp) => {
-      this.allDemands.splice(this.allDemands.findIndex((x) => x.ID === Id));
-    });
+    this.subscription$.add(
+      this.demandService.cancelByDemandId(Id).subscribe((resp) => {
+        this.allDemands.splice(this.allDemands.findIndex((x) => x.ID === Id));
+      })
+    );
   }
 
   edit(Type, ID) {
@@ -168,6 +174,4 @@ export class DemandHistoryPageComponent implements OnInit {
         break;
     }
   }
-
-  ngOnDestroy() {}
 }

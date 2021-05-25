@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
@@ -16,7 +17,7 @@ import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-
   templateUrl: './demand-action-limit-page.component.html',
   styleUrls: ['./demand-action-limit-page.component.scss'],
 })
-export class DemandActionLimitPageComponent implements OnInit {
+export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
   isUserVerified: boolean;
 
   public alert: boolean;
@@ -29,6 +30,7 @@ export class DemandActionLimitPageComponent implements OnInit {
   private currentDraftId: number = 0;
 
   public isLoading: boolean = false;
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     private authService: AuthService,
@@ -37,51 +39,57 @@ export class DemandActionLimitPageComponent implements OnInit {
     private commonService: CommonService,
     private messageService: MessageService,
     private fileService: FileService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.isUserVerified = this.authService.isUserVerified();
     this.initForm();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.route.queryParams.subscribe((params: Params) => {
-      if (params['ID']) {
-        this.demandService.getDemandById(params['ID']).subscribe((resp) => {});
-      }
-      if (params['DraftId']) {
-        this.currentDraftId = params['DraftID'];
-      }
-    });
+    this.subscription$.add(
+      this.route.queryParams.subscribe((params: Params) => {
+        if (params['ID']) {
+          this.demandService
+            .getDemandById(params['ID'])
+            .subscribe((resp) => {});
+        }
+        if (params['DraftId']) {
+          this.currentDraftId = params['DraftID'];
+        }
+      })
+    );
 
     setInterval(() => this.saveDraft(), 30000);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+  }
 
   public onSubmit() {
     this.isLoading = true;
     let data: SaveDemandRequestInterface<any> = this.prepareData();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.demandService.add(data).subscribe((resp) => {
-      this.alert = true;
-      this.alertMessage = 'Запрос успешно создан.';
-      this.isLoading = false;
-    });
+    this.subscription$.add(
+      this.demandService.add(data).subscribe((resp) => {
+        this.alert = true;
+        this.alertMessage = 'Запрос успешно создан.';
+        this.isLoading = false;
+      })
+    );
   }
 
-
   //#region private logic
-    //TODO: ADD LEAK MEMORY PROTECTION
   saveDraft() {
-    this.demandService
-      .addDraftById(this.currentDraftId, this.prepareDraft())
-      .subscribe((resp) => {
-        console.log(resp)
-        this.currentDraftId = resp.ID;
-        this.showSuccess();
-      });
+    this.subscription$.add(
+      this.demandService
+        .addDraftById(this.currentDraftId, this.prepareDraft())
+        .subscribe((resp) => {
+          console.log(resp);
+          this.currentDraftId = resp.ID;
+          this.showSuccess();
+        })
+    );
   }
 
   private prepareDraft() {
@@ -142,10 +150,19 @@ export class DemandActionLimitPageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-      this.commonService.getBase64(file).subscribe((res) => {
-        this.fileService
-          .uploadFileChunks(res, file.name, file.size.toString(), guid)
+      this.subscription$.add(
+        this.commonService
+          .getBase64(file)
+          .pipe(
+            switchMap((res) => {
+              return this.fileService.uploadFileChunks(
+                res,
+                file.name,
+                file.size.toString(),
+                guid
+              );
+            })
+          )
           .subscribe(
             (res) => {
               console.log(res);
@@ -158,8 +175,8 @@ export class DemandActionLimitPageComponent implements OnInit {
               });
             },
             (err) => console.log(err)
-          );
-      });
+          )
+      );
     }
   }
 

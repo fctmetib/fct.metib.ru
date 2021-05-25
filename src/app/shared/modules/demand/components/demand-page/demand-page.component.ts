@@ -1,5 +1,5 @@
 import { DemandLocalActionsInterface } from './../../types/common/demand-local-actions.interface';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CryptoProService } from 'src/app/shared/services/common/cryprto-pro.service';
 import {
@@ -13,18 +13,16 @@ import {
   isValidSystemSetup,
   SystemInfo,
 } from 'crypto-pro';
-import { Guid } from 'src/app/shared/classes/common/guid.class';
-import { CommonService } from 'src/app/shared/services/common/common.service';
-import { saveAs, encodeBase64 } from '@progress/kendo-file-saver';
+import { saveAs } from '@progress/kendo-file-saver';
 import * as JSZip from 'jszip';
+import { Subscription } from 'rxjs';
 
-var cadesplugin;
 @Component({
   selector: 'app-demand-page',
   templateUrl: './demand-page.component.html',
   styleUrls: ['./demand-page.component.scss'],
 })
-export class DemandPageComponent implements OnInit {
+export class DemandPageComponent implements OnInit, OnDestroy {
   actions: DemandLocalActionsInterface[] = [];
 
   isUserVerified: boolean = false;
@@ -70,10 +68,11 @@ export class DemandPageComponent implements OnInit {
   public eds: string = '';
   public filesWithEDS: File[] = [];
 
+  private subscription$: Subscription = new Subscription();
+
   constructor(
     private authService: AuthService,
-    private cryproService: CryptoProService,
-    private commonService: CommonService
+    private cryproService: CryptoProService
   ) {}
 
   ngOnInit() {
@@ -84,16 +83,22 @@ export class DemandPageComponent implements OnInit {
     this.displaySystemInfo();
   }
 
-    //TODO: ADD LEAK MEMORY PROTECTION
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+  }
+
   openCerts() {
     this.displayModal = true;
     this.isCertsLoading = true;
-    this.cryproService.getCertificates().subscribe((resp) => {
-      // https://www.npmjs.com/package/crypto-pro
-      console.log(resp);
-      this.certificateList = resp;
-      this.isCertsLoading = false;
-    });
+    this,
+      this.subscription$.add(
+        this.cryproService.getCertificates().subscribe((resp) => {
+          // https://www.npmjs.com/package/crypto-pro
+          console.log(resp);
+          this.certificateList = resp;
+          this.isCertsLoading = false;
+        })
+      );
   }
 
   initActions() {
@@ -150,8 +155,6 @@ export class DemandPageComponent implements OnInit {
       },
     ];
   }
-
-  ngOnDestroy() {}
 
   public downloadFile() {
     // this.dyanmicDownloadByHtmlTag({
@@ -302,15 +305,19 @@ export class DemandPageComponent implements OnInit {
         '1.3.6.1.4.1.311.80.1': await certificate.hasExtendedKeyUsage(
           '1.3.6.1.4.1.311.80.1'
         ),
-        "['1.3.6.1.5.5.7.3.2', '1.3.6.1.4.1.311.10.3.12']": await certificate.hasExtendedKeyUsage(
-          ['1.3.6.1.5.5.7.3.2', '1.3.6.1.4.1.311.10.3.12']
-        ),
+        "['1.3.6.1.5.5.7.3.2', '1.3.6.1.4.1.311.10.3.12']":
+          await certificate.hasExtendedKeyUsage([
+            '1.3.6.1.5.5.7.3.2',
+            '1.3.6.1.4.1.311.10.3.12',
+          ]),
         '1.3.6.1.4.1.311.80.2': await certificate.hasExtendedKeyUsage(
           '1.3.6.1.4.1.311.80.2'
         ),
-        "'1.3.6.1.5.5.7.3.3', '1.3.6.1.4.1.311.10.3.12'": await certificate.hasExtendedKeyUsage(
-          ['1.3.6.1.5.5.7.3.3', '1.3.6.1.4.1.311.10.3.12']
-        ),
+        "'1.3.6.1.5.5.7.3.3', '1.3.6.1.4.1.311.10.3.12'":
+          await certificate.hasExtendedKeyUsage([
+            '1.3.6.1.5.5.7.3.3',
+            '1.3.6.1.4.1.311.10.3.12',
+          ]),
       };
     } catch (error) {
       this.certificateInfoError = error.message;
@@ -357,7 +364,7 @@ export class DemandPageComponent implements OnInit {
 
           // <----- HERE
           zip.files[filename].async('string').then((fileData) => {
-            console.log('Type', zip.files[filename].name.split('.')[1])
+            console.log('Type', zip.files[filename].name.split('.')[1]);
             if (zip.files[filename].name.split('.')[1] === 'sig') {
               this.eds = fileData;
             } else {

@@ -1,31 +1,15 @@
-import { DemandInterface } from './../../../types/demand.interface';
 import { DemandObligationInterface } from './../../../types/common/demand-obligation.interface';
 import { DemandEDIInterface } from './../../../types/common/demand-edi.interface';
-import { FileModeInterface } from './../../../../../types/file/file-model.interface';
-import { CommonService } from './../../../../../services/common/common.service';
 import { DemandService } from '../../../services/demand.service';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormArray,
-  FormControl,
-} from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
-import { FileService } from 'src/app/shared/services/common/file.service';
-import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { CreateDemandFactoringRequestInterface } from '../../../types/requests/create-demand-factoring-request.interface';
 import { DemandPropertiesInterface } from '../../../types/common/demand-properties.interface';
 import { DemandAddonAccountInterface } from '../../../types/common/demand-addon-account.interface';
-import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { Observable, Subscription } from 'rxjs';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { createDemandFactoringAction } from '../../../store/actions/createDemand.action';
-import { errorSelector, isLoadingSelector } from '../../../store/selectors';
-import { CurrencyPipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -34,7 +18,7 @@ import { ActivatedRoute, Params } from '@angular/router';
   templateUrl: './demand-action-factoring-page.component.html',
   styleUrls: ['./demand-action-factoring-page.component.scss'],
 })
-export class DemandActionFactoringPageComponent implements OnInit {
+export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
   public isUserVerified: boolean;
 
   public alert: boolean;
@@ -58,25 +42,27 @@ export class DemandActionFactoringPageComponent implements OnInit {
     private messageService: MessageService,
     private demandService: DemandService,
     private route: ActivatedRoute,
-    private store: Store,
+    private store: Store
   ) {}
 
   ngOnInit() {
     this.isUserVerified = this.authService.isUserVerified();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.route.queryParams.subscribe((params: Params) => {
-      if (params['ID']) {
-        this.demandService.getDemandById(params['ID']).subscribe((resp) => {
-          this.currentDemand = resp;
-        });
-      }
-      if (params['DraftId']) {
-        this.currentDraftId = params['DraftID'];
-      }
-    });
+    this.subscription$.add(
+      this.route.queryParams.subscribe((params: Params) => {
+        if (params['ID']) {
+          this.demandService.getDemandById(params['ID']).subscribe((resp) => {
+            this.currentDemand = resp;
+          });
+        }
+        if (params['DraftId']) {
+          this.currentDraftId = params['DraftID'];
+        }
+      })
+    );
 
     //TODO: ADD IT IN ANOTHER FILES
+    //TODO: CHECK ON DESTROY IN ANOTHER FILES
     this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
 
@@ -88,7 +74,8 @@ export class DemandActionFactoringPageComponent implements OnInit {
   }
 
   onSubmit() {
-    let data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> = this.prepareData();
+    let data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> =
+      this.prepareData();
     this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
@@ -102,14 +89,15 @@ export class DemandActionFactoringPageComponent implements OnInit {
 
   //#region private logic
   saveDraft() {
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.demandService
-      .addDraftById(this.currentDraftId, this.prepareDraft())
-      .subscribe((resp) => {
-        console.log(resp)
-        this.currentDraftId = resp.ID;
-        this.showSuccess();
-      });
+    this.subscription$.add(
+      this.demandService
+        .addDraftById(this.currentDraftId, this.prepareDraft())
+        .subscribe((resp) => {
+          console.log(resp);
+          this.currentDraftId = resp.ID;
+          this.showSuccess();
+        })
+    );
   }
 
   private prepareDraft(): any {
@@ -118,10 +106,11 @@ export class DemandActionFactoringPageComponent implements OnInit {
 
   private prepareData(): SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> {
     let data = this.prepareCoreData();
-    let result: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> = {
-      Data: data,
-      DraftID: this.currentDraftId,
-    };
+    let result: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> =
+      {
+        Data: data,
+        DraftID: this.currentDraftId,
+      };
 
     return result;
   }

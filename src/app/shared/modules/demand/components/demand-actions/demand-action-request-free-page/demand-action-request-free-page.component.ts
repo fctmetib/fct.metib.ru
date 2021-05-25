@@ -1,25 +1,25 @@
 import { ActivatedRoute, Params } from '@angular/router';
 import { DemandService } from './../../../services/demand.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { createDemandFactoringAction } from '../../../store/actions/createDemand.action';
 import { errorSelector, isLoadingSelector } from '../../../store/selectors';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { MessageService } from 'primeng/api';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demand-action-request-free-page',
   templateUrl: './demand-action-request-free-page.component.html',
   styleUrls: ['./demand-action-request-free-page.component.scss'],
 })
-export class DemandActionRequestFreePageComponent implements OnInit {
+export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
   isUserVerified: boolean;
 
   public alert: boolean;
@@ -33,6 +33,7 @@ export class DemandActionRequestFreePageComponent implements OnInit {
   public files: FileModeInterface[] = [];
 
   private currentDraftId: number = 0;
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     private authService: AuthService,
@@ -50,30 +51,35 @@ export class DemandActionRequestFreePageComponent implements OnInit {
     this.initForm();
     this.initValues();
 
-    //TODO: ADD LEAK MEMORY PROTECTION
-    this.route.queryParams.subscribe((params: Params) => {
-      if (params['ID']) {
-        this.demandService.getDemandById(params['ID']).subscribe((resp) => {});
-      }
-      if (params['DraftId']) {
-        this.currentDraftId = params['DraftID'];
-      }
-    });
+    this.subscription$.add(
+      this.route.queryParams.subscribe((params: Params) => {
+        if (params['ID']) {
+          this.demandService
+            .getDemandById(params['ID'])
+            .subscribe((resp) => {});
+        }
+        if (params['DraftId']) {
+          this.currentDraftId = params['DraftID'];
+        }
+      })
+    );
 
     setInterval(() => this.saveDraft(), 30000);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+  }
 
   public onSubmit() {
     //TODO: UPDATE IT
-    //TODO: ADD LEAK MEMORY PROTECTION
     let data: SaveDemandRequestInterface<any> = this.prepareData();
-
-    this.demandService.add(data).subscribe((resp) => {
-      this.alert = true;
-      this.alertMessage = 'Запрос успешно создан.';
-    });
+    this.subscription$.add(
+      this.demandService.add(data).subscribe((resp) => {
+        this.alert = true;
+        this.alertMessage = 'Запрос успешно создан.';
+      })
+    );
     // this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
@@ -90,37 +96,45 @@ export class DemandActionRequestFreePageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
-      //TODO: ADD LEAK MEMORY PROTECTION
-      this.commonService.getBase64(file).subscribe((res) => {
-        this.fileService
-          .uploadFileChunks(res, file.name, file.size.toString(), guid)
-          .subscribe(
-            (res) => {
-              console.log(res);
-              this.files.push({
-                Code: res.Code,
-                FileName: res.FileName,
-                ID: res.ID,
-                Size: res.Size,
-                Identifier: type,
-              });
-            },
-            (err) => console.log(err)
-          );
-      });
+      this.commonService
+        .getBase64(file)
+        .pipe(
+          switchMap((res) => {
+            return this.fileService.uploadFileChunks(
+              res,
+              file.name,
+              file.size.toString(),
+              guid
+            );
+          })
+        )
+        .subscribe(
+          (res) => {
+            console.log(res);
+            this.files.push({
+              Code: res.Code,
+              FileName: res.FileName,
+              ID: res.ID,
+              Size: res.Size,
+              Identifier: type,
+            });
+          },
+          (err) => console.log(err)
+        );
     }
   }
 
   //#region private logic
-  //TODO: ADD LEAK MEMORY PROTECTION
   saveDraft() {
-    this.demandService
-      .addDraftById(this.currentDraftId, this.prepareDraft())
-      .subscribe((resp) => {
-        console.log(resp);
-        this.currentDraftId = resp.ID;
-        this.showSuccess();
-      });
+    this.subscription$.add(
+      this.demandService
+        .addDraftById(this.currentDraftId, this.prepareDraft())
+        .subscribe((resp) => {
+          console.log(resp);
+          this.currentDraftId = resp.ID;
+          this.showSuccess();
+        })
+    );
   }
 
   private prepareDraft() {
