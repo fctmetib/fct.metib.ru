@@ -41,6 +41,7 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
 
   public currentDemand: DemandInterface<any>;
 
+  private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
 
   constructor(
@@ -70,7 +71,7 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
       })
     );
 
-    setInterval(() => this.saveDraft(), 30000);
+    this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
 
     this.subscription$.add(
       this.demandService.getDebtors().subscribe((resp) => {
@@ -92,6 +93,9 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+    if (this._saveDraftAction$) {
+      clearInterval(this._saveDraftAction$);
+    }
   }
 
   public onSubmit() {

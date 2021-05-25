@@ -33,6 +33,8 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
   public files: FileModeInterface[] = [];
 
   private currentDraftId: number = 0;
+
+  private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
 
   constructor(
@@ -64,11 +66,14 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
       })
     );
 
-    setInterval(() => this.saveDraft(), 30000);
+    this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+    if(this._saveDraftAction$) {
+      clearInterval(this._saveDraftAction$);
+    }
   }
 
   public onSubmit() {

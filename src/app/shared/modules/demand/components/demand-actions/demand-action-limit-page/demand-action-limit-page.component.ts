@@ -30,6 +30,8 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
   private currentDraftId: number = 0;
 
   public isLoading: boolean = false;
+
+  private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
 
   constructor(
@@ -59,11 +61,14 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
       })
     );
 
-    setInterval(() => this.saveDraft(), 30000);
+    this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+    if(this._saveDraftAction$) {
+      clearInterval(this._saveDraftAction$)
+    }
   }
 
   public onSubmit() {
