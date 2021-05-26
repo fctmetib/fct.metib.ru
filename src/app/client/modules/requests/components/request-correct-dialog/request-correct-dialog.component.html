@@ -55,7 +55,7 @@
           </td>
           <td>
             <div class="m-td">
-              <div> {{request.Number}}</div>
+              <div>{{request.Number}}</div>
             </div>
           </td>
           <td>
@@ -69,14 +69,15 @@
             </div>
           </td>
           <td pEditableColumn>
-            <div class="m-td with-icon can-click">
+            <div class="m-td with-icon can-click" style="justify-self: flex-start; flex-direction: row-reverse;">
               <div>
                 <p-cellEditor>
                   <ng-template pTemplate="input">
                     <input pInputText type="text" [(ngModel)]="request.Summ" required>
                   </ng-template>
                   <ng-template pTemplate="output">
-                    {{request.Summ  | currency:'RUB':'symbol-narrow'}}
+                    <div></div>
+                    {{request.Summ | currency:'RUB':'symbol-narrow'}}
                   </ng-template>
                 </p-cellEditor>
               </div>
@@ -86,14 +87,24 @@
             </div>
           </td>
           <td pEditableColumn>
-            <div class="m-td">
+            <div class="m-td" style="justify-self: flex-start; flex-direction: row-reverse;">
               <div>
-                {{request.Summ  | currency:'RUB':'symbol-narrow'}}
+                {{request.Summ | currency:'RUB':'symbol-narrow'}}
               </div>
             </div>
           </td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td colspan="5"></td>
+          <td style="text-align: right;">
+            {{sumCurrentPage | currency:'RUB':'symbol-narrow'}}
+          </td>
+          <td colspan="1"></td>
+        </tr>
+      </ng-template>
+
       <ng-template pTemplate="emptymessage">
         <ng-container *ngIf="requests; else skeletonRequestsTemplate">
           <tr>

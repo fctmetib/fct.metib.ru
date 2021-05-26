@@ -11,6 +11,7 @@ import { RequestsResponseInterface } from '../../types/requestResponse.interface
 export class RequestCorrectDialogComponent {
 
   public requests: RequestsResponseInterface[] = [];
+  public sumCurrentPage: number = 0;
 
   constructor(
     public ref: DynamicDialogRef,
@@ -50,5 +51,8 @@ export class RequestCorrectDialogComponent {
       Summ: 6147,
       Type: ''
     })
+
+    let sum = this.requests.map(x => x.Summ);
+    this.sumCurrentPage = sum.reduce((prev, current) => prev + current);
   }
 }
