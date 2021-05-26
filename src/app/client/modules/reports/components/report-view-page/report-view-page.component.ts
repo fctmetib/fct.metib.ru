@@ -15,7 +15,6 @@ import { Table } from 'primeng/table';
   styleUrls: ['./report-view-page.component.scss'],
 })
 export class ReportViewPageComponent implements OnInit {
-
   @ViewChild('dt') dataTable: Table;
 
   public isLoading: boolean = false;
@@ -27,14 +26,18 @@ export class ReportViewPageComponent implements OnInit {
   public selectedRow: any;
   public items: MenuItem[];
 
+  public allPagesCount: number;
   public sumCurrentPage: number;
   public sumAllPages: number;
+
   public selectedColumnIndex: number = 0;
+
   public currentPage: number = 0;
   public currentRows: number = 10;
   public currentFirst: number = 0;
 
   private data: any;
+  private selectedColumn: any;
   private _selectedColumns: any[] = [];
 
   private subscription$: Subscription = new Subscription();
@@ -46,26 +49,33 @@ export class ReportViewPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.subscription$.add(this.route.queryParams.subscribe((params: Params) => {
-      if (params['dt']) {
-        this.data = JSON.parse(this.cryptoService.decrypt(params['dt']));
-        this.prepareTable();
-        this.fetchReport();
-      } else {
-        this.isError = true;
-      }
-    }));
+    this.subscription$.add(
+      this.route.queryParams.subscribe((params: Params) => {
+        if (params['dt']) {
+          this.data = JSON.parse(this.cryptoService.decrypt(params['dt']));
+          this.prepareTable();
+          this.fetchReport();
+        } else {
+          this.isError = true;
+        }
+      })
+    );
 
     this.items = [
       {
-        label: 'Посчитать сумму по текущей странице',
+        label: 'Посчитать сумму, по текущей странице',
         icon: 'pi pi-money-bill',
         command: () => this._sumByCurrentPage(),
       },
       {
-        label: 'Посчитать сумму по всем страницам',
+        label: 'Посчитать сумму, по всем страницам',
         icon: 'pi pi-money-bill',
         command: () => this._sumByAllPages(),
+      },
+      {
+        label: 'Посчитать количество строк, по текущей странице',
+        icon: 'pi pi-list',
+        command: () => this._getAllPagesCount(),
       },
     ];
   }
@@ -115,28 +125,34 @@ export class ReportViewPageComponent implements OnInit {
   }
 
   public getColSpanIndex(): number {
-    let selectedColumnName = this.reportConfig.columns[this.selectedColumnIndex].name;
-    let currentColumns = this.reportConfig.columns.filter(x => x.visible === true);
-    return currentColumns.indexOf(currentColumns.find(x => x.name === selectedColumnName));
+    let selectedColumnName =
+      this.reportConfig.columns[this.selectedColumnIndex].name;
+    let currentColumns = this.reportConfig.columns.filter(
+      (x) => x.visible === true
+    );
+    return currentColumns.indexOf(
+      currentColumns.find((x) => x.name === selectedColumnName)
+    );
   }
 
   @HostListener('document:contextmenu', ['$event'])
   public selectColumn($event): void {
-    if($event.target.id) {
-      if(+$event.target.id) {
-        if(this.reportConfig.columns[$event.target.id].type === 'number') {
-          this.selectedColumnIndex = $event.target.id;
-        }
+    if ($event.target.id) {
+      if (+$event.target.id) {
+        //  if (this.reportConfig.columns[$event.target.id].type === 'number') {
+        this.selectedColumn = this.reportConfig.columns[$event.target.id];
+        this.selectedColumnIndex = $event.target.id;
+        //   }
       }
     }
   }
 
   public paginate(event): void {
-    let pageIndex = event.first / event.rows + 1
+    let pageIndex = event.first / event.rows + 1;
     this.currentFirst = event.first;
     this.currentPage = pageIndex;
     this.currentRows = event.rows;
-    }
+  }
 
   private saveAsExcelFile(buffer: any, fileName: string): void {
     import('file-saver').then((FileSaver) => {
@@ -208,22 +224,43 @@ export class ReportViewPageComponent implements OnInit {
         break;
     }
 
-    this.subscription$.add(this.reportService.getReport(request).subscribe(
-      (resp) => {
+    this.subscription$.add(
+      this.reportService.getReport(request).subscribe((resp) => {
         this.reportData = resp;
         this.isLoading = false;
-      }));
+      })
+    );
+  }
+
+  private _getAllPagesCount() {
+    this.allPagesCount = null;
+    this.allPagesCount = this.getDataForPageSum().length;
   }
 
   private _sumByAllPages() {
+    if (this.selectedColumn.type !== 'number') {
+      this.selectedColumnIndex = null;
+      return;
+    }
+
     this.sumCurrentPage = null;
-    this.sumAllPages = this.getDataForSum().reduce((prev, current) => prev + current, 0);
+    this.sumAllPages = this.getDataForSum().reduce(
+      (prev, current) => prev + current,
+      0
+    );
   }
 
   private _sumByCurrentPage() {
+    if (this.selectedColumn.type !== 'number') {
+      this.selectedColumnIndex = null;
+      return;
+    }
+
     this.sumAllPages = null;
-    this.sumCurrentPage = this.getDataForPageSum().reduce((prev, current) => prev + current, 0);
-    console.log(this.sumCurrentPage)
+    this.sumCurrentPage = this.getDataForPageSum().reduce(
+      (prev, current) => prev + current,
+      0
+    );
   }
 
   private getDataForPageSum(): number[] {
@@ -231,15 +268,14 @@ export class ReportViewPageComponent implements OnInit {
     let endIndex = startIndex + this.currentRows;
 
     let displayData = this.reportData.slice(startIndex, endIndex);
-    console.log('DISA', displayData)
     let columnName = this.reportConfig.columns[this.selectedColumnIndex].name;
 
-    return displayData.map(x => x[columnName])
+    return displayData.map((x) => x[columnName]);
   }
 
   private getDataForSum(): number[] {
     let columnName = this.reportConfig.columns[this.selectedColumnIndex].name;
-    let dataForSum = this.reportData.map(x => x[columnName]);
+    let dataForSum = this.reportData.map((x) => x[columnName]);
     return dataForSum;
   }
 

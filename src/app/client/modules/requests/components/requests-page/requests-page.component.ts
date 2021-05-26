@@ -126,7 +126,9 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   fetch(): void {
     this.subscription$.add(
       this.requestService.fetch().subscribe((resp) => {
-        this.requests = resp;
+        this.requests = resp.sort((a, b) => {
+          return b.ID - a.ID;
+        });
       })
     );
   }

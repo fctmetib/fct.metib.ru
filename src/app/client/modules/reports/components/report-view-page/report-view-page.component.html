@@ -25,19 +25,10 @@
     </div>
   </div>
   <div class="content">
-    <p-table
-      #dt
-      [columns]="reportConfig.columns"
-      [value]="reportData"
-      [showCurrentPageReport]="true"
-      [scrollable]="true"
-      [(contextMenuSelection)]="selectedRow"
-      [contextMenu]="cm"
-      styleClass="p-datatable-customers mib-table"
-      [rows]="10"
-      (onPage)="paginate($event)"
-      [rowsPerPageOptions]="[10,25,50]"
-      [paginator]="true">
+    <p-table #dt [columns]="reportConfig.columns" [value]="reportData" [showCurrentPageReport]="true"
+      [scrollable]="true" [(contextMenuSelection)]="selectedRow" [contextMenu]="cm"
+      styleClass="p-datatable-customers mib-table" [rows]="10" (onPage)="paginate($event)"
+      [rowsPerPageOptions]="[10,25,50]" [paginator]="true">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
           <ng-container *ngFor="let col of columns">
@@ -61,11 +52,13 @@
           <ng-container *ngFor="let col of columns; index as i">
             <td *ngIf="col.visible">
               <div [ngSwitch]="col.type">
-                <div class="m-td" *ngSwitchCase="'number'"  pTooltip="{{rowData[col.name] | currency:'RUB':'symbol-narrow'}}"
+                <div class="m-td" *ngSwitchCase="'number'"
+                  pTooltip="{{rowData[col.name] | currency:'RUB':'symbol-narrow'}}"
                   style="justify-self: flex-start; flex-direction: row-reverse;" id="{{i}}">
                   {{rowData[col.name] | currency:'RUB':'symbol-narrow'}}
                 </div>
-                <div class="m-td" *ngSwitchCase="'date'" pTooltip="{{rowData[col.name] | date:'MM.dd.yyyy'}}" id="{{i}}">
+                <div class="m-td" *ngSwitchCase="'date'" pTooltip="{{rowData[col.name] | date:'MM.dd.yyyy'}}"
+                  id="{{i}}">
                   {{rowData[col.name] | date:'MM.dd.yyyy'}}
                 </div>
                 <div class="m-td" *ngSwitchDefault pTooltip="{{rowData[col.name]}}" id="{{i}}">
@@ -77,11 +70,14 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="footer">
-        <tr *ngIf="selectedColumnIndex">
+        <tr>
           <td [colSpan]="getColSpanIndex()"></td>
           <td style="text-align: right;">
-            {{sumCurrentPage ? 'Сумма на этой странице: ' : 'Сумма по всем страницам: '}}
-            {{ (sumCurrentPage ? sumCurrentPage : sumAllPages) | currency:'RUB':'symbol' }}
+            <div *ngIf="allPagesCount">Количество строк, на этой сранице: {{allPagesCount}}</div>
+            <div *ngIf="sumCurrentPage || sumAllPages">
+              {{ sumCurrentPage ? 'Сумма на этой странице: ' : 'Сумма по всем страницам: '}}
+              {{ (sumCurrentPage ? sumCurrentPage : sumAllPages) | currency:'RUB':'symbol' }}
+            </div>
           </td>
         </tr>
       </ng-template>
