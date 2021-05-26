@@ -1,21 +1,74 @@
-<div class="manager">
-  <div class="header-block manager-info">
-    <div class="manager-info-name">
-      <ng-container>
-        Адиенко Наталья (53-71)
-      </ng-container>
+<div class="info-header">
+  <div class="info-cards">
+    <div class="info-card">
+      <p><strong>Тип:</strong> Запрос на факторинг</p>
     </div>
-    <div class="manager-info-email">
+    <div class="info-card">
+      <p><strong>Статус:</strong> Выполнен</p>
+    </div>
+    <div class="info-card">
+      <p><strong>Дата:</strong> 10.10.2020</p>
+    </div>
+    <div class="info-card">
+      <p><strong>Изменен:</strong> 10.10.2020 13:25</p>
+    </div>
+  </div>
+
+  <div class="manager">
+    <div class="header-block manager-info">
+      <div class="manager-info-name">
+        <ng-container>
+          Адиенко Наталья (53-71)
+        </ng-container>
+      </div>
+      <div class="manager-info-email">
+        <ng-container>
+          mann@metib.ru
+        </ng-container>
+      </div>
+    </div>
+    <div class="header-block manager-ava">
       <ng-container>
-        mann@metib.ru
+        <p-skeleton size="5rem"></p-skeleton>
       </ng-container>
     </div>
   </div>
-  <div class="header-block manager-ava">
-    <ng-container>
-      <p-skeleton size="5rem"></p-skeleton>
-    </ng-container>
+
+</div>
+
+
+<p-steps [model]="items" [readonly]="true" [activeIndex]="2"></p-steps>
+
+<h2>
+  Сообщения
+</h2>
+<div class="message-list">
+  <div class="message-item">
+    <div class="date">03.04.2021</div>
+    <div class="message">Создан новый запрос</div>
+    <div class="name">Андрей Котов</div>
+  </div>
+  <div class="message-item">
+    <div class="date">03.04.2021</div>
+    <div class="message">Создан новый запрос</div>
+    <div class="name">Андрей Котов</div>
+  </div>
+  <div class="message-item">
+    <div class="date">03.04.2021</div>
+    <div class="message">Создан новый запрос</div>
+    <div class="name">Андрей Котов</div>
   </div>
 </div>
 
-<p-steps [model]="items" [readonly]="true" [activeIndex]="2"></p-steps>
+<h2>
+  Новое сообщение
+</h2>
+<textarea rows="5" cols="30" pInputTextarea style="width: 100%;"></textarea>
+<div class="actions">
+  <div class="files">
+    При необходимости прикрепите файлы:
+  </div>
+  <div>
+    Отправить
+  </div>
+</div>

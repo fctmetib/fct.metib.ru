@@ -1,5 +1,59 @@
 @import '/src/styles/colors.scss';
 
+.info-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .info-cards {
+    display: flex;
+    gap: 9px;
+
+    .info-card {
+      border: 1px solid #EAEAEA;
+      box-sizing: border-box;
+      border-radius: 10px;
+
+      padding: 5px;
+    }
+  }
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .message-item {
+    display: flex;
+    align-items: center;
+    .date {
+      border: 1px solid #EAEAEA;
+      box-sizing: border-box;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    .message {
+      border: 1px solid #EAEAEA;
+      box-sizing: border-box;
+      border-radius: 10px;
+      width: 100%;
+      padding: 15px;
+    }
+    .name {
+      border: 1px solid #EAEAEA;
+      box-sizing: border-box;
+      border-radius: 10px;
+      width: 200px;
+      padding: 15px;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+
 .manager {
   display: flex;
   flex-flow: row wrap;
