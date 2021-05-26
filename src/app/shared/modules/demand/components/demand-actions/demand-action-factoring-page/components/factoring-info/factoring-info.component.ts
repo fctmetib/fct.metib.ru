@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angu
 @Component({
   selector: 'app-factoring-info',
   templateUrl: './factoring-info.component.html',
+  styleUrls: ['./factoring-info.component.scss']
 })
 export class FactoringInfoComponent implements OnInit, OnDestroy {
   @Input()

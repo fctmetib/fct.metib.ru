@@ -22,7 +22,10 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
+import { TabViewModule } from 'primeng/tabview';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ToastModule } from 'primeng/toast';
+import { StepsModule } from 'primeng/steps';
 
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -47,9 +50,8 @@ import { RemoveDemandsEffect } from './store/effects/removeDemands.effect';
 import { CryptoProService } from '../../services/common/cryprto-pro.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { GetDraftsEffect } from './store/effects/getDrafts.effect';
-import {ToastModule} from 'primeng/toast';
+
 import { MessageService } from 'primeng/api';
-import {TabViewModule} from 'primeng/tabview';
 import { FactoringDataComponent } from './components/demand-actions/demand-action-factoring-page/components/factoring-data/factoring-data.component';
 import { FactoringFilesComponent } from './components/demand-actions/demand-action-factoring-page/components/factoring-files/factoring-files.component';
 import { FactoringInfoComponent } from './components/demand-actions/demand-action-factoring-page/components/factoring-info/factoring-info.component';
@@ -67,6 +69,7 @@ import { FactoringInfoComponent } from './components/demand-actions/demand-actio
     TabViewModule,
     SliderModule,
     TableModule,
+    StepsModule,
     SkeletonModule,
     DropdownModule,
     FormsModule,

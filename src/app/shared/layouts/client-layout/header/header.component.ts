@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { environment } from './../../../../../environments/environment';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CustomerInterface } from './../../../types/customer/customer.interface';
