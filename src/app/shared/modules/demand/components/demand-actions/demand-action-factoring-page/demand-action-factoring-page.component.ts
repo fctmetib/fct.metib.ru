@@ -72,7 +72,6 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
       this.demandService
         .addDraftById(this.currentDraftId, event)
         .subscribe((resp) => {
-          console.log(resp);
           this.currentDraftId = resp.ID;
           this.showSuccess();
         })

@@ -6,7 +6,7 @@
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-      [routerLink]="['/demand']"></button>
+      [routerLink]="['/demand']" *ngIf="isEdit"></button>
     </div>
   </div>
 
