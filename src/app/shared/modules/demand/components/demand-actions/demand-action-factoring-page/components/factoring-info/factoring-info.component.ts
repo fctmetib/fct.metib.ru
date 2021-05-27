@@ -14,6 +14,7 @@ import { MenuItem } from 'primeng/api';
 import { switchMap } from 'rxjs/operators';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { FactoringInfoInterface } from 'src/app/shared/modules/demand/types/common/factoring/factoring-info.interface';
+import { CreateDemandMessageRequestInterface } from 'src/app/shared/modules/demand/types/requests/create-demand-message-request.interface';
 
 @Component({
   selector: 'app-factoring-info',
@@ -110,7 +111,15 @@ export class FactoringInfoComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log({ form: this.form.value, files: this.files })
-    this.sendMessage.emit({ form: this.form.value, files: this.files });
+    let file = null;
+    if(this.files)
+      file = this.files[0];
+
+    let data: CreateDemandMessageRequestInterface = {
+      Comment: this.form.value.message,
+      FileCode: file.Code
+    };
+
+    this.sendMessage.emit(data);
   }
 }

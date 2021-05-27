@@ -9,6 +9,7 @@ import { createDemandFactoringAction } from '../../../store/actions/createDemand
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 
 @Component({
   selector: 'app-demand-action-factoring-page',
@@ -95,6 +96,12 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
 
   handleFiles(event: any) {
     this.files = event;
+  }
+
+  handleSendMessage(event: CreateDemandMessageRequestInterface) {
+    this.demandService.addMessageByDemandId(this.currentDemand.ID, event).subscribe(resp => {
+
+    })
   }
 
   //#region private logic

@@ -17,7 +17,7 @@
   <ng-container *ngIf="isEdit; else createTemplate;">
     <p-tabView class="mib-tabs">
       <p-tabPanel header="Информация">
-        <app-factoring-info [currentDemandInfo]="currentInformation"></app-factoring-info>
+        <app-factoring-info [currentDemandInfo]="currentInformation" (sendMessage)="handleSendMessage($event)"></app-factoring-info>
       </p-tabPanel>
       <p-tabPanel header="Данные">
         <app-factoring-data [isEdit]="true" [currentDemand]="currentDemand" [currentDraftId]="currentDraftId"
