@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { createDemandFactoringAction } from '../../../store/actions/createDemand.action';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Params } from '@angular/router';
+import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 
 @Component({
   selector: 'app-demand-action-factoring-page',
@@ -24,7 +25,9 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
   public backendErrors$: Observable<string | null>;
 
   public currentDraftId: number = 0;
+
   public currentDemand: any;
+  public currentInformation: FactoringInfoInterface;
 
   public files: any;
 
@@ -48,6 +51,18 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
         if (params['ID']) {
           this.demandService.getDemandById(params['ID']).subscribe((resp) => {
             this.currentDemand = resp;
+            this.currentInformation = {
+              ID: resp.ID,
+              Messages: resp.Messages,
+              DateCreated: resp.DateCreated,
+              DateModify: resp.DateModify,
+              DateStatus: resp.DateStatus,
+              Steps: resp.Steps,
+              Status: resp.Status,
+              Type: resp.Type,
+              Manager: null
+            }
+            console.log(this.currentDemand)
             this.isEdit = true;
           });
         }

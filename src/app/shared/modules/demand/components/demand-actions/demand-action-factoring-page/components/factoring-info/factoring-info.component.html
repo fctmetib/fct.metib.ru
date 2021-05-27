@@ -1,41 +1,42 @@
 <div class="info-header">
   <div class="info-cards">
     <div class="info-card">
-      <p><strong>Тип:</strong> Запрос на факторинг</p>
+      <p><strong>Тип:</strong> {{getType(currentDemandInfo.Type)}}</p>
     </div>
     <div class="info-card">
-      <p><strong>Статус:</strong> Выполнен</p>
+      <p><strong>Статус:</strong> {{getStatus(currentDemandInfo.Status)}}</p>
     </div>
     <div class="info-card">
-      <p><strong>Дата:</strong> 10.10.2020</p>
+      <p><strong>Дата:</strong> {{currentDemandInfo.DateCreated | date:'dd.MM.yyyy'}}</p>
     </div>
     <div class="info-card">
-      <p><strong>Изменен:</strong> 10.10.2020 13:25</p>
+      <p><strong>Изменен:</strong> {{currentDemandInfo.DateModify | date:'dd.MM.yyyy HH:mm'}}</p>
     </div>
   </div>
 
   <div class="manager">
-    <div class="header-block manager-info">
+    <div class="header-block manager-info" *ngIf="currentDemandInfo?.Manager; else noManagerTmpl" >
       <div class="manager-info-name">
-        <ng-container>
-          Адиенко Наталья (53-71)
-        </ng-container>
+          {{currentDemandInfo?.Manager?.Name}} ({{currentDemandInfo?.Manager?.Extension}})
       </div>
       <div class="manager-info-email">
-        <ng-container>
-          mann@metib.ru
-        </ng-container>
+        {{currentDemandInfo?.Manager?.Email}}
       </div>
     </div>
+    <ng-template #noManagerTmpl>
+      <div class="header-block manager-info">
+        <div class="manager-info-name">
+           Менеджер не назначен
+        </div>
+      </div>
+    </ng-template>
     <div class="header-block manager-ava">
       <ng-container>
         <p-skeleton size="5rem"></p-skeleton>
       </ng-container>
     </div>
   </div>
-
 </div>
-
 
 <p-steps [model]="items" [readonly]="true" [activeIndex]="2"></p-steps>
 
