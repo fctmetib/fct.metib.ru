@@ -1,3 +1,7 @@
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { CommonService } from 'src/app/shared/services/common/common.service';
+import { FileService } from 'src/app/shared/services/common/file.service';
 import {
   Component,
   EventEmitter,
@@ -5,10 +9,10 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { TabView } from 'primeng/tabview';
+import { switchMap } from 'rxjs/operators';
+import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { FactoringInfoInterface } from 'src/app/shared/modules/demand/types/common/factoring/factoring-info.interface';
 
 @Component({
@@ -23,21 +27,29 @@ export class FactoringInfoComponent implements OnInit, OnDestroy {
   @Output()
   sendMessage: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(TabView) tabView: TabView;
+  public selectedStepIndex = 0;
 
-  items: MenuItem[] = [];
+  public files: FileModeInterface[] = [];
+  public items: MenuItem[] = [];
+
+  public form: FormGroup;
+
+  constructor(
+    private commonService: CommonService,
+    private fileService: FileService
+  ) {}
 
   ngOnInit() {
-
-    this.currentDemandInfo.Steps.forEach(s => {
+    this.currentDemandInfo.Steps.forEach((s) => {
       this.items.push({
         label: s.Title,
-        disabled: s.IsCompleted,
-        styleClass: 'p-highlight active'
-      })
-      if(!s.IsCompleted) {
-        this.tabView.tabs[s.Position--].selected = true;
-      }
+      });
+
+      if (s.IsCompleted) this.selectedStepIndex = s.Position--;
+    });
+
+    this.form = new FormGroup({
+      message: new FormControl('', [Validators.required])
     })
   }
 
@@ -45,9 +57,9 @@ export class FactoringInfoComponent implements OnInit, OnDestroy {
 
   public getType(type: string): string {
     let result: string = '';
-    switch(type) {
+    switch (type) {
       case 'Factoring':
-        result = 'Запрос на факторинг'
+        result = 'Запрос на факторинг';
         break;
     }
     return result;
@@ -55,11 +67,50 @@ export class FactoringInfoComponent implements OnInit, OnDestroy {
 
   public getStatus(status: string): string {
     let result: string = '';
-    switch(status) {
+    switch (status) {
       case 'Created':
-        result = 'Создан'
+        result = 'Создан';
         break;
     }
     return result;
+  }
+
+  onSelect(event, type: string) {
+    let files: File[] = event.target.files;
+
+    for (let file of files) {
+      let guid = Guid.newGuid();
+
+      this.commonService
+        .getBase64(file)
+        .pipe(
+          switchMap((res) => {
+            return this.fileService.uploadFileChunks(
+              res,
+              file.name,
+              file.size.toString(),
+              guid
+            );
+          })
+        )
+        .subscribe(
+          (res) => {
+            console.log(res);
+            this.files.push({
+              Code: res.Code,
+              FileName: res.FileName,
+              ID: res.ID,
+              Size: res.Size,
+              Identifier: type,
+            });
+          },
+          (err) => console.log(err)
+        );
+    }
+  }
+
+  onSubmit() {
+    console.log({ form: this.form.value, files: this.files })
+    this.sendMessage.emit({ form: this.form.value, files: this.files });
   }
 }
