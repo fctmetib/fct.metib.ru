@@ -1,3 +1,4 @@
+import { FileModeInterface } from './../../../../../types/file/file-model.interface';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 
 @Component({
@@ -7,14 +8,22 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angu
 })
 export class DemandFilesComponent implements OnInit, OnDestroy {
   @Input()
-  currentDemandFiles: any;
+  public currentDemandFiles: FileModeInterface[] = [];
 
   @Output()
-  addFile: EventEmitter<any> = new EventEmitter<any>();
+  removeFile: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit() {
   }
 
   ngOnDestroy(): void {
+  }
+
+  remove(file: FileModeInterface) {
+    this.removeFile.emit(file);
+    // this.files.splice(
+    //   this.files.indexOf(this.files.find((x) => x === file)),
+    //   1
+    // );
   }
 }
