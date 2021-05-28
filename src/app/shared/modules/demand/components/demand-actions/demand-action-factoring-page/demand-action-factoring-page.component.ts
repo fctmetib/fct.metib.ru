@@ -50,22 +50,7 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
         if (params['ID']) {
-          this.demandService.getDemandById(params['ID']).subscribe((resp) => {
-            this.currentDemand = resp;
-            this.currentInformation = {
-              ID: resp.ID,
-              Messages: resp.Messages,
-              DateCreated: resp.DateCreated,
-              DateModify: resp.DateModify,
-              DateStatus: resp.DateStatus,
-              Steps: resp.Steps,
-              Status: resp.Status,
-              Type: resp.Type,
-              Manager: null
-            }
-            console.log(this.currentDemand)
-            this.isEdit = true;
-          });
+          this.fetch(params['ID']);
         }
         if (params['DraftId']) {
           this.currentDraftId = params['DraftID'];
@@ -79,7 +64,9 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-  handleSubmit(data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface>) {
+  handleSubmit(
+    data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface>
+  ) {
     this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
@@ -99,12 +86,37 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
   }
 
   handleSendMessage(event: CreateDemandMessageRequestInterface) {
-    this.demandService.addMessageByDemandId(this.currentDemand.ID, event).subscribe(resp => {
-
-    })
+    this.subscription$.add(
+      this.demandService
+        .addMessageByDemandId(this.currentDemand.ID, event)
+        .subscribe((resp) => {
+          this.fetch(this.currentDemand.ID);
+        })
+    );
   }
 
   //#region private logic
+
+  private fetch(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandById(id).subscribe((resp) => {
+        this.currentDemand = resp;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
+        console.log(this.currentDemand);
+        this.isEdit = true;
+      })
+    );
+  }
 
   private showSuccess() {
     this.messageService.add({

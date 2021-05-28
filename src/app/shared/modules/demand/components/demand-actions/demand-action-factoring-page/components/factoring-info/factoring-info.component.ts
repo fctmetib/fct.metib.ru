@@ -111,15 +111,16 @@ export class FactoringInfoComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    let file = null;
-    if(this.files)
-      file = this.files[0];
+    let fileCode = null;
+    if(this.files[0])
+      fileCode = this.files[0].Code;
 
     let data: CreateDemandMessageRequestInterface = {
       Comment: this.form.value.message,
-      FileCode: file.Code
+      FileCode: fileCode
     };
 
+    this.form.reset();
     this.sendMessage.emit(data);
   }
 }
