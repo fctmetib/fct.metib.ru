@@ -35,6 +35,10 @@ store.service.ts | файл, который отвечает за хранили
 
 [Гайд](https://github.com/mmartisynuk/metallinvestbank-web/blob/master/documentation/style_guid/STYLE_GUID.md).
 
+# Style гайд
+
+[Гайд](https://github.com/mmartisynuk/metallinvestbank-web/blob/master/documentation/style_guid/STYLE_GUID.md).
+
 # Детальная Архитектура
 
 Архитектура приложения разбивается на основные модули:
