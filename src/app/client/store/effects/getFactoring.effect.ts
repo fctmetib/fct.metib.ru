@@ -24,15 +24,11 @@ export class GetFactoringEffect {
         return this.clientService.getClientFactoringById(organizationID).pipe(
           map((factoring: CustomerInterface) => {
             forkJoin({
-              organization: this.organizationService.getOrganizationById(
-                factoring.Organization.ID
-              ),
               deliveries: this.deliveryService.getDeliveriesByIdWithStats(
                 factoring.Organization.ID.toString()
               ),
-            }).subscribe(({ deliveries, organization }) => {
+            }).subscribe(({ deliveries }) => {
               console.log(deliveries);
-              console.log(organization);
             });
 
             return getFactoringSuccessAction({ factoring });

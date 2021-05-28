@@ -11,7 +11,7 @@
     <div class="subheader info">
       <div class="organization">
         <ng-container *ngIf="factoring; else skeletonOrganizationTemplate">
-          ИНН: {{factoring?.Organization.Inn}} КПП: {{organization?.KPP || '-'}}
+          ИНН: {{factoring?.Organization.Inn}} КПП: -
         </ng-container>
         <ng-template #skeletonOrganizationTemplate>
           <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>

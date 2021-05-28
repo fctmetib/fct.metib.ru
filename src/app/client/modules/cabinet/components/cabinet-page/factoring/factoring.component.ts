@@ -16,7 +16,6 @@ import { CustomerInterface } from 'src/app/shared/types/customer/customer.interf
 export class FactoringComponent implements OnInit {
   public factoring: CustomerInterface;
 
-  public organization: OrganizationInterface;
   public deliveries: DeliveryInterface[] = [];
 
   constructor(
@@ -26,7 +25,6 @@ export class FactoringComponent implements OnInit {
   ngOnInit() {
     this.store.pipe(select(factoringSelector)).subscribe(resp => {
       this.factoring = resp;
-
 
       // TODO: Rework it on NgRx style
       // if(resp) {
