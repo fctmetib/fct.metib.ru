@@ -1,3 +1,4 @@
+import { FileModeInterface } from './../../../../../types/file/file-model.interface';
 import { DemandService } from '../../../services/demand.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -95,6 +96,14 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
     );
   }
 
+  handleRemoveFile(file: FileModeInterface) {
+    this.currentDemand.Files.splice(
+      this.currentDemand.Files.indexOf(
+        this.currentDemand.Files.find((x) => x === file)
+      ),
+      1
+    );
+  }
   //#region private logic
 
   private fetch(id: number) {

@@ -21,9 +21,5 @@ export class DemandFilesComponent implements OnInit, OnDestroy {
 
   remove(file: FileModeInterface) {
     this.removeFile.emit(file);
-    // this.files.splice(
-    //   this.files.indexOf(this.files.find((x) => x === file)),
-    //   1
-    // );
   }
 }

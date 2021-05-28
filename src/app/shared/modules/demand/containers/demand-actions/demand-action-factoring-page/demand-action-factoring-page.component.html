@@ -24,7 +24,7 @@
           (save)="handleSave($event)" (create)="handleSubmit($event)"></app-factoring-data>
       </p-tabPanel>
       <p-tabPanel header="Файлы">
-        <app-demand-files></app-demand-files>
+        <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files"></app-demand-files>
       </p-tabPanel>
     </p-tabView>
   </ng-container>
