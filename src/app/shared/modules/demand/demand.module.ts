@@ -1,19 +1,11 @@
-import { DebitorDataComponent } from './components/demand-actions/demand-action-debitor-page/components/debitor-data/debitor-data.component';
 import { BackendErrorMessagesModule } from './../backendErrorMessages/backendErrorMessages.module';
 import { DialogModule } from 'primeng/dialog';
 import { SuccessMessagesModule } from './../successMessages/successMessages.module';
-import { DemandActionVerificationPageComponent } from './components/demand-actions/demand-action-verification-page/demand-action-verification-page.component';
-import { DemandActionSuretyPageComponent } from './components/demand-actions/demand-action-surety-page/demand-action-surety-page.component';
-import { DemandActionRequestSupportPageComponent } from './components/demand-actions/demand-action-request-support-page/demand-action-request-support-page.component';
-import { DemandActionRequestFreePageComponent } from './components/demand-actions/demand-action-request-free-page/demand-action-request-free-page.component';
-import { DemandActionDebitorPageComponent } from './components/demand-actions/demand-action-debitor-page/demand-action-debitor-page.component';
-import { DemandPageComponent } from './components/demand-page/demand-page.component';
 import { GetDemandsEffect } from './store/effects/getDemands.effect';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { DemandService } from './services/demand.service';
 import { DemandRoutingModule } from './demand-routing.module';
-import { DemandHistoryPageComponent } from './components/demand-history-page/demand-history-page.component';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
@@ -36,12 +28,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { reducers } from './store/reducers';
-import { DemandActionEditProfilePageComponent } from './components/demand-actions/demand-action-edit-profile-page/demand-action-edit-profile-page.component';
-import { DemandActionEDSPageComponent } from './components/demand-actions/demand-action-eds-page/demand-action-eds-page.component';
-import { DemandActionLimitPageComponent } from './components/demand-actions/demand-action-limit-page/demand-action-limit-page.component';
 import { FileUploadModule } from 'primeng/fileupload';
-import { DemandActionAgentFactoringPageComponent } from './components/demand-actions/demand-action-agent-factoring-page/demand-action-agent-factoring-page.component';
-import { DemandActionFactoringPageComponent } from './components/demand-actions/demand-action-factoring-page/demand-action-factoring-page.component';
 import { CommonService } from '../../services/common/common.service';
 import { FileService } from '../../services/common/file.service';
 import { CreateDemandFactoringEffect } from './store/effects/createDemand.effect';
@@ -52,9 +39,23 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { GetDraftsEffect } from './store/effects/getDrafts.effect';
 
 import { MessageService } from 'primeng/api';
-import { FactoringDataComponent } from './components/demand-actions/demand-action-factoring-page/components/factoring-data/factoring-data.component';
-import { FactoringFilesComponent } from './components/demand-actions/demand-action-factoring-page/components/factoring-files/factoring-files.component';
-import { FactoringInfoComponent } from './components/demand-actions/demand-action-factoring-page/components/factoring-info/factoring-info.component';
+import { DemandPageComponent } from './containers/demand-page/demand-page.component';
+import { DemandHistoryPageComponent } from './containers/demand-history-page/demand-history-page.component';
+import { DemandActionDebitorPageComponent } from './containers/demand-actions/demand-action-debitor-page/demand-action-debitor-page.component';
+import { DemandActionEditProfilePageComponent } from './containers/demand-actions/demand-action-edit-profile-page/demand-action-edit-profile-page.component';
+import { DemandActionEDSPageComponent } from './containers/demand-actions/demand-action-eds-page/demand-action-eds-page.component';
+import { DemandActionLimitPageComponent } from './containers/demand-actions/demand-action-limit-page/demand-action-limit-page.component';
+import { DemandActionRequestFreePageComponent } from './containers/demand-actions/demand-action-request-free-page/demand-action-request-free-page.component';
+import { DemandActionRequestSupportPageComponent } from './containers/demand-actions/demand-action-request-support-page/demand-action-request-support-page.component';
+import { DemandActionAgentFactoringPageComponent } from './containers/demand-actions/demand-action-agent-factoring-page/demand-action-agent-factoring-page.component';
+import { DemandActionFactoringPageComponent } from './containers/demand-actions/demand-action-factoring-page/demand-action-factoring-page.component';
+import { DemandActionSuretyPageComponent } from './containers/demand-actions/demand-action-surety-page/demand-action-surety-page.component';
+import { DemandActionVerificationPageComponent } from './containers/demand-actions/demand-action-verification-page/demand-action-verification-page.component';
+import { DebitorDataComponent } from './containers/demand-actions/demand-action-debitor-page/components/debitor-data/debitor-data.component';
+import { FactoringDataComponent } from './containers/demand-actions/demand-action-factoring-page/components/factoring-data/factoring-data.component';
+import { DemandFilesComponent } from './shared/components/demand-files/demand-files.component';
+import { DemandInfoComponent } from './shared/components/demand-info/demand-info.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -109,8 +110,8 @@ import { FactoringInfoComponent } from './components/demand-actions/demand-actio
     // Components
     DebitorDataComponent,
     FactoringDataComponent,
-    FactoringFilesComponent,
-    FactoringInfoComponent,
+    DemandFilesComponent,
+    DemandInfoComponent,
   ],
   providers: [
     CurrencyPipe,

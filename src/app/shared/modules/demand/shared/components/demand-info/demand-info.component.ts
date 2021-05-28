@@ -17,11 +17,11 @@ import { FactoringInfoInterface } from 'src/app/shared/modules/demand/types/comm
 import { CreateDemandMessageRequestInterface } from 'src/app/shared/modules/demand/types/requests/create-demand-message-request.interface';
 
 @Component({
-  selector: 'app-factoring-info',
-  templateUrl: './factoring-info.component.html',
-  styleUrls: ['./factoring-info.component.scss'],
+  selector: 'app-demand-info',
+  templateUrl: './demand-info.component.html',
+  styleUrls: ['./demand-info.component.scss'],
 })
-export class FactoringInfoComponent implements OnInit, OnDestroy {
+export class DemandInfoComponent implements OnInit, OnDestroy {
   @Input()
   currentDemandInfo: FactoringInfoInterface;
 

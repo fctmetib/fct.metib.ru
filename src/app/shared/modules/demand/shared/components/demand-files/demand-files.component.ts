@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 
 @Component({
-  selector: 'app-factoring-files',
-  templateUrl: './factoring-files.component.html',
+  selector: 'app-demand-files',
+  templateUrl: './demand-files.component.html',
+  styleUrls: ['./demand-files.component.scss']
 })
-export class FactoringFilesComponent implements OnInit, OnDestroy {
+export class DemandFilesComponent implements OnInit, OnDestroy {
   @Input()
   currentDemandFiles: any;
 
