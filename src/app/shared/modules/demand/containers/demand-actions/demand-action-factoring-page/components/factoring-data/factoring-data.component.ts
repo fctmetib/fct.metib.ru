@@ -386,6 +386,14 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       })
     );
 
+    if(this.currentDemand) {
+      console.log('CURENT D', this.currentDemand)
+      let anket = this.currentDemand.Data.Anket;
+      let factoring = this.currentDemand.Data.Factoring;
+
+
+    }
+
     this.formFactoring.markAllAsTouched();
     this.formFactoring.markAsDirty();
   }
@@ -403,6 +411,13 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       };
 
     return result;
+  }
+
+  // TODO::
+  private prepareDataToForm(data: any): void {
+    this.formFactoring.patchValue({
+
+    });
   }
 
   private prepareCoreData(): CreateDemandFactoringRequestInterface {

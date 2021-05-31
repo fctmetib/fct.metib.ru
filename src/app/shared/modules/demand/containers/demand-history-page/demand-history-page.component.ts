@@ -90,7 +90,6 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
     this.subscription$.add(
       this.demandService.deleteDraftById(Id).subscribe(() => {
         this.allDemands = this.allDemands.filter(x => x.ID !== Id);
-      //  this.allDemands.splice(this.allDemands.findIndex((x) => x.ID === Id));
       })
     );
   }
@@ -100,7 +99,6 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
       this.demandService.cancelByDemandId(Id).subscribe(() => {
       let canceledDemand = this.allDemands.find(x => x.ID === Id);
       canceledDemand.Status = 'Canceled';
-      //  this.allDemands.splice(this.allDemands.findIndex((x) => x.ID === Id));
       })
     );
   }

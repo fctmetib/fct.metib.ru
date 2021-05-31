@@ -76,6 +76,10 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
     return result;
   }
 
+  public removeFile(file: FileModeInterface): void {
+    this.files = this.files.filter(x => x !== file);
+  }
+
   onSelect(event, type: string) {
     let files: File[] = event.target.files;
 
@@ -96,7 +100,7 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
         )
         .subscribe(
           (res) => {
-            console.log(res);
+            this.files = [];
             this.files.push({
               Code: res.Code,
               FileName: res.FileName,
@@ -121,6 +125,7 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
     };
 
     this.form.reset();
+    this.files = [];
     this.sendMessage.emit(data);
   }
 }

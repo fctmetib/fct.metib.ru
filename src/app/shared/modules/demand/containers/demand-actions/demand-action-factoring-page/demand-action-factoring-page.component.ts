@@ -68,10 +68,14 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
   handleSubmit(
     data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface>
   ) {
+    if(this.isEdit) {
+      data.Data.Files = this.currentDemand.Files
+    }
     this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
   handleSave(event: any) {
+    event.Files = this.currentDemand.Files;
     this.subscription$.add(
       this.demandService
         .addDraftById(this.currentDraftId, event)
@@ -80,10 +84,6 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
           this.showSuccess();
         })
     );
-  }
-
-  handleFiles(event: any) {
-    this.files = event;
   }
 
   handleSendMessage(event: CreateDemandMessageRequestInterface) {
@@ -97,12 +97,7 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
   }
 
   handleRemoveFile(file: FileModeInterface) {
-    this.currentDemand.Files.splice(
-      this.currentDemand.Files.indexOf(
-        this.currentDemand.Files.find((x) => x === file)
-      ),
-      1
-    );
+    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
   }
   //#region private logic
 
