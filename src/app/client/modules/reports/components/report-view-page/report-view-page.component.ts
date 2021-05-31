@@ -6,7 +6,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ReportTypeInterface } from '../../types/reports/report-type.interface';
 import { ReportColumntInterface } from '../../types/reports/report-column.interface';
 import { MenuItem } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Table } from 'primeng/table';
 
 @Component({
@@ -30,7 +30,8 @@ export class ReportViewPageComponent implements OnInit {
   public sumCurrentPage: number;
   public sumAllPages: number;
 
-  public selectedColumnIndex: number = 0;
+  public selectedColumnIndex: number;
+  public selectedDisplay$: Subject<boolean> = new Subject();
 
   public currentPage: number = 0;
   public currentRows: number = 10;
@@ -76,6 +77,11 @@ export class ReportViewPageComponent implements OnInit {
         label: 'Посчитать количество строк, по текущей странице',
         icon: 'pi pi-list',
         command: () => this._getAllPagesCount(),
+      },
+      {
+        label: 'Скрыть все',
+        icon: 'pi pi-hide',
+        command: () => this._hideAll(),
       },
     ];
   }
@@ -125,14 +131,16 @@ export class ReportViewPageComponent implements OnInit {
   }
 
   public getColSpanIndex(): number {
-    let selectedColumnName =
-      this.reportConfig.columns[this.selectedColumnIndex].name;
-    let currentColumns = this.reportConfig.columns.filter(
-      (x) => x.visible === true
-    );
-    return currentColumns.indexOf(
-      currentColumns.find((x) => x.name === selectedColumnName)
-    );
+    if (this.selectedColumnIndex) {
+      let selectedColumnName =
+        this.reportConfig.columns[this.selectedColumnIndex].name;
+      let currentColumns = this.reportConfig.columns.filter(
+        (x) => x.visible === true
+      );
+      return currentColumns.indexOf(
+        currentColumns.find((x) => x.name === selectedColumnName)
+      );
+    }
   }
 
   @HostListener('document:contextmenu', ['$event'])
@@ -142,6 +150,7 @@ export class ReportViewPageComponent implements OnInit {
         //  if (this.reportConfig.columns[$event.target.id].type === 'number') {
         this.selectedColumn = this.reportConfig.columns[$event.target.id];
         this.selectedColumnIndex = $event.target.id;
+        this.selectedDisplay$.next(false);
         //   }
       }
     }
@@ -239,7 +248,6 @@ export class ReportViewPageComponent implements OnInit {
 
   private _sumByAllPages() {
     if (this.selectedColumn.type !== 'number') {
-      this.selectedColumnIndex = null;
       return;
     }
 
@@ -248,11 +256,11 @@ export class ReportViewPageComponent implements OnInit {
       (prev, current) => prev + current,
       0
     );
+    this.selectedDisplay$.next(true);
   }
 
   private _sumByCurrentPage() {
     if (this.selectedColumn.type !== 'number') {
-      this.selectedColumnIndex = null;
       return;
     }
 
@@ -261,6 +269,13 @@ export class ReportViewPageComponent implements OnInit {
       (prev, current) => prev + current,
       0
     );
+    this.selectedDisplay$.next(true);
+  }
+
+  private _hideAll() {
+      this.selectedDisplay$.next(false);
+      this.allPagesCount = null;
+
   }
 
   private getDataForPageSum(): number[] {

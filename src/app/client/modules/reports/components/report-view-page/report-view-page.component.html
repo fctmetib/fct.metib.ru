@@ -72,13 +72,13 @@
       <ng-template pTemplate="footer">
         <tr>
           <td [colSpan]="getColSpanIndex()"></td>
-          <td style="text-align: right;">
-            <div *ngIf="allPagesCount">Количество строк, на этой сранице: {{allPagesCount}}</div>
+          <td style="text-align: right;" *ngIf="(selectedDisplay$ | async)" >
             <div *ngIf="sumCurrentPage || sumAllPages">
               {{ sumCurrentPage ? 'Сумма на этой странице: ' : 'Сумма по всем страницам: '}}
               {{ (sumCurrentPage ? sumCurrentPage : sumAllPages) | currency:'RUB':'symbol' }}
             </div>
           </td>
+          <td *ngIf="allPagesCount">Количество строк, на этой сранице: {{allPagesCount}}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">

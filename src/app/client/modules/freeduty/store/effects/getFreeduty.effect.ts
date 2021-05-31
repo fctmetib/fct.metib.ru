@@ -21,9 +21,8 @@ export class GetFreedutyEffect {
             let list = resp.reverse();
 
             list.sort((a, b) => {
-              return new Date(b.DateDuty).getTime() - new Date(a.DateDuty).getTime()
+              return b.ID - a.ID
             })
-            console.log(list);
             // if (data.data.Free) {
             //   let currentDate = new Date();
             //   let dateTimeStamp = currentDate.getTime() - 12960000000;
