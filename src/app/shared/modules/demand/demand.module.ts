@@ -55,6 +55,7 @@ import { DebitorDataComponent } from './containers/demand-actions/demand-action-
 import { FactoringDataComponent } from './containers/demand-actions/demand-action-factoring-page/components/factoring-data/factoring-data.component';
 import { DemandFilesComponent } from './shared/components/demand-files/demand-files.component';
 import { DemandInfoComponent } from './shared/components/demand-info/demand-info.component';
+import { FreeDataComponent } from './containers/demand-actions/demand-action-request-free-page/free-data/free-data.component';
 
 @NgModule({
   imports: [
@@ -112,6 +113,7 @@ import { DemandInfoComponent } from './shared/components/demand-info/demand-info
     FactoringDataComponent,
     DemandFilesComponent,
     DemandInfoComponent,
+    FreeDataComponent
   ],
   providers: [
     CurrencyPipe,

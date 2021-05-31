@@ -3,11 +3,10 @@
   <div class="header lg">
     <div class="title">
       <h2>Запрос на свободную Тему</h2>
-      <!-- <div class="subheader">
-        Список заявок
-      </div> -->
     </div>
     <div class="actions">
+      <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
+      [routerLink]="['/demand']" *ngIf="isEdit"></button>
     </div>
   </div>
 
@@ -15,70 +14,90 @@
   <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
   </metib-backend-error-messages>
 
-  <form [formGroup]="formFree" (ngSubmit)="onSubmit()">
-    <div class="form-actions">
-      <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-        [routerLink]="['/demand']"></button>
-      <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
-        [disabled]="formFree.invalid || (isLoading$ | async)"></button>
-    </div>
-    <div class="p-fluid p-formgrid p-grid form">
-      <!-- 1 row -->
-      <div class="p-field p-col-12 p-md-12 p-lg-12">
-        <label for="subject">Тема обращения</label>
-        <input id="subject" type="text" pInputText placeholder="Тема обращения" formControlName="subject">
-        <div *ngIf="formFree.controls['subject'].invalid">
-          <small *ngIf="formFree.controls['subject'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
+
+  <ng-container *ngIf="isEdit; else createTemplate;">
+    <p-tabView class="mib-tabs">
+      <p-tabPanel header="Информация">
+        <app-demand-info [currentDemandInfo]="currentInformation" (sendMessage)="handleSendMessage($event)"></app-demand-info>
+      </p-tabPanel>
+      <p-tabPanel header="Данные">
+        <ng-container *ngTemplateOutlet="form; context: {formFree: formFree}">></ng-container>
+      </p-tabPanel>
+      <p-tabPanel header="Файлы">
+        <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files"></app-demand-files>
+      </p-tabPanel>
+    </p-tabView>
+  </ng-container>
+  <ng-template #createTemplate>
+    <ng-container *ngTemplateOutlet="form; context: {formFree: formFree}"></ng-container>
+  </ng-template>
+
+  <ng-template #form let-formFree="formFree">
+    <form [formGroup]="formFree" (ngSubmit)="onSubmit()">
+      <div class="form-actions">
+        <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
+          [routerLink]="['/demand']"></button>
+        <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
+          [disabled]="formFree.invalid || (isLoading$ | async)"></button>
       </div>
-      <!-- 2 row -->
-      <div class="p-field p-col-12 p-md-12 p-lg-12">
-        <label for="question">Вопрос</label>
-        <textarea id="question" type="text" pInputTextarea placeholder="Вопрос" formControlName="question"  style="resize: none;"></textarea>
-        <div *ngIf="formFree.controls['question'].invalid">
-          <small *ngIf="formFree.controls['question'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
-      </div>
-      <!-- 3 row -->
-      <div class="p-field p-col-12 p-md-6">
-        <div class="addon-button mb-20">
-          <div class="addon-text">
-            <p>
-              При необходимости прикрепите файлы:
-            </p>
-          </div>
-          <div class="mib-uploader">
-            <input type="file" id="All" (change)="onSelect($event, 'All')" hidden />
-            <label for="All" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+      <div class="p-fluid p-formgrid p-grid form">
+        <!-- 1 row -->
+        <div class="p-field p-col-12 p-md-12 p-lg-12">
+          <label for="subject">Тема обращения</label>
+          <input id="subject" type="text" pInputText placeholder="Тема обращения" formControlName="subject">
+          <div *ngIf="formFree.controls['subject'].invalid">
+            <small *ngIf="formFree.controls['subject'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
           </div>
         </div>
-        <div *ngIf="files.length">
-          <ng-container *ngFor="let file of files">
-            <div class="addon-button mb-10" *ngIf="file.Identifier === 'All'">
-              <div class="addon-text">
-                <p>
-                  {{file.FileName}}
-                </p>
-              </div>
-              <div class="mib-uploader">
-                <div class="mib-upload-warn" (click)="removeFile(file)">
-                  Удалить
+        <!-- 2 row -->
+        <div class="p-field p-col-12 p-md-12 p-lg-12">
+          <label for="question">Вопрос</label>
+          <textarea id="question" type="text" pInputTextarea placeholder="Вопрос" formControlName="question"  style="resize: none;"></textarea>
+          <div *ngIf="formFree.controls['question'].invalid">
+            <small *ngIf="formFree.controls['question'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+        <!-- 3 row -->
+        <div class="p-field p-col-12 p-md-6">
+          <div class="addon-button mb-20">
+            <div class="addon-text">
+              <p>
+                При необходимости прикрепите файлы:
+              </p>
+            </div>
+            <div class="mib-uploader">
+              <input type="file" id="All" (change)="onSelect($event, 'All')" hidden />
+              <label for="All" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+            </div>
+          </div>
+          <div *ngIf="files.length">
+            <ng-container *ngFor="let file of files">
+              <div class="addon-button mb-10" *ngIf="file.Identifier === 'All'">
+                <div class="addon-text">
+                  <p>
+                    {{file.FileName}}
+                  </p>
+                </div>
+                <div class="mib-uploader">
+                  <div class="mib-upload-warn" (click)="removeFile(file)">
+                    Удалить
+                  </div>
                 </div>
               </div>
-            </div>
-          </ng-container>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-12">
+          <label for="btn_submit">&nbsp;</label>
+          <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
+            class="btn-mib-submit p-button-outlined" [disabled]="formFree.invalid || (isLoading$ | async)"></button>
         </div>
       </div>
-
-      <div class="p-field p-col-12 p-md-12">
-        <label for="btn_submit">&nbsp;</label>
-        <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-          class="btn-mib-submit p-button-outlined" [disabled]="formFree.invalid || (isLoading$ | async)"></button>
-      </div>
-    </div>
-  </form>
+    </form>
+  </ng-template>
 </div>

@@ -62,6 +62,9 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
       case 'Factoring':
         result = 'Запрос на факторинг';
         break;
+      case 'Question':
+        result = 'Запрос на свободную Тему';
+        break;
     }
     return result;
   }

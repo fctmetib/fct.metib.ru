@@ -13,6 +13,8 @@ import { errorSelector, isLoadingSelector } from '../../../store/selectors';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { MessageService } from 'primeng/api';
 import { switchMap } from 'rxjs/operators';
+import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 
 @Component({
   selector: 'app-demand-action-request-free-page',
@@ -25,6 +27,8 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
   public alert: boolean;
   public alertMessage: string;
 
+  public isEdit: boolean = false;
+
   public isLoading$: Observable<boolean> = new Observable<boolean>();
   public backendErrors$: Observable<string | null>;
 
@@ -36,6 +40,9 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
 
   private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
+
+  public currentDemand: any;
+  public currentInformation: FactoringInfoInterface;
 
   constructor(
     private authService: AuthService,
@@ -53,15 +60,15 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
     this.initForm();
     this.initValues();
 
+
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
         if (params['ID']) {
-          this.demandService
-            .getDemandById(params['ID'])
-            .subscribe((resp) => {});
+          this.fetch(params['ID']);
         }
         if (params['DraftId']) {
           this.currentDraftId = params['DraftID'];
+          this.isEdit = true;
         }
       })
     );
@@ -139,6 +146,42 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
           this.currentDraftId = resp.ID;
           this.showSuccess();
         })
+    );
+  }
+
+
+  handleSendMessage(event: CreateDemandMessageRequestInterface) {
+    this.subscription$.add(
+      this.demandService
+        .addMessageByDemandId(this.currentDemand.ID, event)
+        .subscribe((resp) => {
+          this.fetch(this.currentDemand.ID);
+        })
+    );
+  }
+
+  handleRemoveFile(file: FileModeInterface) {
+    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+  }
+
+  private fetch(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandById(id).subscribe((resp) => {
+        this.currentDemand = resp;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
+        console.log(this.currentDemand);
+        this.isEdit = true;
+      })
     );
   }
 
