@@ -81,6 +81,11 @@
                       Черновик
                     </div>
                   </div>
+                  <div *ngSwitchCase="'Canceled'">
+                    <div class="demand-status warning">
+                      Отменен
+                    </div>
+                  </div>
                 </div>
 
                 <div class="demand-status-date">
@@ -88,7 +93,7 @@
                 </div>
               </div>
             </div>
-            <div class="demand-actions" *ngIf="demand.Status !== 'Completed'">
+            <div class="demand-actions" *ngIf="demand.Status !== 'Completed' && demand.Status !== 'Canceled'">
               <ng-container *ngIf="demand.Status === 'Draft'; else removeTemplate">
                 <button pButton pRipple type="button" label="Удалить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
               </ng-container>
