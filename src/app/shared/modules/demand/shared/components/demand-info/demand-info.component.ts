@@ -50,8 +50,8 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
     });
 
     this.form = new FormGroup({
-      message: new FormControl('', [Validators.required])
-    })
+      message: new FormControl('', [Validators.required]),
+    });
   }
 
   ngOnDestroy(): void {}
@@ -64,6 +64,18 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
         break;
       case 'Question':
         result = 'Запрос на свободную Тему';
+        break;
+      case 'DigitalSignature':
+        result = 'Запрос на ЭЦП';
+        break;
+      case 'ProfileChange':
+        result = 'Запрос на Редактирование Профиля';
+        break;
+      case 'Limit':
+        result = 'Запрос на лимит';
+        break;
+      case 'NewDebtor':
+        result = 'Запрос на нового дебитора';
         break;
     }
     return result;
@@ -80,7 +92,7 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
   }
 
   public removeFile(file: FileModeInterface): void {
-    this.files = this.files.filter(x => x !== file);
+    this.files = this.files.filter((x) => x !== file);
   }
 
   onSelect(event, type: string) {
@@ -119,12 +131,11 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     let fileCode = null;
-    if(this.files[0])
-      fileCode = this.files[0].Code;
+    if (this.files[0]) fileCode = this.files[0].Code;
 
     let data: CreateDemandMessageRequestInterface = {
       Comment: this.form.value.message,
-      FileCode: fileCode
+      FileCode: fileCode,
     };
 
     this.form.reset();
