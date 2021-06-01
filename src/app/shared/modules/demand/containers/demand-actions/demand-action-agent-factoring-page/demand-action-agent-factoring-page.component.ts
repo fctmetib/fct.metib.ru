@@ -20,6 +20,10 @@ import { select, Store } from '@ngrx/store';
 import { errorSelector } from 'src/app/client/modules/requests/store/selectors';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { switchMap } from 'rxjs/operators';
+import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { ActivatedRoute, Params } from '@angular/router';
+import { DemandService } from '../../../services/demand.service';
+import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 
 @Component({
   selector: 'app-demand-action-agent-factoring-page',
@@ -27,6 +31,12 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./demand-action-agent-factoring-page.component.scss'],
 })
 export class DemandActionAgentFactoringPageComponent implements OnInit {
+
+  public isEdit: boolean = false;
+  public currentDemand: any;
+  public currentInformation: FactoringInfoInterface;
+  private currentDraftId: number = 0;
+
   public isUserVerified: boolean;
 
   public formFactoring: FormGroup;
@@ -55,6 +65,8 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
     private currencyPipe: CurrencyPipe,
     private authService: AuthService,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private demandService: DemandService,
     private commonService: CommonService,
     private store: Store,
     private fileService: FileService
@@ -64,6 +76,17 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
     this.isUserVerified = this.authService.isUserVerified();
     this.initForm();
     this.initValues();
+
+    this.subscription$.add(
+      this.route.queryParams.subscribe((params: Params) => {
+        if (params['ID']) {
+          this.fetch(params['ID']);
+        }
+        if (params['DraftId']) {
+          this.currentDraftId = params['DraftID'];
+        }
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -74,6 +97,41 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
     let data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> =
       this.prepareData();
     this.store.dispatch(createDemandFactoringAction({ data }));
+  }
+
+  handleSendMessage(event: CreateDemandMessageRequestInterface) {
+    this.subscription$.add(
+      this.demandService
+        .addMessageByDemandId(this.currentDemand.ID, event)
+        .subscribe((resp) => {
+          this.fetch(this.currentDemand.ID);
+        })
+    );
+  }
+
+  handleRemoveFile(file: FileModeInterface) {
+    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+  }
+
+  private fetch(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandById(id).subscribe((resp) => {
+        this.currentDemand = resp;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
+        console.log(this.currentDemand);
+        this.isEdit = true;
+      })
+    );
   }
 
   //#region public page actions

@@ -60,7 +60,6 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
     this.initForm();
     this.initValues();
 
-
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
         if (params['ID']) {
@@ -92,7 +91,6 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
         this.alertMessage = 'Запрос успешно создан.';
       })
     );
-    // this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
   public removeFile(file: FileModeInterface) {
@@ -148,7 +146,6 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
         })
     );
   }
-
 
   handleSendMessage(event: CreateDemandMessageRequestInterface) {
     this.subscription$.add(

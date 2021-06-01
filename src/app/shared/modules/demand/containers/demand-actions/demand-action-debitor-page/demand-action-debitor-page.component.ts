@@ -1,4 +1,3 @@
-import { DemandInterface } from './../../../types/demand.interface';
 import { DebtorInterface } from './../../../types/debtor-interface';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,6 +12,8 @@ import { DemandService } from '../../../services/demand.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
+import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 
 @Component({
   selector: 'app-demand-action-debitor-page',
@@ -20,6 +21,12 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./demand-action-debitor-page.component.scss'],
 })
 export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
+
+  public isEdit: boolean = false;
+  public currentDemand: any;
+  public currentInformation: FactoringInfoInterface;
+  private currentDraftId: number = 0;
+
   public isUserVerified: boolean;
 
   public alert: boolean;
@@ -32,14 +39,10 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
 
   public files: FileModeInterface[] = [];
 
-  private currentDraftId: number = 0;
-
   public isLoading: boolean = false;
   public debtors: DebtorInterface[] = [];
 
   public isNewDebtor: boolean = false;
-
-  public currentDemand: DemandInterface<any>;
 
   private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
@@ -61,9 +64,7 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
         if (params['ID']) {
-          this.demandService.getDemandById(params['ID']).subscribe((resp) => {
-            this.currentDemand = resp;
-          });
+          this.fetch(params['ID']);
         }
         if (params['DraftId']) {
           this.currentDraftId = params['DraftID'];
@@ -96,6 +97,41 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
     if (this._saveDraftAction$) {
       clearInterval(this._saveDraftAction$);
     }
+  }
+
+  handleSendMessage(event: CreateDemandMessageRequestInterface) {
+    this.subscription$.add(
+      this.demandService
+        .addMessageByDemandId(this.currentDemand.ID, event)
+        .subscribe((resp) => {
+          this.fetch(this.currentDemand.ID);
+        })
+    );
+  }
+
+  handleRemoveFile(file: FileModeInterface) {
+    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+  }
+
+  private fetch(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandById(id).subscribe((resp) => {
+        this.currentDemand = resp;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
+        console.log(this.currentDemand);
+        this.isEdit = true;
+      })
+    );
   }
 
   public onSubmit() {

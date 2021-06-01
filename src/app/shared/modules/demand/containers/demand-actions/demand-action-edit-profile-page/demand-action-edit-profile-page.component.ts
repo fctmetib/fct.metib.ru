@@ -14,6 +14,9 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { switchMap } from 'rxjs/operators';
+import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { ActivatedRoute, Params } from '@angular/router';
+import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 
 @Component({
   selector: 'app-demand-action-edit-profile-page',
@@ -21,6 +24,12 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./demand-action-edit-profile-page.component.scss'],
 })
 export class DemandActionEditProfilePageComponent implements OnInit {
+
+  public isEdit: boolean = false;
+  public currentDemand: any;
+  public currentInformation: FactoringInfoInterface;
+  private currentDraftId: number = 0;
+
   isUserVerified: boolean;
 
   public alert: boolean;
@@ -44,6 +53,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     private fb: FormBuilder,
     private demandService: DemandService,
     private store: Store,
+    private route: ActivatedRoute,
     private fileService: FileService,
     private cryptoService: CryptoService,
     private cookieService: CookieService
@@ -53,6 +63,18 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     this.isUserVerified = this.authService.isUserVerified();
     this.initForm();
     this.initValues();
+
+    this.subscription$.add(
+      this.route.queryParams.subscribe((params: Params) => {
+        if (params['ID']) {
+          this.fetch(params['ID']);
+        }
+        if (params['DraftId']) {
+          this.currentDraftId = params['DraftID'];
+          this.isEdit = true;
+        }
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -66,6 +88,41 @@ export class DemandActionEditProfilePageComponent implements OnInit {
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
         this.alertMessage = 'Запрос успешно создан.';
+      })
+    );
+  }
+
+  handleSendMessage(event: CreateDemandMessageRequestInterface) {
+    this.subscription$.add(
+      this.demandService
+        .addMessageByDemandId(this.currentDemand.ID, event)
+        .subscribe((resp) => {
+          this.fetch(this.currentDemand.ID);
+        })
+    );
+  }
+
+  handleRemoveFile(file: FileModeInterface) {
+    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+  }
+
+  private fetch(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandById(id).subscribe((resp) => {
+        this.currentDemand = resp;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
+        console.log(this.currentDemand);
+        this.isEdit = true;
       })
     );
   }

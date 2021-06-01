@@ -2,11 +2,10 @@
   <div class="header lg">
     <div class="title">
       <h2>Редактирование Профиля</h2>
-      <!-- <div class="subheader">
-        Список заявок
-      </div> -->
     </div>
     <div class="actions">
+      <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
+      [routerLink]="['/demand']" *ngIf="isEdit"></button>
     </div>
   </div>
 
@@ -14,154 +13,173 @@
   <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
   </metib-backend-error-messages>
 
-  <form [formGroup]="formEdit" (ngSubmit)="onSubmit()">
-    <div class="form-actions">
-      <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-        [routerLink]="['/demand']"></button>
-      <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
-        [disabled]="formEdit.invalid || (isLoading$ | async)"></button>
-    </div>
-    <div class="d-flex">
-      <div>
-        <div class="avatar">
-          <img src="{{avatarSource}}" alt="">
+  <ng-container *ngIf="isEdit; else createTemplate;">
+    <p-tabView class="mib-tabs">
+      <p-tabPanel header="Информация">
+        <app-demand-info [currentDemandInfo]="currentInformation" (sendMessage)="handleSendMessage($event)"></app-demand-info>
+      </p-tabPanel>
+      <p-tabPanel header="Данные">
+        <ng-container *ngTemplateOutlet="form; context: {formEdit: formEdit}">></ng-container>
+      </p-tabPanel>
+      <p-tabPanel header="Файлы">
+        <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files"></app-demand-files>
+      </p-tabPanel>
+    </p-tabView>
+  </ng-container>
+  <ng-template #createTemplate>
+    <ng-container *ngTemplateOutlet="form; context: {formEdit: formEdit}"></ng-container>
+  </ng-template>
+
+  <ng-template #form let-formEdit="formEdit">
+    <form [formGroup]="formEdit" (ngSubmit)="onSubmit()">
+      <div class="form-actions">
+        <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
+          [routerLink]="['/demand']"></button>
+        <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
+          [disabled]="formEdit.invalid || (isLoading$ | async)"></button>
+      </div>
+      <div class="d-flex">
+        <div>
+          <div class="avatar">
+            <img src="{{avatarSource}}" alt="">
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="Avatar" (change)="onSelect($event, 'Avatar')" hidden />
+            <label for="Avatar" class="mib-upload medium">Сменить Аватар</label>
+          </div>
         </div>
-        <div class="mib-uploader">
-          <input type="file" id="Avatar" (change)="onSelect($event, 'Avatar')" hidden />
-          <label for="Avatar" class="mib-upload medium">Сменить Аватар</label>
+        <div class="p-fluid p-formgrid p-grid form">
+          <!-- 1 row -->
+          <div class="p-field p-col-12 p-md-6 p-lg-4">
+            <label for="last">Фамилия</label>
+            <input id="last" type="text" pInputText placeholder="Фамилия" formControlName="last">
+            <div *ngIf="formEdit.controls['last'].invalid">
+              <small *ngIf="formEdit.controls['last'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
+          <div class="p-field p-col-12 p-md-6 p-lg-4">
+            <label for="first">Имя</label>
+            <input id="first" type="text" pInputText placeholder="Имя" formControlName="first">
+            <div *ngIf="formEdit.controls['first'].invalid">
+              <small *ngIf="formEdit.controls['first'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
+          <div class="p-field p-col-12 p-md-6 p-lg-4">
+            <label for="isMale">Пол</label>
+            <input id="isMale" type="text" pInputText placeholder="Пол" formControlName="isMale">
+            <div *ngIf="formEdit.controls['isMale'].invalid">
+              <small *ngIf="formEdit.controls['isMale'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
+          <!-- 2 row -->
+          <div class="p-field p-col-12 p-md-6 p-lg-6">
+            <label for="phone">Мобильный телефон</label>
+            <input id="phone" type="tel" pInputText placeholder="Мобильный телефон" formControlName="phone">
+            <div *ngIf="formEdit.controls['phone'].invalid">
+              <small *ngIf="formEdit.controls['phone'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
+          <div class="p-field p-col-12 p-md-6 p-lg-6">
+            <label for="email">E-mail</label>
+            <input id="email" type="email" pInputText placeholder="E-mail" formControlName="email">
+            <div *ngIf="formEdit.controls['email'].invalid">
+              <small *ngIf="formEdit.controls['email'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="p-fluid p-formgrid p-grid form">
-        <!-- 1 row -->
-        <div class="p-field p-col-12 p-md-6 p-lg-4">
-          <label for="last">Фамилия</label>
-          <input id="last" type="text" pInputText placeholder="Фамилия" formControlName="last">
-          <div *ngIf="formEdit.controls['last'].invalid">
-            <small *ngIf="formEdit.controls['last'].errors.required" class="p-error">
-              Поле должно быть заполнено.
-            </small>
-          </div>
-        </div>
-        <div class="p-field p-col-12 p-md-6 p-lg-4">
-          <label for="first">Имя</label>
-          <input id="first" type="text" pInputText placeholder="Имя" formControlName="first">
-          <div *ngIf="formEdit.controls['first'].invalid">
-            <small *ngIf="formEdit.controls['first'].errors.required" class="p-error">
-              Поле должно быть заполнено.
-            </small>
-          </div>
-        </div>
-        <div class="p-field p-col-12 p-md-6 p-lg-4">
-          <label for="isMale">Пол</label>
-          <input id="isMale" type="text" pInputText placeholder="Пол" formControlName="isMale">
-          <div *ngIf="formEdit.controls['isMale'].invalid">
-            <small *ngIf="formEdit.controls['isMale'].errors.required" class="p-error">
-              Поле должно быть заполнено.
-            </small>
-          </div>
-        </div>
-        <!-- 2 row -->
-        <div class="p-field p-col-12 p-md-6 p-lg-6">
-          <label for="phone">Мобильный телефон</label>
-          <input id="phone" type="tel" pInputText placeholder="Мобильный телефон" formControlName="phone">
-          <div *ngIf="formEdit.controls['phone'].invalid">
-            <small *ngIf="formEdit.controls['phone'].errors.required" class="p-error">
-              Поле должно быть заполнено.
-            </small>
-          </div>
-        </div>
-        <div class="p-field p-col-12 p-md-6 p-lg-6">
-          <label for="email">E-mail</label>
-          <input id="email" type="email" pInputText placeholder="E-mail" formControlName="email">
-          <div *ngIf="formEdit.controls['email'].invalid">
-            <small *ngIf="formEdit.controls['email'].errors.required" class="p-error">
-              Поле должно быть заполнено.
-            </small>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="p-fluid p-formgrid p-grid form">
-      <div class="p-col-12">
-        <div class="d-flex passport-confirm">
-          <div class="passport-owner">
-            <h1>Паспорт</h1>
-            <p class="description">Заполните паспортные данные</p>
-          </div>
-          <div class="addon-button mb-20">
-            <div class="addon-text">
-              <p>
-                Загрузите копию паспорта
-              </p>
+        <div class="p-col-12">
+          <div class="d-flex passport-confirm">
+            <div class="passport-owner">
+              <h1>Паспорт</h1>
+              <p class="description">Заполните паспортные данные</p>
             </div>
-            <div class="mib-uploader">
-              <input type="file" id="Passport" (change)="onSelect($event, 'Passport')" multiple="true" hidden />
-              <label for="Passport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-field p-col-12 p-md-6 p-lg-3">
-        <label for="number">Серия и номер паспорт</label>
-        <input id="number" type="text" pInputText placeholder="Серия и номер паспорт" formControlName="number">
-        <div *ngIf="formEdit.controls['number'].invalid">
-          <small *ngIf="formEdit.controls['number'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
-      </div>
-      <div class="p-field p-col-12 p-md-6 p-lg-3">
-        <label for="date">Дата выдачи</label>
-        <input id="date" type="date" pInputText placeholder="Дата выдачи" formControlName="date">
-        <div *ngIf="formEdit.controls['date'].invalid">
-          <small *ngIf="formEdit.controls['date'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
-      </div>
-      <div class="p-field p-col-12 p-md-6 p-lg-3">
-        <label for="issuerTitle">Кем выдан</label>
-        <input id="issuerTitle" type="text" pInputText placeholder="Кем выдан" formControlName="issuerTitle">
-        <div *ngIf="formEdit.controls['issuerTitle'].invalid">
-          <small *ngIf="formEdit.controls['issuerTitle'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
-      </div>
-      <div class="p-field p-col-12 p-md-6 p-lg-3">
-        <label for="issuerCode">Код подразделения</label>
-        <input id="issuerCode" type="text" pInputText placeholder="Код подразделения" formControlName="issuerCode">
-        <div *ngIf="formEdit.controls['issuerCode'].invalid">
-          <small *ngIf="formEdit.controls['issuerCode'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
-      </div>
-
-      <div *ngIf="files.length" style="width: 100%;">
-        <h2>Приложенные файлы</h2>
-        <ng-container *ngFor="let file of files">
-          <div class="addon-button mb-10" *ngIf="file.Identifier === 'Passport'">
-            <div class="addon-text">
-              <p>
-                {{file.FileName}}
-              </p>
-            </div>
-            <div class="mib-uploader">
-              <div class="mib-upload-warn" (click)="removeFile(file)">
-                Удалить
+            <div class="addon-button mb-20">
+              <div class="addon-text">
+                <p>
+                  Загрузите копию паспорта
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <input type="file" id="Passport" (change)="onSelect($event, 'Passport')" multiple="true" hidden />
+                <label for="Passport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
               </div>
             </div>
           </div>
-        </ng-container>
-      </div>
+        </div>
+        <div class="p-field p-col-12 p-md-6 p-lg-3">
+          <label for="number">Серия и номер паспорт</label>
+          <input id="number" type="text" pInputText placeholder="Серия и номер паспорт" formControlName="number">
+          <div *ngIf="formEdit.controls['number'].invalid">
+            <small *ngIf="formEdit.controls['number'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+        <div class="p-field p-col-12 p-md-6 p-lg-3">
+          <label for="date">Дата выдачи</label>
+          <input id="date" type="date" pInputText placeholder="Дата выдачи" formControlName="date">
+          <div *ngIf="formEdit.controls['date'].invalid">
+            <small *ngIf="formEdit.controls['date'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+        <div class="p-field p-col-12 p-md-6 p-lg-3">
+          <label for="issuerTitle">Кем выдан</label>
+          <input id="issuerTitle" type="text" pInputText placeholder="Кем выдан" formControlName="issuerTitle">
+          <div *ngIf="formEdit.controls['issuerTitle'].invalid">
+            <small *ngIf="formEdit.controls['issuerTitle'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+        <div class="p-field p-col-12 p-md-6 p-lg-3">
+          <label for="issuerCode">Код подразделения</label>
+          <input id="issuerCode" type="text" pInputText placeholder="Код подразделения" formControlName="issuerCode">
+          <div *ngIf="formEdit.controls['issuerCode'].invalid">
+            <small *ngIf="formEdit.controls['issuerCode'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
 
-      <div class="p-field p-col-12 p-md-12">
-        <label for="btn_submit">&nbsp;</label>
-        <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-          class="btn-mib-submit p-button-outlined" [disabled]="formEdit.invalid || (isLoading$ | async)"></button>
+        <div *ngIf="files.length" style="width: 100%;">
+          <h2>Приложенные файлы</h2>
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'Passport'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="p-field p-col-12 p-md-12">
+          <label for="btn_submit">&nbsp;</label>
+          <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
+            class="btn-mib-submit p-button-outlined" [disabled]="formEdit.invalid || (isLoading$ | async)"></button>
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </ng-template>
 </div>

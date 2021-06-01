@@ -15,6 +15,8 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
+import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 
 @Component({
   selector: 'app-demand-action-eds-page',
@@ -22,6 +24,11 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./demand-action-eds-page.component.scss'],
 })
 export class DemandActionEDSPageComponent implements OnInit {
+
+  public isEdit: boolean = false;
+  public currentDemand: any;
+  public currentInformation: FactoringInfoInterface;
+
   isUserVerified: boolean;
   formEDS: FormGroup;
   files: FileModeInterface[] = [];
@@ -228,6 +235,41 @@ export class DemandActionEDSPageComponent implements OnInit {
     this.files.splice(
       this.files.indexOf(this.files.find((x) => x === file)),
       1
+    );
+  }
+
+  handleSendMessage(event: CreateDemandMessageRequestInterface) {
+    this.subscription$.add(
+      this.demandService
+        .addMessageByDemandId(this.currentDemand.ID, event)
+        .subscribe((resp) => {
+          this.fetch(this.currentDemand.ID);
+        })
+    );
+  }
+
+  handleRemoveFile(file: FileModeInterface) {
+    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+  }
+
+  private fetch(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandById(id).subscribe((resp) => {
+        this.currentDemand = resp;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
+        console.log(this.currentDemand);
+        this.isEdit = true;
+      })
     );
   }
 }

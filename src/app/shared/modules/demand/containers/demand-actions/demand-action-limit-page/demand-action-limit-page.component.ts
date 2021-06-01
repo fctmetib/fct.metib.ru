@@ -10,6 +10,8 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { DemandService } from '../../../services/demand.service';
+import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 
 @Component({
@@ -19,6 +21,10 @@ import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-
 })
 export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
   isUserVerified: boolean;
+
+  public isEdit: boolean = false;
+  public currentDemand: any;
+  public currentInformation: FactoringInfoInterface;
 
   public alert: boolean;
   public alertMessage: string;
@@ -51,12 +57,11 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
         if (params['ID']) {
-          this.demandService
-            .getDemandById(params['ID'])
-            .subscribe((resp) => {});
+          this.fetch(params['ID']);
         }
         if (params['DraftId']) {
           this.currentDraftId = params['DraftID'];
+          this.isEdit = true;
         }
       })
     );
@@ -80,6 +85,42 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
         this.alert = true;
         this.alertMessage = 'Запрос успешно создан.';
         this.isLoading = false;
+      })
+    );
+  }
+
+
+  handleSendMessage(event: CreateDemandMessageRequestInterface) {
+    this.subscription$.add(
+      this.demandService
+        .addMessageByDemandId(this.currentDemand.ID, event)
+        .subscribe((resp) => {
+          this.fetch(this.currentDemand.ID);
+        })
+    );
+  }
+
+  handleRemoveFile(file: FileModeInterface) {
+    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+  }
+
+  private fetch(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandById(id).subscribe((resp) => {
+        this.currentDemand = resp;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
+        console.log(this.currentDemand);
+        this.isEdit = true;
       })
     );
   }
