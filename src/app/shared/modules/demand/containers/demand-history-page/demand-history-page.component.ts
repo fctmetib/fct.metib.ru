@@ -89,7 +89,7 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   remove(Id) {
     this.subscription$.add(
       this.demandService.deleteDraftById(Id).subscribe(() => {
-        this.allDemands = this.allDemands.filter(x => x.ID !== Id);
+        this.allDemands = this.allDemands.filter((x) => x.ID !== Id);
       })
     );
   }
@@ -97,8 +97,8 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   cancel(Id) {
     this.subscription$.add(
       this.demandService.cancelByDemandId(Id).subscribe(() => {
-      let canceledDemand = this.allDemands.find(x => x.ID === Id);
-      canceledDemand.Status = 'Canceled';
+        let canceledDemand = this.allDemands.find((x) => x.ID === Id);
+        canceledDemand.Status = 'Canceled';
       })
     );
   }
@@ -114,6 +114,34 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         break;
       case 'Question':
         this.router.navigate(['/demand/actions/free-request'], {
+          queryParams: {
+            ID: ID,
+          },
+        });
+        break;
+      case 'DigitalSignature':
+        this.router.navigate(['/demand/actions/create-eds'], {
+          queryParams: {
+            ID: ID,
+          },
+        });
+        break;
+      case 'ProfileChange':
+        this.router.navigate(['/demand/actions/edit-profile'], {
+          queryParams: {
+            ID: ID,
+          },
+        });
+        break;
+      case 'Limit':
+        this.router.navigate(['/demand/actions/update-limit'], {
+          queryParams: {
+            ID: ID,
+          },
+        });
+        break;
+      case 'NewDebtor':
+        this.router.navigate(['/demand/actions/create-debitor'], {
           queryParams: {
             ID: ID,
           },
