@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-demand-action-eds-page',
@@ -68,7 +69,7 @@ export class DemandActionEDSPageComponent implements OnInit {
       value: 'Россия',
     },
   ];
-
+  private currentDraftId: number = 0;
   private subscription$: Subscription = new Subscription();
 
   constructor(
@@ -76,12 +77,26 @@ export class DemandActionEDSPageComponent implements OnInit {
     private fb: FormBuilder,
     private commonService: CommonService,
     private fileService: FileService,
+    private route: ActivatedRoute,
     private demandService: DemandService
   ) {}
 
   ngOnInit() {
     this.isUserVerified = this.authService.isUserVerified();
     this.initForm();
+
+    this.subscription$.add(
+      this.route.queryParams.subscribe((params: Params) => {
+        if (params['ID']) {
+          this.fetch(params['ID']);
+        }
+        if (params['DraftId']) {
+          this.currentDraftId = params['DraftID'];
+          this.isEdit = true;
+        }
+      })
+    );
+
   }
 
   ngOnDestroy() {

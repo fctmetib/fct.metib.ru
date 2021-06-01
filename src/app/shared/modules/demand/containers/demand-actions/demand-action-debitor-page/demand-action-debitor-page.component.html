@@ -35,7 +35,7 @@
 
   <ng-template #form let-formFree="formFree">
     <form [formGroup]="formFree" (ngSubmit)="onSubmit()">
-      <div class="form-actions">
+      <div class="form-actions" *ngIf="!isEdit">
         <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
           [routerLink]="['/demand']"></button>
         <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
