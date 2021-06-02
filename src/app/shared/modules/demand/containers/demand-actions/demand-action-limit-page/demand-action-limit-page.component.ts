@@ -121,8 +121,17 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
         };
         console.log(this.currentDemand);
         this.isEdit = true;
+        this.convertToFormData();
       })
     );
+  }
+
+  private convertToFormData() {
+    let data = this.currentDemand.Data;
+    this.formFree.patchValue({
+      limit: data.Limit,
+      comment: data.Comment
+    })
   }
 
   //#region private logic

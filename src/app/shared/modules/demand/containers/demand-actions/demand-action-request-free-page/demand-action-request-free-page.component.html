@@ -21,7 +21,7 @@
         <app-demand-info [currentDemandInfo]="currentInformation" (sendMessage)="handleSendMessage($event)"></app-demand-info>
       </p-tabPanel>
       <p-tabPanel header="Данные">
-        <ng-container *ngTemplateOutlet="form; context: {formFree: formFree}">></ng-container>
+        <ng-container *ngTemplateOutlet="form; context: {formFree: formFree}"></ng-container>
       </p-tabPanel>
       <p-tabPanel header="Файлы">
         <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files"></app-demand-files>
