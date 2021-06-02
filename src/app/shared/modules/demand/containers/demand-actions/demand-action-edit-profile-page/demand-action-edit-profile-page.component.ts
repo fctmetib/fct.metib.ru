@@ -17,6 +17,7 @@ import { switchMap } from 'rxjs/operators';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { ActivatedRoute, Params } from '@angular/router';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
+import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
 
 @Component({
   selector: 'app-demand-action-edit-profile-page',
@@ -42,6 +43,16 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   public formEdit: FormGroup;
 
   public files: FileModeInterface[] = [];
+  public genderTypes: DemandSelectboxInterface[] = [
+    {
+      title: 'Женский',
+      value: 0,
+    },
+    {
+      title: 'Мужской',
+      value: 1,
+    },
+  ];
 
   private currentUserId: string;
 
