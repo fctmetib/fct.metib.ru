@@ -60,34 +60,77 @@
         <!-- 2 row -->
         <div class="p-field p-col-12 p-md-3">
           <label for="organizationINN">ИНН</label>
-          <input id="organizationINN" type="text" pInputText placeholder="ИНН" formControlName="organizationINN">
+          <input id="organizationINN" type="text" pInputText placeholder="ИНН" minlength="10" maxlength="12"
+            formControlName="organizationINN">
+          <div *ngIf="formEDS.controls['organizationINN'].invalid">
+            <small *ngIf="formEDS.controls['organizationINN'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+            <small *ngIf="formEDS.controls['organizationINN'].errors.minlength" class="p-error">
+              Введите корректный ИНН (10 или 12 цифр).
+            </small>
+          </div>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="organizationKPP">КПП</label>
           <input id="organizationKPP" type="text" pInputText placeholder="КПП" formControlName="organizationKPP">
+          <div *ngIf="formEDS.controls['organizationKPP'].invalid">
+            <small *ngIf="formEDS.controls['organizationKPP'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="organizationOGRN">ОГРН</label>
           <input id="organizationOGRN" type="text" pInputText placeholder="ОГРН" formControlName="organizationOGRN">
+          <div *ngIf="formEDS.controls['organizationOGRN'].invalid">
+            <small *ngIf="formEDS.controls['organizationOGRN'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="organizationOKPO">ОКПО</label>
           <input id="organizationOKPO" type="text" pInputText placeholder="ОКПО" formControlName="organizationOKPO">
+          <div *ngIf="formEDS.controls['organizationOKPO'].invalid">
+            <small *ngIf="formEDS.controls['organizationOKPO'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <!-- 3 row -->
         <div class="p-field p-col-12 p-md-3">
           <label for="organizationPhone">Телефон</label>
-          <input id="organizationPhone" type="tel" pInputText placeholder="Телефон" formControlName="organizationPhone">
+          <p-inputMask id="organizationPhone" type="tel" placeholder="Телефон" formControlName="organizationPhone"
+            mask="+7-999-999-99-99"></p-inputMask>
+          <div *ngIf="formEDS.controls['organizationPhone'].invalid">
+            <small *ngIf="formEDS.controls['organizationPhone'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="organizationEmail">E-mail</label>
           <input id="organizationEmail" type="email" pInputText placeholder="E-mail"
             formControlName="organizationEmail">
+          <div *ngIf="formEDS.controls['organizationEmail'].invalid">
+            <small *ngIf="formEDS.controls['organizationEmail'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+            <small *ngIf="formEDS.controls['organizationEmail'].errors.email" class="p-error">
+              Введите корректную почту.
+            </small>
+          </div>
         </div>
         <div class="p-field p-col-12 p-md-6">
           <label for="organizationWEB">Адрес сайта</label>
           <input id="organizationWEB" type="text" pInputText placeholder="Адрес сайта"
             formControlName="organizationWEB">
+          <div *ngIf="formEDS.controls['organizationWEB'].invalid">
+            <small *ngIf="formEDS.controls['organizationWEB'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <!-- 4 row -->
         <div class="p-field p-col-12 p-md-6">
@@ -120,11 +163,9 @@
             <label for="organizationIsLegalAdressEqual">Почтовый адрес совпадает
               с юридическим</label>
           </div>
-
         </div>
         <!-- 5 row -->
         <ng-container *ngIf="!isEdit">
-
           <div class="p-field p-col-12 p-md-6">
             <label>
               Прикрепите необходимые файлы
@@ -208,14 +249,29 @@
         <div class="p-field p-col-12 p-md-3">
           <label for="ownerSurname">Фамилия</label>
           <input id="ownerSurname" type="text" pInputText placeholder="Фамилия" formControlName="ownerSurname">
+          <div *ngIf="formEDS.controls['ownerSurname'].invalid">
+            <small *ngIf="formEDS.controls['ownerSurname'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="ownerName">Имя</label>
           <input id="ownerName" type="text" pInputText placeholder="Имя" formControlName="ownerName">
+          <div *ngIf="formEDS.controls['ownerName'].invalid">
+            <small *ngIf="formEDS.controls['ownerName'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="ownerMiddlename">Отчество</label>
           <input id="ownerMiddlename" type="text" pInputText placeholder="Отчество" formControlName="ownerMiddlename">
+          <div *ngIf="formEDS.controls['ownerMiddlename'].invalid">
+            <small *ngIf="formEDS.controls['ownerMiddlename'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="ownerGender">Пол</label>
@@ -252,6 +308,11 @@
         <div class="p-field p-col-12 p-md-6">
           <label for="ownerEmail">E-mail</label>
           <input id="ownerEmail" type="email" pInputText placeholder="E-mail" formControlName="ownerEmail">
+          <div *ngIf="formEDS.controls['ownerEmail'].invalid">
+            <small *ngIf="formEDS.controls['ownerEmail'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <!-- 9 row -->
         <ng-container *ngIf="!isEdit">
@@ -374,19 +435,39 @@
           <label for="passportNumber">Серия и номер паспорт</label>
           <input id="passportNumber" type="text" pInputText placeholder="Серия и номер паспорт"
             formControlName="passportNumber">
+          <div *ngIf="formEDS.controls['passportNumber'].invalid">
+            <small *ngIf="formEDS.controls['passportNumber'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="passportDate">Дата выдачи</label>
           <input id="passportDate" type="date" pInputText placeholder="Дата выдачи" formControlName="passportDate">
+          <div *ngIf="formEDS.controls['passportDate'].invalid">
+            <small *ngIf="formEDS.controls['passportDate'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="passportFrom">Кем выдан</label>
           <input id="passportFrom" type="text" pInputText placeholder="Кем выдан" formControlName="passportFrom">
+          <div *ngIf="formEDS.controls['passportFrom'].invalid">
+            <small *ngIf="formEDS.controls['passportFrom'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="passportCode">Код подразделения</label>
           <input id="passportCode" type="text" pInputText placeholder="Кем подразделения"
             formControlName="passportCode">
+          <div *ngIf="formEDS.controls['passportCode'].invalid">
+            <small *ngIf="formEDS.controls['passportCode'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
         </div>
 
         <div class="p-col-12">

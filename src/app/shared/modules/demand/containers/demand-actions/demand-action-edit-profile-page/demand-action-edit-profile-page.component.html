@@ -128,7 +128,7 @@
         </div>
         <div class="p-field p-col-12 p-md-6 p-lg-3">
           <label for="number">Серия и номер паспорт</label>
-          <p-inputMask id="phone" type="number" placeholder="Серия и номер паспорт" formControlName="number"
+          <p-inputMask id="phone" type="text" placeholder="Серия и номер паспорт" formControlName="number"
           mask="99 99 999999"></p-inputMask>
           <div *ngIf="formEdit.controls['number'].invalid">
             <small *ngIf="formEdit.controls['number'].errors.required" class="p-error">
@@ -156,8 +156,8 @@
         </div>
         <div class="p-field p-col-12 p-md-6 p-lg-3">
           <label for="issuerCode">Код подразделения</label>
-          <p-inputMask id="issuerCode" type="number" placeholder="Код подразделения" formControlName="issuerCode"
-          mask="99 99 999999"></p-inputMask>
+          <p-inputMask id="issuerCode" type="text" placeholder="Код подразделения" formControlName="issuerCode"
+          mask="999-999"></p-inputMask>
           <div *ngIf="formEdit.controls['issuerCode'].invalid">
             <small *ngIf="formEdit.controls['issuerCode'].errors.required" class="p-error">
               Поле должно быть заполнено.
