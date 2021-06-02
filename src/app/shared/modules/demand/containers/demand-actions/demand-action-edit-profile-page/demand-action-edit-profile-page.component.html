@@ -5,7 +5,7 @@
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-      [routerLink]="['/demand']" *ngIf="isEdit"></button>
+        [routerLink]="['/demand']" *ngIf="isEdit"></button>
     </div>
   </div>
 
@@ -16,13 +16,15 @@
   <ng-container *ngIf="isEdit; else createTemplate;">
     <p-tabView class="mib-tabs">
       <p-tabPanel header="Информация">
-        <app-demand-info [currentDemandInfo]="currentInformation" (sendMessage)="handleSendMessage($event)"></app-demand-info>
+        <app-demand-info [currentDemandInfo]="currentInformation" (sendMessage)="handleSendMessage($event)">
+        </app-demand-info>
       </p-tabPanel>
       <p-tabPanel header="Данные">
         <ng-container *ngTemplateOutlet="form; context: {formEdit: formEdit}">></ng-container>
       </p-tabPanel>
       <p-tabPanel header="Файлы">
-        <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files"></app-demand-files>
+        <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files">
+        </app-demand-files>
       </p-tabPanel>
     </p-tabView>
   </ng-container>
@@ -106,17 +108,19 @@
               <h1>Паспорт</h1>
               <p class="description">Заполните паспортные данные</p>
             </div>
-            <div class="addon-button mb-20">
-              <div class="addon-text">
-                <p>
-                  Загрузите копию паспорта
-                </p>
+            <ng-container *ngIf="!isEdit">
+              <div class="addon-button mb-20">
+                <div class="addon-text">
+                  <p>
+                    Загрузите копию паспорта
+                  </p>
+                </div>
+                <div class="mib-uploader">
+                  <input type="file" id="Passport" (change)="onSelect($event, 'Passport')" multiple="true" hidden />
+                  <label for="Passport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
+                </div>
               </div>
-              <div class="mib-uploader">
-                <input type="file" id="Passport" (change)="onSelect($event, 'Passport')" multiple="true" hidden />
-                <label for="Passport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
-              </div>
-            </div>
+            </ng-container>
           </div>
         </div>
         <div class="p-field p-col-12 p-md-6 p-lg-3">
@@ -155,25 +159,25 @@
             </small>
           </div>
         </div>
-
-        <div *ngIf="files.length" style="width: 100%;">
-          <h2>Приложенные файлы</h2>
-          <ng-container *ngFor="let file of files">
-            <div class="addon-button mb-10" *ngIf="file.Identifier === 'Passport'">
-              <div class="addon-text">
-                <p>
-                  {{file.FileName}}
-                </p>
-              </div>
-              <div class="mib-uploader">
-                <div class="mib-upload-warn" (click)="removeFile(file)">
-                  Удалить
+        <ng-container *ngIf="!isEdit">
+          <div *ngIf="files.length" style="width: 100%;">
+            <h2>Приложенные файлы</h2>
+            <ng-container *ngFor="let file of files">
+              <div class="addon-button mb-10" *ngIf="file.Identifier === 'Passport'">
+                <div class="addon-text">
+                  <p>
+                    {{file.FileName}}
+                  </p>
+                </div>
+                <div class="mib-uploader">
+                  <div class="mib-upload-warn" (click)="removeFile(file)">
+                    Удалить
+                  </div>
                 </div>
               </div>
-            </div>
-          </ng-container>
-        </div>
-
+            </ng-container>
+          </div>
+        </ng-container>
         <div class="p-field p-col-12 p-md-12">
           <label for="btn_submit">&nbsp;</label>
           <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
