@@ -181,24 +181,6 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
 
     this.formFree.markAllAsTouched();
     this.formFree.markAsDirty();
-
-    // this.subscription$.add(
-    //   this.formFree.valueChanges.subscribe((form) => {
-    //     if (form.limit) {
-    //       this.formFree.patchValue(
-    //         {
-    //           limit: this.currencyPipe.transform(
-    //             form.limit.replace(/\D/g, '').replace(/^0+/, ''),
-    //             'RUB',
-    //             'symbol',
-    //             '1.0-0'
-    //           ),
-    //         },
-    //         { emitEvent: false }
-    //       );
-    //     }
-    //   })
-    // );
   }
 
   private showSuccess() {

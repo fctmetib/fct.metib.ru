@@ -178,9 +178,20 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
         };
         console.log(this.currentDemand);
         this.isEdit = true;
+        this.convertToFormData();
       })
     );
   }
+
+
+  private convertToFormData() {
+    let data = this.currentDemand.Data;
+    this.formFree.patchValue({
+      subject: data.Subject,
+      question: data.Question,
+    });
+  }
+
 
   private prepareDraft() {
     let result: any = {
