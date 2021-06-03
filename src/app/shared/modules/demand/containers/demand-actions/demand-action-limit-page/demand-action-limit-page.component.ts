@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -71,8 +72,8 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
-    if(this._saveDraftAction$) {
-      clearInterval(this._saveDraftAction$)
+    if (this._saveDraftAction$) {
+      clearInterval(this._saveDraftAction$);
     }
   }
 
@@ -89,7 +90,6 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
     );
   }
 
-
   handleSendMessage(event: CreateDemandMessageRequestInterface) {
     this.subscription$.add(
       this.demandService
@@ -101,7 +101,9 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
   }
 
   handleRemoveFile(file: FileModeInterface) {
-    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+    this.currentDemand.Files = this.currentDemand.Files.filter(
+      (x) => x !== file
+    );
   }
 
   private fetch(id: number) {
@@ -130,8 +132,8 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
     let data = this.currentDemand.Data;
     this.formFree.patchValue({
       limit: data.Limit,
-      comment: data.Comment
-    })
+      comment: data.Comment,
+    });
   }
 
   //#region private logic
@@ -179,6 +181,24 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
 
     this.formFree.markAllAsTouched();
     this.formFree.markAsDirty();
+
+    // this.subscription$.add(
+    //   this.formFree.valueChanges.subscribe((form) => {
+    //     if (form.limit) {
+    //       this.formFree.patchValue(
+    //         {
+    //           limit: this.currencyPipe.transform(
+    //             form.limit.replace(/\D/g, '').replace(/^0+/, ''),
+    //             'RUB',
+    //             'symbol',
+    //             '1.0-0'
+    //           ),
+    //         },
+    //         { emitEvent: false }
+    //       );
+    //     }
+    //   })
+    // );
   }
 
   private showSuccess() {

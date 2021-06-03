@@ -1,3 +1,4 @@
+import { CurrencyDirective } from './../../directives/currency.directive';
 import { BackendErrorMessagesModule } from './../backendErrorMessages/backendErrorMessages.module';
 import { DialogModule } from 'primeng/dialog';
 import { SuccessMessagesModule } from './../successMessages/successMessages.module';
@@ -95,6 +96,7 @@ import { FreeDataComponent } from './containers/demand-actions/demand-action-req
     AvatarModule,
   ],
   declarations: [
+    CurrencyDirective,
     // Containers
     DemandPageComponent,
     DemandHistoryPageComponent,

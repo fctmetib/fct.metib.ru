@@ -75,7 +75,10 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
   }
 
   handleSave(event: any) {
-    event.Files = this.currentDemand.Files;
+    if (this.currentDemand.Files) {
+      event.Files = this.currentDemand.Files;
+    }
+
     this.subscription$.add(
       this.demandService
         .addDraftById(this.currentDraftId, event)
