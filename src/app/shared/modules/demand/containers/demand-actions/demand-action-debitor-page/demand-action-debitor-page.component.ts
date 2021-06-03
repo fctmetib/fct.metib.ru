@@ -130,8 +130,17 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
         };
         console.log(this.currentDemand);
         this.isEdit = true;
+        this.convertToFormData();
       })
     );
+  }
+
+  private convertToFormData() {
+    let data = this.currentDemand.Data;
+    this.formFree.patchValue({
+      Id: +data.ID,
+      inn: data.INN,
+    });
   }
 
   public onSubmit() {
@@ -198,7 +207,9 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
       return data;
     } else {
       if (this.formFree.value.Id) {
-        let debtor = this.debtors.find((x) => x.ID === this.formFree.value.Id);
+        console.log('Debitor ID', this.formFree.value.Id)
+        let debtor = this.debtors.find((x) => x.ID === +this.formFree.value.Id);
+        console.log('Debitor',debtor)
         let data = {
           ID: debtor.ID,
           INN: debtor.Inn,

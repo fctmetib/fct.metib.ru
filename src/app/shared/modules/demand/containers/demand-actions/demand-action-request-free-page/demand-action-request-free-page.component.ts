@@ -183,7 +183,6 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
     );
   }
 
-
   private convertToFormData() {
     let data = this.currentDemand.Data;
     this.formFree.patchValue({
@@ -191,7 +190,6 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
       question: data.Question,
     });
   }
-
 
   private prepareDraft() {
     let result: any = {
