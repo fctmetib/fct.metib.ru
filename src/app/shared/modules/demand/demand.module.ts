@@ -1,4 +1,3 @@
-import { CurrencyDirective } from './../../directives/currency.directive';
 import { BackendErrorMessagesModule } from './../backendErrorMessages/backendErrorMessages.module';
 import { DialogModule } from 'primeng/dialog';
 import { SuccessMessagesModule } from './../successMessages/successMessages.module';
@@ -19,6 +18,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ToastModule } from 'primeng/toast';
 import { StepsModule } from 'primeng/steps';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -69,6 +69,7 @@ import { FreeDataComponent } from './containers/demand-actions/demand-action-req
     RadioButtonModule,
     ToastModule,
     InputTextareaModule,
+    InputNumberModule,
     TabViewModule,
     SliderModule,
     TableModule,
@@ -96,7 +97,6 @@ import { FreeDataComponent } from './containers/demand-actions/demand-action-req
     AvatarModule,
   ],
   declarations: [
-    CurrencyDirective,
     // Containers
     DemandPageComponent,
     DemandHistoryPageComponent,
@@ -115,7 +115,7 @@ import { FreeDataComponent } from './containers/demand-actions/demand-action-req
     FactoringDataComponent,
     DemandFilesComponent,
     DemandInfoComponent,
-    FreeDataComponent
+    FreeDataComponent,
   ],
   providers: [
     CurrencyPipe,

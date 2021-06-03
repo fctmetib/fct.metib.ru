@@ -44,7 +44,8 @@
         <div class="p-field p-col-12 p-md-12 p-lg-12">
           <div class="addon-input">
             <div class="text">Требуемый лимит</div>
-            <input id="limit" type="number" pInputText placeholder="0" formControlName="limit">
+            <p-inputNumber formControlName="limit" mode="currency" currency="RUB" locale="ru-RU">
+            </p-inputNumber>
           </div>
           <div *ngIf="formFree.controls['limit'].invalid">
             <small *ngIf="formFree.controls['limit'].errors.required" class="p-error">
