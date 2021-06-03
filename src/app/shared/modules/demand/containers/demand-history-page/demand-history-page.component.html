@@ -93,7 +93,7 @@
                 </div>
               </div>
             </div>
-            <div class="demand-actions" *ngIf="demand.Status !== 'Completed' && demand.Status !== 'Canceled'">
+            <div class="demand-actions" *ngIf="demand.Status !== 'Completed' && demand.Status !== 'Canceled' && demand.Status !== 'Rejected'">
               <ng-container *ngIf="demand.Status === 'Draft'; else removeTemplate">
                 <button pButton pRipple type="button" label="Удалить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
               </ng-container>

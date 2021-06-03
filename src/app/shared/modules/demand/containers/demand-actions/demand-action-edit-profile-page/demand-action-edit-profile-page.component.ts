@@ -56,6 +56,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
 
   private currentUserId: string;
 
+  private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
 
   constructor(
@@ -79,17 +80,24 @@ export class DemandActionEditProfilePageComponent implements OnInit {
       this.route.queryParams.subscribe((params: Params) => {
         if (params['ID']) {
           this.fetch(params['ID']);
+        } else {
+          this.getDraft();
         }
-        if (params['DraftId']) {
-          this.currentDraftId = params['DraftID'];
-          this.isEdit = true;
-        }
+        // if (params['DraftId']) {
+        //   this.currentDraftId = params['DraftID'];
+        //   this.isEdit = true;
+        // }
       })
     );
+
+    this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+    if(this._saveDraftAction$) {
+      clearInterval(this._saveDraftAction$);
+    }
   }
 
   onSubmit() {
@@ -117,6 +125,14 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
   }
 
+  private getDraft() {
+    this.subscription$.add(
+      this.demandService.prepareDemandByType('ProfileChange').subscribe((resp) => {
+        this.convertToFormData(resp)
+      })
+    );
+  }
+
   private fetch(id: number) {
     this.subscription$.add(
       this.demandService.getDemandById(id).subscribe((resp) => {
@@ -134,8 +150,30 @@ export class DemandActionEditProfilePageComponent implements OnInit {
         };
         console.log(this.currentDemand);
         this.isEdit = true;
+        this.convertToFormData();
       })
     );
+  }
+
+  private convertToFormData(draft?) {
+    let data;
+    if(draft) {
+      data = draft;
+    } else {
+      data = this.currentDemand.Data;
+    }
+
+    this.formEdit.patchValue({
+      last: data.Profile?.Name.Last,
+      first: data.Profile?.Name.First,
+      isMale: data.Profile?.IsMale,
+      phone: data.Profile?.Phone,
+      email: data.Profile?.Email,
+      number: data.Passport?.Number,
+      date: data.Passport?.Date,
+      issuerTitle: data.Passport?.IssuerTitle,
+      issuerCode: data.Passport?.IssuerCode,
+    });
   }
 
   removeFile(file: FileModeInterface) {
@@ -147,6 +185,20 @@ export class DemandActionEditProfilePageComponent implements OnInit {
 
   //#region private logic
   //TODO: Get login
+  saveDraft() {
+    let draft = this.prepareData();
+    draft.DraftID = this.currentDraftId;
+    this.subscription$.add(
+      this.demandService
+        .addDraftById(this.currentDraftId, draft)
+        .subscribe((resp) => {
+          console.log(resp);
+          this.currentDraftId = resp.ID;
+          this.showSuccess();
+        })
+    );
+  }
+
   private prepareData(): any {
     let result: SaveDemandRequestInterface<any> = {
       Data: {
@@ -185,7 +237,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     this.formEdit = this.fb.group({
       last: ['', [Validators.required]],
       first: ['', [Validators.required]],
-      isMale: ['', [Validators.required]],
+      isMale: [false, [Validators.required]],
       phone: ['', [Validators.required]],
       email: ['', [Validators.required]],
       number: ['', [Validators.required]],
@@ -249,5 +301,9 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     }
   }
 
+  private showSuccess() {
+    this.alert = true;
+    this.alertMessage = 'Запрос успешно создан.';
+  }
   //#endregion
 }
