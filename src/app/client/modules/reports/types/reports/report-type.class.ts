@@ -1454,6 +1454,7 @@ export class ReportType {
       args: function () {
         return new StandartReportArgs('PaymentsIncome', 'Полученные Платежи');
       },
+      columns: []
     },
     {
       id: 18,
@@ -1857,8 +1858,6 @@ export class ReportType {
     },
   ];
 
-  static getType(name: string): ReportTypeInterface;
-  static getType(id: number): ReportTypeInterface;
   static getType(value: any): ReportTypeInterface {
     if (value && typeof value == 'string') {
       for (var i = 0; i < ReportType.Types.length; i++) {

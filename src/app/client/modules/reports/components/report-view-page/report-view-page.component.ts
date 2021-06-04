@@ -180,6 +180,8 @@ export class ReportViewPageComponent implements OnInit {
 
   private prepareTable(): void {
     this.reportConfig = ReportType.getType(this.data.type);
+    console.log(this.reportConfig)
+    console.log(this.data.type)
     this.reportConfig.columns.forEach((column) => {
       if (column.visible) {
         this._selectedColumns.push(column);
@@ -227,6 +229,9 @@ export class ReportViewPageComponent implements OnInit {
         request.OrderNumber = data.numberOrder;
         request.RequestNumber = data.numberRequest;
         break;
+      case 'PaymentsIncome':
+        request.DateFrom = new Date(data.dateFrom);
+        request.DateTo = new Date(data.dateTo);
       default:
         request.DateFrom = new Date(data.dateFrom);
         request.DateTo = new Date(data.dateTo);
