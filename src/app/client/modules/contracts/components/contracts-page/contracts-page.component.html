@@ -161,7 +161,31 @@
           <tr>
             <td *ngFor="let col of columns">
               <div class="m-td">
-                <div>{{product[col.field]}}</div>
+                <div>
+                  <ng-container [ngSwitch]="col.field">
+                    <ng-container *ngSwitchCase="'DateAddon'">
+                      {{product[col.field] | date:"dd.MM.yyyy"}}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'DatePayment'">
+                      {{product[col.field] | date:"dd.MM.yyyy"}}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'DateShipment'">
+                      {{product[col.field] | date:"dd.MM.yyyy"}}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'Summ'">
+                      {{product[col.field] | currency:'RUB':'symbol-narrow'}}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'DutyDebtor'">
+                      {{product[col.field] | currency:'RUB':'symbol-narrow'}}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'DutyCustomer'">
+                      {{product[col.field] | currency:'RUB':'symbol-narrow'}}
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                      {{product[col.field] | currency:'RUB':'symbol-narrow'}}
+                    </ng-container>
+                    </ng-container>
+                </div>
               </div>
             </td>
           </tr>
