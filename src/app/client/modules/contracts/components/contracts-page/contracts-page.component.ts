@@ -12,6 +12,7 @@ import { OrganizationService } from 'src/app/shared/services/share/organization.
 import { ShipmentInterface } from 'src/app/shared/types/common/shipment-interface';
 import { ClipboardService } from 'ngx-clipboard';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-contracts-page',
@@ -97,7 +98,6 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
     private deliveryService: DeliveryService,
     private organizationService: OrganizationService,
     private _clipboardService: ClipboardService,
-    private router: Router
   ) {}
 
   ngOnInit() {
@@ -127,24 +127,26 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
     this.isOrganizationError = false;
 
     this.subscription$.add(
-      this.organizationService.getOrganizationById(id).subscribe(
+      this.deliveryService.getDeliveryAccounts(id).subscribe(
         (resp) => {
-          this.currentOrganization = resp;
 
-          this.currentOrganizationContent = `Банк: ${resp?.Account?.Bank || ''}
-        Получатель: ${resp?.Account?.Bank || ''}
-        Кор/с: ${resp?.Account?.COR || ''}
-        БИК: ${resp?.Account?.BIK || ''}
-        ИНН: ${resp?.INN || ''}
-        КПП: ${resp?.KPP || ''}
-        Счет для оплаты задолженности: ${resp?.ABSID || ''}
-        Счет для оплаты комиссии: ${resp?.ABSID || ''}
-        Счет для оплаты комиссии Фактор-Клиента: ${resp?.ABSID || ''}
-        Примеры назначения платежа: ${resp?.ABSID || ''}
-        Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция):
-        ${resp?.ABSID || ''}
-        Назначение: ${resp?.Description || ''}`;
-          this.isOrganizationLoading = false;
+        console.log(resp)
+        // this.currentOrganization = resp;
+
+        // this.currentOrganizationContent = `Банк: ${resp?.Account?.Bank || ''}
+        // Получатель: ${resp?.Account?.Bank || ''}
+        // Кор/с: ${resp?.Account?.COR || ''}
+        // БИК: ${resp?.Account?.BIK || ''}
+        // ИНН: ${resp?.INN || ''}
+        // КПП: ${resp?.KPP || ''}
+        // Счет для оплаты задолженности: ${resp?.ABSID || ''}
+        // Счет для оплаты комиссии: ${resp?.ABSID || ''}
+        // Счет для оплаты комиссии Фактор-Клиента: ${resp?.ABSID || ''}
+        // Примеры назначения платежа: ${resp?.ABSID || ''}
+        // Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция):
+        // ${resp?.ABSID || ''}
+        // Назначение: ${resp?.Description || ''}`;
+        //   this.isOrganizationLoading = false;
         },
         (error) => {
           this.isOrganizationError = true;
