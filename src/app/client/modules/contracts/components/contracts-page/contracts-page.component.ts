@@ -121,10 +121,6 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
     this._selectedColumns = this.cols.filter((col) => val.includes(col));
   }
 
-  public openDetails(id): void {
-    this.router.navigate([`contracts/details/${id}`]);
-  }
-
   public showPropertyDialog(id): void {
     this.displayProperty = true;
     this.isOrganizationLoading = true;
