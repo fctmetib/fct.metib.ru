@@ -387,7 +387,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       })
     );
 
-    if(this.isEdit)
+    if(this.currentDemand)
     {
       this.convertToFormData()
     }
@@ -412,12 +412,45 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   }
 
   private convertToFormData() {
-    let factoring: DemandFactoringInterface;
-    let anket: DemandAnketInterface;
+    console.log('C1', this.currentDemand)
+    let factoring: DemandFactoringInterface = this.currentDemand.Factoring;
+    let anket: DemandAnketInterface = this.currentDemand.Anket;
 
+    let banks: any[] ;
+    let places: any[];
+    let credits: any[];
+    let ediProviders: any[];
 
     this.formFactoring.patchValue({
+      organizationType: 0,
+      organizationLegalForm: '',
+      organizationShortName: '',
+      organizationINN: '',
+      organizationPhone: '',
+      organizationEmail: '',
+      organizationWEB: '',
 
+      bankBik: factoring.Account.BIK,
+      bankCorrespondentAccount: factoring.Account.COR,
+      bankName: factoring.Account.Bank,
+      bankAccountOpenDate: factoring.Account.Date,
+      bankOwnerAccount: factoring.Account.Number,
+      bankComment: factoring.Account.Comment,
+
+      otherBanks: this.fb.array([]),
+
+      factoringProducts: '',
+      factoringTradeMarks: '',
+      factoringShipments: '',
+      factoringFinanceLimit: '',
+      factoringClients: '',
+      factoringWorkers: 0,
+
+      factoringPlaces: this.fb.array([]),
+
+      factoringCredits: this.fb.array([]),
+
+      factoringEDIProviders: this.fb.array([]),
     });
   }
 
