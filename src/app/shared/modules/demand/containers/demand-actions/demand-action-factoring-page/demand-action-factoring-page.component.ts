@@ -52,11 +52,13 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
       this.route.queryParams.subscribe((params: Params) => {
         if (params['ID']) {
           this.fetch(params['ID']);
+        } else {
+          this.getDraft();
         }
-        if (params['DraftId']) {
-          this.currentDraftId = params['DraftID'];
-          this.isEdit = true;
-        }
+        // if (params['DraftId']) {
+        //   this.currentDraftId = params['DraftID'];
+        //   this.isEdit = true;
+        // }
       })
     );
   }
@@ -104,10 +106,18 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
   }
   //#region private logic
 
+  private getDraft() {
+    this.subscription$.add(
+      this.demandService.prepareDemandByType('Factoring').subscribe((resp) => {
+        this.currentDemand = resp;
+      })
+    );
+  }
+
   private fetch(id: number) {
     this.subscription$.add(
       this.demandService.getDemandById(id).subscribe((resp) => {
-        this.currentDemand = resp;
+        this.currentDemand = resp.Data;
         this.currentInformation = {
           ID: resp.ID,
           Messages: resp.Messages,

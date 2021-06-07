@@ -22,6 +22,8 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { DemandPropertiesInterface } from 'src/app/shared/modules/demand/types/common/demand-properties.interface';
+import { DemandFactoringInterface } from 'src/app/shared/modules/demand/types/common/demand-factoring.interface';
+import { DemandAnketInterface } from 'src/app/shared/modules/demand/types/common/demand-anket.interface';
 
 @Component({
   selector: 'app-factoring-data',
@@ -71,7 +73,6 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initForm();
     this.initValues();
-
     this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
 
@@ -386,12 +387,9 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       })
     );
 
-    if(this.currentDemand) {
-      console.log('CURENT D', this.currentDemand)
-      let anket = this.currentDemand.Data.Anket;
-      let factoring = this.currentDemand.Data.Factoring;
-
-
+    if(this.isEdit)
+    {
+      this.convertToFormData()
     }
 
     this.formFactoring.markAllAsTouched();
@@ -413,8 +411,11 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  // TODO::
-  private prepareDataToForm(data: any): void {
+  private convertToFormData() {
+    let factoring: DemandFactoringInterface;
+    let anket: DemandAnketInterface;
+
+
     this.formFactoring.patchValue({
 
     });
