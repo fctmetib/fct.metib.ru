@@ -280,7 +280,6 @@ export class ReportViewPageComponent implements OnInit {
   private _hideAll() {
       this.selectedDisplay$.next(false);
       this.allPagesCount = null;
-
   }
 
   private getDataForPageSum(): number[] {

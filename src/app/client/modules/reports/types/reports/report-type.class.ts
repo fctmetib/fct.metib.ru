@@ -1459,17 +1459,35 @@ export class ReportType {
           name: 'ABSID',
           title: 'ABSID',
           type: 'string',
-          visible: true
+          visible: false
         },
         {
-          name: 'AccountCredit',
-          title: 'Номер',
+          name: 'DocNumber',
+          title: '№ ПП',
           type: 'string',
           visible: true
         },
         {
+          name: 'Date',
+          title: 'Дата прихода',
+          type: 'date',
+          visible: true
+        },
+        {
+          name: 'Summ',
+          title: 'Сумма прихода',
+          type: 'number',
+          visible: true
+        },
+        {
           name: 'AccountDebt',
-          title: 'Номер',
+          title: 'Дебет',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'AccountCredit',
+          title: 'Кредит',
           type: 'string',
           visible: true
         },
@@ -1480,9 +1498,33 @@ export class ReportType {
           visible: false
         },
         {
-          name: 'Date',
-          title: 'Date',
-          type: 'date',
+          name: 'PayerTitle',
+          title: 'Плательщик',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'PayerAccount',
+          title: 'Счет плательщика',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'PayerINN',
+          title: 'ИНН плательщика',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'PayerCorrespondent',
+          title: 'Корр. плательщика',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'PayerBankTitle',
+          title: 'Банк плательщика',
+          type: 'string',
           visible: true
         },
         {
@@ -1493,50 +1535,8 @@ export class ReportType {
         },
         {
           name: 'DebtorTitle',
-          title: 'DebtorTitle',
+          title: 'Дебитор',
           type: 'string',
-          visible: false
-        },
-        {
-          name: 'DocNumber',
-          title: 'DocNumber',
-          type: 'string',
-          visible: true
-        },
-        {
-          name: 'PayerAccount',
-          title: 'PayerAccount',
-          type: 'string',
-          visible: true
-        },
-        {
-          name: 'PayerBankTitle',
-          title: 'PayerBankTitle',
-          type: 'string',
-          visible: true
-        },
-        {
-          name: 'PayerCorrespondent',
-          title: 'PayerCorrespondent',
-          type: 'string',
-          visible: true
-        },
-        {
-          name: 'PayerINN',
-          title: 'PayerINN',
-          type: 'string',
-          visible: true
-        },
-        {
-          name: 'PayerTitle',
-          title: 'PayerTitle',
-          type: 'string',
-          visible: true
-        },
-        {
-          name: 'Summ',
-          title: 'Summ',
-          type: 'number',
           visible: true
         },
       ]

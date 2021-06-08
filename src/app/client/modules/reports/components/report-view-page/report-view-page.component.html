@@ -62,7 +62,9 @@
                   {{rowData[col.name] | date:'MM.dd.yyyy'}}
                 </div>
                 <div class="m-td" *ngSwitchDefault pTooltip="{{rowData[col.name]}}" id="{{i}}">
-                  {{rowData[col.name]}}
+                  <div>
+                    {{rowData[col.name]}}
+                  </div>
                 </div>
               </div>
             </td>
