@@ -1454,7 +1454,92 @@ export class ReportType {
       args: function () {
         return new StandartReportArgs('PaymentsIncome', 'Полученные Платежи');
       },
-      columns: []
+      columns: [
+        {
+          name: 'ABSID',
+          title: 'ABSID',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'AccountCredit',
+          title: 'Номер',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'AccountDebt',
+          title: 'Номер',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'Comment',
+          title: 'Комментарий',
+          type: 'string',
+          visible: false
+        },
+        {
+          name: 'Date',
+          title: 'Date',
+          type: 'date',
+          visible: true
+        },
+        {
+          name: 'DebtorID',
+          title: 'DebtorID',
+          type: 'string',
+          visible: false
+        },
+        {
+          name: 'DebtorTitle',
+          title: 'DebtorTitle',
+          type: 'string',
+          visible: false
+        },
+        {
+          name: 'DocNumber',
+          title: 'DocNumber',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'PayerAccount',
+          title: 'PayerAccount',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'PayerBankTitle',
+          title: 'PayerBankTitle',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'PayerCorrespondent',
+          title: 'PayerCorrespondent',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'PayerINN',
+          title: 'PayerINN',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'PayerTitle',
+          title: 'PayerTitle',
+          type: 'string',
+          visible: true
+        },
+        {
+          name: 'Summ',
+          title: 'Summ',
+          type: 'number',
+          visible: true
+        },
+      ]
     },
     {
       id: 18,
