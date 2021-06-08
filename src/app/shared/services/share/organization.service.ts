@@ -50,4 +50,8 @@ export class OrganizationService {
     let url = `${environment.apiUrl}/organization/search/${id}?deepSearch=true&includeDetails=true`;
     return this.http.get<OrganizationInterface[]>(url);
   }
+
+  getBankRequisites(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/Content/data/data-requisite.json`);
+  }
 }

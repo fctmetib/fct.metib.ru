@@ -13,6 +13,7 @@ import { ShipmentInterface } from 'src/app/shared/types/common/shipment-interfac
 import { ClipboardService } from 'ngx-clipboard';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BankRequisitesInterface } from 'src/app/shared/types/bank/bank-requisites.interface';
 
 @Component({
   selector: 'app-contracts-page',
@@ -92,17 +93,19 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
   public isShipmentsLoading: boolean = false;
   public currentShipments: ShipmentInterface[] = [];
 
+  private bankRequisites: BankRequisitesInterface;
   private subscription$: Subscription = new Subscription();
 
   constructor(
     private deliveryService: DeliveryService,
     private organizationService: OrganizationService,
-    private _clipboardService: ClipboardService,
+    private _clipboardService: ClipboardService
   ) {}
 
   ngOnInit() {
     this.fetch();
 
+    this.bankRequisites = new MIBCommon().getBankRequisites();
     this.cols = [
       { field: 'ID', header: 'ID' },
       { field: 'Account', header: 'Аккаунт' },
@@ -129,24 +132,29 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
     this.subscription$.add(
       this.deliveryService.getDeliveryAccounts(id).subscribe(
         (resp) => {
+          const accountPayment = resp.filter((x) =>
+            x.Number.startsWith('612 12')
+          )[0];
+          const duties = resp.filter((x) => x.Number.startsWith('458 12'));
 
-        console.log(resp)
-        // this.currentOrganization = resp;
+          console.log(accountPayment);
+          console.log(duties);
+          // this.currentOrganization = resp;
 
-        // this.currentOrganizationContent = `Банк: ${resp?.Account?.Bank || ''}
-        // Получатель: ${resp?.Account?.Bank || ''}
-        // Кор/с: ${resp?.Account?.COR || ''}
-        // БИК: ${resp?.Account?.BIK || ''}
-        // ИНН: ${resp?.INN || ''}
-        // КПП: ${resp?.KPP || ''}
-        // Счет для оплаты задолженности: ${resp?.ABSID || ''}
-        // Счет для оплаты комиссии: ${resp?.ABSID || ''}
-        // Счет для оплаты комиссии Фактор-Клиента: ${resp?.ABSID || ''}
-        // Примеры назначения платежа: ${resp?.ABSID || ''}
-        // Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция):
-        // ${resp?.ABSID || ''}
-        // Назначение: ${resp?.Description || ''}`;
-        //   this.isOrganizationLoading = false;
+          this.currentOrganizationContent = `Банк: ${this.bankRequisites.Title}
+        Получатель: ${this.bankRequisites.Title}
+        Кор/с: ${this.bankRequisites.COR}
+        БИК: ${this.bankRequisites.BIK}
+        ИНН: ${this.bankRequisites.INN}
+        КПП: ${this.bankRequisites.KPP}
+        Счет для оплаты задолженности: ${accountPayment.Number || ''}
+        Счет для оплаты комиссии: ${duties[0]?.Number || ''}
+        Счет для оплаты комиссии Фактор-Клиента: ${duties[1]?.Number || ''}
+        Примеры назначения платежа: ${accountPayment?.Title || ''}
+        Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция):
+        ${accountPayment?.Title || ''}
+        Назначение: ${accountPayment?.Title || ''}`;
+          this.isOrganizationLoading = false;
         },
         (error) => {
           this.isOrganizationError = true;
