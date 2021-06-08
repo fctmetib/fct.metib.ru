@@ -23,7 +23,6 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
   public alert: boolean;
   public alertMessage: string;
 
-  public isLoading$: Observable<boolean> = new Observable<boolean>();
   public backendErrors$: Observable<string | null>;
 
   public currentDraftId: number = 0;
@@ -34,6 +33,7 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
   public files: any;
 
   public isEdit: boolean = false;
+  public isLoading: boolean = false;
 
   private subscription$: Subscription = new Subscription();
 
@@ -53,12 +53,9 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
         if (params['ID']) {
           this.fetch(params['ID']);
         } else {
+          this.isLoading = true;
           this.getDraft();
         }
-        // if (params['DraftId']) {
-        //   this.currentDraftId = params['DraftID'];
-        //   this.isEdit = true;
-        // }
       })
     );
   }
@@ -110,6 +107,7 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
     this.subscription$.add(
       this.demandService.prepareDemandByType('Factoring').subscribe((resp) => {
         this.currentDemand = resp;
+        this.isLoading = false;
       })
     );
   }
@@ -129,7 +127,6 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
           Type: resp.Type,
           Manager: null,
         };
-        console.log(this.currentDemand);
         this.isEdit = true;
       })
     );

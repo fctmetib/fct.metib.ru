@@ -6,7 +6,7 @@
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-      [routerLink]="['/demand']" *ngIf="isEdit"></button>
+        [routerLink]="['/demand']" *ngIf="isEdit"></button>
     </div>
   </div>
 
@@ -14,22 +14,30 @@
   <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
   </metib-backend-error-messages>
 
-  <ng-container *ngIf="isEdit; else createTemplate;">
-    <p-tabView class="mib-tabs">
-      <p-tabPanel header="Информация">
-        <app-demand-info [currentDemandInfo]="currentInformation" (sendMessage)="handleSendMessage($event)"></app-demand-info>
-      </p-tabPanel>
-      <p-tabPanel header="Данные">
-        <app-factoring-data [isEdit]="true" [currentDemand]="currentDemand" [currentDraftId]="currentDraftId"
-          (save)="handleSave($event)" (create)="handleSubmit($event)"></app-factoring-data>
-      </p-tabPanel>
-      <p-tabPanel header="Файлы">
-        <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files"></app-demand-files>
-      </p-tabPanel>
-    </p-tabView>
+  <ng-container *ngIf="isLoading; else contentTemplate">
+    <p>Загрузка...</p>
   </ng-container>
-  <ng-template #createTemplate>
-    <app-factoring-data [isEdit]="false" [currentDemand]="currentDemand" [currentDraftId]="currentDraftId"
-      (save)="handleSave($event)" (create)="handleSubmit($event)"></app-factoring-data>
+  <ng-template #contentTemplate>
+    <ng-container *ngIf="isEdit; else createTemplate;">
+      <p-tabView class="mib-tabs">
+        <p-tabPanel header="Информация">
+          <app-demand-info [currentDemandInfo]="currentInformation" (sendMessage)="handleSendMessage($event)">
+          </app-demand-info>
+        </p-tabPanel>
+        <p-tabPanel header="Данные">
+          <app-factoring-data [isEdit]="true" [currentDemand]="currentDemand" [currentDraftId]="currentDraftId"
+            (save)="handleSave($event)" (create)="handleSubmit($event)"></app-factoring-data>
+        </p-tabPanel>
+        <p-tabPanel header="Файлы">
+          <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files">
+          </app-demand-files>
+        </p-tabPanel>
+      </p-tabView>
+    </ng-container>
+    <ng-template #createTemplate>
+      <app-factoring-data [isEdit]="false" [currentDemand]="currentDemand"
+        [currentDraftId]="currentDraftId" (save)="handleSave($event)" (create)="handleSubmit($event)">
+      </app-factoring-data>
+    </ng-template>
   </ng-template>
 </div>
