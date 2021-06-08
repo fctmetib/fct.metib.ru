@@ -14,6 +14,7 @@ import { ClipboardService } from 'ngx-clipboard';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BankRequisitesInterface } from 'src/app/shared/types/bank/bank-requisites.interface';
+import { AccountsService } from 'src/app/shared/services/common/accounts.service';
 
 @Component({
   selector: 'app-contracts-page',
@@ -98,7 +99,7 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private deliveryService: DeliveryService,
-    private organizationService: OrganizationService,
+    private accountsService: AccountsService,
     private _clipboardService: ClipboardService
   ) {}
 
@@ -150,10 +151,12 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
         Счет для оплаты задолженности: ${accountPayment.Number || ''}
         Счет для оплаты комиссии: ${duties[0]?.Number || ''}
         Счет для оплаты комиссии Фактор-Клиента: ${duties[1]?.Number || ''}
-        Примеры назначения платежа: ${accountPayment?.Title || ''}
+        Примеры назначения платежа: Оплата задолженности по договору поручительства в рамках Генерального договора № 20/12-2005 от 16.02.2006, в т. ч. НДС
         Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция):
         ${accountPayment?.Title || ''}
-        Назначение: ${accountPayment?.Title || ''}`;
+        Назначение: Оплата ежемесячной комиссии в рамках Генерального договора № 20/12-2005 от 16.02.2006, в т. ч. НДС
+        Оплата комиссионного вознаграждения в рамках Генерального договора № 20/12-2005 от 16.02.2006, в т. ч. НДС
+        `;
           this.isOrganizationLoading = false;
         },
         (error) => {
@@ -295,6 +298,10 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       })
     );
+
+    this.accountsService.getAccounts().subscribe(resp => {
+
+    });
   }
 
   private updateCurrentPage(currentPage: number): void {

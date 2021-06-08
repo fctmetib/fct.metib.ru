@@ -28,6 +28,7 @@ import { OrganizationService } from 'src/app/shared/services/share/organization.
 import { BackendErrorMessagesModule } from 'src/app/shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { RequestsService } from '../requests/services/requests.service';
 import { ClipboardModule } from 'ngx-clipboard';
+import { AccountsService } from 'src/app/shared/services/common/accounts.service';
 
 @NgModule({
   imports: [
@@ -58,6 +59,6 @@ import { ClipboardModule } from 'ngx-clipboard';
     ContractsRoutingModule,
   ],
   declarations: [ContractsPageComponent],
-  providers: [DeliveryService, OrganizationService, RequestsService],
+  providers: [DeliveryService, RequestsService, AccountsService],
 })
 export class ContractsModule {}
