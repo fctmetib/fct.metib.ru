@@ -486,6 +486,9 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
       factoringFinanceLimit: factoring.LimitWanted,
       factoringClients: '',
       factoringWorkers: factoring.StaffAmount,
+
+      factoringSuppliers: factoring.Suppliers,
+      factoringLimit: factoring.LimitWanted,
     });
 
     banks.forEach(b => this.addOtherBank(b));

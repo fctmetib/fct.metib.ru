@@ -25,10 +25,11 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./demand-action-eds-page.component.scss'],
 })
 export class DemandActionEDSPageComponent implements OnInit {
-
   public isEdit: boolean = false;
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
+
+  public isLoading: boolean;
 
   isUserVerified: boolean;
   formEDS: FormGroup;
@@ -89,14 +90,12 @@ export class DemandActionEDSPageComponent implements OnInit {
       this.route.queryParams.subscribe((params: Params) => {
         if (params['ID']) {
           this.fetch(params['ID']);
-        }
-        if (params['DraftId']) {
-          this.currentDraftId = params['DraftID'];
-          this.isEdit = true;
+        } else {
+          this.isLoading = true;
+          this.getDraft();
         }
       })
     );
-
   }
 
   ngOnDestroy() {
@@ -264,7 +263,21 @@ export class DemandActionEDSPageComponent implements OnInit {
   }
 
   handleRemoveFile(file: FileModeInterface) {
-    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+    this.currentDemand.Files = this.currentDemand.Files.filter(
+      (x) => x !== file
+    );
+  }
+
+  private getDraft() {
+    this.subscription$.add(
+      this.demandService
+        .prepareDemandByType('DigitalSignature')
+        .subscribe((resp) => {
+          this.currentDemand = resp;
+          this.convertToFormData();
+          this.isLoading = false;
+        })
+    );
   }
 
   private fetch(id: number) {
@@ -284,7 +297,52 @@ export class DemandActionEDSPageComponent implements OnInit {
         };
         console.log(this.currentDemand);
         this.isEdit = true;
+        this.convertToFormData();
       })
     );
+  }
+
+  private convertToFormData() {
+    console.log(this.currentDemand);
+    const organization: OrganizationDataInterface =
+      this.currentDemand.Organization;
+    const passport: PassportInterface = this.currentDemand.Passport;
+    const person: PersonInterface = this.currentDemand.Person;
+
+    this.formEDS.patchValue({
+      organizationType: organization.Type,
+      organizationLegalForm: organization.LegalForm,
+      organizationShortName: organization.ShortTitle,
+      organizationFullName: organization.FullTitle,
+      organizationINN: organization.Requisites.INN,
+      organizationKPP: organization.Requisites.KPP,
+      organizationOGRN: organization.Requisites.OGRN,
+      organizationOKPO: organization.Requisites.OKPO,
+      organizationPhone: organization.Phone,
+      organizationEmail: organization.Email,
+      organizationWEB: organization.Website,
+      organizationLegalAddress: organization.LegalAddress,
+      organizationIsActualAdressEqual: organization.FactAddressEquals,
+
+      organizationActualAddress: organization.FactAddress,
+      organizationIsLegalAdressEqual: organization.PostAddressEquals,
+
+      ownerSurname: person.NameLast,
+      ownerName: person.NameFirst,
+      ownerMiddlename: person.NameSecond,
+      ownerGender: person.Gender,
+      ownerSNILS: person.SNILS,
+      ownerDateBurn: person.BirthDate,
+      ownerPlaceBurn: person.BirthPlace,
+      ownerPhone: person.Phone,
+      ownerWorkPosition: this.currentDemand.PersonPosition,
+      ownerEmail: person.Email,
+      ownerGeoPosition: person.BirthPlace,
+
+      passportNumber: passport.Number,
+      passportDate: passport.Date,
+      passportFrom: passport.IssuerTitle,
+      passportCode: passport.IssuerCode,
+    });
   }
 }
