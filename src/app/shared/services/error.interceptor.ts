@@ -33,7 +33,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           console.warn('ErrorInterceptor. Server-side error');
           //TODO: if dev env => this.showError(`Error Code: ${error.status}\nMessage: ${error.message}`)
           // ELSE =>
-          errorMessage ='При загрузке данных произошла ошибка.'
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+          // errorMessage ='При загрузке данных произошла ошибка.'
         }
 
         this.showError(errorMessage);

@@ -436,7 +436,6 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   }
 
   private convertToFormData() {
-    console.log('C1', this.currentDemand);
     let factoring: DemandFactoringInterface = this.currentDemand.Factoring;
     let anket: DemandAnketInterface = this.currentDemand.Anket;
 

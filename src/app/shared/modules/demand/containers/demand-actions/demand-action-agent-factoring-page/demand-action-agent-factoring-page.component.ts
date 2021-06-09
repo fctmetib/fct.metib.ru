@@ -24,6 +24,8 @@ import { FactoringInfoInterface } from '../../../types/common/factoring/factorin
 import { ActivatedRoute, Params } from '@angular/router';
 import { DemandService } from '../../../services/demand.service';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
+import { DemandFactoringInterface } from '../../../types/common/demand-factoring.interface';
+import { DemandAnketInterface } from '../../../types/common/demand-anket.interface';
 
 @Component({
   selector: 'app-demand-action-agent-factoring-page',
@@ -59,6 +61,7 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
   public isLoading$: Observable<boolean> = new Observable<boolean>();
   public backendErrors$: Observable<string | null>;
 
+  public isLoading: boolean = false;
   private subscription$: Subscription = new Subscription();
 
   constructor(
@@ -81,9 +84,9 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
       this.route.queryParams.subscribe((params: Params) => {
         if (params['ID']) {
           this.fetch(params['ID']);
-        }
-        if (params['DraftId']) {
-          this.currentDraftId = params['DraftID'];
+        }  else {
+          this.isLoading = true;
+          this.getDraft();
         }
       })
     );
@@ -134,22 +137,44 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
     );
   }
 
-  //#region public page actions
-
-  addOtherBank(): void {
-    let otherBanks = this.formFactoring.get('otherBanks') as FormArray;
-    otherBanks.push(
-      this.fb.group({
-        otherBankAccountOpenDate: ['', [Validators.required]],
-        otherBankAccountCloseDate: ['', [Validators.required]],
-        otherBankName: ['', [Validators.required]],
-        otherBankOwnerAccount: ['', [Validators.required]],
-        otherBankTarget: ['', [Validators.required]],
+  private getDraft() {
+    this.subscription$.add(
+      this.demandService.prepareDemandByType('AgencyFactoring ').subscribe((resp) => {
+        this.currentDemand = resp;
+        this.convertToFormData();
+        this.isLoading = false;
       })
     );
   }
 
-  addOtherPlace(): void {
+  //#region public page actions
+
+  addOtherBank(existBank?: DemandAddonAccountInterface): void {
+    let otherBanks = this.formFactoring.get('otherBanks') as FormArray;
+    otherBanks.push(
+      this.fb.group({
+        otherBankAccountOpenDate: [
+          existBank ? existBank.Date : '',
+          [Validators.required],
+        ],
+        otherBankAccountCloseDate: [
+          existBank ? existBank.Expire : '',
+          [Validators.required],
+        ],
+        otherBankName: [existBank ? existBank.Bank : '', [Validators.required]],
+        otherBankOwnerAccount: [
+          existBank ? existBank.Number : '',
+          [Validators.required],
+        ],
+        otherBankTarget: [
+          existBank ? existBank.Comment : '',
+          [Validators.required],
+        ],
+      })
+    );
+  }
+
+  addOtherPlace(existProp?: DemandPropertiesInterface): void {
     let factoringPlaces = this.formFactoring.get(
       'factoringPlaces'
     ) as FormArray;
@@ -157,16 +182,18 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
       this.fb.group({
         displayAddress: '',
         factoringPlacesAddress: {
-          PostCode: '',
-          Country: 'Российская Федерация',
-          RegionCode: 77,
-          RegionTitle: '',
-          City: 'Москва',
-          District: '',
-          Locality: '',
-          Street: '',
-          House: '',
-          Appartment: '',
+          PostCode: existProp ? existProp.Address.PostCode : '',
+          Country: existProp
+            ? existProp.Address.Country
+            : 'Российская Федерация',
+          RegionCode: existProp ? existProp.Address.RegionCode : 77,
+          RegionTitle: existProp ? existProp.Address.RegionTitle : '',
+          City: existProp ? existProp.Address.City : 'Москва',
+          District: existProp ? existProp.Address.District : '',
+          Locality: existProp ? existProp.Address.Locality : '',
+          Street: existProp ? existProp.Address.Street : '',
+          House: existProp ? existProp.Address.House : '',
+          Appartment: existProp ? existProp.Address.Appartment : '',
         },
         factoringPlacesLegalForm: ['Own', [Validators.required]],
       })
@@ -175,18 +202,22 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
     this.updateDisplayAddress(factoringPlaces.length - 1);
   }
 
-  addFactoringCredits(): void {
+  addFactoringCredits(existCredit?: DemandObligationInterface): void {
     let factoringCredits = this.formFactoring.get(
       'factoringCredits'
     ) as FormArray;
     factoringCredits.push(
       this.fb.group({
-        factoringCreditsCreditor: [''],
-        factoringPlacesTypeDuty: [''],
-        factoringPlacesDateClose: [''],
-        factoringPlacesContractSum: [''],
-        factoringPlacesBalanceReport: [''],
-        factoringPlacesBalanceCurrent: [''],
+        factoringCreditsCreditor: [existCredit ? existCredit.Creditor : ''],
+        factoringPlacesTypeDuty: [existCredit ? existCredit.Type : ''],
+        factoringPlacesDateClose: [existCredit ? existCredit.Date : ''],
+        factoringPlacesContractSum: [existCredit ? existCredit.Summ : ''],
+        factoringPlacesBalanceReport: [
+          existCredit ? existCredit.ReportingRest : '',
+        ],
+        factoringPlacesBalanceCurrent: [
+          existCredit ? existCredit.CurrentRest : '',
+        ],
       })
     );
   }
@@ -424,6 +455,44 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
       });
   }
 
+  private convertToFormData() {
+    let factoring: DemandFactoringInterface = this.currentDemand.Factoring;
+    let anket: DemandAnketInterface = this.currentDemand.Anket;
+
+    let banks: DemandAddonAccountInterface[] = factoring.AddonAccounts;
+    let places: DemandPropertiesInterface[] = factoring.Properties;
+    let credits: DemandObligationInterface[] = factoring.Obligations;
+    let ediProviders: DemandEDIInterface[] = factoring.EDI;
+
+    this.formFactoring.patchValue({
+      organizationType: anket.Organization.Type,
+      organizationLegalForm: anket.Organization.LegalForm,
+      organizationShortName: anket.Organization.ShortTitle,
+      organizationINN: anket.Organization.Requisites.INN,
+      organizationPhone: anket.Organization.Phone,
+      organizationEmail: anket.Organization.Email,
+      organizationWEB: anket.Organization.Website,
+
+      bankBik: factoring.Account.BIK,
+      bankCorrespondentAccount: factoring.Account.COR,
+      bankName: factoring.Account.Bank,
+      bankAccountOpenDate: new Date(factoring.Account.Date),
+      bankOwnerAccount: factoring.Account.Number,
+      bankComment: factoring.Account.Comment,
+
+      factoringProducts: factoring.Products,
+      factoringTradeMarks: factoring.Trademarks,
+      factoringShipments: factoring.Suppliers,
+      factoringFinanceLimit: factoring.LimitWanted,
+      factoringClients: '',
+      factoringWorkers: factoring.StaffAmount,
+    });
+
+    banks.forEach(b => this.addOtherBank(b));
+    places.forEach(p => this.addOtherPlace(p));
+    credits.forEach(c => this.addFactoringCredits(c));
+  }
+
   private prepareData(): SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> {
     let listEDI: DemandEDIInterface[] = [];
 
@@ -640,10 +709,11 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
             Trademarks: this.formFactoring.value.factoringTradeMarks,
           },
           Files: this.files,
-          Type: 'Factoring',
+          Type: 'AgencyFactoring ',
         },
         DraftID: 0,
       };
+
 
     return result;
   }
