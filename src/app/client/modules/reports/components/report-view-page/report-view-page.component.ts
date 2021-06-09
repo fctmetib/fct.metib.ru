@@ -113,9 +113,7 @@ export class ReportViewPageComponent implements OnInit {
       this.reportData.forEach((item) => {
         let object: any = {};
         this.reportConfig.columns.forEach((column) => {
-          if (column.visible) {
             object[column.title] = item[column.name];
-          }
         });
         exportData.push(object);
       });

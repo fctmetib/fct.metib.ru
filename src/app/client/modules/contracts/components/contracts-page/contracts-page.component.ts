@@ -138,10 +138,7 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
           )[0];
           const duties = resp.filter((x) => x.Number.startsWith('458 12'));
 
-          console.log(accountPayment);
-          console.log(duties);
           // this.currentOrganization = resp;
-
           this.currentOrganizationContent = `Банк: ${this.bankRequisites.Title}
         Получатель: ${this.bankRequisites.Title}
         Кор/с: ${this.bankRequisites.COR}
@@ -300,7 +297,13 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
     );
 
     this.accountsService.getAccounts().subscribe(resp => {
+      // TODO: из accounts из 458 12 достаем дату и номер
+      let t1: string = `Назначение "Оплата задолженности по договору поручительства в рамках Договора о предоставлении ПАО АКБ «Металлинвестбанк» факторинговых услуг ${'№ 1085/08-2015 от 09.01.2019'}, в т. ч. НДС";`
+      let t2: string = `Назначение "Оплата ежемесячной комиссии в рамках Договора о предоставлении ПАО АКБ «Металлинвестбанк» факторинговых услуг ${'№ 1085/08-2015 от 09.01.2019'}, в т. ч. НДС" `
+      let t3: string = `Назначение "Оплата комиссионного вознаграждения в рамках Договора о предоставлении ПАО АКБ «Металлинвестбанк» факторинговых услуг ${' № 1085/08-2015 от 09.01.2019'}, в т. ч. НДС"`
 
+      // TODO: add contain: "за Фактор-Клиент"
+      const dutyFactorClient = resp.filter((x) => x.Title)
     });
   }
 
