@@ -1,5 +1,9 @@
 <div class="card-content" id="step1">
-  <header-page [title]="'Просрочки покупателя'"></header-page>
+  <header-page [title]="'Просрочки покупателя'">
+    <div class="mib-action mib-button-icon excel-icon can-click" (click)="exportExcel()" pTooltip="Экспорт файла Excel">
+      <img src="../../../../../../assets/icons/mib-excel.png" alt="">
+    </div>
+  </header-page>
 
   <p-table [value]="reportData" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10,25,50]" [loading]="isLoading"

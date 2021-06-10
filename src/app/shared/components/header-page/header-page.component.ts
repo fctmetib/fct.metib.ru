@@ -8,7 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
         <h2>{{title}}</h2>
         <div class="subheader">{{description}}</div>
       </div>
-      <div class="actions"></div>
+      <div class="actions">
+        <ng-content select=".mib-action"></ng-content>
+      </div>
     </div>
   `,
 })
