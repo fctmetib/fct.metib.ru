@@ -5,6 +5,7 @@ import {
   HttpRequest,
   HttpResponse,
   HttpErrorResponse,
+  HttpEventType,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
@@ -29,11 +30,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           console.warn('ErrorInterceptor. Client-side error');
           errorMessage =error.error.message;
         } else {
+          console.log(error)
           // server-side error
-          console.warn('ErrorInterceptor. Server-side error');
+          console.warn(`ErrorInterceptor. Error Code: ${error.status}\nMessage: ${error.message}`);
           //TODO: if dev env => this.showError(`Error Code: ${error.status}\nMessage: ${error.message}`)
           // ELSE =>
-          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+          errorMessage = `${error.error}`;
           // errorMessage ='При загрузке данных произошла ошибка.'
         }
 

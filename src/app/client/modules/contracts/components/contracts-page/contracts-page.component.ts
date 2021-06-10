@@ -1,18 +1,14 @@
 import { CounterpartyReferenceInterface } from './../../../../../shared/types/counterparty/counterparty-reference.interface';
 import { MibArray } from './../../../../../shared/classes/arrays/mib-array.class';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
-import { RequestsService } from './../../../requests/services/requests.service';
-import { Router } from '@angular/router';
 import { OrganizationInterface } from './../../../../../shared/types/organization/organization.interface';
 import { DeliveryInterface } from './../../../../../shared/types/delivery/delivery.interface';
 import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
 import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Paginator } from 'primeng/paginator';
-import { OrganizationService } from 'src/app/shared/services/share/organization.service';
 import { ShipmentInterface } from 'src/app/shared/types/common/shipment-interface';
 import { ClipboardService } from 'ngx-clipboard';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { BankRequisitesInterface } from 'src/app/shared/types/bank/bank-requisites.interface';
 import { AccountsService } from 'src/app/shared/services/common/accounts.service';
 
@@ -131,29 +127,9 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
     this.isOrganizationError = false;
 
     this.subscription$.add(
-      this.deliveryService.getDeliveryAccounts(id).subscribe(
+      this.deliveryService.getRequisitesByDeliveryId(id).subscribe(
         (resp) => {
-          const accountPayment = resp.filter((x) =>
-            x.Number.startsWith('612 12')
-          )[0];
-          const duties = resp.filter((x) => x.Number.startsWith('458 12'));
-
-          // this.currentOrganization = resp;
-          this.currentOrganizationContent = `Банк: ${this.bankRequisites.Title}
-        Получатель: ${this.bankRequisites.Title}
-        Кор/с: ${this.bankRequisites.COR}
-        БИК: ${this.bankRequisites.BIK}
-        ИНН: ${this.bankRequisites.INN}
-        КПП: ${this.bankRequisites.KPP}
-        Счет для оплаты задолженности: ${accountPayment.Number || ''}
-        Счет для оплаты комиссии: ${duties[0]?.Number || ''}
-        Счет для оплаты комиссии Фактор-Клиента: ${duties[1]?.Number || ''}
-        Примеры назначения платежа: Оплата задолженности по договору поручительства в рамках Генерального договора № 20/12-2005 от 16.02.2006, в т. ч. НДС
-        Задолженность по ранее профинансированным отгрузкам (просрочка, возврат, коррекция):
-        ${accountPayment?.Title || ''}
-        Назначение: Оплата ежемесячной комиссии в рамках Генерального договора № 20/12-2005 от 16.02.2006, в т. ч. НДС
-        Оплата комиссионного вознаграждения в рамках Генерального договора № 20/12-2005 от 16.02.2006, в т. ч. НДС
-        `;
+          this.currentOrganizationContent = resp;
           this.isOrganizationLoading = false;
         },
         (error) => {
@@ -295,16 +271,6 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       })
     );
-
-    this.accountsService.getAccounts().subscribe(resp => {
-      // TODO: из accounts из 458 12 достаем дату и номер
-      let t1: string = `Назначение "Оплата задолженности по договору поручительства в рамках Договора о предоставлении ПАО АКБ «Металлинвестбанк» факторинговых услуг ${'№ 1085/08-2015 от 09.01.2019'}, в т. ч. НДС";`
-      let t2: string = `Назначение "Оплата ежемесячной комиссии в рамках Договора о предоставлении ПАО АКБ «Металлинвестбанк» факторинговых услуг ${'№ 1085/08-2015 от 09.01.2019'}, в т. ч. НДС" `
-      let t3: string = `Назначение "Оплата комиссионного вознаграждения в рамках Договора о предоставлении ПАО АКБ «Металлинвестбанк» факторинговых услуг ${' № 1085/08-2015 от 09.01.2019'}, в т. ч. НДС"`
-
-      // TODO: add contain: "за Фактор-Клиент"
-      const dutyFactorClient = resp.filter((x) => x.Title)
-    });
   }
 
   private updateCurrentPage(currentPage: number): void {
