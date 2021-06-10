@@ -1,34 +1,20 @@
 <div class="card-content" id="step1">
-  <div class="header lg">
-    <div class="title">
-      <h2>Просрочки покупателя</h2>
-      <div class="subheader">
-        Описание страницы просрочки покупателя
-      </div>
-    </div>
-    <div class="actions">
-    </div>
-  </div>
+  <header-page [title]="'Просрочки покупателя'"></header-page>
 
-  <p-table [value]="[]" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
-    [rowsPerPageOptions]="[10,25,50]" [loading]="isLoading" [(selection)]="selectedItems" dataKey="ID"
+  <p-table [value]="reportData" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10,25,50]" [loading]="isLoading"
     styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
     currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 3rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
         <th>
           <div class="m-th">
-            <div>
-              Покупатель
-            </div>
+            <div>Покупатель</div>
           </div>
         </th>
         <th>
           <div class="m-th">
-            <div> Договор поставки</div>
+            <div>Договор поставки</div>
           </div>
         </th>
         <th>
@@ -64,21 +50,17 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
-      <tr [pSelectableRow]="item"
-        [ngClass]="{'warn': item.Statistics.PaymentExpire === true, 'success': item.Statistics.ShipmentID}">
-        <td>
-          <p-tableCheckbox [value]="item"></p-tableCheckbox>
-        </td>
+      <tr>
         <td>
           <div class="m-td">
             <div>
-              {{item}}
+              {{item.CustomerTitle}}
             </div>
           </div>
         </td>
         <td>
           <div class="m-td">
-            <div>{{item}}
+            <div>{{item.ContractDeliveryNumber}}
             </div>
           </div>
         </td>

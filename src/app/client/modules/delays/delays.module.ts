@@ -18,6 +18,8 @@ import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { DelaysPageComponent } from './delays-page/delays-page.component';
 import { DelaysService } from './services/delays.service';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { ReportService } from 'src/app/shared/services/common/report.service';
 
 @NgModule({
   imports: [
@@ -38,8 +40,9 @@ import { DelaysService } from './services/delays.service';
     MenubarModule,
     AvatarModule,
     DelaysRoutingModule,
+    SharedModule
   ],
   declarations: [DelaysPageComponent],
-  providers: [DelaysService],
+  providers: [DelaysService, ReportService],
 })
 export class DelaysModule {}

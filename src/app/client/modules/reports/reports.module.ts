@@ -1,4 +1,4 @@
-import { ReportService } from './services/report.service';
+import { ReportService } from '../../../shared/services/common/report.service';
 import { ReportsRoutingModule } from './reports-routing.module';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';

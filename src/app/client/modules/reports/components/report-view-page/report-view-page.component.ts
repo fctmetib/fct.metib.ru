@@ -1,5 +1,5 @@
 import { ReportType } from './../../types/reports/report-type.class';
-import { ReportService } from './../../services/report.service';
+import { ReportService } from '../../../../../shared/services/common/report.service';
 import { CryptoService } from './../../../../../shared/services/common/crypto.service';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
