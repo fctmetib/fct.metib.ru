@@ -12,24 +12,12 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
   public isLoading: false;
   public reportData: DelayInterface[] = [];
 
-  // pagination props
-  public currentPage: number = 0;
-  public currentRows: number = 10;
-  public currentFirst: number = 0;
-
   private _subscription$: Subscription = new Subscription();
 
   constructor(private reportService: ReportService) {}
 
   ngOnInit() {
     this._fetch();
-  }
-
-  public paginate(event): void {
-    let pageIndex = event.first / event.rows + 1;
-    this.currentFirst = event.first;
-    this.currentPage = pageIndex;
-    this.currentRows = event.rows;
   }
 
   public exportExcel(): void {

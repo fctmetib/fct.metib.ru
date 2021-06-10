@@ -66,32 +66,32 @@
         </td>
         <td>
           <div class="m-td">
-            <div> {{item}}</div>
+            <div> {{item.ShipmentFullTitle}}</div>
+          </div>
+        </td>
+        <td>
+          <div class="m-td currency">
+            <div>{{item.ShipmentSumm | currency:'RUB':'symbol-narrow'}}</div>
+          </div>
+        </td>
+        <td>
+          <div class="m-td currency">
+            <div>{{item.DutyDebtor | currency:'RUB':'symbol-narrow'}}</div>
           </div>
         </td>
         <td>
           <div class="m-td">
-            <div>{{item}}</div>
+            <div>{{item.DateShipment | date:"dd.MM.yyyy"}}</div>
           </div>
         </td>
         <td>
           <div class="m-td">
-            <div>{{item}}</div>
+            <div> {{item.DatePayment | date:"dd.MM.yyyy"}}</div>
           </div>
         </td>
         <td>
           <div class="m-td">
-            <div>{{item}}</div>
-          </div>
-        </td>
-        <td>
-          <div class="m-td">
-            <div> {{item}}</div>
-          </div>
-        </td>
-        <td>
-          <div class="m-td">
-            <div>{{item}}</div>
+            <div>{{item.DateAddon | date:"dd.MM.yyyy"}}</div>
           </div>
         </td>
       </tr>
