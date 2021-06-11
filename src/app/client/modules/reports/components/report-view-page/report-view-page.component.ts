@@ -113,7 +113,7 @@ export class ReportViewPageComponent implements OnInit {
       this.reportData.forEach((item) => {
         let object: any = {};
         this.reportConfig.columns.forEach((column) => {
-            object[column.title] = item[column.name];
+          object[column.title] = item[column.name];
         });
         exportData.push(object);
       });
@@ -178,8 +178,8 @@ export class ReportViewPageComponent implements OnInit {
 
   private prepareTable(): void {
     this.reportConfig = ReportType.getType(this.data.type);
-    console.log(this.reportConfig)
-    console.log(this.data.type)
+    console.log(this.reportConfig);
+    console.log(this.data.type);
     this.reportConfig.columns.forEach((column) => {
       if (column.visible) {
         this._selectedColumns.push(column);
@@ -237,8 +237,11 @@ export class ReportViewPageComponent implements OnInit {
     }
 
     this.subscription$.add(
-      this.reportService.getReport(request).subscribe((resp) => {
-        this.reportData = resp;
+      this.reportService.getReport(request).subscribe((resp: any[]) => {
+        console.log('resp', resp);
+        this.reportData = resp.sort((a, b) => {
+          return new Date(b.DateShipment).getTime() - new Date(a.DateShipment).getTime();
+        });
         this.isLoading = false;
       })
     );
@@ -276,8 +279,8 @@ export class ReportViewPageComponent implements OnInit {
   }
 
   private _hideAll() {
-      this.selectedDisplay$.next(false);
-      this.allPagesCount = null;
+    this.selectedDisplay$.next(false);
+    this.allPagesCount = null;
   }
 
   private getDataForPageSum(): number[] {
