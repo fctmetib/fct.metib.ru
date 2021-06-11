@@ -1,5 +1,5 @@
 import { DemandAddonAccountInterface } from './../../../../../types/common/demand-addon-account.interface';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, formatDate } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -103,11 +103,11 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     otherBanks.push(
       this.fb.group({
         otherBankAccountOpenDate: [
-          existBank ? existBank.Date : '',
+          existBank ? formatDate(existBank.Date, 'yyyy-MM-dd', 'en')  : '',
           [Validators.required],
         ],
         otherBankAccountCloseDate: [
-          existBank ? existBank.Expire : '',
+          existBank ? formatDate(existBank.Expire, 'yyyy-MM-dd', 'en')  : '',
           [Validators.required],
         ],
         otherBankName: [existBank ? existBank.Bank : '', [Validators.required]],
@@ -159,7 +159,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       this.fb.group({
         factoringCreditsCreditor: [existCredit ? existCredit.Creditor : ''],
         factoringPlacesTypeDuty: [existCredit ? existCredit.Type : ''],
-        factoringPlacesDateClose: [existCredit ? existCredit.Date : ''],
+        factoringPlacesDateClose: [existCredit ? formatDate(existCredit.Date, 'yyyy-MM-dd', 'en')  : ''],
         factoringPlacesContractSum: [existCredit ? existCredit.Summ : ''],
         factoringPlacesBalanceReport: [
           existCredit ? existCredit.ReportingRest : '',
@@ -456,7 +456,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       bankBik: factoring.Account.BIK,
       bankCorrespondentAccount: factoring.Account.COR,
       bankName: factoring.Account.Bank,
-      bankAccountOpenDate: new Date(factoring.Account.Date),
+      bankAccountOpenDate: formatDate(factoring.Account.Date, 'yyyy-MM-dd', 'en'),
       bankOwnerAccount: factoring.Account.Number,
       bankComment: factoring.Account.Comment,
 

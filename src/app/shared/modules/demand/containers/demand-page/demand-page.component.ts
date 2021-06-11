@@ -121,7 +121,7 @@ export class DemandPageComponent implements OnInit, OnDestroy {
       {
         text: 'Запрос на ЭЦП',
         url: 'actions/create-eds',
-        onlyNewClient: true,
+        onlyNewClient: false,
       },
       {
         text: 'Запрос на поручительство',
