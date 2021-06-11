@@ -8,7 +8,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
-import { OrganizationInterface } from 'src/app/shared/types/organization/organization.interface';
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
 import { CommonService } from 'src/app/shared/services/common/common.service';
@@ -18,6 +17,7 @@ import { switchMap } from 'rxjs/operators';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { ActivatedRoute, Params } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-demand-action-eds-page',
@@ -332,7 +332,7 @@ export class DemandActionEDSPageComponent implements OnInit {
       ownerMiddlename: person.NameSecond,
       ownerGender: person.Gender,
       ownerSNILS: person.SNILS,
-      ownerDateBurn: person.BirthDate,
+      ownerDateBurn: formatDate(person.BirthDate, 'yyyy-MM-dd', 'en') ,
       ownerPlaceBurn: person.BirthPlace,
       ownerPhone: person.Phone,
       ownerWorkPosition: this.currentDemand.PersonPosition,
@@ -340,7 +340,7 @@ export class DemandActionEDSPageComponent implements OnInit {
       ownerGeoPosition: person.BirthPlace,
 
       passportNumber: passport.Number,
-      passportDate: passport.Date,
+      passportDate: formatDate(passport.Date, 'yyyy-MM-dd', 'en') ,
       passportFrom: passport.IssuerTitle,
       passportCode: passport.IssuerCode,
     });

@@ -18,6 +18,7 @@ import { FactoringInfoInterface } from '../../../types/common/factoring/factorin
 import { ActivatedRoute, Params } from '@angular/router';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-demand-action-edit-profile-page',
@@ -83,10 +84,6 @@ export class DemandActionEditProfilePageComponent implements OnInit {
         } else {
           this.getDraft();
         }
-        // if (params['DraftId']) {
-        //   this.currentDraftId = params['DraftID'];
-        //   this.isEdit = true;
-        // }
       })
     );
 
@@ -170,7 +167,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
       phone: data.Profile?.Phone,
       email: data.Profile?.Email,
       number: data.Passport?.Number,
-      date: data.Passport?.Date,
+      date: formatDate(data.Passport?.Date, 'yyyy-MM-dd', 'en') ,
       issuerTitle: data.Passport?.IssuerTitle,
       issuerCode: data.Passport?.IssuerCode,
     });

@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, formatDate } from '@angular/common';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { createDemandFactoringAction } from './../../../store/actions/createDemand.action';
@@ -158,7 +158,7 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
           [Validators.required],
         ],
         otherBankAccountCloseDate: [
-          existBank ? existBank.Expire : '',
+          existBank ? formatDate(existBank.Expire, 'yyyy-MM-dd', 'en')  : '',
           [Validators.required],
         ],
         otherBankName: [existBank ? existBank.Bank : '', [Validators.required]],
@@ -210,7 +210,7 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
       this.fb.group({
         factoringCreditsCreditor: [existCredit ? existCredit.Creditor : ''],
         factoringPlacesTypeDuty: [existCredit ? existCredit.Type : ''],
-        factoringPlacesDateClose: [existCredit ? existCredit.Date : ''],
+        factoringPlacesDateClose: [existCredit ? formatDate(existCredit.Date, 'yyyy-MM-dd', 'en')  : ''],
         factoringPlacesContractSum: [existCredit ? existCredit.Summ : ''],
         factoringPlacesBalanceReport: [
           existCredit ? existCredit.ReportingRest : '',
@@ -476,7 +476,7 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
       bankBik: factoring.Account.BIK,
       bankCorrespondentAccount: factoring.Account.COR,
       bankName: factoring.Account.Bank,
-      bankAccountOpenDate: new Date(factoring.Account.Date),
+      bankAccountOpenDate: formatDate(factoring.Account.Date, 'yyyy-MM-dd', 'en'),
       bankOwnerAccount: factoring.Account.Number,
       bankComment: factoring.Account.Comment,
 

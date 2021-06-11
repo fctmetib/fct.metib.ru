@@ -207,9 +207,7 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
       return data;
     } else {
       if (this.formFree.value.Id) {
-        console.log('Debitor ID', this.formFree.value.Id)
         let debtor = this.debtors.find((x) => x.ID === +this.formFree.value.Id);
-        console.log('Debitor',debtor)
         let data = {
           ID: debtor.ID,
           INN: debtor.Inn,
