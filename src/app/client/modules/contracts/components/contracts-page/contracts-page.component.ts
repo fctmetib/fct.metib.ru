@@ -140,6 +140,24 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
     );
   }
 
+  public getSumDutyDebtor(): number {
+    if (this.cols.find((x) => x.field === 'DutyDebtor')) {
+      return this.currentShipments.reduce(
+        (sum, current) => sum + current.DutyDebtor,
+        0
+      );
+    }
+  }
+
+  public getSumDutyCustomer(): number {
+    if (this.cols.find((x) => x.field === 'DutyCustomer')) {
+      return this.currentShipments.reduce(
+        (sum, current) => sum + current.DutyCustomer,
+        0
+      );
+    }
+  }
+
   public showShipmentsDialog(id): void {
     this.displayShipments = true;
     this.isShipmentsLoading = true;
