@@ -3,4 +3,5 @@ export interface DeliveryStatisticsInterface {
   DutyDebtor: number;
   DutyCustomer: number;
   DelayDuty: number;
+  FreeLimit: number;
 }

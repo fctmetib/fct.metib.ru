@@ -90,19 +90,16 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
   public isShipmentsLoading: boolean = false;
   public currentShipments: ShipmentInterface[] = [];
 
-  private bankRequisites: BankRequisitesInterface;
   private subscription$: Subscription = new Subscription();
 
   constructor(
     private deliveryService: DeliveryService,
-    private accountsService: AccountsService,
     private _clipboardService: ClipboardService
   ) {}
 
   ngOnInit() {
     this.fetch();
 
-    this.bankRequisites = new MIBCommon().getBankRequisites();
     this.cols = [
       { field: 'ID', header: 'ID' },
       { field: 'Account', header: 'Аккаунт' },
