@@ -88,7 +88,6 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
         [Validators.required],
       ],
     });
-
   }
 
   applyFilters(): void {

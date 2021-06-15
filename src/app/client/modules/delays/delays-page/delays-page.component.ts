@@ -1,4 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ReportService } from '../../../../shared/services/common/report.service';
 import { ReportColumntInterface } from '../../reports/types/reports/report-column.interface';
@@ -8,6 +10,7 @@ import { DelayInterface } from '../types/delay.interface';
   selector: 'app-delays-page',
   templateUrl: './delays-page.component.html',
   styleUrls: ['./delays-page.component.scss'],
+  providers: [DatePipe],
 })
 export class DelaysPageComponent implements OnInit, OnDestroy {
   public isLoading: false;
@@ -16,11 +19,18 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
   private columns: ReportColumntInterface[] = []
   private _subscription$: Subscription = new Subscription();
 
-  constructor(private reportService: ReportService) {}
+  public filterDialog: boolean = false;
+  public filterForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    public datepipe: DatePipe,
+    private reportService: ReportService) {}
 
   ngOnInit() {
-    this._fetch();
+    this._initializeForm();
     this._initValues();
+    this._fetch();
   }
 
   public exportExcel(): void {
@@ -44,6 +54,17 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  public openDateModal() {
+    this.filterDialog = true;
+  }
+
+  public checkDateAddon(date: Date): boolean {
+    if (new Date(date) > new Date(this.filterForm.value.dateTo))
+      return true;
+
+    return false;
+  }
+
   //#region private logic
   private _fetch(): void {
     const request = {
@@ -51,7 +72,7 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
       Title: 'Просрочки покупателя',
       Export: 'JSON',
       CustomerID: 0,
-      Date: new Date(),
+      Date: new Date(this.filterForm.value.dateTo),
       DebtorID: 0,
       Delay: 1,
     };
@@ -238,6 +259,18 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
       }
     ]
   }
+
+  private _initializeForm() {
+    let to = new Date();
+
+    this.filterForm = this.fb.group({
+      dateTo: [
+        this.datepipe.transform(to, 'yyyy-MM-dd'),
+        [Validators.required],
+      ],
+    });
+  }
+
   //#endregion
 
   ngOnDestroy() {
