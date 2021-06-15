@@ -54,8 +54,16 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  public updateDelays() {
+    this._fetch();
+  }
+
   public openDateModal() {
     this.filterDialog = true;
+  }
+
+  public closeDateModal() {
+    this.filterDialog = false;
   }
 
   public checkDateAddon(date: Date): boolean {
@@ -79,6 +87,7 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
     this._subscription$.add(
       this.reportService.getReport(request).subscribe((resp) => {
         this.reportData = resp;
+        this.closeDateModal();
         this.isLoading = false;
       })
     );

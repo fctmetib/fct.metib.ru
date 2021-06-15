@@ -109,3 +109,20 @@
     </ng-template>
   </p-table>
 </div>
+
+<!-- Filter Form -->
+<p-dialog [style]="{width: '450px'}" [(visible)]="filterDialog" [draggable]="false" [resizable]="false"
+  header="Укажите период" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="filterForm" (ngSubmit)="updateDelays()">
+      <div class="p-field">
+        <label for="dateTo">Дата по: </label>
+        <input id="dateTo" type="date" pInputText placeholder="Дата по" formControlName="dateTo">
+      </div>
+      <div class="modal-actions">
+        <button pButton pRipple label="Применить" class="p-button-text save" type="submit"></button>
+        <button pButton pRipple label="Отменить" class="p-button-text cancel" (click)="closeDateModal()"></button>
+      </div>
+    </form>
+  </ng-template>
+</p-dialog>

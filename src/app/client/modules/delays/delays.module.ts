@@ -20,6 +20,8 @@ import { DelaysPageComponent } from './delays-page/delays-page.component';
 import { DelaysService } from './services/delays.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReportService } from 'src/app/shared/services/common/report.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   imports: [
@@ -32,6 +34,7 @@ import { ReportService } from 'src/app/shared/services/common/report.service';
     SliderModule,
     TableModule,
     DropdownModule,
+    DialogModule,
     FormsModule,
     ProgressBarModule,
     MultiSelectModule,
@@ -43,6 +46,6 @@ import { ReportService } from 'src/app/shared/services/common/report.service';
     SharedModule
   ],
   declarations: [DelaysPageComponent],
-  providers: [DelaysService, ReportService],
+  providers: [DialogService, DelaysService, ReportService],
 })
 export class DelaysModule {}
