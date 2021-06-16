@@ -202,11 +202,15 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     let addresses = this.formFactoring.value.factoringPlaces;
     let address = addresses[index].factoringPlacesAddress;
 
+    console.log('IN CONTAINER', addresses);
+    console.log('IN CONTAINER', address);
+
     this.ref = this.dialogService.open(AddressModalComponent, {
       header: 'Укажите Адрес',
-      width: '70%',
+      width: '650px',
       contentStyle: { 'max-height': '500px', overflow: 'auto' },
       baseZIndex: 10000,
+      styleClass: 'p-fluid',
       data: {
         address,
         index,
@@ -313,12 +317,11 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       result = result + ' ' + address.Appartment;
     }
 
-    let editeAddress = (<FormArray>(
-      this.formFactoring.controls['factoringPlaces']
-    ))
+    (<FormArray>this.formFactoring.controls['factoringPlaces'])
       .at(index)
       .patchValue({
         displayAddress: result,
+        factoringPlacesAddress: address
       });
   }
 
@@ -328,9 +331,6 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     this.organizationTypes = mibCommon.getOrganizations();
     this.ruleTypes = mibCommon.getLegalForms();
     this.typesOfOwner = mibCommon.getTypesOfOwner();
-
-    // this.isLoading$ = this.store.pipe(select(isLoadingSelector));
-    // this.backendErrors$ = this.store.pipe(select(errorSelector));
   }
 
   private initForm(): void {

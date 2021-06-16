@@ -7,7 +7,7 @@ import { DemandSelectboxInterface } from '../../types/common/demand-selectbox.in
 @Component({
   selector: 'address-modal',
   template: `
-    <div>
+    <div class="address-modal">
       <form [formGroup]="formAddress" (ngSubmit)="saveAddress()">
         <div class="p-field">
           <label for="PostCode">Почтовый Индекс: </label>
@@ -153,7 +153,6 @@ export class AddressModalComponent implements OnInit {
     });
 
     const address = this.config.data.address;
-    console.log('IN MODAL', this.config.data.address)
     if (address) {
       this.formAddress.patchValue(address);
     }
