@@ -69,15 +69,15 @@
           </div>
         </div>
         <div class="contract-step item">
-          <div class="price">{{item.Statistics.DutyCustomer | currency:'RUB'}}</div>
+          <div class="price">{{item?.Statistics?.DutyCustomer | currency:'RUB'}}</div>
           <div class="description">Уступлено</div>
         </div>
         <div class="contract-delay item">
-          <div class="price">{{item.Statistics.DutyDebtor | currency:'RUB'}}</div>
+          <div class="price">{{item?.Statistics?.DutyDebtor | currency:'RUB'}}</div>
           <div class="description">Просрочка</div>
         </div>
         <div class="contract-limit item">
-          <div class="price">{{item.Statistics.FreeLimit | currency:'RUB'}}</div>
+          <div class="price">{{item?.Statistics?.FreeLimit | currency:'RUB'}}</div>
           <div class="description">Свободный лимит</div>
         </div>
       </div>

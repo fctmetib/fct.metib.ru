@@ -24,6 +24,9 @@ import { FileModeInterface } from 'src/app/shared/types/file/file-model.interfac
 import { DemandPropertiesInterface } from 'src/app/shared/modules/demand/types/common/demand-properties.interface';
 import { DemandFactoringInterface } from 'src/app/shared/modules/demand/types/common/demand-factoring.interface';
 import { DemandAnketInterface } from 'src/app/shared/modules/demand/types/common/demand-anket.interface';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
+import { AddressModalComponent } from 'src/app/shared/modules/demand/components/address/address.component';
 
 @Component({
   selector: 'app-factoring-data',
@@ -48,22 +51,20 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   public organizationTypes: DemandSelectboxInterface[] = [];
   public ruleTypes: DemandSelectboxInterface[] = [];
   public typesOfOwner: DemandSelectboxInterface[] = [];
-  public countryList: DemandSelectboxInterface[];
-  public regionList: DemandSelectboxInterface[];
 
   public formFactoring: FormGroup;
-  public formAddress: FormGroup;
 
   public files: FileModeInterface[] = [];
 
-  public addressDialog: boolean = false;
-
+  private ref: DynamicDialogRef;
   private currentAddressFormId: any;
   private subscription$: Subscription = new Subscription();
 
   private _saveDraftAction$: NodeJS.Timeout;
 
   constructor(
+    public dialogService: DialogService,
+    public messageService: MessageService,
     private commonService: CommonService,
     private fileService: FileService,
     private currencyPipe: CurrencyPipe,
@@ -103,11 +104,11 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     otherBanks.push(
       this.fb.group({
         otherBankAccountOpenDate: [
-          existBank ? formatDate(existBank.Date, 'yyyy-MM-dd', 'en')  : '',
+          existBank ? formatDate(existBank.Date, 'yyyy-MM-dd', 'en') : '',
           [Validators.required],
         ],
         otherBankAccountCloseDate: [
-          existBank ? formatDate(existBank.Expire, 'yyyy-MM-dd', 'en')  : '',
+          existBank ? formatDate(existBank.Expire, 'yyyy-MM-dd', 'en') : '',
           [Validators.required],
         ],
         otherBankName: [existBank ? existBank.Bank : '', [Validators.required]],
@@ -159,7 +160,9 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       this.fb.group({
         factoringCreditsCreditor: [existCredit ? existCredit.Creditor : ''],
         factoringPlacesTypeDuty: [existCredit ? existCredit.Type : ''],
-        factoringPlacesDateClose: [existCredit ? formatDate(existCredit.Date, 'yyyy-MM-dd', 'en')  : ''],
+        factoringPlacesDateClose: [
+          existCredit ? formatDate(existCredit.Date, 'yyyy-MM-dd', 'en') : '',
+        ],
         factoringPlacesContractSum: [existCredit ? existCredit.Summ : ''],
         factoringPlacesBalanceReport: [
           existCredit ? existCredit.ReportingRest : '',
@@ -194,30 +197,30 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     other.removeAt(i);
   }
 
-  //TODO: Replace it in modules/modals/address-modal
   openAddressForm(index) {
     this.currentAddressFormId = index;
     let addresses = this.formFactoring.value.factoringPlaces;
     let address = addresses[index].factoringPlacesAddress;
 
-    this.formAddress.patchValue(address);
-    this.addressDialog = true;
-  }
+    this.ref = this.dialogService.open(AddressModalComponent, {
+      header: 'Укажите Адрес',
+      width: '70%',
+      contentStyle: { 'max-height': '500px', overflow: 'auto' },
+      baseZIndex: 10000,
+      data: {
+        address,
+        index,
+      },
+    });
 
-  closeModal() {
-    this.addressDialog = false;
-  }
-
-  saveAddress() {
-    this.formFactoring.value.factoringPlaces[
-      this.currentAddressFormId
-    ].factoringPlacesAddress = this.formAddress.value;
-
-    this.updateDisplayAddress(this.currentAddressFormId);
-
-    this.addressDialog = false;
-    this.formAddress.reset();
-    this.currentAddressFormId = null;
+    this.ref.onClose.subscribe((data: any) => {
+      if (data) {
+        this.formFactoring.value.factoringPlaces[
+          this.currentAddressFormId
+        ].factoringPlacesAddress = data;
+        this.updateDisplayAddress(this.currentAddressFormId);
+      }
+    });
   }
 
   onSelect(event, type: string) {
@@ -253,15 +256,6 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
             (err) => console.log(err)
           )
       );
-    }
-  }
-
-  onRegionChanged(value) {
-    if (value) {
-      let regionTitle = this.regionList.find((x) => x.value === value);
-      this.formAddress.patchValue({
-        RegionTitle: regionTitle,
-      });
     }
   }
 
@@ -334,29 +328,12 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     this.organizationTypes = mibCommon.getOrganizations();
     this.ruleTypes = mibCommon.getLegalForms();
     this.typesOfOwner = mibCommon.getTypesOfOwner();
-    this.countryList = mibCommon.getCountryList();
-    this.regionList = mibCommon.getRegionList();
 
     // this.isLoading$ = this.store.pipe(select(isLoadingSelector));
     // this.backendErrors$ = this.store.pipe(select(errorSelector));
   }
 
   private initForm(): void {
-    //TODO: Break on other pages
-
-    this.formAddress = this.fb.group({
-      PostCode: ['', [Validators.required]],
-      Country: ['', [Validators.required]],
-      RegionCode: [0, [Validators.required]],
-      RegionTitle: ['', [Validators.required]],
-      City: ['', [Validators.required]],
-      District: ['', [Validators.required]],
-      Locality: ['', [Validators.required]],
-      Street: ['', [Validators.required]],
-      House: ['', [Validators.required]],
-      Appartment: ['', [Validators.required]],
-    });
-
     this.formFactoring = this.fb.group({
       organizationType: [0, [Validators.required]],
       organizationLegalForm: [''],
@@ -456,7 +433,11 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       bankBik: factoring.Account.BIK,
       bankCorrespondentAccount: factoring.Account.COR,
       bankName: factoring.Account.Bank,
-      bankAccountOpenDate: formatDate(factoring.Account.Date, 'yyyy-MM-dd', 'en'),
+      bankAccountOpenDate: formatDate(
+        factoring.Account.Date,
+        'yyyy-MM-dd',
+        'en'
+      ),
       bankOwnerAccount: factoring.Account.Number,
       bankComment: factoring.Account.Comment,
 
@@ -468,11 +449,10 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       factoringWorkers: factoring.StaffAmount,
     });
 
-    banks.forEach(b => this.addOtherBank(b));
-    places.forEach(p => this.addOtherPlace(p));
-    credits.forEach(c => this.addFactoringCredits(c));
-    ediProviders.forEach(e => this.addEDIProvider(e));
-
+    banks.forEach((b) => this.addOtherBank(b));
+    places.forEach((p) => this.addOtherPlace(p));
+    credits.forEach((c) => this.addFactoringCredits(c));
+    ediProviders.forEach((e) => this.addEDIProvider(e));
   }
 
   private prepareCoreData(): CreateDemandFactoringRequestInterface {

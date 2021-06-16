@@ -56,6 +56,8 @@ import { DebitorDataComponent } from './containers/demand-actions/demand-action-
 import { FactoringDataComponent } from './containers/demand-actions/demand-action-factoring-page/components/factoring-data/factoring-data.component';
 import { DemandFilesComponent } from './shared/components/demand-files/demand-files.component';
 import { DemandInfoComponent } from './shared/components/demand-info/demand-info.component';
+import { AddressModalComponent } from './components/address/address.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
   imports: [
@@ -114,8 +116,11 @@ import { DemandInfoComponent } from './shared/components/demand-info/demand-info
     FactoringDataComponent,
     DemandFilesComponent,
     DemandInfoComponent,
+    // Modals
+    AddressModalComponent
   ],
   providers: [
+    DialogService,
     CurrencyPipe,
     DemandService,
     MessageService,
