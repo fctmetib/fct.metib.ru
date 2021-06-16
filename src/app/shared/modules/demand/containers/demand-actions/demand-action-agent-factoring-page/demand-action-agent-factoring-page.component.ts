@@ -26,6 +26,8 @@ import { DemandService } from '../../../services/demand.service';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { DemandFactoringInterface } from '../../../types/common/demand-factoring.interface';
 import { DemandAnketInterface } from '../../../types/common/demand-anket.interface';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AddressModalComponent } from '../../../components/address/address.component';
 
 @Component({
   selector: 'app-demand-action-agent-factoring-page',
@@ -33,7 +35,6 @@ import { DemandAnketInterface } from '../../../types/common/demand-anket.interfa
   styleUrls: ['./demand-action-agent-factoring-page.component.scss'],
 })
 export class DemandActionAgentFactoringPageComponent implements OnInit {
-
   public isEdit: boolean = false;
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
@@ -62,9 +63,12 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
   public backendErrors$: Observable<string | null>;
 
   public isLoading: boolean = false;
+
+  private ref: DynamicDialogRef;
   private subscription$: Subscription = new Subscription();
 
   constructor(
+    public dialogService: DialogService,
     private currencyPipe: CurrencyPipe,
     private authService: AuthService,
     private fb: FormBuilder,
@@ -84,7 +88,7 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
       this.route.queryParams.subscribe((params: Params) => {
         if (params['ID']) {
           this.fetch(params['ID']);
-        }  else {
+        } else {
           this.isLoading = true;
           this.getDraft();
         }
@@ -113,7 +117,9 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
   }
 
   handleRemoveFile(file: FileModeInterface) {
-    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+    this.currentDemand.Files = this.currentDemand.Files.filter(
+      (x) => x !== file
+    );
   }
 
   private fetch(id: number) {
@@ -139,11 +145,13 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
 
   private getDraft() {
     this.subscription$.add(
-      this.demandService.prepareDemandByType('AgencyFactoring ').subscribe((resp) => {
-        this.currentDemand = resp;
-        this.convertToFormData();
-        this.isLoading = false;
-      })
+      this.demandService
+        .prepareDemandByType('AgencyFactoring ')
+        .subscribe((resp) => {
+          this.currentDemand = resp;
+          this.convertToFormData();
+          this.isLoading = false;
+        })
     );
   }
 
@@ -158,7 +166,7 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
           [Validators.required],
         ],
         otherBankAccountCloseDate: [
-          existBank ? formatDate(existBank.Expire, 'yyyy-MM-dd', 'en')  : '',
+          existBank ? formatDate(existBank.Expire, 'yyyy-MM-dd', 'en') : '',
           [Validators.required],
         ],
         otherBankName: [existBank ? existBank.Bank : '', [Validators.required]],
@@ -210,7 +218,9 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
       this.fb.group({
         factoringCreditsCreditor: [existCredit ? existCredit.Creditor : ''],
         factoringPlacesTypeDuty: [existCredit ? existCredit.Type : ''],
-        factoringPlacesDateClose: [existCredit ? formatDate(existCredit.Date, 'yyyy-MM-dd', 'en')  : ''],
+        factoringPlacesDateClose: [
+          existCredit ? formatDate(existCredit.Date, 'yyyy-MM-dd', 'en') : '',
+        ],
         factoringPlacesContractSum: [existCredit ? existCredit.Summ : ''],
         factoringPlacesBalanceReport: [
           existCredit ? existCredit.ReportingRest : '',
@@ -227,33 +237,32 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
     other.removeAt(i);
   }
 
-  //TODO: Replace it in modules/modals/address-modal
   openAddressForm(index) {
     this.currentAddressFormId = index;
     let addresses = this.formFactoring.value.factoringPlaces;
     let address = addresses[index].factoringPlacesAddress;
 
-    this.formAddress.patchValue(address);
-    this.addressDialog = true;
+    this.ref = this.dialogService.open(AddressModalComponent, {
+      header: 'Укажите Адрес',
+      width: '650px',
+      contentStyle: { 'max-height': '500px', overflow: 'auto' },
+      baseZIndex: 10000,
+      styleClass: 'p-fluid',
+      data: {
+        address,
+        index,
+      },
+    });
+
+    this.ref.onClose.subscribe((data: any) => {
+      if (data) {
+        this.formFactoring.value.factoringPlaces[
+          this.currentAddressFormId
+        ].factoringPlacesAddress = data;
+        this.updateDisplayAddress(this.currentAddressFormId);
+      }
+    });
   }
-
-  closeModal() {
-    this.addressDialog = false;
-  }
-
-  saveAddress() {
-    this.formFactoring.value.factoringPlaces[
-      this.currentAddressFormId
-    ].factoringPlacesAddress = this.formAddress.value;
-
-    this.updateDisplayAddress(this.currentAddressFormId);
-
-    this.addressDialog = false;
-    this.formAddress.reset();
-    this.currentAddressFormId = null;
-  }
-
-  onBasicUploadAuto() {}
 
   onSelect(event, type: string) {
     let files: File[] = event.target.files;
@@ -388,21 +397,25 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
     });
 
     // factoringEDIProviders
-    this.subscription$.add(this.formFactoring.valueChanges.subscribe((form) => {
-      if (form.factoringFinanceLimit) {
-        this.formFactoring.patchValue(
-          {
-            factoringFinanceLimit: this.currencyPipe.transform(
-              form.factoringFinanceLimit.replace(/\D/g, '').replace(/^0+/, ''),
-              'RUB',
-              'symbol',
-              '1.0-0'
-            ),
-          },
-          { emitEvent: false }
-        );
-      }
-    }));
+    this.subscription$.add(
+      this.formFactoring.valueChanges.subscribe((form) => {
+        if (form.factoringFinanceLimit) {
+          this.formFactoring.patchValue(
+            {
+              factoringFinanceLimit: this.currencyPipe.transform(
+                form.factoringFinanceLimit
+                  .replace(/\D/g, '')
+                  .replace(/^0+/, ''),
+                'RUB',
+                'symbol',
+                '1.0-0'
+              ),
+            },
+            { emitEvent: false }
+          );
+        }
+      })
+    );
 
     this.formFactoring.markAllAsTouched();
     this.formFactoring.markAsDirty();
@@ -446,12 +459,11 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
       result = result + ' ' + address.Appartment;
     }
 
-    let editeAddress = (<FormArray>(
-      this.formFactoring.controls['factoringPlaces']
-    ))
+    (<FormArray>this.formFactoring.controls['factoringPlaces'])
       .at(index)
       .patchValue({
         displayAddress: result,
+        factoringPlacesAddress: address,
       });
   }
 
@@ -462,7 +474,6 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
     let banks: DemandAddonAccountInterface[] = factoring.AddonAccounts;
     let places: DemandPropertiesInterface[] = factoring.Properties;
     let credits: DemandObligationInterface[] = factoring.Obligations;
-    let ediProviders: DemandEDIInterface[] = factoring.EDI;
 
     this.formFactoring.patchValue({
       organizationType: anket.Organization.Type,
@@ -476,7 +487,11 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
       bankBik: factoring.Account.BIK,
       bankCorrespondentAccount: factoring.Account.COR,
       bankName: factoring.Account.Bank,
-      bankAccountOpenDate: formatDate(factoring.Account.Date, 'yyyy-MM-dd', 'en'),
+      bankAccountOpenDate: formatDate(
+        factoring.Account.Date,
+        'yyyy-MM-dd',
+        'en'
+      ),
       bankOwnerAccount: factoring.Account.Number,
       bankComment: factoring.Account.Comment,
 
@@ -491,9 +506,9 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
       factoringLimit: factoring.LimitWanted,
     });
 
-    banks.forEach(b => this.addOtherBank(b));
-    places.forEach(p => this.addOtherPlace(p));
-    credits.forEach(c => this.addFactoringCredits(c));
+    banks.forEach((b) => this.addOtherBank(b));
+    places.forEach((p) => this.addOtherPlace(p));
+    credits.forEach((c) => this.addFactoringCredits(c));
   }
 
   private prepareData(): SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> {
@@ -716,7 +731,6 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
         },
         DraftID: 0,
       };
-
 
     return result;
   }

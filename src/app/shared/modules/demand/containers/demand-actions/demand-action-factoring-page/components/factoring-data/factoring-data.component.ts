@@ -202,9 +202,6 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     let addresses = this.formFactoring.value.factoringPlaces;
     let address = addresses[index].factoringPlacesAddress;
 
-    console.log('IN CONTAINER', addresses);
-    console.log('IN CONTAINER', address);
-
     this.ref = this.dialogService.open(AddressModalComponent, {
       header: 'Укажите Адрес',
       width: '650px',
@@ -321,7 +318,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       .at(index)
       .patchValue({
         displayAddress: result,
-        factoringPlacesAddress: address
+        factoringPlacesAddress: address,
       });
   }
 
