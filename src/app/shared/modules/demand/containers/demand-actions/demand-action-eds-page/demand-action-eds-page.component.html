@@ -144,7 +144,8 @@
 
           <div class="p-field-checkbox">
             <p-checkbox formControlName="organizationIsActualAdressEqual" binary="true"
-              inputId="organizationIsActualAdressEqual"></p-checkbox>
+              inputId="organizationIsActualAdressEqual" (onChange)="isAddressEqual('organizationLegalAddress')">
+            </p-checkbox>
             <label for="organizationIsActualAdressEqual"> Фактический адрес
               совпадает с юридическим</label>
           </div>
@@ -161,7 +162,8 @@
 
           <div class="p-field-checkbox">
             <p-checkbox formControlName="organizationIsLegalAdressEqual" binary="true"
-              inputId="organizationIsLegalAdressEqual"></p-checkbox>
+              inputId="organizationIsLegalAdressEqual" (onChange)="isAddressEqual('organizationActualAddress')">
+            </p-checkbox>
             <label for="organizationIsLegalAdressEqual">Почтовый адрес совпадает
               с юридическим</label>
           </div>

@@ -4,7 +4,13 @@ import { PersonInterface } from 'src/app/shared/types/common/person.interface';
 import { PassportInterface } from './../../../../../types/user/passport.interface';
 import { CreateDemandEDSRequestInterface } from './../../../types/requests/create-demand-eds-request.interface';
 import { DemandService } from './../../../services/demand.service';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormArray,
+  FormControl,
+} from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
@@ -181,10 +187,12 @@ export class DemandActionEDSPageComponent implements OnInit {
       FactAddressEquals: this.formEDS.value.organizationIsActualAdressEqual,
       ForeignTitle: '',
       FullTitle: '',
-      LegalAddress: this.formEDS.value.organizationFullName,
+      LegalAddress:
+        this.formEDS.value.organizationLegalAddress.factoringPlacesAddress,
       LegalForm: this.formEDS.value.organizationLegalForm,
       Phone: this.formEDS.value.organizationPhone,
-      PostAddress: this.formEDS.value.organizationLegalAddress,
+      PostAddress:
+        this.formEDS.value.organizationLegalAddress.factoringPlacesAddress,
       PostAddressEquals: this.formEDS.value.organizationIsLegalAdressEqual,
       Requisites: {
         INN: this.formEDS.value.organizationINN,
@@ -301,6 +309,31 @@ export class DemandActionEDSPageComponent implements OnInit {
     );
   }
 
+  public isAddressEqual(type) {
+    if (type === 'organizationLegalAddress') {
+      let legalAddress =
+        this.formEDS.value.organizationLegalAddress.factoringPlacesAddress;
+      let addressEdited = <FormControl>(
+        this.formEDS.controls['organizationActualAddress']
+      );
+      addressEdited.patchValue({
+        factoringPlacesAddress: legalAddress,
+      });
+      this.updateDisplayAddress('organizationActualAddress');
+    }
+    if (type === 'organizationActualAddress') {
+      let legalAddress =
+        this.formEDS.value.organizationActualAddress.factoringPlacesAddress;
+      let addressEdited = <FormControl>(
+        this.formEDS.controls['organizationLegalAddress']
+      );
+      addressEdited.patchValue({
+        factoringPlacesAddress: legalAddress,
+      });
+      this.updateDisplayAddress('organizationLegalAddress');
+    }
+  }
+
   openAddressForm(type) {
     let addresses = this.formEDS.value[type];
     let address = addresses.factoringPlacesAddress;
@@ -410,39 +443,78 @@ export class DemandActionEDSPageComponent implements OnInit {
     const person: PersonInterface = this.currentDemand.Person;
 
     this.formEDS.patchValue({
-      organizationType: organization.Type,
-      organizationLegalForm: organization.LegalForm,
-      organizationShortName: organization.ShortTitle,
-      organizationFullName: organization.FullTitle,
-      organizationINN: organization.Requisites.INN,
-      organizationKPP: organization.Requisites.KPP,
-      organizationOGRN: organization.Requisites.OGRN,
-      organizationOKPO: organization.Requisites.OKPO,
-      organizationPhone: organization.Phone,
-      organizationEmail: organization.Email,
-      organizationWEB: organization.Website,
-      organizationLegalAddress: organization.LegalAddress,
-      organizationIsActualAdressEqual: organization.FactAddressEquals,
+      organizationType: organization?.Type ? organization?.Type : '',
+      organizationLegalForm: organization?.LegalForm
+        ? organization?.LegalForm
+        : '',
+      organizationShortName: organization?.ShortTitle
+        ? organization?.ShortTitle
+        : '',
+      organizationFullName: organization?.FullTitle
+        ? organization?.FullTitle
+        : '',
+      organizationINN: organization?.Requisites?.INN
+        ? organization?.Requisites?.INN
+        : '',
+      organizationKPP: organization?.Requisites?.KPP
+        ? organization?.Requisites?.KPP
+        : '',
+      organizationOGRN: organization?.Requisites?.OGRN
+        ? organization?.Requisites?.OGRN
+        : '',
+      organizationOKPO: organization?.Requisites?.OKPO
+        ? organization?.Requisites?.OKPO
+        : '',
+      organizationPhone: organization?.Phone ? organization?.Phone : '',
+      organizationEmail: organization?.Email ? organization?.Email : '',
+      organizationWEB: organization?.Website ? organization?.Website : '',
 
-      organizationActualAddress: organization.FactAddress,
-      organizationIsLegalAdressEqual: organization.PostAddressEquals,
+      organizationIsActualAdressEqual: organization?.FactAddressEquals
+        ? organization?.FactAddressEquals
+        : '',
 
-      ownerSurname: person.NameLast,
-      ownerName: person.NameFirst,
-      ownerMiddlename: person.NameSecond,
-      ownerGender: person.Gender,
-      ownerSNILS: person.SNILS,
-      ownerDateBurn: formatDate(person.BirthDate, 'yyyy-MM-dd', 'en'),
-      ownerPlaceBurn: person.BirthPlace,
-      ownerPhone: person.Phone,
-      ownerWorkPosition: this.currentDemand.PersonPosition,
-      ownerEmail: person.Email,
-      ownerGeoPosition: person.BirthPlace,
+      organizationIsLegalAdressEqual: organization?.PostAddressEquals
+        ? organization?.PostAddressEquals
+        : '',
 
-      passportNumber: passport.Number,
-      passportDate: formatDate(passport.Date, 'yyyy-MM-dd', 'en'),
-      passportFrom: passport.IssuerTitle,
-      passportCode: passport.IssuerCode,
+      ownerSurname: person?.NameLast ? person?.NameLast : '',
+      ownerName: person?.NameFirst ? person?.NameFirst : '',
+      ownerMiddlename: person?.NameSecond ? person?.NameSecond : '',
+      ownerGender: person?.Gender ? person?.Gender : '',
+      ownerSNILS: person?.SNILS ? person?.SNILS : '',
+      ownerDateBurn: person.BirthDate
+        ? formatDate(person.BirthDate, 'yyyy-MM-dd', 'en')
+        : '',
+      ownerPlaceBurn: person?.BirthPlace ? person?.BirthPlace : '',
+      ownerPhone: person?.Phone ? person?.Phone : '',
+      ownerWorkPosition: this.currentDemand?.PersonPosition
+        ? this.currentDemand?.PersonPosition
+        : '',
+      ownerEmail: person?.Email ? person?.Email : '',
+      ownerGeoPosition: person?.BirthPlace ? person?.BirthPlace : '',
+
+      passportNumber: passport?.Number ? passport?.Number : '',
+      passportDate: passport?.Date
+        ? formatDate(passport.Date, 'yyyy-MM-dd', 'en')
+        : '',
+      passportFrom: passport?.IssuerTitle ? passport?.IssuerTitle : '',
+      passportCode: passport?.IssuerCode ? passport?.IssuerCode : '',
     });
+
+    this.formEDS.controls['organizationActualAddress'].patchValue({
+      displayAddress: this.getDisplayAddress(organization?.FactAddress),
+      factoringPlacesAddress: organization?.FactAddress,
+    });
+
+    // organizationActualAddress: organization?.FactAddress
+    // ? organization?.FactAddress
+    // : '',
+    // organizationLegalAddress: organization?.LegalAddress
+    // ? organization?.LegalAddress
+    // : '',
+  }
+
+  private getDisplayAddress(address): string {
+    return '';
   }
 }
