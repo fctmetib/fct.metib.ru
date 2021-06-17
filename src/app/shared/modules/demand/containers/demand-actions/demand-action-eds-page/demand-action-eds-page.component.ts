@@ -4,7 +4,7 @@ import { PersonInterface } from 'src/app/shared/types/common/person.interface';
 import { PassportInterface } from './../../../../../types/user/passport.interface';
 import { CreateDemandEDSRequestInterface } from './../../../types/requests/create-demand-eds-request.interface';
 import { DemandService } from './../../../services/demand.service';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
@@ -121,7 +121,7 @@ export class DemandActionEDSPageComponent implements OnInit {
       organizationEmail: ['', [Validators.required]],
       organizationWEB: ['', [Validators.required]],
       organizationLegalAddress: this.fb.group({
-        displayAddress: '',
+        displayAddress: 'Российская Федерация, 77 Москва',
         factoringPlacesAddress: {
           PostCode: '',
           Country: 'Российская Федерация',
@@ -137,24 +137,21 @@ export class DemandActionEDSPageComponent implements OnInit {
       }),
       organizationIsActualAdressEqual: [false],
 
-      organizationActualAddress: [
-        this.fb.group({
-          displayAddress: '',
-          factoringPlacesAddress: {
-            PostCode: '',
-            Country: 'Российская Федерация',
-            RegionCode: 77,
-            RegionTitle: '',
-            City: 'Москва',
-            District: '',
-            Locality: '',
-            Street: '',
-            House: '',
-            Appartment: '',
-          },
-        }),
-        [Validators.required],
-      ],
+      organizationActualAddress: this.fb.group({
+        displayAddress: 'Российская Федерация, 77 Москва',
+        factoringPlacesAddress: {
+          PostCode: '',
+          Country: 'Российская Федерация',
+          RegionCode: 77,
+          RegionTitle: '',
+          City: 'Москва',
+          District: '',
+          Locality: '',
+          Street: '',
+          House: '',
+          Appartment: '',
+        },
+      }),
       organizationIsLegalAdressEqual: [false],
 
       ownerSurname: ['', [Validators.required]],
@@ -306,7 +303,7 @@ export class DemandActionEDSPageComponent implements OnInit {
 
   openAddressForm(type) {
     let addresses = this.formEDS.value[type];
-    let address = addresses[type].factoringPlacesAddress;
+    let address = addresses.factoringPlacesAddress;
 
     this.ref = this.dialogService.open(AddressModalComponent, {
       header: 'Укажите Адрес',
@@ -364,7 +361,8 @@ export class DemandActionEDSPageComponent implements OnInit {
       result = result + ' ' + address.Appartment;
     }
 
-    this.formEDS.value[type]['factoringPlaces'].patchValue({
+    let addressEdited = <FormControl>this.formEDS.controls[type];
+    addressEdited.patchValue({
       displayAddress: result,
       factoringPlacesAddress: address,
     });
