@@ -4,7 +4,7 @@ import { PersonInterface } from 'src/app/shared/types/common/person.interface';
 import { PassportInterface } from './../../../../../types/user/passport.interface';
 import { CreateDemandEDSRequestInterface } from './../../../types/requests/create-demand-eds-request.interface';
 import { DemandService } from './../../../services/demand.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
@@ -18,6 +18,8 @@ import { CreateDemandMessageRequestInterface } from '../../../types/requests/cre
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { ActivatedRoute, Params } from '@angular/router';
 import { formatDate } from '@angular/common';
+import { AddressModalComponent } from '../../../components/address/address.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-demand-action-eds-page',
@@ -70,10 +72,13 @@ export class DemandActionEDSPageComponent implements OnInit {
       value: 'Россия',
     },
   ];
+
+  private ref: DynamicDialogRef;
   private currentDraftId: number = 0;
   private subscription$: Subscription = new Subscription();
 
   constructor(
+    public dialogService: DialogService,
     private authService: AuthService,
     private fb: FormBuilder,
     private commonService: CommonService,
@@ -115,10 +120,41 @@ export class DemandActionEDSPageComponent implements OnInit {
       organizationPhone: ['', [Validators.required]],
       organizationEmail: ['', [Validators.required]],
       organizationWEB: ['', [Validators.required]],
-      organizationLegalAddress: ['', [Validators.required]],
+      organizationLegalAddress: this.fb.group({
+        displayAddress: '',
+        factoringPlacesAddress: {
+          PostCode: '',
+          Country: 'Российская Федерация',
+          RegionCode: 77,
+          RegionTitle: '',
+          City: 'Москва',
+          District: '',
+          Locality: '',
+          Street: '',
+          House: '',
+          Appartment: '',
+        },
+      }),
       organizationIsActualAdressEqual: [false],
 
-      organizationActualAddress: ['', [Validators.required]],
+      organizationActualAddress: [
+        this.fb.group({
+          displayAddress: '',
+          factoringPlacesAddress: {
+            PostCode: '',
+            Country: 'Российская Федерация',
+            RegionCode: 77,
+            RegionTitle: '',
+            City: 'Москва',
+            District: '',
+            Locality: '',
+            Street: '',
+            House: '',
+            Appartment: '',
+          },
+        }),
+        [Validators.required],
+      ],
       organizationIsLegalAdressEqual: [false],
 
       ownerSurname: ['', [Validators.required]],
@@ -268,6 +304,72 @@ export class DemandActionEDSPageComponent implements OnInit {
     );
   }
 
+  openAddressForm(type) {
+    let addresses = this.formEDS.value[type];
+    let address = addresses[type].factoringPlacesAddress;
+
+    this.ref = this.dialogService.open(AddressModalComponent, {
+      header: 'Укажите Адрес',
+      width: '650px',
+      contentStyle: { 'max-height': '500px', overflow: 'auto' },
+      baseZIndex: 10000,
+      styleClass: 'p-fluid',
+      data: {
+        address,
+      },
+    });
+
+    this.ref.onClose.subscribe((data: any) => {
+      if (data) {
+        this.formEDS.value[type].factoringPlacesAddress = data;
+        this.updateDisplayAddress(type);
+      }
+    });
+  }
+
+  private updateDisplayAddress(type): void {
+    let address = this.formEDS.value[type].factoringPlacesAddress;
+    let result = '';
+
+    console.log(address);
+
+    if (address.PostCode) {
+      result = result + ' ' + address.PostCode;
+    }
+    if (address.Country) {
+      result = result + ' ' + address.Country;
+    }
+    if (address.RegionCode) {
+      result = result + ' ' + address.RegionCode;
+    }
+    if (address.RegionTitle) {
+      result = result + ' ' + address.RegionTitle;
+    }
+    if (address.City) {
+      result = result + ' ' + address.City;
+    }
+    if (address.District) {
+      result = result + ' ' + address.District;
+    }
+    if (address.Locality) {
+      result = result + ' ' + address.Locality;
+    }
+    if (address.Street) {
+      result = result + ' ' + address.Street;
+    }
+    if (address.House) {
+      result = result + ' ' + address.House;
+    }
+    if (address.Appartment) {
+      result = result + ' ' + address.Appartment;
+    }
+
+    this.formEDS.value[type]['factoringPlaces'].patchValue({
+      displayAddress: result,
+      factoringPlacesAddress: address,
+    });
+  }
+
   private getDraft() {
     this.subscription$.add(
       this.demandService
@@ -332,7 +434,7 @@ export class DemandActionEDSPageComponent implements OnInit {
       ownerMiddlename: person.NameSecond,
       ownerGender: person.Gender,
       ownerSNILS: person.SNILS,
-      ownerDateBurn: formatDate(person.BirthDate, 'yyyy-MM-dd', 'en') ,
+      ownerDateBurn: formatDate(person.BirthDate, 'yyyy-MM-dd', 'en'),
       ownerPlaceBurn: person.BirthPlace,
       ownerPhone: person.Phone,
       ownerWorkPosition: this.currentDemand.PersonPosition,
@@ -340,7 +442,7 @@ export class DemandActionEDSPageComponent implements OnInit {
       ownerGeoPosition: person.BirthPlace,
 
       passportNumber: passport.Number,
-      passportDate: formatDate(passport.Date, 'yyyy-MM-dd', 'en') ,
+      passportDate: formatDate(passport.Date, 'yyyy-MM-dd', 'en'),
       passportFrom: passport.IssuerTitle,
       passportCode: passport.IssuerCode,
     });

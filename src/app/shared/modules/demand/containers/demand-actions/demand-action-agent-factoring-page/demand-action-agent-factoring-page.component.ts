@@ -300,15 +300,6 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
     }
   }
 
-  onRegionChanged(value) {
-    if (value) {
-      let regionTitle = this.regionList.find((x) => x.value === value);
-      this.formAddress.patchValue({
-        RegionTitle: regionTitle,
-      });
-    }
-  }
-
   removeFile(file: FileModeInterface) {
     this.files.splice(
       this.files.indexOf(this.files.find((x) => x === file)),
@@ -341,21 +332,6 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
   }
 
   private initForm(): void {
-    //TODO: Break on other pages
-
-    this.formAddress = this.fb.group({
-      PostCode: ['', [Validators.required]],
-      Country: ['', [Validators.required]],
-      RegionCode: [0, [Validators.required]],
-      RegionTitle: ['', [Validators.required]],
-      City: ['', [Validators.required]],
-      District: ['', [Validators.required]],
-      Locality: ['', [Validators.required]],
-      Street: ['', [Validators.required]],
-      House: ['', [Validators.required]],
-      Appartment: ['', [Validators.required]],
-    });
-
     this.formFactoring = this.fb.group({
       organizationType: [0, [Validators.required]],
       organizationLegalForm: [''],

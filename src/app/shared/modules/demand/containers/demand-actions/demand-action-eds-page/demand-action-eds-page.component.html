@@ -138,7 +138,8 @@
           <div class="addon-button p-mb-2">
             <input id="organizationLegalAddress" type="text" pInputText placeholder="Юридический адрес"
               formControlName="organizationLegalAddress">
-            <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"></button>
+            <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"
+              (click)="openAddressForm('organizationLegalAddress')"></button>
           </div>
 
           <div class="p-field-checkbox">
@@ -154,7 +155,8 @@
           <div class="addon-button p-mb-2">
             <input id="organizationActualAddress" type="text" pInputText placeholder="Фактический адрес"
               formControlName="organizationActualAddress">
-            <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"></button>
+            <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"
+              (click)="openAddressForm('organizationActualAddress')"></button>
           </div>
 
           <div class="p-field-checkbox">
