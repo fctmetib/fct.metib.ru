@@ -25,7 +25,7 @@ export class GetFactoringEffect {
           map((factoring: CustomerInterface) => {
             forkJoin({
               deliveries: this.deliveryService.getDeliveriesByIdWithStats(
-                factoring.Organization.ID.toString()
+                factoring.ID.toString()
               ),
             }).subscribe(({ deliveries }) => {
               console.log(deliveries);
