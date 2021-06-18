@@ -14,7 +14,6 @@ const routes = [
     component: AuthLayoutComponent,
     canActivate: [LoginedGuard],
     children: [
-      { path: '', redirectTo: '/login', pathMatch: 'full' },
       {
         path: 'login',
         component: LoginPageComponent,
