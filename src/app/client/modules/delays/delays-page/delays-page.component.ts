@@ -67,7 +67,7 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
   }
 
   public checkDateAddon(date: Date): boolean {
-    if (new Date(date) > new Date(this.filterForm.value.dateTo))
+    if (new Date(date) < new Date(this.filterForm.value.dateTo))
       return true;
 
     return false;
