@@ -4,7 +4,6 @@ import { DemandService } from './../../../services/demand.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { createDemandFactoringAction } from '../../../store/actions/createDemand.action';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { select, Store } from '@ngrx/store';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
@@ -26,7 +25,6 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./demand-action-edit-profile-page.component.scss'],
 })
 export class DemandActionEditProfilePageComponent implements OnInit {
-
   public isEdit: boolean = false;
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
@@ -47,11 +45,11 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   public genderTypes: DemandSelectboxInterface[] = [
     {
       title: 'Женский',
-      value: 0,
+      value: false,
     },
     {
       title: 'Мужской',
-      value: 1,
+      value: true,
     },
   ];
 
@@ -92,7 +90,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
-    if(this._saveDraftAction$) {
+    if (this._saveDraftAction$) {
       clearInterval(this._saveDraftAction$);
     }
   }
@@ -119,14 +117,18 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   }
 
   handleRemoveFile(file: FileModeInterface) {
-    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+    this.currentDemand.Files = this.currentDemand.Files.filter(
+      (x) => x !== file
+    );
   }
 
   private getDraft() {
     this.subscription$.add(
-      this.demandService.prepareDemandByType('ProfileChange').subscribe((resp) => {
-        this.convertToFormData(resp)
-      })
+      this.demandService
+        .prepareDemandByType('ProfileChange')
+        .subscribe((resp) => {
+          this.convertToFormData(resp);
+        })
     );
   }
 
@@ -154,22 +156,24 @@ export class DemandActionEditProfilePageComponent implements OnInit {
 
   private convertToFormData(draft?) {
     let data;
-    if(draft) {
+    if (draft) {
       data = draft;
     } else {
       data = this.currentDemand.Data;
     }
 
     this.formEdit.patchValue({
-      last: data.Profile?.Name.Last,
-      first: data.Profile?.Name.First,
-      isMale: data.Profile?.IsMale,
-      phone: data.Profile?.Phone,
-      email: data.Profile?.Email,
-      number: data.Passport?.Number,
-      date: formatDate(data.Passport?.Date, 'yyyy-MM-dd', 'en') ,
-      issuerTitle: data.Passport?.IssuerTitle,
-      issuerCode: data.Passport?.IssuerCode,
+      last: data.Profile?.Name?.Last ? data.Profile?.Name?.Last : '',
+      first: data.Profile?.Name?.First ? data.Profile?.Name?.First : '',
+      isMale: data.Profile?.IsMale ? data.Profile?.IsMale : '',
+      phone: data.Profile?.Phone ? data.Profile?.Phone : '',
+      email: data.Profile?.Email ? data.Profile?.Email : '',
+      number: data.Profile?.Number ? data.Passport?.Number : '',
+      date: data.Profile?.Date
+        ? formatDate(data.Passport?.Date, 'yyyy-MM-dd', 'en')
+        : '',
+      issuerTitle: data.Profile?.IssuerTitle ? data.Passport?.IssuerTitle : '',
+      issuerCode: data.Profile?.IssuerCode ? data.Passport?.IssuerCode : '',
     });
   }
 

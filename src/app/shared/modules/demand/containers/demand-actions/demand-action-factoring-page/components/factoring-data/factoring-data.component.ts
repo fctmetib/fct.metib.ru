@@ -104,20 +104,20 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     otherBanks.push(
       this.fb.group({
         otherBankAccountOpenDate: [
-          existBank ? formatDate(existBank.Date, 'yyyy-MM-dd', 'en') : '',
+          existBank?.Date ? formatDate(existBank?.Date, 'yyyy-MM-dd', 'en') : '',
           [Validators.required],
         ],
         otherBankAccountCloseDate: [
-          existBank ? formatDate(existBank.Expire, 'yyyy-MM-dd', 'en') : '',
+          existBank?.Expire ? formatDate(existBank?.Expire, 'yyyy-MM-dd', 'en') : '',
           [Validators.required],
         ],
-        otherBankName: [existBank ? existBank.Bank : '', [Validators.required]],
+        otherBankName: [existBank?.Bank ? existBank?.Bank : '', [Validators.required]],
         otherBankOwnerAccount: [
-          existBank ? existBank.Number : '',
+          existBank?.Number ? existBank?.Number : '',
           [Validators.required],
         ],
         otherBankTarget: [
-          existBank ? existBank.Comment : '',
+          existBank?.Comment ? existBank?.Comment : '',
           [Validators.required],
         ],
       })
@@ -376,7 +376,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
           this.formFactoring.patchValue(
             {
               factoringFinanceLimit: this.currencyPipe.transform(
-                form.factoringFinanceLimit
+                form.factoringFinanceLimit.toString()
                   .replace(/\D/g, '')
                   .replace(/^0+/, ''),
                 'RUB',

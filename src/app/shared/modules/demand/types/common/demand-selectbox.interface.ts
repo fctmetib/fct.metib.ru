@@ -1,4 +1,4 @@
 export interface DemandSelectboxInterface {
   title: string;
-  value: string | number;
+  value: string | number | boolean;
 }
