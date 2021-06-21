@@ -36,8 +36,6 @@
       <div class="form-actions" *ngIf="!isEdit">
         <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
           [routerLink]="['/demand']"></button>
-        <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
-          [disabled]="formFree.invalid || isLoading"></button>
       </div>
       <div class="p-fluid p-formgrid p-grid form">
         <!-- 1 row -->

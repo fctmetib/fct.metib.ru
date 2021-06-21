@@ -37,8 +37,6 @@
       <div class="form-actions" *ngIf="!isEdit">
         <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
           [routerLink]="['/demand']"></button>
-        <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
-          [disabled]="formEdit.invalid || (isLoading$ | async)"></button>
       </div>
       <div class="d-flex">
         <div>

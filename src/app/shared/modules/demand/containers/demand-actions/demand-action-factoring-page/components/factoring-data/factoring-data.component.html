@@ -3,8 +3,6 @@
     <!--TODO ADD LOADER ON BUTTON -->
     <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
     [routerLink]="['/demand']" *ngIf="!isEdit"></button>
-    <button pButton pRipple type="button" label="Создать Запрос" type="submit" class="basic"
-      [disabled]="formFactoring.invalid" *ngIf="!isEdit" ></button>
   </div>
   <div class="p-fluid p-formgrid p-grid form">
     <!-- 1 row -->
