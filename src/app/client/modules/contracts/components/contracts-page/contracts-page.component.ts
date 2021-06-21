@@ -302,4 +302,43 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription$.unsubscribe();
   }
+
+  public exportExcel(): void {
+    import('xlsx').then((xlsx) => {
+      let exportData: any[] = [];
+      console.log('shipments', this.currentShipments);
+      console.log('cols', this.cols);
+
+      this.currentShipments.forEach((item) => {
+        let object: any = {};
+        this.cols.forEach((column) => {
+          object[column.field] = item[column.field];
+        });
+        exportData.push(object);
+      });
+
+      const worksheet = xlsx.utils.json_to_sheet(exportData);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
+      this._saveAsExcelFile(excelBuffer, 'отчет');
+    });
+  }
+
+  private _saveAsExcelFile(buffer: any, fileName: string): void {
+    import('file-saver').then((FileSaver) => {
+      let EXCEL_TYPE =
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+      let EXCEL_EXTENSION = '.xlsx';
+      const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE,
+      });
+      FileSaver.saveAs(
+        data,
+        fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+      );
+    });
+  }
 }

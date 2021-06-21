@@ -124,11 +124,14 @@
     </ng-container>
     <ng-template #noErrorShipmentsTemplate>
       <p-table [columns]="selectedColumns" [value]="currentShipments" dataKey="ID"
-        styleClass="p-datatable-customers mib-table h-500">
+        styleClass="p-datatable-customers mib-table header-add h-500">
         <ng-template pTemplate="caption">
           <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
             selectedItemsLabel="Выбрано колонок - {0}" [style]="{minWidth: '200px'}" placeholder="Выберите колонки">
           </p-multiSelect>
+          <div class="mib-action mib-button-icon excel-icon can-click" (click)="exportExcel()" pTooltip="Экспорт файла Excel">
+            <img src="../../../../../../assets/icons/mib-excel.png" alt="">
+          </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>

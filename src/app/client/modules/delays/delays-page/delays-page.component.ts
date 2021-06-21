@@ -16,7 +16,7 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
   public isLoading: false;
   public reportData: DelayInterface[] = [];
 
-  private columns: ReportColumntInterface[] = []
+  private columns: ReportColumntInterface[] = [];
   private _subscription$: Subscription = new Subscription();
 
   public filterDialog: boolean = false;
@@ -25,7 +25,8 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     public datepipe: DatePipe,
-    private reportService: ReportService) {}
+    private reportService: ReportService
+  ) {}
 
   ngOnInit() {
     this._initializeForm();
@@ -39,7 +40,7 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
       this.reportData.forEach((item) => {
         let object: any = {};
         this.columns.forEach((column) => {
-            object[column.title] = item[column.name];
+          object[column.title] = item[column.name];
         });
         exportData.push(object);
       });
@@ -67,8 +68,7 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
   }
 
   public checkDateAddon(date: Date): boolean {
-    if (new Date(date) < new Date(this.filterForm.value.dateTo))
-      return true;
+    if (new Date(date) < new Date(this.filterForm.value.dateTo)) return true;
 
     return false;
   }
@@ -87,6 +87,12 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
     this._subscription$.add(
       this.reportService.getReport(request).subscribe((resp) => {
         this.reportData = resp;
+        this.reportData.sort((a: DelayInterface, b: DelayInterface) => {
+          return (
+            new Date(a.DatePayment).getTime() -
+            new Date(b.DatePayment).getTime()
+          );
+        });
         this.closeDateModal();
         this.isLoading = false;
       })
@@ -114,159 +120,159 @@ export class DelaysPageComponent implements OnInit, OnDestroy {
         name: 'ShipmentID',
         title: 'ID поставки',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'CustomerTitle',
         title: 'Название клиента',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'DebtorTitle',
         title: 'Покупатель',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'ContractDeliveryNumber',
         title: 'Договор поставки',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'RequestDate',
         title: 'Дата запроса',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'RequestNumber',
         title: 'Номер запроса',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'ShipmentFullTitle',
         title: 'Накладная',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'StatusTitle',
         title: 'Статус',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'CurrencyTitle',
         title: 'Валюта',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'ShipmentSumm',
         title: 'Сумма отгрузки',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'DutyDebtor',
         title: 'Сумма просрочки',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'DutyCustomer',
         title: 'Сумма клиента',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'DutyCommission',
         title: 'Сумма комиссии',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'DateShipment',
         title: 'Дата поставки',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'DatePayment',
         title: 'Дата оплаты',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'DateOpen',
         title: 'Дата открытия',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'DatePayed',
         title: 'Дата оплачено',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'DateAddon',
         title: 'Дата доп',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'RateStandart',
         title: 'Rate Standart',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'RateExtra',
         title: 'Rate Extra',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'CommissionPercent',
         title: 'Commission Percent',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'PenyPercent',
         title: 'Peny Percent',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'CommissionBottomBorder',
         title: 'Commission Bottom Border',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'CommissionTopBorder',
         title: 'Commission Top Border',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'RegionTitle',
         title: 'Название региона',
         type: 'string',
-        visible: true
+        visible: true,
       },
       {
         name: 'ProductCodeTitle',
         title: 'Product Code Title',
         type: 'string',
-        visible: true
-      }
-    ]
+        visible: true,
+      },
+    ];
   }
 
   private _initializeForm() {
