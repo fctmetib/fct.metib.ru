@@ -15,13 +15,16 @@ import { MessageService } from 'primeng/api';
 import { switchMap } from 'rxjs/operators';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
+import { ExitGuard } from 'src/app/shared/services/exit.guard';
 
 @Component({
   selector: 'app-demand-action-request-free-page',
   templateUrl: './demand-action-request-free-page.component.html',
   styleUrls: ['./demand-action-request-free-page.component.scss'],
 })
-export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
+export class DemandActionRequestFreePageComponent
+  implements OnInit, OnDestroy, ExitGuard
+{
   isUserVerified: boolean;
 
   public alert: boolean;
@@ -77,7 +80,7 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
-    if(this._saveDraftAction$) {
+    if (this._saveDraftAction$) {
       clearInterval(this._saveDraftAction$);
     }
   }
@@ -158,7 +161,9 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
   }
 
   handleRemoveFile(file: FileModeInterface) {
-    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+    this.currentDemand.Files = this.currentDemand.Files.filter(
+      (x) => x !== file
+    );
   }
 
   private fetch(id: number) {
@@ -224,6 +229,10 @@ export class DemandActionRequestFreePageComponent implements OnInit, OnDestroy {
 
     this.formFree.markAllAsTouched();
     this.formFree.markAsDirty();
+  }
+
+  canDeactivate(): boolean | Observable<boolean> {
+    return confirm('Внимание! Вы не сохранили данные, хотите покинуть страницу?');
   }
 
   private initValues(): void {

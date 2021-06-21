@@ -58,6 +58,7 @@ import { DemandFilesComponent } from './shared/components/demand-files/demand-fi
 import { DemandInfoComponent } from './shared/components/demand-info/demand-info.component';
 import { AddressModalComponent } from './components/address/address.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { ExitGuard } from '../../services/exit.guard';
 
 @NgModule({
   imports: [
@@ -120,6 +121,7 @@ import { DialogService } from 'primeng/dynamicdialog';
     AddressModalComponent
   ],
   providers: [
+    ExitGuard,
     DialogService,
     CurrencyPipe,
     DemandService,

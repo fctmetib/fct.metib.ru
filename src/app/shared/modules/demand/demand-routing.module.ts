@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ExitGuard } from '../../services/exit.guard';
 import { DemandActionAgentFactoringPageComponent } from './containers/demand-actions/demand-action-agent-factoring-page/demand-action-agent-factoring-page.component';
 import { DemandActionDebitorPageComponent } from './containers/demand-actions/demand-action-debitor-page/demand-action-debitor-page.component';
 import { DemandActionEditProfilePageComponent } from './containers/demand-actions/demand-action-edit-profile-page/demand-action-edit-profile-page.component';
@@ -27,44 +28,54 @@ const routes = [
       },
       {
         path: 'actions/edit-profile',
-        component: DemandActionEditProfilePageComponent
+        canDeactivate: [ExitGuard],
+        component: DemandActionEditProfilePageComponent,
       },
       {
         path: 'actions/create-debitor',
-        component: DemandActionDebitorPageComponent
+        canDeactivate: [ExitGuard],
+        component: DemandActionDebitorPageComponent,
       },
       {
         path: 'actions/create-eds',
+        canDeactivate: [ExitGuard],
         component: DemandActionEDSPageComponent,
       },
       {
         path: 'actions/update-limit',
-        component: DemandActionLimitPageComponent
+        canDeactivate: [ExitGuard],
+        component: DemandActionLimitPageComponent,
       },
       {
         path: 'actions/free-request',
-        component: DemandActionRequestFreePageComponent
+        canDeactivate: [ExitGuard],
+        component: DemandActionRequestFreePageComponent,
       },
       {
         path: 'actions/support-request',
-        component: DemandActionRequestSupportPageComponent
+        canDeactivate: [ExitGuard],
+        component: DemandActionRequestSupportPageComponent,
       },
       {
         path: 'actions/agent-factoring',
-        component: DemandActionAgentFactoringPageComponent
+        canDeactivate: [ExitGuard],
+        component: DemandActionAgentFactoringPageComponent,
       },
       {
         path: 'actions/factoring',
-        component: DemandActionFactoringPageComponent
+        canDeactivate: [ExitGuard],
+        component: DemandActionFactoringPageComponent,
       },
       {
         path: 'actions/surety',
-        component: DemandActionSuretyPageComponent
+        canDeactivate: [ExitGuard],
+        component: DemandActionSuretyPageComponent,
       },
       {
         path: 'actions/verify',
-        component: DemandActionVerificationPageComponent
-      }
+        canDeactivate: [ExitGuard],
+        component: DemandActionVerificationPageComponent,
+      },
     ],
   },
 ];
