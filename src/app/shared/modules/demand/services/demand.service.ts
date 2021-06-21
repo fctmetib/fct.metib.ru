@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { DemandInterface } from '../types/demand.interface';
+import { CreateDemandEDSRequestInterface } from '../types/requests/create-demand-eds-request.interface';
 
 @Injectable()
 export class DemandService {

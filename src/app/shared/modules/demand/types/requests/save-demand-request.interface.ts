@@ -1,5 +1,5 @@
 
 export interface SaveDemandRequestInterface<T> {
   Data: T;
-  DraftID: number;
+  DraftID?: number;
 }

@@ -26,6 +26,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { AddressModalComponent } from '../../../components/address/address.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-demand-action-eds-page',
@@ -38,6 +39,8 @@ export class DemandActionEDSPageComponent implements OnInit {
   public currentInformation: FactoringInfoInterface;
 
   public isLoading: boolean;
+  public alert: boolean;
+  public alertMessage: string;
 
   isUserVerified: boolean;
   formEDS: FormGroup;
@@ -79,13 +82,16 @@ export class DemandActionEDSPageComponent implements OnInit {
     },
   ];
 
+  public currentDraftId: number = 0;
+
   private ref: DynamicDialogRef;
-  private currentDraftId: number = 0;
+  private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
 
   constructor(
     public dialogService: DialogService,
     private authService: AuthService,
+    private messageService: MessageService,
     private fb: FormBuilder,
     private commonService: CommonService,
     private fileService: FileService,
@@ -107,10 +113,29 @@ export class DemandActionEDSPageComponent implements OnInit {
         }
       })
     );
+
+    this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+    if (this._saveDraftAction$) {
+      clearInterval(this._saveDraftAction$);
+    }
+  }
+
+  saveDraft() {
+    let data = this.prepareDraft();
+
+    this.subscription$.add(
+      this.demandService
+        .addDraftById(this.currentDraftId, data)
+        .subscribe((resp) => {
+          this.currentDraftId = resp.ID;
+          this.showSuccess();
+          data;
+        })
+    );
   }
 
   initForm() {
@@ -181,6 +206,28 @@ export class DemandActionEDSPageComponent implements OnInit {
 
   onSubmit() {
     console.log(this.formEDS.value);
+    this.subscription$.add(
+      this.demandService.add(this.prepareData()).subscribe(resp => {
+        this.alert = true;
+        this.alertMessage = 'Запрос успешно создан.';
+      })
+    );
+  }
+
+  private prepareDraft(): any {
+    return this.prepareCoreData();
+  }
+
+  private prepareData(): SaveDemandRequestInterface<CreateDemandEDSRequestInterface> {
+    let data = this.prepareCoreData();
+    let result: SaveDemandRequestInterface<CreateDemandEDSRequestInterface> = {
+      DraftID: this.currentDraftId,
+      Data: data
+    };
+    return result;
+  }
+
+  private prepareCoreData(): CreateDemandEDSRequestInterface {
     let organization: OrganizationDataInterface = {
       Email: '',
       FactAddress: this.formEDS.value.organizationActualAddress,
@@ -235,19 +282,16 @@ export class DemandActionEDSPageComponent implements OnInit {
       Email: this.formEDS.value.ownerEmail,
     };
 
-    let data: SaveDemandRequestInterface<CreateDemandEDSRequestInterface> = {
-      DraftID: 0,
-      Data: {
+    let data: CreateDemandEDSRequestInterface = {
         Files: this.files,
         Organization: organization,
         Passport: passport,
         Person: person,
         PersonPosition: this.formEDS.value.ownerWorkPosition,
         Type: 'DigitalSignature',
-      },
     };
 
-    this.subscription$.add(this.demandService.add(data).subscribe());
+    return data;
   }
 
   onSelect(event, type: string) {
@@ -516,5 +560,13 @@ export class DemandActionEDSPageComponent implements OnInit {
 
   private getDisplayAddress(address): string {
     return '';
+  }
+
+  private showSuccess() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Успешно',
+      detail: 'Черновик успешно сохранен!',
+    });
   }
 }

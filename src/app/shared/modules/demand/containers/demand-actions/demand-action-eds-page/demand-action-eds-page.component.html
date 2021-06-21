@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div [ngClass]="{'card-content': isUserVerified}">
   <div class="header lg">
     <div class="title">
@@ -8,6 +9,8 @@
         [routerLink]="['/demand']" *ngIf="isEdit"></button>
     </div>
   </div>
+
+  <metib-success-messages *ngIf="alert" [message]="alertMessage"></metib-success-messages>
 
   <ng-container *ngIf="isEdit; else createTemplate;">
     <p-tabView class="mib-tabs">
