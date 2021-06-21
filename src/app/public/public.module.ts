@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { PublicLayoutComponent } from '../shared/layouts/public-layout/public-layout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
+import { UIKitTestComponent } from './shared/ui-kit-test/ui-kit-test.component';
+import { MibButtonComponent } from './shared/buttons/mib-button/mib-button.component';
 
 const routes = [
   {
@@ -24,6 +26,10 @@ const routes = [
         path: 'contacts',
         component: ContactsComponent,
       },
+      {
+        path: 'ui-kit-test',
+        component: UIKitTestComponent,
+      },
     ],
   }
 ];
@@ -40,7 +46,10 @@ const routes = [
     PublicLayoutComponent,
     HomeComponent,
     AboutComponent,
-    ContactsComponent
+    ContactsComponent,
+    // TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
+    UIKitTestComponent,
+    MibButtonComponent
   ],
   providers: [],
 })
