@@ -5,15 +5,18 @@
         <img src="../../../../../assets/images/logo_header.png" alt="Логотип" />
       </div>
       <div class="links">
-        <a [routerLink]="['/']" routerLinkActive="active">Главная</a>
-        <a [routerLink]="['/tarifs']" routerLinkActive="active">Тарифы</a>
-        <a [routerLink]="['/about']" routerLinkActive="active">Клиентам</a>
-        <a [routerLink]="['/contacts']" routerLinkActive="active">Контакты</a>
-        <a [routerLink]="['/ui-kit-test']" routerLinkActive="active">UI KIT</a>
+        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Главная</a>
+        <a [routerLink]="['/tarifs']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
+        <a [routerLink]="['/about']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
+        <a [routerLink]="['/contacts']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
+        <a [routerLink]="['/ui-kit-test']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">UI KIT</a>
       </div>
     </div>
     <div class="actions">
-      <mib-button [title]="'Личный кабинет'" [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
+      <mib-button
+        [title]="'Личный кабинет'"
+        [routerLink]="['login']"
+        [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
         [theme]="'regular'"></mib-button>
     </div>
   </div>
@@ -42,12 +45,16 @@
               <a [routerLink]="['contracts']" (click)="close()" routerLinkActive="active-link">Контакты</a>
             </li>
             <li>
-              <mib-button [title]="'Личный кабинет'" [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
-              [theme]="'regular'"></mib-button>
+              <mib-button
+                [title]="'Личный кабинет'"
+                [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
+                [routerLink]="['login']"
+                [theme]="'regular'"></mib-button>
             </li>
           </ul>
           <div class="social mib-mb-20">
-            <mib-button [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'" [theme]="'icon'"></mib-button>
+            <mib-button [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'" [theme]="'icon'">
+            </mib-button>
             <mib-button [icon]="'../../../../assets/icons/button-icons/icon_insta.svg'" [theme]="'icon'"></mib-button>
           </div>
         </div>

@@ -1,4 +1,20 @@
 .items {
   display: flex;
   gap: 20px;
+
+  &.rows {
+    flex-direction: column;
+  }
+}
+
+.container {
+  width: 900px;
+  margin: auto;
+}
+
+hr {
+  border: none;
+  color: #ededed;
+  background-color: #ededed;
+  height: 1px;
 }

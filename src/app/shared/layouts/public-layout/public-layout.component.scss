@@ -1,0 +1,55 @@
+@import '/src/styles/colors.scss';
+
+:host ::ng-deep {
+  .content {
+    @media (max-width: 1300px) {
+      padding-top: 100px;
+    }
+
+    @media (min-width:1300px) {
+      margin-right: 145px;
+      margin-left: 145px;
+    }
+  }
+
+  // FONTS
+  h1 {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 4.5rem;
+    line-height: 5.188rem;
+    color: $dark-blue;
+  }
+
+  h2 {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2.25rem;
+    line-height: 2.563rem;
+    color: $dark-blue;
+  }
+
+  p {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    text-align: left;
+
+    color: $font-grey;
+
+    &.accent {
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1.125rem;
+      color: $dark-blue;
+    }
+
+    &.description {
+      color: $description;
+    }
+  }
+}

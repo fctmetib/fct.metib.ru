@@ -1,3 +1,59 @@
-.home {
+.promo {
+  height: 710px;
+  background: #FFFFFF;
+  box-shadow: 0px 15px 25px rgba(12, 131, 241, 0.03);
+  border-radius: 0px 0px 20px 20px;
 
+  &_inner {
+    display: flex;
+
+    &_content {
+      width: 600px;
+
+      .information {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 40px;
+
+        .card {
+          display: flex;
+          flex: 1 1 280px;
+
+          .icon {
+            width: 25px;
+            height: 25px;
+            background-image: url('../../../../assets/icons/icon_success.png');
+            margin-right: 20px;
+          }
+
+          .text {
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 16px;
+            color: #656565;
+          }
+        }
+      }
+    }
+
+    &_image {
+      position: absolute;
+
+      background-image: url('../../../../assets/public/image_promo.png');
+      background-repeat: no-repeat;
+
+      right: 0px;
+
+      width: 739px;
+      height: 711px;
+    }
+  }
+
+}
+
+.advantages {
+  background:#F7F7F7;
+  border-radius: 20px;
+  height: 600px;
 }
