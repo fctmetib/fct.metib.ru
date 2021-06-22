@@ -5,12 +5,10 @@ import { Component, OnInit } from '@angular/core';
   selector: 'mib-button',
   styleUrls: ['./mib-button.component.scss'],
   template: `
-    <ng-container>
-      <button class="mib-button" type="button" [ngClass]="theme">
-        <img [src]="icon" alt="" *ngIf="icon" />
-        <span *ngIf="title">{{ title }}</span>
-      </button>
-    </ng-container>
+    <button class="mib-button" type="button" [ngClass]="theme">
+      <img [src]="icon" alt="" *ngIf="icon" />
+      <span *ngIf="title">{{ title }}</span>
+    </button>
   `,
 })
 export class MibButtonComponent implements OnInit {

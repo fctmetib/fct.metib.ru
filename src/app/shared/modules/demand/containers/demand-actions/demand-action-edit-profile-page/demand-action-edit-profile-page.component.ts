@@ -18,6 +18,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
 import { formatDate } from '@angular/common';
+import { environment } from 'src/environments/environment.prod';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-demand-action-edit-profile-page',
@@ -38,7 +40,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   public isLoading$: Observable<boolean> = new Observable<boolean>();
   public backendErrors$: Observable<string | null>;
 
-  public avatarSource: string = '/assets/images/mib_ava.png';
+  public avatarSource: any = '/assets/images/mib_ava.png';
   public formEdit: FormGroup;
 
   public files: FileModeInterface[] = [];
@@ -63,6 +65,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     private commonService: CommonService,
     private fb: FormBuilder,
     private demandService: DemandService,
+    private sanitizer: DomSanitizer,
     private store: Store,
     private route: ActivatedRoute,
     private fileService: FileService,
@@ -268,37 +271,49 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     for (let file of files) {
       let guid = Guid.newGuid();
 
-      this.subscription$.add(
-        this.commonService
-          .getBase64(file)
-          .pipe(
-            switchMap((res) => {
-              console.log(type);
-              return this.fileService.uploadAvatar(
-                res,
-                file.name,
-                file.size.toString(),
-                guid
-              );
-            })
-          )
-          .subscribe(
+      if (type === 'Avatar') {
+        this.subscription$.add(
+          this.fileService.uploadAvatar(file, file.name).subscribe(
             (res) => {
-              if (type === 'Avatar') {
-                this.avatarSource = `https://api-factoring.metib.ru/api/avatar/${res.Code}`;
-              }
-              console.log(res);
-              this.files.push({
-                Code: res.Code,
-                FileName: res.FileName,
-                ID: res.ID,
-                Size: res.Size,
-                Identifier: type,
-              });
+              this.fileService.getAvatar(res).subscribe(resp => {
+                let objectURL = URL.createObjectURL(resp);
+                this.avatarSource = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+
+                console.log(resp);
+                // this.avatarSource = 'data:image/jpeg;base64,' + resp;
+              })
             },
             (err) => console.log(err)
           )
-      );
+        );
+      } else {
+        this.subscription$.add(
+          this.commonService
+            .getBase64(file)
+            .pipe(
+              switchMap((res) => {
+                return this.fileService.uploadFileChunks(
+                  res,
+                  file.name,
+                  file.size.toString(),
+                  guid
+                );
+              })
+            )
+            .subscribe(
+              (res) => {
+                this.files.push({
+                  Code: res.Code,
+                  FileName: res.FileName,
+                  ID: res.ID,
+                  Size: res.Size,
+                  Identifier: type,
+                });
+              },
+              (err) => console.log(err)
+            )
+        );
+      }
     }
   }
 
