@@ -33,6 +33,12 @@ button {
       &:hover {
         filter: drop-shadow(0px 10px 15px rgba(12, 131, 241, 0.6));
       }
+
+      img {
+        &.mr-5 {
+          margin-right: 5px;
+        }
+      }
     }
 
     &.icon {
@@ -59,3 +65,4 @@ button {
     }
   }
 }
+

@@ -1,0 +1,57 @@
+<nav>
+  <div class="desktop">
+    <div class="core">
+      <div class="logo">
+        <img src="../../../../../assets/images/logo_header.png" alt="Логотип" />
+      </div>
+      <div class="links">
+        <a [routerLink]="['/']" routerLinkActive="active">Главная</a>
+        <a [routerLink]="['/tarifs']" routerLinkActive="active">Тарифы</a>
+        <a [routerLink]="['/about']" routerLinkActive="active">Клиентам</a>
+        <a [routerLink]="['/contacts']" routerLinkActive="active">Контакты</a>
+        <a [routerLink]="['/ui-kit-test']" routerLinkActive="active">UI KIT</a>
+      </div>
+    </div>
+    <div class="actions">
+      <mib-button [title]="'Личный кабинет'" [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
+        [theme]="'regular'"></mib-button>
+    </div>
+  </div>
+  <div class="mobile">
+    <div class="logo">
+      <img src="../../../../../assets/images/logo_header.png" alt="Логотип" />
+    </div>
+    <input type="checkbox" class="toggler" />
+    <div class="burger">
+      <div></div>
+    </div>
+    <div class="menu">
+      <div>
+        <div>
+          <ul class="mib-mb-20">
+            <li>
+              <a [routerLink]="['cabinet']" (click)="close()" routerLinkActive="active-link">Главная</a>
+            </li>
+            <li>
+              <a [routerLink]="['requests']" (click)="close()" routerLinkActive="active-link">Тарифы</a>
+            </li>
+            <li>
+              <a [routerLink]="['freeduty']" (click)="close()" routerLinkActive="active-link">Клиентам</a>
+            </li>
+            <li>
+              <a [routerLink]="['contracts']" (click)="close()" routerLinkActive="active-link">Контакты</a>
+            </li>
+            <li>
+              <mib-button [title]="'Личный кабинет'" [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
+              [theme]="'regular'"></mib-button>
+            </li>
+          </ul>
+          <div class="social mib-mb-20">
+            <mib-button [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'" [theme]="'icon'"></mib-button>
+            <mib-button [icon]="'../../../../assets/icons/button-icons/icon_insta.svg'" [theme]="'icon'"></mib-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

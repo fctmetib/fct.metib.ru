@@ -275,13 +275,14 @@ export class DemandActionEditProfilePageComponent implements OnInit {
         this.subscription$.add(
           this.fileService.uploadAvatar(file, file.name).subscribe(
             (res) => {
-              this.fileService.getAvatar(res).subscribe(resp => {
-                let objectURL = URL.createObjectURL(resp);
-                this.avatarSource = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+              this.avatarSource = `https://api-factoring.metib.ru/api/avatar/${res}` ;
+              // this.fileService.getAvatar(res).subscribe(resp => {
+              //   let objectURL = URL.createObjectURL(resp);
+              //   = this.sanitizer.bypassSecurityTrustUrl(objectURL);
 
-                console.log(resp);
-                // this.avatarSource = 'data:image/jpeg;base64,' + resp;
-              })
+              //   console.log(resp);
+              //   // this.avatarSource = 'data:image/jpeg;base64,' + resp;
+              // })
             },
             (err) => console.log(err)
           )

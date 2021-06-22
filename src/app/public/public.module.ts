@@ -8,6 +8,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { UIKitTestComponent } from './shared/ui-kit-test/ui-kit-test.component';
 import { MibButtonComponent } from './shared/buttons/mib-button/mib-button.component';
+import { MibMenuComponent } from './shared/menu/mib-menu/mib-menu.component';
 
 const routes = [
   {
@@ -49,6 +50,7 @@ const routes = [
     ContactsComponent,
     // TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
     UIKitTestComponent,
+    MibMenuComponent,
     MibButtonComponent
   ],
   providers: [],

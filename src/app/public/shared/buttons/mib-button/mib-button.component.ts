@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mib-button.component.scss'],
   template: `
     <button class="mib-button" type="button" [ngClass]="theme">
-      <img [src]="icon" alt="" *ngIf="icon" />
+      <img [src]="icon" alt="" *ngIf="icon"  [ngClass]="{'mr-5':title}" />
       <span *ngIf="title">{{ title }}</span>
     </button>
   `,
