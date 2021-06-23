@@ -23,26 +23,6 @@ export class GetFreedutyEffect {
             list.sort((a, b) => {
               return b.ID - a.ID
             })
-            // if (data.data.Free) {
-            //   let currentDate = new Date();
-            //   let dateTimeStamp = currentDate.getTime() - 12960000000;
-
-            //   list = [];
-            //   let newList: DutyInterface[] = [];
-            //   resp.map((x) => {
-            //     let itemDutyDate = new Date(x.DateDuty);
-            //     console.log('Current ts: ', dateTimeStamp);
-            //     console.log('Item date: ', itemDutyDate);
-            //     console.log('Duty ts: ', itemDutyDate.getTime());
-
-            //     if (itemDutyDate.getTime() > dateTimeStamp) {
-            //       newList.push(x);
-            //     }
-            //   });
-
-            //   console.log(list);
-            // }
-
             return getFreedutySuccessAction({ list });
           }),
 

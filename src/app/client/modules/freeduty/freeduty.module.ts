@@ -26,13 +26,14 @@ import { AvatarModule } from 'primeng/avatar';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { DialogModule } from 'primeng/dialog';
-import {TieredMenuModule} from 'primeng/tieredmenu';
-import {FileUploadModule} from 'primeng/fileupload';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { FileUploadModule } from 'primeng/fileupload';
 import { DutyService } from 'src/app/shared/services/share/duty.service';
 import { FreedutyPageComponent } from './components/freeduty-page/freeduty-page.component';
 import { GetFreedutyEffect } from './store/effects/getFreeduty.effect';
 import { reducers } from './store/reducers';
 import { TooltipModule } from 'primeng/tooltip';
+import { FreedutyStoreService } from './services/freeduty.store.service';
 
 @NgModule({
   imports: [
@@ -67,6 +68,11 @@ import { TooltipModule } from 'primeng/tooltip';
     AvatarModule,
   ],
   declarations: [FreedutyPageComponent],
-  providers: [DialogService, DeliveryService, DutyService],
+  providers: [
+    DialogService,
+    DeliveryService,
+    FreedutyStoreService,
+    DutyService,
+  ],
 })
 export class FreedutyModule {}
