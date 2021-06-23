@@ -2,11 +2,6 @@ import { RequestsStateInterface } from './../types/requestsState.interface';
 import { createReducer, on, Action } from '@ngrx/store';
 import { routerNavigationAction } from '@ngrx/router-store';
 import {
-  getRequestsAction,
-  getRequestsSuccessAction,
-  getRequestsFailureAction,
-} from './actions/getRequests.action';
-import {
   addRequestAction,
   addRequestFailureAction,
   addRequestSuccessAction,
@@ -24,31 +19,6 @@ const initialState: RequestsStateInterface = {
 
 const requestsReducer = createReducer(
   initialState,
-  on(
-    getRequestsAction,
-    (state): RequestsStateInterface => ({
-      ...state,
-      crudError: null,
-      isSubmitting: false,
-      crudSuccessMessage: null,
-      isLoading: true,
-    })
-  ),
-  on(
-    getRequestsSuccessAction,
-    (state, action): RequestsStateInterface => ({
-      ...state,
-      isLoading: false,
-      data: action.requests,
-    })
-  ),
-  on(
-    getRequestsFailureAction,
-    (state): RequestsStateInterface => ({
-      ...state,
-      isLoading: false,
-    })
-  ),
   on(
     addRequestAction,
     (state): RequestsStateInterface => ({

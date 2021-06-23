@@ -16,13 +16,13 @@ import {
   ViewChildren,
   Directive,
 } from '@angular/core';
-import { getRequestsAction } from '../../store/actions/getRequests.action';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SortEvent, MenuItem, MessageService } from 'primeng/api';
 import { RequestsService } from '../../services/requests.service';
 import { AgencyRequestCreateDialogComponent } from '../agency-request-create-dialog/agency-request-create-dialog.component';
 import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RequestStoreService } from '../../services/request.store.service';
 
 @Directive({
   selector: '[tableHighlight]',
@@ -35,8 +35,9 @@ export class TableHighlightDirective {}
   styleUrls: ['./requests-page.component.scss'],
 })
 export class RequestsPageComponent implements OnInit, OnDestroy {
-  // public requests$: Observable<RequestsResponseInterface[] | null>;
-  public requests: RequestsResponseInterface[];
+  public requests$: Observable<RequestsResponseInterface[] | null>;
+  public loading$: Observable<boolean>;
+  // public requests: RequestsResponseInterface[];
 
   public displayModal: boolean;
   public ref: DynamicDialogRef;
@@ -56,11 +57,10 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   private subscription$: Subscription = new Subscription();
 
   constructor(
-    private messageService: MessageService,
-    private store: Store,
     public dialogService: DialogService,
     private fb: FormBuilder,
-    private requestService: RequestsService
+    private requestService: RequestsService,
+    private requestStoreService: RequestStoreService
   ) {}
 
   ngOnInit() {
@@ -124,13 +124,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   fetch(): void {
-    this.subscription$.add(
-      this.requestService.fetch().subscribe((resp) => {
-        this.requests = resp.sort((a, b) => {
-          return b.ID - a.ID;
-        });
-      })
-    );
+    this.requests$ = this.requestStoreService.getRequests();
+    this.loading$ = this.requestStoreService.getLoading();
   }
 
   showCreateAgencyRequestDialog() {
@@ -160,33 +155,33 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   customSort(event: SortEvent) {
-    let requests: any[] = [];
-    console.log(event);
+    // let requests: any[] = [];
+    // console.log(event);
 
-    //TODO: COMPLETE FILTER
+    // //TODO: COMPLETE FILTER
 
-    requests = [...event.data].sort((data1, data2) => {
-      // console.log(data1['Number'])
-      let value1 = data1[event.field];
-      let value2 = data2[event.field];
-      let result = null;
+    // requests = [...event.data].sort((data1, data2) => {
+    //   // console.log(data1['Number'])
+    //   let value1 = data1[event.field];
+    //   let value2 = data2[event.field];
+    //   let result = null;
 
-      if (value1 == null && value2 != null) {
-        result = -1;
-      } else if (value1 != null && value2 == null) {
-        result = 1;
-      } else if (value1 == null && value2 == null) {
-        result = 0;
-      } else if (typeof value1 === 'string' && typeof value2 === 'string') {
-        result = value1.localeCompare(value2);
-      } else {
-        result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
-      }
+    //   if (value1 == null && value2 != null) {
+    //     result = -1;
+    //   } else if (value1 != null && value2 == null) {
+    //     result = 1;
+    //   } else if (value1 == null && value2 == null) {
+    //     result = 0;
+    //   } else if (typeof value1 === 'string' && typeof value2 === 'string') {
+    //     result = value1.localeCompare(value2);
+    //   } else {
+    //     result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
+    //   }
 
-      return event.order * result;
-    });
+    //   return event.order * result;
+    // });
 
-    this.requests = [...requests];
+    // this.requests = [...requests];
   }
 
   showCorrectionDialog() {

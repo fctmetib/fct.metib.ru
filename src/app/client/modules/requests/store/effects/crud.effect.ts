@@ -9,7 +9,6 @@ import { of } from 'rxjs';
 import { addRequestAction, addRequestFailureAction, addRequestSuccessAction } from '../actions/crud.action';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
 import { Store } from '@ngrx/store';
-import { getRequestsAction } from '../actions/getRequests.action';
 
 @Injectable()
 export class CRUDEffect {
@@ -19,7 +18,6 @@ export class CRUDEffect {
       switchMap(({ request }) => {
         return this.requestsService.add(request).pipe(
           map((response: RequestsResponseInterface) => {
-            this.store.dispatch(getRequestsAction());
             return addRequestSuccessAction( {response} );
           }),
 

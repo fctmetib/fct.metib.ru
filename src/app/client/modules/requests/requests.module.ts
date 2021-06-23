@@ -5,7 +5,6 @@ import { CRUDEffect } from './store/effects/crud.effect';
 import { DeliveryService } from './../../../shared/services/share/delivery.service';
 import { RequestCreateDialogComponent } from './components/request-create-dialog/request-create-dialog.component';
 import { RequestsService } from './services/requests.service';
-import { GetRequestsEffect } from './store/effects/getRequests.effect';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { RequestsPageComponent } from './components/requests-page/requests-page.component';
@@ -43,6 +42,7 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
 import { AgencyRequestCreateDialogComponent } from './components/agency-request-create-dialog/agency-request-create-dialog.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { RequestStoreService } from './services/request.store.service';
 
 @NgModule({
   imports: [
@@ -69,7 +69,7 @@ import { MessageService } from 'primeng/api';
     ProgressBarModule,
     ToolbarModule,
     MultiSelectModule,
-    EffectsModule.forFeature([GetRequestsEffect, CRUDEffect]),
+    EffectsModule.forFeature([CRUDEffect]),
     StoreModule.forFeature('requests', reducers),
     BackendErrorMessagesModule,
     SuccessMessagesModule,
@@ -89,6 +89,7 @@ import { MessageService } from 'primeng/api';
     DialogService,
     DeliveryService,
     RequestsService,
+    RequestStoreService,
     FileService,
     MessageService,
     CommonService,
