@@ -3,7 +3,7 @@
     <div class="organization-info">
       <div class="organization-info-name">
         <!-- <ng-container *ngIf="(factoring$ | async); else skeletonFactoringManagerTemplate"> -->
-          ООО "РЕГИОН ПЛЮС"
+        ООО "РЕГИОН ПЛЮС"
         <!-- </ng-container>
         <ng-template #skeletonFactoringManagerTemplate>
           <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
@@ -11,7 +11,7 @@
       </div>
       <div class="organization-info-inn">
         <!-- <ng-container *ngIf="(factoring$ | async); else skeletonFactoringEmailTemplate"> -->
-          ИНН: 7701298966 КПП: 770101001
+        ИНН: 7701298966 КПП: 770101001
         <!-- </ng-container>
         <ng-template #skeletonFactoringEmailTemplate>
           <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
@@ -21,7 +21,12 @@
   </div>
   <div class="account">
     <div class="header-block account-ava">
-      <img src="/assets/images/mib_ava.png" alt="">
+      <ng-container *ngIf="(currentUserFactoring$ | async)?.Avatar; else skeletonFactoringAvatarProfileTemplate">
+        <img src="{{baseAvatarProfileUrl}}/{{(currentUserFactoring$ | async)?.Avatar}}">
+      </ng-container>
+      <ng-template #skeletonFactoringAvatarProfileTemplate>
+        <img src="/assets/images/mib_ava.png">
+      </ng-template>
     </div>
     <div class="header-block account-owner clickable" (click)="openAccountOwner()" id="headerBlock">
       <div class="account-info-name clickable">

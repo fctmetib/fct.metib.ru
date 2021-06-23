@@ -106,12 +106,12 @@ export class DemandPageComponent implements OnInit, OnDestroy {
       {
         text: 'Запрос на редактирование профиля',
         url: 'actions/edit-profile',
-        onlyNewClient: true,
+        onlyNewClient: false,
       },
       {
         text: 'Запрос на свободную тему',
         url: 'actions/free-request',
-        onlyNewClient: true,
+        onlyNewClient: false,
       },
       {
         text: 'Запрос в техническую поддержку',

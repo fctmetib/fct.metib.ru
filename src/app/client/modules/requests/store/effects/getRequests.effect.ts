@@ -9,7 +9,8 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { getRequestsAction } from '../actions/getRequests.action';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { requestsSelector } from '../selectors';
 
 @Injectable()
 export class GetRequestsEffect {
@@ -35,6 +36,7 @@ export class GetRequestsEffect {
 
   constructor(
     private actions$: Actions,
+    private store: Store,
     private requestService: RequestsService
   ) {}
 }

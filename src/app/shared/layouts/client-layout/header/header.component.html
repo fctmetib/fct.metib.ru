@@ -23,7 +23,7 @@
     </div>
     <div class="header-block manager-ava">
       <ng-container *ngIf="(factoring$ | async); else skeletonFactoringAvatarTemplate">
-        <img src="{{baseAvatarUrl}}/{{(factoring$ | async)?.Manager?.Avatar}}" alt="">
+        <img src="{{baseAvatarUrl}}/{{(factoring$ | async)?.Manager?.Avatar}}">
       </ng-container>
       <ng-template #skeletonFactoringAvatarTemplate>
         <p-skeleton size="5rem"></p-skeleton>
@@ -32,7 +32,12 @@
   </div>
   <div class="account">
     <div class="header-block account-ava">
-      <img src="/assets/images/mib_ava.png" alt="">
+      <ng-container *ngIf="(currentUser$ | async)?.Avatar; else skeletonFactoringAvatarProfileTemplate">
+        <img src="{{baseAvatarProfileUrl}}/{{(currentUser$ | async)?.Avatar}}">
+      </ng-container>
+      <ng-template #skeletonFactoringAvatarProfileTemplate>
+        <img src="/assets/images/mib_ava.png">
+      </ng-template>
     </div>
     <div class="header-block account-owner clickable" (click)="openAccountOwner()" id="headerBlock">
       <div class="account-info-name clickable">

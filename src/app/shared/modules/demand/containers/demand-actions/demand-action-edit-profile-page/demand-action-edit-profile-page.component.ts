@@ -57,6 +57,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
 
   private currentUserId: string;
 
+  private avatarCode: string;
   private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
 
@@ -65,7 +66,6 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     private commonService: CommonService,
     private fb: FormBuilder,
     private demandService: DemandService,
-    private sanitizer: DomSanitizer,
     private store: Store,
     private route: ActivatedRoute,
     private fileService: FileService,
@@ -99,7 +99,10 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   }
 
   onSubmit() {
-    let data: SaveDemandRequestInterface<any> = this.prepareData();
+    let data: SaveDemandRequestInterface<any> = {
+      Data: this.prepareData(),
+      DraftID: this.currentDraftId
+    };
 
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
@@ -178,6 +181,11 @@ export class DemandActionEditProfilePageComponent implements OnInit {
       issuerTitle: data.Profile?.IssuerTitle ? data.Passport?.IssuerTitle : '',
       issuerCode: data.Profile?.IssuerCode ? data.Passport?.IssuerCode : '',
     });
+
+    this.avatarCode = data?.Avatar;
+    if (this.avatarCode) {
+      this.avatarSource = `http://api-factoring.metib.ru:8094/api/avatar/${this.avatarCode}`;
+    }
   }
 
   removeFile(file: FileModeInterface) {
@@ -191,47 +199,43 @@ export class DemandActionEditProfilePageComponent implements OnInit {
   //TODO: Get login
   saveDraft() {
     let draft = this.prepareData();
-    draft.DraftID = this.currentDraftId;
+
     this.subscription$.add(
       this.demandService
         .addDraftById(this.currentDraftId, draft)
         .subscribe((resp) => {
           console.log(resp);
           this.currentDraftId = resp.ID;
-          this.showSuccess();
         })
     );
   }
 
   private prepareData(): any {
-    let result: SaveDemandRequestInterface<any> = {
-      Data: {
-        Avatar: this.files[0]?.Code,
-        Passport: {
-          Date: this.formEdit.value.date,
-          Expire: null,
-          IsForeign: false,
-          IssuerCode: this.formEdit.value.issuerCode,
-          IssuerTitle: this.formEdit.value.issuerTitle,
-          Nationality: 'RUS',
-          Number: this.formEdit.value.number,
-        },
-        PassportFileCode: '',
-        Profile: {
-          Email: this.formEdit.value.email,
-          IsMale: this.formEdit.value.isMale,
-          Login: 'realtestapp521@yandex.ru',
-          Name: {
-            First: this.formEdit.value.first,
-            Last: this.formEdit.value.last,
-          },
-          Phone: this.formEdit.value.phone,
-        },
-        Files: this.files,
-        UserID: this.currentUserId,
-        Type: 'ProfileChange',
+    let result: any = {
+      Avatar: this.avatarCode,
+      Passport: {
+        Date: this.formEdit.value.date,
+        Expire: null,
+        IsForeign: false,
+        IssuerCode: this.formEdit.value.issuerCode,
+        IssuerTitle: this.formEdit.value.issuerTitle,
+        Nationality: 'RUS',
+        Number: this.formEdit.value.number,
       },
-      DraftID: 0,
+      PassportFileCode: '',
+      Profile: {
+        Email: this.formEdit.value.email,
+        IsMale: this.formEdit.value.isMale,
+        Login: 'realtestapp521@yandex.ru',
+        Name: {
+          First: this.formEdit.value.first,
+          Last: this.formEdit.value.last,
+        },
+        Phone: this.formEdit.value.phone,
+      },
+      Files: this.files,
+      UserID: this.currentUserId,
+      Type: 'ProfileChange',
     };
 
     return result;
@@ -275,14 +279,9 @@ export class DemandActionEditProfilePageComponent implements OnInit {
         this.subscription$.add(
           this.fileService.uploadAvatar(file, file.name).subscribe(
             (res) => {
-              this.avatarSource = `https://api-factoring.metib.ru/api/avatar/${res}` ;
-              // this.fileService.getAvatar(res).subscribe(resp => {
-              //   let objectURL = URL.createObjectURL(resp);
-              //   = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-
-              //   console.log(resp);
-              //   // this.avatarSource = 'data:image/jpeg;base64,' + resp;
-              // })
+              this.avatarCode = res;
+              this.avatarSource = `http://api-factoring.metib.ru:8094/api/avatar/${res}`;
+              // `https://api-factoring.metib.ru/api/avatar/${res}` ;
             },
             (err) => console.log(err)
           )

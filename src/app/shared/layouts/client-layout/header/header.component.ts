@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit {
 
   items: MenuItem[];
   baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
+  baseAvatarProfileUrl = "http://api-factoring.metib.ru:8094/api/avatar/";
 
   public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
   public currentUser$: Observable<CurrentUserGeneralInterface | null>;
