@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './mib-menu.component.html',
 })
 export class MibMenuComponent implements OnInit {
+
+  //TODO: add Input linksItems
+  //TODO: add close logic
+
   constructor() {}
 
   ngOnInit() {}

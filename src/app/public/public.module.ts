@@ -5,11 +5,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PublicLayoutComponent } from '../shared/layouts/public-layout/public-layout.component';
 import { HomeComponent } from './pages/home/home.component';
-import { AboutComponent } from './pages/about/about.component';
 import { UIKitTestComponent } from './shared/ui-kit-test/ui-kit-test.component';
 import { MibButtonComponent } from './shared/buttons/mib-button/mib-button.component';
 import { MibMenuComponent } from './shared/menu/mib-menu/mib-menu.component';
 import { MibCardInfoComponent } from './shared/cards/card-info/mib-card-info.component';
+import { TariffsComponent } from './pages/tariffs/tariffs.component';
+import { ClientsComponent } from './pages/clients/clients.component';
 
 const routes = [
   {
@@ -21,8 +22,12 @@ const routes = [
         component: HomeComponent,
       },
       {
-        path: 'about',
-        component: AboutComponent,
+        path: 'tariffs',
+        component: TariffsComponent,
+      },
+      {
+        path: 'clients',
+        component: ClientsComponent
       },
       {
         path: 'contacts',
@@ -47,7 +52,8 @@ const routes = [
   declarations: [
     PublicLayoutComponent,
     HomeComponent,
-    AboutComponent,
+    TariffsComponent,
+    ClientsComponent,
     ContactsComponent,
     // TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
     UIKitTestComponent,
