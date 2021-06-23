@@ -213,8 +213,14 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
 
       this.paginate(event);
     } else {
+      this.selectedDebtor = { ID: 0, Title: 'Все' };
       this.btnShowAllText = 'Показать действующие';
       this.listContractsFiltered = this.listContracts;
+    }
+
+    if (this.selectedDebtor.ID !== 0) {
+      this.selectedDebtor = { ID: 0, Title: 'Все' };
+      this.onDebtorChange(this.selectedDebtor);
     }
   }
 
@@ -250,7 +256,7 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
       return;
     } else {
       this.noFilter = false;
-      this.listDisplayContracts = this.listContracts.filter(
+      this.listDisplayContracts = this.listContractsFiltered.filter(
         (x) => x.Debtor.ID === value
       );
     }
