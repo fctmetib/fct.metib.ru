@@ -5,17 +5,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DatePipe } from '@angular/common';
 import { DutyFilterRequestInterface } from 'src/app/shared/types/duty/duty-filter-request.interface';
-import { getFreedutyAction } from '../../store/actions/getFreeduty.action';
-import {
-  errorSelector,
-  freedutySelector,
-  isLoadingSelector,
-} from '../../store/selectors';
 import { DutyInterface } from 'src/app/shared/types/duty/duty.interface';
 import { factoringSelector } from 'src/app/client/store/selectors';
 import { SelectedItemSortedInterface } from '../../types/common/selected-item-sorted.interface';
 import { DutyService } from 'src/app/shared/services/share/duty.service';
 import { Router } from '@angular/router';
+import { FreedutyStoreService } from '../../services/freeduty.store.service';
 
 @Component({
   selector: 'app-freeduty-page',
@@ -25,8 +20,7 @@ import { Router } from '@angular/router';
 })
 export class FreedutyPageComponent implements OnInit, OnDestroy {
   freeduty$: Observable<DutyInterface[] | null>;
-  error$: Observable<string | null>;
-  isLoading$: Observable<boolean>;
+  loading$: Observable<boolean>;
 
   selectedItems: DutyInterface[] = [];
   selectedItemsSorted: SelectedItemSortedInterface[] = [];
@@ -49,6 +43,7 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
     private store: Store,
     private fb: FormBuilder,
     private router: Router,
+    private storeService: FreedutyStoreService,
     private service: DutyService,
     public dialogService: DialogService,
     public datepipe: DatePipe
@@ -57,16 +52,11 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initializeValues();
     this.initializeForm();
-    this.fetch(true);
+    this.fetch(true, false);
   }
 
   initializeValues(): void {
-    this.freeduty$ = this.store.pipe(select(freedutySelector));
-    this.error$ = this.store.pipe(select(errorSelector));
-    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
-
     this.store.pipe(select(factoringSelector)).subscribe((factoring) => {
-      console.log(factoring);
       if (factoring) {
         this.organizationId = factoring.ID;
       }
@@ -91,14 +81,14 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
   }
 
   applyFilters(): void {
-    this.fetch(true);
+    this.fetch(true, true);
   }
 
   showAll(): void {
-    this.fetch(false);
+    this.fetch(false, true);
   }
 
-  fetch(isFree: boolean): void {
+  fetch(isFree: boolean, isRefresh: boolean): void {
     if (this.filterForm.value.dateFrom && this.filterForm.value.dateTo) {
       if (this.organizationId) {
         let data: DutyFilterRequestInterface = {
@@ -108,7 +98,8 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
           Free: isFree,
         };
 
-        this.store.dispatch(getFreedutyAction({ data }));
+        this.freeduty$ = this.storeService.getFreeduty(data, isRefresh);
+        this.loading$ = this.storeService.getLoading();
       }
     }
   }

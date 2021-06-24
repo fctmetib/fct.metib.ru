@@ -30,8 +30,6 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 import { FileUploadModule } from 'primeng/fileupload';
 import { DutyService } from 'src/app/shared/services/share/duty.service';
 import { FreedutyPageComponent } from './components/freeduty-page/freeduty-page.component';
-import { GetFreedutyEffect } from './store/effects/getFreeduty.effect';
-import { reducers } from './store/reducers';
 import { TooltipModule } from 'primeng/tooltip';
 import { FreedutyStoreService } from './services/freeduty.store.service';
 
@@ -57,8 +55,6 @@ import { FreedutyStoreService } from './services/freeduty.store.service';
     ProgressBarModule,
     ToolbarModule,
     MultiSelectModule,
-    EffectsModule.forFeature([GetFreedutyEffect]),
-    StoreModule.forFeature('freeduty', reducers),
     BackendErrorMessagesModule,
     SuccessMessagesModule,
     FreedutyRoutingModule,

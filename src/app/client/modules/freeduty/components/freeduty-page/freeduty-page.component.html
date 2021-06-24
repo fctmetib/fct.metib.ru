@@ -131,12 +131,12 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-      <ng-container *ngIf="(freeduty$ | async); else skeletonFreedutyTemplate">
+      <ng-container *ngIf="(loading$ | async); else skeletonRequestsTemplate">
         <tr>
           <td colspan="8">Нет данных.</td>
         </tr>
       </ng-container>
-      <ng-template #skeletonFreedutyTemplate>
+      <ng-template #skeletonRequestsTemplate>
         <tr *ngFor="let item of [{}, {}, {}, {}, {}]">
           <td>
           </td>

@@ -4,8 +4,6 @@ import {
   getFactoringFailureAction,
   getFactoringSuccessAction,
 } from './../actions/getFactoring.action';
-import { Store } from '@ngrx/store';
-import { CookieService } from 'ngx-cookie-service';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { map, catchError, switchMap } from 'rxjs/operators';
