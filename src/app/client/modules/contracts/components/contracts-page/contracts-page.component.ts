@@ -27,13 +27,25 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
   public noFilter: boolean = true;
 
   public isLoading: boolean = false;
+
+  /**
+   * @property Хранит в себе данные, полученные от бекенда
+   */
   public listContracts: DeliveryInterface[] = [];
+
+  /**
+   * @property Хранит в себе данные, для отображения "Действующие договоры"
+   */
   public listContractsFiltered: DeliveryInterface[] = [];
 
   public isPagination: boolean = true;
   public btnShowAllText: string = 'Показать всё';
 
+  /**
+   * @property Отвечает за отображение данных
+   */
   public listDisplayContracts: DeliveryInterface[] = [];
+
   public paginationPage: number = 0;
   public paginationRows: number = 10;
 
@@ -41,6 +53,10 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
   public displayShipments: boolean = false;
 
   public debtorsList: CounterpartyReferenceInterface[] = [];
+  public selectedDebtorDisplay: CounterpartyReferenceInterface = {
+    ID: 0,
+    Title: 'Все',
+  };
   public selectedDebtor: CounterpartyReferenceInterface = {
     ID: 0,
     Title: 'Все',
@@ -201,26 +217,45 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
 
   public showAllToggle() {
     this.isPagination = !this.isPagination;
+    let isAll: boolean = false;
 
     if (this.isPagination) {
       this.btnShowAllText = 'Показать всё';
-      this.filterByDate();
-
-      let event = {
-        page: 0,
-        rows: 10,
-      };
-
-      this.paginate(event);
+      isAll = false;
     } else {
-      this.selectedDebtor = { ID: 0, Title: 'Все' };
+      isAll = true;
       this.btnShowAllText = 'Показать действующие';
-      this.listContractsFiltered = this.listContracts;
     }
 
+    this.changeDisplayData(isAll);
+  }
+
+  private changeDisplayData(isAll) {
     if (this.selectedDebtor.ID !== 0) {
-      this.selectedDebtor = { ID: 0, Title: 'Все' };
-      this.onDebtorChange(this.selectedDebtor);
+      // показать данные (все или действующие по компании)
+      if (isAll) {
+        this.listDisplayContracts = this.listContracts.filter(
+          (x) => x.Debtor.ID === this.selectedDebtor.ID
+        );
+      } else {
+        this.listDisplayContracts = this.listContractsFiltered.filter(
+          (x) => x.Debtor.ID === this.selectedDebtor.ID
+        );
+      }
+    } else {
+      if (isAll) {
+        this.btnShowAllText = 'Показать всё';
+        this.filterByDate();
+
+        let event = {
+          page: 0,
+          rows: 10,
+        };
+        this.paginate(event);
+      } else {
+        this.btnShowAllText = 'Показать действующие';
+        this.listContractsFiltered = this.listContracts;
+      }
     }
   }
 
@@ -255,6 +290,11 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
       this.paginate();
       return;
     } else {
+      let selectedDebtor = this.debtorsList.find((x) => x.ID === value);
+      this.selectedDebtor = {
+        ID: value,
+        Title: selectedDebtor.Title,
+      };
       this.noFilter = false;
       this.listDisplayContracts = this.listContractsFiltered.filter(
         (x) => x.Debtor.ID === value

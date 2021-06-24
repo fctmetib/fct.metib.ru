@@ -8,7 +8,7 @@
       </div>
       <div>
         <p-dropdown [options]="debtorsList" placeholder="Выберите дебитора" optionLabel="Title" optionValue="ID"
-          [ngModel]="selectedDebtor" (ngModelChange)="onDebtorChange($event)" class="fix-width--200"></p-dropdown>
+          [ngModel]="selectedDebtorDisplay" (ngModelChange)="onDebtorChange($event)" class="fix-width--200"></p-dropdown>
       </div>
     </ng-template>
   </p-toolbar>
