@@ -10,17 +10,18 @@ import { FileService } from 'src/app/shared/services/common/file.service';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { DemandService } from '../../../services/demand.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { ExitGuard } from 'src/app/shared/services/exit.guard';
 
 @Component({
   selector: 'app-demand-action-debitor-page',
   templateUrl: './demand-action-debitor-page.component.html',
   styleUrls: ['./demand-action-debitor-page.component.scss'],
 })
-export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
+export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, ExitGuard {
 
   public isEdit: boolean = false;
   public currentDemand: any;
@@ -292,4 +293,8 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy {
     this.errorMessage = '';
   }
   //#endregion
+  canDeactivate(): boolean | Observable<boolean> {
+    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
+  }
+
 }

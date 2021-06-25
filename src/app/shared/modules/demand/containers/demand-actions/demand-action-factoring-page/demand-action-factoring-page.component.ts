@@ -11,13 +11,14 @@ import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
+import { ExitGuard } from 'src/app/shared/services/exit.guard';
 
 @Component({
   selector: 'app-demand-action-factoring-page',
   templateUrl: './demand-action-factoring-page.component.html',
   styleUrls: ['./demand-action-factoring-page.component.scss'],
 })
-export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
+export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, ExitGuard {
   public isUserVerified: boolean;
 
   public alert: boolean;
@@ -140,4 +141,8 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy {
     });
   }
   //#endregion
+  canDeactivate(): boolean | Observable<boolean> {
+    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
+  }
+
 }

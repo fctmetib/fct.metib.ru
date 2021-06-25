@@ -28,13 +28,16 @@ import { DemandFactoringInterface } from '../../../types/common/demand-factoring
 import { DemandAnketInterface } from '../../../types/common/demand-anket.interface';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddressModalComponent } from '../../../components/address/address.component';
+import { ExitGuard } from 'src/app/shared/services/exit.guard';
 
 @Component({
   selector: 'app-demand-action-agent-factoring-page',
   templateUrl: './demand-action-agent-factoring-page.component.html',
   styleUrls: ['./demand-action-agent-factoring-page.component.scss'],
 })
-export class DemandActionAgentFactoringPageComponent implements OnInit {
+export class DemandActionAgentFactoringPageComponent
+  implements OnInit, ExitGuard
+{
   public isEdit: boolean = false;
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
@@ -711,4 +714,10 @@ export class DemandActionAgentFactoringPageComponent implements OnInit {
     return result;
   }
   //#endregion
+
+  canDeactivate(): boolean | Observable<boolean> {
+    return confirm(
+      'Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?'
+    );
+  }
 }

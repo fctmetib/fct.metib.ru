@@ -18,15 +18,14 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
 import { formatDate } from '@angular/common';
-import { environment } from 'src/environments/environment.prod';
-import { DomSanitizer } from '@angular/platform-browser';
+import { ExitGuard } from 'src/app/shared/services/exit.guard';
 
 @Component({
   selector: 'app-demand-action-edit-profile-page',
   templateUrl: './demand-action-edit-profile-page.component.html',
   styleUrls: ['./demand-action-edit-profile-page.component.scss'],
 })
-export class DemandActionEditProfilePageComponent implements OnInit {
+export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   public isEdit: boolean = false;
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
@@ -322,4 +321,7 @@ export class DemandActionEditProfilePageComponent implements OnInit {
     this.alertMessage = 'Запрос успешно создан.';
   }
   //#endregion
+  canDeactivate(): boolean | Observable<boolean> {
+    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
+  }
 }

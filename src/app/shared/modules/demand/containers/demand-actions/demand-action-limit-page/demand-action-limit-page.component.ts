@@ -1,4 +1,3 @@
-import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -9,6 +8,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
+import { ExitGuard } from 'src/app/shared/services/exit.guard';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { DemandService } from '../../../services/demand.service';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
@@ -20,7 +20,7 @@ import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-
   templateUrl: './demand-action-limit-page.component.html',
   styleUrls: ['./demand-action-limit-page.component.scss'],
 })
-export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
+export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGuard {
   isUserVerified: boolean;
 
   public isEdit: boolean = false;
@@ -236,6 +236,9 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy {
       );
     }
   }
-
   //#endregion
+
+  canDeactivate(): boolean | Observable<boolean> {
+    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
+  }
 }

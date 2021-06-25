@@ -8,7 +8,6 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  FormArray,
   FormControl,
 } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +17,7 @@ import { OrganizationDataInterface } from 'src/app/shared/types/organization/org
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
@@ -27,13 +26,14 @@ import { formatDate } from '@angular/common';
 import { AddressModalComponent } from '../../../components/address/address.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
+import { ExitGuard } from 'src/app/shared/services/exit.guard';
 
 @Component({
   selector: 'app-demand-action-eds-page',
   templateUrl: './demand-action-eds-page.component.html',
   styleUrls: ['./demand-action-eds-page.component.scss'],
 })
-export class DemandActionEDSPageComponent implements OnInit {
+export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   public isEdit: boolean = false;
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
@@ -568,5 +568,9 @@ export class DemandActionEDSPageComponent implements OnInit {
       summary: 'Успешно',
       detail: 'Черновик успешно сохранен!',
     });
+  }
+
+  canDeactivate(): boolean | Observable<boolean> {
+    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
   }
 }
