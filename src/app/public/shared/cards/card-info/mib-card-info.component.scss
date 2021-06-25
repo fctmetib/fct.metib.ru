@@ -1,4 +1,26 @@
 .mib-card-info {
-  display: flex;
+  width: 255px;
+  padding: 0 15px;
+  border-radius: 10px;
+  background-color: white;
 
+  .icon {
+    position: relative;
+    top: 0px;
+    left: 0px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .inner {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+
+    color: #334D64;
+  }
 }

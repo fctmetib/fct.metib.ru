@@ -8,9 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
       <div class="icon">
         <img [src]="icon" alt="Иконка">
       </div>
-      <div class="content">
-        Факторинг помогает разморозить деньги, зависшие в дебиторке, и сразу
-        направить их в оборот
+      <div class="inner">
+        {{text}}
       </div>
     </div>
   `,
@@ -18,6 +17,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MibCardInfoComponent implements OnInit {
   @Input()
   icon: string;
+
+  @Input()
+  text: string;
 
   constructor() {}
 

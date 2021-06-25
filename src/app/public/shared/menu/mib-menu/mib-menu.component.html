@@ -1,22 +1,26 @@
 <nav>
   <div class="desktop">
-    <div class="core">
-      <div class="logo">
-        <a [routerLink]="['/']">
-          <img src="../../../../../assets/images/logo_header.png" alt="Логотип" />
-        </a>
+    <div class="mib-container">
+      <div class="core">
+        <div class="logo">
+          <a [routerLink]="['/']">
+            <img src="../../../../../assets/images/logo_header.png" alt="Логотип" />
+          </a>
+        </div>
+        <div class="links">
+          <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Главная</a>
+          <a [routerLink]="['/tariffs']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
+          <a [routerLink]="['/clients']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
+          <a [routerLink]="['/contacts']" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}">Контакты</a>
+          <a [routerLink]="['/ui-kit-test']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">UI
+            KIT</a>
+        </div>
       </div>
-      <div class="links">
-        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Главная</a>
-        <a [routerLink]="['/tariffs']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
-        <a [routerLink]="['/clients']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
-        <a [routerLink]="['/contacts']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
-        <a [routerLink]="['/ui-kit-test']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">UI KIT</a>
+      <div class="actions">
+        <mib-button [title]="'Личный кабинет'" [routerLink]="['login']"
+          [icon]="'../../../../assets/icons/button-icons/icon_key.svg'" [theme]="'regular'"></mib-button>
       </div>
-    </div>
-    <div class="actions">
-      <mib-button [title]="'Личный кабинет'" [routerLink]="['login']"
-        [icon]="'../../../../assets/icons/button-icons/icon_key.svg'" [theme]="'regular'"></mib-button>
     </div>
   </div>
   <div class="mobile">

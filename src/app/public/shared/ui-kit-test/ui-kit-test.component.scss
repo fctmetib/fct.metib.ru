@@ -1,9 +1,14 @@
 .items {
+  padding: 40px;
   display: flex;
   gap: 20px;
 
   &.rows {
     flex-direction: column;
+  }
+
+  &.grey {
+    background-color: #ededed;
   }
 }
 

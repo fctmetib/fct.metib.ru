@@ -4,21 +4,30 @@
   box-shadow: 0px 15px 25px rgba(12, 131, 241, 0.03);
   border-radius: 0px 0px 20px 20px;
 
+  margin: 0 auto;
+  max-width: 1400px;
+  background-image: url('../../../../assets/public/image_promo.png');
+  background-repeat: no-repeat;
+  background-position: right;
+
   &_inner {
+    height: 100%;
     display: flex;
+    max-width: 1100px;
 
     &_content {
       width: 600px;
 
-      h1 {
-        margin-bottom: 2.25rem;
-      }
-      .description {
-        margin-bottom: 3rem;
-      }
-      .actions {
+      .intro {
+        h1 {
+          margin-bottom: 2.25rem;
+        }
+        .description {
+          margin-bottom: 3rem;
+        }
         margin-bottom: 5.25rem;
       }
+
       .information {
         display: flex;
         flex-direction: row;
@@ -45,21 +54,10 @@
         }
       }
     }
-
-    &_image {
-      position: absolute;
-
-      background-image: url('../../../../assets/public/image_promo.png');
-      background-repeat: no-repeat;
-
-      right: 0px;
-
-      width: 739px;
-      height: 711px;
-    }
   }
-
 }
+
+
 
 .advantages {
   background:#F7F7F7;
