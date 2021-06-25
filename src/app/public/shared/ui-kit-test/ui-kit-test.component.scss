@@ -1,7 +1,10 @@
 .items {
-  padding: 40px;
+  border-radius: 20px;
+  padding: 45px;
   display: flex;
   gap: 20px;
+
+  flex-wrap: wrap;
 
   &.rows {
     flex-direction: column;

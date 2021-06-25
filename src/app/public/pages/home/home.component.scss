@@ -8,7 +8,7 @@
   max-width: 1400px;
   background-image: url('../../../../assets/public/image_promo.png');
   background-repeat: no-repeat;
-  background-position: right;
+  background-position: right bottom;
 
   &_inner {
     height: 100%;
@@ -41,7 +41,6 @@
           .icon {
             width: 25px;
             height: 25px;
-            background-image: url('../../../../assets/icons/icon_success.png');
             margin-right: 20px;
           }
 
@@ -62,5 +61,39 @@
 .advantages {
   background:#F7F7F7;
   border-radius: 20px;
-  height: 600px;
+
+  &_cards {
+    margin-top: 3.625rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+
+    justify-content: center;
+  }
 }
+
+.offer {
+  background: white;
+  height: 500px;
+  border-radius: 20px;
+}
+
+.how-work {
+  background:#F7F7F7;
+  height: 500px;
+  border-radius: 20px;
+}
+
+.partners {
+  background:white;
+  height: 500px;
+  border-radius: 20px;
+}
+
+.news {
+  background:#F7F7F7;
+  height: 500px;
+  border-radius: 20px;
+}
+

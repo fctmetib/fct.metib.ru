@@ -11,6 +11,7 @@ import { MibMenuComponent } from './shared/menu/mib-menu/mib-menu.component';
 import { MibCardInfoComponent } from './shared/cards/card-info/mib-card-info.component';
 import { TariffsComponent } from './pages/tariffs/tariffs.component';
 import { ClientsComponent } from './pages/clients/clients.component';
+import { MibFooterComponent } from './shared/mib-footer/mib-footer.component';
 
 const routes = [
   {
@@ -58,6 +59,7 @@ const routes = [
     // TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
     UIKitTestComponent,
     MibMenuComponent,
+    MibFooterComponent,
     MibButtonComponent,
     // CARDS
     MibCardInfoComponent,
