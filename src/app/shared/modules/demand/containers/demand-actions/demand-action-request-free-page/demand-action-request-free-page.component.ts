@@ -16,6 +16,7 @@ import { switchMap } from 'rxjs/operators';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-demand-action-request-free-page',
@@ -46,8 +47,10 @@ export class DemandActionRequestFreePageComponent
 
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
+  public ref: DynamicDialogRef;
 
   constructor(
+    public dialogService: DialogService,
     private authService: AuthService,
     private fb: FormBuilder,
     private demandService: DemandService,
@@ -232,7 +235,7 @@ export class DemandActionRequestFreePageComponent
   }
 
   canDeactivate(): boolean | Observable<boolean> {
-    return confirm('Внимание! Вы не сохранили данные, хотите покинуть страницу?');
+    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
   }
 
   private initValues(): void {

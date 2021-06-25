@@ -2,10 +2,8 @@ import { DeliveryInterface } from './../../../../../shared/types/delivery/delive
 import { Store } from '@ngrx/store';
 import { DeliveryService } from '../../../../../shared/services/share/delivery.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { FileService } from 'src/app/shared/services/common/file.service';
-import { CommonService } from 'src/app/shared/services/common/common.service';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 import { AgencyShipmentsInterface } from '../../types/common/agency-shipments.interface';
 import { Subscription } from 'rxjs';
