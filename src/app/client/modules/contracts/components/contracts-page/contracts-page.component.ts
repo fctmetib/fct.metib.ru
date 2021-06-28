@@ -287,6 +287,10 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
 
   public onDebtorChange(value) {
     if (value === 0) {
+      this.selectedDebtor = {
+        ID: 0,
+        Title: 'Все'
+      }
       this.paginate();
       return;
     } else {
