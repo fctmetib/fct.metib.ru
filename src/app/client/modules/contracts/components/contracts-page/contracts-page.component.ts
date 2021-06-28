@@ -359,6 +359,14 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
 
         this.paginate();
 
+        this.selectedDebtorDisplay = {
+          ID: 0,
+          Title: 'Все'
+        };
+        this.selectedDebtor = {
+          ID: 0,
+          Title: 'Все',
+        };
         this.debtorsList = [
           {
             ID: 0,
