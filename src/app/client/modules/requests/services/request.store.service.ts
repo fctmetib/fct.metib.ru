@@ -5,27 +5,33 @@ import { RequestsService } from './requests.service';
 
 @Injectable()
 export class RequestStoreService {
-  private _requests$: BehaviorSubject<RequestsResponseInterface[]> = new BehaviorSubject([]);
+  private _requestStore: RequestsResponseInterface[] = [];
+
+  private _requests$: BehaviorSubject<RequestsResponseInterface[]> =
+    new BehaviorSubject([]);
   private _loading$: Subject<boolean> = new Subject();
 
   constructor(private requestService: RequestsService) {}
 
   public setRequests(requests: RequestsResponseInterface[]) {
+    this._requestStore = requests;
     this._requests$.next(requests);
   }
 
-  public getRequests(): Observable<RequestsResponseInterface[]> {
+  public getRequests(
+    isRefresh: boolean = false
+  ): Observable<RequestsResponseInterface[]> {
     this._setLoading(true);
-    this._requests$.subscribe((requests) => {
-      if (requests.length === 0) {
-        this.requestService.fetch().subscribe((resp) => {
-          let result = resp.sort((a, b) => {
-            return b.ID - a.ID;
-          });
-          this.setRequests(result);
+
+    if (this._requestStore.length === 0 || isRefresh) {
+      this.requestService.fetch().subscribe((resp) => {
+        let result = resp.sort((a, b) => {
+          return b.ID - a.ID;
         });
-      }
-    });
+        this.setRequests(result);
+      });
+    }
+
     this._setLoading(false);
     return this._requests$;
   }

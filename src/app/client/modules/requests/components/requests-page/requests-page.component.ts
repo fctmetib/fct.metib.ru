@@ -123,8 +123,12 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  fetch(): void {
-    this.requests$ = this.requestStoreService.getRequests();
+  refresh(): void {
+    this.fetch(true);
+  }
+
+  fetch(isRefresh?: boolean): void {
+    this.requests$ = this.requestStoreService.getRequests(isRefresh);
     this.loading$ = this.requestStoreService.getLoading();
   }
 
