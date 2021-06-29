@@ -1,3 +1,102 @@
-footer {
+@import '/src/styles/colors.scss';
 
+footer {
+  .mib-container {
+    .contacts {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 50px;
+
+      margin-top: 30px;
+      margin-bottom: 50px;
+
+      .location {
+        display: flex;
+        align-items: center;
+
+        img {
+          margin-right: 10px;
+        }
+      }
+
+      .phones {
+        display: flex;
+        align-items: center;
+
+        img {
+          margin-right: 10px;
+        }
+
+        .phones_list {
+          p {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    .footer_menu {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-top: 35px;
+
+      .links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+
+        a {
+          flex: 1 1 150px;
+
+          font-style: normal;
+          font-weight: normal;
+          line-height: 1rem;
+          text-decoration: none;
+          color: $link-grey;
+
+          &.active {
+            color: $dark-blue;
+          }
+        }
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 10px;
+      }
+    }
+
+    .footer_info {
+      display: flex;
+      justify-content: space-between;
+
+      border-top: 2px solid #EAEAEA;
+
+      padding-top: 26px;
+      margin-top: 50px;
+      margin-bottom: 14px;
+      p {
+        max-width: 760px;
+      }
+    }
+  }
+
+  .map {
+    height: 250px;
+  }
+}
+
+.description {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #A7A7A7;
 }

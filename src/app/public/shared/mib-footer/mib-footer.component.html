@@ -2,41 +2,55 @@
   <div class="mib-container">
     <h2>Контакты</h2>
   </div>
-  <div class="contacts">
-    <div class="location">
-      119180, г. Москва, ул. Большая Полянка, д. 47, стр. 2
-    </div>
-    <div class="phones">
-      +7 (495) 727-9797
-      +7 (800) 250-9797
+  <div class="mib-container">
+    <div class="contacts">
+      <div class="location">
+        <img src="../../../../assets/icons/contact-icons/location.png" alt="">
+        <div class="address">
+          119180, г. Москва, ул. Большая <br> Полянка, д. 47, стр. 2
+        </div>
+      </div>
+      <div class="phones">
+        <img src="../../../../assets/icons/contact-icons/phone.png" alt="">
+        <div class="phones_list">
+          <p>+7 (495) 727-9797</p>
+          <p>+7 (800) 250-9797</p>
+        </div>
+      </div>
     </div>
   </div>
+
   <div class="map">
     <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas"
       src="https://maps.google.com/maps?hl=ru&amp;q=%D0%91%D0%BE%D0%BB%D1%8C%D1%88%D0%B0%D1%8F%20%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%BA%D0%B0%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+()&amp;t=p&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
       width="100%" height="100%"></iframe>
   </div>
-  <div class="footer_menu">
-    <div class="logo"></div>
-    <div class="links">
-      <a [routerLink]="['/']">Главная</a>
-      <a [routerLink]="['/']">Тарифы</a>
-      <a [routerLink]="['/']">Контакты</a>
-      <a [routerLink]="['/']">Клиентам</a>
+  <div class="mib-container">
+    <div class="footer_menu">
+      <div class="logo">
+        <a [routerLink]="['/']">
+          <img src="../../../../../assets/images/logo_header.png" alt="Логотип" />
+        </a>
+      </div>
+      <div class="links">
+        <a [routerLink]="['/']"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Главная</a>
+        <a [routerLink]="['/tariffs']"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
+        <a [routerLink]="['/contacts']"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
+        <a [routerLink]="['/clients']"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
+      </div>
+      <div class="actions">
+        <mib-button [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'" [theme]="'icon'"></mib-button>
+        <mib-button [icon]="'../../../../assets/icons/button-icons/icon_insta.svg'" [theme]="'icon'"></mib-button>
+        <mib-button [title]="'Личный кабинет'" [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
+          [theme]="'regular'"></mib-button>
+      </div>
     </div>
-    <div class="actions">
-      <mib-button [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'" [theme]="'icon'"></mib-button>
-      <mib-button [icon]="'../../../../assets/icons/button-icons/icon_insta.svg'" [theme]="'icon'"></mib-button>
-      <mib-button [title]="'Личный кабинет'" [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
-        [theme]="'regular'"></mib-button>
-    </div>
-  </div>
-  <div class="footer_info">
-    <p>Банк осуществляет свою деятельность на основании
-      Генеральной лицензии на осуществление банковских операций №2440, выданной Банком России 21.11.2014 г</p>
-    <div class="developed-by">
-      <p>Разработано командой</p>
-      <img src="" alt="">
+    <div class="footer_info">
+      <p class="description">Банк осуществляет свою деятельность на основании
+        Генеральной лицензии на осуществление банковских операций №2440, выданной Банком России 21.11.2014 г</p>
+      <div class="developed-by">
+        <img src="../../../../assets/images/copyright.png" alt="">
+      </div>
     </div>
   </div>
 </footer>
