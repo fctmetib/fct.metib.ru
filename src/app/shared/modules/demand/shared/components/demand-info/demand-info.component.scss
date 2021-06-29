@@ -73,7 +73,7 @@
 
   &.manager-greatings {
     color: $white;
-    background-color: $main;
+    background: linear-gradient(216.14deg, #009FD9 10.37%, rgba(0, 159, 217, 0) 93.52%), #4B75B1;
   }
 
   &.manager-info {
@@ -95,7 +95,7 @@
 
   &.account-ava {
     width: 70px;
-    background: $main;
+    background: linear-gradient(216.14deg, #009FD9 10.37%, rgba(0, 159, 217, 0) 93.52%), #4B75B1;
 
     img {
       width: 40px;
