@@ -1,7 +1,7 @@
 <div class="p-field p-col-12 p-md-12">
   <p class="p-text-center">Измените сумму поставок где это необходимо и нажмите "Сохранить изменения"</p>
   <div class="responsive-table">
-    <p-table [value]="requests" [rows]="10" styleClass="p-datatable-customers mib-table">
+    <p-table [value]="shipments" [rows]="10" styleClass="p-datatable-customers mib-table">
       <ng-template pTemplate="header">
         <tr>
           <th>
@@ -50,22 +50,22 @@
           </td>
           <td>
             <div class="m-td">
-              <div>{{request.Date | date: 'dd.MM.yyyy'}}</div>
+              <div>{{request.AccountDate | date: 'dd.MM.yyyy'}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <div>{{request.Number}}</div>
+              <div>{{request.InvoiceNumber}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <div>{{request.Date | date: 'dd.MM.yyyy'}}</div>
+              <div>{{request.InvoiceDate | date: 'dd.MM.yyyy'}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <div>{{request.Date | date: 'dd.MM.yyyy'}}</div>
+              <div>{{request.DateShipment | date: 'dd.MM.yyyy'}}</div>
             </div>
           </td>
           <td pEditableColumn>
@@ -106,7 +106,7 @@
       </ng-template>
 
       <ng-template pTemplate="emptymessage">
-        <ng-container *ngIf="requests; else skeletonRequestsTemplate">
+        <ng-container *ngIf="shipments; else skeletonRequestsTemplate">
           <tr>
             <td colspan="8">Нет данных.</td>
           </tr>

@@ -10,9 +10,8 @@ import { ClientRequestInterface } from './../../../../../shared/types/client/cli
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { RequestSourceEnum } from 'src/app/shared/types/enums/request-source.enum';
 import { FinanceTypeInterface } from '../../types/common/finance-type.interface';
-import { Observable, Observer, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   addRequestAction,
   setErrorAction,

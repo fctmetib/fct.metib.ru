@@ -1,20 +1,27 @@
+import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
+import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
+import { RequestsService } from '../../services/requests.service';
 
 @Component({
   selector: 'app-request-correct-dialog',
   templateUrl: './request-correct-dialog.component.html',
   styleUrls: ['./request-correct-dialog.component.scss'],
 })
-export class RequestCorrectDialogComponent {
+export class RequestCorrectDialogComponent implements OnDestroy {
 
-  public requests: RequestsResponseInterface[] = [];
+  public request: RequestsResponseInterface;
+  public shipments: ClientShipmentInterface[] = [];
   public sumCurrentPage: number = 0;
+
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     public ref: DynamicDialogRef,
+    private service: RequestsService,
     public config: DynamicDialogConfig,
     public store: Store
   ) {}
@@ -23,36 +30,24 @@ export class RequestCorrectDialogComponent {
     this.initValues();
   }
 
-  public onSubmit(): void {}
-
+  public onSubmit(): void { }
 
   private initValues(): void {
-    this.requests.push({
-      Date: new Date(),
-      Delivery: null,
-      Documents: null,
-      Files: null,
-      ID: 1,
-      Number: '1',
-      Shipments: null,
-      Status: null,
-      Summ: 6127,
-      Type: ''
-    })
-    this.requests.push({
-      Date: new Date(),
-      Delivery: null,
-      Documents: null,
-      Files: null,
-      ID: 2,
-      Number: '2',
-      Shipments: null,
-      Status: null,
-      Summ: 6147,
-      Type: ''
-    })
+    console.log('DATA', this.config.data[0])
+    let id = this.config.data[0].ID;
 
-    let sum = this.requests.map(x => x.Summ);
-    this.sumCurrentPage = sum.reduce((prev, current) => prev + current);
+    this.subscription$.add(
+      this.service.getRequestByIdAndParams(id, true, false, false).subscribe(resp => {
+        this.request = resp;
+        this.shipments = this.request.Shipments;
+        console.log('Shipments', this.shipments)
+        let sum = this.shipments.map(x => x.Summ);
+        this.sumCurrentPage = sum.reduce((prev, current) => prev + current);
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }
