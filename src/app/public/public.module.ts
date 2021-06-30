@@ -12,6 +12,7 @@ import { MibCardInfoComponent } from './shared/cards/card-info/mib-card-info.com
 import { TariffsComponent } from './pages/tariffs/tariffs.component';
 import { ClientsComponent } from './pages/clients/clients.component';
 import { MibFooterComponent } from './shared/mib-footer/mib-footer.component';
+import { MibModalModule } from './shared/mib-modal';
 
 const routes = [
   {
@@ -48,6 +49,7 @@ const routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
+    MibModalModule
   ],
   exports: [RouterModule],
   declarations: [
@@ -64,6 +66,7 @@ const routes = [
     // CARDS
     MibCardInfoComponent,
   ],
-  providers: [],
+  providers: [
+  ],
 })
 export class PublicModule {}
