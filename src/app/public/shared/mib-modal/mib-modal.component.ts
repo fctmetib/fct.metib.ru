@@ -15,7 +15,19 @@ import { MibModalService } from './mib-modal.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class MibModalComponent implements OnInit, OnDestroy {
+  // Конфигурация
   @Input() id: string;
+  @Input() width: string;
+
+  // Отображение
+  /**
+   *
+   *
+   * @type {string}
+   * @property title - отвечает за отображаемое название модального окна
+   */
+  @Input() title: string;
+
   private element: any;
 
   constructor(

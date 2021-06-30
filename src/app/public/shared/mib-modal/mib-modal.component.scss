@@ -4,7 +4,7 @@ mib-modal {
   .mib-modal {
     /* контейнер фиксируется по всему экрану */
     position: fixed;
-    top: 0;
+    top: 150px;
     right: 0;
     bottom: 0;
     left: 0;
@@ -17,10 +17,37 @@ mib-modal {
 
     .mib-modal-body {
       padding: 20px;
-      background: #fff;
 
-      /* отступ от края экрана */
-      margin: 40px;
+      background: #FDFDFD;
+      border-radius: 10px;
+      border-top: #0C83F1 2px solid;
+
+      /* выравнивание по центру */
+      margin: auto;
+
+      &_header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        h4 {
+          margin: 0;
+          font-family: Ubuntu;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 14px;
+          line-height: 16px;
+          color: #102538;
+          margin-right: auto;
+          text-align: center;
+        }
+
+        .close {
+          background-image: url("../../../../assets/icons/icon_close.png");
+          width: 12px;
+          height: 12px;
+        }
+      }
     }
   }
 

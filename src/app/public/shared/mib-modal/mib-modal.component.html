@@ -1,6 +1,15 @@
 <div class="mib-modal">
-  <div class="mib-modal-body">
+  <div class="mib-modal-body" [style.width]="width">
+    <div class="mib-modal-body_header">
+      <h4>{{title}}</h4>
+      <div class="close"></div>
+    </div>
+    <div class="mib-modal-body_content">
       <ng-content></ng-content>
+    </div>
+    <div class="mib-modal-body_footer">
+
+    </div>
   </div>
 </div>
 <div class="mib-modal-background"></div>
