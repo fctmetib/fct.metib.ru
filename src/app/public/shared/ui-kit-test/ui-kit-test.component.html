@@ -22,9 +22,8 @@
       <input type="text" formControlName="name" placeholder="Имя">
       <input type="phone" formControlName="phone" placeholder="Телефон">
       <input type="email" formControlName="email" placeholder="Электронная почта">
-
     </div>
-    <mib-button (click)="submit()" [title]="'Отправить'"></mib-button>
+
     <hr>
 
     <h2>
@@ -44,7 +43,14 @@
       </mib-button>
     </div>
     <mib-modal id="get-finance" [width]="'350px'" [title]="'Финансирование'">
-      <p>Финансирование</p>
+      <form class="one-column">
+        <input type="text" placeholder="Имя">
+        <input type="phone" placeholder="Телефон">
+        <input type="email" placeholder="Электронная почта">
+        <div class="actions">
+          <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"></mib-button>
+        </div>
+      </form>
     </mib-modal>
 
     <hr>

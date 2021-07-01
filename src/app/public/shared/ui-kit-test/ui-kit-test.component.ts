@@ -15,7 +15,7 @@ export class UIKitTestComponent implements OnInit {
   form = this.fb.group({
     name: ["", Validators.required],
     phone: ["", Validators.required],
-    email: ["", Validators.required],
+    email: ["", [Validators.required, Validators.email]],
   });
 
   // Buttons

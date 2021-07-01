@@ -1,4 +1,6 @@
 @import '/src/styles/colors.scss';
+@import '/src/styles/mib-ui/mib-input.scss';
+@import '/src/styles/mib-ui/mib-form.scss';
 
 :host ::ng-deep {
   .content {

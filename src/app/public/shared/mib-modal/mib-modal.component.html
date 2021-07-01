@@ -2,7 +2,7 @@
   <div class="mib-modal-body" [style.width]="width">
     <div class="mib-modal-body_header">
       <h4>{{title}}</h4>
-      <div class="close"></div>
+      <div class="close" (click)="close()"></div>
     </div>
     <div class="mib-modal-body_content">
       <ng-content></ng-content>

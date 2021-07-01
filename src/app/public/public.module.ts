@@ -13,7 +13,6 @@ import { TariffsComponent } from './pages/tariffs/tariffs.component';
 import { ClientsComponent } from './pages/clients/clients.component';
 import { MibFooterComponent } from './shared/mib-footer/mib-footer.component';
 import { MibModalModule } from './shared/mib-modal';
-import { MIBInputComponent } from './shared/mib-input/mib-input.component';
 
 const routes = [
   {
@@ -61,7 +60,6 @@ const routes = [
     ContactsComponent,
     // TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
     UIKitTestComponent,
-    MIBInputComponent,
     MibMenuComponent,
     MibFooterComponent,
     MibButtonComponent,
