@@ -7,12 +7,12 @@ export interface ClientRequestInterface {
   DeliveryID: number;
   Type: RequestTypeEnum;
   Source?: RequestSourceEnum,
-  Number: string;
+  Number?: string;
   Title?: string;
   Date: Date;
   ID?: number;
   AgencyFlag?: boolean;
   Shipments: ClientShipmentInterface[];
-  Files: FileModeInterface[]
+  Files?: FileModeInterface[]
 }
 // {"DeliveryID":20940,"Type":"Financing","Number":"","Title":"","Date":"2021-03-17T09:53:34+03:00","Shipments":[],"Files":[]}

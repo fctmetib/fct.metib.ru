@@ -1,3 +1,6 @@
+
+<metib-success-messages *ngIf="successMessage" [message]="successMessage"></metib-success-messages>
+
 <div class="p-field p-col-12 p-md-12">
   <p class="p-text-center">Измените сумму поставок где это необходимо и нажмите "Сохранить изменения"</p>
   <div class="responsive-table">
@@ -41,31 +44,31 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-request>
-        <tr [pSelectableRow]="request">
+      <ng-template pTemplate="body" let-shipment>
+        <tr [pSelectableRow]="shipment">
           <td>
             <div class="m-td">
-              <div>{{request.ID}}</div>
+              <div>{{shipment.ID}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <div>{{request.AccountDate | date: 'dd.MM.yyyy'}}</div>
+              <div>{{shipment.AccountDate | date: 'dd.MM.yyyy'}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <div>{{request.InvoiceNumber}}</div>
+              <div>{{shipment.InvoiceNumber}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <div>{{request.InvoiceDate | date: 'dd.MM.yyyy'}}</div>
+              <div>{{shipment.InvoiceDate | date: 'dd.MM.yyyy'}}</div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              <div>{{request.DateShipment | date: 'dd.MM.yyyy'}}</div>
+              <div>{{shipment.DateShipment | date: 'dd.MM.yyyy'}}</div>
             </div>
           </td>
           <td pEditableColumn>
@@ -73,11 +76,12 @@
               <div>
                 <p-cellEditor>
                   <ng-template pTemplate="input">
-                    <input pInputText type="text" [(ngModel)]="request.Summ" required>
+                    <input pInputText type="text" [(ngModel)]="shipment.Summ"
+                      (ngModelChange)="setChangedShipment(shipment, shipment.Summ)" required>
                   </ng-template>
                   <ng-template pTemplate="output">
                     <div></div>
-                    {{request.Summ | currency:'RUB':'symbol-narrow'}}
+                    {{shipment.Summ | currency:'RUB':'symbol-narrow'}}
                   </ng-template>
                 </p-cellEditor>
               </div>
@@ -89,7 +93,7 @@
           <td pEditableColumn>
             <div class="m-td" style="justify-self: flex-start; flex-direction: row-reverse;">
               <div>
-                {{request.Summ | currency:'RUB':'symbol-narrow'}}
+                {{shipment.Summ | currency:'RUB':'symbol-narrow'}}
               </div>
             </div>
           </td>
@@ -142,5 +146,6 @@
   </div>
 </div>
 <div class="p-field p-col-12 p-md-12">
-  <button id="btn_submit" pButton pRipple type="submit" label="Сохранить изменения" class="btn-mib-submit"></button>
+  <button id="btn_submit" pButton pRipple type="submit" label="Сохранить изменения" class="btn-mib-submit"
+    (click)="onSubmit()"></button>
 </div>
