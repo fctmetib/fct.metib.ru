@@ -1,102 +1,106 @@
-<!-- <h2>
-  Menu
-</h2>
-<mib-menu></mib-menu>
-<hr> -->
-<div class="container">
+<section class="fluid">
+  <div class="content">
 
+    <h2>
+      Buttons
+    </h2>
+    <div class="items">
+      <mib-button (click)="incrementButton(1)" [title]="'Скачать договор'"></mib-button>
+      <mib-button (click)="incrementButton(2)" [title]="'Личный кабинет'"
+        [icon]="'../../../../assets/icons/button-icons/icon_key.svg'" [theme]="'regular'"></mib-button>
+      <mib-button (click)="incrementButton(3)" [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'"
+        [theme]="'icon'"></mib-button>
+    </div>
 
-  <h2>
-    Buttons
-  </h2>
-  <div class="items">
-    <mib-button (click)="incrementButton(1)" [title]="'Скачать договор'"></mib-button>
-    <mib-button (click)="incrementButton(2)" [title]="'Личный кабинет'"
-      [icon]="'../../../../assets/icons/button-icons/icon_key.svg'" [theme]="'regular'"></mib-button>
-    <mib-button (click)="incrementButton(3)" [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'"
-      [theme]="'icon'"></mib-button>
+    <hr>
+
+    <h2>
+      Inputs
+    </h2>
+    {{ form.value | json }}
+    <div class="items grey" [formGroup]="form">
+      <input type="text" formControlName="name" placeholder="Имя">
+      <input type="phone" formControlName="phone" placeholder="Телефон">
+      <input type="email" formControlName="email" placeholder="Электронная почта">
+
+    </div>
+    <mib-button (click)="submit()" [title]="'Отправить'"></mib-button>
+    <hr>
+
+    <h2>
+      Progress
+    </h2>
+
+    <hr>
+
+    <h2>
+      Modals
+    </h2>
+
+    <hr>
+
+    <div class="items grey">
+      <mib-button (click)="openModal('get-finance')" [title]="'Получить финансирование'" [theme]="'regular'">
+      </mib-button>
+    </div>
+    <mib-modal id="get-finance" [width]="'350px'" [title]="'Финансирование'">
+      <p>Финансирование</p>
+    </mib-modal>
+
+    <hr>
+
+    <h2>
+      Typography
+    </h2>
+
+    <div class="items rows ">
+      <h1>H1</h1>
+      <h2>H2</h2>
+      <p>Text text text</p>
+      <p class="accent">Accent Accent Accent</p>
+      <p class="description">Description Description Description</p>
+    </div>
+
+    <hr>
+
+    <h2>
+      Cards
+    </h2>
+    <div class="items grey">
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/money.png'"
+        [text]="'Факторинг помогает разморозить деньги, зависшие в дебиторке, и сразу направить их в оборот'">
+      </mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/vector.png'"
+        [text]="'Покрытие кассовых разрывов за счет поступления финансирования на следующий день после отгрузки товара'">
+      </mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/settings.png'"
+        [text]="'Развитие бизнеса за счет ускорения оборачиваемости капитала'"></mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/safe.png'"
+        [text]="'Отсутствие риска неоплаты со стороны Дебитора (при факторинге без регресса)'"></mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/normal.png'"
+        [text]="'Отсутствие залогового обеспечения'"></mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/agile.png'"
+        [text]="'Гибкость и прозрачность схемы работы по факторингу'"></mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/summ.png'"
+        [text]="'Сумма финансирования устанавливается в зависимости от запроса клиента'"></mib-card-info>
+    </div>
+
+    <hr>
+
+    <h2>
+      Icons
+    </h2>
+
+    <hr>
+
+    <h2>
+      Sections
+    </h2>
+
+    <hr>
+
+    <h2>
+      News
+    </h2>
   </div>
-
-  <hr>
-
-  <h2>
-    Inputs
-  </h2>
-
-  <hr>
-
-  <h2>
-    Progress
-  </h2>
-
-  <hr>
-
-  <h2>
-    Modals
-  </h2>
-
-  <hr>
-
-  <div class="items grey">
-    <mib-button (click)="openModal('get-finance')" [title]="'Получить финансирование'" [theme]="'regular'"></mib-button>
-  </div>
-  <mib-modal id="get-finance" [width]="'350px'" [title]="'Финансирование'">
-    <p>Финансирование</p>
-  </mib-modal>
-
-  <hr>
-
-  <h2>
-    Typography
-  </h2>
-
-  <div class="items rows ">
-    <h1>H1</h1>
-    <h2>H2</h2>
-    <p>Text text text</p>
-    <p class="accent">Accent Accent Accent</p>
-    <p class="description">Description Description Description</p>
-  </div>
-
-  <hr>
-
-  <h2>
-    Cards
-  </h2>
-  <div class="items grey">
-    <mib-card-info [icon]="'../../../../assets/icons/card-icons/money.png'"
-      [text]="'Факторинг помогает разморозить деньги, зависшие в дебиторке, и сразу направить их в оборот'">
-    </mib-card-info>
-    <mib-card-info [icon]="'../../../../assets/icons/card-icons/vector.png'"
-      [text]="'Покрытие кассовых разрывов за счет поступления финансирования на следующий день после отгрузки товара'">
-    </mib-card-info>
-    <mib-card-info [icon]="'../../../../assets/icons/card-icons/settings.png'"
-      [text]="'Развитие бизнеса за счет ускорения оборачиваемости капитала'"></mib-card-info>
-    <mib-card-info [icon]="'../../../../assets/icons/card-icons/safe.png'"
-      [text]="'Отсутствие риска неоплаты со стороны Дебитора (при факторинге без регресса)'"></mib-card-info>
-    <mib-card-info [icon]="'../../../../assets/icons/card-icons/normal.png'"
-      [text]="'Отсутствие залогового обеспечения'"></mib-card-info>
-    <mib-card-info [icon]="'../../../../assets/icons/card-icons/agile.png'"
-      [text]="'Гибкость и прозрачность схемы работы по факторингу'"></mib-card-info>
-    <mib-card-info [icon]="'../../../../assets/icons/card-icons/summ.png'"
-      [text]="'Сумма финансирования устанавливается в зависимости от запроса клиента'"></mib-card-info>
-  </div>
-
-  <hr>
-
-  <h2>
-    Icons
-  </h2>
-
-  <hr>
-
-  <h2>
-    Sections
-  </h2>
-
-  <hr>
-
-  <h2>
-    News
-  </h2>
-</div>
+</section>

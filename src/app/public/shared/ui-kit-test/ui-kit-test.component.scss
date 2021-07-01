@@ -26,3 +26,10 @@ hr {
   background-color: #ededed;
   height: 1px;
 }
+
+input.ng-dirty.ng-invalid {
+  color: red
+}
+input.ng-dirty.ng-valid {
+  color: green
+}

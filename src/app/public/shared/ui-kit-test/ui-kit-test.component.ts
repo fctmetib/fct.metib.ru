@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MibModalService } from '../mib-modal';
 
 @Component({
@@ -7,9 +8,15 @@ import { MibModalService } from '../mib-modal';
   templateUrl: 'ui-kit-test.component.html',
 })
 export class UIKitTestComponent implements OnInit {
-  constructor(private mibModalService: MibModalService) {}
+  constructor(private mibModalService: MibModalService, private fb: FormBuilder) {}
 
   ngOnInit() {}
+
+  form = this.fb.group({
+    name: ["", Validators.required],
+    phone: ["", Validators.required],
+    email: ["", Validators.required],
+  });
 
   // Buttons
   public buttonMessageOne = 0;
@@ -27,5 +34,9 @@ export class UIKitTestComponent implements OnInit {
 
   closeModal(id: string) {
     this.mibModalService.close(id);
+  }
+
+  submit() {
+
   }
 }
