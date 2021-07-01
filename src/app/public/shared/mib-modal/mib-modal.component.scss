@@ -27,7 +27,8 @@ mib-modal {
 
       &_header {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
+        position: relative;
         align-items: center;
 
         h4 {
@@ -38,14 +39,19 @@ mib-modal {
           font-size: 14px;
           line-height: 16px;
           color: #102538;
-          margin-right: auto;
-          text-align: center;
+
+          flex: 0 1 auto;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
         }
 
         .close {
+          flex:  0 1 auto;
           background-image: url("../../../../assets/icons/icon_close.png");
           width: 12px;
           height: 12px;
+          margin-left: auto;
         }
       }
     }
