@@ -11,6 +11,7 @@ import { MibTabItemComponent } from "../mib-tab-item/mib-tab-item.component";
 
 @Component({
   selector: "mib-tab",
+  styleUrls: ['./mib-tab.component.scss'],
   template: `
     <div class="tabs-header">
       <div
@@ -27,29 +28,16 @@ import { MibTabItemComponent } from "../mib-tab-item/mib-tab-item.component";
           {{ item.label }}
         </ng-container>
       </div>
+      <div class="line"></div>
     </div>
+
     <div class="tabs-body">
       <ng-container *ngIf="activeTab && activeTab.bodyComponent">
         <ng-container *ngTemplateOutlet="activeTab.bodyComponent.bodyContent">
         </ng-container>
       </ng-container>
     </div>
-  `,
-  styles: [
-    `
-      .tabs-header {
-        display: flex;
-      }
-      .active {
-        color: red;
-      }
-      .tab-label {
-        border: 1px dashed black;
-        padding: 25px;
-        margin: 0 10px;
-      }
-    `,
-  ],
+  `
 })
 export class MibTabComponent implements AfterContentInit, AfterContentChecked {
   @ContentChildren(MibTabItemComponent)

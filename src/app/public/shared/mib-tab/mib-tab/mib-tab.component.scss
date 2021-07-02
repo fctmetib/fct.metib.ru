@@ -1,0 +1,44 @@
+.tabs-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+
+  .line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #EAEAEA;
+    bottom: 0px;
+  }
+}
+
+.tab-label {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  color: #C0C0C0;
+
+  padding: 0px;
+  padding-bottom: 30px;
+
+  z-index: 1;
+}
+
+.active {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  color: #102538;
+  border-bottom: 2px #0C83F1 solid;
+}
+
+.tabs-body {
+  display: flex;
+  padding-top: 50px;
+  justify-content: space-between;
+}

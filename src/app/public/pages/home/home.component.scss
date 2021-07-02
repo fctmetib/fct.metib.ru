@@ -22,9 +22,11 @@
         h1 {
           margin-bottom: 2.25rem;
         }
+
         .description {
           margin-bottom: 3rem;
         }
+
         margin-bottom: 5.25rem;
       }
 
@@ -59,7 +61,7 @@
 
 
 .advantages {
-  background:#F7F7F7;
+  background: #F7F7F7;
   border-radius: 20px;
 
   &_cards {
@@ -75,25 +77,53 @@
 
 .offer {
   background: white;
-  height: 500px;
   border-radius: 20px;
+  padding-bottom: 56px;
 }
 
 .how-work {
-  background:#F7F7F7;
+  background: #F7F7F7;
   height: 500px;
   border-radius: 20px;
 }
 
 .partners {
-  background:white;
+  background: white;
   height: 500px;
   border-radius: 20px;
 }
 
 .news {
-  background:#F7F7F7;
+  background: #F7F7F7;
   height: 500px;
   border-radius: 20px;
 }
 
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  width: 350px;
+
+  .summary_item {
+    .title {
+      display: flex;
+      font-family: Ubuntu;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 18px;
+      color: #102538;
+    }
+
+    .desc {
+      font-family: Ubuntu;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+      color: #989898;
+    }
+  }
+}
