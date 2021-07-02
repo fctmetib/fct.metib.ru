@@ -30,3 +30,25 @@
       background-position-y: 65% !important;
     }
   }
+
+  .checkbox {
+    display: flex;
+    justify-content: space-between;
+    gap: 7px;
+
+    margin-top: 2px;
+
+    input[type="checkbox"] {
+      background: #DBDBDB !important;
+      border-radius: 5px !important;
+    }
+
+    label {
+      font-family: Ubuntu;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+      color: #102538;
+    }
+  }

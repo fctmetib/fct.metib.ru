@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'mib-button',
   styleUrls: ['./mib-button.component.scss'],
   template: `
-    <button class="mib-button" type="button" [ngClass]="theme" [style.width]="width ? width+'%' : ''">
+    <button class="mib-button" type="button" [ngClass]="theme" [style.width]="width ? width+'%' : ''" [disabled]="disable">
       <img [src]="icon" alt="" *ngIf="icon"  [ngClass]="{'mr-5':title}" />
       <span *ngIf="title">{{ title }}</span>
     </button>
@@ -22,6 +22,8 @@ export class MibButtonComponent implements OnInit {
 
   // regular, default, icon
   @Input() theme: string = 'default';
+
+  @Input() disable: boolean;
 
   onClick() {
     this.click.emit();

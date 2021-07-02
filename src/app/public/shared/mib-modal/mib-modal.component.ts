@@ -48,11 +48,11 @@ export class MibModalComponent implements OnInit, OnDestroy {
     document.body.appendChild(this.element);
 
     // закрывает окно при нажатии на фон
-    this.element.addEventListener('click', (el) => {
-      if (el.target.className === 'mib-modal') {
-        this.close();
-      }
-    });
+    // this.element.addEventListener('click', (el) => {
+    //   if (el.target.className === 'mib-modal') {
+    //     this.close();
+    //   }
+    // });
 
     // добавляет текущее окно в сервис
     this.mibModalService.add(this);

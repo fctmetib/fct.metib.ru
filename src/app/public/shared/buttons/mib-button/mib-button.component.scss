@@ -22,6 +22,27 @@ button {
         color: white;
         border: 1px solid $main;
       }
+      &:disabled {
+        border: 1px solid $button-grey;
+        background: transparent;
+        color: $button-grey;
+      }
+    }
+
+    &.link {
+      border: unset;
+      background: transparent;
+      padding: 0px !important;
+      font-family: Ubuntu;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+      /* identical to box height */
+
+      text-decoration-line: underline;
+
+      color: #0C83F1;
     }
 
     &.regular {
@@ -38,6 +59,12 @@ button {
         &.mr-5 {
           margin-right: 5px;
         }
+      }
+
+      &:disabled {
+        border: 1px solid $button-grey;
+        background: transparent;
+        color: $button-grey;
       }
     }
 
@@ -58,11 +85,15 @@ button {
       &:hover {
         background: $main;
         border: 2px solid $main;
+
         img {
           filter: brightness(0) invert(1);
         }
       }
     }
   }
-}
 
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

@@ -5,6 +5,7 @@
       Buttons
     </h2>
     <div class="items">
+      <mib-button [title]="'Обновить картинку'" [theme]="'link'"></mib-button>
       <mib-button (click)="incrementButton(1)" [title]="'Скачать договор'"></mib-button>
       <mib-button (click)="incrementButton(2)" [title]="'Личный кабинет'"
         [icon]="'../../../../assets/icons/button-icons/icon_key.svg'" [theme]="'regular'"></mib-button>
@@ -43,12 +44,17 @@
       </mib-button>
     </div>
     <mib-modal id="get-finance" [width]="'350px'" [title]="'Финансирование'">
-      <form class="one-column">
-        <input type="text" placeholder="Имя">
-        <input type="phone" placeholder="Телефон">
-        <input type="email" placeholder="Электронная почта">
+      <form class="one-column" [formGroup]="form">
+        <input type="text" formControlName="name" placeholder="Имя">
+        <input type="phone" formControlName="phone" placeholder="Телефон">
+        <input type="email" formControlName="email" placeholder="Электронная почта">
+        <input type="text" placeholder="ИНН">
         <div class="actions">
-          <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"></mib-button>
+          <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100" (click)="submit()"></mib-button>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" id="checkbox">
+          <label for="checkbox">Пожалуйста подтвердите Ваше согласие на обработку персональных данных</label>
         </div>
       </form>
     </mib-modal>
