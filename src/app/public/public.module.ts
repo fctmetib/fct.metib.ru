@@ -13,6 +13,7 @@ import { TariffsComponent } from './pages/tariffs/tariffs.component';
 import { ClientsComponent } from './pages/clients/clients.component';
 import { MibFooterComponent } from './shared/mib-footer/mib-footer.component';
 import { MibModalModule } from './shared/mib-modal';
+import { MibTabModule } from './shared/mib-tab';
 
 const routes = [
   {
@@ -49,7 +50,8 @@ const routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    MibModalModule
+    MibModalModule,
+    MibTabModule
   ],
   exports: [RouterModule],
   declarations: [

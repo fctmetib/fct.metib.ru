@@ -9,7 +9,8 @@
           превратить дебиторскую задолженность в деньги!
         </p>
         <div class="actions">
-          <mib-button (click)="openModal('get-finance')" [title]="'Получить финансирование'" [theme]="'regular'"></mib-button>
+          <mib-button (click)="openModal('get-finance')" [title]="'Получить финансирование'" [theme]="'regular'">
+          </mib-button>
         </div>
       </div>
 
@@ -78,6 +79,68 @@
 <section class="offer">
   <div class="mib-container">
     <h2>Мы предлагаем</h2>
+    <mib-tab>
+      <mib-tab-item>
+        <mib-tab-label>Внутренний факторинг</mib-tab-label>
+        <mib-tab-body>
+          <div class="summary">
+            <div class="summary_item">
+              <div class="title">
+                <img src="../../../../assets/icons/icon_success.png" alt="">
+                Факторинг с регрессом
+              </div>
+              <div>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s
+              </div>
+            </div>
+            <div class="summary_item">
+              <div class="title">
+                <img src="../../../../assets/icons/icon_success.png" alt="">
+                Факторинг без регресса
+              </div>
+              <div>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s
+              </div>
+            </div>
+          </div>
+          <div class="image">
+            <img src="../../../../assets/images/offer_one.png" alt="">
+          </div>
+        </mib-tab-body>
+      </mib-tab-item>
+      <mib-tab-item>
+        <mib-tab-label>Международный факторинг</mib-tab-label>
+        <mib-tab-body>
+          <div class="summary">
+            <div class="summary_item">
+              <div class="title">
+                <img src="../../../../assets/icons/icon_success.png" alt="">
+                Факторинг с регрессом
+              </div>
+              <div>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s
+              </div>
+            </div>
+            <div class="summary_item">
+              <div class="title">
+                <img src="../../../../assets/icons/icon_success.png" alt="">
+                Факторинг без регресса
+              </div>
+              <div>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s
+              </div>
+            </div>
+          </div>
+          <div class="image">
+            <img src="../../../../assets/images/offer_two.png" alt="">
+          </div>
+        </mib-tab-body>
+      </mib-tab-item>
+    </mib-tab>
   </div>
 </section>
 <section class="how-work">
@@ -109,11 +172,7 @@
     <input type="email" formControlName="email" placeholder="Электронная почта">
     <input type="text" formControlName="inn" placeholder="ИНН">
     <div class="actions">
-      <mib-button
-        [title]="'Отправить заявку'"
-        [theme]="'regular'"
-        [width]="100"
-        (click)="sendFinanceRequest()"
+      <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100" (click)="sendFinanceRequest()"
         [disable]="!isFinanceFormValid()"></mib-button>
     </div>
     <div class="checkbox">
