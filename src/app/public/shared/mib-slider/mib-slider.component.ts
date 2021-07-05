@@ -13,7 +13,7 @@ import { Component, Input, OnInit } from '@angular/core';
         [theme]="'scroller'"
         id="scroll-left"
       ></mib-button>
-      <div class="list" mib-scroll #list="mib-scroll" [scrollUnit]="150">
+      <div class="list" mib-scroll #list="mib-scroll" [scrollUnit]="150" [ngClass]="theme">
         <ng-content></ng-content>
       </div>
       <mib-button
@@ -28,6 +28,10 @@ import { Component, Input, OnInit } from '@angular/core';
   `,
 })
 export class MibSliderComponent implements OnInit {
+
+  // default, news
+  @Input() theme: string = 'default';
+
   constructor() {}
 
   ngOnInit() {}

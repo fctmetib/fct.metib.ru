@@ -1,31 +1,40 @@
 .mib-card-news {
   width: 255px;
-  padding: 0 15px;
   border-radius: 10px;
   background-color: white;
 
-  margin-bottom: 30px;
-
-  .icon {
+  .header {
     position: relative;
-    top: -40px;
-    left: 0px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .date {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      padding: 5px;
+      background: #FFFFFF;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 16px;
+      text-align: center;
+      color: #989898;
+    }
   }
 
-  .inner {
-    position: relative;
-    top: -40px;
-
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 16px;
-    text-align: center;
-
-    color: #334D64;
+  .body {
+    padding: 15px;
+    .title {
+      text-align: center;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 18px;
+      color: #102538;
+      margin-bottom: 12px;
+    }
+    .desc {
+      font-size: 14px;
+      line-height: 16px;
+      text-align: center;
+      color: #989898;
+    }
   }
 }

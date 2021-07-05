@@ -5,21 +5,37 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./mib-card-news.component.scss'],
   template: `
     <div class="mib-card-news">
-      <div class="icon">
-        <img [src]="icon" alt="Иконка">
+      <div class="header">
+        <div class="date">
+          {{ date }}
+        </div>
+        <div class="image">
+          <img [src]="image" />
+        </div>
       </div>
-      <div class="inner">
-        {{text}}
+      <div class="body">
+        <div class="title">
+          {{ title }}
+        </div>
+        <div class="desc">
+          {{ desc }}
+        </div>
       </div>
     </div>
   `,
 })
 export class MibCardNewsComponent implements OnInit {
   @Input()
-  icon: string;
+  date: string;
 
   @Input()
-  text: string;
+  image: string;
+
+  @Input()
+  title: string;
+
+  @Input()
+  desc: string;
 
   constructor() {}
 

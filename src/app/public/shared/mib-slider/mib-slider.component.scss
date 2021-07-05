@@ -5,8 +5,15 @@
   .list {
     flex-grow: 1;
     display: flex;
-    gap: 90px;
     overflow-x: scroll;
+
+    &.default {
+      gap: 90px;
+    }
+
+    &.news {
+      gap: 30px;
+    }
   }
 
   .list::-webkit-scrollbar {
