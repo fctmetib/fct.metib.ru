@@ -1,0 +1,19 @@
+.mib-slider {
+  display: flex;
+  margin: 5px;
+
+  .list {
+    flex-grow: 1;
+    display: flex;
+    gap: 90px;
+    overflow-x: scroll;
+  }
+
+  .list::-webkit-scrollbar {
+    display: none;
+  }
+
+  #scroll-left {
+    order: -1;
+  }
+}

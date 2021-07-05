@@ -14,6 +14,9 @@ import { ClientsComponent } from './pages/clients/clients.component';
 import { MibFooterComponent } from './shared/mib-footer/mib-footer.component';
 import { MibModalModule } from './shared/mib-modal';
 import { MibTabModule } from './shared/mib-tab';
+import { MibScrollDirective } from './shared/directives/mib-scroll.directive';
+import { MibSliderComponent } from './shared/mib-slider/mib-slider.component';
+import { MibCardNewsComponent } from './shared/cards/card-news/mib-card-news.component';
 
 const routes = [
   {
@@ -61,6 +64,9 @@ const routes = [
     ClientsComponent,
     ContactsComponent,
     // TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
+    MibCardNewsComponent,
+    MibSliderComponent,
+    MibScrollDirective,
     UIKitTestComponent,
     MibMenuComponent,
     MibFooterComponent,
