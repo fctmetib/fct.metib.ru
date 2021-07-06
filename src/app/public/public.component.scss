@@ -1,8 +1,13 @@
 @import '/src/styles/colors.scss';
-@import '/src/styles/mib-ui/mib-input.scss';
-@import '/src/styles/mib-ui/mib-form.scss';
 
 :host ::ng-deep {
+  @media (min-width:1300px) {
+    .mib-body {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+
   .content {
     @media (max-width: 1300px) {
       padding-top: 100px;
@@ -16,7 +21,8 @@
 
   .mib-container {
     @media (max-width: 1300px) {
-      margin: 0 14px 0 14px;
+      text-align: center;
+
       h2 {
         margin: 0px;
         text-align: center;
@@ -27,11 +33,10 @@
       max-width: 1100px;
       margin: 0 auto;
 
-      &-fluid{
+      &-fluid {
         max-width: 1400px;
         margin: 0 auto;
       }
-
       h2 {
         margin: 0;
         padding-top: 3.25rem;
@@ -84,8 +89,9 @@
 
   @media (max-width: 1300px) {
     h1 {
+      font-size: 36px;
+      line-height: 41px;
       text-align: center;
     }
   }
-
 }

@@ -2,9 +2,6 @@ import {
   Component,
   OnInit,
   Input,
-  EventEmitter,
-  ViewChild,
-  TemplateRef,
   ContentChild,
 } from "@angular/core";
 import { MibTabBodyComponent } from "../mib-tab-body/mib-tab-body.component";

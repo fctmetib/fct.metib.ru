@@ -93,6 +93,21 @@ footer {
   .map {
     height: 250px;
   }
+
+  @media (max-width: 1300px) {
+    padding-left: 15px;
+    padding-right: 15px;
+
+    .footer_menu {
+      flex-direction: column;
+      gap: 35px;
+    }
+
+    .footer_info {
+      flex-direction: column;
+      gap: 35px;
+    }
+  }
 }
 
 .description {
@@ -103,3 +118,4 @@ footer {
   line-height: 16px;
   color: #A7A7A7;
 }
+

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MibModalService } from '../../shared/mib-modal';
 
 @Component({
   selector: 'home',
   styleUrls: ['./home.component.scss'],
-  templateUrl: './home.component.html',
+  templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
   public financeForm = this.fb.group({

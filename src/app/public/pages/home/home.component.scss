@@ -1,5 +1,5 @@
 .promo {
-  height: 710px;
+  min-height: 710px;
   background: #FFFFFF;
   box-shadow: 0px 15px 25px rgba(12, 131, 241, 0.03);
   border-radius: 0px 0px 20px 20px;
@@ -12,6 +12,7 @@
 
   @media (max-width: 1300px) {
     background-image: none;
+    padding-bottom: 40px;
   }
 
   &_inner {
@@ -92,7 +93,7 @@
 .how-work {
   background: #F7F7F7;
   border-radius: 20px;
-  height: 35.875rem;
+  height: 574px;
 
   position: relative;
 
@@ -159,6 +160,24 @@
         text-align: center;
         color: #102538;
       }
+    }
+  }
+
+
+  @media (max-width: 1300px) {
+    height: 100%;
+
+    .line {
+      width: 0px;
+      height: 0px;
+    }
+
+    &__items {
+      margin-top: 7.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 40px;
     }
   }
 }

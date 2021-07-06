@@ -1,44 +1,100 @@
-.tabs-header {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  gap: 50px;
+:host ::ng-deep {
+  .tabs-header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
 
-  .line {
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background-color: #EAEAEA;
-    bottom: 0px;
+    .line {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: #EAEAEA;
+      bottom: 0px;
+    }
   }
-}
 
-.tab-label {
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  color: #C0C0C0;
+  .tab-label {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    color: #C0C0C0;
 
-  padding: 0px;
-  padding-bottom: 30px;
+    padding: 0px;
+    padding-bottom: 30px;
 
-  z-index: 1;
-}
+    z-index: 1;
+  }
 
-.active {
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  color: #102538;
-  border-bottom: 2px #0C83F1 solid;
-}
+  .active {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    color: #102538;
+    border-bottom: 2px #0C83F1 solid;
+  }
 
-.tabs-body {
-  display: flex;
-  padding-top: 50px;
-  justify-content: space-between;
+  .tabs-body {
+    display: flex;
+    padding-top: 50px;
+    justify-content: space-between;
+  }
+
+
+  @media (max-width: 1300px) {
+    .tabs-header {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tab-label {
+      border: 1px solid #BDBDBD;
+      box-sizing: border-box;
+      border-radius: 10px;
+
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 21px;
+      color: #BDBDBD;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: unset;
+      height: 90px;
+    }
+
+    .active {
+      border: 1px solid #0C83F1;
+      background: #0C83F1;
+      border-radius: 10px;
+
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 21px;
+      color: #FFFFFF;
+    }
+
+    .tabs-body {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      padding-top: 50px;
+
+      .image {
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
 }
