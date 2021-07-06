@@ -6,12 +6,12 @@ import { RouterModule } from '@angular/router';
 import { LoginedGuard } from './../shared/services/logined.guard';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
-import { AuthLayoutComponent } from './../shared/layouts/auth-layout/auth-layout.component';
+import { AuthComponent } from './auth.component';
 
 const routes = [
   {
     path: '',
-    component: AuthLayoutComponent,
+    component: AuthComponent,
     canActivate: [LoginedGuard],
     children: [
       {

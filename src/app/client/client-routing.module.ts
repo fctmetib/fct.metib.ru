@@ -1,13 +1,13 @@
 import { AuthGuard } from './../shared/services/auth.guard';
-import { ClientLayoutComponent } from '../shared/layouts/client-layout/client-layout.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UserVerifyGuard } from '../shared/services/user-verify.guard';
+import { ClientComponent } from './client.component';
 
 const routes = [
   {
     path: '',
-    component: ClientLayoutComponent,
+    component: ClientComponent,
     canActivate: [AuthGuard, UserVerifyGuard],
     children: [
       {

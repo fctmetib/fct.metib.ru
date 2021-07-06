@@ -27,8 +27,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
-import { AuthLayoutComponent } from './../shared/layouts/auth-layout/auth-layout.component';
 import { AuthRoutingModule } from './auth-routing.module';
+import { AuthComponent } from './auth.component';
 
 @NgModule({
   imports: [
@@ -54,7 +54,7 @@ import { AuthRoutingModule } from './auth-routing.module';
     InputMaskModule,
   ],
   declarations: [
-    AuthLayoutComponent,
+    AuthComponent,
     LoginPageComponent,
     RegisterPageComponent,
     ResetPasswordPageComponent,

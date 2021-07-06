@@ -1,15 +1,15 @@
 import { RouterTestingModule } from '@angular/router/testing';
-import { ClientLayoutComponent } from './client-layout.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ClientComponent } from './client.component';
 
-describe('ClientLayoutComponent', () => {
-  let component: ClientLayoutComponent;
-  let fixture: ComponentFixture<ClientLayoutComponent>;
+describe('ClientComponent', () => {
+  let component: ClientComponent;
+  let fixture: ComponentFixture<ClientComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientLayoutComponent ],
+      declarations: [ ClientComponent ],
       imports: [
         RouterTestingModule
       ],
@@ -19,7 +19,7 @@ describe('ClientLayoutComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClientLayoutComponent);
+    fixture = TestBed.createComponent(ClientComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

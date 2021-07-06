@@ -3,20 +3,15 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { AdminLayoutComponent } from '../shared/layouts/admin-layout/admin-layout.component';
 import { AuthGuard } from '../shared/services/auth.guard';
-import { AdminComponent } from './pages/admin/containers/admin.component';
+import { AdminComponent } from './admin.component';
 
 const routes = [
   {
     path: 'admin',
-    component: AdminLayoutComponent,
+    component: AdminComponent,
     canActivate: [AuthGuard],
     children: [
-      {
-        path: '',
-        component: AdminComponent,
-      },
     ],
   }
 ];
@@ -32,7 +27,6 @@ const routes = [
     RouterModule
   ],
   declarations: [
-    AdminLayoutComponent,
     AdminComponent
   ],
   providers: [],

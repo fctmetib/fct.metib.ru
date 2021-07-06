@@ -1,15 +1,15 @@
 import { RouterTestingModule } from '@angular/router/testing';
-import { NotVerifyClientLayoutComponent } from './not-verify-client-layout.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NotVerifyClientComponent } from './not-verify-client.component';
 
-describe('NotVerifyClientLayoutComponent', () => {
-  let component: NotVerifyClientLayoutComponent;
-  let fixture: ComponentFixture<NotVerifyClientLayoutComponent>;
+describe('NotVerifyClientComponent', () => {
+  let component: NotVerifyClientComponent;
+  let fixture: ComponentFixture<NotVerifyClientComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotVerifyClientLayoutComponent ],
+      declarations: [ NotVerifyClientComponent ],
       imports: [
         RouterTestingModule
       ],
@@ -19,7 +19,7 @@ describe('NotVerifyClientLayoutComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NotVerifyClientLayoutComponent);
+    fixture = TestBed.createComponent(NotVerifyClientComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

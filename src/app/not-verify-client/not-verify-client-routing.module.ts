@@ -1,12 +1,12 @@
-import { NotVerifyClientLayoutComponent } from './../shared/layouts/not-verify-client-layout/not-verify-client-layout.component';
 import { AuthGuard } from '../shared/services/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NotVerifyClientComponent } from './not-verify-client.component';
 
 const routes = [
   {
     path: 'not-verify',
-    component: NotVerifyClientLayoutComponent,
+    component: NotVerifyClientComponent,
     canActivate: [AuthGuard],
     children: [
       {

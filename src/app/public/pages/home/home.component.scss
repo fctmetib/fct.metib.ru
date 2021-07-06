@@ -10,6 +10,10 @@
   background-repeat: no-repeat;
   background-position: right bottom;
 
+  @media (max-width: 1300px) {
+    background-image: none;
+  }
+
   &_inner {
     height: 100%;
     display: flex;
@@ -17,6 +21,10 @@
 
     &_content {
       width: 600px;
+
+      @media (max-width: 1300px) {
+        width: 100%;
+      }
 
       .intro {
         h1 {

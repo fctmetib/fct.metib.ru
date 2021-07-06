@@ -2,11 +2,11 @@ import { MenuItem } from 'primeng/api';
 import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-not-verify-client-layout',
-  templateUrl: './not-verify-client-layout.component.html',
-  styleUrls: ['./not-verify-client-layout.component.scss'],
+  selector: 'app-not-verify-client',
+  templateUrl: './not-verify-client.component.html',
+  styleUrls: ['./not-verify-client.component.scss'],
 })
-export class NotVerifyClientLayoutComponent implements OnInit {
+export class NotVerifyClientComponent implements OnInit {
   constructor() {}
   items: MenuItem[];
 

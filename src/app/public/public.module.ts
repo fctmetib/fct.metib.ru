@@ -3,7 +3,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PublicLayoutComponent } from '../shared/layouts/public-layout/public-layout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { UIKitTestComponent } from './shared/ui-kit-test/ui-kit-test.component';
 import { MibButtonComponent } from './shared/buttons/mib-button/mib-button.component';
@@ -17,11 +16,12 @@ import { MibTabModule } from './shared/mib-tab';
 import { MibScrollDirective } from './shared/directives/mib-scroll.directive';
 import { MibSliderComponent } from './shared/mib-slider/mib-slider.component';
 import { MibCardNewsComponent } from './shared/cards/card-news/mib-card-news.component';
+import { PublicComponent } from './public.component';
 
 const routes = [
   {
     path: '',
-    component: PublicLayoutComponent,
+    component: PublicComponent,
     children: [
       {
         path: '',
@@ -58,7 +58,7 @@ const routes = [
   ],
   exports: [RouterModule],
   declarations: [
-    PublicLayoutComponent,
+    PublicComponent,
     HomeComponent,
     TariffsComponent,
     ClientsComponent,

@@ -3,11 +3,11 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-client-layout',
-  templateUrl: './client-layout.component.html',
-  styleUrls: ['./client-layout.component.scss'],
+  selector: 'app-client',
+  templateUrl: './client.component.html',
+  styleUrls: ['./client.component.scss'],
 })
-export class ClientLayoutComponent implements OnInit {
+export class ClientComponent implements OnInit {
   constructor(private router: Router) {}
 
   items: MenuItem[];
