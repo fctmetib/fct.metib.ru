@@ -1,15 +1,13 @@
 .mib-card-info {
-  width: 255px;
-  padding: 0 15px;
-  border-radius: 10px;
-  background-color: white;
-
-  margin-bottom: 30px;
+  position: relative;
+  margin-bottom: 65px;
 
   .icon {
-    position: relative;
-    top: -40px;
-    left: 0px;
+    position: absolute;
+
+    top: -27%;
+    left: 50%;
+    transform: translateX(-50%);
 
     display: flex;
     align-items: center;
@@ -17,15 +15,28 @@
   }
 
   .inner {
-    position: relative;
-    top: -40px;
+    padding: 0 15px;
+    border-radius: 10px;
+    background-color: white;
+    width: 255px;
 
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 16px;
-    text-align: center;
+    .text {
+      padding-top: 50px;
 
-    color: #334D64;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+      text-align: center;
+
+      color: #334D64;
+    }
+    &.lg {
+      height: 114px;
+    }
+    &.xl {
+      height: 130px;
+    }
+
   }
 }

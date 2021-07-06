@@ -8,8 +8,10 @@ import { Component, Input, OnInit } from '@angular/core';
       <div class="icon">
         <img [src]="icon" alt="Иконка">
       </div>
-      <div class="inner">
-        {{text}}
+      <div class="inner" [ngClass]="size">
+        <div class="text">
+          {{text}}
+        </div>
       </div>
     </div>
   `,
@@ -17,6 +19,10 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MibCardInfoComponent implements OnInit {
   @Input()
   icon: string;
+
+  // xl, lg - default
+  @Input()
+  size: string = 'lg';
 
   @Input()
   text: string;
