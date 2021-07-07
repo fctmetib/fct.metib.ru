@@ -91,7 +91,9 @@ footer {
   }
 
   .map {
+    max-width: 1400px;
     height: 250px;
+    margin: auto;
   }
 
   @media (max-width: 1300px) {
