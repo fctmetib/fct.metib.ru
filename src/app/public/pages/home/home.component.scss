@@ -81,20 +81,22 @@
   }
 }
 
-
-
 .advantages {
   background: #F7F7F7;
   border-radius: 20px;
 
   &_cards {
-    margin-top: 3.625rem;
+    margin-top: 5.625rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 20px;
 
     justify-content: center;
+
+    @media (max-width: 1300px) {
+      margin-top: 3.625rem;
+    }
   }
 }
 
@@ -182,7 +184,6 @@
     }
   }
 
-
   @media (max-width: 1300px) {
     height: 100%;
 
@@ -236,7 +237,7 @@
   border-radius: 20px;
 
   h2 {
-    margin-bottom: 3.5rem;
+  //  margin-bottom: 3.5rem;
   }
 }
 
