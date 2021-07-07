@@ -94,8 +94,10 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      gap: 34px;
 
       padding-top: 50px;
+      text-align: left;
 
       .image {
         img {

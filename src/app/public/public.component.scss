@@ -1,10 +1,10 @@
 @import '/src/styles/colors.scss';
 
 :host ::ng-deep {
-  @media (min-width:1300px) {
+  @media (max-width:1300px) {
     .mib-body {
-      padding-left: 15px;
-      padding-right: 15px;
+      // padding-left: 15px;
+      // padding-right: 15px;
     }
   }
 
@@ -19,14 +19,27 @@
     }
   }
 
+  .mib-section {
+    @media (max-width: 1300px) {
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-bottom: 38px;
+    }
+
+  }
+
   .mib-container {
     @media (max-width: 1300px) {
       text-align: center;
 
       h2 {
+        padding-top: 30px;
+        padding-bottom: 40px;
         margin: 0px;
         text-align: center;
       }
+
+      padding-bottom: 40px;
     }
 
     @media (min-width:1300px) {

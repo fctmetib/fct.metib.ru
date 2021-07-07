@@ -100,6 +100,21 @@ footer {
     padding-left: 15px;
     padding-right: 15px;
 
+    .mib-container {
+      .contacts {
+        margin-top: 0px;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .location {
+          .address {
+            text-align: left;
+          }
+        }
+      }
+    }
+
+
     .footer_menu {
       flex-direction: column;
       gap: 35px;
