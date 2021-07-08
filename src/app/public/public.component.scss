@@ -1,6 +1,110 @@
 @import '/src/styles/colors.scss';
 
 :host ::ng-deep {
+
+  // UI KIT START
+
+  // Mobile
+  @media (max-width: 1300px) {
+    .mib-section {
+      margin: 0 auto;
+      max-width: 1400px;
+
+      &__header {
+        &.lg {
+          height: 574px;
+        }
+
+        padding-top: 78px;
+      }
+
+      &__text {
+        background: #F6F6F6;
+      }
+
+      .mib-container {
+        margin: auto;
+
+        span {
+          background: #0C83F1;
+          border-radius: 10px;
+          font-size: 14px;
+          line-height: 16px;
+          color: #FFFFFF;
+          padding: 9px 12px 9px 12px;
+        }
+
+        h1 {
+          max-width: 540px;
+          margin: 0px;
+          margin-top: 24px;
+          margin-bottom: 36px;
+        }
+
+        .desc {
+          max-width: 540px;
+          font-size: 14px;
+          line-height: 16px;
+          color: #989898;
+        }
+      }
+    }
+  }
+
+  // Desktop
+  @media (min-width: 1300px) {
+    .mib-section {
+      margin: 0 auto;
+      max-width: 1400px;
+
+      &__header {
+        &.lg {
+          height: 574px;
+        }
+
+        background-image: url('../../assets/public/image_promo.png');
+        background-repeat: no-repeat;
+        background-position: right bottom;
+
+        padding-top: 78px;
+      }
+
+      &__text {
+        background: #F6F6F6;
+      }
+
+      .mib-container {
+        margin: auto;
+
+        span {
+          background: #0C83F1;
+          border-radius: 10px;
+          font-size: 14px;
+          line-height: 16px;
+          color: #FFFFFF;
+          padding: 9px 12px 9px 12px;
+        }
+
+        h1 {
+          max-width: 540px;
+          margin: 0px;
+          margin-top: 24px;
+          margin-bottom: 36px;
+        }
+
+        .desc {
+          max-width: 540px;
+          font-size: 14px;
+          line-height: 16px;
+          color: #989898;
+        }
+      }
+    }
+  }
+
+  // UI KIT END
+
+
   @media (max-width:1300px) {
     .mib-body {
       // padding-left: 15px;
@@ -50,6 +154,7 @@
         max-width: 1400px;
         margin: 0 auto;
       }
+
       h2 {
         margin: 0;
         padding-top: 3.25rem;

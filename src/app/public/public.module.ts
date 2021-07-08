@@ -17,6 +17,8 @@ import { MibScrollDirective } from './shared/directives/mib-scroll.directive';
 import { MibSliderComponent } from './shared/mib-slider/mib-slider.component';
 import { MibCardNewsComponent } from './shared/cards/card-news/mib-card-news.component';
 import { PublicComponent } from './public.component';
+import { MibSectionHeaderComponent } from './shared/mib-sections/mib-section-header/mib-section-header.component';
+import { NewsComponent } from './pages/news/news.component';
 
 const routes = [
   {
@@ -38,6 +40,10 @@ const routes = [
       {
         path: 'contacts',
         component: ContactsComponent,
+      },
+      {
+        path: 'news/:id',
+        component: NewsComponent
       },
       {
         path: 'ui-kit-test',
@@ -63,7 +69,9 @@ const routes = [
     TariffsComponent,
     ClientsComponent,
     ContactsComponent,
+    NewsComponent,
     // TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
+    MibSectionHeaderComponent,
     MibCardNewsComponent,
     MibSliderComponent,
     MibScrollDirective,
