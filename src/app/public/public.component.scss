@@ -26,7 +26,7 @@
       .mib-container {
         margin: auto;
 
-        span {
+        .date {
           background: #0C83F1;
           border-radius: 10px;
           font-size: 14px;
@@ -101,7 +101,7 @@
       .mib-container {
         margin: auto;
 
-        span {
+        .date {
           background: #0C83F1;
           border-radius: 10px;
           font-size: 14px;
@@ -122,6 +122,14 @@
           font-size: 14px;
           line-height: 16px;
           color: #989898;
+        }
+
+
+        .row {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          gap: 28px;
         }
       }
     }

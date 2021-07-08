@@ -1,0 +1,42 @@
+.steps {
+  margin-bottom: 42px;
+}
+
+.instruction {
+  margin-bottom: 16px;
+}
+
+.annotation {
+  p {
+    font-size: 14px;
+    line-height: 16px;
+    color: #828282;
+  }
+}
+
+
+.step-two {
+  text-align: left;
+  .pre-header {
+    text-align: left;
+  }
+  h2 {
+    padding: 0;
+    margin-top: 20px;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+}
+
+.step-three {
+  text-align: right;
+  .pre-header {
+    text-align: right;
+  }
+  h2 {
+    padding: 0;
+    margin-top: 20px;
+    margin-bottom: 24px;
+    text-align: right;
+  }
+}

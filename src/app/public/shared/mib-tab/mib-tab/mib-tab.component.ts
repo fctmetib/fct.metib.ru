@@ -4,6 +4,7 @@ import {
   QueryList,
   AfterContentInit,
   AfterContentChecked,
+  Input,
 } from "@angular/core";
 import { Observable } from "rxjs";
 import { startWith, map, delay } from "rxjs/operators";
@@ -31,7 +32,7 @@ import { MibTabItemComponent } from "../mib-tab-item/mib-tab-item.component";
       <div class="line"></div>
     </div>
 
-    <div class="tabs-body">
+    <div class="tabs-body" [ngStyle]="{'display': flexDisable ? 'unset' : 'flex'}">
       <ng-container *ngIf="activeTab && activeTab.bodyComponent">
         <ng-container *ngTemplateOutlet="activeTab.bodyComponent.bodyContent">
         </ng-container>
@@ -40,6 +41,9 @@ import { MibTabItemComponent } from "../mib-tab-item/mib-tab-item.component";
   `
 })
 export class MibTabComponent implements AfterContentInit, AfterContentChecked {
+  @Input()
+  flexDisable: boolean;
+
   @ContentChildren(MibTabItemComponent)
   tabs: QueryList<MibTabItemComponent>;
 

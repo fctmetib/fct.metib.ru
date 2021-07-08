@@ -21,6 +21,7 @@ import { MibSectionHeaderComponent } from './shared/mib-sections/mib-section-hea
 import { NewsComponent } from './pages/news/news.component';
 import { MibSectionBodyComponent } from './shared/mib-sections/mib-section-body/mib-section-body.component';
 import { MibCardTariffComponent } from './shared/cards/card-tariff/mib-card-tariff.component';
+import { MibCardPersonComponent } from './shared/cards/card-person/mib-card-person.component';
 
 const routes = [
   {
@@ -73,17 +74,21 @@ const routes = [
     ContactsComponent,
     NewsComponent,
     // TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
+    // DIRECTIVES
+    MibScrollDirective,
+    // SECTIONS
     MibSectionHeaderComponent,
     MibSectionBodyComponent,
-    MibCardNewsComponent,
+    // COMPONENTS
     MibSliderComponent,
-    MibScrollDirective,
     UIKitTestComponent,
-    MibCardTariffComponent,
     MibMenuComponent,
     MibFooterComponent,
     MibButtonComponent,
     // CARDS
+    MibCardTariffComponent,
+    MibCardPersonComponent,
+    MibCardNewsComponent,
     MibCardInfoComponent,
   ],
   providers: [

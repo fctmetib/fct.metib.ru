@@ -1,1 +1,49 @@
+h3 {
+  text-align: center;
+}
 
+.persons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+
+.contacts {
+  padding: 30px;
+  .address {
+    max-width: 450px;
+
+    span {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 21px;
+      color: #C0C0C0;
+    }
+
+    p {
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 28px;
+      color: #102538;
+    }
+
+    .phones {
+      display: flex;
+      gap: 30px;
+
+      .phone {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 21px;
+        color: #102538;
+      }
+    }
+  }
+  .map {
+    width: 100%;
+    height: 225px;
+  }
+}
