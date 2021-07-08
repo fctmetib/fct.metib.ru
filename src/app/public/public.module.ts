@@ -19,6 +19,8 @@ import { MibCardNewsComponent } from './shared/cards/card-news/mib-card-news.com
 import { PublicComponent } from './public.component';
 import { MibSectionHeaderComponent } from './shared/mib-sections/mib-section-header/mib-section-header.component';
 import { NewsComponent } from './pages/news/news.component';
+import { MibSectionBodyComponent } from './shared/mib-sections/mib-section-body/mib-section-body.component';
+import { MibCardTariffComponent } from './shared/cards/card-tariff/mib-card-tariff.component';
 
 const routes = [
   {
@@ -72,10 +74,12 @@ const routes = [
     NewsComponent,
     // TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
     MibSectionHeaderComponent,
+    MibSectionBodyComponent,
     MibCardNewsComponent,
     MibSliderComponent,
     MibScrollDirective,
     UIKitTestComponent,
+    MibCardTariffComponent,
     MibMenuComponent,
     MibFooterComponent,
     MibButtonComponent,

@@ -1,31 +1,23 @@
-.promo {
-  height: 500px;
-  background: #FFFFFF;
-  box-shadow: 0px 15px 25px rgba(12, 131, 241, 0.03);
-  border-radius: 0px 0px 20px 20px;
 
-  margin: 0 auto;
-  max-width: 1400px;
-  background-image: url('../../../../assets/public/image_tarif_promo.png');
-  background-repeat: no-repeat;
-  background-position: right bottom;
-
-  &_inner {
-    height: 100%;
+// Mobile
+@media (max-width: 1300px) {
+  .items {
     display: flex;
-    max-width: 1100px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+  }
 
-    &_content {
-      width: 600px;
+}
 
-      .intro {
-        h1 {
-          margin-bottom: 2.25rem;
-        }
-        .description {
-          margin-bottom: 3rem;
-        }
-      }
-    }
+// Desktop
+@media (min-width: 1300px) {
+  .items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
   }
 }

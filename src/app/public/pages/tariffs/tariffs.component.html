@@ -1,12 +1,24 @@
-<section class="promo fluid">
-  <div class="mib-container content promo_inner">
-    <div class="promo_inner_content">
-      <div class="intro">
-        <h1>Тарифы</h1>
-        <p class="description">
-          Выбери сам с чего начнётся наше сотрудничество
-        </p>
-      </div>
-    </div>
+<mib-section-header [backgroundImageUrl]="'../../../../assets/public/image_tarif_promo.png'">
+  <h1>Тарифы</h1>
+  <p class="desc">Выбери сам с чего начнётся наше сотрудничество
+  </p>
+</mib-section-header>
+<mib-section-body [addonHeader]="'Тарифы'">
+  <h2 class="addon-header">
+    Выберите удобный Вам тариф
+  </h2>
+  <div class="items">
+    <mib-card-tariff [theme]="'purp'" [title]="'Premium'"
+      [items]="['Финансирование до 100%', 'Фиксированная процентная ставка', 'Финансирование в день отгрузки']">
+    </mib-card-tariff>
+    <mib-card-tariff [theme]="'blue'" [title]="'Business'" [items]="['Отсрочка до
+  3-х лет', 'Финансирование до 100%', 'Фиксированный комиссионный параметр за каждый день пользования деньгами']">
+    </mib-card-tariff>
+    <mib-card-tariff [theme]="'green'" [title]="'Compromise no risk'"
+      [items]="['Финансирование до 100%', 'Фиксированная процентная ставка', 'Страхование дебиторской задолженности']">
+    </mib-card-tariff>
+    <mib-card-tariff [theme]="'red'" [title]="'Compromise'"
+      [items]="['Комиссионный параметр за каждый день пользования деньгами', 'Бесплатный льготный период 30 дней', 'Возможность выбора комфортных условий финансирования за минимальную процентную ставку']">
+    </mib-card-tariff>
   </div>
-</section>
+</mib-section-body>
