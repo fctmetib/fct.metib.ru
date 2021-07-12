@@ -2,6 +2,21 @@ h3 {
   text-align: center;
 }
 
+.section-information {
+  border-bottom: 2px solid #EAEAEA;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+
+  &:first-of-type {
+    margin-bottom: 0px;
+  }
+  &:last-of-type {
+    border-bottom: unset;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+  }
+}
+
 .persons {
   display: flex;
   justify-content: center;
