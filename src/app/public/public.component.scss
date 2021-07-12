@@ -10,6 +10,33 @@
       margin: 0 auto;
       max-width: 1400px;
 
+      &__body {
+        padding-top: 50px;
+        padding-bottom: 70px;
+
+        &.grey {
+          background: #F6F6F6;
+
+          p {
+            font-size: 14px;
+            line-height: 16px;
+            color: #102538;
+          }
+        }
+
+        .pre-header {
+          padding-top: 13px;
+          text-align: center;
+          font-size: 14px;
+          line-height: 16px;
+          color: #0C83F1;
+        }
+
+        .addon-header {
+          padding-top: 1.25rem;
+        }
+      }
+
       &__header {
         &.lg {
           height: 492px;
@@ -47,6 +74,15 @@
           font-size: 14px;
           line-height: 16px;
           color: #989898;
+        }
+
+        .row {
+          .col {
+            text-align: center;
+            img {
+              width: 100%;
+            }
+          }
         }
       }
     }
@@ -130,6 +166,10 @@
           flex-direction: row;
           justify-content: space-between;
           gap: 28px;
+
+          .col {
+
+          }
         }
       }
     }
