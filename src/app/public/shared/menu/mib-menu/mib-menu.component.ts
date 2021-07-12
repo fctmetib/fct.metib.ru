@@ -8,11 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class MibMenuComponent implements OnInit {
 
   //TODO: add Input linksItems
-  //TODO: add close logic
 
   constructor() {}
 
   ngOnInit() {}
 
-  close() {}
+  close() {
+    let toggler: any = document.getElementsByClassName('toggler')[0];
+    toggler.checked = false;
+  }
 }

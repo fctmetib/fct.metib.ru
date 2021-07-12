@@ -133,9 +133,6 @@
 
       &__header {
         max-width: 1400px;
-
-       //  position: relative;
-
         &.lg {
           height: 492px;
         }
@@ -143,15 +140,6 @@
         background-image: url('../../assets/public/image_promo.png');
         background-repeat: no-repeat;
         background-position: right bottom;
-        // .image {
-        //   position: absolute;
-        //   bottom: -3px;
-        //   right: 0;
-        //   img {
-        //     width: 100%;
-        //   }
-        // }
-
         padding-top: 78px;
       }
 

@@ -330,8 +330,16 @@ nav {
               color: $link-grey;
 
               &.active {
+                position: relative;
                 color: $dark-blue;
-                border-top: $main 2px solid;
+                &::before {
+                  content: '';
+                  width: 48px;
+                  height: 2px;
+                  background-color: $main;
+                  position: absolute;
+                  top: -47px;
+                }
               }
             }
           }

@@ -38,20 +38,20 @@
         <div>
           <ul class="mib-mb-20">
             <li>
-              <a [routerLink]="['cabinet']" (click)="close()" routerLinkActive="active-link">Главная</a>
+              <a [routerLink]="['/']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Главная</a>
             </li>
             <li>
-              <a [routerLink]="['requests']" (click)="close()" routerLinkActive="active-link">Тарифы</a>
+              <a [routerLink]="['/tariffs']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
             </li>
             <li>
-              <a [routerLink]="['freeduty']" (click)="close()" routerLinkActive="active-link">Клиентам</a>
+              <a [routerLink]="['/clients']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
             </li>
             <li>
-              <a [routerLink]="['contracts']" (click)="close()" routerLinkActive="active-link">Контакты</a>
+              <a [routerLink]="['/contracts']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
             </li>
             <li>
               <mib-button [title]="'Личный кабинет'" [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
-                [routerLink]="['login']" [theme]="'regular'"></mib-button>
+                [routerLink]="['/login']" [theme]="'regular'"></mib-button>
             </li>
           </ul>
           <div class="social mib-mb-20">
