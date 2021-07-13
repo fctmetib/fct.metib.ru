@@ -13,30 +13,17 @@
       <div>
         <ul class="mib-mb-20">
           <li>
-            <a [routerLink]="['demand']" (click)="close()">Запросы</a>
-          </li>
-          <!-- <li>
-            <a>Кабинет</a>
+            <a [routerLink]="['cabinet']" (click)="close()">Главная</a>
           </li>
           <li>
-            <a>Заявки</a>
+            <a [routerLink]="['organizations']" (click)="close()">Организации</a>
           </li>
           <li>
-            <a>Свободная задолженность</a>
+            <a [routerLink]="['users']" (click)="close()">Пользователи</a>
           </li>
           <li>
-            <a>Договоры</a>
+            <a [routerLink]="['tests']" (click)="close()">Бизнес-тесты</a>
           </li>
-          <li>
-            <a>Платежи</a>
-          </li>
-          <li>
-            <a>Просрочки покупателя
-            </a>
-          </li>
-          <li>
-            <a>Документы</a>
-          </li> -->
         </ul>
         <div class="account mib-mb-20">
           <div class="header-block account-ava">
@@ -63,12 +50,6 @@
         </div>
         <div class="dropdown-content">
           <div class="items">
-            <div class="item" (click)="getInfo()">
-              <div class="icon">
-                <img src="../../../../../assets/icons/header-icons/info_icon.svg">
-              </div>
-              <a>Справка</a>
-            </div>
             <div class="item">
               <div class="icon grey">
                 <img src="../../../../../assets/icons/header-icons/exit_icon.svg">

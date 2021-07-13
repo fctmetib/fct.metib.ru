@@ -1,0 +1,57 @@
+<div class="header">
+  <div class="page">
+    <div class="page-info">
+      <div class="page-info-name">
+        {{ (page$ | async)?.header }}
+      </div>
+      <div class="page-info-desc">
+        {{ (page$ | async)?.description }}
+      </div>
+    </div>
+  </div>
+  <div class="account">
+    <div class="header-block account-ava">
+      <ng-container *ngIf="(currentUserFactoring$ | async)?.Avatar; else skeletonFactoringAvatarProfileTemplate">
+        <img src="{{baseAvatarProfileUrl}}/{{(currentUserFactoring$ | async)?.Avatar}}">
+      </ng-container>
+      <ng-template #skeletonFactoringAvatarProfileTemplate>
+        <img src="/assets/images/mib_ava.png">
+      </ng-template>
+    </div>
+    <div class="header-block account-owner clickable" (click)="openAccountOwner()" id="headerBlock">
+      <div class="account-info-name clickable">
+        <ng-container *ngIf="(currentUserFactoring$ | async); else skeletonUserNameTemplate">
+          {{(currentUserFactoring$ | async)?.Name}}
+        </ng-container>
+        <ng-template #skeletonUserNameTemplate>
+          <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
+        </ng-template>
+      </div>
+      <div class="account-info-email clickable">
+        <ng-container *ngIf="(currentUserFactoring$ | async); else skeletonUserEmailTemplate">
+          {{(currentUser$ | async)?.Profile.Email}}
+        </ng-container>
+        <ng-template #skeletonUserEmailTemplate>
+          <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
+        </ng-template>
+      </div>
+    </div>
+    <div id="dropdownMenu" class="dropdown-content">
+      <div class="items">
+        <div class="item">
+          <div class="icon grey">
+            <img src="../../../../../assets/icons/header-icons/change_password_icon.svg">
+          </div>
+          <a>Сменить Пароль</a>
+        </div>
+        <div class="item">
+          <div class="icon grey">
+            <img src="../../../../../assets/icons/header-icons/exit_icon.svg">
+          </div>
+          <a href="#" (click)="logout()">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="triangle-header"></div>
+</div>

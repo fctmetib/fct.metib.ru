@@ -1,4 +1,24 @@
-<h1>
-  Металлинвестбанк
-</h1>
-<router-outlet></router-outlet>
+<main>
+  <aside>
+    <div class="logo">
+      <a [routerLink]="['/']">
+        <img src="../../../../../assets/images/mib_logo.svg">
+      </a>
+    </div>
+    <div class="menu">
+      <p-menu [model]="items"></p-menu>
+      <div class="triangle-menu big"></div>
+    </div>
+  </aside>
+  <div class="page">
+    <app-mobile-header></app-mobile-header>
+    <section class="container">
+      <div class="main-body">
+        <div class="card-content card-content_simple">
+          <app-header></app-header>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>

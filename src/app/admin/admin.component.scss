@@ -1,0 +1,36 @@
+main {
+  display: flex;
+  height: calc(100vh - 70px);
+
+  .page {
+    width: 100%;
+    margin-right: 10px;
+    margin-left: 10px;
+
+    .container {
+      margin-top: 10px;
+      display: flex;
+      height: calc(100vh - 70px);
+
+      .main-body {
+        width: 100%;
+      }
+    }
+  }
+
+  aside {
+    width: 350px;
+    padding-top: 28px;
+    padding-left: 44px;
+
+    .menu {
+      margin-top: 50px;
+    }
+  }
+}
+
+
+.card-content_simple {
+  background:  #F9F9F9;
+}
+
