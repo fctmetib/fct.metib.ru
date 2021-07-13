@@ -26,8 +26,32 @@ const routes = [
     component: AdminComponent,
     canActivate: [AuthGuard],
     children: [
+      {
+        path: 'cabinet',
+        loadChildren: () =>
+          import('./modules/cabinet/cabinet.module').then(
+            (m) => m.CabinetModule
+          ),
+      },
+      {
+        path: 'organizations',
+        loadChildren: () =>
+          import('./modules/organizations/organizations.module').then(
+            (m) => m.OrganizationsModule
+          ),
+      },
+      {
+        path: 'tests',
+        loadChildren: () =>
+          import('./modules/tests/tests.module').then((m) => m.TestsModule),
+      },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./modules/users/users.module').then((m) => m.UsersModule),
+      },
     ],
-  }
+  },
 ];
 
 @NgModule({
@@ -51,17 +75,13 @@ const routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
   ],
-  exports: [
-    RouterModule
-  ],
+  exports: [RouterModule],
   declarations: [
     // Layout
     AdminComponent,
     HeaderComponent,
     MobileHeaderComponent,
   ],
-  providers: [
-    PageStoreService
-  ],
+  providers: [PageStoreService],
 })
-export class AdminModule { }
+export class AdminModule {}
