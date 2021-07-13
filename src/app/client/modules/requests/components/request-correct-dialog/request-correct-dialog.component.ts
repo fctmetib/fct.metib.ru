@@ -38,9 +38,13 @@ export class RequestCorrectDialogComponent implements OnDestroy {
     shipment: ClientShipmentInterface,
     changedSumm: number
   ) {
-    shipment.SummToFactor = changedSumm;
-    this.changedShipments.push(shipment);
-    this.calcSumCurrentPage();
+    // shipment.SummToFactor = changedSumm;
+    if (shipment.Summ < shipment.SummToFactor) {
+      shipment.Summ = shipment.SummToFactor;
+    } else {
+      this.changedShipments.push(shipment);
+      this.calcSumCurrentPage();
+    }
   }
 
   public onSubmit(): void {

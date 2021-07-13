@@ -76,8 +76,11 @@
               <div>
                 <p-cellEditor>
                   <ng-template pTemplate="input">
-                    <input pInputText type="text" [(ngModel)]="shipment.Summ"
-                      (ngModelChange)="setChangedShipment(shipment, shipment.Summ)" required>
+                    <input pInputText type="text"
+                      [(ngModel)]="shipment.Summ"
+                      (ngModelChange)="setChangedShipment(shipment, shipment.Summ)"
+                      [min]="shipment.SummToFactor"
+                      required>
                   </ng-template>
                   <ng-template pTemplate="output">
                     <div></div>
@@ -90,10 +93,10 @@
               </div>
             </div>
           </td>
-          <td pEditableColumn>
-            <div class="m-td" style="justify-self: flex-start; flex-direction: row-reverse;">
+          <td>
+            <div class="m-td">
               <div>
-                {{shipment.Summ | currency:'RUB':'symbol-narrow'}}
+                {{shipment.SummToFactor | currency:'RUB':'symbol-narrow'}}
               </div>
             </div>
           </td>
