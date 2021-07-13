@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { PageStoreService } from 'src/app/admin/shared/services/page-store.service';
 
 @Component({
   selector: 'users',
   template: ` <h1>Пользователи</h1>`,
 })
 export class UsersComponent implements OnInit {
-  constructor() {}
+  constructor( private pageStoreService: PageStoreService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.pageStoreService.setPage({
+      header: 'Пользователи',
+      description: 'Найдите и войдите от имени интересующего Вас пользователя'
+    })
+  }
 }

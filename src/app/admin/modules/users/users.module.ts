@@ -13,18 +13,20 @@ import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from 'primeng/skeleton';
+import { PageStoreService } from '../../shared/services/page-store.service';
 import { UsersComponent } from './components/users/users.component';
 
 const routes = [
   {
     path: '',
     canActivate: [],
-    children: [      {
-      path: '',
-      component: UsersComponent,
-    },
+    children: [
+      {
+        path: '',
+        component: UsersComponent,
+      },
     ],
-  }
+  },
 ];
 
 @NgModule({
@@ -47,13 +49,8 @@ const routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
   ],
-  exports: [
-    RouterModule
-  ],
-  declarations: [
-    UsersComponent,
-  ],
-  providers: [
-  ],
+  exports: [RouterModule],
+  declarations: [UsersComponent],
+  providers: [PageStoreService],
 })
-export class UsersModule { }
+export class UsersModule {}

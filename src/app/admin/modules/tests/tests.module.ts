@@ -1,3 +1,4 @@
+import { PageStoreService } from 'src/app/admin/shared/services/page-store.service';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,12 +20,13 @@ const routes = [
   {
     path: '',
     canActivate: [],
-    children: [      {
-      path: '',
-      component: TestsComponent,
-    },
+    children: [
+      {
+        path: '',
+        component: TestsComponent,
+      },
     ],
-  }
+  },
 ];
 
 @NgModule({
@@ -47,13 +49,8 @@ const routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
   ],
-  exports: [
-    RouterModule
-  ],
-  declarations: [
-    TestsComponent,
-  ],
-  providers: [
-  ],
+  exports: [RouterModule],
+  declarations: [TestsComponent],
+  providers: [PageStoreService],
 })
-export class TestsModule { }
+export class TestsModule {}
