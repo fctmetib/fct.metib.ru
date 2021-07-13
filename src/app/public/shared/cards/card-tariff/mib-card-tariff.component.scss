@@ -78,3 +78,10 @@
     padding: 17px 21px;
   }
 }
+
+/* Mobile */
+@media (max-width:1300px) {
+  .body {
+    text-align: left;
+  }
+}
