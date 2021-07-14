@@ -82,6 +82,16 @@ export class AuthService {
   }
 
   //#region common logic
+  isUserAdmin(): boolean {
+    const roles = this.getUserRoles();
+
+    if(roles.includes('Administrator') || roles.includes('Manager') || roles.includes('Factoring Head'))
+    {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   isUserVerified(): boolean {
     const roles = this.getUserRoles();

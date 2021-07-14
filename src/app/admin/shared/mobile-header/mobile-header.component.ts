@@ -6,11 +6,8 @@ import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
-import { currentUserFactoringSelector, currentUserGeneralSelector } from 'src/app/auth/store/selectors';
+import { currentUserFactoringSelector } from 'src/app/auth/store/selectors';
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
-import { factoringSelector } from 'src/app/client/store/selectors';
-
-import * as introJs from 'intro.js/intro.js';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
 @Component({
@@ -19,8 +16,6 @@ import { CustomerInterface } from 'src/app/shared/types/customer/customer.interf
   styleUrls: ['./mobile-header.component.scss'],
 })
 export class MobileHeaderComponent implements OnInit {
-  introJS = introJs();
-
   items: MenuItem[];
   baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
 
@@ -32,8 +27,7 @@ export class MobileHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
-    this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
-    this.factoring$ = this.store.pipe(select(factoringSelector));
+    // this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
   }
 
   logout() {

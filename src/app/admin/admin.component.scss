@@ -31,6 +31,65 @@ main {
 
 
 .card-content_simple {
-  background:  #F9F9F9;
+  background: #F9F9F9;
 }
 
+:host ::ng-deep {
+
+  /* Layout Styles */
+  .sub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+
+    .sub-header__title {
+      h2 {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 28px;
+        color: #102538;
+
+        margin-bottom: 8px;
+        margin-top: 16px;
+      }
+
+      p {
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+        color: #989898;
+
+        margin: 0px;
+      }
+    }
+
+    .sub-header__actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+
+      input {
+        &.search {
+        }
+      }
+
+      button {}
+    }
+  }
+
+  .content {
+    &_cards {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    &_row {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+    }
+  }
+}

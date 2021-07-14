@@ -1,0 +1,56 @@
+.card-news {
+  width: 255px;
+  border-radius: 10px;
+  background-color: white;
+
+  .header {
+    position: relative;
+
+    .date {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      padding: 5px;
+      background: #FFFFFF;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 16px;
+      text-align: center;
+      color: #989898;
+    }
+    .image {
+      height: 145px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .body {
+    padding: 15px;
+    height: 140px;
+    .title {
+      text-align: center;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 18px;
+      color: #102538;
+      margin-bottom: 12px;
+    }
+    .desc {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 35px;
+
+      font-size: 14px;
+      line-height: 16px;
+      text-align: center;
+      color: #989898;
+    }
+  }
+}

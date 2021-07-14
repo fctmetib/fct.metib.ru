@@ -15,6 +15,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from 'primeng/skeleton';
 import { PageStoreService } from '../../shared/services/page-store.service';
 import { OrganizationsComponent } from './components/organizations/organizations.component';
+import { OrganizationService } from './services/organization.service';
 
 const routes = [
   {
@@ -51,6 +52,9 @@ const routes = [
   ],
   exports: [RouterModule],
   declarations: [OrganizationsComponent],
-  providers: [PageStoreService],
+  providers: [
+    PageStoreService,
+    OrganizationService
+  ],
 })
 export class OrganizationsModule {}

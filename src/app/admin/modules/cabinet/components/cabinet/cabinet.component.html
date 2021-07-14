@@ -1,0 +1,19 @@
+<div class="sub-header">
+  <div class="sub-header__title">
+    <h2>Новости</h2>
+    <p>Всего 464 новости</p>
+  </div>
+  <form class="sub-header__actions">
+    <input type="text" pInputText placeholder="Поиск" class="search">
+    <button type="button" pButton label="Создать" class="basic"></button>
+  </form>
+</div>
+<div class="content content_cards">
+  <card-news
+    *ngFor="let newsItem of (newsList$ | async)"
+    [image]="newsItem.ID"
+    [date]="newsItem.Date"
+    [title]="newsItem.Title"
+    [desc]="newsItem.Text">
+  </card-news>
+</div>

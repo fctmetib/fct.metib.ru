@@ -1,3 +1,4 @@
+import { NewsService } from './../../shared/services/news.service';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,6 +14,7 @@ import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from 'primeng/skeleton';
+import { CardNewsComponent } from '../../shared/components/cards/card-news/card-news.component';
 import { PageStoreService } from '../../shared/services/page-store.service';
 import { CabinetComponent } from './components/cabinet/cabinet.component';
 
@@ -50,7 +52,14 @@ const routes = [
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],
-  declarations: [CabinetComponent],
-  providers: [PageStoreService],
+  declarations: [
+    CabinetComponent,
+    // Components
+    CardNewsComponent
+  ],
+  providers: [
+    PageStoreService,
+    NewsService
+  ],
 })
 export class CabinetModule {}

@@ -13,6 +13,7 @@ import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from 'primeng/skeleton';
+import { AdminGuard } from '../shared/services/admin.guard';
 
 import { AuthGuard } from '../shared/services/auth.guard';
 import { AdminComponent } from './admin.component';
@@ -24,7 +25,7 @@ const routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
     children: [
       {
         path: 'cabinet',

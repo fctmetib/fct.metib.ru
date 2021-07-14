@@ -21,8 +21,6 @@ import { PageInterface } from '../types/page.interface';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  introJS = introJs();
-
   items: MenuItem[];
   baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
   baseAvatarProfileUrl = "http://api-factoring.metib.ru:8094/api/avatar/";
@@ -36,8 +34,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
-    this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
-    this.factoring$ = this.store.pipe(select(factoringSelector));
     this.page$ = this.pageStoreService.getPage();
   }
 
