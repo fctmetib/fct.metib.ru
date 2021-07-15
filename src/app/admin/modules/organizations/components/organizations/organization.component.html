@@ -9,7 +9,7 @@
   </form>
 </div>
 <div class="content content_rows">
-  <div *ngFor="let organization of (organizationList$ | async)" >
-    {{organization.Title}}
-  </div>
+  <card-organization-row [organization]="(organizationList$ | async)[0]"></card-organization-row>
+
+  <!-- <card-organization-row *ngFor="let organization of (organizationList$ | async)" [organization]="organization"></card-organization-row> -->
 </div>

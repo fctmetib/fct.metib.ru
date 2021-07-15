@@ -1,8 +1,8 @@
-import { OrganizationInterface } from './../../types/organization.interface';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { PageStoreService } from 'src/app/admin/shared/services/page-store.service';
 import { OrganizationService } from '../../services/organization.service';
+import { OrganizationInterface } from 'src/app/admin/shared/types/organization.interface';
 
 @Component({
   selector: 'organizations',

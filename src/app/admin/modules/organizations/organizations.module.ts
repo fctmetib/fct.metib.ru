@@ -13,6 +13,7 @@ import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from 'primeng/skeleton';
+import { CardRowComponent } from '../../shared/components/cards/card-row/card-organization-row/card-organization-row.component';
 import { PageStoreService } from '../../shared/services/page-store.service';
 import { OrganizationsComponent } from './components/organizations/organizations.component';
 import { OrganizationService } from './services/organization.service';
@@ -51,7 +52,11 @@ const routes = [
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],
-  declarations: [OrganizationsComponent],
+  declarations: [
+    OrganizationsComponent,
+    // Layout
+    CardRowComponent
+  ],
   providers: [
     PageStoreService,
     OrganizationService
