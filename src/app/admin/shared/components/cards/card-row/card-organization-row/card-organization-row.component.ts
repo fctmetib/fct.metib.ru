@@ -14,31 +14,31 @@ import { OrganizationInterface } from 'src/app/admin/shared/types/organization.i
           <p>{{ organization?.Description }}</p>
         </div>
         <div class="card-organization-row__organization__contacts">
-          <div class="card-organization-row__organization__contacts__phone">
-            <img src="" alt="icon phone" />
+          <div class="card-organization-row__organization__contacts__contact" *ngIf="organization?.Telephone">
+            <img src="../../../../../../../assets/admin/icons/icon-phone.png" alt="icon phone" />
             {{ organization?.Telephone }}
           </div>
-          <div class="card-organization-row__organization__contacts__email">
-            <img src="" alt="icon email" />
+          <div class="card-organization-row__organization__contacts__contact" *ngIf="organization?.Email">
+            <img src="../../../../../../../assets/admin/icons/icon-email.png" alt="icon email" />
             {{ organization?.Email }}
           </div>
-          <div class="card-organization-row__organization__contacts__web">
-            <img src="" alt="icon website" />
+          <div class="card-organization-row__organization__contacts__contact" *ngIf="organization?.WebSite" >
+            <img src="../../../../../../../assets/admin/icons/icon-web.png" alt="icon website" />
             {{ organization?.WebSite }}
           </div>
         </div>
       </div>
       <div class="card-organization-row__information">
         <div class="card-organization-row__information__creditionals">
-          <div class="card-organization-row__information__creditionals__inn">
-            <p>{{ organization?.INN }}</p>
+          <div class="card-organization-row__information__creditionals__creditional">
+            <p><strong>ИНН:</strong> {{ organization?.INN ? organization?.INN : '-'}}</p>
           </div>
-          <div class="card-organization-row__information__creditionals__kpp">
-            <p>{{ organization?.KPP }}</p>
+          <div class="card-organization-row__information__creditionals__creditional">
+            <p><strong>КПП:</strong> {{ organization?.KPP ? organization?.KPP : '-'}}</p>
           </div>
         </div>
         <div class="card-organization-row__information__status">
-          <p>{{ organization?.State }}</p>
+          {{ organization?.State }}
         </div>
       </div>
     </div>

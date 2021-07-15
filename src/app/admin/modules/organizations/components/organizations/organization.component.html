@@ -1,15 +1,8 @@
 <div class="sub-header">
-  <div class="sub-header__title">
-    <h2>Новости</h2>
-    <p>Всего 464 новости</p>
-  </div>
-  <form class="sub-header__actions">
+  <form class="sub-header__actions sub-header__actions_search">
     <input type="text" pInputText placeholder="Поиск" class="search">
-    <button type="button" pButton label="Создать" class="basic"></button>
   </form>
 </div>
 <div class="content content_rows">
-  <card-organization-row [organization]="(organizationList$ | async)[0]"></card-organization-row>
-
   <!-- <card-organization-row *ngFor="let organization of (organizationList$ | async)" [organization]="organization"></card-organization-row> -->
 </div>

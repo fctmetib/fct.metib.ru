@@ -76,6 +76,14 @@ main {
       }
 
       button {}
+
+      &.sub-header__actions_search {
+        input {
+          &.search {
+            width: 100%;
+          }
+        }
+      }
     }
   }
 

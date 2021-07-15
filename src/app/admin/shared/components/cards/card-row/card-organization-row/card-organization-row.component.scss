@@ -1,3 +1,92 @@
 .card-organization-row {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .card-organization-row__organization {
+    display: flex;
+    flex: 1 816px;
+    flex-direction: column;
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 30px;
+
+    .card-organization-row__organization__title {
+      h4 {
+        margin: 0px;
+        margin-bottom: 12px;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 28px;
+        color: #102538;
+      }
+    }
+
+    .card-organization-row__organization__description {
+      p {
+        margin: 0px;
+        margin-bottom: 16px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+        color: #9C9C9C;
+      }
+    }
+
+    .card-organization-row__organization__contacts {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 45px;
+
+      .card-organization-row__organization__contacts__contact {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        img {
+          margin-right: 6px;
+        }
+      }
+    }
+  }
+
+  .card-organization-row__information {
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    flex: 1 208px;
+    gap: 16px;
+    padding: 30px;
+
+    .card-organization-row__information__creditionals {
+      margin-bottom: 16px;
+
+      .card-organization-row__information__creditionals__creditional {
+        p {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 16px;
+          margin: 0px;
+        }
+      }
+    }
+
+    .card-organization-row__information__status {
+      box-sizing: border-box;
+      border-radius: 10px;
+
+      &_progress {
+        border: 1px solid #009FD9;
+      }
+
+      &_factoring {
+        border: 1px solid #FF7A00;
+      }
+    }
+  }
 }
