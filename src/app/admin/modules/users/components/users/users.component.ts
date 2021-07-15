@@ -3,7 +3,7 @@ import { PageStoreService } from 'src/app/admin/shared/services/page-store.servi
 
 @Component({
   selector: 'users',
-  template: ` <h1>Пользователи</h1>`,
+  templateUrl: './users.component.html'
 })
 export class UsersComponent implements OnInit {
   constructor( private pageStoreService: PageStoreService) {}

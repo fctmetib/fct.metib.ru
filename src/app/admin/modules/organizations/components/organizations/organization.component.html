@@ -1,8 +1,13 @@
 <div class="sub-header">
-  <form class="sub-header__actions sub-header__actions_search">
-    <input type="text" pInputText placeholder="Поиск" class="search">
+  <form class="sub-header__actions sub-header__actions_search" [formGroup]="filterForm">
+    <input type="text" pInputText placeholder="Поиск" formControlName="search" class="search">
   </form>
 </div>
 <div class="content content_rows">
-  <!-- <card-organization-row *ngFor="let organization of (organizationList$ | async)" [organization]="organization"></card-organization-row> -->
+  <ng-container *ngIf="(organizationList$ | async) && !isLoading || !(organizationList$ | async) && !isLoading; else loadingTemplate">
+    <card-organization-row *ngFor="let organization of (organizationList$ | async)" [organization]="organization"></card-organization-row>
+  </ng-container>
+  <ng-template #loadingTemplate>
+    Загрузка...
+  </ng-template>
 </div>

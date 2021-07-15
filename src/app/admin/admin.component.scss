@@ -78,6 +78,7 @@ main {
       button {}
 
       &.sub-header__actions_search {
+        width: 100%;
         input {
           &.search {
             width: 100%;
@@ -94,9 +95,9 @@ main {
       flex-wrap: wrap;
       gap: 12px;
     }
-    &_row {
+    &_rows {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       gap: 20px;
     }
   }

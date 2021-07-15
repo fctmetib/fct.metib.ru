@@ -16,8 +16,8 @@ export class OrganizationService {
   * Получает список организаций
   * @returns Возвращает список организаций
   */
-  getOrganizationList(): Observable<OrganizationInterface[]> {
-    let url = `${environment.apiUrl}/organization`;
+  getOrganizationList(organizationName: string): Observable<OrganizationInterface[]> {
+    let url = `${environment.apiUrl}/organization/search/${organizationName}?deepSearch=true`;
     return this.http.get<OrganizationInterface[]>(url)
   }
 }

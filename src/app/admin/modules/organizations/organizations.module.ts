@@ -15,6 +15,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CardRowComponent } from '../../shared/components/cards/card-row/card-organization-row/card-organization-row.component';
 import { PageStoreService } from '../../shared/services/page-store.service';
+import { OrganizationComponent } from './components/organization/organization.component';
 import { OrganizationsComponent } from './components/organizations/organizations.component';
 import { OrganizationService } from './services/organization.service';
 
@@ -27,6 +28,10 @@ const routes = [
         path: '',
         component: OrganizationsComponent,
       },
+      {
+        path: '/:id',
+        component: OrganizationComponent
+      }
     ],
   },
 ];
@@ -54,6 +59,7 @@ const routes = [
   exports: [RouterModule],
   declarations: [
     OrganizationsComponent,
+    OrganizationComponent,
     // Layout
     CardRowComponent
   ],
