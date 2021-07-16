@@ -29,7 +29,7 @@ const routes = [
         component: OrganizationsComponent,
       },
       {
-        path: '/:id',
+        path: ':id',
         component: OrganizationComponent
       }
     ],

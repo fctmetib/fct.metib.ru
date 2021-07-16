@@ -71,17 +71,25 @@ main {
       gap: 10px;
 
       input {
-        &.search {
-        }
+        &.search {}
       }
 
       button {}
 
       &.sub-header__actions_search {
         width: 100%;
+
         input {
           &.search {
             width: 100%;
+            padding: 15px;
+            padding-left: 40px;
+            border: 1px solid #D6D6D6 !important;
+            box-sizing: border-box;
+            border-radius: 10px;
+            background-image: url('../../assets/admin/icons/icon-search.svg') !important;
+            background-repeat: no-repeat !important;
+            background-position: 15px !important;
           }
         }
       }
@@ -95,6 +103,7 @@ main {
       flex-wrap: wrap;
       gap: 12px;
     }
+
     &_rows {
       display: flex;
       flex-direction: column;

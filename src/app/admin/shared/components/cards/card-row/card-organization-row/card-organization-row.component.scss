@@ -3,9 +3,11 @@
   display: flex;
   flex-direction: row;
 
+  cursor: pointer;
+
   .card-organization-row__organization {
     display: flex;
-    flex: 1 816px;
+    flex-basis: 80%;
     flex-direction: column;
     border: 1px solid #D5D5D5;
     box-sizing: border-box;
@@ -58,10 +60,11 @@
     box-sizing: border-box;
     border-radius: 10px;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
-    flex: 1 208px;
+    flex-basis: 20%;
     gap: 16px;
-    padding: 30px;
 
     .card-organization-row__information__creditionals {
       margin-bottom: 16px;
@@ -78,13 +81,14 @@
 
     .card-organization-row__information__status {
       box-sizing: border-box;
+      padding: 15px;
       border-radius: 10px;
 
-      &_progress {
+      &.card-organization-row__information__status_progress {
         border: 1px solid #009FD9;
       }
 
-      &_factoring {
+      &.card-organization-row__information__status_factoring {
         border: 1px solid #FF7A00;
       }
     }

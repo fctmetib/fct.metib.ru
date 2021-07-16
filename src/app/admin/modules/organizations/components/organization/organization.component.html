@@ -1,33 +1,31 @@
 <div class="sub-header sub-header_">
   <div class="">
     <div class="sub-header__title">
-      <h2>ООО "Миксит"</h2>
-      <p>ИНН: 7733333130 КПП: 773301001</p>
-      <div> +7-499-500-4000</div>
-      <div>hello@mixit.ru</div>
-      <div>hello@mixit.ru</div>
-      <div>Позвонили в офис по рекомендации от действ. поставщиков. Согласованы индивидуальные условия тариф Премиум со
-        ставкой 7,4 % год + 1% Факторин, но БЕЗРЕГРЕСС! Поставщики косметики! Тандер - 90 кд - лимит 500 млн руб. Позже
-        могут подключить Х5. Остальных дебиторов финансировать не хотят, объемы не такие большие</div>
+      <h2>{{(organizationInfo$ | async)?.Title}}</h2>
+      <p>ИНН: {{(organizationInfo$ | async)?.INN}} КПП: {{(organizationInfo$ | async)?.KPP}}</p>
+      <div>{{(organizationInfo$ | async)?.Telephone}}</div>
+      <div>{{(organizationInfo$ | async)?.Email}}</div>
+      <div>{{(organizationInfo$ | async)?.WebSite}}</div>
+      <div>{{(organizationInfo$ | async)?.Description}}</div>
     </div>
     <div class="sub-header__actions">
       <button type="button" pButton label="Вернуться к списку организаций" class="basic"></button>
     </div>
   </div>
   <div class="about">
-    <div>Правовая Форма: ООО</div>
-    <div>ОГРН: 1187746961742</div>
-    <div>Подписант: Черданцева Анастасия Сергеевна</div>
-    <div>Счет: АО "АЛЬФА-БАНК"</div>
+    <div>Правовая Форма: {{(organizationInfo$ | async)?.LegalForm}}</div>
+    <div>ОГРН: {{(organizationInfo$ | async)?.OGRN}}</div>
+    <div>Подписант: {{(organizationInfo$ | async)?.Signer.FIO}}</div>
+    <div>Счет: {{(organizationInfo$ | async)?.Account.Bank}}</div>
   </div>
 </div>
 <div class="content content_rows">
   <h3>Сотрудники компании</h3>
   <p>Сотрудники и их контакты</p>
-  <div class="organization-card__person">
+  <div class="organization-card__person" *ngFor="let person of (organizationStaff$ | async)" >
     <div class="organization-card__person__info">
-      <h4>Анна Журавская</h4>
-      <p>Национальный менеджер по работе с Федеральными сетями</p>
+      <h4>{{person.NameLast}} {{person.NameFirst}} {{person.NameSecond}}</h4>
+      <p>{{person.Post}}</p>
     </div>
     <div class="organization-card__person__contacts">
       <div class="organization-card__person__contacts__contact"> +7-499-500-4000</div>

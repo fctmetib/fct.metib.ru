@@ -5,7 +5,7 @@
 </div>
 <div class="content content_rows">
   <ng-container *ngIf="(organizationList$ | async) && !isLoading || !(organizationList$ | async) && !isLoading; else loadingTemplate">
-    <card-organization-row *ngFor="let organization of (organizationList$ | async)" [organization]="organization"></card-organization-row>
+    <card-organization-row *ngFor="let organization of (organizationList$ | async)" [organization]="organization" [routerLink]="[organization.ID]"></card-organization-row>
   </ng-container>
   <ng-template #loadingTemplate>
     Загрузка...

@@ -27,11 +27,11 @@ export class AdminComponent implements OnInit {
         routerLink: 'users',
         routerLinkActiveOptions: { exact: true },
       },
-      {
-        label: 'Бизнес-тесты',
-        routerLink: 'tests',
-        routerLinkActiveOptions: { exact: true },
-      },
+      // {
+      //   label: 'Бизнес-тесты',
+      //   routerLink: 'tests',
+      //   routerLinkActiveOptions: { exact: true },
+      // },
     ];
   }
 

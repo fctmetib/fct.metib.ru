@@ -37,7 +37,7 @@ import { OrganizationInterface } from 'src/app/admin/shared/types/organization.i
             <p><strong>КПП:</strong> {{ organization?.KPP ? organization?.KPP : '-'}}</p>
           </div>
         </div>
-        <div class="card-organization-row__information__status">
+        <div class="card-organization-row__information__status" [ngClass]="getStatusTheme()">
           {{ organization?.State }}
         </div>
       </div>
@@ -51,4 +51,12 @@ export class CardRowComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  public getStatusTheme() {
+    if (this.organization.State === 'В работе') {
+      return 'card-organization-row__information__status_progress';
+    } else {
+      return 'card-organization-row__information__status_factoring';
+    }
+  }
 }
