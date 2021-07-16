@@ -5,7 +5,7 @@
 
   .card-user__information {
     display: flex;
-    flex: 1 584px;
+    flex-basis: 50%;
     flex-direction: column;
     border: 1px solid #D5D5D5;
     box-sizing: border-box;
@@ -36,12 +36,14 @@
 
   .card-user__contacts {
     display: flex;
+    flex-basis: 25%;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     border: 1px solid #D5D5D5;
     box-sizing: border-box;
     border-radius: 10px;
-    padding: 30px;
+
 
     .card-user__contacts__contact {
       font-weight: 500;
@@ -50,7 +52,6 @@
       color: #102538;
 
       display: flex;
-      justify-content: space-between;
       align-items: center;
 
       img {
@@ -61,7 +62,7 @@
 
   .card-user__actions {
     display: flex;
-    flex: 1 254px;
+    flex-basis: 25%;
     flex-direction: column;
     border: 1px solid #D5D5D5;
     box-sizing: border-box;
