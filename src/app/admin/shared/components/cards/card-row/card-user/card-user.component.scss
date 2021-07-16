@@ -1,0 +1,71 @@
+.card-user {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .card-user__information {
+    display: flex;
+    flex: 1 584px;
+    flex-direction: column;
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 22px;
+
+    .card-user__information__name {
+      margin-bottom: 5px;
+      h4 {
+        margin: 0px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: #102538;
+      }
+    }
+
+    .card-user__information__organization {
+      p {
+        margin: 0px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: #4B75B1;
+      }
+    }
+  }
+
+  .card-user__contacts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 30px;
+
+    .card-user__contacts__contact {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      color: #102538;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      img {
+        margin-right: 6px;
+      }
+    }
+  }
+
+  .card-user__actions {
+    display: flex;
+    flex: 1 254px;
+    flex-direction: column;
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 12px;
+  }
+}

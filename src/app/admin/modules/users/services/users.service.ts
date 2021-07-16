@@ -1,10 +1,9 @@
-import { OrganizationInterface } from '../../../../shared/types/organization/organization.interface';
 import { environment } from 'src/environments/environment';
 
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserInterface } from '../type/user.interface';
+import { UserInterface } from '../../../shared/types/user.interface';
 
 @Injectable()
 export class UsersService {
