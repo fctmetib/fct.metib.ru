@@ -1,35 +1,67 @@
-<div class="sub-header sub-header_">
-  <div class="">
-    <div class="sub-header__title">
-      <h2>{{(organizationInfo$ | async)?.Title}}</h2>
-      <p>ИНН: {{(organizationInfo$ | async)?.INN}} КПП: {{(organizationInfo$ | async)?.KPP}}</p>
-      <div>{{(organizationInfo$ | async)?.Telephone}}</div>
-      <div>{{(organizationInfo$ | async)?.Email}}</div>
-      <div>{{(organizationInfo$ | async)?.WebSite}}</div>
-      <div>{{(organizationInfo$ | async)?.Description}}</div>
+<div class="sub-header sub-header_organization">
+  <div class="sub-header__title">
+    <h2>{{(organizationInfo$ | async)?.Title}}</h2>
+    <p>
+      <strong>ИНН: </strong> {{(organizationInfo$ | async)?.INN}}
+      <strong>КПП: </strong> {{(organizationInfo$ | async)?.KPP}}
+    </p>
+  </div>
+  <div class="sub-header__actions">
+    <button type="button" pButton label="Вернуться к списку организаций" class="p-button-outlined"></button>
+  </div>
+</div>
+<div class="organization-information">
+  <div class="organization-information__contacts">
+    <div class="organization-information__contacts__contact">
+      <img src="../../../../../../assets/admin/icons/icon-phone.png" alt="Phone">
+      {{(organizationInfo$ | async)?.Telephone}}</div>
+      <div class="organization-information__contacts__contact">
+      <img src="../../../../../../assets/admin/icons/icon-email.png" alt="Email">
+      {{(organizationInfo$ | async)?.Email}}
     </div>
-    <div class="sub-header__actions">
-      <button type="button" pButton label="Вернуться к списку организаций" class="basic"></button>
+    <div class="organization-information__contacts__contact">
+      <img src="../../../../../../assets/admin/icons/icon-web.png" alt="Web">
+      {{(organizationInfo$ | async)?.WebSite}}
     </div>
   </div>
-  <div class="about">
-    <div>Правовая Форма: {{(organizationInfo$ | async)?.LegalForm}}</div>
-    <div>ОГРН: {{(organizationInfo$ | async)?.OGRN}}</div>
-    <div>Подписант: {{(organizationInfo$ | async)?.Signer.FIO}}</div>
-    <div>Счет: {{(organizationInfo$ | async)?.Account.Bank}}</div>
+  <div class="organization-information__description">
+    <p>
+      {{(organizationInfo$ | async)?.Description}}
+    </p>
+  </div>
+  <div class="organization-information__blocks">
+    <div class="organization-information__blocks__block">
+      <p><strong>Правовая Форма:</strong> {{(organizationInfo$ | async)?.LegalForm}}</p>
+    </div>
+    <div class="organization-information__blocks__block">
+      <p><strong>ОГРН:</strong> {{(organizationInfo$ | async)?.OGRN}}</p>
+    </div>
+    <div class="organization-information__blocks__block">
+      <p><strong>Подписант:</strong> {{(organizationInfo$ | async)?.Signer.FIO}}</p>
+    </div>
+    <div class="organization-information__blocks__block">
+      <p><strong>Счет:</strong> {{(organizationInfo$ | async)?.Account.Bank}}</p>
+    </div>
   </div>
 </div>
 <div class="content content_rows">
-  <h3>Сотрудники компании</h3>
-  <p>Сотрудники и их контакты</p>
-  <div class="organization-card__person" *ngFor="let person of (organizationStaff$ | async)" >
+  <div class="content_rows__title">
+    <h3>Сотрудники компании</h3>
+    <p>Сотрудники и их контакты</p>
+  </div>
+
+  <div class="organization-card__person" *ngFor="let person of (organizationStaff$ | async)">
     <div class="organization-card__person__info">
-      <h4>{{person.NameLast}} {{person.NameFirst}} {{person.NameSecond}}</h4>
-      <p>{{person.Post}}</p>
+      <div class="organization-card__person__info__content">
+        <h4>{{person.NameLast}} {{person.NameFirst}} {{person.NameSecond}}</h4>
+        <p>{{person.Post}}</p>
+      </div>
     </div>
     <div class="organization-card__person__contacts">
-      <div class="organization-card__person__contacts__contact"> +7-499-500-4000</div>
-      <div class="organization-card__person__contacts__contact"> hello@mixit.ru</div>
+      <div class="organization-card__person__contacts__contact" *ngIf="person.Phone">
+        <img src="../../../../../../assets/admin/icons/icon-phone.png" alt="Phone"> {{person.Phone}}</div>
+      <div class="organization-card__person__contacts__contact" *ngIf="person.Email">
+        <img src="../../../../../../assets/admin/icons/icon-email.png" alt="Email"> {{person.Email}}</div>
     </div>
   </div>
 </div>

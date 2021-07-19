@@ -7,6 +7,7 @@ import { OrganizationInterface } from 'src/app/admin/shared/types/organization.i
 
 @Component({
   selector: 'organization',
+  styleUrls: ['./organization.component.scss'],
   templateUrl: './organization.component.html',
 })
 export class OrganizationComponent implements OnInit {
@@ -18,7 +19,6 @@ export class OrganizationComponent implements OnInit {
     private organizationService: OrganizationService
   ) {
     let id = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log('IM AID', id)
     this.organizationStaff$ = this.organizationService.getOrganizationStaffById(id);
     this.organizationInfo$ = this.organizationService.getOrganizationInfoById(id);
   }

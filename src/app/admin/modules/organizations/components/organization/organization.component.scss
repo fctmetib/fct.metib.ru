@@ -1,0 +1,157 @@
+.sub-header_organization {
+  display: flex;
+
+  .sub-header__title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+
+    h2 {
+      margin: 0;
+      font-weight: bold;
+      font-size: 36px;
+      line-height: 41px;
+      color: #102538;
+    }
+
+    p {
+      margin: 0;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      color: #102538;
+    }
+  }
+
+  .sub-header__actions {}
+}
+
+.organization-information {
+  padding-bottom: 30px;
+
+  .organization-information__contacts {
+    display: flex;
+    margin-bottom: 30px;
+    gap: 20px;
+
+    .organization-information__contacts__contact {
+      display: flex;
+      align-items: center;
+
+      img {
+        margin-right: 6px;
+      }
+    }
+  }
+
+  .organization-information__description {
+    margin-bottom: 20px;
+    p {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+      color: #A8A8A8;
+    }
+  }
+
+  .organization-information__blocks {
+    display: flex;
+    justify-content: space-between;
+
+    .organization-information__blocks__block {
+      padding: 12px;
+      border: 1px solid #EAEAEA;
+      box-sizing: border-box;
+      border-radius: 10px;
+    }
+
+  }
+}
+
+.content_rows {
+  border-top: 1px solid #DBDBDB;
+  padding-top: 30px;
+
+  .content_rows__title {
+    h3 {
+      margin: 0;
+      margin-bottom: 14px;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 28px;
+      color: #102538;
+    }
+
+    p {
+      margin: 0;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+      color: #989898;
+    }
+  }
+}
+
+.organization-card__person {
+  display: flex;
+  width: 100%;
+  height: 80px;
+  flex-direction: row;
+
+  .organization-card__person__info {
+    border: 1px solid #C8C8C8;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 70%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+
+    .organization-card__person__info__content {
+      h4 {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: #102538;
+        margin: 0;
+        margin-bottom: 5px;
+      }
+
+      p {
+        margin: 0;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+        color: #989898;
+      }
+    }
+  }
+
+  .organization-card__person__contacts {
+    border: 1px solid #C8C8C8;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 20px;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    .organization-card__person__contacts__contact {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      color: #102538;
+
+      img {
+        margin-right: 6px;
+      }
+    }
+  }
+}
