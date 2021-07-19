@@ -1,10 +1,10 @@
 <div class="sub-header">
   <div class="sub-header__title">
     <h2>Новости</h2>
-    <p>Всего 464 новости</p>
+    <p>Всего {{(newsList$ | async)?.length}} новости</p>
   </div>
-  <form class="sub-header__actions">
-    <input type="text" pInputText placeholder="Поиск" class="search">
+  <form class="sub-header__actions sub-header__actions_search" [formGroup]="filterForm">
+    <input type="text" pInputText placeholder="Поиск" class="search search_small" formControlName="search" >
     <button type="button" pButton label="Создать" class="basic"></button>
   </form>
 </div>
