@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageStoreService } from 'src/app/admin/shared/services/page-store.service';
 import { NewsInterface } from 'src/app/admin/shared/types/news.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'cabinet',
@@ -12,7 +12,8 @@ import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 })
 export class CabinetComponent implements OnInit {
   public filterForm: FormGroup;
-  public newsList$: Observable<NewsInterface[]>;
+  public newsListOriginal$: Observable<NewsInterface[]>;
+  public newsListFiltered$: Observable<NewsInterface[]>;
 
   constructor(
     private pageStoreService: PageStoreService,
@@ -26,7 +27,9 @@ export class CabinetComponent implements OnInit {
       description: 'Добро пожаловать в панель администратора!',
     });
 
-    this.newsList$ = this.newsService.getNewsList();
+    this.newsListOriginal$ = this.newsService.getNewsList();
+    this.newsListFiltered$ = this.newsListOriginal$;
+
     this.filterForm = this.formBuilder.group({
       search: '',
     });
@@ -34,20 +37,15 @@ export class CabinetComponent implements OnInit {
     this.onChanges();
   }
   onChanges(): void {
-    this.filterForm.valueChanges
-      .subscribe((value) => {
-        console.log('asd 1', value)
-        this.newsList$.pipe(
-          map((news) => {
-            console.log('asd 2', value.search)
-            console.log('asd 3', news)
-            return news.find(
-              (newsItem) =>
-                newsItem.Title.includes(value.search) ||
-                newsItem.Text.includes(value.search)
-            );
-          })
-        );
-      });
+    this.filterForm.valueChanges.subscribe((value) => {
+      this.newsListFiltered$ = this.newsListOriginal$.pipe(
+        map((news) => {
+          return news.filter((newsItem) =>
+            newsItem.Title.includes(value.search) ||
+            newsItem.Text.includes(value.search)
+          );
+        })
+      );
+    });
   }
 }
