@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-formgrid p-grid form">
+    <div class="p-field p-col-12 p-md-6">
+      <label for="date">Укажите дату создания: </label>
+      <input id="date" type="date" pInputText placeholder="Дата" formControlName="Date">
+      <div *ngIf="form.controls['Date'].invalid">
+        <small *ngIf="form.controls['Date'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label for="title">Заголовок: </label>
+      <input id="title" type="text" pInputText placeholder="Название" formControlName="Title">
+      <div *ngIf="form.controls['Title'].invalid">
+        <small *ngIf="form.controls['Title'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-12">
+      <input id="text" type="text" pInputText placeholder="Содержание" formControlName="Text">
+      <div *ngIf="form.controls['Text'].invalid">
+        <small *ngIf="form.controls['Text'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-6">
+      <label for="btn_submit">&nbsp;</label>
+      <button id="btn_submit" pButton pRipple type="submit" label="Создать" class="btn-mib-submit"
+        [disabled]="form.invalid"></button>
+    </div>
+  </div>
+</form>

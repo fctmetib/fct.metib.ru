@@ -5,7 +5,7 @@
   </div>
   <form class="sub-header__actions sub-header__actions_search" [formGroup]="filterForm">
     <input type="text" pInputText placeholder="Поиск" class="search search_small" formControlName="search" >
-    <button type="button" pButton label="Создать" class="basic"></button>
+    <button type="button" pButton label="Создать" class="basic" (click)="openCreateNews()" ></button>
   </form>
 </div>
 <div class="content content_cards">

@@ -17,6 +17,8 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { CardNewsComponent } from '../../shared/components/cards/card-news/card-news.component';
 import { PageStoreService } from '../../shared/services/page-store.service';
 import { CabinetComponent } from './components/cabinet/cabinet.component';
+import { CreateNewsDialogComponent } from './components/create-news-dialog/create-news-dialog.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 const routes = [
   {
@@ -55,10 +57,12 @@ const routes = [
   declarations: [
     CabinetComponent,
     // Components
-    CardNewsComponent
+    CardNewsComponent,
+    CreateNewsDialogComponent
   ],
   providers: [
     PageStoreService,
+    DialogService,
     NewsService
   ],
 })

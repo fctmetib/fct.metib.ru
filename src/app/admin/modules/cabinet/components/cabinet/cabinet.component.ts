@@ -5,6 +5,8 @@ import { PageStoreService } from 'src/app/admin/shared/services/page-store.servi
 import { NewsInterface } from 'src/app/admin/shared/types/news.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { distinctUntilChanged, filter, map, tap } from 'rxjs/operators';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CreateNewsDialogComponent } from '../create-news-dialog/create-news-dialog.component';
 
 @Component({
   selector: 'cabinet',
@@ -15,9 +17,12 @@ export class CabinetComponent implements OnInit {
   public newsListOriginal$: Observable<NewsInterface[]>;
   public newsListFiltered$: Observable<NewsInterface[]>;
 
+  ref: DynamicDialogRef;
+
   constructor(
     private pageStoreService: PageStoreService,
     private newsService: NewsService,
+    public dialogService: DialogService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -36,16 +41,35 @@ export class CabinetComponent implements OnInit {
 
     this.onChanges();
   }
-  onChanges(): void {
+
+  public openCreateNews() {
+    this.ref = this.dialogService.open(CreateNewsDialogComponent, {
+      header: 'Создание новости',
+      width: '50%',
+      contentStyle: { 'max-height': '465px', overflow: 'auto' },
+      baseZIndex: 10000,
+    });
+
+    this.ref.onClose.subscribe(() => {});
+  }
+
+  private onChanges(): void {
     this.filterForm.valueChanges.subscribe((value) => {
       this.newsListFiltered$ = this.newsListOriginal$.pipe(
         map((news) => {
-          return news.filter((newsItem) =>
-            newsItem.Title.includes(value.search) ||
-            newsItem.Text.includes(value.search)
+          return news.filter(
+            (newsItem) =>
+              newsItem.Title.includes(value.search) ||
+              newsItem.Text.includes(value.search)
           );
         })
       );
     });
+  }
+
+  ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 }
