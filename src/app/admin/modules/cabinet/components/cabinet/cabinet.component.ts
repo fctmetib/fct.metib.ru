@@ -43,13 +43,13 @@ export class CabinetComponent implements OnInit {
     this.onChanges();
   }
 
-  public openCreateNews(id?: string) {
+  public openCreateNews(newsItem?: NewsInterface) {
     this.ref = this.dialogService.open(CreateNewsDialogComponent, {
       header: 'Создание новости',
       width: '50%',
       contentStyle: { 'max-height': '550px', overflow: 'auto' },
       baseZIndex: 10000,
-      data: id
+      data: newsItem
     });
 
     this.ref.onClose.subscribe(() => {

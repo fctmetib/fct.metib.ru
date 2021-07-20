@@ -44,7 +44,7 @@
 
     <div class="p-field p-col-12 p-md-6">
       <label for="btn_submit">&nbsp;</label>
-      <button id="btn_submit" pButton pRipple type="submit" label="Создать" class="btn-mib-submit"
+      <button id="btn_submit" pButton pRipple type="submit" label="{{currentId ? 'Сохранить' : 'Создать'}}" class="btn-mib-submit"
         [disabled]="form.invalid"></button>
     </div>
   </div>

@@ -5,16 +5,19 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'create-news-dialog',
-  templateUrl: 'create-news-dialog.component.html'
+  templateUrl: 'create-news-dialog.component.html',
 })
-
 export class CreateNewsDialogComponent implements OnInit {
-
   public form: FormGroup;
-
   public file: File;
+  public currentId: string;
 
-  constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig, private formBuilder: FormBuilder, private newsService: NewsService) { }
+  constructor(
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig,
+    private formBuilder: FormBuilder,
+    private newsService: NewsService
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -22,6 +25,11 @@ export class CreateNewsDialogComponent implements OnInit {
       Text: '',
       Title: '',
     });
+    if (this.config.data) {
+      this.form.patchValue(this.config.data);
+      this.form.value.Date = new Date(this.config.data.Date);
+      this.currentId = this.config.data.ID;
+    }
   }
 
   public onSelect(event) {
@@ -29,10 +37,30 @@ export class CreateNewsDialogComponent implements OnInit {
   }
 
   public onSubmit() {
-    this.newsService.addNewsItem(this.form.value).subscribe(newsResponse => {
-      this.newsService.addNewsImage(this.file, newsResponse.ID).subscribe(imageResponse => {
-        this.ref.close();
-      });
-    })
+    if (this.currentId) {
+      this.newsService
+        .updateNewsItem(this.form.value)
+        .subscribe((newsResponse) => {
+          if(this.file) {
+            this.newsService
+            .addNewsImage(this.file, newsResponse.ID)
+            .subscribe((imageResponse) => {
+              this.ref.close();
+            });
+          }
+        });
+    } else {
+      this.newsService
+        .addNewsItem(this.form.value)
+        .subscribe((newsResponse) => {
+          if(this.file) {
+            this.newsService
+            .addNewsImage(this.file, newsResponse.ID)
+            .subscribe((imageResponse) => {
+              this.ref.close();
+            });
+          }
+        });
+    }
   }
 }
