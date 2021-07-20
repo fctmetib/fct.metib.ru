@@ -18,6 +18,19 @@ export class NewsService {
   */
   getNewsList(): Observable<NewsInterface[]> {
     let url = `${environment.apiUrl}/news`;
-    return this.http.get<NewsInterface[]>(url)
+    return this.http.get<NewsInterface[]>(url);
+  }
+
+  addNewsItem(data: NewsInterface): Observable<NewsInterface> {
+    let url = `${environment.apiUrl}/news`;
+    return this.http.post<NewsInterface>(url, data);
+  }
+
+  addNewsImage(file, newsId): Observable<any> {
+    var formdata = new FormData();
+    formdata.append('', file);
+
+    let url = `${environment.apiFileUploadUrl}/news/${newsId}/image`;
+    return this.http.post<string>(url, formdata);
   }
 }

@@ -14,6 +14,7 @@ import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from 'primeng/skeleton';
+import {CalendarModule} from 'primeng/calendar';
 import { CardNewsComponent } from '../../shared/components/cards/card-news/card-news.component';
 import { PageStoreService } from '../../shared/services/page-store.service';
 import { CabinetComponent } from './components/cabinet/cabinet.component';
@@ -41,6 +42,7 @@ const routes = [
     ButtonModule,
     RadioButtonModule,
     InputTextareaModule,
+    CalendarModule,
     DropdownModule,
     MenuModule,
     SkeletonModule,

@@ -26,14 +26,15 @@ export class CabinetComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
+
+
   ngOnInit() {
     this.pageStoreService.setPage({
       header: 'Панель Администратора',
       description: 'Добро пожаловать в панель администратора!',
     });
 
-    this.newsListOriginal$ = this.newsService.getNewsList();
-    this.newsListFiltered$ = this.newsListOriginal$;
+    this.fetch();
 
     this.filterForm = this.formBuilder.group({
       search: '',
@@ -42,15 +43,23 @@ export class CabinetComponent implements OnInit {
     this.onChanges();
   }
 
-  public openCreateNews() {
+  public openCreateNews(id?: string) {
     this.ref = this.dialogService.open(CreateNewsDialogComponent, {
       header: 'Создание новости',
       width: '50%',
-      contentStyle: { 'max-height': '465px', overflow: 'auto' },
+      contentStyle: { 'max-height': '550px', overflow: 'auto' },
       baseZIndex: 10000,
+      data: id
     });
 
-    this.ref.onClose.subscribe(() => {});
+    this.ref.onClose.subscribe(() => {
+      this.fetch();
+    });
+  }
+
+  private fetch() {
+    this.newsListOriginal$ = this.newsService.getNewsList();
+    this.newsListFiltered$ = this.newsListOriginal$;
   }
 
   private onChanges(): void {

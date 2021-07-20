@@ -2,7 +2,7 @@
   <div class="p-fluid p-formgrid p-grid form">
     <div class="p-field p-col-12 p-md-6">
       <label for="date">Укажите дату создания: </label>
-      <input id="date" type="date" pInputText placeholder="Дата" formControlName="Date">
+      <p-calendar id="date" formControlName="Date" required [showIcon]="true" inputId="icon"></p-calendar>
       <div *ngIf="form.controls['Date'].invalid">
         <small *ngIf="form.controls['Date'].errors.required" class="p-error">
           Поле должно быть заполнено.
@@ -11,7 +11,7 @@
     </div>
     <div class="p-field p-col-12 p-md-6">
       <label for="title">Заголовок: </label>
-      <input id="title" type="text" pInputText placeholder="Название" formControlName="Title">
+      <input id="title" type="text" pInputText placeholder="Название" formControlName="Title" required>
       <div *ngIf="form.controls['Title'].invalid">
         <small *ngIf="form.controls['Title'].errors.required" class="p-error">
           Поле должно быть заполнено.
@@ -19,12 +19,26 @@
       </div>
     </div>
 
+
     <div class="p-field p-col-12 p-md-12">
-      <input id="text" type="text" pInputText placeholder="Содержание" formControlName="Text">
+      <textarea id="text" pInputTextarea name="text" rows="8" placeholder="Содержание" formControlName="Text"
+        required></textarea>
       <div *ngIf="form.controls['Text'].invalid">
         <small *ngIf="form.controls['Text'].errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
+      </div>
+    </div>
+
+    <div class="addon-button mb-20">
+      <div class="addon-text">
+        <p>
+          Загрузите картинку
+        </p>
+      </div>
+      <div class="mib-uploader">
+        <input type="file" id="Balance" (change)="onSelect($event)" hidden />
+        <label for="Balance" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
       </div>
     </div>
 

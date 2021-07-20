@@ -1,5 +1,5 @@
 export interface NewsInterface {
-  ID: number;
+  ID?: number;
   Date: string;
   Text: string;
   Title: string;
