@@ -64,7 +64,6 @@ const routes = [
     CardRowComponent
   ],
   providers: [
-    PageStoreService,
     OrganizationService
   ],
 })

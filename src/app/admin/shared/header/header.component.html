@@ -28,7 +28,7 @@
         </ng-template>
       </div>
       <div class="account-info-email clickable">
-        <ng-container *ngIf="(currentUserFactoring$ | async); else skeletonUserEmailTemplate">
+        <ng-container *ngIf="(currentUser$ | async); else skeletonUserEmailTemplate">
           {{(currentUser$ | async)?.Profile.Email}}
         </ng-container>
         <ng-template #skeletonUserEmailTemplate>

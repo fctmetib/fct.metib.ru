@@ -64,7 +64,6 @@ const routes = [
   ],
   providers: [
     DatePipe,
-    PageStoreService,
     DialogService,
     NewsService
   ],

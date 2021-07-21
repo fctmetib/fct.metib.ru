@@ -51,6 +51,6 @@ const routes = [
   ],
   exports: [RouterModule],
   declarations: [TestsComponent],
-  providers: [PageStoreService],
+  providers: [],
 })
 export class TestsModule {}

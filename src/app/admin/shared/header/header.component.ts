@@ -8,9 +8,6 @@ import { MenuItem } from 'primeng/api';
 
 import { currentUserFactoringSelector, currentUserGeneralSelector } from 'src/app/auth/store/selectors';
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
-import { factoringSelector } from 'src/app/client/store/selectors';
-
-import * as introJs from 'intro.js/intro.js';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
 import { PageStoreService } from '../services/page-store.service';
@@ -34,6 +31,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
+    this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
     this.page$ = this.pageStoreService.getPage();
   }
 

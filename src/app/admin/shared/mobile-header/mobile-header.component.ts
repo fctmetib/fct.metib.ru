@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
-import { currentUserFactoringSelector } from 'src/app/auth/store/selectors';
+import { currentUserFactoringSelector, currentUserGeneralSelector } from 'src/app/auth/store/selectors';
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
@@ -27,7 +27,7 @@ export class MobileHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
-    // this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
+    this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
   }
 
   logout() {
