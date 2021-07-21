@@ -1,5 +1,5 @@
 import { NewsService } from './../../../../shared/services/news.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { PageStoreService } from 'src/app/admin/shared/services/page-store.service';
 import { NewsInterface } from 'src/app/admin/shared/types/news.interface';
@@ -19,14 +19,14 @@ export class CabinetComponent implements OnInit {
 
   ref: DynamicDialogRef;
 
+  private subscription$: Subscription = new Subscription();
+
   constructor(
     private pageStoreService: PageStoreService,
     private newsService: NewsService,
     public dialogService: DialogService,
     private formBuilder: FormBuilder
   ) {}
-
-
 
   ngOnInit() {
     this.pageStoreService.setPage({
@@ -49,12 +49,14 @@ export class CabinetComponent implements OnInit {
       width: '50%',
       contentStyle: { 'max-height': '550px', overflow: 'auto' },
       baseZIndex: 10000,
-      data: newsItem
+      data: newsItem,
     });
 
-    this.ref.onClose.subscribe(() => {
-      this.fetch();
-    });
+    this.subscription$.add(
+      this.ref.onClose.subscribe(() => {
+        this.fetch();
+      })
+    );
   }
 
   private fetch() {
@@ -63,22 +65,25 @@ export class CabinetComponent implements OnInit {
   }
 
   private onChanges(): void {
-    this.filterForm.valueChanges.subscribe((value) => {
-      this.newsListFiltered$ = this.newsListOriginal$.pipe(
-        map((news) => {
-          return news.filter(
-            (newsItem) =>
-              newsItem.Title.includes(value.search) ||
-              newsItem.Text.includes(value.search)
-          );
-        })
-      );
-    });
+    this.subscription$.add(
+      this.filterForm.valueChanges.subscribe((value) => {
+        this.newsListFiltered$ = this.newsListOriginal$.pipe(
+          map((news) => {
+            return news.filter(
+              (newsItem) =>
+                newsItem.Title.includes(value.search) ||
+                newsItem.Text.includes(value.search)
+            );
+          })
+        );
+      })
+    );
   }
 
   ngOnDestroy() {
     if (this.ref) {
       this.ref.close();
     }
+    this.subscription$.unsubscribe();
   }
 }

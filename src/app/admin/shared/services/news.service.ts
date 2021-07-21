@@ -21,8 +21,8 @@ export class NewsService {
     return this.http.get<NewsInterface[]>(url);
   }
 
-  updateNewsItem(data: NewsInterface): Observable<NewsInterface> {
-    let url = `${environment.apiUrl}/news/${data.ID}`;
+  updateNewsItem(data: NewsInterface, newsID: string): Observable<NewsInterface> {
+    let url = `${environment.apiUrl}/news/${newsID}`;
     return this.http.post<NewsInterface>(url, data);
   }
 

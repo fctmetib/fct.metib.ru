@@ -1,5 +1,5 @@
 import { NewsService } from './../../shared/services/news.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -63,6 +63,7 @@ const routes = [
     CreateNewsDialogComponent
   ],
   providers: [
+    DatePipe,
     PageStoreService,
     DialogService,
     NewsService

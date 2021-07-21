@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageStoreService } from 'src/app/admin/shared/services/page-store.service';
 import { OrganizationService } from '../../services/organization.service';
 import { OrganizationInterface } from 'src/app/admin/shared/types/organization.interface';
@@ -10,10 +10,12 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
   selector: 'organizations',
   templateUrl: './organization.component.html',
 })
-export class OrganizationsComponent implements OnInit {
+export class OrganizationsComponent implements OnInit, OnDestroy {
   public organizationList$: Observable<OrganizationInterface[]>;
   public filterForm: FormGroup;
   public isLoading: boolean = false;
+
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     private pageStoreService: PageStoreService,
@@ -35,17 +37,23 @@ export class OrganizationsComponent implements OnInit {
   }
 
   onChanges(): void {
-    this.filterForm.valueChanges
-      .pipe(
-        tap(() => (this.isLoading = true)),
-        debounceTime(2000),
-        distinctUntilChanged()
-      )
-      .subscribe((value) => {
-        this.organizationList$ = this.organizationService.getOrganizationList(
-          value.search
-        );
-        this.isLoading = false;
-      });
+    this.subscription$.add(
+      this.filterForm.valueChanges
+        .pipe(
+          tap(() => (this.isLoading = true)),
+          debounceTime(2000),
+          distinctUntilChanged()
+        )
+        .subscribe((value) => {
+          this.organizationList$ = this.organizationService.getOrganizationList(
+            value.search
+          );
+          this.isLoading = false;
+        })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }
