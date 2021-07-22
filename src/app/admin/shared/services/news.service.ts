@@ -21,16 +21,37 @@ export class NewsService {
     return this.http.get<NewsInterface[]>(url);
   }
 
+  /**
+  * Удаляет новость по id
+  * @returns Ничего не возвращает
+  */
+  removeNewsItem(newsID: string): Observable<any> {
+    let url = `${environment.apiUrl}/news/${newsID}`;
+    return this.http.delete<any>(url);
+  }
+
+  /**
+  * Обновляет новость по id
+  * @returns Ничего не возвращает
+  */
   updateNewsItem(data: NewsInterface, newsID: string): Observable<NewsInterface> {
     let url = `${environment.apiUrl}/news/${newsID}`;
     return this.http.post<NewsInterface>(url, data);
   }
 
+  /**
+  * Добавляет новую новость
+  * @returns Ничего не возвращает
+  */
   addNewsItem(data: NewsInterface): Observable<NewsInterface> {
     let url = `${environment.apiUrl}/news`;
     return this.http.post<NewsInterface>(url, data);
   }
 
+  /**
+  * Добавляет картинку в новость, по id
+  * @returns Ничего не возвращает
+  */
   addNewsImage(file, newsId): Observable<any> {
     var formdata = new FormData();
     formdata.append('', file);

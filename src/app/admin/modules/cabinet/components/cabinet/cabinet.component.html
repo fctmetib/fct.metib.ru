@@ -11,10 +11,11 @@
 <div class="content content_cards">
   <card-news
     *ngFor="let newsItem of (newsListFiltered$ | async)"
-    [image]="newsItem.ID"
+    [id]="newsItem.ID"
     [date]="newsItem.Date"
     [title]="newsItem.Title"
     [desc]="newsItem.Text"
-    (click)="openCreateNews(newsItem)">
+    (remove)="handleRemove($event)"
+    (open)="openCreateNews($event)">
   </card-news>
 </div>

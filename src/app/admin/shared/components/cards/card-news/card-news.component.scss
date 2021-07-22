@@ -1,5 +1,4 @@
 .card-news {
-  cursor: pointer;
   width: 255px;
   border-radius: 10px;
   background-color: white;
@@ -19,6 +18,21 @@
       text-align: center;
       color: #989898;
     }
+    .actions {
+      cursor: pointer;
+      position: absolute;
+      z-index: 3;
+      top: 15px;
+      right: 15px;
+      padding: 5px;
+      background: linear-gradient(216.14deg, #009FD9 10.37%, rgba(0, 159, 217, 0) 93.52%), #4B75B1;;
+      color: #FFFFFF;
+      box-sizing: border-box;
+      border-radius: 5px;
+      font-size: 14px;
+      line-height: 16px;
+      text-align: center;
+    }
     .image {
       height: 145px;
       display: flex;
@@ -36,6 +50,7 @@
     padding: 15px;
     height: 140px;
     .title {
+      cursor: pointer;
       text-align: center;
       font-weight: 500;
       font-size: 16px;

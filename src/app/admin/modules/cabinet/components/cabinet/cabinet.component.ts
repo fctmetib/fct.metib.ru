@@ -43,6 +43,14 @@ export class CabinetComponent implements OnInit {
     this.onChanges();
   }
 
+  public handleRemove(newsID: string) {
+    this.subscription$.add(
+      this.newsService.removeNewsItem(newsID).subscribe(removeResponse => {
+        this.fetch();
+      })
+    );
+  }
+
   public openCreateNews(newsItem?: NewsInterface) {
     this.ref = this.dialogService.open(CreateNewsDialogComponent, {
       header: 'Создание новости',
@@ -61,7 +69,7 @@ export class CabinetComponent implements OnInit {
 
   private fetch() {
     this.newsListOriginal$ = this.newsService.getNewsList();
-    this.newsListFiltered$ = this.newsListOriginal$;
+    this.newsListFiltered$ = this.newsListOriginal$.pipe(map(newsList => newsList));
   }
 
   private onChanges(): void {
