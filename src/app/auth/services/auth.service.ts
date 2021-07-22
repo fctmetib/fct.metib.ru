@@ -38,6 +38,11 @@ export class AuthService {
     return this.http.post<{}>(url, data);
   }
 
+  reauth(userId: string): Observable<any> {
+    const url = environment.apiUrl + `/user/reauth/${userId}`;
+    return this.http.post<any>(url, null);
+  }
+
   login(data: LoginRequestInterface): Observable<AuthResponseInterface> {
     const url = environment.apiUrl + '/user/login';
     return this.http.post<AuthResponseInterface>(url, data);

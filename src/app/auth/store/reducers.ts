@@ -22,6 +22,7 @@ import {
   registerSuccessAction,
   registerFailureAction,
 } from './actions/register.action';
+import { reauthAction, reauthFailureAction, reauthSuccessAction } from './actions/reauth.action';
 
 const initialState: AuthStateInterface = {
   isSubmitting: false,
@@ -116,6 +117,33 @@ const authReducer = createReducer(
   ),
   on(
     loginFailureAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      successMessage: null,
+      validationErrors: action.errors,
+    })
+  ),
+  on(
+    reauthAction,
+    (state): AuthStateInterface => ({
+      ...state,
+      isSubmitting: true,
+      successMessage: null,
+      validationErrors: null,
+    })
+  ),
+  on(
+    reauthSuccessAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      currentUserFactoring: action.currentUserFactoring,
+      isLoggedIn: true,
+    })
+  ),
+  on(
+    reauthFailureAction,
     (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
