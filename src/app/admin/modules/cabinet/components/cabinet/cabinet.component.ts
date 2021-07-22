@@ -14,8 +14,8 @@ import { CreateNewsDialogComponent } from '../create-news-dialog/create-news-dia
 })
 export class CabinetComponent implements OnInit {
   public filterForm: FormGroup;
-  public newsListOriginal$: Observable<NewsInterface[]>;
-  public newsListFiltered$: Observable<NewsInterface[]>;
+  public newsListOriginal: NewsInterface[] = [];
+  public newsListFiltered: NewsInterface[] = [];
 
   ref: DynamicDialogRef;
 
@@ -45,7 +45,7 @@ export class CabinetComponent implements OnInit {
 
   public handleRemove(newsID: string) {
     this.subscription$.add(
-      this.newsService.removeNewsItem(newsID).subscribe(removeResponse => {
+      this.newsService.removeNewsItem(newsID).subscribe((removeResponse) => {
         this.fetch();
       })
     );
@@ -68,21 +68,19 @@ export class CabinetComponent implements OnInit {
   }
 
   private fetch() {
-    this.newsListOriginal$ = this.newsService.getNewsList();
-    this.newsListFiltered$ = this.newsListOriginal$.pipe(map(newsList => newsList));
+    this.newsService.getNewsList().subscribe((newsListResponse) => {
+      this.newsListOriginal = newsListResponse;
+      this.newsListFiltered = newsListResponse;
+    });
   }
 
   private onChanges(): void {
     this.subscription$.add(
       this.filterForm.valueChanges.subscribe((value) => {
-        this.newsListFiltered$ = this.newsListOriginal$.pipe(
-          map((news) => {
-            return news.filter(
-              (newsItem) =>
-                newsItem.Title.includes(value.search) ||
-                newsItem.Text.includes(value.search)
-            );
-          })
+        this.newsListFiltered = this.newsListOriginal.filter(
+          (newsItem) =>
+            newsItem.Title.includes(value.search) ||
+            newsItem.Text.includes(value.search)
         );
       })
     );
