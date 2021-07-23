@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -19,6 +20,7 @@ import { AuthGuard } from '../shared/services/auth.guard';
 import { AdminComponent } from './admin.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { MobileHeaderComponent } from './shared/mobile-header/mobile-header.component';
+import { AdminAuthInterceptor } from './shared/services/admin-auth.interceptor';
 import { PageStoreService } from './shared/services/page-store.service';
 
 const routes = [
@@ -58,6 +60,7 @@ const routes = [
 @NgModule({
   imports: [
     CommonModule,
+    HttpClientModule,
     CommonModule,
     InputTextModule,
     CheckboxModule,
@@ -83,6 +86,13 @@ const routes = [
     HeaderComponent,
     MobileHeaderComponent,
   ],
-  providers: [PageStoreService],
+  providers: [
+    PageStoreService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AdminAuthInterceptor,
+      multi: true,
+    },
+  ],
 })
 export class AdminModule {}

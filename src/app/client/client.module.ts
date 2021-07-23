@@ -24,12 +24,15 @@ import { OrganizationService } from '../shared/services/share/organization.servi
 import { ClientComponent } from './client.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { MobileHeaderComponent } from './shared/mobile-header/mobile-header.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '../shared/services/auth.interceptor';
 
 @NgModule({
   imports: [
     CommonModule,
     InputTextModule,
     CheckboxModule,
+    HttpClientModule,
     ButtonModule,
     RadioButtonModule,
     InputTextareaModule,
@@ -46,6 +49,15 @@ import { MobileHeaderComponent } from './shared/mobile-header/mobile-header.comp
     AvatarModule,
   ],
   declarations: [ClientComponent, HeaderComponent, MobileHeaderComponent],
-  providers: [ClientService, DeliveryService, OrganizationService],
+  providers: [
+    ClientService,
+    DeliveryService,
+    OrganizationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
+  ],
 })
 export class ClientModule {}

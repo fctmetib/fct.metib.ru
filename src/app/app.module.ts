@@ -49,11 +49,6 @@ registerLocaleData(localeRu, 'ru');
     { provide: LOCALE_ID, useValue: 'ru' },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true
     }

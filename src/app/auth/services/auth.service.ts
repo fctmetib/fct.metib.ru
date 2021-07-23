@@ -6,7 +6,7 @@ import { ResetPasswordReponseInterface } from './../types/reset-password/resetPa
 import { ResetPasswordRequestInterface } from '../types/reset-password/resetPasswordRequest.interface';
 import { CookieService } from 'ngx-cookie-service';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -40,6 +40,12 @@ export class AuthService {
   }
 
   reauth(user: ReauthRequestInterface): Observable<AuthResponseInterface> {
+    // let bt = this.cookieService.get('_bt_admin');
+
+    // const myHeaders = new HttpHeaders().set('Authorization',  `Basic ${bt}`);
+    // const headers = { 'Authorization': `Basic ${bt}`};
+    // console.log(headers);
+
     const url = environment.apiUrl + `/user/reauth/${user.userId}`;
     return this.http.post<AuthResponseInterface>(url, null);
   }
@@ -91,8 +97,11 @@ export class AuthService {
   isUserAdmin(): boolean {
     const roles = this.getUserRoles();
 
-    if(roles.includes('Administrator') || roles.includes('Manager') || roles.includes('Factoring Head'))
-    {
+    if (
+      roles.includes('Administrator') ||
+      roles.includes('Manager') ||
+      roles.includes('Factoring Head')
+    ) {
       return true;
     } else {
       return false;
@@ -102,8 +111,11 @@ export class AuthService {
   isUserVerified(): boolean {
     const roles = this.getUserRoles();
 
-    if(roles.includes('Customer') || roles.includes('Debtor') || roles.includes('Staff'))
-    {
+    if (
+      roles.includes('Customer') ||
+      roles.includes('Debtor') ||
+      roles.includes('Staff')
+    ) {
       return true;
     } else {
       return false;
@@ -117,7 +129,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    if (this.cookieService.get('_cu')) {
+    if (this.cookieService.get('_cu') || this.cookieService.get('_cu_admin')) {
       return true;
     } else {
       return false;
@@ -135,11 +147,27 @@ export class AuthService {
     // const user: AuthResponseInterface = this.cryptoService.decrypt(
     //   JSON.parse(this.cookieService.get('_cu'))
     // );
+    let roles: string[] = [];
+
+    const adminCookie = this.cookieService.get('_cu_admin');
     const userCookie = this.cookieService.get('_cu');
-    const user = JSON.parse(
-      this.cryptoService.decrypt(userCookie)
-    ) as AuthResponseInterface;
-    return user.Roles;
+    if (userCookie) {
+      const user = JSON.parse(
+        this.cryptoService.decrypt(userCookie)
+      ) as AuthResponseInterface;
+      user.Roles.forEach((role) => {
+        roles.push(role);
+      });
+    }
+    if (adminCookie) {
+      const admin = JSON.parse(
+        this.cryptoService.decrypt(adminCookie)
+      ) as AuthResponseInterface;
+      admin.Roles.forEach((role) => {
+        roles.push(role);
+      });
+    }
+    return roles;
   }
 
   //#endregion

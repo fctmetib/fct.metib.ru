@@ -30,12 +30,15 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { ReauthEffect } from './store/effects/reauth.effect';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AdminAuthInterceptor } from './services/admin-auth.interceptor';
 
 @NgModule({
   imports: [
     CommonModule,
     AuthRoutingModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     BackendErrorMessagesModule,
     SuccessMessagesModule,
@@ -66,7 +69,12 @@ import { ReauthEffect } from './store/effects/reauth.effect';
     AuthService,
     CommonService,
     CryptoService,
-    CryptoProService
+    CryptoProService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AdminAuthInterceptor,
+      multi: true,
+    },
   ],
 })
 export class AuthModule {}

@@ -15,7 +15,6 @@ import {
   getCurrentUserSuccessAction,
   getCurrentUserFailureAction,
 } from 'src/app/auth/store/actions/getCurrentUser.action';
-import { getFactoringAction } from 'src/app/client/store/actions/getFactoring.action';
 
 @Injectable()
 export class GetCurrentUserEffect {
