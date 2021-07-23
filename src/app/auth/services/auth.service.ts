@@ -16,6 +16,7 @@ import { LoginRequestInterface } from 'src/app/auth/types/login/loginRequest.int
 import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
 import { RegisterConfirmRequestInterface } from '../types/register/registerConfirmRequest.interface';
 import { RegisterReponseInterface } from '../types/register/registerResponse.interface';
+import { ReauthRequestInterface } from '../types/login/reauthRequest.interface';
 
 @Injectable()
 export class AuthService {
@@ -38,9 +39,9 @@ export class AuthService {
     return this.http.post<{}>(url, data);
   }
 
-  reauth(userId: string): Observable<any> {
-    const url = environment.apiUrl + `/user/reauth/${userId}`;
-    return this.http.post<any>(url, null);
+  reauth(user: ReauthRequestInterface): Observable<AuthResponseInterface> {
+    const url = environment.apiUrl + `/user/reauth/${user.userId}`;
+    return this.http.post<AuthResponseInterface>(url, null);
   }
 
   login(data: LoginRequestInterface): Observable<AuthResponseInterface> {

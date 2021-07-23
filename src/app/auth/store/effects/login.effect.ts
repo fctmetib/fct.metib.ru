@@ -1,7 +1,5 @@
 import { CryptoService } from './../../../shared/services/common/crypto.service';
 import { CurrentUserFactoringInterface } from '../../../shared/types/currentUserFactoring.interface';
-import { getCurrentUserAction } from './../actions/getCurrentUser.action';
-import { Store, select } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
@@ -26,14 +24,26 @@ export class LoginEffect {
       switchMap(({ request }) => {
         return this.authService.login(request).pipe(
           map((response: AuthResponseInterface) => {
-            let crptInfo = this.cryptoService.encrypt(JSON.stringify(response));
+            let isAdmin = response.Roles.find(x => x === 'Administrator');
+            if(isAdmin) {
+              let crptInfo = this.cryptoService.encrypt(JSON.stringify(response));
 
-            // current user
-            this.cookieService.set('_cu', crptInfo);
+              // admin current user
+              this.cookieService.set('_cu_admin', crptInfo);
 
-            // base token
-            let token = btoa(`${request.login}:${request.password}`);
-            this.cookieService.set('_bt', token)
+              // admin base token
+              let token = btoa(`${request.login}:${request.password}`);
+              this.cookieService.set('_bt_admin', token)
+            } else {
+              let crptInfo = this.cryptoService.encrypt(JSON.stringify(response));
+
+              // current user
+              this.cookieService.set('_cu', crptInfo);
+
+              // base token
+              let token = btoa(`${request.login}:${request.password}`);
+              this.cookieService.set('_bt', token)
+            }
 
             let currentUserFactoring: CurrentUserFactoringInterface = response;
 
@@ -53,7 +63,11 @@ export class LoginEffect {
       this.actions$.pipe(
         ofType(loginSuccessAction),
         tap(() => {
-          this.router.navigateByUrl('/cabinet');
+          if (this.authService.isUserAdmin()) {
+            this.router.navigateByUrl('/admin/cabinet');
+          } else {
+            this.router.navigateByUrl('/cabinet');
+          }
         })
       ),
     { dispatch: false }

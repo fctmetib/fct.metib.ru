@@ -5,7 +5,10 @@
 </div>
 <div class="content content_rows">
   <ng-container *ngIf="(userList$ | async) && !isLoading || !(userList$ | async) && !isLoading; else loadingTemplate">
-    <card-user *ngFor="let user of (userList$ | async)" [user]="user"></card-user>
+    <card-user
+      *ngFor="let user of (userList$ | async)"
+      [user]="user"
+      (switchAccount)="reauthHandler($event)"></card-user>
   </ng-container>
   <ng-template #loadingTemplate>
     Загрузка...

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserInterface } from 'src/app/admin/shared/types/user.interface';
 
 @Component({
@@ -20,7 +20,7 @@ import { UserInterface } from 'src/app/admin/shared/types/user.interface';
         </div>
       </div>
       <div class="card-user__actions">
-        <button type="button" pButton class="basic" label="Войти от имени пользователя" (click)="switchAccount()" ></button>
+        <button type="button" pButton class="basic" label="Войти от имени пользователя" (click)="onSwitchAccount(user.ID)" ></button>
       </div>
   </div>
   `,
@@ -31,11 +31,15 @@ export class CardUserComponent implements OnInit {
   @Input()
   user: UserInterface;
 
+  @Output()
+  switchAccount = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit() { }
 
-  public switchAccount() {
-    // TODO: Switch user {{user?.Login}}
+  public onSwitchAccount(userId: number) {
+    console.log('user id 1', userId)
+    this.switchAccount.emit(userId);
   }
 }

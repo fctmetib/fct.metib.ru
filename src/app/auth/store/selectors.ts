@@ -38,6 +38,11 @@ export const currentUserFactoringSelector = createSelector(
   (authState: AuthStateInterface) => authState.currentUserFactoring
 )
 
+export const secondUserFactoringSelector = createSelector(
+  authFeatureSelector,
+  (authState: AuthStateInterface) => authState.secondUserFactoring
+)
+
 export const confirmationCodeSelector = createSelector(
   authFeatureSelector,
   (authState: AuthStateInterface) => authState.confirmCode

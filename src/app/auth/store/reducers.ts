@@ -29,6 +29,7 @@ const initialState: AuthStateInterface = {
   isLoading: false,
   currentUserGeneral: null,
   currentUserFactoring: null,
+  secondUserFactoring: null,
   validationErrors: null,
   isLoggedIn: null,
   successMessage: null,
@@ -138,7 +139,7 @@ const authReducer = createReducer(
     (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
-      currentUserFactoring: action.currentUserFactoring,
+      secondUserFactoring: action.secondUserFactoring,
       isLoggedIn: true,
     })
   ),

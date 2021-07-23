@@ -29,6 +29,7 @@ import { RegisterPageComponent } from './components/register-page/register-page.
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
+import { ReauthEffect } from './store/effects/reauth.effect';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { AuthComponent } from './auth.component';
     StoreModule.forFeature('auth', reducers),
     EffectsModule.forFeature([
       LoginEffect,
+      ReauthEffect,
       GetCurrentUserEffect,
       RegisterEffect,
       ResetPasswordEffect,

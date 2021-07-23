@@ -10,7 +10,7 @@ export const reauthAction = createAction(
 );
 
 export const reauthSuccessAction = createAction(ActionTypes.REAUTH_SUCCESS,
-  props<{ currentUserFactoring: CurrentUserFactoringInterface }>());
+  props<{ secondUserFactoring: CurrentUserFactoringInterface }>());
 
 export const reauthFailureAction = createAction(
   ActionTypes.REAUTH_FAILURE,
