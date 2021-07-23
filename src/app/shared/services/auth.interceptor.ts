@@ -39,30 +39,38 @@ export class AuthInterceptor implements HttpInterceptor {
       token = user.Code;
     }
 
-    request = request.clone({
-      setHeaders: {
-      //  Authorization: token ? `Token ${token}` : '',
-       Authorization: bt ? `Basic ${bt}` : ''
-      },
-    });
+    if (this.auth.isUserAdmin()) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: token ? `Token ${token}` : '',
+        },
+      });
+    } else {
+      request = request.clone({
+        setHeaders: {
+          Authorization: bt ? `Basic ${bt}` : '',
+        },
+      });
+    }
 
-    return next.handle(request).pipe(
-      catchError(
-        (error: HttpErrorResponse) =>  this.handleAuthError(error)
-      )
-    )
+    return next
+      .handle(request)
+      .pipe(
+        catchError((error: HttpErrorResponse) => this.handleAuthError(error))
+      );
   }
 
   private handleAuthError(error: HttpErrorResponse) {
     if (error.status === 401) {
-      this.auth.logout()
-      this.router.navigate(['/login']), {
-        queryParams: {
-          sessionFailed: true
-        }
-      }
+      this.auth.logout();
+      this.router.navigate(['/login']),
+        {
+          queryParams: {
+            sessionFailed: true,
+          },
+        };
     }
 
-    return throwError(error)
+    return throwError(error);
   }
 }
