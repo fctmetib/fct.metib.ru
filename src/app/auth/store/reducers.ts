@@ -178,8 +178,6 @@ const authReducer = createReducer(
       currentUserGeneral: null,
     })
   ),
-
-
   on(
     resetPasswordAction,
     (state): AuthStateInterface => ({
