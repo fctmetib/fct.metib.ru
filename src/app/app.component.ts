@@ -14,19 +14,13 @@ export class AppComponent implements OnInit {
   constructor(private store: Store, private authService: AuthService) {}
 
   ngOnInit() {
-    let isUserVerified = this.authService.isUserVerified();
+    this.store.dispatch(getCurrentUserAction());
 
-    if (isUserVerified) {
-      this.store.dispatch(getCurrentUserAction());
-
-      this.store
-        .pipe(select(currentUserFactoringSelector))
-        .subscribe((user) => {
-          if (user) {
-            let organizationID = +user.OrganizationID;
-            this.store.dispatch(getFactoringAction({ organizationID }));
-          }
-        });
-    }
+    this.store.pipe(select(currentUserFactoringSelector)).subscribe((user) => {
+      if (user) {
+        let organizationID = +user.OrganizationID;
+        this.store.dispatch(getFactoringAction({ organizationID }));
+      }
+    });
   }
 }

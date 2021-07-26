@@ -9,8 +9,15 @@ export const loginAction = createAction(
   props<{ request: LoginRequestInterface }>()
 );
 
-export const loginSuccessAction = createAction(ActionTypes.LOGIN_SUCCESS,
-  props<{ currentUserFactoring: CurrentUserFactoringInterface }>());
+export const loginSuccessAction = createAction(
+  ActionTypes.LOGIN_SUCCESS,
+  props<{ currentUserFactoring: CurrentUserFactoringInterface }>()
+);
+
+export const loginAdminSuccessAction = createAction(
+  ActionTypes.LOGIN_ADMIN_SUCCESS,
+  props<{ adminUserFactoring: CurrentUserFactoringInterface }>()
+);
 
 export const loginFailureAction = createAction(
   ActionTypes.LOGIN_FAILURE,

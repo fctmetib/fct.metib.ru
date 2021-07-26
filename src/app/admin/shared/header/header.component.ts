@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
-import { currentUserFactoringSelector, currentUserGeneralSelector } from 'src/app/auth/store/selectors';
+import { adminUserFactoringSelector, currentUserFactoringSelector, currentUserGeneralSelector } from 'src/app/auth/store/selectors';
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
@@ -22,16 +22,13 @@ export class HeaderComponent implements OnInit {
   baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
   baseAvatarProfileUrl = "http://api-factoring.metib.ru:8094/api/avatar/";
 
-  public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
-  public currentUser$: Observable<CurrentUserGeneralInterface | null>;
-  public factoring$: Observable<CustomerInterface | null>;
+  public adminUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
   public page$: Observable<PageInterface>;
 
   constructor(private store: Store, private authService: AuthService, private router: Router, private pageStoreService: PageStoreService) {}
 
   ngOnInit() {
-    this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
-    this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
+    this.adminUserFactoring$ = this.store.pipe(select(adminUserFactoringSelector));
     this.page$ = this.pageStoreService.getPage();
   }
 

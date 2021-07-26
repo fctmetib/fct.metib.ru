@@ -11,6 +11,7 @@ import {
 import { AuthStateInterface } from 'src/app/auth/types/authState.interface';
 import {
   loginAction,
+  loginAdminSuccessAction,
   loginFailureAction,
   loginSuccessAction,
 } from './actions/login.action';
@@ -29,7 +30,7 @@ const initialState: AuthStateInterface = {
   isLoading: false,
   currentUserGeneral: null,
   currentUserFactoring: null,
-  secondUserFactoring: null,
+  adminUserFactoring: null,
   validationErrors: null,
   isLoggedIn: null,
   successMessage: null,
@@ -117,6 +118,15 @@ const authReducer = createReducer(
     })
   ),
   on(
+    loginAdminSuccessAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      adminUserFactoring: action.adminUserFactoring,
+      isLoggedIn: true,
+    })
+  ),
+  on(
     loginFailureAction,
     (state, action): AuthStateInterface => ({
       ...state,
@@ -139,7 +149,7 @@ const authReducer = createReducer(
     (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
-      secondUserFactoring: action.secondUserFactoring,
+      currentUserFactoring: action.currentUserFactoring,
       isLoggedIn: true,
     })
   ),

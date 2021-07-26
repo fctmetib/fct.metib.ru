@@ -14,6 +14,7 @@ import {
   loginAction,
   loginSuccessAction,
   loginFailureAction,
+  loginAdminSuccessAction,
 } from 'src/app/auth/store/actions/login.action';
 
 @Injectable()
@@ -24,30 +25,37 @@ export class LoginEffect {
       switchMap(({ request }) => {
         return this.authService.login(request).pipe(
           map((response: AuthResponseInterface) => {
-            let isAdmin = response.Roles.find(x => x === 'Administrator');
-            if(isAdmin) {
-              let crptInfo = this.cryptoService.encrypt(JSON.stringify(response));
+            let isAdmin = response.Roles.find((x) => x === 'Administrator');
+            if (isAdmin) {
+              let crptInfo = this.cryptoService.encrypt(
+                JSON.stringify(response)
+              );
 
               // admin current user
               this.cookieService.set('_cu_admin', crptInfo);
 
               // admin base token
               let token = btoa(`${request.login}:${request.password}`);
-              this.cookieService.set('_bt_admin', token)
+              this.cookieService.set('_bt_admin', token);
+              let adminUserFactoring: CurrentUserFactoringInterface = response;
+
+              return loginAdminSuccessAction({ adminUserFactoring });
             } else {
-              let crptInfo = this.cryptoService.encrypt(JSON.stringify(response));
+              let crptInfo = this.cryptoService.encrypt(
+                JSON.stringify(response)
+              );
 
               // current user
               this.cookieService.set('_cu', crptInfo);
 
               // base token
               let token = btoa(`${request.login}:${request.password}`);
-              this.cookieService.set('_bt', token)
+              this.cookieService.set('_bt', token);
+              let currentUserFactoring: CurrentUserFactoringInterface =
+                response;
+
+              return loginSuccessAction({ currentUserFactoring });
             }
-
-            let currentUserFactoring: CurrentUserFactoringInterface = response;
-
-            return loginSuccessAction( {currentUserFactoring} );
           }),
 
           catchError((errorResponse: HttpErrorResponse) => {
@@ -63,11 +71,18 @@ export class LoginEffect {
       this.actions$.pipe(
         ofType(loginSuccessAction),
         tap(() => {
-          if (this.authService.isUserAdmin()) {
-            this.router.navigateByUrl('/admin/cabinet');
-          } else {
-            this.router.navigateByUrl('/cabinet');
-          }
+          this.router.navigateByUrl('/cabinet');
+        })
+      ),
+    { dispatch: false }
+  );
+
+  redirectAfterSubmitAdmin$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loginAdminSuccessAction),
+        tap(() => {
+          this.router.navigateByUrl('/admin/cabinet');
         })
       ),
     { dispatch: false }

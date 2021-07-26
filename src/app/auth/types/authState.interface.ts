@@ -5,7 +5,7 @@ export interface AuthStateInterface {
   isSubmitting: boolean;
   currentUserGeneral: CurrentUserGeneralInterface | null;
   currentUserFactoring: CurrentUserFactoringInterface | null;
-  secondUserFactoring: CurrentUserFactoringInterface | null;
+  adminUserFactoring: CurrentUserFactoringInterface | null;
   isLoggedIn: boolean | null;
   validationErrors: string | null;
   successMessage: string;

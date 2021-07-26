@@ -9,6 +9,7 @@ export enum ActionTypes {
 
   LOGIN = '[Auth] Login',
   LOGIN_SUCCESS = '[Auth] Login success',
+  LOGIN_ADMIN_SUCCESS = '[Auth] Login admin success',
   LOGIN_FAILURE = '[Auth] Login failure',
 
   REAUTH = '[Auth] Reauth',

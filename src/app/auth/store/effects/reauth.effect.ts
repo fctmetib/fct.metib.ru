@@ -28,9 +28,9 @@ export class ReauthEffect {
             let token = response.Code;
             this.cookieService.set('_bt', token)
 
-            let secondUserFactoring: CurrentUserFactoringInterface = response;
+            let currentUserFactoring: CurrentUserFactoringInterface = response;
 
-            return reauthSuccessAction( {secondUserFactoring} );
+            return reauthSuccessAction( {currentUserFactoring} );
           }),
 
           catchError((errorResponse: HttpErrorResponse) => {

@@ -31,21 +31,21 @@
           </div>
           <div class="header-block account-owner">
             <div class="account-info-name">
-              <ng-container *ngIf="(currentUserFactoring$ | async); else skeletonUserNameTemplate">
-                {{(currentUserFactoring$ | async)?.Name}}
+              <ng-container *ngIf="(adminUserFactoring$ | async); else skeletonUserNameTemplate">
+                {{(adminUserFactoring$ | async)?.Name}}
               </ng-container>
               <ng-template #skeletonUserNameTemplate>
                 <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
               </ng-template>
             </div>
-            <div class="account-info-email">
-              <ng-container *ngIf="(currentUser$ | async); else skeletonUserEmailTemplate">
-                {{(currentUser$ | async)?.Profile.Email}}
+            <!-- <div class="account-info-email">
+              <ng-container *ngIf="(adminUserFactoring$ | async); else skeletonUserEmailTemplate">
+                {{(adminUserFactoring$ | async)?.Profile.Email}}
               </ng-container>
               <ng-template #skeletonUserEmailTemplate>
                 <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
               </ng-template>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="dropdown-content">
