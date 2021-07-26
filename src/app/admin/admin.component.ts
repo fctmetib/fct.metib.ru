@@ -1,5 +1,8 @@
 import { MenuItem } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { adminUserFactoringSelector } from '../auth/store/selectors';
+import { getCurrentUserAdminAction } from '../auth/store/actions/getCurrentAdmin.action';
 
 @Component({
   selector: 'admin',
@@ -7,10 +10,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-  constructor() {}
+  constructor(private store: Store) {}
   public items: MenuItem[];
 
   ngOnInit(): void {
+    this.store.dispatch(getCurrentUserAdminAction());
+    this.store.pipe(select(adminUserFactoringSelector));
+
     this.items = [
       {
         label: 'Главная',

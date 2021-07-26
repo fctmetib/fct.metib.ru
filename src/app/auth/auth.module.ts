@@ -32,6 +32,7 @@ import { AuthComponent } from './auth.component';
 import { ReauthEffect } from './store/effects/reauth.effect';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminAuthInterceptor } from './services/admin-auth.interceptor';
+import { GetCurrentUserAdminEffect } from './store/effects/getCurrentUserAdmin.effect';
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import { AdminAuthInterceptor } from './services/admin-auth.interceptor';
       ReauthEffect,
       GetCurrentUserEffect,
       RegisterEffect,
+      GetCurrentUserAdminEffect,
       ResetPasswordEffect,
     ]),
     InputTextModule,

@@ -24,6 +24,7 @@ import {
   registerFailureAction,
 } from './actions/register.action';
 import { reauthAction, reauthFailureAction, reauthSuccessAction } from './actions/reauth.action';
+import { getCurrentUserAdminAction, getCurrentUserAdminFailureAction, getCurrentUserAdminSuccessAction } from './actions/getCurrentAdmin.action';
 
 const initialState: AuthStateInterface = {
   isSubmitting: false,
@@ -177,6 +178,31 @@ const authReducer = createReducer(
       isLoggedIn: true,
       currentUserGeneral: action.currentUser.userGeneral,
       currentUserFactoring: action.currentUser.userFactoring,
+    })
+  ),
+  on(
+    getCurrentUserAdminAction,
+    (state): AuthStateInterface => ({
+      ...state,
+      isLoading: true,
+    })
+  ),
+  on(
+    getCurrentUserAdminSuccessAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isLoading: false,
+      isLoggedIn: true,
+      adminUserFactoring: action.adminUserFactoring,
+    })
+  ),
+  on(
+    getCurrentUserAdminFailureAction,
+    (state): AuthStateInterface => ({
+      ...state,
+      isLoading: false,
+      isLoggedIn: false,
+      currentUserGeneral: null,
     })
   ),
   on(

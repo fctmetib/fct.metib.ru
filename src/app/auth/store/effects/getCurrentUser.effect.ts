@@ -31,7 +31,6 @@ export class GetCurrentUserEffect {
         }
 
         let userId;
-        let isUserVerified = this.authService.isUserVerified();
 
         if(user) {
           const token = user.Code;
