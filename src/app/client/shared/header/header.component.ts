@@ -29,16 +29,24 @@ export class HeaderComponent implements OnInit {
   public currentUser$: Observable<CurrentUserGeneralInterface | null>;
   public factoring$: Observable<CustomerInterface | null>;
 
+  public isAdmin: boolean = false;
+
   constructor(private store: Store, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
     this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
     this.factoring$ = this.store.pipe(select(factoringSelector));
+
+    this.isAdmin = this.authService.isUserAdmin();
   }
 
   logout() {
     this.authService.logout()
+  }
+
+  switchToAdmin() {
+    this.authService.switchToAdmin();
   }
 
   openAccountOwner() {

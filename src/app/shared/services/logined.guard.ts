@@ -19,10 +19,16 @@ export class LoginedGuard implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    if (!this.auth.isAuthenticated()) {
+    if (!this.auth.isAuthenticated() && !this.auth.isAdminAuthenticated()) {
       return of(true);
     } else {
-      this.router.navigate(['/cabinet']);
+      let url = '/cabinet';
+
+      if (this.auth.isAdminAuthenticated()) {
+        url = '/admin/cabinet';
+      }
+
+      this.router.navigate([url]);
       return of(false);
     }
   }

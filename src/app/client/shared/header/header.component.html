@@ -59,6 +59,12 @@
     </div>
     <div id="dropdownMenu" class="dropdown-content">
       <div class="items">
+        <div class="item" (click)="switchToAdmin()" *ngIf="isAdmin">
+          <div class="icon">
+            <img src="../../../../../assets/icons/header-icons/info_icon.svg">
+          </div>
+          <a>В панель Администратора</a>
+        </div>
         <div class="item" (click)="getInfo()">
           <div class="icon">
             <img src="../../../../../assets/icons/header-icons/info_icon.svg">

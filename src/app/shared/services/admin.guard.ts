@@ -12,10 +12,10 @@ export class AdminGuard implements CanActivate, CanActivateChild {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    if (this.auth.isUserAdmin()) {
+    if (this.auth.isUserAdmin() && this.auth.isAdminAuthenticated()) {
       return of(true)
     } else {
-      this.router.navigate(['/admin'])
+      this.router.navigate(['/admin/cabinet'])
       return of(false)
     }
   }

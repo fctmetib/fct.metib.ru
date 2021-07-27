@@ -126,12 +126,12 @@
         }
       }
 
-      .item:first-child {
+      .item {
         border-right: 1px dashed #A9A9A9;
       }
 
       .item:last-child {
-        border-left: 1px dashed #A9A9A9;
+        border-right: unset;
       }
     }
   }

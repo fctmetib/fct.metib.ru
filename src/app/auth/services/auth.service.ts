@@ -128,8 +128,22 @@ export class AuthService {
     this.router.navigate(['']);
   }
 
-  isAuthenticated(): boolean {
-    if (this.cookieService.get('_cu') || this.cookieService.get('_cu_admin')) {
+  public switchToAdmin(): void {
+    this.cookieService.delete('_cu');
+    this.cookieService.delete('_bt');
+    this.router.navigate(['/admin/cabinet']);
+  }
+
+  public isAdminAuthenticated(): boolean {
+    if (this.cookieService.get('_cu_admin')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public isAuthenticated(): boolean {
+    if (this.cookieService.get('_cu')) {
       return true;
     } else {
       return false;
