@@ -123,6 +123,10 @@ export class AuthService {
   }
 
   public logout(): void {
+    this.cookieService.delete('_cu');
+    this.cookieService.delete('_bt');
+    this.cookieService.delete('_cu_admin');
+    this.cookieService.delete('_bt_admin');
     this.cookieService.deleteAll();
     localStorage.clear();
     this.router.navigate(['']);
