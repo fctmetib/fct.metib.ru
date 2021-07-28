@@ -15,7 +15,7 @@ import { CryptoService } from 'src/app/shared/services/common/crypto.service';
 import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
 
 @Injectable()
-export class AdminAuthInterceptor implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private cookieService: CookieService,
     private cryptoService: CryptoService,

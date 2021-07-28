@@ -31,8 +31,8 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { ReauthEffect } from './store/effects/reauth.effect';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AdminAuthInterceptor } from './services/admin-auth.interceptor';
 import { GetCurrentUserAdminEffect } from './store/effects/getCurrentUserAdmin.effect';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 @NgModule({
   imports: [
@@ -74,7 +74,7 @@ import { GetCurrentUserAdminEffect } from './store/effects/getCurrentUserAdmin.e
     CryptoProService,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AdminAuthInterceptor,
+      useClass: AuthInterceptor,
       multi: true,
     },
   ],
