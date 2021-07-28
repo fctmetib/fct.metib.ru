@@ -27,14 +27,22 @@ export class AdminAuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    let bt = this.cookieService.get('_bt_admin');
-    let adminCookie = this.cookieService.get('_cu_admin');
+    let bt: string;
+    let cookie: string;
+
+    if (this.auth.isAdminAuthenticated()) {
+      bt = this.cookieService.get('_bt_admin');
+      cookie = this.cookieService.get('_cu_admin');
+    } else if (this.auth.isAuthenticated()) {
+      bt = this.cookieService.get('_bt');
+      cookie = this.cookieService.get('_cu');
+    }
 
     let user: AuthResponseInterface;
     let token;
-    if (adminCookie) {
+    if (cookie) {
       user = JSON.parse(
-        this.cryptoService.decrypt(adminCookie)
+        this.cryptoService.decrypt(cookie)
       ) as AuthResponseInterface;
       token = user.Code;
     }
