@@ -31,7 +31,7 @@
 
     .dropdown-content {
       display: none;
-      top: 150px;
+      top: 120px;
       right: 40px;
       position: absolute;
       background-color: #E9E9E9;
@@ -80,12 +80,14 @@
           }
         }
 
-        .item:first-child {
+
+        .item {
+          width: 100%;
           border-right: 1px dashed #A9A9A9;
         }
 
         .item:last-child {
-          border-left: 1px dashed #A9A9A9;
+          border-right: unset;
         }
       }
     }

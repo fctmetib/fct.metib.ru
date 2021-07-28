@@ -1,5 +1,7 @@
 .sub-header_organization {
   display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
 
   .sub-header__title {
     display: flex;
@@ -32,6 +34,7 @@
 
   .organization-information__contacts {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 30px;
     gap: 20px;
 
@@ -47,6 +50,7 @@
 
   .organization-information__description {
     margin-bottom: 20px;
+
     p {
       font-style: normal;
       font-weight: normal;
@@ -58,6 +62,8 @@
 
   .organization-information__blocks {
     display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
     justify-content: space-between;
 
     .organization-information__blocks__block {
@@ -96,6 +102,7 @@
 
 .organization-card__person {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   height: 80px;
   flex-direction: row;
@@ -152,6 +159,28 @@
       img {
         margin-right: 6px;
       }
+    }
+  }
+}
+
+
+@media (max-width: 1300px) {
+
+  .organization-information__blocks__block {
+    width: 100%;
+  }
+
+  .organization-card__person {
+    width: 100%;
+    height: unset;
+    flex-direction: row;
+
+    .organization-card__person__info {
+      width: 100%;
+    }
+
+    .organization-card__person__contacts {
+      width: 100%;
     }
   }
 }
