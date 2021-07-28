@@ -1,3 +1,4 @@
+import { NotificationService } from './shared/services/notification.service';
 import { GetFactoringEffect } from './store/effects/getFactoring.effect';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -22,10 +23,12 @@ import { reducers } from './store/reducers';
 import { DeliveryService } from '../shared/services/share/delivery.service';
 import { OrganizationService } from '../shared/services/share/organization.service';
 import { ClientComponent } from './client.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { MobileHeaderComponent } from './shared/mobile-header/mobile-header.component';
+import { HeaderComponent } from './shared/components/header/header.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../shared/services/auth.interceptor';
+import { MobileHeaderComponent } from './shared/components/mobile-header/mobile-header.component';
+import { NotifyDialogComponent } from './shared/components/notify-dialog/notify-dialog.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
   imports: [
@@ -48,10 +51,16 @@ import { AuthInterceptor } from '../shared/services/auth.interceptor';
     MenubarModule,
     AvatarModule,
   ],
-  declarations: [ClientComponent, HeaderComponent, MobileHeaderComponent],
+  declarations: [
+    ClientComponent,
+    HeaderComponent,
+    NotifyDialogComponent,
+    MobileHeaderComponent],
   providers: [
     ClientService,
     DeliveryService,
+    DialogService,
+    NotificationService,
     OrganizationService,
     {
       provide: HTTP_INTERCEPTORS,

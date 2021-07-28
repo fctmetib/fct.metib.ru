@@ -1,14 +1,26 @@
 import { MenuItem } from 'primeng/api';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotificationService } from './shared/services/notification.service';
+import { NotifyDialogComponent } from './shared/components/notify-dialog/notify-dialog.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss'],
 })
-export class ClientComponent implements OnInit {
-  constructor(private router: Router) {}
+export class ClientComponent implements OnInit, OnDestroy {
+  ref: DynamicDialogRef;
+
+  private subscription$: Subscription = new Subscription();
+
+  constructor(
+    private router: Router,
+    public dialogService: DialogService,
+    private notifyService: NotificationService
+  ) {}
 
   items: MenuItem[];
 
@@ -57,9 +69,32 @@ export class ClientComponent implements OnInit {
       {
         label: 'Отчеты',
         routerLink: 'reports',
-        routerLinkActiveOptions: { exact: false }
+        routerLinkActiveOptions: { exact: false },
       },
     ];
+
+    this.subscription$.add(
+      this.notifyService.getNewNotifications().subscribe((resp) => {
+        if (resp.length > 0) {
+          this.openNotifications(resp);
+        }
+      })
+    );
+  }
+
+  public openNotifications(notifications: any[]) {
+    this.ref = this.dialogService.open(NotifyDialogComponent, {
+      header: 'Уведомления',
+      width: '50%',
+      contentStyle: { 'max-height': '550px', overflow: 'auto' },
+      baseZIndex: 10000,
+      data: notifications,
+    });
+
+    this.subscription$.add(
+      this.ref.onClose.subscribe(() => {
+      })
+    );
   }
 
   @HostListener('click', ['$event.target'])
@@ -73,9 +108,7 @@ export class ClientComponent implements OnInit {
     }
   }
 
-  private isActive(base: string): string {
-    if(this.router.url.includes(`/${base}`)) {
-      return 'p-menuitem-link-active';
-    }
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }

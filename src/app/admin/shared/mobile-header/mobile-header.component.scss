@@ -193,7 +193,7 @@
     .items {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
 
       min-width: 10rem;
       overflow: auto;
@@ -230,13 +230,13 @@
         }
       }
 
-      .item:first-child {
-        border-right: 1px dashed #A9A9A9;
-      }
+      // .item:first-child {
+      //   border-right: 1px dashed #A9A9A9;
+      // }
 
-      .item:last-child {
-        border-left: 1px dashed #A9A9A9;
-      }
+      // .item:last-child {
+      //   border-left: 1px dashed #A9A9A9;
+      // }
     }
   }
 

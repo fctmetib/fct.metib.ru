@@ -1,0 +1,10 @@
+<div class="notification-list">
+  <div class="notification-list__row" *ngFor="let notificationItem of notificationsList" >
+    <div class="notification-list__row__content">
+      {{notificationItem.Title}}
+    </div>
+    <div class="notification-list__row__date">
+      {{notificationItem.Date | date:"dd.MM.yyyy"}}
+    </div>
+  </div>
+</div>
