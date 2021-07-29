@@ -26,11 +26,9 @@ export class CreateNewsDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      Date: this.config.data.Date
-        ? new Date(this.config.data.Date)
-        : new Date(),
-      Text: this.config.data.Text ? this.config.data.Text : '',
-      Title: this.config.data.Title ? this.config.data.Title : '',
+      Date: this.config?.data?.Date ? new Date(this.config?.data?.Date) : new Date(),
+      Text: this.config?.data?.Text ? this.config?.data?.Text : '',
+      Title: this.config?.data?.Title ? this.config?.data?.Title : '',
     });
     if (this.config.data) {
       console.log(this.config.data);
