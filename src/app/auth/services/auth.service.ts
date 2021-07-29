@@ -17,6 +17,8 @@ import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.int
 import { RegisterConfirmRequestInterface } from '../types/register/registerConfirmRequest.interface';
 import { RegisterReponseInterface } from '../types/register/registerResponse.interface';
 import { ReauthRequestInterface } from '../types/login/reauthRequest.interface';
+import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
+import { FreedutyStoreService } from 'src/app/shared/services/store/freeduty.store.service';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +26,10 @@ export class AuthService {
     private http: HttpClient,
     private cookieService: CookieService,
     private router: Router,
-    private cryptoService: CryptoService
+    private cryptoService: CryptoService,
+    // Store services
+    private requestStoreService: RequestStoreService,
+    private freedutyStoreService: FreedutyStoreService
   ) {}
 
   register(
@@ -40,12 +45,6 @@ export class AuthService {
   }
 
   reauth(user: ReauthRequestInterface): Observable<AuthResponseInterface> {
-    // let bt = this.cookieService.get('_bt_admin');
-
-    // const myHeaders = new HttpHeaders().set('Authorization',  `Basic ${bt}`);
-    // const headers = { 'Authorization': `Basic ${bt}`};
-    // console.log(headers);
-
     const url = environment.apiUrl + `/user/reauth/${user.userId}`;
     return this.http.post<AuthResponseInterface>(url, null);
   }
@@ -112,8 +111,6 @@ export class AuthService {
     const roles = this.getUserRoles();
 
     if (
-      roles.includes('Customer') ||
-      roles.includes('Debtor') ||
       roles.includes('Staff')
     ) {
       return true;
@@ -123,11 +120,8 @@ export class AuthService {
   }
 
   public logout(): void {
-    // this.cookieService.remove('_cu');
-    // this.cookieService.delete('_bt', '/', '/');
-    // this.cookieService.delete('_cu_admin', '/', '/');
-    // this.cookieService.delete('_bt_admin', '/', '/');
     this.cookieService.removeAll();
+    this.clearStore();
     localStorage.clear();
     this.router.navigate(['']);
   }
@@ -157,6 +151,11 @@ export class AuthService {
   //#endregion
 
   //#region private
+  private clearStore() {
+    this.requestStoreService.clear();
+    this.freedutyStoreService.clear();
+  }
+
 
   /**
    * This function return current user roles

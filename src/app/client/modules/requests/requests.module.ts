@@ -42,7 +42,7 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
 import { AgencyRequestCreateDialogComponent } from './components/agency-request-create-dialog/agency-request-create-dialog.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { RequestStoreService } from './services/request.store.service';
+import { RequestStoreService } from '../../../shared/services/store/request.store.service';
 
 @NgModule({
   imports: [
@@ -89,7 +89,6 @@ import { RequestStoreService } from './services/request.store.service';
     DialogService,
     DeliveryService,
     RequestsService,
-    RequestStoreService,
     FileService,
     MessageService,
     CommonService,

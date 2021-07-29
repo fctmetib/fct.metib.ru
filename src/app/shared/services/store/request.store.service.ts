@@ -1,9 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { RequestsResponseInterface } from '../types/requestResponse.interface';
-import { RequestsService } from './requests.service';
+import { environment } from 'src/environments/environment';
+import { RequestsResponseInterface } from '../../../client/modules/requests/types/requestResponse.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class RequestStoreService {
   private _requestStore: RequestsResponseInterface[] = [];
 
@@ -11,7 +14,7 @@ export class RequestStoreService {
     new BehaviorSubject([]);
   private _loading$: Subject<boolean> = new Subject();
 
-  constructor(private requestService: RequestsService) {}
+  constructor(private http: HttpClient) {}
 
   public setRequests(requests: RequestsResponseInterface[]) {
     this._requestStore = requests;
@@ -24,7 +27,7 @@ export class RequestStoreService {
     this._setLoading(true);
 
     if (this._requestStore.length === 0 || isRefresh) {
-      this.requestService.fetch().subscribe((resp) => {
+      this._fetch().subscribe((resp) => {
         let result = resp.sort((a, b) => {
           return b.ID - a.ID;
         });
@@ -36,11 +39,21 @@ export class RequestStoreService {
     return this._requests$;
   }
 
+  public clear(): void {
+    this._requestStore = [];
+    this._requests$.next([]);
+  }
+
   public getLoading(): Observable<boolean> {
     return this._loading$;
   }
 
   private _setLoading(state: boolean) {
     this._loading$.next(state);
+  }
+
+  private _fetch(): Observable<RequestsResponseInterface[]> {
+    const url = `${environment.apiUrl}/request`;
+    return this.http.get<RequestsResponseInterface[]>(url);
   }
 }

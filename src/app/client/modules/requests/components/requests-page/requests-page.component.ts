@@ -1,13 +1,7 @@
 import { RequestCorrectDialogComponent } from './../request-correct-dialog/request-correct-dialog.component';
 import { RequestCreateDialogComponent } from './../request-create-dialog/request-create-dialog.component';
-import {
-  requestsSelector,
-  errorSelector,
-  isLoadingSelector,
-} from './../../store/selectors';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { RequestsResponseInterface } from './../../types/requestResponse.interface';
-import { Store, select } from '@ngrx/store';
 import {
   Component,
   OnInit,
@@ -17,12 +11,12 @@ import {
   Directive,
 } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SortEvent, MenuItem, MessageService } from 'primeng/api';
+import { SortEvent, MenuItem } from 'primeng/api';
 import { RequestsService } from '../../services/requests.service';
 import { AgencyRequestCreateDialogComponent } from '../agency-request-create-dialog/agency-request-create-dialog.component';
 import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RequestStoreService } from '../../services/request.store.service';
+import { RequestStoreService } from '../../../../../shared/services/store/request.store.service';
 
 @Directive({
   selector: '[tableHighlight]',

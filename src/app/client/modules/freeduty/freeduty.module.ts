@@ -2,8 +2,6 @@ import { FreedutyRoutingModule } from './freeduty-routing.module';
 import { BackendErrorMessagesModule } from '../../../shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { SuccessMessagesModule } from '../../../shared/modules/successMessages/successMessages.module';
 import { DeliveryService } from '../../../shared/services/share/delivery.service';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
@@ -31,7 +29,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { DutyService } from 'src/app/shared/services/share/duty.service';
 import { FreedutyPageComponent } from './components/freeduty-page/freeduty-page.component';
 import { TooltipModule } from 'primeng/tooltip';
-import { FreedutyStoreService } from './services/freeduty.store.service';
+import { FreedutyStoreService } from '../../../shared/services/store/freeduty.store.service';
 
 @NgModule({
   imports: [
@@ -67,7 +65,6 @@ import { FreedutyStoreService } from './services/freeduty.store.service';
   providers: [
     DialogService,
     DeliveryService,
-    FreedutyStoreService,
     DutyService,
   ],
 })

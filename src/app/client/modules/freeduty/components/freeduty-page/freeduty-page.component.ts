@@ -10,7 +10,7 @@ import { factoringSelector } from 'src/app/client/store/selectors';
 import { SelectedItemSortedInterface } from '../../types/common/selected-item-sorted.interface';
 import { DutyService } from 'src/app/shared/services/share/duty.service';
 import { Router } from '@angular/router';
-import { FreedutyStoreService } from '../../services/freeduty.store.service';
+import { FreedutyStoreService } from '../../../../../shared/services/store/freeduty.store.service';
 
 @Component({
   selector: 'app-freeduty-page',
