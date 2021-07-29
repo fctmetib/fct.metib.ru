@@ -278,10 +278,12 @@
 <!-- Modals -->
 <mib-modal id="get-finance" [width]="'350px'" [title]="'Финансирование'">
   <form class="one-column" [formGroup]="financeForm">
+    <input type="text" formControlName="organization" placeholder="Название организации">
     <input type="text" formControlName="name" placeholder="Имя">
     <input type="phone" formControlName="phone" placeholder="Телефон">
     <input type="email" formControlName="email" placeholder="Электронная почта">
     <input type="text" formControlName="inn" placeholder="ИНН">
+    <input type="text" formControlName="comment" placeholder="Ваш комментарий">
     <div class="actions">
       <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100" (click)="sendFinanceRequest()"
         [disable]="!isFinanceFormValid()"></mib-button>
