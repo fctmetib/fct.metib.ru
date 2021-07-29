@@ -1,6 +1,7 @@
+import { Paginator } from 'primeng/paginator';
 import { NewsService } from './../../../../shared/services/news.service';
 import { Observable, Subscription } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageStoreService } from 'src/app/admin/shared/services/page-store.service';
 import { NewsInterface } from 'src/app/admin/shared/types/news.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -16,6 +17,11 @@ export class CabinetComponent implements OnInit {
   public filterForm: FormGroup;
   public newsListOriginal: NewsInterface[] = [];
   public newsListFiltered: NewsInterface[] = [];
+  public newsListDisplayed: NewsInterface[] = [];
+
+  @ViewChild('paginator', { static: false }) paginator!: Paginator;
+  public paginationPage: number = 0;
+  public paginationRows: number = 10;
 
   ref: DynamicDialogRef;
 
@@ -67,10 +73,32 @@ export class CabinetComponent implements OnInit {
     );
   }
 
+  public paginate(event?): void {
+    this.newsListDisplayed = [];
+    if (event) {
+      this.paginationPage = event.page;
+
+      let currentIndex = event.page * event.rows;
+      this.newsListDisplayed = this.newsListFiltered.slice(
+        currentIndex,
+        currentIndex + event.rows
+      );
+    } else {
+      let currentIndex = this.paginationPage * this.paginationRows;
+      this.updateCurrentPage(currentIndex);
+
+      this.newsListDisplayed = this.newsListFiltered.slice(
+        currentIndex,
+        currentIndex + this.paginationRows
+      );
+    }
+  }
+
   private fetch() {
     this.newsService.getNewsList().subscribe((newsListResponse) => {
       this.newsListOriginal = newsListResponse;
       this.newsListFiltered = newsListResponse;
+      this.paginate()
     });
   }
 
@@ -82,8 +110,13 @@ export class CabinetComponent implements OnInit {
             newsItem.Title.includes(value.search) ||
             newsItem.Text.includes(value.search)
         );
+        this.paginate();
       })
     );
+  }
+
+  private updateCurrentPage(currentPage: number): void {
+    this.paginator.changePage(currentPage);
   }
 
   ngOnDestroy() {

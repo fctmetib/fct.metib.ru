@@ -8,9 +8,11 @@
     <button type="button" pButton label="Создать" class="basic" (click)="openCreateNews()"></button>
   </form>
 </div>
+
+
 <div class="content content_cards">
   <card-news
-    *ngFor="let newsItem of newsListFiltered"
+    *ngFor="let newsItem of newsListDisplayed"
     [id]="newsItem.ID"
     [date]="newsItem.Date"
     [title]="newsItem.Title"
@@ -19,3 +21,6 @@
     (open)="openCreateNews($event)">
   </card-news>
 </div>
+
+<p-paginator #paginator [rows]="10" totalRecords="{{newsListFiltered.length}}" (onPageChange)="paginate($event)">
+</p-paginator>

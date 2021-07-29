@@ -2,6 +2,7 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 
   cursor: pointer;
 
@@ -90,6 +91,55 @@
 
       &.card-organization-row__information__status_factoring {
         border: 1px solid #FF7A00;
+      }
+    }
+  }
+}
+
+@media (max-width: 1300px) {
+  .card-organization-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    cursor: pointer;
+
+    .card-organization-row__organization {
+      flex-basis: 100%;
+
+      .card-organization-row__organization__title {
+        h4 {}
+      }
+
+      .card-organization-row__organization__description {
+        p {}
+      }
+
+      .card-organization-row__organization__contacts {
+
+        .card-organization-row__organization__contacts__contact {
+          img {}
+        }
+      }
+    }
+
+    .card-organization-row__information {
+      flex-basis: 100%;
+      padding-top: 24px;
+      padding-bottom: 24px;
+      .card-organization-row__information__creditionals {
+
+        .card-organization-row__information__creditionals__creditional {
+          p {}
+        }
+      }
+
+      .card-organization-row__information__status {
+
+        &.card-organization-row__information__status_progress {}
+
+        &.card-organization-row__information__status_factoring {}
       }
     }
   }

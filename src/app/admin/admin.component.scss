@@ -40,6 +40,8 @@ main {
   .sub-header {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
     align-items: center;
     margin-bottom: 22px;
 
@@ -68,6 +70,7 @@ main {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
       gap: 10px;
 
       input {

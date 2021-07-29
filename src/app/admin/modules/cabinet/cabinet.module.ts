@@ -20,6 +20,7 @@ import { PageStoreService } from '../../shared/services/page-store.service';
 import { CabinetComponent } from './components/cabinet/cabinet.component';
 import { CreateNewsDialogComponent } from './components/create-news-dialog/create-news-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import {PaginatorModule} from 'primeng/paginator';
 
 const routes = [
   {
@@ -53,6 +54,7 @@ const routes = [
     AvatarModule,
     FormsModule,
     ReactiveFormsModule,
+    PaginatorModule,
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],

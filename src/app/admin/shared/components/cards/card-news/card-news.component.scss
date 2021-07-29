@@ -55,6 +55,9 @@
       font-weight: 500;
       font-size: 16px;
       line-height: 18px;
+      max-height: 35px;
+      overflow: hidden;
+      text-overflow: ellipsis;
       color: #102538;
       margin-bottom: 12px;
     }
@@ -62,7 +65,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
       max-height: 35px;
-
       font-size: 14px;
       line-height: 16px;
       text-align: center;
