@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie';
 import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
 
 @Injectable()

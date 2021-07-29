@@ -1,7 +1,7 @@
 import { reauthAction, reauthFailureAction, reauthSuccessAction } from './../actions/reauth.action';
 import { CryptoService } from './../../../shared/services/common/crypto.service';
 import { CurrentUserFactoringInterface } from '../../../shared/types/currentUserFactoring.interface';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
@@ -22,11 +22,11 @@ export class ReauthEffect {
           map((response: AuthResponseInterface) => {
             let crptInfo = this.cryptoService.encrypt(JSON.stringify(response));
             // second user
-            this.cookieService.set('_cu', crptInfo);
+            this.cookieService.put('_cu', crptInfo);
 
             // second base token
             let token = response.Code;
-            this.cookieService.set('_bt', token)
+            this.cookieService.put('_bt', token)
 
             let currentUserFactoring: CurrentUserFactoringInterface = response;
 

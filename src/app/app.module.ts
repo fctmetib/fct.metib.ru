@@ -18,10 +18,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ToastModule} from 'primeng/toast';
 
-import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './auth/services/auth.service';
 import { HttpErrorInterceptor } from './shared/services/error.interceptor';
 import { MessageService } from 'primeng/api';
+import { CookieModule } from 'ngx-cookie';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -32,6 +32,7 @@ registerLocaleData(localeRu, 'ru');
     BrowserAnimationsModule,
     ToastModule,
     AppRoutingModule,
+    CookieModule.forRoot(),
     StoreModule.forRoot({ router: routerReducer }),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
@@ -43,7 +44,6 @@ registerLocaleData(localeRu, 'ru');
     AuthModule,
   ],
   providers: [
-    CookieService,
     AuthService,
     MessageService,
     { provide: LOCALE_ID, useValue: 'ru' },

@@ -4,7 +4,7 @@ import { ResetPasswordCompleteRequestInterface } from './../types/reset-password
 import { ResetPasswordConfirmRequestInterface } from './../types/reset-password/resetPasswordConfirmRequest.interface';
 import { ResetPasswordReponseInterface } from './../types/reset-password/resetPasswordResponse.interface';
 import { ResetPasswordRequestInterface } from '../types/reset-password/resetPasswordRequest.interface';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -123,18 +123,18 @@ export class AuthService {
   }
 
   public logout(): void {
-    this.cookieService.delete('_cu', '/', '/');
-    this.cookieService.delete('_bt', '/', '/');
-    this.cookieService.delete('_cu_admin', '/', '/');
-    this.cookieService.delete('_bt_admin', '/', '/');
-    this.cookieService.deleteAll('../');
+    // this.cookieService.remove('_cu');
+    // this.cookieService.delete('_bt', '/', '/');
+    // this.cookieService.delete('_cu_admin', '/', '/');
+    // this.cookieService.delete('_bt_admin', '/', '/');
+    this.cookieService.removeAll();
     localStorage.clear();
     this.router.navigate(['']);
   }
 
   public switchToAdmin(): void {
-    this.cookieService.delete('_cu');
-    this.cookieService.delete('_bt');
+    this.cookieService.remove('_cu');
+    this.cookieService.remove('_bt');
     this.router.navigate(['/admin/cabinet']);
   }
 

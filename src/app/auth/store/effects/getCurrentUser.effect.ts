@@ -2,7 +2,7 @@ import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.int
 import { CryptoService } from './../../../shared/services/common/crypto.service';
 import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
 import { Store } from '@ngrx/store';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { map, catchError, switchMap } from 'rxjs/operators';

@@ -1,4 +1,4 @@
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie';
 import { CryptoService } from './../../../../../services/common/crypto.service';
 import { DemandService } from './../../../services/demand.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

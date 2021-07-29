@@ -1,6 +1,6 @@
 import { CryptoService } from './../../../shared/services/common/crypto.service';
 import { CurrentUserFactoringInterface } from '../../../shared/types/currentUserFactoring.interface';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
@@ -32,11 +32,11 @@ export class LoginEffect {
               );
 
               // admin current user
-              this.cookieService.set('_cu_admin', crptInfo);
+              this.cookieService.put('_cu_admin', crptInfo);
 
               // admin base token
               let token = btoa(`${request.login}:${request.password}`);
-              this.cookieService.set('_bt_admin', token);
+              this.cookieService.put('_bt_admin', token);
               let adminUserFactoring: CurrentUserFactoringInterface = response;
 
               return loginAdminSuccessAction({ adminUserFactoring });
@@ -46,11 +46,11 @@ export class LoginEffect {
               );
 
               // current user
-              this.cookieService.set('_cu', crptInfo);
+              this.cookieService.put('_cu', crptInfo);
 
               // base token
               let token = btoa(`${request.login}:${request.password}`);
-              this.cookieService.set('_bt', token);
+              this.cookieService.put('_bt', token);
               let currentUserFactoring: CurrentUserFactoringInterface =
                 response;
 

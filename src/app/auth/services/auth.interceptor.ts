@@ -1,4 +1,4 @@
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie';
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,

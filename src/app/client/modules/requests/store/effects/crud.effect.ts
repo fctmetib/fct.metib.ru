@@ -1,5 +1,5 @@
 import { RequestsService } from './../../services/requests.service';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
