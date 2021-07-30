@@ -29,6 +29,9 @@ export class LoginPageComponent implements OnInit {
   alert: boolean = false;
   alertMessage: string = '';
 
+  alertWarning: boolean = false;
+  alertWarningMessage: string = '';
+
   constructor(
     private fb: FormBuilder,
     private commonService: CommonService,
@@ -43,6 +46,12 @@ export class LoginPageComponent implements OnInit {
     this.initializeValues();
 
     this.route.queryParams.subscribe((params: Params) => {
+      if (params['inActive']) {
+        this.alertWarning = true;
+        this.alertWarningMessage = `
+        Ваша сессия была прервана в целях безопасности,
+        \n так как Вы не пользовались сервисом более 15 секунд.`
+      }
       if (params['successRegistration']) {
         this.alert = true;
         this.alertMessage = 'Регистрация успешно завершена. Войдите в сервис, используя свои данные.'

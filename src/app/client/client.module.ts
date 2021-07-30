@@ -29,6 +29,7 @@ import { AuthInterceptor } from '../shared/services/auth.interceptor';
 import { MobileHeaderComponent } from './shared/components/mobile-header/mobile-header.component';
 import { NotifyDialogComponent } from './shared/components/notify-dialog/notify-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { InactiveDialogComponent } from '../shared/components/inactive-dialog/inactive-dialog.component';
 
 @NgModule({
   imports: [
@@ -53,9 +54,13 @@ import { DialogService } from 'primeng/dynamicdialog';
   ],
   declarations: [
     ClientComponent,
-    HeaderComponent,
+    // Dialogs
+    InactiveDialogComponent,
     NotifyDialogComponent,
-    MobileHeaderComponent],
+    // Layout
+    HeaderComponent,
+    MobileHeaderComponent
+  ],
   providers: [
     ClientService,
     DeliveryService,

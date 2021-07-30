@@ -4,8 +4,8 @@
     <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
     </metib-backend-error-messages>
 
-    <metib-success-messages *ngIf="alert"
-      [message]="alertMessage"></metib-success-messages>
+    <metib-success-messages *ngIf="alert" [message]="alertMessage"></metib-success-messages>
+    <metib-backend-error-messages *ngIf="alertWarning" [backendErrors]="alertWarningMessage"></metib-backend-error-messages>
 
     <h1>Авторизация</h1>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -24,11 +24,11 @@
           <label for="password">Пароль</label>
           <input id="password" type="password" pInputText placeholder="Пароль" formControlName="password"
             [ngClass]="{'ng-invalid ng-dirty': form.get('password').invalid && form.get('password').touched}">
-            <small class="p-error" *ngIf="form.get('password').invalid && form.get('password').touched">
-              <div *ngIf="form.get('password').errors['required']">
-                Поле Пароль не должно быть пустым
-              </div>
-            </small>
+          <small class="p-error" *ngIf="form.get('password').invalid && form.get('password').touched">
+            <div *ngIf="form.get('password').errors['required']">
+              Поле Пароль не должно быть пустым
+            </div>
+          </small>
         </div>
       </div>
       <div class="p-d-flex p-jc-end p-mb-4">
@@ -40,7 +40,8 @@
       </div>
     </form>
 
-    <p-button styleClass="p-button-link" [routerLink]="['/confirm-password/026d9227-ebc1-453d-8d6b-37d4c0d9cde4']" label="[TEST] Новый пароль"></p-button>
+    <p-button styleClass="p-button-link" [routerLink]="['/confirm-password/026d9227-ebc1-453d-8d6b-37d4c0d9cde4']"
+      label="[TEST] Новый пароль"></p-button>
 
   </p-card>
 </div>

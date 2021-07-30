@@ -110,20 +110,29 @@ export class AuthService {
   isUserVerified(): boolean {
     const roles = this.getUserRoles();
 
-    if (
-      roles.includes('Staff')
-    ) {
+    if (roles.includes('Staff')) {
       return true;
     } else {
       return false;
     }
   }
 
-  public logout(): void {
+  public logout(params?: string): void {
     this.cookieService.removeAll();
     this.clearStore();
     localStorage.clear();
-    this.router.navigate(['']);
+    switch (params) {
+      case 'inActive':
+        this.router.navigate(['/login'], {
+          queryParams: {
+            inActive: true,
+          },
+        });
+        break;
+      default:
+        this.router.navigate(['']);
+        break;
+    }
   }
 
   public switchToAdmin(): void {
@@ -155,7 +164,6 @@ export class AuthService {
     this.requestStoreService.clear();
     this.freedutyStoreService.clear();
   }
-
 
   /**
    * This function return current user roles

@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { NotificationService } from './shared/services/notification.service';
 import { NotifyDialogComponent } from './shared/components/notify-dialog/notify-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { InactiveDialogComponent } from '../shared/components/inactive-dialog/inactive-dialog.component';
 
 @Component({
   selector: 'app-client',
@@ -12,17 +13,28 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./client.component.scss'],
 })
 export class ClientComponent implements OnInit, OnDestroy {
-  ref: DynamicDialogRef;
+  refNotificationDialog: DynamicDialogRef;
+  refInactiveDialog: DynamicDialogRef;
+
+  userActivity;
+  userInactive: Subject<any> = new Subject();
 
   private subscription$: Subscription = new Subscription();
+
+  items: MenuItem[];
 
   constructor(
     private router: Router,
     public dialogService: DialogService,
     private notifyService: NotificationService
-  ) {}
+  ) {
+    this.setTimeout();
+    this.userInactive.subscribe(() => {
+      console.log('user has been inactive for 15s');
+      this.openInactive();
+    });
+  }
 
-  items: MenuItem[];
 
   ngOnInit() {
     this.items = [
@@ -83,7 +95,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   public openNotifications(notifications: any[]) {
-    this.ref = this.dialogService.open(NotifyDialogComponent, {
+    this.refNotificationDialog = this.dialogService.open(NotifyDialogComponent, {
       header: 'Уведомления',
       width: '50%',
       contentStyle: { 'max-height': '550px', overflow: 'auto' },
@@ -91,10 +103,32 @@ export class ClientComponent implements OnInit, OnDestroy {
       data: notifications,
     });
 
-    this.subscription$.add(
-      this.ref.onClose.subscribe(() => {
-      })
+    this.subscription$.add(this.refNotificationDialog.onClose.subscribe(() => {}));
+  }
+
+  public openInactive() {
+    if(!this.refInactiveDialog) {
+      this.refInactiveDialog = this.dialogService.open(InactiveDialogComponent, {
+        header: 'Внимание',
+        width: '50%',
+        contentStyle: { 'max-height': '550px', overflow: 'auto' },
+        baseZIndex: 10000,
+      });
+
+      this.subscription$.add(this.refInactiveDialog.onClose.subscribe(() => {}));
+    }
+  }
+
+  setTimeout() {
+    this.userActivity = setTimeout(
+      () => this.userInactive.next(undefined),
+      15000
     );
+  }
+
+  @HostListener('window:mousemove') refreshUserState() {
+    clearTimeout(this.userActivity);
+    this.setTimeout();
   }
 
   @HostListener('click', ['$event.target'])
@@ -109,6 +143,8 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.refInactiveDialog.close();
+    this.refNotificationDialog.close();
     this.subscription$.unsubscribe();
   }
 }
