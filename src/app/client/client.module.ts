@@ -29,7 +29,7 @@ import { AuthInterceptor } from '../shared/services/auth.interceptor';
 import { MobileHeaderComponent } from './shared/components/mobile-header/mobile-header.component';
 import { NotifyDialogComponent } from './shared/components/notify-dialog/notify-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
-import { InactiveDialogComponent } from '../shared/components/inactive-dialog/inactive-dialog.component';
+import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive-dialog.module';
 
 @NgModule({
   imports: [
@@ -51,11 +51,10 @@ import { InactiveDialogComponent } from '../shared/components/inactive-dialog/in
     CardModule,
     MenubarModule,
     AvatarModule,
+    InactiveDialogModule
   ],
   declarations: [
     ClientComponent,
-    // Dialogs
-    InactiveDialogComponent,
     NotifyDialogComponent,
     // Layout
     HeaderComponent,

@@ -8,12 +8,14 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
+import { DialogService } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from 'primeng/skeleton';
+import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive-dialog.module';
 import { AdminGuard } from '../shared/services/admin.guard';
 
 import { AuthGuard } from '../shared/services/auth.guard';
@@ -61,7 +63,6 @@ const routes = [
   imports: [
     CommonModule,
     HttpClientModule,
-    CommonModule,
     InputTextModule,
     CheckboxModule,
     ButtonModule,
@@ -77,6 +78,7 @@ const routes = [
     AvatarModule,
     FormsModule,
     ReactiveFormsModule,
+    InactiveDialogModule,
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],
@@ -88,6 +90,7 @@ const routes = [
   ],
   providers: [
     PageStoreService,
+    DialogService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AdminAuthInterceptor,

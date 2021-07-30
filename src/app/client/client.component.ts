@@ -5,7 +5,7 @@ import { NotificationService } from './shared/services/notification.service';
 import { NotifyDialogComponent } from './shared/components/notify-dialog/notify-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
-import { InactiveDialogComponent } from '../shared/components/inactive-dialog/inactive-dialog.component';
+import { InactiveDialogComponent } from '../shared/modules/inactive-dialog/inactive-dialog.component';
 
 @Component({
   selector: 'app-client',
@@ -34,7 +34,6 @@ export class ClientComponent implements OnInit, OnDestroy {
       this.openInactive();
     });
   }
-
 
   ngOnInit() {
     this.items = [
@@ -95,27 +94,37 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   public openNotifications(notifications: any[]) {
-    this.refNotificationDialog = this.dialogService.open(NotifyDialogComponent, {
-      header: 'Уведомления',
-      width: '50%',
-      contentStyle: { 'max-height': '550px', overflow: 'auto' },
-      baseZIndex: 10000,
-      data: notifications,
-    });
-
-    this.subscription$.add(this.refNotificationDialog.onClose.subscribe(() => {}));
-  }
-
-  public openInactive() {
-    if(!this.refInactiveDialog) {
-      this.refInactiveDialog = this.dialogService.open(InactiveDialogComponent, {
-        header: 'Внимание',
+    this.refNotificationDialog = this.dialogService.open(
+      NotifyDialogComponent,
+      {
+        header: 'Уведомления',
         width: '50%',
         contentStyle: { 'max-height': '550px', overflow: 'auto' },
         baseZIndex: 10000,
-      });
+        data: notifications,
+      }
+    );
 
-      this.subscription$.add(this.refInactiveDialog.onClose.subscribe(() => {}));
+    this.subscription$.add(
+      this.refNotificationDialog.onClose.subscribe(() => {})
+    );
+  }
+
+  public openInactive() {
+    if (!this.refInactiveDialog) {
+      this.refInactiveDialog = this.dialogService.open(
+        InactiveDialogComponent,
+        {
+          header: 'Внимание',
+          width: '50%',
+          contentStyle: { 'max-height': '550px', overflow: 'auto' },
+          baseZIndex: 10000,
+        }
+      );
+
+      this.subscription$.add(
+        this.refInactiveDialog.onClose.subscribe(() => {})
+      );
     }
   }
 
@@ -143,8 +152,13 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.refInactiveDialog.close();
-    this.refNotificationDialog.close();
+    if (this.refInactiveDialog) {
+      this.refInactiveDialog.close();
+    }
+    if (this.refNotificationDialog) {
+      this.refNotificationDialog.close();
+    }
+    this.userInactive.unsubscribe();
     this.subscription$.unsubscribe();
   }
 }

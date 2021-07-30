@@ -19,6 +19,8 @@ import { HeaderComponent } from './shared/header/header.component';
 import { MobileHeaderComponent } from './shared/mobile-header/mobile-header.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../shared/services/auth.interceptor';
+import { DialogService } from 'primeng/dynamicdialog';
+import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive-dialog.module';
 
 @NgModule({
   imports: [
@@ -38,6 +40,7 @@ import { AuthInterceptor } from '../shared/services/auth.interceptor';
     CardModule,
     MenubarModule,
     AvatarModule,
+    InactiveDialogModule
   ],
   declarations: [
     NotVerifyClientComponent,
@@ -45,6 +48,7 @@ import { AuthInterceptor } from '../shared/services/auth.interceptor';
     MobileHeaderComponent,
   ],
   providers: [
+    DialogService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
