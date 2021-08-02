@@ -266,7 +266,7 @@
   </p-tabPanel>
   <p-tabPanel header="Скан-копии накладных">
     <div class="mib-toolbar">
-      <input type="file" id="Scan" multiple="true" (change)="onSelect($event, 'Scan')" hidden />
+      <input type="file" id="Scan" multiple="true" (change)="onSelect($event, 'Scan')" accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
       <label for="Scan" pButton pRipple class="p-mr-2 button" label="Добавить"></label>
       <button type="button" pButton pRipple label="Удалить ({{selectedImages.length}})" class="p-mr-2"
         (click)="removeFile()"></button>
@@ -422,7 +422,7 @@
   </p-tabPanel>
   <p-tabPanel header="Документы ЭДО">
     <div class="mib-toolbar">
-      <input type="file" id="All" multiple="true" (change)="onSelect($event, 'All')" hidden />
+      <input type="file" id="All" multiple="true" (change)="onSelect($event, 'All')" accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
       <label for="All" pButton pRipple class="p-mr-2 button" label="Добавить"></label>
       <button type="button" pButton pRipple label="Удалить ({{selectedImages.length}})" class="p-mr-2"
         (click)="removeFile()"></button>

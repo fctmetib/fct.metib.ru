@@ -175,7 +175,7 @@
         </div>
         <div class="p-field p-col-12 p-md-6">
           <label for="bankComment">Комментарий</label>
-          <input id="bankComment" type="text" pInputText placeholder="Комментарий" formControlName="bankComment">
+          <input id="bankComment" type="text" pInputText placeholder="Основной" formControlName="bankComment">
           <div *ngIf="formFactoring.controls['bankComment'].invalid">
             <small *ngIf="formFactoring.controls['bankComment'].errors.required" class="p-error">
               Поле должно быть заполнено.
@@ -550,7 +550,7 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="Regulations" multiple="true" (change)="onSelect($event, 'Regulations')" hidden />
+                <input type="file" id="Regulations" multiple="true" (change)="onSelect($event, 'Regulations')" accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
                 <label for="Regulations" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
               </div>
             </div>
@@ -580,7 +580,10 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="GenDirPassport" multiple="true" (change)="onSelect($event, 'GenDirPassport')"
+                <input type="file"
+                  id="GenDirPassport"
+                  accept="image/jpeg,image/png,image/gif,application/pdf"
+                  multiple="true" (change)="onSelect($event, 'GenDirPassport')"
                   hidden />
                 <label for="GenDirPassport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать
                   файл</label>
@@ -611,7 +614,12 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="GenDirProtocol" (change)="onSelect($event, 'GenDirProtocol')" hidden />
+                <input
+                  type="file"
+                  id="GenDirProtocol"
+                  (change)="onSelect($event, 'GenDirProtocol')"
+                  accept="image/jpeg,image/png,image/gif,application/pdf"
+                  hidden />
                 <label for="GenDirProtocol" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать
                   файл</label>
               </div>
@@ -641,7 +649,12 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="actual-btn" (change)="onSelect($event, 'GenDirOrder')" hidden />
+                <input
+                  type="file"
+                  id="actual-btn"
+                  (change)="onSelect($event, 'GenDirOrder')"
+                  accept="image/jpeg,image/png,image/gif,application/pdf"
+                  hidden />
                 <label for="actual-btn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
               </div>
             </div>
@@ -670,7 +683,10 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="Balance" (change)="onSelect($event, 'Balance')" hidden />
+                <input
+                  type="file" id="Balance"
+                  accept="image/jpeg,image/png,image/gif,application/pdf"
+                  (change)="onSelect($event, 'Balance')" hidden />
                 <label for="Balance" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
               </div>
             </div>
@@ -699,7 +715,11 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="OSV" (change)="onSelect($event, 'OSV')" hidden />
+                <input
+                  type="file"
+                  id="OSV"
+                  accept="image/jpeg,image/png,image/gif,application/pdf"
+                  (change)="onSelect($event, 'OSV')" hidden />
                 <label for="OSV" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
               </div>
             </div>
@@ -728,7 +748,12 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="Shareholders" (change)="onSelect($event, 'Shareholders')" hidden />
+                <input
+                  type="file"
+                  id="Shareholders"
+                  (change)="onSelect($event, 'Shareholders')"
+                  accept="image/jpeg,image/png,image/gif,application/pdf"
+                  hidden />
                 <label for="Shareholders" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
               </div>
             </div>
@@ -757,7 +782,12 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="ContractDelivery" multiple="true" (change)="onSelect($event, 'ContractDelivery')"
+                <input
+                  type="file"
+                  id="ContractDelivery"
+                  multiple="true"
+                  (change)="onSelect($event, 'ContractDelivery')"
+                  accept="image/jpeg,image/png,image/gif,application/pdf"
                   hidden />
                 <label for="ContractDelivery" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать
                   файлы</label>

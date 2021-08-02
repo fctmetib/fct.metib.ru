@@ -184,7 +184,12 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="Inn" (change)="onSelect($event, 'Inn')" multiple="true" hidden />
+                <input
+                   type="file"
+                   id="Inn"
+                   accept="image/jpeg,image/png,image/gif,application/pdf"
+                   (change)="onSelect($event, 'Inn')"
+                   multiple="true" hidden />
                 <label for="Inn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
               </div>
             </div>
@@ -218,7 +223,13 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="Ogrn" (change)="onSelect($event, 'Ogrn')" multiple="true" hidden />
+                <input
+                  type="file"
+                  id="Ogrn"
+                  (change)="onSelect($event, 'Ogrn')"
+                  multiple="true"
+                  accept="image/jpeg,image/png,image/gif,application/pdf"
+                  hidden />
                 <label for="Ogrn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
               </div>
             </div>
@@ -335,7 +346,13 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="Snils" (change)="onSelect($event, 'Snils')" multiple="true" hidden />
+                <input
+                  type="file"
+                  id="Snils"
+                  (change)="onSelect($event, 'Snils')"
+                  accept="image/jpeg,image/png,image/gif,application/pdf"
+                  multiple="true"
+                  hidden />
                 <label for="Snils" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
               </div>
             </div>
@@ -368,7 +385,12 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="Director" (change)="onSelect($event, 'Director')" multiple="true" hidden />
+                <input
+                  type="file"
+                  id="Director"
+                  (change)="onSelect($event, 'Director')"
+                  accept="image/jpeg,image/png,image/gif,application/pdf"
+                  multiple="true" hidden />
                 <label for="Director" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
               </div>
             </div>
@@ -412,7 +434,13 @@
                   </p>
                 </div>
                 <div class="mib-uploader">
-                  <input type="file" id="Passport" (change)="onSelect($event, 'Passport')" multiple="true" hidden />
+                  <input
+                    type="file"
+                    id="Passport"
+                    (change)="onSelect($event, 'Passport')"
+                    accept="image/jpeg,image/png,image/gif,application/pdf"
+                    multiple="true"
+                    hidden />
                   <label for="Passport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
                 </div>
               </div>

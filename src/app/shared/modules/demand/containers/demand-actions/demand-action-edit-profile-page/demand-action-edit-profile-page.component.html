@@ -117,7 +117,11 @@
                   </p>
                 </div>
                 <div class="mib-uploader">
-                  <input type="file" id="Passport" (change)="onSelect($event, 'Passport')" multiple="true" hidden />
+                  <input
+                    type="file"
+                    id="Passport"
+                    accept="image/jpeg,image/png,image/gif,application/pdf"
+                    (change)="onSelect($event, 'Passport')" multiple="true" hidden />
                   <label for="Passport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
                 </div>
               </div>
