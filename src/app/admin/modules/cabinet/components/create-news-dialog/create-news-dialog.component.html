@@ -2,7 +2,7 @@
   <div class="p-fluid p-formgrid p-grid form">
     <div class="p-field p-col-12 p-md-6">
       <label for="date">Укажите дату создания: </label>
-      <p-calendar id="date" formControlName="Date" required [showIcon]="true" inputId="icon" [styleClass]="'dateSmall'"></p-calendar>
+      <p-calendar id="date" formControlName="Date" required [showIcon]="true" inputId="icon" [styleClass]="'dateSmall'"  dateFormat="dd.mm.yy"></p-calendar>
       <div *ngIf="form.controls['Date'].invalid">
         <small *ngIf="form.controls['Date'].errors.required" class="p-error">
           Поле должно быть заполнено.

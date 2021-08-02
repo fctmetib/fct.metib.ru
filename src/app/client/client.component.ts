@@ -123,7 +123,10 @@ export class ClientComponent implements OnInit, OnDestroy {
       );
 
       this.subscription$.add(
-        this.refInactiveDialog.onClose.subscribe(() => {})
+        this.refInactiveDialog.onClose.subscribe(() => {
+          this.refInactiveDialog = null;
+          this.setTimeout();
+        })
       );
     }
   }

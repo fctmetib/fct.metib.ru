@@ -106,52 +106,62 @@ export class DemandPageComponent implements OnInit, OnDestroy {
       {
         text: 'Запрос на редактирование профиля',
         url: 'actions/edit-profile',
-        onlyNewClient: false,
+        isForNewClient: true,
+        isForDefaultClient: true
       },
       {
         text: 'Запрос на свободную тему',
         url: 'actions/free-request',
-        onlyNewClient: false,
+        isForNewClient: false,
+        isForDefaultClient: true
       },
       {
         text: 'Запрос в техническую поддержку',
         url: 'actions/support-request',
-        onlyNewClient: false,
+        isForNewClient: false,
+        isForDefaultClient: true
       },
       {
         text: 'Запрос на ЭЦП',
         url: 'actions/create-eds',
-        onlyNewClient: false,
+        isForNewClient: true,
+        isForDefaultClient: true
       },
       {
         text: 'Запрос на поручительство',
         url: 'actions/surety',
-        onlyNewClient: false,
+        isForNewClient: true,
+        isForDefaultClient: true
       },
       {
         text: 'Запрос на факторинг',
         url: 'actions/factoring',
-        onlyNewClient: true,
+        isForNewClient: true,
+        isForDefaultClient: true
       },
       {
         text: 'Запрос на агентский факторинг',
         url: 'actions/agent-factoring',
-        onlyNewClient: true,
+        isForNewClient: true,
+        isForDefaultClient: true
       },
       {
         text: 'Запрос на увеличение лимита',
         url: 'actions/update-limit',
-        onlyNewClient: false,
+        isForNewClient: false,
+        isForDefaultClient: true
       },
       {
         text: 'Запрос на нового дебитора',
         url: 'actions/create-debitor',
-        onlyNewClient: false,
+        isForNewClient: false,
+        isForDefaultClient: true
       },
       {
         text: 'Регистрация канала верификации',
         url: 'actions/verify',
-        onlyNewClient: false,
+        isForNewClient: false,
+        isForDefaultClient: true
       },
     ];
   }

@@ -70,7 +70,10 @@ export class AdminComponent implements OnInit {
       );
 
       this.subscription$.add(
-        this.refInactiveDialog.onClose.subscribe(() => {})
+        this.refInactiveDialog.onClose.subscribe(() => {
+          this.refInactiveDialog = null;
+          this.setTimeout();
+        })
       );
     }
   }

@@ -50,7 +50,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       severity: 'error',
       summary: 'Ошибка',
       detail: errorMessage,
-      sticky: true,
+      sticky: false,
     });
   }
 }
