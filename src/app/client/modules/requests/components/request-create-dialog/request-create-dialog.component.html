@@ -175,8 +175,8 @@
           </div>
           <div class="p-field">
             <label for="accountDate">Дата накладной: </label>
-            <p-calendar id="accountDate" formControlName="accountDate" [maxDate]="maxDate" placeholder="Дата накладной"
-              [readonlyInput]="true"></p-calendar>
+            <p-calendar id="accountDate" selectOtherMonths="true" formControlName="accountDate" [maxDate]="maxDate"
+              placeholder="Дата накладной" [readonlyInput]="true"></p-calendar>
             <div *ngIf="shipmentForm.controls['accountDate'].invalid">
               <small *ngIf="shipmentForm.controls['accountDate'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -194,8 +194,8 @@
           </div>
           <div class="p-field">
             <label for="invoiceDate">Дата счета-ф: </label>
-            <p-calendar id="invoiceDate" formControlName="invoiceDate" [maxDate]="maxDate" placeholder="Дата счета-ф"
-              [readonlyInput]="true"></p-calendar>
+            <p-calendar id="invoiceDate" selectOtherMonths="true" formControlName="invoiceDate" [maxDate]="maxDate"
+              placeholder="Дата счета-ф" [readonlyInput]="true"></p-calendar>
             <div *ngIf="shipmentForm.controls['invoiceDate'].invalid">
               <small *ngIf="shipmentForm.controls['invoiceDate'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -205,8 +205,8 @@
 
           <div class="p-field">
             <label for="dateShipment">Дата поставки: </label>
-            <p-calendar id="dateShipment" formControlName="dateShipment" [maxDate]="maxDate" placeholder="Дата поставки"
-              [readonlyInput]="true"></p-calendar>
+            <p-calendar id="dateShipment" selectOtherMonths="true" formControlName="dateShipment" [maxDate]="maxDate"
+              placeholder="Дата поставки" [readonlyInput]="true"></p-calendar>
             <div *ngIf="shipmentForm.controls['dateShipment'].invalid">
               <small *ngIf="shipmentForm.controls['dateShipment'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -266,7 +266,8 @@
   </p-tabPanel>
   <p-tabPanel header="Скан-копии накладных">
     <div class="mib-toolbar">
-      <input type="file" id="Scan" multiple="true" (change)="onSelect($event, 'Scan')" accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
+      <input type="file" id="Scan" multiple="true" (change)="onSelect($event, 'Scan')"
+        accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
       <label for="Scan" pButton pRipple class="p-mr-2 button" label="Добавить"></label>
       <button type="button" pButton pRipple label="Удалить ({{selectedImages.length}})" class="p-mr-2"
         (click)="removeFile()"></button>
@@ -347,7 +348,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-file let-rowIndex="rowIndex">
-        <ng-container *ngIf="file.Identifier === 'Scan'" >
+        <ng-container *ngIf="file.Identifier === 'Scan'">
           <tr [pSelectableRow]="file" [pSelectableRowIndex]="rowIndex">
             <td>
               <p-tableCheckbox [value]="file"></p-tableCheckbox>
@@ -422,7 +423,8 @@
   </p-tabPanel>
   <p-tabPanel header="Документы ЭДО">
     <div class="mib-toolbar">
-      <input type="file" id="All" multiple="true" (change)="onSelect($event, 'All')" accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
+      <input type="file" id="All" multiple="true" (change)="onSelect($event, 'All')"
+        accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
       <label for="All" pButton pRipple class="p-mr-2 button" label="Добавить"></label>
       <button type="button" pButton pRipple label="Удалить ({{selectedImages.length}})" class="p-mr-2"
         (click)="removeFile()"></button>

@@ -19,7 +19,8 @@
         <div class="card">
           <div class="mib-toolbar">
             <button type="button" pButton pRipple label="Добавить" class="p-mr-2" (click)="openNew(false, i)"></button>
-            <button type="button" pButton pRipple label="Редактировать" class="p-mr-2" (click)="openNew(true, i)"></button>
+            <button type="button" pButton pRipple label="Редактировать" class="p-mr-2"
+              (click)="openNew(true, i)"></button>
             <button type="button" pButton pRipple label="Удалить ({{selectedShipments.length}})" class="p-mr-2"
               (click)="deleteShipments(i)"></button>
           </div>
@@ -131,75 +132,73 @@
 </form>
 
 <p-dialog [style]="{width: '650px'}" [(visible)]="addDeliveryDialog" header="Накладная" [modal]="true"
-[draggable]="false" [resizable]="false" styleClass="p-fluid">
-<ng-template pTemplate="content">
-  <form [formGroup]="shipmentForm" (ngSubmit)="addShipment()">
-    <div class="p-field">
-      <label for="accountNumber">Накладная: </label>
-      <input id="accountNumber" type="text" pInputText placeholder="Накладная"
-        formControlName="accountNumber">
-      <div *ngIf="shipmentForm.controls['accountNumber'].invalid">
-        <small *ngIf="shipmentForm.controls['accountNumber'].errors.required" class="p-error">
-          Поле должно быть заполнено.
-        </small>
+  [draggable]="false" [resizable]="false" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form [formGroup]="shipmentForm" (ngSubmit)="addShipment()">
+      <div class="p-field">
+        <label for="accountNumber">Накладная: </label>
+        <input id="accountNumber" type="text" pInputText placeholder="Накладная" formControlName="accountNumber">
+        <div *ngIf="shipmentForm.controls['accountNumber'].invalid">
+          <small *ngIf="shipmentForm.controls['accountNumber'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
       </div>
-    </div>
-    <div class="p-field">
-      <label for="accountDate">Дата накладной: </label>
-      <p-calendar id="accountDate" formControlName="accountDate" [maxDate]="maxDate"
-        placeholder="Дата накладной" [readonlyInput]="true"></p-calendar>
-      <div *ngIf="shipmentForm.controls['accountDate'].invalid">
-        <small *ngIf="shipmentForm.controls['accountDate'].errors.required" class="p-error">
-          Поле должно быть заполнено.
-        </small>
+      <div class="p-field">
+        <label for="accountDate">Дата накладной: </label>
+        <p-calendar id="accountDate" formControlName="accountDate" [maxDate]="maxDate" selectOtherMonths="true"
+          placeholder="Дата накладной" [readonlyInput]="true"></p-calendar>
+        <div *ngIf="shipmentForm.controls['accountDate'].invalid">
+          <small *ngIf="shipmentForm.controls['accountDate'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
       </div>
-    </div>
-    <div class="p-field">
-      <label for="invoiceNumber">Счет-фактура: </label>
-      <input id="invoiceNumber" type="text" pInputText placeholder="Счет-фактура"
-        formControlName="invoiceNumber">
-      <div *ngIf="shipmentForm.controls['invoiceNumber'].invalid">
-        <small *ngIf="shipmentForm.controls['invoiceNumber'].errors.required" class="p-error">
-          Поле должно быть заполнено.
-        </small>
+      <div class="p-field">
+        <label for="invoiceNumber">Счет-фактура: </label>
+        <input id="invoiceNumber" type="text" pInputText placeholder="Счет-фактура" formControlName="invoiceNumber">
+        <div *ngIf="shipmentForm.controls['invoiceNumber'].invalid">
+          <small *ngIf="shipmentForm.controls['invoiceNumber'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
       </div>
-    </div>
-    <div class="p-field">
-      <label for="invoiceDate">Дата счета-ф: </label>
-      <p-calendar id="invoiceDate" formControlName="invoiceDate" [maxDate]="maxDate"
-        placeholder="Дата счета-ф" [readonlyInput]="true"></p-calendar>
-      <div *ngIf="shipmentForm.controls['invoiceDate'].invalid">
-        <small *ngIf="shipmentForm.controls['invoiceDate'].errors.required" class="p-error">
-          Поле должно быть заполнено.
-        </small>
+      <div class="p-field">
+        <label for="invoiceDate">Дата счета-ф: </label>
+        <p-calendar id="invoiceDate" formControlName="invoiceDate" selectOtherMonths="true" [maxDate]="maxDate"
+          placeholder="Дата счета-ф" [readonlyInput]="true"></p-calendar>
+        <div *ngIf="shipmentForm.controls['invoiceDate'].invalid">
+          <small *ngIf="shipmentForm.controls['invoiceDate'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
       </div>
-    </div>
 
-    <div class="p-field">
-      <label for="dateShipment">Дата поставки: </label>
-      <p-calendar id="dateShipment" formControlName="dateShipment" [maxDate]="maxDate"
-        placeholder="Дата поставки" [readonlyInput]="true"></p-calendar>
-      <div *ngIf="shipmentForm.controls['dateShipment'].invalid">
-        <small *ngIf="shipmentForm.controls['dateShipment'].errors.required" class="p-error">
-          Поле должно быть заполнено.
-        </small>
+      <div class="p-field">
+        <label for="dateShipment">Дата поставки: </label>
+        <p-calendar id="dateShipment" selectOtherMonths="true" formControlName="dateShipment" [maxDate]="maxDate"
+          placeholder="Дата поставки" [readonlyInput]="true"></p-calendar>
+        <div *ngIf="shipmentForm.controls['dateShipment'].invalid">
+          <small *ngIf="shipmentForm.controls['dateShipment'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
       </div>
-    </div>
-    <div class="p-field">
-      <label for="summ">Сумма: </label>
-      <input id="summ" type="number" pInputText placeholder="Сумма" formControlName="summ" min="1">
-      <div *ngIf="shipmentForm.controls['summ'].invalid">
-        <small *ngIf="shipmentForm.controls['summ'].errors.required" class="p-error">
-          Поле должно быть заполнено.
-        </small>
+      <div class="p-field">
+        <label for="summ">Сумма: </label>
+        <input id="summ" type="number" pInputText placeholder="Сумма" formControlName="summ" min="1">
+        <div *ngIf="shipmentForm.controls['summ'].invalid">
+          <small *ngIf="shipmentForm.controls['summ'].errors.required" class="p-error">
+            Поле должно быть заполнено.
+          </small>
+        </div>
       </div>
-    </div>
-    <div class="modal-actions">
-      <button pButton pRipple label="Сформировать" class="p-button-text save" type="submit"
-        [disabled]="shipmentForm.invalid"></button>
-      <button pButton pRipple label="Отменить" class="p-button-text cancel"></button>
-    </div>
+      <div class="modal-actions">
+        <button pButton pRipple label="Сформировать" class="p-button-text save" type="submit"
+          [disabled]="shipmentForm.invalid"></button>
+        <button pButton pRipple label="Отменить" class="p-button-text cancel"></button>
+      </div>
 
-  </form>
-</ng-template>
+    </form>
+  </ng-template>
 </p-dialog>

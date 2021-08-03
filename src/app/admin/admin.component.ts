@@ -52,7 +52,7 @@ export class AdminComponent implements OnInit {
     ];
     this.setTimeout();
     this.userInactive.subscribe(() => {
-      console.log('user has been inactive for 15s');
+      console.log('user has been inactive for 15m');
       this.openInactive();
     });
   }
@@ -81,7 +81,7 @@ export class AdminComponent implements OnInit {
   setTimeout() {
     this.userActivity = setTimeout(
       () => this.userInactive.next(undefined),
-      15000
+      900000
     );
   }
 

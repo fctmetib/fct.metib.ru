@@ -9,7 +9,11 @@
     <ng-container *ngIf="controlConfig.isDateFrom">
       <div class="p-field p-col-12 p-md-6">
         <label for="dateFrom">Дата с: </label>
-        <p-calendar formControlName="dateFrom" inputId="dateFrom" dateFormat="dd.mm.yy"></p-calendar>
+        <p-calendar
+          formControlName="dateFrom"
+          selectOtherMonths="true"
+          inputId="dateFrom"
+          dateFormat="dd.mm.yy"></p-calendar>
         <div *ngIf="form.controls['dateFrom'].invalid">
           <small *ngIf="form.controls['dateFrom'].errors.required" class="p-error">
             Поле должно быть заполнено.
@@ -20,7 +24,11 @@
     <ng-container *ngIf="controlConfig.isDateTo">
       <div class="p-field p-col-12 p-md-6">
         <label for="dateTo">Дата до: </label>
-        <p-calendar formControlName="dateTo" inputId="dateTo" dateFormat="dd.mm.yy"></p-calendar>
+        <p-calendar
+          formControlName="dateTo"
+          inputId="dateTo"
+          selectOtherMonths="true"
+          dateFormat="dd.mm.yy"></p-calendar>
         <div *ngIf="form.controls['dateTo'].invalid">
           <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
             Поле должно быть заполнено.
@@ -40,7 +48,8 @@
     <ng-container *ngIf="controlConfig.isOnDate">
       <div class="p-field p-col-12 p-md-6">
         <label for="onDate">На Дату: </label>
-        <p-calendar formControlName="onDate" inputId="onDate" dateFormat="dd.mm.yy"></p-calendar>
+        <p-calendar formControlName="onDate"
+        selectOtherMonths="true" inputId="onDate" dateFormat="dd.mm.yy"></p-calendar>
         <div *ngIf="form.controls['onDate'].invalid">
           <small *ngIf="form.controls['onDate'].errors.required" class="p-error">
             Поле должно быть заполнено.

@@ -134,7 +134,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   setTimeout() {
     this.userActivity = setTimeout(
       () => this.userInactive.next(undefined),
-      15000
+      900000
     );
   }
 

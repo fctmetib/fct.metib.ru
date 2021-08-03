@@ -89,7 +89,7 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
       () => {
         this.userInactive.next(undefined)
       },
-      15000
+      900000
     );
   }
 
