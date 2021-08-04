@@ -82,8 +82,8 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-request let-rowIndex="rowIndex">
-        <tr [pSelectableRow]="request" [pSelectableRowIndex]="rowIndex">
+      <ng-template pTemplate="body" let-request let-expanded="expanded">
+        <tr [pRowToggler]="request">
           <td>
             <p-tableCheckbox [value]="request"></p-tableCheckbox>
           </td>
@@ -140,6 +140,14 @@
           </td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="rowexpansion" let-request>
+        <div class="mib-row-expansion mib-row-expansion__with-checkbox">
+          <p><strong>Сумма: </strong> {{request.Summ}}</p>
+          <p><strong>Номер: </strong> {{request.Number}}</p>
+          <p><strong>Тип: </strong> {{request.Type}}</p>
+          <p><strong>Статус: </strong> {{request.Status}}</p>
+        </div>
+    </ng-template>
       <ng-template pTemplate="emptymessage">
         <ng-container *ngIf="(loading$ | async); else skeletonRequestsTemplate">
           <tr>

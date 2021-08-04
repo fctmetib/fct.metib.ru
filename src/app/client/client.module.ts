@@ -30,6 +30,9 @@ import { MobileHeaderComponent } from './shared/components/mobile-header/mobile-
 import { NotifyDialogComponent } from './shared/components/notify-dialog/notify-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive-dialog.module';
+import {AccordionModule} from 'primeng/accordion';
+import { MIBAccordionGroupComponent } from './shared/components/mib-accordion/mib-accordion-group.component';
+import { MIBAccordionComponent } from './shared/components/mib-accordion/mib-accordion.component';
 
 @NgModule({
   imports: [
@@ -48,6 +51,7 @@ import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive
     FormsModule,
     ClientRoutingModule,
     ReactiveFormsModule,
+    AccordionModule,
     CardModule,
     MenubarModule,
     AvatarModule,
@@ -58,7 +62,10 @@ import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive
     NotifyDialogComponent,
     // Layout
     HeaderComponent,
-    MobileHeaderComponent
+    MobileHeaderComponent,
+    // Components
+    MIBAccordionGroupComponent,
+    MIBAccordionComponent
   ],
   providers: [
     ClientService,

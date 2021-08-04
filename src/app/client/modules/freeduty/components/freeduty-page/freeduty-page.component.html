@@ -75,7 +75,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
-      <tr [pSelectableRow]="item"
+      <tr
         [ngClass]="{'warn': item.Statistics.PaymentExpire === true, 'success': item.Statistics.ShipmentID}">
         <td>
           <p-tableCheckbox [value]="item"></p-tableCheckbox>
