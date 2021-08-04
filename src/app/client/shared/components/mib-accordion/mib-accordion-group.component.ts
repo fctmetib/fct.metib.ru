@@ -4,7 +4,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   selector: 'mib-group',
   template: `
   <div class="mib-panel">
-    <div class="mib-panel-header" (click)="toggle.emit()">
+    <div class="mib-panel-header" (click)="toggle.emit()" [ngClass]="{'mib-panel-header__active': opened}">
       <div class="mib-panel-header__content" >
         <div class="mib-panel-header__content__title">
           {{title}}
