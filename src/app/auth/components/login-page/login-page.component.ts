@@ -50,7 +50,7 @@ export class LoginPageComponent implements OnInit {
         this.alertWarning = true;
         this.alertWarningMessage = `
         Ваша сессия была прервана в целях безопасности,
-        \n так как Вы не пользовались сервисом более 15 секунд.`
+        \n так как Вы не пользовались сервисом более 15 минут.`
       }
       if (params['successRegistration']) {
         this.alert = true;

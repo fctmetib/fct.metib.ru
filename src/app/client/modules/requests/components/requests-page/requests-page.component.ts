@@ -33,6 +33,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   public loading$: Observable<boolean>;
   // public requests: RequestsResponseInterface[];
 
+  public selectedRequest: RequestsResponseInterface;
+
   public displayModal: boolean;
   public ref: DynamicDialogRef;
   public items: MenuItem[] = [];
@@ -117,6 +119,17 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  public selectRow(request: RequestsResponseInterface) {
+    this.subscription$.add(
+      this.requestService
+        .getRequestByIdAndParams(request.ID, true, true, true)
+        .subscribe((requestWithAdditionalData) => {
+          this.selectedRequest = requestWithAdditionalData;
+          console.log('SELECTED ROW: ', this.selectedRequest);
+        })
+    );
+  }
+
   refresh(): void {
     this.fetch(true);
   }
@@ -155,15 +168,12 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   customSort(event: SortEvent) {
     // let requests: any[] = [];
     // console.log(event);
-
     // //TODO: COMPLETE FILTER
-
     // requests = [...event.data].sort((data1, data2) => {
     //   // console.log(data1['Number'])
     //   let value1 = data1[event.field];
     //   let value2 = data2[event.field];
     //   let result = null;
-
     //   if (value1 == null && value2 != null) {
     //     result = -1;
     //   } else if (value1 != null && value2 == null) {
@@ -175,10 +185,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     //   } else {
     //     result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
     //   }
-
     //   return event.order * result;
     // });
-
     // this.requests = [...requests];
   }
 

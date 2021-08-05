@@ -10,11 +10,10 @@
   </p-toolbar>
   <div class="responsive-table">
     <div *ngFor="let request of (requests$ | async)"></div>
-    <p-table [value]="(requests$ | async)" [rows]="25" [showCurrentPageReport]="true" selectionMode="multiple"
+    <p-table [value]="(requests$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"
       [rowsPerPageOptions]="[10,25,50]" [(selection)]="selectedItems" dataKey="ID" (onRowSelect)="checkSelecteditems()"
       styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
-      (sortFunction)="customSort($event)" [customSort]="true"
-      tableHighlight
+      (sortFunction)="customSort($event)" [customSort]="true" tableHighlight
       currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">
       <!-- -->
       <ng-template pTemplate="header">
@@ -54,15 +53,8 @@
               <div>Тип
                 <p-sortIcon field="Type"></p-sortIcon>
               </div>
-
             </div>
           </th>
-          <!-- <th pSortableColumn="Date">
-          <div class="m-th">
-            Дата Отправки
-            <p-sortIcon field="Date"></p-sortIcon>
-          </div>
-        </th> -->
           <th pSortableColumn="Status">
             <div class="m-th">
               <div>Состояние
@@ -82,8 +74,8 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-request let-expanded="expanded">
-        <tr [pRowToggler]="request">
+      <ng-template pTemplate="body" let-request>
+        <tr [pRowToggler]="request" class="can-click" (click)="selectRow(request)">
           <td>
             <p-tableCheckbox [value]="request"></p-tableCheckbox>
           </td>
@@ -120,9 +112,6 @@
               </div>
             </div>
           </td>
-          <!-- <td>
-          <div class="m-td"> {{request.Date | date: 'dd.MM.yyyy'}}</div>
-        </td> -->
           <td>
             <div class="m-td">
               <div>{{request.Status}}</div>
@@ -140,14 +129,6 @@
           </td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="rowexpansion" let-request>
-        <div class="mib-row-expansion mib-row-expansion__with-checkbox">
-          <p><strong>Сумма: </strong> {{request.Summ}}</p>
-          <p><strong>Номер: </strong> {{request.Number}}</p>
-          <p><strong>Тип: </strong> {{request.Type}}</p>
-          <p><strong>Статус: </strong> {{request.Status}}</p>
-        </div>
-    </ng-template>
       <ng-template pTemplate="emptymessage">
         <ng-container *ngIf="(loading$ | async); else skeletonRequestsTemplate">
           <tr>
@@ -219,6 +200,25 @@
       </ng-template>
     </p-table>
   </div>
+</div>
+
+<div class="card-content card-content__tabs">
+  <ng-container *ngIf="!selectedRequest; else selectedRequestTemplate">
+    <div class="card-content__text-center">
+      Для просмотра Накладных и Документов - нажмите, на любую заявку.
+    </div>
+  </ng-container>
+  <ng-template #selectedRequestTemplate>
+    <p-tabView>
+      <p-tabPanel header="Накладные">
+        <shipments-view [shipments]="selectedRequest.Shipments"></shipments-view>
+      </p-tabPanel>
+      <p-tabPanel header="Документы">
+        <documents-view [documents]="selectedRequest.Documents"></documents-view>
+      </p-tabPanel>
+    </p-tabView>
+  </ng-template>
+
 </div>
 
 

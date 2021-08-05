@@ -1,3 +1,5 @@
+import { DocumentsViewComponent } from './components/requests-page/documents-view/documents-view.componet';
+import { ShipmentsViewComponent } from './components/requests-page/shipments-view/shipments-view.componet';
 import { RequestCorrectDialogComponent } from './components/request-correct-dialog/request-correct-dialog.component';
 import { BackendErrorMessagesModule } from './../../../shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { SuccessMessagesModule } from './../../../shared/modules/successMessages/successMessages.module';
@@ -80,6 +82,10 @@ import { RequestStoreService } from '../../../shared/services/store/request.stor
     AvatarModule,
   ],
   declarations: [
+    //Components
+    DocumentsViewComponent,
+    ShipmentsViewComponent,
+    // Containers
     RequestsPageComponent,
     RequestCreateDialogComponent,
     RequestCorrectDialogComponent,
