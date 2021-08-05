@@ -104,6 +104,7 @@
         width: 100%;
         padding: 10px;
         display: inline;
+        height: 60px;
 
         .mib-panel-header__content__title {}
 
@@ -111,7 +112,10 @@
       }
 
       .mib-panel-header__action {
+        height: 60px;
         width: 100%;
+        border-left: unset;
+        border-top: 1px dashed #C0C0C0;
       }
     }
 
@@ -122,7 +126,10 @@
         .mib-panel-header__content__date {}
       }
 
-      .mib-panel-header__action {}
+      .mib-panel-header__action {
+        border-left: unset;
+        border-top: 1px dashed #A3D2FF;
+      }
     }
 
     .body {}
