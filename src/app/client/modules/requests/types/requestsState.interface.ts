@@ -8,3 +8,4 @@ export interface RequestsStateInterface {
   crudSuccessMessage: string | null;
   crudError: string | null;
 }
+

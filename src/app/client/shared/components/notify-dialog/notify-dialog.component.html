@@ -1,20 +1,5 @@
-<!-- <div class="">
-  <div class="notification-list__row" >
-    <div class="notification-list__row__content">
-      <div class="notification-list__row__content__item">
-        {{}}
-      </div>
-      <div class="list__row__content__item">
-        {{}}
-      </div>
-    </div>
-    <div class="notification-list__row__date">
-
-    </div>
-  </div>
-</div> -->
 <mib-accordion>
   <mib-group [title]="notificationItem.Title" [date]="notificationItem.Date" *ngFor="let notificationItem of notificationsList">
-    Акк
+    <div [innerHTML]="notificationItem.Message"></div>
   </mib-group>
 </mib-accordion>

@@ -14,7 +14,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         </div>
       </div>
       <div class="mib-panel-header__action">
-        {{!opened ? 'Посмотреть' : 'Скрыть'}}
+        <button class="mib-panel-header__action__button" [ngClass]="{'active' : opened}">
+          {{!opened ? 'Посмотреть' : 'Скрыть'}}
+        </button>
       </div>
     </div>
 
