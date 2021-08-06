@@ -21,7 +21,8 @@
   }
 
   .body {
-    padding: 15px;
+    padding: 10px;
+    max-width: 85%;
     .title {
       text-align: center;
       font-weight: 500;
@@ -35,6 +36,17 @@
       line-height: 16px;
       text-align: center;
       color: #989898;
-    }
+    } 
   }
+
+  img{
+    @media (max-width: 1300px) {
+      max-width: 75% !important;
+      margin-left: -17%;
+      margin-top: 5px;
+    }
+    @media (min-width: 1300px) {
+     
+    }
+}
 }

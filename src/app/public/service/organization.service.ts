@@ -10,7 +10,7 @@ export class OrganizationService {
   constructor(private http: HttpClient) {}
 
   send(data: OrganizationInterface): Observable<OrganizationInterface> {
-    const url = `public/anket/factoring/request`;
+    const url = `${environment.apiUrl}/public/anket/factoring`
     return this.http.post<OrganizationInterface>(url, data);
   }
 

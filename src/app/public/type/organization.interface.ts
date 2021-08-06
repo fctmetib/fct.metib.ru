@@ -1,10 +1,10 @@
 export interface OrganizationInterface {
-    Organization: string;
-    Person: string;
-    Phone: string;
-    Email: string;
-    INN: string;
-    Comment: string;
-    Agreement: boolean;
+    organization: string;
+    person: string;
+    phone: string;
+    email: string;
+    inn: string;
+    comment: string;
+    isAccept: boolean;
   }
   

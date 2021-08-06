@@ -285,7 +285,7 @@
     <input type="text" formControlName="inn" placeholder="ИНН">
     <input type="text" formControlName="comment" placeholder="Ваш комментарий">
     <div class="actions">
-      <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100" (click)="sendFinanceRequest()"
+      <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100" (click)="sendFinanceRequest('get-finance')"
         [disable]="!isFinanceFormValid()"></mib-button>
     </div>
     <div class="checkbox">

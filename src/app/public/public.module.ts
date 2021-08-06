@@ -22,6 +22,7 @@ import { NewsComponent } from './pages/news/news.component';
 import { MibSectionBodyComponent } from './shared/mib-sections/mib-section-body/mib-section-body.component';
 import { MibCardTariffComponent } from './shared/cards/card-tariff/mib-card-tariff.component';
 import { MibCardPersonComponent } from './shared/cards/card-person/mib-card-person.component';
+import { OrganizationService } from './service/organization.service';
 
 const routes = [
   {
@@ -92,6 +93,7 @@ const routes = [
     MibCardInfoComponent,
   ],
   providers: [
+    OrganizationService
   ],
 })
 export class PublicModule {}
