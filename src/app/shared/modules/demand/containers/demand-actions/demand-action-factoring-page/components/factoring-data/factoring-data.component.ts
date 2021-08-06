@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { DemandAddonAccountInterface } from './../../../../../types/common/demand-addon-account.interface';
 import { CurrencyPipe, formatDate } from '@angular/common';
 import {
@@ -27,6 +28,7 @@ import { DemandAnketInterface } from 'src/app/shared/modules/demand/types/common
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { AddressModalComponent } from 'src/app/shared/modules/demand/components/address/address.component';
+import { BankInterface } from 'src/app/shared/types/common/bank.interface';
 
 @Component({
   selector: 'app-factoring-data',
@@ -53,6 +55,8 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   public typesOfOwner: DemandSelectboxInterface[] = [];
 
   public formFactoring: FormGroup;
+
+  public resultsBIK: BankInterface[];
 
   public files: FileModeInterface[] = [];
 
@@ -99,19 +103,41 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
 
   //#region public page actions
 
+  public search(event): void {
+    this.subscription$.add(
+      this.commonService.getBankByBIK(event.query).subscribe((data) => {
+        this.resultsBIK = data;
+      })
+    );
+  }
+
+  public onBIKselect(bank: BankInterface) {
+    this.formFactoring.patchValue({
+      bankCorrespondentAccount: bank.AccountBank,
+      bankName: bank.Name
+    })
+  }
+
   addOtherBank(existBank?: DemandAddonAccountInterface): void {
     let otherBanks = this.formFactoring.get('otherBanks') as FormArray;
     otherBanks.push(
       this.fb.group({
         otherBankAccountOpenDate: [
-          existBank?.Date ? formatDate(existBank?.Date, 'yyyy-MM-dd', 'en') : '',
+          existBank?.Date
+            ? formatDate(existBank?.Date, 'yyyy-MM-dd', 'en')
+            : '',
           [Validators.required],
         ],
         otherBankAccountCloseDate: [
-          existBank?.Expire ? formatDate(existBank?.Expire, 'yyyy-MM-dd', 'en') : '',
+          existBank?.Expire
+            ? formatDate(existBank?.Expire, 'yyyy-MM-dd', 'en')
+            : '',
           [Validators.required],
         ],
-        otherBankName: [existBank?.Bank ? existBank?.Bank : '', [Validators.required]],
+        otherBankName: [
+          existBank?.Bank ? existBank?.Bank : '',
+          [Validators.required],
+        ],
         otherBankOwnerAccount: [
           existBank?.Number ? existBank?.Number : '',
           [Validators.required],
@@ -376,7 +402,8 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
           this.formFactoring.patchValue(
             {
               factoringFinanceLimit: this.currencyPipe.transform(
-                form.factoringFinanceLimit.toString()
+                form.factoringFinanceLimit
+                  .toString()
                   .replace(/\D/g, '')
                   .replace(/^0+/, ''),
                 'RUB',

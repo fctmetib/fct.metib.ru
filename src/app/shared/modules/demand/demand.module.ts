@@ -59,7 +59,7 @@ import { DemandInfoComponent } from './shared/components/demand-info/demand-info
 import { AddressModalComponent } from './components/address/address.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ExitGuard } from '../../services/exit.guard';
-
+import {AutoCompleteModule} from 'primeng/autocomplete';
 @NgModule({
   imports: [
     CommonModule,
@@ -73,6 +73,7 @@ import { ExitGuard } from '../../services/exit.guard';
     InputTextareaModule,
     InputNumberModule,
     TabViewModule,
+    AutoCompleteModule,
     SliderModule,
     TableModule,
     StepsModule,

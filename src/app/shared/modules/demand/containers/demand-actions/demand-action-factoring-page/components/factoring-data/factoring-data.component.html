@@ -2,7 +2,7 @@
   <div class="form-actions">
     <!--TODO ADD LOADER ON BUTTON -->
     <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-    [routerLink]="['/demand']" *ngIf="!isEdit"></button>
+      [routerLink]="['/demand']" *ngIf="!isEdit"></button>
   </div>
   <div class="p-fluid p-formgrid p-grid form">
     <!-- 1 row -->
@@ -88,8 +88,10 @@
 
     <div class="p-field p-col-12 p-md-3">
       <label for="bankBik">Бик банка</label>
-      <p-inputMask id="bankBik" type="text" placeholder="Бик банка" formControlName="bankBik" mask="999999999">
-      </p-inputMask>
+
+      <p-autoComplete id="bankBik" placeholder="Бик банка" formControlName="bankBik" [suggestions]="resultsBIK" field="BIC"
+        (completeMethod)="search($event)" (onSelect)="onBIKselect($event)"></p-autoComplete>
+
       <div *ngIf="formFactoring.controls['bankBik'].invalid">
         <small *ngIf="formFactoring.controls['bankBik'].errors.required" class="p-error">
           Введите корректный БИК банка (9 цифр).
@@ -335,9 +337,8 @@
               </div>
               <div class="p-field p-col-12 p-md-6">
                 <label for="factoringPlacesLegalForm">Форма владения</label>
-                <p-dropdown id="factoringPlacesLegalForm" [options]="typesOfOwner"
-                  placeholder="Выберите Форму владения" formControlName="factoringPlacesLegalForm" optionLabel="title"
-                  optionValue="value"></p-dropdown>
+                <p-dropdown id="factoringPlacesLegalForm" [options]="typesOfOwner" placeholder="Выберите Форму владения"
+                  formControlName="factoringPlacesLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
               </div>
             </div>
           </div>
@@ -533,288 +534,259 @@
     </div>
 
     <ng-container *ngIf="!isEdit">
-          <!-- W -->
-    <div class="p-field p-col-12 p-md-12">
-      <p>Прикрепите необходимые файлы:</p>
-    </div>
-
-    <div class="p-field p-col-12 p-md-6">
-      <div class="addon-button mb-20">
-        <div class="addon-text">
-          <p>
-            Устав (Со всеми изменениями)
-          </p>
-        </div>
-        <div class="mib-uploader">
-          <input
-            type="file"
-            id="Regulations"
-            multiple="true"
-            (change)="onSelect($event, 'Regulations')"
-            accept="image/jpeg,image/png,image/gif,application/pdf"
-            hidden />
-          <label for="Regulations" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
-        </div>
-      </div>
-      <div *ngIf="files.length">
-        <ng-container *ngFor="let file of files">
-          <div class="addon-button mb-10" *ngIf="file.Identifier === 'Regulations'">
-            <div class="addon-text">
-              <p>
-                {{file.FileName}}
-              </p>
-            </div>
-            <div class="mib-uploader">
-              <div class="mib-upload-warn" (click)="removeFile(file)">
-                Удалить
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <div class="p-field p-col-12 p-md-6">
-      <div class="addon-button mb-20">
-        <div class="addon-text">
-          <p>
-            Паспорт генерального директора
-            (Все страницы)
-          </p>
-        </div>
-        <div class="mib-uploader">
-          <input
-            type="file"
-            id="GenDirPassport"
-            accept="image/jpeg,image/png,image/gif,application/pdf"
-            multiple="true" (change)="onSelect($event, 'GenDirPassport')" hidden />
-          <label for="GenDirPassport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
-        </div>
-      </div>
-      <div *ngIf="files.length">
-        <ng-container *ngFor="let file of files">
-          <div class="addon-button mb-10" *ngIf="file.Identifier === 'GenDirPassport'">
-            <div class="addon-text">
-              <p>
-                {{file.FileName}}
-              </p>
-            </div>
-            <div class="mib-uploader">
-              <div class="mib-upload-warn" (click)="removeFile(file)">
-                Удалить
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <div class="p-field p-col-12 p-md-6">
-      <div class="addon-button mb-20">
-        <div class="addon-text">
-          <p>
-            Протокол/решение о назначении генерального директора
-          </p>
-        </div>
-        <div class="mib-uploader">
-          <input
-            type="file"
-            id="GenDirProtocol"
-            accept="image/jpeg,image/png,image/gif,application/pdf"
-            (change)="onSelect($event, 'GenDirProtocol')" hidden />
-          <label for="GenDirProtocol" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
-        </div>
-      </div>
-      <div *ngIf="files.length">
-        <ng-container *ngFor="let file of files">
-          <div class="addon-button mb-10" *ngIf="file.Identifier === 'GenDirProtocol'">
-            <div class="addon-text">
-              <p>
-                {{file.FileName}}
-              </p>
-            </div>
-            <div class="mib-uploader">
-              <div class="mib-upload-warn" (click)="removeFile(file)">
-                Удалить
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <div class="p-field p-col-12 p-md-6">
-      <div class="addon-button mb-20">
-        <div class="addon-text">
-          <p>
-            Приказ о назначении генерального директора
-          </p>
-        </div>
-        <div class="mib-uploader">
-          <input
-            type="file"
-            id="actual-btn"
-            accept="image/jpeg,image/png,image/gif,application/pdf"
-            (change)="onSelect($event, 'GenDirOrder')" hidden />
-          <label for="actual-btn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
-        </div>
-      </div>
-      <div *ngIf="files.length">
-        <ng-container *ngFor="let file of files">
-          <div class="addon-button mb-10" *ngIf="file.Identifier === 'GenDirOrder'">
-            <div class="addon-text">
-              <p>
-                {{file.FileName}}
-              </p>
-            </div>
-            <div class="mib-uploader">
-              <div class="mib-upload-warn" (click)="removeFile(file)">
-                Удалить
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <div class="p-field p-col-12 p-md-6">
-      <div class="addon-button mb-20">
-        <div class="addon-text">
-          <p>
-            Бухгалтерский Баланс
-          </p>
-        </div>
-        <div class="mib-uploader">
-          <input
-            type="file"
-            id="Balance"
-            accept="image/jpeg,image/png,image/gif,application/pdf"
-            (change)="onSelect($event, 'Balance')" hidden />
-          <label for="Balance" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
-        </div>
-      </div>
-      <div *ngIf="files.length">
-        <ng-container *ngFor="let file of files">
-          <div class="addon-button mb-10" *ngIf="file.Identifier === 'Balance'">
-            <div class="addon-text">
-              <p>
-                {{file.FileName}}
-              </p>
-            </div>
-            <div class="mib-uploader">
-              <div class="mib-upload-warn" (click)="removeFile(file)">
-                Удалить
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <div class="p-field p-col-12 p-md-6">
-      <div class="addon-button mb-20">
-        <div class="addon-text">
-          <p>
-            ОСВ (оборотно-сальдовая ведомость)
-          </p>
-        </div>
-        <div class="mib-uploader">
-          <input
-            type="file"
-            id="OSV"
-            (change)="onSelect($event, 'OSV')"
-            accept="image/jpeg,image/png,image/gif,application/pdf"
-            hidden />
-          <label for="OSV" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
-        </div>
-      </div>
-      <div *ngIf="files.length">
-        <ng-container *ngFor="let file of files">
-          <div class="addon-button mb-10" *ngIf="file.Identifier === 'OSV'">
-            <div class="addon-text">
-              <p>
-                {{file.FileName}}
-              </p>
-            </div>
-            <div class="mib-uploader">
-              <div class="mib-upload-warn" (click)="removeFile(file)">
-                Удалить
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <div class="p-field p-col-12 p-md-6 p-lg-6">
-      <div class="addon-button mb-20">
-        <div class="addon-text">
-          <p>
-            Паспорта Учредителей
-          </p>
-        </div>
-        <div class="mib-uploader">
-          <input
-            type="file"
-            id="Shareholders"
-            (change)="onSelect($event, 'Shareholders')"
-            accept="image/jpeg,image/png,image/gif,application/pdf"
-            hidden />
-          <label for="Shareholders" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
-        </div>
-      </div>
-      <div *ngIf="files.length">
-        <ng-container *ngFor="let file of files">
-          <div class="addon-button mb-10" *ngIf="file.Identifier === 'Shareholders'">
-            <div class="addon-text">
-              <p>
-                {{file.FileName}}
-              </p>
-            </div>
-            <div class="mib-uploader">
-              <div class="mib-upload-warn" (click)="removeFile(file)">
-                Удалить
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <div class="p-field p-col-12 p-md-6">
-      <div class="addon-button mb-20">
-        <div class="addon-text">
-          <p>
-            Договор поставки
-          </p>
-        </div>
-        <div class="mib-uploader">
-          <input
-            type="file"
-            id="ContractDelivery"
-            accept="image/jpeg,image/png,image/gif,application/pdf"
-            multiple="true"
-            (change)="onSelect($event, 'ContractDelivery')" hidden />
-          <label for="ContractDelivery" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
-        </div>
+      <!-- W -->
+      <div class="p-field p-col-12 p-md-12">
+        <p>Прикрепите необходимые файлы:</p>
       </div>
 
-      <div *ngIf="files.length">
-        <ng-container *ngFor="let file of files">
-          <div class="addon-button mb-10" *ngIf="file.Identifier === 'ContractDelivery'">
-            <div class="addon-text">
-              <p>
-                {{file.FileName}}
-              </p>
-            </div>
-            <div class="mib-uploader">
-              <div class="mib-upload-warn" (click)="removeFile(file)">
-                Удалить
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button mb-20">
+          <div class="addon-text">
+            <p>
+              Устав (Со всеми изменениями)
+            </p>
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="Regulations" multiple="true" (change)="onSelect($event, 'Regulations')"
+              accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
+            <label for="Regulations" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'Regulations'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
               </div>
             </div>
-          </div>
-        </ng-container>
+          </ng-container>
+        </div>
       </div>
-    </div>
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button mb-20">
+          <div class="addon-text">
+            <p>
+              Паспорт генерального директора
+              (Все страницы)
+            </p>
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="GenDirPassport" accept="image/jpeg,image/png,image/gif,application/pdf"
+              multiple="true" (change)="onSelect($event, 'GenDirPassport')" hidden />
+            <label for="GenDirPassport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'GenDirPassport'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button mb-20">
+          <div class="addon-text">
+            <p>
+              Протокол/решение о назначении генерального директора
+            </p>
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="GenDirProtocol" accept="image/jpeg,image/png,image/gif,application/pdf"
+              (change)="onSelect($event, 'GenDirProtocol')" hidden />
+            <label for="GenDirProtocol" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'GenDirProtocol'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button mb-20">
+          <div class="addon-text">
+            <p>
+              Приказ о назначении генерального директора
+            </p>
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="actual-btn" accept="image/jpeg,image/png,image/gif,application/pdf"
+              (change)="onSelect($event, 'GenDirOrder')" hidden />
+            <label for="actual-btn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'GenDirOrder'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button mb-20">
+          <div class="addon-text">
+            <p>
+              Бухгалтерский Баланс
+            </p>
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="Balance" accept="image/jpeg,image/png,image/gif,application/pdf"
+              (change)="onSelect($event, 'Balance')" hidden />
+            <label for="Balance" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'Balance'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button mb-20">
+          <div class="addon-text">
+            <p>
+              ОСВ (оборотно-сальдовая ведомость)
+            </p>
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="OSV" (change)="onSelect($event, 'OSV')"
+              accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
+            <label for="OSV" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'OSV'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="p-field p-col-12 p-md-6 p-lg-6">
+        <div class="addon-button mb-20">
+          <div class="addon-text">
+            <p>
+              Паспорта Учредителей
+            </p>
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="Shareholders" (change)="onSelect($event, 'Shareholders')"
+              accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
+            <label for="Shareholders" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+          </div>
+        </div>
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'Shareholders'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <div class="addon-button mb-20">
+          <div class="addon-text">
+            <p>
+              Договор поставки
+            </p>
+          </div>
+          <div class="mib-uploader">
+            <input type="file" id="ContractDelivery" accept="image/jpeg,image/png,image/gif,application/pdf"
+              multiple="true" (change)="onSelect($event, 'ContractDelivery')" hidden />
+            <label for="ContractDelivery" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
+          </div>
+        </div>
+
+        <div *ngIf="files.length">
+          <ng-container *ngFor="let file of files">
+            <div class="addon-button mb-10" *ngIf="file.Identifier === 'ContractDelivery'">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="removeFile(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
     </ng-container>
 
 
     <div class="p-field p-col-12 p-md-12">
       <label for="btn_submit">&nbsp;</label>
-          <!--TODO ADD LOADER ON BUTTON -->
+      <!--TODO ADD LOADER ON BUTTON -->
       <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
         class="btn-mib-submit p-button-outlined" [disabled]="formFactoring.invalid"></button>
     </div>
