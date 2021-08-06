@@ -209,6 +209,7 @@
     </div>
   </ng-container>
   <ng-template #selectedRequestTemplate>
+    <p>ID Заявки: <strong> {{selectedRequest.ID}}</strong></p>
     <p-tabView>
       <p-tabPanel header="Накладные">
         <shipments-view [shipments]="selectedRequest.Shipments"></shipments-view>

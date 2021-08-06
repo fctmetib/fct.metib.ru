@@ -44,6 +44,11 @@ import { Component, OnInit, Input } from '@angular/core';
           </td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4">Накладных, для этой заявки нет.</td>
+        </tr>
+      </ng-template>
     </p-table>
   `,
 })

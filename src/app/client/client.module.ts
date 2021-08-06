@@ -31,8 +31,8 @@ import { NotifyDialogComponent } from './shared/components/notify-dialog/notify-
 import { DialogService } from 'primeng/dynamicdialog';
 import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive-dialog.module';
 import {AccordionModule} from 'primeng/accordion';
-import { MIBAccordionGroupComponent } from './shared/components/mib-accordion/mib-accordion-group.component';
-import { MIBAccordionComponent } from './shared/components/mib-accordion/mib-accordion.component';
+import { MIBNotifyAccordionComponent } from './shared/components/mib-notify-accordion/mib-notify-accordion.component';
+import { MIBNotifyAccordionGroupComponent } from './shared/components/mib-notify-accordion/mib-notify-accordion-group.component';
 
 @NgModule({
   imports: [
@@ -64,12 +64,13 @@ import { MIBAccordionComponent } from './shared/components/mib-accordion/mib-acc
     HeaderComponent,
     MobileHeaderComponent,
     // Components
-    MIBAccordionGroupComponent,
-    MIBAccordionComponent
+    MIBNotifyAccordionGroupComponent,
+    MIBNotifyAccordionComponent
   ],
   providers: [
     ClientService,
     DeliveryService,
+    NotificationService,
     DialogService,
     NotificationService,
     OrganizationService,

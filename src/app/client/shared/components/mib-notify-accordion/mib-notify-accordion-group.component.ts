@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'mib-group',
+  selector: 'mib-notify-accordion-group',
   template: `
   <div class="mib-panel">
     <div class="mib-panel-header" (click)="toggle.emit()" [ngClass]="{'mib-panel-header__active': opened}">
@@ -25,9 +25,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     </div>
   <div>
   `,
-  styleUrls: ['./mib-accordion.component.scss'],
+  styleUrls: ['./mib-notify-accordion.component.scss'],
 })
-export class MIBAccordionGroupComponent {
+export class MIBNotifyAccordionGroupComponent {
 
   /**
    * Панель открыта или закрыта
@@ -43,6 +43,11 @@ export class MIBAccordionGroupComponent {
    * Дата, которая отображается на панеле
    */
    @Input() date: string;
+
+  /**
+   * ID новости
+   */
+   @Input() id: string;
 
   /**
    * Вызывается, когда пользоваель нажимает на поле Title

@@ -17,14 +17,14 @@
     }
 
     &.ng-invalid {
-      background-image: url('../../assets/icons/icon_error-input.png') !important;
+      background-image: url('../../../../../assets/icons/icon_error-input.png') !important;
       background-repeat: no-repeat !important;
       background-position-x: 95% !important;
       background-position-y: 65% !important;
     }
 
     &.ng-touched.ng-valid {
-      background-image: url('../../assets/icons/icon_success-input.png') !important;
+      background-image: url('../../../../../assets/icons/icon_success-input.png') !important;
       background-repeat: no-repeat !important;
       background-position-x: 95% !important;
       background-position-y: 65% !important;
