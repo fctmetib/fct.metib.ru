@@ -245,30 +245,10 @@
 <section class="mib-section news">
   <div class="mib-container">
     <h2>Пресс-центр</h2>
-    <mib-slider [theme]="'news'">
+    <mib-slider [theme]="'news'" *ngFor="let card of news">
       <div class="item">
-        <mib-card-news [image]="'../../../../assets/public/images/news/news.png'" [title]="'Несем спорт в массы!'"
-          [date]="'01.09.2020'" [desc]="'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'">
-        </mib-card-news>
-      </div>
-      <div class="item">
-        <mib-card-news [image]="'../../../../assets/public/images/news/news.png'" [title]="'Несем спорт в массы!'"
-          [date]="'01.09.2020'" [desc]="'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'">
-        </mib-card-news>
-      </div>
-      <div class="item">
-        <mib-card-news [image]="'../../../../assets/public/images/news/news.png'" [title]="'Несем спорт в массы!'"
-          [date]="'01.09.2020'" [desc]="'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'">
-        </mib-card-news>
-      </div>
-      <div class="item">
-        <mib-card-news [image]="'../../../../assets/public/images/news/news.png'" [title]="'Несем спорт в массы!'"
-          [date]="'01.09.2020'" [desc]="'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'">
-        </mib-card-news>
-      </div>
-      <div class="item">
-        <mib-card-news [image]="'../../../../assets/public/images/news/news.png'" [title]="'Несем спорт в массы!'"
-          [date]="'01.09.2020'" [desc]="'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'">
+        <mib-card-news [image]= card.image [title]= card.title
+          [date]= card.date [desc]= card.desc>
         </mib-card-news>
       </div>
     </mib-slider>
