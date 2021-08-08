@@ -44,8 +44,8 @@ export class HomeComponent implements OnInit {
   }
 
   public sendFinanceRequest(id: string) {
-    let org: OrganizationInterface = this.financeForm.value;
-    this.organizationService.send(org).subscribe(response=>{
+    let organizationInterface: OrganizationInterface = this.financeForm.value;
+    this.organizationService.send(organizationInterface).subscribe(response=>{
       this.closeModal(id); 
       this.financeForm.reset();
     });
