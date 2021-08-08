@@ -25,6 +25,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+
       img {
         width: 100%;
       }
@@ -43,6 +44,7 @@
       color: #102538;
       margin-bottom: 12px;
     }
+
     .desc {
       font-size: 14px;
       line-height: 16px;
@@ -50,15 +52,9 @@
       color: #989898;
     }
   }
-
-  img{
-    @media (max-width: 1300px) {
-      max-width: 75% !important;
-      margin-left: -17%;
-      margin-top: 5px;
-    }
-    @media (min-width: 1300px) {
-
-    }
 }
+@media (max-width: 1300px) {
+  .mib-card-news {
+    width: 200px;
+  }
 }
