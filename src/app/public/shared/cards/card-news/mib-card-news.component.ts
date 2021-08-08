@@ -7,10 +7,10 @@ import { Component, Input, OnInit } from '@angular/core';
     <div class="mib-card-news">
       <div class="header">
         <div class="date">
-          {{ date }}
+          {{ date | date:"dd.MM.yyyy"}}
         </div>
         <div class="image">
-          <img [src]="image" />
+          <img [src]="imageSrc" />
         </div>
       </div>
       <div class="body">
@@ -37,7 +37,12 @@ export class MibCardNewsComponent implements OnInit {
   @Input()
   desc: string;
 
+
+  public imageSrc: string;
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.imageSrc = `http://api-factoring.metib.ru:8094/api/news/${this.image}/image`
+  }
 }

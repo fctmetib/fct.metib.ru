@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, observable, Subscriber } from 'rxjs';
 import { subscribeOn } from 'rxjs/operators';
-import { NewsService } from '../../service/news.service'; 
+import { NewsService } from '../../service/news.service';
 import { NewsInterface } from '../../type/news.interface';
 import { OrganizationService } from '../../service/organization.service';
 import { MibModalService } from '../../shared/mib-modal';
@@ -33,7 +33,9 @@ export class HomeComponent implements OnInit {
     private newsService: NewsService
   ) {}
 
-  ngOnInit() {this.fillNews();}
+  ngOnInit() {
+    this.fillNews();
+  }
 
   public isFinanceFormValid(): boolean {
     if (this.financeForm.value.isAccept && this.financeForm.valid) {
@@ -46,14 +48,13 @@ export class HomeComponent implements OnInit {
   public sendFinanceRequest(id: string) {
     let organizationInterface: OrganizationInterface = this.financeForm.value;
     this.organizationService.send(organizationInterface).subscribe(response=>{
-      this.closeModal(id); 
+      this.closeModal(id);
       this.financeForm.reset();
     });
   }
 
   openModal(id: string) {
     this.mibModalService.open(id);
-   
   }
 
   closeModal(id: string) {

@@ -18,11 +18,23 @@
       text-align: center;
       color: #989898;
     }
+
+    .image {
+      height: 145px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      img {
+        width: 100%;
+      }
+    }
   }
 
   .body {
     padding: 10px;
-    max-width: 85%;
+    height: 150px;
+
     .title {
       text-align: center;
       font-weight: 500;
@@ -36,7 +48,7 @@
       line-height: 16px;
       text-align: center;
       color: #989898;
-    } 
+    }
   }
 
   img{
@@ -46,7 +58,7 @@
       margin-top: 5px;
     }
     @media (min-width: 1300px) {
-     
+
     }
 }
 }
