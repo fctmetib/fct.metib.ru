@@ -24,11 +24,13 @@ export class HomeComponent implements OnInit {
     isAccept: false,
   });
 
+  public news: NewsInterface[];
+
   constructor(
     private mibModalService: MibModalService,
     private fb: FormBuilder,
     private organizationService: OrganizationService,
-    private ns: NewsService
+    private newsService: NewsService
   ) {}
 
   ngOnInit() {this.fillNews();}
@@ -44,7 +46,8 @@ export class HomeComponent implements OnInit {
   public sendFinanceRequest(id: string) {
     let org: OrganizationInterface = this.financeForm.value;
     this.organizationService.send(org).subscribe(response=>{
-      this.closeModal(id);
+      this.closeModal(id); 
+      this.financeForm.reset();
     });
   }
 
@@ -57,13 +60,9 @@ export class HomeComponent implements OnInit {
     this.mibModalService.close(id);
   }
 
-  public news: Observable<NewsInterface>[];
-
   fillNews() {
-    for(let i = 0; i< 10; i++) {
-      this.news[i] = this.ns.getNews(1);
+    this.newsService.getNewsList().subscribe(responseNews => {
+      this.news = responseNews
+    });
   }
-  }
-  //public news = this.newsService.getNewsList().subscribe();
- // let news: NewsInterface[] = this.ns.getNews(1).subscribe();
 }
