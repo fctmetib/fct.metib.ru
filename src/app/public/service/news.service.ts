@@ -9,9 +9,9 @@ import { environment } from 'src/environments/environment';
 export class NewsService {
   constructor(private http: HttpClient) {}
 
-  getNews(newsID: number): Observable<NewsInterface> {
-    const url = `${environment.apiUrl}/news/top/${newsID}`;
-    return this.http.get<NewsInterface>(url);
+  getNews(newsCount: number): Observable<NewsInterface[]> {
+    const url = `${environment.apiUrl}/news/top/${newsCount}`;
+    return this.http.get<NewsInterface[]>(url);
   }
   
   getNewsList(): Observable<NewsInterface[]> {

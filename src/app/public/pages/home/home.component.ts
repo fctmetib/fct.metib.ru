@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   fillNews() {
-    this.newsService.getNewsList().subscribe(responseNews => {
+    this.newsService.getNews(10).subscribe(responseNews => {
       this.news = responseNews
     });
   }
