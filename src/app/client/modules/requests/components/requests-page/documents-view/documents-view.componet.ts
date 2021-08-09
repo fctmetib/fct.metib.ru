@@ -21,7 +21,7 @@ import { Component, OnInit, Input } from '@angular/core';
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-document>
-        <tr>
+        <tr class="can-click" (click)="viewDocument(document)" >
           <td>
             <div class="m-td">
               {{ document.DocumentID }}
@@ -55,6 +55,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DocumentsViewComponent implements OnInit {
   @Input()
   documents: any[];
+
+
+  public viewDocument(document: any) {
+    console.log(document)
+  }
 
   constructor() {}
 
