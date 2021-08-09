@@ -4,6 +4,8 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { InactiveDialogComponent } from '../shared/modules/inactive-dialog/inactive-dialog.component';
+import { Router } from '@angular/router';
+import { LocalStorageService } from '../shared/services/common/localstorage.service';
 
 @Component({
   selector: 'app-not-verify-client',
@@ -11,7 +13,7 @@ import { InactiveDialogComponent } from '../shared/modules/inactive-dialog/inact
   styleUrls: ['./not-verify-client.component.scss'],
 })
 export class NotVerifyClientComponent implements OnInit, OnDestroy {
-  constructor(public dialogService: DialogService) {}
+
   items: MenuItem[];
 
   refInactiveDialog: DynamicDialogRef;
@@ -20,7 +22,28 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
   userInactive: Subject<any> = new Subject();
   private subscription$: Subscription = new Subscription();
 
+  public preloader: boolean = false;
+
+  constructor(
+    public dialogService: DialogService,
+    private router: Router,
+    private localStorageService: LocalStorageService
+    ) {}
+
   ngOnInit() {
+    this.preloader = true;
+    //TODO: rework it
+    // обновляет страницу, для изоляции стилей
+    if (this.localStorageService.getValue('fromPublic')) {
+      this.localStorageService.clearValue('fromPublic');
+      let currentUrl = this.router.url;
+      this.router.navigate([currentUrl]).then(() => {
+        window.location.reload();
+      });
+    } else {
+      this.preloader = false;
+    }
+
     this.items = [
       {
         label: 'Запросы',
@@ -85,12 +108,9 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
   }
 
   setTimeout() {
-    this.userActivity = setTimeout(
-      () => {
-        this.userInactive.next(undefined)
-      },
-      900000
-    );
+    this.userActivity = setTimeout(() => {
+      this.userInactive.next(undefined);
+    }, 900000);
   }
 
   @HostListener('window:mousemove') refreshUserState() {

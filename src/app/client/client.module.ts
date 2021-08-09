@@ -8,6 +8,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ClientRoutingModule } from './client-routing.module';
 import {SkeletonModule} from 'primeng/skeleton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -48,6 +49,7 @@ import { MIBNotifyAccordionGroupComponent } from './shared/components/mib-notify
     DropdownModule,
     MenuModule,
     SkeletonModule,
+    ProgressSpinnerModule,
     FormsModule,
     ClientRoutingModule,
     ReactiveFormsModule,

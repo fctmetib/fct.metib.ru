@@ -15,6 +15,7 @@ import { MessageModule } from 'primeng/message';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { CommonService } from '../shared/services/common/common.service';
 import { RegisterEffect } from './store/effects/register.effect';
@@ -54,6 +55,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
     ]),
     InputTextModule,
     DropdownModule,
+    ProgressSpinnerModule,
     CardModule,
     MessageModule,
     MessagesModule,

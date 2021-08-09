@@ -17,6 +17,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from 'primeng/skeleton';
 import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive-dialog.module';
 import { AdminGuard } from '../shared/services/admin.guard';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { AuthGuard } from '../shared/services/auth.guard';
 import { AdminComponent } from './admin.component';
@@ -66,6 +67,7 @@ const routes = [
     InputTextModule,
     CheckboxModule,
     ButtonModule,
+    ProgressSpinnerModule,
     RadioButtonModule,
     InputTextareaModule,
     DropdownModule,

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { LocalStorageService } from '../shared/services/common/localstorage.service';
 
 @Component({
   selector: 'public',
@@ -8,9 +9,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class PublicComponent implements OnInit {
 
-  constructor() { }
+  constructor(private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
+    this.localStorageService.setValue('fromPublic', true);
   }
 
   ngOnDestroy() {

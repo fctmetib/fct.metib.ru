@@ -6,11 +6,12 @@ import { NotifyDialogComponent } from './shared/components/notify-dialog/notify-
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { InactiveDialogComponent } from '../shared/modules/inactive-dialog/inactive-dialog.component';
+import { LocalStorageService } from '../shared/services/common/localstorage.service';
 
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
-  styleUrls: ['./client.component.scss'],
+  styleUrls: ['./client.component.scss']
 })
 export class ClientComponent implements OnInit, OnDestroy {
   refNotificationDialog: DynamicDialogRef;
@@ -20,13 +21,15 @@ export class ClientComponent implements OnInit, OnDestroy {
   userInactive: Subject<any> = new Subject();
 
   private subscription$: Subscription = new Subscription();
+  public preloader: boolean = false;
 
   items: MenuItem[];
 
   constructor(
     private router: Router,
     public dialogService: DialogService,
-    private notifyService: NotificationService
+    private notifyService: NotificationService,
+    private localStorageService: LocalStorageService
   ) {
     this.setTimeout();
     this.userInactive.subscribe(() => {
@@ -36,6 +39,20 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.preloader = true;
+    //TODO: rework it
+    // обновляет страницу, для изоляции стилей
+    if (this.localStorageService.getValue('fromPublic')) {
+      this.localStorageService.clearValue('fromPublic');
+      let currentUrl = this.router.url;
+      this.router.navigate([currentUrl]).then(() => {
+        window.location.reload();
+      });
+    } else {
+      this.preloader = false;
+    }
+
+
     this.items = [
       {
         label: 'Кабинет',

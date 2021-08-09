@@ -1,1 +1,9 @@
-<router-outlet></router-outlet>
+<ng-container *ngIf="preloader; else contentTemplate">
+  <div class="mib-preload">
+    Загрузка
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+</ng-container>
+<ng-template #contentTemplate>
+  <router-outlet></router-outlet>
+</ng-template>

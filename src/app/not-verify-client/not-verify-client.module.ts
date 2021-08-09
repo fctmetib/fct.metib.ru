@@ -21,6 +21,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../shared/services/auth.interceptor';
 import { DialogService } from 'primeng/dynamicdialog';
 import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive-dialog.module';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive
     HttpClientModule,
     RadioButtonModule,
     InputTextareaModule,
+    ProgressSpinnerModule,
     DropdownModule,
     MenuModule,
     SkeletonModule,
@@ -40,7 +42,7 @@ import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive
     CardModule,
     MenubarModule,
     AvatarModule,
-    InactiveDialogModule
+    InactiveDialogModule,
   ],
   declarations: [
     NotVerifyClientComponent,

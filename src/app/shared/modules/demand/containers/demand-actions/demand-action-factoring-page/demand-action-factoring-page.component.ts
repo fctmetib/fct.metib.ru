@@ -1,6 +1,6 @@
 import { FileModeInterface } from './../../../../../types/file/file-model.interface';
 import { DemandService } from '../../../services/demand.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { CreateDemandFactoringRequestInterface } from '../../../types/requests/create-demand-factoring-request.interface';
