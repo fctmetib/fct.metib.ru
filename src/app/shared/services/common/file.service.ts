@@ -52,8 +52,8 @@ export class FileService {
     return this.http.get<any>(url);
   }
 
-  getFile(): Observable<string> {
-    let url = `${environment.apiUrl}/File`;
+  getFile(id: string): Observable<string> {
+    let url = `${environment.apiUrl}/document/${id}/file`;
     return this.http.get<string>(url);
   }
 

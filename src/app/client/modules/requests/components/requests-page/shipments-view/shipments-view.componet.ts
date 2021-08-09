@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'shipments-view',
   template: `
-   <p-table [value]="shipments">
+    <p-table [value]="shipments">
       <ng-template pTemplate="header">
         <tr>
           <th>
@@ -24,22 +24,30 @@ import { Component, OnInit, Input } from '@angular/core';
         <tr>
           <td>
             <div class="m-td">
-              {{ shipment.ID }}
+              <div>
+                {{ shipment.ID }}
+              </div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              {{ shipment.InvoiceNumber }}
+              <div>
+                {{ shipment.InvoiceNumber }}
+              </div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              {{ shipment.DateShipment | date:"dd.MM.yyyy" }}
+              <div>
+                {{ shipment.DateShipment | date: 'dd.MM.yyyy' }}
+              </div>
             </div>
           </td>
           <td>
-            <div class="m-td">
-              {{ shipment.Summ | currency:'RUB':'symbol-narrow' }}
+            <div class="m-td currency">
+              <div>
+                {{ shipment.Summ | currency: 'RUB':'symbol-narrow' }}
+              </div>
             </div>
           </td>
         </tr>
@@ -52,13 +60,11 @@ import { Component, OnInit, Input } from '@angular/core';
     </p-table>
   `,
 })
-
 export class ShipmentsViewComponent implements OnInit {
-
   @Input()
-  shipments: any[]
+  shipments: any[];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

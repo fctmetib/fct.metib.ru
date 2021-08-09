@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'documents-view',
@@ -21,25 +21,37 @@ import { Component, OnInit, Input } from '@angular/core';
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-document>
-        <tr class="can-click" (click)="viewDocument(document)" >
+        <tr class="can-click" (click)="viewDocument(document)">
           <td>
             <div class="m-td">
-              {{ document.DocumentID }}
+              <div>
+                {{ document.DocumentID }}
+              </div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              {{ document.Number }}
+              <div>
+                {{ document.Number }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div
+              class="m-td"
+              tooltipPosition="bottom"
+              pTooltip="{{ document.Description }}"
+            >
+              <div>
+                {{ document.Description }}
+              </div>
             </div>
           </td>
           <td>
             <div class="m-td">
-              {{ document.Description }}
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              {{ document.Title }}
+              <div>
+                {{ document.Title }}
+              </div>
             </div>
           </td>
         </tr>
@@ -56,12 +68,14 @@ export class DocumentsViewComponent implements OnInit {
   @Input()
   documents: any[];
 
-
-  public viewDocument(document: any) {
-    console.log(document)
-  }
+  @Output()
+  documentView: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {}
 
   ngOnInit() {}
+
+  public viewDocument(document: any) {
+    this.documentView.emit(document);
+  }
 }

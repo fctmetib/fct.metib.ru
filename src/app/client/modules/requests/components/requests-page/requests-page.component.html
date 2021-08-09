@@ -215,7 +215,7 @@
         <shipments-view [shipments]="selectedRequest.Shipments"></shipments-view>
       </p-tabPanel>
       <p-tabPanel header="Документы">
-        <documents-view [documents]="selectedRequest.Documents"></documents-view>
+        <documents-view [documents]="selectedRequest.Documents" (documentView)="documentViewHandler($event)"></documents-view>
       </p-tabPanel>
     </p-tabView>
   </ng-template>

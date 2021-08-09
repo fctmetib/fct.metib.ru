@@ -17,6 +17,7 @@ import { AgencyRequestCreateDialogComponent } from '../agency-request-create-dia
 import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestStoreService } from '../../../../../shared/services/store/request.store.service';
+import { FileService } from 'src/app/shared/services/common/file.service';
 
 @Directive({
   selector: '[tableHighlight]',
@@ -42,6 +43,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   public confirmForm: FormGroup;
   public confirmDialog: boolean = false;
 
+  public documentViewDialog: boolean = false;
+
   public selectedItems: RequestsResponseInterface[] = [];
 
   public successRequestsDialogMessage: string = null;
@@ -56,7 +59,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     public dialogService: DialogService,
     private fb: FormBuilder,
     private requestService: RequestsService,
-    private requestStoreService: RequestStoreService
+    private requestStoreService: RequestStoreService,
+    private fileService: FileService
   ) {}
 
   ngOnInit() {
@@ -127,6 +131,14 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
           this.selectedRequest = requestWithAdditionalData;
           console.log('SELECTED ROW: ', this.selectedRequest);
         })
+    );
+  }
+
+  public documentViewHandler(document) {
+    this.subscription$.add(
+      this.fileService.getFile(document.DocumentID).subscribe((response) => {
+        this.documentViewDialog = true;
+      })
     );
   }
 
