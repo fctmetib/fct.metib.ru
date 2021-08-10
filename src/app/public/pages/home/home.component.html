@@ -303,8 +303,14 @@
   <div class="mib-container">
     <h2>Пресс-центр</h2>
     <mib-slider [theme]="'news'">
-        <mib-card-news *ngFor="let card of news" [image]= card.ID [title]= card.Title
-          [date]= card.Date [desc]= card.Desc>
+        <mib-card-news
+          *ngFor="let card of news"
+          [id]= card.ID
+          [title]= card.Title
+          [date]= card.Date
+          [desc]= card.Desc
+          (read)="onReadHandler($event)"
+          >
         </mib-card-news>
     </mib-slider>
   </div>

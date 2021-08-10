@@ -4,5 +4,5 @@ export interface NewsInterface {
     Title: string;
     Date: string;
     Desc: string;
+    Text: string;
   }
-  

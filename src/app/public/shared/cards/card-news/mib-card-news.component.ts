@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'mib-card-news',
   styleUrls: ['./mib-card-news.component.scss'],
   template: `
-    <div class="mib-card-news">
+    <div class="mib-card-news can-click" (click)="openNews(id)" >
       <div class="header">
         <div class="date">
           {{ date | date:"dd.MM.yyyy"}}
@@ -29,7 +29,7 @@ export class MibCardNewsComponent implements OnInit {
   date: string;
 
   @Input()
-  image: string;
+  id: string;
 
   @Input()
   title: string;
@@ -37,12 +37,18 @@ export class MibCardNewsComponent implements OnInit {
   @Input()
   desc: string;
 
+  @Output()
+  read = new EventEmitter<any>();
 
   public imageSrc: string;
 
   constructor() {}
 
   ngOnInit() {
-    this.imageSrc = `http://api-factoring.metib.ru:8094/api/news/${this.image}/image`
+    this.imageSrc = `http://api-factoring.metib.ru:8094/api/news/${this.id}/image`
+  }
+
+  public openNews(id: string) {
+    this.read.emit(id);
   }
 }

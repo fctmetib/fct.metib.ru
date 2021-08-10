@@ -6,6 +6,7 @@ import { NewsInterface } from '../../type/news.interface';
 import { OrganizationService } from '../../service/organization.service';
 import { MibModalService } from '../../shared/mib-modal';
 import { OrganizationInterface } from '../../type/organization.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'home',
@@ -31,11 +32,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     private mibModalService: MibModalService,
     private fb: FormBuilder,
     private organizationService: OrganizationService,
-    private newsService: NewsService
+    private newsService: NewsService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.fillNews();
+  }
+
+  public onReadHandler(id: string) {
+    this.router.navigate([`news/${id}`]);
   }
 
   public isFinanceFormValid(): boolean {
