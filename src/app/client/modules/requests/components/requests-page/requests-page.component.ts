@@ -135,8 +135,9 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   public documentViewHandler(document) {
+    console.log(document)
     this.subscription$.add(
-      this.fileService.getFile(document.DocumentID).subscribe((response) => {
+      this.fileService.getFile(this.selectedRequest.ID, document.DocumentID).subscribe((response) => {
         this.documentViewDialog = true;
       })
     );

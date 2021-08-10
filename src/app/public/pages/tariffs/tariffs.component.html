@@ -8,17 +8,50 @@
     Выберите удобный Вам тариф
   </h2>
   <div class="items">
-    <mib-card-tariff [theme]="'purp'" [title]="'Premium'"
+    <mib-card-tariff
+      [theme]="'purp'"
+      [title]="'Premium'"
+      (consultation)="onConsultationHandler()"
       [items]="['Финансирование до 100%', 'Фиксированная процентная ставка', 'Финансирование в день отгрузки']">
     </mib-card-tariff>
-    <mib-card-tariff [theme]="'blue'" [title]="'Business'" [items]="['Отсрочка до
+    <mib-card-tariff
+      [theme]="'blue'"
+      (consultation)="onConsultationHandler()"
+      [title]="'Business'"
+      [items]="['Отсрочка до
   3-х лет', 'Финансирование до 100%', 'Фиксированный комиссионный параметр за каждый день пользования деньгами']">
     </mib-card-tariff>
-    <mib-card-tariff [theme]="'green'" [title]="'Compromise no risk'"
+    <mib-card-tariff
+      [theme]="'green'"
+      [title]="'Compromise no risk'"
+      (consultation)="onConsultationHandler()"
       [items]="['Финансирование до 100%', 'Фиксированная процентная ставка', 'Страхование дебиторской задолженности']">
     </mib-card-tariff>
-    <mib-card-tariff [theme]="'red'" [title]="'Compromise'"
+    <mib-card-tariff
+      [theme]="'red'"
+      (consultation)="onConsultationHandler()"
+      [title]="'Compromise'"
       [items]="['Комиссионный параметр за каждый день пользования деньгами', 'Бесплатный льготный период 30 дней', 'Возможность выбора комфортных условий финансирования за минимальную процентную ставку']">
     </mib-card-tariff>
   </div>
 </mib-section-body>
+
+<!-- Modals -->
+<mib-modal id="get-finance" [width]="'350px'" [title]="'Финансирование'">
+  <form class="one-column" [formGroup]="financeForm">
+    <input type="text" formControlName="organization" placeholder="Название организации">
+    <input type="text" formControlName="name" placeholder="Имя">
+    <input type="phone" formControlName="phone" placeholder="Телефон">
+    <input type="email" formControlName="email" placeholder="Электронная почта">
+    <input type="text" formControlName="inn" placeholder="ИНН">
+    <input type="text" formControlName="comment" placeholder="Ваш комментарий">
+    <div class="actions">
+      <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"
+        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid()"></mib-button>
+    </div>
+    <div class="checkbox">
+      <input type="checkbox" id="checkbox" formControlName="isAccept">
+      <label for="checkbox">Пожалуйста подтвердите Ваше согласие на обработку персональных данных</label>
+    </div>
+  </form>
+</mib-modal>

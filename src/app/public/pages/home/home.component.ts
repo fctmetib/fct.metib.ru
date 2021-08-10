@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable, observable, Subscriber } from 'rxjs';
-import { subscribeOn } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { NewsService } from '../../service/news.service';
 import { NewsInterface } from '../../type/news.interface';
 import { OrganizationService } from '../../service/organization.service';
@@ -11,9 +10,11 @@ import { OrganizationInterface } from '../../type/organization.interface';
 @Component({
   selector: 'home',
   styleUrls: ['./home.component.scss'],
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  private subscription$: Subscription = new Subscription();
+
   public financeForm = this.fb.group({
     organization: [''],
     name: ['', Validators.required],
@@ -47,10 +48,14 @@ export class HomeComponent implements OnInit {
 
   public sendFinanceRequest(id: string) {
     let organizationInterface: OrganizationInterface = this.financeForm.value;
-    this.organizationService.send(organizationInterface).subscribe(response=>{
-      this.closeModal(id);
-      this.financeForm.reset();
-    });
+    this.subscription$.add(
+      this.organizationService
+        .send(organizationInterface)
+        .subscribe((response) => {
+          this.closeModal(id);
+          this.financeForm.reset();
+        })
+    );
   }
 
   openModal(id: string) {
@@ -62,8 +67,14 @@ export class HomeComponent implements OnInit {
   }
 
   fillNews() {
-    this.newsService.getNews(10).subscribe(responseNews => {
-      this.news = responseNews
-    });
+    this.subscription$.add(
+      this.newsService.getNews(10).subscribe((responseNews) => {
+        this.news = responseNews;
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }

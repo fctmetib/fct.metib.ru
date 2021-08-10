@@ -16,21 +16,29 @@
     &.purp {
       background: #DEBCFF;
       color: #7F00FF;
+
+      border-bottom: 1px dashed #7F00FF;
     }
 
     &.blue {
       color: #0C83F1;
       background: #BCEBFF;
+
+      border-bottom: 1px dashed #0C83F1;
     }
 
     &.green {
       background: #C1FFCF;
       color: #00C614;
+
+      border-bottom: 1px dashed #00C614;
     }
 
     &.red {
       background: #FFDCBC;
       color: #FF7A00;
+
+      border-bottom: 1px dashed #FF7A00;
     }
   }
 

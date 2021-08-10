@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'mib-card-tariff',
@@ -16,7 +16,7 @@ import { Component, Input, OnInit } from '@angular/core';
           <div class="text">{{ item }}</div>
         </div>
       </div>
-      <div class="footer">
+      <div class="footer can-click" (click)="getConsultation()" >
         Получить консультацию
       </div>
     </div>
@@ -32,7 +32,14 @@ export class MibCardTariffComponent implements OnInit {
   @Input()
   theme: string;
 
+  @Output()
+  consultation = new EventEmitter<any>();
+
   constructor() {}
 
   ngOnInit() {}
+
+  public getConsultation() {
+    this.consultation.emit();
+  }
 }
