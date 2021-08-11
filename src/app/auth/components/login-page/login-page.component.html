@@ -6,20 +6,20 @@
         <div class="auth__body__form__fields__field">
           <input id="login" type="text" pInputText placeholder="Логин" formControlName="login"
             [ngClass]="{'ng-invalid ng-dirty': form.get('login').invalid && form.get('login').touched}">
-          <!-- <small class="p-error" *ngIf="form.get('login').invalid && form.get('login').touched">
+          <small class="p-error" *ngIf="form.get('login').invalid && form.get('login').touched">
             <div *ngIf="form.get('login').errors['required']">
               Поле Логин не должно быть пустым
             </div>
-          </small> -->
+          </small>
         </div>
         <div class="auth__body__form__fields__field">
           <input id="password" type="password" pInputText placeholder="Пароль" formControlName="password"
             [ngClass]="{'ng-invalid ng-dirty': form.get('password').invalid && form.get('password').touched}">
-          <!-- <small class="p-error" *ngIf="form.get('password').invalid && form.get('password').touched">
+          <small class="p-error" *ngIf="form.get('password').invalid && form.get('password').touched">
             <div *ngIf="form.get('password').errors['required']">
               Поле Пароль не должно быть пустым
             </div>
-          </small> -->
+          </small>
         </div>
       </div>
       <div class="actions">

@@ -9,7 +9,7 @@
     <div class="actions">
       <span class="p-input-icon-left mr-20">
         <i class="pi pi-search"></i>
-        <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" pInputText />
+        <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" [(ngModel)]="searchField" (ngModelChange)="search()" pInputText />
       </span>
       <button pButton pRipple type="button" label="Вернуться к списку запросов" [routerLink]="['/demand']"
         class="p-button-outlined"></button>

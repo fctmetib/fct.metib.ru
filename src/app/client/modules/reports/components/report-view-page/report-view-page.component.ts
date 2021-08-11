@@ -23,6 +23,8 @@ export class ReportViewPageComponent implements OnInit {
   public reportData: any[] = [];
   public search: string;
 
+  public filteredColumns: string[] = [];
+
   public selectedRow: any;
   public items: MenuItem[];
 
@@ -86,8 +88,8 @@ export class ReportViewPageComponent implements OnInit {
     ];
   }
 
-  public onSearch(value) {
-    console.log(value);
+  public setFilterFields() {
+    this.filteredColumns = this.reportConfig.columns.map(x => x.name);
   }
 
   get selectedColumns(): any[] {
@@ -184,6 +186,7 @@ export class ReportViewPageComponent implements OnInit {
       if (column.visible) {
         this._selectedColumns.push(column);
       }
+      this.setFilterFields();
     });
   }
 

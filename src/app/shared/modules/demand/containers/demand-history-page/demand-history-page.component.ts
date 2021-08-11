@@ -20,6 +20,9 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
 
   allDemands: DemandInterface<any>[] = [];
   allDrafts: any[] = [];
+
+  public searchField: string = '';
+
   private subscription$: Subscription = new Subscription();
 
   constructor(
@@ -35,6 +38,12 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+  }
+
+  public search() {
+    this.allDemands.find(x => {
+      return x.Messages ? x.Messages.toString().toLowerCase().includes(this.searchField.toLowerCase()) || x.Manager : x.Manager.toString().toLowerCase().includes(this.searchField.toLowerCase())
+    });
   }
 
   fetch() {

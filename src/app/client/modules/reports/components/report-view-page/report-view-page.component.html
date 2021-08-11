@@ -13,7 +13,7 @@
       <span class="p-input-icon-left mr-20">
         <i class="pi pi-search"></i>
         <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" [(ngModel)]="search"
-          (ngModelChange)="onSearch($event)" pInputText />
+          (input)="dt.filterGlobal($event.target.value, 'contains')" pInputText />
       </span>
       <p-multiSelect [options]="reportConfig.columns" [(ngModel)]="selectedColumns" optionLabel="title"
         selectedItemsLabel="Выбрано колонок - {0}" class="mr-20" [style]="{minWidth: '200px'}"
@@ -28,7 +28,8 @@
     <p-table #dt [columns]="reportConfig.columns" [value]="reportData" [showCurrentPageReport]="true"
       [scrollable]="true" [(contextMenuSelection)]="selectedRow" [contextMenu]="cm"
       styleClass="p-datatable-customers mib-table" [rows]="25" (onPage)="paginate($event)"
-      [rowsPerPageOptions]="[25,50]" [paginator]="true">
+      [rowsPerPageOptions]="[25,50]" [paginator]="true"
+      [filterDelay]="0" [globalFilterFields]="filteredColumns">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
           <ng-container *ngFor="let col of columns">
@@ -74,7 +75,7 @@
       <ng-template pTemplate="footer">
         <tr>
           <td [colSpan]="getColSpanIndex()"></td>
-          <td style="text-align: right;" *ngIf="(selectedDisplay$ | async)" >
+          <td style="text-align: right;" *ngIf="(selectedDisplay$ | async)">
             <div *ngIf="sumCurrentPage || sumAllPages">
               {{ sumCurrentPage ? 'Сумма на этой странице: ' : 'Сумма по всем страницам: '}}
               {{ (sumCurrentPage ? sumCurrentPage : sumAllPages) | currency:'RUB':'symbol' }}
