@@ -1,6 +1,6 @@
-<mib-section-header [backgroundImageUrl]="imageSrc">
-  <span class="date">{{ currentNews.Date | date:"dd.MM.yyyy"}}</span>
-  <h1>{{currentNews.Title}}</h1>
+<mib-section-header [backgroundImageUrl]="imageSrc" [pageType]="'news'">
+  <span class="date">{{ currentNews?.Date | date:"dd.MM.yyyy"}}</span>
+  <h1 class="news-title">{{currentNews?.Title}}</h1>
   <!-- <p class="desc">
     За последние пол года все больше и больше людей стали заботиться о
     своем здоровье и физической форме. В связи с этим в адрес
@@ -9,5 +9,5 @@
   </p> -->
 </mib-section-header>
 <mib-section-body>
-  {{currentNews.Text}}
+  {{currentNews?.Text}}
 </mib-section-body>

@@ -1,3 +1,42 @@
+<div class="auth-body">
+  <div class="auth-body__form">
+    <h1>Личный кабинет</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div>
+        <div>
+          <label for="login">Логин</label>
+          <input id="login" type="text" pInputText placeholder="Логин" formControlName="login"
+            [ngClass]="{'ng-invalid ng-dirty': form.get('login').invalid && form.get('login').touched}">
+          <small class="p-error" *ngIf="form.get('login').invalid && form.get('login').touched">
+            <div *ngIf="form.get('login').errors['required']">
+              Поле Логин не должно быть пустым
+            </div>
+          </small>
+        </div>
+        <div>
+          <label for="password">Пароль</label>
+          <input id="password" type="password" pInputText placeholder="Пароль" formControlName="password"
+            [ngClass]="{'ng-invalid ng-dirty': form.get('password').invalid && form.get('password').touched}">
+          <small class="p-error" *ngIf="form.get('password').invalid && form.get('password').touched">
+            <div *ngIf="form.get('password').errors['required']">
+              Поле Пароль не должно быть пустым
+            </div>
+          </small>
+        </div>
+      </div>
+      <div>
+        <p-button styleClass="p-button-link" label="Забыли пароль?" [routerLink]="['/reset-password']"></p-button>
+      </div>
+      <div>
+        <p-button styleClass="p-button-link" [routerLink]="['/register']" label="Регистрация"></p-button>
+        <button pButton type="submit" [disabled]="isSubmitting$ | async" label="Вход"></button>
+      </div>
+    </form>
+  </div>
+  <div class="auth-body__promo"></div>
+</div>
+
+<!--
 <div class="p-d-flex p-jc-center">
   <p-card class="auth-body">
     <a class="logo" href="#/"><img alt="metallinvest logo" src="assets/images/logo_big.png"></a>
@@ -44,4 +83,4 @@
       label="[TEST] Новый пароль"></p-button>
 
   </p-card>
-</div>
+</div> -->
