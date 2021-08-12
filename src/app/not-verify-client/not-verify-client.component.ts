@@ -13,7 +13,6 @@ import { LocalStorageService } from '../shared/services/common/localstorage.serv
   styleUrls: ['./not-verify-client.component.scss'],
 })
 export class NotVerifyClientComponent implements OnInit, OnDestroy {
-
   items: MenuItem[];
 
   refInactiveDialog: DynamicDialogRef;
@@ -28,7 +27,7 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
     public dialogService: DialogService,
     private router: Router,
     private localStorageService: LocalStorageService
-    ) {}
+  ) {}
 
   ngOnInit() {
     this.preloader = true;

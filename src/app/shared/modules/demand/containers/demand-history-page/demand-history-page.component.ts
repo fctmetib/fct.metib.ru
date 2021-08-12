@@ -201,7 +201,8 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
             this.isSearching = true;
           }),
           debounceTime(2000),
-          distinctUntilChanged())
+          distinctUntilChanged()
+        )
         .subscribe((formSub) => {
           this.allDemandsFiltered = [];
           let searchFieldValue: string = formSub.search;
