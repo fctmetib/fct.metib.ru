@@ -6,19 +6,24 @@
         Список Истории запросов
       </div>
     </div>
-    <div class="actions">
-      <span class="p-input-icon-left mr-20">
-        <i class="pi pi-search"></i>
-        <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" [(ngModel)]="searchField" (ngModelChange)="search()" pInputText />
+    <form [formGroup]="searchForm" class="actions">
+      <span class="mr-20" [ngClass]="isSearching ? 'p-input-icon-right' : 'p-input-icon-left'">
+        <ng-container *ngIf="isSearching; else searchIconTemplate">
+          <i class="pi pi-spin pi-spinner"></i>
+        </ng-container>
+        <ng-template #searchIconTemplate>
+          <i class="pi pi-search"></i>
+        </ng-template>
+        <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" formControlName="search" pInputText />
       </span>
       <button pButton pRipple type="button" label="Вернуться к списку запросов" [routerLink]="['/demand']"
         class="p-button-outlined"></button>
-    </div>
+    </form>
   </div>
 
   <div class="demand-list">
     <ng-container *ngIf="loading; else skeletonDemandTemplate">
-      <div class="demand-item" *ngFor="let demand of allDemands">
+      <div class="demand-item" *ngFor="let demand of allDemandsFiltered">
         <div class="demand-info">
           <div class="demand-card">
             <div class="demand-card-content">

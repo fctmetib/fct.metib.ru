@@ -4,7 +4,14 @@ import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import {
+  switchMap,
+  map,
+  debounceTime,
+  distinctUntilChanged,
+  tap,
+} from 'rxjs/operators';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-demand-history-page',
@@ -18,14 +25,19 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   selectedItems: DemandInterface<any>[];
   isUserVerified: boolean;
 
+  allDemandsFiltered: DemandInterface<any>[] = [];
   allDemands: DemandInterface<any>[] = [];
   allDrafts: any[] = [];
 
-  public searchField: string = '';
+  public searchForm = this.fb.group({
+    search: [''],
+  });
 
   private subscription$: Subscription = new Subscription();
+  isSearching: boolean;
 
   constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
     private demandService: DemandService,
     private router: Router
@@ -33,6 +45,7 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.fetch();
+    this.initForm();
     this.isUserVerified = this.authService.isUserVerified();
   }
 
@@ -40,11 +53,7 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-  public search() {
-    this.allDemands.find(x => {
-      return x.Messages ? x.Messages.toString().toLowerCase().includes(this.searchField.toLowerCase()) || x.Manager : x.Manager.toString().toLowerCase().includes(this.searchField.toLowerCase())
-    });
-  }
+  public search() {}
 
   fetch() {
     this.loading = true;
@@ -91,6 +100,31 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
               });
             }
           }
+
+          this.allDemands = this.allDemands.map((x) => {
+            let translatedType = this.getTypeTranslate(x.Type);
+            let translatedStatus = this.getStatusTranslate(x.Status);
+
+            return {
+              Type: x?.Type,
+              Status: x?.Status,
+              User: x?.User,
+              Manager: x?.Manager,
+              DateCreated: x?.DateCreated,
+              DateModify: x?.DateModify,
+              DateStatus: x?.DateStatus,
+              Requirements: x?.Requirements,
+              Steps: x?.Steps,
+              Messages: x?.Messages,
+              Files: x?.Files,
+              Data: x?.Data,
+              Result: x?.Result,
+              ID: x?.ID,
+              TranslatedType: translatedType,
+              TranslatedStatus: translatedStatus,
+            };
+          });
+          this.allDemandsFiltered = this.allDemands;
         })
     );
   }
@@ -157,5 +191,95 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         });
         break;
     }
+  }
+
+  private initForm() {
+    this.subscription$.add(
+      this.searchForm.valueChanges
+        .pipe(
+          tap(() => {
+            this.isSearching = true;
+          }),
+          debounceTime(2000),
+          distinctUntilChanged())
+        .subscribe((formSub) => {
+          this.allDemandsFiltered = [];
+          let searchFieldValue: string = formSub.search;
+          searchFieldValue = searchFieldValue.toLowerCase();
+          this.allDemands.forEach((demand) => {
+            let propValueList = Object.values(demand);
+            for (let i = 0; i < propValueList.length; i++) {
+              {
+                if (propValueList[i]) {
+                  if (
+                    propValueList[i]
+                      .toString()
+                      .toLowerCase()
+                      .indexOf(searchFieldValue) > -1
+                  ) {
+                    this.allDemandsFiltered.push(demand);
+                    break;
+                  }
+                }
+              }
+            }
+          });
+          this.isSearching = false;
+        })
+    );
+  }
+
+  private getTypeTranslate(type): string {
+    let result: string = '';
+    switch (type) {
+      case 'Factoring':
+        result = 'Запрос на Факторинг';
+        break;
+      case 'DigitalSignature':
+        result = 'Запрос на ЭЦП';
+        break;
+      case 'ProfileChange':
+        result = 'Запрос на Редактирование Профиля';
+        break;
+      case 'Question':
+        result = 'Запрос на свободную тему';
+        break;
+      case 'Limit':
+        result = 'Запрос на лимит';
+        break;
+      case 'NewDebtor':
+        result = 'Запрос на нового дебитора';
+        break;
+      default:
+        result = 'Запрос на свободную тему';
+        break;
+    }
+    return result;
+  }
+
+  private getStatusTranslate(status): string {
+    let result: string = '';
+    switch (status) {
+      case 'Processing':
+        result = 'В процессе';
+        break;
+      case 'Completed':
+        result = 'Завершен';
+        break;
+      case 'Rejected':
+        result = 'Отклонено';
+        break;
+      case 'Created':
+        result = 'Создан';
+        break;
+      case 'Draft':
+        result = 'Черновик';
+        break;
+      case 'Canceled':
+        result = 'Отменен';
+        break;
+    }
+
+    return result;
   }
 }

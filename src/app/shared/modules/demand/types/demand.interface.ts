@@ -21,4 +21,8 @@ export interface DemandInterface<T> {
   Data: T;
   Result: DemandResultDataInterface;
   ID: number;
+  // Translated
+  TranslatedType?: string;
+  TranslatedStatus?: string;
+  TranslatedResult?: string;
 }
