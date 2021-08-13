@@ -1,3 +1,4 @@
+import { BankInterface } from './../../../../../types/common/bank.interface';
 import { Observable, Subscription } from 'rxjs';
 import { CurrencyPipe, formatDate } from '@angular/common';
 import { CommonService } from 'src/app/shared/services/common/common.service';
@@ -48,6 +49,10 @@ export class DemandActionAgentFactoringPageComponent
   public formFactoring: FormGroup;
   public formAddress: FormGroup;
 
+  public banksFounded: BankInterface[];
+  public resultsBIK: string[];
+  public resultsBankname: string[];
+
   public files: FileModeInterface[] = [];
 
   public organizationTypes: DemandSelectboxInterface[] = [];
@@ -95,6 +100,41 @@ export class DemandActionAgentFactoringPageComponent
           this.isLoading = true;
           this.getDraft();
         }
+      })
+    );
+  }
+
+
+  public search(event): void {
+    this.subscription$.add(
+      this.commonService.getBankByBIK(event.query).subscribe((data) => {
+        this.banksFounded = data;
+        this.resultsBIK = data.map(result => result.BIC);
+      })
+    );
+  }
+
+  public onOtherBankSelect(indexOtherBank: number, bankInfo: string) {
+    let bank = this.banksFounded.find(x => x.BIC === bankInfo || x.Name === bankInfo);
+    this.formFactoring.get('otherBanks')['controls'][indexOtherBank].patchValue({
+      otherBankName: bank.Name,
+    })
+  }
+
+  public onBankSelect(bankInfo: string) {
+    let bank = this.banksFounded.find(x => x.BIC === bankInfo || x.Name === bankInfo);
+    this.formFactoring.patchValue({
+      bankBik: bank.BIC,
+      bankCorrespondentAccount: bank.AccountBank,
+      bankName: bank.Name,
+    })
+  }
+
+  public searchByBankName(event): void {
+    this.subscription$.add(
+      this.commonService.getBankByName(event.query).subscribe((data) => {
+        this.banksFounded = data;
+        this.resultsBankname = data.map(result => result.Name);
       })
     );
   }

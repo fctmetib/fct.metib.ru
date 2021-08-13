@@ -114,6 +114,13 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     );
   }
 
+  public onOtherBankSelect(indexOtherBank: number, bankInfo: string) {
+    let bank = this.banksFounded.find(x => x.BIC === bankInfo || x.Name === bankInfo);
+    this.formFactoring.get('otherBanks')['controls'][indexOtherBank].patchValue({
+      otherBankName: bank.Name,
+    })
+  }
+
   public onBankSelect(bankInfo: string) {
     let bank = this.banksFounded.find(x => x.BIC === bankInfo || x.Name === bankInfo);
     this.formFactoring.patchValue({

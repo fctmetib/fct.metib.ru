@@ -113,8 +113,9 @@
     </div>
     <div class="p-field p-col-12 p-md-6">
       <label for="bankName">Название банка</label>
-      <p-autoComplete id="bankName" placeholder="Название банка" formControlName="bankName" [suggestions]="resultsBankname"
-      (completeMethod)="searchByBankName($event)" (onSelect)="onBankSelect($event)"></p-autoComplete>
+      <p-autoComplete id="bankName" placeholder="Название банка" formControlName="bankName"
+        [suggestions]="resultsBankname" (completeMethod)="searchByBankName($event)" (onSelect)="onBankSelect($event)">
+      </p-autoComplete>
       <div *ngIf="formFactoring.controls['bankName'].invalid">
         <small *ngIf="formFactoring.controls['bankName'].errors.required" class="p-error">
           Поле должно быть заполнено.
@@ -193,8 +194,11 @@
               </div>
               <div class="p-field p-col-12 p-md-6">
                 <label for="otherBankName">Название банка</label>
-                <input id="otherBankName" type="text" pInputText placeholder="Название банка"
-                  formControlName="otherBankName">
+
+                <p-autoComplete id="otherBankName" placeholder="Название банка" formControlName="otherBankName"
+                  [suggestions]="resultsBankname" (completeMethod)="searchByBankName($event)" (onSelect)="onOtherBankSelect(formFactoring.get('otherBanks')['controls'][i], $event)">
+                </p-autoComplete>
+
                 <div *ngIf="formFactoring.get('otherBanks')['controls'][i].get('otherBankName').invalid">
                   <small *ngIf="formFactoring.get('otherBanks')['controls'][i].get('otherBankName').errors.required"
                     class="p-error">
@@ -430,7 +434,7 @@
                   </small>
                 </div>
               </div>
-              <div class="p-field p-col-12 p-md-4 p-lg-3">
+              <div class="p-field p-col-12 p-md-6 p-lg-6">
                 <label for="factoringPlacesBalanceReport">Остаток на дату сдачи отчетности</label>
                 <input id="factoringPlacesBalanceReport" type="text" pInputText
                   placeholder="Остаток на дату сдачи отчетности" formControlName="factoringPlacesBalanceReport">
@@ -443,7 +447,7 @@
                   </small>
                 </div>
               </div>
-              <div class="p-field p-col-12 p-md-4 p-lg-3">
+              <div class="p-field p-col-12 p-md-6 p-lg-6">
                 <label for="factoringPlacesBalanceCurrent">Остаток на текущую дату</label>
                 <input id="factoringPlacesBalanceCurrent" type="text" pInputText placeholder="Остаток на текущую дату"
                   formControlName="factoringPlacesBalanceCurrent">
