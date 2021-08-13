@@ -89,8 +89,8 @@
     <div class="p-field p-col-12 p-md-3">
       <label for="bankBik">Бик банка</label>
 
-      <p-autoComplete id="bankBik" placeholder="Бик банка" formControlName="bankBik" [suggestions]="resultsBIK" field="BIC"
-        (completeMethod)="search($event)" (onSelect)="onBIKselect($event)"></p-autoComplete>
+      <p-autoComplete id="bankBik" placeholder="Бик банка" formControlName="bankBik" [suggestions]="resultsBIK"
+        (completeMethod)="search($event)" (onSelect)="onBankSelect($event)"></p-autoComplete>
 
       <div *ngIf="formFactoring.controls['bankBik'].invalid">
         <small *ngIf="formFactoring.controls['bankBik'].errors.required" class="p-error">
@@ -113,7 +113,8 @@
     </div>
     <div class="p-field p-col-12 p-md-6">
       <label for="bankName">Название банка</label>
-      <input id="bankName" type="text" pInputText placeholder="Название банка" formControlName="bankName">
+      <p-autoComplete id="bankName" placeholder="Название банка" formControlName="bankName" [suggestions]="resultsBankname"
+      (completeMethod)="searchByBankName($event)" (onSelect)="onBankSelect($event)"></p-autoComplete>
       <div *ngIf="formFactoring.controls['bankName'].invalid">
         <small *ngIf="formFactoring.controls['bankName'].errors.required" class="p-error">
           Поле должно быть заполнено.
@@ -245,7 +246,7 @@
     <div class="p-field p-col-12 p-md-12">
       <h3>Приложение к Анкете (Факторинг)</h3>
     </div>
-    <div class="p-field p-col-12 p-md-6">
+    <div class="p-field p-col-12 p-lg-4">
       <label for="factoringProducts">Виды реализуемой продукции</label>
       <input id="factoringProducts" type="text" pInputText placeholder="Виды реализуемой продукции"
         formControlName="factoringProducts">
@@ -255,7 +256,7 @@
         </small>
       </div>
     </div>
-    <div class="p-field p-col-12 p-md-6">
+    <div class="p-field p-col-12 p-lg-8">
       <label for="factoringTradeMarks">Торговые марки, под которыми осуществляется продажа продукции</label>
       <input id="factoringTradeMarks" type="text" pInputText
         placeholder="Торговые марки, под которыми осуществляется продажа продукции"
@@ -266,7 +267,7 @@
         </small>
       </div>
     </div>
-    <div class="p-field p-col-12 p-md-3">
+    <div class="p-field p-col-12 p-lg-6">
       <label for="factoringShipments">Основные поставщики</label>
       <input id="factoringShipments" type="text" pInputText placeholder="Основные поставщики"
         formControlName="factoringShipments">
@@ -276,7 +277,7 @@
         </small>
       </div>
     </div>
-    <div class="p-field p-col-12 p-md-3">
+    <div class="p-field p-col-12 p-lg-6">
       <label for="factoringFinanceLimit">Предполагаемый лимит финансирования</label>
       <input id="factoringFinanceLimit" type="text" pInputText placeholder="Предполагаемый лимит финансирования"
         formControlName="factoringFinanceLimit">
@@ -286,7 +287,7 @@
         </small>
       </div>
     </div>
-    <div class="p-field p-col-12 p-md-3">
+    <div class="p-field p-col-12 p-md-6">
       <label for="factoringClients">Основные покупатели</label>
       <input id="factoringClients" type="text" pInputText placeholder="Основные покупатели"
         formControlName="factoringClients">
@@ -296,7 +297,7 @@
         </small>
       </div>
     </div>
-    <div class="p-field p-col-12 p-md-3">
+    <div class="p-field p-col-12 p-md-6">
       <label for="factoringWorkers">Количество сотрудников</label>
       <input id="factoringWorkers" type="number" pInputText placeholder="Количество сотрудников"
         formControlName="factoringWorkers">

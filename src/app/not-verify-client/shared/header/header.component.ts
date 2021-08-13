@@ -13,6 +13,7 @@ import { factoringSelector } from 'src/app/client/store/selectors';
 import * as introJs from 'intro.js/intro.js';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

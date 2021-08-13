@@ -14,6 +14,11 @@ export class CommonService {
     return this.http.get<BankInterface[]>(url)
   }
 
+  getBankByName(name: string): Observable<BankInterface[]> {
+    let url = `${environment.apiUrl}/public/banks?name=${name}`;
+    return this.http.get<BankInterface[]>(url)
+  }
+
   getIP(): Observable<string> {
     let url = `${environment.apiUrl}/test/ip`;
     // 'https://jsonip.com'

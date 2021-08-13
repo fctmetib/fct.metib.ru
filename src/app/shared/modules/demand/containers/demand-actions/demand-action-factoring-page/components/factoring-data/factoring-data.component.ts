@@ -56,7 +56,9 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
 
   public formFactoring: FormGroup;
 
-  public resultsBIK: BankInterface[];
+  public banksFounded: BankInterface[];
+  public resultsBIK: string[];
+  public resultsBankname: string[];
 
   public files: FileModeInterface[] = [];
 
@@ -106,16 +108,28 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   public search(event): void {
     this.subscription$.add(
       this.commonService.getBankByBIK(event.query).subscribe((data) => {
-        this.resultsBIK = data;
+        this.banksFounded = data;
+        this.resultsBIK = data.map(result => result.BIC);
       })
     );
   }
 
-  public onBIKselect(bank: BankInterface) {
+  public onBankSelect(bankInfo: string) {
+    let bank = this.banksFounded.find(x => x.BIC === bankInfo || x.Name === bankInfo);
     this.formFactoring.patchValue({
+      bankBik: bank.BIC,
       bankCorrespondentAccount: bank.AccountBank,
-      bankName: bank.Name
+      bankName: bank.Name,
     })
+  }
+
+  public searchByBankName(event): void {
+    this.subscription$.add(
+      this.commonService.getBankByName(event.query).subscribe((data) => {
+        this.banksFounded = data;
+        this.resultsBankname = data.map(result => result.Name);
+      })
+    );
   }
 
   addOtherBank(existBank?: DemandAddonAccountInterface): void {

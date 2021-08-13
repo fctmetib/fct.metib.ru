@@ -49,34 +49,34 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
         routerLink: 'demand',
         routerLinkActiveOptions: { exact: true },
       },
-      {
-        label: 'Кабинет',
-        disabled: true,
-      },
-      {
-        label: 'Заявки',
-        disabled: true,
-      },
-      {
-        label: 'Свободная задолженность',
-        disabled: true,
-      },
-      {
-        label: 'Договоры',
-        disabled: true,
-      },
-      {
-        label: 'Платежи',
-        disabled: true,
-      },
-      {
-        label: 'Просрочки Покупателя',
-        disabled: true,
-      },
-      {
-        label: 'Документы',
-        disabled: true,
-      },
+      // {
+      //   label: 'Кабинет',
+      //   disabled: true,
+      // },
+      // {
+      //   label: 'Заявки',
+      //   disabled: true,
+      // },
+      // {
+      //   label: 'Свободная задолженность',
+      //   disabled: true,
+      // },
+      // {
+      //   label: 'Договоры',
+      //   disabled: true,
+      // },
+      // {
+      //   label: 'Платежи',
+      //   disabled: true,
+      // },
+      // {
+      //   label: 'Просрочки Покупателя',
+      //   disabled: true,
+      // },
+      // {
+      //   label: 'Документы',
+      //   disabled: true,
+      // },
     ];
     this.setTimeout();
     this.userInactive.subscribe(() => {
