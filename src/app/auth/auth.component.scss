@@ -2,6 +2,7 @@
   .pre-auth {
     background-color: #f6f6f6;
   }
+
   // Desktop
   @media (min-width: 1300px) {
     .auth {
@@ -25,6 +26,16 @@
           border-top: 2px solid #4B75B1;
           background: #FDFDFD;
 
+          &.auth__body__form_reset {
+            height: 100%;
+          }
+
+          &.auth__body__form_registration {
+            width: 700px;
+            height: 100%;
+            padding: 28px 65px;
+          }
+
           h1 {
             font-style: normal;
             font-weight: normal;
@@ -35,7 +46,6 @@
           }
 
           form {
-
             .auth__body__form__fields {
               display: flex;
               flex-direction: column;
@@ -49,10 +59,39 @@
                   width: 100%;
                   height: 50px;
                   border: 1px solid #D6D6D6;
+                  padding: 20px;
                   border-radius: 10px;
+                }
+
+                .p-dropdown {
+                  width: 100%;
+                  height: 50px;
+                }
+
+                img {
+                  width: 100%;
+                  height: 80px;
                 }
               }
             }
+
+
+            .auth__body__form__fields__two-columns {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              gap: 10px;
+              margin-bottom: 10px;
+
+              .auth__body__form__fields__field {
+                flex: 2;
+
+                .registration-link {
+                  padding: 0px !important;
+                }
+              }
+            }
+
 
             .actions {
               display: flex;
@@ -83,6 +122,25 @@
                   box-sizing: border-box;
                   color: #C0C0C0;
                 }
+
+              }
+
+              &.actions_registration {
+                &.actions_additional {
+                  flex-wrap: unset;
+                }
+
+                .main {
+                  width: 100%;
+                  height: 50px;
+                  background: linear-gradient(216.14deg, #009FD9 10.37%, rgba(0, 159, 217, 0) 93.52%), #4B75B1;
+                  box-shadow: 0px 10px 15px rgba(12, 131, 241, 0.2);
+                  border: unset;
+                  font-size: 14px;
+                  line-height: 16px;
+                  border-radius: 10px;
+                  color: #fff;
+                }
               }
             }
           }
@@ -99,8 +157,8 @@
           .auth__body__promo__image {
             position: absolute;
             width: 100%;
-            top: -35px;
-            right: -3px;
+            top: 0px;
+            right: 0px;
           }
         }
       }
@@ -109,5 +167,152 @@
   }
 
   // Mobile
-  @media (max-width: 1300px) {}
+  @media (max-width: 1300px) {
+    .auth {
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+
+      .auth__body {
+        display: flex;
+        flex-direction: row;
+
+        .auth__body__form {
+          width: 350px;
+          height: 340px;
+          padding: 28px 35px;
+          border-radius: 10px;
+          border-top: 2px solid #4B75B1;
+          background: #FDFDFD;
+
+          &.auth__body__form_reset {
+            height: 100%;
+          }
+
+          &.auth__body__form_registration {
+            width: 350px;
+            height: 100%;
+            padding: 28px 65px;
+          }
+
+          h1 {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 16px;
+            color: #102538;
+            margin-bottom: 24px;
+          }
+
+          form {
+            .auth__body__form__fields {
+              display: flex;
+              flex-direction: column;
+              margin-bottom: 24px;
+              gap: 10px;
+
+              .auth__body__form__fields__field {
+                text-align: left;
+
+                input {
+                  width: 100%;
+                  height: 50px;
+                  border: 1px solid #D6D6D6;
+                  padding: 20px;
+                  border-radius: 10px;
+                }
+
+                .p-dropdown {
+                  width: 100%;
+                  height: 50px;
+                }
+
+                img {
+                  width: 100%;
+                  height: 80px;
+                }
+              }
+            }
+
+            .auth__body__form__fields__two-columns {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              gap: 10px;
+              margin-bottom: 10px;
+
+              .auth__body__form__fields__field {
+                flex: 2;
+
+                .registration-link {
+                  padding: 0px !important;
+                }
+              }
+            }
+
+
+            .actions {
+              display: flex;
+              width: 100%;
+              margin-bottom: 10px;
+
+              button {
+                width: 100%;
+                height: 50px;
+                background: linear-gradient(216.14deg, #009FD9 10.37%, rgba(0, 159, 217, 0) 93.52%), #4B75B1;
+                box-shadow: 0px 10px 15px rgba(12, 131, 241, 0.2);
+                border: unset;
+                font-size: 14px;
+                line-height: 16px;
+                border-radius: 10px;
+              }
+
+              &.actions_additional {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 10px;
+
+                button {
+                  border: 1px solid #C0C0C0;
+                  background: unset;
+                  box-shadow: unset;
+                  box-sizing: border-box;
+                  color: #C0C0C0;
+                }
+
+              }
+
+              &.actions_registration {
+                &.actions_additional {
+                  flex-wrap: wrap;
+                }
+
+                .main {
+                  width: 100%;
+                  height: 50px;
+                  background: linear-gradient(216.14deg, #009FD9 10.37%, rgba(0, 159, 217, 0) 93.52%), #4B75B1;
+                  box-shadow: 0px 10px 15px rgba(12, 131, 241, 0.2);
+                  border: unset;
+                  font-size: 14px;
+                  line-height: 16px;
+                  border-radius: 10px;
+                  color: #fff;
+                }
+              }
+            }
+          }
+        }
+
+        .auth__body__promo {
+          display: none;
+        }
+      }
+    }
+
+  }
 }
