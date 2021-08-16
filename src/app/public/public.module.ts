@@ -24,6 +24,7 @@ import { MibCardTariffComponent } from './shared/cards/card-tariff/mib-card-tari
 import { MibCardPersonComponent } from './shared/cards/card-person/mib-card-person.component';
 import { OrganizationService } from './service/organization.service';
 import { NewsService } from './service/news.service'
+import { MibSectionHeaderNewsComponent } from './shared/mib-sections/mib-section-header-news/mib-section-header-news.component';
 
 const routes = [
   {
@@ -80,6 +81,7 @@ const routes = [
     MibScrollDirective,
     // SECTIONS
     MibSectionHeaderComponent,
+    MibSectionHeaderNewsComponent,
     MibSectionBodyComponent,
     // COMPONENTS
     MibSliderComponent,

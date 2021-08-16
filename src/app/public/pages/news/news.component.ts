@@ -6,6 +6,7 @@ import { NewsInterface } from '../../type/news.interface';
 
 @Component({
   selector: 'news',
+  styleUrls: ['./news.component.scss'],
   templateUrl: 'news.component.html',
 })
 export class NewsComponent implements OnInit, OnDestroy {
