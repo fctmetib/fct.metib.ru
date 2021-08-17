@@ -38,8 +38,8 @@
         <a [routerLink]="['/clients']"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
       </div>
       <div class="actions">
-        <mib-button [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'" [theme]="'icon'"></mib-button>
-        <mib-button [icon]="'../../../../assets/icons/button-icons/icon_insta.svg'" [theme]="'icon'"></mib-button>
+        <mib-button [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'" [theme]="'icon'" (click)="openSocial('whatsapp')" ></mib-button>
+        <mib-button [icon]="'../../../../assets/icons/button-icons/icon_insta.svg'" [theme]="'icon'" (click)="openSocial('instagram')" ></mib-button>
         <mib-button [title]="'Личный кабинет'" [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
           [theme]="'regular'"></mib-button>
       </div>
