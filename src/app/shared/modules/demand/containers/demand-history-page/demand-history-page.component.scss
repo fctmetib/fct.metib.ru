@@ -127,6 +127,21 @@
 
 // mobile
 @media (max-width: 1300px) {
+  .actions {
+    p-dropdown {
+      width: 100%;
+    }
+    span {
+      margin-right: 0px;
+      width: 100%;
+      input {
+        width: 100%;
+      }
+    }
+    button {
+      width: 100%;
+    }
+  }
   .demand-item {
     display: flex;
     justify-content: space-between;
@@ -134,15 +149,18 @@
     margin-bottom: 10px;
 
     .demand-info {
-
+      padding: 35px;
       .demand-card {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
 
         .demand-actions {
-          visibility: hidden;
+          width: 100%;
+          visibility: visible;
           display: flex;
-          flex-direction: column;
+          justify-content: space-between;
+          flex-direction: row;
 
           button {
             margin-top: 10px;
@@ -167,7 +185,7 @@
     }
 
     .demand-manager {
-
+      width: 100%;
       .demand-manager-date {
       }
 
