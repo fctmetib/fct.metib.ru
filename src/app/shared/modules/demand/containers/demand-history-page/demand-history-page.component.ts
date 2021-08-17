@@ -29,6 +29,8 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   allDemands: DemandInterface<any>[] = [];
   allDrafts: any[] = [];
 
+  public statusTypes: any[] = [];
+
   public searchForm = this.fb.group({
     search: [''],
   });
@@ -46,6 +48,7 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fetch();
     this.initForm();
+    this.initValues();
     this.isUserVerified = this.authService.isUserVerified();
   }
 
@@ -53,7 +56,13 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-  public search() {}
+  public onFilterStatusChange(event) {
+    if (event.value === 'All') {
+      this.allDemandsFiltered = this.allDemands;
+    } else {
+      this.allDemandsFiltered = this.allDemands.filter(x => x.Status === event.value);
+    }
+  }
 
   fetch() {
     this.loading = true;
@@ -132,7 +141,7 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   remove(Id) {
     this.subscription$.add(
       this.demandService.deleteDraftById(Id).subscribe(() => {
-        this.allDemands = this.allDemands.filter((x) => x.ID !== Id);
+        this.allDemands = this.allDemands.filter((x) => x.ID !== +Id);
       })
     );
   }
@@ -191,6 +200,39 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         });
         break;
     }
+  }
+
+  private initValues() {
+    this.statusTypes = [
+      {
+        type: 'All',
+        name: 'Все',
+      },
+      {
+        type: 'Processing',
+        name: 'В процессе',
+      },
+      {
+        type: 'Completed',
+        name: 'Завершен',
+      },
+      {
+        type: 'Rejected',
+        name: 'Отклонено',
+      },
+      {
+        type: 'Created',
+        name: 'Создан',
+      },
+      {
+        type: 'Draft',
+        name: 'Черновик',
+      },
+      {
+        type: 'Canceled',
+        name: 'Отменен',
+      },
+    ];
   }
 
   private initForm() {

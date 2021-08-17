@@ -119,3 +119,60 @@
     }
   }
 }
+
+// desktop
+@media (max-width: 1300px) {
+
+}
+
+// mobile
+@media (max-width: 1300px) {
+  .demand-item {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+
+    .demand-info {
+
+      .demand-card {
+        display: flex;
+        justify-content: space-between;
+
+        .demand-actions {
+          visibility: hidden;
+          display: flex;
+          flex-direction: column;
+
+          button {
+            margin-top: 10px;
+          }
+        }
+      }
+
+      .demand-content {
+        display: flex;
+        align-items: center;
+
+        .icon {
+          &.arrow_right {
+          }
+        }
+      }
+
+      .demand-status-info {
+        display: flex;
+
+      }
+    }
+
+    .demand-manager {
+
+      .demand-manager-date {
+      }
+
+      .demand-manager-info {
+      }
+    }
+  }
+}

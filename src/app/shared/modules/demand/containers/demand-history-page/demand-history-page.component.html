@@ -7,6 +7,15 @@
       </div>
     </div>
     <form [formGroup]="searchForm" class="actions">
+      <p-dropdown
+        [options]="statusTypes"
+        placeholder="Выберите статус запроса"
+        styleClass="search-field"
+        optionLabel="name"
+        optionValue="type"
+        (onChange)="onFilterStatusChange($event)"
+        >
+      </p-dropdown>
       <span class="mr-20" [ngClass]="isSearching ? 'p-input-icon-right' : 'p-input-icon-left'">
         <ng-container *ngIf="isSearching; else searchIconTemplate">
           <i class="pi pi-spin pi-spinner"></i>
