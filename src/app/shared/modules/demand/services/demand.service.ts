@@ -5,7 +5,7 @@ import { CreateDemandMessageRequestInterface } from './../types/requests/create-
 import { SaveDemandRequestInterface } from './../types/requests/save-demand-request.interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { DemandInterface } from '../types/demand.interface';
 import { CreateDemandEDSRequestInterface } from '../types/requests/create-demand-eds-request.interface';
@@ -33,6 +33,11 @@ export class DemandService {
 
   //#endregion
 
+  getDigitalSignatureRequest(data: CreateDemandEDSRequestInterface): Observable<any> {
+    const url = `${environment.apiUrl}/demand/document/DigitalSignatureRequest`;
+    return this.http.post<any>(url, data, {responseType: 'arraybuffer' as 'json'});
+  }
+
   getDemandByFilter(filter: string): Observable<DemandDataBaseInterface[]> {
     const url = `${environment.apiUrl}/demand?filter=${filter}`;
     return this.http.get<DemandDataBaseInterface[]>(url);
@@ -43,7 +48,9 @@ export class DemandService {
     return this.http.get<DemandDataBaseInterface>(url);
   }
 
-  addDemandDocumentById(identifier: string): Observable<DemandDataBaseInterface> {
+  addDemandDocumentById(
+    identifier: string
+  ): Observable<DemandDataBaseInterface> {
     const url = `${environment.apiUrl}/demand/document/${identifier}`;
     return this.http.post<DemandDataBaseInterface>(url, {});
   }
@@ -53,12 +60,18 @@ export class DemandService {
     return this.http.get<any>(url);
   }
 
-  addById<T>(id: number, data: SaveDemandRequestInterface<T>): Observable<DemandInterface<T>> {
+  addById<T>(
+    id: number,
+    data: SaveDemandRequestInterface<T>
+  ): Observable<DemandInterface<T>> {
     const url = `${environment.apiUrl}/demand/${id}`;
     return this.http.post<DemandInterface<T>>(url, data);
   }
 
-  addMessageByDemandId(id: number, data: CreateDemandMessageRequestInterface): Observable<any> {
+  addMessageByDemandId(
+    id: number,
+    data: CreateDemandMessageRequestInterface
+  ): Observable<any> {
     const url = `${environment.apiUrl}/demand/${id}/message`;
     return this.http.post<any>(url, data);
   }
@@ -78,7 +91,10 @@ export class DemandService {
     return this.http.get<DemandDraftInterface<any>>(url);
   }
 
-  addDraftById(id: number, data: DemandDataBaseInterface): Observable<DemandDraftInterface<any>> {
+  addDraftById(
+    id: number,
+    data: DemandDataBaseInterface
+  ): Observable<DemandDraftInterface<any>> {
     const url = `${environment.apiUrl}/demand/draft/${id}`;
     return this.http.post<DemandDraftInterface<any>>(url, data);
   }

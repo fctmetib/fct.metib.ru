@@ -27,7 +27,8 @@ import { AddressModalComponent } from '../../../components/address/address.compo
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
-
+import * as JSZip from 'jszip';
+import { saveAs } from '@progress/kendo-file-saver';
 @Component({
   selector: 'app-demand-action-eds-page',
   templateUrl: './demand-action-eds-page.component.html',
@@ -122,6 +123,21 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     if (this._saveDraftAction$) {
       clearInterval(this._saveDraftAction$);
     }
+  }
+
+
+  public getDigitalSignatureRequest() {
+    this.demandService.getDigitalSignatureRequest(this.prepareCoreData()).subscribe(resp => {
+      console.log('RRR', resp)
+      let binaryData = [];
+      binaryData.push(resp);
+      let downloadLink = document.createElement('a');
+      downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: 'application/msword'}));
+
+      downloadLink.setAttribute('download', 'Заявка на выдачу сертификата');
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+    });
   }
 
   saveDraft() {
