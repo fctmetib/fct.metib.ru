@@ -128,7 +128,6 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
   public getDigitalSignatureRequest() {
     this.demandService.getDigitalSignatureRequest(this.prepareCoreData()).subscribe(resp => {
-      console.log('RRR', resp)
       let binaryData = [];
       binaryData.push(resp);
       let downloadLink = document.createElement('a');
