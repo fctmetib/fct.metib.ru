@@ -2,15 +2,15 @@
   <div class="organization">
     <div class="organization-info">
       <div class="organization-info-name">
-        <ng-container *ngIf="(factoring$ | async); else skeletonFactoringManagerTemplate"> -->
+        <ng-container *ngIf="(factoring$ | async); else skeletonFactoringManagerTemplate">
           ООО "РЕГИОН ПЛЮС"
         </ng-container>
         <ng-template #skeletonFactoringManagerTemplate>
-          Новый клиент
+          Новый пользователь
         </ng-template>
       </div>
       <div class="organization-info-inn">
-        <ng-container *ngIf="(factoring$ | async); else skeletonFactoringEmailTemplate"> -->
+        <ng-container *ngIf="(factoring$ | async); else skeletonFactoringEmailTemplate">
         ИНН: 7701298966 КПП: 770101001
         </ng-container>
         <ng-template #skeletonFactoringEmailTemplate>

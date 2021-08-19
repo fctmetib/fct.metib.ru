@@ -15,13 +15,17 @@ import { DemandService } from '../../../services/demand.service';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
+import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
+import { MibArray } from 'src/app/shared/classes/arrays/mib-array.class';
 
 @Component({
   selector: 'app-demand-action-verification-page',
   templateUrl: './demand-action-verification-page.component.html',
   styleUrls: ['./demand-action-verification-page.component.scss'],
 })
-export class DemandActionVerificationPageComponent implements OnInit, ExitGuard {
+export class DemandActionVerificationPageComponent
+  implements OnInit, ExitGuard
+{
   isUserVerified: boolean;
 
   public alert: boolean;
@@ -30,7 +34,9 @@ export class DemandActionVerificationPageComponent implements OnInit, ExitGuard 
   public isEdit: boolean = false;
 
   public isLoading: boolean;
-  public backendErrors$: Observable<string | null>;
+
+  public debtorList: any[] = [];
+  public verificationTypes: any[] = [];
 
   public formFree: FormGroup;
 
@@ -47,9 +53,9 @@ export class DemandActionVerificationPageComponent implements OnInit, ExitGuard 
     private authService: AuthService,
     private fb: FormBuilder,
     private demandService: DemandService,
-    private commonService: CommonService,
+    private deliveryService: DeliveryService,
     private messageService: MessageService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -75,6 +81,21 @@ export class DemandActionVerificationPageComponent implements OnInit, ExitGuard 
     this.subscription$.unsubscribe();
     if (this._saveDraftAction$) {
       clearInterval(this._saveDraftAction$);
+    }
+  }
+
+  public changeVerificationType(event) {
+    console.log('hgere', event);
+    switch (event.value) {
+      case 'EDOKontur':
+        this.currentTemplate = 'edoTemplate';
+        break;
+      case 'Other':
+        this.currentTemplate = 'anotherTemplate';
+        break;
+      default:
+        this.currentTemplate = 'ediTemplate';
+        break;
     }
   }
 
@@ -153,18 +174,42 @@ export class DemandActionVerificationPageComponent implements OnInit, ExitGuard 
 
   private convertToFormData() {
     let data = this.currentDemand.Data;
-    this.formFree.patchValue({
-      subject: data.Subject,
-      question: data.Question,
-    });
+    // this.formFree.patchValue({
+    //   subject: data.Subject,
+    //   question: data.Question,
+    // });
   }
 
   private prepareDraft() {
+    let DocumentTypes: string[] = [];
+    let formValues = this.formFree.value;
+
+    if (formValues.DocumentTypeTorg12) {
+      DocumentTypes.push('Torg12');
+    }
+    if (formValues.DocumentTypeInvoice) {
+      DocumentTypes.push('Invoice');
+    }
+    if (formValues.DocumentTypeAcceptance) {
+      DocumentTypes.push('Acceptance');
+    }
+    if (formValues.DocumentTypeNonformalized) {
+      DocumentTypes.push('Nonformalized');
+    }
+    if (formValues.DocumentTypeORDER) {
+      DocumentTypes.push('ORDER');
+    }
+    if (formValues.DocumentTypeRECADV) {
+      DocumentTypes.push('RECADV');
+    }
+
     let result: any = {
-      // Question: this.formFree.value.question,
-      // Subject: this.formFree.value.subject,
-      Type: 'VerificationChannel',
-      VerificationType: 'EDIKorus'
+      DocumentTypes,
+      Comment: formValues.Comment,
+      DebtorID: formValues.DebtorID,
+      GLN: formValues.GLN,
+      VerificationType: formValues.VerificationType,
+      Type: formValues.VerificationType,
     };
 
     return result;
@@ -188,9 +233,15 @@ export class DemandActionVerificationPageComponent implements OnInit, ExitGuard 
     this.formFree = this.fb.group({
       Comment: ['', [Validators.required]],
       DebtorID: ['', [Validators.required]],
-      DocumentTypes: [[], [Validators.required]],
       GLN: [''],
       VerificationType: [''],
+      DocumentTypeTorg12: false,
+      DocumentTypeInvoice: false,
+      DocumentTypeAcceptance: false,
+      DocumentTypeNonformalized: false,
+      // EDI only
+      DocumentTypeORDER: false,
+      DocumentTypeRECADV: false,
     });
 
     this.formFree.markAllAsTouched();
@@ -198,10 +249,40 @@ export class DemandActionVerificationPageComponent implements OnInit, ExitGuard 
   }
 
   canDeactivate(): boolean | Observable<boolean> {
-    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
+    return confirm(
+      'Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?'
+    );
   }
 
   private initValues(): void {
+    this.verificationTypes = [
+      {
+        name: 'EDI Корус',
+        value: 'EDIKorus',
+      },
+      {
+        name: 'EDI CISLINK (Сислинк)',
+        value: 'EDICislink',
+      },
+      {
+        name: 'EDI Exite',
+        value: 'EDIExite',
+      },
+      {
+        name: 'ЭДО Контур Диадок',
+        value: 'EDOKontur',
+      },
+      {
+        name: 'Другой источник',
+        value: 'Other',
+      },
+    ];
+
+    this.deliveryService.getDeliveriesWithStats().subscribe((deliveries) => {
+      let debtors = deliveries.map((delivery) => delivery.Debtor);
+      let uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
+      this.debtorList.push(...uniqDebtors);
+    });
   }
 
   private showSuccess() {
@@ -213,3 +294,7 @@ export class DemandActionVerificationPageComponent implements OnInit, ExitGuard 
   }
   //#endregion
 }
+// 0: "Torg12"
+// 1: "Invoice"
+// 2: "Acceptance"
+// 3: "Nonformalized"
