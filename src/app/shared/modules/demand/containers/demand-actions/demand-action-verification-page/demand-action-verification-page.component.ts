@@ -1,7 +1,4 @@
-import { errorSelector } from './../../../../../../client/modules/requests/store/selectors';
-import { isLoadingSelector } from './../../../../../../auth/store/selectors';
 import { SaveDemandRequestInterface } from 'src/app/shared/modules/demand/types/requests/save-demand-request.interface';
-import { select, Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -9,7 +6,6 @@ import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { CommonService } from 'src/app/shared/services/common/common.service';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
 import { DemandService } from '../../../services/demand.service';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
@@ -85,7 +81,6 @@ export class DemandActionVerificationPageComponent
   }
 
   public changeVerificationType(event) {
-    console.log('hgere', event);
     switch (event.value) {
       case 'EDOKontur':
         this.currentTemplate = 'edoTemplate';
@@ -165,7 +160,6 @@ export class DemandActionVerificationPageComponent
           Type: resp.Type,
           Manager: null,
         };
-        console.log(this.currentDemand);
         this.isEdit = true;
         this.convertToFormData();
       })
@@ -173,11 +167,50 @@ export class DemandActionVerificationPageComponent
   }
 
   private convertToFormData() {
-    let data = this.currentDemand.Data;
-    // this.formFree.patchValue({
-    //   subject: data.Subject,
-    //   question: data.Question,
-    // });
+    let data = this.currentDemand;
+
+    let DocumentTypeTorg12 = false;
+    let DocumentTypeInvoice = false;
+    let DocumentTypeAcceptance = false;
+    let DocumentTypeNonformalized = false;
+    let DocumentTypeORDER = false;
+    let DocumentTypeRECADV = false;
+
+    data.DocumentTypes.forEach((documentType) => {
+      if (documentType === 'Torg12') {
+        DocumentTypeTorg12 = true;
+      }
+      if (documentType === 'Invoice') {
+        DocumentTypeInvoice = true;
+      }
+      if (documentType === 'Acceptance') {
+        DocumentTypeAcceptance = true;
+      }
+      if (documentType === 'Nonformalized') {
+        DocumentTypeNonformalized = true;
+      }
+      if (documentType === 'ORDER') {
+        DocumentTypeORDER = true;
+      }
+      if (documentType === 'RECADV') {
+        DocumentTypeRECADV = true;
+      }
+    });
+
+    this.formFree.patchValue({
+      Comment: data.Comment ? data.Comment : '',
+      DebtorID: data.DebtorID ? data.DebtorID : this.debtorList[0].ID,
+      GLN: data.GLN ? data.GLN : '',
+      VerificationType: data.VerificationType
+        ? data.VerificationType
+        : 'EDIKorus',
+      DocumentTypeTorg12: DocumentTypeTorg12,
+      DocumentTypeInvoice: DocumentTypeInvoice,
+      DocumentTypeAcceptance: DocumentTypeAcceptance,
+      DocumentTypeNonformalized: DocumentTypeNonformalized,
+      DocumentTypeORDER: DocumentTypeORDER,
+      DocumentTypeRECADV: DocumentTypeRECADV,
+    });
   }
 
   private prepareDraft() {
@@ -209,20 +242,16 @@ export class DemandActionVerificationPageComponent
       DebtorID: formValues.DebtorID,
       GLN: formValues.GLN,
       VerificationType: formValues.VerificationType,
-      Type: formValues.VerificationType,
+      Type: 'VerificationChannel',
     };
 
     return result;
   }
 
   private prepareData() {
+    let data = this.prepareDraft();
     let result: SaveDemandRequestInterface<any> = {
-      Data: {
-        Question: this.formFree.value.question,
-        Subject: this.formFree.value.subject,
-        Files: [],
-        Type: 'VerificationChannel',
-      },
+      Data: data,
       DraftID: this.currentDraftId,
     };
 
@@ -282,6 +311,11 @@ export class DemandActionVerificationPageComponent
       let debtors = deliveries.map((delivery) => delivery.Debtor);
       let uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
       this.debtorList.push(...uniqDebtors);
+
+      this.formFree.patchValue({
+        VerificationType: 'EDIKorus',
+        DebtorID: this.debtorList[0].ID,
+      });
     });
   }
 
@@ -294,7 +328,3 @@ export class DemandActionVerificationPageComponent
   }
   //#endregion
 }
-// 0: "Torg12"
-// 1: "Invoice"
-// 2: "Acceptance"
-// 3: "Nonformalized"

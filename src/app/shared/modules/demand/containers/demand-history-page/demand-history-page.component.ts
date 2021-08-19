@@ -141,6 +141,7 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   remove(Id) {
     this.subscription$.add(
       this.demandService.deleteDraftById(Id).subscribe(() => {
+        this.allDemandsFiltered = this.allDemandsFiltered.filter(x => x.ID !== Id);
         this.allDemands = this.allDemands.filter((x) => x.ID !== +Id);
       })
     );

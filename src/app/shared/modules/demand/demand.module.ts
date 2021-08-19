@@ -1,3 +1,4 @@
+import { SuretyDataComponent } from './containers/demand-actions/demand-action-surety-page/components/surety-data/surety-data.component';
 import { BackendErrorMessagesModule } from './../backendErrorMessages/backendErrorMessages.module';
 import { DialogModule } from 'primeng/dialog';
 import { SuccessMessagesModule } from './../successMessages/successMessages.module';
@@ -115,6 +116,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     DemandActionVerificationPageComponent,
     // Components
     DebitorDataComponent,
+    SuretyDataComponent,
     FactoringDataComponent,
     DemandFilesComponent,
     DemandInfoComponent,
