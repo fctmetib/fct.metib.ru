@@ -60,7 +60,9 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
     if (event.value === 'All') {
       this.allDemandsFiltered = this.allDemands;
     } else {
-      this.allDemandsFiltered = this.allDemands.filter(x => x.Status === event.value);
+      this.allDemandsFiltered = this.allDemands.filter(
+        (x) => x.Status === event.value
+      );
     }
   }
 
@@ -141,7 +143,9 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   remove(Id) {
     this.subscription$.add(
       this.demandService.deleteDraftById(Id).subscribe(() => {
-        this.allDemandsFiltered = this.allDemandsFiltered.filter(x => x.ID !== Id);
+        this.allDemandsFiltered = this.allDemandsFiltered.filter(
+          (x) => x.ID !== Id
+        );
         this.allDemands = this.allDemands.filter((x) => x.ID !== +Id);
       })
     );
@@ -195,6 +199,20 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         break;
       case 'NewDebtor':
         this.router.navigate(['/demand/actions/create-debitor'], {
+          queryParams: {
+            ID: ID,
+          },
+        });
+        break;
+      case 'Guarantee':
+        this.router.navigate(['/demand/actions/surety'], {
+          queryParams: {
+            ID: ID,
+          },
+        });
+        break;
+      case 'VerificationChannel':
+        this.router.navigate(['/demand/actions/verify'], {
           queryParams: {
             ID: ID,
           },
@@ -276,6 +294,12 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   private getTypeTranslate(type): string {
     let result: string = '';
     switch (type) {
+      case 'VerificationChannel':
+        result = 'Запрос на Регистрацию канала верификации';
+        break;
+      case 'Guarantee':
+        result = 'Запрос на Поручительство';
+        break;
       case 'Factoring':
         result = 'Запрос на Факторинг';
         break;

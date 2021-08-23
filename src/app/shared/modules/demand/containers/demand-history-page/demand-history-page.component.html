@@ -40,29 +40,7 @@
                 <div class="text">
                   <p>
                     №{{demand.ID}}
-                    <span [ngSwitch]="demand.Type">
-                      <span *ngSwitchCase="'Factoring'">
-                        Запрос на Факторинг
-                      </span>
-                      <span *ngSwitchCase="'DigitalSignature'">
-                        Запрос на ЭЦП
-                      </span>
-                      <span *ngSwitchCase="'ProfileChange'">
-                        Запрос на Редактирование Профиля
-                      </span>
-                      <span *ngSwitchCase="'Question'">
-                        Запрос на свободную тему
-                      </span>
-                      <span *ngSwitchCase="'Limit'">
-                        Запрос на лимит
-                      </span>
-                      <span *ngSwitchCase="'NewDebtor'">
-                        Запрос на нового дебитора
-                      </span>
-                      <span *ngSwitchDefault>
-                        Запрос на свободную тему
-                      </span>
-                    </span>
+                    {{demand.TranslatedType}}
                   </p>
 
                 </div>

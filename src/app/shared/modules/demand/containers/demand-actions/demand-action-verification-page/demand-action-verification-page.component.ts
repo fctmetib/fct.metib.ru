@@ -30,6 +30,7 @@ export class DemandActionVerificationPageComponent
   public isEdit: boolean = false;
 
   public isLoading: boolean;
+  public isLoadingData: boolean;
 
   public debtorList: any[] = [];
   public verificationTypes: any[] = [];
@@ -105,12 +106,14 @@ export class DemandActionVerificationPageComponent
   }
 
   private getDraft() {
+    this.isLoadingData = true;
     this.subscription$.add(
       this.demandService
         .prepareDemandByType('VerificationChannel')
         .subscribe((resp) => {
           this.currentDemand = resp;
           this.convertToFormData();
+          this.isLoadingData = false;
           this.isLoading = false;
         })
     );
@@ -146,6 +149,7 @@ export class DemandActionVerificationPageComponent
   }
 
   private fetch(id: number) {
+    this.isLoadingData = true;
     this.subscription$.add(
       this.demandService.getDemandById(id).subscribe((resp) => {
         this.currentDemand = resp;
@@ -162,6 +166,7 @@ export class DemandActionVerificationPageComponent
         };
         this.isEdit = true;
         this.convertToFormData();
+        this.isLoadingData = false;
       })
     );
   }
@@ -198,11 +203,11 @@ export class DemandActionVerificationPageComponent
     });
 
     this.formFree.patchValue({
-      Comment: data.Comment ? data.Comment : '',
-      DebtorID: data.DebtorID ? data.DebtorID : this.debtorList[0].ID,
-      GLN: data.GLN ? data.GLN : '',
-      VerificationType: data.VerificationType
-        ? data.VerificationType
+      Comment: data?.Comment ? data?.Comment : '',
+      DebtorID: data?.DebtorID ? data?.DebtorID : this.debtorList[0].ID,
+      GLN: data?.GLN ? data?.GLN : '',
+      VerificationType: data?.VerificationType
+        ? data?.VerificationType
         : 'EDIKorus',
       DocumentTypeTorg12: DocumentTypeTorg12,
       DocumentTypeInvoice: DocumentTypeInvoice,
