@@ -79,7 +79,14 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
     if(this.isEdit) {
       data.Data.Files = this.currentDemand.Files
     }
-    this.store.dispatch(createDemandFactoringAction({ data }));
+    this.subscription$.add(
+      this.demandService.add(data).subscribe((resp) => {
+        this.alert = true;
+        window.scroll(0,0);
+        this.alertMessage = 'Запрос успешно создан.';
+      })
+    );
+    // this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
   handleSave(event: any) {
@@ -92,6 +99,7 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
         .addDraftById(this.currentDraftId, event)
         .subscribe((resp) => {
           this.currentDraftId = resp.ID;
+          window.scroll(0,0);
           this.showSuccess();
         })
     );

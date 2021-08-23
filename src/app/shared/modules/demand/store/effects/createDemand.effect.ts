@@ -39,16 +39,16 @@ export class CreateDemandFactoringEffect {
     )
   );
 
-  redirectAfterSubmit$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(createDemandFactoringSuccessAction),
-        tap(() => {
-          this.router.navigateByUrl('/demand/history');
-        })
-      ),
-    { dispatch: false }
-  );
+  // redirectAfterSubmit$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(createDemandFactoringSuccessAction),
+  //       tap(() => {
+  //         this.router.navigateByUrl('/demand/history');
+  //       })
+  //     ),
+  //   { dispatch: false }
+  // );
 
   constructor(
     private actions$: Actions,
