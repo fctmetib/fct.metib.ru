@@ -1,7 +1,7 @@
 import { DebtorInterface } from './../../../types/debtor-interface';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
@@ -55,6 +55,7 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
     private commonService: CommonService,
     private messageService: MessageService,
     private fileService: FileService,
+    private router: Router,
     private route: ActivatedRoute
   ) {}
 
@@ -81,6 +82,13 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
       })
     );
   }
+
+  public back() {
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+    this.router.navigate([`${baseUrl}/demand`]);
+  }
+
 
   public debtorChange() {
     let selectedDebtor = this.debtors.find(

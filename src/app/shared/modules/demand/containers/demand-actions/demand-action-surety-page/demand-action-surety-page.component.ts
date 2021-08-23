@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
@@ -41,6 +41,7 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
+    private router: Router,
     private demandService: DemandService,
     private route: ActivatedRoute,
     private store: Store
@@ -60,6 +61,13 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
       })
     );
   }
+
+  public back() {
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+    this.router.navigate([`${baseUrl}/demand`]);
+  }
+
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();

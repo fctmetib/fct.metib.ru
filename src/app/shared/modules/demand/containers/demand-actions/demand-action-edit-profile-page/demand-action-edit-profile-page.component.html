@@ -5,7 +5,7 @@
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-        [routerLink]="['/demand']" *ngIf="isEdit"></button>
+        (click)="back()" *ngIf="isEdit"></button>
     </div>
   </div>
 
@@ -36,7 +36,7 @@
     <form [formGroup]="formEdit" (ngSubmit)="onSubmit()">
       <div class="form-actions" *ngIf="!isEdit">
         <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-          [routerLink]="['/demand']"></button>
+          (click)="back()"></button>
       </div>
       <div class="d-flex">
         <!-- <div>
@@ -82,8 +82,8 @@
           <!-- 2 row -->
           <div class="p-field p-col-12 p-md-6 p-lg-6">
             <label for="phone">Мобильный телефон</label>
-            <p-inputMask id="phone" type="tel" placeholder="Телефон" formControlName="phone"
-            mask="+7-999-999-99-99"></p-inputMask>
+            <p-inputMask id="phone" type="tel" placeholder="Телефон" formControlName="phone" mask="+7-999-999-99-99">
+            </p-inputMask>
             <div *ngIf="formEdit.controls['phone'].invalid">
               <small *ngIf="formEdit.controls['phone'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -117,10 +117,7 @@
                   </p>
                 </div>
                 <div class="mib-uploader">
-                  <input
-                    type="file"
-                    id="Passport"
-                    accept="image/jpeg,image/png,image/gif,application/pdf"
+                  <input type="file" id="Passport" accept="image/jpeg,image/png,image/gif,application/pdf"
                     (change)="onSelect($event, 'Passport')" multiple="true" hidden />
                   <label for="Passport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
                 </div>
@@ -131,7 +128,7 @@
         <div class="p-field p-col-12 p-md-6 p-lg-3">
           <label for="number">Серия и номер паспорт</label>
           <p-inputMask id="phone" type="text" placeholder="Серия и номер паспорт" formControlName="number"
-          mask="99 99 999999"></p-inputMask>
+            mask="99 99 999999"></p-inputMask>
           <div *ngIf="formEdit.controls['number'].invalid">
             <small *ngIf="formEdit.controls['number'].errors.required" class="p-error">
               Поле должно быть заполнено.
@@ -159,7 +156,7 @@
         <div class="p-field p-col-12 p-md-6 p-lg-3">
           <label for="issuerCode">Код подразделения</label>
           <p-inputMask id="issuerCode" type="text" placeholder="Код подразделения" formControlName="issuerCode"
-          mask="999-999"></p-inputMask>
+            mask="999-999"></p-inputMask>
           <div *ngIf="formEdit.controls['issuerCode'].invalid">
             <small *ngIf="formEdit.controls['issuerCode'].errors.required" class="p-error">
               Поле должно быть заполнено.

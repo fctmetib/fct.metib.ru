@@ -14,7 +14,7 @@ import { FileService } from 'src/app/shared/services/common/file.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { switchMap } from 'rxjs/operators';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
 import { formatDate } from '@angular/common';
@@ -67,6 +67,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     private demandService: DemandService,
     private store: Store,
     private route: ActivatedRoute,
+    private router: Router,
     private fileService: FileService,
     private cryptoService: CryptoService,
     private cookieService: CookieService
@@ -89,6 +90,13 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
 
     this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
+
+  public back() {
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+    this.router.navigate([`${baseUrl}/demand`]);
+  }
+
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();

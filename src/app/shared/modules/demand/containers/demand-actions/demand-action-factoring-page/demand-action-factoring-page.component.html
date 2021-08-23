@@ -6,7 +6,7 @@
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-        [routerLink]="['/demand']" *ngIf="isEdit"></button>
+      (click)="back()" *ngIf="isEdit"></button>
     </div>
   </div>
 
@@ -26,7 +26,7 @@
         </p-tabPanel>
         <p-tabPanel header="Данные">
           <app-factoring-data [isEdit]="true" [currentDemand]="currentDemand" [currentDraftId]="currentDraftId"
-            (save)="handleSave($event)" (create)="handleSubmit($event)"></app-factoring-data>
+            (save)="handleSave($event)" (create)="handleSubmit($event)" (back)="back()"></app-factoring-data>
         </p-tabPanel>
         <p-tabPanel header="Файлы">
           <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files">
@@ -35,7 +35,7 @@
       </p-tabView>
     </ng-container>
     <ng-template #createTemplate>
-      <app-factoring-data [isEdit]="false" [currentDemand]="currentDemand"
+      <app-factoring-data (back)="back()" [isEdit]="false" [currentDemand]="currentDemand"
         [currentDraftId]="currentDraftId" (save)="handleSave($event)" (create)="handleSubmit($event)">
       </app-factoring-data>
     </ng-template>

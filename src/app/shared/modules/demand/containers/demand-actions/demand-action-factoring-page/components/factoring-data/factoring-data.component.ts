@@ -50,6 +50,9 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   @Output()
   create: EventEmitter<any> = new EventEmitter();
 
+  @Output()
+  back: EventEmitter<any> = new EventEmitter();
+
   public organizationTypes: DemandSelectboxInterface[] = [];
   public ruleTypes: DemandSelectboxInterface[] = [];
   public typesOfOwner: DemandSelectboxInterface[] = [];
@@ -101,6 +104,10 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
 
   saveDraft() {
     this.save.emit(this.prepareDraft());
+  }
+
+  public onBack() {
+    this.back.emit();
   }
 
   //#region public page actions

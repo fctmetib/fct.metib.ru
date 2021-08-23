@@ -1,7 +1,7 @@
 import { SaveDemandRequestInterface } from 'src/app/shared/modules/demand/types/requests/save-demand-request.interface';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
@@ -52,6 +52,7 @@ export class DemandActionVerificationPageComponent
     private demandService: DemandService,
     private deliveryService: DeliveryService,
     private messageService: MessageService,
+    private router: Router,
     private route: ActivatedRoute
   ) {}
 
@@ -73,6 +74,13 @@ export class DemandActionVerificationPageComponent
 
     this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
+
+  public back() {
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+    this.router.navigate([`${baseUrl}/demand`]);
+  }
+
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();

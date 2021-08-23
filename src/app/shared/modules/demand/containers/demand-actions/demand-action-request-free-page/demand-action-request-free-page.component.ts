@@ -1,4 +1,4 @@
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DemandService } from './../../../services/demand.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -55,6 +55,7 @@ export class DemandActionRequestFreePageComponent
     private messageService: MessageService,
     private fileService: FileService,
     private route: ActivatedRoute,
+    private router: Router,
     private store: Store
   ) {}
 
@@ -76,6 +77,12 @@ export class DemandActionRequestFreePageComponent
     );
 
     this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
+  }
+
+  public back() {
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+    this.router.navigate([`${baseUrl}/demand`]);
   }
 
   ngOnDestroy() {

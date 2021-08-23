@@ -6,7 +6,7 @@
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-        [routerLink]="['/demand']" *ngIf="isEdit"></button>
+      (click)="back()" *ngIf="isEdit"></button>
     </div>
   </div>
 
@@ -40,7 +40,7 @@
       <form [formGroup]="formFree" (ngSubmit)="onSubmit()">
         <div class="form-actions" *ngIf="!isEdit">
           <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-            [routerLink]="['/demand']"></button>
+          (click)="back()"></button>
         </div>
         <div class="p-fluid p-formgrid p-grid form">
           <!-- 1 row -->

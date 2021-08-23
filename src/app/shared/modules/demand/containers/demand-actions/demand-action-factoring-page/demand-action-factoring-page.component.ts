@@ -8,7 +8,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { createDemandFactoringAction } from '../../../store/actions/createDemand.action';
 import { MessageService } from 'primeng/api';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
@@ -43,6 +43,7 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
     private messageService: MessageService,
     private demandService: DemandService,
     private route: ActivatedRoute,
+    private router: Router,
     private store: Store
   ) {}
 
@@ -60,6 +61,13 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
       })
     );
   }
+
+  public back() {
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+    this.router.navigate([`${baseUrl}/demand`]);
+  }
+
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();

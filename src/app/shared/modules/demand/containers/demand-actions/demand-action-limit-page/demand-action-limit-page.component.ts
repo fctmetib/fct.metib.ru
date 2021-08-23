@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -48,7 +48,8 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
     private commonService: CommonService,
     private messageService: MessageService,
     private fileService: FileService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -68,6 +69,12 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
     );
 
     this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
+  }
+
+  public back() {
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+    this.router.navigate([`${baseUrl}/demand`]);
   }
 
   ngOnDestroy() {

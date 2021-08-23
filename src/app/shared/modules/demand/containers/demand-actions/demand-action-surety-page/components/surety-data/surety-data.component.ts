@@ -50,6 +50,9 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
   @Output()
   create: EventEmitter<any> = new EventEmitter();
 
+  @Output()
+  back: EventEmitter<any> = new EventEmitter();
+
   public organizationTypes: DemandSelectboxInterface[] = [];
   public ruleTypes: DemandSelectboxInterface[] = [];
   public typesOfOwner: DemandSelectboxInterface[] = [];
@@ -86,6 +89,10 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
     }
 
     this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
+  }
+
+  public onBack() {
+    this.back.emit();
   }
 
   ngOnDestroy() {

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { BankInterface } from './../../../../../types/common/bank.interface';
 import { Observable, Subscription } from 'rxjs';
 import { CurrencyPipe, formatDate } from '@angular/common';
@@ -79,6 +80,7 @@ export class DemandActionAgentFactoringPageComponent
     public dialogService: DialogService,
     private currencyPipe: CurrencyPipe,
     private authService: AuthService,
+    private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private demandService: DemandService,
@@ -104,37 +106,48 @@ export class DemandActionAgentFactoringPageComponent
     );
   }
 
+  public back() {
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+    this.router.navigate([`${baseUrl}/demand`]);
+  }
 
   public search(event): void {
     this.subscription$.add(
       this.commonService.getBankByBIK(event.query).subscribe((data) => {
         this.banksFounded = data;
-        this.resultsBIK = data.map(result => result.BIC);
+        this.resultsBIK = data.map((result) => result.BIC);
       })
     );
   }
 
   public onOtherBankSelect(indexOtherBank: number, bankInfo: string) {
-    let bank = this.banksFounded.find(x => x.BIC === bankInfo || x.Name === bankInfo);
-    this.formFactoring.get('otherBanks')['controls'][indexOtherBank].patchValue({
-      otherBankName: bank.Name,
-    })
+    let bank = this.banksFounded.find(
+      (x) => x.BIC === bankInfo || x.Name === bankInfo
+    );
+    this.formFactoring
+      .get('otherBanks')
+      ['controls'][indexOtherBank].patchValue({
+        otherBankName: bank.Name,
+      });
   }
 
   public onBankSelect(bankInfo: string) {
-    let bank = this.banksFounded.find(x => x.BIC === bankInfo || x.Name === bankInfo);
+    let bank = this.banksFounded.find(
+      (x) => x.BIC === bankInfo || x.Name === bankInfo
+    );
     this.formFactoring.patchValue({
       bankBik: bank.BIC,
       bankCorrespondentAccount: bank.AccountBank,
       bankName: bank.Name,
-    })
+    });
   }
 
   public searchByBankName(event): void {
     this.subscription$.add(
       this.commonService.getBankByName(event.query).subscribe((data) => {
         this.banksFounded = data;
-        this.resultsBankname = data.map(result => result.Name);
+        this.resultsBankname = data.map((result) => result.Name);
       })
     );
   }
@@ -487,47 +500,53 @@ export class DemandActionAgentFactoringPageComponent
   }
 
   private convertToFormData() {
-    let factoring: DemandFactoringInterface = this.currentDemand.Factoring;
-    let anket: DemandAnketInterface = this.currentDemand.Anket;
+    let factoring: DemandFactoringInterface = this.currentDemand?.Factoring;
+    let anket: DemandAnketInterface = this.currentDemand?.Anket;
 
-    let banks: DemandAddonAccountInterface[] = factoring.AddonAccounts;
-    let places: DemandPropertiesInterface[] = factoring.Properties;
-    let credits: DemandObligationInterface[] = factoring.Obligations;
+    let banks: DemandAddonAccountInterface[] = factoring?.AddonAccounts;
+    let places: DemandPropertiesInterface[] = factoring?.Properties;
+    let credits: DemandObligationInterface[] = factoring?.Obligations;
 
     this.formFactoring.patchValue({
-      organizationType: anket.Organization.Type,
-      organizationLegalForm: anket.Organization.LegalForm,
-      organizationShortName: anket.Organization.ShortTitle,
-      organizationINN: anket.Organization.Requisites.INN,
-      organizationPhone: anket.Organization.Phone,
-      organizationEmail: anket.Organization.Email,
-      organizationWEB: anket.Organization.Website,
+      organizationType: anket?.Organization?.Type,
+      organizationLegalForm: anket?.Organization?.LegalForm,
+      organizationShortName: anket.Organization?.ShortTitle,
+      organizationINN: anket?.Organization?.Requisites?.INN,
+      organizationPhone: anket?.Organization?.Phone,
+      organizationEmail: anket?.Organization?.Email,
+      organizationWEB: anket?.Organization?.Website,
 
-      bankBik: factoring.Account.BIK,
-      bankCorrespondentAccount: factoring.Account.COR,
-      bankName: factoring.Account.Bank,
+      bankBik: factoring?.Account?.BIK,
+      bankCorrespondentAccount: factoring?.Account?.COR,
+      bankName: factoring?.Account?.Bank,
       bankAccountOpenDate: formatDate(
-        factoring.Account.Date,
+        factoring?.Account?.Date ? factoring?.Account?.Date : null,
         'yyyy-MM-dd',
         'en'
       ),
-      bankOwnerAccount: factoring.Account.Number,
-      bankComment: factoring.Account.Comment,
+      bankOwnerAccount: factoring?.Account?.Number,
+      bankComment: factoring?.Account?.Comment,
 
-      factoringProducts: factoring.Products,
-      factoringTradeMarks: factoring.Trademarks,
-      factoringShipments: factoring.Suppliers,
-      factoringFinanceLimit: factoring.LimitWanted,
+      factoringProducts: factoring?.Products,
+      factoringTradeMarks: factoring?.Trademarks,
+      factoringShipments: factoring?.Suppliers,
+      factoringFinanceLimit: factoring?.LimitWanted,
       factoringClients: '',
-      factoringWorkers: factoring.StaffAmount,
+      factoringWorkers: factoring?.StaffAmount,
 
-      factoringSuppliers: factoring.Suppliers,
-      factoringLimit: factoring.LimitWanted,
+      factoringSuppliers: factoring?.Suppliers,
+      factoringLimit: factoring?.LimitWanted,
     });
 
-    banks.forEach((b) => this.addOtherBank(b));
-    places.forEach((p) => this.addOtherPlace(p));
-    credits.forEach((c) => this.addFactoringCredits(c));
+    if (banks) {
+      banks.forEach((b) => this.addOtherBank(b));
+    }
+    if (places) {
+      places.forEach((p) => this.addOtherPlace(p));
+    }
+    if (credits) {
+      credits.forEach((c) => this.addFactoringCredits(c));
+    }
   }
 
   private prepareData(): SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> {

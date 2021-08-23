@@ -5,13 +5,13 @@
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-        [routerLink]="['/demand']" *ngIf="isEdit"></button>
+        (click)="back()" *ngIf="isEdit"></button>
     </div>
   </div>
 
   <metib-success-messages *ngIf="alert" [message]="alertMessage"></metib-success-messages>
-  <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
-  </metib-backend-error-messages>
+  <!-- <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
+  </metib-backend-error-messages> -->
 
   <ng-container *ngIf="isEdit; else createTemplate;">
     <p-tabView class="mib-tabs">
@@ -36,7 +36,7 @@
     <form [formGroup]="formFactoring" (ngSubmit)="onSubmit()">
       <div class="form-actions">
         <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-          [routerLink]="['/demand']"></button>
+          (click)="back()"></button>
       </div>
       <div class="p-fluid p-formgrid p-grid form">
         <!-- 1 row -->

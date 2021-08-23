@@ -9,6 +9,7 @@ export class ExitGuard implements CanDeactivate<ComponentCanDeactivate> {
   canDeactivate(
     component: ComponentCanDeactivate
   ): Observable<boolean> | boolean {
+    console.log('Can deactivate')
     return component.canDeactivate ? component.canDeactivate() : true;
   }
 }

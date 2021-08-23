@@ -161,58 +161,70 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   }
 
   edit(Type, ID) {
+    console.log(Type);
+
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+
     switch (Type) {
       case 'Factoring':
-        this.router.navigate(['/demand/actions/factoring'], {
+        this.router.navigate([`${baseUrl}/demand/actions/factoring`], {
+          queryParams: {
+            ID: ID,
+          },
+        });
+        break;
+      case 'AgencyFactoring':
+        this.router.navigate([`${baseUrl}/demand/actions/agent-factoring`], {
           queryParams: {
             ID: ID,
           },
         });
         break;
       case 'Question':
-        this.router.navigate(['/demand/actions/free-request'], {
+        this.router.navigate([`${baseUrl}/demand/actions/free-request`], {
           queryParams: {
             ID: ID,
           },
         });
         break;
       case 'DigitalSignature':
-        this.router.navigate(['/demand/actions/create-eds'], {
+        this.router.navigate([`${baseUrl}/demand/actions/create-eds`], {
           queryParams: {
             ID: ID,
           },
         });
         break;
       case 'ProfileChange':
-        this.router.navigate(['/demand/actions/edit-profile'], {
+        this.router.navigate([`${baseUrl}/demand/actions/edit-profile`], {
           queryParams: {
             ID: ID,
           },
         });
         break;
       case 'Limit':
-        this.router.navigate(['/demand/actions/update-limit'], {
+        this.router.navigate([`${baseUrl}/demand/actions/update-limit`], {
           queryParams: {
             ID: ID,
           },
         });
         break;
       case 'NewDebtor':
-        this.router.navigate(['/demand/actions/create-debitor'], {
+        this.router.navigate([`${baseUrl}/demand/actions/create-debitor`], {
           queryParams: {
             ID: ID,
           },
         });
         break;
       case 'Guarantee':
-        this.router.navigate(['/demand/actions/surety'], {
+        this.router.navigate([`${baseUrl}/demand/actions/surety`], {
           queryParams: {
             ID: ID,
           },
         });
         break;
       case 'VerificationChannel':
-        this.router.navigate(['/demand/actions/verify'], {
+        this.router.navigate([`${baseUrl}/demand/actions/verify`], {
           queryParams: {
             ID: ID,
           },
@@ -317,6 +329,9 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         break;
       case 'NewDebtor':
         result = 'Запрос на нового дебитора';
+        break;
+      case 'AgencyFactoring':
+        result = 'Запрос на Агентский Факторинг';
         break;
       default:
         result = 'Запрос на свободную тему';

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { FileModeInterface } from './../../../../../types/file/file-model.interface';
 import { PersonInterface } from 'src/app/shared/types/common/person.interface';
@@ -97,6 +98,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     private commonService: CommonService,
     private fileService: FileService,
     private route: ActivatedRoute,
+    private router: Router,
     private demandService: DemandService
   ) {}
 
@@ -117,6 +119,13 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
     this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
+
+  public back() {
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+    this.router.navigate([`${baseUrl}/demand`]);
+  }
+
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
