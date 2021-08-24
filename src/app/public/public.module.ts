@@ -25,6 +25,8 @@ import { MibCardPersonComponent } from './shared/cards/card-person/mib-card-pers
 import { OrganizationService } from './service/organization.service';
 import { NewsService } from './service/news.service'
 import { MibSectionHeaderNewsComponent } from './shared/mib-sections/mib-section-header-news/mib-section-header-news.component';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
+import {InputMaskModule} from 'primeng/inputmask';
 
 const routes = [
   {
@@ -59,12 +61,20 @@ const routes = [
   },
 ];
 
+const maskConfigFunction: () => Partial<IConfig> = () => {
+  return {
+    validation: false,
+  };
+};
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
+    InputMaskModule,
+    NgxMaskModule.forRoot(maskConfigFunction),
     MibModalModule,
     MibTabModule
   ],
