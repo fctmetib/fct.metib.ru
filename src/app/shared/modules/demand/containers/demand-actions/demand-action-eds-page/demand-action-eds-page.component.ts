@@ -42,7 +42,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
   public isLoading: boolean;
   public alert: boolean;
-  public alertMessage: string;
+  public alertMessage = [];
 
   isUserVerified: boolean;
   formEDS: FormGroup;
@@ -233,7 +233,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     this.subscription$.add(
       this.demandService.add(this.prepareData()).subscribe(resp => {
         this.alert = true;
-        this.alertMessage = 'Запрос успешно создан.';
+        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
       })
     );
   }

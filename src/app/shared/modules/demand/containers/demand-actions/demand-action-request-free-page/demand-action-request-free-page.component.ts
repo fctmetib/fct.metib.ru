@@ -28,7 +28,7 @@ export class DemandActionRequestFreePageComponent
   isUserVerified: boolean;
 
   public alert: boolean;
-  public alertMessage: string;
+  public alertMessage = [];
 
   public isEdit: boolean = false;
 
@@ -98,7 +98,7 @@ export class DemandActionRequestFreePageComponent
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
-        this.alertMessage = 'Запрос успешно создан.';
+        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
       })
     );
   }

@@ -28,7 +28,7 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
   public currentInformation: FactoringInfoInterface;
 
   public alert: boolean;
-  public alertMessage: string;
+  public alertMessage = [];
 
   public formFree: FormGroup;
 
@@ -91,7 +91,7 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
-        this.alertMessage = 'Запрос успешно создан.';
+        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
         this.isLoading = false;
       })
     );

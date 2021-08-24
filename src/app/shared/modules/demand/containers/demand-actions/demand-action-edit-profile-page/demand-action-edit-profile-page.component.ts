@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { select, Store } from '@ngrx/store';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { errorSelector, isLoadingSelector } from '../../../store/selectors';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
@@ -34,7 +34,8 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   isUserVerified: boolean;
 
   public alert: boolean;
-  public alertMessage: string;
+  public alertMessage = [];
+  public alertMessage$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
   public isLoading$: Observable<boolean> = new Observable<boolean>();
   public backendErrors$: Observable<string | null>;
@@ -114,7 +115,8 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
-        this.alertMessage = 'Запрос успешно создан.';
+        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
+        // this.alertMessage = '';
       })
     );
   }
@@ -324,10 +326,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     }
   }
 
-  private showSuccess() {
-    this.alert = true;
-    this.alertMessage = 'Запрос успешно создан.';
-  }
   //#endregion
   canDeactivate(): boolean | Observable<boolean> {
     return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');

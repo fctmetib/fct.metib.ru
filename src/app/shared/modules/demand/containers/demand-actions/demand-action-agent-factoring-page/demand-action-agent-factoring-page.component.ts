@@ -63,7 +63,7 @@ export class DemandActionAgentFactoringPageComponent
   public regionList: DemandSelectboxInterface[];
 
   public alert: boolean;
-  public alertMessage: string;
+  public alertMessage = [];
   public addressDialog: boolean = false;
 
   private currentAddressFormId: any;
@@ -183,7 +183,7 @@ export class DemandActionAgentFactoringPageComponent
         this.demandService.add(data).subscribe((resp) => {
           this.alert = true;
           window.scroll(0,0);
-          this.alertMessage = 'Запрос успешно создан.';
+          this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
         })
       );
    // this.store.dispatch(createDemandFactoringAction({ data }));

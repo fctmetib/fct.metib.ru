@@ -33,7 +33,7 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
   public alert: boolean;
   public errorAlert: boolean;
 
-  public alertMessage: string;
+  public alertMessage = [];
   public errorMessage: string;
 
   public formFree: FormGroup;
@@ -170,7 +170,7 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
-        this.alertMessage = 'Запрос успешно создан.';
+        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
         this.isLoading = false;
       })
     );
@@ -296,7 +296,7 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
 
   private resetAlerts() {
     this.alert = false;
-    this.alertMessage = '';
+    this.alertMessage = [];
     this.errorAlert = false;
     this.errorMessage = '';
   }

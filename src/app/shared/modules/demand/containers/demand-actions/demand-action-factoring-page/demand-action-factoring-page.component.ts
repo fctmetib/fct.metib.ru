@@ -22,7 +22,7 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
   public isUserVerified: boolean;
 
   public alert: boolean;
-  public alertMessage: string;
+  public alertMessage = [];
 
   public backendErrors$: Observable<string | null>;
 
@@ -83,7 +83,7 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
         window.scroll(0,0);
-        this.alertMessage = 'Запрос успешно создан.';
+        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
       })
     );
     // this.store.dispatch(createDemandFactoringAction({ data }));

@@ -22,7 +22,7 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
   public isUserVerified: boolean;
 
   public alert: boolean;
-  public alertMessage: string;
+  public alertMessage = [];
 
   public backendErrors$: Observable<string | null>;
 
@@ -83,7 +83,7 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
         window.scroll(0,0);
-        this.alertMessage = 'Запрос успешно создан.';
+        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
       })
     );
    // this.store.dispatch(createDemandFactoringAction({ data }));

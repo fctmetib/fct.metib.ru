@@ -412,7 +412,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       factoringProducts: ['', [Validators.required]],
       factoringTradeMarks: ['', [Validators.required]],
       factoringShipments: ['', [Validators.required]],
-      factoringFinanceLimit: [''],
+      factoringFinanceLimit: ['', [Validators.required]],
       factoringClients: ['', [Validators.required]],
       factoringWorkers: [0, [Validators.required]],
 

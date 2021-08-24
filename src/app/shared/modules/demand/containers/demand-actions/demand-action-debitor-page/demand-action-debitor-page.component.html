@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <metib-success-messages *ngIf="alert" [message]="alertMessage"></metib-success-messages>
+  <p-messages [(value)]="alertMessage" [enableService]="false"></p-messages>
   <metib-backend-error-messages *ngIf="errorAlert" [backendErrors]="errorMessage">
   </metib-backend-error-messages>
 

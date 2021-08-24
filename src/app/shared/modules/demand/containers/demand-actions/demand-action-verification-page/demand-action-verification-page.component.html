@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <metib-success-messages *ngIf="alert" [message]="alertMessage"></metib-success-messages>
+  <p-messages [(value)]="alertMessage" [enableService]="false"></p-messages>
 
   <div *ngIf="isLoadingData; else contentTemplate">
     Загрузка...
