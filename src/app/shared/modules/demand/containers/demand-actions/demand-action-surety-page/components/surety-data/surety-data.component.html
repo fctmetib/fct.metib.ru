@@ -755,37 +755,6 @@
           </ng-container>
         </div>
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <div class="addon-button mb-20">
-          <div class="addon-text">
-            <p>
-              Договор поставки
-            </p>
-          </div>
-          <div class="mib-uploader">
-            <input type="file" id="ContractDelivery" accept="image/jpeg,image/png,image/gif,application/pdf"
-              multiple="true" (change)="onSelect($event, 'ContractDelivery')" hidden />
-            <label for="ContractDelivery" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
-          </div>
-        </div>
-
-        <div *ngIf="files.length">
-          <ng-container *ngFor="let file of files">
-            <div class="addon-button mb-10" *ngIf="file.Identifier === 'ContractDelivery'">
-              <div class="addon-text">
-                <p>
-                  {{file.FileName}}
-                </p>
-              </div>
-              <div class="mib-uploader">
-                <div class="mib-upload-warn" (click)="removeFile(file)">
-                  Удалить
-                </div>
-              </div>
-            </div>
-          </ng-container>
-        </div>
-      </div>
     </ng-container>
 
 
