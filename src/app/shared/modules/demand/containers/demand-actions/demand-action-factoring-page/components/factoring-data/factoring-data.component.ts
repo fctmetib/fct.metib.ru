@@ -159,8 +159,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
         otherBankAccountCloseDate: [
           existBank?.Expire
             ? formatDate(existBank?.Expire, 'yyyy-MM-dd', 'en')
-            : '',
-          [Validators.required],
+            : ''
         ],
         otherBankName: [
           existBank?.Bank ? existBank?.Bank : '',
@@ -497,7 +496,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       factoringTradeMarks: factoring.Trademarks,
       factoringShipments: factoring.Suppliers,
       factoringFinanceLimit: factoring.LimitWanted,
-      factoringClients: '',
+      factoringClients: factoring.Buyers,
       factoringWorkers: factoring.StaffAmount,
     });
 
@@ -717,7 +716,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
           Number: this.formFactoring.value.bankOwnerAccount,
         },
         AddonAccounts: listAddonAccounts,
-        Buyers: this.formFactoring.value.Clients,
+        Buyers: this.formFactoring.value.factoringClients,
         EDI: listEDI,
         FactoringAim: 0,
         LimitWanted: this.formFactoring.value.factoringFinanceLimit,

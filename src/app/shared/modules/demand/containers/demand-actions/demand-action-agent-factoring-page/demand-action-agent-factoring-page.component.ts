@@ -76,6 +76,8 @@ export class DemandActionAgentFactoringPageComponent
   private ref: DynamicDialogRef;
   private subscription$: Subscription = new Subscription();
 
+  private _saveDraftAction$: NodeJS.Timeout;
+
   constructor(
     public dialogService: DialogService,
     private currencyPipe: CurrencyPipe,
@@ -104,6 +106,8 @@ export class DemandActionAgentFactoringPageComponent
         }
       })
     );
+
+    this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
 
   public back() {
@@ -119,6 +123,22 @@ export class DemandActionAgentFactoringPageComponent
         this.resultsBIK = data.map((result) => result.BIC);
       })
     );
+  }
+
+  private saveDraft() {
+    // if (this.currentDemand.Files) {
+    //   event.Files = this.currentDemand.Files;
+    // }
+
+    // this.subscription$.add(
+    //   this.demandService
+    //     .addDraftById(this.currentDraftId, event)
+    //     .subscribe((resp) => {
+    //       this.currentDraftId = resp.ID;
+    //       window.scroll(0,0);
+    //       this.showSuccess();
+    //     })
+    // );
   }
 
   public onOtherBankSelect(indexOtherBank: number, bankInfo: string) {
@@ -230,7 +250,6 @@ export class DemandActionAgentFactoringPageComponent
         ],
         otherBankAccountCloseDate: [
           existBank ? formatDate(existBank.Expire, 'yyyy-MM-dd', 'en') : '',
-          [Validators.required],
         ],
         otherBankName: [existBank ? existBank.Bank : '', [Validators.required]],
         otherBankOwnerAccount: [
@@ -779,6 +798,11 @@ export class DemandActionAgentFactoringPageComponent
 
     return result;
   }
+
+  private prepareDraft(): any {
+    return this.prepareData();
+  }
+
   //#endregion
 
   canDeactivate(): boolean | Observable<boolean> {

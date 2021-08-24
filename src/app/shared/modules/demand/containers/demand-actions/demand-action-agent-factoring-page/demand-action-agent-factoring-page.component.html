@@ -220,14 +220,6 @@
                     <label for="otherBankAccountCloseDate">Дата закрытия счёта</label>
                     <input id="otherBankAccountCloseDate" type="date" pInputText placeholder="Дата закрытия счёта"
                       formControlName="otherBankAccountCloseDate">
-                    <div
-                      *ngIf="formFactoring.get('otherBanks')['controls'][i].get('otherBankAccountCloseDate').invalid">
-                      <small
-                        *ngIf="formFactoring.get('otherBanks')['controls'][i].get('otherBankAccountCloseDate').errors.required"
-                        class="p-error">
-                        Поле должно быть заполнено.
-                      </small>
-                    </div>
                   </div>
                   <div class="p-field p-col-12 p-lg-6">
                     <label for="otherBankName">Название банка</label>
