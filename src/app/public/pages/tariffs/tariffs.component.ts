@@ -14,7 +14,7 @@ export class TariffsComponent implements OnInit, OnDestroy {
   private subscription$: Subscription = new Subscription();
 
   public financeForm = this.fb.group({
-    organization: [''],
+    organization: ['', Validators.required],
     name: ['', Validators.required],
     phone: ['', Validators.required],
     inn: ['', Validators.required],
