@@ -8,7 +8,7 @@ export interface AuthResponseInterface {
   Login: string;
   ManagerID: number;
   Name: string;
-  OrganizationID: string;
+  OrganizationID: any;
   Roles: string[];
   StaffID: number;
   UserID: number;

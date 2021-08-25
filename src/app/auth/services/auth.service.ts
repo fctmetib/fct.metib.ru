@@ -107,15 +107,34 @@ export class AuthService {
     }
   }
 
-  isUserVerified(): boolean {
-    const roles = this.getUserRoles();
-
-    if (roles.includes('Staff')) {
+  /**
+   * Проверяет подтвержден ли пользователь.
+   * Если да, то открывает доступ к полноценному кабинету, иначе открывает доступ только к 1 вкладке меню "Запросы"
+   */
+  public isUserVerified(): boolean {
+    const user = this.getUserVerificationType();
+    console.log('user conditon', user)
+    if (user.CustomerID === 0) {
+      return false;
+    } else {
       return true;
+    }
+  }
+
+  /**
+   * Проверяет привязан ли пользователь к Организации, в CRM.
+   * Если да, то в дальнейшем отправляет запрос на получение организации.
+   */
+  public isUserLinked(): any {
+    const user = this.getUserVerificationType();
+
+    if (user.OrganizationID !== 0) {
+      return user.OrganizationID;
     } else {
       return false;
     }
   }
+
 
   public logout(params?: string): void {
     this.cookieService.removeAll();
@@ -195,5 +214,14 @@ export class AuthService {
     return roles;
   }
 
+  private getUserVerificationType(): AuthResponseInterface {
+    const userCookie = this.cookieService.get('_cu');
+
+    return userCookie
+      ? (JSON.parse(
+          this.cryptoService.decrypt(userCookie)
+        ) as AuthResponseInterface)
+      : null;
+  }
   //#endregion
 }

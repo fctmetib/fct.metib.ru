@@ -6,6 +6,9 @@ import { Subscription } from 'rxjs';
 import { InactiveDialogComponent } from '../shared/modules/inactive-dialog/inactive-dialog.component';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../shared/services/common/localstorage.service';
+import { AuthService } from '../auth/services/auth.service';
+import { OrganizationService } from '../shared/services/share/organization.service';
+import { OrganizationInterface } from '../shared/types/organization/organization.interface';
 
 @Component({
   selector: 'app-not-verify-client',
@@ -23,8 +26,12 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
 
   public preloader: boolean = false;
 
+  public organization: OrganizationInterface;
+
   constructor(
     public dialogService: DialogService,
+    private authService: AuthService,
+    private organizationService: OrganizationService,
     private router: Router,
     private localStorageService: LocalStorageService
   ) {}
@@ -41,6 +48,18 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
       });
     } else {
       this.preloader = false;
+    }
+
+    const isUserLinked = this.authService.isUserLinked();
+    console.log('Not verify', isUserLinked)
+    if (isUserLinked) {
+      this.subscription$.add(
+        this.organizationService
+          .getOrganizationById(isUserLinked)
+          .subscribe((responseOrganization) => {
+            this.organization = responseOrganization;
+          })
+      );
     }
 
     this.items = [

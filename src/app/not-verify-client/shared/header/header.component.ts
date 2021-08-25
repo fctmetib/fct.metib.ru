@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 import { currentUserFactoringSelector, currentUserGeneralSelector } from 'src/app/auth/store/selectors';
@@ -13,6 +13,7 @@ import { factoringSelector } from 'src/app/client/store/selectors';
 import * as introJs from 'intro.js/intro.js';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
+import { OrganizationInterface } from '../../../shared/types/organization/organization.interface';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,9 @@ import { CustomerInterface } from 'src/app/shared/types/customer/customer.interf
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Input()
+  organization: OrganizationInterface;
+
   introJS = introJs();
 
   items: MenuItem[];

@@ -6,7 +6,7 @@
     <div class="header-block manager-info">
       <div class="manager-info-name">
         <ng-container *ngIf="(factoring$ | async); else skeletonFactoringManagerTemplate">
-          {{(factoring$ | async)?.Manager?.Name}} ({{(factoring$ | async)?.Manager?.Extension}})
+          {{(factoring$ | async)?.Manager?.Name ? (factoring$ | async)?.Manager?.Name : 'Менеджер не назначен'}} ({{(factoring$ | async)?.Manager?.Extension}})
         </ng-container>
         <ng-template #skeletonFactoringManagerTemplate>
           <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
@@ -23,7 +23,12 @@
     </div>
     <div class="header-block manager-ava">
       <ng-container *ngIf="(factoring$ | async); else skeletonFactoringAvatarTemplate">
-        <img src="{{baseAvatarUrl}}/{{(factoring$ | async)?.Manager?.Avatar}}">
+        <ng-container *ngIf="(factoring$ | async)?.Manager?.Avatar; else placeholderAvaTemplate">
+          <img src="{{baseAvatarUrl}}/{{(factoring$ | async)?.Manager?.Avatar}}">
+        </ng-container>
+        <ng-template #placeholderAvaTemplate>
+          <img src="/assets/images/mib_ava.png">
+        </ng-template>
       </ng-container>
       <ng-template #skeletonFactoringAvatarTemplate>
         <p-skeleton size="5rem"></p-skeleton>
