@@ -16,7 +16,6 @@ export class PageStoreService {
   constructor() {}
 
   public setPage(page: PageInterface) {
-    console.log('NEXT PAGE IS', page)
     this._page$.next(page);
     this.page$.next(page);
   }

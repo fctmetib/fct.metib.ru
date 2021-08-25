@@ -113,7 +113,6 @@ export class AuthService {
    */
   public isUserVerified(): boolean {
     const user = this.getUserVerificationType();
-    console.log('user conditon', user)
     if (user.CustomerID === 0) {
       return false;
     } else {

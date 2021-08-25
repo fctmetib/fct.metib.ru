@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
     this.store.dispatch(getCurrentUserAction());
 
     this.store.pipe(select(currentUserFactoringSelector)).subscribe((user) => {
-      console.log('store user', user)
       if (user && user.CustomerID !== 0) {
         let organizationID = +user.OrganizationID;
         this.store.dispatch(getFactoringAction({ organizationID }));

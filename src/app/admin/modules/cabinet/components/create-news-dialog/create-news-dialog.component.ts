@@ -31,7 +31,6 @@ export class CreateNewsDialogComponent implements OnInit, OnDestroy {
       Title: this.config?.data?.Title ? this.config?.data?.Title : '',
     });
     if (this.config.data) {
-      console.log(this.config.data);
       this.currentId = this.config.data.ID;
     }
   }

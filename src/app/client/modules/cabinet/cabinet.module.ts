@@ -23,6 +23,7 @@ import { CabinetRoutingModule } from './cabinet-routing.module';
 import { CabinetPageComponent } from './components/cabinet-page/cabinet-page.component';
 import { ClientService } from 'src/app/shared/services/common/client.service';
 import { SkeletonModule } from 'primeng/skeleton';
+import { StatisticsService } from './services/statistics.service';
 
 @NgModule({
   imports: [
@@ -47,6 +48,6 @@ import { SkeletonModule } from 'primeng/skeleton';
     CabinetRoutingModule,
   ],
   declarations: [CabinetPageComponent, FactoringComponent],
-  providers: [ClientService, DeliveryService, OrganizationService],
+  providers: [ClientService, DeliveryService, OrganizationService, StatisticsService],
 })
 export class CabinetModule {}

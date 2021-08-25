@@ -39,7 +39,6 @@ export class CardUserComponent implements OnInit {
   ngOnInit() { }
 
   public onSwitchAccount(userId: number) {
-    console.log('user id 1', userId)
     this.switchAccount.emit(userId);
   }
 }

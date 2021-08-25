@@ -42,7 +42,6 @@ export class UsersComponent implements OnInit {
   }
 
   public reauthHandler(userId: string): void {
-    console.log('user id 2', userId)
     const request: ReauthRequestInterface = {
       userId: userId
     };
