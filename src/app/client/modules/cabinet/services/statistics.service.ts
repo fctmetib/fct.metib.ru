@@ -9,7 +9,7 @@ export class StatisticsService {
   constructor(private httpClient: HttpClient) { }
 
   getClientStatistics(): Observable<StatisticsInterface> {
-    const url = `${environment.apiUrl}/report/finstatistic`;
+    const url = `${environment.apiUrl}/report/finstatistics`;
     return this.httpClient.get<StatisticsInterface>(url);
   }
 
