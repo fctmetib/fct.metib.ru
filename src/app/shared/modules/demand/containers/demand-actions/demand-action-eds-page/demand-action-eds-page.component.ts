@@ -126,7 +126,6 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     this.router.navigate([`${baseUrl}/demand`]);
   }
 
-
   ngOnDestroy() {
     this.subscription$.unsubscribe();
     if (this._saveDraftAction$) {
@@ -134,18 +133,21 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     }
   }
 
-
   public getDigitalSignatureRequest() {
-    this.demandService.getDigitalSignatureRequest(this.prepareCoreData()).subscribe(resp => {
-      let binaryData = [];
-      binaryData.push(resp);
-      let downloadLink = document.createElement('a');
-      downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: 'application/msword'}));
+    this.demandService
+      .getDigitalSignatureRequest(this.prepareCoreData())
+      .subscribe((resp) => {
+        let binaryData = [];
+        binaryData.push(resp);
+        let downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(
+          new Blob(binaryData, { type: 'application/msword' })
+        );
 
-      downloadLink.setAttribute('download', 'Заявка на выдачу сертификата');
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-    });
+        downloadLink.setAttribute('download', 'Заявка на выдачу сертификата');
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      });
   }
 
   saveDraft() {
@@ -231,9 +233,15 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   onSubmit() {
     console.log(this.formEDS.value);
     this.subscription$.add(
-      this.demandService.add(this.prepareData()).subscribe(resp => {
+      this.demandService.add(this.prepareData()).subscribe((resp) => {
         this.alert = true;
-        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
+        this.alertMessage = [
+          {
+            severity: 'success',
+            summary: 'Успешно!',
+            detail: 'Запрос успешно создан.',
+          },
+        ];
       })
     );
   }
@@ -246,7 +254,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     let data = this.prepareCoreData();
     let result: SaveDemandRequestInterface<CreateDemandEDSRequestInterface> = {
       DraftID: this.currentDraftId,
-      Data: data
+      Data: data,
     };
     return result;
   }
@@ -307,12 +315,12 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     };
 
     let data: CreateDemandEDSRequestInterface = {
-        Files: this.files,
-        Organization: organization,
-        Passport: passport,
-        Person: person,
-        PersonPosition: this.formEDS.value.ownerWorkPosition,
-        Type: 'DigitalSignature',
+      Files: this.files,
+      Organization: organization,
+      Passport: passport,
+      Person: person,
+      PersonPosition: this.formEDS.value.ownerWorkPosition,
+      Type: 'DigitalSignature',
     };
 
     return data;
@@ -375,6 +383,44 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     this.currentDemand.Files = this.currentDemand.Files.filter(
       (x) => x !== file
     );
+  }
+
+  public isFileInvalid(type: string): boolean {
+    let isInvalid = false;
+
+    // crtInds = currentFileIdentifiers
+    let crtInds = this.files.map((file) => file.Identifier);
+    if (crtInds.includes(type)) {
+      isInvalid = false;
+    } else {
+      isInvalid = true;
+    }
+
+    return isInvalid;
+  }
+
+  public isFilesInvalid(): boolean {
+    let isInvalid = false;
+
+    // crtInds = currentFileIdentifiers
+    let crtInds = this.files.map((file) => file.Identifier);
+    if (crtInds.length < 1) {
+      return true;
+    }
+
+    if (
+      crtInds.includes('Inn') &&
+      crtInds.includes('Ogrn') &&
+      crtInds.includes('Snils') &&
+      crtInds.includes('Director') &&
+      crtInds.includes('Passport')
+    ) {
+      isInvalid = false;
+    } else {
+      isInvalid = true;
+    }
+
+    return isInvalid;
   }
 
   public isAddressEqual(type) {
@@ -595,6 +641,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   }
 
   canDeactivate(): boolean | Observable<boolean> {
-    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
+    return confirm(
+      'Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?'
+    );
   }
 }

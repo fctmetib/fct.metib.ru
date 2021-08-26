@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div [ngClass]="{'card-content': isUserVerified}">
   <div class="header lg">
     <div class="title">
@@ -128,7 +129,7 @@
                       <label for="Passport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
                     </div>
                   </div>
-                  <div class="mib-uploader__error" *ngIf="isFileInvalid('ContractDelivery')">
+                  <div class="mib-uploader__error" *ngIf="isFileInvalid('Passport')">
                     <small class="p-error">
                       Необходимо загрузить документ
                     </small>

@@ -116,32 +116,38 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
     this.subscription$.add(
       this.commonService.getBankByBIK(event.query).subscribe((data) => {
         this.banksFounded = data;
-        this.resultsBIK = data.map(result => result.BIC);
+        this.resultsBIK = data.map((result) => result.BIC);
       })
     );
   }
 
   public onOtherBankSelect(indexOtherBank: number, bankInfo: string) {
-    let bank = this.banksFounded.find(x => x.BIC === bankInfo || x.Name === bankInfo);
-    this.formFactoring.get('otherBanks')['controls'][indexOtherBank].patchValue({
-      otherBankName: bank.Name,
-    })
+    let bank = this.banksFounded.find(
+      (x) => x.BIC === bankInfo || x.Name === bankInfo
+    );
+    this.formFactoring
+      .get('otherBanks')
+      ['controls'][indexOtherBank].patchValue({
+        otherBankName: bank.Name,
+      });
   }
 
   public onBankSelect(bankInfo: string) {
-    let bank = this.banksFounded.find(x => x.BIC === bankInfo || x.Name === bankInfo);
+    let bank = this.banksFounded.find(
+      (x) => x.BIC === bankInfo || x.Name === bankInfo
+    );
     this.formFactoring.patchValue({
       bankBik: bank.BIC,
       bankCorrespondentAccount: bank.AccountBank,
       bankName: bank.Name,
-    })
+    });
   }
 
   public searchByBankName(event): void {
     this.subscription$.add(
       this.commonService.getBankByName(event.query).subscribe((data) => {
         this.banksFounded = data;
-        this.resultsBankname = data.map(result => result.Name);
+        this.resultsBankname = data.map((result) => result.Name);
       })
     );
   }
@@ -276,6 +282,46 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
         this.updateDisplayAddress(this.currentAddressFormId);
       }
     });
+  }
+
+  public isFilesInvalid(): boolean {
+    let isInvalid = false;
+
+    // crtInds = currentFileIdentifiers
+    let crtInds = this.files.map((file) => file.Identifier);
+    if (crtInds.length < 1) {
+      return true;
+    }
+
+    if (
+      crtInds.includes('Regulations') &&
+      crtInds.includes('GenDirPassport') &&
+      crtInds.includes('GenDirProtocol') &&
+      crtInds.includes('GenDirOrder') &&
+      crtInds.includes('Balance') &&
+      crtInds.includes('OSV') &&
+      crtInds.includes('Shareholders')
+    ) {
+      isInvalid = false;
+    } else {
+      isInvalid = true;
+    }
+
+    return isInvalid;
+  }
+
+  public isFileInvalid(type: string): boolean {
+    let isInvalid = false;
+
+    // crtInds = currentFileIdentifiers
+    let crtInds = this.files.map((file) => file.Identifier);
+    if (crtInds.includes(type)) {
+      isInvalid = false;
+    } else {
+      isInvalid = true;
+    }
+
+    return isInvalid;
   }
 
   onSelect(event, type: string) {

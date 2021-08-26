@@ -99,7 +99,6 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
         .addDraftById(this.currentDraftId, event)
         .subscribe((resp) => {
           this.currentDraftId = resp.ID;
-          window.scroll(0,0);
           this.showSuccess();
         })
     );

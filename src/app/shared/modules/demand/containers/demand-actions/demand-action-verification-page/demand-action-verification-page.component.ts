@@ -212,7 +212,7 @@ export class DemandActionVerificationPageComponent
 
     this.formFree.patchValue({
       Comment: data?.Comment ? data?.Comment : '',
-      DebtorID: data?.DebtorID ? data?.DebtorID : this.debtorList[0].ID,
+      DebtorID: data?.DebtorID ? data?.DebtorID : this.debtorList[0]?.ID,
       GLN: data?.GLN ? data?.GLN : '',
       VerificationType: data?.VerificationType
         ? data?.VerificationType

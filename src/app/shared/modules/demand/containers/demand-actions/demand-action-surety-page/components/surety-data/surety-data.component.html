@@ -557,6 +557,12 @@
             <label for="Regulations" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
           </div>
         </div>
+        <div class="mib-uploader__error" *ngIf="isFileInvalid('Regulations')">
+          <small class="p-error">
+            Необходимо загрузить документ
+          </small>
+        </div>
+
         <div *ngIf="files.length">
           <ng-container *ngFor="let file of files">
             <div class="addon-button mb-10" *ngIf="file.Identifier === 'Regulations'">
@@ -588,6 +594,12 @@
             <label for="GenDirPassport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
           </div>
         </div>
+        <div class="mib-uploader__error" *ngIf="isFileInvalid('GenDirPassport')">
+          <small class="p-error">
+            Необходимо загрузить документ
+          </small>
+        </div>
+
         <div *ngIf="files.length">
           <ng-container *ngFor="let file of files">
             <div class="addon-button mb-10" *ngIf="file.Identifier === 'GenDirPassport'">
@@ -618,6 +630,12 @@
             <label for="GenDirProtocol" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
           </div>
         </div>
+        <div class="mib-uploader__error" *ngIf="isFileInvalid('GenDirProtocol')">
+          <small class="p-error">
+            Необходимо загрузить документ
+          </small>
+        </div>
+
         <div *ngIf="files.length">
           <ng-container *ngFor="let file of files">
             <div class="addon-button mb-10" *ngIf="file.Identifier === 'GenDirProtocol'">
@@ -648,6 +666,12 @@
             <label for="actual-btn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
           </div>
         </div>
+        <div class="mib-uploader__error" *ngIf="isFileInvalid('GenDirOrder')">
+          <small class="p-error">
+            Необходимо загрузить документ
+          </small>
+        </div>
+
         <div *ngIf="files.length">
           <ng-container *ngFor="let file of files">
             <div class="addon-button mb-10" *ngIf="file.Identifier === 'GenDirOrder'">
@@ -678,6 +702,12 @@
             <label for="Balance" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
           </div>
         </div>
+        <div class="mib-uploader__error" *ngIf="isFileInvalid('Balance')">
+          <small class="p-error">
+            Необходимо загрузить документ
+          </small>
+        </div>
+
         <div *ngIf="files.length">
           <ng-container *ngFor="let file of files">
             <div class="addon-button mb-10" *ngIf="file.Identifier === 'Balance'">
@@ -708,6 +738,12 @@
             <label for="OSV" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
           </div>
         </div>
+        <div class="mib-uploader__error" *ngIf="isFileInvalid('OSV')">
+          <small class="p-error">
+            Необходимо загрузить документ
+          </small>
+        </div>
+
         <div *ngIf="files.length">
           <ng-container *ngFor="let file of files">
             <div class="addon-button mb-10" *ngIf="file.Identifier === 'OSV'">
@@ -738,6 +774,12 @@
             <label for="Shareholders" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
           </div>
         </div>
+        <div class="mib-uploader__error" *ngIf="isFileInvalid('Shareholders')">
+          <small class="p-error">
+            Необходимо загрузить документ
+          </small>
+        </div>
+
         <div *ngIf="files.length">
           <ng-container *ngFor="let file of files">
             <div class="addon-button mb-10" *ngIf="file.Identifier === 'Shareholders'">
@@ -762,7 +804,7 @@
       <label for="btn_submit">&nbsp;</label>
       <!--TODO ADD LOADER ON BUTTON -->
       <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-        class="btn-mib-submit p-button-outlined" [disabled]="formFactoring.invalid"></button>
+        class="btn-mib-submit p-button-outlined" [disabled]="formFactoring.invalid  || isFilesInvalid()"></button>
     </div>
   </div>
 </form>

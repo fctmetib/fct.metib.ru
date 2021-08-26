@@ -99,6 +99,7 @@ export class DemandActionAgentFactoringPageComponent
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
         if (params['ID']) {
+          this.isLoading = true;
           this.fetch(params['ID']);
         } else {
           this.isLoading = true;
@@ -141,6 +142,46 @@ export class DemandActionAgentFactoringPageComponent
     // );
   }
 
+  public isFileInvalid(type: string): boolean {
+    let isInvalid = false;
+
+    // crtInds = currentFileIdentifiers
+    let crtInds = this.files.map((file) => file.Identifier);
+    if (crtInds.includes(type)) {
+      isInvalid = false;
+    } else {
+      isInvalid = true;
+    }
+
+    return isInvalid;
+  }
+
+  public isFilesInvalid(): boolean {
+    let isInvalid = false;
+
+    // crtInds = currentFileIdentifiers
+    let crtInds = this.files.map((file) => file.Identifier);
+    if (crtInds.length < 1) {
+      return true;
+    }
+
+    if (
+      crtInds.includes('Regulations') &&
+      crtInds.includes('GenDirPassport') &&
+      crtInds.includes('GenDirProtocol') &&
+      crtInds.includes('GenDirOrder') &&
+      crtInds.includes('Balance') &&
+      crtInds.includes('OSV') &&
+      crtInds.includes('Shareholders') &&
+      crtInds.includes('ContractDelivery')
+    ) {
+      isInvalid = false;
+    } else {
+      isInvalid = true;
+    }
+
+    return isInvalid;
+  }
   public onOtherBankSelect(indexOtherBank: number, bankInfo: string) {
     let bank = this.banksFounded.find(
       (x) => x.BIC === bankInfo || x.Name === bankInfo
@@ -221,6 +262,8 @@ export class DemandActionAgentFactoringPageComponent
           Manager: null,
         };
         console.log(this.currentDemand);
+
+        this.isLoading = false;
         this.isEdit = true;
       })
     );

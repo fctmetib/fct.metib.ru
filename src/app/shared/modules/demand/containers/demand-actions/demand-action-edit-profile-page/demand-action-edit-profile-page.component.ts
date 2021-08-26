@@ -19,6 +19,7 @@ import { CreateDemandMessageRequestInterface } from '../../../types/requests/cre
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
 import { formatDate } from '@angular/common';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-demand-action-edit-profile-page',
@@ -68,6 +69,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   constructor(
     private authService: AuthService,
     private commonService: CommonService,
+    private messageService: MessageService,
     private fb: FormBuilder,
     private demandService: DemandService,
     private store: Store,
@@ -259,6 +261,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
         .addDraftById(this.currentDraftId, draft)
         .subscribe((resp) => {
           this.currentDraftId = resp.ID;
+          this.showSuccess();
         })
     );
   }
@@ -368,6 +371,13 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     }
   }
 
+  private showSuccess() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Успешно',
+      detail: 'Черновик успешно сохранен!',
+    });
+  }
   //#endregion
   canDeactivate(): boolean | Observable<boolean> {
     return confirm(
