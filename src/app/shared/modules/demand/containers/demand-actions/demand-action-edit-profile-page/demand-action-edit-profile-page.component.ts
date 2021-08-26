@@ -35,9 +35,13 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
 
   public alert: boolean;
   public alertMessage = [];
-  public alertMessage$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public alertMessage$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    null
+  );
 
-  public isLoading$: Observable<boolean> = new Observable<boolean>();
+  public isLoading: boolean = false;
+  public isRequestLoading: boolean = false;
+
   public backendErrors$: Observable<string | null>;
 
   public avatarSource: any = '/assets/images/mib_ava.png';
@@ -98,7 +102,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     this.router.navigate([`${baseUrl}/demand`]);
   }
 
-
   ngOnDestroy() {
     this.subscription$.unsubscribe();
     if (this._saveDraftAction$) {
@@ -109,14 +112,20 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   onSubmit() {
     let data: SaveDemandRequestInterface<any> = {
       Data: this.prepareData(),
-      DraftID: this.currentDraftId
+      DraftID: this.currentDraftId,
     };
 
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
-        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
-        // this.alertMessage = '';
+        window.scroll(0, 0);
+        this.alertMessage = [
+          {
+            severity: 'success',
+            summary: 'Успешно!',
+            detail: 'Запрос успешно создан.',
+          },
+        ];
       })
     );
   }
@@ -137,17 +146,38 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     );
   }
 
+  public isFilesInvalid(): boolean {
+    let isInvalid = false;
+
+    // crtInds = currentFileIdentifiers
+    let crtInds = this.files.map((file) => file.Identifier);
+    if (crtInds.length < 1) {
+      return true;
+    }
+
+    if (crtInds.includes('Passport')) {
+      isInvalid = false;
+    } else {
+      isInvalid = true;
+    }
+
+    return isInvalid;
+  }
+
   private getDraft() {
+    this.isLoading = true;
     this.subscription$.add(
       this.demandService
         .prepareDemandByType('ProfileChange')
         .subscribe((resp) => {
+          this.isLoading = false;
           this.convertToFormData(resp);
         })
     );
   }
 
   private fetch(id: number) {
+    this.isLoading = true;
     this.subscription$.add(
       this.demandService.getDemandById(id).subscribe((resp) => {
         this.currentDemand = resp;
@@ -164,6 +194,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
         };
         console.log(this.currentDemand);
         this.isEdit = true;
+        this.isLoading = false;
         this.convertToFormData();
       })
     );
@@ -183,12 +214,12 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
       isMale: data.Profile?.IsMale ? data.Profile?.IsMale : '',
       phone: data.Profile?.Phone ? data.Profile?.Phone : '',
       email: data.Profile?.Email ? data.Profile?.Email : '',
-      number: data.Profile?.Number ? data.Passport?.Number : '',
-      date: data.Profile?.Date
+      number: data.Passport?.Number ? data.Passport?.Number : '',
+      date: data.Passport?.Date
         ? formatDate(data.Passport?.Date, 'yyyy-MM-dd', 'en')
         : '',
-      issuerTitle: data.Profile?.IssuerTitle ? data.Passport?.IssuerTitle : '',
-      issuerCode: data.Profile?.IssuerCode ? data.Passport?.IssuerCode : '',
+      issuerTitle: data.Passport?.IssuerTitle ? data.Passport?.IssuerTitle : '',
+      issuerCode: data.Passport?.IssuerCode ? data.Passport?.IssuerCode : '',
     });
 
     this.avatarCode = data?.Avatar;
@@ -204,6 +235,20 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     );
   }
 
+  public isFileInvalid(type: string): boolean {
+    let isInvalid = false;
+
+    // crtInds = currentFileIdentifiers
+    let crtInds = this.files.map((file) => file.Identifier);
+    if (crtInds.includes(type)) {
+      isInvalid = false;
+    } else {
+      isInvalid = true;
+    }
+
+    return isInvalid;
+  }
+
   //#region private logic
   //TODO: Get login
   saveDraft() {
@@ -213,7 +258,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
       this.demandService
         .addDraftById(this.currentDraftId, draft)
         .subscribe((resp) => {
-          console.log(resp);
           this.currentDraftId = resp.ID;
         })
     );
@@ -235,7 +279,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
       Profile: {
         Email: this.formEdit.value.email,
         IsMale: this.formEdit.value.isMale,
-        Login: 'realtestapp521@yandex.ru',
         Name: {
           First: this.formEdit.value.first,
           Last: this.formEdit.value.last,
@@ -268,7 +311,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   }
 
   private initValues(): void {
-    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
     this.backendErrors$ = this.store.pipe(select(errorSelector));
 
     let encryptedJsonCurrentUser = this.cookieService.get('_cu');
@@ -328,6 +370,8 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
 
   //#endregion
   canDeactivate(): boolean | Observable<boolean> {
-    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
+    return confirm(
+      'Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?'
+    );
   }
 }

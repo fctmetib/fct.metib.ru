@@ -8,6 +8,7 @@ import { StatisticsInterface } from '../types/common/statistics.interface';
 export class StatisticsService {
   constructor(private httpClient: HttpClient) { }
 
+
   getClientStatistics(): Observable<StatisticsInterface> {
     const url = `${environment.apiUrl}/report/finstatistics`;
     return this.httpClient.get<StatisticsInterface>(url);
