@@ -107,6 +107,17 @@ export class AuthService {
     }
   }
 
+  public getUserFromStore(): AuthResponseInterface {
+    const userCookie = this.cookieService.get('_cu');
+    if (userCookie) {
+      const user = JSON.parse(
+        this.cryptoService.decrypt(userCookie)
+      ) as AuthResponseInterface;
+      return user;
+    }
+    return null;
+  }
+
   /**
    * Проверяет подтвержден ли пользователь.
    * Если да, то открывает доступ к полноценному кабинету, иначе открывает доступ только к 1 вкладке меню "Запросы"
@@ -133,7 +144,6 @@ export class AuthService {
       return false;
     }
   }
-
 
   public logout(params?: string): void {
     this.cookieService.removeAll();

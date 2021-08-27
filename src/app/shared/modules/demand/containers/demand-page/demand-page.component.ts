@@ -107,63 +107,91 @@ export class DemandPageComponent implements OnInit, OnDestroy {
         text: 'Запрос на редактирование профиля',
         url: 'actions/edit-profile',
         isForNewClient: true,
-        isForDefaultClient: true
+        isForDefaultClient: true,
       },
       {
         text: 'Запрос на свободную тему',
         url: 'actions/free-request',
         isForNewClient: false,
-        isForDefaultClient: true
+        isForDefaultClient: true,
       },
       {
         text: 'Запрос в техническую поддержку',
         url: 'actions/support-request',
         isForNewClient: false,
-        isForDefaultClient: true
+        isForDefaultClient: true,
       },
       {
         text: 'Запрос на ЭЦП',
         url: 'actions/create-eds',
         isForNewClient: true,
-        isForDefaultClient: true
+        isForDefaultClient: true,
       },
       {
         text: 'Запрос на поручительство',
         url: 'actions/surety',
         isForNewClient: true,
-        isForDefaultClient: true
+        isForDefaultClient: true,
       },
       {
         text: 'Запрос на факторинг',
         url: 'actions/factoring',
         isForNewClient: true,
-        isForDefaultClient: true
+        isForDefaultClient: true,
       },
       {
         text: 'Запрос на агентский факторинг',
         url: 'actions/agent-factoring',
         isForNewClient: true,
-        isForDefaultClient: true
+        isForDefaultClient: true,
       },
       {
         text: 'Запрос на увеличение лимита',
         url: 'actions/update-limit',
         isForNewClient: false,
-        isForDefaultClient: true
+        isForDefaultClient: true,
       },
       {
         text: 'Запрос на нового дебитора',
         url: 'actions/create-debitor',
         isForNewClient: false,
-        isForDefaultClient: true
+        isForDefaultClient: true,
       },
       {
         text: 'Регистрация канала верификации',
         url: 'actions/verify',
         isForNewClient: false,
-        isForDefaultClient: true
+        isForDefaultClient: true,
       },
     ];
+
+    let user = this.authService.getUserFromStore();
+    if (user && user.DebtorID) {
+      let updateAction = this.actions.find(
+        (x) => x.text === 'Запрос на агентский факторинг'
+      );
+      let updatedAction = {
+        ...updateAction,
+        isForNewClient: false,
+        isForDefaultClient: false,
+      };
+
+      let index = this.actions.indexOf(updateAction);
+      this.actions[index] = updatedAction;
+    }
+    if (user && user.CustomerID) {
+      let updateAction = this.actions.find(
+        (x) => x.text === 'Запрос на факторинг'
+      );
+      let updatedAction = {
+        ...updateAction,
+        isForNewClient: false,
+        isForDefaultClient: false,
+      };
+
+      let index = this.actions.indexOf(updateAction);
+      this.actions[index] = updatedAction;
+    }
   }
 
   public downloadFile() {
