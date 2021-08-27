@@ -61,6 +61,7 @@ import { AddressModalComponent } from './components/address/address.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ExitGuard } from '../../services/exit.guard';
 import {AutoCompleteModule} from 'primeng/autocomplete';
+import { DemandResultComponent } from './shared/components/demand-result/demand-result.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -119,6 +120,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     SuretyDataComponent,
     FactoringDataComponent,
     DemandFilesComponent,
+    DemandResultComponent,
     DemandInfoComponent,
     // Modals
     AddressModalComponent

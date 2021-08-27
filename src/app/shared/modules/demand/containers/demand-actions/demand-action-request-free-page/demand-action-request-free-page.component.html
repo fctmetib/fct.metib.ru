@@ -27,8 +27,8 @@
         <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files"></app-demand-files>
       </p-tabPanel>
       <p-tabPanel header="Результат" *ngIf="isView">
-        <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files">
-        </app-demand-files>
+        <app-demand-result [result]="currentDemand.Result">
+        </app-demand-result>
       </p-tabPanel>
     </p-tabView>
   </ng-container>

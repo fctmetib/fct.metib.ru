@@ -81,6 +81,8 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
     return result;
   }
 
+  //TODO: ADD
+
   public getStatus(status: string): string {
     let result: string = '';
     switch (status) {
