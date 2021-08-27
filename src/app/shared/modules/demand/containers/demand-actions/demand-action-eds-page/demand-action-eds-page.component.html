@@ -25,6 +25,10 @@
         <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files">
         </app-demand-files>
       </p-tabPanel>
+      <p-tabPanel header="Результат" *ngIf="isView">
+        <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files">
+        </app-demand-files>
+      </p-tabPanel>
     </p-tabView>
   </ng-container>
   <ng-template #createTemplate>
@@ -267,8 +271,8 @@
               запрос
               на
               издание
-              сертификата!
-              В данном случае, сертификат будет издан на имя: Олег Кузнецов</p>
+              сертификата!</p>
+              <!-- В данном случае, сертификат будет издан на имя: Олег Кузнецов -->
           </div>
 
           <!-- 6 row -->

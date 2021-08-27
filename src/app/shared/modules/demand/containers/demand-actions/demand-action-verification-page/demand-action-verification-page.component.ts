@@ -45,6 +45,7 @@ export class DemandActionVerificationPageComponent
   public currentTemplate: string = 'ediTemplate';
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
+  isView: boolean;
 
   constructor(
     private authService: AuthService,
@@ -63,7 +64,8 @@ export class DemandActionVerificationPageComponent
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        if (params['ID']) {
+        this.isView = params['View'] === 'true' ? true : false
+        if (params['ID'] && params['Edit'] === 'false') {
           this.fetch(params['ID']);
         } else {
           this.isLoading = true;

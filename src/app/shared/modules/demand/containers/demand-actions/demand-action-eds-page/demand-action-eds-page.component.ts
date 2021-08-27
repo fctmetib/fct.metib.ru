@@ -19,7 +19,7 @@ import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { Observable, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap, switchMapTo } from 'rxjs/operators';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -89,6 +89,10 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   private ref: DynamicDialogRef;
   private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
+  postList: import('g:/_Metallinvestbank/_Projects/metallinvestbank-web/src/app/shared/services/common/common.service').PostInterface[];
+  countryList: import('g:/_Metallinvestbank/_Projects/metallinvestbank-web/src/app/shared/services/common/common.service').RegionInterface[];
+  regionList: import('g:/_Metallinvestbank/_Projects/metallinvestbank-web/src/app/shared/services/common/common.service').RegionInterface[];
+  isView: any;
 
   constructor(
     public dialogService: DialogService,
@@ -108,7 +112,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        if (params['ID']) {
+        this.isView = params['View'] === 'true' ? true : false
+        if (params['ID'] && params['Edit'] === 'false') {
           this.fetch(params['ID']);
         } else {
           this.isLoading = true;
@@ -116,6 +121,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
         }
       })
     );
+
+    this.initAdditionalData();
 
     this._saveDraftAction$ = setInterval(() => this.saveDraft(), 30000);
   }
@@ -596,8 +603,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       ownerMiddlename: person?.NameSecond ? person?.NameSecond : '',
       ownerGender: person?.Gender ? person?.Gender : '',
       ownerSNILS: person?.SNILS ? person?.SNILS : '',
-      ownerDateBurn: person.BirthDate
-        ? formatDate(person.BirthDate, 'yyyy-MM-dd', 'en')
+      ownerDateBurn: person?.BirthDate
+        ? formatDate(person?.BirthDate, 'yyyy-MM-dd', 'en')
         : '',
       ownerPlaceBurn: person?.BirthPlace ? person?.BirthPlace : '',
       ownerPhone: person?.Phone ? person?.Phone : '',
@@ -630,6 +637,24 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
   private getDisplayAddress(address): string {
     return '';
+  }
+
+  private initAdditionalData(): void {
+    this.subscription$.add(
+      this.commonService.getPosts().subscribe((posts) => {
+        this.postList = posts;
+      })
+    );
+    this.subscription$.add(
+      this.commonService.getCountries().subscribe((countries) => {
+        this.countryList = countries;
+      })
+    );
+    this.subscription$.add(
+      this.commonService.getRegions().subscribe((regions) => {
+        this.regionList = regions;
+      })
+    );
   }
 
   private showSuccess() {

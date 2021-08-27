@@ -78,6 +78,7 @@ export class DemandActionAgentFactoringPageComponent
   private subscription$: Subscription = new Subscription();
 
   private _saveDraftAction$: NodeJS.Timeout;
+  isView: boolean;
 
   constructor(
     public dialogService: DialogService,
@@ -100,7 +101,8 @@ export class DemandActionAgentFactoringPageComponent
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        if (params['ID']) {
+        this.isView = params['View'] === 'true' ? true : false
+        if (params['ID'] && params['Edit'] === 'false') {
           this.isLoading = true;
           this.fetch(params['ID']);
         } else {

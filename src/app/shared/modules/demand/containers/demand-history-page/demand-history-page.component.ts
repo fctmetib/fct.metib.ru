@@ -160,17 +160,21 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  edit(Type, ID) {
+  edit(Type: string, ID: string, isView: boolean, isDraft: string) {
     console.log(Type);
 
     const notVerify = 'not-verify';
     const baseUrl = this.isUserVerified ? '' : notVerify;
+
+    let Edit = isDraft === 'Draft' ? true : false;
 
     switch (Type) {
       case 'Factoring':
         this.router.navigate([`${baseUrl}/demand/actions/factoring`], {
           queryParams: {
             ID: ID,
+            View: isView,
+            Edit: Edit
           },
         });
         break;
@@ -178,6 +182,8 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         this.router.navigate([`${baseUrl}/demand/actions/agent-factoring`], {
           queryParams: {
             ID: ID,
+            View: isView,
+            Edit: Edit
           },
         });
         break;
@@ -185,6 +191,8 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         this.router.navigate([`${baseUrl}/demand/actions/free-request`], {
           queryParams: {
             ID: ID,
+            View: isView,
+            Edit: Edit
           },
         });
         break;
@@ -192,6 +200,8 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         this.router.navigate([`${baseUrl}/demand/actions/create-eds`], {
           queryParams: {
             ID: ID,
+            View: isView,
+            Edit: Edit
           },
         });
         break;
@@ -199,6 +209,8 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         this.router.navigate([`${baseUrl}/demand/actions/edit-profile`], {
           queryParams: {
             ID: ID,
+            View: isView,
+            Edit: Edit
           },
         });
         break;
@@ -206,6 +218,8 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         this.router.navigate([`${baseUrl}/demand/actions/update-limit`], {
           queryParams: {
             ID: ID,
+            View: isView,
+            Edit: Edit
           },
         });
         break;
@@ -213,6 +227,8 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         this.router.navigate([`${baseUrl}/demand/actions/create-debitor`], {
           queryParams: {
             ID: ID,
+            View: isView,
+            Edit: Edit
           },
         });
         break;
@@ -220,6 +236,8 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         this.router.navigate([`${baseUrl}/demand/actions/surety`], {
           queryParams: {
             ID: ID,
+            View: isView,
+            Edit: Edit
           },
         });
         break;
@@ -227,6 +245,8 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
         this.router.navigate([`${baseUrl}/demand/actions/verify`], {
           queryParams: {
             ID: ID,
+            View: isView,
+            Edit: Edit
           },
         });
         break;

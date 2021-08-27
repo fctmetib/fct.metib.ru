@@ -87,6 +87,9 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
       case 'Created':
         result = 'Создан';
         break;
+      case 'Completed':
+        result = 'Завершен';
+        break;
     }
     return result;
   }

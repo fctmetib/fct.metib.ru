@@ -37,6 +37,7 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
   public isLoading: boolean = false;
 
   private subscription$: Subscription = new Subscription();
+  isView: boolean;
 
   constructor(
     private authService: AuthService,
@@ -52,7 +53,8 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        if (params['ID']) {
+        this.isView = params['View'] === 'true' ? true : false
+        if (params['ID'] && params['Edit'] === 'false') {
           this.fetch(params['ID']);
         } else {
           this.isLoading = true;

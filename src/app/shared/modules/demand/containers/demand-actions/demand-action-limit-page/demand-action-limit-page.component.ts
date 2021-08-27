@@ -40,6 +40,7 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
 
   private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
+  isView: boolean;
 
   constructor(
     private authService: AuthService,
@@ -58,7 +59,8 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        if (params['ID']) {
+        this.isView = params['View'] === 'true' ? true : false
+        if (params['ID'] && params['Edit'] === 'false') {
           this.fetch(params['ID']);
         }
         if (params['DraftId']) {

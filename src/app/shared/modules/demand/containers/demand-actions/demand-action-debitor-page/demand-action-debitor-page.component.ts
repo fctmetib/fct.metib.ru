@@ -47,6 +47,7 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
 
   private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
+  isView: boolean;
 
   constructor(
     private authService: AuthService,
@@ -65,7 +66,8 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        if (params['ID']) {
+        this.isView = params['View'] === 'true' ? true : false
+        if (params['ID'] && params['Edit'] === 'false') {
           this.fetch(params['ID']);
         }
         if (params['DraftId']) {
