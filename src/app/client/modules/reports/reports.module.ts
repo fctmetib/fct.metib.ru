@@ -28,6 +28,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { ContextMenuModule } from 'primeng/contextmenu';
     DropdownModule,
     FormsModule,
     ProgressBarModule,
+    ProgressSpinnerModule,
     SkeletonModule,
     MultiSelectModule,
     ReportsRoutingModule,

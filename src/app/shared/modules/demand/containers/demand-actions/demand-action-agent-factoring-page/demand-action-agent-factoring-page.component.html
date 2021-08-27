@@ -322,8 +322,10 @@
           </div>
           <div class="p-field p-col-12 p-lg-6">
             <label for="factoringFinanceLimit">Предполагаемый лимит финансирования</label>
-            <input id="factoringFinanceLimit" type="text" pInputText placeholder="Предполагаемый лимит финансирования"
-              formControlName="factoringFinanceLimit">
+            <p-inputNumber placeholder="Предполагаемый лимит финансирования" id="factoringFinanceLimit"
+              formControlName="factoringFinanceLimit" inputId="factoringFinanceLimit" mode="currency" currency="RUB"
+              locale="ru-RU">
+            </p-inputNumber>
             <div *ngIf="formFactoring.controls['factoringFinanceLimit'].invalid">
               <small *ngIf="formFactoring.controls['factoringFinanceLimit'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -535,8 +537,9 @@
           </div>
           <div class="p-field p-col-12 p-md-6">
             <label for="factoringLimit">Предполагаемый лимит</label>
-            <input id="factoringLimit" type="number" pInputText placeholder="Предполагаемый лимит"
-              formControlName="factoringLimit">
+            <p-inputNumber placeholder="Предполагаемый лимит" id="factoringLimit"
+              formControlName="factoringLimit" inputId="factoringLimit" mode="currency" currency="RUB" locale="ru-RU">
+            </p-inputNumber>
             <div *ngIf="formFactoring.controls['factoringLimit'].invalid">
               <small *ngIf="formFactoring.controls['factoringLimit'].errors.required" class="p-error">
                 Поле должно быть заполнено.

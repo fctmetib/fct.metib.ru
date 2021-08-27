@@ -165,8 +165,7 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
         otherBankAccountCloseDate: [
           existBank?.Expire
             ? formatDate(existBank?.Expire, 'yyyy-MM-dd', 'en')
-            : '',
-          [Validators.required],
+            : ''
         ],
         otherBankName: [
           existBank?.Bank ? existBank?.Bank : '',
@@ -459,7 +458,7 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
       factoringProducts: ['', [Validators.required]],
       factoringTradeMarks: ['', [Validators.required]],
       factoringShipments: ['', [Validators.required]],
-      factoringFinanceLimit: [''],
+      factoringFinanceLimit: [null, [Validators.required]],
       factoringClients: ['', [Validators.required]],
       factoringWorkers: [0, [Validators.required]],
 
@@ -470,26 +469,26 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
       factoringEDIProviders: this.fb.array([]),
     });
 
-    this.subscription$.add(
-      this.formFactoring.valueChanges.subscribe((form) => {
-        if (form.factoringFinanceLimit) {
-          this.formFactoring.patchValue(
-            {
-              factoringFinanceLimit: this.currencyPipe.transform(
-                form.factoringFinanceLimit
-                  .toString()
-                  .replace(/\D/g, '')
-                  .replace(/^0+/, ''),
-                'RUB',
-                'symbol',
-                '1.0-0'
-              ),
-            },
-            { emitEvent: false }
-          );
-        }
-      })
-    );
+    // this.subscription$.add(
+    //   this.formFactoring.valueChanges.subscribe((form) => {
+    //     if (form.factoringFinanceLimit) {
+    //       this.formFactoring.patchValue(
+    //         {
+    //           factoringFinanceLimit: this.currencyPipe.transform(
+    //             form.factoringFinanceLimit
+    //               .toString()
+    //               .replace(/\D/g, '')
+    //               .replace(/^0+/, ''),
+    //             'RUB',
+    //             'symbol',
+    //             '1.0-0'
+    //           ),
+    //         },
+    //         { emitEvent: false }
+    //       );
+    //     }
+    //   })
+    // );
 
     this.formFactoring.markAllAsTouched();
     this.formFactoring.markAsDirty();
@@ -543,7 +542,7 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
       factoringTradeMarks: factoring.Trademarks,
       factoringShipments: factoring.Suppliers,
       factoringFinanceLimit: factoring.LimitWanted,
-      factoringClients: '',
+      factoringClients: factoring.Buyers,
       factoringWorkers: factoring.StaffAmount,
     });
 

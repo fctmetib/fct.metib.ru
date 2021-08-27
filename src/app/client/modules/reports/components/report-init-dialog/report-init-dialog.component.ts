@@ -21,6 +21,8 @@ import { DeliveryInterface } from 'src/app/shared/types/delivery/delivery.interf
 export class ReportInitDialogComponent implements OnDestroy {
   public form: FormGroup;
 
+  public preloader: boolean = false;
+
   private inputsCount: number;
   private currentData: any;
 
@@ -56,6 +58,7 @@ export class ReportInitDialogComponent implements OnDestroy {
   }
 
   private initValues(): void {
+    this.preloader = true;
     this.currentData = this.config.data;
     this.controlConfig = this.currentData.config;
     console.log(this.currentData);
@@ -71,6 +74,7 @@ export class ReportInitDialogComponent implements OnDestroy {
 
         this.uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
         console.log(this.uniqDebtors);
+        this.preloader = false;
       })
     );
 

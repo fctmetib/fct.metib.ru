@@ -1,128 +1,139 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="p-fluid p-formgrid p-grid form">
 
-    <ng-container *ngIf="controlConfig.isEmpty">
-      <p>Для этого отчета не нужны параметры...
-        В отчете будут указаны актуальные данные на текущий момент.</p>
-    </ng-container>
-
-    <ng-container *ngIf="controlConfig.isDateFrom">
-      <div class="p-field p-col-12 p-md-6">
-        <label for="dateFrom">Дата с: </label>
-        <p-calendar
-          formControlName="dateFrom"
-          selectOtherMonths="true"
-          inputId="dateFrom"
-          dateFormat="dd.mm.yy"></p-calendar>
-        <div *ngIf="form.controls['dateFrom'].invalid">
-          <small *ngIf="form.controls['dateFrom'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="controlConfig.isDateTo">
-      <div class="p-field p-col-12 p-md-6">
-        <label for="dateTo">Дата до: </label>
-        <p-calendar
-          formControlName="dateTo"
-          inputId="dateTo"
-          selectOtherMonths="true"
-          dateFormat="dd.mm.yy"></p-calendar>
-        <div *ngIf="form.controls['dateTo'].invalid">
-          <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="controlConfig.isDebitor">
-      <div class="p-field p-col-12 p-md-12">
-        <label for="debitor">Дебитор: </label>
-        <p-dropdown id="debitor" [options]="uniqDebtors" placeholder="Выберите Дебитора" formControlName="debitor"
-          optionLabel="Title" optionValue="ID"></p-dropdown>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="controlConfig.isOnDate">
-      <div class="p-field p-col-12 p-md-6">
-        <label for="onDate">На Дату: </label>
-        <p-calendar formControlName="onDate"
-        selectOtherMonths="true" inputId="onDate" dateFormat="dd.mm.yy"></p-calendar>
-        <div *ngIf="form.controls['onDate'].invalid">
-          <small *ngIf="form.controls['onDate'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="controlConfig.isStatusRequest">
-      <div class="p-field p-col-12 p-md-6">
-        <label for="statusRequest">Статус Накладных: </label>
-        <p-dropdown id="statusRequest" [options]="statusShipments" placeholder="Выберите Статус Накладных"
-          formControlName="statusRequest" optionLabel="Title" optionValue="ID"></p-dropdown>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="controlConfig.isDaysDelay">
-      <div class="p-field p-col-12 p-md-6">
-        <label for="daysDelay">Количество дней просрочки: </label>
-        <input id="daysDelay" type="number" pInputText placeholder="Количество дней просрочки"
-          formControlName="daysDelay">
-        <div *ngIf="form.controls['daysDelay'].invalid">
-          <small *ngIf="form.controls['daysDelay'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="controlConfig.isNumberOrder">
-      <div class="p-field p-col-12 p-md-6">
-        <label for="numberOrder">Номер Распоряжения: </label>
-        <input id="numberOrder" type="text" pInputText placeholder="Номер Распоряжения" formControlName="numberOrder">
-        <div *ngIf="form.controls['numberOrder'].invalid">
-          <small *ngIf="form.controls['numberOrder'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="controlConfig.isNumberRequest">
-      <div class="p-field p-col-12 p-md-6">
-        <label for="numberRequest">Номер Заявки: </label>
-        <input id="numberRequest" type="text" pInputText placeholder="Номер Заявки" formControlName="numberRequest">
-        <div *ngIf="form.controls['numberRequest'].invalid">
-          <small *ngIf="form.controls['numberRequest'].errors.required" class="p-error">
-            Поле должно быть заполнено.
-          </small>
-        </div>
-      </div>
-    </ng-container>
-
-
-    <ng-container *ngIf="controlConfig.isSelectReportDropdown">
-      <div class="p-field p-col-12 p-md-6">
-        <p-dropdown id="selectReportDropdown" [options]="createdByList" formControlName="selectReportDropdown"
-          optionLabel="Title" optionValue="ID"></p-dropdown>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="controlConfig.isSelectReportCheckbox">
-      <div class="p-field p-col-12 p-md-6">
-        <div class="p-field-checkbox">
-          <p-checkbox formControlName="selectReportCheckbox" binary="true" inputId="selectReportCheckbox"></p-checkbox>
-          <label for="binary">Только платные отчеты</label>
-        </div>
-      </div>
-    </ng-container>
-
+<ng-container *ngIf="preloader; else contentTemplate">
+  <div class="mib-preload__small">
+    Загрузка
+    <p-progressSpinner></p-progressSpinner>
   </div>
-  <div class="modal-actions">
-    <button pButton pRipple label="Сформировать" class="p-button-text save" type="submit"
-      [disabled]="form.invalid"></button>
-  </div>
-</form>
+</ng-container>
+<ng-template #contentTemplate>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="p-fluid p-formgrid p-grid form">
+
+      <ng-container *ngIf="controlConfig.isEmpty">
+        <p>Для этого отчета не нужны параметры...
+          В отчете будут указаны актуальные данные на текущий момент.</p>
+      </ng-container>
+
+      <ng-container *ngIf="controlConfig.isDateFrom">
+        <div class="p-field p-col-12 p-md-6">
+          <label for="dateFrom">Дата с: </label>
+          <p-calendar
+            formControlName="dateFrom"
+            selectOtherMonths="true"
+            inputId="dateFrom"
+            dateFormat="dd.mm.yy"></p-calendar>
+          <div *ngIf="form.controls['dateFrom'].invalid">
+            <small *ngIf="form.controls['dateFrom'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="controlConfig.isDateTo">
+        <div class="p-field p-col-12 p-md-6">
+          <label for="dateTo">Дата до: </label>
+          <p-calendar
+            formControlName="dateTo"
+            inputId="dateTo"
+            selectOtherMonths="true"
+            dateFormat="dd.mm.yy"></p-calendar>
+          <div *ngIf="form.controls['dateTo'].invalid">
+            <small *ngIf="form.controls['dateTo'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="controlConfig.isDebitor">
+        <div class="p-field p-col-12 p-md-12">
+          <label for="debitor">Дебитор: </label>
+          <p-dropdown id="debitor" [options]="uniqDebtors" placeholder="Выберите Дебитора" formControlName="debitor"
+            optionLabel="Title" optionValue="ID"></p-dropdown>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="controlConfig.isOnDate">
+        <div class="p-field p-col-12 p-md-6">
+          <label for="onDate">На Дату: </label>
+          <p-calendar formControlName="onDate"
+          selectOtherMonths="true" inputId="onDate" dateFormat="dd.mm.yy"></p-calendar>
+          <div *ngIf="form.controls['onDate'].invalid">
+            <small *ngIf="form.controls['onDate'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="controlConfig.isStatusRequest">
+        <div class="p-field p-col-12 p-md-6">
+          <label for="statusRequest">Статус Накладных: </label>
+          <p-dropdown id="statusRequest" [options]="statusShipments" placeholder="Выберите Статус Накладных"
+            formControlName="statusRequest" optionLabel="Title" optionValue="ID"></p-dropdown>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="controlConfig.isDaysDelay">
+        <div class="p-field p-col-12 p-md-6">
+          <label for="daysDelay">Количество дней просрочки: </label>
+          <input id="daysDelay" type="number" pInputText placeholder="Количество дней просрочки"
+            formControlName="daysDelay">
+          <div *ngIf="form.controls['daysDelay'].invalid">
+            <small *ngIf="form.controls['daysDelay'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="controlConfig.isNumberOrder">
+        <div class="p-field p-col-12 p-md-6">
+          <label for="numberOrder">Номер Распоряжения: </label>
+          <input id="numberOrder" type="text" pInputText placeholder="Номер Распоряжения" formControlName="numberOrder">
+          <div *ngIf="form.controls['numberOrder'].invalid">
+            <small *ngIf="form.controls['numberOrder'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="controlConfig.isNumberRequest">
+        <div class="p-field p-col-12 p-md-6">
+          <label for="numberRequest">Номер Заявки: </label>
+          <input id="numberRequest" type="text" pInputText placeholder="Номер Заявки" formControlName="numberRequest">
+          <div *ngIf="form.controls['numberRequest'].invalid">
+            <small *ngIf="form.controls['numberRequest'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+      </ng-container>
+
+
+      <ng-container *ngIf="controlConfig.isSelectReportDropdown">
+        <div class="p-field p-col-12 p-md-6">
+          <p-dropdown id="selectReportDropdown" [options]="createdByList" formControlName="selectReportDropdown"
+            optionLabel="Title" optionValue="ID"></p-dropdown>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="controlConfig.isSelectReportCheckbox">
+        <div class="p-field p-col-12 p-md-6">
+          <div class="p-field-checkbox">
+            <p-checkbox formControlName="selectReportCheckbox" binary="true" inputId="selectReportCheckbox"></p-checkbox>
+            <label for="binary">Только платные отчеты</label>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+    <div class="modal-actions">
+      <button pButton pRipple label="Сформировать" class="p-button-text save" type="submit"
+        [disabled]="form.invalid"></button>
+    </div>
+  </form>
+
+</ng-template>

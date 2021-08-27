@@ -470,26 +470,26 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
       factoringEDIProviders: this.fb.array([]),
     });
 
-    this.subscription$.add(
-      this.formFactoring.valueChanges.subscribe((form) => {
-        if (form.factoringFinanceLimit) {
-          this.formFactoring.patchValue(
-            {
-              factoringFinanceLimit: this.currencyPipe.transform(
-                form.factoringFinanceLimit
-                  .toString()
-                  .replace(/\D/g, '')
-                  .replace(/^0+/, ''),
-                'RUB',
-                'symbol',
-                '1.0-0'
-              ),
-            },
-            { emitEvent: false }
-          );
-        }
-      })
-    );
+    // this.subscription$.add(
+    //   this.formFactoring.valueChanges.subscribe((form) => {
+    //     if (form.factoringFinanceLimit) {
+    //       this.formFactoring.patchValue(
+    //         {
+    //           factoringFinanceLimit: this.currencyPipe.transform(
+    //             form.factoringFinanceLimit
+    //               .toString()
+    //               .replace(/\D/g, '')
+    //               .replace(/^0+/, ''),
+    //             'RUB',
+    //             'symbol',
+    //             '1.0-0'
+    //           ),
+    //         },
+    //         { emitEvent: false }
+    //       );
+    //     }
+    //   })
+    // );
 
     this.formFactoring.markAllAsTouched();
     this.formFactoring.markAsDirty();

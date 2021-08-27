@@ -490,7 +490,7 @@ export class DemandActionAgentFactoringPageComponent
       factoringProducts: ['', [Validators.required]],
       factoringTradeMarks: ['', [Validators.required]],
       factoringShipments: ['', [Validators.required]],
-      factoringFinanceLimit: ['', [Validators.required]],
+      factoringFinanceLimit: [null, [Validators.required]],
       factoringClients: ['', [Validators.required]],
       factoringWorkers: [0, [Validators.required]],
 
@@ -503,25 +503,25 @@ export class DemandActionAgentFactoringPageComponent
     });
 
     // factoringEDIProviders
-    this.subscription$.add(
-      this.formFactoring.valueChanges.subscribe((form) => {
-        if (form.factoringFinanceLimit) {
-          this.formFactoring.patchValue(
-            {
-              factoringFinanceLimit: this.currencyPipe.transform(
-                form.factoringFinanceLimit
-                  .replace(/\D/g, '')
-                  .replace(/^0+/, ''),
-                'RUB',
-                'symbol',
-                '1.0-0'
-              ),
-            },
-            { emitEvent: false }
-          );
-        }
-      })
-    );
+    // this.subscription$.add(
+    //   this.formFactoring.valueChanges.subscribe((form) => {
+    //     if (form.factoringFinanceLimit) {
+    //       this.formFactoring.patchValue(
+    //         {
+    //           factoringFinanceLimit: this.currencyPipe.transform(
+    //             form.factoringFinanceLimit
+    //               .replace(/\D/g, '')
+    //               .replace(/^0+/, ''),
+    //             'RUB',
+    //             'symbol',
+    //             '1.0-0'
+    //           ),
+    //         },
+    //         { emitEvent: false }
+    //       );
+    //     }
+    //   })
+    // );
 
     this.formFactoring.markAllAsTouched();
     this.formFactoring.markAsDirty();
@@ -605,7 +605,7 @@ export class DemandActionAgentFactoringPageComponent
       factoringTradeMarks: factoring?.Trademarks,
       factoringShipments: factoring?.Suppliers,
       factoringFinanceLimit: factoring?.LimitWanted,
-      factoringClients: '',
+      factoringClients: factoring?.Buyers,
       factoringWorkers: factoring?.StaffAmount,
 
       factoringSuppliers: factoring?.Suppliers,
@@ -833,7 +833,7 @@ export class DemandActionAgentFactoringPageComponent
           Number: this.formFactoring.value.bankOwnerAccount,
         },
         AddonAccounts: listAddonAccounts,
-        Buyers: this.formFactoring.value.Clients,
+        Buyers: this.formFactoring.value.factoringClients,
         EDI: listEDI,
         FactoringAim: 0,
         LimitWanted: this.formFactoring.value.factoringFinanceLimit,

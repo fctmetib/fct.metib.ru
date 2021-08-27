@@ -2,7 +2,7 @@
   <div class="form-actions">
     <!--TODO ADD LOADER ON BUTTON -->
     <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-    (click)="onBack()" *ngIf="!isEdit"></button>
+      (click)="onBack()" *ngIf="!isEdit"></button>
   </div>
   <div class="p-fluid p-formgrid p-grid form">
     <!-- 1 row -->
@@ -184,19 +184,20 @@
                 <label for="otherBankAccountCloseDate">Дата закрытия счёта</label>
                 <input id="otherBankAccountCloseDate" type="date" pInputText placeholder="Дата закрытия счёта"
                   formControlName="otherBankAccountCloseDate">
-                <div *ngIf="formFactoring.get('otherBanks')['controls'][i].get('otherBankAccountCloseDate').invalid">
+                <!-- <div *ngIf="formFactoring.get('otherBanks')['controls'][i].get('otherBankAccountCloseDate').invalid">
                   <small
                     *ngIf="formFactoring.get('otherBanks')['controls'][i].get('otherBankAccountCloseDate').errors.required"
                     class="p-error">
                     Поле должно быть заполнено.
                   </small>
-                </div>
+                </div> -->
               </div>
               <div class="p-field p-col-12 p-md-6">
                 <label for="otherBankName">Название банка</label>
 
                 <p-autoComplete id="otherBankName" placeholder="Название банка" formControlName="otherBankName"
-                  [suggestions]="resultsBankname" (completeMethod)="searchByBankName($event)" (onSelect)="onOtherBankSelect(formFactoring.get('otherBanks')['controls'][i], $event)">
+                  [suggestions]="resultsBankname" (completeMethod)="searchByBankName($event)"
+                  (onSelect)="onOtherBankSelect(formFactoring.get('otherBanks')['controls'][i], $event)">
                 </p-autoComplete>
 
                 <div *ngIf="formFactoring.get('otherBanks')['controls'][i].get('otherBankName').invalid">
@@ -283,8 +284,10 @@
     </div>
     <div class="p-field p-col-12 p-lg-6">
       <label for="factoringFinanceLimit">Предполагаемый лимит финансирования</label>
-      <input id="factoringFinanceLimit" type="text" pInputText placeholder="Предполагаемый лимит финансирования"
-        formControlName="factoringFinanceLimit">
+      <p-inputNumber placeholder="Предполагаемый лимит" id="factoringFinanceLimit"
+        formControlName="factoringFinanceLimit" inputId="factoringFinanceLimit" mode="currency" currency="RUB"
+        locale="ru-RU">
+      </p-inputNumber>
       <div *ngIf="formFactoring.controls['factoringFinanceLimit'].invalid">
         <small *ngIf="formFactoring.controls['factoringFinanceLimit'].errors.required" class="p-error">
           Поле должно быть заполнено.
