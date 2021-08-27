@@ -130,6 +130,16 @@
     opacity: 0;
   }
 
+  .menu {
+    div {
+      div {
+        ul {
+          padding-left: 0px;
+        }
+      }
+    }
+  }
+
   .menu>div>div>ul>li {
     list-style: none;
   }
@@ -200,14 +210,17 @@
       height: 4.375rem;
 
       .item {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
         height: 100%;
         padding: .75rem 1rem;
         align-items: center;
-        display: flex;
 
         .icon {
           filter: grayscale(100%);
-          margin-right: .313px;
+          margin-right: 10px
         }
 
         a {
@@ -230,13 +243,13 @@
         }
       }
 
-      .item:first-child {
-        border-right: 1px dashed #A9A9A9;
-      }
+      // .item:first-child {
+      //   border-right: 1px dashed #A9A9A9;
+      // }
 
-      .item:last-child {
-        border-left: 1px dashed #A9A9A9;
-      }
+      // .item:last-child {
+      //   border-left: 1px dashed #A9A9A9;
+      // }
     }
   }
 
