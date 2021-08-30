@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NewsInterface } from '../../../types/news.interface';
 
@@ -53,7 +54,7 @@ export class CardNewsComponent implements OnInit {
 
   ngOnInit() {
     if(this.id) {
-      this.imageSource = `http://api-factoring.metib.ru:8094/api/news/${this.id}/image`
+      this.imageSource = `${environment.apiUrl}/news/${this.id}/image`
     }  else {
       this.imageSource = '../../../../../../assets/public/images/news/news.png';
     }

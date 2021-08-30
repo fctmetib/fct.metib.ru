@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -23,7 +24,7 @@ export class HeaderComponent implements OnInit {
 
   items: MenuItem[];
   baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
-  baseAvatarProfileUrl = "http://api-factoring.metib.ru:8094/api/avatar/";
+  baseAvatarProfileUrl = `${environment.apiUrl}/avatar/`;
 
   public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
   public currentUser$: Observable<CurrentUserGeneralInterface | null>;

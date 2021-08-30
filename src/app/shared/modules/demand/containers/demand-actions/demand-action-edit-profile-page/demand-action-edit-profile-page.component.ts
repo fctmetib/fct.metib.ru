@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { CryptoService } from './../../../../../services/common/crypto.service';
 import { DemandService } from './../../../services/demand.service';
@@ -228,7 +229,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
 
     this.avatarCode = data?.Avatar;
     if (this.avatarCode) {
-      this.avatarSource = `http://api-factoring.metib.ru:8094/api/avatar/${this.avatarCode}`;
+      this.avatarSource = `${environment.apiUrl}avatar/${this.avatarCode}`;
     }
   }
 
@@ -336,7 +337,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
           this.fileService.uploadAvatar(file, file.name).subscribe(
             (res) => {
               this.avatarCode = res;
-              this.avatarSource = `http://api-factoring.metib.ru:8094/api/avatar/${res}`;
+              this.avatarSource = `${environment.apiUrl}avatar/${res}`;
               // `https://api-factoring.metib.ru/api/avatar/${res}` ;
             },
             (err) => console.log(err)

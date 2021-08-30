@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -45,7 +46,7 @@ export class MibCardNewsComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.imageSrc = `http://api-factoring.metib.ru:8094/api/news/${this.id}/image`
+    this.imageSrc = `${environment.apiUrl}news/${this.id}/image`
   }
 
   public openNews(id: string) {

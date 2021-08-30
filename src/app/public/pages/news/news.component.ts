@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -25,7 +26,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.subscription$.add(
       this.newsService.getNewsById(id).subscribe((newsResponse) => {
         this.currentNews = newsResponse;
-        this.imageSrc = `http://api-factoring.metib.ru:8094/api/news/${this.currentNews.ID}/image`;
+        this.imageSrc = `${environment.apiUrl}news/${this.currentNews.ID}/image`;
       })
     );
   }
