@@ -59,11 +59,14 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
   public getType(type: string): string {
     let result: string = '';
     switch (type) {
-      case 'Factoring':
-        result = 'Запрос на факторинг';
+      case 'VerificationChannel':
+        result = 'Запрос на Регистрацию канала верификации';
         break;
-      case 'Question':
-        result = 'Запрос на свободную Тему';
+      case 'Guarantee':
+        result = 'Запрос на Поручительство';
+        break;
+      case 'Factoring':
+        result = 'Запрос на Факторинг';
         break;
       case 'DigitalSignature':
         result = 'Запрос на ЭЦП';
@@ -71,11 +74,20 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
       case 'ProfileChange':
         result = 'Запрос на Редактирование Профиля';
         break;
+      case 'Question':
+        result = 'Запрос на свободную тему';
+        break;
       case 'Limit':
         result = 'Запрос на лимит';
         break;
       case 'NewDebtor':
         result = 'Запрос на нового дебитора';
+        break;
+      case 'AgencyFactoring':
+        result = 'Запрос на Агентский Факторинг';
+        break;
+      default:
+        result = 'Запрос на свободную тему';
         break;
     }
     return result;
@@ -91,6 +103,18 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
         break;
       case 'Completed':
         result = 'Завершен';
+        break;
+      case 'Processing':
+        result = 'В процессе';
+        break;
+      case 'Rejected':
+        result = 'Отклонено';
+        break;
+      case 'Draft':
+        result = 'Черновик';
+        break;
+      case 'Canceled':
+        result = 'Отменен';
         break;
     }
     return result;

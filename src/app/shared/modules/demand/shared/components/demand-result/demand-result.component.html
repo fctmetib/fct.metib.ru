@@ -1,12 +1,15 @@
-<div class="file-list">
-  <div class="file-list-item">
-    <ng-container [ngSwitch]="result.Type">
-      <div *ngSwitchCase="'DigitalSignature'">
+<ng-container [ngSwitch]="result?.Type">
+  <div *ngSwitchCase="'DigitalSignature'">
+    <div class="file-list">
+      <div class="file-list-item">
         <div class="file-list-item__name">
           {{result.Comment}}
         </div>
-        <div (click)="downloadCert()" class="can-click">Скачать сертификат</div>
+        <div (click)="downloadCert()" class="file-list-item__download-button">
+            Скачать сертификат
+        </div>
       </div>
-    </ng-container>
+    </div>
   </div>
-</div>
+</ng-container>
+
