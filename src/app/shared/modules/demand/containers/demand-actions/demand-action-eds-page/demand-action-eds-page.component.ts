@@ -51,17 +51,37 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   organizationTypes: DemandSelectboxInterface[] = [
     {
       title: 'Юридическое лицо',
-      value: 'Юридическое лицо',
+      value: 1,
     },
     {
       title: 'ИП',
-      value: 'ИП',
+      value: 2,
     },
   ];
   ruleTypes: DemandSelectboxInterface[] = [
     {
       title: 'ООО',
       value: 'ООО',
+    },
+    {
+      title: 'ЗАО',
+      value: 'ЗАО',
+    },
+    {
+      title: 'ПАО',
+      value: 'ПАО',
+    },
+    {
+      title: 'ОАО',
+      value: 'ОАО',
+    },
+    {
+      title: 'НАО',
+      value: 'НАО',
+    },
+    {
+      title: 'АО',
+      value: 'АО',
     },
   ];
   postionTypes: DemandSelectboxInterface[] = [
@@ -89,9 +109,11 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   private ref: DynamicDialogRef;
   private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
-  public postList: PostInterface[];
-  public countryList: RegionInterface[];
-  public regionList: RegionInterface[];
+  public postList: PostInterface[] = [];
+  public countryList: RegionInterface[] = [];
+  public regionList: RegionInterface[] = [];
+  public idCenterList: any[] = [];
+  public selectedIdCenter: any;
   isView: any;
 
   constructor(
@@ -173,8 +195,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
   initForm() {
     this.formEDS = this.fb.group({
-      organizationType: ['', [Validators.required]],
-      organizationLegalForm: ['', [Validators.required]],
+      organizationType: [1],
+      organizationLegalForm: [''],
       organizationShortName: ['', [Validators.required]],
       organizationFullName: ['', [Validators.required]],
       organizationINN: ['', [Validators.required]],
@@ -228,12 +250,14 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       ownerPhone: ['', [Validators.required]],
       ownerWorkPosition: ['', [Validators.required]],
       ownerEmail: ['', [Validators.required]],
-      ownerGeoPosition: ['', [Validators.required]],
+      ownerGeoPosition: [''],
+      ownerIdCenter: [''],
 
       passportNumber: ['', [Validators.required]],
       passportDate: ['', [Validators.required]],
       passportFrom: ['', [Validators.required]],
       passportCode: ['', [Validators.required]],
+      passportNationality: ['', [Validators.required]]
     });
   }
 
@@ -288,7 +312,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
         OKPO: this.formEDS.value.organizationOKPO,
       },
       ShortTitle: this.formEDS.value.organizationShortName,
-      Type: 1,
+      Type: this.formEDS.value.organizationType,
       Website: this.formEDS.value.organizationWEB,
     };
 
@@ -297,7 +321,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       IsForeign: false,
       IssuerCode: this.formEDS.value.passportCode,
       IssuerTitle: this.formEDS.value.passportFrom,
-      Nationality: 'RUS',
+      Nationality: this.formEDS.value.passportNationality,
       Number: this.formEDS.value.passportNumber,
     };
 
@@ -374,6 +398,16 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       this.files.indexOf(this.files.find((x) => x === file)),
       1
     );
+  }
+
+  public selectGeoPosition(event) {
+    this.commonService.getIdCenters(event.value).subscribe(response => {
+      this.idCenterList = response;
+    });
+  }
+
+  public setIDCenter(event) {
+    this.selectedIdCenter = this.idCenterList.find(x => x.guid === event.value);
   }
 
   handleSendMessage(event: CreateDemandMessageRequestInterface) {
@@ -612,7 +646,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
         ? this.currentDemand?.PersonPosition
         : '',
       ownerEmail: person?.Email ? person?.Email : '',
-      ownerGeoPosition: person?.BirthPlace ? person?.BirthPlace : '',
+      // ownerGeoPosition: person?.BirthPlace ? person?.BirthPlace : '',
 
       passportNumber: passport?.Number ? passport?.Number : '',
       passportDate: passport?.Date
@@ -620,6 +654,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
         : '',
       passportFrom: passport?.IssuerTitle ? passport?.IssuerTitle : '',
       passportCode: passport?.IssuerCode ? passport?.IssuerCode : '',
+      passportNationality: passport?.Nationality ? passport.Nationality: ''
     });
 
     this.formEDS.controls['organizationActualAddress'].patchValue({

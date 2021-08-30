@@ -53,11 +53,13 @@
             <p-dropdown id="organizationType" [options]="organizationTypes" placeholder="Выберите Тип организации"
               formControlName="organizationType" optionLabel="title" optionValue="value"></p-dropdown>
           </div>
-          <div class="p-field p-col-12 p-md-3">
+          <div class="p-field p-col-12 p-md-9" *ngIf="formEDS.value.organizationType === 1">
             <label for="organizationLegalForm">Правовая форма</label>
             <p-dropdown id="organizationLegalForm" [options]="ruleTypes" placeholder="Выберите Правовую форму"
               formControlName="organizationLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
           </div>
+        </div>
+        <div class="p-fluid p-formgrid p-grid form">
           <div class="p-field p-col-12 p-md-3">
             <label for="organizationShortName">Краткое наименование организации</label>
             <input id="organizationShortName" type="text" pInputText placeholder="Краткое наименование организации"
@@ -272,13 +274,14 @@
               на
               издание
               сертификата!</p>
-              <!-- В данном случае, сертификат будет издан на имя: Олег Кузнецов -->
+            <!-- В данном случае, сертификат будет издан на имя: Олег Кузнецов -->
           </div>
 
           <!-- 6 row -->
           <div class="p-field p-col-12 p-md-3">
             <label for="ownerSurname">Фамилия</label>
-            <input id="ownerSurname" type="text" pInputText placeholder="Фамилия" formControlName="ownerSurname">
+            <input id="ownerSurname" type="text" pInputText placeholder="Фамилия" disabled
+              formControlName="ownerSurname">
             <div *ngIf="formEDS.controls['ownerSurname'].invalid">
               <small *ngIf="formEDS.controls['ownerSurname'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -287,7 +290,7 @@
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="ownerName">Имя</label>
-            <input id="ownerName" type="text" pInputText placeholder="Имя" formControlName="ownerName">
+            <input id="ownerName" disabled type="text" pInputText placeholder="Имя" formControlName="ownerName">
             <div *ngIf="formEDS.controls['ownerName'].invalid">
               <small *ngIf="formEDS.controls['ownerName'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -305,8 +308,8 @@
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="ownerGender">Пол</label>
-            <p-dropdown id="ownerGender" [options]="genderTypes" formControlName="ownerGender" optionLabel="title"
-              optionValue="value">
+            <p-dropdown id="ownerGender" [disabled]="true" [options]="genderTypes" formControlName="ownerGender"
+              optionLabel="title" optionValue="value">
             </p-dropdown>
           </div>
 
@@ -327,27 +330,29 @@
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="ownerPhone">Мобильный телефон</label>
-            <input id="ownerPhone" type="tel" pInputText placeholder="Мобильный телефон" formControlName="ownerPhone">
+            <input id="ownerPhone" disabled type="tel" pInputText placeholder="Мобильный телефон"
+              formControlName="ownerPhone">
           </div>
 
           <!-- 8 row -->
           <div class="p-field p-col-12 p-md-6">
             <label for="ownerWorkPosition">Должность</label>
-            <p-dropdown id="ownerWorkPosition" [options]="postionTypes" placeholder="Выберите Должность"
-              formControlName="ownerWorkPosition" optionLabel="title" optionValue="value"></p-dropdown>
+            <p-dropdown id="ownerWorkPosition" [options]="postList" placeholder="Выберите Должность"
+              formControlName="ownerWorkPosition" optionLabel="Title" optionValue="Title"></p-dropdown>
           </div>
           <div class="p-field p-col-12 p-md-6">
             <label for="ownerEmail">E-mail</label>
-            <input id="ownerEmail" type="email" pInputText placeholder="E-mail" formControlName="ownerEmail">
+            <input id="ownerEmail" type="email" pInputText disabled placeholder="E-mail" formControlName="ownerEmail">
             <div *ngIf="formEDS.controls['ownerEmail'].invalid">
               <small *ngIf="formEDS.controls['ownerEmail'].errors.required" class="p-error">
                 Поле должно быть заполнено.
               </small>
             </div>
           </div>
-          <!-- 9 row -->
+        </div>
+        <!-- 9 row -->
+        <div class="p-fluid p-formgrid p-grid form">
           <ng-container *ngIf="!isEdit">
-
             <div class="p-field p-col-12 p-md-6">
               <label>
                 Прикрепите необходимые файлы
@@ -428,15 +433,42 @@
                 </ng-container>
               </div>
             </div>
+
           </ng-container>
+        </div>
+        <div class="p-fluid p-formgrid p-grid form">
           <!-- 10 row -->
           <div class="p-field p-col-12 p-md-12">
             <label for="ownerGeoPosition">Укажите географическое расположение</label>
-            <p-dropdown id="ownerGeoPosition" [options]="locationTypes"
-              placeholder="Выберите географическое расположение" formControlName="ownerGeoPosition" optionLabel="title"
-              optionValue="value"></p-dropdown>
+            <p-dropdown id="ownerGeoPosition" [options]="regionList" placeholder="Выберите географическое расположение"
+              formControlName="ownerGeoPosition" optionLabel="Title" (onChange)="selectGeoPosition($event)"
+              optionValue="Code"></p-dropdown>
+            <div>
+              <small class="p-error">
+                Укажите Ваше географическое расположение для выбора ближайших Центров идентификации
+              </small>
+            </div>
           </div>
 
+          <div class="p-field p-col-12 p-md-12" *ngIf="formEDS.value.ownerGeoPosition">
+            <label for="ownerIdCenter">Укажите подходящий региональный Центр идентификации</label>
+            <p-dropdown id="ownerIdCenter" (onChange)="setIDCenter($event)" [options]="idCenterList" placeholder="Выберите географическое расположение"
+              formControlName="ownerIdCenter" optionLabel="name" optionValue="guid"></p-dropdown>
+            <div>
+              <small class="p-error">
+                Укажите подходящий региональный Центр идентификации
+              </small>
+            </div>
+          </div>
+
+          <div class="p-field p-col-12 p-md-12" *ngIf="formEDS.value.ownerIdCenter">
+            <p>
+             {{selectedIdCenter.name}} <br>
+             Адрес: {{selectedIdCenter.address}} <br>
+             Режим работы: {{selectedIdCenter.schedule}}  <br>
+             Контакты: {{selectedIdCenter.email}} {{selectedIdCenter.phone}} <br>
+            </p>
+          </div>
           <div class="p-col-12">
             <div class="d-flex passport-confirm">
               <div class="passport-owner">
@@ -522,6 +554,17 @@
               formControlName="passportCode">
             <div *ngIf="formEDS.controls['passportCode'].invalid">
               <small *ngIf="formEDS.controls['passportCode'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
+          <div class="p-field p-col-12 p-md-3">
+            <label for="passportNationality">Гражданство</label>
+            <p-dropdown id="passportNationality" [options]="countryList"
+            placeholder="Выберите гражданство"
+            formControlName="passportNationality" optionLabel="Title" optionValue="Identifier"></p-dropdown>
+            <div *ngIf="formEDS.controls['passportNationality'].invalid">
+              <small *ngIf="formEDS.controls['passportNationality'].errors.required" class="p-error">
                 Поле должно быть заполнено.
               </small>
             </div>

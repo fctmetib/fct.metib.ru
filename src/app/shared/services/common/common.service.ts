@@ -24,6 +24,11 @@ export interface RegionInterface {
 export class CommonService {
   constructor(private http: HttpClient) {}
 
+  getIdCenters(code): Observable<any[]> {
+    let url = `${environment.apiUrl}/caluga/identificationPoints?code=${code}`;
+    return this.http.get<any[]>(url);
+  }
+
   getPosts(): Observable<PostInterface[]> {
     let url = `${environment.apiUrl}/public/posts`;
     return this.http.get<PostInterface[]>(url);
