@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
-import { CommonService } from 'src/app/shared/services/common/common.service';
+import { CommonService, PostInterface, RegionInterface } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { Observable, Subscription } from 'rxjs';
 import { map, switchMap, switchMapTo } from 'rxjs/operators';
@@ -89,9 +89,9 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   private ref: DynamicDialogRef;
   private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
-  postList: import('g:/_Metallinvestbank/_Projects/metallinvestbank-web/src/app/shared/services/common/common.service').PostInterface[];
-  countryList: import('g:/_Metallinvestbank/_Projects/metallinvestbank-web/src/app/shared/services/common/common.service').RegionInterface[];
-  regionList: import('g:/_Metallinvestbank/_Projects/metallinvestbank-web/src/app/shared/services/common/common.service').RegionInterface[];
+  public postList: PostInterface[];
+  public countryList: RegionInterface[];
+  public regionList: RegionInterface[];
   isView: any;
 
   constructor(
