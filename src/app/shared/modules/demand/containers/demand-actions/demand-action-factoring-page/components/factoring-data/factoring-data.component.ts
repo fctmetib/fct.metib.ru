@@ -249,7 +249,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
           House: existProp ? existProp.Address.House : '',
           Appartment: existProp ? existProp.Address.Appartment : '',
         },
-        factoringPlacesLegalForm: ['Own', [Validators.required]],
+        factoringPlacesLegalForm: [existProp?.Type ? existProp?.Type : '', [Validators.required]],
       })
     );
 
@@ -265,7 +265,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
         factoringCreditsCreditor: [existCredit ? existCredit.Creditor : ''],
         factoringPlacesTypeDuty: [existCredit ? existCredit.Type : ''],
         factoringPlacesDateClose: [
-          existCredit ? formatDate(existCredit.Date, 'yyyy-MM-dd', 'en') : '',
+          existCredit?.Date ? formatDate(existCredit?.Date, 'yyyy-MM-dd', 'en') : '',
         ],
         factoringPlacesContractSum: [existCredit ? existCredit.Summ : ''],
         factoringPlacesBalanceReport: [

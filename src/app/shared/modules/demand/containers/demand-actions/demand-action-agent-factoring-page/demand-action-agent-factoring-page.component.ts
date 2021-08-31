@@ -9,7 +9,7 @@ import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { isLoadingSelector } from './../../../../../../auth/store/selectors';
 import { FileModeInterface } from '../../../../../types/file/file-model.interface';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
 import { CreateDemandFactoringRequestInterface } from '../../../types/requests/create-demand-factoring-request.interface';
@@ -39,7 +39,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./demand-action-agent-factoring-page.component.scss'],
 })
 export class DemandActionAgentFactoringPageComponent
-  implements OnInit, ExitGuard
+  implements OnInit, ExitGuard, OnDestroy
 {
   public isEdit: boolean = false;
   public currentDemand: any;
@@ -220,6 +220,9 @@ export class DemandActionAgentFactoringPageComponent
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+    if (this._saveDraftAction$) {
+      clearInterval(this._saveDraftAction$);
+    }
   }
 
   onSubmit() {
@@ -260,7 +263,8 @@ export class DemandActionAgentFactoringPageComponent
   private fetch(id: number) {
     this.subscription$.add(
       this.demandService.getDemandById(id).subscribe((resp) => {
-        this.currentDemand = resp;
+        this.currentDemand = resp.Data;
+
         this.currentInformation = {
           ID: resp.ID,
           Messages: resp.Messages,
@@ -272,8 +276,8 @@ export class DemandActionAgentFactoringPageComponent
           Type: resp.Type,
           Manager: null,
         };
-        console.log(this.currentDemand);
 
+        this.convertToFormData();
         this.isLoading = false;
         this.isEdit = true;
       })
@@ -299,19 +303,19 @@ export class DemandActionAgentFactoringPageComponent
     otherBanks.push(
       this.fb.group({
         otherBankAccountOpenDate: [
-          existBank ? existBank.Date : '',
+          existBank ? existBank?.Date : '',
           [Validators.required],
         ],
         otherBankAccountCloseDate: [
-          existBank ? formatDate(existBank.Expire, 'yyyy-MM-dd', 'en') : '',
+          existBank?.Expire ? formatDate(existBank?.Expire, 'yyyy-MM-dd', 'en') : '',
         ],
-        otherBankName: [existBank ? existBank.Bank : '', [Validators.required]],
+        otherBankName: [existBank ? existBank?.Bank : '', [Validators.required]],
         otherBankOwnerAccount: [
-          existBank ? existBank.Number : '',
+          existBank ? existBank?.Number : '',
           [Validators.required],
         ],
         otherBankTarget: [
-          existBank ? existBank.Comment : '',
+          existBank ? existBank?.Comment : '',
           [Validators.required],
         ],
       })
@@ -326,20 +330,20 @@ export class DemandActionAgentFactoringPageComponent
       this.fb.group({
         displayAddress: '',
         factoringPlacesAddress: {
-          PostCode: existProp ? existProp.Address.PostCode : '',
+          PostCode: existProp ? existProp?.Address?.PostCode : '',
           Country: existProp
-            ? existProp.Address.Country
+            ? existProp?.Address?.Country
             : 'Российская Федерация',
-          RegionCode: existProp ? existProp.Address.RegionCode : 77,
-          RegionTitle: existProp ? existProp.Address.RegionTitle : '',
-          City: existProp ? existProp.Address.City : 'Москва',
-          District: existProp ? existProp.Address.District : '',
-          Locality: existProp ? existProp.Address.Locality : '',
-          Street: existProp ? existProp.Address.Street : '',
-          House: existProp ? existProp.Address.House : '',
-          Appartment: existProp ? existProp.Address.Appartment : '',
+          RegionCode: existProp ? existProp?.Address?.RegionCode : 77,
+          RegionTitle: existProp ? existProp?.Address?.RegionTitle : '',
+          City: existProp ? existProp?.Address?.City : 'Москва',
+          District: existProp ? existProp?.Address?.District : '',
+          Locality: existProp ? existProp?.Address?.Locality : '',
+          Street: existProp ? existProp?.Address?.Street : '',
+          House: existProp ? existProp?.Address?.House : '',
+          Appartment: existProp ? existProp?.Address?.Appartment : '',
         },
-        factoringPlacesLegalForm: ['Own', [Validators.required]],
+        factoringPlacesLegalForm: [ existProp ? existProp?.Type : '', [Validators.required]],
       })
     );
 
@@ -352,17 +356,17 @@ export class DemandActionAgentFactoringPageComponent
     ) as FormArray;
     factoringCredits.push(
       this.fb.group({
-        factoringCreditsCreditor: [existCredit ? existCredit.Creditor : ''],
-        factoringPlacesTypeDuty: [existCredit ? existCredit.Type : ''],
+        factoringCreditsCreditor: [existCredit ? existCredit?.Creditor : ''],
+        factoringPlacesTypeDuty: [existCredit ? existCredit?.Type : ''],
         factoringPlacesDateClose: [
-          existCredit ? formatDate(existCredit.Date, 'yyyy-MM-dd', 'en') : '',
+          existCredit?.Date ? formatDate(existCredit?.Date, 'yyyy-MM-dd', 'en') : '',
         ],
-        factoringPlacesContractSum: [existCredit ? existCredit.Summ : ''],
+        factoringPlacesContractSum: [existCredit ? existCredit?.Summ : ''],
         factoringPlacesBalanceReport: [
-          existCredit ? existCredit.ReportingRest : '',
+          existCredit ? existCredit?.ReportingRest : '',
         ],
         factoringPlacesBalanceCurrent: [
-          existCredit ? existCredit.CurrentRest : '',
+          existCredit ? existCredit?.CurrentRest : '',
         ],
       })
     );
@@ -590,7 +594,7 @@ export class DemandActionAgentFactoringPageComponent
     this.formFactoring.patchValue({
       organizationType: anket?.Organization?.Type,
       organizationLegalForm: anket?.Organization?.LegalForm,
-      organizationShortName: anket.Organization?.ShortTitle,
+      organizationShortName: anket?.Organization?.ShortTitle,
       organizationINN: anket?.Organization?.Requisites?.INN,
       organizationPhone: anket?.Organization?.Phone,
       organizationEmail: anket?.Organization?.Email,

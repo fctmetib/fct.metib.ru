@@ -766,7 +766,7 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
           Number: this.formFactoring.value.bankOwnerAccount,
         },
         AddonAccounts: listAddonAccounts,
-        Buyers: this.formFactoring.value.Clients,
+        Buyers: this.formFactoring.value.factoringClients,
         EDI: listEDI,
         FactoringAim: 0,
         LimitWanted: this.formFactoring.value.factoringFinanceLimit,

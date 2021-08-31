@@ -45,7 +45,7 @@
     <ng-template #contentTemplate>
 
       <form [formGroup]="formFactoring" (ngSubmit)="onSubmit()">
-        <div class="form-actions">
+        <div class="form-actions" *ngIf="!isEdit">
           <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
             (click)="back()"></button>
         </div>
