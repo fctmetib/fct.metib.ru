@@ -64,7 +64,10 @@
       <p class="step-description">«Фактор-Клиент» - это программный продукт для обеспечения процесса факторинга между
         Банком и Клиентом. Эта программа реализует электронный документооборот, применяющий электронную подпись (ЭП).
         Происходит обмен электронными файлами, имеющими силу бумажных документов.</p>
-      <mib-button [title]="'Скачать инструкцию'" (click)="getInstruction()"></mib-button>
+        <div class="step-description__actions">
+          <mib-button [title]="'Скачать регламент'" (click)="getReglament()"></mib-button>
+          <mib-button [title]="'Скачать инструкцию'" (click)="getInstruction()"></mib-button>
+        </div>
     </div>
   </div>
 </mib-section-body>

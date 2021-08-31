@@ -23,4 +23,8 @@ export class ClientsComponent implements OnInit {
     window.open(`${window.location.origin}/assets/_files/FactorClientHelp.zip`);
   }
 
+  public getReglament() {
+    window.open(`${window.location.origin}/assets/_files/reglament.pdf`);
+  }
+
 }
