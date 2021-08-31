@@ -25,6 +25,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { MobileHeaderComponent } from './shared/mobile-header/mobile-header.component';
 import { AdminAuthInterceptor } from './shared/services/admin-auth.interceptor';
 import { PageStoreService } from './shared/services/page-store.service';
+import { UpdatePasswordDialogModule } from '../shared/modules/update-password-dialog/update-password-dialog.module';
 
 const routes = [
   {
@@ -81,6 +82,7 @@ const routes = [
     FormsModule,
     ReactiveFormsModule,
     InactiveDialogModule,
+    UpdatePasswordDialogModule,
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],

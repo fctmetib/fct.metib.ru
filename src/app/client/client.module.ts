@@ -34,6 +34,7 @@ import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive
 import {AccordionModule} from 'primeng/accordion';
 import { MIBNotifyAccordionComponent } from './shared/components/mib-notify-accordion/mib-notify-accordion.component';
 import { MIBNotifyAccordionGroupComponent } from './shared/components/mib-notify-accordion/mib-notify-accordion-group.component';
+import { UpdatePasswordDialogModule } from '../shared/modules/update-password-dialog/update-password-dialog.module';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import { MIBNotifyAccordionGroupComponent } from './shared/components/mib-notify
     CardModule,
     MenubarModule,
     AvatarModule,
-    InactiveDialogModule
+    InactiveDialogModule,
+    UpdatePasswordDialogModule
   ],
   declarations: [
     ClientComponent,

@@ -76,4 +76,9 @@ export class CommonService {
       reader.readAsArrayBuffer(file);
     });
   }
+
+  updatePassword(data): Observable<any> {
+    const url = environment.apiUrl + '/user/password/change';
+    return this.http.post(url, data);
+  }
 }

@@ -22,6 +22,7 @@ import { AuthInterceptor } from '../shared/services/auth.interceptor';
 import { DialogService } from 'primeng/dynamicdialog';
 import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive-dialog.module';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { UpdatePasswordDialogModule } from '../shared/modules/update-password-dialog/update-password-dialog.module';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     MenubarModule,
     AvatarModule,
     InactiveDialogModule,
+    UpdatePasswordDialogModule
   ],
   declarations: [
     NotVerifyClientComponent,
