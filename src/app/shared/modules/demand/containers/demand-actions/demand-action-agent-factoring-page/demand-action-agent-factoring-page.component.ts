@@ -287,7 +287,7 @@ export class DemandActionAgentFactoringPageComponent
   private getDraft() {
     this.subscription$.add(
       this.demandService
-        .prepareDemandByType('AgencyFactoring ')
+        .prepareDemandByType('AgencyFactoring')
         .subscribe((resp) => {
           this.currentDemand = resp;
           this.convertToFormData();

@@ -64,8 +64,9 @@ export class DemandActionVerificationPageComponent
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        this.isView = params['View'] === 'true' ? true : false
+        this.isView = params['View'] === 'true' ? true : false;
         if (params['ID'] && params['Edit'] === 'false') {
+          this.isLoading = true;
           this.fetch(params['ID']);
         } else {
           this.isLoading = true;
@@ -83,7 +84,6 @@ export class DemandActionVerificationPageComponent
     this.router.navigate([`${baseUrl}/demand`]);
   }
 
-
   ngOnDestroy() {
     this.subscription$.unsubscribe();
     if (this._saveDraftAction$) {
@@ -92,6 +92,15 @@ export class DemandActionVerificationPageComponent
   }
 
   public changeVerificationType(event) {
+    this.formFree.patchValue({
+      DocumentTypeTorg12: false,
+      DocumentTypeInvoice: false,
+      DocumentTypeAcceptance: false,
+      DocumentTypeNonformalized: false,
+      DocumentTypeORDER: false,
+      DocumentTypeRECADV: false,
+    });
+
     switch (event.value) {
       case 'EDOKontur':
         this.currentTemplate = 'edoTemplate';
@@ -111,7 +120,13 @@ export class DemandActionVerificationPageComponent
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
         window.scroll(0, 0);
-        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
+        this.alertMessage = [
+          {
+            severity: 'success',
+            summary: 'Успешно!',
+            detail: 'Запрос успешно создан.',
+          },
+        ];
       })
     );
   }
@@ -227,6 +242,18 @@ export class DemandActionVerificationPageComponent
       DocumentTypeORDER: DocumentTypeORDER,
       DocumentTypeRECADV: DocumentTypeRECADV,
     });
+
+    switch (data?.VerificationType) {
+      case 'EDOKontur':
+        this.currentTemplate = 'edoTemplate';
+        break;
+      case 'Other':
+        this.currentTemplate = 'anotherTemplate';
+        break;
+      default:
+        this.currentTemplate = 'ediTemplate';
+        break;
+    }
   }
 
   private prepareDraft() {

@@ -21,8 +21,9 @@ import { ExitGuard } from 'src/app/shared/services/exit.guard';
   templateUrl: './demand-action-debitor-page.component.html',
   styleUrls: ['./demand-action-debitor-page.component.scss'],
 })
-export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, ExitGuard {
-
+export class DemandActionDebitorPageComponent
+  implements OnInit, OnDestroy, ExitGuard
+{
   public isEdit: boolean = false;
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
@@ -66,12 +67,14 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        this.isView = params['View'] === 'true' ? true : false
+        this.isView = params['View'] === 'true' ? true : false;
         if (params['ID'] && params['Edit'] === 'false') {
+          this.isLoading = true;
           this.fetch(params['ID']);
         }
         if (params['DraftId']) {
-          this.currentDraftId = params['DraftID'];
+          this.isLoading = true;
+          this.getDraft();
         }
       })
     );
@@ -90,7 +93,6 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
     const baseUrl = this.isUserVerified ? '' : notVerify;
     this.router.navigate([`${baseUrl}/demand`]);
   }
-
 
   public debtorChange() {
     let selectedDebtor = this.debtors.find(
@@ -121,13 +123,25 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
   }
 
   handleRemoveFile(file: FileModeInterface) {
-    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+    this.currentDemand.Files = this.currentDemand.Files.filter(
+      (x) => x !== file
+    );
+  }
+
+  private getDraft() {
+    this.subscription$.add(
+      this.demandService.prepareDemandByType('NewDebtor').subscribe((resp) => {
+        this.currentDemand = resp;
+        this.convertToFormData();
+        this.isLoading = false;
+      })
+    );
   }
 
   private fetch(id: number) {
     this.subscription$.add(
       this.demandService.getDemandById(id).subscribe((resp) => {
-        this.currentDemand = resp;
+        this.currentDemand = resp.Data;
         this.currentInformation = {
           ID: resp.ID,
           Messages: resp.Messages,
@@ -142,16 +156,30 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
         console.log(this.currentDemand);
         this.isEdit = true;
         this.convertToFormData();
+        this.isLoading = false;
       })
     );
   }
 
   private convertToFormData() {
-    let data = this.currentDemand.Data;
+    let data = this.currentDemand;
+
+    console.log('FORM', this.formFree);
+
     this.formFree.patchValue({
-      Id: +data.ID,
-      inn: data.INN,
+      INN: data.INN,
     });
+
+    if (data.IsNew) {
+      this.formFree.patchValue({
+        Id: data.Title,
+      });
+      this.isNewDebtor = true;
+    } else {
+      this.formFree.patchValue({
+        Id: data.ID,
+      });
+    }
   }
 
   public onSubmit() {
@@ -173,7 +201,13 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
         window.scroll(0, 0);
-        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
+        this.alertMessage = [
+          {
+            severity: 'success',
+            summary: 'Успешно!',
+            detail: 'Запрос успешно создан.',
+          },
+        ];
         this.isLoading = false;
       })
     );
@@ -235,7 +269,7 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
 
   private initForm(): void {
     this.formFree = this.fb.group({
-      Id: [0, [Validators.required]],
+      Id: ['', [Validators.required]],
       INN: [''],
     });
 
@@ -305,7 +339,8 @@ export class DemandActionDebitorPageComponent implements OnInit, OnDestroy, Exit
   }
   //#endregion
   canDeactivate(): boolean | Observable<boolean> {
-    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
+    return confirm(
+      'Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?'
+    );
   }
-
 }
