@@ -1,6 +1,9 @@
 :host ::ng-deep {
   .pre-auth {
-    background-color: #f6f6f6;
+    background-color: #fff;
+    background-image: url('../../assets/auth/logo_background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   // Desktop
@@ -25,6 +28,8 @@
           border-radius: 10px;
           border-top: 2px solid #4B75B1;
           background: #FDFDFD;
+          box-shadow: 0px 40px 50px rgba(0, 0, 0, 0.1);
+          border-radius: 10px;
 
           &.auth__body__form_reset {
             height: 100%;
