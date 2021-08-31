@@ -95,11 +95,11 @@ export class DemandActionRequestFreePageComponent
   }
 
   public onSubmit() {
-    //TODO: UPDATE IT
     let data: SaveDemandRequestInterface<any> = this.prepareData();
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
+        window.scroll(0, 0);
         this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
       })
     );

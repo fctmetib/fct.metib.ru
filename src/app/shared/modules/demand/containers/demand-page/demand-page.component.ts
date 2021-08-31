@@ -119,7 +119,7 @@ export class DemandPageComponent implements OnInit, OnDestroy {
         text: 'Запрос в техническую поддержку',
         url: 'actions/support-request',
         isForNewClient: false,
-        isForDefaultClient: true,
+        isForDefaultClient: false,
       },
       {
         text: 'Запрос на ЭЦП',

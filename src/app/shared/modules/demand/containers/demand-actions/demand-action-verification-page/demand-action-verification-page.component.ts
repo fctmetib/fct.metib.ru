@@ -110,6 +110,7 @@ export class DemandActionVerificationPageComponent
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
+        window.scroll(0, 0);
         this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
       })
     );
@@ -162,7 +163,7 @@ export class DemandActionVerificationPageComponent
     this.isLoadingData = true;
     this.subscription$.add(
       this.demandService.getDemandById(id).subscribe((resp) => {
-        this.currentDemand = resp;
+        this.currentDemand = resp.Data;
         this.currentInformation = {
           ID: resp.ID,
           Messages: resp.Messages,
