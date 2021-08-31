@@ -75,7 +75,7 @@ export class HeaderComponent implements OnInit {
         UpdatePasswordDialogComponent,
         {
           header: 'Смена пароля',
-          width: '350px',
+          width: '450px',
           contentStyle: { 'max-height': '550px', overflow: 'auto' },
           baseZIndex: 10000,
         }

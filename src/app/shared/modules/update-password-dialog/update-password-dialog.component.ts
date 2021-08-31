@@ -32,16 +32,21 @@ export class UpdatePasswordDialogComponent implements OnInit, OnDestroy {
   }
 
   public updatePassword() {
-    console.log(this.form.value);
-    // this.commonService.updatePassword(this.form.value).subscribe((resp) => {
-    //   this.alertMessage = [
-    //     {
-    //       severity: 'success',
-    //       summary: 'Успешно!',
-    //       detail: 'Пароль успешно изменён!',
-    //     },
-    //   ];
-    // });
+    this.commonService.updatePassword(this.form.value).subscribe((resp) => {
+      this.alertMessage = [
+        {
+          severity: 'success',
+          detail: 'Пароль успешно изменён!',
+        },
+      ];
+    }, error => {
+      this.alertMessage = [
+        {
+          severity: 'error',
+          detail: error,
+        },
+      ];
+    });
   }
 
   public close() {

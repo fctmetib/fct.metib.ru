@@ -3,11 +3,14 @@ import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
-import { currentUserFactoringSelector, currentUserGeneralSelector } from 'src/app/auth/store/selectors';
+import {
+  currentUserFactoringSelector,
+  currentUserGeneralSelector,
+} from 'src/app/auth/store/selectors';
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
 import { factoringSelector } from 'src/app/client/store/selectors';
 
@@ -15,6 +18,8 @@ import * as introJs from 'intro.js/intro.js';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
 import { OrganizationInterface } from '../../../shared/types/organization/organization.interface';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { UpdatePasswordDialogComponent } from 'src/app/shared/modules/update-password-dialog/update-password-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -28,27 +33,57 @@ export class HeaderComponent implements OnInit {
   introJS = introJs();
 
   items: MenuItem[];
-  baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
+  baseAvatarUrl = 'https://api-factoring.metib.ru/api/avatar';
   baseAvatarProfileUrl = `${environment.apiUrl}/avatar/`;
 
   public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
   public currentUser$: Observable<CurrentUserGeneralInterface | null>;
   public factoring$: Observable<CustomerInterface | null>;
 
-  constructor(private store: Store, private authService: AuthService, private router: Router) {}
+  private subscription$: Subscription = new Subscription();
+  refUpdatePasswordDialog: DynamicDialogRef;
+
+  constructor(
+    private store: Store,
+    private authService: AuthService,
+    public dialogService: DialogService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
+    this.currentUserFactoring$ = this.store.pipe(
+      select(currentUserFactoringSelector)
+    );
     this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
     this.factoring$ = this.store.pipe(select(factoringSelector));
   }
 
   logout() {
-    this.authService.logout()
+    this.authService.logout();
+  }
+
+  public openUpdatePassword() {
+    if (!this.refUpdatePasswordDialog) {
+      this.refUpdatePasswordDialog = this.dialogService.open(
+        UpdatePasswordDialogComponent,
+        {
+          header: 'Смена пароля',
+          width: '450px',
+          contentStyle: { 'max-height': '550px', overflow: 'auto' },
+          baseZIndex: 10000,
+        }
+      );
+
+      this.subscription$.add(
+        this.refUpdatePasswordDialog.onClose.subscribe(() => {
+          this.refUpdatePasswordDialog = null;
+        })
+      );
+    }
   }
 
   openAccountOwner() {
-    document.getElementById("dropdownMenu").classList.toggle("show");
+    document.getElementById('dropdownMenu').classList.toggle('show');
   }
 
   getInfo() {
@@ -69,12 +104,12 @@ export class HeaderComponent implements OnInit {
       steps: [
         {
           element: '#step1',
-          intro: 'Это страница с Вашими заявками, на ней Вы можете просматривать созданные заявки, создавать новые, а также редактировать и удалять существующие.',
+          intro:
+            'Это страница с Вашими заявками, на ней Вы можете просматривать созданные заявки, создавать новые, а также редактировать и удалять существующие.',
         },
         {
           element: '#step2',
-          intro:
-            "Чтобы создать новую заявку, нажмите на эту кнопку.",
+          intro: 'Чтобы создать новую заявку, нажмите на эту кнопку.',
           position: 'bottom',
         },
         // {
@@ -98,12 +133,13 @@ export class HeaderComponent implements OnInit {
     this.introJS.setOptions({
       steps: [
         {
-          intro: 'Это главная страница Вашего личного кабинета, на ней находится основная важная информация!',
+          intro:
+            'Это главная страница Вашего личного кабинета, на ней находится основная важная информация!',
         },
         {
           element: '#step1',
           intro:
-            "В данной секции отображаются все отчеты. Чтобы перейти к нужному отчету - кликните по нему, один раз.",
+            'В данной секции отображаются все отчеты. Чтобы перейти к нужному отчету - кликните по нему, один раз.',
           position: 'bottom',
         },
         // {
