@@ -206,6 +206,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       organizationPhone: ['', [Validators.required]],
       organizationEmail: ['', [Validators.required]],
       organizationWEB: ['', [Validators.required]],
+
+      // Юр. адресс
       organizationLegalAddress: this.fb.group({
         displayAddress: 'Российская Федерация, 77 Москва',
         factoringPlacesAddress: {
@@ -223,6 +225,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       }),
       organizationIsActualAdressEqual: [false],
 
+      // Факт. адресс
       organizationActualAddress: this.fb.group({
         displayAddress: 'Российская Федерация, 77 Москва',
         factoringPlacesAddress: {
@@ -239,6 +242,23 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
         },
       }),
       organizationIsLegalAdressEqual: [false],
+
+      // Почтовый. адресс
+      organizationPostAddress: this.fb.group({
+        displayAddress: 'Российская Федерация, 77 Москва',
+        factoringPlacesAddress: {
+          PostCode: '',
+          Country: 'Российская Федерация',
+          RegionCode: 77,
+          RegionTitle: '',
+          City: 'Москва',
+          District: '',
+          Locality: '',
+          Street: '',
+          House: '',
+          Appartment: '',
+        },
+      }),
 
       ownerSurname: ['', [Validators.required]],
       ownerName: ['', [Validators.required]],
@@ -266,6 +286,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     this.subscription$.add(
       this.demandService.add(this.prepareData()).subscribe((resp) => {
         this.alert = true;
+        window.scroll(0, 0);
         this.alertMessage = [
           {
             severity: 'success',
@@ -292,17 +313,17 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
   private prepareCoreData(): CreateDemandEDSRequestInterface {
     let organization: OrganizationDataInterface = {
-      Email: '',
-      FactAddress: this.formEDS.value.organizationActualAddress,
+      Email: this.formEDS.value.organizationEmail,
+      FactAddress: this.formEDS.value.organizationActualAddress.factoringPlacesAddress,
       FactAddressEquals: this.formEDS.value.organizationIsActualAdressEqual,
       ForeignTitle: '',
-      FullTitle: '',
+      FullTitle: this.formEDS.value.organizationFullName,
       LegalAddress:
         this.formEDS.value.organizationLegalAddress.factoringPlacesAddress,
       LegalForm: this.formEDS.value.organizationLegalForm,
       Phone: this.formEDS.value.organizationPhone,
       PostAddress:
-        this.formEDS.value.organizationLegalAddress.factoringPlacesAddress,
+        this.formEDS.value.organizationPostAddress.factoringPlacesAddress,
       PostAddressEquals: this.formEDS.value.organizationIsLegalAdressEqual,
       Requisites: {
         INN: this.formEDS.value.organizationINN,
@@ -317,7 +338,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     };
 
     let passport: PassportInterface = {
-      Date: this.formEDS.value.passportDate,
+      Date: new Date(this.formEDS.value.passportDate).toISOString().slice(0, 19)+ '+03:00',
       IsForeign: false,
       IssuerCode: this.formEDS.value.passportCode,
       IssuerTitle: this.formEDS.value.passportFrom,
@@ -338,7 +359,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       Gender: this.formEDS.value.ownerGender,
 
       SNILS: this.formEDS.value.ownerSNILS,
-      BirthDate: this.formEDS.value.valueownerDateBurn,
+      BirthDate: this.formEDS.value.ownerDateBurn,
       BirthPlace: this.formEDS.value.ownerPlaceBurn,
 
       Phone: this.formEDS.value.ownerPhone,
@@ -441,6 +462,10 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   }
 
   public isFilesInvalid(): boolean {
+    if (this.isEdit) {
+      return false;
+    }
+
     let isInvalid = false;
 
     // crtInds = currentFileIdentifiers
@@ -465,7 +490,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   }
 
   public isAddressEqual(type) {
-    if (type === 'organizationLegalAddress') {
+    if (type === 'organizationActualAddress') {
       let legalAddress =
         this.formEDS.value.organizationLegalAddress.factoringPlacesAddress;
       let addressEdited = <FormControl>(
@@ -476,16 +501,16 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       });
       this.updateDisplayAddress('organizationActualAddress');
     }
-    if (type === 'organizationActualAddress') {
+    if (type === 'organizationPostAddress') {
       let legalAddress =
-        this.formEDS.value.organizationActualAddress.factoringPlacesAddress;
+        this.formEDS.value.organizationLegalAddress.factoringPlacesAddress;
       let addressEdited = <FormControl>(
-        this.formEDS.controls['organizationLegalAddress']
+        this.formEDS.controls['organizationPostAddress']
       );
       addressEdited.patchValue({
         factoringPlacesAddress: legalAddress,
       });
-      this.updateDisplayAddress('organizationLegalAddress');
+      this.updateDisplayAddress('organizationPostAddress');
     }
   }
 
@@ -518,34 +543,34 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
     console.log(address);
 
-    if (address.PostCode) {
+    if (address?.PostCode) {
       result = result + ' ' + address.PostCode;
     }
-    if (address.Country) {
+    if (address?.Country) {
       result = result + ' ' + address.Country;
     }
-    if (address.RegionCode) {
+    if (address?.RegionCode) {
       result = result + ' ' + address.RegionCode;
     }
-    if (address.RegionTitle) {
+    if (address?.RegionTitle) {
       result = result + ' ' + address.RegionTitle;
     }
-    if (address.City) {
+    if (address?.City) {
       result = result + ' ' + address.City;
     }
-    if (address.District) {
+    if (address?.District) {
       result = result + ' ' + address.District;
     }
-    if (address.Locality) {
+    if (address?.Locality) {
       result = result + ' ' + address.Locality;
     }
-    if (address.Street) {
+    if (address?.Street) {
       result = result + ' ' + address.Street;
     }
-    if (address.House) {
+    if (address?.House) {
       result = result + ' ' + address.House;
     }
-    if (address.Appartment) {
+    if (address?.Appartment) {
       result = result + ' ' + address.Appartment;
     }
 
@@ -571,7 +596,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   private fetch(id: number) {
     this.subscription$.add(
       this.demandService.getDemandById(id).subscribe((resp) => {
-        this.currentDemand = resp;
+        this.currentDemand = resp.Data;
         this.currentInformation = {
           ID: resp.ID,
           Messages: resp.Messages,
@@ -591,7 +616,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   }
 
   private convertToFormData() {
-    console.log(this.currentDemand);
+    console.log('THIS IS CURRENT DEMAND:',this.currentDemand);
     const organization: OrganizationDataInterface =
       this.currentDemand.Organization;
     const passport: PassportInterface = this.currentDemand.Passport;
@@ -642,9 +667,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
         : '',
       ownerPlaceBurn: person?.BirthPlace ? person?.BirthPlace : '',
       ownerPhone: person?.Phone ? person?.Phone : '',
-      ownerWorkPosition: this.currentDemand?.PersonPosition
-        ? this.currentDemand?.PersonPosition
-        : '',
+      ownerWorkPosition: this.currentDemand?.PersonPosition ? this.currentDemand?.PersonPosition : '',
       ownerEmail: person?.Email ? person?.Email : '',
       // ownerGeoPosition: person?.BirthPlace ? person?.BirthPlace : '',
 
@@ -657,21 +680,19 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       passportNationality: passport?.Nationality ? passport.Nationality: ''
     });
 
+    this.formEDS.controls['organizationLegalAddress'].patchValue({
+      factoringPlacesAddress: organization?.LegalAddress
+    });
     this.formEDS.controls['organizationActualAddress'].patchValue({
-      displayAddress: this.getDisplayAddress(organization?.FactAddress),
-      factoringPlacesAddress: organization?.FactAddress,
+      factoringPlacesAddress: organization?.FactAddress
+    });
+    this.formEDS.controls['organizationPostAddress'].patchValue({
+      factoringPlacesAddress: organization?.PostAddress
     });
 
-    // organizationActualAddress: organization?.FactAddress
-    // ? organization?.FactAddress
-    // : '',
-    // organizationLegalAddress: organization?.LegalAddress
-    // ? organization?.LegalAddress
-    // : '',
-  }
-
-  private getDisplayAddress(address): string {
-    return '';
+    this.updateDisplayAddress('organizationLegalAddress')
+    this.updateDisplayAddress('organizationActualAddress')
+    this.updateDisplayAddress('organizationPostAddress')
   }
 
   private initAdditionalData(): void {

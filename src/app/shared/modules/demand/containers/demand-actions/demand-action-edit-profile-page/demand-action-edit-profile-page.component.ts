@@ -152,6 +152,10 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   }
 
   public isFilesInvalid(): boolean {
+    if (this.isEdit) {
+      return false;
+    }
+
     let isInvalid = false;
 
     // crtInds = currentFileIdentifiers
@@ -273,7 +277,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     let result: any = {
       Avatar: this.avatarCode,
       Passport: {
-        Date: this.formEdit.value.date,
+        Date: new Date(this.formEdit.value.date).toISOString().slice(0, 19)+ '+03:00',
         Expire: null,
         IsForeign: false,
         IssuerCode: this.formEdit.value.issuerCode,

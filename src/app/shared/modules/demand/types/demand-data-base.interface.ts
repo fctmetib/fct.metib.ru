@@ -6,5 +6,5 @@ export interface DemandDataBaseInterface {
   Type: string;
   Files: FileModeInterface[];
   Anket?: DemandAnketInterface;
-  Factoring?: DemandFactoringInterface
+  Factoring?: DemandFactoringInterface;
 }

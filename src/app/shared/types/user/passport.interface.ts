@@ -1,6 +1,6 @@
 export interface PassportInterface {
   Number: string;
-  Date: Date;
+  Date: any;
   Expire?: Date;
   IssuerTitle: string;
   IssuerCode: string;

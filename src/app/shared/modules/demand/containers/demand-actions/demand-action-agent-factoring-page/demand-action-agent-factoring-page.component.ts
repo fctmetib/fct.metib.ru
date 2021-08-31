@@ -158,6 +158,10 @@ export class DemandActionAgentFactoringPageComponent
   }
 
   public isFilesInvalid(): boolean {
+    if (this.isEdit) {
+      return false;
+    }
+
     let isInvalid = false;
 
     // crtInds = currentFileIdentifiers

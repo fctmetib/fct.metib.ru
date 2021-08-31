@@ -284,6 +284,10 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
   }
 
   public isFilesInvalid(): boolean {
+    if (this.isEdit) {
+      return false;
+    }
+
     let isInvalid = false;
 
     // crtInds = currentFileIdentifiers
