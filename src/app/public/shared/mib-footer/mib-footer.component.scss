@@ -31,7 +31,16 @@ footer {
         .phones_list {
           p {
             margin: 0;
+            a {
+              text-decoration: none;
+              font-style: normal;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 18px;
+              color: #102538;
+            }
           }
+
         }
       }
     }
@@ -81,18 +90,20 @@ footer {
       padding-top: 26px;
       margin-top: 50px;
       margin-bottom: 14px;
+
       p {
         max-width: 760px;
       }
     }
-    &-fluid{
+
+    &-fluid {
       width: 1400px;
     }
   }
 
   .map {
     max-width: 1400px;
-    height: 250px;
+    height: 280px;
     margin: auto;
   }
 
@@ -136,4 +147,3 @@ footer {
   line-height: 16px;
   color: #A7A7A7;
 }
-

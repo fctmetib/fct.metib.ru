@@ -27,7 +27,7 @@ h3 {
 .contacts {
   padding: 30px;
   .address {
-    max-width: 450px;
+    width: 100%;
 
     span {
       font-weight: 500;
@@ -51,10 +51,13 @@ h3 {
         display: flex;
         align-items: center;
         gap: 10px;
-        font-weight: 500;
-        font-size: 18px;
-        line-height: 21px;
-        color: #102538;
+        a {
+          text-decoration: none;
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 21px;
+          color: #102538;
+        }
       }
     }
   }

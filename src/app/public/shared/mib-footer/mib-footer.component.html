@@ -12,17 +12,19 @@
       <div class="phones">
         <img src="../../../../assets/icons/svg/icon-phone.svg" alt="">
         <div class="phones_list">
-          <p>+7 (495) 727-9797</p>
-          <p>+7 (800) 250-9797</p>
+          <p>
+            <a href="tel:+74957279797">+7 (495) 727-9797</a>
+          </p>
+          <p>
+            <a href="tel:+78002509797">+7 (800) 250-9797</a>
+          </p>
         </div>
       </div>
     </div>
   </div>
 
   <div class="map">
-    <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas"
-      src="https://maps.google.com/maps?hl=ru&amp;q=%D0%91%D0%BE%D0%BB%D1%8C%D1%88%D0%B0%D1%8F%20%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%BA%D0%B0%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+()&amp;t=p&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-      width="100%" height="100%"></iframe>
+    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A668e048cde5370e42d9239d2a08a2ae5dd26a6aa79afb0abd872ce4276d34d8a&amp;source=constructor" width="100%" height="280" frameborder="0"></iframe>
   </div>
   <div class="mib-container">
     <div class="footer_menu">
@@ -32,19 +34,18 @@
         </a>
       </div>
       <div class="links">
-        <a [routerLink]="['/']"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Главная</a>
-        <a [routerLink]="['/tariffs']"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
-        <a [routerLink]="['/contacts']"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
-        <a [routerLink]="['/clients']"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
+        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Главная</a>
+        <a [routerLink]="['/tariffs']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
+        <a [routerLink]="['/contacts']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
+        <a [routerLink]="['/clients']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
       </div>
       <div class="actions">
-        <mib-button [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'" [theme]="'icon'" (click)="openSocial('whatsapp')" ></mib-button>
-        <mib-button [icon]="'../../../../assets/icons/button-icons/icon_insta.svg'" [theme]="'icon'" (click)="openSocial('instagram')" ></mib-button>
-        <mib-button
-          [title]="'Личный кабинет'"
-          [routerLink]="['login']"
-          [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
-          [theme]="'regular'"></mib-button>
+        <mib-button [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'" [theme]="'icon'"
+          (click)="openSocial('whatsapp')"></mib-button>
+        <mib-button [icon]="'../../../../assets/icons/button-icons/icon_insta.svg'" [theme]="'icon'"
+          (click)="openSocial('instagram')"></mib-button>
+        <mib-button [title]="'Личный кабинет'" [routerLink]="['login']"
+          [icon]="'../../../../assets/icons/button-icons/icon_key.svg'" [theme]="'regular'"></mib-button>
       </div>
     </div>
     <div class="footer_info">
