@@ -1,3 +1,4 @@
+import { ElementRef } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { DemandAddonAccountInterface } from './../../../../../types/common/demand-addon-account.interface';
 import { CurrencyPipe, formatDate } from '@angular/common';
@@ -8,6 +9,7 @@ import {
   OnInit,
   Output,
   OnDestroy,
+  ViewChild,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -64,6 +66,32 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   public resultsBankname: string[];
 
   public files: FileModeInterface[] = [];
+
+  //#region  File Inputs
+  @ViewChild('regulationsInput', { static: false })
+  private regulationsInput: ElementRef | undefined;
+
+  @ViewChild('genDirPassportInput', { static: false })
+  private genDirPassportInput: ElementRef | undefined;
+
+  @ViewChild('genDirProtocolInput', { static: false })
+  private genDirProtocolInput: ElementRef | undefined;
+
+  @ViewChild('genDirOrderInput', { static: false })
+  private genDirOrderInput: ElementRef | undefined;
+
+  @ViewChild('balanceInput', { static: false })
+  private balanceInput: ElementRef | undefined;
+
+  @ViewChild('OSVInput', { static: false })
+  private OSVInput: ElementRef | undefined;
+
+  @ViewChild('shareholdersInput', { static: false })
+  private shareholdersInput: ElementRef | undefined;
+
+  @ViewChild('contractDeliveryInput', { static: false })
+  private contractDeliveryInput: ElementRef | undefined;
+  //#endregion
 
   private ref: DynamicDialogRef;
   private currentAddressFormId: any;
@@ -249,7 +277,10 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
           House: existProp ? existProp.Address.House : '',
           Appartment: existProp ? existProp.Address.Appartment : '',
         },
-        factoringPlacesLegalForm: [existProp?.Type ? existProp?.Type : '', [Validators.required]],
+        factoringPlacesLegalForm: [
+          existProp?.Type ? existProp?.Type : '',
+          [Validators.required],
+        ],
       })
     );
 
@@ -265,7 +296,9 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
         factoringCreditsCreditor: [existCredit ? existCredit.Creditor : ''],
         factoringPlacesTypeDuty: [existCredit ? existCredit.Type : ''],
         factoringPlacesDateClose: [
-          existCredit?.Date ? formatDate(existCredit?.Date, 'yyyy-MM-dd', 'en') : '',
+          existCredit?.Date
+            ? formatDate(existCredit?.Date, 'yyyy-MM-dd', 'en')
+            : '',
         ],
         factoringPlacesContractSum: [existCredit ? existCredit.Summ : ''],
         factoringPlacesBalanceReport: [
@@ -365,10 +398,19 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   }
 
   removeFile(file: FileModeInterface) {
-    this.files.splice(
-      this.files.indexOf(this.files.find((x) => x === file)),
-      1
-    );
+    this.files = this.files.filter((x) => x !== file);
+    this.resetFileInputs();
+  }
+
+  private resetFileInputs() {
+    this.regulationsInput.nativeElement.value = '';
+    this.genDirPassportInput.nativeElement.value = '';
+    this.genDirProtocolInput.nativeElement.value = '';
+    this.genDirOrderInput.nativeElement.value = '';
+    this.balanceInput.nativeElement.value = '';
+    this.OSVInput.nativeElement.value = '';
+    this.shareholdersInput.nativeElement.value = '';
+    this.contractDeliveryInput.nativeElement.value = '';
   }
 
   onTypeChanged(value) {

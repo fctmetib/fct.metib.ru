@@ -113,6 +113,7 @@ export class DemandActionRequestFreePageComponent
   }
 
   onSelect(event, type: string) {
+    console.log('IM HERE');
     let files: File[] = event.target.files;
 
     for (let file of files) {
