@@ -3,7 +3,7 @@ import { CookieService } from 'ngx-cookie';
 import { CryptoService } from './../../../../../services/common/crypto.service';
 import { DemandService } from './../../../services/demand.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { select, Store } from '@ngrx/store';
@@ -60,6 +60,11 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
       value: true,
     },
   ];
+
+  //#region  File Inputs
+  @ViewChild('Passport', { static: false })
+  private Passport: ElementRef | undefined;
+  //#endregion
 
   private currentUserId: string;
 
@@ -238,10 +243,12 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   }
 
   removeFile(file: FileModeInterface) {
-    this.files.splice(
-      this.files.indexOf(this.files.find((x) => x === file)),
-      1
-    );
+    this.files = this.files.filter((x) => x !== file);
+    this.resetFileInputs();
+  }
+
+  private resetFileInputs() {
+    this.Passport.nativeElement.value = '';
   }
 
   public isFileInvalid(type: string): boolean {

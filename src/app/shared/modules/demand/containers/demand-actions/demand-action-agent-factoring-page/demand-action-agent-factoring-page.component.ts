@@ -9,7 +9,13 @@ import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { isLoadingSelector } from './../../../../../../auth/store/selectors';
 import { FileModeInterface } from '../../../../../types/file/file-model.interface';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
 import { CreateDemandFactoringRequestInterface } from '../../../types/requests/create-demand-factoring-request.interface';
@@ -74,6 +80,32 @@ export class DemandActionAgentFactoringPageComponent
 
   public isLoading: boolean = false;
 
+  //#region  File Inputs
+  @ViewChild('Regulations', { static: false })
+  private Regulations: ElementRef | undefined;
+
+  @ViewChild('GenDirPassport', { static: false })
+  private GenDirPassport: ElementRef | undefined;
+
+  @ViewChild('GenDirProtocol', { static: false })
+  private GenDirProtocol: ElementRef | undefined;
+
+  @ViewChild('GenDirOrder', { static: false })
+  private GenDirOrder: ElementRef | undefined;
+
+  @ViewChild('Balance', { static: false })
+  private Balance: ElementRef | undefined;
+
+  @ViewChild('OSV', { static: false })
+  private OSV: ElementRef | undefined;
+
+  @ViewChild('Shareholders', { static: false })
+  private Shareholders: ElementRef | undefined;
+
+  @ViewChild('ContractDelivery', { static: false })
+  private ContractDelivery: ElementRef | undefined;
+  //#endregion
+
   private ref: DynamicDialogRef;
   private subscription$: Subscription = new Subscription();
 
@@ -101,7 +133,7 @@ export class DemandActionAgentFactoringPageComponent
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        this.isView = params['View'] === 'true' ? true : false
+        this.isView = params['View'] === 'true' ? true : false;
         if (params['ID'] && params['Edit'] === 'false') {
           this.isLoading = true;
           this.fetch(params['ID']);
@@ -296,6 +328,17 @@ export class DemandActionAgentFactoringPageComponent
     );
   }
 
+  private resetFileInputs() {
+    this.Regulations.nativeElement.value = '';
+    this.GenDirPassport.nativeElement.value = '';
+    this.GenDirProtocol.nativeElement.value = '';
+    this.GenDirOrder.nativeElement.value = '';
+    this.Balance.nativeElement.value = '';
+    this.OSV.nativeElement.value = '';
+    this.Shareholders.nativeElement.value = '';
+    this.ContractDelivery.nativeElement.value = '';
+  }
+
   //#region public page actions
 
   addOtherBank(existBank?: DemandAddonAccountInterface): void {
@@ -307,9 +350,14 @@ export class DemandActionAgentFactoringPageComponent
           [Validators.required],
         ],
         otherBankAccountCloseDate: [
-          existBank?.Expire ? formatDate(existBank?.Expire, 'yyyy-MM-dd', 'en') : '',
+          existBank?.Expire
+            ? formatDate(existBank?.Expire, 'yyyy-MM-dd', 'en')
+            : '',
         ],
-        otherBankName: [existBank ? existBank?.Bank : '', [Validators.required]],
+        otherBankName: [
+          existBank ? existBank?.Bank : '',
+          [Validators.required],
+        ],
         otherBankOwnerAccount: [
           existBank ? existBank?.Number : '',
           [Validators.required],
@@ -343,7 +391,10 @@ export class DemandActionAgentFactoringPageComponent
           House: existProp ? existProp?.Address?.House : '',
           Appartment: existProp ? existProp?.Address?.Appartment : '',
         },
-        factoringPlacesLegalForm: [ existProp ? existProp?.Type : '', [Validators.required]],
+        factoringPlacesLegalForm: [
+          existProp ? existProp?.Type : '',
+          [Validators.required],
+        ],
       })
     );
 
@@ -359,7 +410,9 @@ export class DemandActionAgentFactoringPageComponent
         factoringCreditsCreditor: [existCredit ? existCredit?.Creditor : ''],
         factoringPlacesTypeDuty: [existCredit ? existCredit?.Type : ''],
         factoringPlacesDateClose: [
-          existCredit?.Date ? formatDate(existCredit?.Date, 'yyyy-MM-dd', 'en') : '',
+          existCredit?.Date
+            ? formatDate(existCredit?.Date, 'yyyy-MM-dd', 'en')
+            : '',
         ],
         factoringPlacesContractSum: [existCredit ? existCredit?.Summ : ''],
         factoringPlacesBalanceReport: [
@@ -441,10 +494,8 @@ export class DemandActionAgentFactoringPageComponent
   }
 
   removeFile(file: FileModeInterface) {
-    this.files.splice(
-      this.files.indexOf(this.files.find((x) => x === file)),
-      1
-    );
+    this.files = this.files.filter((x) => x !== file);
+    this.resetFileInputs();
   }
 
   onTypeChanged(value) {

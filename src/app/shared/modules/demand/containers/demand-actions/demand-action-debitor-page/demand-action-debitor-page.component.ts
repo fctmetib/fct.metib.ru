@@ -1,5 +1,5 @@
 import { DebtorInterface } from './../../../types/debtor-interface';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -45,6 +45,11 @@ export class DemandActionDebitorPageComponent
   public debtors: DebtorInterface[] = [];
 
   public isNewDebtor: boolean = false;
+
+  //#region  File Inputs
+  @ViewChild('All', { static: false })
+  private All: ElementRef | undefined;
+  //#endregion
 
   private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
@@ -288,13 +293,14 @@ export class DemandActionDebitorPageComponent
   //#endregion
 
   //#region files
-  public removeFile(file: FileModeInterface) {
-    this.files.splice(
-      this.files.indexOf(this.files.find((x) => x === file)),
-      1
-    );
+  removeFile(file: FileModeInterface) {
+    this.files = this.files.filter((x) => x !== file);
+    this.resetFileInputs();
   }
 
+  private resetFileInputs() {
+    this.All.nativeElement.value = '';
+  }
   onSelect(event, type: string) {
     let files: File[] = event.target.files;
 
