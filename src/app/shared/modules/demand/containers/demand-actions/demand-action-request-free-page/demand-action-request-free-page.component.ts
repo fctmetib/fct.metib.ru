@@ -1,6 +1,6 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DemandService } from './../../../services/demand.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -38,6 +38,11 @@ export class DemandActionRequestFreePageComponent
   public formFree: FormGroup;
 
   public files: FileModeInterface[] = [];
+
+  //#region  File Inputs
+  @ViewChild('All', { static: false })
+  private All: ElementRef | undefined;
+  //#endregion
 
   private currentDraftId: number = 0;
 
@@ -105,11 +110,13 @@ export class DemandActionRequestFreePageComponent
     );
   }
 
-  public removeFile(file: FileModeInterface) {
-    this.files.splice(
-      this.files.indexOf(this.files.find((x) => x === file)),
-      1
-    );
+  removeFile(file: FileModeInterface) {
+    this.files = this.files.filter((x) => x !== file);
+    this.resetFileInputs();
+  }
+
+  private resetFileInputs() {
+    this.All.nativeElement.value = '';
   }
 
   onSelect(event, type: string) {

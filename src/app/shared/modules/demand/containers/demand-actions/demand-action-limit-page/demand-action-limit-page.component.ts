@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -33,6 +33,18 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
   public formFree: FormGroup;
 
   public files: FileModeInterface[] = [];
+
+
+  //#region  File Inputs
+  @ViewChild('OSV', { static: false })
+  private OSV: ElementRef | undefined;
+
+  @ViewChild('Balance', { static: false })
+  private Balance: ElementRef | undefined;
+
+  @ViewChild('Loans', { static: false })
+  private Loans: ElementRef | undefined;
+  //#endregion
 
   private currentDraftId: number = 0;
 
@@ -204,11 +216,15 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
   //#endregion
 
   //#region files
-  public removeFile(file: FileModeInterface) {
-    this.files.splice(
-      this.files.indexOf(this.files.find((x) => x === file)),
-      1
-    );
+  removeFile(file: FileModeInterface) {
+    this.files = this.files.filter((x) => x !== file);
+    this.resetFileInputs();
+  }
+
+  private resetFileInputs() {
+    this.OSV.nativeElement.value = '';
+    this.Balance.nativeElement.value = '';
+    this.Loans.nativeElement.value = '';
   }
 
   onSelect(event, type: string) {

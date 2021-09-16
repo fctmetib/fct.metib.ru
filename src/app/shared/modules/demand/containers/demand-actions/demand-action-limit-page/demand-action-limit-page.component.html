@@ -81,7 +81,7 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="OSV" (change)="onSelect($event, 'OSV')" multiple="true" hidden />
+                <input type="file" id="OSV" #OSV (change)="onSelect($event, 'OSV')" multiple="true" hidden />
                 <label for="OSV" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
               </div>
             </div>
@@ -112,7 +112,7 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="Balance" (change)="onSelect($event, 'Balance')" multiple="true" hidden />
+                <input type="file" id="Balance" #Balance (change)="onSelect($event, 'Balance')" multiple="true" hidden />
                 <label for="Balance" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
               </div>
             </div>
@@ -143,7 +143,7 @@
                 </p>
               </div>
               <div class="mib-uploader">
-                <input type="file" id="Loans" (change)="onSelect($event, 'Loans')" multiple="true" hidden />
+                <input type="file" id="Loans" #Loans (change)="onSelect($event, 'Loans')" multiple="true" hidden />
                 <label for="Loans" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
               </div>
             </div>

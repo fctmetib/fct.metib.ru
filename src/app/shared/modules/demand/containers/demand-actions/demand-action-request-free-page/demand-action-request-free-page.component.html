@@ -72,7 +72,7 @@
               </p>
             </div>
             <div class="mib-uploader">
-              <input type="file" id="All" (change)="onSelect($event, 'All')" hidden />
+              <input type="file" id="All" #All (change)="onSelect($event, 'All')" hidden />
               <label for="All" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
             </div>
           </div>

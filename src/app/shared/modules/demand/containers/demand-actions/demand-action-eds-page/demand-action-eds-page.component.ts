@@ -11,7 +11,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
@@ -105,6 +105,23 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   ];
 
   public currentDraftId: number = 0;
+
+  //#region  File Inputs
+  @ViewChild('Inn', { static: false })
+  private Inn: ElementRef | undefined;
+
+  @ViewChild('Ogrn', { static: false })
+  private Ogrn: ElementRef | undefined;
+
+  @ViewChild('Snils', { static: false })
+  private Snils: ElementRef | undefined;
+
+  @ViewChild('Director', { static: false })
+  private Director: ElementRef | undefined;
+
+  @ViewChild('Passport', { static: false })
+  private Passport: ElementRef | undefined;
+  //#endregion
 
   private ref: DynamicDialogRef;
   private _saveDraftAction$: NodeJS.Timeout;
@@ -414,11 +431,18 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     }
   }
 
+
   removeFile(file: FileModeInterface) {
-    this.files.splice(
-      this.files.indexOf(this.files.find((x) => x === file)),
-      1
-    );
+    this.files = this.files.filter((x) => x !== file);
+    this.resetFileInputs();
+  }
+
+  private resetFileInputs() {
+    this.Inn.nativeElement.value = '';
+    this.Ogrn.nativeElement.value = '';
+    this.Snils.nativeElement.value = '';
+    this.Director.nativeElement.value = '';
+    this.Passport.nativeElement.value = '';
   }
 
   public selectGeoPosition(event) {

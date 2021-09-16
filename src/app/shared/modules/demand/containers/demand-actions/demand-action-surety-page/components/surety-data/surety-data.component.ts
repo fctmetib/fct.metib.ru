@@ -8,6 +8,8 @@ import {
   OnInit,
   Output,
   OnDestroy,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -64,6 +66,30 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
   public resultsBankname: string[];
 
   public files: FileModeInterface[] = [];
+
+  //#region  File Inputs
+  @ViewChild('Regulations', { static: false })
+  private Regulations: ElementRef | undefined;
+
+  @ViewChild('GenDirPassport', { static: false })
+  private GenDirPassport: ElementRef | undefined;
+
+  @ViewChild('GenDirProtocol', { static: false })
+  private GenDirProtocol: ElementRef | undefined;
+
+  @ViewChild('GenDirOrder', { static: false })
+  private GenDirOrder: ElementRef | undefined;
+
+  @ViewChild('Balance', { static: false })
+  private Balance: ElementRef | undefined;
+
+  @ViewChild('OSV', { static: false })
+  private OSV: ElementRef | undefined;
+
+  @ViewChild('Shareholders', { static: false })
+  private Shareholders: ElementRef | undefined;
+  //#endregion
+
 
   private ref: DynamicDialogRef;
   private currentAddressFormId: any;
@@ -364,10 +390,18 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
   }
 
   removeFile(file: FileModeInterface) {
-    this.files.splice(
-      this.files.indexOf(this.files.find((x) => x === file)),
-      1
-    );
+    this.files = this.files.filter((x) => x !== file);
+    this.resetFileInputs();
+  }
+
+  private resetFileInputs() {
+    this.Regulations.nativeElement.value = '';
+    this.GenDirPassport.nativeElement.value = '';
+    this.GenDirProtocol.nativeElement.value = '';
+    this.GenDirOrder.nativeElement.value = '';
+    this.Balance.nativeElement.value = '';
+    this.OSV.nativeElement.value = '';
+    this.Shareholders.nativeElement.value = '';
   }
 
   onTypeChanged(value) {
