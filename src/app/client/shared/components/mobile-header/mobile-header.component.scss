@@ -190,7 +190,10 @@
 
     &.account-owner {
       cursor: pointer;
-      align-items: flex-end;
+      width: 200px;
+      padding: 10px;
+      overflow: hidden;
+      align-items: unset;
       border: 1px solid #ECECEC;
     }
   }
