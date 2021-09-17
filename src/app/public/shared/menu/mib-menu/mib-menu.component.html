@@ -37,23 +37,28 @@
       <div>
         <div>
           <ul class="mib-mb-20">
+            <div class="section-border"></div>
             <li>
               <a [routerLink]="['/']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Главная</a>
             </li>
+            <div class="section-border"></div>
             <li>
               <a [routerLink]="['/tariffs']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
             </li>
+            <div class="section-border"></div>
             <li>
               <a [routerLink]="['/clients']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
             </li>
+            <div class="section-border"></div>
             <li>
               <a [routerLink]="['/contacts']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
             </li>
-            <li>
-              <mib-button [title]="'Личный кабинет'" [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
-                [routerLink]="['/login']" [theme]="'regular'"></mib-button>
-            </li>
+            <div class="section-border"></div>
           </ul>
+          <div class="social mib-mb-20">
+            <mib-button [title]="'Личный кабинет'" [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
+              [routerLink]="['/login']" [theme]="'regular'"></mib-button>
+          </div>
           <div class="social mib-mb-20">
             <mib-button [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'" [theme]="'icon'">
             </mib-button>

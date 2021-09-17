@@ -165,7 +165,7 @@ nav {
 
 
       .menu>div>div>ul>li:first-child {
-        border-top: 1px solid #E6E6E6;
+      //  border-top: 1px solid #E6E6E6;
       }
 
       .menu>div>div>ul>li>a {
@@ -179,7 +179,7 @@ nav {
         color: $black;
         transition: .3s;
 
-        border-bottom: 1px solid #E6E6E6;
+      //  border-bottom: 1px solid #E6E6E6;
       }
 
       .menu>div>div>ul>li>a:hover {
@@ -370,4 +370,11 @@ nav {
       }
     }
   }
+}
+
+.section-border {
+  width: 100vw;
+  position: relative;
+  left: calc(-50vw + 50%);
+  border-top: 1px solid #E6E6E6;
 }
