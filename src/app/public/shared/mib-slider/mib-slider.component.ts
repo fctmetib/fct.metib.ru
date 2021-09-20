@@ -13,7 +13,7 @@ import { Component, Input, OnInit } from '@angular/core';
         [theme]="'scroller'"
         id="scroll-left"
       ></mib-button>
-      <div class="list" mib-scroll #list="mib-scroll" [scrollUnit]="150" [ngClass]="theme">
+      <div class="list" mib-scroll #list="mib-scroll" [scrollUnit]="210" [ngClass]="theme">
         <ng-content></ng-content>
       </div>
       <mib-button

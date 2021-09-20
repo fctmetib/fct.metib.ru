@@ -155,6 +155,10 @@ nav {
         gap: 10px;
       }
 
+      .menu>div>div>.actions {
+        width: 100%;
+      }
+
       .menu>div>div>ul {
         padding: 0px;
       }

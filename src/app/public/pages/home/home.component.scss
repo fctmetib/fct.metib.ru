@@ -221,6 +221,14 @@
   height: 407px;
   border-radius: 20px;
 
+  .partners-item {
+    max-width: 150px;
+    img {
+      max-width: 150px;
+    }
+  }
+
+
   .desc-partners {
     font-size: 14px;
     line-height: 16px;
@@ -235,6 +243,10 @@
   background: #F7F7F7;
   height: 500px;
   border-radius: 20px;
+
+  .news-item {
+    width: 300px;
+  }
 
   h2 {
   //  margin-bottom: 3.5rem;
