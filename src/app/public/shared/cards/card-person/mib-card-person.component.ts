@@ -5,8 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./mib-card-person.component.scss'],
   template: `
     <div class="mib-card-person">
-      <div class="ava">
-          <img [src]="avatar" />
+      <div class="ava" [ngStyle]="{'background-image': 'url(' + avatar + ')'}">
       </div>
       <div class="person">
         <div class="name">
