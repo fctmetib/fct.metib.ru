@@ -1,5 +1,6 @@
 @import '/src/styles/colors.scss';
 
+
 footer {
   .mib-container {
     .contacts {
@@ -31,6 +32,7 @@ footer {
         .phones_list {
           p {
             margin: 0;
+
             a {
               text-decoration: none;
               font-style: normal;
@@ -78,6 +80,13 @@ footer {
         align-items: center;
         flex-direction: row;
         gap: 10px;
+
+        .actions__social {
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+          gap: 10px;
+        }
       }
     }
 
@@ -107,7 +116,20 @@ footer {
     margin: auto;
   }
 
-  @media (max-width: 1300px) {
+}
+
+.description {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #A7A7A7;
+}
+// mobile
+
+@media (max-width: 1300px) {
+  footer {
     padding-left: 15px;
     padding-right: 15px;
 
@@ -124,26 +146,33 @@ footer {
           }
         }
       }
-    }
-
 
     .footer_menu {
       flex-direction: column;
       gap: 35px;
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+
+        .actions__social {
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+          gap: 10px;
+          order: 2;
+        }
+
+        flex-wrap: wrap;
+      }
     }
+
+    }
+
 
     .footer_info {
       flex-direction: column;
       gap: 35px;
     }
   }
-}
-
-.description {
-  font-family: Ubuntu;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 16px;
-  color: #A7A7A7;
 }
