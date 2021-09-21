@@ -1,3 +1,10 @@
+// mobile
+@media (max-width: 1300px) {
+  .mobile-pb-58 {
+    padding-bottom: 58px;
+  }
+}
+
 .promo {
   background: #FFFFFF;
   box-shadow: 0px 15px 25px rgba(12, 131, 241, 0.03);
@@ -99,10 +106,7 @@
 
     @media (max-width: 1300px) {
       margin-top: 35px;
-
-      .mib-container {
-        padding-bottom: 65px;
-      }
+      padding-bottom: 25px;
     }
   }
 }
@@ -111,6 +115,10 @@
   background: white;
   border-radius: 20px;
   padding-bottom: 56px;
+
+  @media (max-width: 1300px) {
+    padding-bottom: 0px;
+  }
 }
 
 .how-work {
@@ -125,7 +133,7 @@
     width: 100%;
     height: 2px;
     background-color: #EAEAEA;
-    top: 59%;
+    top: 56%;
     z-index: 0;
   }
 
@@ -146,7 +154,7 @@
       }
 
       .icon {
-        margin-bottom: 29px;
+        margin-bottom: 10px;
 
         img {
           height: 70px;
@@ -193,6 +201,13 @@
 
   @media (max-width: 1300px) {
     height: 100%;
+    padding-bottom: 38px;
+    .mib-container {
+      h2 {
+        padding-top: 40px;
+        padding-bottom: 0px;
+      }
+    }
 
     .line {
       width: 0px;
@@ -215,7 +230,7 @@
           width: 100%;
           height: 2px;
           background-color: #EAEAEA;
-          top: 65%;
+          top: 60%;
           z-index: 0;
         }
       }
@@ -227,7 +242,6 @@
   background: white;
   height: 407px;
   border-radius: 20px;
-
   .partners-item {
     max-width: 150px;
     img {
@@ -244,6 +258,22 @@
 
     margin-bottom: 3.5rem;
   }
+
+
+  @media (max-width: 1300px) {
+    height: unset;
+    padding-bottom: 0px;
+    .mib-container {
+      h2 {
+        padding-top: 40px;
+        padding-bottom: 20px;
+      }
+    }
+    .desc-partners {
+      margin-bottom: 20px;
+    }
+
+  }
 }
 
 .news {
@@ -257,6 +287,16 @@
 
   h2 {
   //  margin-bottom: 3.5rem;
+  }
+
+  @media (max-width: 1300px) {
+    height: unset;
+    .mib-container {
+      h2 {
+        padding-top: 40px;
+        padding-bottom: 30px;
+      }
+    }
   }
 }
 

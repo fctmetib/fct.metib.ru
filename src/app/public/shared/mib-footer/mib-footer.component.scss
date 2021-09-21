@@ -126,14 +126,18 @@ footer {
   line-height: 16px;
   color: #A7A7A7;
 }
-// mobile
 
+// mobile
 @media (max-width: 1300px) {
   footer {
     padding-left: 15px;
     padding-right: 15px;
 
     .mib-container {
+      h2 {
+        padding-top: 40px;
+        padding-bottom: 23px;
+      }
       .contacts {
         margin-top: 0px;
         margin-bottom: 0px;
