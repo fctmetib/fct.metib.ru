@@ -4,7 +4,7 @@ import { Component, Input, OnInit } from '@angular/core';
   selector: 'mib-card-info',
   styleUrls: ['./mib-card-info.component.scss'],
   template: `
-    <div class="mib-card-info">
+    <div class="mib-card-info" [ngStyle]="isLast && {'margin-bottom': '0px'}">
       <div class="icon">
         <img [src]="icon" alt="Иконка">
       </div>
@@ -17,6 +17,9 @@ import { Component, Input, OnInit } from '@angular/core';
   `,
 })
 export class MibCardInfoComponent implements OnInit {
+  @Input()
+  isLast: boolean;
+
   @Input()
   icon: string;
 
