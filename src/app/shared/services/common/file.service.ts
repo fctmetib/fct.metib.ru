@@ -1,7 +1,11 @@
 import { environment } from 'src/environments/environment';
 
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpEvent,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FileModeInterface } from '../../types/file/file-model.interface';
 
@@ -20,7 +24,7 @@ export class FileService {
     fileName: string,
     fileSize: string,
     guid: string
-  ): Observable<FileModeInterface> {
+  ): Observable<HttpEvent<FileModeInterface>> {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Upload-ChunkNumber', '1');
     headers = headers.append('Upload-FileName', fileName);
@@ -28,13 +32,17 @@ export class FileService {
     headers = headers.append('Upload-TotalSize', fileSize);
 
     let url = `${environment.apiFileUploadUrl}/file/chunks`;
-    return this.http.post<FileModeInterface>(url, file, { headers });
+
+    const upload$: Observable<HttpEvent<FileModeInterface>> =
+      this.http.post<FileModeInterface>(url, file, {
+        headers,
+        reportProgress: true,
+        observe: 'events',
+      });
+    return upload$;
   }
 
-  uploadAvatar(
-    file: Blob,
-    fileName: string
-  ): Observable<string> {
+  uploadAvatar(file: Blob, fileName: string): Observable<string> {
     var formdata = new FormData();
     formdata.append('', file, fileName);
 

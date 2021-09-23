@@ -194,20 +194,33 @@
           <!-- 5 row -->
           <ng-container *ngIf="!isEdit">
             <div class="p-field p-col-12 p-md-6">
-              <label>
+              <mib-file-uploader
+                [title]="'Скан-Копия свидетельства ИНН организации'"
+                [type]="'Inn'"
+                (remove)="onRemove($event)"
+                (add)="onAdd($event)">
+              </mib-file-uploader>
+
+              <!-- <label>
                 Прикрепите необходимые файлы
               </label>
               <div class="addon-button mb-20">
-                <div class="addon-text">
-                  <p>
-                    Скан-Копия свидетельства ИНН
-                    организации
-                  </p>
+                <div class="input-file">
+                  <div class="addon-text">
+                    <p>
+
+                    </p>
+                  </div>
+                  <div class="mib-uploader">
+                    <input type="file" id="" #Inn accept="image/jpeg,image/png,image/gif,application/pdf"
+                      (change)="onSelect($event, 'Inn')" multiple="true" hidden />
+                    <label for="Inn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
+                  </div>
                 </div>
-                <div class="mib-uploader">
-                  <input type="file" id="Inn" #Inn  accept="image/jpeg,image/png,image/gif,application/pdf"
-                    (change)="onSelect($event, 'Inn')" multiple="true" hidden />
-                  <label for="Inn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
+                <div class="progress">
+                  <p-progressBar style="width: 100%" [value]="fileUploadProgress.progress"
+                  showValue="false"
+                    *ngIf="fileUploadProgress.type === 'Inn'"></p-progressBar>
                 </div>
               </div>
               <div class="mib-uploader__error" *ngIf="isFileInvalid('Inn')">
@@ -231,7 +244,7 @@
                     </div>
                   </div>
                 </ng-container>
-              </div>
+              </div> -->
 
             </div>
             <div class="p-field p-col-12 p-md-6">
