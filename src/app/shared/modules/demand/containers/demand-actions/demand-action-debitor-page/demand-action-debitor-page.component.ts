@@ -322,14 +322,26 @@ export class DemandActionDebitorPageComponent
           )
           .subscribe(
             (res) => {
-              console.log(res);
-              this.files.push({
-                Code: res.Code,
-                FileName: res.FileName,
-                ID: res.ID,
-                Size: res.Size,
-                Identifier: type,
-              });
+              switch(res.type) {
+                // загружается
+                case 1:
+                  // const progressResult = Math.round((100 * res.loaded) / res.total)
+                  // this.fileUploadProgress = {
+                  //  progress: progressResult,
+                  //  type
+                  // }
+                  break;
+                // получил результат
+                case 4:
+                   this.files.push({
+                     Code: res.body.Code,
+                     FileName: res.body.FileName,
+                     ID: res.body.ID,
+                     Size: res.body.Size,
+                     Identifier: type,
+                   });
+                  break;
+              }
             },
             (err) => console.log(err)
           )
