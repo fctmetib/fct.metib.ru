@@ -247,7 +247,7 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
             })
           )
           .subscribe(
-            (res) => {
+            (res: any) => {
               switch(res.type) {
                 // загружается
                 case 1:

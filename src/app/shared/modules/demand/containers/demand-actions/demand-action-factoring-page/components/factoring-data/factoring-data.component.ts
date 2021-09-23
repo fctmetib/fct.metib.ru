@@ -381,7 +381,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
             })
           )
           .subscribe(
-            (res) => {
+            (res: any) => {
               switch(res.type) {
                 // загружается
                 case 1:

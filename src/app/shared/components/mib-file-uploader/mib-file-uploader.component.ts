@@ -131,7 +131,7 @@ export class MibFileUploaderComponent implements OnInit {
             })
           )
           .subscribe(
-            (res) => {
+            (res: any) => {
               switch (res.type) {
                 // загружается
                 case 1:

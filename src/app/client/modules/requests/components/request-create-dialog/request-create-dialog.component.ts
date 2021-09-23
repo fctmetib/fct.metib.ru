@@ -283,7 +283,7 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
           this.fileService
             .uploadFileChunks(res, file.name, file.size.toString(), guid)
             .subscribe(
-              (res) => {
+              (res: any) => {
                 switch(res.type) {
                   // загружается
                   case 1:

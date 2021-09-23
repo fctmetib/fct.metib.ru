@@ -143,7 +143,7 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe(
-          (res) => {
+          (res: any) => {
             this.files = [];
             switch(res.type) {
               // загружается

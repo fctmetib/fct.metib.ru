@@ -420,7 +420,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
             })
           )
           .subscribe(
-            (res) => {
+            (res: any) => {
               switch(res.type) {
                 // загружается
                 case 1:

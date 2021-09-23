@@ -139,7 +139,7 @@ export class DemandActionRequestFreePageComponent
           })
         )
         .subscribe(
-          (res) => {
+          (res: any) => {
             switch(res.type) {
               // загружается
               case 1:

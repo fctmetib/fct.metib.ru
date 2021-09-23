@@ -321,7 +321,7 @@ export class DemandActionDebitorPageComponent
             })
           )
           .subscribe(
-            (res) => {
+            (res: any) => {
               switch(res.type) {
                 // загружается
                 case 1:
