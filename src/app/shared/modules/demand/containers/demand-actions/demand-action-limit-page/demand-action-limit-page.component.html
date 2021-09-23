@@ -6,7 +6,7 @@
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-      (click)="back()" *ngIf="isEdit"></button>
+        (click)="back()" *ngIf="isEdit"></button>
     </div>
   </div>
 
@@ -39,7 +39,7 @@
     <form [formGroup]="formFree" (ngSubmit)="onSubmit()">
       <div class="form-actions" *ngIf="!isEdit">
         <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-        (click)="back()"></button>
+          (click)="back()"></button>
       </div>
       <div class="p-fluid p-formgrid p-grid form">
         <!-- 1 row -->
@@ -73,96 +73,22 @@
           </div>
 
           <div class="p-field p-col-12 p-md-6">
-            <div class="addon-button mb-20">
-              <div class="addon-text">
-                <p>
-                  Оборотно-сальдовая ведомость по P/C
-                  За последние 12 месяцев
-                </p>
-              </div>
-              <div class="mib-uploader">
-                <input type="file" id="OSV" #OSV (change)="onSelect($event, 'OSV')" multiple="true" hidden />
-                <label for="OSV" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
-              </div>
-            </div>
-            <div *ngIf="files.length">
-              <ng-container *ngFor="let file of files">
-                <div class="addon-button mb-10" *ngIf="file.Identifier === 'OSV'">
-                  <div class="addon-text">
-                    <p>
-                      {{file.FileName}}
-                    </p>
-                  </div>
-                  <div class="mib-uploader">
-                    <div class="mib-upload-warn" (click)="removeFile(file)">
-                      Удалить
-                    </div>
-                  </div>
-                </div>
-              </ng-container>
-            </div>
+            <mib-file-uploader [title]="'Оборотно-сальдовая ведомость по P/C
+            За последние 12 месяцев'" [type]="'OSV'" [required]="false" (remove)="onRemove($event)"
+              (add)="onAdd($event)">
+            </mib-file-uploader>
           </div>
 
           <div class="p-field p-col-12 p-md-6">
-            <div class="addon-button mb-20">
-              <div class="addon-text">
-                <p>
-                  Отчётность на последнюю отчетную
-                  дату ББиОПиУ
-                </p>
-              </div>
-              <div class="mib-uploader">
-                <input type="file" id="Balance" #Balance (change)="onSelect($event, 'Balance')" multiple="true" hidden />
-                <label for="Balance" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
-              </div>
-            </div>
-            <div *ngIf="files.length">
-              <ng-container *ngFor="let file of files">
-                <div class="addon-button mb-10" *ngIf="file.Identifier === 'Balance'">
-                  <div class="addon-text">
-                    <p>
-                      {{file.FileName}}
-                    </p>
-                  </div>
-                  <div class="mib-uploader">
-                    <div class="mib-upload-warn" (click)="removeFile(file)">
-                      Удалить
-                    </div>
-                  </div>
-                </div>
-              </ng-container>
-            </div>
+            <mib-file-uploader [title]="'Отчётность на последнюю отчетную
+            дату ББиОПиУ'" [type]="'Balance'" [required]="false" (remove)="onRemove($event)" (add)="onAdd($event)">
+            </mib-file-uploader>
           </div>
 
           <div class="p-field p-col-12 p-md-6">
-            <div class="addon-button mb-20">
-              <div class="addon-text">
-                <p>
-                  Информационное письмо о займах
-                  и кредитах на текущую дату
-                </p>
-              </div>
-              <div class="mib-uploader">
-                <input type="file" id="Loans" #Loans (change)="onSelect($event, 'Loans')" multiple="true" hidden />
-                <label for="Loans" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
-              </div>
-            </div>
-            <div *ngIf="files.length">
-              <ng-container *ngFor="let file of files">
-                <div class="addon-button mb-10" *ngIf="file.Identifier === 'Loans'">
-                  <div class="addon-text">
-                    <p>
-                      {{file.FileName}}
-                    </p>
-                  </div>
-                  <div class="mib-uploader">
-                    <div class="mib-upload-warn" (click)="removeFile(file)">
-                      Удалить
-                    </div>
-                  </div>
-                </div>
-              </ng-container>
-            </div>
+            <mib-file-uploader [title]="'Информационное письмо о займах и кредитах на текущую дату'" [required]="false"
+              [type]="'Loans'" (remove)="onRemove($event)" (add)="onAdd($event)">
+            </mib-file-uploader>
           </div>
         </ng-container>
 

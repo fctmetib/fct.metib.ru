@@ -80,32 +80,6 @@ export class DemandActionAgentFactoringPageComponent
 
   public isLoading: boolean = false;
 
-  //#region  File Inputs
-  @ViewChild('Regulations', { static: false })
-  private Regulations: ElementRef | undefined;
-
-  @ViewChild('GenDirPassport', { static: false })
-  private GenDirPassport: ElementRef | undefined;
-
-  @ViewChild('GenDirProtocol', { static: false })
-  private GenDirProtocol: ElementRef | undefined;
-
-  @ViewChild('GenDirOrder', { static: false })
-  private GenDirOrder: ElementRef | undefined;
-
-  @ViewChild('Balance', { static: false })
-  private Balance: ElementRef | undefined;
-
-  @ViewChild('OSV', { static: false })
-  private OSV: ElementRef | undefined;
-
-  @ViewChild('Shareholders', { static: false })
-  private Shareholders: ElementRef | undefined;
-
-  @ViewChild('ContractDelivery', { static: false })
-  private ContractDelivery: ElementRef | undefined;
-  //#endregion
-
   private ref: DynamicDialogRef;
   private subscription$: Subscription = new Subscription();
 
@@ -328,17 +302,6 @@ export class DemandActionAgentFactoringPageComponent
     );
   }
 
-  private resetFileInputs() {
-    this.Regulations.nativeElement.value = '';
-    this.GenDirPassport.nativeElement.value = '';
-    this.GenDirProtocol.nativeElement.value = '';
-    this.GenDirOrder.nativeElement.value = '';
-    this.Balance.nativeElement.value = '';
-    this.OSV.nativeElement.value = '';
-    this.Shareholders.nativeElement.value = '';
-    this.ContractDelivery.nativeElement.value = '';
-  }
-
   //#region public page actions
 
   addOtherBank(existBank?: DemandAddonAccountInterface): void {
@@ -505,9 +468,13 @@ export class DemandActionAgentFactoringPageComponent
     }
   }
 
-  removeFile(file: FileModeInterface) {
+
+  onAdd(file) {
+    this.files.push(file);
+  }
+
+  onRemove(file) {
     this.files = this.files.filter((x) => x !== file);
-    this.resetFileInputs();
   }
 
   onTypeChanged(value) {

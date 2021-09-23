@@ -121,26 +121,10 @@
               </div>
               <ng-container *ngIf="!isEdit">
                 <div>
-                  <div class="addon-button mb-20">
-                    <div class="addon-text">
-                      <p>
-                        Загрузите копию паспорта
-                      </p>
-                    </div>
-                    <div class="mib-uploader">
-                      <input type="file" id="Passport" #Passport accept="image/jpeg,image/png,image/gif,application/pdf"
-                        (change)="onSelect($event, 'Passport')" multiple="true" hidden />
-                      <label for="Passport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
-                    </div>
-                  </div>
-                  <div class="mib-uploader__error" *ngIf="isFileInvalid('Passport')">
-                    <small class="p-error">
-                      Необходимо загрузить документ
-                    </small>
-                  </div>
+                  <mib-file-uploader [title]="'Загрузите копию паспорта'" [type]="'Passport'"
+                    (remove)="onRemove($event)" (add)="onAdd($event)">
+                  </mib-file-uploader>
                 </div>
-
-
               </ng-container>
             </div>
           </div>
@@ -187,14 +171,16 @@
               <h2>Приложенные файлы</h2>
               <ng-container *ngFor="let file of files">
                 <div class="addon-button mb-10" *ngIf="file.Identifier === 'Passport'">
-                  <div class="addon-text">
-                    <p>
-                      {{file.FileName}}
-                    </p>
-                  </div>
-                  <div class="mib-uploader">
-                    <div class="mib-upload-warn" (click)="removeFile(file)">
-                      Удалить
+                  <div class="action-box">
+                    <div class="addon-text">
+                      <p>
+                        {{file.FileName}}
+                      </p>
+                    </div>
+                    <div class="mib-uploader">
+                      <div class="mib-upload-warn" (click)="onRemove(file)">
+                        Удалить
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -204,7 +190,8 @@
           <div class="p-field p-col-12 p-md-12">
             <label for="btn_submit">&nbsp;</label>
             <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-              class="btn-mib-submit p-button-outlined" [disabled]="formEdit.invalid || isRequestLoading || isFilesInvalid()"></button>
+              class="btn-mib-submit p-button-outlined"
+              [disabled]="formEdit.invalid || isRequestLoading || isFilesInvalid()"></button>
           </div>
         </div>
       </form>

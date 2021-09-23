@@ -104,29 +104,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     },
   ];
 
-  public fileUploadProgress = {
-    progress: 0,
-    type: null
-  }
-
   public currentDraftId: number = 0;
-
-  //#region  File Inputs
-  @ViewChild('Inn', { static: false })
-  private Inn: ElementRef | undefined;
-
-  @ViewChild('Ogrn', { static: false })
-  private Ogrn: ElementRef | undefined;
-
-  @ViewChild('Snils', { static: false })
-  private Snils: ElementRef | undefined;
-
-  @ViewChild('Director', { static: false })
-  private Director: ElementRef | undefined;
-
-  @ViewChild('Passport', { static: false })
-  private Passport: ElementRef | undefined;
-  //#endregion
 
   private ref: DynamicDialogRef;
   private _saveDraftAction$: NodeJS.Timeout;
@@ -400,74 +378,12 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     return data;
   }
 
-  onSelect(event, type: string) {
-    let files: File[] = event.target.files;
-
-    for (let file of files) {
-      let guid = Guid.newGuid();
-
-      this.subscription$.add(
-        this.commonService
-          .getBase64(file)
-          .pipe(
-            switchMap((res) => {
-              return this.fileService.uploadFileChunks(
-                res,
-                file.name,
-                file.size.toString(),
-                guid
-              );
-            })
-          )
-          .subscribe(
-            (res: any) => {
-              switch(res.type) {
-                // загружается
-                case 1:
-                  const progressResult = Math.round((100 * res.loaded) / res.total)
-                  this.fileUploadProgress = {
-                   progress: progressResult,
-                   type
-                  }
-                  break;
-                // получил результат
-                case 4:
-                   this.files.push({
-                     Code: res.body.Code,
-                     FileName: res.body.FileName,
-                     ID: res.body.ID,
-                     Size: res.body.Size,
-                     Identifier: type,
-                   });
-                  break;
-              }
-            },
-            (err) => console.log(err)
-          )
-      );
-    }
-  }
-
   onAdd(file) {
     this.files.push(file);
   }
 
   onRemove(file) {
     this.files = this.files.filter((x) => x !== file);
-    this.resetFileInputs();
-  }
-
-  removeFile(file: FileModeInterface) {
-    this.files = this.files.filter((x) => x !== file);
-    this.resetFileInputs();
-  }
-
-  private resetFileInputs() {
-    this.Inn.nativeElement.value = '';
-    this.Ogrn.nativeElement.value = '';
-    this.Snils.nativeElement.value = '';
-    this.Director.nativeElement.value = '';
-    this.Passport.nativeElement.value = '';
   }
 
   public selectGeoPosition(event) {

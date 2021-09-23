@@ -194,98 +194,19 @@
           <!-- 5 row -->
           <ng-container *ngIf="!isEdit">
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader
-                [title]="'Скан-Копия свидетельства ИНН организации'"
-                [type]="'Inn'"
-                (remove)="onRemove($event)"
-                (add)="onAdd($event)">
+              <label> Прикрепите необходимые файлы </label>
+              <mib-file-uploader [title]="'Скан-Копия свидетельства ИНН организации'" [type]="'Inn'"
+                (remove)="onRemove($event)" (add)="onAdd($event)">
               </mib-file-uploader>
-
-              <!-- <label>
-                Прикрепите необходимые файлы
-              </label>
-              <div class="addon-button mb-20">
-                <div class="input-file">
-                  <div class="addon-text">
-                    <p>
-
-                    </p>
-                  </div>
-                  <div class="mib-uploader">
-                    <input type="file" id="" #Inn accept="image/jpeg,image/png,image/gif,application/pdf"
-                      (change)="onSelect($event, 'Inn')" multiple="true" hidden />
-                    <label for="Inn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
-                  </div>
-                </div>
-                <div class="progress">
-                  <p-progressBar style="width: 100%" [value]="fileUploadProgress.progress"
-                  showValue="false"
-                    *ngIf="fileUploadProgress.type === 'Inn'"></p-progressBar>
-                </div>
-              </div>
-              <div class="mib-uploader__error" *ngIf="isFileInvalid('Inn')">
-                <small class="p-error">
-                  Необходимо загрузить документ
-                </small>
-              </div>
-
-              <div *ngIf="files.length">
-                <ng-container *ngFor="let file of files">
-                  <div class="addon-button mb-10" *ngIf="file.Identifier === 'Inn'">
-                    <div class="addon-text">
-                      <p>
-                        {{file.FileName}}
-                      </p>
-                    </div>
-                    <div class="mib-uploader">
-                      <div class="mib-upload-warn" (click)="removeFile(file)">
-                        Удалить
-                      </div>
-                    </div>
-                  </div>
-                </ng-container>
-              </div> -->
-
             </div>
             <div class="p-field p-col-12 p-md-6">
               <label>
                 &nbsp;
               </label>
-              <div class="addon-button mb-20">
-                <div class="addon-text">
-                  <p>
-                    Скан-Копия свидетельства ОГРН
-                    организации
-                  </p>
-                </div>
-                <div class="mib-uploader">
-                  <input type="file" id="Ogrn" #Ogrn (change)="onSelect($event, 'Ogrn')" multiple="true"
-                    accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
-                  <label for="Ogrn" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
-                </div>
-              </div>
-              <div class="mib-uploader__error" *ngIf="isFileInvalid('Ogrn')">
-                <small class="p-error">
-                  Необходимо загрузить документ
-                </small>
-              </div>
+              <mib-file-uploader [title]="'Скан-Копия свидетельства ОГРН
+              организации'" [type]="'Ogrn'" (remove)="onRemove($event)" (add)="onAdd($event)">
+              </mib-file-uploader>
 
-              <div *ngIf="files.length">
-                <ng-container *ngFor="let file of files">
-                  <div class="addon-button mb-10" *ngIf="file.Identifier === 'Ogrn'">
-                    <div class="addon-text">
-                      <p>
-                        {{file.FileName}}
-                      </p>
-                    </div>
-                    <div class="mib-uploader">
-                      <div class="mib-upload-warn" (click)="removeFile(file)">
-                        Удалить
-                      </div>
-                    </div>
-                  </div>
-                </ng-container>
-              </div>
             </div>
           </ng-container>
           <div class="p-col-12">
@@ -380,81 +301,18 @@
               <label>
                 Прикрепите необходимые файлы
               </label>
-              <div class="addon-button mb-20">
-                <div class="addon-text">
-                  <p>
-                    Скан-Копия СНИЛС владельца
-                    ключа подписи
-                  </p>
-                </div>
-                <div class="mib-uploader">
-                  <input type="file" id="Snils" #Snils (change)="onSelect($event, 'Snils')"
-                    accept="image/jpeg,image/png,image/gif,application/pdf" multiple="true" hidden />
-                  <label for="Snils" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
-                </div>
-              </div>
-              <div class="mib-uploader__error" *ngIf="isFileInvalid('Snils')">
-                <small class="p-error">
-                  Необходимо загрузить документ
-                </small>
-              </div>
+              <mib-file-uploader [title]="'Скан-Копия СНИЛС владельца
+              ключа подписи'" [type]="'Snils'" (remove)="onRemove($event)" (add)="onAdd($event)">
+              </mib-file-uploader>
 
-              <div *ngIf="files.length">
-                <ng-container *ngFor="let file of files">
-                  <div class="addon-button mb-10" *ngIf="file.Identifier === 'Snils'">
-                    <div class="addon-text">
-                      <p>
-                        {{file.FileName}}
-                      </p>
-                    </div>
-                    <div class="mib-uploader">
-                      <div class="mib-upload-warn" (click)="removeFile(file)">
-                        Удалить
-                      </div>
-                    </div>
-                  </div>
-                </ng-container>
-              </div>
             </div>
             <div class="p-field p-col-12 p-md-6">
               <label>
                 &nbsp;
               </label>
-              <div class="addon-button mb-20">
-                <div class="addon-text">
-                  <p>
-                    Скан-Копия приказа о назначении на
-                    должность Генерального директора
-                  </p>
-                </div>
-                <div class="mib-uploader">
-                  <input type="file" id="Director" #Director (change)="onSelect($event, 'Director')"
-                    accept="image/jpeg,image/png,image/gif,application/pdf" multiple="true" hidden />
-                  <label for="Director" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label>
-                </div>
-              </div>
-              <div class="mib-uploader__error" *ngIf="isFileInvalid('Director')">
-                <small class="p-error">
-                  Необходимо загрузить документ
-                </small>
-              </div>
-
-              <div *ngIf="files.length">
-                <ng-container *ngFor="let file of files">
-                  <div class="addon-button mb-10" *ngIf="file.Identifier === 'Director'">
-                    <div class="addon-text">
-                      <p>
-                        {{file.FileName}}
-                      </p>
-                    </div>
-                    <div class="mib-uploader">
-                      <div class="mib-upload-warn" (click)="removeFile(file)">
-                        Удалить
-                      </div>
-                    </div>
-                  </div>
-                </ng-container>
-              </div>
+              <mib-file-uploader [title]="'Скан-Копия приказа о назначении на
+              должность Генерального директора'" [type]="'Director'" (remove)="onRemove($event)" (add)="onAdd($event)">
+              </mib-file-uploader>
             </div>
 
           </ng-container>
@@ -500,44 +358,11 @@
                 <p class="description">Заполните паспортные данные</p>
               </div>
               <ng-container *ngIf="!isEdit">
+
                 <div>
-                  <div class="addon-button mb-20">
-                    <div class="addon-text">
-                      <p>
-                        Скан-копия паспорта
-                        владельца ключа подписи
-                      </p>
-                    </div>
-                    <div class="mib-uploader">
-                      <input type="file" id="Passport" #Passport (change)="onSelect($event, 'Passport')"
-                        accept="image/jpeg,image/png,image/gif,application/pdf" multiple="true" hidden />
-                      <label for="Passport" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать
-                        файлы</label>
-                    </div>
-                  </div>
-                  <div class="mib-uploader__error" *ngIf="isFileInvalid('Passport')">
-                    <small class="p-error">
-                      Необходимо загрузить документ
-                    </small>
-                  </div>
-
-
-                  <div *ngIf="files.length">
-                    <ng-container *ngFor="let file of files">
-                      <div class="addon-button mb-10" *ngIf="file.Identifier === 'Passport'">
-                        <div class="addon-text">
-                          <p>
-                            {{file.FileName}}
-                          </p>
-                        </div>
-                        <div class="mib-uploader">
-                          <div class="mib-upload-warn" (click)="removeFile(file)">
-                            Удалить
-                          </div>
-                        </div>
-                      </div>
-                    </ng-container>
-                  </div>
+                  <mib-file-uploader [title]="'Скан-копия паспорта
+                  владельца ключа подписи'" [type]="'Passport'" (remove)="onRemove($event)" (add)="onAdd($event)">
+                  </mib-file-uploader>
                 </div>
 
               </ng-container>

@@ -46,11 +46,6 @@ export class DemandActionDebitorPageComponent
 
   public isNewDebtor: boolean = false;
 
-  //#region  File Inputs
-  @ViewChild('All', { static: false })
-  private All: ElementRef | undefined;
-  //#endregion
-
   private _saveDraftAction$: NodeJS.Timeout;
   private subscription$: Subscription = new Subscription();
   isView: boolean;
@@ -293,61 +288,15 @@ export class DemandActionDebitorPageComponent
   //#endregion
 
   //#region files
-  removeFile(file: FileModeInterface) {
+
+  onAdd(file) {
+    this.files.push(file);
+  }
+
+  onRemove(file) {
     this.files = this.files.filter((x) => x !== file);
-    this.resetFileInputs();
   }
 
-  private resetFileInputs() {
-    this.All.nativeElement.value = '';
-  }
-  onSelect(event, type: string) {
-    let files: File[] = event.target.files;
-
-    for (let file of files) {
-      let guid = Guid.newGuid();
-
-      this.subscription$.add(
-        this.commonService
-          .getBase64(file)
-          .pipe(
-            switchMap((res) => {
-              return this.fileService.uploadFileChunks(
-                res,
-                file.name,
-                file.size.toString(),
-                guid
-              );
-            })
-          )
-          .subscribe(
-            (res: any) => {
-              switch(res.type) {
-                // загружается
-                case 1:
-                  // const progressResult = Math.round((100 * res.loaded) / res.total)
-                  // this.fileUploadProgress = {
-                  //  progress: progressResult,
-                  //  type
-                  // }
-                  break;
-                // получил результат
-                case 4:
-                   this.files.push({
-                     Code: res.body.Code,
-                     FileName: res.body.FileName,
-                     ID: res.body.ID,
-                     Size: res.body.Size,
-                     Identifier: type,
-                   });
-                  break;
-              }
-            },
-            (err) => console.log(err)
-          )
-      );
-    }
-  }
 
   private resetAlerts() {
     this.alert = false;

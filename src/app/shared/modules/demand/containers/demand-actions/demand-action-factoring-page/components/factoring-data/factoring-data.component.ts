@@ -67,32 +67,6 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
 
   public files: FileModeInterface[] = [];
 
-  //#region  File Inputs
-  @ViewChild('regulationsInput', { static: false })
-  private regulationsInput: ElementRef | undefined;
-
-  @ViewChild('genDirPassportInput', { static: false })
-  private genDirPassportInput: ElementRef | undefined;
-
-  @ViewChild('genDirProtocolInput', { static: false })
-  private genDirProtocolInput: ElementRef | undefined;
-
-  @ViewChild('genDirOrderInput', { static: false })
-  private genDirOrderInput: ElementRef | undefined;
-
-  @ViewChild('balanceInput', { static: false })
-  private balanceInput: ElementRef | undefined;
-
-  @ViewChild('OSVInput', { static: false })
-  private OSVInput: ElementRef | undefined;
-
-  @ViewChild('shareholdersInput', { static: false })
-  private shareholdersInput: ElementRef | undefined;
-
-  @ViewChild('contractDeliveryInput', { static: false })
-  private contractDeliveryInput: ElementRef | undefined;
-  //#endregion
-
   private ref: DynamicDialogRef;
   private currentAddressFormId: any;
   private subscription$: Subscription = new Subscription();
@@ -182,6 +156,15 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   public onBack() {
     this.back.emit();
   }
+
+  onAdd(file) {
+    this.files.push(file);
+  }
+
+  onRemove(file) {
+    this.files = this.files.filter((x) => x !== file);
+  }
+
 
   //#region public page actions
 
@@ -359,70 +342,6 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
         this.updateDisplayAddress(this.currentAddressFormId);
       }
     });
-  }
-
-  onSelect(event, type: string) {
-    let files: File[] = event.target.files;
-
-    for (let file of files) {
-      let guid = Guid.newGuid();
-
-      this.subscription$.add(
-        this.commonService
-          .getBase64(file)
-          .pipe(
-            switchMap((res) => {
-              return this.fileService.uploadFileChunks(
-                res,
-                file.name,
-                file.size.toString(),
-                guid
-              );
-            })
-          )
-          .subscribe(
-            (res: any) => {
-              switch(res.type) {
-                // загружается
-                case 1:
-                  // const progressResult = Math.round((100 * res.loaded) / res.total)
-                  // this.fileUploadProgress = {
-                  //  progress: progressResult,
-                  //  type
-                  // }
-                  break;
-                // получил результат
-                case 4:
-                   this.files.push({
-                     Code: res.body.Code,
-                     FileName: res.body.FileName,
-                     ID: res.body.ID,
-                     Size: res.body.Size,
-                     Identifier: type,
-                   });
-                  break;
-              }
-            },
-            (err) => console.log(err)
-          )
-      );
-    }
-  }
-
-  removeFile(file: FileModeInterface) {
-    this.files = this.files.filter((x) => x !== file);
-    this.resetFileInputs();
-  }
-
-  private resetFileInputs() {
-    this.regulationsInput.nativeElement.value = '';
-    this.genDirPassportInput.nativeElement.value = '';
-    this.genDirProtocolInput.nativeElement.value = '';
-    this.genDirOrderInput.nativeElement.value = '';
-    this.balanceInput.nativeElement.value = '';
-    this.OSVInput.nativeElement.value = '';
-    this.shareholdersInput.nativeElement.value = '';
-    this.contractDeliveryInput.nativeElement.value = '';
   }
 
   onTypeChanged(value) {

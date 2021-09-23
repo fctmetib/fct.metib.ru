@@ -61,11 +61,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     },
   ];
 
-  //#region  File Inputs
-  @ViewChild('Passport', { static: false })
-  private Passport: ElementRef | undefined;
-  //#endregion
-
   private currentUserId: string;
 
   private avatarCode: string;
@@ -214,6 +209,14 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     );
   }
 
+  onAdd(file) {
+    this.files.push(file);
+  }
+
+  onRemove(file) {
+    this.files = this.files.filter((x) => x !== file);
+  }
+
   private convertToFormData(draft?) {
     let data;
     if (draft) {
@@ -242,14 +245,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     }
   }
 
-  removeFile(file: FileModeInterface) {
-    this.files = this.files.filter((x) => x !== file);
-    this.resetFileInputs();
-  }
-
-  private resetFileInputs() {
-    this.Passport.nativeElement.value = '';
-  }
 
   public isFileInvalid(type: string): boolean {
     let isInvalid = false;
@@ -337,66 +332,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     this.currentUserId = currentUser.UserID;
   }
 
-  onSelect(event, type: string) {
-    let files: File[] = event.target.files;
-
-    for (let file of files) {
-      let guid = Guid.newGuid();
-
-      if (type === 'Avatar') {
-        this.subscription$.add(
-          this.fileService.uploadAvatar(file, file.name).subscribe(
-            (res) => {
-              this.avatarCode = res;
-              this.avatarSource = `${environment.apiUrl}avatar/${res}`;
-              // `https://api-factoring.metib.ru/api/avatar/${res}` ;
-            },
-            (err) => console.log(err)
-          )
-        );
-      } else {
-        this.subscription$.add(
-          this.commonService
-            .getBase64(file)
-            .pipe(
-              switchMap((res) => {
-                return this.fileService.uploadFileChunks(
-                  res,
-                  file.name,
-                  file.size.toString(),
-                  guid
-                );
-              })
-            )
-            .subscribe(
-              (res: any) => {
-                switch(res.type) {
-                  // загружается
-                  case 1:
-                    // const progressResult = Math.round((100 * res.loaded) / res.total)
-                    // this.fileUploadProgress = {
-                    //  progress: progressResult,
-                    //  type
-                    // }
-                    break;
-                  // получил результат
-                  case 4:
-                     this.files.push({
-                       Code: res.body.Code,
-                       FileName: res.body.FileName,
-                       ID: res.body.ID,
-                       Size: res.body.Size,
-                       Identifier: type,
-                     });
-                    break;
-                }
-              },
-              (err) => console.log(err)
-            )
-        );
-      }
-    }
-  }
 
   private showSuccess() {
     this.messageService.add({

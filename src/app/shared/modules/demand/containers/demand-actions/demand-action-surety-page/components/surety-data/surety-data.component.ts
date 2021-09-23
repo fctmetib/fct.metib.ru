@@ -67,30 +67,6 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
 
   public files: FileModeInterface[] = [];
 
-  //#region  File Inputs
-  @ViewChild('Regulations', { static: false })
-  private Regulations: ElementRef | undefined;
-
-  @ViewChild('GenDirPassport', { static: false })
-  private GenDirPassport: ElementRef | undefined;
-
-  @ViewChild('GenDirProtocol', { static: false })
-  private GenDirProtocol: ElementRef | undefined;
-
-  @ViewChild('GenDirOrder', { static: false })
-  private GenDirOrder: ElementRef | undefined;
-
-  @ViewChild('Balance', { static: false })
-  private Balance: ElementRef | undefined;
-
-  @ViewChild('OSV', { static: false })
-  private OSV: ElementRef | undefined;
-
-  @ViewChild('Shareholders', { static: false })
-  private Shareholders: ElementRef | undefined;
-  //#endregion
-
-
   private ref: DynamicDialogRef;
   private currentAddressFormId: any;
   private subscription$: Subscription = new Subscription();
@@ -309,6 +285,14 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
     });
   }
 
+  onAdd(file) {
+    this.files.push(file);
+  }
+
+  onRemove(file) {
+    this.files = this.files.filter((x) => x !== file);
+  }
+
   public isFilesInvalid(): boolean {
     if (this.isEdit) {
       return false;
@@ -351,69 +335,6 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
     }
 
     return isInvalid;
-  }
-
-  onSelect(event, type: string) {
-    let files: File[] = event.target.files;
-
-    for (let file of files) {
-      let guid = Guid.newGuid();
-
-      this.subscription$.add(
-        this.commonService
-          .getBase64(file)
-          .pipe(
-            switchMap((res) => {
-              return this.fileService.uploadFileChunks(
-                res,
-                file.name,
-                file.size.toString(),
-                guid
-              );
-            })
-          )
-          .subscribe(
-            (res: any) => {
-              switch(res.type) {
-                // загружается
-                case 1:
-                  // const progressResult = Math.round((100 * res.loaded) / res.total)
-                  // this.fileUploadProgress = {
-                  //  progress: progressResult,
-                  //  type
-                  // }
-                  break;
-                // получил результат
-                case 4:
-                   this.files.push({
-                     Code: res.body.Code,
-                     FileName: res.body.FileName,
-                     ID: res.body.ID,
-                     Size: res.body.Size,
-                     Identifier: type,
-                   });
-                  break;
-              }
-            },
-            (err) => console.log(err)
-          )
-      );
-    }
-  }
-
-  removeFile(file: FileModeInterface) {
-    this.files = this.files.filter((x) => x !== file);
-    this.resetFileInputs();
-  }
-
-  private resetFileInputs() {
-    this.Regulations.nativeElement.value = '';
-    this.GenDirPassport.nativeElement.value = '';
-    this.GenDirProtocol.nativeElement.value = '';
-    this.GenDirOrder.nativeElement.value = '';
-    this.Balance.nativeElement.value = '';
-    this.OSV.nativeElement.value = '';
-    this.Shareholders.nativeElement.value = '';
   }
 
   onTypeChanged(value) {

@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
@@ -14,10 +8,10 @@ import { FileModeInterface } from 'src/app/shared/types/file/file-model.interfac
 
 @Component({
   selector: 'mib-file-uploader',
+  styleUrls: ['./mib-file-uploader.component.scss'],
   template: `
-    <label> Прикрепите необходимые файлы </label>
     <div class="addon-button mb-20">
-      <div class="input-file">
+      <div class="action-box">
         <div class="addon-text">
           <p>{{ title }}</p>
         </div>
@@ -26,7 +20,7 @@ import { FileModeInterface } from 'src/app/shared/types/file/file-model.interfac
             type="file"
             id="{{ type }}"
             accept="image/jpeg,image/png,image/gif,application/pdf"
-            (change)="onSelect($event, type)"
+            (change)="onSelect($event)"
             multiple="true"
             hidden
           />
@@ -37,27 +31,30 @@ import { FileModeInterface } from 'src/app/shared/types/file/file-model.interfac
       </div>
       <div class="progress">
         <p-progressBar
-          style="width: 100%"
+          *ngIf="fileUploadProgress.isProgress == true"
+          styleClass="mib-progress"
           [value]="fileUploadProgress.progress"
           showValue="false"
         ></p-progressBar>
       </div>
     </div>
-    <div class="mib-uploader__error" *ngIf="isFileInvalid()">
+    <div class="mib-uploader__error" *ngIf="required && isFileInvalid()">
       <small class="p-error"> Необходимо загрузить документ </small>
     </div>
 
     <div *ngIf="currentFiles.length">
       <ng-container *ngFor="let file of currentFiles">
         <div class="addon-button mb-10">
-          <div class="addon-text">
-            <p>
-              {{ file.FileName }}
-            </p>
-          </div>
-          <div class="mib-uploader">
-            <div class="mib-upload-warn" (click)="removeFile(file)">
-              Удалить
+          <div class="action-box">
+            <div class="addon-text">
+              <p>
+                {{ file.FileName }}
+              </p>
+            </div>
+            <div class="mib-uploader">
+              <div class="mib-upload-warn" (click)="removeFile(file)">
+                Удалить
+              </div>
             </div>
           </div>
         </div>
@@ -72,6 +69,9 @@ export class MibFileUploaderComponent implements OnInit {
   @Input()
   type: string;
 
+  @Input()
+  required: boolean = true;
+
   @Output()
   remove = new EventEmitter<any>();
 
@@ -82,7 +82,7 @@ export class MibFileUploaderComponent implements OnInit {
 
   public fileUploadProgress = {
     progress: 0,
-    type: null,
+    isProgress: false,
   };
   private subscription$: Subscription = new Subscription();
 
@@ -111,10 +111,11 @@ export class MibFileUploaderComponent implements OnInit {
     this.resetFileInputs();
   }
 
-  public onSelect(event, type: string) {
+  public onSelect(event) {
     let files: File[] = event.target.files;
 
     for (let file of files) {
+      this.resetLoader();
       let guid = Guid.newGuid();
 
       this.subscription$.add(
@@ -141,7 +142,7 @@ export class MibFileUploaderComponent implements OnInit {
                   console.log('Progress Result: ', progressResult);
                   this.fileUploadProgress = {
                     progress: progressResult,
-                    type,
+                    isProgress: true,
                   };
                   console.log('fileUploadProgress: ', this.fileUploadProgress);
                   break;
@@ -152,10 +153,11 @@ export class MibFileUploaderComponent implements OnInit {
                     FileName: res.body.FileName,
                     ID: res.body.ID,
                     Size: res.body.Size,
-                    Identifier: type,
+                    Identifier: this.type,
                   };
                   this.currentFiles.push(file);
                   this.add.emit(file);
+                  this.resetLoader();
                   break;
               }
             },
@@ -163,6 +165,13 @@ export class MibFileUploaderComponent implements OnInit {
           )
       );
     }
+  }
+
+  private resetLoader() {
+    this.fileUploadProgress = {
+      progress: 0,
+      isProgress: false,
+    };
   }
 
   private resetFileInputs() {

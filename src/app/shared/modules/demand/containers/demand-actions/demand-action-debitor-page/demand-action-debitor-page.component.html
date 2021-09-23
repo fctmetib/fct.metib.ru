@@ -6,7 +6,7 @@
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-      (click)="back()" *ngIf="isEdit"></button>
+        (click)="back()" *ngIf="isEdit"></button>
     </div>
   </div>
 
@@ -41,7 +41,7 @@
     <form [formGroup]="formFree" (ngSubmit)="onSubmit()">
       <div class="form-actions" *ngIf="!isEdit">
         <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-        (click)="back()"></button>
+          (click)="back()"></button>
       </div>
       <div class="p-fluid p-formgrid p-grid form">
         <!-- 1 row -->
@@ -71,37 +71,9 @@
         <!-- 2 row -->
         <ng-container *ngIf="!isEdit">
           <div class="p-field p-col-12 p-md-6">
-            <div class="addon-button mb-20">
-              <div class="addon-text">
-                <p>
-                  При необходимости прикрепите файлы:
-                </p>
-              </div>
-              <div class="mib-uploader">
-                <input
-                  type="file"
-                  accept="image/jpeg,image/png,image/gif,application/pdf"
-                  #All
-                  id="All" (change)="onSelect($event, 'All')" multiple="true" hidden />
-                <label for="All" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
-              </div>
-            </div>
-            <div *ngIf="files.length">
-              <ng-container *ngFor="let file of files">
-                <div class="addon-button mb-10" *ngIf="file.Identifier === 'All'">
-                  <div class="addon-text">
-                    <p>
-                      {{file.FileName}}
-                    </p>
-                  </div>
-                  <div class="mib-uploader">
-                    <div class="mib-upload-warn" (click)="removeFile(file)">
-                      Удалить
-                    </div>
-                  </div>
-                </div>
-              </ng-container>
-            </div>
+            <mib-file-uploader [title]="'При необходимости прикрепите файлы:'" [required]="false" [type]="'All'"
+              (remove)="onRemove($event)" (add)="onAdd($event)">
+            </mib-file-uploader>
           </div>
         </ng-container>
         <div class="p-field p-col-12 p-md-12">

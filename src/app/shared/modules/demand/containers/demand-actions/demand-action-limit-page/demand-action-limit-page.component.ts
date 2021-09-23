@@ -34,18 +34,6 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
 
   public files: FileModeInterface[] = [];
 
-
-  //#region  File Inputs
-  @ViewChild('OSV', { static: false })
-  private OSV: ElementRef | undefined;
-
-  @ViewChild('Balance', { static: false })
-  private Balance: ElementRef | undefined;
-
-  @ViewChild('Loans', { static: false })
-  private Loans: ElementRef | undefined;
-  //#endregion
-
   private currentDraftId: number = 0;
 
   public isLoading: boolean = false;
@@ -216,64 +204,14 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
   //#endregion
 
   //#region files
-  removeFile(file: FileModeInterface) {
+  onAdd(file) {
+    this.files.push(file);
+  }
+
+  onRemove(file) {
     this.files = this.files.filter((x) => x !== file);
-    this.resetFileInputs();
   }
 
-  private resetFileInputs() {
-    this.OSV.nativeElement.value = '';
-    this.Balance.nativeElement.value = '';
-    this.Loans.nativeElement.value = '';
-  }
-
-  onSelect(event, type: string) {
-    let files: File[] = event.target.files;
-
-    for (let file of files) {
-      let guid = Guid.newGuid();
-
-      this.subscription$.add(
-        this.commonService
-          .getBase64(file)
-          .pipe(
-            switchMap((res) => {
-              return this.fileService.uploadFileChunks(
-                res,
-                file.name,
-                file.size.toString(),
-                guid
-              );
-            })
-          )
-          .subscribe(
-            (res: any) => {
-              switch(res.type) {
-                // загружается
-                case 1:
-                  // const progressResult = Math.round((100 * res.loaded) / res.total)
-                  // this.fileUploadProgress = {
-                  //  progress: progressResult,
-                  //  type
-                  // }
-                  break;
-                // получил результат
-                case 4:
-                   this.files.push({
-                     Code: res.body.Code,
-                     FileName: res.body.FileName,
-                     ID: res.body.ID,
-                     Size: res.body.Size,
-                     Identifier: type,
-                   });
-                  break;
-              }
-            },
-            (err) => console.log(err)
-          )
-      );
-    }
-  }
   //#endregion
 
   canDeactivate(): boolean | Observable<boolean> {
