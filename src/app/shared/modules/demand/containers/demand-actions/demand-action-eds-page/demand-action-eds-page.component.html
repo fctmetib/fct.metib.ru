@@ -149,10 +149,12 @@
           <div class="p-field p-col-12 p-md-12">
             <label for="organizationLegalAddress">Юридический адрес</label>
             <div class="addon-button p-mb-2" formGroupName="organizationLegalAddress">
-              <input id="organizationLegalAddress" type="text" pInputText placeholder="Юридический адрес" disabled
-                formControlName="displayAddress">
-              <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"
-                (click)="openAddressForm('organizationLegalAddress')"></button>
+              <div class="action-box">
+                <input id="organizationLegalAddress" type="text" pInputText placeholder="Юридический адрес" disabled
+                  formControlName="displayAddress">
+                <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"
+                  (click)="openAddressForm('organizationLegalAddress')"></button>
+              </div>
             </div>
           </div>
           <div class="p-field p-col-12 p-md-12">
@@ -167,10 +169,12 @@
           <div class="p-field p-col-12 p-md-12" *ngIf="!formEDS.value.organizationIsActualAdressEqual">
             <label for="organizationActualAddress">Фактический адрес</label>
             <div class="addon-button p-mb-2" formGroupName="organizationActualAddress">
-              <input id="organizationActualAddress" type="text" pInputText placeholder="Фактический адрес" disabled
-                formControlName="displayAddress">
-              <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"
-                (click)="openAddressForm('organizationActualAddress')"></button>
+              <div class="action-box">
+                <input id="organizationActualAddress" type="text" pInputText placeholder="Фактический адрес" disabled
+                  formControlName="displayAddress">
+                <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"
+                  (click)="openAddressForm('organizationActualAddress')"></button>
+              </div>
             </div>
           </div>
           <div class="p-field p-col-12 p-md-12">
@@ -185,10 +189,12 @@
           <div class="p-field p-col-12 p-md-12" *ngIf="!formEDS.value.organizationIsLegalAdressEqual">
             <label for="organizationPostAddress">Почтовый адрес</label>
             <div class="addon-button p-mb-2" formGroupName="organizationPostAddress">
-              <input id="organizationPostAddress" type="text" pInputText placeholder="Почтовый адрес" disabled
-                formControlName="displayAddress">
-              <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"
-                (click)="openAddressForm('organizationPostAddress')"></button>
+              <div class="action-box">
+                <input id="organizationPostAddress" type="text" pInputText placeholder="Почтовый адрес" disabled
+                  formControlName="displayAddress">
+                <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"
+                  (click)="openAddressForm('organizationPostAddress')"></button>
+              </div>
             </div>
           </div>
           <!-- 5 row -->
