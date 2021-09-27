@@ -22,6 +22,7 @@ import { DemandSelectboxInterface } from '../../types/common/demand-selectbox.in
         <div class="p-field">
           <label for="Country">Страна: </label>
           <p-dropdown
+          styleClass="mib-input"
             id="Country"
             [options]="countryList"
             placeholder="Страна"
@@ -34,6 +35,7 @@ import { DemandSelectboxInterface } from '../../types/common/demand-selectbox.in
           <label for="RegionCode">Код региона: </label>
           <p-dropdown
             id="RegionCode"
+            styleClass="mib-input"
             [options]="regionList"
             placeholder="Код региона"
             (onChange)="onRegionChanged($event.value)"

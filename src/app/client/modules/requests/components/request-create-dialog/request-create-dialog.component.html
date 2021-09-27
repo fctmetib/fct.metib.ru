@@ -31,7 +31,7 @@
     </div>
     <div class="p-field p-col-12 p-md-6">
       <label for="type">Тип заявки:</label>
-      <p-dropdown id="type" [options]="types" formControlName="type" optionLabel="name" optionValue="value">
+      <p-dropdown styleClass="mib-input"  id="type" [options]="types" formControlName="type" optionLabel="name" optionValue="value">
       </p-dropdown>
       <div *ngIf="form.controls['type'].invalid">
         <small *ngIf="form.controls['type'].errors.required" class="p-error">

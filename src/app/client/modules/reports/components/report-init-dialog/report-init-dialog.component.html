@@ -49,7 +49,7 @@
       <ng-container *ngIf="controlConfig.isDebitor">
         <div class="p-field p-col-12 p-md-12">
           <label for="debitor">Дебитор: </label>
-          <p-dropdown id="debitor" [options]="uniqDebtors" placeholder="Выберите Дебитора" formControlName="debitor"
+          <p-dropdown styleClass="mib-input" id="debitor" [options]="uniqDebtors" placeholder="Выберите Дебитора" formControlName="debitor"
             optionLabel="Title" optionValue="ID"></p-dropdown>
         </div>
       </ng-container>
@@ -70,7 +70,7 @@
       <ng-container *ngIf="controlConfig.isStatusRequest">
         <div class="p-field p-col-12 p-md-6">
           <label for="statusRequest">Статус Накладных: </label>
-          <p-dropdown id="statusRequest" [options]="statusShipments" placeholder="Выберите Статус Накладных"
+          <p-dropdown  styleClass="mib-input" id="statusRequest" [options]="statusShipments" placeholder="Выберите Статус Накладных"
             formControlName="statusRequest" optionLabel="Title" optionValue="ID"></p-dropdown>
         </div>
       </ng-container>
@@ -115,7 +115,7 @@
 
       <ng-container *ngIf="controlConfig.isSelectReportDropdown">
         <div class="p-field p-col-12 p-md-6">
-          <p-dropdown id="selectReportDropdown" [options]="createdByList" formControlName="selectReportDropdown"
+          <p-dropdown styleClass="mib-input"  id="selectReportDropdown" [options]="createdByList" formControlName="selectReportDropdown"
             optionLabel="Title" optionValue="ID"></p-dropdown>
         </div>
       </ng-container>

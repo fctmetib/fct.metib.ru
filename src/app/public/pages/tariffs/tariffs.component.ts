@@ -13,6 +13,7 @@ import { OrganizationInterface } from '../../type/organization.interface';
 export class TariffsComponent implements OnInit, OnDestroy {
   private subscription$: Subscription = new Subscription();
 
+  public display: boolean = false;
   public financeForm = this.fb.group({
     organization: ['', Validators.required],
     name: ['', Validators.required],
@@ -37,7 +38,7 @@ export class TariffsComponent implements OnInit, OnDestroy {
       this.organizationService
         .send(organizationInterface)
         .subscribe((response) => {
-          this.closeModal(id);
+          this.display = false;
           this.financeForm.reset();
         })
     );
@@ -52,15 +53,8 @@ export class TariffsComponent implements OnInit, OnDestroy {
   }
 
   public onConsultationHandler() {
-    this.openModal('get-finance');
-  }
-
-  openModal(id: string) {
-    this.mibModalService.open(id);
-  }
-
-  closeModal(id: string) {
-    this.mibModalService.close(id);
+    this.financeForm.reset();
+    this.display = true;
   }
 
   ngOnDestroy() {

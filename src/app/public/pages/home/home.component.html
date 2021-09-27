@@ -9,7 +9,7 @@
           превратить дебиторскую задолженность в деньги!
         </p>
         <div class="actions">
-          <mib-button (click)="openModal('get-finance')" [title]="'Получить финансирование'" [theme]="'regular'">
+          <mib-button (click)="showDialog()" [title]="'Получить финансирование'" [theme]="'regular'">
           </mib-button>
         </div>
       </div>
@@ -72,8 +72,8 @@
       <mib-card-info [icon]="'../../../../assets/icons/svg/icon-agile.svg'"
         [text]="'Гибкость и прозрачность схемы работы по факторингу'"></mib-card-info>
       <mib-card-info [icon]="'../../../../assets/icons/svg/icon-summ.svg'"
-        [text]="'Сумма финансирования устанавливается в зависимости от запроса клиента'"
-        [isLast]="true"></mib-card-info>
+        [text]="'Сумма финансирования устанавливается в зависимости от запроса клиента'" [isLast]="true">
+      </mib-card-info>
     </div>
   </div>
 </section>
@@ -224,7 +224,8 @@
       открытыми лимитами финансирования. Каждый день, по просьбам наших клиентов, список наших партнеров пополняется.
       Вот крупнейшие из них.
     </div>
-    <mib-slider>
+    <mib-slider-partners [partners]="partners"></mib-slider-partners>
+    <!-- <mib-slider>
       <div class="partners-item">
         <img src="../../../../assets/public/partners/old_svg/billa.svg" alt="">
       </div>
@@ -297,17 +298,18 @@
       <div class="partners-item">
         <img src="../../../../assets/public/partners/old_svg/x5.svg" alt="">
       </div>
-    </mib-slider>
+    </mib-slider> -->
   </div>
 </section>
 <section class="mib-section news">
   <div class="mib-container">
     <h2>Пресс-центр</h2>
-    <mib-slider [theme]="'news'">
+    <mib-slider-news [news]="news"></mib-slider-news>
+    <!-- <mib-slider [theme]="'news'">
       <mib-card-news *ngFor="let card of news" [id]=card.ID [title]=card.Title [date]=card.Date [desc]=card.Desc
         (read)="onReadHandler($event)">
       </mib-card-news>
-    </mib-slider>
+    </mib-slider> -->
   </div>
 </section>
 
@@ -331,3 +333,24 @@
     </div>
   </form>
 </mib-modal>
+
+<p-dialog styleClass="mib-modal" header="Получить финансирование" [(visible)]="display" [modal]="true" [style]="{width: '350px'}" [draggable]="false"
+  [resizable]="false">
+  <form class="one-column" [formGroup]="financeForm">
+    <input type="text" formControlName="organization" placeholder="Ваш контрагент">
+    <input type="text" formControlName="name" placeholder="Имя">
+    <input type="phone" prefix="+7" mask="(000) 000-00-00" [showMaskTyped]="true" formControlName="phone"
+      placeholder="Телефон">
+    <input type="email" formControlName="email" placeholder="Электронная почта">
+    <input type="text" formControlName="inn" placeholder="ИНН организации" minlength="10" maxlength="12">
+    <input type="text" formControlName="comment" placeholder="Ваш комментарий">
+    <div class="actions">
+      <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"
+        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid()"></mib-button>
+    </div>
+    <div class="checkbox">
+      <p-checkbox name="checkbox" binary="true"  inputId="checkbox" formControlName="isAccept"></p-checkbox>
+      <label for="checkbox">Пожалуйста подтвердите Ваше согласие на обработку персональных данных</label>
+    </div>
+  </form>
+</p-dialog>

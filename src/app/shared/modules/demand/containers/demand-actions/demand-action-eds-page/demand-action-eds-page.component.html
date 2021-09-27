@@ -50,12 +50,12 @@
           <!-- 1 row -->
           <div class="p-field p-col-12 p-md-3">
             <label for="organizationType">Тип организации</label>
-            <p-dropdown id="organizationType" [options]="organizationTypes" placeholder="Выберите Тип организации"
+            <p-dropdown styleClass="mib-input"  id="organizationType" [options]="organizationTypes" placeholder="Выберите Тип организации"
               formControlName="organizationType" optionLabel="title" optionValue="value"></p-dropdown>
           </div>
           <div class="p-field p-col-12 p-md-9" *ngIf="formEDS.value.organizationType === 1">
             <label for="organizationLegalForm">Правовая форма</label>
-            <p-dropdown id="organizationLegalForm" [options]="ruleTypes" placeholder="Выберите Правовую форму"
+            <p-dropdown styleClass="mib-input"  id="organizationLegalForm" [options]="ruleTypes" placeholder="Выберите Правовую форму"
               formControlName="organizationLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
           </div>
         </div>
@@ -258,7 +258,7 @@
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="ownerGender">Пол</label>
-            <p-dropdown id="ownerGender" [disabled]="true" [options]="genderTypes" formControlName="ownerGender"
+            <p-dropdown styleClass="mib-input"  id="ownerGender" [disabled]="true" [options]="genderTypes" formControlName="ownerGender"
               optionLabel="title" optionValue="value">
             </p-dropdown>
           </div>
@@ -287,7 +287,7 @@
           <!-- 8 row -->
           <div class="p-field p-col-12 p-md-6">
             <label for="ownerWorkPosition">Должность</label>
-            <p-dropdown id="ownerWorkPosition" [options]="postList" placeholder="Выберите Должность"
+            <p-dropdown styleClass="mib-input"  id="ownerWorkPosition" [options]="postList" placeholder="Выберите Должность"
               formControlName="ownerWorkPosition" optionLabel="Title" optionValue="Title"></p-dropdown>
           </div>
           <div class="p-field p-col-12 p-md-6">
@@ -327,7 +327,7 @@
           <!-- 10 row -->
           <div class="p-field p-col-12 p-md-12">
             <label for="ownerGeoPosition">Укажите географическое расположение</label>
-            <p-dropdown id="ownerGeoPosition" [options]="regionList" placeholder="Выберите географическое расположение"
+            <p-dropdown styleClass="mib-input"  id="ownerGeoPosition" [options]="regionList" placeholder="Выберите географическое расположение"
               formControlName="ownerGeoPosition" optionLabel="Title" (onChange)="selectGeoPosition($event)"
               optionValue="Code"></p-dropdown>
             <div>
@@ -339,7 +339,7 @@
 
           <div class="p-field p-col-12 p-md-12" *ngIf="formEDS.value.ownerGeoPosition">
             <label for="ownerIdCenter">Укажите подходящий региональный Центр идентификации</label>
-            <p-dropdown id="ownerIdCenter" (onChange)="setIDCenter($event)" [options]="idCenterList"
+            <p-dropdown styleClass="mib-input"  id="ownerIdCenter" (onChange)="setIDCenter($event)" [options]="idCenterList"
               placeholder="Выберите географическое расположение" formControlName="ownerIdCenter" optionLabel="name"
               optionValue="guid"></p-dropdown>
             <div>
@@ -416,7 +416,7 @@
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="passportNationality">Гражданство</label>
-            <p-dropdown id="passportNationality" [options]="countryList" placeholder="Выберите гражданство"
+            <p-dropdown styleClass="mib-input"  id="passportNationality" [options]="countryList" placeholder="Выберите гражданство"
               formControlName="passportNationality" optionLabel="Title" optionValue="Identifier"></p-dropdown>
             <div *ngIf="formEDS.controls['passportNationality'].invalid">
               <small *ngIf="formEDS.controls['passportNationality'].errors.required" class="p-error">

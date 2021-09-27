@@ -47,7 +47,7 @@
         <!-- 1 row -->
         <div class="p-field p-col-12 p-md-12 p-lg-12">
           <label for="Id">Дебитор</label>
-          <p-dropdown [options]="debtors" formControlName="Id" id="Id" [filter]="true" filterBy="Title"
+          <p-dropdown styleClass="mib-input"  [options]="debtors" formControlName="Id" id="Id" [filter]="true" filterBy="Title"
             optionLabel="Title" optionValue="ID" editable="true" (change)="debtorChange()" (onChange)="debtorChange()">
           </p-dropdown>
           <small id="debtor-help">Выберите дебитора из списка или добавьте своего.</small>

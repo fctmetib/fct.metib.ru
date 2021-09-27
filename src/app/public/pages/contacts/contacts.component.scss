@@ -17,6 +17,19 @@ h3 {
   }
 }
 
+
+.section-information-double {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  .section-information {
+    border-bottom: unset;
+  }
+}
+
 .persons {
   display: flex;
   justify-content: center;

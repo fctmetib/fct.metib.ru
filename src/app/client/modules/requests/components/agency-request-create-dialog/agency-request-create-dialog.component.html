@@ -6,7 +6,7 @@
         <div class="p-fluid p-formgrid p-grid form">
           <div class="p-field p-col-12 p-md-6">
             <label for="deliveryID">Договор поставки:</label>
-            <p-dropdown id="delivery" [options]="deliveries" placeholder="Выберите договор поставки" optionLabel="Title"
+            <p-dropdown styleClass="mib-input"  id="delivery" [options]="deliveries" placeholder="Выберите договор поставки" optionLabel="Title"
               (onChange)="deliveryChanged(i)" valueLabel="ID" [formControlName]="i"></p-dropdown>
           </div>
           <div class="p-field p-col-12 p-md-6">

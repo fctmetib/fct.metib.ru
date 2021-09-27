@@ -301,3 +301,25 @@ p-calendar.ng-invalid {
     width: 100%;
   }
 }
+
+.mib-input.p-dropdown {
+  border: unset;
+
+  .p-dropdown-label {
+    border-radius: 10px;
+  }
+
+  .p-dropdown-trigger {
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+    border-radius: 10px;
+  }
+  &.p-focus {
+    outline: unset !important;
+    box-shadow: unset !important;
+    border-color: unset !important;
+  }
+  &:focus-visible {
+    outline: unset;
+  }
+}

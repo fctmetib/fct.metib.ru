@@ -14,8 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  private subscription$: Subscription = new Subscription();
-
+  public display: boolean = false;
   public financeForm = this.fb.group({
     organization: ['', Validators.required],
     name: ['', Validators.required],
@@ -27,6 +26,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   });
 
   public news: NewsInterface[];
+  public partners: string[] = [];
+  private subscription$: Subscription = new Subscription();
 
   constructor(
     private mibModalService: MibModalService,
@@ -38,6 +39,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.fillNews();
+    this.fillPartners();
+  }
+
+  showDialog() {
+    this.financeForm.reset();
+    this.display = true;
   }
 
   public onReadHandler(id: string) {
@@ -58,18 +65,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.organizationService
         .send(organizationInterface)
         .subscribe((response) => {
-          this.closeModal(id);
+          this.display = false;
           this.financeForm.reset();
         })
     );
-  }
-
-  openModal(id: string) {
-    this.mibModalService.open(id);
-  }
-
-  closeModal(id: string) {
-    this.mibModalService.close(id);
   }
 
   fillNews() {
@@ -78,6 +77,35 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.news = responseNews;
       })
     );
+  }
+
+  private fillPartners() {
+    this.partners = [
+      '../../../../assets/public/partners/old_svg/billa.svg',
+      '../../../../assets/public/partners/old_svg/diksi.svg',
+      '../../../../assets/public/partners/old_svg/familia.svg',
+      '../../../../assets/public/partners/old_svg/home.svg',
+      '../../../../assets/public/partners/old_svg/inmarko.svg',
+      '../../../../assets/public/partners/old_svg/instrument.svg',
+      '../../../../assets/public/partners/old_svg/katren.svg',
+      '../../../../assets/public/partners/old_svg/lamoda.svg',
+      '../../../../assets/public/partners/old_svg/lenta.svg',
+      '../../../../assets/public/partners/old_svg/leroy.svg',
+      '../../../../assets/public/partners/old_svg/megaphone.svg',
+      '../../../../assets/public/partners/old_svg/metro.svg',
+      '../../../../assets/public/partners/old_svg/mvideo.svg',
+      '../../../../assets/public/partners/old_svg/myasnov.svg',
+      '../../../../assets/public/partners/old_svg/nestle.svg',
+      '../../../../assets/public/partners/old_svg/obi.svg',
+      '../../../../assets/public/partners/old_svg/ok.svg',
+      '../../../../assets/public/partners/old_svg/petr.svg',
+      '../../../../assets/public/partners/old_svg/post.svg',
+      '../../../../assets/public/partners/old_svg/potek.svg',
+      '../../../../assets/public/partners/old_svg/stroy.svg',
+      '../../../../assets/public/partners/old_svg/uni.svg',
+      '../../../../assets/public/partners/old_svg/vimpel.svg',
+      '../../../../assets/public/partners/old_svg/x5.svg',
+    ];
   }
 
   ngOnDestroy() {

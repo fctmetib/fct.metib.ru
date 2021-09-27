@@ -1,3 +1,4 @@
+import { MibSliderPartnersComponent } from './shared/mib-slider-partners/mib-slider-partners.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -23,10 +24,15 @@ import { MibSectionBodyComponent } from './shared/mib-sections/mib-section-body/
 import { MibCardTariffComponent } from './shared/cards/card-tariff/mib-card-tariff.component';
 import { MibCardPersonComponent } from './shared/cards/card-person/mib-card-person.component';
 import { OrganizationService } from './service/organization.service';
-import { NewsService } from './service/news.service'
+import { NewsService } from './service/news.service';
 import { MibSectionHeaderNewsComponent } from './shared/mib-sections/mib-section-header-news/mib-section-header-news.component';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
-import {InputMaskModule} from 'primeng/inputmask';
+import { InputMaskModule } from 'primeng/inputmask';
+import { DialogModule } from 'primeng/dialog';
+import { CheckboxModule } from 'primeng/checkbox';
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
+import { MibSliderNewsComponent } from './shared/mib-slider-news/mib-slider-news.component';
 
 const routes = [
   {
@@ -43,7 +49,7 @@ const routes = [
       },
       {
         path: 'clients',
-        component: ClientsComponent
+        component: ClientsComponent,
       },
       {
         path: 'contacts',
@@ -51,7 +57,7 @@ const routes = [
       },
       {
         path: 'news/:id',
-        component: NewsComponent
+        component: NewsComponent,
       },
       {
         path: 'ui-kit-test',
@@ -76,7 +82,11 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     InputMaskModule,
     NgxMaskModule.forRoot(maskConfigFunction),
     MibModalModule,
-    MibTabModule
+    DialogModule,
+    MibTabModule,
+    CarouselModule,
+    CheckboxModule,
+    ButtonModule,
   ],
   exports: [RouterModule],
   declarations: [
@@ -99,15 +109,14 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     MibMenuComponent,
     MibFooterComponent,
     MibButtonComponent,
+    MibSliderPartnersComponent,
+    MibSliderNewsComponent,
     // CARDS
     MibCardTariffComponent,
     MibCardPersonComponent,
     MibCardNewsComponent,
     MibCardInfoComponent,
   ],
-  providers: [
-    OrganizationService,
-    NewsService
-  ],
+  providers: [OrganizationService, NewsService],
 })
 export class PublicModule {}

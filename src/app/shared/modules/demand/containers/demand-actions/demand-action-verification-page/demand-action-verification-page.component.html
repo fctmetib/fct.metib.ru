@@ -50,7 +50,7 @@
           <!-- 1 row -->
           <div class="p-field p-col-12 p-lg-6">
             <label for="DebtorID">Дебитор</label>
-            <p-dropdown [options]="debtorList" formControlName="DebtorID" placeholder="Дебитор" optionLabel="Title"
+            <p-dropdown styleClass="mib-input"  [options]="debtorList" formControlName="DebtorID" placeholder="Дебитор" optionLabel="Title"
               optionValue="ID">
             </p-dropdown>
 
@@ -63,7 +63,7 @@
 
           <div class="p-field p-col-12 p-lg-6">
             <label for="VerificationType">Тип верификации</label>
-            <p-dropdown [options]="verificationTypes" formControlName="VerificationType"
+            <p-dropdown styleClass="mib-input"  [options]="verificationTypes" formControlName="VerificationType"
               (onChange)="changeVerificationType($event)" placeholder="Тип верификации" optionValue="value"
               optionLabel="name">
             </p-dropdown>

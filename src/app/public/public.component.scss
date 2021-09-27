@@ -306,5 +306,29 @@
       text-align: center;
     }
   }
+
+  // COMPONENTS
+.p-carousel .p-carousel-indicators {
+  display: none !important;
+}
+.p-carousel-item {
+  display: flex;
+  justify-content: center;
+}
+
+  .mib-modal.p-dialog {
+    border-radius: 10px;
+    .p-dialog-header  {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .p-dialog-content {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    .p-dialog-header-close-icon {
+      color:  #0C83F1;
+    }
+  }
 }
 

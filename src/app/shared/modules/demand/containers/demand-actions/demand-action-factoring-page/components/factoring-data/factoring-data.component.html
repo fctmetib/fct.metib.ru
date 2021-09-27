@@ -31,13 +31,13 @@
     </div>
     <div class="p-field p-col-12 p-md-4 p-lg-3">
       <label for="organizationType">Тип организации</label>
-      <p-dropdown id="organizationType" [options]="organizationTypes" placeholder="Выберите Тип организации"
+      <p-dropdown styleClass="mib-input"  id="organizationType" [options]="organizationTypes" placeholder="Выберите Тип организации"
         (onChange)="onTypeChanged($event.value)" formControlName="organizationType" optionLabel="title"
         optionValue="value"></p-dropdown>
     </div>
     <div class="p-field p-col-12 p-md-4 p-lg-3" *ngIf="formFactoring.get('organizationType').value === 1">
       <label for="organizationLegalForm">Правовая форма</label>
-      <p-dropdown id="organizationLegalForm" [options]="ruleTypes" placeholder="Выберите Правовую форму"
+      <p-dropdown styleClass="mib-input"  id="organizationLegalForm" [options]="ruleTypes" placeholder="Выберите Правовую форму"
         formControlName="organizationLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
       <div *ngIf="formFactoring.controls['organizationLegalForm'].invalid">
         <small *ngIf="formFactoring.controls['organizationLegalForm'].errors.required" class="p-error">
@@ -348,7 +348,7 @@
               </div>
               <div class="p-field p-col-12 p-md-6">
                 <label for="factoringPlacesLegalForm">Форма владения</label>
-                <p-dropdown id="factoringPlacesLegalForm" [options]="typesOfOwner" placeholder="Выберите Форму владения"
+                <p-dropdown styleClass="mib-input"  id="factoringPlacesLegalForm" [options]="typesOfOwner" placeholder="Выберите Форму владения"
                   formControlName="factoringPlacesLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
               </div>
             </div>

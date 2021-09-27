@@ -7,7 +7,7 @@
         <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="updateData()"></button>
       </div>
       <div>
-        <p-dropdown [options]="debtorsList" placeholder="Выберите дебитора" optionLabel="Title" optionValue="ID"
+        <p-dropdown styleClass="mib-input"  [options]="debtorsList" placeholder="Выберите дебитора" optionLabel="Title" optionValue="ID"
           [ngModel]="selectedDebtorDisplay" (ngModelChange)="onDebtorChange($event)" class="fix-width--200"></p-dropdown>
       </div>
     </ng-template>

@@ -81,7 +81,7 @@
           </div>
           <div class="p-field p-col-12 p-md-6 p-lg-4">
             <label for="isMale">Пол</label>
-            <p-dropdown id="isMale" [options]="genderTypes" formControlName="isMale" optionLabel="title"
+            <p-dropdown styleClass="mib-input"  id="isMale" [options]="genderTypes" formControlName="isMale" optionLabel="title"
               optionValue="value">
             </p-dropdown>
             <div *ngIf="formEdit.controls['isMale'].invalid">
