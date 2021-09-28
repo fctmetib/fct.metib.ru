@@ -39,6 +39,7 @@
 
       &__header {
         padding-top: 140px;
+
         &.lg {
           height: 850px;
         }
@@ -94,6 +95,7 @@
         .row {
           .col {
             text-align: center;
+
             img {
               &.promo-img {
                 width: 100%;
@@ -139,6 +141,7 @@
 
       &__header {
         max-width: 1400px;
+
         &.lg {
           height: 492px;
         }
@@ -187,9 +190,7 @@
           justify-content: space-between;
           gap: 28px;
 
-          .col {
-
-          }
+          .col {}
         }
       }
     }
@@ -220,7 +221,7 @@
     @media (max-width: 1300px) {
       padding-left: 15px;
       padding-right: 15px;
-     // padding-bottom: 38px;
+      // padding-bottom: 38px;
     }
 
   }
@@ -308,27 +309,42 @@
   }
 
   // COMPONENTS
-.p-carousel .p-carousel-indicators {
-  display: none !important;
-}
-.p-carousel-item {
-  display: flex;
-  justify-content: center;
-}
+  .p-carousel .p-carousel-indicators {
+    display: none !important;
+  }
+
+  .p-carousel-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   .mib-modal.p-dialog {
     border-radius: 10px;
-    .p-dialog-header  {
+
+    .p-dialog-header {
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
     }
+
     .p-dialog-content {
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
     }
+
     .p-dialog-header-close-icon {
-      color:  #0C83F1;
+      color: #0C83F1;
     }
   }
-}
 
+  .p-carousel .p-carousel-content .p-carousel-prev, .p-carousel .p-carousel-content .p-carousel-next {
+    color: #C7C7C7;
+    border: 1px #C7C7C7 solid;
+   }
+
+   .p-carousel .p-carousel-content .p-carousel-prev:enabled:hover, .p-carousel .p-carousel-content .p-carousel-next:enabled:hover {
+    color: white;
+    border-color: #0C83F1;
+    background: #0C83F1;
+}
+}

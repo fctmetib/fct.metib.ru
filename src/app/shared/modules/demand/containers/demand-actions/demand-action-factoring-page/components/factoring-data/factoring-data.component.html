@@ -31,14 +31,15 @@
     </div>
     <div class="p-field p-col-12 p-md-4 p-lg-3">
       <label for="organizationType">Тип организации</label>
-      <p-dropdown styleClass="mib-input"  id="organizationType" [options]="organizationTypes" placeholder="Выберите Тип организации"
-        (onChange)="onTypeChanged($event.value)" formControlName="organizationType" optionLabel="title"
-        optionValue="value"></p-dropdown>
+      <p-dropdown styleClass="mib-input" id="organizationType" [options]="organizationTypes"
+        placeholder="Выберите Тип организации" (onChange)="onTypeChanged($event.value)"
+        formControlName="organizationType" optionLabel="title" optionValue="value"></p-dropdown>
     </div>
     <div class="p-field p-col-12 p-md-4 p-lg-3" *ngIf="formFactoring.get('organizationType').value === 1">
       <label for="organizationLegalForm">Правовая форма</label>
-      <p-dropdown styleClass="mib-input"  id="organizationLegalForm" [options]="ruleTypes" placeholder="Выберите Правовую форму"
-        formControlName="organizationLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
+      <p-dropdown styleClass="mib-input" id="organizationLegalForm" [options]="ruleTypes"
+        placeholder="Выберите Правовую форму" formControlName="organizationLegalForm" optionLabel="title"
+        optionValue="value"></p-dropdown>
       <div *ngIf="formFactoring.controls['organizationLegalForm'].invalid">
         <small *ngIf="formFactoring.controls['organizationLegalForm'].errors.required" class="p-error">
           Поле должно быть заполнено.
@@ -348,8 +349,9 @@
               </div>
               <div class="p-field p-col-12 p-md-6">
                 <label for="factoringPlacesLegalForm">Форма владения</label>
-                <p-dropdown styleClass="mib-input"  id="factoringPlacesLegalForm" [options]="typesOfOwner" placeholder="Выберите Форму владения"
-                  formControlName="factoringPlacesLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
+                <p-dropdown styleClass="mib-input" id="factoringPlacesLegalForm" [options]="typesOfOwner"
+                  placeholder="Выберите Форму владения" formControlName="factoringPlacesLegalForm" optionLabel="title"
+                  optionValue="value"></p-dropdown>
               </div>
             </div>
           </div>
@@ -431,8 +433,11 @@
               </div>
               <div class="p-field p-col-12 p-md-4 p-lg-3">
                 <label for="factoringPlacesContractSum">Сумма договора</label>
-                <input id="factoringPlacesContractSum" type="text" pInputText placeholder="Сумма договора"
-                  formControlName="factoringPlacesContractSum">
+                <p-inputNumber placeholder="Сумма договора" id="factoringPlacesContractSum"
+                  formControlName="factoringPlacesContractSum" inputId="factoringPlacesContractSum" mode="currency"
+                  currency="RUB" locale="ru-RU">
+                </p-inputNumber>
+
                 <div
                   *ngIf="formFactoring.get('factoringCredits')['controls'][i].get('factoringPlacesContractSum').invalid">
                   <small
@@ -444,8 +449,10 @@
               </div>
               <div class="p-field p-col-12 p-md-6 p-lg-6">
                 <label for="factoringPlacesBalanceReport">Остаток на дату сдачи отчетности</label>
-                <input id="factoringPlacesBalanceReport" type="text" pInputText
-                  placeholder="Остаток на дату сдачи отчетности" formControlName="factoringPlacesBalanceReport">
+                <p-inputNumber placeholder="Остаток на дату сдачи отчетности" id="factoringPlacesBalanceReport"
+                  formControlName="factoringPlacesBalanceReport" inputId="factoringPlacesBalanceReport" mode="currency"
+                  currency="RUB" locale="ru-RU">
+                </p-inputNumber>
                 <div
                   *ngIf="formFactoring.get('factoringCredits')['controls'][i].get('factoringPlacesBalanceReport').invalid">
                   <small
@@ -457,8 +464,10 @@
               </div>
               <div class="p-field p-col-12 p-md-6 p-lg-6">
                 <label for="factoringPlacesBalanceCurrent">Остаток на текущую дату</label>
-                <input id="factoringPlacesBalanceCurrent" type="text" pInputText placeholder="Остаток на текущую дату"
-                  formControlName="factoringPlacesBalanceCurrent">
+                <p-inputNumber placeholder="Остаток на текущую дату" id="factoringPlacesBalanceCurrent"
+                  formControlName="factoringPlacesBalanceCurrent" inputId="factoringPlacesBalanceCurrent"
+                  mode="currency" currency="RUB" locale="ru-RU">
+                </p-inputNumber>
                 <div
                   *ngIf="formFactoring.get('factoringCredits')['controls'][i].get('factoringPlacesBalanceCurrent').invalid">
                   <small

@@ -50,13 +50,15 @@
           <!-- 1 row -->
           <div class="p-field p-col-12 p-md-3">
             <label for="organizationType">Тип организации</label>
-            <p-dropdown styleClass="mib-input"  id="organizationType" [options]="organizationTypes" placeholder="Выберите Тип организации"
-              formControlName="organizationType" optionLabel="title" optionValue="value"></p-dropdown>
+            <p-dropdown styleClass="mib-input" id="organizationType" [options]="organizationTypes"
+              placeholder="Выберите Тип организации" formControlName="organizationType" optionLabel="title"
+              optionValue="value"></p-dropdown>
           </div>
           <div class="p-field p-col-12 p-md-9" *ngIf="formEDS.value.organizationType === 1">
             <label for="organizationLegalForm">Правовая форма</label>
-            <p-dropdown styleClass="mib-input"  id="organizationLegalForm" [options]="ruleTypes" placeholder="Выберите Правовую форму"
-              formControlName="organizationLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
+            <p-dropdown styleClass="mib-input" id="organizationLegalForm" [options]="ruleTypes"
+              placeholder="Выберите Правовую форму" formControlName="organizationLegalForm" optionLabel="title"
+              optionValue="value"></p-dropdown>
           </div>
         </div>
         <div class="p-fluid p-formgrid p-grid form">
@@ -86,7 +88,8 @@
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="organizationKPP">КПП</label>
-            <input id="organizationKPP" type="text" pInputText placeholder="КПП" formControlName="organizationKPP">
+            <p-inputMask id="organizationKPP" mask="999999999" formControlName="organizationKPP" placeholder="КПП">
+            </p-inputMask>
             <div *ngIf="formEDS.controls['organizationKPP'].invalid">
               <small *ngIf="formEDS.controls['organizationKPP'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -95,7 +98,8 @@
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="organizationOGRN">ОГРН</label>
-            <input id="organizationOGRN" type="text" pInputText placeholder="ОГРН" formControlName="organizationOGRN">
+            <p-inputMask id="organizationOGRN" mask="9999999999999" formControlName="organizationOGRN"
+              placeholder="ОГРН"></p-inputMask>
             <div *ngIf="formEDS.controls['organizationOGRN'].invalid">
               <small *ngIf="formEDS.controls['organizationOGRN'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -104,10 +108,14 @@
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="organizationOKPO">ОКПО</label>
-            <input id="organizationOKPO" type="text" pInputText placeholder="ОКПО" formControlName="organizationOKPO">
+            <input id="organizationOKPO" type="text" pInputText placeholder="ОКПО" minlength="8" maxlength="10"
+              formControlName="organizationOKPO">
             <div *ngIf="formEDS.controls['organizationOKPO'].invalid">
               <small *ngIf="formEDS.controls['organizationOKPO'].errors.required" class="p-error">
                 Поле должно быть заполнено.
+              </small>
+              <small *ngIf="formEDS.controls['organizationOKPO'].errors.minlength" class="p-error">
+                Введите корректный ОКПО (8 или 10 цифр).
               </small>
             </div>
           </div>
@@ -258,15 +266,16 @@
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="ownerGender">Пол</label>
-            <p-dropdown styleClass="mib-input"  id="ownerGender" [disabled]="true" [options]="genderTypes" formControlName="ownerGender"
-              optionLabel="title" optionValue="value">
+            <p-dropdown styleClass="mib-input" id="ownerGender" [disabled]="true" [options]="genderTypes"
+              formControlName="ownerGender" optionLabel="title" optionValue="value">
             </p-dropdown>
           </div>
 
           <!-- 7 row -->
           <div class="p-field p-col-12 p-md-3">
             <label for="ownerSNILS">СНИЛС</label>
-            <input id="ownerSNILS" type="text" pInputText placeholder="СНИЛС" formControlName="ownerSNILS">
+            <p-inputMask id="ownerSNILS" mask="999-999-999 99" formControlName="ownerSNILS" placeholder="СНИЛС">
+            </p-inputMask>
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="ownerDateBurn">Дата рождения</label>
@@ -287,8 +296,9 @@
           <!-- 8 row -->
           <div class="p-field p-col-12 p-md-6">
             <label for="ownerWorkPosition">Должность</label>
-            <p-dropdown styleClass="mib-input"  id="ownerWorkPosition" [options]="postList" placeholder="Выберите Должность"
-              formControlName="ownerWorkPosition" optionLabel="Title" optionValue="Title"></p-dropdown>
+            <p-dropdown styleClass="mib-input" id="ownerWorkPosition" [options]="postList"
+              placeholder="Выберите Должность" formControlName="ownerWorkPosition" optionLabel="Title"
+              optionValue="Title"></p-dropdown>
           </div>
           <div class="p-field p-col-12 p-md-6">
             <label for="ownerEmail">E-mail</label>
@@ -327,9 +337,9 @@
           <!-- 10 row -->
           <div class="p-field p-col-12 p-md-12">
             <label for="ownerGeoPosition">Укажите географическое расположение</label>
-            <p-dropdown styleClass="mib-input"  id="ownerGeoPosition" [options]="regionList" placeholder="Выберите географическое расположение"
-              formControlName="ownerGeoPosition" optionLabel="Title" (onChange)="selectGeoPosition($event)"
-              optionValue="Code"></p-dropdown>
+            <p-dropdown styleClass="mib-input" id="ownerGeoPosition" [options]="regionList"
+              placeholder="Выберите географическое расположение" formControlName="ownerGeoPosition" optionLabel="Title"
+              (onChange)="selectGeoPosition($event)" optionValue="Code"></p-dropdown>
             <div>
               <small class="p-error">
                 Укажите Ваше географическое расположение для выбора ближайших Центров идентификации
@@ -339,9 +349,9 @@
 
           <div class="p-field p-col-12 p-md-12" *ngIf="formEDS.value.ownerGeoPosition">
             <label for="ownerIdCenter">Укажите подходящий региональный Центр идентификации</label>
-            <p-dropdown styleClass="mib-input"  id="ownerIdCenter" (onChange)="setIDCenter($event)" [options]="idCenterList"
-              placeholder="Выберите географическое расположение" formControlName="ownerIdCenter" optionLabel="name"
-              optionValue="guid"></p-dropdown>
+            <p-dropdown styleClass="mib-input" id="ownerIdCenter" (onChange)="setIDCenter($event)"
+              [options]="idCenterList" placeholder="Выберите географическое расположение"
+              formControlName="ownerIdCenter" optionLabel="name" optionValue="guid"></p-dropdown>
             <div>
               <small class="p-error">
                 Укажите подходящий региональный Центр идентификации
@@ -378,8 +388,8 @@
           <!-- 11 row -->
           <div class="p-field p-col-12 p-md-3">
             <label for="passportNumber">Серия и номер паспорт</label>
-            <input id="passportNumber" type="text" pInputText placeholder="Серия и номер паспорт"
-              formControlName="passportNumber">
+            <p-inputMask id="passportNumber" type="text" placeholder="Серия и номер паспорта"
+              formControlName="passportNumber" mask="99 99 999999"></p-inputMask>
             <div *ngIf="formEDS.controls['passportNumber'].invalid">
               <small *ngIf="formEDS.controls['passportNumber'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -406,8 +416,8 @@
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="passportCode">Код подразделения</label>
-            <input id="passportCode" type="text" pInputText placeholder="Кем подразделения"
-              formControlName="passportCode">
+            <p-inputMask id="passportCode" type="text" placeholder="Код подразделения" formControlName="passportCode"
+              mask="999-999"></p-inputMask>
             <div *ngIf="formEDS.controls['passportCode'].invalid">
               <small *ngIf="formEDS.controls['passportCode'].errors.required" class="p-error">
                 Поле должно быть заполнено.
@@ -416,8 +426,9 @@
           </div>
           <div class="p-field p-col-12 p-md-3">
             <label for="passportNationality">Гражданство</label>
-            <p-dropdown styleClass="mib-input"  id="passportNationality" [options]="countryList" placeholder="Выберите гражданство"
-              formControlName="passportNationality" optionLabel="Title" optionValue="Identifier"></p-dropdown>
+            <p-dropdown styleClass="mib-input" id="passportNationality" [options]="countryList"
+              placeholder="Выберите гражданство" formControlName="passportNationality" optionLabel="Title"
+              optionValue="Identifier"></p-dropdown>
             <div *ngIf="formEDS.controls['passportNationality'].invalid">
               <small *ngIf="formEDS.controls['passportNationality'].errors.required" class="p-error">
                 Поле должно быть заполнено.

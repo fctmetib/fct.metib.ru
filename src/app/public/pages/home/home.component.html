@@ -224,7 +224,9 @@
       открытыми лимитами финансирования. Каждый день, по просьбам наших клиентов, список наших партнеров пополняется.
       Вот крупнейшие из них.
     </div>
-    <mib-slider-partners [partners]="partners"></mib-slider-partners>
+    <div class="mib-slider-wrapper__partnerts">
+      <mib-slider-partners [partners]="partners"></mib-slider-partners>
+    </div>
     <!-- <mib-slider>
       <div class="partners-item">
         <img src="../../../../assets/public/partners/old_svg/billa.svg" alt="">
@@ -334,8 +336,8 @@
   </form>
 </mib-modal>
 
-<p-dialog styleClass="mib-modal" header="Получить финансирование" [(visible)]="display" [modal]="true" [style]="{width: '350px'}" [draggable]="false"
-  [resizable]="false">
+<p-dialog styleClass="mib-modal" header="Получить финансирование" [(visible)]="display" [modal]="true"
+  [style]="{width: '350px'}" [draggable]="false" [resizable]="false">
   <form class="one-column" [formGroup]="financeForm">
     <input type="text" formControlName="organization" placeholder="Ваш контрагент">
     <input type="text" formControlName="name" placeholder="Имя">
@@ -349,7 +351,7 @@
         (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid()"></mib-button>
     </div>
     <div class="checkbox">
-      <p-checkbox name="checkbox" binary="true"  inputId="checkbox" formControlName="isAccept"></p-checkbox>
+      <p-checkbox name="checkbox" binary="true" inputId="checkbox" formControlName="isAccept"></p-checkbox>
       <label for="checkbox">Пожалуйста подтвердите Ваше согласие на обработку персональных данных</label>
     </div>
   </form>

@@ -207,6 +207,7 @@
   @media (max-width: 1300px) {
     height: 100%;
     padding-bottom: 38px;
+
     .mib-container {
       h2 {
         padding-top: 40px;
@@ -245,10 +246,12 @@
 
 .partners {
   background: white;
-  height: 407px;
+  // height: 407px;
   border-radius: 20px;
+
   .partners-item {
     max-width: 150px;
+
     img {
       max-width: 150px;
     }
@@ -265,15 +268,21 @@
   }
 
 
+  @media (min-width: 1300px) {
+    padding-bottom: 50px;
+  }
+
   @media (max-width: 1300px) {
     height: unset;
     padding-bottom: 0px;
+
     .mib-container {
       h2 {
         padding-top: 40px;
         padding-bottom: 20px;
       }
     }
+
     .desc-partners {
       margin-bottom: 20px;
     }
@@ -291,11 +300,12 @@
   }
 
   h2 {
-  //  margin-bottom: 3.5rem;
+    //  margin-bottom: 3.5rem;
   }
 
   @media (max-width: 1300px) {
     height: unset;
+
     .mib-container {
       h2 {
         padding-top: 40px;
