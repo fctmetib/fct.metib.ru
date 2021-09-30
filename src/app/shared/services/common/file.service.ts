@@ -60,9 +60,9 @@ export class FileService {
     return this.http.get<any>(url);
   }
 
-  getFile(requestID, documentID): Observable<string> {
+  getFile(requestID, documentID): Observable<any> {
     let url = `${environment.apiUrl}/request/${requestID}/documents/${documentID}/file `;
-    return this.http.get<string>(url);
+    return this.http.get<any>(url);
   }
 
   getAvatar(code: string): Observable<any> {

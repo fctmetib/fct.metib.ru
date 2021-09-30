@@ -45,6 +45,7 @@ import { AgencyRequestCreateDialogComponent } from './components/agency-request-
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RequestStoreService } from '../../../shared/services/store/request.store.service';
+import { DocumentViewDialogComponent } from '../../shared/components/dialogs/document-view-dialog/document-view-dialog.component';
 
 @NgModule({
   imports: [
@@ -85,6 +86,7 @@ import { RequestStoreService } from '../../../shared/services/store/request.stor
     //Components
     DocumentsViewComponent,
     ShipmentsViewComponent,
+    DocumentViewDialogComponent,
     // Containers
     RequestsPageComponent,
     RequestCreateDialogComponent,

@@ -38,8 +38,6 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.preloader = true;
-    //TODO: rework it
-    // обновляет страницу, для изоляции стилей
     if (this.localStorageService.getValue('fromPublic')) {
       this.localStorageService.clearValue('fromPublic');
       let currentUrl = this.router.url;
@@ -51,7 +49,7 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
     }
 
     const isUserLinked = this.authService.isUserLinked();
-    console.log('Not verify', isUserLinked)
+
     if (isUserLinked) {
       this.subscription$.add(
         this.organizationService
@@ -66,40 +64,12 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
       {
         label: 'Запросы',
         routerLink: 'demand',
+        styleClass: 'p-menuitem-link-active',
         routerLinkActiveOptions: { exact: true },
       },
-      // {
-      //   label: 'Кабинет',
-      //   disabled: true,
-      // },
-      // {
-      //   label: 'Заявки',
-      //   disabled: true,
-      // },
-      // {
-      //   label: 'Свободная задолженность',
-      //   disabled: true,
-      // },
-      // {
-      //   label: 'Договоры',
-      //   disabled: true,
-      // },
-      // {
-      //   label: 'Платежи',
-      //   disabled: true,
-      // },
-      // {
-      //   label: 'Просрочки Покупателя',
-      //   disabled: true,
-      // },
-      // {
-      //   label: 'Документы',
-      //   disabled: true,
-      // },
     ];
     this.setTimeout();
     this.userInactive.subscribe(() => {
-      console.log('user has been inactive for 15s');
       this.openInactive();
     });
   }

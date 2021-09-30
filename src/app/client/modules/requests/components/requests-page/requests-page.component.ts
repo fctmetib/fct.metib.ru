@@ -18,6 +18,7 @@ import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-req
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestStoreService } from '../../../../../shared/services/store/request.store.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
+import { DocumentViewDialogComponent } from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component';
 
 @Directive({
   selector: '[tableHighlight]',
@@ -43,8 +44,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   public confirmForm: FormGroup;
   public confirmDialog: boolean = false;
 
-  public documentViewDialog: boolean = false;
-
   public selectedItems: RequestsResponseInterface[] = [];
 
   public successRequestsDialogMessage: string = null;
@@ -52,6 +51,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   @ViewChildren(TableHighlightDirective)
   tableHighlight: TableHighlightDirective;
+
+  private refDocumentViewDialog: DynamicDialogRef;
 
   private subscription$: Subscription = new Subscription();
 
@@ -129,18 +130,16 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
         .getRequestByIdAndParams(request.ID, true, true, true)
         .subscribe((requestWithAdditionalData) => {
           this.selectedRequest = requestWithAdditionalData;
-          console.log('SELECTED ROW: ', this.selectedRequest);
         })
     );
   }
 
   public documentViewHandler(document) {
-    console.log(document)
-    this.subscription$.add(
-      this.fileService.getFile(this.selectedRequest.ID, document.DocumentID).subscribe((response) => {
-        this.documentViewDialog = true;
-      })
-    );
+    const data = {
+      document,
+      requestID: this.selectedRequest.ID,
+    }
+    this.openDocumentViewer(data)
   }
 
   refresh(): void {
@@ -296,6 +295,23 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   //   let ff = this.tableHighlight;
   //   console.log(ff)
   // }
+
+  private openDocumentViewer(document: any) {
+    this.refDocumentViewDialog = this.dialogService.open(
+      DocumentViewDialogComponent,
+      {
+        header: 'Просмотр Документа',
+        width: '50%',
+        contentStyle: { 'max-height': '550px', overflow: 'auto' },
+        baseZIndex: 10000,
+        data: document,
+      }
+    );
+
+    this.subscription$.add(
+      this.refDocumentViewDialog.onClose.subscribe(() => {})
+    );
+  }
 
   private checkSelectedItemIsReadonly(): boolean {
     let isFromDuty = this.selectedItems.filter((x) => x.ReadOnly === true);

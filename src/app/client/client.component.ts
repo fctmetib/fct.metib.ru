@@ -1,17 +1,18 @@
+import { environment } from 'src/environments/environment';
 import { MenuItem } from 'primeng/api';
 import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationService } from './shared/services/notification.service';
-import { NotifyDialogComponent } from './shared/components/notify-dialog/notify-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { InactiveDialogComponent } from '../shared/modules/inactive-dialog/inactive-dialog.component';
 import { LocalStorageService } from '../shared/services/common/localstorage.service';
+import { NotifyDialogComponent } from './shared/components/dialogs/notify-dialog/notify-dialog.component';
 
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
-  styleUrls: ['./client.component.scss']
+  styleUrls: ['./client.component.scss'],
 })
 export class ClientComponent implements OnInit, OnDestroy {
   refNotificationDialog: DynamicDialogRef;
@@ -52,54 +53,7 @@ export class ClientComponent implements OnInit, OnDestroy {
       this.preloader = false;
     }
 
-
-    this.items = [
-      {
-        label: 'Кабинет',
-        routerLink: 'cabinet',
-        routerLinkActiveOptions: { exact: false },
-      },
-      // {
-      //   label: 'Заявки',
-      //   routerLink: 'requests',
-      //   routerLinkActiveOptions: { exact: false },
-      // },
-      // {
-      //   label: 'Свободная задолженность',
-      //   routerLink: 'freeduty',
-      //   routerLinkActiveOptions: { exact: false },
-      // },
-      // {
-      //   label: 'Договоры',
-      //   routerLink: 'contracts',
-      //   routerLinkActiveOptions: { exact: false },
-      // },
-      // {
-      //   label: 'Платежи',
-      //   routerLink: 'invoices',
-      //   routerLinkActiveOptions: { exact: false },
-      // },
-      // {
-      //   label: 'Просрочки Покупателя',
-      //   routerLink: 'delays',
-      //   routerLinkActiveOptions: { exact: false },
-      // },
-      {
-        label: 'Запросы',
-        routerLink: 'demand',
-        routerLinkActiveOptions: { exact: false },
-      },
-      // {
-      //   label: 'Документы',
-      //   routerLink: 'documents',
-      //   routerLinkActiveOptions: { exact: false },
-      // },
-      {
-        label: 'Отчеты',
-        routerLink: 'reports',
-        routerLinkActiveOptions: { exact: false },
-      },
-    ];
+    this.initMenu();
 
     this.subscription$.add(
       this.notifyService.getNewNotifications().subscribe((resp) => {
@@ -168,6 +122,106 @@ export class ClientComponent implements OnInit, OnDestroy {
       if (document.getElementById('dropdownMenu').classList.contains('show')) {
         document.getElementById('dropdownMenu').classList.remove('show');
       }
+    }
+  }
+
+  private initMenu() {
+    if (environment.production) {
+      this.items = [
+        {
+          label: 'Кабинет',
+          routerLink: 'cabinet',
+          routerLinkActiveOptions: { exact: false },
+        },
+        // {
+        //   label: 'Заявки',
+        //   routerLink: 'requests',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Свободная задолженность',
+        //   routerLink: 'freeduty',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Договоры',
+        //   routerLink: 'contracts',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Платежи',
+        //   routerLink: 'invoices',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Просрочки Покупателя',
+        //   routerLink: 'delays',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        {
+          label: 'Запросы',
+          routerLink: 'demand',
+          routerLinkActiveOptions: { exact: false },
+        },
+        // {
+        //   label: 'Документы',
+        //   routerLink: 'documents',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        {
+          label: 'Отчеты',
+          routerLink: 'reports',
+          routerLinkActiveOptions: { exact: false },
+        },
+      ];
+    } else {
+      this.items = [
+        {
+          label: 'Кабинет',
+          routerLink: 'cabinet',
+          routerLinkActiveOptions: { exact: false },
+        },
+        {
+          label: 'Заявки',
+          routerLink: 'requests',
+          routerLinkActiveOptions: { exact: false },
+        },
+        // {
+        //   label: 'Свободная задолженность',
+        //   routerLink: 'freeduty',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Договоры',
+        //   routerLink: 'contracts',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Платежи',
+        //   routerLink: 'invoices',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Просрочки Покупателя',
+        //   routerLink: 'delays',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        {
+          label: 'Запросы',
+          routerLink: 'demand',
+          routerLinkActiveOptions: { exact: false },
+        },
+        // {
+        //   label: 'Документы',
+        //   routerLink: 'documents',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        {
+          label: 'Отчеты',
+          routerLink: 'reports',
+          routerLinkActiveOptions: { exact: false },
+        },
+      ];
     }
   }
 

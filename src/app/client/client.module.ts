@@ -28,13 +28,13 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../shared/services/auth.interceptor';
 import { MobileHeaderComponent } from './shared/components/mobile-header/mobile-header.component';
-import { NotifyDialogComponent } from './shared/components/notify-dialog/notify-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive-dialog.module';
 import {AccordionModule} from 'primeng/accordion';
 import { MIBNotifyAccordionComponent } from './shared/components/mib-notify-accordion/mib-notify-accordion.component';
 import { MIBNotifyAccordionGroupComponent } from './shared/components/mib-notify-accordion/mib-notify-accordion-group.component';
 import { UpdatePasswordDialogModule } from '../shared/modules/update-password-dialog/update-password-dialog.module';
+import { NotifyDialogComponent } from './shared/components/dialogs/notify-dialog/notify-dialog.component';
 
 @NgModule({
   imports: [
