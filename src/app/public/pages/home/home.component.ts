@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { NewsService } from '../../service/news.service';
 import { NewsInterface } from '../../type/news.interface';
@@ -15,15 +15,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   public display: boolean = false;
-  public financeForm = this.fb.group({
-    organization: ['', Validators.required],
-    name: ['', Validators.required],
-    phone: ['', Validators.required],
-    inn: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    comment: [''],
-    isAccept: false,
-  });
+  public financeForm: FormGroup;
 
   public news: NewsInterface[];
   public partners: string[] = [];
@@ -40,6 +32,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fillNews();
     this.fillPartners();
+    this.financeForm = this.fb.group({
+      organization: ['', Validators.required],
+      name: ['', Validators.required],
+      phone: ['', Validators.required],
+      inn: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      comment: [''],
+      isAccept: false,
+    });
+
+    this.financeForm.controls['organization'].setErrors(null);
+    this.financeForm.controls['name'].setErrors(null);
+    this.financeForm.controls['phone'].setErrors(null);
+    this.financeForm.controls['inn'].setErrors(null);
+    this.financeForm.controls['email'].setErrors(null);
   }
 
   showDialog() {

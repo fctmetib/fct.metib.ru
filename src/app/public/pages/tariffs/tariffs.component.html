@@ -60,19 +60,24 @@
 <p-dialog styleClass="mib-modal" header="Получить финансирование" [(visible)]="display" [modal]="true" [style]="{width: '350px'}" [draggable]="false"
   [resizable]="false">
   <form class="one-column" [formGroup]="financeForm">
-    <input type="text" formControlName="organization" placeholder="Ваш контрагент">
-    <input type="text" formControlName="name" placeholder="Имя">
+    <input type="text" formControlName="organization" placeholder="Ваш контрагент"
+      [ngClass]="{'mib-invalid': financeForm.controls['organization'].invalid && financeForm.controls['organization'].touched}">
+    <input type="text" formControlName="name" placeholder="Имя"
+      [ngClass]="{'mib-invalid': financeForm.controls['name'].invalid && financeForm.controls['name'].touched}">
     <input type="phone" prefix="+7" mask="(000) 000-00-00" [showMaskTyped]="true" formControlName="phone"
+      [ngClass]="{'mib-invalid': financeForm.controls['phone'].invalid && financeForm.controls['phone'].touched}"
       placeholder="Телефон">
-    <input type="email" formControlName="email" placeholder="Электронная почта">
-    <input type="text" formControlName="inn" placeholder="ИНН организации" minlength="10" maxlength="12">
+    <input type="email" formControlName="email" placeholder="Электронная почта"
+      [ngClass]="{'mib-invalid': financeForm.controls['email'].invalid && financeForm.controls['email'].touched}">
+    <input type="text" formControlName="inn" placeholder="ИНН организации" minlength="10" maxlength="12"
+      [ngClass]="{'mib-invalid': financeForm.controls['inn'].invalid && financeForm.controls['inn'].touched}">
     <input type="text" formControlName="comment" placeholder="Ваш комментарий">
     <div class="actions">
       <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"
         (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid()"></mib-button>
     </div>
     <div class="checkbox">
-      <p-checkbox name="checkbox" binary="true"  inputId="checkbox" formControlName="isAccept"></p-checkbox>
+      <p-checkbox name="checkbox" binary="true" inputId="checkbox" formControlName="isAccept"></p-checkbox>
       <label for="checkbox">Пожалуйста подтвердите Ваше согласие на обработку персональных данных</label>
     </div>
   </form>

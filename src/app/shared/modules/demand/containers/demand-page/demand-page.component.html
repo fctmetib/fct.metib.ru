@@ -11,9 +11,9 @@
     </div>
   </div>
 
-  <!-- <div>
+  <div>
     <button pButton pRipple type="button" label="[TEST] Посмотреть мои сертификаты" (click)="openCerts()" class="basic"></button>
-  </div> -->
+  </div>
 
   <div class="p-grid">
     <ng-container *ngFor="let action of actions">
@@ -63,6 +63,8 @@
               <p-dropdown  styleClass="mib-input"  id="certificate" name="certificate" [options]="certificateList"
                [(ngModel)]="thumbprint"
                optionLabel="name"
+               [filter]="true"
+               filterBy="name"
                optionValue="thumbprint"
                [showClear]="true"></p-dropdown>
 
