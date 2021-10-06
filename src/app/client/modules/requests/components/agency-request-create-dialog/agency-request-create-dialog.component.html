@@ -4,12 +4,12 @@
       <p-accordionTab header="{{requests.at(i).value.Title || 'Выберите договор поставки...'}}"
         *ngFor="let request of requests.controls; let i=index">
         <div class="p-fluid p-formgrid p-grid form">
-          <div class="p-field p-col-12 p-md-6">
+          <div class="p-field p-col-12 p-md-12">
             <label for="deliveryID">Договор поставки:</label>
             <p-dropdown styleClass="mib-input"  id="delivery" [options]="deliveries" placeholder="Выберите договор поставки" optionLabel="Title"
               (onChange)="deliveryChanged(i)" valueLabel="ID" [formControlName]="i"></p-dropdown>
           </div>
-          <div class="p-field p-col-12 p-md-6">
+          <div class="p-field p-col-12 p-md-12">
             <label for="date">Дата: </label>
             <input id="date" type="text" pInputText placeholder="Дата"
               value="{{requests.at(i).value.DateFrom || '...'}}" [disabled]="true">

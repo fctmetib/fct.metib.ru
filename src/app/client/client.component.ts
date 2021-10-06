@@ -186,36 +186,36 @@ export class ClientComponent implements OnInit, OnDestroy {
           routerLink: 'requests',
           routerLinkActiveOptions: { exact: false },
         },
-        // {
-        //   label: 'Свободная задолженность',
-        //   routerLink: 'freeduty',
-        //   routerLinkActiveOptions: { exact: false },
-        // },
-        // {
-        //   label: 'Договоры',
-        //   routerLink: 'contracts',
-        //   routerLinkActiveOptions: { exact: false },
-        // },
-        // {
-        //   label: 'Платежи',
-        //   routerLink: 'invoices',
-        //   routerLinkActiveOptions: { exact: false },
-        // },
-        // {
-        //   label: 'Просрочки Покупателя',
-        //   routerLink: 'delays',
-        //   routerLinkActiveOptions: { exact: false },
-        // },
+        {
+          label: 'Свободная задолженность',
+          routerLink: 'freeduty',
+          routerLinkActiveOptions: { exact: false },
+        },
+        {
+          label: 'Договоры',
+          routerLink: 'contracts',
+          routerLinkActiveOptions: { exact: false },
+        },
+        {
+          label: 'Платежи',
+          routerLink: 'invoices',
+          routerLinkActiveOptions: { exact: false },
+        },
+        {
+          label: 'Просрочки Покупателя',
+          routerLink: 'delays',
+          routerLinkActiveOptions: { exact: false },
+        },
         {
           label: 'Запросы',
           routerLink: 'demand',
           routerLinkActiveOptions: { exact: false },
         },
-        // {
-        //   label: 'Документы',
-        //   routerLink: 'documents',
-        //   routerLinkActiveOptions: { exact: false },
-        // },
+        {
+          label: 'Электронные документы',
+          routerLink: 'documents',
+          routerLinkActiveOptions: { exact: false },
+        },
         {
           label: 'Отчеты',
           routerLink: 'reports',

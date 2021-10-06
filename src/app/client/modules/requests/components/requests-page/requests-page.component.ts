@@ -153,7 +153,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   showCreateAgencyRequestDialog() {
     this.ref = this.dialogService.open(AgencyRequestCreateDialogComponent, {
-      header: 'Заявка на агентский факторинг',
+      header: 'Реестр поручений',
       width: '85%',
       contentStyle: { height: '800px', overflow: 'auto' },
       baseZIndex: 10000,

@@ -2,7 +2,7 @@
 <div class="card-content" id="step1">
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
-      <button #btn type="button" pButton label="Действие" icon="pi pi-angle-down" (click)="menu.toggle($event)"
+      <button #btn type="button" pButton label="Действие"  iconPos="right" icon="pi pi-angle-down" (click)="menu.toggle($event)"
         class="basic" id="step2"></button>
       <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
       <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="refresh()"></button>

@@ -1,0 +1,13 @@
+.view-file-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+
+  .subheader {
+    font-size: 14px;
+    line-height: 16px;
+    color: #102538;
+  }
+}
