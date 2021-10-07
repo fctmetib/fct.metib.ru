@@ -1,126 +1,131 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div formArrayName="requests">
-    <p-accordion>
-      <p-accordionTab header="{{requests.at(i).value.Title || 'Выберите договор поставки...'}}"
-        *ngFor="let request of requests.controls; let i=index">
-        <div class="p-fluid p-formgrid p-grid form">
-          <div class="p-field p-col-12 p-md-12">
-            <label for="deliveryID">Договор поставки:</label>
-            <p-dropdown styleClass="mib-input"  id="delivery" [options]="deliveries" placeholder="Выберите договор поставки" optionLabel="Title"
-              (onChange)="deliveryChanged(i)" valueLabel="ID" [formControlName]="i"></p-dropdown>
-          </div>
-          <div class="p-field p-col-12 p-md-12">
-            <label for="date">Дата: </label>
-            <input id="date" type="text" pInputText placeholder="Дата"
-              value="{{requests.at(i).value.DateFrom || '...'}}" [disabled]="true">
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="mib-toolbar">
-            <button type="button" pButton pRipple label="Добавить" class="p-mr-2" (click)="openNew(false, i)"></button>
-            <button type="button" pButton pRipple label="Редактировать" class="p-mr-2"
-              (click)="openNew(true, i)"></button>
-            <button type="button" pButton pRipple label="Удалить ({{selectedShipments.length}})" class="p-mr-2"
-              (click)="deleteShipments(i)"></button>
+    <div class="p-field p-col-12 p-md-12">
+      <p-accordion styleClass="mib-accordion">
+        <p-accordionTab header="{{requests.at(i).value.Title || 'Выберите договор поставки...'}}"
+          *ngFor="let request of requests.controls; let i=index">
+          <div class="p-fluid p-formgrid p-grid form">
+            <div class="p-field p-col-12 p-md-12">
+              <label for="deliveryID">Договор поставки:</label>
+              <p-dropdown styleClass="mib-input" id="delivery" [options]="deliveries"
+                placeholder="Выберите договор поставки" optionLabel="Title" (onChange)="deliveryChanged(i)"
+                valueLabel="ID" [formControlName]="i"></p-dropdown>
+            </div>
+            <div class="p-field p-col-12 p-md-12">
+              <label for="date">Дата: </label>
+              <input id="date" type="text" pInputText placeholder="Дата"
+                value="{{requests.at(i).value.DateFrom || '...'}}" [disabled]="true">
+            </div>
           </div>
 
-          <p-table [rows]="10" [rowHover]="true" [value]="shipments[i]?.shipmnets" selectionMode="multiple"
-            [(selection)]="selectedShipments">
-            <ng-template pTemplate="header">
-              <tr>
-                <th style="width: 3rem">
-                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th>
-                  <div class="m-th">
-                    <div>ID</div>
-                  </div>
-                </th>
-                <th>
-                  <div class="m-th">
-                    <div>Накладная</div>
-                  </div>
-                </th>
-                <th>
-                  <div class="m-th">
-                    <div>Дата накладной</div>
-                  </div>
-                </th>
-                <th>
-                  <div class="m-th">
-                    <div>Счёт-фактура</div>
-                  </div>
-                </th>
-                <th>
-                  <div class="m-th">
-                    <div>Дата счёт-фактуры</div>
-                  </div>
-                </th>
-                <th>
-                  <div class="m-th">
-                    <div>Дата поставки</div>
-                  </div>
-                </th>
-                <th>
-                  <div class="m-th">
-                    <div>Сумма</div>
-                  </div>
-                </th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-shipment>
-              <tr>
-                <td>
-                  <p-tableCheckbox [value]="shipment"></p-tableCheckbox>
-                </td>
-                <td>
-                  <div class="m-td">
-                    <div>{{shipment.ID}}</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="m-td">
-                    <div>{{shipment.AccountNumber}}</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="m-td">
-                    <div>{{shipment.AccountDate | date:'dd/MM/yyyy'}}</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="m-td">
-                    <div>{{shipment.InvoiceNumber}}</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="m-td">
-                    <div>{{shipment.InvoiceDate | date:'dd/MM/yyyy'}}</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="m-td">
-                    <div>{{shipment.DateShipment | date:'dd/MM/yyyy'}}</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="m-td currency">
-                    <div>{{shipment.Summ | currency:'RUB':'symbol'}}</div>
-                  </div>
-                </td>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="footer">
-              <tr>
-                <td colspan="7" class="p-text-right"></td>
-                <td>{{getShipmentsSum(i) | currency:'RUB':'symbol' }}</td>
-              </tr>
-            </ng-template>
-          </p-table>
-        </div>
-      </p-accordionTab>
-    </p-accordion>
+          <div class="card">
+            <div class="mib-toolbar">
+              <button type="button" pButton pRipple label="Добавить" class="p-mr-2"
+                (click)="openNew(false, i)"></button>
+              <button type="button" pButton pRipple label="Редактировать" class="p-mr-2"
+                (click)="openNew(true, i)"></button>
+              <button type="button" pButton pRipple label="Удалить ({{selectedShipments.length}})" class="p-mr-2"
+                (click)="deleteShipments(i)"></button>
+            </div>
+
+            <p-table [rows]="10" [rowHover]="true" [value]="shipments[i]?.shipmnets" selectionMode="multiple"
+              [(selection)]="selectedShipments">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                  </th>
+                  <th>
+                    <div class="m-th">
+                      <div>ID</div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="m-th">
+                      <div>Накладная</div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="m-th">
+                      <div>Дата накладной</div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="m-th">
+                      <div>Счёт-фактура</div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="m-th">
+                      <div>Дата счёт-фактуры</div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="m-th">
+                      <div>Дата поставки</div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="m-th">
+                      <div>Сумма</div>
+                    </div>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-shipment>
+                <tr>
+                  <td>
+                    <p-tableCheckbox [value]="shipment"></p-tableCheckbox>
+                  </td>
+                  <td>
+                    <div class="m-td">
+                      <div>{{shipment.ID}}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="m-td">
+                      <div>{{shipment.AccountNumber}}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="m-td">
+                      <div>{{shipment.AccountDate | date:'dd/MM/yyyy'}}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="m-td">
+                      <div>{{shipment.InvoiceNumber}}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="m-td">
+                      <div>{{shipment.InvoiceDate | date:'dd/MM/yyyy'}}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="m-td">
+                      <div>{{shipment.DateShipment | date:'dd/MM/yyyy'}}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="m-td currency">
+                      <div>{{shipment.Summ | currency:'RUB':'symbol'}}</div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="footer">
+                <tr>
+                  <td colspan="7" class="p-text-right"></td>
+                  <td>{{getShipmentsSum(i) | currency:'RUB':'symbol' }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+
     <div class="p-field p-col-12 p-md-12">
       <button id="btn_submit" pButton pRipple type="button" label="Добавить заявку" (click)="addRequest()"
         class="btn-mib-submit p-button-outlined"></button>

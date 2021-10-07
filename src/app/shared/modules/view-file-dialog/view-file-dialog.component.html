@@ -1,7 +1,7 @@
 <div class="view-file-dialog">
   <p class="subheader">Предварительный просмотр документа</p>
-  <iframe></iframe>
-  <p-tabView>
+  <iframe class="mib-file-view"></iframe>
+  <p-tabView styleClass="mib-tab">
     <p-tabPanel header="Электронные подписи">
       <p-table [value]="[]" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple" dataKey="ID"
       styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true" tableHighlight
