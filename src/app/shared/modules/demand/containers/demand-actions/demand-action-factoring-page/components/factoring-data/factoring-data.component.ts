@@ -165,7 +165,6 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     this.files = this.files.filter((x) => x !== file);
   }
 
-
   //#region public page actions
 
   public search(event): void {
@@ -497,31 +496,28 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
     let ediProviders: DemandEDIInterface[] = factoring.EDI;
 
     this.formFactoring.patchValue({
-      organizationType: anket.Organization.Type,
-      organizationLegalForm: anket.Organization.LegalForm,
-      organizationShortName: anket.Organization.ShortTitle,
-      organizationINN: anket.Organization.Requisites.INN,
-      organizationPhone: anket.Organization.Phone,
-      organizationEmail: anket.Organization.Email,
-      organizationWEB: anket.Organization.Website,
+      organizationType: anket?.Organization?.Type,
+      organizationLegalForm: anket?.Organization?.LegalForm,
+      organizationShortName: anket?.Organization?.ShortTitle,
+      organizationINN: anket?.Organization?.Requisites?.INN,
+      organizationPhone: anket?.Organization?.Phone,
+      organizationEmail: anket?.Organization?.Email,
+      organizationWEB: anket?.Organization?.Website,
 
-      bankBik: factoring.Account.BIK,
-      bankCorrespondentAccount: factoring.Account.COR,
-      bankName: factoring.Account.Bank,
-      bankAccountOpenDate: formatDate(
-        factoring.Account.Date,
-        'yyyy-MM-dd',
-        'en'
-      ),
-      bankOwnerAccount: factoring.Account.Number,
-      bankComment: factoring.Account.Comment,
+      bankBik: factoring?.Account?.BIK,
+      bankCorrespondentAccount: factoring?.Account?.COR,
+      bankName: factoring?.Account?.Bank,
 
-      factoringProducts: factoring.Products,
-      factoringTradeMarks: factoring.Trademarks,
-      factoringShipments: factoring.Suppliers,
-      factoringFinanceLimit: factoring.LimitWanted,
-      factoringClients: factoring.Buyers,
-      factoringWorkers: factoring.StaffAmount,
+      bankAccountOpenDate: formatDate(factoring?.Account?.Date ? factoring?.Account?.Date : null, 'yyyy-MM-dd', 'en'),
+      bankOwnerAccount: factoring?.Account?.Number,
+      bankComment: factoring?.Account?.Comment,
+
+      factoringProducts: factoring?.Products,
+      factoringTradeMarks: factoring?.Trademarks,
+      factoringShipments: factoring?.Suppliers,
+      factoringFinanceLimit: factoring?.LimitWanted,
+      factoringClients: factoring?.Buyers,
+      factoringWorkers: factoring?.StaffAmount,
     });
 
     banks.forEach((b) => this.addOtherBank(b));
