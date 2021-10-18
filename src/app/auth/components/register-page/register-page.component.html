@@ -3,13 +3,11 @@
     <div class="auth__body__form__title">
       <h1>Регистрация</h1>
     </div>
-    <metib-success-messages *ngIf="(confirmationCode$ | async)"
-      [message]="'На указанную почту отправлен код. Пожалуйста, введите его в поле КОД'"></metib-success-messages>
     <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
     </metib-backend-error-messages>
 
     <metib-success-messages *ngIf="(confirmationCode$ | async)"
-      [message]="'На указанную почту отправлен код. Пожалуйста, введите его в поле КОД'"></metib-success-messages>
+      [message]="'На указанный номер телефона отправлен код. Пожалуйста, введите его в поле КОД'"></metib-success-messages>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="auth__body__form__fields">
@@ -43,7 +41,7 @@
 
           <div class="auth__body__form__fields__two-columns">
             <div class="auth__body__form__fields__field">
-              <p-inputMask mask="8-999-999-9999" id="phone" type="tel" placeholder="Телефон" formControlName="phone"
+              <p-inputMask mask="+7-999-999-9999" id="phone" type="tel" placeholder="Телефон" formControlName="phone"
                 [ngClass]="{'ng-invalid ng-dirty': form.get('profile.phone').invalid && form.get('profile.phone').touched}">
               </p-inputMask>
               <small class="p-error" *ngIf="form.get('profile.phone').invalid && form.get('profile.phone').touched">
