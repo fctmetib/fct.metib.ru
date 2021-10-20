@@ -92,6 +92,10 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
   }
 
   handleSave(event: any) {
+    if(this.isEdit) {
+      return;
+    }
+
     if (this.currentDemand.Files) {
       event.Files = this.currentDemand.Files;
     }

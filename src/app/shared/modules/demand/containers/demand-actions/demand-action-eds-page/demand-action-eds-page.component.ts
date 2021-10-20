@@ -38,6 +38,7 @@ import { saveAs } from '@progress/kendo-file-saver';
 export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   public isEdit: boolean = false;
   public currentDemand: any;
+  public resultDemand: any;
   public currentInformation: FactoringInfoInterface;
 
   public isLoading: boolean;
@@ -180,6 +181,10 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   }
 
   saveDraft() {
+    if(this.isEdit) {
+      return;
+    }
+
     let data = this.prepareDraft();
 
     this.subscription$.add(
@@ -561,6 +566,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   private fetch(id: number) {
     this.subscription$.add(
       this.demandService.getDemandById(id).subscribe((resp) => {
+        this.resultDemand = resp.Result
         this.currentDemand = resp.Data;
         this.currentInformation = {
           ID: resp.ID,
@@ -573,7 +579,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
           Type: resp.Type,
           Manager: null,
         };
-        console.log(this.currentDemand);
+        console.log('Fetched, is view', this.currentDemand);
         this.isEdit = true;
         this.convertToFormData();
       })

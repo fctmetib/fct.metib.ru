@@ -19,8 +19,8 @@
       justify-content: space-between;
 
       .demand-actions {
-        visibility: hidden;
-        display: flex;
+        display: none;
+        // display: flex;
         flex-direction: column;
 
         button {
@@ -114,7 +114,7 @@
   .demand-info {
     .demand-card {
       .demand-actions {
-        visibility: visible;
+        display: flex;
       }
     }
   }
@@ -157,7 +157,7 @@
 
         .demand-actions {
           width: 100%;
-          visibility: visible;
+          // visibility: flex;
           display: flex;
           justify-content: space-between;
           flex-direction: row;

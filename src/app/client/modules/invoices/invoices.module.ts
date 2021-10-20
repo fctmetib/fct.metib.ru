@@ -1,5 +1,5 @@
 import { InvoicesRoutingModule } from './invoices-routing.module';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -39,6 +39,6 @@ import { InvoicesPageComponent } from './components/invoices-page/invoices-page.
     InvoicesRoutingModule,
   ],
   declarations: [InvoicesPageComponent],
-  providers: [],
+  providers: [DatePipe],
 })
 export class InvoicesModule {}

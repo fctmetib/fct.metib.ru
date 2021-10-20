@@ -17,12 +17,15 @@ export class DemandResultComponent implements OnInit, OnDestroy {
   @Input()
   public result: any;
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('Current result: ', this.result)
+  }
 
   ngOnDestroy(): void {}
 
   public downloadCert() {
-    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+    let win: any = window;
+    if (win.navigator && win.navigator.msSaveOrOpenBlob) {
       // download PDF in IE
       let byteChar = atob(this.result.CertificateData);
       let byteArray = new Array(byteChar.length);
@@ -31,7 +34,7 @@ export class DemandResultComponent implements OnInit, OnDestroy {
       }
       let uIntArray = new Uint8Array(byteArray);
       let blob = new Blob([uIntArray], { type: 'crt' });
-      window.navigator.msSaveOrOpenBlob(blob, `certificate.crt`);
+      win.navigator.msSaveOrOpenBlob(blob, `certificate.crt`);
     } else {
       // Download PDF in Chrome etc.
       const source = `data:crt;base64,${this.result.CertificateData}`;
