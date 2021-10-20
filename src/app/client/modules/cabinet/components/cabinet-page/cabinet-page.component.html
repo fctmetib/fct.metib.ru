@@ -1,36 +1,15 @@
 <div class="card-content">
-    <app-factoring [stats]="statistics"></app-factoring>
+  <app-factoring [stats]="statistics"></app-factoring>
 </div>
 <div class="triangle-menu big"></div>
 <div class="triangle-right"></div>
-<!--<div class="card-content" id="step1">
-  <div class="header lg">
-    <div class="title">
-      <h2>Отчеты</h2>
-      <div class="subheader">
-        Получите любой интересующий Вас отчёт
-      </div>
-    </div>
-    <div class="actions">
-    </div>
+
+<div class="widgets">
+  <div class="widget__full-height">
+    <widget-stats></widget-stats>
   </div>
-
-
-
-   <div class="p-grid">
-    <div class="p-col" *ngFor="let reportCard of reportCards" >
-      <div class="card-report">
-        <div class="header">
-          <div class="text">
-            {{reportCard.title}}
-          </div>
-          <div class="icon arrow_right"></div>
-        </div>
-        <div class="content">
-          {{reportCard.description}}
-        </div>
-      </div>
-    </div>
+  <div class="widget__normal">
+    <widget-actions></widget-actions>
+    <widget-news></widget-news>
   </div>
 </div>
--->

@@ -10,7 +10,7 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
-
+import { ChartModule } from 'primeng/chart';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -24,6 +24,9 @@ import { CabinetPageComponent } from './components/cabinet-page/cabinet-page.com
 import { ClientService } from 'src/app/shared/services/common/client.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { StatisticsService } from './services/statistics.service';
+import { WidgetStatsComponent } from './components/cabinet-page/widget-stats/widget-stats.component';
+import { WidgetActionsComponent } from './components/cabinet-page/widget-actions/widget-actions.component';
+import { WidgetNewsComponent } from './components/cabinet-page/widget-news/widget-news.component';
 
 @NgModule({
   imports: [
@@ -46,8 +49,22 @@ import { StatisticsService } from './services/statistics.service';
     MenubarModule,
     AvatarModule,
     CabinetRoutingModule,
+    ChartModule,
   ],
-  declarations: [CabinetPageComponent, FactoringComponent],
-  providers: [ClientService, DeliveryService, OrganizationService, StatisticsService],
+  declarations: [
+    // Containers
+    CabinetPageComponent,
+    // Components
+    FactoringComponent,
+    WidgetStatsComponent,
+    WidgetActionsComponent,
+    WidgetNewsComponent,
+  ],
+  providers: [
+    ClientService,
+    DeliveryService,
+    OrganizationService,
+    StatisticsService,
+  ],
 })
 export class CabinetModule {}

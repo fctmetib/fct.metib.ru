@@ -3,7 +3,7 @@ import { ReportCardInterface } from './../../types/common/report-card.interface'
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { AuthService } from '../../../../../auth/services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import {
   currentUserFactoringSelector,
@@ -16,6 +16,7 @@ import { StatisticsService } from '../../services/statistics.service';
   selector: 'app-cabinet-page',
   templateUrl: './cabinet-page.component.html',
   styleUrls: ['./cabinet-page.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CabinetPageComponent implements OnInit {
   public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
