@@ -6,21 +6,35 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'widget-stats.component.html',
 })
 export class WidgetStatsComponent implements OnInit {
-  public lineStylesData: any;
+  public limitData: any;
+  public delayData: any;
 
   constructor() {}
 
   ngOnInit() {
-    this.lineStylesData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    this.limitData = {
+      labels: ['01.10.2021', '05.10.2021', '09.10.2021', '12.10.2021', '17.10.2021', '22.10.2021', '24.10.2021'],
       datasets: [
         {
           label: 'Лимит',
-          data: [12, 51, 62, 33, 21, 62, 45],
+          data: [100000, 1400000, 1900000, 2500000, 2800000, 4700000, 9000000],
           fill: true,
-          borderColor: '#FFA726',
+          borderColor: '#7AD383',
           tension: 0.4,
-          backgroundColor: 'rgba(255,167,38,0.2)',
+          backgroundColor: '#7AD383',
+        },
+      ],
+    };
+    this.delayData = {
+      labels: ['01.10.2021', '05.10.2021', '09.10.2021', '12.10.2021', '17.10.2021', '22.10.2021', '24.10.2021'],
+      datasets: [
+        {
+          label: 'Лимит',
+          data: [9000000, 4700000, 2800000, 100000, 1400000, 1900000, 2500000],
+          fill: true,
+          borderColor: '#E74630',
+          tension: 0.4,
+          backgroundColor: '#E74630',
         },
       ],
     };

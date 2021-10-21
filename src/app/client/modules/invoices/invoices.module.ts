@@ -1,3 +1,4 @@
+import { SharedModule } from 'src/app/shared/shared.module';
 import { InvoicesRoutingModule } from './invoices-routing.module';
 import { CommonModule, DatePipe } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
@@ -37,6 +38,7 @@ import { InvoicesPageComponent } from './components/invoices-page/invoices-page.
     MenubarModule,
     AvatarModule,
     InvoicesRoutingModule,
+    SharedModule,
   ],
   declarations: [InvoicesPageComponent],
   providers: [DatePipe],

@@ -5,17 +5,21 @@
     </h4>
   </div>
   <div class="widget__content widget__content-news">
-    <div class="news-row">
+    <div class="news-row" *ngFor="let newsItem of newsList">
       <div class="news-image">
-        img
+        <img [src]="getImageURL(newsItem.ID)" alt="">
       </div>
       <div class="news-content">
-        <div class="news-header">Поздравляем с Днём России!</div>
-        <div class="news-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry</div>
+        <div class="news-header">{{newsItem.Title}}</div>
+        <div class="news-description">{{newsItem.Text}}</div>
       </div>
       <div class="news-info">
-        <div class="news-date">14.07.2021</div>
-        <div class="news-action">Читать</div>
+        <div class="news-date">{{newsItem.Date | date:"yyyy.MM.dd"}}</div>
+        <div class="news-action">
+          <a [routerLink]="['/news/', newsItem.ID]" target="_blank">
+            Читать
+          </a>
+        </div>
       </div>
     </div>
   </div>

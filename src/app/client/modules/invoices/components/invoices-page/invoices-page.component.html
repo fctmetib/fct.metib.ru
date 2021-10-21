@@ -1,7 +1,12 @@
 <div class="card-content" id="step1">
-    <div class="mib-action mib-button-icon excel-icon can-click" pTooltip="Экспорт файла Excel">
+  <header-page [title]="'Платежи'">
+    <div class="mib-action button-content p-mr-2" (click)="openDateModal()">
+      {{22.10.2021 | date: 'dd.MM.yyyy'}}
+    </div>
+    <div class="mib-action mib-button-icon excel-icon can-click"  pTooltip="Экспорт файла Excel">
       <img src="../../../../../../assets/icons/mib-excel.png" alt="">
     </div>
+  </header-page>
 
 
   <p-table [value]="[]" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"

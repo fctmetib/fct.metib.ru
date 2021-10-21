@@ -14,16 +14,16 @@
         <div class="widget__stats-header__date">20.07.2021</div>
       </div>
       <div class="widget__chart">
-        <p-chart type="line" [data]="lineStylesData"></p-chart>
+        <p-chart type="line" [data]="limitData"></p-chart>
       </div>
     </div>
     <div class="widget__stats-chart widget__stats-chart__warning">
       <div class="widget__stats-header">
-        <div class="widget__stats-header__name">Лимит</div>
+        <div class="widget__stats-header__name">Просрочка</div>
         <div class="widget__stats-header__date">20.07.2021</div>
       </div>
       <div class="widget__chart">
-        <p-chart type="line" [data]="lineStylesData"></p-chart>
+        <p-chart type="line" [data]="delayData"></p-chart>
       </div>
     </div>
   </div>

@@ -27,6 +27,7 @@ import { StatisticsService } from './services/statistics.service';
 import { WidgetStatsComponent } from './components/cabinet-page/widget-stats/widget-stats.component';
 import { WidgetActionsComponent } from './components/cabinet-page/widget-actions/widget-actions.component';
 import { WidgetNewsComponent } from './components/cabinet-page/widget-news/widget-news.component';
+import { CabinetNewsService } from './services/news.service';
 
 @NgModule({
   imports: [
@@ -65,6 +66,7 @@ import { WidgetNewsComponent } from './components/cabinet-page/widget-news/widge
     DeliveryService,
     OrganizationService,
     StatisticsService,
+    CabinetNewsService
   ],
 })
 export class CabinetModule {}

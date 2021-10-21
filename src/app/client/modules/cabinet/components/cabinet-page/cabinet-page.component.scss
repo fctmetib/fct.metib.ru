@@ -81,6 +81,28 @@
       font-size: 14px;
       line-height: 16px;
       color: #989898;
+      margin-bottom: 36px;
+    }
+  }
+
+  .widget__content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .widget__stats-chart {
+    background: #F0F0F0;
+    border-radius: 10px;
+    padding: 34px;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+
+    .widget__stats-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
     }
   }
 }
