@@ -89,7 +89,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        this.isView = params['View'] === 'true' ? true : false
+        this.isView = params['View'] === 'true' ? true : false;
         if (params['ID'] && params['Edit'] === 'false') {
           this.fetch(params['ID']);
         } else {
@@ -245,7 +245,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     }
   }
 
-
   public isFileInvalid(type: string): boolean {
     let isInvalid = false;
 
@@ -263,6 +262,9 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   //#region private logic
   //TODO: Get login
   saveDraft() {
+    if (this.isEdit) {
+      return;
+    }
     let draft = this.prepareData();
 
     this.subscription$.add(
@@ -279,7 +281,9 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     let result: any = {
       Avatar: this.avatarCode,
       Passport: {
-        Date: new Date(this.formEdit.value.date).toISOString().slice(0, 19)+ '+03:00',
+        Date:
+          new Date(this.formEdit.value.date).toISOString().slice(0, 19) +
+          '+03:00',
         Expire: null,
         IsForeign: false,
         IssuerCode: this.formEdit.value.issuerCode,
@@ -331,7 +335,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
 
     this.currentUserId = currentUser.UserID;
   }
-
 
   private showSuccess() {
     this.messageService.add({

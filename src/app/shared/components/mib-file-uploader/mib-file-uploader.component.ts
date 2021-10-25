@@ -74,6 +74,9 @@ export class MibFileUploaderComponent implements OnInit {
   @Input()
   required: boolean = true;
 
+  @Input()
+  existFile: FileModeInterface[] = [];
+
   @Output()
   remove = new EventEmitter<any>();
 
@@ -95,7 +98,9 @@ export class MibFileUploaderComponent implements OnInit {
     private dialogService: DialogService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fillCurrentFiles();
+  }
 
   public isFileInvalid(): boolean {
     let isInvalid = false;
@@ -209,5 +214,13 @@ export class MibFileUploaderComponent implements OnInit {
         })
       );
     }
+  }
+
+  private fillCurrentFiles() {
+    this.existFile.forEach(file => {
+      if (file.Identifier === this.type) {
+        this.currentFiles.push(file);
+      }
+    });
   }
 }

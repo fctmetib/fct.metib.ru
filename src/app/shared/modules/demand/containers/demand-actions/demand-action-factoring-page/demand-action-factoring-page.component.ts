@@ -31,8 +31,6 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
 
-  public files: any;
-
   public isEdit: boolean = false;
   public isLoading: boolean = false;
 
@@ -118,6 +116,10 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
           this.fetch(this.currentDemand.ID);
         })
     );
+  }
+
+  handleRemoveFiles(files: FileModeInterface[]) {
+    this.currentDemand.Files = files;
   }
 
   handleRemoveFile(file: FileModeInterface) {

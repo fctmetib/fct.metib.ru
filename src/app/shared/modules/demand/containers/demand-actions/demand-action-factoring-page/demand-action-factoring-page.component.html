@@ -39,7 +39,7 @@
       </p-tabView>
     </ng-container>
     <ng-template #createTemplate>
-      <app-factoring-data (back)="back()" [isEdit]="false" [currentDemand]="currentDemand"
+      <app-factoring-data (back)="back()" (removeFile)="handleRemoveFiles($event)" [isEdit]="false" [currentDemand]="currentDemand"
         [currentDraftId]="currentDraftId" (save)="handleSave($event)" (create)="handleSubmit($event)">
       </app-factoring-data>
     </ng-template>

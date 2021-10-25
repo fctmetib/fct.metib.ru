@@ -213,6 +213,10 @@ export class DemandActionDebitorPageComponent
 
   //#region private logic
   saveDraft() {
+    if (this.isEdit) {
+      return;
+    }
+
     this.subscription$.add(
       this.demandService
         .addDraftById(this.currentDraftId, this.prepareDraft())

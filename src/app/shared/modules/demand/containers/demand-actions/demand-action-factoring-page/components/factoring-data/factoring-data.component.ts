@@ -55,6 +55,9 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   @Output()
   back: EventEmitter<any> = new EventEmitter();
 
+  @Output()
+  removeFile: EventEmitter<any> = new EventEmitter();
+
   public organizationTypes: DemandSelectboxInterface[] = [];
   public ruleTypes: DemandSelectboxInterface[] = [];
   public typesOfOwner: DemandSelectboxInterface[] = [];
@@ -162,7 +165,9 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   }
 
   onRemove(file) {
+    console.log('files', this.files)
     this.files = this.files.filter((x) => x !== file);
+    this.removeFile.emit(this.files);
   }
 
   //#region public page actions
@@ -485,6 +490,8 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   }
 
   private convertToFormData() {
+    this.files =  this.currentDemand.Files;
+
     let factoring: DemandFactoringInterface = this.currentDemand.Factoring;
     let anket: DemandAnketInterface = this.currentDemand.Anket;
 

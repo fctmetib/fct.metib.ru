@@ -148,6 +148,10 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
 
   //#region private logic
   saveDraft() {
+    if (this.isEdit) {
+      return;
+    }
+
     this.subscription$.add(
       this.demandService
         .addDraftById(this.currentDraftId, this.prepareDraft())
