@@ -139,6 +139,8 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
   }
 
   private convertToFormData() {
+    this.files = this.currentDemand.Files;
+
     let data = this.currentDemand.Data;
     this.formFree.patchValue({
       limit: data.Limit,

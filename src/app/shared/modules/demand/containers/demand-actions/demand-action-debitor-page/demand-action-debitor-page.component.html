@@ -71,7 +71,7 @@
         <!-- 2 row -->
         <ng-container *ngIf="!isEdit">
           <div class="p-field p-col-12 p-md-6">
-            <mib-file-uploader [title]="'При необходимости прикрепите файлы:'" [required]="false" [type]="'All'"
+            <mib-file-uploader [existFile]="files" [title]="'При необходимости прикрепите файлы:'" [required]="false" [type]="'All'"
               (remove)="onRemove($event)" (add)="onAdd($event)">
             </mib-file-uploader>
           </div>

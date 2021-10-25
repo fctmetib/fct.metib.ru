@@ -73,20 +73,20 @@
           </div>
 
           <div class="p-field p-col-12 p-md-6">
-            <mib-file-uploader [title]="'Оборотно-сальдовая ведомость по P/C
+            <mib-file-uploader [existFile]="files" [title]="'Оборотно-сальдовая ведомость по P/C
             За последние 12 месяцев'" [type]="'OSV'" [required]="false" (remove)="onRemove($event)"
               (add)="onAdd($event)">
             </mib-file-uploader>
           </div>
 
           <div class="p-field p-col-12 p-md-6">
-            <mib-file-uploader [title]="'Отчётность на последнюю отчетную
+            <mib-file-uploader [existFile]="files" [title]="'Отчётность на последнюю отчетную
             дату ББиОПиУ'" [type]="'Balance'" [required]="false" (remove)="onRemove($event)" (add)="onAdd($event)">
             </mib-file-uploader>
           </div>
 
           <div class="p-field p-col-12 p-md-6">
-            <mib-file-uploader [title]="'Информационное письмо о займах и кредитах на текущую дату'" [required]="false"
+            <mib-file-uploader [existFile]="files" [title]="'Информационное письмо о займах и кредитах на текущую дату'" [required]="false"
               [type]="'Loans'" (remove)="onRemove($event)" (add)="onAdd($event)">
             </mib-file-uploader>
           </div>

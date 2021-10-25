@@ -67,6 +67,7 @@
         <div class="p-field p-col-12 p-md-6" *ngIf="!isEdit">
           <mib-file-uploader
             [title]="'При необходимости прикрепите файлы'"
+            [existFile]="files"
             [type]="'All'"
             [required]="false"
             (remove)="onRemove($event)"

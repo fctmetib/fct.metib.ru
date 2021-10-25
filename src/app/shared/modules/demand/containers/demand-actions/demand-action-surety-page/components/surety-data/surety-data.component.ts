@@ -55,6 +55,9 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
   @Output()
   back: EventEmitter<any> = new EventEmitter();
 
+  @Output()
+  removeFile: EventEmitter<any> = new EventEmitter();
+
   public organizationTypes: DemandSelectboxInterface[] = [];
   public ruleTypes: DemandSelectboxInterface[] = [];
   public typesOfOwner: DemandSelectboxInterface[] = [];
@@ -291,6 +294,7 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
 
   onRemove(file) {
     this.files = this.files.filter((x) => x !== file);
+    this.removeFile.emit(this.files);
   }
 
   public isFilesInvalid(): boolean {
@@ -479,6 +483,8 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
   }
 
   private convertToFormData() {
+    this.files =  this.currentDemand.Files;
+
     let factoring: DemandFactoringInterface = this.currentDemand.Factoring;
     let anket: DemandAnketInterface = this.currentDemand.Anket;
 

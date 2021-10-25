@@ -165,7 +165,6 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   }
 
   onRemove(file) {
-    console.log('files', this.files)
     this.files = this.files.filter((x) => x !== file);
     this.removeFile.emit(this.files);
   }

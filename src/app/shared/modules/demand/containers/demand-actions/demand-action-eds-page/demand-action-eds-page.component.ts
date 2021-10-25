@@ -584,6 +584,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   }
 
   private convertToFormData() {
+    this.files = this.currentDemand.Files;
 
     const organization: OrganizationDataInterface =
       this.currentDemand.Organization;

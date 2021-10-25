@@ -568,6 +568,8 @@ export class DemandActionAgentFactoringPageComponent
   }
 
   private convertToFormData() {
+    this.files = this.currentDemand.Files;
+
     let factoring: DemandFactoringInterface = this.currentDemand?.Factoring;
     let anket: DemandAnketInterface = this.currentDemand?.Anket;
 
@@ -839,7 +841,7 @@ export class DemandActionAgentFactoringPageComponent
         Trademarks: this.formFactoring.value.factoringTradeMarks,
       },
       Files: this.files,
-      Type: 'AgencyFactoring ',
+      Type: 'AgencyFactoring',
     };
 
     return result;

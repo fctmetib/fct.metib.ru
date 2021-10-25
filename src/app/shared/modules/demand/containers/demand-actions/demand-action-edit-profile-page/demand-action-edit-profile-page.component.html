@@ -121,7 +121,7 @@
               </div>
               <ng-container *ngIf="!isEdit">
                 <div>
-                  <mib-file-uploader [title]="'Загрузите копию паспорта'" [type]="'Passport'"
+                  <mib-file-uploader [existFile]="files" [title]="'Загрузите копию паспорта'" [type]="'Passport'"
                     (remove)="onRemove($event)" (add)="onAdd($event)">
                   </mib-file-uploader>
                 </div>

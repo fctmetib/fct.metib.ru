@@ -169,6 +169,8 @@ export class DemandActionRequestFreePageComponent
   }
 
   private convertToFormData() {
+    this.files = this.currentDemand.Files;
+
     let data = this.currentDemand.Data;
     this.formFree.patchValue({
       subject: data.Subject,

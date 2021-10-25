@@ -225,6 +225,8 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
       data = this.currentDemand.Data;
     }
 
+    this.files = data.Files;
+
     this.formEdit.patchValue({
       last: data.Profile?.Name?.Last ? data.Profile?.Name?.Last : '',
       first: data.Profile?.Name?.First ? data.Profile?.Name?.First : '',
@@ -281,9 +283,9 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     let result: any = {
       Avatar: this.avatarCode,
       Passport: {
-        Date:
+        Date: this.formEdit.value.date ?
           new Date(this.formEdit.value.date).toISOString().slice(0, 19) +
-          '+03:00',
+          '+03:00' : null,
         Expire: null,
         IsForeign: false,
         IssuerCode: this.formEdit.value.issuerCode,

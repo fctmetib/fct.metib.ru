@@ -209,7 +209,7 @@
           <ng-container *ngIf="!isEdit">
             <div class="p-field p-col-12 p-md-6">
               <label> Прикрепите необходимые файлы </label>
-              <mib-file-uploader [title]="'Скан-Копия свидетельства ИНН организации'" [type]="'Inn'"
+              <mib-file-uploader [existFile]="files" [title]="'Скан-Копия свидетельства ИНН организации'" [type]="'Inn'"
                 (remove)="onRemove($event)" (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
@@ -217,7 +217,7 @@
               <label>
                 &nbsp;
               </label>
-              <mib-file-uploader [title]="'Скан-Копия свидетельства ОГРН
+              <mib-file-uploader [existFile]="files" [title]="'Скан-Копия свидетельства ОГРН
               организации'" [type]="'Ogrn'" (remove)="onRemove($event)" (add)="onAdd($event)">
               </mib-file-uploader>
 
@@ -317,7 +317,7 @@
               <label>
                 Прикрепите необходимые файлы
               </label>
-              <mib-file-uploader [title]="'Скан-Копия СНИЛС владельца
+              <mib-file-uploader [existFile]="files" [title]="'Скан-Копия СНИЛС владельца
               ключа подписи'" [type]="'Snils'" (remove)="onRemove($event)" (add)="onAdd($event)">
               </mib-file-uploader>
 
@@ -326,7 +326,7 @@
               <label>
                 &nbsp;
               </label>
-              <mib-file-uploader [title]="'Скан-Копия приказа о назначении на
+              <mib-file-uploader [existFile]="files" [title]="'Скан-Копия приказа о назначении на
               должность Генерального директора'" [type]="'Director'" (remove)="onRemove($event)" (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
@@ -376,7 +376,7 @@
               <ng-container *ngIf="!isEdit">
 
                 <div>
-                  <mib-file-uploader [title]="'Скан-копия паспорта
+                  <mib-file-uploader [existFile]="files" [title]="'Скан-копия паспорта
                   владельца ключа подписи'" [type]="'Passport'" (remove)="onRemove($event)" (add)="onAdd($event)">
                   </mib-file-uploader>
                 </div>

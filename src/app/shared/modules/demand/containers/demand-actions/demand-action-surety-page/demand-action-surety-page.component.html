@@ -6,7 +6,7 @@
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-      (click)="back()" *ngIf="isEdit"></button>
+        (click)="back()" *ngIf="isEdit"></button>
     </div>
   </div>
 
@@ -25,8 +25,9 @@
           </app-demand-info>
         </p-tabPanel>
         <p-tabPanel header="Данные">
-          <app-surety-data (back)="back()" [isEdit]="true" [currentDemand]="currentDemand" [currentDraftId]="currentDraftId"
-            (save)="handleSave($event)" (create)="handleSubmit($event)"></app-surety-data>
+          <app-surety-data (back)="back()" [isEdit]="true" [currentDemand]="currentDemand"
+            [currentDraftId]="currentDraftId" (save)="handleSave($event)" (create)="handleSubmit($event)">
+          </app-surety-data>
         </p-tabPanel>
         <p-tabPanel header="Файлы">
           <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files">
@@ -39,8 +40,9 @@
       </p-tabView>
     </ng-container>
     <ng-template #createTemplate>
-      <app-surety-data (back)="back()" [isEdit]="false" [currentDemand]="currentDemand"
-        [currentDraftId]="currentDraftId" (save)="handleSave($event)" (create)="handleSubmit($event)">
+      <app-surety-data (back)="back()" (removeFile)="handleRemoveFiles($event)" [isEdit]="false"
+        [currentDemand]="currentDemand" [currentDraftId]="currentDraftId" (save)="handleSave($event)"
+        (create)="handleSubmit($event)">
       </app-surety-data>
     </ng-template>
   </ng-template>

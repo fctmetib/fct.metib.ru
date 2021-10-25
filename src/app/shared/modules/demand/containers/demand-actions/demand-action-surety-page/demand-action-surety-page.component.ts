@@ -116,6 +116,10 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
     );
   }
 
+  handleRemoveFiles(files: FileModeInterface[]) {
+    this.currentDemand.Files = files;
+  }
+
   handleRemoveFile(file: FileModeInterface) {
     this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
   }
