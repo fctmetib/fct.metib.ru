@@ -4,10 +4,11 @@ import { HeaderPageComponent } from './components/header-page/header-page.compon
 import { MibFileUploaderComponent } from './components/mib-file-uploader/mib-file-uploader.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MibFileErrorDialogComponent } from './components/mib-file-error-dialog/mib-file-error-dialog.component';
 
 @NgModule({
   imports: [CommonModule, ProgressBarModule, FormsModule, ReactiveFormsModule],
-  exports: [HeaderPageComponent, MibFileUploaderComponent],
-  declarations: [HeaderPageComponent, MibFileUploaderComponent],
+  exports: [HeaderPageComponent, MibFileUploaderComponent, MibFileErrorDialogComponent],
+  declarations: [HeaderPageComponent, MibFileUploaderComponent, MibFileErrorDialogComponent],
 })
 export class SharedModule {}

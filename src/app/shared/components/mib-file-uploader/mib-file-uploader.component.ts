@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-error-dialog.component';
 
 @Component({
   selector: 'mib-file-uploader',
@@ -79,6 +81,7 @@ export class MibFileUploaderComponent implements OnInit {
   add = new EventEmitter<any>();
 
   public currentFiles = [];
+  private refMibFileErrorDialog: DynamicDialogRef;
 
   public fileUploadProgress = {
     progress: 0,
@@ -88,7 +91,8 @@ export class MibFileUploaderComponent implements OnInit {
 
   constructor(
     private commonService: CommonService,
-    private fileService: FileService
+    private fileService: FileService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {}
@@ -144,7 +148,12 @@ export class MibFileUploaderComponent implements OnInit {
                     progress: progressResult,
                     isProgress: true,
                   };
-
+                  break;
+                case 2:
+                  if (!res.ok) {
+                    // TODO: показать ошибку
+                    this.openErrorDialog();
+                  }
                   break;
                 // получил результат
                 case 4:
@@ -159,9 +168,13 @@ export class MibFileUploaderComponent implements OnInit {
                   this.add.emit(file);
                   this.resetLoader();
                   break;
+                default:
+                  break;
               }
             },
-            (err) => console.log(err)
+            (err) => {
+              console.log(err);
+            }
           )
       );
     }
@@ -176,5 +189,25 @@ export class MibFileUploaderComponent implements OnInit {
 
   private resetFileInputs() {
     (<HTMLInputElement>document.getElementById(this.type)).value = '';
+  }
+
+  private openErrorDialog() {
+    if (!this.refMibFileErrorDialog) {
+      this.refMibFileErrorDialog = this.dialogService.open(
+        MibFileErrorDialogComponent,
+        {
+          header: 'Ошибка',
+          width: '976px',
+          contentStyle: { 'max-height': '677px', overflow: 'auto' },
+          baseZIndex: 10000,
+        }
+      );
+
+      this.subscription$.add(
+        this.refMibFileErrorDialog.onClose.subscribe(() => {
+          this.refMibFileErrorDialog = null;
+        })
+      );
+    }
   }
 }
