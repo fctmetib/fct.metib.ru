@@ -287,7 +287,6 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   }
 
   onSubmit() {
-    console.log(this.formEDS.value);
     this.subscription$.add(
       this.demandService.add(this.prepareData()).subscribe((resp) => {
         this.alert = true;
@@ -511,8 +510,6 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     let address = this.formEDS.value[type].factoringPlacesAddress;
     let result = '';
 
-    console.log(address);
-
     if (address?.PostCode) {
       result = result + ' ' + address.PostCode;
     }
@@ -579,7 +576,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
           Type: resp.Type,
           Manager: null,
         };
-        console.log('Fetched, is view', this.currentDemand);
+
         this.isEdit = true;
         this.convertToFormData();
       })
@@ -587,7 +584,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   }
 
   private convertToFormData() {
-    console.log('THIS IS CURRENT DEMAND:',this.currentDemand);
+
     const organization: OrganizationDataInterface =
       this.currentDemand.Organization;
     const passport: PassportInterface = this.currentDemand.Passport;

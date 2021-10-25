@@ -18,7 +18,6 @@ export class DemandResultComponent implements OnInit, OnDestroy {
   public result: any;
 
   ngOnInit() {
-    console.log('Current result: ', this.result)
   }
 
   ngOnDestroy(): void {}

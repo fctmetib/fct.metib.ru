@@ -130,7 +130,6 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
 
     if (this.config.data) {
       let selectedRow: RequestsResponseInterface = this.config.data;
-      console.log(selectedRow);
 
       if (selectedRow.Shipments) {
         this.shipments = selectedRow.Shipments;
@@ -345,7 +344,6 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
           ID: Math.floor(Math.random() * 100),
         };
 
-        console.log(shipment);
         this.shipments.push(shipment);
       } else {
         this.errorsShipments.push(currentRowIndex);

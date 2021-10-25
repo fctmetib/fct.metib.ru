@@ -10,7 +10,6 @@ export class CryptoProService {
     try {
       return from(getUserCertificates());
     } catch (error) {
-      console.log(error);
     }
   }
 }

@@ -201,7 +201,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
           Type: resp.Type,
           Manager: null,
         };
-        console.log(this.currentDemand);
+
         this.isEdit = true;
         this.isLoading = false;
         this.convertToFormData();

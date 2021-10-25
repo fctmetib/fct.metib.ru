@@ -139,12 +139,12 @@ export class MibFileUploaderComponent implements OnInit {
                   const progressResult = Math.round(
                     (100 * res.loaded) / res.total
                   );
-                  console.log('Progress Result: ', progressResult);
+
                   this.fileUploadProgress = {
                     progress: progressResult,
                     isProgress: true,
                   };
-                  console.log('fileUploadProgress: ', this.fileUploadProgress);
+
                   break;
                 // получил результат
                 case 4:

@@ -49,7 +49,6 @@ export class ReportInitDialogComponent implements OnDestroy {
   }
 
   public onSubmit(): void {
-    console.log(this.form.value);
     this.ref.close(this.form.value);
   }
 
@@ -61,8 +60,6 @@ export class ReportInitDialogComponent implements OnDestroy {
     this.preloader = true;
     this.currentData = this.config.data;
     this.controlConfig = this.currentData.config;
-    console.log(this.currentData);
-
     this.subscription$.add(
       this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
         let debtors = resp.map((x) => x.Debtor);
@@ -73,7 +70,6 @@ export class ReportInitDialogComponent implements OnDestroy {
         debtors.reverse();
 
         this.uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
-        console.log(this.uniqDebtors);
         this.preloader = false;
       })
     );

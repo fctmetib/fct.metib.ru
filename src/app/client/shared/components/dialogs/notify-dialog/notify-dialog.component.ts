@@ -30,7 +30,6 @@ export class NotifyDialogComponent implements OnInit, OnDestroy {
     let isOpen: boolean = event.isOpen;
 
     if (isOpen) {
-      console.log('ID: ', id);
       this.subscription$.add(
         this.notifyService.readNotification(id).subscribe((resp) => {})
       );

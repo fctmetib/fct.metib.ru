@@ -73,7 +73,6 @@ export class AdminComponent implements OnInit {
     ];
     this.setTimeout();
     this.userInactive.subscribe(() => {
-      console.log('user has been inactive for 15m');
       this.openInactive();
     });
   }

@@ -153,7 +153,7 @@ export class DemandActionDebitorPageComponent
           Type: resp.Type,
           Manager: null,
         };
-        console.log(this.currentDemand);
+
         this.isEdit = true;
         this.convertToFormData();
         this.isLoading = false;
@@ -163,8 +163,6 @@ export class DemandActionDebitorPageComponent
 
   private convertToFormData() {
     let data = this.currentDemand;
-
-    console.log('FORM', this.formFree);
 
     this.formFree.patchValue({
       INN: data.INN,
@@ -219,7 +217,6 @@ export class DemandActionDebitorPageComponent
       this.demandService
         .addDraftById(this.currentDraftId, this.prepareDraft())
         .subscribe((resp) => {
-          console.log(resp);
           this.currentDraftId = resp.ID;
           this.showSuccess();
         })

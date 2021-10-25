@@ -160,7 +160,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     });
 
     this.ref.onClose.subscribe((data: any) => {
-      console.log('closed');
     });
   }
 
@@ -173,7 +172,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     });
 
     this.ref.onClose.subscribe((data: any) => {
-      console.log('closed');
     });
   }
 
@@ -230,7 +228,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
             });
 
             this.ref.onClose.subscribe((data: any) => {
-              console.log('closed');
             });
           }
         })
@@ -315,13 +312,11 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   private checkSelectedItemIsReadonly(): boolean {
     let isFromDuty = this.selectedItems.filter((x) => x.ReadOnly === true);
-    console.log(isFromDuty);
     return isFromDuty.length > 0 ? true : false;
   }
 
   private checkSelectedItemIsCreate(): boolean {
     let isCreated = this.selectedItems.filter((x) => x.Status !== 'Создана');
-    console.log(isCreated);
     return isCreated.length > 0 ? true : false;
   }
 

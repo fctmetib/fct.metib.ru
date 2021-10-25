@@ -106,8 +106,6 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
                     new Date(a.DateModify).getTime()
                   );
                 });
-
-                console.log('Demands', this.allDemands);
               });
             }
           }
@@ -161,8 +159,6 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   }
 
   edit(Type: string, ID: string, isView: boolean, isDraft: string) {
-    console.log(Type);
-
     const notVerify = 'not-verify';
     const baseUrl = this.isUserVerified ? '' : notVerify;
 

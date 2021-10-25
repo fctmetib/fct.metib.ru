@@ -30,7 +30,6 @@ export class ResetPasswordEffect {
             return resetPasswordSuccessAction({ confirmCode });
           }),
           catchError((errorResponse: HttpErrorResponse) => {
-            console.log(errorResponse);
             return of(
               resetPasswordFailureAction({ errors: errorResponse.error })
             );
@@ -50,7 +49,6 @@ export class ResetPasswordEffect {
             return resetPasswordConfirmSuccessAction({ successMessage });
           }),
           catchError((errorResponse: HttpErrorResponse) => {
-            console.log(errorResponse);
             return of(
               resetPasswordFailureAction({ errors: errorResponse.error })
             );

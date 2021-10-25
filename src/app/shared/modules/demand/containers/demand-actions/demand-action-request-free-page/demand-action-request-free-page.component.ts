@@ -120,7 +120,6 @@ export class DemandActionRequestFreePageComponent
       this.demandService
         .addDraftById(this.currentDraftId, this.prepareDraft())
         .subscribe((resp) => {
-          console.log(resp);
           this.currentDraftId = resp.ID;
           this.showSuccess();
         })
@@ -158,7 +157,7 @@ export class DemandActionRequestFreePageComponent
           Type: resp.Type,
           Manager: null,
         };
-        console.log(this.currentDemand);
+
         this.isEdit = true;
         this.convertToFormData();
       })

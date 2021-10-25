@@ -30,7 +30,6 @@ export class InactiveDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.counter$.subscribe(val => {
-      console.log(val, 'time to logout')
       if (val <= 0) {
         this.subject.next();
         this.subscription.unsubscribe();

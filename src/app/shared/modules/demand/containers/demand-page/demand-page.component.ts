@@ -94,7 +94,6 @@ export class DemandPageComponent implements OnInit, OnDestroy {
       this.subscription$.add(
         this.cryproService.getCertificates().subscribe((resp) => {
           // https://www.npmjs.com/package/crypto-pro
-          console.log(resp);
           this.certificateList = resp;
           this.isCertsLoading = false;
         })
@@ -235,8 +234,6 @@ export class DemandPageComponent implements OnInit, OnDestroy {
   }
 
   public async createSignatureWithFile(thumbprint) {
-    console.log(thumbprint);
-    console.log(this.file);
     this.hash = null;
     this.hashError = null;
     this.fileSignature = null;
@@ -245,7 +242,6 @@ export class DemandPageComponent implements OnInit, OnDestroy {
 
     try {
       this.hash = await createHash(this.file);
-      console.log('HASH', this.hash);
     } catch (error) {
       this.hashError = error.message;
 
@@ -396,13 +392,8 @@ export class DemandPageComponent implements OnInit, OnDestroy {
       jszip.loadAsync(file).then((zip) => {
         // <----- HERE
         Object.keys(zip.files).forEach((filename) => {
-          console.log('ZIP FILES', zip.files);
-          console.log('File Name', filename);
-          console.log('Current File', zip.files[filename]);
-
           // <----- HERE
           zip.files[filename].async('string').then((fileData) => {
-            console.log('Type', zip.files[filename].name.split('.')[1]);
             if (zip.files[filename].name.split('.')[1] === 'sig') {
               this.eds = fileData;
             } else {
@@ -417,7 +408,6 @@ export class DemandPageComponent implements OnInit, OnDestroy {
             }
             // <----- HERE
             fileData = fileData + '**$$##$$**' + fileData;
-            console.log('FD', fileData);
           });
         });
       });

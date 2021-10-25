@@ -28,7 +28,6 @@ export class RegisterEffect {
             return registerSuccessAction({ confirmCode });
           }),
           catchError((errorResponse: HttpErrorResponse) => {
-            console.log(errorResponse);
             return of(registerFailureAction({ errors: errorResponse.error }));
           })
         );

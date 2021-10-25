@@ -572,8 +572,6 @@ export class DemandActionAgentFactoringPageComponent
       this.formFactoring.value.factoringPlaces[index].factoringPlacesAddress;
     let result = '';
 
-    console.log(address);
-
     if (address.PostCode) {
       result = result + ' ' + address.PostCode;
     }

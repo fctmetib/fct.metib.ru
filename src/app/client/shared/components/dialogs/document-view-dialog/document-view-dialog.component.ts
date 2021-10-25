@@ -20,7 +20,6 @@ export class DocumentViewDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.config.data) {
       const data = this.config.data;
-      console.log(data);
       this.subscription$.add(
         this.fileService
           .getFile(data.requestID, data.document.DocumentID)

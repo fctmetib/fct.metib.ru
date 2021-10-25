@@ -34,7 +34,6 @@ export class ClientComponent implements OnInit, OnDestroy {
   ) {
     this.setTimeout();
     this.userInactive.subscribe(() => {
-      console.log('user has been inactive for 15s');
       this.openInactive();
     });
   }

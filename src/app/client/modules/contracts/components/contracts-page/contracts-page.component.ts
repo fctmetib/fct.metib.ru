@@ -392,7 +392,6 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
     this.listContractsFiltered = this.listContracts.filter(
       (x) => new Date(x.DateTo) > new Date()
     );
-    console.log(this.listContractsFiltered);
   }
 
   ngOnDestroy() {
@@ -402,9 +401,6 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
   public exportExcel(): void {
     import('xlsx').then((xlsx) => {
       let exportData: any[] = [];
-      console.log('shipments', this.currentShipments);
-      console.log('cols', this.cols);
-
       this.currentShipments.forEach((item) => {
         let object: any = {};
         this.cols.forEach((column) => {

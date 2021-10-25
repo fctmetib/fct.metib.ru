@@ -30,7 +30,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           console.warn('ErrorInterceptor. Client-side error');
           errorMessage =error.error.message;
         } else {
-          console.log(error)
           // server-side error
           console.warn(`ErrorInterceptor. Error Code: ${error.status}\nMessage: ${error.message}`);
           //TODO: if dev env => this.showError(`Error Code: ${error.status}\nMessage: ${error.message}`)

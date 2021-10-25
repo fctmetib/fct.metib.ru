@@ -43,12 +43,10 @@ export class MobileHeaderComponent implements OnInit {
   close() {
     let toggler: any = document.getElementsByClassName('toggler')[0];
     toggler.checked = false;
-    console.log(toggler)
   }
 
 
   getInfo() {
-    console.log(this.router.url); //
     const url = this.router.url;
     switch (url) {
       case '/cabinet':

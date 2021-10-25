@@ -12,7 +12,6 @@ export class CryptoService {
     try {
       return CryptoJS.AES.encrypt(JSON.stringify(data), this.KEY).toString();
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -24,7 +23,6 @@ export class CryptoService {
       }
       return data;
     } catch (e) {
-      console.log(e);
     }
   }
 }

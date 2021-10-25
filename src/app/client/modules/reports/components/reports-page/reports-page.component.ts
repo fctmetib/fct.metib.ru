@@ -34,7 +34,6 @@ export class ReportsPageComponent implements OnInit {
 
     this.ref.onClose.subscribe((data: any) => {
       if (data) {
-        console.log(data);
         data.type = type;
         data.title = title;
 

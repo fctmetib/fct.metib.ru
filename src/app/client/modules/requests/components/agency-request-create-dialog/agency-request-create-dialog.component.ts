@@ -49,7 +49,6 @@ export class AgencyRequestCreateDialogComponent implements OnDestroy {
   public onSubmit(): void {}
 
   public deliveryChanged(i) {
-    console.log(this.requests.at(i).value);
   }
 
   public getRequestByIndx(i): DeliveryInterface {

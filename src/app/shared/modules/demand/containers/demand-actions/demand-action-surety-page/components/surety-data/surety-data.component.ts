@@ -351,8 +351,6 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
       this.formFactoring.value.factoringPlaces[index].factoringPlacesAddress;
     let result = '';
 
-    console.log(address);
-
     if (address.PostCode) {
       result = result + ' ' + address.PostCode;
     }

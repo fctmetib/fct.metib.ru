@@ -87,7 +87,6 @@ export class HeaderComponent implements OnInit {
   }
 
   getInfo() {
-    console.log(this.router.url); //
     const url = this.router.url;
     switch (url) {
       case '/cabinet':

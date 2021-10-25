@@ -180,8 +180,6 @@ export class ReportViewPageComponent implements OnInit {
 
   private prepareTable(): void {
     this.reportConfig = ReportType.getType(this.data.type);
-    console.log(this.reportConfig);
-    console.log(this.data.type);
     this.reportConfig.columns.forEach((column) => {
       if (column.visible) {
         this._selectedColumns.push(column);
@@ -241,7 +239,6 @@ export class ReportViewPageComponent implements OnInit {
 
     this.subscription$.add(
       this.reportService.getReport(request).subscribe((resp: any[]) => {
-        console.log('resp', resp);
         this.reportData = resp.sort((a, b) => {
           return new Date(b.DateShipment).getTime() - new Date(a.DateShipment).getTime();
         });

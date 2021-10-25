@@ -151,7 +151,6 @@ export class DemandActionVerificationPageComponent
       this.demandService
         .addDraftById(this.currentDraftId, this.prepareDraft())
         .subscribe((resp) => {
-          console.log(resp);
           this.currentDraftId = resp.ID;
           this.showSuccess();
         })
