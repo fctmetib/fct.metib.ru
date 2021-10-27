@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ExitGuard } from '../../services/exit.guard';
-import { DemandContainerComponent } from './containers/demand-container/demand-container.component';
+import { DemandActionComponent } from './containers/demand-action/demand-action.component';
 
 const routes = [
   {
     path: '',
     children: [
       {
-        path: 'demand-work',
-        component: DemandContainerComponent,
+        path: 'demand-action',
+        component: DemandActionComponent,
       },
     ],
   },

@@ -1,0 +1,38 @@
+<!-- Нотификация -->
+<p-toast></p-toast>
+
+<!-- Обёртка в card content -->
+<div [ngClass]="{'card-content': isUserVerified}">
+  <div class="header lg">
+    <div class="title">
+      <h2>{{actionName}}</h2>
+    </div>
+    <div class="actions">
+      <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
+        (click)="back()"></button>
+    </div>
+  </div>
+
+  <!-- Проверка загрузки -->
+  <ng-container *ngIf="isLoading; else contentTemplate">
+    Загрузка...
+  </ng-container>
+  <ng-template #contentTemplate>
+    <!-- Создание запроса -->
+    <ng-template [ngIf]="currentDemandType === demandType.CREATE">
+      <demand-create></demand-create>
+    </ng-template>
+    <!-- Редактирование созданной заявки -->
+    <ng-template [ngIf]="currentDemandType === demandType.EDIT_CREATED">
+      Редактирование созданной заявки
+    </ng-template>
+    <!-- Редактирование черновика -->
+    <ng-template [ngIf]="currentDemandType === demandType.EDIT_DRAFT">
+      Редактирование черновика
+    </ng-template>
+    <!-- Просмотр закрытого запроса -->
+    <ng-template [ngIf]="currentDemandType === demandType.VIEW">
+      Просмотр закрытой
+    </ng-template>
+  </ng-template>
+</div>

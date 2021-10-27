@@ -37,7 +37,9 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import { SharedModule } from '../../shared.module';
 
 // Containers
-import { DemandContainerComponent } from './containers/demand-container/demand-container.component';
+import { DemandActionComponent } from './containers/demand-action/demand-action.component';
+import { DemandCreateComponent } from './containers/demand-create/demand-create.component';
+import { EDSComponent } from './components/eds/eds.component';
 
 @NgModule({
   imports: [
@@ -74,8 +76,10 @@ import { DemandContainerComponent } from './containers/demand-container/demand-c
   ],
   declarations: [
     // Containers
-    DemandContainerComponent
+    DemandActionComponent,
+    DemandCreateComponent,
     // Components
+    EDSComponent
     // Modals
   ],
   providers: [
