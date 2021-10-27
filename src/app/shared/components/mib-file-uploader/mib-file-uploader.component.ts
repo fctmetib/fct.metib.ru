@@ -21,7 +21,6 @@ import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-e
           <input
             type="file"
             id="{{ type }}"
-            accept="image/jpeg,image/png,image/gif,application/pdf"
             (change)="onSelect($event)"
             multiple="true"
             hidden
