@@ -36,6 +36,9 @@ import { ExitGuard } from '../../services/exit.guard';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import { SharedModule } from '../../shared.module';
 
+// Containers
+import { DemandContainerComponent } from './containers/demand-container/demand-container.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -71,6 +74,7 @@ import { SharedModule } from '../../shared.module';
   ],
   declarations: [
     // Containers
+    DemandContainerComponent
     // Components
     // Modals
   ],

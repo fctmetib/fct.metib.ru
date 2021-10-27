@@ -211,6 +211,11 @@ export class ClientComponent implements OnInit, OnDestroy {
           routerLinkActiveOptions: { exact: false },
         },
         {
+          label: 'Запросы new',
+          routerLink: 'new-demand',
+          routerLinkActiveOptions: { exact: false },
+        },
+        {
           label: 'Электронные документы',
           routerLink: 'documents',
           routerLinkActiveOptions: { exact: false },
