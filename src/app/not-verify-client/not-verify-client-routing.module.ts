@@ -13,6 +13,10 @@ const routes = [
         path: 'demand',
         loadChildren: () => import('../shared/modules/demand/demand.module').then(m => m.DemandModule)
       },
+      {
+        path: 'new-demand',
+        loadChildren: () => import('../shared/modules/demand-new/demand-new.module').then(m => m.DemandNewModule)
+      },
     ],
   },
 ];
