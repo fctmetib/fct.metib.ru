@@ -31,6 +31,11 @@ export class DemandService {
     return this.http.get<DemandInterface<any>>(url);
   }
 
+  getDemandDraftById(id: number): Observable<DemandInterface<any>> {
+    const url = `${environment.apiUrl}/demand/draft/${id}`;
+    return this.http.get<DemandInterface<any>>(url);
+  }
+
   //#endregion
 
   getDigitalSignatureRequest(data: CreateDemandEDSRequestInterface): Observable<any> {

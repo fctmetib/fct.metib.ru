@@ -90,9 +90,13 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
         this.isView = params['View'] === 'true' ? true : false;
-        if (params['ID'] && params['Edit'] === 'false') {
+        if (params['ID'] && params['Edit'] === 'true') {
+          this.isLoading = true;
+          this.fetchDraft(params['ID']);
+        } else if (params['ID'] && params['Edit'] === 'false') {
           this.fetch(params['ID']);
         } else {
+          this.isLoading = true;
           this.getDraft();
         }
       })
@@ -185,6 +189,27 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     );
   }
 
+  private fetchDraft(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandDraftById(id).subscribe((resp) => {
+        this.currentDemand = resp;
+        this.currentDraftId = resp.ID;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
+        this.convertToFormData();
+      })
+    );
+  }
+
   private fetch(id: number) {
     this.isLoading = true;
     this.subscription$.add(
@@ -225,7 +250,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
       data = this.currentDemand.Data;
     }
 
-    this.files = data.Files;
+    this.files = data?.Files;
 
     this.formEdit.patchValue({
       last: data.Profile?.Name?.Last ? data.Profile?.Name?.Last : '',
@@ -245,6 +270,9 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     if (this.avatarCode) {
       this.avatarSource = `${environment.apiUrl}avatar/${this.avatarCode}`;
     }
+
+    this.isLoading = false;
+    this.formEdit.markAllAsTouched();
   }
 
   public isFileInvalid(type: string): boolean {

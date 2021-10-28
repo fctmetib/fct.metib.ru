@@ -18,7 +18,9 @@ import { ExitGuard } from 'src/app/shared/services/exit.guard';
   templateUrl: './demand-action-factoring-page.component.html',
   styleUrls: ['./demand-action-factoring-page.component.scss'],
 })
-export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, ExitGuard {
+export class DemandActionFactoringPageComponent
+  implements OnInit, OnDestroy, ExitGuard
+{
   public isUserVerified: boolean;
 
   public alert: boolean;
@@ -51,8 +53,11 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        this.isView = params['View'] === 'true' ? true : false
-        if (params['ID'] && params['Edit'] === 'false') {
+        this.isView = params['View'] === 'true' ? true : false;
+        if (params['ID'] && params['Edit'] === 'true') {
+          this.isLoading = true;
+          this.fetchDraft(params['ID']);
+        } else if (params['ID'] && params['Edit'] === 'false') {
           this.fetch(params['ID']);
         } else {
           this.isLoading = true;
@@ -68,7 +73,6 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
     this.router.navigate([`${baseUrl}/demand`]);
   }
 
-
   ngOnDestroy() {
     this.subscription$.unsubscribe();
   }
@@ -76,21 +80,27 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
   handleSubmit(
     data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface>
   ) {
-    if(this.isEdit) {
-      data.Data.Files = this.currentDemand.Files
+    if (this.isEdit) {
+      data.Data.Files = this.currentDemand.Files;
     }
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
-        window.scroll(0,0);
-        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
+        window.scroll(0, 0);
+        this.alertMessage = [
+          {
+            severity: 'success',
+            summary: 'Успешно!',
+            detail: 'Запрос успешно создан.',
+          },
+        ];
       })
     );
     // this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
   handleSave(event: any) {
-    if(this.isEdit) {
+    if (this.isEdit) {
       return;
     }
 
@@ -123,7 +133,9 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
   }
 
   handleRemoveFile(file: FileModeInterface) {
-    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+    this.currentDemand.Files = this.currentDemand.Files.filter(
+      (x) => x !== file
+    );
   }
   //#region private logic
 
@@ -131,6 +143,27 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
     this.subscription$.add(
       this.demandService.prepareDemandByType('Factoring').subscribe((resp) => {
         this.currentDemand = resp;
+        this.isLoading = false;
+      })
+    );
+  }
+
+  private fetchDraft(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandDraftById(id).subscribe((resp) => {
+        this.currentDemand = resp.Data;
+        this.currentDraftId = resp.ID;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
         this.isLoading = false;
       })
     );
@@ -165,7 +198,8 @@ export class DemandActionFactoringPageComponent implements OnInit, OnDestroy, Ex
   }
   //#endregion
   canDeactivate(): boolean | Observable<boolean> {
-    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
+    return confirm(
+      'Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?'
+    );
   }
-
 }

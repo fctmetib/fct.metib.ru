@@ -54,7 +54,10 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
         this.isView = params['View'] === 'true' ? true : false
-        if (params['ID'] && params['Edit'] === 'false') {
+        if (params['ID'] && params['Edit'] === 'true') {
+          this.isLoading = true;
+          this.fetchDraft(params['ID']);
+        } else if (params['ID'] && params['Edit'] === 'false') {
           this.fetch(params['ID']);
         } else {
           this.isLoading = true;
@@ -129,6 +132,27 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
     this.subscription$.add(
       this.demandService.prepareDemandByType('Guarantee').subscribe((resp) => {
         this.currentDemand = resp;
+        this.isLoading = false;
+      })
+    );
+  }
+
+  private fetchDraft(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandDraftById(id).subscribe((resp) => {
+        this.currentDemand = resp.Data;
+        this.currentDraftId = resp.ID;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
         this.isLoading = false;
       })
     );

@@ -108,8 +108,10 @@ export class DemandActionAgentFactoringPageComponent
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
         this.isView = params['View'] === 'true' ? true : false;
-        if (params['ID'] && params['Edit'] === 'false') {
+        if (params['ID'] && params['Edit'] === 'true') {
           this.isLoading = true;
+          this.fetchDraft(params['ID']);
+        } else if (params['ID'] && params['Edit'] === 'false') {
           this.fetch(params['ID']);
         } else {
           this.isLoading = true;
@@ -306,6 +308,27 @@ export class DemandActionAgentFactoringPageComponent
     );
   }
 
+  private fetchDraft(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandDraftById(id).subscribe((resp) => {
+        this.currentDemand = resp.Data;
+        this.currentDraftId = resp.ID;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
+        this.convertToFormData();
+      })
+    );
+  }
+
   //#region public page actions
 
   addOtherBank(existBank?: DemandAddonAccountInterface): void {
@@ -423,7 +446,6 @@ export class DemandActionAgentFactoringPageComponent
       }
     });
   }
-
 
   onAdd(file) {
     this.files.push(file);
@@ -617,6 +639,9 @@ export class DemandActionAgentFactoringPageComponent
     if (credits) {
       credits.forEach((c) => this.addFactoringCredits(c));
     }
+
+    this.formFactoring.markAllAsTouched();
+    this.isLoading = false;
   }
 
   private showSuccess() {

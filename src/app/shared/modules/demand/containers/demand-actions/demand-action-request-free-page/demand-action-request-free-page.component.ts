@@ -37,6 +37,8 @@ export class DemandActionRequestFreePageComponent
 
   public formFree: FormGroup;
 
+  public isLoading: boolean = false;
+
   public files: FileModeInterface[] = [];
 
   private currentDraftId: number = 0;
@@ -68,12 +70,14 @@ export class DemandActionRequestFreePageComponent
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
         this.isView = params['View'] === 'true' ? true : false
-        if (params['ID'] && params['Edit'] === 'false') {
+        if(params['ID'] && params['Edit'] === 'true') {
+          this.isLoading = true;
+          this.fetchDraft(params['ID']);
+        } else if (params['ID'] && params['Edit'] === 'false') {
           this.fetch(params['ID']);
-        }
-        if (params['DraftId']) {
-          this.currentDraftId = params['DraftID'];
-          this.isEdit = true;
+        } else {
+          this.isLoading = true;
+          this.getDraft();
         }
       })
     );
@@ -145,6 +149,18 @@ export class DemandActionRequestFreePageComponent
       (x) => x !== file
     );
   }
+  private getDraft() {
+    this.subscription$.add(
+      this.demandService
+        .prepareDemandByType('Question')
+        .subscribe((resp) => {
+          this.currentDemand = resp;
+          this.convertToFormData();
+          this.isLoading = false;
+        })
+    );
+  }
+
 
   private fetch(id: number) {
     this.subscription$.add(
@@ -168,14 +184,40 @@ export class DemandActionRequestFreePageComponent
     );
   }
 
-  private convertToFormData() {
-    this.files = this.currentDemand.Files;
+  private fetchDraft(id: number) {
+    this.subscription$.add(
+      this.demandService.getDemandDraftById(id).subscribe((resp) => {
+        this.currentDemand = resp;
+        console.log('RESTP: ', resp)
+        this.currentDraftId = resp.ID;
+        this.currentInformation = {
+          ID: resp.ID,
+          Messages: resp.Messages,
+          DateCreated: resp.DateCreated,
+          DateModify: resp.DateModify,
+          DateStatus: resp.DateStatus,
+          Steps: resp.Steps,
+          Status: resp.Status,
+          Type: resp.Type,
+          Manager: null,
+        };
+        this.convertToFormData();
+      })
+    );
+  }
 
-    let data = this.currentDemand.Data;
+  private convertToFormData() {
+    this.files = this.currentDemand?.Files;
+
+    let data = this.currentDemand?.Data;
+    console.log(this.currentDemand)
+    console.log(data)
     this.formFree.patchValue({
-      subject: data.Subject,
-      question: data.Question,
+      subject: data?.Subject,
+      question: data?.Question,
     });
+
+    this.isLoading = false;
   }
 
   private prepareDraft() {
