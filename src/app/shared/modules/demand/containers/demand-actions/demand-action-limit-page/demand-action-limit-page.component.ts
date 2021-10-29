@@ -36,6 +36,7 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
 
   private currentDraftId: number = 0;
 
+  public isRequestLoading: boolean = false;
   public isLoading: boolean = false;
 
   private _saveDraftAction$: NodeJS.Timeout;
@@ -88,6 +89,7 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
 
   public onSubmit() {
     this.isLoading = true;
+    this.isRequestLoading = true;
     let data: SaveDemandRequestInterface<any> = this.prepareData();
 
     this.subscription$.add(
@@ -96,6 +98,7 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
         window.scroll(0, 0);
         this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
         this.isLoading = false;
+        this.isRequestLoading = false;
       })
     );
   }

@@ -39,6 +39,8 @@ export class DemandActionDebitorPageComponent
 
   public formFree: FormGroup;
 
+  public isRequestLoading: boolean = false;
+
   public files: FileModeInterface[] = [];
 
   public isLoading: boolean = false;
@@ -222,6 +224,7 @@ export class DemandActionDebitorPageComponent
     }
 
     this.isLoading = true;
+    this.isRequestLoading = true;
     let data: SaveDemandRequestInterface<any> = this.prepareData();
 
     this.subscription$.add(
@@ -235,6 +238,7 @@ export class DemandActionDebitorPageComponent
             detail: 'Запрос успешно создан.',
           },
         ];
+        this.isRequestLoading = false;
         this.isLoading = false;
       })
     );

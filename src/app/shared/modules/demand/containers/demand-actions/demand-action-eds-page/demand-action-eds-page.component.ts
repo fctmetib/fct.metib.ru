@@ -45,6 +45,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   public alert: boolean;
   public alertMessage = [];
 
+  public isRequestLoading: boolean = false;
+
   isUserVerified: boolean;
   formEDS: FormGroup;
   public files: FileModeInterface[] = [];
@@ -285,11 +287,12 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       passportDate: ['', [Validators.required]],
       passportFrom: ['', [Validators.required]],
       passportCode: ['', [Validators.required]],
-      passportNationality: ['', [Validators.required]]
+      passportNationality: ['']
     });
   }
 
   onSubmit() {
+    this.isRequestLoading = true;
     this.subscription$.add(
       this.demandService.add(this.prepareData()).subscribe((resp) => {
         this.alert = true;
@@ -301,6 +304,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
             detail: 'Запрос успешно создан.',
           },
         ];
+        this.isRequestLoading = false;
       })
     );
   }

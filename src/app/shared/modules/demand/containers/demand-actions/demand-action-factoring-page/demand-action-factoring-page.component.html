@@ -26,7 +26,7 @@
         </p-tabPanel>
         <p-tabPanel header="Данные">
           <app-factoring-data [isEdit]="true" [currentDemand]="currentDemand" [currentDraftId]="currentDraftId"
-            (save)="handleSave($event)" (create)="handleSubmit($event)" (back)="back()"></app-factoring-data>
+            (save)="handleSave($event)" (create)="handleSubmit($event)" (back)="back()" [isRequestLoading]="isRequestLoading"></app-factoring-data>
         </p-tabPanel>
         <p-tabPanel header="Файлы">
           <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files">
@@ -40,7 +40,7 @@
     </ng-container>
     <ng-template #createTemplate>
       <app-factoring-data (back)="back()" (removeFile)="handleRemoveFiles($event)" [isEdit]="false" [currentDemand]="currentDemand"
-        [currentDraftId]="currentDraftId" (save)="handleSave($event)" (create)="handleSubmit($event)">
+        [currentDraftId]="currentDraftId" (save)="handleSave($event)" (create)="handleSubmit($event)" [isRequestLoading]="isRequestLoading">
       </app-factoring-data>
     </ng-template>
   </ng-template>

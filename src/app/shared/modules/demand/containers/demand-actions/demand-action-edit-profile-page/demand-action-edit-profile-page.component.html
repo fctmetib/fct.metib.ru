@@ -191,6 +191,7 @@
             <label for="btn_submit">&nbsp;</label>
             <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
               class="btn-mib-submit p-button-outlined"
+              [loading]="isRequestLoading"
               [disabled]="formEdit.invalid || isRequestLoading || isFilesInvalid()"></button>
           </div>
         </div>

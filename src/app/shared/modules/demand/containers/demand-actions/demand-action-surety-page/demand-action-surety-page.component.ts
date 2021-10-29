@@ -31,6 +31,8 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
 
+  public isRequestLoading: boolean = false;
+
   public files: any;
 
   public isEdit: boolean = false;
@@ -53,7 +55,7 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        this.isView = params['View'] === 'true' ? true : false
+        this.isView = params['View'] === 'true' ? true : false;
         if (params['ID'] && params['Edit'] === 'true') {
           this.isLoading = true;
           this.fetchDraft(params['ID']);
@@ -73,7 +75,6 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
     this.router.navigate([`${baseUrl}/demand`]);
   }
 
-
   ngOnDestroy() {
     this.subscription$.unsubscribe();
   }
@@ -81,17 +82,26 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
   handleSubmit(
     data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface>
   ) {
-    if(this.isEdit) {
-      data.Data.Files = this.currentDemand.Files
+    if (this.isEdit) {
+      data.Data.Files = this.currentDemand.Files;
     }
+    this.isRequestLoading = true;
+
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
-        window.scroll(0,0);
-        this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
+        window.scroll(0, 0);
+        this.alertMessage = [
+          {
+            severity: 'success',
+            summary: 'Успешно!',
+            detail: 'Запрос успешно создан.',
+          },
+        ];
+        this.isRequestLoading = false;
       })
     );
-   // this.store.dispatch(createDemandFactoringAction({ data }));
+    // this.store.dispatch(createDemandFactoringAction({ data }));
   }
 
   handleSave(event: any) {
@@ -124,7 +134,9 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
   }
 
   handleRemoveFile(file: FileModeInterface) {
-    this.currentDemand.Files = this.currentDemand.Files.filter(x => x !== file)
+    this.currentDemand.Files = this.currentDemand.Files.filter(
+      (x) => x !== file
+    );
   }
   //#region private logic
 
@@ -187,7 +199,8 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
   }
   //#endregion
   canDeactivate(): boolean | Observable<boolean> {
-    return confirm('Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?');
+    return confirm(
+      'Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?'
+    );
   }
-
 }

@@ -119,6 +119,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   }
 
   onSubmit() {
+    this.isRequestLoading = true;
     let data: SaveDemandRequestInterface<any> = {
       Data: this.prepareData(),
       DraftID: this.currentDraftId,
@@ -135,6 +136,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
             detail: 'Запрос успешно создан.',
           },
         ];
+        this.isRequestLoading = false;
       })
     );
   }

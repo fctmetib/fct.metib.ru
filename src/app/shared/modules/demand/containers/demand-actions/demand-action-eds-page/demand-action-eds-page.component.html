@@ -429,11 +429,11 @@
             <p-dropdown styleClass="mib-input" id="passportNationality" [options]="countryList"
               placeholder="Выберите гражданство" formControlName="passportNationality" optionLabel="Title"
               optionValue="Identifier"></p-dropdown>
-            <div *ngIf="formEDS.controls['passportNationality'].invalid">
+            <!-- <div *ngIf="formEDS.controls['passportNationality'].invalid">
               <small *ngIf="formEDS.controls['passportNationality'].errors.required" class="p-error">
                 Поле должно быть заполнено.
               </small>
-            </div>
+            </div> -->
           </div>
 
           <div class="p-col-12">
@@ -454,7 +454,8 @@
           <div class="p-field p-col-12 p-md-12">
             <label for="btn_submit">&nbsp;</label>
             <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-              [disabled]="formEDS.invalid || isFilesInvalid()" class="btn-mib-submit p-button-outlined"></button>
+            [loading]="isRequestLoading"
+              [disabled]="formEDS.invalid || isFilesInvalid() || isRequestLoading" class="btn-mib-submit p-button-outlined"></button>
           </div>
         </div>
       </form>

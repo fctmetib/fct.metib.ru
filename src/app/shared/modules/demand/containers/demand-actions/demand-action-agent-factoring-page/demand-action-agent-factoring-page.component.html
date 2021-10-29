@@ -619,7 +619,8 @@
             <label for="btn_submit">&nbsp;</label>
             <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
               class="btn-mib-submit p-button-outlined"
-              [disabled]="formFactoring.invalid || (isLoading$ | async) || isFilesInvalid()"></button>
+              [loading]="isRequestLoading"
+              [disabled]="formFactoring.invalid || (isLoading$ | async) || isFilesInvalid() || isRequestLoading"></button>
           </div>
         </div>
       </form>

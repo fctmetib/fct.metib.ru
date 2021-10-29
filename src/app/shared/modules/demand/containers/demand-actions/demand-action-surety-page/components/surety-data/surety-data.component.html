@@ -611,7 +611,8 @@
       <label for="btn_submit">&nbsp;</label>
       <!--TODO ADD LOADER ON BUTTON -->
       <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-        class="btn-mib-submit p-button-outlined" [disabled]="formFactoring.invalid  || isFilesInvalid()"></button>
+      [loading]="isRequestLoading"
+        class="btn-mib-submit p-button-outlined" [disabled]="formFactoring.invalid  || isFilesInvalid() || isRequestLoading"></button>
     </div>
   </div>
 </form>

@@ -6,7 +6,7 @@
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-      (click)="back()" *ngIf="isEdit"></button>
+        (click)="back()" *ngIf="isEdit"></button>
     </div>
   </div>
 
@@ -44,14 +44,14 @@
       <form [formGroup]="formFree" (ngSubmit)="onSubmit()">
         <div class="form-actions" *ngIf="!isEdit">
           <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
-          (click)="back()"></button>
+            (click)="back()"></button>
         </div>
         <div class="p-fluid p-formgrid p-grid form">
           <!-- 1 row -->
           <div class="p-field p-col-12 p-lg-6">
             <label for="DebtorID">Дебитор</label>
-            <p-dropdown styleClass="mib-input"  [options]="debtorList" formControlName="DebtorID" placeholder="Дебитор" optionLabel="Title"
-              optionValue="ID">
+            <p-dropdown styleClass="mib-input" [options]="debtorList" formControlName="DebtorID" placeholder="Дебитор"
+              optionLabel="Title" optionValue="ID">
             </p-dropdown>
 
             <div *ngIf="formFree.controls['DebtorID'].invalid">
@@ -63,7 +63,7 @@
 
           <div class="p-field p-col-12 p-lg-6">
             <label for="VerificationType">Тип верификации</label>
-            <p-dropdown styleClass="mib-input"  [options]="verificationTypes" formControlName="VerificationType"
+            <p-dropdown styleClass="mib-input" [options]="verificationTypes" formControlName="VerificationType"
               (onChange)="changeVerificationType($event)" placeholder="Тип верификации" optionValue="value"
               optionLabel="name">
             </p-dropdown>
@@ -152,8 +152,9 @@
 
           <div class="p-field p-col-12 p-md-12">
             <label for="btn_submit">&nbsp;</label>
-            <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-              class="btn-mib-submit p-button-outlined" [disabled]="formFree.invalid || isLoading"></button>
+            <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос" [loading]="isRequestLoading"
+              class="btn-mib-submit p-button-outlined"
+              [disabled]="formFree.invalid || isLoading || isRequestLoading"></button>
           </div>
         </div>
       </form>

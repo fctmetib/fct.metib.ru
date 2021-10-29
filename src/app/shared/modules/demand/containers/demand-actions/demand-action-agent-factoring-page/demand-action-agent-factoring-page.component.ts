@@ -75,6 +75,7 @@ export class DemandActionAgentFactoringPageComponent
 
   private currentAddressFormId: any;
 
+  public isRequestLoading: boolean = false;
   public isLoading$: Observable<boolean> = new Observable<boolean>();
   public backendErrors$: Observable<string | null>;
 
@@ -240,6 +241,7 @@ export class DemandActionAgentFactoringPageComponent
   onSubmit() {
     let data: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> =
       this.prepareData();
+    this.isRequestLoading = true;
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
@@ -251,6 +253,7 @@ export class DemandActionAgentFactoringPageComponent
             detail: 'Запрос успешно создан.',
           },
         ];
+        this.isRequestLoading = false;
       })
     );
     // this.store.dispatch(createDemandFactoringAction({ data }));

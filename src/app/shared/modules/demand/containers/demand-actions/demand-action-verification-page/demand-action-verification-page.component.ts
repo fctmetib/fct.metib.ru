@@ -30,6 +30,7 @@ export class DemandActionVerificationPageComponent
   public isEdit: boolean = false;
 
   public isLoading: boolean;
+  public isRequestLoading: boolean = false;
   public isLoadingData: boolean;
 
   public debtorList: any[] = [];
@@ -118,6 +119,7 @@ export class DemandActionVerificationPageComponent
 
   public onSubmit() {
     let data: SaveDemandRequestInterface<any> = this.prepareData();
+    this.isRequestLoading = true;
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
@@ -129,6 +131,7 @@ export class DemandActionVerificationPageComponent
             detail: 'Запрос успешно создан.',
           },
         ];
+        this.isRequestLoading = false;
       })
     );
   }

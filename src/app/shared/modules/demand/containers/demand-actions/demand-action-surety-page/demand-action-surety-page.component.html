@@ -26,7 +26,8 @@
         </p-tabPanel>
         <p-tabPanel header="Данные">
           <app-surety-data (back)="back()" [isEdit]="true" [currentDemand]="currentDemand"
-            [currentDraftId]="currentDraftId" (save)="handleSave($event)" (create)="handleSubmit($event)">
+            [isRequestLoading]="isRequestLoading" [currentDraftId]="currentDraftId" (save)="handleSave($event)"
+            (create)="handleSubmit($event)">
           </app-surety-data>
         </p-tabPanel>
         <p-tabPanel header="Файлы">
@@ -41,8 +42,8 @@
     </ng-container>
     <ng-template #createTemplate>
       <app-surety-data (back)="back()" (removeFile)="handleRemoveFiles($event)" [isEdit]="false"
-        [currentDemand]="currentDemand" [currentDraftId]="currentDraftId" (save)="handleSave($event)"
-        (create)="handleSubmit($event)">
+        [isRequestLoading]="isRequestLoading" [currentDemand]="currentDemand" [currentDraftId]="currentDraftId"
+        (save)="handleSave($event)" (create)="handleSubmit($event)">
       </app-surety-data>
     </ng-template>
   </ng-template>

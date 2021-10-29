@@ -95,7 +95,8 @@
         <div class="p-field p-col-12 p-md-12">
           <label for="btn_submit">&nbsp;</label>
           <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-            class="btn-mib-submit p-button-outlined" [disabled]="formFree.invalid || isLoading"></button>
+          [loading]="isRequestLoading"
+            class="btn-mib-submit p-button-outlined" [disabled]="formFree.invalid || isLoading || isRequestLoading"></button>
         </div>
       </div>
     </form>

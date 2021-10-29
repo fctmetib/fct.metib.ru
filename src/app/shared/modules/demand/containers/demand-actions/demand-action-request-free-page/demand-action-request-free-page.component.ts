@@ -36,7 +36,7 @@ export class DemandActionRequestFreePageComponent
   public backendErrors$: Observable<string | null>;
 
   public formFree: FormGroup;
-
+  public isRequestLoading: boolean = false;
   public isLoading: boolean = false;
 
   public files: FileModeInterface[] = [];
@@ -99,12 +99,14 @@ export class DemandActionRequestFreePageComponent
   }
 
   public onSubmit() {
+    this.isRequestLoading = true;
     let data: SaveDemandRequestInterface<any> = this.prepareData();
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
         window.scroll(0, 0);
         this.alertMessage = [{severity:'success', summary:'Успешно!', detail:'Запрос успешно создан.'},];
+        this.isRequestLoading = false;
       })
     );
   }

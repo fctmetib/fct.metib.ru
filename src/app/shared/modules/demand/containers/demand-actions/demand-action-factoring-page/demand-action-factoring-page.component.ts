@@ -35,6 +35,7 @@ export class DemandActionFactoringPageComponent
 
   public isEdit: boolean = false;
   public isLoading: boolean = false;
+  public isRequestLoading: boolean = false;
 
   private subscription$: Subscription = new Subscription();
   isView: boolean;
@@ -83,9 +84,11 @@ export class DemandActionFactoringPageComponent
     if (this.isEdit) {
       data.Data.Files = this.currentDemand.Files;
     }
+    this.isRequestLoading = true;
     this.subscription$.add(
       this.demandService.add(data).subscribe((resp) => {
         this.alert = true;
+        this.isRequestLoading = false;
         window.scroll(0, 0);
         this.alertMessage = [
           {
@@ -104,6 +107,8 @@ export class DemandActionFactoringPageComponent
       return;
     }
 
+    this.isRequestLoading = true;
+
     if (this.currentDemand.Files) {
       event.Files = this.currentDemand.Files;
     }
@@ -113,6 +118,7 @@ export class DemandActionFactoringPageComponent
         .addDraftById(this.currentDraftId, event)
         .subscribe((resp) => {
           this.currentDraftId = resp.ID;
+          this.isRequestLoading = false;
           this.showSuccess();
         })
     );

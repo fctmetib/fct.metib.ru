@@ -46,6 +46,9 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
   @Input()
   currentDraftId: any;
 
+  @Input()
+  isRequestLoading: boolean = false;
+
   @Output()
   save: EventEmitter<any> = new EventEmitter();
 
