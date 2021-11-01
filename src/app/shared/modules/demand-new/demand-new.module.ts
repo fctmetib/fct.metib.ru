@@ -40,6 +40,7 @@ import { SharedModule } from '../../shared.module';
 import { DemandActionComponent } from './containers/demand-action/demand-action.component';
 import { DemandCreateComponent } from './containers/demand-create/demand-create.component';
 import { EDSComponent } from './components/eds/eds.component';
+import { DemandActionsComponent } from './containers/demand-actions/demand-actions.component';
 
 @NgModule({
   imports: [
@@ -78,6 +79,7 @@ import { EDSComponent } from './components/eds/eds.component';
     // Containers
     DemandActionComponent,
     DemandCreateComponent,
+    DemandActionsComponent,
     // Components
     EDSComponent
     // Modals

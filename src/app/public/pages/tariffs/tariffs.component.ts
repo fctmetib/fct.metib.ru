@@ -4,6 +4,7 @@ import { OrganizationService } from '../../service/organization.service';
 import { MibModalService } from '../../shared/mib-modal';
 import { Subscription } from 'rxjs';
 import { OrganizationInterface } from '../../type/organization.interface';
+import { Defender } from 'src/app/shared/classes/common/defender.class';
 
 @Component({
   selector: 'tariffs',
@@ -12,6 +13,8 @@ import { OrganizationInterface } from '../../type/organization.interface';
 })
 export class TariffsComponent implements OnInit, OnDestroy {
   private subscription$: Subscription = new Subscription();
+
+  public isRequestLoading: boolean = false;
 
   public display: boolean = false;
   public financeForm = this.fb.group({
@@ -33,7 +36,22 @@ export class TariffsComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   public sendFinanceRequest(id: string) {
-    let organizationInterface: OrganizationInterface = this.financeForm.value;
+    if (!this.isFinanceFormValid() || this.isRequestLoading) {
+      return;
+    }
+
+    this.isRequestLoading = true;
+
+    let organizationInterface: OrganizationInterface =  {
+      Comment: Defender.defendValue(this.financeForm.value?.comment),
+      Email:  Defender.defendValue(this.financeForm.value?.email),
+      Inn:  Defender.defendValue(this.financeForm.value?.inn),
+      IsAccept: this.financeForm.value?.isAccept,
+      Organization:  Defender.defendValue(this.financeForm.value?.organization),
+      Person:  Defender.defendValue(this.financeForm.value?.name),
+      Phone: Defender.defendValue(this.financeForm.value?.phone)
+    }
+
     this.subscription$.add(
       this.organizationService
         .send(organizationInterface)

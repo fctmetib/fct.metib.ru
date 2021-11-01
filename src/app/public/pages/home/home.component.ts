@@ -7,6 +7,7 @@ import { OrganizationService } from '../../service/organization.service';
 import { MibModalService } from '../../shared/mib-modal';
 import { OrganizationInterface } from '../../type/organization.interface';
 import { Router } from '@angular/router';
+import { Defender } from 'src/app/shared/classes/common/defender.class';
 
 @Component({
   selector: 'home',
@@ -16,6 +17,8 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit, OnDestroy {
   public display: boolean = false;
   public financeForm: FormGroup;
+
+  public isRequestLoading: boolean = false;
 
   public news: NewsInterface[];
   public partners: string[] = [];
@@ -67,7 +70,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public sendFinanceRequest(id: string) {
-    let organizationInterface: OrganizationInterface = this.financeForm.value;
+    if (!this.isFinanceFormValid() || this.isRequestLoading) {
+      return;
+    }
+
+    this.isRequestLoading = true;
+
+    let organizationInterface: OrganizationInterface =  {
+      Comment: Defender.defendValue(this.financeForm.value?.comment),
+      Email:  Defender.defendValue(this.financeForm.value?.email),
+      Inn:  Defender.defendValue(this.financeForm.value?.inn),
+      IsAccept: this.financeForm.value?.isAccept,
+      Organization:  Defender.defendValue(this.financeForm.value?.organization),
+      Person:  Defender.defendValue(this.financeForm.value?.name),
+      Phone: Defender.defendValue(this.financeForm.value?.phone)
+    }
+
     this.subscription$.add(
       this.organizationService
         .send(organizationInterface)
@@ -114,33 +132,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       '../../../../assets/public/partners/new/vseinstrumenti.png',
       '../../../../assets/public/partners/new/x5.png'
     ];
-
-    // this.partners = [
-    //   '../../../../assets/public/partners/old_svg/billa.svg',
-    //   '../../../../assets/public/partners/old_svg/diksi.svg',
-    //   '../../../../assets/public/partners/old_svg/familia.svg',
-    //   '../../../../assets/public/partners/old_svg/home.svg',
-    //   '../../../../assets/public/partners/old_svg/inmarko.svg',
-    //   '../../../../assets/public/partners/old_svg/instrument.svg',
-    //   '../../../../assets/public/partners/old_svg/katren.svg',
-    //   '../../../../assets/public/partners/old_svg/lamoda.svg',
-    //   '../../../../assets/public/partners/old_svg/lenta.svg',
-    //   '../../../../assets/public/partners/old_svg/leroy.svg',
-    //   '../../../../assets/public/partners/old_svg/megaphone.svg',
-    //   '../../../../assets/public/partners/old_svg/metro.svg',
-    //   '../../../../assets/public/partners/old_svg/mvideo.svg',
-    //   '../../../../assets/public/partners/old_svg/myasnov.svg',
-    //   '../../../../assets/public/partners/old_svg/nestle.svg',
-    //   '../../../../assets/public/partners/old_svg/obi.svg',
-    //   '../../../../assets/public/partners/old_svg/ok.svg',
-    //   '../../../../assets/public/partners/old_svg/petr.svg',
-    //   '../../../../assets/public/partners/old_svg/post.svg',
-    //   '../../../../assets/public/partners/old_svg/potek.svg',
-    //   '../../../../assets/public/partners/old_svg/stroy.svg',
-    //   '../../../../assets/public/partners/old_svg/uni.svg',
-    //   '../../../../assets/public/partners/old_svg/vimpel.svg',
-    //   '../../../../assets/public/partners/old_svg/x5.svg',
-    // ];
   }
 
   ngOnDestroy() {

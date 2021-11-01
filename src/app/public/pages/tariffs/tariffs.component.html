@@ -48,7 +48,7 @@
     <input type="text" formControlName="comment" placeholder="Ваш комментарий">
     <div class="actions">
       <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"
-        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid()"></mib-button>
+        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid() || isRequestLoading"></mib-button>
     </div>
     <div class="checkbox">
       <input type="checkbox" id="checkbox" formControlName="isAccept">
@@ -74,7 +74,7 @@
     <input type="text" formControlName="comment" placeholder="Ваш комментарий">
     <div class="actions">
       <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"
-        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid()"></mib-button>
+        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid() || isRequestLoading"></mib-button>
     </div>
     <div class="checkbox">
       <p-checkbox name="checkbox" binary="true" inputId="checkbox" formControlName="isAccept"></p-checkbox>
