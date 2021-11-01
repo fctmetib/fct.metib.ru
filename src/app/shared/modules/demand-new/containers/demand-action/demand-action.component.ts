@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DemandAction } from '../../types/common/demand-action';
 import { DemandActionType } from '../../types/common/demand-action-type';
 
 @Component({
@@ -11,11 +12,15 @@ export class DemandActionComponent implements OnInit {
   public isUserVerified: boolean = true;
   public isLoading: boolean = false;
   public actionName: string = 'Запрос на ЭЦП';
-  public currentDemandType: DemandActionType = DemandActionType.CREATE;
+
+  public currentDemandAction: DemandAction;
+  public currentDemandType: DemandActionType;
 
   constructor(private _router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   public back() {
     const notVerify = 'not-verify';

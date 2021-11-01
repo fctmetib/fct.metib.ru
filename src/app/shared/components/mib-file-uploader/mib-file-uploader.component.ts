@@ -216,10 +216,12 @@ export class MibFileUploaderComponent implements OnInit {
   }
 
   private fillCurrentFiles() {
-    this.existFile.forEach(file => {
-      if (file.Identifier === this.type) {
-        this.currentFiles.push(file);
-      }
-    });
+    if(this.existFile) {
+      this.existFile.forEach(file => {
+        if (file.Identifier === this.type) {
+          this.currentFiles.push(file);
+        }
+      });
+    }
   }
 }

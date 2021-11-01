@@ -87,9 +87,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       value: 'АО',
     },
   ];
-  postionTypes: DemandSelectboxInterface[] = [
-    { title: 'Директор', value: 'Директор' },
-  ];
+
   genderTypes: DemandSelectboxInterface[] = [
     {
       title: 'Женский',

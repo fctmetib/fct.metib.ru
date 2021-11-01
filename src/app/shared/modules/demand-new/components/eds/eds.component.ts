@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGenerator } from '../../tools/form-generator';
 
 @Component({
   selector: 'eds',
   styleUrls: ['./eds.component.scss'],
-  templateUrl: './eds.component.html'
+  templateUrl: './eds.component.html',
 })
-
 export class EDSComponent implements OnInit {
   public formEDS: FormGroup;
 
@@ -14,33 +14,21 @@ export class EDSComponent implements OnInit {
   public isEdit: boolean = false;
   public files: any[];
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {}
 
-  ngOnInit() { }
-
-  public onSubmit() {
-
+  ngOnInit() {
+    this._initForm();
   }
+
+  public onSubmit() {}
 
   // OLD
-  isFilesInvalid() {
-
-  }
-  getDigitalSignatureRequest() {
-
-  }
-  onRemove(event) {
-
-  }
-  onAdd(event) {
-
-  }
-  selectGeoPosition(event) {
-
-  }
-  setIDCenter(event) {
-
-  }
+  isFilesInvalid() {}
+  getDigitalSignatureRequest() {}
+  onRemove(event) {}
+  onAdd(event) {}
+  selectGeoPosition(event) {}
+  setIDCenter(event) {}
   openAddressForm(type) {
     let addresses = this.formEDS.value[type];
     let address = addresses.factoringPlacesAddress;
@@ -82,4 +70,8 @@ export class EDSComponent implements OnInit {
     // }
   }
 
+  private _initForm() {
+    const formGenerator = new FormGenerator(this.fb);
+    this.formEDS = formGenerator.generateEDSForm();
+  }
 }

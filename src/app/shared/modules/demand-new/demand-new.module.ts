@@ -41,6 +41,7 @@ import { DemandActionComponent } from './containers/demand-action/demand-action.
 import { DemandCreateComponent } from './containers/demand-create/demand-create.component';
 import { EDSComponent } from './components/eds/eds.component';
 import { DemandActionsComponent } from './containers/demand-actions/demand-actions.component';
+import { DemandNavigationService } from './services/demand-navigation.service';
 
 @NgModule({
   imports: [
@@ -92,6 +93,8 @@ import { DemandActionsComponent } from './containers/demand-actions/demand-actio
     CryptoProService,
     CommonService,
     FileService,
+    // Demand Services
+    DemandNavigationService,
   ],
 })
 export class DemandNewModule {}
