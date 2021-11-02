@@ -8,10 +8,16 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FileModeInterface } from '../../types/file/file-model.interface';
+import { Translator } from '../../classes/common/translator.class';
 
 @Injectable()
 export class FileService {
-  constructor(private http: HttpClient) {}
+
+  private _translator: Translator;
+
+  constructor(private http: HttpClient) {
+    this._translator = new Translator();
+  }
 
   //TODO: нужно узнать что передавать
   addFile(): Observable<FileModeInterface> {
@@ -25,9 +31,12 @@ export class FileService {
     fileSize: string,
     guid: string
   ): Observable<HttpEvent<FileModeInterface>> {
+
+    const fileNameNormal = this._translator.translitToEnglish(fileName);
+
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Upload-ChunkNumber', '1');
-    headers = headers.append('Upload-FileName', fileName);
+    headers = headers.append('Upload-FileName', fileNameNormal);
     headers = headers.append('Upload-GUID', guid);
     headers = headers.append('Upload-TotalSize', fileSize);
 
