@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { DemandNavigationService } from '../../services/demand-navigation.service';
 import { DemandAction } from '../../types/common/demand-action';
 import { DemandActionType } from '../../types/common/demand-action-type';
+import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 
 @Component({
   selector: 'demand-action',
@@ -13,19 +16,27 @@ export class DemandActionComponent implements OnInit {
   public isLoading: boolean = false;
   public actionName: string = 'Запрос на ЭЦП';
 
-  public currentDemandAction: DemandAction;
-  public currentDemandType: DemandActionType;
+  public demandNavigationConfig: DemandNavigationInterface;
 
-  constructor(private _router: Router) {}
+  private _subscription$: Subscription = new Subscription();
+
+  constructor(private _router: Router,
+    private _demandNavigationService: DemandNavigationService,) {}
 
   ngOnInit() {
+    this._subscription$.add(this._demandNavigationService.demandConfig$.subscribe(demandConfig => {
+      this.demandNavigationConfig = demandConfig;
+    }));
+  }
 
+  ngOnDestroy() {
+    this._subscription$.unsubscribe();
   }
 
   public back() {
     const notVerify = 'not-verify';
     const baseUrl = this.isUserVerified ? '' : notVerify;
-    this._router.navigate([`${baseUrl}/demand`]);
+    this._router.navigate([`${baseUrl}/new-demand`]);
   }
 
   public get demandType(): typeof DemandActionType {

@@ -11,14 +11,14 @@
  * @FACTORING запрос на факторинг
  * @AGENT_FACTORING запрос на агентский факторинг
  */
- export enum DemandAction {
-  EDS = 'eds',
-  EDIT_PROFILE = 'edit-profile',
-  FREE_REQUEST = 'free-request',
-  SURETY = 'surety',
-  UPDATE_LIMIT = 'update-limit',
-  CREATE_DEBITOR = 'create-debitor',
-  VERIFY = 'verify',
-  FACTORING = 'factoring',
-  AGENT_FACTORING = 'agent-factoring',
+export enum DemandAction {
+  EDS = 'EDS',
+  EDIT_PROFILE = 'EDIT_PROFILE',
+  FREE_REQUEST = 'FREE_REQUEST',
+  SURETY = 'SURETY',
+  UPDATE_LIMIT = 'UPDATE_LIMIT',
+  CREATE_DEBITOR = 'CREATE_DEBITOR',
+  VERIFY = 'VERIFY',
+  FACTORING = 'FACTORING',
+  AGENT_FACTORING = 'AGENT_FACTORING',
 }

@@ -14,7 +14,7 @@ export class DemandNavigationService {
 
   constructor() { }
 
-  set updateDemandConfig(newConfig: DemandNavigationInterface) {
+  public updateDemandConfig(newConfig: DemandNavigationInterface) {
     this.demandConfig$.next(newConfig);
   }
 }

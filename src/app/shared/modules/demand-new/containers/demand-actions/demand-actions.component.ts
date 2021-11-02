@@ -1,18 +1,32 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { saveAs } from '@progress/kendo-file-saver';
-import { Certificate, createAttachedSignature, createDetachedSignature, createHash, getCertificate, getSystemInfo, getUserCertificates, isValidSystemSetup, SystemInfo } from 'crypto-pro';
+import {
+  Certificate,
+  createAttachedSignature,
+  createDetachedSignature,
+  createHash,
+  getCertificate,
+  getSystemInfo,
+  getUserCertificates,
+  isValidSystemSetup,
+  SystemInfo,
+} from 'crypto-pro';
 import * as JSZip from 'jszip';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CryptoProService } from 'src/app/shared/services/common/cryprto-pro.service';
+import { DemandNavigationService } from '../../services/demand-navigation.service';
+import { DemandAction } from '../../types/common/demand-action';
+import { DemandActionType } from '../../types/common/demand-action-type';
 import { DemandLocalActionsInterface } from '../../types/common/demand-local-actions.interface';
+import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 
 @Component({
   selector: 'demand-actions',
   styleUrls: ['./demand-actions.component.scss'],
   templateUrl: './demand-actions.component.html',
 })
-
 export class DemandActionsComponent implements OnInit, OnDestroy {
   actions: DemandLocalActionsInterface[] = [];
 
@@ -22,11 +36,13 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
+    private _demandNavigationService: DemandNavigationService,
+    private _router: Router,
     private cryproService: CryptoProService
   ) {}
 
   ngOnInit() {
-    this.initActions();
+    this._initActions();
     this.isUserVerified = this.authService.isUserVerified();
   }
 
@@ -34,15 +50,32 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
+  /**
+   * Открывает новую страницу, по выбранному Запросу
+   */
+  public openDemandAction(action: DemandAction): void {
+    const demandConfig: DemandNavigationInterface = {
+      demandAction: action,
+      demandActionType: DemandActionType.CREATE
+    }
+    this._demandNavigationService.updateDemandConfig(demandConfig);
 
-  initActions() {
+    const url = `${this._router.url}/demand-action`;
+    this._router.navigateByUrl(url);
+  }
+
+  /**
+   * Производит инициализацию списка запросов, на основе ролей пользователя
+   */
+  private _initActions(): void {
     this.actions = [
       {
         text: 'Запрос на ЭЦП',
         url: 'demand-action',
+        action: DemandAction.EDS,
         isForNewClient: true,
         isForDefaultClient: true,
-      }
+      },
     ];
 
     let user = this.authService.getUserFromStore();
