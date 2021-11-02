@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { DemandNavigationService } from '../../services/demand-navigation.service';
@@ -11,22 +11,31 @@ import { DemandNavigationInterface } from '../../types/common/demand-navigation.
   styleUrls: ['./demand-action.component.scss'],
   templateUrl: './demand-action.component.html',
 })
-export class DemandActionComponent implements OnInit {
+export class DemandActionComponent implements OnInit, OnDestroy {
   public isUserVerified: boolean = true;
   public isLoading: boolean = false;
   public actionName: string = 'Запрос на ЭЦП';
 
   public demandNavigationConfig: DemandNavigationInterface;
-
   private _subscription$: Subscription = new Subscription();
 
-  constructor(private _router: Router,
-    private _demandNavigationService: DemandNavigationService,) {}
+  constructor(
+    private _router: Router,
+    private _demandNavigationService: DemandNavigationService
+  ) {}
 
   ngOnInit() {
-    this._subscription$.add(this._demandNavigationService.demandConfig$.subscribe(demandConfig => {
-      this.demandNavigationConfig = demandConfig;
-    }));
+    this._subscription$.add(
+      this._demandNavigationService.demandConfig$.subscribe((demandConfig) => {
+        // Если demand config пустой, значит "логика" не знает,
+        // что отрисовать - возвращаем пользователя на страницу назад, для заполнения demand config
+        if (!demandConfig) {
+          this._router.navigate(['/new-demand']);
+        }
+
+        this.demandNavigationConfig = demandConfig;
+      })
+    );
   }
 
   ngOnDestroy() {

@@ -1,16 +1,39 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DemandNavigationService } from '../../services/demand-navigation.service';
 import { DemandAction } from '../../types/common/demand-action';
+import { DemandActionType } from '../../types/common/demand-action-type';
+import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 
 @Component({
   selector: 'demand-create',
   styleUrls: ['./demand-create.component.scss'],
   templateUrl: './demand-create.component.html',
 })
-export class DemandCreateComponent implements OnInit {
-  public currentDemandAction: DemandAction;
+export class DemandCreateComponent implements OnInit, OnDestroy {
 
-  constructor(private _demandNavigationService: DemandNavigationService) {}
+  public demandNavigationConfig: DemandNavigationInterface;
+  private _subscription$: Subscription = new Subscription();
 
-  ngOnInit() {}
+  constructor(
+    private _router: Router,
+    private _demandNavigationService: DemandNavigationService
+  ) {}
+
+  ngOnInit() {
+    this._subscription$.add(
+      this._demandNavigationService.demandConfig$.subscribe((demandConfig) => {
+        this.demandNavigationConfig = demandConfig;
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this._subscription$.unsubscribe();
+  }
+
+  public get demandAction(): typeof DemandAction {
+    return DemandAction;
+  }
 }

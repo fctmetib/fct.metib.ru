@@ -1,12 +1,29 @@
-<eds></eds>
-
-<span [ngSwitch]="currentDemandAction">
-<p *ngSwitchCase="true">
-</p>
-<p *ngSwitchCase="false">
-
-</p>
-<p *ngSwitchDefault>
-
-</p>
-</span>
+<ng-container [ngSwitch]="demandNavigationConfig.demandAction">
+  <ng-template *ngSwitchCase="demandAction.EDS">
+    <eds></eds>
+  </ng-template>
+  <ng-template *ngSwitchCase="demandAction.EDIT_PROFILE">
+    <!-- TODO: ADD PAGE -->
+  </ng-template>
+  <ng-template *ngSwitchCase="demandAction.FREE_REQUEST">
+    <!-- TODO: ADD PAGE -->
+  </ng-template>
+  <ng-template *ngSwitchCase="demandAction.SURETY">
+    <!-- TODO: ADD PAGE -->
+  </ng-template>
+  <ng-template *ngSwitchCase="demandAction.UPDATE_LIMIT">
+    <!-- TODO: ADD PAGE -->
+  </ng-template>
+  <ng-template *ngSwitchCase="demandAction.CREATE_DEBITOR">
+    <!-- TODO: ADD PAGE -->
+  </ng-template>
+  <ng-template *ngSwitchCase="demandAction.VERIFY">
+    <!-- TODO: ADD PAGE -->
+  </ng-template>
+  <ng-template *ngSwitchCase="demandAction.FACTORING">
+    <!-- TODO: ADD PAGE -->
+  </ng-template>
+  <ng-template *ngSwitchCase="demandAction.AGENT_FACTORING">
+    <!-- TODO: ADD PAGE -->
+  </ng-template>
+</ng-container>

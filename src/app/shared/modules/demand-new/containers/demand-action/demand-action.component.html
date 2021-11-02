@@ -14,24 +14,24 @@
   </div>
 
   <!-- Проверка загрузки -->
-  <ng-container *ngIf="isLoading; else contentTemplate">
+  <ng-container *ngIf="!demandNavigationConfig; else contentTemplate">
     Загрузка...
   </ng-container>
   <ng-template #contentTemplate>
     <!-- Создание запроса -->
-    <ng-template [ngIf]="demandNavigationConfig.demandActionType === demandType.CREATE">
+    <ng-template *ngIf="demandNavigationConfig.demandActionType === demandType.CREATE">
       <demand-create></demand-create>
     </ng-template>
     <!-- Редактирование созданной заявки -->
-    <ng-template [ngIf]="demandNavigationConfig.demandActionType === demandType.EDIT_CREATED">
+    <ng-template *ngIf="demandNavigationConfig.demandActionType === demandType.EDIT_CREATED">
       Редактирование созданной заявки
     </ng-template>
     <!-- Редактирование черновика -->
-    <ng-template [ngIf]="demandNavigationConfig.demandActionType === demandType.EDIT_DRAFT">
+    <ng-template *ngIf="demandNavigationConfig.demandActionType === demandType.EDIT_DRAFT">
       Редактирование черновика
     </ng-template>
     <!-- Просмотр закрытого запроса -->
-    <ng-template [ngIf]="demandNavigationConfig.demandActionType === demandType.VIEW">
+    <ng-template *ngIf="demandNavigationConfig.demandActionType === demandType.VIEW">
       Просмотр закрытой
     </ng-template>
   </ng-template>

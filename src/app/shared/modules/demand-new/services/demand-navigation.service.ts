@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { DemandAction } from '../types/common/demand-action';
+import { DemandActionType } from '../types/common/demand-action-type';
 import { DemandNavigationInterface } from '../types/common/demand-navigation.interface';
 
 /**
@@ -10,7 +12,7 @@ import { DemandNavigationInterface } from '../types/common/demand-navigation.int
 @Injectable()
 export class DemandNavigationService {
 
-  public demandConfig$ = new Subject<DemandNavigationInterface>();
+  public demandConfig$ = new BehaviorSubject<DemandNavigationInterface>(null);
 
   constructor() { }
 
