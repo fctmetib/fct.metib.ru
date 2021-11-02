@@ -30,7 +30,7 @@ export class Translator {
     ['щ', 'shh'],
     ['ъ', "''"],
     ['ы', 'y'],
-    ['ь', "'"],
+    ['ь', ""],
     ['э', 'e'],
     ['ю', 'yu'],
     ['я', 'ya'],
@@ -129,6 +129,7 @@ export class Translator {
     ['X', 'X'],
     ['Y', 'Y'],
     ['Z', 'Z'],
+    ['.', '.'],
   ];
 
   public translitToEnglish(russianString: string): string {
