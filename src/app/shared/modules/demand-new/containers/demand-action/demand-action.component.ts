@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { DemandNavigationService } from '../../services/demand-navigation.service';
@@ -11,12 +11,12 @@ import { DemandNavigationInterface } from '../../types/common/demand-navigation.
   styleUrls: ['./demand-action.component.scss'],
   templateUrl: './demand-action.component.html',
 })
-export class DemandActionComponent implements OnInit, OnDestroy {
+export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   public isUserVerified: boolean = true;
   public isLoading: boolean = false;
   public actionName: string = 'Запрос на ЭЦП';
 
-  public demandNavigationConfig: DemandNavigationInterface;
+  public demandNavigationConfig: DemandNavigationInterface = null;
   private _subscription$: Subscription = new Subscription();
 
   constructor(
@@ -36,6 +36,9 @@ export class DemandActionComponent implements OnInit, OnDestroy {
         this.demandNavigationConfig = demandConfig;
       })
     );
+  }
+
+  ngAfterViewInit(): void {
   }
 
   ngOnDestroy() {

@@ -18,21 +18,19 @@
     Загрузка...
   </ng-container>
   <ng-template #contentTemplate>
-    <!-- Создание запроса -->
-    <ng-template *ngIf="demandNavigationConfig.demandActionType === demandType.CREATE">
-      <demand-create></demand-create>
-    </ng-template>
-    <!-- Редактирование созданной заявки -->
-    <ng-template *ngIf="demandNavigationConfig.demandActionType === demandType.EDIT_CREATED">
-      Редактирование созданной заявки
-    </ng-template>
-    <!-- Редактирование черновика -->
-    <ng-template *ngIf="demandNavigationConfig.demandActionType === demandType.EDIT_DRAFT">
-      Редактирование черновика
-    </ng-template>
-    <!-- Просмотр закрытого запроса -->
-    <ng-template *ngIf="demandNavigationConfig.demandActionType === demandType.VIEW">
-      Просмотр закрытой
-    </ng-template>
+    <ng-container [ngSwitch]="demandNavigationConfig.demandActionType">
+      <ng-container *ngSwitchCase="demandType.CREATE">
+        <demand-create></demand-create>
+      </ng-container>
+      <ng-container *ngSwitchCase="demandType.EDIT_CREATED">
+        Редактирование созданной заявки
+      </ng-container>
+      <ng-container *ngSwitchCase="demandType.EDIT_DRAFT">
+        Редактирование черновика
+      </ng-container>
+      <ng-container *ngSwitchCase="demandType.VIEW">
+        Просмотр закрытой
+      </ng-container>
+    </ng-container>
   </ng-template>
 </div>

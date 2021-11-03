@@ -8,11 +8,12 @@ import { FormGenerator } from '../../tools/form-generator';
   templateUrl: './eds.component.html',
 })
 export class EDSComponent implements OnInit {
-  public formEDS: FormGroup;
+  public form: FormGroup;
 
   // OLD
   public isEdit: boolean = false;
   public files: any[];
+  public selectedIdCenter: any;
 
   constructor(private fb: FormBuilder) {}
 
@@ -30,7 +31,7 @@ export class EDSComponent implements OnInit {
   selectGeoPosition(event) {}
   setIDCenter(event) {}
   openAddressForm(type) {
-    let addresses = this.formEDS.value[type];
+    let addresses = this.form.value[type];
     let address = addresses.factoringPlacesAddress;
 
     // this.ref = this.dialogService.open(AddressModalComponent, {
@@ -72,6 +73,6 @@ export class EDSComponent implements OnInit {
 
   private _initForm() {
     const formGenerator = new FormGenerator(this.fb);
-    this.formEDS = formGenerator.generateEDSForm();
+    this.form = formGenerator.generateEDSForm();
   }
 }

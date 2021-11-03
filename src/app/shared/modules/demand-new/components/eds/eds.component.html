@@ -1,17 +1,15 @@
-<form [formGroup]="formEDS" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="p-fluid p-formgrid p-grid form">
     <!-- 1 row -->
     <div class="p-field p-col-12 p-md-3">
       <label for="organizationType">Тип организации</label>
-      <p-dropdown styleClass="mib-input" id="organizationType" [options]="[]"
-        placeholder="Выберите Тип организации" formControlName="organizationType" optionLabel="title"
-        optionValue="value"></p-dropdown>
+      <p-dropdown styleClass="mib-input" id="organizationType" [options]="[]" placeholder="Выберите Тип организации"
+        formControlName="organizationType" optionLabel="title" optionValue="value"></p-dropdown>
     </div>
-    <div class="p-field p-col-12 p-md-9" *ngIf="formEDS?.value?.organizationType === 1">
+    <div class="p-field p-col-12 p-md-9" *ngIf="form?.value?.organizationType === 1">
       <label for="organizationLegalForm">Правовая форма</label>
-      <p-dropdown styleClass="mib-input" id="organizationLegalForm" [options]="[]"
-        placeholder="Выберите Правовую форму" formControlName="organizationLegalForm" optionLabel="title"
-        optionValue="value"></p-dropdown>
+      <p-dropdown styleClass="mib-input" id="organizationLegalForm" [options]="[]" placeholder="Выберите Правовую форму"
+        formControlName="organizationLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
     </div>
   </div>
   <div class="p-fluid p-formgrid p-grid form">
@@ -30,11 +28,11 @@
       <label for="organizationINN">ИНН</label>
       <input id="organizationINN" type="text" pInputText placeholder="ИНН" minlength="10" maxlength="12"
         formControlName="organizationINN">
-      <div *ngIf="formEDS?.controls['organizationINN']?.invalid">
-        <small *ngIf="formEDS?.controls['organizationINN']?.errors?.required" class="p-error">
+      <div *ngIf="form?.controls['organizationINN']?.invalid">
+        <small *ngIf="form?.controls['organizationINN']?.errors?.required" class="p-error">
           Поле должно быть заполнено.
         </small>
-        <small *ngIf="formEDS?.controls['organizationINN']?.errors.minlength" class="p-error">
+        <small *ngIf="form?.controls['organizationINN']?.errors.minlength" class="p-error">
           Введите корректный ИНН (10 или 12 цифр).
         </small>
       </div>
@@ -43,8 +41,8 @@
       <label for="organizationKPP">КПП</label>
       <p-inputMask id="organizationKPP" mask="999999999" formControlName="organizationKPP" placeholder="КПП">
       </p-inputMask>
-      <div *ngIf="formEDS?.controls['organizationKPP']?.invalid">
-        <small *ngIf="formEDS?.controls['organizationKPP']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['organizationKPP']?.invalid">
+        <small *ngIf="form?.controls['organizationKPP']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
@@ -53,8 +51,8 @@
       <label for="organizationOGRN">ОГРН</label>
       <p-inputMask id="organizationOGRN" mask="9999999999999" formControlName="organizationOGRN" placeholder="ОГРН">
       </p-inputMask>
-      <div *ngIf="formEDS?.controls['organizationOGRN']?.invalid">
-        <small *ngIf="formEDS?.controls['organizationOGRN']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['organizationOGRN']?.invalid">
+        <small *ngIf="form?.controls['organizationOGRN']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
@@ -63,11 +61,11 @@
       <label for="organizationOKPO">ОКПО</label>
       <input id="organizationOKPO" type="text" pInputText placeholder="ОКПО" minlength="8" maxlength="10"
         formControlName="organizationOKPO">
-      <div *ngIf="formEDS?.controls['organizationOKPO']?.invalid">
-        <small *ngIf="formEDS?.controls['organizationOKPO']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['organizationOKPO']?.invalid">
+        <small *ngIf="form?.controls['organizationOKPO']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
-        <small *ngIf="formEDS?.controls['organizationOKPO']?.errors.minlength" class="p-error">
+        <small *ngIf="form?.controls['organizationOKPO']?.errors.minlength" class="p-error">
           Введите корректный ОКПО (8 или 10 цифр).
         </small>
       </div>
@@ -77,8 +75,8 @@
       <label for="organizationPhone">Телефон</label>
       <p-inputMask id="organizationPhone" type="tel" placeholder="Телефон" formControlName="organizationPhone"
         mask="+7-999-999-99-99"></p-inputMask>
-      <div *ngIf="formEDS?.controls['organizationPhone']?.invalid">
-        <small *ngIf="formEDS?.controls['organizationPhone']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['organizationPhone']?.invalid">
+        <small *ngIf="form?.controls['organizationPhone']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
@@ -86,11 +84,11 @@
     <div class="p-field p-col-12 p-md-3">
       <label for="organizationEmail">E-mail</label>
       <input id="organizationEmail" type="email" pInputText placeholder="E-mail" formControlName="organizationEmail">
-      <div *ngIf="formEDS?.controls['organizationEmail']?.invalid">
-        <small *ngIf="formEDS?.controls['organizationEmail']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['organizationEmail']?.invalid">
+        <small *ngIf="form?.controls['organizationEmail']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
-        <small *ngIf="formEDS?.controls['organizationEmail']?.errors.email" class="p-error">
+        <small *ngIf="form?.controls['organizationEmail']?.errors.email" class="p-error">
           Введите корректную почту.
         </small>
       </div>
@@ -98,23 +96,16 @@
     <div class="p-field p-col-12 p-md-12">
       <label for="organizationWEB">Адрес сайта</label>
       <input id="organizationWEB" type="text" pInputText placeholder="Адрес сайта" formControlName="organizationWEB">
-      <div *ngIf="formEDS?.controls['organizationWEB']?.invalid">
-        <small *ngIf="formEDS?.controls['organizationWEB']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['organizationWEB']?.invalid">
+        <small *ngIf="form?.controls['organizationWEB']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
     </div>
     <!-- 4 row -->
-    <div class="p-field p-col-12 p-md-12">
-      <label for="organizationLegalAddress">Юридический адрес</label>
-      <div class="addon-button p-mb-2" formGroupName="organizationLegalAddress">
-        <div class="action-box">
-          <input id="organizationLegalAddress" type="text" pInputText placeholder="Юридический адрес" disabled
-            formControlName="displayAddress">
-          <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"
-            (click)="openAddressForm('organizationLegalAddress')"></button>
-        </div>
-      </div>
+    <div class="p-col-12 p-md-12">
+      <demand-address-group [title]="'Юридический адрес'" [placeholder]="'Юридический адрес'"
+        [addressGroup]="form.get('organizationLegalAddress')"></demand-address-group>
     </div>
     <div class="p-field p-col-12 p-md-12">
       <div class="p-field-checkbox">
@@ -125,7 +116,7 @@
           совпадает с юридическим</label>
       </div>
     </div>
-    <div class="p-field p-col-12 p-md-12" *ngIf="!formEDS?.value?.organizationIsActualAdressEqual">
+    <div class="p-field p-col-12 p-md-12" *ngIf="!form?.value?.organizationIsActualAdressEqual">
       <label for="organizationActualAddress">Фактический адрес</label>
       <div class="addon-button p-mb-2" formGroupName="organizationActualAddress">
         <div class="action-box">
@@ -145,7 +136,7 @@
           с юридическим</label>
       </div>
     </div>
-    <div class="p-field p-col-12 p-md-12" *ngIf="!formEDS?.value?.organizationIsLegalAdressEqual">
+    <div class="p-field p-col-12 p-md-12" *ngIf="!form?.value?.organizationIsLegalAdressEqual">
       <label for="organizationPostAddress">Почтовый адрес</label>
       <div class="addon-button p-mb-2" formGroupName="organizationPostAddress">
         <div class="action-box">
@@ -171,7 +162,6 @@
         <mib-file-uploader [existFile]="files" [title]="'Скан-Копия свидетельства ОГРН
         организации'" [type]="'Ogrn'" (remove)="onRemove($event)" (add)="onAdd($event)">
         </mib-file-uploader>
-
       </div>
     </ng-container>
     <div class="p-col-12">
@@ -190,8 +180,8 @@
     <div class="p-field p-col-12 p-md-3">
       <label for="ownerSurname">Фамилия</label>
       <input id="ownerSurname" type="text" pInputText placeholder="Фамилия" disabled formControlName="ownerSurname">
-      <div *ngIf="formEDS?.controls['ownerSurname']?.invalid">
-        <small *ngIf="formEDS?.controls['ownerSurname']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['ownerSurname']?.invalid">
+        <small *ngIf="form?.controls['ownerSurname']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
@@ -199,8 +189,8 @@
     <div class="p-field p-col-12 p-md-3">
       <label for="ownerName">Имя</label>
       <input id="ownerName" disabled type="text" pInputText placeholder="Имя" formControlName="ownerName">
-      <div *ngIf="formEDS?.controls['ownerName']?.invalid">
-        <small *ngIf="formEDS?.controls['ownerName']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['ownerName']?.invalid">
+        <small *ngIf="form?.controls['ownerName']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
@@ -208,16 +198,16 @@
     <div class="p-field p-col-12 p-md-3">
       <label for="ownerMiddlename">Отчество</label>
       <input id="ownerMiddlename" type="text" pInputText placeholder="Отчество" formControlName="ownerMiddlename">
-      <div *ngIf="formEDS?.controls['ownerMiddlename']?.invalid">
-        <small *ngIf="formEDS?.controls['ownerMiddlename']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['ownerMiddlename']?.invalid">
+        <small *ngIf="form?.controls['ownerMiddlename']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
     </div>
     <div class="p-field p-col-12 p-md-3">
       <label for="ownerGender">Пол</label>
-      <p-dropdown styleClass="mib-input" id="ownerGender" [disabled]="true" [options]="[]"
-        formControlName="ownerGender" optionLabel="title" optionValue="value">
+      <p-dropdown styleClass="mib-input" id="ownerGender" [disabled]="true" [options]="[]" formControlName="ownerGender"
+        optionLabel="title" optionValue="value">
       </p-dropdown>
     </div>
 
@@ -250,8 +240,8 @@
     <div class="p-field p-col-12 p-md-6">
       <label for="ownerEmail">E-mail</label>
       <input id="ownerEmail" type="email" pInputText disabled placeholder="E-mail" formControlName="ownerEmail">
-      <div *ngIf="formEDS?.controls['ownerEmail']?.invalid">
-        <small *ngIf="formEDS?.controls['ownerEmail']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['ownerEmail']?.invalid">
+        <small *ngIf="form?.controls['ownerEmail']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
@@ -294,7 +284,7 @@
       </div>
     </div>
 
-    <div class="p-field p-col-12 p-md-12" *ngIf="formEDS?.value?.ownerGeoPosition">
+    <div class="p-field p-col-12 p-md-12" *ngIf="form?.value?.ownerGeoPosition">
       <label for="ownerIdCenter">Укажите подходящий региональный Центр идентификации</label>
       <p-dropdown styleClass="mib-input" id="ownerIdCenter" (onChange)="setIDCenter($event)" [options]="[]"
         placeholder="Выберите географическое расположение" formControlName="ownerIdCenter" optionLabel="name"
@@ -306,12 +296,12 @@
       </div>
     </div>
 
-    <div class="p-field p-col-12 p-md-12" *ngIf="formEDS?.value?.ownerIdCenter">
+    <div class="p-field p-col-12 p-md-12" *ngIf="form?.value?.ownerIdCenter">
       <p>
-        <!-- {{selectedIdCenter.name}} <br>
+        {{selectedIdCenter.name}} <br>
         Адрес: {{selectedIdCenter.address}} <br>
         Режим работы: {{selectedIdCenter.schedule}} <br>
-        Контакты: {{selectedIdCenter.email}} {{selectedIdCenter.phone}} <br> -->
+        Контакты: {{selectedIdCenter.email}} {{selectedIdCenter.phone}} <br>
       </p>
     </div>
     <div class="p-col-12">
@@ -337,8 +327,8 @@
       <label for="passportNumber">Серия и номер паспорт</label>
       <p-inputMask id="passportNumber" type="text" placeholder="Серия и номер паспорта" formControlName="passportNumber"
         mask="99 99 999999"></p-inputMask>
-      <div *ngIf="formEDS?.controls['passportNumber']?.invalid">
-        <small *ngIf="formEDS?.controls['passportNumber']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['passportNumber']?.invalid">
+        <small *ngIf="form?.controls['passportNumber']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
@@ -346,8 +336,8 @@
     <div class="p-field p-col-12 p-md-3">
       <label for="passportDate">Дата выдачи</label>
       <input id="passportDate" type="date" pInputText placeholder="Дата выдачи" formControlName="passportDate">
-      <div *ngIf="formEDS?.controls['passportDate']?.invalid">
-        <small *ngIf="formEDS?.controls['passportDate']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['passportDate']?.invalid">
+        <small *ngIf="form?.controls['passportDate']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
@@ -355,8 +345,8 @@
     <div class="p-field p-col-12 p-md-3">
       <label for="passportFrom">Кем выдан</label>
       <input id="passportFrom" type="text" pInputText placeholder="Кем выдан" formControlName="passportFrom">
-      <div *ngIf="formEDS?.controls['passportFrom']?.invalid">
-        <small *ngIf="formEDS?.controls['passportFrom']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['passportFrom']?.invalid">
+        <small *ngIf="form?.controls['passportFrom']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
@@ -365,19 +355,18 @@
       <label for="passportCode">Код подразделения</label>
       <p-inputMask id="passportCode" type="text" placeholder="Код подразделения" formControlName="passportCode"
         mask="999-999"></p-inputMask>
-      <div *ngIf="formEDS?.controls['passportCode']?.invalid">
-        <small *ngIf="formEDS?.controls['passportCode']?.errors.required" class="p-error">
+      <div *ngIf="form?.controls['passportCode']?.invalid">
+        <small *ngIf="form?.controls['passportCode']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
     </div>
     <div class="p-field p-col-12 p-md-3">
       <label for="passportNationality">Гражданство</label>
-      <p-dropdown styleClass="mib-input" id="passportNationality" [options]="[]"
-        placeholder="Выберите гражданство" formControlName="passportNationality" optionLabel="Title"
-        optionValue="Identifier"></p-dropdown>
-      <div *ngIf="formEDS?.controls['passportNationality']?.invalid">
-        <small *ngIf="formEDS?.controls['passportNationality']?.errors.required" class="p-error">
+      <p-dropdown styleClass="mib-input" id="passportNationality" [options]="[]" placeholder="Выберите гражданство"
+        formControlName="passportNationality" optionLabel="Title" optionValue="Identifier"></p-dropdown>
+      <div *ngIf="form?.controls['passportNationality']?.invalid">
+        <small *ngIf="form?.controls['passportNationality']?.errors.required" class="p-error">
           Поле должно быть заполнено.
         </small>
       </div>
@@ -401,7 +390,7 @@
     <div class="p-field p-col-12 p-md-12">
       <label for="btn_submit">&nbsp;</label>
       <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-        [disabled]="formEDS?.invalid || isFilesInvalid()" class="btn-mib-submit p-button-outlined"></button>
+        [disabled]="form?.invalid || isFilesInvalid()" class="btn-mib-submit p-button-outlined"></button>
     </div>
   </div>
 </form>

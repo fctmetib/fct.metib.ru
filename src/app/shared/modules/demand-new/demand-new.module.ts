@@ -43,6 +43,8 @@ import { EDSComponent } from './components/eds/eds.component';
 import { DemandActionsComponent } from './containers/demand-actions/demand-actions.component';
 import { DemandNavigationService } from './services/demand-navigation.service';
 import { DemandLoadingService } from './services/demand-loading.service';
+import { DemandAddressGroupComponent } from './components/form-groups/address-group/address-group.component';
+import { AddressModalComponent } from './components/modals/address/address.component';
 
 @NgModule({
   imports: [
@@ -83,8 +85,10 @@ import { DemandLoadingService } from './services/demand-loading.service';
     DemandCreateComponent,
     DemandActionsComponent,
     // Components
-    EDSComponent
+    EDSComponent,
+    DemandAddressGroupComponent,
     // Modals
+    AddressModalComponent
   ],
   providers: [
     ExitGuard,
