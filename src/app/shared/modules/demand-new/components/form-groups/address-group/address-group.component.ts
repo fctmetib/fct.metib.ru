@@ -8,7 +8,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
   styleUrls: ['./address-group.component.scss'],
   template: `
     <ng-container [formGroup]="addressGroup">
-      <div class="address-group-row">
+      <div class="p-field">
         <label for="organizationLegalAddress">{{ title }}</label>
         <div class="addon-button p-mb-2">
           <div class="action-box">
@@ -25,7 +25,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
               pRipple
               type="button"
               label="Изменить"
-              class="p-button-outlined address__button"
+              class="p-button-outlined small"
               (click)="openAddressForm('organizationLegalAddress')"
             ></button>
           </div>

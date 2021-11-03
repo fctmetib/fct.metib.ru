@@ -1,24 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+// System
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+// Interfaces
+import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
+// Common Logic / Classes / Tools
+import { DemandValuesIniter } from '../../tools/demand-values-initer';
 import { FormGenerator } from '../../tools/form-generator';
+// Services
+import {
+  CommonService,
+  PostInterface,
+  RegionInterface,
+} from 'src/app/shared/services/common/common.service';
 
 @Component({
   selector: 'eds',
   styleUrls: ['./eds.component.scss'],
   templateUrl: './eds.component.html',
 })
-export class EDSComponent implements OnInit {
+export class EDSComponent implements OnInit, OnDestroy {
+  // Форма
   public form: FormGroup;
+
+  // Данные, для выпадающих список
+  public organizationTypes: DemandSelectboxInterface[] = DemandValuesIniter.organizationTypes;
+  public ruleTypes: DemandSelectboxInterface[] = DemandValuesIniter.ruleTypes;
+  public genderTypes: DemandSelectboxInterface[] = DemandValuesIniter.genderTypes;
+  public postList: PostInterface[] = [];
+  public countryList: RegionInterface[] = [];
+  public regionList: RegionInterface[] = [];
+  public idCenterList: any[] = [];
+
+  // Системные переменные
+  private subscription$: Subscription = new Subscription();
 
   // OLD
   public isEdit: boolean = false;
   public files: any[];
   public selectedIdCenter: any;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private commonService: CommonService) {}
 
   ngOnInit() {
     this._initForm();
+    this._initAdditionalData();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 
   public onSubmit() {}
@@ -30,21 +60,6 @@ export class EDSComponent implements OnInit {
   onAdd(event) {}
   selectGeoPosition(event) {}
   setIDCenter(event) {}
-  openAddressForm(type) {
-    let addresses = this.form.value[type];
-    let address = addresses.factoringPlacesAddress;
-
-    // this.ref = this.dialogService.open(AddressModalComponent, {
-    //   header: 'Укажите Адрес',
-    //   width: '650px',
-    //   contentStyle: { 'max-height': '500px', overflow: 'auto' },
-    //   baseZIndex: 10000,
-    //   styleClass: 'p-fluid',
-    //   data: {
-    //     address,
-    //   },
-    // });
-  }
 
   public isAddressEqual(type) {
     // if (type === 'organizationActualAddress') {
@@ -74,5 +89,23 @@ export class EDSComponent implements OnInit {
   private _initForm() {
     const formGenerator = new FormGenerator(this.fb);
     this.form = formGenerator.generateEDSForm();
+  }
+
+  private _initAdditionalData(): void {
+    this.subscription$.add(
+      this.commonService.getPosts().subscribe((posts) => {
+        this.postList = posts;
+      })
+    );
+    this.subscription$.add(
+      this.commonService.getCountries().subscribe((countries) => {
+        this.countryList = countries;
+      })
+    );
+    this.subscription$.add(
+      this.commonService.getRegions().subscribe((regions) => {
+        this.regionList = regions;
+      })
+    );
   }
 }

@@ -3,13 +3,15 @@
     <!-- 1 row -->
     <div class="p-field p-col-12 p-md-3">
       <label for="organizationType">Тип организации</label>
-      <p-dropdown styleClass="mib-input" id="organizationType" [options]="[]" placeholder="Выберите Тип организации"
-        formControlName="organizationType" optionLabel="title" optionValue="value"></p-dropdown>
+      <p-dropdown styleClass="mib-input" id="organizationType" [options]="organizationTypes"
+        placeholder="Выберите Тип организации" formControlName="organizationType" optionLabel="title"
+        optionValue="value"></p-dropdown>
     </div>
     <div class="p-field p-col-12 p-md-9" *ngIf="form?.value?.organizationType === 1">
       <label for="organizationLegalForm">Правовая форма</label>
-      <p-dropdown styleClass="mib-input" id="organizationLegalForm" [options]="[]" placeholder="Выберите Правовую форму"
-        formControlName="organizationLegalForm" optionLabel="title" optionValue="value"></p-dropdown>
+      <p-dropdown styleClass="mib-input" id="organizationLegalForm" [options]="ruleTypes"
+        placeholder="Выберите Правовую форму" formControlName="organizationLegalForm" optionLabel="title"
+        optionValue="value"></p-dropdown>
     </div>
   </div>
   <div class="p-fluid p-formgrid p-grid form">
@@ -116,16 +118,9 @@
           совпадает с юридическим</label>
       </div>
     </div>
-    <div class="p-field p-col-12 p-md-12" *ngIf="!form?.value?.organizationIsActualAdressEqual">
-      <label for="organizationActualAddress">Фактический адрес</label>
-      <div class="addon-button p-mb-2" formGroupName="organizationActualAddress">
-        <div class="action-box">
-          <input id="organizationActualAddress" type="text" pInputText placeholder="Фактический адрес" disabled
-            formControlName="displayAddress">
-          <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"
-            (click)="openAddressForm('organizationActualAddress')"></button>
-        </div>
-      </div>
+    <div class="p-col-12 p-md-12" *ngIf="!form?.value?.organizationIsActualAdressEqual">
+      <demand-address-group [title]="'Фактический адрес'" [placeholder]="'Фактический адрес'"
+        [addressGroup]="form.get('organizationActualAddress')"></demand-address-group>
     </div>
     <div class="p-field p-col-12 p-md-12">
       <div class="p-field-checkbox">
@@ -136,16 +131,9 @@
           с юридическим</label>
       </div>
     </div>
-    <div class="p-field p-col-12 p-md-12" *ngIf="!form?.value?.organizationIsLegalAdressEqual">
-      <label for="organizationPostAddress">Почтовый адрес</label>
-      <div class="addon-button p-mb-2" formGroupName="organizationPostAddress">
-        <div class="action-box">
-          <input id="organizationPostAddress" type="text" pInputText placeholder="Почтовый адрес" disabled
-            formControlName="displayAddress">
-          <button pButton pRipple type="button" label="Изменить" class="p-button-outlined small"
-            (click)="openAddressForm('organizationPostAddress')"></button>
-        </div>
-      </div>
+    <div class="p-col-12 p-md-12" *ngIf="!form?.value?.organizationIsLegalAdressEqual">
+      <demand-address-group [title]="'Почтовый адрес'" [placeholder]="'Почтовый адрес'"
+        [addressGroup]="form.get('organizationPostAddress')"></demand-address-group>
     </div>
     <!-- 5 row -->
     <ng-container *ngIf="!isEdit">
@@ -206,8 +194,8 @@
     </div>
     <div class="p-field p-col-12 p-md-3">
       <label for="ownerGender">Пол</label>
-      <p-dropdown styleClass="mib-input" id="ownerGender" [disabled]="true" [options]="[]" formControlName="ownerGender"
-        optionLabel="title" optionValue="value">
+      <p-dropdown styleClass="mib-input" id="ownerGender" [disabled]="true" [options]="genderTypes"
+        formControlName="ownerGender" optionLabel="title" optionValue="value">
       </p-dropdown>
     </div>
 
@@ -234,7 +222,7 @@
     <!-- 8 row -->
     <div class="p-field p-col-12 p-md-6">
       <label for="ownerWorkPosition">Должность</label>
-      <p-dropdown styleClass="mib-input" id="ownerWorkPosition" [options]="[]" placeholder="Выберите Должность"
+      <p-dropdown styleClass="mib-input" id="ownerWorkPosition" [options]="postList" placeholder="Выберите Должность"
         formControlName="ownerWorkPosition" optionLabel="Title" optionValue="Title"></p-dropdown>
     </div>
     <div class="p-field p-col-12 p-md-6">
@@ -274,7 +262,7 @@
     <!-- 10 row -->
     <div class="p-field p-col-12 p-md-12">
       <label for="ownerGeoPosition">Укажите географическое расположение</label>
-      <p-dropdown styleClass="mib-input" id="ownerGeoPosition" [options]="[]"
+      <p-dropdown styleClass="mib-input" id="ownerGeoPosition" [options]="regionList"
         placeholder="Выберите географическое расположение" formControlName="ownerGeoPosition" optionLabel="Title"
         (onChange)="selectGeoPosition($event)" optionValue="Code"></p-dropdown>
       <div>
@@ -286,7 +274,7 @@
 
     <div class="p-field p-col-12 p-md-12" *ngIf="form?.value?.ownerGeoPosition">
       <label for="ownerIdCenter">Укажите подходящий региональный Центр идентификации</label>
-      <p-dropdown styleClass="mib-input" id="ownerIdCenter" (onChange)="setIDCenter($event)" [options]="[]"
+      <p-dropdown styleClass="mib-input" id="ownerIdCenter" (onChange)="setIDCenter($event)" [options]="idCenterList"
         placeholder="Выберите географическое расположение" formControlName="ownerIdCenter" optionLabel="name"
         optionValue="guid"></p-dropdown>
       <div>
@@ -363,8 +351,9 @@
     </div>
     <div class="p-field p-col-12 p-md-3">
       <label for="passportNationality">Гражданство</label>
-      <p-dropdown styleClass="mib-input" id="passportNationality" [options]="[]" placeholder="Выберите гражданство"
-        formControlName="passportNationality" optionLabel="Title" optionValue="Identifier"></p-dropdown>
+      <p-dropdown styleClass="mib-input" id="passportNationality" [options]="countryList"
+        placeholder="Выберите гражданство" formControlName="passportNationality" optionLabel="Title"
+        optionValue="Identifier"></p-dropdown>
       <div *ngIf="form?.controls['passportNationality']?.invalid">
         <small *ngIf="form?.controls['passportNationality']?.errors.required" class="p-error">
           Поле должно быть заполнено.

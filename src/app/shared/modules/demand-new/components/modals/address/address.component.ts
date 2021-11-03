@@ -162,7 +162,7 @@ export class AddressModalComponent implements OnInit {
 
   onRegionChanged(value) {
     if (value) {
-      let regionTitle = this.regionList.find((x) => x.value === value);
+      let regionTitle = this.regionList.find((x) => x.value === value).title;
       this.formAddress.patchValue({
         RegionTitle: regionTitle,
       });
@@ -170,6 +170,7 @@ export class AddressModalComponent implements OnInit {
   }
 
   saveAddress() {
+    console.log(this.formAddress.value)
     this.ref.close(this.formAddress.value);
   }
 
