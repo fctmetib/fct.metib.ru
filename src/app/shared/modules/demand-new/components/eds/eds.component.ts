@@ -1,6 +1,11 @@
 // System
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
 // Interfaces
 import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
@@ -23,10 +28,12 @@ export class EDSComponent implements OnInit, OnDestroy {
   // Форма
   public form: FormGroup;
 
-  // Данные, для выпадающих список
-  public organizationTypes: DemandSelectboxInterface[] = DemandValuesIniter.organizationTypes;
+  // Данные, для выпадающих списков
+  public organizationTypes: DemandSelectboxInterface[] =
+    DemandValuesIniter.organizationTypes;
   public ruleTypes: DemandSelectboxInterface[] = DemandValuesIniter.ruleTypes;
-  public genderTypes: DemandSelectboxInterface[] = DemandValuesIniter.genderTypes;
+  public genderTypes: DemandSelectboxInterface[] =
+    DemandValuesIniter.genderTypes;
   public postList: PostInterface[] = [];
   public countryList: RegionInterface[] = [];
   public regionList: RegionInterface[] = [];
@@ -51,39 +58,129 @@ export class EDSComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
+  // TODO:: ADD METHODS LOGIC
   public onSubmit() {}
 
-  // OLD
-  isFilesInvalid() {}
-  getDigitalSignatureRequest() {}
-  onRemove(event) {}
-  onAdd(event) {}
-  selectGeoPosition(event) {}
-  setIDCenter(event) {}
+  /**
+   * Получает список центров выдачи от АПИ
+   * @param event - принимает событие из dropdown
+   * @returns void
+   */
+  public selectGeoPosition(event): void {
+    this.commonService.getIdCenters(event.value).subscribe((response) => {
+      this.idCenterList = response;
+    });
+  }
 
-  public isAddressEqual(type) {
-    // if (type === 'organizationActualAddress') {
-    //   let legalAddress =
-    //     this.formEDS.value.organizationLegalAddress.factoringPlacesAddress;
-    //   let addressEdited = <FormControl>(
-    //     this.formEDS.controls['organizationActualAddress']
-    //   );
-    //   addressEdited.patchValue({
-    //     factoringPlacesAddress: legalAddress,
+  /**
+   * Задает выбранный центр выдачи, для отрисовки пользователю
+   * @param event - принимает событие из dropdown
+   * @returns void
+   */
+  public setIDCenter(event): void {
+    this.selectedIdCenter = this.idCenterList.find(
+      (x) => x.guid === event.value
+    );
+  }
+
+  /**
+   * Получает цифровую подпись, на основе введенных данных
+   * @returns void
+   */
+  public getDigitalSignatureRequest(): void {
+    // this.demandService
+    //   .getDigitalSignatureRequest(this.prepareCoreData())
+    //   .subscribe((resp) => {
+    //     let binaryData = [];
+    //     binaryData.push(resp);
+    //     let downloadLink = document.createElement('a');
+    //     downloadLink.href = window.URL.createObjectURL(
+    //       new Blob(binaryData, { type: 'application/msword' })
+    //     );
+    //     downloadLink.setAttribute('download', 'Заявка на выдачу сертификата');
+    //     document.body.appendChild(downloadLink);
+    //     downloadLink.click();
     //   });
-    //   this.updateDisplayAddress('organizationActualAddress');
-    // }
-    // if (type === 'organizationPostAddress') {
-    //   let legalAddress =
-    //     this.formEDS.value.organizationLegalAddress.factoringPlacesAddress;
-    //   let addressEdited = <FormControl>(
-    //     this.formEDS.controls['organizationPostAddress']
-    //   );
-    //   addressEdited.patchValue({
-    //     factoringPlacesAddress: legalAddress,
-    //   });
-    //   this.updateDisplayAddress('organizationPostAddress');
-    // }
+  }
+
+  /**
+   * Проверяет совпадение адресса, на основе типа и заполняет следующее поле, если есть совпадение
+   * @param type - принимает тип из чекбокса на UI
+   * @returns void
+   */
+  public isAddressEqual(type): void {
+    if (type === 'organizationActualAddress') {
+      let legalAddress =
+        this.form.value.organizationLegalAddress.factoringPlacesAddress;
+      let addressEdited = <FormControl>(
+        this.form.controls['organizationActualAddress']
+      );
+      addressEdited.patchValue({
+        factoringPlacesAddress: legalAddress,
+      });
+      this._updateDisplayAddress('organizationActualAddress');
+    }
+    if (type === 'organizationPostAddress') {
+      let legalAddress =
+        this.form.value.organizationLegalAddress.factoringPlacesAddress;
+      let addressEdited = <FormControl>(
+        this.form.controls['organizationPostAddress']
+      );
+      addressEdited.patchValue({
+        factoringPlacesAddress: legalAddress,
+      });
+      this._updateDisplayAddress('organizationPostAddress');
+    }
+  }
+
+  /**
+   * Ловит событие на добавление нового файла и добавляет его в список файлов, в форме
+   * @param file - пойманный файл
+   * @returns void
+   */
+  public onAdd(file): void {
+    this.files.push(file);
+  }
+
+  /**
+   * Ловит событие на удаление существующего файла и удаляет его из списка файлов, в форме
+   * @param file - принимает событие из dropdown
+   * @returns void
+   */
+  public onRemove(file): void {
+    this.files = this.files.filter((x) => x !== file);
+  }
+
+  /**
+   * Осуществляет проверку, если все файлы загружены, то возвращает false (ошибок нет), иначе true (есть ошибки)
+   * @returns {boolean} решение валидации
+   */
+  public isFilesInvalid(): boolean {
+    if (this.isEdit) {
+      return false;
+    }
+
+    let isInvalid = false;
+
+    // crtInds = currentFileIdentifiers
+    let crtInds = this.files.map((file) => file.Identifier);
+    if (crtInds.length < 1) {
+      return true;
+    }
+
+    if (
+      crtInds.includes('Inn') &&
+      crtInds.includes('Ogrn') &&
+      crtInds.includes('Snils') &&
+      crtInds.includes('Director') &&
+      crtInds.includes('Passport')
+    ) {
+      isInvalid = false;
+    } else {
+      isInvalid = true;
+    }
+
+    return isInvalid;
   }
 
   private _initForm() {
@@ -107,5 +204,47 @@ export class EDSComponent implements OnInit, OnDestroy {
         this.regionList = regions;
       })
     );
+  }
+
+  private _updateDisplayAddress(type): void {
+    let address = this.form.value[type].factoringPlacesAddress;
+    let result = '';
+
+    if (address?.PostCode) {
+      result = result + ' ' + address.PostCode;
+    }
+    if (address?.Country) {
+      result = result + ' ' + address.Country;
+    }
+    if (address?.RegionCode) {
+      result = result + ' ' + address.RegionCode;
+    }
+    if (address?.RegionTitle) {
+      result = result + ' ' + address.RegionTitle;
+    }
+    if (address?.City) {
+      result = result + ' ' + address.City;
+    }
+    if (address?.District) {
+      result = result + ' ' + address.District;
+    }
+    if (address?.Locality) {
+      result = result + ' ' + address.Locality;
+    }
+    if (address?.Street) {
+      result = result + ' ' + address.Street;
+    }
+    if (address?.House) {
+      result = result + ' ' + address.House;
+    }
+    if (address?.Appartment) {
+      result = result + ' ' + address.Appartment;
+    }
+
+    let addressEdited = <FormControl>this.form.controls[type];
+    addressEdited.patchValue({
+      displayAddress: result,
+      factoringPlacesAddress: address,
+    });
   }
 }
