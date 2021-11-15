@@ -136,7 +136,7 @@
         [addressGroup]="form.get('organizationPostAddress')"></demand-address-group>
     </div>
     <!-- 5 row -->
-    <ng-container *ngIf="!isEdit">
+    <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
       <div class="p-field p-col-12 p-md-6">
         <label> Прикрепите необходимые файлы </label>
         <mib-file-uploader [existFile]="files" [title]="'Скан-Копия свидетельства ИНН организации'" [type]="'Inn'"
@@ -167,7 +167,7 @@
     <!-- 6 row -->
     <div class="p-field p-col-12 p-md-3">
       <label for="ownerSurname">Фамилия</label>
-      <input id="ownerSurname" type="text" pInputText placeholder="Фамилия" disabled formControlName="ownerSurname">
+      <input id="ownerSurname" type="text" pInputText placeholder="Фамилия" formControlName="ownerSurname">
       <div *ngIf="form?.controls['ownerSurname']?.invalid">
         <small *ngIf="form?.controls['ownerSurname']?.errors.required" class="p-error">
           Поле должно быть заполнено.
@@ -176,7 +176,7 @@
     </div>
     <div class="p-field p-col-12 p-md-3">
       <label for="ownerName">Имя</label>
-      <input id="ownerName" disabled type="text" pInputText placeholder="Имя" formControlName="ownerName">
+      <input id="ownerName" type="text" pInputText placeholder="Имя" formControlName="ownerName">
       <div *ngIf="form?.controls['ownerName']?.invalid">
         <small *ngIf="form?.controls['ownerName']?.errors.required" class="p-error">
           Поле должно быть заполнено.
@@ -194,7 +194,7 @@
     </div>
     <div class="p-field p-col-12 p-md-3">
       <label for="ownerGender">Пол</label>
-      <p-dropdown styleClass="mib-input" id="ownerGender" [disabled]="true" [options]="genderTypes"
+      <p-dropdown styleClass="mib-input" id="ownerGender" [options]="genderTypes"
         formControlName="ownerGender" optionLabel="title" optionValue="value">
       </p-dropdown>
     </div>
@@ -215,7 +215,7 @@
     </div>
     <div class="p-field p-col-12 p-md-3">
       <label for="ownerPhone">Мобильный телефон</label>
-      <input id="ownerPhone" disabled type="tel" pInputText placeholder="Мобильный телефон"
+      <input id="ownerPhone" type="tel" pInputText placeholder="Мобильный телефон"
         formControlName="ownerPhone">
     </div>
 
@@ -227,7 +227,7 @@
     </div>
     <div class="p-field p-col-12 p-md-6">
       <label for="ownerEmail">E-mail</label>
-      <input id="ownerEmail" type="email" pInputText disabled placeholder="E-mail" formControlName="ownerEmail">
+      <input id="ownerEmail" type="email" pInputText placeholder="E-mail" formControlName="ownerEmail">
       <div *ngIf="form?.controls['ownerEmail']?.invalid">
         <small *ngIf="form?.controls['ownerEmail']?.errors.required" class="p-error">
           Поле должно быть заполнено.
@@ -237,7 +237,7 @@
   </div>
   <!-- 9 row -->
   <div class="p-fluid p-formgrid p-grid form">
-    <ng-container *ngIf="!isEdit">
+    <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
       <div class="p-field p-col-12 p-md-6">
         <label>
           Прикрепите необходимые файлы
@@ -298,14 +298,12 @@
           <h1>Паспортные данные владельца сертификата</h1>
           <p class="description">Заполните паспортные данные</p>
         </div>
-        <ng-container *ngIf="!isEdit">
-
+        <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
           <div>
             <mib-file-uploader [existFile]="files" [title]="'Скан-копия паспорта
             владельца ключа подписи'" [type]="'Passport'" (remove)="onRemove($event)" (add)="onAdd($event)">
             </mib-file-uploader>
           </div>
-
         </ng-container>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { DemandNavigationInterface } from '../types/common/demand-navigation.interface';
 
 /**
@@ -12,12 +12,12 @@ export class DemandLoadingService {
   /**
    * Используется, для отображения загрузки страницы, например, при первом открытии, в этом время подгружаются данные из API
    */
-  public demandPageLoading$ = new Subject<boolean>();
+  public demandPageLoading$ = new BehaviorSubject<boolean>(false);
 
   /**
    * Используется, для отображения загрузки на кнопках, например, при отправке Сохранения
    */
-  public demandRequestLoading$ = new Subject<boolean>();
+  public demandRequestLoading$ = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 

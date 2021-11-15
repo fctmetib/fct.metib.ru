@@ -45,6 +45,7 @@ import { DemandNavigationService } from './services/demand-navigation.service';
 import { DemandLoadingService } from './services/demand-loading.service';
 import { DemandAddressGroupComponent } from './components/form-groups/address-group/address-group.component';
 import { AddressModalComponent } from './components/modals/address/address.component';
+import { DemandService } from './services/demand.service';
 
 @NgModule({
   imports: [
@@ -100,6 +101,7 @@ import { AddressModalComponent } from './components/modals/address/address.compo
     FileService,
     // Demand Services
     DemandNavigationService,
+    DemandService,
     DemandLoadingService
   ],
 })

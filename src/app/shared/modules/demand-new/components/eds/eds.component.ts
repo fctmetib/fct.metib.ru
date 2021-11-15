@@ -1,5 +1,5 @@
 // System
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -18,6 +18,10 @@ import {
   PostInterface,
   RegionInterface,
 } from 'src/app/shared/services/common/common.service';
+import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { DemandNavigationService } from '../../services/demand-navigation.service';
+import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
+import { DemandActionType } from '../../types/common/demand-action-type';
 
 @Component({
   selector: 'eds',
@@ -40,22 +44,30 @@ export class EDSComponent implements OnInit, OnDestroy {
   public idCenterList: any[] = [];
 
   // Системные переменные
-  private subscription$: Subscription = new Subscription();
+  public demandNavigationConfig: DemandNavigationInterface;
+  private _subscription$: Subscription = new Subscription();
 
-  // OLD
-  public isEdit: boolean = false;
-  public files: any[];
+  // UI
   public selectedIdCenter: any;
 
-  constructor(private fb: FormBuilder, private commonService: CommonService) {}
+  // Файлы
+  public files: FileModeInterface[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private commonService: CommonService,
+    private _demandNavigationService: DemandNavigationService
+  ) {}
 
   ngOnInit() {
     this._initForm();
     this._initAdditionalData();
+    this._getDemandConfig();
+    this._getCurrentDemand();
   }
 
   ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
+    this._subscription$.unsubscribe();
   }
 
   // TODO:: ADD METHODS LOGIC
@@ -150,13 +162,20 @@ export class EDSComponent implements OnInit, OnDestroy {
   public onRemove(file): void {
     this.files = this.files.filter((x) => x !== file);
   }
+  /**
+   * Предоставляет для UI enum типов события (редактирование, создание и тд)
+   * @returns enum с типами
+   */
+  public get demandActionType(): typeof DemandActionType {
+    return DemandActionType;
+  }
 
   /**
    * Осуществляет проверку, если все файлы загружены, то возвращает false (ошибок нет), иначе true (есть ошибки)
    * @returns {boolean} решение валидации
    */
   public isFilesInvalid(): boolean {
-    if (this.isEdit) {
+    if (this.demandNavigationConfig.demandActionType === DemandActionType.EDIT_CREATED) {
       return false;
     }
 
@@ -189,17 +208,17 @@ export class EDSComponent implements OnInit, OnDestroy {
   }
 
   private _initAdditionalData(): void {
-    this.subscription$.add(
+    this._subscription$.add(
       this.commonService.getPosts().subscribe((posts) => {
         this.postList = posts;
       })
     );
-    this.subscription$.add(
+    this._subscription$.add(
       this.commonService.getCountries().subscribe((countries) => {
         this.countryList = countries;
       })
     );
-    this.subscription$.add(
+    this._subscription$.add(
       this.commonService.getRegions().subscribe((regions) => {
         this.regionList = regions;
       })
@@ -246,5 +265,21 @@ export class EDSComponent implements OnInit, OnDestroy {
       displayAddress: result,
       factoringPlacesAddress: address,
     });
+  }
+
+  private _getDemandConfig(): void {
+    this._subscription$.add(
+      this._demandNavigationService.demandConfig$.subscribe((demandConfig) => {
+        this.demandNavigationConfig = demandConfig;
+      })
+    );
+  }
+
+  private _getCurrentDemand(): void {
+    this._subscription$.add(
+      this._demandNavigationService.currentDemand$.subscribe((currentDemand) => {
+        console.log('Current Demand: ', currentDemand);
+      })
+    );
   }
 }

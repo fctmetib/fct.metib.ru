@@ -29,16 +29,16 @@ export class FormGenerator {
       // Почтовый. адресс
       organizationPostAddress: this.generateAddressForm(),
 
-      ownerSurname: ['', [Validators.required]],
-      ownerName: ['', [Validators.required]],
+      ownerSurname: [{value: '', disabled: true}, [Validators.required]],
+      ownerName: [{value: '', disabled: true}, [Validators.required]],
       ownerMiddlename: ['', [Validators.required]],
-      ownerGender: [0, [Validators.required]],
+      ownerGender: [{value: 0, disabled: true}, [Validators.required]],
       ownerSNILS: ['', [Validators.required]],
       ownerDateBurn: ['', [Validators.required]],
       ownerPlaceBurn: ['', [Validators.required]],
-      ownerPhone: ['', [Validators.required]],
+      ownerPhone: [{value: '', disabled: true}, [Validators.required]],
       ownerWorkPosition: [''],
-      ownerEmail: ['', [Validators.required]],
+      ownerEmail: [{value: '', disabled: true}, [Validators.required]],
       ownerGeoPosition: [''],
       ownerIdCenter: [''],
 
@@ -55,7 +55,7 @@ export class FormGenerator {
 
   public generateAddressForm(): FormGroup {
     const addressForm = this.fb.group({
-      displayAddress: 'Российская Федерация, 77 Москва',
+      displayAddress: [{value: 'Российская Федерация, 77 Москва', disabled: true}],
       factoringPlacesAddress: {
         PostCode: '',
         Country: 'Российская Федерация',

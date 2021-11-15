@@ -17,7 +17,6 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
               type="text"
               pInputText
               placeholder="{{ placeholder }}"
-              disabled
               formControlName="displayAddress"
             />
             <button

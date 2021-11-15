@@ -12,9 +12,8 @@
         (click)="back()"></button>
     </div>
   </div>
-
   <!-- Проверка загрузки -->
-  <ng-container *ngIf="!demandNavigationConfig; else contentTemplate">
+  <ng-container *ngIf="!demandNavigationConfig || ((demandLoadingService.demandPageLoading$ | async)); else contentTemplate">
     Загрузка...
   </ng-container>
   <ng-template #contentTemplate>

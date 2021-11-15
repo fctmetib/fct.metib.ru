@@ -13,10 +13,15 @@ import { DemandNavigationInterface } from '../types/common/demand-navigation.int
 export class DemandNavigationService {
 
   public demandConfig$ = new BehaviorSubject<DemandNavigationInterface>(null);
+  public currentDemand$ = new BehaviorSubject<any>(null);
 
   constructor() { }
 
   public updateDemandConfig(newConfig: DemandNavigationInterface) {
     this.demandConfig$.next(newConfig);
+  }
+
+  public setCurrentDemandData(currentDemand: any): void {
+    this.currentDemand$.next(currentDemand);
   }
 }
