@@ -22,6 +22,7 @@ import { FileModeInterface } from 'src/app/shared/types/file/file-model.interfac
 import { DemandNavigationService } from '../../services/demand-navigation.service';
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DemandActionType } from '../../types/common/demand-action-type';
+import { DemandConverter } from '../../tools/demand-converter';
 
 @Component({
   selector: 'eds',
@@ -175,7 +176,10 @@ export class EDSComponent implements OnInit, OnDestroy {
    * @returns {boolean} решение валидации
    */
   public isFilesInvalid(): boolean {
-    if (this.demandNavigationConfig.demandActionType === DemandActionType.EDIT_CREATED) {
+    if (
+      this.demandNavigationConfig.demandActionType ===
+      DemandActionType.EDIT_CREATED
+    ) {
       return false;
     }
 
@@ -277,9 +281,16 @@ export class EDSComponent implements OnInit, OnDestroy {
 
   private _getCurrentDemand(): void {
     this._subscription$.add(
-      this._demandNavigationService.currentDemand$.subscribe((currentDemand) => {
-        console.log('Current Demand: ', currentDemand);
-      })
+      this._demandNavigationService.currentDemand$.subscribe(
+        (currentDemand) => {
+          const demandConverter = new DemandConverter();
+          const convertedDemand =
+            demandConverter.convertToFormData(currentDemand);
+          this.form.patchValue(convertedDemand);
+          console.log('Current Demand: ', currentDemand);
+          console.log('Converted Demand: ', convertedDemand);
+        }
+      )
     );
   }
 }

@@ -10,6 +10,7 @@
       <button pButton pRipple type="button" label="История запросов" [routerLink]="['history']" class="basic"></button>
     </div>
   </div>
+
   <div class="p-grid">
     <ng-container *ngFor="let action of actions">
       <div *ngIf="action.isForDefaultClient && isUserVerified" class="p-col">

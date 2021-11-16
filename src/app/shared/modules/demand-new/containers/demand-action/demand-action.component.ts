@@ -64,13 +64,12 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     switch (this.demandNavigationConfig?.demandActionType) {
       case DemandActionType.CREATE:
           this._getDraft();
+          this._enableDraftSaving();
         break;
 
       default:
         break;
     }
-
-    // TODO: save draft
   }
 
   private _enableDraftSaving(): void {
@@ -81,7 +80,7 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.demandLoadingService.setPageLoading(true);
     this._subscription$.add(
       this._demandService
-        .prepareDemandByType(this._getType())
+        .prepareDemandByType(this.demandNavigationConfig.demandAction)
         .subscribe((resp) => {
           this.demandLoadingService.setPageLoading(false);
           this._demandNavigationService.setCurrentDemandData(resp);
@@ -90,13 +89,7 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private _saveDraft(): void {
+    // TODO: save draft
     console.log('Draft saved')
-  }
-
-  private _getType(): string {
-    switch (this.demandNavigationConfig.demandAction) {
-      case DemandAction.EDS:
-        return 'DigitalSignature'
-    }
   }
 }

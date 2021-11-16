@@ -14,4 +14,5 @@ export class DemandService {
     const url = `${environment.apiUrl}/demand/prepare/${type}`;
     return this.http.get<DemandDataBaseInterface>(url);
   }
+
 }
