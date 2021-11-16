@@ -280,6 +280,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       ownerEmail: ['', [Validators.required]],
       ownerGeoPosition: [''],
       ownerIdCenter: [''],
+      ownerINN: ['', [Validators.required]],
 
       passportNumber: ['', [Validators.required]],
       passportDate: ['', [Validators.required]],
@@ -373,6 +374,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
       Phone: this.formEDS.value.ownerPhone,
       Email: this.formEDS.value.ownerEmail,
+      INN: this.formEDS.value.ownerINN
     };
 
     let data: CreateDemandEDSRequestInterface = {
@@ -664,6 +666,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       ownerPhone: person?.Phone ? person?.Phone : '',
       ownerWorkPosition: this.currentDemand?.PersonPosition ? this.currentDemand?.PersonPosition : '',
       ownerEmail: person?.Email ? person?.Email : '',
+      ownerINN: person?.INN ? person?.INN : '',
+
       // ownerGeoPosition: person?.BirthPlace ? person?.BirthPlace : '',
 
       passportNumber: passport?.Number ? passport?.Number : '',

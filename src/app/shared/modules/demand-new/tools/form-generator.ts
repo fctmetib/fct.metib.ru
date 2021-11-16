@@ -39,6 +39,7 @@ export class FormGenerator {
       ownerPhone: [{value: '', disabled: true}, [Validators.required]],
       ownerWorkPosition: [''],
       ownerEmail: [{value: '', disabled: true}, [Validators.required]],
+      ownerINN: ['', [Validators.required]],
       ownerGeoPosition: [''],
       ownerIdCenter: [''],
 

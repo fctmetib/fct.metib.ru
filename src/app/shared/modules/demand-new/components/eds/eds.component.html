@@ -206,6 +206,19 @@
       </p-inputMask>
     </div>
     <div class="p-field p-col-12 p-md-3">
+      <label for="ownerINN">ИНН</label>
+      <input id="ownerINN" type="text" pInputText placeholder="ИНН" minlength="12" maxlength="12"
+        formControlName="ownerINN">
+      <div *ngIf="form.controls['ownerINN'].invalid">
+        <small *ngIf="form.controls['ownerINN'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+        <small *ngIf="form.controls['ownerINN'].errors.minlength" class="p-error">
+          Введите корректный ИНН (12 цифр).
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
       <label for="ownerDateBurn">Дата рождения</label>
       <input id="ownerDateBurn" type="date" pInputText placeholder="Дата рождения" formControlName="ownerDateBurn">
     </div>

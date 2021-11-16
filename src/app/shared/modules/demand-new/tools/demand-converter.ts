@@ -66,6 +66,7 @@ export class DemandConverter {
       ownerMiddlename: person?.NameSecond ? person?.NameSecond : '',
       ownerGender: person?.Gender ? person?.Gender : 0,
       ownerSNILS: person?.SNILS ? person?.SNILS : '',
+      ownerINN: person?.INN ? person?.INN : '',
       ownerDateBurn: person?.BirthDate
         ? formatDate(person?.BirthDate, 'yyyy-MM-dd', 'en')
         : '',

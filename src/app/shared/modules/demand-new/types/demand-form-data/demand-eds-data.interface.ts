@@ -34,6 +34,7 @@ export interface DemandEDSDataInterface {
   ownerPhone: string;
   ownerWorkPosition: string;
   ownerEmail: string;
+  ownerINN: string;
   ownerGeoPosition: string;
   ownerIdCenter: string;
 

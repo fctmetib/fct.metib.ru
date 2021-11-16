@@ -12,6 +12,7 @@ export interface PersonInterface {
   Gender: number;
 
   SNILS: string;
+  INN: string;
   BirthDate: Date;
   BirthPlace: string;
 

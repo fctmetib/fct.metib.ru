@@ -287,8 +287,6 @@ export class EDSComponent implements OnInit, OnDestroy {
           const convertedDemand =
             demandConverter.convertToFormData(currentDemand);
           this.form.patchValue(convertedDemand);
-          console.log('Current Demand: ', currentDemand);
-          console.log('Converted Demand: ', convertedDemand);
         }
       )
     );
