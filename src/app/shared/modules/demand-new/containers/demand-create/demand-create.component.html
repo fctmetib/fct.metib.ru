@@ -1,6 +1,6 @@
 <ng-container [ngSwitch]="demandNavigationConfig.demandAction">
   <ng-container *ngSwitchCase="demandAction.EDS">
-    <eds></eds>
+    <eds (sumbit)="onSubmit($event)"></eds>
   </ng-container>
   <ng-container *ngSwitchCase="demandAction.EDIT_PROFILE">
     <!-- TODO: ADD PAGE -->

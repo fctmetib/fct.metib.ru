@@ -43,11 +43,29 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  ngAfterViewInit(): void {
-  }
+  ngAfterViewInit(): void {}
 
   ngOnDestroy() {
     this._subscription$.unsubscribe();
+  }
+
+  public onSubmit(form) {
+    console.log('LEVEL 3', form)
+    //  this.isRequestLoading = true;
+    this._subscription$.add(
+      this._demandService.createDemand(form).subscribe((resp) => {
+        // this.alert = true;
+        window.scroll(0, 0);
+        // this.alertMessage = [
+        //    {
+        //     severity: 'success',
+        //      summary: 'Успешно!',
+        //     detail: 'Запрос успешно создан.',
+        //    },
+        //];
+        //    this.isRequestLoading = false;
+      })
+    );
   }
 
   public back() {
@@ -63,8 +81,8 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   private _prepareLogic(): void {
     switch (this.demandNavigationConfig?.demandActionType) {
       case DemandActionType.CREATE:
-          this._getDraft();
-          this._enableDraftSaving();
+        this._getDraft();
+        this._enableDraftSaving();
         break;
 
       default:
@@ -90,6 +108,6 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private _saveDraft(): void {
     // TODO: save draft
-    console.log('Draft saved')
+    console.log('Draft saved');
   }
 }

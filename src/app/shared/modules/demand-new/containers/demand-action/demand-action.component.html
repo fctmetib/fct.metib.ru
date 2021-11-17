@@ -20,7 +20,7 @@
   <ng-template #contentTemplate>
     <ng-container [ngSwitch]="demandNavigationConfig.demandActionType">
       <ng-container *ngSwitchCase="demandType.CREATE">
-        <demand-create></demand-create>
+        <demand-create (submit)="onSubmit($event)"></demand-create>
       </ng-container>
       <ng-container *ngSwitchCase="demandType.EDIT_CREATED">
         Редактирование созданной заявки

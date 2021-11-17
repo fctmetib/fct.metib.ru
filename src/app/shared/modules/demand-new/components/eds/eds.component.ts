@@ -1,5 +1,12 @@
 // System
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -30,6 +37,9 @@ import { DemandConverter } from '../../tools/demand-converter';
   templateUrl: './eds.component.html',
 })
 export class EDSComponent implements OnInit, OnDestroy {
+  @Output()
+  sumbit = new EventEmitter();
+
   // Форма
   public form: FormGroup;
 
@@ -47,6 +57,7 @@ export class EDSComponent implements OnInit, OnDestroy {
   // Системные переменные
   public demandNavigationConfig: DemandNavigationInterface;
   private _subscription$: Subscription = new Subscription();
+  private _demandConverter: DemandConverter;
 
   // UI
   public selectedIdCenter: any;
@@ -58,7 +69,9 @@ export class EDSComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private commonService: CommonService,
     private _demandNavigationService: DemandNavigationService
-  ) {}
+  ) {
+    this._demandConverter = new DemandConverter();
+  }
 
   ngOnInit() {
     this._initForm();
@@ -72,7 +85,15 @@ export class EDSComponent implements OnInit, OnDestroy {
   }
 
   // TODO:: ADD METHODS LOGIC
-  public onSubmit() {}
+  public onSubmit() {
+    const convertedForm = this._demandConverter.convertToApiData(
+      this.demandNavigationConfig.demandAction,
+      this.form.getRawValue(),
+      this.files
+    );
+    console.log('LEVEL 1', convertedForm);
+    this.sumbit.emit(convertedForm);
+  }
 
   /**
    * Получает список центров выдачи от АПИ
@@ -283,10 +304,10 @@ export class EDSComponent implements OnInit, OnDestroy {
     this._subscription$.add(
       this._demandNavigationService.currentDemand$.subscribe(
         (currentDemand) => {
-          const demandConverter = new DemandConverter();
           const convertedDemand =
-            demandConverter.convertToFormData(currentDemand);
+            this._demandConverter.convertToFormData(currentDemand);
           this.form.patchValue(convertedDemand);
+          this.files = currentDemand.Files;
         }
       )
     );
