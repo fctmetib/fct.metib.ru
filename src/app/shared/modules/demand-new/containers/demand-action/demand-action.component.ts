@@ -38,13 +38,17 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
         // Если demand config пустой, значит "логика" не знает,
         // что отрисовать - возвращаем пользователя на страницу назад, для заполнения demand config
         if (!demandConfig) {
-          this._router.navigate(['/new-demand']);
+          const notVerify = 'not-verify';
+          const baseUrl = this.isUserVerified ? '' : notVerify;
+          this._router.navigate([`${baseUrl}/new-demand`]);
         }
 
         this.demandNavigationConfig = demandConfig;
         this._prepareLogic();
       })
     );
+
+    this._enableFormListening();
   }
 
   ngAfterViewInit(): void {}
@@ -53,9 +57,32 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     this._subscription$.unsubscribe();
   }
 
-  public onSubmit(form) {
-    console.log('LEVEL 3', form)
-    //  this.isRequestLoading = true;
+  public back() {
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+    this._router.navigate([`${baseUrl}/new-demand`]);
+  }
+
+  public get demandType(): typeof DemandActionType {
+    return DemandActionType;
+  }
+
+  private _enableFormListening(): void {
+    this._subscription$.add(
+      this._demandNavigationService.doDemandAction$.subscribe(
+        (demandAction) => {
+          switch (demandAction.type) {
+            case DemandActionType.CREATE:
+              this._createDemand(demandAction.data);
+          }
+        }
+      )
+    );
+  }
+
+  private _createDemand(form): void {
+    console.log('LEVEL 3', form);
+    // this.isRequestLoading = true;
     this._subscription$.add(
       this._demandService.createDemand(form).subscribe((resp) => {
         // this.alert = true;
@@ -70,16 +97,6 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
         //    this.isRequestLoading = false;
       })
     );
-  }
-
-  public back() {
-    const notVerify = 'not-verify';
-    const baseUrl = this.isUserVerified ? '' : notVerify;
-    this._router.navigate([`${baseUrl}/new-demand`]);
-  }
-
-  public get demandType(): typeof DemandActionType {
-    return DemandActionType;
   }
 
   private _prepareLogic(): void {

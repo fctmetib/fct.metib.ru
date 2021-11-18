@@ -30,6 +30,8 @@ import { DemandNavigationService } from '../../services/demand-navigation.servic
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DemandActionType } from '../../types/common/demand-action-type';
 import { DemandConverter } from '../../tools/demand-converter';
+import { SaveDemandRequestInterface } from '../../types/requests/save-demand-request.interface';
+import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
 
 @Component({
   selector: 'eds',
@@ -37,9 +39,6 @@ import { DemandConverter } from '../../tools/demand-converter';
   templateUrl: './eds.component.html',
 })
 export class EDSComponent implements OnInit, OnDestroy {
-  @Output()
-  sumbit = new EventEmitter();
-
   // Форма
   public form: FormGroup;
 
@@ -92,7 +91,21 @@ export class EDSComponent implements OnInit, OnDestroy {
       this.files
     );
     console.log('LEVEL 1', convertedForm);
-    this.sumbit.emit(convertedForm);
+    // this.sumbit.emit(convertedForm);
+
+    // Для всех форм при создании указывается DraftID = 0
+    const requestData: SaveDemandRequestInterface<any> = {
+      DraftID: 0,
+      Data: convertedForm,
+    };
+
+    const doActionData: DoDemandActionInterface = {
+      data: requestData,
+      type: this.demandNavigationConfig.demandActionType,
+    };
+
+    console.log('LEVEL 2', doActionData);
+    this._demandNavigationService.setDoDemandAction(doActionData);
   }
 
   /**

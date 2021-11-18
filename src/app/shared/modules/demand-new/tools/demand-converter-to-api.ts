@@ -7,7 +7,6 @@ import { CreateDemandEDSRequestInterface } from '../types/requests/create-demand
 
 export class DemandConverterToAPI {
   public convertEDStoApiData(form: DemandEDSDataInterface, files: FileModeInterface[]) {
-    console.log('IN CONVERTER START: ', form)
     let organization: OrganizationDataInterface = {
       Email: form.organizationEmail,
       FactAddress:
@@ -74,7 +73,6 @@ export class DemandConverterToAPI {
       PersonPosition: form.ownerWorkPosition,
       Type: 'DigitalSignature',
     };
-    console.log('IN CONVERTER END: ', data)
     return data;
   }
 }
