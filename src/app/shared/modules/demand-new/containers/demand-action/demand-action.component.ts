@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandLoadingService } from '../../services/demand-loading.service';
 import { DemandNavigationService } from '../../services/demand-navigation.service';
 import { DemandService } from '../../services/demand.service';
@@ -24,11 +25,14 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public demandLoadingService: DemandLoadingService,
     private _router: Router,
+    private _authService: AuthService,
     private _demandNavigationService: DemandNavigationService,
     private _demandService: DemandService
   ) {}
 
   ngOnInit() {
+    this.isUserVerified = this._authService.isUserVerified();
+
     this._subscription$.add(
       this._demandNavigationService.demandConfig$.subscribe((demandConfig) => {
         // Если demand config пустой, значит "логика" не знает,

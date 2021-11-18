@@ -46,6 +46,7 @@ import { DemandLoadingService } from './services/demand-loading.service';
 import { DemandAddressGroupComponent } from './components/form-groups/address-group/address-group.component';
 import { AddressModalComponent } from './components/modals/address/address.component';
 import { DemandService } from './services/demand.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @NgModule({
   imports: [
@@ -99,6 +100,7 @@ import { DemandService } from './services/demand.service';
     CryptoProService,
     CommonService,
     FileService,
+    AuthService,
     // Demand Services
     DemandNavigationService,
     DemandService,

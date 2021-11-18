@@ -16,7 +16,7 @@ export class ClientsComponent implements OnInit {
   }
 
   public getContract() {
-    window.open(`${window.location.origin}/assets/_files/factoring_contract.zip`);
+    window.open(`${window.location.origin}/assets/_files/contract.zip`);
   }
 
   public getInstruction() {
