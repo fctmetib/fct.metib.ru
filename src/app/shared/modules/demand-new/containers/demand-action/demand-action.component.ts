@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandLoadingService } from '../../services/demand-loading.service';
 import { DemandNavigationService } from '../../services/demand-navigation.service';
@@ -20,7 +20,9 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   public actionName: string = 'Запрос на ЭЦП';
 
   public demandNavigationConfig: DemandNavigationInterface = null;
+
   private _subscription$: Subscription = new Subscription();
+  private _draftId: number = 0;
   private _saveDraftAction$: NodeJS.Timeout;
 
   constructor(
@@ -79,8 +81,10 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
           switch (demandAction.type) {
             case DoDemandPageActionType.CREATE:
               this._createDemand(demandAction.data);
+              break;
             case DoDemandPageActionType.SAVE_DRAFT:
               this._saveDraft(demandAction.data);
+              break;
           }
         }
       )
@@ -88,39 +92,53 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private _createDemand(form): void {
+    form.DraftID = this._draftId;
+
     this._demandLoadingService.setRequestLoading(true);
     this._subscription$.add(
-      this._demandService.createDemand(form).subscribe((resp) => {
-        window.scroll(0, 0);
-        this._messageService.add({
-          severity: 'success',
-          summary: 'Успешно',
-          detail: 'Запрос успешно создан!',
-        });
-        this._demandLoadingService.setRequestLoading(false);
-      }, (error) => {
-        window.scroll(0, 0);
-        this._messageService.add({
-          severity: 'error',
-          summary: 'Ошибка',
-          detail: 'Произошла ошибка!',
-        });
-        this._demandLoadingService.setRequestLoading(false);
-      })
+      this._demandService.createDemand(form).subscribe(
+        (resp) => {
+          // TODO: navigate to demand list
+          window.scroll(0, 0);
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Успешно',
+            detail: 'Запрос успешно создан!',
+          });
+          this._demandLoadingService.setRequestLoading(false);
+        },
+        (error) => {
+          window.scroll(0, 0);
+          this._messageService.add({
+            severity: 'error',
+            summary: 'Ошибка',
+            detail: 'Произошла ошибка!',
+          });
+          this._demandLoadingService.setRequestLoading(false);
+        }
+      )
     );
   }
 
   private _saveDraft(form): void {
     this._subscription$.add(
-      // this._demandService.createDemand(form).subscribe((resp) => {
-      //   window.scroll(0, 0);
-      //   this._messageService.add({
-      //     severity: 'success',
-      //     summary: 'Успешно',
-      //     detail: 'Черновик успешно создан!',
-      //   });
-      //   this._demandLoadingService.setRequestLoading(false);
-      // })
+      this._demandService.saveDraftById(this._draftId, form).subscribe(
+        (resp) => {
+          this._draftId = resp.ID;
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Успешно',
+            detail: 'Черновик успешно сохранен!',
+          });
+        },
+        (error) => {
+          this._messageService.add({
+            severity: 'error',
+            summary: 'Ошибка',
+            detail: 'При сохранении черновика произошла ошибка!',
+          });
+        }
+      )
     );
   }
 

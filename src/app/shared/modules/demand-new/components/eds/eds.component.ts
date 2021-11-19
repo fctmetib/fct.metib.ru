@@ -232,17 +232,30 @@ export class EDSComponent implements OnInit, OnDestroy {
       this.files
     );
 
-    // Для всех форм при создании указывается DraftID = 0, если отстуствует иное значение
-    const requestData: SaveDemandRequestInterface<any> = {
-      DraftID: 0,
-      Data: convertedForm,
-    };
+    let requestData;
+
+    switch (type) {
+      case DoDemandPageActionType.CREATE:
+        // Для всех форм при создании указывается DraftID = 0, если отстуствует иное значение
+        requestData = {
+          Data: convertedForm,
+        };
+        break;
+      case DoDemandPageActionType.SAVE_DRAFT:
+        requestData = convertedForm;
+        break;
+      case DoDemandPageActionType.UPDATE:
+        // DraftID заполняется в demand-action.component.ts
+        requestData = {
+          Data: convertedForm,
+        };
+        break;
+    }
 
     const doActionData: DoDemandActionInterface = {
       data: requestData,
       type: type,
     };
-
     this._demandNavigationService.setDoDemandAction(doActionData);
   }
 
@@ -250,7 +263,7 @@ export class EDSComponent implements OnInit, OnDestroy {
     this.requestLoading$ = this._demandLoadingService.demandRequestLoading$;
 
     this._subscription$.add(
-      this._demandNavigationService.doDemandSave$.subscribe(saveAction => {
+      this._demandNavigationService.doDemandSave$.subscribe((saveAction) => {
         this._doDemandAction(DoDemandPageActionType.SAVE_DRAFT);
       })
     );
