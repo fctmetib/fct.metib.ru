@@ -1,6 +1,6 @@
-import { DemandActionType } from "../common/demand-action-type";
+import { DoDemandPageActionType } from "./do-demand-page-action-type";
 
 export interface DoDemandActionInterface {
-  type: DemandActionType,
+  type: DoDemandPageActionType,
   data: any, // содержит в себе форму готовую к отправке на АПИ
 }

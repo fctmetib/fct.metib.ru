@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { DemandAction } from '../types/common/demand-action';
-import { DemandActionType } from '../types/common/demand-action-type';
 import { DemandNavigationInterface } from '../types/common/demand-navigation.interface';
 import { DoDemandActionInterface } from '../types/navigation-service/do-demand-action.interface';
 
@@ -20,6 +18,8 @@ export class DemandNavigationService {
   // принимает в себя готовый к отправке на АПИ объект, а также тип действия (создание, редактирование, сохранение)
   public doDemandAction$ = new Subject<DoDemandActionInterface>();
 
+  public doDemandSave$ = new Subject();
+
   constructor() { }
 
   public updateDemandConfig(newConfig: DemandNavigationInterface) {
@@ -33,6 +33,4 @@ export class DemandNavigationService {
   public setDoDemandAction(action: DoDemandActionInterface): void {
     this.doDemandAction$.next(action);
   }
-
-
 }

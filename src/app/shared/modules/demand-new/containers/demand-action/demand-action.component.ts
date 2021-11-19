@@ -1,13 +1,14 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandLoadingService } from '../../services/demand-loading.service';
 import { DemandNavigationService } from '../../services/demand-navigation.service';
 import { DemandService } from '../../services/demand.service';
-import { DemandAction } from '../../types/common/demand-action';
 import { DemandActionType } from '../../types/common/demand-action-type';
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
+import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
 
 @Component({
   selector: 'demand-action',
@@ -27,27 +28,13 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     private _router: Router,
     private _authService: AuthService,
     private _demandNavigationService: DemandNavigationService,
+    private _demandLoadingService: DemandLoadingService,
+    private _messageService: MessageService,
     private _demandService: DemandService
   ) {}
 
   ngOnInit() {
-    this.isUserVerified = this._authService.isUserVerified();
-
-    this._subscription$.add(
-      this._demandNavigationService.demandConfig$.subscribe((demandConfig) => {
-        // Если demand config пустой, значит "логика" не знает,
-        // что отрисовать - возвращаем пользователя на страницу назад, для заполнения demand config
-        if (!demandConfig) {
-          const notVerify = 'not-verify';
-          const baseUrl = this.isUserVerified ? '' : notVerify;
-          this._router.navigate([`${baseUrl}/new-demand`]);
-        }
-
-        this.demandNavigationConfig = demandConfig;
-        this._prepareLogic();
-      })
-    );
-
+    this._initValues();
     this._enableFormListening();
   }
 
@@ -67,13 +54,33 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     return DemandActionType;
   }
 
+  private _initValues(): void {
+    this.isUserVerified = this._authService.isUserVerified();
+    this._subscription$.add(
+      this._demandNavigationService.demandConfig$.subscribe((demandConfig) => {
+        // Если demand config пустой, значит "логика" не знает,
+        // что отрисовать - возвращаем пользователя на страницу назад, для заполнения demand config
+        if (!demandConfig) {
+          const notVerify = 'not-verify';
+          const baseUrl = this.isUserVerified ? '' : notVerify;
+          this._router.navigate([`${baseUrl}/new-demand`]);
+        }
+
+        this.demandNavigationConfig = demandConfig;
+        this._prepareLogic();
+      })
+    );
+  }
+
   private _enableFormListening(): void {
     this._subscription$.add(
       this._demandNavigationService.doDemandAction$.subscribe(
         (demandAction) => {
           switch (demandAction.type) {
-            case DemandActionType.CREATE:
+            case DoDemandPageActionType.CREATE:
               this._createDemand(demandAction.data);
+            case DoDemandPageActionType.SAVE_DRAFT:
+              this._saveDraft(demandAction.data);
           }
         }
       )
@@ -81,21 +88,39 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private _createDemand(form): void {
-    console.log('LEVEL 3', form);
-    // this.isRequestLoading = true;
+    this._demandLoadingService.setRequestLoading(true);
     this._subscription$.add(
       this._demandService.createDemand(form).subscribe((resp) => {
-        // this.alert = true;
         window.scroll(0, 0);
-        // this.alertMessage = [
-        //    {
-        //     severity: 'success',
-        //      summary: 'Успешно!',
-        //     detail: 'Запрос успешно создан.',
-        //    },
-        //];
-        //    this.isRequestLoading = false;
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Успешно',
+          detail: 'Запрос успешно создан!',
+        });
+        this._demandLoadingService.setRequestLoading(false);
+      }, (error) => {
+        window.scroll(0, 0);
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Ошибка',
+          detail: 'Произошла ошибка!',
+        });
+        this._demandLoadingService.setRequestLoading(false);
       })
+    );
+  }
+
+  private _saveDraft(form): void {
+    this._subscription$.add(
+      // this._demandService.createDemand(form).subscribe((resp) => {
+      //   window.scroll(0, 0);
+      //   this._messageService.add({
+      //     severity: 'success',
+      //     summary: 'Успешно',
+      //     detail: 'Черновик успешно создан!',
+      //   });
+      //   this._demandLoadingService.setRequestLoading(false);
+      // })
     );
   }
 
@@ -112,7 +137,9 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private _enableDraftSaving(): void {
-    this._saveDraftAction$ = setInterval(() => this._saveDraft(), 30000);
+    this._saveDraftAction$ = setInterval(() => {
+      this._demandNavigationService.doDemandSave$.next();
+    }, 30000);
   }
 
   private _getDraft(): void {
@@ -125,10 +152,5 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
           this._demandNavigationService.setCurrentDemandData(resp);
         })
     );
-  }
-
-  private _saveDraft(): void {
-    // TODO: save draft
-    console.log('Draft saved');
   }
 }

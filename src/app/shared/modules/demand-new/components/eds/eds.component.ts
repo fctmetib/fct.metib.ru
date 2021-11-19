@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 // System
 import {
   Component,
@@ -32,6 +33,8 @@ import { DemandActionType } from '../../types/common/demand-action-type';
 import { DemandConverter } from '../../tools/demand-converter';
 import { SaveDemandRequestInterface } from '../../types/requests/save-demand-request.interface';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
+import { DemandLoadingService } from '../../services/demand-loading.service';
+import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
 
 @Component({
   selector: 'eds',
@@ -54,6 +57,7 @@ export class EDSComponent implements OnInit, OnDestroy {
   public idCenterList: any[] = [];
 
   // Системные переменные
+  public requestLoading$: Observable<boolean>;
   public demandNavigationConfig: DemandNavigationInterface;
   private _subscription$: Subscription = new Subscription();
   private _demandConverter: DemandConverter;
@@ -67,12 +71,14 @@ export class EDSComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private commonService: CommonService,
+    private _demandLoadingService: DemandLoadingService,
     private _demandNavigationService: DemandNavigationService
   ) {
     this._demandConverter = new DemandConverter();
   }
 
   ngOnInit() {
+    this._initValues();
     this._initForm();
     this._initAdditionalData();
     this._getDemandConfig();
@@ -83,29 +89,8 @@ export class EDSComponent implements OnInit, OnDestroy {
     this._subscription$.unsubscribe();
   }
 
-  // TODO:: ADD METHODS LOGIC
   public onSubmit() {
-    const convertedForm = this._demandConverter.convertToApiData(
-      this.demandNavigationConfig.demandAction,
-      this.form.getRawValue(),
-      this.files
-    );
-    console.log('LEVEL 1', convertedForm);
-    // this.sumbit.emit(convertedForm);
-
-    // Для всех форм при создании указывается DraftID = 0
-    const requestData: SaveDemandRequestInterface<any> = {
-      DraftID: 0,
-      Data: convertedForm,
-    };
-
-    const doActionData: DoDemandActionInterface = {
-      data: requestData,
-      type: this.demandNavigationConfig.demandActionType,
-    };
-
-    console.log('LEVEL 2', doActionData);
-    this._demandNavigationService.setDoDemandAction(doActionData);
+    this._doDemandAction(DoDemandPageActionType.CREATE);
   }
 
   /**
@@ -238,6 +223,37 @@ export class EDSComponent implements OnInit, OnDestroy {
     }
 
     return isInvalid;
+  }
+
+  private _doDemandAction(type: DoDemandPageActionType): void {
+    const convertedForm = this._demandConverter.convertToApiData(
+      this.demandNavigationConfig.demandAction,
+      this.form.getRawValue(),
+      this.files
+    );
+
+    // Для всех форм при создании указывается DraftID = 0, если отстуствует иное значение
+    const requestData: SaveDemandRequestInterface<any> = {
+      DraftID: 0,
+      Data: convertedForm,
+    };
+
+    const doActionData: DoDemandActionInterface = {
+      data: requestData,
+      type: type,
+    };
+
+    this._demandNavigationService.setDoDemandAction(doActionData);
+  }
+
+  private _initValues() {
+    this.requestLoading$ = this._demandLoadingService.demandRequestLoading$;
+
+    this._subscription$.add(
+      this._demandNavigationService.doDemandSave$.subscribe(saveAction => {
+        this._doDemandAction(DoDemandPageActionType.SAVE_DRAFT);
+      })
+    );
   }
 
   private _initForm() {
