@@ -185,6 +185,30 @@ export class AuthService {
     }
   }
 
+  public getNormalToken(): string {
+    let bt: string;
+    let cookie: string;
+
+    if (this.isAdminAuthenticated()) {
+      bt = this.cookieService.get('_bt_admin');
+      cookie = this.cookieService.get('_cu_admin');
+    } else if (this.isAuthenticated()) {
+      bt = this.cookieService.get('_bt');
+      cookie = this.cookieService.get('_cu');
+    }
+
+    let user: AuthResponseInterface;
+    let token;
+    if (cookie) {
+      user = JSON.parse(
+        this.cryptoService.decrypt(cookie)
+      ) as AuthResponseInterface;
+      token = user.Code;
+    }
+
+    return token;
+  }
+
   //#endregion
 
   //#region private

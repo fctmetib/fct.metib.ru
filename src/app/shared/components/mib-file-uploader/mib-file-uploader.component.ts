@@ -2,10 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { CryptoService } from '../../services/common/crypto.service';
 import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-error-dialog.component';
 
 @Component({
@@ -13,7 +16,7 @@ import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-e
   styleUrls: ['./mib-file-uploader.component.scss'],
   template: `
     <div class="addon-button mb-20">
-      <div class="action-box">
+      <label for="{{ type }}" class="action-box">
         <div class="addon-text">
           <p>{{ title }}</p>
         </div>
@@ -29,7 +32,7 @@ import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-e
             ><i class="pi pi-paperclip mr-20"></i> Выбрать файлы</label
           >
         </div>
-      </div>
+      </label>
       <div class="progress">
         <p-progressBar
           *ngIf="fileUploadProgress.isProgress == true"
@@ -47,7 +50,7 @@ import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-e
       <ng-container *ngFor="let file of currentFiles">
         <div class="addon-button mb-10">
           <div class="action-box">
-            <div class="addon-text">
+            <div class="addon-text" (click)="downloadFile(file)">
               <p>
                 {{ file.FileName }}
               </p>
@@ -94,7 +97,8 @@ export class MibFileUploaderComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private fileService: FileService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -117,6 +121,14 @@ export class MibFileUploaderComponent implements OnInit {
     this.currentFiles = this.currentFiles.filter((x) => x !== file);
     this.remove.emit(file);
     this.resetFileInputs();
+  }
+
+  public downloadFile(file) {
+    const token = this.authService.getNormalToken();
+    const link = document.createElement('a');
+    link.href = `https://api-factoring.metib.ru/api/file/${file.Code}/content?Token=${token}`;
+    link.download = `certificate.crt`;
+    link.click();
   }
 
   public onSelect(event) {
@@ -216,8 +228,8 @@ export class MibFileUploaderComponent implements OnInit {
   }
 
   private fillCurrentFiles() {
-    if(this.existFile) {
-      this.existFile.forEach(file => {
+    if (this.existFile) {
+      this.existFile.forEach((file) => {
         if (file.Identifier === this.type) {
           this.currentFiles.push(file);
         }

@@ -278,7 +278,7 @@
       <p-dropdown styleClass="mib-input" id="ownerGeoPosition" [options]="regionList"
         placeholder="Выберите географическое расположение" formControlName="ownerGeoPosition" optionLabel="Title"
         (onChange)="selectGeoPosition($event)" optionValue="Code"></p-dropdown>
-      <div>
+      <div *ngIf="idCenterList.length === 0">
         <small class="p-error">
           Укажите Ваше географическое расположение для выбора ближайших Центров идентификации
         </small>
@@ -290,7 +290,7 @@
       <p-dropdown styleClass="mib-input" id="ownerIdCenter" (onChange)="setIDCenter($event)" [options]="idCenterList"
         placeholder="Выберите географическое расположение" formControlName="ownerIdCenter" optionLabel="name"
         optionValue="guid"></p-dropdown>
-      <div>
+      <div  *ngIf="!selectedIdCenter">
         <small class="p-error">
           Укажите подходящий региональный Центр идентификации
         </small>

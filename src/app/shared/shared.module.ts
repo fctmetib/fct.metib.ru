@@ -5,10 +5,20 @@ import { MibFileUploaderComponent } from './components/mib-file-uploader/mib-fil
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MibFileErrorDialogComponent } from './components/mib-file-error-dialog/mib-file-error-dialog.component';
+import { AuthService } from '../auth/services/auth.service';
 
 @NgModule({
   imports: [CommonModule, ProgressBarModule, FormsModule, ReactiveFormsModule],
-  exports: [HeaderPageComponent, MibFileUploaderComponent, MibFileErrorDialogComponent],
-  declarations: [HeaderPageComponent, MibFileUploaderComponent, MibFileErrorDialogComponent],
+  exports: [
+    HeaderPageComponent,
+    MibFileUploaderComponent,
+    MibFileErrorDialogComponent,
+  ],
+  declarations: [
+    HeaderPageComponent,
+    MibFileUploaderComponent,
+    MibFileErrorDialogComponent,
+  ],
+  providers: [AuthService],
 })
 export class SharedModule {}
