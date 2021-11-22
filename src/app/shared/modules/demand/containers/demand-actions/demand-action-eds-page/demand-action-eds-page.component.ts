@@ -177,7 +177,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
           new Blob(binaryData, { type: 'application/msword' })
         );
 
-        downloadLink.setAttribute('download', 'Заявка на выдачу сертификата');
+        downloadLink.setAttribute('download', 'Заявка на выдачу сертификата.doc');
         document.body.appendChild(downloadLink);
         downloadLink.click();
       });
