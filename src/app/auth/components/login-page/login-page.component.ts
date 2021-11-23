@@ -33,6 +33,8 @@ export class LoginPageComponent implements OnInit {
   alertWarning: boolean = false;
   alertWarningMessage: string = '';
 
+  public fieldTextType: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private commonService: CommonService,
@@ -92,5 +94,9 @@ export class LoginPageComponent implements OnInit {
     };
 
     this.store.dispatch(loginAction({ request }));
+  }
+
+  public showPassword() {
+    this.fieldTextType = !this.fieldTextType;
   }
 }

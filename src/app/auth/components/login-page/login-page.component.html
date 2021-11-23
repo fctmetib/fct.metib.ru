@@ -15,9 +15,15 @@
             </div>
           </small>
         </div>
+
         <div class="auth__body__form__fields__field">
-          <input id="password" type="password" pInputText placeholder="Пароль" formControlName="password"
-            [ngClass]="{'ng-invalid ng-dirty': form.get('password').invalid && form.get('password').touched}">
+          <div class="p-inputgroup">
+            <input [type]="fieldTextType ? 'text' : 'password'" pInputText placeholder="Пароль"
+              formControlName="password"
+              [ngClass]="{'ng-invalid ng-dirty': form.get('password').invalid && form.get('password').touched}">
+            <button type="button" pButton pRipple [icon]="fieldTextType ? 'pi pi-eye' : 'pi pi-eye-slash'"
+              styleClass="p-button-icon" (click)="showPassword()" ></button>
+          </div>
           <small class="p-error" *ngIf="form.get('password').invalid && form.get('password').touched">
             <div *ngIf="form.get('password').errors['required']">
               Поле Пароль не должно быть пустым
