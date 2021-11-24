@@ -47,6 +47,7 @@ import { DemandAddressGroupComponent } from './components/form-groups/address-gr
 import { AddressModalComponent } from './components/modals/address/address.component';
 import { DemandService } from './services/demand.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { DemandHistoryComponent } from './containers/demand-history/demand-history.component';
 
 @NgModule({
   imports: [
@@ -86,6 +87,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
     DemandActionComponent,
     DemandCreateComponent,
     DemandActionsComponent,
+    DemandHistoryComponent,
     // Components
     EDSComponent,
     DemandAddressGroupComponent,

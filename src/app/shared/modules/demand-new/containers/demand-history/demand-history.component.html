@@ -1,0 +1,152 @@
+<div [ngClass]="{'card-content': isUserVerified}">
+  <div class="header lg">
+    <div class="title">
+      <h2>История запросов</h2>
+      <div class="subheader">
+        Список Истории запросов
+      </div>
+    </div>
+    <form [formGroup]="searchForm" class="actions">
+      <p-dropdown
+      styleClass="mib-input"
+        [options]="statusTypes"
+        placeholder="Выберите статус запроса"
+        styleClass="search-field"
+        optionLabel="name"
+        optionValue="type"
+        (onChange)="onFilterStatusChange($event)"
+        >
+      </p-dropdown>
+      <span class="mr-20" [ngClass]="isSearching ? 'p-input-icon-right' : 'p-input-icon-left'">
+        <ng-container *ngIf="isSearching; else searchIconTemplate">
+          <i class="pi pi-spin pi-spinner"></i>
+        </ng-container>
+        <ng-template #searchIconTemplate>
+          <i class="pi pi-search"></i>
+        </ng-template>
+        <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" formControlName="search" pInputText />
+      </span>
+      <button pButton pRipple type="button" label="Вернуться к списку запросов" [routerLink]="['/demand']"
+        class="p-button-outlined"></button>
+    </form>
+  </div>
+
+  <div class="demand-list">
+    <ng-container *ngIf="loading; else skeletonDemandTemplate">
+      <div class="demand-item" *ngFor="let demand of allDemandsFiltered">
+        <div class="demand-info">
+          <div class="demand-card">
+            <div class="demand-card-content">
+              <div class="demand-content">
+                <div class="text">
+                  <p>
+                    №{{demand.ID}}
+                    {{demand.TranslatedType}}
+                  </p>
+
+                </div>
+                <div class="icon arrow_right"></div>
+              </div>
+              <div class="demand-status-info">
+                <div [ngSwitch]="demand.Status">
+                  <div *ngSwitchCase="'Processing'">
+                    <div class="demand-status default">
+                      В процессе
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="'Completed'">
+                    <div class="demand-status success">
+                      Завершен
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="'Rejected'">
+                    <div class="demand-status warning">
+                      Отклонено
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="'Created'">
+                    <div class="demand-status default">
+                      Создан
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="'Draft'">
+                    <div class="demand-status default">
+                      Черновик
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="'Canceled'">
+                    <div class="demand-status warning">
+                      Отменен
+                    </div>
+                  </div>
+                </div>
+
+                <div class="demand-status-date">
+                  {{demand.DateModify | date:'dd.MM.yyyy'}}
+                </div>
+              </div>
+            </div>
+            <div class="demand-actions" *ngIf="demand.Status !== 'Canceled' && demand.Status !== 'Rejected'">
+
+              <div *ngIf="demand.Status !== 'Completed'">
+              <ng-container *ngIf="demand.Status === 'Draft'; else removeTemplate">
+                <button pButton pRipple type="button" label="Удалить" class="p-button-outlined p-button-danger mib-small" (click)="remove(demand.ID)"></button>
+              </ng-container>
+              <ng-template #removeTemplate>
+                  <button pButton pRipple type="button" label="Отменить" class="p-button-outlined p-button-danger mib-small" (click)="cancel(demand.ID)"></button>
+              </ng-template>
+            </div>
+
+              <ng-container *ngIf="demand.Status === 'Completed'; else editTemplate">
+                <button pButton pRipple type="button" label="Посмотреть" class="p-button-outlined mib-small" (click)="edit(demand.Type, demand.ID, true, demand.Status)" ></button>
+              </ng-container>
+              <ng-template #editTemplate>
+                <button pButton pRipple type="button" label="Редактировать" class="p-button-outlined mib-small" (click)="edit(demand.Type, demand.ID, false, demand.Status)" ></button>
+            </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="demand-manager">
+          <div class="demand-manager-date">
+            {{demand.DateModify | date:'dd.MM.yyyy'}}
+          </div>
+          <div *ngIf="demand.Manager; else noManager">
+            <div class="demand-manager-info">
+              {{demand.Manager.Name}} ({{demand.Manager.Extension}})
+            </div>
+          </div>
+          <ng-template #noManager>
+            <div class="demand-manager-info">
+              Менеджер не назначен
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #skeletonDemandTemplate>
+      <div class="demand-item" *ngFor="let demand of [{}, {}, {}]">
+        <div class="demand-info">
+          <div class="demand-content">
+            <div class="text">
+              <p>
+                <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+              </p>
+            </div>
+          </div>
+          <div class="demand-status-info">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+            <div class="demand-status-date">
+              <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+            </div>
+          </div>
+        </div>
+        <div class="demand-manager">
+          <div class="demand-manager-date">
+            <p-skeleton></p-skeleton>
+          </div>
+          <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
