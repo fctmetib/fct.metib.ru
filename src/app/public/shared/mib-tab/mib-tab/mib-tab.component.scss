@@ -76,11 +76,15 @@
       padding: unset;
       height: 50px;
       width: 290px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     .active {
-      border: 1px solid #0C83F1;
-      background: #0C83F1;
+      border: 1px solid white;
+      background: linear-gradient(254.84deg, #3561A6 8.99%, rgba(255, 255, 255, 0) 64.13%), linear-gradient(252.66deg, #66ABC6 40.02%, rgba(255, 255, 255, 0) 151.07%), #89D3CF;
       border-radius: 10px;
 
       font-weight: 500;

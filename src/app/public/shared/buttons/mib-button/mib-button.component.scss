@@ -20,7 +20,7 @@ button {
       &:hover {
         background: $main;
         color: white;
-        border: 1px solid $main;
+        border: 1px solid white;
       }
 
       &:disabled {
@@ -85,7 +85,7 @@ button {
 
       &:hover {
         background: $main;
-        border: 2px solid $main;
+        border: unset;
 
         img {
           filter: brightness(0) invert(1);
