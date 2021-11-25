@@ -44,6 +44,9 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this._subscription$.unsubscribe();
+    if (this._saveDraftAction$) {
+      clearInterval(this._saveDraftAction$);
+    }
   }
 
   public back() {

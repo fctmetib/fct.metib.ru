@@ -32,4 +32,24 @@ export class DemandService {
     const url = `${environment.apiUrl}/demand/draft/${id}`;
     return this.http.post<DemandDraftInterface<any>>(url, data);
   }
+
+  public getDemands(): Observable<DemandInterface<any>[]> {
+    const url = `${environment.apiUrl}/demand`;
+    return this.http.get<DemandInterface<any>[]>(url);
+  }
+
+  public getDrafts(): Observable<DemandDraftInterface<any>[]> {
+    const url = `${environment.apiUrl}/demand/draft`;
+    return this.http.get<DemandDraftInterface<any>[]>(url);
+  }
+
+  public deleteDraftById(id: number): Observable<DemandDraftInterface<any>> {
+    const url = `${environment.apiUrl}/demand/draft/${id}`;
+    return this.http.delete<DemandDraftInterface<any>>(url);
+  }
+
+  public cancelByDemandId(id: number): Observable<any> {
+    const url = `${environment.apiUrl}/demand/${id}/cancel`;
+    return this.http.post<any>(url, {});
+  }
 }

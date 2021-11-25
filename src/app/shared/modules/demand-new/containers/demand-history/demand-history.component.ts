@@ -74,95 +74,94 @@ export class DemandHistoryComponent implements OnInit, OnDestroy {
 
   fetch() {
     this.loading = true;
-    this.subscription$
-      .add
-      // this.demandService
-      //   .getDrafts()
-      //   .pipe(
-      //     switchMap((drafts) => {
-      //       this.allDrafts = drafts;
-      //       return this.demandService.fetch();
-      //     })
-      //   )
-      //   .subscribe((demands) => {
-      //     this.allDemands = demands;
+    this.subscription$.add(
+      this.demandService
+        .getDrafts()
+        .pipe(
+          switchMap((drafts) => {
+            this.allDrafts = drafts;
+            return this.demandService.getDemands();
+          })
+        )
+        .subscribe((demands) => {
+          this.allDemands = demands;
 
-      //     if (demands) {
-      //       if (this.allDrafts) {
-      //         this.allDrafts.forEach((draft) => {
-      //           this.allDemands.push({
-      //             Data: draft.Data,
-      //             DateCreated: draft.DateCreated,
-      //             DateModify: draft.DateModify,
-      //             DateStatus: draft.DateCreated,
-      //             Files: draft.Data.Files,
-      //             ID: draft.ID,
-      //             Manager: null,
-      //             Messages: null,
-      //             Requirements: null,
-      //             Result: null,
-      //             Status: 'Draft',
-      //             Steps: null,
-      //             Type: draft.Data.Type,
-      //             User: draft.User,
-      //           });
+          if (demands) {
+            if (this.allDrafts) {
+              this.allDrafts.forEach((draft) => {
+                this.allDemands.push({
+                  Data: draft.Data,
+                  DateCreated: draft.DateCreated,
+                  DateModify: draft.DateModify,
+                  DateStatus: draft.DateCreated,
+                  Files: draft.Data.Files,
+                  ID: draft.ID,
+                  Manager: null,
+                  Messages: null,
+                  Requirements: null,
+                  Result: null,
+                  Status: 'Draft',
+                  Steps: null,
+                  Type: draft.Data.Type,
+                  User: draft.User,
+                });
 
-      //           this.allDemands.sort((a, b) => {
-      //             return (
-      //               new Date(b.DateModify).getTime() -
-      //               new Date(a.DateModify).getTime()
-      //             );
-      //           });
-      //         });
-      //       }
-      //     }
+                this.allDemands.sort((a, b) => {
+                  return (
+                    new Date(b.DateModify).getTime() -
+                    new Date(a.DateModify).getTime()
+                  );
+                });
+              });
+            }
+          }
 
-      //     this.allDemands = this.allDemands.map((x) => {
-      //       let translatedType = this.getTypeTranslate(x.Type);
-      //       let translatedStatus = this.getStatusTranslate(x.Status);
+          this.allDemands = this.allDemands.map((x) => {
+            let translatedType = this.getTypeTranslate(x.Type);
+            let translatedStatus = this.getStatusTranslate(x.Status);
 
-      //       return {
-      //         Type: x?.Type,
-      //         Status: x?.Status,
-      //         User: x?.User,
-      //         Manager: x?.Manager,
-      //         DateCreated: x?.DateCreated,
-      //         DateModify: x?.DateModify,
-      //         DateStatus: x?.DateStatus,
-      //         Requirements: x?.Requirements,
-      //         Steps: x?.Steps,
-      //         Messages: x?.Messages,
-      //         Files: x?.Files,
-      //         Data: x?.Data,
-      //         Result: x?.Result,
-      //         ID: x?.ID,
-      //         TranslatedType: translatedType,
-      //         TranslatedStatus: translatedStatus,
-      //       };
-      //     });
-      //     this.allDemandsFiltered = this.allDemands;
-      //   })
-      ();
+            return {
+              Type: x?.Type,
+              Status: x?.Status,
+              User: x?.User,
+              Manager: x?.Manager,
+              DateCreated: x?.DateCreated,
+              DateModify: x?.DateModify,
+              DateStatus: x?.DateStatus,
+              Requirements: x?.Requirements,
+              Steps: x?.Steps,
+              Messages: x?.Messages,
+              Files: x?.Files,
+              Data: x?.Data,
+              Result: x?.Result,
+              ID: x?.ID,
+              TranslatedType: translatedType,
+              TranslatedStatus: translatedStatus,
+            };
+          });
+          this.allDemandsFiltered = this.allDemands;
+        })
+    );
   }
 
   remove(Id) {
-    // this.subscription$.add(
-    //   this.demandService.deleteDraftById(Id).subscribe(() => {
-    //     this.allDemandsFiltered = this.allDemandsFiltered.filter(
-    //       (x) => x.ID !== Id
-    //     );
-    //     this.allDemands = this.allDemands.filter((x) => x.ID !== +Id);
-    //   })
-    // );
+    this.subscription$.add(
+      this.demandService.deleteDraftById(Id).subscribe(() => {
+        this.allDemandsFiltered = this.allDemandsFiltered.filter(
+          (x) => x.ID !== Id
+        );
+        this.allDemands = this.allDemands.filter((x) => x.ID !== +Id);
+      })
+    );
   }
 
   cancel(Id) {
-    // this.subscription$.add(
-    //   this.demandService.cancelByDemandId(Id).subscribe(() => {
-    //     let canceledDemand = this.allDemands.find((x) => x.ID === Id);
-    //     canceledDemand.Status = 'Canceled';
-    //   })
-    // );
+    this.subscription$.add(
+      this.demandService.cancelByDemandId(Id).subscribe(() => {
+        let canceledDemand = this.allDemands.find((x) => x.ID === Id);
+        canceledDemand.Status = 'Canceled';
+      })
+    );
   }
 
   edit(Type: string, ID: string, isView: boolean, isDraft: string) {
