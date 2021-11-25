@@ -66,6 +66,12 @@ export class DemandHistoryComponent implements OnInit, OnDestroy {
     }
   }
 
+  public back(): void {
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+    this.router.navigate([`${baseUrl}//new-demand`]);
+  }
+
   fetch() {
     this.loading = true;
     this.subscription$
