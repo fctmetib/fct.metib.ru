@@ -1,3 +1,4 @@
+import { DemandActionType } from './../../types/common/demand-action-type';
 import { DemandService } from '../../services/demand.service';
 import { DemandInterface } from '../../types/demand.interface';
 import { Subscription } from 'rxjs';
@@ -12,6 +13,7 @@ import {
   tap,
 } from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
+import { DemandAction } from '../../types/common/demand-action';
 
 @Component({
   selector: 'app-demand-history',
@@ -164,95 +166,60 @@ export class DemandHistoryComponent implements OnInit, OnDestroy {
     );
   }
 
-  edit(Type: string, ID: string, isView: boolean, isDraft: string) {
+  edit(Type: string, ID: string, isDraft: string, isCompleted: boolean) {
     const notVerify = 'not-verify';
     const baseUrl = this.isUserVerified ? '' : notVerify;
 
     let Edit = isDraft === 'Draft' ? true : false;
 
+    let demandAction: DemandActionType;
+    let demandType: DemandAction;
+
+    if (isCompleted) {
+      demandAction = DemandActionType.VIEW;
+    } else {
+      demandAction = Edit
+        ? DemandActionType.EDIT_DRAFT
+        : DemandActionType.EDIT_CREATED;
+    }
+
     switch (Type) {
       case 'Factoring':
-        this.router.navigate([`${baseUrl}/demand/actions/factoring`], {
-          queryParams: {
-            ID: ID,
-            View: isView,
-            Edit: Edit,
-          },
-        });
+        demandType = DemandAction.FACTORING;
         break;
       case 'AgencyFactoring':
-        this.router.navigate([`${baseUrl}/demand/actions/agent-factoring`], {
-          queryParams: {
-            ID: ID,
-            View: isView,
-            Edit: Edit,
-          },
-        });
+        demandType = DemandAction.AGENT_FACTORING;
         break;
       case 'Question':
-        this.router.navigate([`${baseUrl}/demand/actions/free-request`], {
-          queryParams: {
-            ID: ID,
-            View: isView,
-            Edit: Edit,
-          },
-        });
+        demandType = DemandAction.FREE_REQUEST;
         break;
       case 'DigitalSignature':
-        this.router.navigate([`${baseUrl}/demand/actions/create-eds`], {
-          queryParams: {
-            ID: ID,
-            View: isView,
-            Edit: Edit,
-          },
-        });
+        demandType = DemandAction.EDS;
         break;
       case 'ProfileChange':
-        this.router.navigate([`${baseUrl}/demand/actions/edit-profile`], {
-          queryParams: {
-            ID: ID,
-            View: isView,
-            Edit: Edit,
-          },
-        });
+        demandType = DemandAction.EDIT_PROFILE;
         break;
       case 'Limit':
-        this.router.navigate([`${baseUrl}/demand/actions/update-limit`], {
-          queryParams: {
-            ID: ID,
-            View: isView,
-            Edit: Edit,
-          },
-        });
+        demandType = DemandAction.UPDATE_LIMIT;
         break;
       case 'NewDebtor':
-        this.router.navigate([`${baseUrl}/demand/actions/create-debitor`], {
-          queryParams: {
-            ID: ID,
-            View: isView,
-            Edit: Edit,
-          },
-        });
+        demandType = DemandAction.CREATE_DEBITOR;
         break;
       case 'Guarantee':
-        this.router.navigate([`${baseUrl}/demand/actions/surety`], {
-          queryParams: {
-            ID: ID,
-            View: isView,
-            Edit: Edit,
-          },
-        });
+        demandType = DemandAction.SURETY;
         break;
       case 'VerificationChannel':
-        this.router.navigate([`${baseUrl}/demand/actions/verify`], {
-          queryParams: {
-            ID: ID,
-            View: isView,
-            Edit: Edit,
-          },
-        });
+        demandType = DemandAction.VERIFY;
         break;
     }
+
+    this.router.navigate([`${baseUrl}/new-demand/demand-action`], {
+      queryParams: {
+        ID: ID, // Id запроса
+        Type: demandType, // Factoring, EDS и тд
+        Action: demandAction, // Редактирование, создание и тд
+      },
+    });
   }
 
   private initValues() {

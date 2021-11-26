@@ -6,8 +6,8 @@
  * @UPDATE_LIMIT 'Limit' запрос на увеличение лимита
  * @CREATE_DEBITOR 'NewDebtor' запрос на нового дебитора
  * @VERIFY 'VerificationChannel' запрос на регистрацию канала верификации
- * @FACTORING запрос на факторинг
- * @AGENT_FACTORING запрос на агентский факторинг
+ * @FACTORING 'Factoring' запрос на факторинг
+ * @AGENT_FACTORING 'AgencyFactoring' запрос на агентский факторинг
  */
 export enum DemandAction {
   EDS = 'DigitalSignature',
@@ -17,6 +17,6 @@ export enum DemandAction {
   UPDATE_LIMIT = 'Limit',
   CREATE_DEBITOR = 'NewDebtor',
   VERIFY = 'VerificationChannel',
-  FACTORING = 'FACTORING',
-  AGENT_FACTORING = 'AGENT_FACTORING',
+  FACTORING = 'Factoring',
+  AGENT_FACTORING = 'AgencyFactoring',
 }

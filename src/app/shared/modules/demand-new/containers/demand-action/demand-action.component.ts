@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandLoadingService } from '../../services/demand-loading.service';
 import { DemandNavigationService } from '../../services/demand-navigation.service';
 import { DemandService } from '../../services/demand.service';
+import { DemandAction } from '../../types/common/demand-action';
 import { DemandActionType } from '../../types/common/demand-action-type';
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
@@ -28,6 +29,7 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public demandLoadingService: DemandLoadingService,
     private _router: Router,
+    private _route: ActivatedRoute,
     private _authService: AuthService,
     private _demandNavigationService: DemandNavigationService,
     private _demandLoadingService: DemandLoadingService,
@@ -36,7 +38,7 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this._initValues();
+    this._preInitValues();
     this._enableFormListening();
   }
 
@@ -57,6 +59,29 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public get demandType(): typeof DemandActionType {
     return DemandActionType;
+  }
+
+  private _preInitValues(): void {
+    this._subscription$.add(
+      this._route.queryParams.subscribe((params: Params) => {
+        this._fillConfig(params);
+      })
+    );
+  }
+
+  private _fillConfig(params): void {
+    let id: number = params['ID'];
+    let type: DemandAction = params['Type'];
+    let action: DemandActionType = params['Action'];
+
+    const demandConfig: DemandNavigationInterface = {
+      demandAction: type,
+      demandActionType: action,
+      demandId: id,
+    };
+
+    this._demandNavigationService.updateDemandConfig(demandConfig);
+    this._initValues();
   }
 
   private _initValues(): void {

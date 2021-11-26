@@ -56,12 +56,24 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
   public openDemandAction(action: DemandAction): void {
     const demandConfig: DemandNavigationInterface = {
       demandAction: action,
-      demandActionType: DemandActionType.CREATE
-    }
+      demandActionType: DemandActionType.CREATE,
+      demandId: 0,
+    };
     this._demandNavigationService.updateDemandConfig(demandConfig);
 
-    const url = `${this._router.url}/demand-action`;
-    this._router.navigateByUrl(url);
+    // const url = `${this._router.url}/demand-action`;
+    // this._router.navigateByUrl(url);
+
+    const notVerify = 'not-verify';
+    const baseUrl = this.isUserVerified ? '' : notVerify;
+
+    this._router.navigate([`${baseUrl}/new-demand/demand-action`], {
+      queryParams: {
+        ID: 0, // Id запроса
+        Type: action, // Factoring, EDS и тд
+        Action: DemandActionType.CREATE, // Редактирование, создание и тд
+      },
+    });
   }
 
   /**

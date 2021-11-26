@@ -14,20 +14,25 @@
   </div>
 
   <!-- Проверка загрузки -->
-  <ng-container *ngIf="!demandNavigationConfig || ((demandLoadingService.demandPageLoading$ | async)); else contentTemplate">
+  <ng-container
+    *ngIf="!demandNavigationConfig || ((demandLoadingService.demandPageLoading$ | async)); else contentTemplate">
     Загрузка...
   </ng-container>
   <ng-template #contentTemplate>
     <ng-container [ngSwitch]="demandNavigationConfig.demandActionType">
+      <!-- Создание заявки -->
       <ng-container *ngSwitchCase="demandType.CREATE">
         <demand-create></demand-create>
       </ng-container>
+      <!-- Редактирование созданной заявки -->
       <ng-container *ngSwitchCase="demandType.EDIT_CREATED">
         Редактирование созданной заявки
       </ng-container>
+      <!-- Редактирование черновика -->
       <ng-container *ngSwitchCase="demandType.EDIT_DRAFT">
         Редактирование черновика
       </ng-container>
+      <!-- Просмотр закрытой -->
       <ng-container *ngSwitchCase="demandType.VIEW">
         Просмотр закрытой
       </ng-container>

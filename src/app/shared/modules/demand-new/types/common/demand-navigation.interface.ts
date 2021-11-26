@@ -10,4 +10,5 @@ import { DemandActionType } from './demand-action-type';
 export interface DemandNavigationInterface {
   demandAction: DemandAction;
   demandActionType: DemandActionType;
+  demandId: number;
 }
