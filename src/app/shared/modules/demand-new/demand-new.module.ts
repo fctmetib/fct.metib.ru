@@ -48,6 +48,8 @@ import { AddressModalComponent } from './components/modals/address/address.compo
 import { DemandService } from './services/demand.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandHistoryComponent } from './containers/demand-history/demand-history.component';
+import { DemandEditComponent } from './containers/demand-edit/demand-edit.component';
+import { DemandViewComponent } from './containers/demand-view/demand-view.component';
 
 @NgModule({
   imports: [
@@ -86,6 +88,8 @@ import { DemandHistoryComponent } from './containers/demand-history/demand-histo
     // Containers
     DemandActionComponent,
     DemandCreateComponent,
+    DemandEditComponent,
+    DemandViewComponent,
     DemandActionsComponent,
     DemandHistoryComponent,
     // Components

@@ -26,15 +26,18 @@
       </ng-container>
       <!-- Редактирование созданной заявки -->
       <ng-container *ngSwitchCase="demandType.EDIT_CREATED">
-        Редактирование созданной заявки
+        <!-- Редактирование созданной заявки -->
+        <demand-edit></demand-edit>
       </ng-container>
       <!-- Редактирование черновика -->
       <ng-container *ngSwitchCase="demandType.EDIT_DRAFT">
-        Редактирование черновика
+        <!-- Редактирование черновика -->
+        <demand-edit></demand-edit>
       </ng-container>
       <!-- Просмотр закрытой -->
       <ng-container *ngSwitchCase="demandType.VIEW">
         Просмотр закрытой
+        <!--  <demand-view></demand-view> -->
       </ng-container>
     </ng-container>
   </ng-template>

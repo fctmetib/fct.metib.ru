@@ -1,4 +1,4 @@
-import { DoDemandActionInterface } from './../../types/navigation-service/do-demand-action.interface';
+import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,11 +9,11 @@ import { DemandNavigationInterface } from '../../types/common/demand-navigation.
 import { SaveDemandRequestInterface } from '../../types/requests/save-demand-request.interface';
 
 @Component({
-  selector: 'demand-create',
-  styleUrls: ['./demand-create.component.scss'],
-  templateUrl: './demand-create.component.html',
+  selector: 'demand-view',
+  styleUrls: ['./demand-view.component.scss'],
+  templateUrl: './demand-view.component.html',
 })
-export class DemandCreateComponent implements OnInit, OnDestroy {
+export class DemandViewComponent implements OnInit, OnDestroy {
   public demandNavigationConfig: DemandNavigationInterface;
   private _subscription$: Subscription = new Subscription();
 
