@@ -9,11 +9,11 @@ import { DemandNavigationInterface } from '../../types/common/demand-navigation.
 import { SaveDemandRequestInterface } from '../../types/requests/save-demand-request.interface';
 
 @Component({
-  selector: 'demand-edit',
-  styleUrls: ['./demand-edit.component.scss'],
-  templateUrl: './demand-edit.component.html',
+  selector: 'demand-edit-created',
+  styleUrls: ['./demand-edit-created.component.scss'],
+  templateUrl: './demand-edit-created.component.html',
 })
-export class DemandEditComponent implements OnInit, OnDestroy {
+export class DemandEditCreatedComponent implements OnInit, OnDestroy {
   public demandNavigationConfig: DemandNavigationInterface;
   private _subscription$: Subscription = new Subscription();
 

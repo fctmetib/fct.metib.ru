@@ -33,7 +33,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ExitGuard } from '../../services/exit.guard';
-import {AutoCompleteModule} from 'primeng/autocomplete';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SharedModule } from '../../shared.module';
 
 // Containers
@@ -48,8 +48,9 @@ import { AddressModalComponent } from './components/modals/address/address.compo
 import { DemandService } from './services/demand.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandHistoryComponent } from './containers/demand-history/demand-history.component';
-import { DemandEditComponent } from './containers/demand-edit/demand-edit.component';
+import { DemandEditDraftComponent } from './containers/demand-edit-draft/demand-edit-draft.component';
 import { DemandViewComponent } from './containers/demand-view/demand-view.component';
+import { DemandEditCreatedComponent } from './containers/demand-edit-created/demand-edit-created.component';
 
 @NgModule({
   imports: [
@@ -82,13 +83,14 @@ import { DemandViewComponent } from './containers/demand-view/demand-view.compon
     DialogModule,
     MenubarModule,
     AvatarModule,
-    SharedModule
+    SharedModule,
   ],
   declarations: [
     // Containers
     DemandActionComponent,
     DemandCreateComponent,
-    DemandEditComponent,
+    DemandEditDraftComponent,
+    DemandEditCreatedComponent,
     DemandViewComponent,
     DemandActionsComponent,
     DemandHistoryComponent,
@@ -96,7 +98,7 @@ import { DemandViewComponent } from './containers/demand-view/demand-view.compon
     EDSComponent,
     DemandAddressGroupComponent,
     // Modals
-    AddressModalComponent
+    AddressModalComponent,
   ],
   providers: [
     ExitGuard,
@@ -110,7 +112,7 @@ import { DemandViewComponent } from './containers/demand-view/demand-view.compon
     // Demand Services
     DemandNavigationService,
     DemandService,
-    DemandLoadingService
+    DemandLoadingService,
   ],
 })
 export class DemandNewModule {}

@@ -176,7 +176,14 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
         this._getDraft();
         this._enableDraftSaving();
         break;
-
+      case DemandActionType.EDIT_DRAFT:
+        this._initEditDraftSettings();
+        this._getDraft();
+        this._enableDraftSaving();
+        break;
+      case DemandActionType.EDIT_CREATED:
+        this._getDemand();
+        break;
       default:
         break;
     }
@@ -198,5 +205,21 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
           this._demandNavigationService.setCurrentDemandData(resp);
         })
     );
+  }
+
+  private _getDemand(): void {
+    this.demandLoadingService.setPageLoading(true);
+    this._subscription$.add(
+      this._demandService
+        .getDemandById(this.demandNavigationConfig.demandId)
+        .subscribe((resp) => {
+          this.demandLoadingService.setPageLoading(false);
+          this._demandNavigationService.setCurrentDemandData(resp);
+        })
+    );
+  }
+
+  private _initEditDraftSettings(): void {
+    this._draftId = this.demandNavigationConfig.demandId;
   }
 }

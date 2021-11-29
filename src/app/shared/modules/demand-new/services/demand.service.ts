@@ -18,6 +18,11 @@ export class DemandService {
     return this.http.get<DemandDataBaseInterface>(url);
   }
 
+  getDemandById(id: number): Observable<DemandInterface<any>> {
+    const url = `${environment.apiUrl}/demand/${id}`;
+    return this.http.get<DemandInterface<any>>(url);
+  }
+
   public createDemand<T>(
     data: SaveDemandRequestInterface<T>
   ): Observable<DemandInterface<T>> {
