@@ -9,6 +9,7 @@ import { DemandService } from '../../services/demand.service';
 import { DemandAction } from '../../types/common/demand-action';
 import { DemandActionType } from '../../types/common/demand-action-type';
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
+import { DemandInterface } from '../../types/demand.interface';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
 
 @Component({
@@ -214,12 +215,35 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
         .getDemandById(this.demandNavigationConfig.demandId)
         .subscribe((resp) => {
           this.demandLoadingService.setPageLoading(false);
-          this._demandNavigationService.setCurrentDemandData(resp);
+          const demandData = resp.Data;
+          const demandInfoData = this._convertToDemandInfoData(resp);
+          this._demandNavigationService.setCurrentDemandData(demandData);
+          this._demandNavigationService.setCurrentDemandInfoData(
+            demandInfoData
+          );
         })
     );
   }
 
   private _initEditDraftSettings(): void {
     this._draftId = this.demandNavigationConfig.demandId;
+  }
+
+  private _convertToDemandInfoData(data: any): any {
+    return {
+      DateCreated: data.DateCreated,
+      DateModify: data.DateModify,
+      DateStatus: data.DateStatus,
+      Files: data.Files,
+      ID: data.ID,
+      Manager: data.Manager,
+      Messages: data.Messages,
+      Requirements: data.Requirements,
+      Result: data.Result,
+      Status: data.Status,
+      Steps: data.Steps,
+      Type: data.Type,
+      User: data.User,
+    };
   }
 }
