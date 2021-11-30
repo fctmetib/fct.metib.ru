@@ -51,6 +51,9 @@ import { DemandHistoryComponent } from './containers/demand-history/demand-histo
 import { DemandEditDraftComponent } from './containers/demand-edit-draft/demand-edit-draft.component';
 import { DemandViewComponent } from './containers/demand-view/demand-view.component';
 import { DemandEditCreatedComponent } from './containers/demand-edit-created/demand-edit-created.component';
+import { DemandResultComponent } from './components/demand-result/demand-result.component';
+import { DemandInfoComponent } from './components/demand-info/demand-info.component';
+import { DemandFilesComponent } from './components/demand-files/demand-files.component';
 
 @NgModule({
   imports: [
@@ -94,6 +97,10 @@ import { DemandEditCreatedComponent } from './containers/demand-edit-created/dem
     DemandViewComponent,
     DemandActionsComponent,
     DemandHistoryComponent,
+    // Shared Components
+    DemandResultComponent,
+    DemandInfoComponent,
+    DemandFilesComponent,
     // Components
     EDSComponent,
     DemandAddressGroupComponent,

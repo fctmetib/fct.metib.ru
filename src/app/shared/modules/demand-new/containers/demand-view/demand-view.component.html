@@ -1,6 +1,6 @@
 <p-tabView class="mib-tabs">
   <p-tabPanel header="Информация">
-    Информация
+    <demand-info></demand-info>
   </p-tabPanel>
   <p-tabPanel header="Данные">
     <ng-container [ngSwitch]="demandNavigationConfig.demandAction">
@@ -34,9 +34,9 @@
     </ng-container>
   </p-tabPanel>
   <p-tabPanel header="Файлы">
-    Файлы
+    <demand-files></demand-files>
   </p-tabPanel>
   <p-tabPanel header="Результат">
-    Результат
+    <demand-result></demand-result>
   </p-tabPanel>
 </p-tabView>
