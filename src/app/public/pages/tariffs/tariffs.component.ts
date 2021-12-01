@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { OrganizationService } from '../../service/organization.service';
 import { MibModalService } from '../../shared/mib-modal';
 import { Subscription } from 'rxjs';
@@ -18,8 +18,8 @@ export class TariffsComponent implements OnInit, OnDestroy {
 
   public display: boolean = false;
   public financeForm = this.fb.group({
-    organization: ['', Validators.required],
-    name: ['', Validators.required],
+    organization: ['', [Validators.required, this._noWhitespaceValidator]],
+    name: ['', [Validators.required, this._noWhitespaceValidator]],
     phone: ['', Validators.required],
     inn: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
@@ -42,15 +42,15 @@ export class TariffsComponent implements OnInit, OnDestroy {
 
     this.isRequestLoading = true;
 
-    let organizationInterface: OrganizationInterface =  {
+    let organizationInterface: OrganizationInterface = {
       Comment: Defender.defendValue(this.financeForm.value?.comment),
-      Email:  Defender.defendValue(this.financeForm.value?.email),
-      Inn:  Defender.defendValue(this.financeForm.value?.inn),
+      Email: Defender.defendValue(this.financeForm.value?.email),
+      Inn: Defender.defendValue(this.financeForm.value?.inn),
       IsAccept: this.financeForm.value?.isAccept,
-      Organization:  Defender.defendValue(this.financeForm.value?.organization),
-      Person:  Defender.defendValue(this.financeForm.value?.name),
-      Phone: Defender.defendValue(this.financeForm.value?.phone)
-    }
+      Organization: Defender.defendValue(this.financeForm.value?.organization),
+      Person: Defender.defendValue(this.financeForm.value?.name),
+      Phone: Defender.defendValue(this.financeForm.value?.phone),
+    };
 
     this.subscription$.add(
       this.organizationService
@@ -77,5 +77,11 @@ export class TariffsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+  }
+
+  private _noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { whitespace: true };
   }
 }
