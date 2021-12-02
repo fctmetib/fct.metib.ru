@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { DemandNavigationService } from '../../services/demand-navigation.service';
 
 @Component({
   selector: 'demand-result',
@@ -13,10 +14,12 @@ import {
   styleUrls: ['./demand-result.component.scss'],
 })
 export class DemandResultComponent implements OnInit, OnDestroy {
-  @Input()
   public result: any;
 
+  constructor(private _demandNavigationService: DemandNavigationService) {}
+
   ngOnInit() {
+    this._initValues();
   }
 
   ngOnDestroy(): void {}
@@ -41,6 +44,14 @@ export class DemandResultComponent implements OnInit, OnDestroy {
       link.download = `certificate.crt`;
       link.click();
     }
+  }
+
+  private _initValues(): void {
+    this._demandNavigationService.currentDemandInfoData$.subscribe(
+      (demandData) => {
+        this.result = demandData.Result;
+      }
+    );
   }
 }
 // TODO: ADD INTERFACE
