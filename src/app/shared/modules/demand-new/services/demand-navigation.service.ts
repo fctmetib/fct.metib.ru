@@ -35,6 +35,14 @@ export class DemandNavigationService {
     this.currentDemandInfoData$.next(currentDemandInfoData);
   }
 
+  public updateCurrentDemandInfoData(newDemandInfoData: any): void {
+    const updatedDemandInfoData = {
+      ...this.currentDemandInfoData$.value,
+      ...newDemandInfoData,
+    };
+    this.currentDemandInfoData$.next(updatedDemandInfoData);
+  }
+
   public setDoDemandAction(action: DoDemandActionInterface): void {
     this.doDemandAction$.next(action);
   }

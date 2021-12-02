@@ -117,6 +117,9 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
             case DoDemandPageActionType.SEND_MESSAGE:
               this._sendMessage(demandAction.data);
               break;
+            case DoDemandPageActionType.REMOVE_FILE:
+              this._removeFile(demandAction.data);
+              break;
           }
         }
       )
@@ -198,6 +201,17 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     this._saveDraftAction$ = setInterval(() => {
       this._demandNavigationService.doDemandSave$.next();
     }, 30000);
+  }
+
+  private _removeFile(form): void {
+    const newFiles =
+      this._demandNavigationService.currentDemandInfoData$.value.Files.filter(
+        (x) => x !== form
+      );
+    const updatedDemandInfo = { Files: newFiles };
+    this._demandNavigationService.updateCurrentDemandInfoData(
+      updatedDemandInfo
+    );
   }
 
   private _sendMessage(form): void {

@@ -36,12 +36,9 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
 
   public form: FormGroup;
 
-  private _subscription$: Subscription = new Subscription();
-
   constructor(
     private commonService: CommonService,
     private fileService: FileService,
-    private _demandService: DemandService,
     private _demandNavigationService: DemandNavigationService
   ) {}
 
