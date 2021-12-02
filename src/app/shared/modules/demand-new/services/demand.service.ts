@@ -6,6 +6,7 @@ import { DemandDataBaseInterface } from '../types/demand-data-base.interface';
 import { DemandInterface } from '../types/demand.interface';
 import { SaveDemandRequestInterface } from '../types/requests/save-demand-request.interface';
 import { DemandDraftInterface } from '../types/demand-draft.interface';
+import { CreateDemandMessageRequestInterface } from '../types/requests/create-demand-message-request.interface';
 
 @Injectable()
 export class DemandService {
@@ -57,4 +58,13 @@ export class DemandService {
     const url = `${environment.apiUrl}/demand/${id}/cancel`;
     return this.http.post<any>(url, {});
   }
+
+  public addMessageByDemandId(
+    id: number,
+    data: CreateDemandMessageRequestInterface
+  ): Observable<any> {
+    const url = `${environment.apiUrl}/demand/${id}/message`;
+    return this.http.post<any>(url, data);
+  }
+
 }

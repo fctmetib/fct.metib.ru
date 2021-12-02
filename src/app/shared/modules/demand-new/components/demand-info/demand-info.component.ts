@@ -15,6 +15,11 @@ import { switchMap } from 'rxjs/operators';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { FactoringInfoInterface } from 'src/app/shared/modules/demand/types/common/factoring/factoring-info.interface';
 import { CreateDemandMessageRequestInterface } from 'src/app/shared/modules/demand/types/requests/create-demand-message-request.interface';
+import { DemandService } from '../../services/demand.service';
+import { DemandNavigationService } from '../../services/demand-navigation.service';
+import { Subscription } from 'rxjs';
+import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
+import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
 
 @Component({
   selector: 'demand-info',
@@ -22,11 +27,7 @@ import { CreateDemandMessageRequestInterface } from 'src/app/shared/modules/dema
   styleUrls: ['./demand-info.component.scss'],
 })
 export class DemandInfoComponent implements OnInit, OnDestroy {
-  @Input()
-  currentDemandInfo: FactoringInfoInterface;
-
-  @Output()
-  sendMessage: EventEmitter<any> = new EventEmitter<any>();
+  public currentDemandInfo: FactoringInfoInterface;
 
   public selectedStepIndex = 0;
 
@@ -35,23 +36,18 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
 
   public form: FormGroup;
 
+  private _subscription$: Subscription = new Subscription();
+
   constructor(
     private commonService: CommonService,
-    private fileService: FileService
+    private fileService: FileService,
+    private _demandService: DemandService,
+    private _demandNavigationService: DemandNavigationService
   ) {}
 
   ngOnInit() {
-    this.currentDemandInfo.Steps.forEach((s) => {
-      this.items.push({
-        label: s.Title,
-      });
-
-      if (s.IsCompleted) this.selectedStepIndex = s.Position--;
-    });
-
-    this.form = new FormGroup({
-      message: new FormControl('', [Validators.required]),
-    });
+    this._initValues();
+    this._initForm();
   }
 
   ngOnDestroy(): void {}
@@ -143,7 +139,7 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
         .subscribe(
           (res: any) => {
             this.files = [];
-            switch(res.type) {
+            switch (res.type) {
               // загружается
               case 1:
                 // const progressResult = Math.round((100 * res.loaded) / res.total)
@@ -154,13 +150,13 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
                 break;
               // получил результат
               case 4:
-                 this.files.push({
-                   Code: res.body.Code,
-                   FileName: res.body.FileName,
-                   ID: res.body.ID,
-                   Size: res.body.Size,
-                   Identifier: type,
-                 });
+                this.files.push({
+                  Code: res.body.Code,
+                  FileName: res.body.FileName,
+                  ID: res.body.ID,
+                  Size: res.body.Size,
+                  Identifier: type,
+                });
                 break;
             }
           },
@@ -180,6 +176,32 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
 
     this.form.reset();
     this.files = [];
-    this.sendMessage.emit(data);
+
+    const doActionData: DoDemandActionInterface = {
+      data: data,
+      type: DoDemandPageActionType.SEND_MESSAGE,
+    };
+    this._demandNavigationService.setDoDemandAction(doActionData);
+  }
+
+  private _initValues(): void {
+    this._demandNavigationService.currentDemandInfoData$.subscribe(
+      (demandData) => {
+        this.currentDemandInfo = demandData;
+        demandData.Steps.forEach((s) => {
+          this.items.push({
+            label: s.Title,
+          });
+
+          if (s.IsCompleted) this.selectedStepIndex = s.Position--;
+        });
+      }
+    );
+  }
+
+  private _initForm(): void {
+    this.form = new FormGroup({
+      message: new FormControl('', [Validators.required]),
+    });
   }
 }

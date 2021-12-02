@@ -114,6 +114,9 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
             case DoDemandPageActionType.SAVE_DRAFT:
               this._saveDraft(demandAction.data);
               break;
+            case DoDemandPageActionType.SEND_MESSAGE:
+              this._sendMessage(demandAction.data);
+              break;
           }
         }
       )
@@ -185,7 +188,8 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
       case DemandActionType.EDIT_CREATED:
         this._getDemand();
         break;
-      default:
+      case DemandActionType.VIEW:
+        this._getDemand();
         break;
     }
   }
@@ -194,6 +198,16 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     this._saveDraftAction$ = setInterval(() => {
       this._demandNavigationService.doDemandSave$.next();
     }, 30000);
+  }
+
+  private _sendMessage(form): void {
+    this._subscription$.add(
+      this._demandService
+        .addMessageByDemandId(this.demandNavigationConfig.demandId, form)
+        .subscribe(() => {
+          this._getDemand();
+        })
+    );
   }
 
   private _getDraft(): void {
