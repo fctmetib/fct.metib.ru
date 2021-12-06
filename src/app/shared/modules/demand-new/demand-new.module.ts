@@ -39,14 +39,11 @@ import { SharedModule } from '../../shared.module';
 // Containers
 import { DemandActionComponent } from './containers/demand-action/demand-action.component';
 import { DemandCreateComponent } from './containers/demand-create/demand-create.component';
-import { EDSComponent } from './components/eds/eds.component';
 import { DemandActionsComponent } from './containers/demand-actions/demand-actions.component';
-import { DemandNavigationService } from './services/demand-navigation.service';
-import { DemandLoadingService } from './services/demand-loading.service';
+
 import { DemandAddressGroupComponent } from './components/form-groups/address-group/address-group.component';
 import { AddressModalComponent } from './components/modals/address/address.component';
-import { DemandService } from './services/demand.service';
-import { AuthService } from 'src/app/auth/services/auth.service';
+
 import { DemandHistoryComponent } from './containers/demand-history/demand-history.component';
 import { DemandEditDraftComponent } from './containers/demand-edit-draft/demand-edit-draft.component';
 import { DemandViewComponent } from './containers/demand-view/demand-view.component';
@@ -55,6 +52,15 @@ import { DemandResultComponent } from './components/demand-result/demand-result.
 import { DemandInfoComponent } from './components/demand-info/demand-info.component';
 import { DemandFilesComponent } from './components/demand-files/demand-files.component';
 
+// Components
+import { EDSComponent } from './components/eds/eds.component';
+import { FactoringComponent } from './components/factoring/factoring.component';
+
+// Services
+import { DemandNavigationService } from './services/demand-navigation.service';
+import { DemandLoadingService } from './services/demand-loading.service';
+import { DemandService } from './services/demand.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -103,6 +109,7 @@ import { DemandFilesComponent } from './components/demand-files/demand-files.com
     DemandFilesComponent,
     // Components
     EDSComponent,
+    FactoringComponent,
     DemandAddressGroupComponent,
     // Modals
     AddressModalComponent,
