@@ -120,6 +120,9 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
             case DoDemandPageActionType.REMOVE_FILE:
               this._removeFile(demandAction.data);
               break;
+            case DoDemandPageActionType.DOWNLOAD_DIGITAL_SIGNATURE_ANKET:
+              this._downloadDigitalSignatureAnket(demandAction.data);
+              break;
           }
         }
       )
@@ -201,6 +204,20 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     this._saveDraftAction$ = setInterval(() => {
       this._demandNavigationService.doDemandSave$.next();
     }, 30000);
+  }
+
+  private _downloadDigitalSignatureAnket(data): void {
+    this._demandService.getDigitalSignatureRequest(data).subscribe((resp) => {
+      let binaryData = [];
+      binaryData.push(resp);
+      let downloadLink = document.createElement('a');
+      downloadLink.href = window.URL.createObjectURL(
+        new Blob(binaryData, { type: 'application/msword' })
+      );
+      downloadLink.setAttribute('download', 'Заявка на выдачу сертификата');
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+    });
   }
 
   private _removeFile(form): void {

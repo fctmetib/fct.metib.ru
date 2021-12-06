@@ -7,6 +7,7 @@ import { DemandInterface } from '../types/demand.interface';
 import { SaveDemandRequestInterface } from '../types/requests/save-demand-request.interface';
 import { DemandDraftInterface } from '../types/demand-draft.interface';
 import { CreateDemandMessageRequestInterface } from '../types/requests/create-demand-message-request.interface';
+import { CreateDemandEDSRequestInterface } from '../types/requests/create-demand-eds-request.interface';
 
 @Injectable()
 export class DemandService {
@@ -67,4 +68,12 @@ export class DemandService {
     return this.http.post<any>(url, data);
   }
 
+  getDigitalSignatureRequest(
+    data: CreateDemandEDSRequestInterface
+  ): Observable<any> {
+    const url = `${environment.apiUrl}/demand/document/DigitalSignatureRequest`;
+    return this.http.post<any>(url, data, {
+      responseType: 'arraybuffer' as 'json',
+    });
+  }
 }

@@ -120,19 +120,9 @@ export class EDSComponent implements OnInit, OnDestroy {
    * @returns void
    */
   public getDigitalSignatureRequest(): void {
-    // this.demandService
-    //   .getDigitalSignatureRequest(this.prepareCoreData())
-    //   .subscribe((resp) => {
-    //     let binaryData = [];
-    //     binaryData.push(resp);
-    //     let downloadLink = document.createElement('a');
-    //     downloadLink.href = window.URL.createObjectURL(
-    //       new Blob(binaryData, { type: 'application/msword' })
-    //     );
-    //     downloadLink.setAttribute('download', 'Заявка на выдачу сертификата');
-    //     document.body.appendChild(downloadLink);
-    //     downloadLink.click();
-    //   });
+    this._doDemandAction(
+      DoDemandPageActionType.DOWNLOAD_DIGITAL_SIGNATURE_ANKET
+    );
   }
 
   /**
@@ -249,6 +239,9 @@ export class EDSComponent implements OnInit, OnDestroy {
         requestData = {
           Data: convertedForm,
         };
+        break;
+      case DoDemandPageActionType.DOWNLOAD_DIGITAL_SIGNATURE_ANKET:
+        requestData = convertedForm;
         break;
     }
 
