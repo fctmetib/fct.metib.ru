@@ -5,7 +5,7 @@
 <div [ngClass]="{'card-content': isUserVerified}">
   <div class="header lg">
     <div class="title">
-      <h2>{{actionName}}</h2>
+      <h2>{{getActionName()}}</h2>
     </div>
     <div class="actions">
       <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"

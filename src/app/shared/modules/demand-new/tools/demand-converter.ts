@@ -26,9 +26,9 @@ export class DemandConverter {
   public convertToApiData(type: DemandAction, dataForm: any, files) {
     switch (type) {
       case DemandAction.EDS:
-        return this._converterToAPI.convertEDStoApiData(dataForm, files);
-      case DemandAction.AGENT_FACTORING:
-        return null;
+        return this._converterToAPI.convertEDSToApiData(dataForm, files);
+        case DemandAction.FACTORING:
+          return this._converterToAPI.convertFactoringToApiData(dataForm, files);;
     }
   }
 
@@ -40,9 +40,9 @@ export class DemandConverter {
   public convertToFormData(dataFromAPI: any) {
     switch (dataFromAPI.Type) {
       case DemandAction.EDS:
-        return this._converterToForm.convertEDStoFormData(dataFromAPI);
-      case DemandAction.AGENT_FACTORING:
-        return null;
+        return this._converterToForm.convertEDSToFormData(dataFromAPI);
+      case DemandAction.FACTORING:
+        return this._converterToForm.convertFactoringToFormData(dataFromAPI);
     }
   }
 

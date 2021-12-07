@@ -2,10 +2,11 @@ import { formatDate } from '@angular/common';
 import { PersonInterface } from 'src/app/shared/types/common/person.interface';
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
 import { PassportInterface } from 'src/app/shared/types/user/passport.interface';
+import { DemandFactoringInterface } from '../types/demand-factoring.interface';
 import { DemandEDSDataInterface } from '../types/demand-form-data/demand-eds-data.interface';
 
 export class DemandConverterToForm {
-  public convertEDStoFormData(dataFromAPI: any): DemandEDSDataInterface {
+  public convertEDSToFormData(dataFromAPI: any): DemandEDSDataInterface {
     const organization: OrganizationDataInterface = dataFromAPI?.Organization;
     const passport: PassportInterface = dataFromAPI?.Passport;
     const person: PersonInterface = dataFromAPI?.Person;
@@ -92,6 +93,11 @@ export class DemandConverterToForm {
       ownerIdCenter: null,
     };
     return result;
+  }
+
+  public convertFactoringToFormData(dataFromAPI: any): DemandFactoringInterface {
+    console.log('FROM API: ', dataFromAPI);
+    return null;
   }
 
   private _convertToDisplayAddress(address): string {

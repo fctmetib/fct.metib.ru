@@ -9,7 +9,6 @@ import { DemandService } from '../../services/demand.service';
 import { DemandAction } from '../../types/common/demand-action';
 import { DemandActionType } from '../../types/common/demand-action-type';
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
-import { DemandInterface } from '../../types/demand.interface';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
 
 @Component({
@@ -19,7 +18,6 @@ import { DoDemandPageActionType } from '../../types/navigation-service/do-demand
 })
 export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   public isUserVerified: boolean = true;
-  public actionName: string = 'Запрос на ЭЦП';
 
   public demandNavigationConfig: DemandNavigationInterface = null;
 
@@ -49,6 +47,29 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     this._subscription$.unsubscribe();
     if (this._saveDraftAction$) {
       clearInterval(this._saveDraftAction$);
+    }
+  }
+
+  public getActionName(): string {
+    switch (this.demandNavigationConfig.demandAction) {
+      case DemandAction.AGENT_FACTORING:
+        return 'Агентский факторинг';
+      case DemandAction.CREATE_DEBITOR:
+        return 'Добавление дебитора';
+      case DemandAction.EDIT_PROFILE:
+        return 'Редактирование профиля';
+      case DemandAction.EDS:
+        return 'Запрос на ЭЦП';
+      case DemandAction.FACTORING:
+        return 'Запрос на Факторинг';
+      case DemandAction.FREE_REQUEST:
+        return 'Свободный';
+      case DemandAction.SURETY:
+        return '';
+      case DemandAction.UPDATE_LIMIT:
+        return 'Обновление лимита';
+      case DemandAction.VERIFY:
+        return '';
     }
   }
 

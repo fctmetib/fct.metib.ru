@@ -88,6 +88,13 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
         isForNewClient: true,
         isForDefaultClient: true,
       },
+      {
+        text: 'Запрос на Факторинг',
+        url: 'demand-action',
+        action: DemandAction.FACTORING,
+        isForNewClient: true,
+        isForDefaultClient: true,
+      },
     ];
 
     let user = this.authService.getUserFromStore();

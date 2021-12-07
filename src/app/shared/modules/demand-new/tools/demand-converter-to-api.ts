@@ -6,7 +6,7 @@ import { FileModeInterface } from 'src/app/shared/types/file/file-model.interfac
 import { CreateDemandEDSRequestInterface } from '../types/requests/create-demand-eds-request.interface';
 
 export class DemandConverterToAPI {
-  public convertEDStoApiData(form: DemandEDSDataInterface, files: FileModeInterface[]) {
+  public convertEDSToApiData(form: DemandEDSDataInterface, files: FileModeInterface[]) {
     let organization: OrganizationDataInterface = {
       Email: form.organizationEmail,
       FactAddress:
@@ -74,5 +74,9 @@ export class DemandConverterToAPI {
       Type: 'DigitalSignature',
     };
     return data;
+  }
+
+  public convertFactoringToApiData(form: any, file: FileModeInterface[]) {
+
   }
 }
