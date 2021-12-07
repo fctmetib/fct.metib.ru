@@ -2,8 +2,13 @@ import { formatDate } from '@angular/common';
 import { PersonInterface } from 'src/app/shared/types/common/person.interface';
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
 import { PassportInterface } from 'src/app/shared/types/user/passport.interface';
+import { DemandAddonAccountInterface } from '../types/demand-addon-account.interface';
+import { DemandAnketInterface } from '../types/demand-anket.interface';
+import { DemandEDIInterface } from '../types/demand-edi.interface';
 import { DemandFactoringInterface } from '../types/demand-factoring.interface';
 import { DemandEDSDataInterface } from '../types/demand-form-data/demand-eds-data.interface';
+import { DemandObligationInterface } from '../types/demand-obligation.interface';
+import { DemandPropertiesInterface } from '../types/demand-properties.interface';
 
 export class DemandConverterToForm {
   public convertEDSToFormData(dataFromAPI: any): DemandEDSDataInterface {
@@ -95,9 +100,105 @@ export class DemandConverterToForm {
     return result;
   }
 
-  public convertFactoringToFormData(dataFromAPI: any): DemandFactoringInterface {
-    console.log('FROM API: ', dataFromAPI);
-    return null;
+  public convertFactoringToFormData(
+    dataFromAPI: any
+  ): any {
+    let factoring: DemandFactoringInterface = dataFromAPI.Factoring;
+    let anket: DemandAnketInterface = dataFromAPI.Anket;
+
+    let banks: DemandAddonAccountInterface[] = factoring.AddonAccounts;
+    let places: DemandPropertiesInterface[] = factoring.Properties;
+    let credits: DemandObligationInterface[] = factoring.Obligations;
+    let ediProviders: DemandEDIInterface[] = factoring.EDI;
+
+    const result = {
+      organizationType: anket?.Organization?.Type,
+      organizationLegalForm: anket?.Organization?.LegalForm,
+      organizationShortName: anket?.Organization?.ShortTitle,
+      organizationINN: anket?.Organization?.Requisites?.INN,
+      organizationPhone: anket?.Organization?.Phone,
+      organizationEmail: anket?.Organization?.Email,
+      organizationWEB: anket?.Organization?.Website,
+
+      bankBik: factoring?.Account?.BIK,
+      bankCorrespondentAccount: factoring?.Account?.COR,
+      bankName: factoring?.Account?.Bank,
+
+      bankAccountOpenDate: formatDate(
+        factoring?.Account?.Date ? factoring?.Account?.Date : null,
+        'yyyy-MM-dd',
+        'en'
+      ),
+      bankOwnerAccount: factoring?.Account?.Number,
+      bankComment: factoring?.Account?.Comment,
+
+      factoringProducts: factoring?.Products,
+      factoringTradeMarks: factoring?.Trademarks,
+      factoringShipments: factoring?.Suppliers,
+      factoringFinanceLimit: factoring?.LimitWanted,
+      factoringClients: factoring?.Buyers,
+      factoringWorkers: factoring?.StaffAmount,
+
+      factoringEDIProviders: [],
+      factoringCredits: [],
+      factoringPlaces: [],
+      otherBanks: [],
+    };
+
+    banks.forEach((b) => {
+      result.otherBanks.push({
+        otherBankAccountOpenDate: b?.Date
+          ? formatDate(b?.Date, 'yyyy-MM-dd', 'en')
+          : '',
+        otherBankAccountCloseDate: [
+          b?.Expire ? formatDate(b?.Expire, 'yyyy-MM-dd', 'en') : '',
+        ],
+        otherBankName: [b?.Bank ? b?.Bank : ''],
+        otherBankOwnerAccount: [b?.Number ? b?.Number : ''],
+        otherBankTarget: [b?.Comment ? b?.Comment : ''],
+      });
+    });
+
+    places.forEach((p) => {
+      result.factoringPlaces.push({
+        displayAddress: this._convertToDisplayAddress(p),
+        factoringPlacesAddress: {
+          PostCode: p ? p.Address?.PostCode : '',
+          Country: p ? p.Address?.Country : 'Российская Федерация',
+          RegionCode: p ? p.Address?.RegionCode : 77,
+          RegionTitle: p ? p.Address?.RegionTitle : '',
+          City: p ? p?.Address?.City : 'Москва',
+          District: p ? p?.Address?.District : '',
+          Locality: p ? p?.Address?.Locality : '',
+          Street: p ? p?.Address?.Street : '',
+          House: p ? p?.Address?.House : '',
+          Appartment: p ? p?.Address?.Appartment : '',
+        },
+        factoringPlacesLegalForm: p?.Type ? p?.Type : '',
+      });
+    });
+
+    credits.forEach((c) => {
+      result.factoringCredits.push({
+        factoringCreditsCreditor: c ? c?.Creditor : '',
+        factoringPlacesTypeDuty: c ? c?.Type : '',
+        factoringPlacesDateClose: c?.Date
+          ? formatDate(c?.Date, 'yyyy-MM-dd', 'en')
+          : '',
+        factoringPlacesContractSum: c ? c?.Summ : '',
+        factoringPlacesBalanceReport: c ? c?.ReportingRest : '',
+        factoringPlacesBalanceCurrent: c ? c?.CurrentRest : '',
+      });
+    });
+
+    ediProviders.forEach((e) => {
+      result.factoringEDIProviders.push({
+        factoringEDIProvidersDebitor: e?.Company ? e?.Company : '',
+        factoringEDIProvidersProvider: e?.EDIProvider ? e?.EDIProvider : '',
+      });
+    });
+
+    return result;
   }
 
   private _convertToDisplayAddress(address): string {

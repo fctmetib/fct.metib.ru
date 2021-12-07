@@ -384,7 +384,7 @@ export class FactoringComponent implements OnInit {
 
   private _initForm() {
     const formGenerator = new FormGenerator(this.fb);
-    this.form = formGenerator.generateEDSForm();
+    this.form = formGenerator.generateFactoringForm();
   }
 
   private _initAdditionalData(): void {
@@ -419,6 +419,7 @@ export class FactoringComponent implements OnInit {
         (currentDemand) => {
           const convertedDemand =
             this._demandConverter.convertToFormData(currentDemand);
+            console.log('CONVERTED FORM IS : ', convertedDemand);
           this.form.patchValue(convertedDemand);
           this.files = currentDemand.Files;
         }
