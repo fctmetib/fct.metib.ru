@@ -377,6 +377,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   }
   //#endregion
   canDeactivate(): boolean | Observable<boolean> {
+    this.saveDraft();
     return confirm(
       'Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?'
     );

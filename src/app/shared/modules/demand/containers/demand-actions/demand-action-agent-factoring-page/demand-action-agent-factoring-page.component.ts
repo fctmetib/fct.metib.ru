@@ -893,6 +893,7 @@ export class DemandActionAgentFactoringPageComponent
   //#endregion
 
   canDeactivate(): boolean | Observable<boolean> {
+    this.saveDraft();
     return confirm(
       'Внимание! Возможно, Вы не сохранили данные, хотите покинуть страницу?'
     );
