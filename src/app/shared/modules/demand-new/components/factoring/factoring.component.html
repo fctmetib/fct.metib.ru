@@ -332,15 +332,8 @@
           <div [formGroupName]="i">
             <div class="p-fluid p-formgrid p-grid">
               <div class="p-field p-col-12 p-md-6">
-                <label for="factoringPlacesAddress">Адрес объёкта</label>
-                <div class="addon-button">
-                  <div class="action-box">
-                    <input id="factoringPlacesAddress" type="text" pInputText placeholder="Адрес объёкта" disabled
-                      formControlName="displayAddress">
-                    <button pButton pRipple type="button" label="Изменить" class="p-button-outlined mib-small"
-                      (click)="openAddressForm(i)"></button>
-                  </div>
-                </div>
+                <demand-address-group [title]="'Адрес объёкта'" [placeholder]="'Адрес объёкта'"
+                [addressGroup]="getFactoringPlaces(i)"></demand-address-group>
               </div>
               <div class="p-field p-col-12 p-md-6">
                 <label for="factoringPlacesLegalForm">Форма владения</label>

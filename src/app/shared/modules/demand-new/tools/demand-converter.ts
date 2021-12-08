@@ -9,7 +9,6 @@ import { DemandConverterToAPI } from './demand-converter-to-api';
 import { DemandConverterToForm } from './demand-converter-to-form';
 
 export class DemandConverter {
-
   private _converterToForm: DemandConverterToForm;
   private _converterToAPI: DemandConverterToAPI;
 
@@ -27,8 +26,8 @@ export class DemandConverter {
     switch (type) {
       case DemandAction.EDS:
         return this._converterToAPI.convertEDSToApiData(dataForm, files);
-        case DemandAction.FACTORING:
-          return this._converterToAPI.convertFactoringToApiData(dataForm, files);;
+      case DemandAction.FACTORING:
+        return this._converterToAPI.convertFactoringToApiData(dataForm, files);
     }
   }
 
@@ -45,5 +44,4 @@ export class DemandConverter {
         return this._converterToForm.convertFactoringToFormData(dataFromAPI);
     }
   }
-
 }

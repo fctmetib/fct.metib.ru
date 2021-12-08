@@ -47,7 +47,8 @@ export class DemandAddressGroupComponent implements OnInit {
 
   constructor(public dialogService: DialogService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   public openAddressForm(type) {
     let addresses = this.addressGroup.value;
