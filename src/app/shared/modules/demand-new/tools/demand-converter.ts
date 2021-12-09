@@ -1,10 +1,4 @@
-import { formatDate } from '@angular/common';
-import { PersonInterface } from 'src/app/shared/types/common/person.interface';
-import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
-import { PassportInterface } from 'src/app/shared/types/user/passport.interface';
 import { DemandAction } from '../types/common/demand-action';
-import { DemandActionType } from '../types/common/demand-action-type';
-import { DemandEDSDataInterface } from '../types/demand-form-data/demand-eds-data.interface';
 import { DemandConverterToAPI } from './demand-converter-to-api';
 import { DemandConverterToForm } from './demand-converter-to-form';
 

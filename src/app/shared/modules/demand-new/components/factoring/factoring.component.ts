@@ -25,6 +25,10 @@ import { formatDate } from '@angular/common';
 import { DemandEDIInterface } from '../../types/demand-edi.interface';
 import { BankInterface } from 'src/app/shared/types/common/bank.interface';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
+import {
+  DemandEDIProvidersDataInterface,
+  DemandFactoringDataInterface,
+} from '../../types/demand-form-data/demand-factoring-data.interface';
 
 @Component({
   selector: 'factoring',
@@ -51,6 +55,7 @@ export class FactoringComponent implements OnInit {
   public demandNavigationConfig: DemandNavigationInterface;
   private _subscription$: Subscription = new Subscription();
   private _demandConverter: DemandConverter;
+  private _formGenerator: FormGenerator;
 
   // UI
   public selectedIdCenter: any;
@@ -74,6 +79,7 @@ export class FactoringComponent implements OnInit {
     private _demandNavigationService: DemandNavigationService
   ) {
     this._demandConverter = new DemandConverter();
+    this._formGenerator = new FormGenerator(this.fb);
   }
 
   ngOnInit() {
@@ -197,44 +203,16 @@ export class FactoringComponent implements OnInit {
     return factoringPlaces.controls[index] as FormGroup;
   }
 
-  public addFactoringCredits(existCredit?: DemandObligationInterface): void {
+  public addFactoringCredits(): void {
     let factoringCredits = this.form.get('factoringCredits') as FormArray;
-    factoringCredits.push(
-      this.fb.group({
-        factoringCreditsCreditor: [existCredit ? existCredit.Creditor : ''],
-        factoringPlacesTypeDuty: [existCredit ? existCredit.Type : ''],
-        factoringPlacesDateClose: [
-          existCredit?.Date
-            ? formatDate(existCredit?.Date, 'yyyy-MM-dd', 'en')
-            : '',
-        ],
-        factoringPlacesContractSum: [existCredit ? existCredit.Summ : ''],
-        factoringPlacesBalanceReport: [
-          existCredit ? existCredit.ReportingRest : '',
-        ],
-        factoringPlacesBalanceCurrent: [
-          existCredit ? existCredit.CurrentRest : '',
-        ],
-      })
-    );
+    factoringCredits.push(this._formGenerator.generateFactorCreditGroup());
   }
 
-  public addEDIProvider(existEDI?: DemandEDIInterface): void {
+  public addEDIProvider(): void {
     let factoringEDIProviders = this.form.get(
       'factoringEDIProviders'
     ) as FormArray;
-    factoringEDIProviders.push(
-      this.fb.group({
-        factoringEDIProvidersDebitor: [
-          existEDI ? existEDI.Company : '',
-          [Validators.required],
-        ],
-        factoringEDIProvidersProvider: [
-          existEDI ? existEDI.EDIProvider : '',
-          [Validators.required],
-        ],
-      })
-    );
+    factoringEDIProviders.push(this._formGenerator.generateEDIFormGroup());
   }
 
   public remove(i: number, type: string): void {
@@ -410,8 +388,7 @@ export class FactoringComponent implements OnInit {
   }
 
   private _initForm() {
-    const formGenerator = new FormGenerator(this.fb);
-    this.form = formGenerator.generateFactoringForm();
+    this.form = this._formGenerator.generateFactoringForm();
   }
 
   private _initAdditionalData(): void {
@@ -444,9 +421,47 @@ export class FactoringComponent implements OnInit {
     this._subscription$.add(
       this._demandNavigationService.currentDemand$.subscribe(
         (currentDemand) => {
-          const convertedDemand =
+          const convertedDemand: any =
             this._demandConverter.convertToFormData(currentDemand);
+
           this.form.patchValue(convertedDemand);
+
+          // получаем Form Arrays
+          let factoringEDIProviders = this.form.get(
+            'factoringEDIProviders'
+          ) as FormArray;
+          let factoringCredits = this.form.get('factoringCredits') as FormArray;
+          let factoringPlaces = this.form.get('factoringPlaces') as FormArray;
+          let otherBanks = this.form.get('otherBanks') as FormArray;
+
+          // заполняем Form Arrays
+          const edies = convertedDemand.factoringEDIProviders;
+          const credits = convertedDemand.factoringCredits;
+          const places = convertedDemand.factoringPlaces;
+          const banks = convertedDemand.otherBanks;
+
+          edies.forEach((edi) => {
+            factoringEDIProviders.push(
+              this._formGenerator.convertEDIProviderToFormGroup(edi)
+            );
+          });
+
+          credits.forEach((credit) => {
+            factoringCredits.push(
+              this._formGenerator.convertFactorCreditToFormGroup(credit)
+            );
+          });
+
+          // places.forEach((place) => {
+          //   factoringPlaces.push(
+          //     this._formGenerator.convertFactroringPlaceToFormGroup(place)
+          //   );
+          // });
+
+          // banks.forEach((bank) => {
+          //   otherBanks.push(this._formGenerator.convertBankToFormGroup(bank));
+          // });
+
           this.files = currentDemand.Files;
         }
       )

@@ -1,4 +1,6 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { formatDate } from '@angular/common';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DemandEDIProvidersDataInterface } from '../types/demand-form-data/demand-factoring-data.interface';
 
 export class FormGenerator {
   constructor(private fb: FormBuilder) {}
@@ -76,7 +78,6 @@ export class FormGenerator {
       bankOwnerAccount: ['', [Validators.required]],
       bankComment: [''],
 
-
       factoringProducts: ['', [Validators.required]],
       factoringTradeMarks: ['', [Validators.required]],
       factoringShipments: ['', [Validators.required]],
@@ -91,6 +92,36 @@ export class FormGenerator {
     });
 
     return form;
+  }
+
+  public generateEDIFormGroup(): FormGroup {
+    return this.fb.group({
+      factoringEDIProvidersDebitor: ['', [Validators.required]],
+      factoringEDIProvidersProvider: ['', [Validators.required]],
+    });
+  }
+
+  public generateFactorCreditGroup(): FormGroup {
+    return this.fb.group({
+      factoringCreditsCreditor: '',
+      factoringPlacesTypeDuty: '',
+      factoringPlacesDateClose: '',
+      factoringPlacesContractSum: '',
+      factoringPlacesBalanceReport: '',
+
+      factoringPlacesBalanceCurrent: '',
+    });
+  }
+
+  public generateEDIFormArray(
+    ediProviders: DemandEDIProvidersDataInterface[]
+  ): FormArray {
+    let array = this.fb.array([]);
+
+    ediProviders.map((x: DemandEDIProvidersDataInterface) =>
+      array.push(this.convertEDIProviderToFormGroup(x))
+    );
+    return array;
   }
 
   public generateAddressForm(): FormGroup {
@@ -113,5 +144,37 @@ export class FormGenerator {
     });
 
     return addressForm;
+  }
+
+  public convertFactorCreditToFormGroup(creditForm): FormGroup {
+    return this.fb.group({
+      factoringCreditsCreditor: [creditForm ? creditForm.Creditor : ''],
+      factoringPlacesTypeDuty: [creditForm ? creditForm.Type : ''],
+      factoringPlacesDateClose: [
+        creditForm?.Date
+          ? formatDate(creditForm?.Date, 'yyyy-MM-dd', 'en')
+          : '',
+      ],
+      factoringPlacesContractSum: [creditForm ? creditForm.Summ : ''],
+      factoringPlacesBalanceReport: [
+        creditForm ? creditForm.ReportingRest : '',
+      ],
+      factoringPlacesBalanceCurrent: [creditForm ? creditForm.CurrentRest : ''],
+    });
+  }
+
+  public convertEDIProviderToFormGroup(
+    ediProvider: DemandEDIProvidersDataInterface
+  ): FormGroup {
+    return this.fb.group({
+      factoringEDIProvidersDebitor: [
+        ediProvider ? ediProvider.factoringEDIProvidersDebitor : '',
+        [Validators.required],
+      ],
+      factoringEDIProvidersProvider: [
+        ediProvider ? ediProvider.factoringEDIProvidersProvider : '',
+        [Validators.required],
+      ],
+    });
   }
 }

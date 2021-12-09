@@ -1,4 +1,5 @@
 import { formatDate } from '@angular/common';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PersonInterface } from 'src/app/shared/types/common/person.interface';
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
 import { PassportInterface } from 'src/app/shared/types/user/passport.interface';
@@ -7,6 +8,7 @@ import { DemandAnketInterface } from '../types/demand-anket.interface';
 import { DemandEDIInterface } from '../types/demand-edi.interface';
 import { DemandFactoringInterface } from '../types/demand-factoring.interface';
 import { DemandEDSDataInterface } from '../types/demand-form-data/demand-eds-data.interface';
+import { DemandFactoringDataInterface } from '../types/demand-form-data/demand-factoring-data.interface';
 import { DemandObligationInterface } from '../types/demand-obligation.interface';
 import { DemandPropertiesInterface } from '../types/demand-properties.interface';
 
@@ -102,7 +104,7 @@ export class DemandConverterToForm {
 
   public convertFactoringToFormData(
     dataFromAPI: any
-  ): any {
+  ): DemandFactoringDataInterface {
     let factoring: DemandFactoringInterface = dataFromAPI.Factoring;
     let anket: DemandAnketInterface = dataFromAPI.Anket;
 
@@ -111,7 +113,7 @@ export class DemandConverterToForm {
     let credits: DemandObligationInterface[] = factoring.Obligations;
     let ediProviders: DemandEDIInterface[] = factoring.EDI;
 
-    const result = {
+    const result: DemandFactoringDataInterface = {
       organizationType: anket?.Organization?.Type,
       organizationLegalForm: anket?.Organization?.LegalForm,
       organizationShortName: anket?.Organization?.ShortTitle,
@@ -150,12 +152,12 @@ export class DemandConverterToForm {
         otherBankAccountOpenDate: b?.Date
           ? formatDate(b?.Date, 'yyyy-MM-dd', 'en')
           : '',
-        otherBankAccountCloseDate: [
-          b?.Expire ? formatDate(b?.Expire, 'yyyy-MM-dd', 'en') : '',
-        ],
-        otherBankName: [b?.Bank ? b?.Bank : ''],
-        otherBankOwnerAccount: [b?.Number ? b?.Number : ''],
-        otherBankTarget: [b?.Comment ? b?.Comment : ''],
+        otherBankAccountCloseDate: b?.Expire
+          ? formatDate(b?.Expire, 'yyyy-MM-dd', 'en')
+          : '',
+        otherBankName: b?.Bank ? b?.Bank : '',
+        otherBankOwnerAccount: b?.Number ? b?.Number : '',
+        otherBankTarget: b?.Comment ? b?.Comment : '',
       });
     });
 
@@ -185,9 +187,9 @@ export class DemandConverterToForm {
         factoringPlacesDateClose: c?.Date
           ? formatDate(c?.Date, 'yyyy-MM-dd', 'en')
           : '',
-        factoringPlacesContractSum: c ? c?.Summ : '',
-        factoringPlacesBalanceReport: c ? c?.ReportingRest : '',
-        factoringPlacesBalanceCurrent: c ? c?.CurrentRest : '',
+        factoringPlacesContractSum: c ? c?.Summ : 0,
+        factoringPlacesBalanceReport: c ? c?.ReportingRest : 0,
+        factoringPlacesBalanceCurrent: c ? c?.CurrentRest : 0,
       });
     });
 
