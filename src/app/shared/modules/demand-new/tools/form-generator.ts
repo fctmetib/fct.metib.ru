@@ -101,29 +101,6 @@ export class FormGenerator {
     });
   }
 
-  public generateFactorCreditGroup(): FormGroup {
-    return this.fb.group({
-      factoringCreditsCreditor: '',
-      factoringPlacesTypeDuty: '',
-      factoringPlacesDateClose: '',
-      factoringPlacesContractSum: '',
-      factoringPlacesBalanceReport: '',
-
-      factoringPlacesBalanceCurrent: '',
-    });
-  }
-
-  public generateEDIFormArray(
-    ediProviders: DemandEDIProvidersDataInterface[]
-  ): FormArray {
-    let array = this.fb.array([]);
-
-    ediProviders.map((x: DemandEDIProvidersDataInterface) =>
-      array.push(this.convertEDIProviderToFormGroup(x))
-    );
-    return array;
-  }
-
   public generateAddressForm(): FormGroup {
     const addressForm = this.fb.group({
       displayAddress: [
@@ -146,25 +123,33 @@ export class FormGenerator {
     return addressForm;
   }
 
-  public convertFactorCreditToFormGroup(creditForm): FormGroup {
+  public generateFactorCreditGroup(creditForm?): FormGroup {
     return this.fb.group({
-      factoringCreditsCreditor: [creditForm ? creditForm.Creditor : ''],
-      factoringPlacesTypeDuty: [creditForm ? creditForm.Type : ''],
+      factoringCreditsCreditor: [
+        creditForm ? creditForm.factoringCreditsCreditor : '',
+      ],
+      factoringPlacesTypeDuty: [
+        creditForm ? creditForm.factoringPlacesTypeDuty : '',
+      ],
       factoringPlacesDateClose: [
-        creditForm?.Date
-          ? formatDate(creditForm?.Date, 'yyyy-MM-dd', 'en')
+        creditForm?.factoringPlacesDateClose
+          ? formatDate(creditForm?.factoringPlacesDateClose, 'yyyy-MM-dd', 'en')
           : '',
       ],
-      factoringPlacesContractSum: [creditForm ? creditForm.Summ : ''],
-      factoringPlacesBalanceReport: [
-        creditForm ? creditForm.ReportingRest : '',
+      factoringPlacesContractSum: [
+        creditForm ? creditForm.factoringPlacesContractSum : '',
       ],
-      factoringPlacesBalanceCurrent: [creditForm ? creditForm.CurrentRest : ''],
+      factoringPlacesBalanceReport: [
+        creditForm ? creditForm.factoringPlacesBalanceReport : '',
+      ],
+      factoringPlacesBalanceCurrent: [
+        creditForm ? creditForm.factoringPlacesBalanceCurrent : '',
+      ],
     });
   }
 
-  public convertEDIProviderToFormGroup(
-    ediProvider: DemandEDIProvidersDataInterface
+  public generateEDIFormArray(
+    ediProvider?: DemandEDIProvidersDataInterface
   ): FormGroup {
     return this.fb.group({
       factoringEDIProvidersDebitor: [
@@ -173,6 +158,78 @@ export class FormGenerator {
       ],
       factoringEDIProvidersProvider: [
         ediProvider ? ediProvider.factoringEDIProvidersProvider : '',
+        [Validators.required],
+      ],
+    });
+  }
+
+  public generateFactoringPlaceForm(factoringPlace?): FormGroup {
+    return this.fb.group({
+      displayAddress: [{ value: '', disabled: true }],
+      factoringPlacesAddress: {
+        PostCode: factoringPlace
+          ? factoringPlace?.factoringPlacesAddress?.PostCode
+          : '',
+        Country: factoringPlace
+          ? factoringPlace?.Address?.Country
+          : 'Российская Федерация',
+        RegionCode: factoringPlace
+          ? factoringPlace?.factoringPlacesAddress?.RegionCode
+          : 77,
+        RegionTitle: factoringPlace
+          ? factoringPlace?.factoringPlacesAddress?.RegionTitle
+          : '',
+        City: factoringPlace
+          ? factoringPlace?.factoringPlacesAddress?.City
+          : 'Москва',
+        District: factoringPlace
+          ? factoringPlace?.factoringPlacesAddress?.District
+          : '',
+        Locality: factoringPlace
+          ? factoringPlace?.factoringPlacesAddress?.Locality
+          : '',
+        Street: factoringPlace
+          ? factoringPlace?.factoringPlacesAddress?.Street
+          : '',
+        House: factoringPlace
+          ? factoringPlace?.factoringPlacesAddress?.House
+          : '',
+        Appartment: factoringPlace
+          ? factoringPlace?.factoringPlacesAddress?.Appartment
+          : '',
+      },
+      factoringPlacesLegalForm: [
+        factoringPlace?.factoringPlacesLegalForm
+          ? factoringPlace?.factoringPlacesLegalForm
+          : '',
+        [Validators.required],
+      ],
+    });
+  }
+
+  public generateBankForm(bank?): FormGroup {
+    return this.fb.group({
+      otherBankAccountOpenDate: [
+        bank?.otherBankAccountOpenDate
+          ? formatDate(bank?.otherBankAccountOpenDate, 'yyyy-MM-dd', 'en')
+          : '',
+        [Validators.required],
+      ],
+      otherBankAccountCloseDate: [
+        bank?.otherBankAccountCloseDate
+          ? formatDate(bank?.otherBankAccountCloseDate, 'yyyy-MM-dd', 'en')
+          : '',
+      ],
+      otherBankName: [
+        bank?.otherBankName ? bank?.otherBankName : '',
+        [Validators.required],
+      ],
+      otherBankOwnerAccount: [
+        bank?.otherBankOwnerAccount ? bank?.otherBankOwnerAccount : '',
+        [Validators.required],
+      ],
+      otherBankTarget: [
+        bank?.otherBankTarget ? bank?.otherBankTarget : '',
         [Validators.required],
       ],
     });

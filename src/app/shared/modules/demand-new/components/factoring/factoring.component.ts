@@ -138,63 +138,14 @@ export class FactoringComponent implements OnInit {
     );
   }
 
-  public addOtherBank(existBank?: DemandAddonAccountInterface): void {
+  public addOtherBank(): void {
     let otherBanks = this.form.get('otherBanks') as FormArray;
-    otherBanks.push(
-      this.fb.group({
-        otherBankAccountOpenDate: [
-          existBank?.Date
-            ? formatDate(existBank?.Date, 'yyyy-MM-dd', 'en')
-            : '',
-          [Validators.required],
-        ],
-        otherBankAccountCloseDate: [
-          existBank?.Expire
-            ? formatDate(existBank?.Expire, 'yyyy-MM-dd', 'en')
-            : '',
-        ],
-        otherBankName: [
-          existBank?.Bank ? existBank?.Bank : '',
-          [Validators.required],
-        ],
-        otherBankOwnerAccount: [
-          existBank?.Number ? existBank?.Number : '',
-          [Validators.required],
-        ],
-        otherBankTarget: [
-          existBank?.Comment ? existBank?.Comment : '',
-          [Validators.required],
-        ],
-      })
-    );
+    otherBanks.push(this._formGenerator.generateBankForm());
   }
 
-  public addOtherPlace(existProp?: DemandPropertiesInterface): void {
+  public addOtherPlace(): void {
     let factoringPlaces = this.form.get('factoringPlaces') as FormArray;
-    factoringPlaces.push(
-      this.fb.group({
-        displayAddress: '',
-        factoringPlacesAddress: {
-          PostCode: existProp ? existProp.Address.PostCode : '',
-          Country: existProp
-            ? existProp.Address.Country
-            : 'Российская Федерация',
-          RegionCode: existProp ? existProp.Address.RegionCode : 77,
-          RegionTitle: existProp ? existProp.Address.RegionTitle : '',
-          City: existProp ? existProp.Address.City : 'Москва',
-          District: existProp ? existProp.Address.District : '',
-          Locality: existProp ? existProp.Address.Locality : '',
-          Street: existProp ? existProp.Address.Street : '',
-          House: existProp ? existProp.Address.House : '',
-          Appartment: existProp ? existProp.Address.Appartment : '',
-        },
-        factoringPlacesLegalForm: [
-          existProp?.Type ? existProp?.Type : '',
-          [Validators.required],
-        ],
-      })
-    );
-
+    factoringPlaces.push(this._formGenerator.generateFactoringPlaceForm());
     this._updateDisplayAddress(factoringPlaces.length - 1);
   }
 
@@ -442,25 +393,25 @@ export class FactoringComponent implements OnInit {
 
           edies.forEach((edi) => {
             factoringEDIProviders.push(
-              this._formGenerator.convertEDIProviderToFormGroup(edi)
+              this._formGenerator.generateEDIFormArray(edi)
             );
           });
 
           credits.forEach((credit) => {
             factoringCredits.push(
-              this._formGenerator.convertFactorCreditToFormGroup(credit)
+              this._formGenerator.generateFactorCreditGroup(credit)
             );
           });
 
-          // places.forEach((place) => {
-          //   factoringPlaces.push(
-          //     this._formGenerator.convertFactroringPlaceToFormGroup(place)
-          //   );
-          // });
+          places.forEach((place) => {
+            factoringPlaces.push(
+              this._formGenerator.generateFactoringPlaceForm(place)
+            );
+          });
 
-          // banks.forEach((bank) => {
-          //   otherBanks.push(this._formGenerator.convertBankToFormGroup(bank));
-          // });
+          banks.forEach((bank) => {
+            otherBanks.push(this._formGenerator.generateBankForm(bank));
+          });
 
           this.files = currentDemand.Files;
         }

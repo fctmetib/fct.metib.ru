@@ -48,6 +48,7 @@ export class DemandAddressGroupComponent implements OnInit {
   constructor(public dialogService: DialogService) {}
 
   ngOnInit() {
+    this._updateDisplayAddress();
   }
 
   public openAddressForm(type) {
@@ -73,7 +74,7 @@ export class DemandAddressGroupComponent implements OnInit {
     });
   }
 
-  private _updateDisplayAddress(type): void {
+  private _updateDisplayAddress(type?): void {
     let address = this.addressGroup.value.factoringPlacesAddress;
     let result = '';
 
