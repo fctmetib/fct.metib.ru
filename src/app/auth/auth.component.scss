@@ -1,4 +1,8 @@
 :host ::ng-deep {
+  .p-dropdown .p-dropdown-trigger {
+    width: 50px !important;
+  }
+
   .pre-auth {
     background-color: #fff;
     background-image: url('../../assets/auth/logo_background.png');

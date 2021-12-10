@@ -5,6 +5,7 @@
   .organization {
     margin-right: 37px;
   }
+
   .card-info {
     height: 137px;
 
@@ -31,7 +32,7 @@
       line-height: 28px;
 
       &.normal {
-        color: $main;
+        color: $main-blue;
       }
 
       &.success {
