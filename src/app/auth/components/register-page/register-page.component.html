@@ -7,7 +7,8 @@
     </metib-backend-error-messages>
 
     <metib-success-messages *ngIf="(confirmationCode$ | async)"
-      [message]="'На указанный номер телефона отправлен код. Пожалуйста, введите его в поле КОД'"></metib-success-messages>
+      [message]="'На указанный номер телефона отправлен код. Пожалуйста, введите его в поле КОД'">
+    </metib-success-messages>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="auth__body__form__fields">
@@ -65,14 +66,20 @@
           </div>
 
           <div class="auth__body__form__fields__two-columns">
-            <div class="auth__body__form__fields__field">
+            <div class="auth__body__form__fields__field" pTooltip="Ваш Логин, используется для входа в систему">
               <input id="login" type="text" pInputText placeholder="Логин" formControlName="login"
                 [ngClass]="{'ng-invalid ng-dirty': form.get('profile.login').invalid && form.get('profile.login').touched}">
+              <!-- <small>
+                <div>
+                  Логин
+                </div>
+              </small> -->
               <small class="p-error" *ngIf="form.get('profile.login').invalid && form.get('profile.login').touched">
                 <div *ngIf="form.get('profile.login').errors['required']">
                   Поле Логин не должно быть пустым
                 </div>
               </small>
+
             </div>
             <div class="auth__body__form__fields__field">
               <p-dropdown id="isMale" [options]="genderOptions" formControlName="isMale" optionLabel="name"

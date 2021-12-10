@@ -6,7 +6,10 @@ import { select, Store } from '@ngrx/store';
 
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
 import { AuthService } from './../../services/auth.service';
-import { registerAction, registerConfirmAction } from './../../store/actions/register.action';
+import {
+  registerAction,
+  registerConfirmAction,
+} from './../../store/actions/register.action';
 import { MaleOptionsInterface } from '../../types/common/maleOptions.interface';
 import { resetMessagesAction } from './../../store/actions/common.action';
 import { CommonService } from '../../../shared/services/common/common.service';
@@ -72,29 +75,43 @@ export class RegisterPageComponent {
   }
 
   initializeForm(): void {
-    this.form = this.fb.group({
-      captcha: this.fb.group({
-        text: ['', Validators.required],
-      }),
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      profile: this.fb.group({
-        login: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        isMale: ['', Validators.required],
-        name: this.fb.group({
-          first: ['', Validators.required],
-          last: ['', Validators.required],
+    this.form = this.fb.group(
+      {
+        captcha: this.fb.group({
+          text: ['', Validators.required],
         }),
-        phone: ['', Validators.required],
-      }),
-    }, {
-      validator: ConfirmedValidator('password', 'confirmPassword')
-    });
+        password: ['', Validators.required],
+        confirmPassword: ['', Validators.required],
+        profile: this.fb.group({
+          login: [{ value: '', disabled: true }, Validators.required],
+          email: ['', [Validators.required, Validators.email]],
+          isMale: ['', Validators.required],
+          name: this.fb.group({
+            first: ['', Validators.required],
+            last: ['', Validators.required],
+          }),
+          phone: ['', Validators.required],
+        }),
+      },
+      {
+        validator: ConfirmedValidator('password', 'confirmPassword'),
+      }
+    );
 
     this.formConfirm = this.fb.group({
       pin: ['', Validators.required],
     });
+
+    this.form
+      .get('profile')
+      .get('email')
+      .valueChanges.subscribe((updatedEmail) => {
+        this.form.patchValue({
+          profile: {
+            login: updatedEmail,
+          },
+        });
+      });
   }
 
   updateCaptcha() {
@@ -136,9 +153,9 @@ export class RegisterPageComponent {
 
   onConfirmSubmit(): void {
     let ConfirmationCode = '';
-    this.confirmationCode$.subscribe(c => {
+    this.confirmationCode$.subscribe((c) => {
       ConfirmationCode = c;
-    })
+    });
 
     const request: RegisterConfirmRequestInterface = {
       ConfirmationCode,

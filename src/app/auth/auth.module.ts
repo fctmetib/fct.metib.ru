@@ -34,7 +34,7 @@ import { ReauthEffect } from './store/effects/reauth.effect';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GetCurrentUserAdminEffect } from './store/effects/getCurrentUserAdmin.effect';
 import { AuthInterceptor } from './services/auth.interceptor';
-
+import { TooltipModule } from 'primeng/tooltip';
 @NgModule({
   imports: [
     CommonModule,
@@ -61,6 +61,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
     MessagesModule,
     ButtonModule,
     InputMaskModule,
+    TooltipModule,
   ],
   declarations: [
     AuthComponent,
