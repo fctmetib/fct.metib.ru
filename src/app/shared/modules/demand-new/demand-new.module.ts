@@ -61,6 +61,8 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandResultComponent } from './components/common/demand-result/demand-result.component';
 import { DemandInfoComponent } from './components/common/demand-info/demand-info.component';
 import { AddressModalComponent } from './components/common/address/address.component';
+import { AgentFactoringComponent } from './components/agent-factoring/agent-factoring.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -110,6 +112,7 @@ import { AddressModalComponent } from './components/common/address/address.compo
     // Components
     EDSComponent,
     FactoringComponent,
+    AgentFactoringComponent,
     DemandAddressGroupComponent,
     // Modals
     AddressModalComponent,

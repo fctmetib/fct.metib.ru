@@ -53,23 +53,23 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   public getActionName(): string {
     switch (this.demandNavigationConfig.demandAction) {
       case DemandAction.AGENT_FACTORING:
-        return 'Агентский факторинг';
+        return 'Запрос на Агентский Факторинг';
       case DemandAction.CREATE_DEBITOR:
-        return 'Добавление дебитора';
+        return 'Запрос на добавление дебитора';
       case DemandAction.EDIT_PROFILE:
-        return 'Редактирование профиля';
+        return 'Запрос на редактирование профиля';
       case DemandAction.EDS:
         return 'Запрос на ЭЦП';
       case DemandAction.FACTORING:
         return 'Запрос на Факторинг';
       case DemandAction.FREE_REQUEST:
-        return 'Свободный';
+        return 'Запрос на свободную тему';
       case DemandAction.SURETY:
-        return '';
+        return 'Запрос на поручительство';
       case DemandAction.UPDATE_LIMIT:
-        return 'Обновление лимита';
+        return 'Запрос на обновление лимита';
       case DemandAction.VERIFY:
-        return '';
+        return 'Запрос на верификацию';
     }
   }
 

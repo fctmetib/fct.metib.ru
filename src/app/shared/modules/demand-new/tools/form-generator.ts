@@ -101,6 +101,10 @@ export class FormGenerator {
     });
   }
 
+  public generateAgentFactoringForm(): FormGroup {
+    return this.fb.group({});
+  }
+
   public generateAddressForm(): FormGroup {
     const addressForm = this.fb.group({
       displayAddress: [

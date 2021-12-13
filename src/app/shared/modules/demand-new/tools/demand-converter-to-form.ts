@@ -102,6 +102,10 @@ export class DemandConverterToForm {
     return result;
   }
 
+  public convertAgentFactoringToFormData(dataFromAPI: any): any {
+    //TODO:
+  }
+
   public convertFactoringToFormData(
     dataFromAPI: any
   ): DemandFactoringDataInterface {
