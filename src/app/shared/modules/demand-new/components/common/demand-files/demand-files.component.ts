@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { DemandNavigationService } from '../../services/demand-navigation.service';
-import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
-import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
+import { DemandNavigationService } from '../../../services/demand-navigation.service';
+import { DoDemandActionInterface } from '../../../types/navigation-service/do-demand-action.interface';
+import { DoDemandPageActionType } from '../../../types/navigation-service/do-demand-page-action-type';
 
 @Component({
   selector: 'demand-files',

@@ -1,7 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { AddressModalComponent } from '../../modals/address/address.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AddressModalComponent } from '../address/address.component';
 
 @Component({
   selector: 'demand-address-group',

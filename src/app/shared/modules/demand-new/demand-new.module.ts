@@ -41,16 +41,13 @@ import { DemandActionComponent } from './containers/demand-action/demand-action.
 import { DemandCreateComponent } from './containers/demand-create/demand-create.component';
 import { DemandActionsComponent } from './containers/demand-actions/demand-actions.component';
 
-import { DemandAddressGroupComponent } from './components/form-groups/address-group/address-group.component';
-import { AddressModalComponent } from './components/modals/address/address.component';
+import { DemandAddressGroupComponent } from './components/common/address-group/address-group.component';
 
 import { DemandHistoryComponent } from './containers/demand-history/demand-history.component';
 import { DemandEditDraftComponent } from './containers/demand-edit-draft/demand-edit-draft.component';
 import { DemandViewComponent } from './containers/demand-view/demand-view.component';
 import { DemandEditCreatedComponent } from './containers/demand-edit-created/demand-edit-created.component';
-import { DemandResultComponent } from './components/demand-result/demand-result.component';
-import { DemandInfoComponent } from './components/demand-info/demand-info.component';
-import { DemandFilesComponent } from './components/demand-files/demand-files.component';
+import { DemandFilesComponent } from './components/common/demand-files/demand-files.component';
 
 // Components
 import { EDSComponent } from './components/eds/eds.component';
@@ -61,6 +58,9 @@ import { DemandNavigationService } from './services/demand-navigation.service';
 import { DemandLoadingService } from './services/demand-loading.service';
 import { DemandService } from './services/demand.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { DemandResultComponent } from './components/common/demand-result/demand-result.component';
+import { DemandInfoComponent } from './components/common/demand-info/demand-info.component';
+import { AddressModalComponent } from './components/common/address/address.component';
 @NgModule({
   imports: [
     CommonModule,

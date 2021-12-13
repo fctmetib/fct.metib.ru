@@ -1,4 +1,3 @@
-import { Validators } from '@angular/forms';
 import { DemandValuesIniter } from './../../tools/demand-values-initer';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { DemandConverter } from './../../tools/demand-converter';
@@ -18,17 +17,8 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
-import { DemandAddonAccountInterface } from '../../types/demand-addon-account.interface';
-import { DemandPropertiesInterface } from '../../types/demand-properties.interface';
-import { DemandObligationInterface } from '../../types/demand-obligation.interface';
-import { formatDate } from '@angular/common';
-import { DemandEDIInterface } from '../../types/demand-edi.interface';
 import { BankInterface } from 'src/app/shared/types/common/bank.interface';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
-import {
-  DemandEDIProvidersDataInterface,
-  DemandFactoringDataInterface,
-} from '../../types/demand-form-data/demand-factoring-data.interface';
 
 @Component({
   selector: 'factoring',
@@ -64,7 +54,6 @@ export class FactoringComponent implements OnInit {
   public files: FileModeInterface[] = [];
 
   //#region Factoring Request Region
-  // TODO: Do logic
   public resultsBIK: string[];
   public resultsBankname: string[];
   public typesOfOwner: DemandSelectboxInterface[] = [];

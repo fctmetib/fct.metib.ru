@@ -1,3 +1,4 @@
+import { DoDemandPageActionType } from './../../../types/navigation-service/do-demand-page-action-type';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { CommonService } from 'src/app/shared/services/common/common.service';
@@ -8,9 +9,8 @@ import { switchMap } from 'rxjs/operators';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { FactoringInfoInterface } from 'src/app/shared/modules/demand/types/common/factoring/factoring-info.interface';
 import { CreateDemandMessageRequestInterface } from 'src/app/shared/modules/demand/types/requests/create-demand-message-request.interface';
-import { DemandNavigationService } from '../../services/demand-navigation.service';
-import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
-import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
+import { DemandNavigationService } from '../../../services/demand-navigation.service';
+import { DoDemandActionInterface } from '../../../types/navigation-service/do-demand-action.interface';
 
 @Component({
   selector: 'demand-info',

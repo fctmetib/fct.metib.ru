@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { DemandNavigationService } from '../../services/demand-navigation.service';
+import { DemandNavigationService } from '../../../services/demand-navigation.service';
 
 @Component({
   selector: 'demand-result',
