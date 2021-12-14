@@ -81,6 +81,226 @@ export class DemandConverterToAPI {
     return data;
   }
 
+  public convertAgentFactoringToApiData(form: any, files: FileModeInterface[]) {
+    let listEDI: DemandEDIInterface[] = [];
+
+    let listObligations: DemandObligationInterface[] = [];
+    let listAddonAccounts: DemandAddonAccountInterface[] = [];
+    let listProperties: DemandPropertiesInterface[] = [];
+
+    let properties = form.factoringPlaces;
+    properties.forEach((property) => {
+      listProperties.push({
+        Address: {
+          Appartment: property.factoringPlacesAddress.Appartment,
+          City: property.factoringPlacesAddress.City,
+          Country: property.factoringPlacesAddress.Country,
+          District: property.factoringPlacesAddress.District,
+          House: property.factoringPlacesAddress.House,
+          Locality: property.factoringPlacesAddress.Locality,
+          PostCode: property.factoringPlacesAddress.PostCode,
+          RegionCode: property.factoringPlacesAddress.RegionCode,
+          Street: property.factoringPlacesAddress.Street,
+          RegionTitle: property.factoringPlacesAddress.RegionTitle,
+        },
+        Comment: '',
+        Type: property.factoringPlacesLegalForm,
+      });
+    });
+
+    let obligations = form.factoringCredits;
+    obligations.forEach((obligation) => {
+      listObligations.push({
+        Creditor: obligation.factoringCreditsCreditor,
+        CurrentRest: obligation.factoringPlacesBalanceCurrent,
+        Date: new Date(obligation.factoringPlacesDateClose),
+        ReportingRest: obligation.factoringPlacesBalanceReport,
+        Summ: obligation.factoringPlacesContractSum,
+        Type: obligation.factoringPlacesTypeDuty,
+      });
+    });
+
+    let addonAccounts = form.otherBanks;
+    addonAccounts.forEach((addonAccount) => {
+      listAddonAccounts.push({
+        BIK: '',
+        Bank: addonAccount.otherBankName,
+        COR: '',
+        Comment: addonAccount.otherBankTarget,
+        Date: new Date(addonAccount.otherBankAccountOpenDate),
+        Expire: new Date(addonAccount.otherBankAccountCloseDate),
+        Number: addonAccount.otherBankOwnerAccount,
+      });
+    });
+
+    let result: any = {
+      Anket: {
+        Registration: {
+          Authority: '',
+          Date: new Date(),
+          InitDate: new Date(),
+          Number: '',
+          Place: '',
+        },
+        Resident: {
+          Country: 'РФ',
+          ForeignCode: '',
+          IsResident: true,
+        },
+        Shareholders: [],
+        Signer: {
+          FactAddress: {
+            Appartment: '',
+            City: '',
+            Country: '',
+            District: '',
+            House: '',
+            Locality: '',
+            PostCode: '',
+            RegionCode: 0,
+            RegionTitle: '',
+            Street: '',
+          },
+          Passport: {
+            Date: new Date(),
+            Expire: new Date(),
+            IsForeign: false,
+            IssuerCode: '',
+            IssuerTitle: '',
+            Nationality: '',
+            Number: '',
+          },
+          Person: {
+            BirthDate: new Date(),
+            BirthPlace: '',
+            Email: '',
+            Gender: 1,
+            Name: {
+              First: '',
+              Last: '',
+              Second: '',
+            },
+            NameFirst: '',
+            NameLast: '',
+            NameSecond: '',
+            Phone: '',
+            SNILS: '',
+          },
+          PositionDate: new Date(),
+          PositionTitle: '',
+          RegistrationAddress: {
+            Appartment: '',
+            City: '',
+            Country: '',
+            District: '',
+            House: '',
+            Locality: '',
+            PostCode: '',
+            RegionCode: 0,
+            RegionTitle: '',
+            Street: '',
+          },
+        },
+        Activities: [],
+        Capital: {
+          Total: 0,
+          Payed: 0,
+        },
+        Licenses: [],
+        Objectives: {
+          BankRelationObjective: 16,
+          BankRelationObjectiveOther: '',
+          FinancialObjective: 1,
+          FinancialObjectiveOther: '',
+          TransactionsContracts: 'Договор факторинга',
+          TransactionsCount: '',
+          TransactionsSumm: '',
+        },
+        Organization: {
+          Email: form.organizationEmail,
+          FactAddress: {
+            Appartment: '',
+            City: '',
+            Country: '',
+            District: '',
+            House: '',
+            Locality: '',
+            PostCode: '',
+            RegionCode: 0,
+            RegionTitle: '',
+            Street: '',
+          },
+          FactAddressEquals: false,
+          ForeignTitle: '',
+          FullTitle: '',
+          LegalAddress: {
+            Appartment: '',
+            City: '',
+            Country: '',
+            District: '',
+            House: '',
+            Locality: '',
+            PostCode: '',
+            RegionCode: 0,
+            RegionTitle: '',
+            Street: '',
+          },
+          LegalForm: form.organizationLegalForm,
+          Phone: form.organizationPhone,
+          PostAddress: {
+            Appartment: '',
+            City: '',
+            Country: '',
+            District: '',
+            House: '',
+            Locality: '',
+            PostCode: '',
+            RegionCode: 0,
+            RegionTitle: '',
+            Street: '',
+          },
+          PostAddressEquals: false,
+          Requisites: {
+            INN: form.organizationINN,
+            KPP: '',
+            OGRN: '',
+            OKATO: '',
+            OKPO: '',
+          },
+          ShortTitle: form.organizationShortName,
+          Type: form.organizationType,
+          Website: form.organizationWEB,
+        },
+      },
+      Factoring: {
+        Account: {
+          BIK: form.bankBik,
+          Bank: form.bankName,
+          COR: form.bankCorrespondentAccount,
+          Comment: form.bankComment,
+          Date: new Date(form.bankAccountOpenDate),
+          Expire: null,
+          Number: form.bankOwnerAccount,
+        },
+        AddonAccounts: listAddonAccounts,
+        Buyers: form.factoringClients,
+        EDI: listEDI,
+        FactoringAim: 0,
+        LimitWanted: form.factoringFinanceLimit,
+        Obligations: listObligations,
+        Products: form.factoringProducts,
+        Properties: listProperties,
+        StaffAmount: form.factoringWorkers,
+        Suppliers: form.factoringShipments,
+        Trademarks: form.factoringTradeMarks,
+      },
+      Files: files,
+      Type: 'AgencyFactoring',
+    };
+
+    return result;
+  }
+
   public convertFactoringToApiData(form: any, files: FileModeInterface[]) {
     let listEDI: DemandEDIInterface[] = [];
 

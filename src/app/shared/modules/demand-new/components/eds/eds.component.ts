@@ -31,7 +31,6 @@ import { DemandNavigationService } from '../../services/demand-navigation.servic
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DemandActionType } from '../../types/common/demand-action-type';
 import { DemandConverter } from '../../tools/demand-converter';
-import { SaveDemandRequestInterface } from '../../types/requests/save-demand-request.interface';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
 import { DemandLoadingService } from '../../services/demand-loading.service';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';

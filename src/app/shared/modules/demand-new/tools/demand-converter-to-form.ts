@@ -103,7 +103,59 @@ export class DemandConverterToForm {
   }
 
   public convertAgentFactoringToFormData(dataFromAPI: any): any {
-    //TODO:
+    let factoring: DemandFactoringInterface = dataFromAPI?.Factoring;
+    let anket: DemandAnketInterface = dataFromAPI?.Anket;
+
+    let banks: DemandAddonAccountInterface[] = factoring?.AddonAccounts;
+    let places: DemandPropertiesInterface[] = factoring?.Properties;
+    let credits: DemandObligationInterface[] = factoring?.Obligations;
+
+    let result = {
+      organizationType: anket?.Organization?.Type,
+      organizationLegalForm: anket?.Organization?.LegalForm,
+      organizationShortName: anket?.Organization?.ShortTitle,
+      organizationINN: anket?.Organization?.Requisites?.INN,
+      organizationPhone: anket?.Organization?.Phone,
+      organizationEmail: anket?.Organization?.Email,
+      organizationWEB: anket?.Organization?.Website,
+
+      bankBik: factoring?.Account?.BIK,
+      bankCorrespondentAccount: factoring?.Account?.COR,
+      bankName: factoring?.Account?.Bank,
+      bankAccountOpenDate: formatDate(
+        factoring?.Account?.Date ? factoring?.Account?.Date : null,
+        'yyyy-MM-dd',
+        'en'
+      ),
+      bankOwnerAccount: factoring?.Account?.Number,
+      bankComment: factoring?.Account?.Comment,
+
+      factoringProducts: factoring?.Products,
+      factoringTradeMarks: factoring?.Trademarks,
+      factoringShipments: factoring?.Suppliers,
+      factoringFinanceLimit: factoring?.LimitWanted,
+      factoringClients: factoring?.Buyers,
+      factoringWorkers: factoring?.StaffAmount,
+
+      factoringSuppliers: factoring?.Suppliers,
+      factoringLimit: factoring?.LimitWanted,
+
+      factoringCredits: [],
+      factoringPlaces: [],
+      otherBanks: [],
+    };
+
+    if (banks) {
+      banks.forEach((b) => result.otherBanks.push({}));
+    }
+    if (places) {
+      places.forEach((p) => result.factoringPlaces.push({}));
+    }
+    if (credits) {
+      credits.forEach((c) => result.factoringCredits.push({}));
+    }
+
+    return result;
   }
 
   public convertFactoringToFormData(
