@@ -103,7 +103,7 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
         isForDefaultClient: true,
       },
       {
-        text: 'Запрос на Поручительство (WIP)',
+        text: 'Запрос на Поручительство',
         url: 'demand-action',
         action: DemandAction.SURETY,
         isForNewClient: true,

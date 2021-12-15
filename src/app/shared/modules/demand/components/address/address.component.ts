@@ -22,7 +22,7 @@ import { DemandSelectboxInterface } from '../../types/common/demand-selectbox.in
         <div class="p-field">
           <label for="Country">Страна: </label>
           <p-dropdown
-          styleClass="mib-input"
+            styleClass="mib-input"
             id="Country"
             [options]="countryList"
             placeholder="Страна"
@@ -164,7 +164,7 @@ export class AddressModalComponent implements OnInit {
     if (value) {
       let regionTitle = this.regionList.find((x) => x.value === value);
       this.formAddress.patchValue({
-        RegionTitle: regionTitle,
+        RegionTitle: regionTitle.title,
       });
     }
   }

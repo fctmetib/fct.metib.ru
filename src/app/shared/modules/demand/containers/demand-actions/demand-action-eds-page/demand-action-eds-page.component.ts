@@ -16,7 +16,11 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
-import { CommonService, PostInterface, RegionInterface } from 'src/app/shared/services/common/common.service';
+import {
+  CommonService,
+  PostInterface,
+  RegionInterface,
+} from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { Observable, Subscription } from 'rxjs';
 import { map, switchMap, switchMapTo } from 'rxjs/operators';
@@ -135,8 +139,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        this.isView = params['View'] === 'true' ? true : false
-        if(params['ID'] && params['Edit'] === 'true') {
+        this.isView = params['View'] === 'true' ? true : false;
+        if (params['ID'] && params['Edit'] === 'true') {
           this.isLoading = true;
           this.fetchDraft(params['ID']);
         } else if (params['ID'] && params['Edit'] === 'false') {
@@ -177,14 +181,17 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
           new Blob(binaryData, { type: 'application/msword' })
         );
 
-        downloadLink.setAttribute('download', 'Заявка на выдачу сертификата.doc');
+        downloadLink.setAttribute(
+          'download',
+          'Заявка на выдачу сертификата.doc'
+        );
         document.body.appendChild(downloadLink);
         downloadLink.click();
       });
   }
 
   saveDraft() {
-    if(this.isEdit) {
+    if (this.isEdit) {
       return;
     }
 
@@ -286,7 +293,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       passportDate: ['', [Validators.required]],
       passportFrom: ['', [Validators.required]],
       passportCode: ['', [Validators.required]],
-      passportNationality: ['']
+      passportNationality: [''],
     });
   }
 
@@ -324,7 +331,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   private prepareCoreData(): CreateDemandEDSRequestInterface {
     let organization: OrganizationDataInterface = {
       Email: this.formEDS.value.organizationEmail,
-      FactAddress: this.formEDS.value.organizationActualAddress.factoringPlacesAddress,
+      FactAddress:
+        this.formEDS.value.organizationActualAddress.factoringPlacesAddress,
       FactAddressEquals: this.formEDS.value.organizationIsActualAdressEqual,
       ForeignTitle: '',
       FullTitle: this.formEDS.value.organizationFullName,
@@ -348,7 +356,10 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     };
 
     let passport: PassportInterface = {
-      Date:  this.formEDS?.value?.passportDate ? new Date(this.formEDS.value.passportDate).toISOString().slice(0, 19)+ '+03:00' : null,
+      Date: this.formEDS?.value?.passportDate
+        ? new Date(this.formEDS.value.passportDate).toISOString().slice(0, 19) +
+          '+03:00'
+        : null,
       IsForeign: false,
       IssuerCode: this.formEDS.value.passportCode,
       IssuerTitle: this.formEDS.value.passportFrom,
@@ -374,7 +385,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
       Phone: this.formEDS.value.ownerPhone,
       Email: this.formEDS.value.ownerEmail,
-      INN: this.formEDS.value.ownerINN
+      INN: this.formEDS.value.ownerINN,
     };
 
     let data: CreateDemandEDSRequestInterface = {
@@ -398,13 +409,15 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   }
 
   public selectGeoPosition(event) {
-    this.commonService.getIdCenters(event.value).subscribe(response => {
+    this.commonService.getIdCenters(event.value).subscribe((response) => {
       this.idCenterList = response;
     });
   }
 
   public setIDCenter(event) {
-    this.selectedIdCenter = this.idCenterList.find(x => x.guid === event.value);
+    this.selectedIdCenter = this.idCenterList.find(
+      (x) => x.guid === event.value
+    );
   }
 
   handleSendMessage(event: CreateDemandMessageRequestInterface) {
@@ -506,9 +519,20 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     });
 
     this.ref.onClose.subscribe((data: any) => {
+      console.log('ADDRESS DATA:', data);
+      console.log('type DATA:', type);
       if (data) {
         this.formEDS.value[type].factoringPlacesAddress = data;
         this.updateDisplayAddress(type);
+
+        if (type === 'organizationLegalAddress') {
+          if (this.formEDS.value.organizationIsActualAdressEqual) {
+            this.isAddressEqual('organizationActualAddress');
+          }
+          if (this.formEDS.value.organizationIsLegalAdressEqual) {
+            this.isAddressEqual('organizationPostAddress');
+          }
+        }
       }
     });
   }
@@ -591,7 +615,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   private fetch(id: number) {
     this.subscription$.add(
       this.demandService.getDemandById(id).subscribe((resp) => {
-        this.resultDemand = resp.Result
+        this.resultDemand = resp.Result;
         this.currentDemand = resp.Data;
         this.currentInformation = {
           ID: resp.ID,
@@ -664,7 +688,9 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
         : '',
       ownerPlaceBurn: person?.BirthPlace ? person?.BirthPlace : '',
       ownerPhone: person?.Phone ? person?.Phone : '',
-      ownerWorkPosition: this.currentDemand?.PersonPosition ? this.currentDemand?.PersonPosition : '',
+      ownerWorkPosition: this.currentDemand?.PersonPosition
+        ? this.currentDemand?.PersonPosition
+        : '',
       ownerEmail: person?.Email ? person?.Email : '',
       ownerINN: person?.INN ? person?.INN : '',
 
@@ -676,23 +702,22 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
         : '',
       passportFrom: passport?.IssuerTitle ? passport?.IssuerTitle : '',
       passportCode: passport?.IssuerCode ? passport?.IssuerCode : '',
-      passportNationality: passport?.Nationality ? passport.Nationality: ''
+      passportNationality: passport?.Nationality ? passport.Nationality : '',
     });
 
     this.formEDS.controls['organizationLegalAddress'].patchValue({
-      factoringPlacesAddress: organization?.LegalAddress
+      factoringPlacesAddress: organization?.LegalAddress,
     });
     this.formEDS.controls['organizationActualAddress'].patchValue({
-      factoringPlacesAddress: organization?.FactAddress
+      factoringPlacesAddress: organization?.FactAddress,
     });
     this.formEDS.controls['organizationPostAddress'].patchValue({
-      factoringPlacesAddress: organization?.PostAddress
+      factoringPlacesAddress: organization?.PostAddress,
     });
 
-    this.updateDisplayAddress('organizationLegalAddress')
-    this.updateDisplayAddress('organizationActualAddress')
-    this.updateDisplayAddress('organizationPostAddress')
-
+    this.updateDisplayAddress('organizationLegalAddress');
+    this.updateDisplayAddress('organizationActualAddress');
+    this.updateDisplayAddress('organizationPostAddress');
 
     this.isLoading = false;
     this.formEDS.markAllAsTouched();
