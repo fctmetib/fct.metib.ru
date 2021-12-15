@@ -101,6 +101,47 @@ export class FormGenerator {
     });
   }
 
+  public generateSureryForm(): FormGroup {
+    return this.fb.group({
+      organizationType: [0, [Validators.required]],
+      organizationLegalForm: [''],
+      organizationShortName: ['', [Validators.required]],
+      organizationINN: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(12),
+        ],
+      ],
+      organizationPhone: ['', [Validators.required]],
+      organizationEmail: ['', [Validators.required, Validators.email]],
+      organizationWEB: [''],
+
+      bankBik: ['', [Validators.required]],
+      bankCorrespondentAccount: ['', [Validators.required]],
+      bankName: ['', [Validators.required]],
+      bankAccountOpenDate: ['', [Validators.required]],
+      bankOwnerAccount: ['', [Validators.required]],
+      bankComment: [''],
+
+      otherBanks: this.fb.array([]),
+
+      factoringProducts: ['', [Validators.required]],
+      factoringTradeMarks: ['', [Validators.required]],
+      factoringShipments: ['', [Validators.required]],
+      factoringFinanceLimit: [null, [Validators.required]],
+      factoringClients: ['', [Validators.required]],
+      factoringWorkers: [0, [Validators.required]],
+
+      factoringPlaces: this.fb.array([]),
+
+      factoringCredits: this.fb.array([]),
+
+      factoringEDIProviders: this.fb.array([]),
+    });
+  }
+
   public generateAgentFactoringForm(): FormGroup {
     return this.fb.group({
       organizationType: [0, [Validators.required]],

@@ -24,6 +24,8 @@ export class DemandConverter {
         return this._converterToAPI.convertFactoringToApiData(dataForm, files);
       case DemandAction.AGENT_FACTORING:
         return this._converterToAPI.convertFactoringToApiData(dataForm, files);
+      case DemandAction.SURETY:
+        return this._converterToAPI.convertSuretyToApiData(dataForm, files);
     }
   }
 
@@ -42,6 +44,8 @@ export class DemandConverter {
         return this._converterToForm.convertAgentFactoringToFormData(
           dataFromAPI
         );
+      case DemandAction.SURETY:
+        return this._converterToForm.convertSuretyToFormData(dataFromAPI);
     }
   }
 }

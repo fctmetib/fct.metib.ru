@@ -102,6 +102,48 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
         isForNewClient: true,
         isForDefaultClient: true,
       },
+      {
+        text: 'Запрос на Поручительство (WIP)',
+        url: 'demand-action',
+        action: DemandAction.SURETY,
+        isForNewClient: true,
+        isForDefaultClient: true,
+      },
+      {
+        text: 'Запрос на Редактирование профиля (WIP)',
+        url: 'demand-action',
+        action: DemandAction.EDIT_PROFILE,
+        isForNewClient: true,
+        isForDefaultClient: true,
+      },
+      {
+        text: 'Запрос на Свободную тему (WIP)',
+        url: 'demand-action',
+        action: DemandAction.FREE_REQUEST,
+        isForNewClient: true,
+        isForDefaultClient: true,
+      },
+      {
+        text: 'Запрос на Увеличение лимита (WIP)',
+        url: 'demand-action',
+        action: DemandAction.UPDATE_LIMIT,
+        isForNewClient: true,
+        isForDefaultClient: true,
+      },
+      {
+        text: 'Запрос на Нового дебитора (WIP)',
+        url: 'demand-action',
+        action: DemandAction.CREATE_DEBITOR,
+        isForNewClient: true,
+        isForDefaultClient: true,
+      },
+      {
+        text: 'Регистрация канала верификации (WIP)',
+        url: 'demand-action',
+        action: DemandAction.VERIFY,
+        isForNewClient: true,
+        isForDefaultClient: true,
+      },
     ];
 
     let user = this.authService.getUserFromStore();

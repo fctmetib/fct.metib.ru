@@ -102,6 +102,109 @@ export class DemandConverterToForm {
     return result;
   }
 
+  public convertSuretyToFormData(dataFromAPI: any): any {
+    let factoring: DemandFactoringInterface = dataFromAPI.Factoring;
+    let anket: DemandAnketInterface = dataFromAPI.Anket;
+
+    let banks: DemandAddonAccountInterface[] = factoring.AddonAccounts;
+    let places: DemandPropertiesInterface[] = factoring.Properties;
+    let credits: DemandObligationInterface[] = factoring.Obligations;
+    let ediProviders: DemandEDIInterface[] = factoring.EDI;
+
+    let result = {
+      organizationType: anket.Organization.Type,
+      organizationLegalForm: anket.Organization.LegalForm,
+      organizationShortName: anket.Organization.ShortTitle,
+      organizationINN: anket.Organization.Requisites.INN,
+      organizationPhone: anket.Organization.Phone,
+      organizationEmail: anket.Organization.Email,
+      organizationWEB: anket.Organization.Website,
+
+      bankBik: factoring.Account.BIK,
+      bankCorrespondentAccount: factoring.Account.COR,
+      bankName: factoring.Account.Bank,
+      bankAccountOpenDate: formatDate(
+        factoring.Account.Date,
+        'yyyy-MM-dd',
+        'en'
+      ),
+      bankOwnerAccount: factoring.Account.Number,
+      bankComment: factoring.Account.Comment,
+
+      factoringProducts: factoring.Products,
+      factoringTradeMarks: factoring.Trademarks,
+      factoringShipments: factoring.Suppliers,
+      factoringFinanceLimit: factoring.LimitWanted,
+      factoringClients: factoring.Buyers,
+      factoringWorkers: factoring.StaffAmount,
+
+      otherBanks: [],
+      factoringPlaces: [],
+      factoringCredits: [],
+      factoringEDIProviders: [],
+    };
+
+    if (banks) {
+      banks.forEach((b) =>
+        result.otherBanks.push({
+          otherBankAccountOpenDate: b?.Date
+            ? formatDate(b?.Date, 'yyyy-MM-dd', 'en')
+            : '',
+          otherBankAccountCloseDate: b?.Expire
+            ? formatDate(b?.Expire, 'yyyy-MM-dd', 'en')
+            : '',
+          otherBankName: b?.Bank ? b?.Bank : '',
+          otherBankOwnerAccount: b?.Number ? b?.Number : '',
+          otherBankTarget: b?.Comment ? b?.Comment : '',
+        })
+      );
+    }
+    if (places) {
+      places.forEach((p) =>
+        result.factoringPlaces.push({
+          displayAddress: '',
+          factoringPlacesAddress: {
+            PostCode: p ? p?.Address?.PostCode : '',
+            Country: p ? p?.Address?.Country : 'Российская Федерация',
+            RegionCode: p ? p?.Address?.RegionCode : 77,
+            RegionTitle: p ? p?.Address?.RegionTitle : '',
+            City: p ? p?.Address?.City : 'Москва',
+            District: p ? p?.Address?.District : '',
+            Locality: p ? p?.Address?.Locality : '',
+            Street: p ? p?.Address?.Street : '',
+            House: p ? p?.Address?.House : '',
+            Appartment: p ? p?.Address?.Appartment : '',
+          },
+          factoringPlacesLegalForm: 'Own',
+        })
+      );
+    }
+    if (credits) {
+      credits.forEach((c) =>
+        result.factoringCredits.push({
+          factoringCreditsCreditor: c ? c.Creditor : '',
+          factoringPlacesTypeDuty: c ? c.Type : '',
+          factoringPlacesDateClose: c
+            ? formatDate(c.Date, 'yyyy-MM-dd', 'en')
+            : '',
+          factoringPlacesContractSum: c ? c.Summ : '',
+          factoringPlacesBalanceReport: c ? c.ReportingRest : '',
+          factoringPlacesBalanceCurrent: c ? c.CurrentRest : '',
+        })
+      );
+    }
+    if (ediProviders) {
+      ediProviders.forEach((e) => {
+        result.factoringEDIProviders.push({
+          factoringEDIProvidersDebitor: e?.Company ? e?.Company : '',
+          factoringEDIProvidersProvider: e?.EDIProvider ? e?.EDIProvider : '',
+        });
+      });
+    }
+
+    return result;
+  }
+
   public convertAgentFactoringToFormData(dataFromAPI: any): any {
     let factoring: DemandFactoringInterface = dataFromAPI?.Factoring;
     let anket: DemandAnketInterface = dataFromAPI?.Anket;
@@ -146,13 +249,53 @@ export class DemandConverterToForm {
     };
 
     if (banks) {
-      banks.forEach((b) => result.otherBanks.push({}));
+      banks.forEach((b) =>
+        result.otherBanks.push({
+          otherBankAccountOpenDate: b ? b?.Date : '',
+          otherBankAccountCloseDate: b?.Expire
+            ? formatDate(b?.Expire, 'yyyy-MM-dd', 'en')
+            : '',
+          otherBankName: b ? b?.Bank : '',
+          otherBankOwnerAccount: b ? b?.Number : '',
+          otherBankTarget: b ? b?.Comment : '',
+        })
+      );
     }
+
     if (places) {
-      places.forEach((p) => result.factoringPlaces.push({}));
+      places.forEach((p) =>
+        result.factoringPlaces.push({
+          displayAddress: '',
+          factoringPlacesAddress: {
+            PostCode: p ? p?.Address?.PostCode : '',
+            Country: p ? p?.Address?.Country : 'Российская Федерация',
+            RegionCode: p ? p?.Address?.RegionCode : 77,
+            RegionTitle: p ? p?.Address?.RegionTitle : '',
+            City: p ? p?.Address?.City : 'Москва',
+            District: p ? p?.Address?.District : '',
+            Locality: p ? p?.Address?.Locality : '',
+            Street: p ? p?.Address?.Street : '',
+            House: p ? p?.Address?.House : '',
+            Appartment: p ? p?.Address?.Appartment : '',
+          },
+          factoringPlacesLegalForm: p ? p?.Type : '',
+        })
+      );
     }
+
     if (credits) {
-      credits.forEach((c) => result.factoringCredits.push({}));
+      credits.forEach((c) =>
+        result.factoringCredits.push({
+          factoringCreditsCreditor: c ? c?.Creditor : '',
+          factoringPlacesTypeDuty: c ? c?.Type : '',
+          factoringPlacesDateClose: c?.Date
+            ? formatDate(c?.Date, 'yyyy-MM-dd', 'en')
+            : '',
+          factoringPlacesContractSum: c ? c?.Summ : '',
+          factoringPlacesBalanceReport: c ? c?.ReportingRest : '',
+          factoringPlacesBalanceCurrent: c ? c?.CurrentRest : '',
+        })
+      );
     }
 
     return result;
