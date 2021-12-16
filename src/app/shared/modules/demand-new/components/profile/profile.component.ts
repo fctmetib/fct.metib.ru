@@ -1,46 +1,31 @@
-import { Observable } from 'rxjs';
-// System
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { Subscription } from 'rxjs';
-// Interfaces
-import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
-// Common Logic / Classes / Tools
 import { DemandValuesIniter } from '../../tools/demand-values-initer';
+import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { DemandConverter } from '../../tools/demand-converter';
+import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
 import { FormGenerator } from '../../tools/form-generator';
-// Services
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
+import { DemandActionType } from '../../types/common/demand-action-type';
+import { DemandNavigationService } from '../../services/demand-navigation.service';
+import { DemandLoadingService } from '../../services/demand-loading.service';
 import {
   CommonService,
   PostInterface,
   RegionInterface,
 } from 'src/app/shared/services/common/common.service';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { DemandNavigationService } from '../../services/demand-navigation.service';
+import { Observable, Subscription } from 'rxjs';
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
-import { DemandActionType } from '../../types/common/demand-action-type';
-import { DemandConverter } from '../../tools/demand-converter';
-import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
-import { DemandLoadingService } from '../../services/demand-loading.service';
-import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
+import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
+import { BankInterface } from 'src/app/shared/types/common/bank.interface';
+import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 
 @Component({
-  selector: 'eds',
-  styleUrls: ['./eds.component.scss'],
-  templateUrl: './eds.component.html',
+  selector: 'profile',
+  styleUrls: ['./profile.component.scss'],
+  templateUrl: 'profile.component.html',
 })
-export class EDSComponent implements OnInit, OnDestroy {
+export class ProfileComponent implements OnInit {
   // Форма
   public form: FormGroup;
 
@@ -60,12 +45,21 @@ export class EDSComponent implements OnInit, OnDestroy {
   public demandNavigationConfig: DemandNavigationInterface;
   private _subscription$: Subscription = new Subscription();
   private _demandConverter: DemandConverter;
+  private _formGenerator: FormGenerator;
 
   // UI
   public selectedIdCenter: any;
 
   // Файлы
   public files: FileModeInterface[] = [];
+
+  //#region Factoring Request Region
+  public resultsBIK: string[];
+  public resultsBankname: string[];
+  public typesOfOwner: DemandSelectboxInterface[] = [];
+  isRequestLoading: boolean = false; // this was an Input Property
+  public banksFounded: BankInterface[];
+  //#endregion
 
   constructor(
     private fb: FormBuilder,
@@ -74,6 +68,7 @@ export class EDSComponent implements OnInit, OnDestroy {
     private _demandNavigationService: DemandNavigationService
   ) {
     this._demandConverter = new DemandConverter();
+    this._formGenerator = new FormGenerator(this.fb);
   }
 
   ngOnInit() {
@@ -92,67 +87,129 @@ export class EDSComponent implements OnInit, OnDestroy {
     this._doDemandAction(DoDemandPageActionType.CREATE);
   }
 
-  /**
-   * Получает список центров выдачи от АПИ
-   * @param event - принимает событие из dropdown
-   * @returns void
-   */
-  public selectGeoPosition(event): void {
-    this.commonService.getIdCenters(event.value).subscribe((response) => {
-      this.idCenterList = response;
+  //#region Factoring Request Region
+
+  public search(event): void {
+    this._subscription$.add(
+      this.commonService.getBankByBIK(event.query).subscribe((data) => {
+        this.banksFounded = data;
+        this.resultsBIK = data.map((result) => result.BIC);
+      })
+    );
+  }
+
+  public onOtherBankSelect(indexOtherBank: number, bankInfo: string) {
+    let bank = this.banksFounded.find(
+      (x) => x.BIC === bankInfo || x.Name === bankInfo
+    );
+    this.form.get('otherBanks')['controls'][indexOtherBank].patchValue({
+      otherBankName: bank.Name,
     });
   }
 
-  /**
-   * Задает выбранный центр выдачи, для отрисовки пользователю
-   * @param event - принимает событие из dropdown
-   * @returns void
-   */
-  public setIDCenter(event): void {
-    this.selectedIdCenter = this.idCenterList.find(
-      (x) => x.guid === event.value
+  public onBankSelect(bankInfo: string) {
+    let bank = this.banksFounded.find(
+      (x) => x.BIC === bankInfo || x.Name === bankInfo
+    );
+    this.form.patchValue({
+      bankBik: bank.BIC,
+      bankCorrespondentAccount: bank.AccountBank,
+      bankName: bank.Name,
+    });
+  }
+
+  public searchByBankName(event): void {
+    this._subscription$.add(
+      this.commonService.getBankByName(event.query).subscribe((data) => {
+        this.banksFounded = data;
+        this.resultsBankname = data.map((result) => result.Name);
+      })
     );
   }
 
-  /**
-   * Получает цифровую подпись, на основе введенных данных
-   * @returns void
-   */
-  public getDigitalSignatureRequest(): void {
-    this._doDemandAction(
-      DoDemandPageActionType.DOWNLOAD_DIGITAL_SIGNATURE_ANKET
-    );
+  public addOtherBank(): void {
+    let otherBanks = this.form.get('otherBanks') as FormArray;
+    otherBanks.push(this._formGenerator.generateBankForm());
   }
 
-  /**
-   * Проверяет совпадение адресса, на основе типа и заполняет следующее поле, если есть совпадение
-   * @param type - принимает тип из чекбокса на UI
-   * @returns void
-   */
-  public isAddressEqual(type): void {
-    if (type === 'organizationActualAddress') {
-      let legalAddress =
-        this.form.value.organizationLegalAddress.factoringPlacesAddress;
-      let addressEdited = <FormControl>(
-        this.form.controls['organizationActualAddress']
-      );
-      addressEdited.patchValue({
-        factoringPlacesAddress: legalAddress,
+  public addOtherPlace(): void {
+    let factoringPlaces = this.form.get('factoringPlaces') as FormArray;
+    factoringPlaces.push(this._formGenerator.generateFactoringPlaceForm());
+    this._updateDisplayAddress(factoringPlaces.length - 1);
+  }
+
+  public getFactoringPlaces(index): FormGroup {
+    let factoringPlaces = this.form.get('factoringPlaces') as FormArray;
+    return factoringPlaces.controls[index] as FormGroup;
+  }
+
+  public addFactoringCredits(): void {
+    let factoringCredits = this.form.get('factoringCredits') as FormArray;
+    factoringCredits.push(this._formGenerator.generateFactorCreditGroup());
+  }
+
+  public addEDIProvider(): void {
+    let factoringEDIProviders = this.form.get(
+      'factoringEDIProviders'
+    ) as FormArray;
+    factoringEDIProviders.push(this._formGenerator.generateEDIFormGroup());
+  }
+
+  public remove(i: number, type: string): void {
+    let other = this.form.get(type) as FormArray;
+    other.removeAt(i);
+  }
+
+  onTypeChanged(value) {
+    if (value === 0) {
+      this.form.patchValue({
+        organizationLegalForm: null,
       });
-      this._updateDisplayAddress('organizationActualAddress');
-    }
-    if (type === 'organizationPostAddress') {
-      let legalAddress =
-        this.form.value.organizationLegalAddress.factoringPlacesAddress;
-      let addressEdited = <FormControl>(
-        this.form.controls['organizationPostAddress']
-      );
-      addressEdited.patchValue({
-        factoringPlacesAddress: legalAddress,
-      });
-      this._updateDisplayAddress('organizationPostAddress');
     }
   }
+
+  private _updateDisplayAddress(index): void {
+    let address = this.form.value.factoringPlaces[index].factoringPlacesAddress;
+    let result = '';
+
+    if (address.PostCode) {
+      result = result + ' ' + address.PostCode;
+    }
+    if (address.Country) {
+      result = result + ' ' + address.Country;
+    }
+    if (address.RegionCode) {
+      result = result + ' ' + address.RegionCode;
+    }
+    if (address.RegionTitle) {
+      result = result + ' ' + address.RegionTitle;
+    }
+    if (address.City) {
+      result = result + ' ' + address.City;
+    }
+    if (address.District) {
+      result = result + ' ' + address.District;
+    }
+    if (address.Locality) {
+      result = result + ' ' + address.Locality;
+    }
+    if (address.Street) {
+      result = result + ' ' + address.Street;
+    }
+    if (address.House) {
+      result = result + ' ' + address.House;
+    }
+    if (address.Appartment) {
+      result = result + ' ' + address.Appartment;
+    }
+
+    (<FormArray>this.form.controls['factoringPlaces']).at(index).patchValue({
+      displayAddress: result,
+      factoringPlacesAddress: address,
+    });
+  }
+
+  //#endregion
 
   /**
    * Ловит событие на добавление нового файла и добавляет его в список файлов, в форме
@@ -171,21 +228,13 @@ export class EDSComponent implements OnInit, OnDestroy {
   public onRemove(file): void {
     this.files = this.files.filter((x) => x !== file);
   }
+
   /**
    * Предоставляет для UI enum типов события (редактирование, создание и тд)
    * @returns enum с типами
    */
   public get demandActionType(): typeof DemandActionType {
     return DemandActionType;
-  }
-
-  public onLegalAddressChange(): void {
-    if (this.form.value.organizationIsActualAdressEqual) {
-      this.isAddressEqual('organizationActualAddress');
-    }
-    if (this.form.value.organizationIsLegalAdressEqual) {
-      this.isAddressEqual('organizationPostAddress');
-    }
   }
 
   /**
@@ -209,11 +258,14 @@ export class EDSComponent implements OnInit, OnDestroy {
     }
 
     if (
-      crtInds.includes('Inn') &&
-      crtInds.includes('Ogrn') &&
-      crtInds.includes('Snils') &&
-      crtInds.includes('Director') &&
-      crtInds.includes('Passport')
+      crtInds.includes('Regulations') &&
+      crtInds.includes('ContractDelivery') &&
+      crtInds.includes('GenDirPassport') &&
+      crtInds.includes('GenDirProtocol') &&
+      crtInds.includes('Balance') &&
+      crtInds.includes('GenDirOrder') &&
+      crtInds.includes('OSV') &&
+      crtInds.includes('Shareholders')
     ) {
       isInvalid = false;
     } else {
@@ -248,9 +300,6 @@ export class EDSComponent implements OnInit, OnDestroy {
           Data: convertedForm,
         };
         break;
-      case DoDemandPageActionType.DOWNLOAD_DIGITAL_SIGNATURE_ANKET:
-        requestData = convertedForm;
-        break;
     }
 
     const doActionData: DoDemandActionInterface = {
@@ -261,6 +310,14 @@ export class EDSComponent implements OnInit, OnDestroy {
   }
 
   private _initValues() {
+    // Только factoring
+    let mibCommon = new MIBCommon();
+
+    this.organizationTypes = mibCommon.getOrganizations();
+    this.ruleTypes = mibCommon.getLegalForms();
+    this.typesOfOwner = mibCommon.getTypesOfOwner();
+    // -----
+
     this.requestLoading$ = this._demandLoadingService.demandRequestLoading$;
 
     this._subscription$.add(
@@ -271,8 +328,7 @@ export class EDSComponent implements OnInit, OnDestroy {
   }
 
   private _initForm() {
-    const formGenerator = new FormGenerator(this.fb);
-    this.form = formGenerator.generateEDSForm();
+    this.form = this._formGenerator.generateFactoringForm();
   }
 
   private _initAdditionalData(): void {
@@ -293,48 +349,6 @@ export class EDSComponent implements OnInit, OnDestroy {
     );
   }
 
-  private _updateDisplayAddress(type): void {
-    let address = this.form.value[type].factoringPlacesAddress;
-    let result = '';
-
-    if (address?.PostCode) {
-      result = result + ' ' + address.PostCode;
-    }
-    if (address?.Country) {
-      result = result + ' ' + address.Country;
-    }
-    if (address?.RegionCode) {
-      result = result + ' ' + address.RegionCode;
-    }
-    if (address?.RegionTitle) {
-      result = result + ' ' + address.RegionTitle;
-    }
-    if (address?.City) {
-      result = result + ' ' + address.City;
-    }
-    if (address?.District) {
-      result = result + ' ' + address.District;
-    }
-    if (address?.Locality) {
-      result = result + ' ' + address.Locality;
-    }
-    if (address?.Street) {
-      result = result + ' ' + address.Street;
-    }
-    if (address?.House) {
-      result = result + ' ' + address.House;
-    }
-    if (address?.Appartment) {
-      result = result + ' ' + address.Appartment;
-    }
-
-    let addressEdited = <FormControl>this.form.controls[type];
-    addressEdited.patchValue({
-      displayAddress: result,
-      factoringPlacesAddress: address,
-    });
-  }
-
   private _getDemandConfig(): void {
     this._subscription$.add(
       this._demandNavigationService.demandConfig$.subscribe((demandConfig) => {
@@ -347,9 +361,11 @@ export class EDSComponent implements OnInit, OnDestroy {
     this._subscription$.add(
       this._demandNavigationService.currentDemand$.subscribe(
         (currentDemand) => {
-          const convertedDemand =
+          const convertedDemand: any =
             this._demandConverter.convertToFormData(currentDemand);
+
           this.form.patchValue(convertedDemand);
+
           this.files = currentDemand.Files;
         }
       )

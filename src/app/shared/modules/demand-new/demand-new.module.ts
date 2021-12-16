@@ -63,6 +63,7 @@ import { DemandInfoComponent } from './components/common/demand-info/demand-info
 import { AddressModalComponent } from './components/common/address/address.component';
 import { AgentFactoringComponent } from './components/agent-factoring/agent-factoring.component';
 import { SuretyComponent } from './components/surety/surety.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   imports: [
@@ -115,6 +116,7 @@ import { SuretyComponent } from './components/surety/surety.component';
     FactoringComponent,
     SuretyComponent,
     AgentFactoringComponent,
+    ProfileComponent,
     DemandAddressGroupComponent,
     // Modals
     AddressModalComponent,

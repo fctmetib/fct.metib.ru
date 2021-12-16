@@ -1,5 +1,12 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddressModalComponent } from '../address/address.component';
 
@@ -9,11 +16,10 @@ import { AddressModalComponent } from '../address/address.component';
   template: `
     <ng-container [formGroup]="addressGroup">
       <div class="p-field">
-        <label for="organizationLegalAddress">{{ title }}</label>
+        <label>{{ title }}</label>
         <div class="addon-button p-mb-2">
           <div class="action-box">
             <input
-              id="organizationLegalAddress"
               type="text"
               pInputText
               placeholder="{{ placeholder }}"
@@ -25,7 +31,7 @@ import { AddressModalComponent } from '../address/address.component';
               type="button"
               label="Изменить"
               class="p-button-outlined small"
-              (click)="openAddressForm('organizationLegalAddress')"
+              (click)="openAddressForm()"
             ></button>
           </div>
         </div>
@@ -43,6 +49,12 @@ export class DemandAddressGroupComponent implements OnInit {
   @Input()
   placeholder: string;
 
+  @Input()
+  isOnChangeRequired: boolean;
+
+  @Output()
+  onChange = new EventEmitter<any>();
+
   private ref: DynamicDialogRef;
 
   constructor(public dialogService: DialogService) {}
@@ -51,7 +63,7 @@ export class DemandAddressGroupComponent implements OnInit {
     this._updateDisplayAddress();
   }
 
-  public openAddressForm(type) {
+  public openAddressForm() {
     let addresses = this.addressGroup.value;
     let address = addresses.factoringPlacesAddress;
 
@@ -69,12 +81,15 @@ export class DemandAddressGroupComponent implements OnInit {
     this.ref.onClose.subscribe((data: any) => {
       if (data) {
         this.addressGroup.value.factoringPlacesAddress = data;
-        this._updateDisplayAddress(type);
+        this._updateDisplayAddress();
+        if (this.isOnChangeRequired) {
+          this.onChange.emit(data);
+        }
       }
     });
   }
 
-  private _updateDisplayAddress(type?): void {
+  private _updateDisplayAddress(): void {
     let address = this.addressGroup.value.factoringPlacesAddress;
     let result = '';
 

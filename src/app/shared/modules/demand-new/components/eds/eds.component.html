@@ -107,7 +107,9 @@
     <!-- 4 row -->
     <div class="p-col-12 p-md-12">
       <demand-address-group [title]="'Юридический адрес'" [placeholder]="'Юридический адрес'"
-        [addressGroup]="form.get('organizationLegalAddress')"></demand-address-group>
+        [addressGroup]="form.get('organizationLegalAddress')" (onChange)="onLegalAddressChange()"
+        isOnChangeRequired="true">
+      </demand-address-group>
     </div>
     <div class="p-field p-col-12 p-md-12">
       <div class="p-field-checkbox">
@@ -194,8 +196,8 @@
     </div>
     <div class="p-field p-col-12 p-md-3">
       <label for="ownerGender">Пол</label>
-      <p-dropdown styleClass="mib-input" id="ownerGender" [options]="genderTypes"
-        formControlName="ownerGender" optionLabel="title" optionValue="value">
+      <p-dropdown styleClass="mib-input" id="ownerGender" [options]="genderTypes" formControlName="ownerGender"
+        optionLabel="title" optionValue="value">
       </p-dropdown>
     </div>
 
@@ -228,8 +230,7 @@
     </div>
     <div class="p-field p-col-12 p-md-3">
       <label for="ownerPhone">Мобильный телефон</label>
-      <input id="ownerPhone" type="tel" pInputText placeholder="Мобильный телефон"
-        formControlName="ownerPhone">
+      <input id="ownerPhone" type="tel" pInputText placeholder="Мобильный телефон" formControlName="ownerPhone">
     </div>
 
     <!-- 8 row -->
@@ -290,7 +291,7 @@
       <p-dropdown styleClass="mib-input" id="ownerIdCenter" (onChange)="setIDCenter($event)" [options]="idCenterList"
         placeholder="Выберите географическое расположение" formControlName="ownerIdCenter" optionLabel="name"
         optionValue="guid"></p-dropdown>
-      <div  *ngIf="!selectedIdCenter">
+      <div *ngIf="!selectedIdCenter">
         <small class="p-error">
           Укажите подходящий региональный Центр идентификации
         </small>
@@ -389,8 +390,9 @@
 
     <div class="p-field p-col-12 p-md-12">
       <label for="btn_submit">&nbsp;</label>
-      <button id="btn_submit" pButton pRipple  label="Сохранить запрос"
-        [disabled]="form?.invalid || isFilesInvalid() || (requestLoading$ | async)" class="btn-mib-submit p-button-outlined"></button>
+      <button id="btn_submit" pButton pRipple label="Сохранить запрос"
+        [disabled]="form?.invalid || isFilesInvalid() || (requestLoading$ | async)"
+        class="btn-mib-submit p-button-outlined"></button>
     </div>
   </div>
 </form>
