@@ -1,3 +1,4 @@
+import { CryptoService } from 'src/app/shared/services/common/crypto.service';
 import { DemandValuesIniter } from '../../tools/demand-values-initer';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { DemandConverter } from '../../tools/demand-converter';
@@ -19,6 +20,7 @@ import { DemandNavigationInterface } from '../../types/common/demand-navigation.
 import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
 import { BankInterface } from 'src/app/shared/types/common/bank.interface';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'profile',
@@ -47,8 +49,8 @@ export class ProfileComponent implements OnInit {
   private _demandConverter: DemandConverter;
   private _formGenerator: FormGenerator;
 
-  // UI
-  public selectedIdCenter: any;
+  private currentUserId: string;
+  private avatarCode: string;
 
   // Файлы
   public files: FileModeInterface[] = [];
@@ -65,7 +67,9 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder,
     private commonService: CommonService,
     private _demandLoadingService: DemandLoadingService,
-    private _demandNavigationService: DemandNavigationService
+    private _demandNavigationService: DemandNavigationService,
+    private cryptoService: CryptoService,
+    private cookieService: CookieService
   ) {
     this._demandConverter = new DemandConverter();
     this._formGenerator = new FormGenerator(this.fb);
@@ -276,9 +280,15 @@ export class ProfileComponent implements OnInit {
   }
 
   private _doDemandAction(type: DoDemandPageActionType): void {
+    const formValue = {
+      ...this.form.getRawValue(),
+      currentUserId: this.currentUserId,
+      avatarCode: this.avatarCode,
+    };
+
     const convertedForm = this._demandConverter.convertToApiData(
       this.demandNavigationConfig.demandAction,
-      this.form.getRawValue(),
+      formValue,
       this.files
     );
 
@@ -310,13 +320,12 @@ export class ProfileComponent implements OnInit {
   }
 
   private _initValues() {
-    // Только factoring
-    let mibCommon = new MIBCommon();
-
-    this.organizationTypes = mibCommon.getOrganizations();
-    this.ruleTypes = mibCommon.getLegalForms();
-    this.typesOfOwner = mibCommon.getTypesOfOwner();
-    // -----
+    // Только edit profile
+    let encryptedJsonCurrentUser = this.cookieService.get('_cu');
+    let currentJsonUser = this.cryptoService.decrypt(encryptedJsonCurrentUser);
+    let currentUser = JSON.parse(currentJsonUser);
+    this.currentUserId = currentUser.UserID;
+    //
 
     this.requestLoading$ = this._demandLoadingService.demandRequestLoading$;
 
@@ -328,7 +337,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private _initForm() {
-    this.form = this._formGenerator.generateFactoringForm();
+    this.form = this._formGenerator.generateProfileForm();
   }
 
   private _initAdditionalData(): void {
@@ -366,6 +375,7 @@ export class ProfileComponent implements OnInit {
 
           this.form.patchValue(convertedDemand);
 
+          this.avatarCode = currentDemand?.Avatar;
           this.files = currentDemand.Files;
         }
       )

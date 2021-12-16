@@ -102,6 +102,34 @@ export class DemandConverterToForm {
     return result;
   }
 
+  public convertProfileToFormData(dataFromAPI: any): any {
+    let result = {
+      last: dataFromAPI?.Profile?.Name?.Last
+        ? dataFromAPI?.Profile?.Name?.Last
+        : '',
+      first: dataFromAPI?.Profile?.Name?.First
+        ? dataFromAPI?.Profile?.Name?.First
+        : '',
+      isMale: dataFromAPI?.Profile?.IsMale ? dataFromAPI?.Profile?.IsMale : '',
+      phone: dataFromAPI?.Profile?.Phone ? dataFromAPI?.Profile?.Phone : '',
+      email: dataFromAPI?.Profile?.Email ? dataFromAPI?.Profile?.Email : '',
+      number: dataFromAPI?.Passport?.Number
+        ? dataFromAPI?.Passport?.Number
+        : '',
+      date: dataFromAPI?.Passport?.Date
+        ? formatDate(dataFromAPI?.Passport?.Date, 'yyyy-MM-dd', 'en')
+        : '',
+      issuerTitle: dataFromAPI?.Passport?.IssuerTitle
+        ? dataFromAPI.Passport?.IssuerTitle
+        : '',
+      issuerCode: dataFromAPI?.Passport?.IssuerCode
+        ? dataFromAPI?.Passport?.IssuerCode
+        : '',
+    };
+
+    return result;
+  }
+
   public convertSuretyToFormData(dataFromAPI: any): any {
     let factoring: DemandFactoringInterface = dataFromAPI.Factoring;
     let anket: DemandAnketInterface = dataFromAPI.Anket;

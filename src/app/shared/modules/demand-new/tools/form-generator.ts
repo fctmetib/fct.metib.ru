@@ -54,6 +54,20 @@ export class FormGenerator {
     return form;
   }
 
+  public generateProfileForm(): FormGroup {
+    return this.fb.group({
+      last: ['', [Validators.required]],
+      first: ['', [Validators.required]],
+      isMale: [false, [Validators.required]],
+      phone: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      number: ['', [Validators.required]],
+      date: ['', [Validators.required]],
+      issuerTitle: ['', [Validators.required]],
+      issuerCode: ['', [Validators.required]],
+    });
+  }
+
   public generateFactoringForm(): FormGroup {
     const form = this.fb.group({
       organizationType: [0, [Validators.required]],

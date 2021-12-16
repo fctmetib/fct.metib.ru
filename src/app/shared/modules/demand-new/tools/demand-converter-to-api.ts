@@ -81,6 +81,38 @@ export class DemandConverterToAPI {
     return data;
   }
 
+  public convertProfileToApiData(form: any, files: FileModeInterface[]) {
+    let result: any = {
+      Avatar: form.avatarCode,
+      Passport: {
+        Date: form.date
+          ? new Date(form.date).toISOString().slice(0, 19) + '+03:00'
+          : null,
+        Expire: null,
+        IsForeign: false,
+        IssuerCode: form.issuerCode,
+        IssuerTitle: form.issuerTitle,
+        Nationality: 'RUS',
+        Number: form.number,
+      },
+      PassportFileCode: '',
+      Profile: {
+        Email: form.email,
+        IsMale: form.isMale,
+        Name: {
+          First: form.first,
+          Last: form.last,
+        },
+        Phone: form.phone,
+      },
+      Files: files,
+      UserID: form.currentUserId,
+      Type: 'ProfileChange',
+    };
+
+    return result;
+  }
+
   public convertSuretyToApiData(form: any, files: FileModeInterface[]) {
     let listEDI: DemandEDIInterface[] = [];
 
