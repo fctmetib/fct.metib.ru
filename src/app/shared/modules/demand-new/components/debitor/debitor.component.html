@@ -1,1 +1,42 @@
-<!--TODO:: -->>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-formgrid p-grid form">
+    <!-- 1 row -->
+    <div class="p-field p-col-12 p-md-12 p-lg-12">
+      <label for="Id">Дебитор</label>
+      <p-dropdown styleClass="mib-input" [options]="debtors" formControlName="Id" id="Id" [filter]="true"
+        filterBy="Title" optionLabel="Title" optionValue="ID" editable="true" (change)="debtorChange()"
+        (onChange)="debtorChange()">
+      </p-dropdown>
+      <small id="debtor-help">Выберите дебитора из списка или добавьте своего.</small>
+      <div *ngIf="form.controls['Id'].invalid">
+        <small *ngIf="form.controls['Id'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-12 p-lg-12" *ngIf="isNewDebtor">
+      <label for="INN">ИНН</label>
+      <input formControlName="INN" id="INN" type="text" pInputText aria-describedby="Инн">
+      <div *ngIf="form.controls['INN'].invalid">
+        <small *ngIf="form.controls['INN'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+
+    <!-- 2 row -->
+    <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+      <div class="p-field p-col-12 p-md-6">
+        <mib-file-uploader [existFile]="files" [title]="'При необходимости прикрепите файлы:'" [required]="false"
+          [type]="'All'" (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+    </ng-container>
+    <div class="p-field p-col-12 p-md-12">
+      <label for="btn_submit">&nbsp;</label>
+      <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос" [loading]="isRequestLoading"
+        class="btn-mib-submit p-button-outlined" [disabled]="form.invalid ||  isRequestLoading"></button>
+    </div>
+  </div>
+</form>

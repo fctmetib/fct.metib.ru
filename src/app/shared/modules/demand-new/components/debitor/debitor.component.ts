@@ -21,6 +21,7 @@ import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface
 import { BankInterface } from 'src/app/shared/types/common/bank.interface';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { CookieService } from 'ngx-cookie';
+import { DebtorInterface } from '../../types/debtor-interface';
 
 @Component({
   selector: 'debitor',
@@ -55,12 +56,10 @@ export class DebitorComponent implements OnInit {
   // Файлы
   public files: FileModeInterface[] = [];
 
-  //#region Factoring Request Region
-  public resultsBIK: string[];
-  public resultsBankname: string[];
-  public typesOfOwner: DemandSelectboxInterface[] = [];
+  //#region Debtor
+  public debtors: DebtorInterface[] = [];
   isRequestLoading: boolean = false; // this was an Input Property
-  public banksFounded: BankInterface[];
+  public isNewDebtor: boolean = false;
   //#endregion
 
   constructor(
@@ -91,129 +90,14 @@ export class DebitorComponent implements OnInit {
     this._doDemandAction(DoDemandPageActionType.CREATE);
   }
 
-  //#region Factoring Request Region
-
-  public search(event): void {
-    this._subscription$.add(
-      this.commonService.getBankByBIK(event.query).subscribe((data) => {
-        this.banksFounded = data;
-        this.resultsBIK = data.map((result) => result.BIC);
-      })
-    );
-  }
-
-  public onOtherBankSelect(indexOtherBank: number, bankInfo: string) {
-    let bank = this.banksFounded.find(
-      (x) => x.BIC === bankInfo || x.Name === bankInfo
-    );
-    this.form.get('otherBanks')['controls'][indexOtherBank].patchValue({
-      otherBankName: bank.Name,
-    });
-  }
-
-  public onBankSelect(bankInfo: string) {
-    let bank = this.banksFounded.find(
-      (x) => x.BIC === bankInfo || x.Name === bankInfo
-    );
-    this.form.patchValue({
-      bankBik: bank.BIC,
-      bankCorrespondentAccount: bank.AccountBank,
-      bankName: bank.Name,
-    });
-  }
-
-  public searchByBankName(event): void {
-    this._subscription$.add(
-      this.commonService.getBankByName(event.query).subscribe((data) => {
-        this.banksFounded = data;
-        this.resultsBankname = data.map((result) => result.Name);
-      })
-    );
-  }
-
-  public addOtherBank(): void {
-    let otherBanks = this.form.get('otherBanks') as FormArray;
-    otherBanks.push(this._formGenerator.generateBankForm());
-  }
-
-  public addOtherPlace(): void {
-    let factoringPlaces = this.form.get('factoringPlaces') as FormArray;
-    factoringPlaces.push(this._formGenerator.generateFactoringPlaceForm());
-    this._updateDisplayAddress(factoringPlaces.length - 1);
-  }
-
-  public getFactoringPlaces(index): FormGroup {
-    let factoringPlaces = this.form.get('factoringPlaces') as FormArray;
-    return factoringPlaces.controls[index] as FormGroup;
-  }
-
-  public addFactoringCredits(): void {
-    let factoringCredits = this.form.get('factoringCredits') as FormArray;
-    factoringCredits.push(this._formGenerator.generateFactorCreditGroup());
-  }
-
-  public addEDIProvider(): void {
-    let factoringEDIProviders = this.form.get(
-      'factoringEDIProviders'
-    ) as FormArray;
-    factoringEDIProviders.push(this._formGenerator.generateEDIFormGroup());
-  }
-
-  public remove(i: number, type: string): void {
-    let other = this.form.get(type) as FormArray;
-    other.removeAt(i);
-  }
-
-  onTypeChanged(value) {
-    if (value === 0) {
-      this.form.patchValue({
-        organizationLegalForm: null,
-      });
+  public debtorChange() {
+    let selectedDebtor = this.debtors.find((x) => x.ID === this.form.value.Id);
+    if (!selectedDebtor) {
+      this.isNewDebtor = true;
+    } else {
+      this.isNewDebtor = false;
     }
   }
-
-  private _updateDisplayAddress(index): void {
-    let address = this.form.value.factoringPlaces[index].factoringPlacesAddress;
-    let result = '';
-
-    if (address.PostCode) {
-      result = result + ' ' + address.PostCode;
-    }
-    if (address.Country) {
-      result = result + ' ' + address.Country;
-    }
-    if (address.RegionCode) {
-      result = result + ' ' + address.RegionCode;
-    }
-    if (address.RegionTitle) {
-      result = result + ' ' + address.RegionTitle;
-    }
-    if (address.City) {
-      result = result + ' ' + address.City;
-    }
-    if (address.District) {
-      result = result + ' ' + address.District;
-    }
-    if (address.Locality) {
-      result = result + ' ' + address.Locality;
-    }
-    if (address.Street) {
-      result = result + ' ' + address.Street;
-    }
-    if (address.House) {
-      result = result + ' ' + address.House;
-    }
-    if (address.Appartment) {
-      result = result + ' ' + address.Appartment;
-    }
-
-    (<FormArray>this.form.controls['factoringPlaces']).at(index).patchValue({
-      displayAddress: result,
-      factoringPlacesAddress: address,
-    });
-  }
-
-  //#endregion
 
   /**
    * Ловит событие на добавление нового файла и добавляет его в список файлов, в форме
@@ -311,13 +195,6 @@ export class DebitorComponent implements OnInit {
   }
 
   private _initValues() {
-    // Только edit profile
-    let encryptedJsonCurrentUser = this.cookieService.get('_cu');
-    let currentJsonUser = this.cryptoService.decrypt(encryptedJsonCurrentUser);
-    let currentUser = JSON.parse(currentJsonUser);
-    this.currentUserId = currentUser.UserID;
-    //
-
     this.requestLoading$ = this._demandLoadingService.demandRequestLoading$;
 
     this._subscription$.add(
@@ -328,7 +205,7 @@ export class DebitorComponent implements OnInit {
   }
 
   private _initForm() {
-    this.form = this._formGenerator.generateProfileForm();
+    this.form = this._formGenerator.generateDebitorForm();
   }
 
   private _initAdditionalData(): void {

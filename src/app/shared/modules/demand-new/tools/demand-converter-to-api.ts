@@ -81,6 +81,62 @@ export class DemandConverterToAPI {
     return data;
   }
 
+  convertVerifyToApiData(form: any, files: FileModeInterface[]) {
+    let DocumentTypes: string[] = [];
+
+    if (form.DocumentTypeTorg12) {
+      DocumentTypes.push('Torg12');
+    }
+    if (form.DocumentTypeInvoice) {
+      DocumentTypes.push('Invoice');
+    }
+    if (form.DocumentTypeAcceptance) {
+      DocumentTypes.push('Acceptance');
+    }
+    if (form.DocumentTypeNonformalized) {
+      DocumentTypes.push('Nonformalized');
+    }
+    if (form.DocumentTypeORDER) {
+      DocumentTypes.push('ORDER');
+    }
+    if (form.DocumentTypeRECADV) {
+      DocumentTypes.push('RECADV');
+    }
+
+    let result: any = {
+      DocumentTypes,
+      Comment: form.Comment,
+      DebtorID: form.DebtorID,
+      GLN: form.GLN,
+      VerificationType: form.VerificationType,
+      Type: 'VerificationChannel',
+    };
+
+    return result;
+  }
+
+  convertDebitorToApiData(form: any, files: FileModeInterface[]) {
+    let result = {
+      ID: form.ID,
+      INN: form.Inn,
+      IsNew: form.IsNew,
+      Title: form.Title,
+      Files: files,
+      Type: 'NewDebtor',
+    };
+    return result;
+  }
+
+  convertLimitToApiData(form: any, files: FileModeInterface[]) {
+    let result = {
+      Limit: form.limit,
+      Comment: form.comment,
+      Files: files,
+      Type: 'Limit',
+    };
+    return result;
+  }
+
   public convertFreeToApiData(form: any, files: FileModeInterface[]) {
     let result: any = {
       Question: form.question,

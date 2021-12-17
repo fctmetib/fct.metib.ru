@@ -1,5 +1,11 @@
 import { DebtorInterface } from './../../../types/debtor-interface';
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -141,7 +147,6 @@ export class DemandActionDebitorPageComponent
     );
   }
 
-
   private fetchDraft(id: number) {
     this.subscription$.add(
       this.demandService.getDemandDraftById(id).subscribe((resp) => {
@@ -162,7 +167,6 @@ export class DemandActionDebitorPageComponent
       })
     );
   }
-
 
   private fetch(id: number) {
     this.subscription$.add(
@@ -195,7 +199,7 @@ export class DemandActionDebitorPageComponent
     this.formFree.patchValue({
       INN: data.INN,
     });
-
+    // TODO: DO IT IN THE NEW DEMAND!!!
     if (data.IsNew) {
       this.formFree.patchValue({
         Id: data.Title,
@@ -330,7 +334,6 @@ export class DemandActionDebitorPageComponent
   onRemove(file) {
     this.files = this.files.filter((x) => x !== file);
   }
-
 
   private resetAlerts() {
     this.alert = false;

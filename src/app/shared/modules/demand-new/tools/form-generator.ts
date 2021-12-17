@@ -5,6 +5,29 @@ import { DemandEDIProvidersDataInterface } from '../types/demand-form-data/deman
 export class FormGenerator {
   constructor(private fb: FormBuilder) {}
 
+  public generateDebitorForm(): FormGroup {
+    return this.fb.group({
+      Id: ['', [Validators.required]],
+      INN: [''],
+    });
+  }
+
+  public generateVerifyForm(): FormGroup {
+    return this.fb.group({
+      Comment: ['', [Validators.required]],
+      DebtorID: ['', [Validators.required]],
+      GLN: [''],
+      VerificationType: [''],
+      DocumentTypeTorg12: false,
+      DocumentTypeInvoice: false,
+      DocumentTypeAcceptance: false,
+      DocumentTypeNonformalized: false,
+      // EDI only
+      DocumentTypeORDER: false,
+      DocumentTypeRECADV: false,
+    });
+  }
+
   public generateLimitForm(): FormGroup {
     return this.fb.group({
       limit: [0, [Validators.required]],

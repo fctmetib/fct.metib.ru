@@ -30,6 +30,12 @@ export class DemandConverter {
         return this._converterToAPI.convertProfileToApiData(dataForm, files);
       case DemandAction.FREE_REQUEST:
         return this._converterToAPI.convertFreeToApiData(dataForm, files);
+      case DemandAction.UPDATE_LIMIT:
+        return this._converterToAPI.convertLimitToApiData(dataForm, files);
+      case DemandAction.VERIFY:
+        return this._converterToAPI.convertVerifyToApiData(dataForm, files);
+      case DemandAction.CREATE_DEBITOR:
+        return this._converterToAPI.convertDebitorToApiData(dataForm, files);
     }
   }
 
@@ -54,6 +60,12 @@ export class DemandConverter {
         return this._converterToForm.convertProfileToFormData(dataFromAPI);
       case DemandAction.FREE_REQUEST:
         return this._converterToForm.convertFreeToFormData(dataFromAPI);
+      case DemandAction.UPDATE_LIMIT:
+        return this._converterToForm.convertLimitToFormData(dataFromAPI);
+      case DemandAction.VERIFY:
+        return this._converterToForm.convertVerifyToFormData(dataFromAPI);
+      case DemandAction.CREATE_DEBITOR:
+        return this._converterToForm.convertDebitorToFormData(dataFromAPI);
     }
   }
 }

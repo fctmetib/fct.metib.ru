@@ -240,35 +240,6 @@ export class LimitComponent implements OnInit {
     return DemandActionType;
   }
 
-  /**
-   * Осуществляет проверку, если все файлы загружены, то возвращает false (ошибок нет), иначе true (есть ошибки)
-   * @returns {boolean} решение валидации
-   */
-  public isFilesInvalid(): boolean {
-    if (
-      this.demandNavigationConfig.demandActionType ===
-      DemandActionType.EDIT_CREATED
-    ) {
-      return false;
-    }
-
-    let isInvalid = false;
-
-    // crtInds = currentFileIdentifiers
-    let crtInds = this.files.map((file) => file.Identifier);
-    if (crtInds.length < 1) {
-      return true;
-    }
-
-    if (crtInds.includes('Passport')) {
-      isInvalid = false;
-    } else {
-      isInvalid = true;
-    }
-
-    return isInvalid;
-  }
-
   private _doDemandAction(type: DoDemandPageActionType): void {
     const formValue = {
       ...this.form.getRawValue(),

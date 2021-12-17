@@ -66,7 +66,7 @@ export class DemandActionVerificationPageComponent
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
         this.isView = params['View'] === 'true' ? true : false;
-        if(params['ID'] && params['Edit'] === 'true') {
+        if (params['ID'] && params['Edit'] === 'true') {
           this.isLoading = true;
           this.fetchDraft(params['ID']);
         } else if (params['ID'] && params['Edit'] === 'false') {
@@ -257,6 +257,7 @@ export class DemandActionVerificationPageComponent
       }
     });
 
+    //TODO: do it in the new demand!
     this.formFree.patchValue({
       Comment: data?.Comment ? data?.Comment : '',
       DebtorID: data?.DebtorID ? data?.DebtorID : this.debtorList[0]?.ID,
@@ -272,6 +273,7 @@ export class DemandActionVerificationPageComponent
       DocumentTypeRECADV: DocumentTypeRECADV,
     });
 
+    //TODO: do it in the new demand!
     switch (data?.VerificationType) {
       case 'EDOKontur':
         this.currentTemplate = 'edoTemplate';

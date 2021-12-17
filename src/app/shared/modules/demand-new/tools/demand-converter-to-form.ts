@@ -102,6 +102,76 @@ export class DemandConverterToForm {
     return result;
   }
 
+  public convertVerifyToFormData(dataFromAPI: any): any {
+    let DocumentTypeTorg12 = false;
+    let DocumentTypeInvoice = false;
+    let DocumentTypeAcceptance = false;
+    let DocumentTypeNonformalized = false;
+    let DocumentTypeORDER = false;
+    let DocumentTypeRECADV = false;
+
+    dataFromAPI.DocumentTypes.forEach((documentType) => {
+      if (documentType === 'Torg12') {
+        DocumentTypeTorg12 = true;
+      }
+      if (documentType === 'Invoice') {
+        DocumentTypeInvoice = true;
+      }
+      if (documentType === 'Acceptance') {
+        DocumentTypeAcceptance = true;
+      }
+      if (documentType === 'Nonformalized') {
+        DocumentTypeNonformalized = true;
+      }
+      if (documentType === 'ORDER') {
+        DocumentTypeORDER = true;
+      }
+      if (documentType === 'RECADV') {
+        DocumentTypeRECADV = true;
+      }
+    });
+
+    let result = {
+      Comment: dataFromAPI?.Comment ? dataFromAPI?.Comment : '',
+      DebtorID: dataFromAPI?.DebtorID ? dataFromAPI?.DebtorID : '',
+      GLN: dataFromAPI?.GLN ? dataFromAPI?.GLN : '',
+      VerificationType: dataFromAPI?.VerificationType
+        ? dataFromAPI?.VerificationType
+        : 'EDIKorus',
+      DocumentTypeTorg12: DocumentTypeTorg12,
+      DocumentTypeInvoice: DocumentTypeInvoice,
+      DocumentTypeAcceptance: DocumentTypeAcceptance,
+      DocumentTypeNonformalized: DocumentTypeNonformalized,
+      DocumentTypeORDER: DocumentTypeORDER,
+      DocumentTypeRECADV: DocumentTypeRECADV,
+    };
+
+    return result;
+  }
+
+  public convertDebitorToFormData(dataFromAPI: any): any {
+    let result: any = {
+      INN: dataFromAPI.INN,
+    };
+
+    if (dataFromAPI.IsNew) {
+      result.Id = dataFromAPI.Title;
+    } else {
+      result.Id = dataFromAPI.ID;
+    }
+
+    return result;
+  }
+
+  public convertLimitToFormData(dataFromAPI: any): any {
+    let result = {
+      limit: dataFromAPI.Limit,
+      comment: dataFromAPI.Comment,
+    };
+
+    return result;
+  }
+
   public convertFreeToFormData(dataFromAPI: any): any {
     let result = {
       subject: dataFromAPI?.Subject,

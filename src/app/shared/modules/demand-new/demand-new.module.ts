@@ -68,6 +68,7 @@ import { SuretyComponent } from './components/surety/surety.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FreeComponent } from './components/free/free.component';
 import { LimitComponent } from './components/limit/limit.component';
+import { DeliveryService } from '../../services/share/delivery.service';
 
 @NgModule({
   imports: [
@@ -142,6 +143,7 @@ import { LimitComponent } from './components/limit/limit.component';
     DemandNavigationService,
     DemandService,
     DemandLoadingService,
+    DeliveryService,
   ],
 })
 export class DemandNewModule {}
