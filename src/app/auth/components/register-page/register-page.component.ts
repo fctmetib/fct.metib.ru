@@ -139,7 +139,7 @@ export class RegisterPageComponent {
       Profile: {
         Email: this.form.value.profile.email,
         IsMale: this.form.value.profile.isMale,
-        Login: this.form.value.profile.login,
+        Login: this.form.value.profile.email,
         Name: {
           First: this.form.value.profile.name.first,
           Last: this.form.value.profile.name.last,
