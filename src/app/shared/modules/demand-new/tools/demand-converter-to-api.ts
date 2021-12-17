@@ -81,6 +81,17 @@ export class DemandConverterToAPI {
     return data;
   }
 
+  public convertFreeToApiData(form: any, files: FileModeInterface[]) {
+    let result: any = {
+      Question: form.question,
+      Subject: form.subject,
+      Files: files,
+      Type: 'Question',
+    };
+
+    return result;
+  }
+
   public convertProfileToApiData(form: any, files: FileModeInterface[]) {
     let result: any = {
       Avatar: form.avatarCode,

@@ -102,6 +102,15 @@ export class DemandConverterToForm {
     return result;
   }
 
+  public convertFreeToFormData(dataFromAPI: any): any {
+    let result = {
+      subject: dataFromAPI?.Subject,
+      question: dataFromAPI?.Question,
+    };
+
+    return result;
+  }
+
   public convertProfileToFormData(dataFromAPI: any): any {
     let result = {
       last: dataFromAPI?.Profile?.Name?.Last

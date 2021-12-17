@@ -1,3 +1,5 @@
+import { DebitorComponent } from './components/debitor/debitor.component';
+import { VerifyComponent } from './components/verify/verify.component';
 import { BackendErrorMessagesModule } from '../backendErrorMessages/backendErrorMessages.module';
 import { DialogModule } from 'primeng/dialog';
 import { SuccessMessagesModule } from '../successMessages/successMessages.module';
@@ -65,6 +67,7 @@ import { AgentFactoringComponent } from './components/agent-factoring/agent-fact
 import { SuretyComponent } from './components/surety/surety.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FreeComponent } from './components/free/free.component';
+import { LimitComponent } from './components/limit/limit.component';
 
 @NgModule({
   imports: [
@@ -120,6 +123,9 @@ import { FreeComponent } from './components/free/free.component';
     ProfileComponent,
     DemandAddressGroupComponent,
     FreeComponent,
+    LimitComponent,
+    VerifyComponent,
+    DebitorComponent,
     // Modals
     AddressModalComponent,
   ],

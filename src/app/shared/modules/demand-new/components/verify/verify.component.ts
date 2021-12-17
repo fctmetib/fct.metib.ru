@@ -23,11 +23,11 @@ import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
-  selector: 'free',
-  styleUrls: ['./free.component.scss'],
-  templateUrl: 'free.component.html',
+  selector: 'verify',
+  styleUrls: ['./verify.component.scss'],
+  templateUrl: 'verify.component.html',
 })
-export class FreeComponent implements OnInit {
+export class VerifyComponent implements OnInit {
   // Форма
   public form: FormGroup;
 
@@ -42,8 +42,6 @@ export class FreeComponent implements OnInit {
   public regionList: RegionInterface[] = [];
   public idCenterList: any[] = [];
 
-  isRequestLoading: boolean = false; // this was an Input Property
-
   // Системные переменные
   public requestLoading$: Observable<boolean>;
   public demandNavigationConfig: DemandNavigationInterface;
@@ -56,6 +54,14 @@ export class FreeComponent implements OnInit {
 
   // Файлы
   public files: FileModeInterface[] = [];
+
+  //#region Factoring Request Region
+  public resultsBIK: string[];
+  public resultsBankname: string[];
+  public typesOfOwner: DemandSelectboxInterface[] = [];
+  isRequestLoading: boolean = false; // this was an Input Property
+  public banksFounded: BankInterface[];
+  //#endregion
 
   constructor(
     private fb: FormBuilder,
@@ -86,6 +92,44 @@ export class FreeComponent implements OnInit {
   }
 
   //#region Factoring Request Region
+
+  public search(event): void {
+    this._subscription$.add(
+      this.commonService.getBankByBIK(event.query).subscribe((data) => {
+        this.banksFounded = data;
+        this.resultsBIK = data.map((result) => result.BIC);
+      })
+    );
+  }
+
+  public onOtherBankSelect(indexOtherBank: number, bankInfo: string) {
+    let bank = this.banksFounded.find(
+      (x) => x.BIC === bankInfo || x.Name === bankInfo
+    );
+    this.form.get('otherBanks')['controls'][indexOtherBank].patchValue({
+      otherBankName: bank.Name,
+    });
+  }
+
+  public onBankSelect(bankInfo: string) {
+    let bank = this.banksFounded.find(
+      (x) => x.BIC === bankInfo || x.Name === bankInfo
+    );
+    this.form.patchValue({
+      bankBik: bank.BIC,
+      bankCorrespondentAccount: bank.AccountBank,
+      bankName: bank.Name,
+    });
+  }
+
+  public searchByBankName(event): void {
+    this._subscription$.add(
+      this.commonService.getBankByName(event.query).subscribe((data) => {
+        this.banksFounded = data;
+        this.resultsBankname = data.map((result) => result.Name);
+      })
+    );
+  }
 
   public addOtherBank(): void {
     let otherBanks = this.form.get('otherBanks') as FormArray;
@@ -197,6 +241,35 @@ export class FreeComponent implements OnInit {
     return DemandActionType;
   }
 
+  /**
+   * Осуществляет проверку, если все файлы загружены, то возвращает false (ошибок нет), иначе true (есть ошибки)
+   * @returns {boolean} решение валидации
+   */
+  public isFilesInvalid(): boolean {
+    if (
+      this.demandNavigationConfig.demandActionType ===
+      DemandActionType.EDIT_CREATED
+    ) {
+      return false;
+    }
+
+    let isInvalid = false;
+
+    // crtInds = currentFileIdentifiers
+    let crtInds = this.files.map((file) => file.Identifier);
+    if (crtInds.length < 1) {
+      return true;
+    }
+
+    if (crtInds.includes('Passport')) {
+      isInvalid = false;
+    } else {
+      isInvalid = true;
+    }
+
+    return isInvalid;
+  }
+
   private _doDemandAction(type: DoDemandPageActionType): void {
     const formValue = {
       ...this.form.getRawValue(),
@@ -238,6 +311,13 @@ export class FreeComponent implements OnInit {
   }
 
   private _initValues() {
+    // Только edit profile
+    let encryptedJsonCurrentUser = this.cookieService.get('_cu');
+    let currentJsonUser = this.cryptoService.decrypt(encryptedJsonCurrentUser);
+    let currentUser = JSON.parse(currentJsonUser);
+    this.currentUserId = currentUser.UserID;
+    //
+
     this.requestLoading$ = this._demandLoadingService.demandRequestLoading$;
 
     this._subscription$.add(
@@ -248,10 +328,26 @@ export class FreeComponent implements OnInit {
   }
 
   private _initForm() {
-    this.form = this._formGenerator.generateFreeForm();
+    this.form = this._formGenerator.generateProfileForm();
   }
 
-  private _initAdditionalData(): void {}
+  private _initAdditionalData(): void {
+    this._subscription$.add(
+      this.commonService.getPosts().subscribe((posts) => {
+        this.postList = posts;
+      })
+    );
+    this._subscription$.add(
+      this.commonService.getCountries().subscribe((countries) => {
+        this.countryList = countries;
+      })
+    );
+    this._subscription$.add(
+      this.commonService.getRegions().subscribe((regions) => {
+        this.regionList = regions;
+      })
+    );
+  }
 
   private _getDemandConfig(): void {
     this._subscription$.add(

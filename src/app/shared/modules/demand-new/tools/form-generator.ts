@@ -5,6 +5,13 @@ import { DemandEDIProvidersDataInterface } from '../types/demand-form-data/deman
 export class FormGenerator {
   constructor(private fb: FormBuilder) {}
 
+  public generateLimitForm(): FormGroup {
+    return this.fb.group({
+      limit: [0, [Validators.required]],
+      comment: ['', [Validators.required]],
+    });
+  }
+
   public generateEDSForm(): FormGroup {
     const form = this.fb.group({
       organizationType: [1],
@@ -52,6 +59,13 @@ export class FormGenerator {
     });
 
     return form;
+  }
+
+  public generateFreeForm(): FormGroup {
+    return this.fb.group({
+      subject: ['', [Validators.required]],
+      question: ['', [Validators.required]],
+    });
   }
 
   public generateProfileForm(): FormGroup {
