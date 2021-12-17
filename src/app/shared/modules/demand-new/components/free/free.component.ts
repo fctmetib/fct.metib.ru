@@ -23,11 +23,11 @@ import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
-  selector: 'profile',
-  styleUrls: ['./profile.component.scss'],
-  templateUrl: 'profile.component.html',
+  selector: 'free',
+  styleUrls: ['./free.component.scss'],
+  templateUrl: 'free.component.html',
 })
-export class ProfileComponent implements OnInit {
+export class FreeComponent implements OnInit {
   // Форма
   public form: FormGroup;
 
@@ -54,14 +54,6 @@ export class ProfileComponent implements OnInit {
 
   // Файлы
   public files: FileModeInterface[] = [];
-
-  //#region Factoring Request Region
-  public resultsBIK: string[];
-  public resultsBankname: string[];
-  public typesOfOwner: DemandSelectboxInterface[] = [];
-  isRequestLoading: boolean = false; // this was an Input Property
-  public banksFounded: BankInterface[];
-  //#endregion
 
   constructor(
     private fb: FormBuilder,
@@ -92,44 +84,6 @@ export class ProfileComponent implements OnInit {
   }
 
   //#region Factoring Request Region
-
-  public search(event): void {
-    this._subscription$.add(
-      this.commonService.getBankByBIK(event.query).subscribe((data) => {
-        this.banksFounded = data;
-        this.resultsBIK = data.map((result) => result.BIC);
-      })
-    );
-  }
-
-  public onOtherBankSelect(indexOtherBank: number, bankInfo: string) {
-    let bank = this.banksFounded.find(
-      (x) => x.BIC === bankInfo || x.Name === bankInfo
-    );
-    this.form.get('otherBanks')['controls'][indexOtherBank].patchValue({
-      otherBankName: bank.Name,
-    });
-  }
-
-  public onBankSelect(bankInfo: string) {
-    let bank = this.banksFounded.find(
-      (x) => x.BIC === bankInfo || x.Name === bankInfo
-    );
-    this.form.patchValue({
-      bankBik: bank.BIC,
-      bankCorrespondentAccount: bank.AccountBank,
-      bankName: bank.Name,
-    });
-  }
-
-  public searchByBankName(event): void {
-    this._subscription$.add(
-      this.commonService.getBankByName(event.query).subscribe((data) => {
-        this.banksFounded = data;
-        this.resultsBankname = data.map((result) => result.Name);
-      })
-    );
-  }
 
   public addOtherBank(): void {
     let otherBanks = this.form.get('otherBanks') as FormArray;

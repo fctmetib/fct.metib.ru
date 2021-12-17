@@ -1,0 +1,39 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-formgrid p-grid form">
+    <!-- 1 row -->
+    <div class="p-field p-col-12 p-md-12 p-lg-12">
+      <label for="subject">Тема обращения</label>
+      <input id="subject" type="text" pInputText placeholder="Тема обращения" formControlName="subject">
+      <div *ngIf="form.controls['subject'].invalid">
+        <small *ngIf="form.controls['subject'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <!-- 2 row -->
+    <div class="p-field p-col-12 p-md-12 p-lg-12">
+      <label for="question">Вопрос</label>
+      <textarea id="question" type="text" pInputTextarea placeholder="Вопрос" formControlName="question"
+        style="resize: none;"></textarea>
+      <div *ngIf="form.controls['question'].invalid">
+        <small *ngIf="form.controls['question'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <!-- 3 row -->
+    <div class="p-field p-col-12 p-md-6"
+      *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+      <mib-file-uploader [title]="'При необходимости прикрепите файлы'" [existFile]="files" [type]="'All'"
+        [required]="false" (remove)="onRemove($event)" (add)="onAdd($event)">
+      </mib-file-uploader>
+    </div>
+
+    <div class="p-field p-col-12 p-md-12">
+      <label for="btn_submit">&nbsp;</label>
+      <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
+        class="btn-mib-submit p-button-outlined" [loading]="isRequestLoading"
+        [disabled]="form.invalid || isRequestLoading || isFilesInvalid()"></button>
+    </div>
+  </div>
+</form>

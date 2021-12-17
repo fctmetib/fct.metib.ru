@@ -313,9 +313,10 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     let result: any = {
       Avatar: this.avatarCode,
       Passport: {
-        Date: this.formEdit.value.date ?
-          new Date(this.formEdit.value.date).toISOString().slice(0, 19) +
-          '+03:00' : null,
+        Date: this.formEdit.value.date
+          ? new Date(this.formEdit.value.date).toISOString().slice(0, 19) +
+            '+03:00'
+          : null,
         Expire: null,
         IsForeign: false,
         IssuerCode: this.formEdit.value.issuerCode,
