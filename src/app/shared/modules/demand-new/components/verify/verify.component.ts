@@ -1,29 +1,27 @@
-import { MibArray } from 'src/app/shared/classes/arrays/mib-array.class';
-import { CryptoService } from 'src/app/shared/services/common/crypto.service';
-import { DemandValuesIniter } from '../../tools/demand-values-initer';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { DemandConverter } from '../../tools/demand-converter';
-import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
-import { FormGenerator } from '../../tools/form-generator';
+// Core & System
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
-import { DemandActionType } from '../../types/common/demand-action-type';
-import { DemandNavigationService } from '../../services/demand-navigation.service';
-import { DemandLoadingService } from '../../services/demand-loading.service';
+import { Observable, Subscription } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
+// Interfaces & Types
+import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
+import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
 import {
   CommonService,
   PostInterface,
   RegionInterface,
 } from 'src/app/shared/services/common/common.service';
-import { Observable, Subscription } from 'rxjs';
-import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
-import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
-import { BankInterface } from 'src/app/shared/types/common/bank.interface';
-import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
-import { CookieService } from 'ngx-cookie';
+import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
+import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
+import { DemandActionType } from '../../types/common/demand-action-type';
+// Services
+import { DemandNavigationService } from '../../services/demand-navigation.service';
+import { DemandLoadingService } from '../../services/demand-loading.service';
 import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
-
+// Tools
+import { MibArray } from 'src/app/shared/classes/arrays/mib-array.class';
+import { DemandValuesIniter } from '../../tools/demand-values-initer';
+import { DemandConverter } from '../../tools/demand-converter';
+import { FormGenerator } from '../../tools/form-generator';
 @Component({
   selector: 'verify',
   styleUrls: ['./verify.component.scss'],
@@ -33,40 +31,22 @@ export class VerifyComponent implements OnInit {
   // Форма
   public form: FormGroup;
 
-  // Данные, для выпадающих списков
-  public organizationTypes: DemandSelectboxInterface[] =
-    DemandValuesIniter.organizationTypes;
-  public ruleTypes: DemandSelectboxInterface[] = DemandValuesIniter.ruleTypes;
-  public genderTypes: DemandSelectboxInterface[] =
-    DemandValuesIniter.genderTypes;
-  public postList: PostInterface[] = [];
-  public countryList: RegionInterface[] = [];
-  public regionList: RegionInterface[] = [];
-  public idCenterList: any[] = [];
-
   // Системные переменные
   public requestLoading$: Observable<boolean>;
   public demandNavigationConfig: DemandNavigationInterface;
+
   private _subscription$: Subscription = new Subscription();
   private _demandConverter: DemandConverter;
   private _formGenerator: FormGenerator;
-
-  private currentUserId: string;
-  private avatarCode: string;
-
-  // Файлы
-  public files: FileModeInterface[] = [];
 
   //#region Verify Request
   public debtorList: any[] = [];
   public verificationTypes: any[] = [];
   public currentTemplate: string = 'ediTemplate';
-  isRequestLoading: boolean = false; // this was an Input Property
   //#endregion
 
   constructor(
     private fb: FormBuilder,
-    private commonService: CommonService,
     private _demandLoadingService: DemandLoadingService,
     private _demandNavigationService: DemandNavigationService,
     private _deliveryService: DeliveryService
@@ -87,11 +67,9 @@ export class VerifyComponent implements OnInit {
     this._subscription$.unsubscribe();
   }
 
-  public onSubmit() {
-    this._doDemandAction(DoDemandPageActionType.CREATE);
-  }
-
-  public changeVerificationType(event) {
+  //#region Код текущего запроса
+  // Регион в котором содержится код только для текущего запроса
+  public changeVerificationType(event): void {
     this.form.patchValue({
       DocumentTypeTorg12: false,
       DocumentTypeInvoice: false,
@@ -114,26 +92,22 @@ export class VerifyComponent implements OnInit {
     }
   }
 
-  /**
-   * Ловит событие на добавление нового файла и добавляет его в список файлов, в форме
-   * @param file - пойманный файл
-   * @returns void
-   */
-  public onAdd(file): void {
-    this.files.push(file);
-  }
+  //#endregion
+
+  //#region Boilerplate код для запросов
+  // Регион в котором содержится шаблонный код для всех запросов
 
   /**
-   * Ловит событие на удаление существующего файла и удаляет его из списка файлов, в форме
-   * @param file - принимает событие из dropdown
-   * @returns void
+   * Обработчик кнопки submit
+   * Используется на всех страницах запроса
    */
-  public onRemove(file): void {
-    this.files = this.files.filter((x) => x !== file);
+  public onSubmit(): void {
+    this._doDemandAction(DoDemandPageActionType.CREATE);
   }
 
   /**
    * Предоставляет для UI enum типов события (редактирование, создание и тд)
+   * Во всех запросах код повторяется
    * @returns enum с типами
    */
   public get demandActionType(): typeof DemandActionType {
@@ -141,45 +115,18 @@ export class VerifyComponent implements OnInit {
   }
 
   /**
-   * Осуществляет проверку, если все файлы загружены, то возвращает false (ошибок нет), иначе true (есть ошибки)
-   * @returns {boolean} решение валидации
+   * Метод для выполнения действий, которые инициируются из состояния, или нажатия на кнопку
+   * Во всех запросах код повторяется
    */
-  public isFilesInvalid(): boolean {
-    if (
-      this.demandNavigationConfig.demandActionType ===
-      DemandActionType.EDIT_CREATED
-    ) {
-      return false;
-    }
-
-    let isInvalid = false;
-
-    // crtInds = currentFileIdentifiers
-    let crtInds = this.files.map((file) => file.Identifier);
-    if (crtInds.length < 1) {
-      return true;
-    }
-
-    if (crtInds.includes('Passport')) {
-      isInvalid = false;
-    } else {
-      isInvalid = true;
-    }
-
-    return isInvalid;
-  }
-
   private _doDemandAction(type: DoDemandPageActionType): void {
     const formValue = {
       ...this.form.getRawValue(),
-      currentUserId: this.currentUserId,
-      avatarCode: this.avatarCode,
     };
 
     const convertedForm = this._demandConverter.convertToApiData(
       this.demandNavigationConfig.demandAction,
       formValue,
-      this.files
+      []
     );
 
     let requestData;
@@ -209,6 +156,10 @@ export class VerifyComponent implements OnInit {
     this._demandNavigationService.setDoDemandAction(doActionData);
   }
 
+  /**
+   * Метод для инициализации основных значений
+   * Почти во всех запросах код повторяется
+   */
   private _initValues() {
     // Только verify
     this.verificationTypes = [
@@ -234,17 +185,18 @@ export class VerifyComponent implements OnInit {
       },
     ];
 
-    this._deliveryService.getDeliveriesWithStats().subscribe((deliveries) => {
-      let debtors = deliveries.map((delivery) => delivery.Debtor);
-      let uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
-      this.debtorList.push(...uniqDebtors);
+    this._subscription$.add(
+      this._deliveryService.getDeliveriesWithStats().subscribe((deliveries) => {
+        let debtors = deliveries.map((delivery) => delivery.Debtor);
+        let uniqDebtors = MibArray.getUniqByProperty(debtors, 'Title');
+        this.debtorList.push(...uniqDebtors);
 
-      this.form.patchValue({
-        VerificationType: 'EDIKorus',
-        DebtorID: this.debtorList[0].ID,
-      });
-    });
-    //
+        this.form.patchValue({
+          VerificationType: 'EDIKorus',
+          DebtorID: this.debtorList[0].ID,
+        });
+      })
+    );
 
     this.requestLoading$ = this._demandLoadingService.demandRequestLoading$;
 
@@ -255,28 +207,18 @@ export class VerifyComponent implements OnInit {
     );
   }
 
-  private _initForm() {
-    this.form = this._formGenerator.generateVerifyForm();
-  }
-
+  /**
+   * Метод для инициализации дополнительых данных
+   * Во всех запросах код повторяется
+   */
   private _initAdditionalData(): void {
-    this._subscription$.add(
-      this.commonService.getPosts().subscribe((posts) => {
-        this.postList = posts;
-      })
-    );
-    this._subscription$.add(
-      this.commonService.getCountries().subscribe((countries) => {
-        this.countryList = countries;
-      })
-    );
-    this._subscription$.add(
-      this.commonService.getRegions().subscribe((regions) => {
-        this.regionList = regions;
-      })
-    );
+    // Метод для инициализации дополнительных данных
   }
 
+  /**
+   * Получает текущий Demand Config, в котором содержатся основные параметры текущего запроса (demand-а)
+   * Во всех запросах код повторяется
+   */
   private _getDemandConfig(): void {
     this._subscription$.add(
       this._demandNavigationService.demandConfig$.subscribe((demandConfig) => {
@@ -285,6 +227,19 @@ export class VerifyComponent implements OnInit {
     );
   }
 
+  /**
+   * Метод для генерации формы
+   * В запросах код разный
+   */
+  private _initForm() {
+    this.form = this._formGenerator.generateVerifyForm();
+  }
+
+  /**
+   * Получает текущий Demand по подписке из контейнера demand-action
+   * Конвертирует полученный Demand в данные для формы и заполняет форму
+   * В запросах код разный
+   */
   private _getCurrentDemand(): void {
     this._subscription$.add(
       this._demandNavigationService.currentDemand$.subscribe(
@@ -293,11 +248,9 @@ export class VerifyComponent implements OnInit {
             this._demandConverter.convertToFormData(currentDemand);
 
           this.form.patchValue(convertedDemand);
-
-          this.avatarCode = currentDemand?.Avatar;
-          this.files = currentDemand.Files;
         }
       )
     );
   }
+  //#endregion
 }
