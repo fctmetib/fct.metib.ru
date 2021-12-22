@@ -257,7 +257,6 @@ export class DemandActionVerificationPageComponent
       }
     });
 
-    //TODO: do it in the new demand!
     this.formFree.patchValue({
       Comment: data?.Comment ? data?.Comment : '',
       DebtorID: data?.DebtorID ? data?.DebtorID : this.debtorList[0]?.ID,
@@ -273,7 +272,6 @@ export class DemandActionVerificationPageComponent
       DocumentTypeRECADV: DocumentTypeRECADV,
     });
 
-    //TODO: do it in the new demand!
     switch (data?.VerificationType) {
       case 'EDOKontur':
         this.currentTemplate = 'edoTemplate';

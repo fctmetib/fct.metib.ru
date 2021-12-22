@@ -240,6 +240,18 @@ export class VerifyComponent implements OnInit {
           const convertedDemand: any =
             this._demandConverter.convertToFormData(currentDemand);
 
+          switch (currentDemand?.VerificationType) {
+            case 'EDOKontur':
+              this.currentTemplate = 'edoTemplate';
+              break;
+            case 'Other':
+              this.currentTemplate = 'anotherTemplate';
+              break;
+            default:
+              this.currentTemplate = 'ediTemplate';
+              break;
+          }
+
           this.form.patchValue(convertedDemand);
         }
       )

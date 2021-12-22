@@ -135,7 +135,7 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
         isForDefaultClient: true,
       },
       {
-        text: 'Регистрация канала верификации (Need test)',
+        text: 'Регистрация канала верификации',
         url: 'demand-action',
         action: DemandAction.VERIFY,
         isForNewClient: true,
