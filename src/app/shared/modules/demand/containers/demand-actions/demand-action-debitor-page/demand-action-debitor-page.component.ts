@@ -199,7 +199,7 @@ export class DemandActionDebitorPageComponent
     this.formFree.patchValue({
       INN: data.INN,
     });
-    // TODO: DO IT IN THE NEW DEMAND!!!
+
     if (data.IsNew) {
       this.formFree.patchValue({
         Id: data.Title,

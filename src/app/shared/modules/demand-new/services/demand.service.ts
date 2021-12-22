@@ -8,6 +8,7 @@ import { SaveDemandRequestInterface } from '../types/requests/save-demand-reques
 import { DemandDraftInterface } from '../types/demand-draft.interface';
 import { CreateDemandMessageRequestInterface } from '../types/requests/create-demand-message-request.interface';
 import { CreateDemandEDSRequestInterface } from '../types/requests/create-demand-eds-request.interface';
+import { DebtorInterface } from '../types/debtor-interface';
 
 @Injectable()
 export class DemandService {
@@ -75,5 +76,10 @@ export class DemandService {
     return this.http.post<any>(url, data, {
       responseType: 'arraybuffer' as 'json',
     });
+  }
+
+  getDebtors(): Observable<DebtorInterface[]> {
+    const url = `${environment.apiUrl}/public/debtors`;
+    return this.http.get<DebtorInterface[]>(url);
   }
 }

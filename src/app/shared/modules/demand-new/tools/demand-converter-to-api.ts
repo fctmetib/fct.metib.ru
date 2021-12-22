@@ -118,7 +118,7 @@ export class DemandConverterToAPI {
   convertDebitorToApiData(form: any, files: FileModeInterface[]) {
     let result = {
       ID: form.ID,
-      INN: form.Inn,
+      INN: form.INN,
       IsNew: form.IsNew,
       Title: form.Title,
       Files: files,

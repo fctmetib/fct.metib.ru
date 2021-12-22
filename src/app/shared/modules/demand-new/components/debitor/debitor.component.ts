@@ -1,28 +1,21 @@
-import { CryptoService } from 'src/app/shared/services/common/crypto.service';
-import { DemandValuesIniter } from '../../tools/demand-values-initer';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { DemandConverter } from '../../tools/demand-converter';
-import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
-import { FormGenerator } from '../../tools/form-generator';
+// Core & System
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
+// Interfaces & Types
+import { DebtorInterface } from '../../types/debtor-interface';
+import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
+import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
 import { DemandActionType } from '../../types/common/demand-action-type';
+// Services
+import { DemandService } from '../../services/demand.service';
 import { DemandNavigationService } from '../../services/demand-navigation.service';
 import { DemandLoadingService } from '../../services/demand-loading.service';
-import {
-  CommonService,
-  PostInterface,
-  RegionInterface,
-} from 'src/app/shared/services/common/common.service';
-import { Observable, Subscription } from 'rxjs';
-import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
-import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
-import { BankInterface } from 'src/app/shared/types/common/bank.interface';
-import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
-import { CookieService } from 'ngx-cookie';
-import { DebtorInterface } from '../../types/debtor-interface';
-
+// Tools
+import { DemandConverter } from '../../tools/demand-converter';
+import { FormGenerator } from '../../tools/form-generator';
 @Component({
   selector: 'debitor',
   styleUrls: ['./debitor.component.scss'],
@@ -32,52 +25,36 @@ export class DebitorComponent implements OnInit {
   // Форма
   public form: FormGroup;
 
-  // Данные, для выпадающих списков
-  public organizationTypes: DemandSelectboxInterface[] =
-    DemandValuesIniter.organizationTypes;
-  public ruleTypes: DemandSelectboxInterface[] = DemandValuesIniter.ruleTypes;
-  public genderTypes: DemandSelectboxInterface[] =
-    DemandValuesIniter.genderTypes;
-  public postList: PostInterface[] = [];
-  public countryList: RegionInterface[] = [];
-  public regionList: RegionInterface[] = [];
-  public idCenterList: any[] = [];
-
   // Системные переменные
   public requestLoading$: Observable<boolean>;
   public demandNavigationConfig: DemandNavigationInterface;
+
   private _subscription$: Subscription = new Subscription();
   private _demandConverter: DemandConverter;
   private _formGenerator: FormGenerator;
-
-  private currentUserId: string;
-  private avatarCode: string;
 
   // Файлы
   public files: FileModeInterface[] = [];
 
   //#region Debtor
   public debtors: DebtorInterface[] = [];
-  isRequestLoading: boolean = false; // this was an Input Property
   public isNewDebtor: boolean = false;
   //#endregion
 
   constructor(
     private fb: FormBuilder,
-    private commonService: CommonService,
+    private _demandService: DemandService,
     private _demandLoadingService: DemandLoadingService,
-    private _demandNavigationService: DemandNavigationService,
-    private cryptoService: CryptoService,
-    private cookieService: CookieService
+    private _demandNavigationService: DemandNavigationService
   ) {
     this._demandConverter = new DemandConverter();
     this._formGenerator = new FormGenerator(this.fb);
   }
 
   ngOnInit() {
+    this._initAdditionalData();
     this._initValues();
     this._initForm();
-    this._initAdditionalData();
     this._getDemandConfig();
     this._getCurrentDemand();
   }
@@ -86,10 +63,8 @@ export class DebitorComponent implements OnInit {
     this._subscription$.unsubscribe();
   }
 
-  public onSubmit() {
-    this._doDemandAction(DoDemandPageActionType.CREATE);
-  }
-
+  //#region Код текущего запроса
+  // Регион в котором содержится код только для текущего запроса
   public debtorChange() {
     let selectedDebtor = this.debtors.find((x) => x.ID === this.form.value.Id);
     if (!selectedDebtor) {
@@ -116,6 +91,18 @@ export class DebitorComponent implements OnInit {
   public onRemove(file): void {
     this.files = this.files.filter((x) => x !== file);
   }
+  //#endregion
+
+  //#region Boilerplate код для запросов
+  // Регион в котором содержится шаблонный код для всех запросов
+
+  /**
+   * Обработчик кнопки submit
+   * Используется на всех страницах запроса
+   */
+  public onSubmit() {
+    this._doDemandAction(DoDemandPageActionType.CREATE);
+  }
 
   /**
    * Предоставляет для UI enum типов события (редактирование, создание и тд)
@@ -126,40 +113,30 @@ export class DebitorComponent implements OnInit {
   }
 
   /**
-   * Осуществляет проверку, если все файлы загружены, то возвращает false (ошибок нет), иначе true (есть ошибки)
-   * @returns {boolean} решение валидации
+   * Метод для выполнения действий, которые инициируются из состояния, или нажатия на кнопку
+   * Во всех запросах код повторяется
    */
-  public isFilesInvalid(): boolean {
-    if (
-      this.demandNavigationConfig.demandActionType ===
-      DemandActionType.EDIT_CREATED
-    ) {
-      return false;
-    }
-
-    let isInvalid = false;
-
-    // crtInds = currentFileIdentifiers
-    let crtInds = this.files.map((file) => file.Identifier);
-    if (crtInds.length < 1) {
-      return true;
-    }
-
-    if (crtInds.includes('Passport')) {
-      isInvalid = false;
-    } else {
-      isInvalid = true;
-    }
-
-    return isInvalid;
-  }
-
   private _doDemandAction(type: DoDemandPageActionType): void {
-    const formValue = {
-      ...this.form.getRawValue(),
-      currentUserId: this.currentUserId,
-      avatarCode: this.avatarCode,
-    };
+    let formValue;
+
+    if (this.isNewDebtor) {
+      formValue = {
+        ID: 0,
+        INN: this.form.value.INN,
+        IsNew: true,
+        Title: this.form.value.Id,
+      };
+    } else {
+      if (this.form.value.Id) {
+        let debtor = this.debtors.find((x) => x.ID === +this.form.value.Id);
+        formValue = {
+          ID: debtor.ID,
+          INN: debtor.Inn,
+          IsNew: false,
+          Title: debtor.Title,
+        };
+      }
+    }
 
     const convertedForm = this._demandConverter.convertToApiData(
       this.demandNavigationConfig.demandAction,
@@ -194,6 +171,10 @@ export class DebitorComponent implements OnInit {
     this._demandNavigationService.setDoDemandAction(doActionData);
   }
 
+  /**
+   * Метод для инициализации основных значений
+   * Почти во всех запросах код повторяется
+   */
   private _initValues() {
     this.requestLoading$ = this._demandLoadingService.demandRequestLoading$;
 
@@ -204,28 +185,22 @@ export class DebitorComponent implements OnInit {
     );
   }
 
-  private _initForm() {
-    this.form = this._formGenerator.generateDebitorForm();
-  }
-
+  /**
+   * Метод для инициализации дополнительых данных
+   * Во всех запросах код повторяется
+   */
   private _initAdditionalData(): void {
     this._subscription$.add(
-      this.commonService.getPosts().subscribe((posts) => {
-        this.postList = posts;
-      })
-    );
-    this._subscription$.add(
-      this.commonService.getCountries().subscribe((countries) => {
-        this.countryList = countries;
-      })
-    );
-    this._subscription$.add(
-      this.commonService.getRegions().subscribe((regions) => {
-        this.regionList = regions;
+      this._demandService.getDebtors().subscribe((resp) => {
+        this.debtors = resp;
       })
     );
   }
 
+  /**
+   * Получает текущий Demand Config, в котором содержатся основные параметры текущего запроса (demand-а)
+   * Во всех запросах код повторяется
+   */
   private _getDemandConfig(): void {
     this._subscription$.add(
       this._demandNavigationService.demandConfig$.subscribe((demandConfig) => {
@@ -234,6 +209,19 @@ export class DebitorComponent implements OnInit {
     );
   }
 
+  /**
+   * Метод для генерации формы
+   * В запросах код разный
+   */
+  private _initForm() {
+    this.form = this._formGenerator.generateDebitorForm();
+  }
+
+  /**
+   * Получает текущий Demand по подписке из контейнера demand-action
+   * Конвертирует полученный Demand в данные для формы и заполняет форму
+   * В запросах код разный
+   */
   private _getCurrentDemand(): void {
     this._subscription$.add(
       this._demandNavigationService.currentDemand$.subscribe(
@@ -243,7 +231,20 @@ export class DebitorComponent implements OnInit {
 
           this.form.patchValue(convertedDemand);
 
-          this.avatarCode = currentDemand?.Avatar;
+          setTimeout(() => {
+            if (currentDemand.IsNew) {
+              this.form.patchValue({
+                Id: currentDemand.Title,
+              });
+              this.isNewDebtor = true;
+            } else {
+              this.form.patchValue({
+                Id: Number.parseInt(currentDemand.ID),
+              });
+              this.debtorChange();
+            }
+          }, 700);
+
           this.files = currentDemand.Files;
         }
       )

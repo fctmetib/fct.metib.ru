@@ -61,9 +61,6 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
     };
     this._demandNavigationService.updateDemandConfig(demandConfig);
 
-    // const url = `${this._router.url}/demand-action`;
-    // this._router.navigateByUrl(url);
-
     const notVerify = 'not-verify';
     const baseUrl = this.isUserVerified ? '' : notVerify;
 
@@ -131,7 +128,7 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
         isForDefaultClient: true,
       },
       {
-        text: 'Запрос на Нового дебитора (Need test)',
+        text: 'Запрос на Нового дебитора',
         url: 'demand-action',
         action: DemandAction.CREATE_DEBITOR,
         isForNewClient: true,

@@ -4,12 +4,6 @@ import { Observable, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 // Interfaces & Types
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
-import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
-import {
-  CommonService,
-  PostInterface,
-  RegionInterface,
-} from 'src/app/shared/services/common/common.service';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
 import { DemandActionType } from '../../types/common/demand-action-type';
@@ -19,7 +13,6 @@ import { DemandLoadingService } from '../../services/demand-loading.service';
 import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
 // Tools
 import { MibArray } from 'src/app/shared/classes/arrays/mib-array.class';
-import { DemandValuesIniter } from '../../tools/demand-values-initer';
 import { DemandConverter } from '../../tools/demand-converter';
 import { FormGenerator } from '../../tools/form-generator';
 @Component({
