@@ -1,26 +1,19 @@
-import { CryptoService } from 'src/app/shared/services/common/crypto.service';
-import { DemandValuesIniter } from '../../tools/demand-values-initer';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { DemandConverter } from '../../tools/demand-converter';
-import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
-import { FormGenerator } from '../../tools/form-generator';
+// Core & System
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+// Interfaces & Types
+import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
+import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DemandActionType } from '../../types/common/demand-action-type';
+import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
+// Services
 import { DemandNavigationService } from '../../services/demand-navigation.service';
 import { DemandLoadingService } from '../../services/demand-loading.service';
-import {
-  CommonService,
-  PostInterface,
-  RegionInterface,
-} from 'src/app/shared/services/common/common.service';
-import { Observable, Subscription } from 'rxjs';
-import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
-import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
-import { BankInterface } from 'src/app/shared/types/common/bank.interface';
-import { CookieService } from 'ngx-cookie';
-
+// Tools
+import { DemandConverter } from '../../tools/demand-converter';
+import { FormGenerator } from '../../tools/form-generator';
 @Component({
   selector: 'limit',
   styleUrls: ['./limit.component.scss'],
@@ -30,45 +23,21 @@ export class LimitComponent implements OnInit {
   // Форма
   public form: FormGroup;
 
-  // Данные, для выпадающих списков
-  public organizationTypes: DemandSelectboxInterface[] =
-    DemandValuesIniter.organizationTypes;
-  public ruleTypes: DemandSelectboxInterface[] = DemandValuesIniter.ruleTypes;
-  public genderTypes: DemandSelectboxInterface[] =
-    DemandValuesIniter.genderTypes;
-  public postList: PostInterface[] = [];
-  public countryList: RegionInterface[] = [];
-  public regionList: RegionInterface[] = [];
-  public idCenterList: any[] = [];
-
   // Системные переменные
   public requestLoading$: Observable<boolean>;
   public demandNavigationConfig: DemandNavigationInterface;
+
   private _subscription$: Subscription = new Subscription();
   private _demandConverter: DemandConverter;
   private _formGenerator: FormGenerator;
 
-  private currentUserId: string;
-  private avatarCode: string;
-
   // Файлы
   public files: FileModeInterface[] = [];
 
-  //#region Factoring Request Region
-  public resultsBIK: string[];
-  public resultsBankname: string[];
-  public typesOfOwner: DemandSelectboxInterface[] = [];
-  isRequestLoading: boolean = false; // this was an Input Property
-  public banksFounded: BankInterface[];
-  //#endregion
-
   constructor(
     private fb: FormBuilder,
-    private commonService: CommonService,
     private _demandLoadingService: DemandLoadingService,
-    private _demandNavigationService: DemandNavigationService,
-    private cryptoService: CryptoService,
-    private cookieService: CookieService
+    private _demandNavigationService: DemandNavigationService
   ) {
     this._demandConverter = new DemandConverter();
     this._formGenerator = new FormGenerator(this.fb);
@@ -86,133 +55,8 @@ export class LimitComponent implements OnInit {
     this._subscription$.unsubscribe();
   }
 
-  public onSubmit() {
-    this._doDemandAction(DoDemandPageActionType.CREATE);
-  }
-
-  //#region Factoring Request Region
-
-  public search(event): void {
-    this._subscription$.add(
-      this.commonService.getBankByBIK(event.query).subscribe((data) => {
-        this.banksFounded = data;
-        this.resultsBIK = data.map((result) => result.BIC);
-      })
-    );
-  }
-
-  public onOtherBankSelect(indexOtherBank: number, bankInfo: string) {
-    let bank = this.banksFounded.find(
-      (x) => x.BIC === bankInfo || x.Name === bankInfo
-    );
-    this.form.get('otherBanks')['controls'][indexOtherBank].patchValue({
-      otherBankName: bank.Name,
-    });
-  }
-
-  public onBankSelect(bankInfo: string) {
-    let bank = this.banksFounded.find(
-      (x) => x.BIC === bankInfo || x.Name === bankInfo
-    );
-    this.form.patchValue({
-      bankBik: bank.BIC,
-      bankCorrespondentAccount: bank.AccountBank,
-      bankName: bank.Name,
-    });
-  }
-
-  public searchByBankName(event): void {
-    this._subscription$.add(
-      this.commonService.getBankByName(event.query).subscribe((data) => {
-        this.banksFounded = data;
-        this.resultsBankname = data.map((result) => result.Name);
-      })
-    );
-  }
-
-  public addOtherBank(): void {
-    let otherBanks = this.form.get('otherBanks') as FormArray;
-    otherBanks.push(this._formGenerator.generateBankForm());
-  }
-
-  public addOtherPlace(): void {
-    let factoringPlaces = this.form.get('factoringPlaces') as FormArray;
-    factoringPlaces.push(this._formGenerator.generateFactoringPlaceForm());
-    this._updateDisplayAddress(factoringPlaces.length - 1);
-  }
-
-  public getFactoringPlaces(index): FormGroup {
-    let factoringPlaces = this.form.get('factoringPlaces') as FormArray;
-    return factoringPlaces.controls[index] as FormGroup;
-  }
-
-  public addFactoringCredits(): void {
-    let factoringCredits = this.form.get('factoringCredits') as FormArray;
-    factoringCredits.push(this._formGenerator.generateFactorCreditGroup());
-  }
-
-  public addEDIProvider(): void {
-    let factoringEDIProviders = this.form.get(
-      'factoringEDIProviders'
-    ) as FormArray;
-    factoringEDIProviders.push(this._formGenerator.generateEDIFormGroup());
-  }
-
-  public remove(i: number, type: string): void {
-    let other = this.form.get(type) as FormArray;
-    other.removeAt(i);
-  }
-
-  onTypeChanged(value) {
-    if (value === 0) {
-      this.form.patchValue({
-        organizationLegalForm: null,
-      });
-    }
-  }
-
-  private _updateDisplayAddress(index): void {
-    let address = this.form.value.factoringPlaces[index].factoringPlacesAddress;
-    let result = '';
-
-    if (address.PostCode) {
-      result = result + ' ' + address.PostCode;
-    }
-    if (address.Country) {
-      result = result + ' ' + address.Country;
-    }
-    if (address.RegionCode) {
-      result = result + ' ' + address.RegionCode;
-    }
-    if (address.RegionTitle) {
-      result = result + ' ' + address.RegionTitle;
-    }
-    if (address.City) {
-      result = result + ' ' + address.City;
-    }
-    if (address.District) {
-      result = result + ' ' + address.District;
-    }
-    if (address.Locality) {
-      result = result + ' ' + address.Locality;
-    }
-    if (address.Street) {
-      result = result + ' ' + address.Street;
-    }
-    if (address.House) {
-      result = result + ' ' + address.House;
-    }
-    if (address.Appartment) {
-      result = result + ' ' + address.Appartment;
-    }
-
-    (<FormArray>this.form.controls['factoringPlaces']).at(index).patchValue({
-      displayAddress: result,
-      factoringPlacesAddress: address,
-    });
-  }
-
-  //#endregion
+  //#region Код текущего запроса
+  // Регион в котором содержится код только для текущего запроса
 
   /**
    * Ловит событие на добавление нового файла и добавляет его в список файлов, в форме
@@ -232,19 +76,35 @@ export class LimitComponent implements OnInit {
     this.files = this.files.filter((x) => x !== file);
   }
 
+  //#endregion
+
+  //#region Boilerplate код для запросов
+  // Регион в котором содержится шаблонный код для всех запросов
+
+  /**
+   * Обработчик кнопки submit
+   * Используется на всех страницах запроса
+   */
+  public onSubmit() {
+    this._doDemandAction(DoDemandPageActionType.CREATE);
+  }
+
   /**
    * Предоставляет для UI enum типов события (редактирование, создание и тд)
+   * Во всех запросах код повторяется
    * @returns enum с типами
    */
   public get demandActionType(): typeof DemandActionType {
     return DemandActionType;
   }
 
+  /**
+   * Метод для выполнения действий, которые инициируются из состояния, или нажатия на кнопку
+   * Во всех запросах код повторяется
+   */
   private _doDemandAction(type: DoDemandPageActionType): void {
     const formValue = {
       ...this.form.getRawValue(),
-      currentUserId: this.currentUserId,
-      avatarCode: this.avatarCode,
     };
 
     const convertedForm = this._demandConverter.convertToApiData(
@@ -280,14 +140,11 @@ export class LimitComponent implements OnInit {
     this._demandNavigationService.setDoDemandAction(doActionData);
   }
 
+  /**
+   * Метод для инициализации основных значений
+   * Почти во всех запросах код повторяется
+   */
   private _initValues() {
-    // Только edit profile
-    let encryptedJsonCurrentUser = this.cookieService.get('_cu');
-    let currentJsonUser = this.cryptoService.decrypt(encryptedJsonCurrentUser);
-    let currentUser = JSON.parse(currentJsonUser);
-    this.currentUserId = currentUser.UserID;
-    //
-
     this.requestLoading$ = this._demandLoadingService.demandRequestLoading$;
 
     this._subscription$.add(
@@ -297,28 +154,16 @@ export class LimitComponent implements OnInit {
     );
   }
 
-  private _initForm() {
-    this.form = this._formGenerator.generateLimitForm();
-  }
+  /**
+   * Метод для инициализации дополнительых данных
+   * Во всех запросах код повторяется
+   */
+  private _initAdditionalData(): void {}
 
-  private _initAdditionalData(): void {
-    this._subscription$.add(
-      this.commonService.getPosts().subscribe((posts) => {
-        this.postList = posts;
-      })
-    );
-    this._subscription$.add(
-      this.commonService.getCountries().subscribe((countries) => {
-        this.countryList = countries;
-      })
-    );
-    this._subscription$.add(
-      this.commonService.getRegions().subscribe((regions) => {
-        this.regionList = regions;
-      })
-    );
-  }
-
+  /**
+   * Получает текущий Demand Config, в котором содержатся основные параметры текущего запроса (demand-а)
+   * Во всех запросах код повторяется
+   */
   private _getDemandConfig(): void {
     this._subscription$.add(
       this._demandNavigationService.demandConfig$.subscribe((demandConfig) => {
@@ -327,6 +172,19 @@ export class LimitComponent implements OnInit {
     );
   }
 
+  /**
+   * Метод для генерации формы
+   * В запросах код разный
+   */
+  private _initForm() {
+    this.form = this._formGenerator.generateLimitForm();
+  }
+
+  /**
+   * Получает текущий Demand по подписке из контейнера demand-action
+   * Конвертирует полученный Demand в данные для формы и заполняет форму
+   * В запросах код разный
+   */
   private _getCurrentDemand(): void {
     this._subscription$.add(
       this._demandNavigationService.currentDemand$.subscribe(
@@ -336,10 +194,10 @@ export class LimitComponent implements OnInit {
 
           this.form.patchValue(convertedDemand);
 
-          this.avatarCode = currentDemand?.Avatar;
           this.files = currentDemand.Files;
         }
       )
     );
   }
+  //#endregion
 }

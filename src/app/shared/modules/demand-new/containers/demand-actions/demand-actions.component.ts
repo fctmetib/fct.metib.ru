@@ -121,7 +121,7 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
         isForDefaultClient: true,
       },
       {
-        text: 'Запрос на Увеличение лимита (Need test)',
+        text: 'Запрос на Увеличение лимита',
         url: 'demand-action',
         action: DemandAction.UPDATE_LIMIT,
         isForNewClient: true,
