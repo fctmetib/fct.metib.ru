@@ -157,9 +157,14 @@ export class ClientComponent implements OnInit, OnDestroy {
         //   routerLink: 'delays',
         //   routerLinkActiveOptions: { exact: false },
         // },
+        // {
+        //   label: 'Запросы',
+        //   routerLink: 'demand',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
         {
           label: 'Запросы',
-          routerLink: 'demand',
+          routerLink: 'new-demand',
           routerLinkActiveOptions: { exact: false },
         },
         // {
@@ -205,13 +210,13 @@ export class ClientComponent implements OnInit, OnDestroy {
           routerLink: 'delays',
           routerLinkActiveOptions: { exact: false },
         },
+        // {
+        //   label: 'Запросы',
+        //   routerLink: 'demand',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
         {
           label: 'Запросы',
-          routerLink: 'demand',
-          routerLinkActiveOptions: { exact: false },
-        },
-        {
-          label: 'Запросы new',
           routerLink: 'new-demand',
           routerLinkActiveOptions: { exact: false },
         },

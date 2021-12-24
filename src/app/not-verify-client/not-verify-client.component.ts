@@ -61,9 +61,15 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
     }
 
     this.items = [
+      // {
+      //   label: 'Запросы',
+      //   routerLink: 'demand',
+      //   styleClass: 'p-menuitem-link-active',
+      //   routerLinkActiveOptions: { exact: true },
+      // },
       {
         label: 'Запросы',
-        routerLink: 'demand',
+        routerLink: 'new-demand',
         styleClass: 'p-menuitem-link-active',
         routerLinkActiveOptions: { exact: true },
       },

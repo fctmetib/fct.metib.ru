@@ -117,28 +117,28 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
         text: 'Запрос на Свободную тему',
         url: 'demand-action',
         action: DemandAction.FREE_REQUEST,
-        isForNewClient: true,
+        isForNewClient: false,
         isForDefaultClient: true,
       },
       {
         text: 'Запрос на Увеличение лимита',
         url: 'demand-action',
         action: DemandAction.UPDATE_LIMIT,
-        isForNewClient: true,
+        isForNewClient: false,
         isForDefaultClient: true,
       },
       {
         text: 'Запрос на Нового дебитора',
         url: 'demand-action',
         action: DemandAction.CREATE_DEBITOR,
-        isForNewClient: true,
+        isForNewClient: false,
         isForDefaultClient: true,
       },
       {
         text: 'Регистрация канала верификации',
         url: 'demand-action',
         action: DemandAction.VERIFY,
-        isForNewClient: true,
+        isForNewClient: false,
         isForDefaultClient: true,
       },
     ];
@@ -146,7 +146,7 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
     let user = this.authService.getUserFromStore();
     if (user && user.DebtorID) {
       let updateAction = this.actions.find(
-        (x) => x.text === 'Запрос на агентский факторинг'
+        (x) => x.text === 'Запрос на Агентский Факторинг'
       );
       let updatedAction = {
         ...updateAction,
@@ -159,7 +159,7 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
     }
     if (user && user.CustomerID) {
       let updateAction = this.actions.find(
-        (x) => x.text === 'Запрос на факторинг'
+        (x) => x.text === 'Запрос на Факторинг'
       );
       let updatedAction = {
         ...updateAction,
