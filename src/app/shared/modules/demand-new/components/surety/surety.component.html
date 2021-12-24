@@ -238,7 +238,7 @@
             </p>
           </div>
           <button pButton pRipple (click)="addOtherBank()" label="Добавить счёт в банке" type="button"
-            class="basic-small"></button>
+            class="addon-button__button "></button>
         </div>
       </div>
     </div>
@@ -335,261 +335,264 @@
                   [addressGroup]="getFactoringPlaces(i)">
                 </demand-address-group>
               </div>
+              <div class="p-field p-col-12 p-md-6">
+                <label for="factoringPlacesLegalForm">Форма владения</label>
+                <p-dropdown styleClass="mib-input" id="factoringPlacesLegalForm" [options]="typesOfOwner"
+                  placeholder="Выберите Форму владения" formControlName="factoringPlacesLegalForm" optionLabel="title"
+                  optionValue="value"></p-dropdown>
+              </div>
             </div>
-            <div class="p-field p-col-12 p-md-6">
-              <label for="factoringPlacesLegalForm">Форма владения</label>
-              <p-dropdown styleClass="mib-input" id="factoringPlacesLegalForm" [options]="typesOfOwner"
-                placeholder="Выберите Форму владения" formControlName="factoringPlacesLegalForm" optionLabel="title"
-                optionValue="value"></p-dropdown>
-            </div>
+
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="p-field p-col-12 p-md-6">
-    <div class="addon-button">
-      <div class="action-box">
-        <div class="addon-text-small">
-          <p>
-            Дополнительная недвижимость
-          </p>
-        </div>
-        <button pButton pRipple (click)="addOtherPlace()" label="Добавить недвижимость" type="button"
-          class="basic-small"></button>
-      </div>
-    </div>
-  </div>
 
-
-  <!-- W -->
-  <div class="p-field p-col-12 p-md-12">
-    <h3>Сведения о полученных ранее кредитах, аккредитивах, гарантиях, поручительствах</h3>
-    <p class="description">Кредитная история и текущая кредиторская задолженность, в т. ч. ссуды из других
-      источников, включая государственные учреждения</p>
-
-    <div class="mib-formset" formArrayName="factoringCredits"
-      *ngFor="let item of form.get('factoringCredits')['controls']; let i = index;">
-      <div class="title">
-        <div class="text">
-          Кредит, займ, гарантия, ...
-        </div>
-        <button class="button warn" (click)="remove(i, 'factoringCredits')">
-          Удалить
-        </button>
-      </div>
-      <div class="form">
-        <div [formGroupName]="i">
-          <div class="p-fluid p-formgrid p-grid">
-            <div class="p-field p-col-12 p-md-4 p-lg-3">
-              <label for="factoringCreditsCreditor">Кредитор</label>
-              <input id="factoringCreditsCreditor" type="text" pInputText placeholder="Кредитор"
-                formControlName="factoringCreditsCreditor">
-              <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringCreditsCreditor').invalid">
-                <small
-                  *ngIf="form.get('factoringCredits')['controls'][i].get('factoringCreditsCreditor').errors.required"
-                  class="p-error">
-                  Поле должно быть заполнено.
-                </small>
-              </div>
-            </div>
-            <div class="p-field p-col-12 p-md-4 p-lg-3">
-              <label for="factoringPlacesTypeDuty">Тип обязательства</label>
-              <input id="factoringPlacesTypeDuty" type="text" pInputText placeholder="Тип обязательства"
-                formControlName="factoringPlacesTypeDuty">
-              <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesTypeDuty').invalid">
-                <small
-                  *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesTypeDuty').errors.required"
-                  class="p-error">
-                  Поле должно быть заполнено.
-                </small>
-              </div>
-            </div>
-            <div class="p-field p-col-12 p-md-4 p-lg-3">
-              <label for="factoringPlacesDateClose">Дата погашения</label>
-              <input id="factoringPlacesDateClose" type="date" pInputText placeholder="Дата погашения"
-                formControlName="factoringPlacesDateClose">
-              <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesDateClose').invalid">
-                <small
-                  *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesDateClose').errors.required"
-                  class="p-error">
-                  Поле должно быть заполнено.
-                </small>
-              </div>
-            </div>
-            <div class="p-field p-col-12 p-md-4 p-lg-3">
-              <label for="factoringPlacesContractSum">Сумма договора</label>
-              <p-inputNumber placeholder="Сумма договора" id="factoringPlacesContractSum"
-                formControlName="factoringPlacesContractSum" inputId="factoringPlacesContractSum" mode="currency"
-                currency="RUB" locale="ru-RU">
-              </p-inputNumber>
-
-              <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesContractSum').invalid">
-                <small
-                  *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesContractSum').errors.required"
-                  class="p-error">
-                  Поле должно быть заполнено.
-                </small>
-              </div>
-            </div>
-            <div class="p-field p-col-12 p-md-6 p-lg-6">
-              <label for="factoringPlacesBalanceReport">Остаток на дату сдачи отчетности</label>
-              <p-inputNumber placeholder="Остаток на дату сдачи отчетности" id="factoringPlacesBalanceReport"
-                formControlName="factoringPlacesBalanceReport" inputId="factoringPlacesBalanceReport" mode="currency"
-                currency="RUB" locale="ru-RU">
-              </p-inputNumber>
-              <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesBalanceReport').invalid">
-                <small
-                  *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesBalanceReport').errors.required"
-                  class="p-error">
-                  Поле должно быть заполнено.
-                </small>
-              </div>
-            </div>
-            <div class="p-field p-col-12 p-md-6 p-lg-6">
-              <label for="factoringPlacesBalanceCurrent">Остаток на текущую дату</label>
-              <p-inputNumber placeholder="Остаток на текущую дату" id="factoringPlacesBalanceCurrent"
-                formControlName="factoringPlacesBalanceCurrent" inputId="factoringPlacesBalanceCurrent" mode="currency"
-                currency="RUB" locale="ru-RU">
-              </p-inputNumber>
-              <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesBalanceCurrent').invalid">
-                <small
-                  *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesBalanceCurrent').errors.required"
-                  class="p-error">
-                  Поле должно быть заполнено.
-                </small>
-              </div>
-            </div>
+    <div class="p-field p-col-12 p-md-6">
+      <div class="addon-button">
+        <div class="action-box">
+          <div class="addon-text-small">
+            <p>
+              Дополнительная недвижимость
+            </p>
           </div>
+          <button pButton pRipple (click)="addOtherPlace()" label="Добавить недвижимость" type="button"
+            class="addon-button__button "></button>
         </div>
       </div>
     </div>
-  </div>
-  <div class="p-field p-col-12 p-md-6">
-    <div class="addon-button">
-      <div class="action-box">
-        <div class="addon-text-small">
-          <p>
-            Дополнительная задолженность
-          </p>
-        </div>
-        <button pButton pRipple (click)="addFactoringCredits()" label="Добавить задолженность" type="button"
-          class="basic-small"></button>
-      </div>
-    </div>
-  </div>
 
 
-  <!-- W -->
-  <div class="p-field p-col-12 p-md-12">
-    <h3>Взаимодействие с EDI-провайдерами по электронному документообороту</h3>
-
-    <div class="mib-formset" formArrayName="factoringEDIProviders"
-      *ngFor="let item of form.get('factoringEDIProviders')['controls']; let i = index;">
-      <div class="title">
-        <div class="text">
-          EDI
-        </div>
-        <button class="button warn" (click)="remove(i, 'factoringEDIProviders')">
-          Удалить
-        </button>
-      </div>
-      <div class="form">
-        <div [formGroupName]="i">
-          <div class="p-fluid p-formgrid p-grid">
-            <div class="p-field p-col-12 p-md-6">
-              <label for="factoringEDIProvidersDebitor">Дебитор</label>
-              <input id="factoringEDIProvidersDebitor" type="text" pInputText placeholder="Дебитор"
-                formControlName="factoringEDIProvidersDebitor">
-              <div *ngIf="form.get('factoringEDIProviders')['controls'][i].get('factoringEDIProvidersDebitor').invalid">
-                <small
-                  *ngIf="form.get('factoringEDIProviders')['controls'][i].get('factoringEDIProvidersDebitor').errors.required"
-                  class="p-error">
-                  Поле должно быть заполнено.
-                </small>
-              </div>
-            </div>
-            <div class="p-field p-col-12 p-md-6">
-              <label for="factoringEDIProvidersProvider">EDI-Провайдер</label>
-              <input id="factoringEDIProvidersProvider" type="text" pInputText placeholder="EDI-Провайдер"
-                formControlName="factoringEDIProvidersProvider">
-              <div
-                *ngIf="form.get('factoringEDIProviders')['controls'][i].get('factoringEDIProvidersProvider').invalid">
-                <small
-                  *ngIf="form.get('factoringEDIProviders')['controls'][i].get('factoringEDIProvidersProvider').errors.required"
-                  class="p-error">
-                  Поле должно быть заполнено.
-                </small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="p-field p-col-12 p-md-6">
-    <div class="addon-button">
-      <div class="action-box">
-        <div class="addon-text-small">
-          <p>
-            EDI взаимодействие
-          </p>
-        </div>
-        <button pButton pRipple (click)="addEDIProvider()" label="Добавить взаимодействие" type="button"
-          class="basic-small"></button>
-      </div>
-    </div>
-  </div>
-
-  <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
     <!-- W -->
     <div class="p-field p-col-12 p-md-12">
-      <p>Прикрепите необходимые файлы:</p>
+      <h3>Сведения о полученных ранее кредитах, аккредитивах, гарантиях, поручительствах</h3>
+      <p class="description">Кредитная история и текущая кредиторская задолженность, в т. ч. ссуды из других
+        источников, включая государственные учреждения</p>
+
+      <div class="mib-formset" formArrayName="factoringCredits"
+        *ngFor="let item of form.get('factoringCredits')['controls']; let i = index;">
+        <div class="title">
+          <div class="text">
+            Кредит, займ, гарантия, ...
+          </div>
+          <button class="button warn" (click)="remove(i, 'factoringCredits')">
+            Удалить
+          </button>
+        </div>
+        <div class="form">
+          <div [formGroupName]="i">
+            <div class="p-fluid p-formgrid p-grid">
+              <div class="p-field p-col-12 p-md-4 p-lg-3">
+                <label for="factoringCreditsCreditor">Кредитор</label>
+                <input id="factoringCreditsCreditor" type="text" pInputText placeholder="Кредитор"
+                  formControlName="factoringCreditsCreditor">
+                <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringCreditsCreditor').invalid">
+                  <small
+                    *ngIf="form.get('factoringCredits')['controls'][i].get('factoringCreditsCreditor').errors.required"
+                    class="p-error">
+                    Поле должно быть заполнено.
+                  </small>
+                </div>
+              </div>
+              <div class="p-field p-col-12 p-md-4 p-lg-3">
+                <label for="factoringPlacesTypeDuty">Тип обязательства</label>
+                <input id="factoringPlacesTypeDuty" type="text" pInputText placeholder="Тип обязательства"
+                  formControlName="factoringPlacesTypeDuty">
+                <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesTypeDuty').invalid">
+                  <small
+                    *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesTypeDuty').errors.required"
+                    class="p-error">
+                    Поле должно быть заполнено.
+                  </small>
+                </div>
+              </div>
+              <div class="p-field p-col-12 p-md-4 p-lg-3">
+                <label for="factoringPlacesDateClose">Дата погашения</label>
+                <input id="factoringPlacesDateClose" type="date" pInputText placeholder="Дата погашения"
+                  formControlName="factoringPlacesDateClose">
+                <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesDateClose').invalid">
+                  <small
+                    *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesDateClose').errors.required"
+                    class="p-error">
+                    Поле должно быть заполнено.
+                  </small>
+                </div>
+              </div>
+              <div class="p-field p-col-12 p-md-4 p-lg-3">
+                <label for="factoringPlacesContractSum">Сумма договора</label>
+                <p-inputNumber placeholder="Сумма договора" id="factoringPlacesContractSum"
+                  formControlName="factoringPlacesContractSum" inputId="factoringPlacesContractSum" mode="currency"
+                  currency="RUB" locale="ru-RU">
+                </p-inputNumber>
+
+                <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesContractSum').invalid">
+                  <small
+                    *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesContractSum').errors.required"
+                    class="p-error">
+                    Поле должно быть заполнено.
+                  </small>
+                </div>
+              </div>
+              <div class="p-field p-col-12 p-md-6 p-lg-6">
+                <label for="factoringPlacesBalanceReport">Остаток на дату сдачи отчетности</label>
+                <p-inputNumber placeholder="Остаток на дату сдачи отчетности" id="factoringPlacesBalanceReport"
+                  formControlName="factoringPlacesBalanceReport" inputId="factoringPlacesBalanceReport" mode="currency"
+                  currency="RUB" locale="ru-RU">
+                </p-inputNumber>
+                <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesBalanceReport').invalid">
+                  <small
+                    *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesBalanceReport').errors.required"
+                    class="p-error">
+                    Поле должно быть заполнено.
+                  </small>
+                </div>
+              </div>
+              <div class="p-field p-col-12 p-md-6 p-lg-6">
+                <label for="factoringPlacesBalanceCurrent">Остаток на текущую дату</label>
+                <p-inputNumber placeholder="Остаток на текущую дату" id="factoringPlacesBalanceCurrent"
+                  formControlName="factoringPlacesBalanceCurrent" inputId="factoringPlacesBalanceCurrent"
+                  mode="currency" currency="RUB" locale="ru-RU">
+                </p-inputNumber>
+                <div *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesBalanceCurrent').invalid">
+                  <small
+                    *ngIf="form.get('factoringCredits')['controls'][i].get('factoringPlacesBalanceCurrent').errors.required"
+                    class="p-error">
+                    Поле должно быть заполнено.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <div class="addon-button">
+        <div class="action-box">
+          <div class="addon-text-small">
+            <p>
+              Дополнительная задолженность
+            </p>
+          </div>
+          <button pButton pRipple (click)="addFactoringCredits()" label="Добавить задолженность" type="button"
+            class="addon-button__button "></button>
+        </div>
+      </div>
     </div>
 
-    <div class="p-field p-col-12 p-md-6">
-      <mib-file-uploader [existFile]="files" [title]="'Устав (Со всеми изменениями)'" [type]="'Regulations'"
-        (remove)="onRemove($event)" (add)="onAdd($event)">
-      </mib-file-uploader>
-    </div>
-    <div class="p-field p-col-12 p-md-6">
-      <mib-file-uploader [existFile]="files" [title]="'Паспорт генерального директора (Все страницы)'"
-        [type]="'GenDirPassport'" (remove)="onRemove($event)" (add)="onAdd($event)">
-      </mib-file-uploader>
-    </div>
-    <div class="p-field p-col-12 p-md-6">
-      <mib-file-uploader [existFile]="files" [title]="'Протокол/решение о назначении генерального директора'"
-        [type]="'GenDirProtocol'" (remove)="onRemove($event)" (add)="onAdd($event)">
-      </mib-file-uploader>
-    </div>
-    <div class="p-field p-col-12 p-md-6">
-      <mib-file-uploader [existFile]="files" [title]="'Приказ о назначении генерального директора'"
-        [type]="'GenDirOrder'" (remove)="onRemove($event)" (add)="onAdd($event)">
-      </mib-file-uploader>
-    </div>
-    <div class="p-field p-col-12 p-md-6">
-      <mib-file-uploader [existFile]="files" [title]="'Бухгалтерский Баланс'" [type]="'Balance'"
-        (remove)="onRemove($event)" (add)="onAdd($event)">
-      </mib-file-uploader>
-    </div>
-    <div class="p-field p-col-12 p-md-6">
-      <mib-file-uploader [existFile]="files" [title]="'ОСВ (оборотно-сальдовая ведомость)'" [type]="'OSV'"
-        (remove)="onRemove($event)" (add)="onAdd($event)">
-      </mib-file-uploader>
 
+    <!-- W -->
+    <div class="p-field p-col-12 p-md-12">
+      <h3>Взаимодействие с EDI-провайдерами по электронному документообороту</h3>
+
+      <div class="mib-formset" formArrayName="factoringEDIProviders"
+        *ngFor="let item of form.get('factoringEDIProviders')['controls']; let i = index;">
+        <div class="title">
+          <div class="text">
+            EDI
+          </div>
+          <button class="button warn" (click)="remove(i, 'factoringEDIProviders')">
+            Удалить
+          </button>
+        </div>
+        <div class="form">
+          <div [formGroupName]="i">
+            <div class="p-fluid p-formgrid p-grid">
+              <div class="p-field p-col-12 p-md-6">
+                <label for="factoringEDIProvidersDebitor">Дебитор</label>
+                <input id="factoringEDIProvidersDebitor" type="text" pInputText placeholder="Дебитор"
+                  formControlName="factoringEDIProvidersDebitor">
+                <div
+                  *ngIf="form.get('factoringEDIProviders')['controls'][i].get('factoringEDIProvidersDebitor').invalid">
+                  <small
+                    *ngIf="form.get('factoringEDIProviders')['controls'][i].get('factoringEDIProvidersDebitor').errors.required"
+                    class="p-error">
+                    Поле должно быть заполнено.
+                  </small>
+                </div>
+              </div>
+              <div class="p-field p-col-12 p-md-6">
+                <label for="factoringEDIProvidersProvider">EDI-Провайдер</label>
+                <input id="factoringEDIProvidersProvider" type="text" pInputText placeholder="EDI-Провайдер"
+                  formControlName="factoringEDIProvidersProvider">
+                <div
+                  *ngIf="form.get('factoringEDIProviders')['controls'][i].get('factoringEDIProvidersProvider').invalid">
+                  <small
+                    *ngIf="form.get('factoringEDIProviders')['controls'][i].get('factoringEDIProvidersProvider').errors.required"
+                    class="p-error">
+                    Поле должно быть заполнено.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="p-field p-col-12 p-md-6 p-lg-6">
-      <mib-file-uploader [existFile]="files" [title]="'Паспорта Учредителей'" [type]="'Shareholders'"
-        (remove)="onRemove($event)" (add)="onAdd($event)">
-      </mib-file-uploader>
+    <div class="p-field p-col-12 p-md-6">
+      <div class="addon-button">
+        <div class="action-box">
+          <div class="addon-text-small">
+            <p>
+              EDI взаимодействие
+            </p>
+          </div>
+          <button pButton pRipple (click)="addEDIProvider()" label="Добавить взаимодействие" type="button"
+            class="addon-button__button "></button>
+        </div>
+      </div>
     </div>
-  </ng-container>
+
+    <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+      <!-- W -->
+      <div class="p-field p-col-12 p-md-12">
+        <p>Прикрепите необходимые файлы:</p>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <mib-file-uploader [existFile]="files" [title]="'Устав (Со всеми изменениями)'" [type]="'Regulations'"
+          (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <mib-file-uploader [existFile]="files" [title]="'Паспорт генерального директора (Все страницы)'"
+          [type]="'GenDirPassport'" (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <mib-file-uploader [existFile]="files" [title]="'Протокол/решение о назначении генерального директора'"
+          [type]="'GenDirProtocol'" (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <mib-file-uploader [existFile]="files" [title]="'Приказ о назначении генерального директора'"
+          [type]="'GenDirOrder'" (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <mib-file-uploader [existFile]="files" [title]="'Бухгалтерский Баланс'" [type]="'Balance'"
+          (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <mib-file-uploader [existFile]="files" [title]="'ОСВ (оборотно-сальдовая ведомость)'" [type]="'OSV'"
+          (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+
+      </div>
+      <div class="p-field p-col-12 p-md-6 p-lg-6">
+        <mib-file-uploader [existFile]="files" [title]="'Паспорта Учредителей'" [type]="'Shareholders'"
+          (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+    </ng-container>
 
 
-  <div class="p-field p-col-12 p-md-12">
-    <label for="btn_submit">&nbsp;</label>
-    <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос" [loading]="isRequestLoading"
-      class="btn-mib-submit p-button-outlined"
-      [disabled]="form.invalid  || isFilesInvalid() || isRequestLoading"></button>
+    <div class="p-field p-col-12 p-md-12">
+      <label for="btn_submit">&nbsp;</label>
+      <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос" [loading]="isRequestLoading"
+        class="btn-mib-submit p-button-outlined"
+        [disabled]="form.invalid  || isFilesInvalid() || isRequestLoading"></button>
+    </div>
   </div>
 </form>

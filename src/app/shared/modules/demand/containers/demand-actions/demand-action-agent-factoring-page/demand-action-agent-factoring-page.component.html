@@ -286,7 +286,7 @@
                   </p>
                 </div>
                 <button pButton pRipple (click)="addOtherBank()" label="Добавить счёт в банке" type="button"
-                  class="basic-small"></button>
+                  class="addon-button__button "></button>
               </div>
             </div>
           </div>
@@ -411,7 +411,7 @@
                   </p>
                 </div>
                 <button pButton pRipple (click)="addOtherPlace()" label="Добавить недвижимость" type="button"
-                  class="basic-small"></button>
+                  class="addon-button__button "></button>
               </div>
             </div>
           </div>
@@ -535,7 +535,7 @@
                   </p>
                 </div>
                 <button pButton pRipple (click)="addFactoringCredits()" label="Добавить задолженность" type="button"
-                  class="basic-small"></button>
+                  class="addon-button__button "></button>
               </div>
             </div>
           </div>
@@ -578,8 +578,8 @@
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader [existFile]="files" [title]="'Паспорт генерального директора (Все страницы)'" [type]="'GenDirPassport'"
-                (remove)="onRemove($event)" (add)="onAdd($event)">
+              <mib-file-uploader [existFile]="files" [title]="'Паспорт генерального директора (Все страницы)'"
+                [type]="'GenDirPassport'" (remove)="onRemove($event)" (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6">
@@ -589,13 +589,13 @@
 
             </div>
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader [existFile]="files" [title]="'Приказ о назначении генерального директора'" [type]="'GenDirOrder'"
-                (remove)="onRemove($event)" (add)="onAdd($event)">
+              <mib-file-uploader [existFile]="files" [title]="'Приказ о назначении генерального директора'"
+                [type]="'GenDirOrder'" (remove)="onRemove($event)" (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader [existFile]="files" [title]="'Бухгалтерский Баланс'" [type]="'Balance'" (remove)="onRemove($event)"
-                (add)="onAdd($event)">
+              <mib-file-uploader [existFile]="files" [title]="'Бухгалтерский Баланс'" [type]="'Balance'"
+                (remove)="onRemove($event)" (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6">
@@ -604,13 +604,13 @@
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6 p-lg-6">
-              <mib-file-uploader [existFile]="files" [title]="'Паспорта Учредителей'" [type]="'Shareholders'" (remove)="onRemove($event)"
-                (add)="onAdd($event)">
+              <mib-file-uploader [existFile]="files" [title]="'Паспорта Учредителей'" [type]="'Shareholders'"
+                (remove)="onRemove($event)" (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader [existFile]="files" [title]="'Договор поставки'" [type]="'ContractDelivery'" (remove)="onRemove($event)"
-                (add)="onAdd($event)">
+              <mib-file-uploader [existFile]="files" [title]="'Договор поставки'" [type]="'ContractDelivery'"
+                (remove)="onRemove($event)" (add)="onAdd($event)">
               </mib-file-uploader>
 
             </div>
@@ -618,8 +618,7 @@
           <div class="p-field p-col-12 p-md-12">
             <label for="btn_submit">&nbsp;</label>
             <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
-              class="btn-mib-submit p-button-outlined"
-              [loading]="isRequestLoading"
+              class="btn-mib-submit p-button-outlined" [loading]="isRequestLoading"
               [disabled]="formFactoring.invalid || (isLoading$ | async) || isFilesInvalid() || isRequestLoading"></button>
           </div>
         </div>
