@@ -1,26 +1,36 @@
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Observable, of } from 'rxjs';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from "@angular/router";
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserVerifyGuard implements CanActivate, CanActivateChild {
-  constructor(private auth: AuthService,
-              private router: Router) {
-  }
+  constructor(private auth: AuthService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> {
     if (this.auth.isUserVerified()) {
-      return of(true)
+      return of(true);
     } else {
-      this.router.navigate(['/not-verify/demand'])
-      return of(false)
+      this.router.navigate(['/not-verify/new-demand']);
+      return of(false);
     }
   }
 
-  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.canActivate(route, state)
+  canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> {
+    return this.canActivate(route, state);
   }
 }
