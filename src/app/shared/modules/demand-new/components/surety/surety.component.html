@@ -590,9 +590,9 @@
 
     <div class="p-field p-col-12 p-md-12">
       <label for="btn_submit">&nbsp;</label>
-      <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос" [loading]="isRequestLoading"
-        class="btn-mib-submit p-button-outlined"
-        [disabled]="form.invalid  || isFilesInvalid() || isRequestLoading"></button>
+      <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
+        class="btn-mib-submit p-button-outlined" [loading]="(requestLoading$ | async)"
+        [disabled]="form?.invalid || isFilesInvalid() || (requestLoading$ | async)"></button>
     </div>
   </div>
 </form>

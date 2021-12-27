@@ -189,7 +189,7 @@ export class DemandConverterToForm {
       first: dataFromAPI?.Profile?.Name?.First
         ? dataFromAPI?.Profile?.Name?.First
         : '',
-      isMale: dataFromAPI?.Profile?.IsMale ? dataFromAPI?.Profile?.IsMale : '',
+      isMale: dataFromAPI?.Profile?.IsMale ? 1 : 0,
       phone: dataFromAPI?.Profile?.Phone ? dataFromAPI?.Profile?.Phone : '',
       email: dataFromAPI?.Profile?.Email ? dataFromAPI?.Profile?.Email : '',
       number: dataFromAPI?.Passport?.Number

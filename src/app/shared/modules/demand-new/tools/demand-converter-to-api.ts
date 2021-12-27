@@ -835,7 +835,7 @@ export class DemandConverterToAPI {
           ShortTitle: form.organizationShortName
             ? form.organizationShortName
             : '',
-          Type: form.organizationType ? form.organizationType : '',
+          Type: form.organizationType ? form.organizationType : 0,
           Website: form.organizationWEB ? form.organizationWEB : '',
         },
       },

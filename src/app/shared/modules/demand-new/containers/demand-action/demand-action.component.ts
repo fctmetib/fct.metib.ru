@@ -164,6 +164,12 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
             summary: 'Успешно',
             detail: 'Запрос успешно создан!',
           });
+
+          // Выключаем сохранение
+          if (this._saveDraftAction$) {
+            clearInterval(this._saveDraftAction$);
+          }
+
           this._demandLoadingService.setRequestLoading(false);
         },
         (error) => {

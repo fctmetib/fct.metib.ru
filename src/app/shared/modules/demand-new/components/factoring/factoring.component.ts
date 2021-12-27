@@ -102,6 +102,7 @@ export class FactoringComponent implements OnInit {
     let bank = this.banksFounded.find(
       (x) => x.BIC === bankInfo || x.Name === bankInfo
     );
+
     this.form.get('otherBanks')['controls'][indexOtherBank].patchValue({
       otherBankName: bank.Name,
     });
@@ -164,6 +165,7 @@ export class FactoringComponent implements OnInit {
     if (value === 0) {
       this.form.patchValue({
         organizationLegalForm: null,
+        organizationType: 0,
       });
     }
   }
