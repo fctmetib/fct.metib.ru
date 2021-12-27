@@ -82,4 +82,9 @@ export class DemandService {
     const url = `${environment.apiUrl}/public/debtors`;
     return this.http.get<DebtorInterface[]>(url);
   }
+
+  getDemandDraftById(id: number): Observable<DemandInterface<any>> {
+    const url = `${environment.apiUrl}/demand/draft/${id}`;
+    return this.http.get<DemandInterface<any>>(url);
+  }
 }

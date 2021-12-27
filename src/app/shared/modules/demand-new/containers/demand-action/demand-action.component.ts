@@ -209,7 +209,7 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
       case DemandActionType.EDIT_DRAFT:
         this._initEditDraftSettings();
-        this._getDraft();
+        this._getDraftById();
         this._enableDraftSaving();
         break;
       case DemandActionType.EDIT_CREATED:
@@ -262,6 +262,17 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
+  private _getDraftById(): void {
+    this.demandLoadingService.setPageLoading(true);
+    this._subscription$.add(
+      this._demandService
+        .getDemandDraftById(this.demandNavigationConfig.demandId)
+        .subscribe((resp) => {
+          this.demandLoadingService.setPageLoading(false);
+          this._demandNavigationService.setCurrentDemandData(resp.Data);
+        })
+    );
+  }
   private _getDraft(): void {
     this.demandLoadingService.setPageLoading(true);
     this._subscription$.add(

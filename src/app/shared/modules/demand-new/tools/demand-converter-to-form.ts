@@ -78,21 +78,21 @@ export class DemandConverterToForm {
       passportNationality: passport?.Nationality ? passport.Nationality : '',
       // Заполнение адресов
       organizationLegalAddress: {
-        displayAddress: this._convertToDisplayAddress(
-          organization?.LegalAddress
-        ),
+        displayAddress: organization?.LegalAddress
+          ? this._convertToDisplayAddress(organization?.LegalAddress)
+          : '',
         factoringPlacesAddress: organization?.LegalAddress,
       },
       organizationActualAddress: {
-        displayAddress: this._convertToDisplayAddress(
-          organization?.FactAddress
-        ),
+        displayAddress: organization?.FactAddress
+          ? this._convertToDisplayAddress(organization?.FactAddress)
+          : '',
         factoringPlacesAddress: organization?.FactAddress,
       },
       organizationPostAddress: {
-        displayAddress: this._convertToDisplayAddress(
-          organization?.PostAddress
-        ),
+        displayAddress: organization?.PostAddress
+          ? this._convertToDisplayAddress(organization?.PostAddress)
+          : '',
         factoringPlacesAddress: organization?.PostAddress,
       },
       //TODO: Update it

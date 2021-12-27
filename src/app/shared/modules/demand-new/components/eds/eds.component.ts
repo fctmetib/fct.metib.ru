@@ -1,4 +1,8 @@
-import { Observable } from 'rxjs';
+import {
+  currentUserFactoringSelector,
+  currentUserGeneralSelector,
+} from './../../../../../auth/store/selectors';
+import { combineLatest, Observable } from 'rxjs';
 // System
 import {
   Component,
@@ -34,6 +38,8 @@ import { DemandConverter } from '../../tools/demand-converter';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
 import { DemandLoadingService } from '../../services/demand-loading.service';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { select, Store } from '@ngrx/store';
 
 @Component({
   selector: 'eds',
@@ -71,7 +77,9 @@ export class EDSComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private commonService: CommonService,
     private _demandLoadingService: DemandLoadingService,
-    private _demandNavigationService: DemandNavigationService
+    private _demandNavigationService: DemandNavigationService,
+    private _authService: AuthService,
+    private store: Store
   ) {
     this._demandConverter = new DemandConverter();
   }
@@ -344,15 +352,45 @@ export class EDSComponent implements OnInit, OnDestroy {
   }
 
   private _getCurrentDemand(): void {
+    const storedUser$ = this.store.pipe(select(currentUserGeneralSelector));
+    const currentDemand$ = this._demandNavigationService.currentDemand$;
+
     this._subscription$.add(
-      this._demandNavigationService.currentDemand$.subscribe(
-        (currentDemand) => {
-          const convertedDemand =
-            this._demandConverter.convertToFormData(currentDemand);
-          this.form.patchValue(convertedDemand);
-          this.files = currentDemand.Files;
-        }
-      )
+      combineLatest(
+        storedUser$,
+        currentDemand$,
+        (storedUser, currentDemand) => ({
+          storedUser,
+          currentDemand,
+        })
+      ).subscribe((pair) => {
+        const currentUser = this._authService.getUserFromStore();
+        console.log(currentUser);
+        const user = {
+          ...pair.currentDemand.Person,
+          ...{
+            Email: pair.storedUser.Profile.Email,
+            NameFirst: pair.storedUser.Profile.Name.First,
+            NameLast: pair.storedUser.Profile.Name.Last,
+            Gender: pair.storedUser.Profile.IsMale ? 1 : 0,
+            Phone: pair.storedUser.Profile.Phone,
+          },
+        };
+
+        const demandToConvert = {
+          ...pair.currentDemand,
+          Person: {
+            ...user,
+          },
+        };
+
+        console.log(demandToConvert);
+
+        const convertedDemand =
+          this._demandConverter.convertToFormData(demandToConvert);
+        this.form.patchValue(convertedDemand);
+        this.files = pair.currentDemand.Files;
+      })
     );
   }
 }
