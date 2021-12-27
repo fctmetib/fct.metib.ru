@@ -1,24 +1,28 @@
-import { DemandValuesIniter } from '../../tools/demand-values-initer';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { DemandConverter } from '../../tools/demand-converter';
-import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
-import { FormGenerator } from '../../tools/form-generator';
+// Core & System
+import { Observable, Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+// Interfaces & Types
+import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
+import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
+import { BankInterface } from 'src/app/shared/types/common/bank.interface';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
 import { DemandActionType } from '../../types/common/demand-action-type';
-import { DemandNavigationService } from '../../services/demand-navigation.service';
-import { DemandLoadingService } from '../../services/demand-loading.service';
+import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
+import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
+import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+// Services
 import {
   CommonService,
   PostInterface,
   RegionInterface,
 } from 'src/app/shared/services/common/common.service';
-import { Observable, Subscription } from 'rxjs';
-import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
-import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
-import { BankInterface } from 'src/app/shared/types/common/bank.interface';
-import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
+import { DemandNavigationService } from '../../services/demand-navigation.service';
+import { DemandLoadingService } from '../../services/demand-loading.service';
+// Tools
+import { FormGenerator } from '../../tools/form-generator';
+import { DemandConverter } from '../../tools/demand-converter';
+import { DemandValuesIniter } from '../../tools/demand-values-initer';
 
 @Component({
   selector: 'agent-factoring',
@@ -43,6 +47,7 @@ export class AgentFactoringComponent implements OnInit {
   // Системные переменные
   public requestLoading$: Observable<boolean>;
   public demandNavigationConfig: DemandNavigationInterface;
+
   private _subscription$: Subscription = new Subscription();
   private _demandConverter: DemandConverter;
   private _formGenerator: FormGenerator;
@@ -53,7 +58,7 @@ export class AgentFactoringComponent implements OnInit {
   // Файлы
   public files: FileModeInterface[] = [];
 
-  //#region Factoring Request Region
+  //#region Agent Factoring Request
   public resultsBIK: string[];
   public resultsBankname: string[];
   public typesOfOwner: DemandSelectboxInterface[] = [];
@@ -83,12 +88,8 @@ export class AgentFactoringComponent implements OnInit {
     this._subscription$.unsubscribe();
   }
 
-  public onSubmit() {
-    this._doDemandAction(DoDemandPageActionType.CREATE);
-  }
-
-  //#region Factoring Request Region
-
+  //#region Factoring Request
+  // Регион в котором содержится код только для текущего запроса
   public search(event): void {
     this._subscription$.add(
       this.commonService.getBankByBIK(event.query).subscribe((data) => {
@@ -209,8 +210,6 @@ export class AgentFactoringComponent implements OnInit {
     });
   }
 
-  //#endregion
-
   /**
    * Ловит событие на добавление нового файла и добавляет его в список файлов, в форме
    * @param file - пойманный файл
@@ -227,14 +226,6 @@ export class AgentFactoringComponent implements OnInit {
    */
   public onRemove(file): void {
     this.files = this.files.filter((x) => x !== file);
-  }
-
-  /**
-   * Предоставляет для UI enum типов события (редактирование, создание и тд)
-   * @returns enum с типами
-   */
-  public get demandActionType(): typeof DemandActionType {
-    return DemandActionType;
   }
 
   /**
@@ -275,6 +266,31 @@ export class AgentFactoringComponent implements OnInit {
     return isInvalid;
   }
 
+  //#endregion
+
+  //#region Boilerplate код для запросов
+  // Регион в котором содержится шаблонный код для всех запросов
+
+  /**
+   * Обработчик кнопки submit
+   * Используется на всех страницах запроса
+   */
+  public onSubmit() {
+    this._doDemandAction(DoDemandPageActionType.CREATE);
+  }
+
+  /**
+   * Предоставляет для UI enum типов события (редактирование, создание и тд)
+   * @returns enum с типами
+   */
+  public get demandActionType(): typeof DemandActionType {
+    return DemandActionType;
+  }
+
+  /**
+   * Метод для выполнения действий, которые инициируются из состояния, или нажатия на кнопку
+   * Во всех запросах код повторяется
+   */
   private _doDemandAction(type: DoDemandPageActionType): void {
     const convertedForm = this._demandConverter.convertToApiData(
       this.demandNavigationConfig.demandAction,
@@ -309,6 +325,10 @@ export class AgentFactoringComponent implements OnInit {
     this._demandNavigationService.setDoDemandAction(doActionData);
   }
 
+  /**
+   * Метод для инициализации основных значений
+   * Почти во всех запросах код повторяется
+   */
   private _initValues() {
     // Только factoring
     let mibCommon = new MIBCommon();
@@ -327,10 +347,10 @@ export class AgentFactoringComponent implements OnInit {
     );
   }
 
-  private _initForm() {
-    this.form = this._formGenerator.generateAgentFactoringForm();
-  }
-
+  /**
+   * Метод для инициализации дополнительых данных
+   * Во всех запросах код повторяется
+   */
   private _initAdditionalData(): void {
     this._subscription$.add(
       this.commonService.getPosts().subscribe((posts) => {
@@ -349,6 +369,10 @@ export class AgentFactoringComponent implements OnInit {
     );
   }
 
+  /**
+   * Получает текущий Demand Config, в котором содержатся основные параметры текущего запроса (demand-а)
+   * Во всех запросах код повторяется
+   */
   private _getDemandConfig(): void {
     this._subscription$.add(
       this._demandNavigationService.demandConfig$.subscribe((demandConfig) => {
@@ -357,6 +381,19 @@ export class AgentFactoringComponent implements OnInit {
     );
   }
 
+  /**
+   * Метод для генерации формы
+   * В запросах код разный
+   */
+  private _initForm() {
+    this.form = this._formGenerator.generateAgentFactoringForm();
+  }
+
+  /**
+   * Получает текущий Demand по подписке из контейнера demand-action
+   * Конвертирует полученный Demand в данные для формы и заполняет форму
+   * В запросах код разный
+   */
   private _getCurrentDemand(): void {
     this._subscription$.add(
       this._demandNavigationService.currentDemand$.subscribe(

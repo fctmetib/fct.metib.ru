@@ -83,7 +83,7 @@
             </div>
             <div class="auth__body__form__fields__field">
               <p-dropdown id="isMale" [options]="genderOptions" formControlName="isMale" optionLabel="name"
-                [showClear]="false" placeholder="Пол" optionValue="value"
+                styleClass="gender-select" [showClear]="false" placeholder="Пол" optionValue="value"
                 [ngClass]="{'ng-invalid ng-dirty': form.get('profile.isMale').invalid && form.get('profile.isMale').touched}">
                 <ng-template let-country pTemplate="item">
                   <div class="country-item">
