@@ -78,7 +78,6 @@ export class EDSComponent implements OnInit, OnDestroy {
     private commonService: CommonService,
     private _demandLoadingService: DemandLoadingService,
     private _demandNavigationService: DemandNavigationService,
-    private _authService: AuthService,
     private store: Store
   ) {
     this._demandConverter = new DemandConverter();
@@ -364,16 +363,14 @@ export class EDSComponent implements OnInit, OnDestroy {
           currentDemand,
         })
       ).subscribe((pair) => {
-        const currentUser = this._authService.getUserFromStore();
-        console.log(currentUser);
         const user = {
           ...pair.currentDemand.Person,
           ...{
-            Email: pair.storedUser.Profile.Email,
-            NameFirst: pair.storedUser.Profile.Name.First,
-            NameLast: pair.storedUser.Profile.Name.Last,
-            Gender: pair.storedUser.Profile.IsMale ? 1 : 0,
-            Phone: pair.storedUser.Profile.Phone,
+            Email: pair.storedUser?.Profile?.Email,
+            NameFirst: pair.storedUser?.Profile?.Name?.First,
+            NameLast: pair.storedUser?.Profile?.Name?.Last,
+            Gender: pair.storedUser?.Profile?.IsMale ? 1 : 0,
+            Phone: pair.storedUser?.Profile?.Phone,
           },
         };
 
@@ -383,8 +380,6 @@ export class EDSComponent implements OnInit, OnDestroy {
             ...user,
           },
         };
-
-        console.log(demandToConvert);
 
         const convertedDemand =
           this._demandConverter.convertToFormData(demandToConvert);

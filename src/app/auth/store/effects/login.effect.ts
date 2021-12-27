@@ -16,6 +16,8 @@ import {
   loginFailureAction,
   loginAdminSuccessAction,
 } from 'src/app/auth/store/actions/login.action';
+import { Store } from '@ngrx/store';
+import { getCurrentUserAction } from '../actions/getCurrentUser.action';
 
 @Injectable()
 export class LoginEffect {
@@ -38,6 +40,7 @@ export class LoginEffect {
               let token = btoa(`${request.login}:${request.password}`);
               this.cookieService.put('_bt_admin', token);
               let adminUserFactoring: CurrentUserFactoringInterface = response;
+              this.store.dispatch(getCurrentUserAction());
 
               return loginAdminSuccessAction({ adminUserFactoring });
             } else {
@@ -53,6 +56,8 @@ export class LoginEffect {
               this.cookieService.put('_bt', token);
               let currentUserFactoring: CurrentUserFactoringInterface =
                 response;
+
+              this.store.dispatch(getCurrentUserAction());
 
               return loginSuccessAction({ currentUserFactoring });
             }
@@ -93,6 +98,7 @@ export class LoginEffect {
     private actions$: Actions,
     private authService: AuthService,
     private cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 }
