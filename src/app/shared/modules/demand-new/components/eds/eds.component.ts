@@ -215,13 +215,7 @@ export class EDSComponent implements OnInit, OnDestroy {
       return true;
     }
 
-    if (
-      crtInds.includes('Inn') &&
-      crtInds.includes('Ogrn') &&
-      crtInds.includes('Snils') &&
-      crtInds.includes('Director') &&
-      crtInds.includes('Passport')
-    ) {
+    if (crtInds.includes('Application') && crtInds.includes('Passport')) {
       isInvalid = false;
     } else {
       isInvalid = true;

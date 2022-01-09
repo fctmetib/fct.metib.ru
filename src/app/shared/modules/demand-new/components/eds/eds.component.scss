@@ -1,3 +1,6 @@
+.application {
+  margin-top: 14px;
+}
 
 .description {
   font-family: Ubuntu;
@@ -24,7 +27,7 @@
   padding: 10px;
 }
 
-:host ::ng-deep  .p-fileupload.p-fileupload-basic.p-component {
+:host ::ng-deep .p-fileupload.p-fileupload-basic.p-component {
   height: 100% !important;
 
 }

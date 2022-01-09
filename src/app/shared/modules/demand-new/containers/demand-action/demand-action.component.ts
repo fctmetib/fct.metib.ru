@@ -241,7 +241,10 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
       downloadLink.href = window.URL.createObjectURL(
         new Blob(binaryData, { type: 'application/msword' })
       );
-      downloadLink.setAttribute('download', 'Заявка на выдачу сертификата');
+      downloadLink.setAttribute(
+        'download',
+        'Заявка_на_выдачу_сертификата.docx'
+      );
       document.body.appendChild(downloadLink);
       downloadLink.click();
     });

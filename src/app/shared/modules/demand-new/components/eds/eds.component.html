@@ -138,7 +138,7 @@
         [addressGroup]="form.get('organizationPostAddress')"></demand-address-group>
     </div>
     <!-- 5 row -->
-    <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+    <!-- <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
       <div class="p-field p-col-12 p-md-6">
         <label> Прикрепите необходимые файлы </label>
         <mib-file-uploader [existFile]="files" [title]="'Скан-Копия свидетельства ИНН организации'" [type]="'Inn'"
@@ -153,7 +153,7 @@
         организации'" [type]="'Ogrn'" (remove)="onRemove($event)" (add)="onAdd($event)">
         </mib-file-uploader>
       </div>
-    </ng-container>
+    </ng-container> -->
     <div class="p-col-12">
       <h1>
         Данные о владельце сертификата
@@ -250,7 +250,7 @@
     </div>
   </div>
   <!-- 9 row -->
-  <div class="p-fluid p-formgrid p-grid form">
+  <!-- <div class="p-fluid p-formgrid p-grid form">
     <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
       <div class="p-field p-col-12 p-md-6">
         <label>
@@ -271,7 +271,7 @@
       </div>
 
     </ng-container>
-  </div>
+  </div> -->
   <div class="p-fluid p-formgrid p-grid form">
     <!-- 10 row -->
     <div class="p-field p-col-12 p-md-12">
@@ -388,6 +388,19 @@
         href="https://astral.ru/" target="_blank"> один из
         центров выдачи сертификатов</a> для сверки документов и получения сертификата</p>
     <p>Вы можете следить за состоянием Вашего запроса из личного кабинета по факторингу в разделе "Запросы"</p>
+
+
+    <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+      <div class="p-field p-col-12 p-md-12 application">
+        <label>
+          Прикрепите заполненную заявку
+        </label>
+        <mib-file-uploader [existFile]="files" [title]="'Скан заполненной заявки'" [type]="'Application'"
+          (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+
+      </div>
+    </ng-container>
 
     <div class="p-field p-col-12 p-md-12">
       <label for="btn_submit">&nbsp;</label>
