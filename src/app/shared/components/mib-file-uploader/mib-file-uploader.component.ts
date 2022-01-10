@@ -3,12 +3,10 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { CryptoService } from '../../services/common/crypto.service';
 import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-error-dialog.component';
 
 @Component({
@@ -26,6 +24,7 @@ import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-e
             id="{{ type }}"
             (change)="onSelect($event)"
             multiple="true"
+            accept="{{ validations ? validations : '*' }}"
             hidden
           />
           <label for="{{ type }}" class="mib-upload"
@@ -67,6 +66,9 @@ import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-e
   `,
 })
 export class MibFileUploaderComponent implements OnInit {
+  @Input()
+  validations: string;
+
   @Input()
   title: string;
 
