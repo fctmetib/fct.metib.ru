@@ -21,8 +21,21 @@
   }
 
   @media (max-width: 1300px) {
-    background-image: none;
-    // padding-bottom: 40px;
+    height: 900px;
+    background-size: 500px;
+    background-position: bottom;
+  }
+
+  @media (max-width: 920px) {
+    height: 900px;
+    background-size: 400px;
+    background-position: bottom;
+  }
+
+  @media (max-width: 570px) {
+    height: 900px;
+    background-size: 260px;
+    background-position: bottom;
   }
 
   &_inner {
@@ -347,4 +360,3 @@
     }
   }
 }
-
