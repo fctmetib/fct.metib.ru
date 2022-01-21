@@ -79,8 +79,8 @@ export class DemandPageComponent implements OnInit, OnDestroy {
     this.initActions();
     this.isUserVerified = this.authService.isUserVerified();
 
-    // this.displayCertificates();
-    // this.displaySystemInfo();
+    this.displayCertificates();
+    this.displaySystemInfo();
   }
 
   ngOnDestroy() {
