@@ -1,0 +1,12 @@
+@import '/src/styles/layout/menu.scss';
+@import '/src/styles/layout/text.scss';
+@import '/src/styles/layout/common.scss';
+@import '/src/styles/layout/form.scss';
+
+body {
+  margin: 0;
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: normal;
+  color: $black;
+}

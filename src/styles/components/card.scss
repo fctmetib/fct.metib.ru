@@ -1,0 +1,93 @@
+.card-content {
+  background: url('/assets/images/mib_logo_background.png') no-repeat center center, $grey;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 50px;
+  box-shadow: none;
+  // width: 80vw;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    &.lg {
+      margin-bottom: 48px;
+    }
+
+    h2 {
+      margin-top: 0px;
+      margin-bottom: 10px;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .subheader {
+      color: $description;
+
+      &.info {
+        margin-top: 9px;
+        display: flex;
+        flex-wrap: wrap;
+        color: #102538;
+      }
+    }
+  }
+
+  &.card-content__tabs {
+    height: 500px;
+    padding-top: 5px;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-bottom: 15px;
+
+    .p-tabview-nav {
+      background: transparent;
+      border-width: 0 0 1px 0;
+
+      .p-tabview-nav-link {
+        border-width: 0 0 1px 0;
+        background: transparent;
+        border-color: #DEDEDE;
+        color: #A6A6A6;
+      }
+
+      .p-highlight {
+        .p-tabview-nav-link {
+          background: transparent;
+        }
+      }
+    }
+    .p-tabview-panels {
+      background: transparent;
+    }
+  }
+
+  .card-content__text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+  }
+}
+
+
+
+// Стили, для небольших экранов
+@media (max-width: 1300px) {
+  .card-content {
+    // width: 98vw;
+  }
+}

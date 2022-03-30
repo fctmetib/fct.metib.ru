@@ -1,0 +1,88 @@
+button {
+  border-radius: 10px !important;
+  padding: 20px !important;
+}
+
+button.basic {
+  background: linear-gradient(254.84deg, #3561A6 8.99%, rgba(255, 255, 255, 0) 64.13%), linear-gradient(252.66deg, #66ABC6 40.02%, rgba(255, 255, 255, 0) 151.07%), #89D3CF;
+  border: unset;
+}
+
+button.basic:hover {
+  background: linear-gradient(254.84deg, #3561A6 8.99%, rgba(255, 255, 255, 0) 64.13%), linear-gradient(252.66deg, #66ABC6 40.02%, rgba(255, 255, 255, 0) 151.07%), #89D3CF !important;
+  border: unset !important;
+}
+
+.button-content {
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 20px;
+
+  border: 1px solid #4B75B1;
+}
+
+.addon-text {
+  border: solid 1px #c4c4c4;
+  width: 100%;
+  height: 39px;
+  border-radius: 10px;
+  padding-left: 10px;
+  align-items: center;
+  display: flex;
+}
+
+.addon-text-small {
+  text-align: center;
+  border: solid 1px #c4c4c4;
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.mib-small {
+  width: 130px !important;
+  padding: 10px !important;
+}
+
+.mib-button-icon {
+  height: 3.375rem;
+  width: 3.375rem;
+
+  border-radius: 10px;
+
+  background-color: $main;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  image {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.p-button-icon-only {
+  padding: 0px 16px !important;
+  width: unset !important;
+  background: linear-gradient(254.84deg, #3561A6 8.99%, rgba(255, 255, 255, 0) 64.13%), linear-gradient(252.66deg, #66ABC6 40.02%, rgba(255, 255, 255, 0) 151.07%), #89D3CF !important;
+  border: unset !important;
+}
+
+.p-button.p-button-outlined {
+  background-color: transparent;
+  color: #7DA9CA !important;
+  border: 1px #7DA9CA solid !important;
+}
+
+.action-box__button {
+  background: $main !important;
+  border-color: $main-mono !important;
+}
+
+.addon-button__button {
+  background: linear-gradient(254.84deg, #3561A6 8.99%, rgba(255, 255, 255, 0) 64.13%),
+    linear-gradient(252.66deg, #66ABC6 40.02%, rgba(255, 255, 255, 0) 151.07%),
+    #89D3CF !important;
+  border: unset !important;
+}

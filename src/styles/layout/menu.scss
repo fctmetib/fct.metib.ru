@@ -1,0 +1,29 @@
+.p-menu {
+  border: unset !important;
+}
+
+.p-menu .p-menuitem-link:not(.p-disabled):hover {
+  background: transparent !important;
+  color: $dark-grey !important;
+//  font-weight: bold !important;
+}
+
+.p-menu .p-menuitem-link {
+  padding-left: 0px !important;
+}
+
+.p-menu .p-menuitem-link .p-menuitem-text {
+  color: $dark-grey !important;
+}
+
+.p-menu .p-menuitem-link-active .p-menuitem-text {
+  color: $dark-blue !important;
+}
+
+.active-link {
+  font-weight: bold;
+}
+
+.p-menu .p-menuitem-link:focus {
+  box-shadow: unset !important;
+}

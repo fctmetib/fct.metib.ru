@@ -1,0 +1,203 @@
+.p-datatable-wrapper::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+  border: 1px solid $dark-grey;
+}
+
+.p-datatable-scrollable-body::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+  border: 1px solid $dark-grey;
+  border-radius: 10px;
+}
+
+.p-datatable-scrollable-body::-webkit-scrollbar-thumb:horizontal {
+  background: $main;
+  border-radius: 10px;
+}
+
+
+.p-datatable-scrollable-header-box {
+  padding-right: 0px !important;
+}
+
+// Стили, для небольших экранов
+@media (max-width: 1300px) {
+  .responsive-table {
+    max-width: 95vw;
+  }
+}
+
+.p-datatable .p-datatable-tbody>tr {
+  background: transparent !important;
+}
+
+.p-paginator {
+  background: transparent !important;
+}
+
+.p-datatable .p-datatable-tbody>tr>td {
+  border: unset !important;
+  padding: unset !important;
+
+  .m-td {
+    width: 100%;
+    height: 2.5rem;
+    border: 1px solid $light-grey;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+    padding: 0 .5rem 0 .5rem;
+
+    display: flex;
+    align-items: center;
+
+    div {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      p-celleditor {
+        input {
+          padding: unset !important;
+          border: none !important;
+          border-radius: unset !important;
+          background: unset !important;
+          width: 100px;
+        }
+      }
+    }
+
+    &.red {
+      border: 1px solid $warning;
+
+      div {
+        color: $warning;
+      }
+    }
+  }
+}
+
+.p-datatable .p-datatable-thead>tr>th {
+  background: transparent !important;
+  border: unset !important;
+  padding: unset !important;
+
+  .m-th {
+    height: 2.5rem;
+    width: 100%;
+    border: 1px solid $main;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+    padding: 0 .5rem 0 .5rem;
+
+    display: flex;
+    align-items: center;
+
+    div {
+      display: inline;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &.red {
+      border: 1px solid $warning;
+    }
+  }
+}
+
+.p-datatable .p-datatable-tbody>tr.p-highlight>td>.m-td {
+  border: 1px solid $dark-grey !important;
+}
+
+.p-datatable .p-datatable-tbody>tr {
+  outline-style: none !important;
+  outline-color: transparent !important;
+  transition: none !important;
+  color: #111111 !important;
+}
+
+.p-datatable table {
+  border-collapse: separate !important;
+  border-spacing: 1px !important;
+}
+
+.p-datatable .p-datatable-tbody {
+  tr {
+    &.success {
+      td {
+        .m-td {
+          border: 1px solid $success;
+          border-width: 1px 1px 1px 1px;
+        }
+      }
+    }
+
+    &.warn {
+      td {
+        .m-td {
+          border: 1px solid $warning !important;
+          border-width: 1px 1px 1px 1px;
+        }
+      }
+    }
+  }
+}
+
+.p-datatable .p-datatable-thead>tr {
+  &.empty {
+    th {
+      border: unset !important;
+    }
+  }
+}
+
+.p-datatable .p-datatable-tfoot>tr>td {
+  background: transparent !important;
+}
+
+.p-datatable .p-datatable-header {
+  background: transparent !important;
+  border: unset !important;
+}
+
+.p-datatable {
+  &.header-add {
+    .p-datatable-header {
+      display: flex;
+      justify-content: space-between;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+}
+
+
+.with-icon {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.h-500 {
+  height: 500px;
+}
+
+.currency {
+  justify-self: flex-start;
+  flex-direction: row-reverse;
+}
+
+.mib-row-expansion {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  &.mib-row-expansion__with-checkbox {
+    padding-left: 50px;
+  }
+}
