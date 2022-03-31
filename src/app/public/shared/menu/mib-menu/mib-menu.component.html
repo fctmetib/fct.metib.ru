@@ -4,29 +4,28 @@
       <div class="core">
         <div class="logo">
           <a [routerLink]="['/']">
-            <img src="../../../../../assets/images/logo_big_normal_svg.svg" alt="Логотип" />
+            <img src="/assets/images/logo_big_normal_svg.svg" alt="Логотип" />
           </a>
         </div>
         <div class="links">
           <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Главная</a>
           <a [routerLink]="['/tariffs']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
           <a [routerLink]="['/clients']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
-          <a [routerLink]="['/contacts']" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact:true}">Контакты</a>
-          <!-- <a [routerLink]="['/ui-kit-test']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">UI
-            KIT</a> -->
+          <a [routerLink]="['/contacts']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
         </div>
       </div>
       <div class="actions">
-        <mib-button [title]="'Личный кабинет'" [routerLink]="['login']"
-          [icon]="'../../../../assets/icons/button-icons/icon_key.svg'" [theme]="'regular'"></mib-button>
+        <mib-button [title]="'Личный кабинет'"
+                    [routerLink]="['login']"
+                    [icon]="'/assets/icons/button-icons/icon_key.svg'"
+                    [theme]="'regular'"></mib-button>
       </div>
     </div>
   </div>
   <div class="mobile">
     <div class="logo">
       <a [routerLink]="['/']">
-        <img src="../../../../../assets/images/logo_big_normal_svg.svg" alt="Логотип" />
+        <img src="/assets/images/logo_big_normal_svg.svg" alt="Логотип" />
       </a>
     </div>
     <input type="checkbox" class="toggler" />
@@ -56,13 +55,15 @@
             <div class="section-border"></div>
           </ul>
           <div class="actions mib-mb-20">
-            <mib-button [title]="'Личный кабинет'" [icon]="'../../../../assets/icons/button-icons/icon_key.svg'"
-              [routerLink]="['/login']" [theme]="'regular'" [width]="100"></mib-button>
+            <mib-button [title]="'Личный кабинет'"
+                        [icon]="'/assets/icons/button-icons/icon_key.svg'"
+                        [routerLink]="['/login']"
+                        [theme]="'regular'"
+                        [width]="100"></mib-button>
           </div>
           <div class="social mib-mb-20">
-            <mib-button [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'" [theme]="'icon'">
-            </mib-button>
-            <mib-button [icon]="'../../../../assets/icons/button-icons/icon_insta.svg'" [theme]="'icon'"></mib-button>
+            <mib-button [icon]="'/assets/icons/button-icons/icon_whatsapp.svg'"
+                        [theme]="'icon'"></mib-button>
           </div>
         </div>
       </div>
