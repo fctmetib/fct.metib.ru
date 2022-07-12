@@ -80,15 +80,15 @@ export class RegisterPageComponent {
         captcha: this.fb.group({
           text: ['', Validators.required],
         }),
-        password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^[\w\d \-]+$/)]],
-        confirmPassword: ['', [Validators.compose([Validators.required, Validators.minLength(6), Validators.pattern(/^[\w\d \-]+$/)])]],
+        password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]],
+        confirmPassword: ['', [Validators.compose([Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)])]],
         profile: this.fb.group({
           login: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]],
           email: ['', [Validators.required, Validators.email]],
           isMale: ['', Validators.required],
           name: this.fb.group({
-            first: ['', [Validators.required, Validators.minLength(6)]],
-            last: ['', [Validators.required, Validators.minLength(6)]],
+            first: ['', Validators.required],
+            last: ['', Validators.required],
           }),
           phone: ['', Validators.required],
         }),

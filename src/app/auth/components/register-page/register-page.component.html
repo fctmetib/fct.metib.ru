@@ -31,9 +31,6 @@
                   <div *ngIf="form.get('profile.name.first').errors['required']">
                     Поле Имя не должно быть пустым
                   </div>
-                  <div *ngIf="form.get('profile.name.first').errors['minlength']">
-                    Поле Имя должно быть более шести символов
-                  </div>
                 </small>
               </div>
               <div class="auth__body__form__fields__field">
@@ -47,9 +44,6 @@
                        *ngIf="form.get('profile.name.last').invalid && form.get('profile.name.last').touched">
                   <div *ngIf="form.get('profile.name.last').errors['required']">
                     Поле Фамилия не должно быть пустым
-                  </div>
-                  <div *ngIf="form.get('profile.name.last').errors['minlength']">
-                    Поле Фамилия должно быть более шести символов
                   </div>
                 </small>
               </div>
@@ -216,19 +210,32 @@
         </div>
 
       </div>
-      <div class="actions actions_registration actions_additional" *ngIf="!(confirmationCode$ | async)">
-        <button pButton class="additional-button" [routerLink]="['/login']" label="Авторизация"></button>
-        <button pButton type="submit" [disabled]="isSubmitting$ | async" label="Зарегистрироваться"
+      <div class="actions actions_registration actions_additional"
+           *ngIf="!(confirmationCode$ | async)">
+        <button pButton
+                class="additional-button"
+                [routerLink]="['/login']"
+                label="Авторизация"></button>
+        <button pButton
+                type="submit"
+                [disabled]="isSubmitting$ | async"
+                label="Зарегистрироваться"
                 class="main"></button>
         <!-- <p-button styleClass="p-button-link" label="Забыли пароль?" [routerLink]="['/reset-password']"></p-button> -->
       </div>
     </form>
 
-    <form *ngIf="(confirmationCode$ | async)" [formGroup]="formConfirm" (ngSubmit)="onConfirmSubmit()">
+    <form *ngIf="(confirmationCode$ | async)"
+          [formGroup]="formConfirm"
+          (ngSubmit)="onConfirmSubmit()">
       <div class="auth__body__form__fields">
         <div class="auth__body__form__fields__two-columns">
           <div class="auth__body__form__fields__field">
-            <input id="pin" type="text" pInputText placeholder="Код" formControlName="pin"
+            <input id="pin"
+                   type="text"
+                   pInputText
+                   placeholder="Код"
+                   formControlName="pin"
                    [ngClass]="{'ng-invalid ng-dirty': formConfirm.get('pin').invalid && formConfirm.get('pin').touched}">
             <!-- <small class="p-error" *ngIf="formConfirm.get('pin').invalid && formConfirm.get('pin').touched">
               <div *ngIf="formConfirm.get('pin').errors['required']">
@@ -242,8 +249,14 @@
       </div>
 
       <div class="actions actions_registration actions_additional">
-        <button pButton class="additional-button" [routerLink]="['/login']" label="Авторизация"></button>
-        <button pButton type="submit" [disabled]="isSubmitting$ | async" label="Завершить регистрацию"
+        <button pButton
+                class="additional-button"
+                [routerLink]="['/login']"
+                label="Авторизация"></button>
+        <button pButton
+                type="submit"
+                [disabled]="isSubmitting$ | async"
+                label="Завершить регистрацию"
                 class="main"></button>
         <!-- <p-button styleClass="p-button-link" label="Забыли пароль?" [routerLink]="['/reset-password']"></p-button> -->
       </div>
