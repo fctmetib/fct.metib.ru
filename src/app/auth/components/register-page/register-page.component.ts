@@ -47,7 +47,7 @@ export class RegisterPageComponent {
     private authService: AuthService,
     private commonService: CommonService,
     private store: Store
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.store.dispatch(resetMessagesAction());
@@ -80,15 +80,15 @@ export class RegisterPageComponent {
         captcha: this.fb.group({
           text: ['', Validators.required],
         }),
-        password: ['', Validators.required],
-        confirmPassword: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^[\w\d \-]+$/)]],
+        confirmPassword: ['', [Validators.compose([Validators.required, Validators.minLength(6), Validators.pattern(/^[\w\d \-]+$/)])]],
         profile: this.fb.group({
-          login: [{ value: '', disabled: true }, Validators.required],
+          login: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]],
           email: ['', [Validators.required, Validators.email]],
           isMale: ['', Validators.required],
           name: this.fb.group({
-            first: ['', Validators.required],
-            last: ['', Validators.required],
+            first: ['', [Validators.required, Validators.minLength(6)]],
+            last: ['', [Validators.required, Validators.minLength(6)]],
           }),
           phone: ['', Validators.required],
         }),
@@ -130,6 +130,9 @@ export class RegisterPageComponent {
   }
 
   onSubmit(): void {
+
+    if (this.form.valid === false) return;
+
     const request: RegisterRequestInterface = {
       Captcha: {
         Code: this.captchaCode,
