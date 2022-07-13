@@ -91,6 +91,8 @@ export class ResetPasswordPageComponent {
   }
 
   onSubmit(): void {
+    if (this.form.invalid) return;
+
     const request: ResetPasswordRequestInterface = {
       Captcha: {
         Code: this.captchaCode,

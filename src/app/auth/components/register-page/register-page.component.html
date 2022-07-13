@@ -69,7 +69,8 @@
             <div class="auth__body__form__fields__field">
               <input id="email"
                      type="email"
-                     pInputText placeholder="Email"
+                     pInputText
+                     placeholder="Email"
                      formControlName="email"
                      [ngClass]="{'ng-invalid ng-dirty': form.get('profile.email').invalid && form.get('profile.email').touched}">
               <small class="p-error" *ngIf="form.get('profile.email').invalid && form.get('profile.email').touched">
@@ -225,41 +226,41 @@
       </div>
     </form>
 
-    <form *ngIf="(confirmationCode$ | async)"
-          [formGroup]="formConfirm"
-          (ngSubmit)="onConfirmSubmit()">
-      <div class="auth__body__form__fields">
-        <div class="auth__body__form__fields__two-columns">
-          <div class="auth__body__form__fields__field">
-            <input id="pin"
-                   type="text"
-                   pInputText
-                   placeholder="Код"
-                   formControlName="pin"
-                   [ngClass]="{'ng-invalid ng-dirty': formConfirm.get('pin').invalid && formConfirm.get('pin').touched}">
-            <!-- <small class="p-error" *ngIf="formConfirm.get('pin').invalid && formConfirm.get('pin').touched">
-              <div *ngIf="formConfirm.get('pin').errors['required']">
-                Поле Код не должно быть пустым
-              </div>
-            </small> -->
-          </div>
-          <div class="auth__body__form__fields__field">
-          </div>
+  <form *ngIf="(confirmationCode$ | async)"
+        [formGroup]="formConfirm"
+        (ngSubmit)="onConfirmSubmit()">
+    <div class="auth__body__form__fields">
+      <div class="auth__body__form__fields__two-columns">
+        <div class="auth__body__form__fields__field">
+          <input id="pin"
+                 type="text"
+                 pInputText
+                 placeholder="Код"
+                 formControlName="pin"
+                 [ngClass]="{'ng-invalid ng-dirty': formConfirm.get('pin').invalid && formConfirm.get('pin').touched}">
+          <!-- <small class="p-error" *ngIf="formConfirm.get('pin').invalid && formConfirm.get('pin').touched">
+            <div *ngIf="formConfirm.get('pin').errors['required']">
+              Поле Код не должно быть пустым
+            </div>
+          </small> -->
+        </div>
+        <div class="auth__body__form__fields__field">
         </div>
       </div>
+    </div>
 
-      <div class="actions actions_registration actions_additional">
-        <button pButton
-                class="additional-button"
-                [routerLink]="['/login']"
-                label="Авторизация"></button>
-        <button pButton
-                type="submit"
-                [disabled]="isSubmitting$ | async"
-                label="Завершить регистрацию"
-                class="main"></button>
-        <!-- <p-button styleClass="p-button-link" label="Забыли пароль?" [routerLink]="['/reset-password']"></p-button> -->
-      </div>
-    </form>
+    <div class="actions actions_registration actions_additional">
+      <button pButton
+              class="additional-button"
+              [routerLink]="['/login']"
+              label="Авторизация"></button>
+      <button pButton
+              type="submit"
+              [disabled]="isSubmitting$ | async"
+              label="Завершить регистрацию"
+              class="main"></button>
+      <!-- <p-button styleClass="p-button-link" label="Забыли пароль?" [routerLink]="['/reset-password']"></p-button> -->
+    </div>
+  </form>
   </div>
 </div>

@@ -5,7 +5,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
-import { AuthService } from './../../services/auth.service';
 import {
   registerAction,
   registerConfirmAction,
@@ -29,6 +28,8 @@ import { ConfirmedValidator } from '../../tools/confirmPassword.tool';
 export class RegisterPageComponent {
   form: FormGroup;
   formConfirm: FormGroup;
+  testForm: FormGroup;
+
   genderOptions: MaleOptionsInterface[] = [];
 
   isSubmitting$: Observable<boolean>;
@@ -42,11 +43,10 @@ export class RegisterPageComponent {
   private captchaCode: string = '';
 
   constructor(
-    private fb: FormBuilder,
-    private sanitizer: DomSanitizer,
-    private authService: AuthService,
-    private commonService: CommonService,
-    private store: Store
+    private readonly fb: FormBuilder,
+    private readonly sanitizer: DomSanitizer,
+    private readonly commonService: CommonService,
+    private readonly store: Store
   ) { }
 
   ngOnInit(): void {
@@ -70,7 +70,7 @@ export class RegisterPageComponent {
       {
         name: 'Женский',
         value: false,
-      },
+      }
     ];
   }
 
@@ -105,13 +105,16 @@ export class RegisterPageComponent {
     this.form
       .get('profile')
       .get('email')
-      .valueChanges.subscribe((updatedEmail) => {
+      .valueChanges
+      .subscribe((updatedEmail: string): void => {
         this.form.patchValue({
           profile: {
             login: updatedEmail,
           },
         });
       });
+
+    console.log(this.form);
   }
 
   updateCaptcha() {
@@ -131,7 +134,10 @@ export class RegisterPageComponent {
 
   onSubmit(): void {
 
-    if (this.form.valid === false) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     const request: RegisterRequestInterface = {
       Captcha: {
