@@ -1,7 +1,7 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
@@ -18,7 +18,7 @@ import {
   isSubmittingSelector,
   confirmationCodeSelector,
 } from './../../store/selectors';
-import { ConfirmedValidator } from '../../tools/confirmPassword.tool';
+import { CustomValidators } from '../../tools/confirmPassword.tool';
 
 @Component({
   selector: 'app-register-page',
@@ -75,27 +75,26 @@ export class RegisterPageComponent {
   }
 
   initializeForm(): void {
-    this.form = this.fb.group(
+    this.form = new FormGroup(
       {
-        captcha: this.fb.group({
-          text: ['', Validators.required],
+        captcha: new FormGroup({
+          text: new FormControl('', Validators.required),
         }),
-        password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]],
-        confirmPassword: ['', [Validators.compose([Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)])]],
-        profile: this.fb.group({
-          login: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]],
-          email: ['', [Validators.required, Validators.email]],
-          isMale: ['', Validators.required],
-          name: this.fb.group({
-            first: ['', Validators.required],
-            last: ['', Validators.required],
+        password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]),
+        confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]),
+        profile: new FormGroup({
+          login: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]),
+          email: new FormControl('', [Validators.required, Validators.email]),
+          isMale: new FormControl('', Validators.required),
+          name: new FormGroup({
+            first: new FormControl('', Validators.required),
+            last: new FormControl('', Validators.required),
           }),
-          phone: ['', Validators.required],
+          phone: new FormControl('', Validators.required),
         }),
-      },
-      {
-        validator: ConfirmedValidator('password', 'confirmPassword'),
-      }
+      }, [
+        CustomValidators.ConfirmedValidator('password', 'confirmPassword'),
+      ]
     );
 
     this.formConfirm = this.fb.group({

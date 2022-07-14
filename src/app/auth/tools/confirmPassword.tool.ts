@@ -1,7 +1,8 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export function ConfirmedValidator(controlName: string, matchingControlName: string){
-  return (formGroup: FormGroup) => {
+export class CustomValidators {
+    static ConfirmedValidator(controlName: string, matchingControlName: string): ValidatorFn {
+  return (formGroup: FormGroup): ValidationErrors | null => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
       if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {
@@ -13,4 +14,5 @@ export function ConfirmedValidator(controlName: string, matchingControlName: str
           matchingControl.setErrors(null);
       }
   }
+}
 }
