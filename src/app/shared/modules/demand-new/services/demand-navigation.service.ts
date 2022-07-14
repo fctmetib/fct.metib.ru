@@ -19,7 +19,7 @@ export class DemandNavigationService {
   // принимает в себя готовый к отправке на АПИ объект, а также тип действия (создание, редактирование, сохранение)
   public doDemandAction$ = new Subject<DoDemandActionInterface>();
 
-  public doDemandSave$ = new Subject();
+  public doDemandSave$:Subject<void> = new Subject<void>();
 
   constructor() {}
 

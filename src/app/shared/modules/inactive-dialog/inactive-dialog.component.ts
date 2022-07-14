@@ -10,8 +10,8 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   styleUrls: ['./inactive-dialog.component.scss'],
 })
 export class InactiveDialogComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
-  subject = new Subject();
+  private subscription: Subscription;
+  private subject: Subject<void> = new Subject<void>();
 
   public counter$: Observable<number>;
   count = 30;
