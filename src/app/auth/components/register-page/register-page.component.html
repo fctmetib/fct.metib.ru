@@ -25,7 +25,7 @@
                        pInputText
                        placeholder="Имя"
                        formControlName="first"
-                       [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.name.first').invalid }">
+                       [ngClass]="{ 'mib-border-danger': isSubmitted && form.get('profile.name.first').invalid }">
                 <small class="p-error"
                        *ngIf="isSubmitted && form.get('profile.name.first').invalid">
                   <div *ngIf="form.get('profile.name.first').errors['required']">
@@ -39,7 +39,7 @@
                        pInputText
                        placeholder="Фамилия"
                        formControlName="last"
-                       [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.name.last').invalid }">
+                       [ngClass]="{ 'mib-border-danger': isSubmitted && form.get('profile.name.last').invalid }">
                 <small class="p-error"
                        *ngIf="isSubmitted && form.get('profile.name.last').invalid">
                   <div *ngIf="form.get('profile.name.last').errors['required']">
@@ -57,7 +57,7 @@
                            type="tel"
                            placeholder="Телефон"
                            formControlName="phone"
-                           [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.phone').invalid }">
+                           [ngClass]="{ 'mib-border-danger': isSubmitted && form.get('profile.phone').invalid }">
               </p-inputMask>
               <small class="p-error"
                      *ngIf="isSubmitted && form.get('profile.phone').invalid ">
@@ -72,7 +72,7 @@
                      pInputText
                      placeholder="Email"
                      formControlName="email"
-                     [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.email').invalid }">
+                     [ngClass]="{ 'mib-border-danger': isSubmitted && form.get('profile.email').invalid }">
               <small class="p-error"
                      *ngIf="isSubmitted && form.get('profile.email').invalid">
                 <div *ngIf="form.get('profile.email').errors['required']">
@@ -93,7 +93,7 @@
                      pInputText
                      placeholder="Логин"
                      formControlName="login"
-                     [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.login').invalid }">
+                     [ngClass]="{ 'mib-border-danger': isSubmitted && form.get('profile.login').invalid }">
               <!-- <small>
                 <div>
                   Логин
@@ -116,7 +116,7 @@
                           [showClear]="false"
                           placeholder="Пол"
                           optionValue="value"
-                          [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.isMale').invalid }">
+                          [ngClass]="{ 'mib-border-danger': isSubmitted && form.get('profile.isMale').invalid }">
                 <ng-template let-country
                              pTemplate="item">
                   <div class="country-item">
@@ -143,7 +143,7 @@
                    pInputText
                    placeholder="Пароль"
                    formControlName="password"
-                   [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('password').invalid }">
+                   [ngClass]="{ 'mib-border-danger': isSubmitted && form.get('password').invalid }">
             <small class="p-error"
                    *ngIf="isSubmitted && form.get('password').invalid">
               <div *ngIf="form.get('password').errors['required']">
@@ -163,7 +163,7 @@
                    pInputText
                    placeholder="Подтвердите Пароль"
                    formControlName="confirmPassword"
-                   [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('confirmPassword').invalid }">
+                   [ngClass]="{ 'mib-border-danger': isSubmitted && form.get('confirmPassword').invalid }">
             <small class="p-error"
                    *ngIf="isSubmitted && form.get('confirmPassword').invalid">
               <div *ngIf="form.get('confirmPassword').errors['required']">
@@ -193,7 +193,7 @@
                      pInputText
                      formControlName="text"
                      placeholder="Укажите текст с картинки"
-                     [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('captcha.text').invalid }">
+                     [ngClass]="{ 'mib-border-danger': isSubmitted && form.get('captcha.text').invalid }">
               <small class="p-error"
                      *ngIf="isSubmitted && form.get('captcha.text').invalid">
                 <div *ngIf="form.get('captcha.text').errors['required']">
@@ -237,7 +237,7 @@
                    pInputText
                    placeholder="Код"
                    formControlName="pin"
-                   [ngClass]="{'mib-border-danger ng-dirty': formConfirm.get('pin').invalid && formConfirm.get('pin').touched}">
+                   [ngClass]="{'mib-border-danger': formConfirm.get('pin').invalid && formConfirm.get('pin').touched}">
             <!-- <small class="p-error" *ngIf="formConfirm.get('pin').invalid && formConfirm.get('pin').touched">
               <div *ngIf="formConfirm.get('pin').errors['required']">
                 Поле Код не должно быть пустым

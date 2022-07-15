@@ -4,7 +4,7 @@
       <h1>Личный кабинет</h1>
       <div class="close"
            [routerLink]="['/']">
-           <i class="pi pi-times"></i>
+        <i class="pi pi-times"></i>
       </div>
     </div>
     <form [formGroup]="form"
@@ -28,7 +28,8 @@
         <div class="auth__body__form__fields__field">
           <div class="p-inputgroup">
             <input [type]="fieldTextType ? 'text' : 'password'"
-                   pInputText placeholder="Пароль"
+                   pInputText
+                   placeholder="Пароль"
                    formControlName="password"
                    [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('password').invalid }">
             <button type="button"
@@ -48,9 +49,9 @@
       </div>
       <div class="actions">
         <button pButton
-           type="submit"
-           [disabled]="isSubmitting$ | async"
-           label="Вход"></button>
+                type="submit"
+                [disabled]="isSubmitting$ | async"
+                label="Вход"></button>
       </div>
       <div class="actions actions_additional">
         <p-button styleClass="p-button-link"
