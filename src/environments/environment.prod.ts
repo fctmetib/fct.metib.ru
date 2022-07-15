@@ -1,6 +1,6 @@
 export const environment = {
   // new  https://api-factoring.metib.ru/
-  apiUrl: 'https://api-factoring.metib.ru/api/',
+  apiUrl: 'https://api-factoring.metib.ru/api',
   apiFileUploadUrl: 'https://api-factoring.metib.ru/api/',
   // old
   // apiUrl: 'https://api-factoring.metib.ru:8096/api/',
