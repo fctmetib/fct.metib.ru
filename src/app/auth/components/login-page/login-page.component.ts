@@ -1,7 +1,7 @@
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 
 import { resetMessagesAction } from './../../store/actions/common.action';
@@ -20,12 +20,13 @@ import { loginAction } from '../../store/actions/login.action';
   encapsulation: ViewEncapsulation.None
 })
 export class LoginPageComponent implements OnInit {
-  form: FormGroup;
+  public form: FormGroup;
 
-  isSubmitting$: Observable<boolean> = new Observable<boolean>();
-  backendErrors$: Observable<string | null>;
+  public isSubmitting$: Observable<boolean> = new Observable<boolean>();
+  public backendErrors$: Observable<string | null>;
+  public isSubmitted: boolean = false;
 
-  currentIp: string = '';
+  private currentIp: string = '';
 
   alert: boolean = false;
   alertMessage: string = '';
@@ -36,11 +37,10 @@ export class LoginPageComponent implements OnInit {
   public fieldTextType: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
-    private commonService: CommonService,
-    private store: Store,
-    private route: ActivatedRoute
-  ) {}
+    private readonly commonService: CommonService,
+    private readonly store: Store,
+    private readonly route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.store.dispatch(resetMessagesAction());
@@ -63,14 +63,21 @@ export class LoginPageComponent implements OnInit {
         this.alert = true;
         this.alertMessage = 'Пароль успешно изменен. Войдите в сервис, используя свои данные.'
       }
-      if(params['sessionFailed']) {
+      if (params['sessionFailed']) {
         this.alert = true;
         this.alertMessage = 'Пожалуйста, войдите в систему снова.'
       }
     });
   }
 
-  initializeValues(): void {
+  private initializeForm(): void {
+    this.form = new FormGroup({
+      login: new FormControl('', [Validators.required]),
+      password: new FormControl('', Validators.required),
+    });
+  }
+
+  private initializeValues(): void {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
     this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
 
@@ -79,14 +86,11 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  initializeForm(): void {
-    this.form = this.fb.group({
-      login: ['', [Validators.required]],
-      password: ['', Validators.required],
-    });
-  }
+  public onSubmit(): void {
 
-  onSubmit(): void {
+    this.isSubmitted = true;
+    if (this.form.invalid) return;
+
     const request: LoginRequestInterface = {
       ip: this.currentIp,
       login: this.form.value.login,
@@ -94,9 +98,5 @@ export class LoginPageComponent implements OnInit {
     };
 
     this.store.dispatch(loginAction({ request }));
-  }
-
-  public showPassword() {
-    this.fieldTextType = !this.fieldTextType;
   }
 }

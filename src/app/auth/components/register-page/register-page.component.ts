@@ -18,7 +18,7 @@ import {
   isSubmittingSelector,
   confirmationCodeSelector,
 } from './../../store/selectors';
-import { CustomValidators } from '../../tools/confirmPassword.tool';
+import Validation from '../../tools/confirmPassword.tool';
 
 @Component({
   selector: 'app-register-page',
@@ -26,19 +26,18 @@ import { CustomValidators } from '../../tools/confirmPassword.tool';
   styleUrls: ['./register-page.component.scss'],
 })
 export class RegisterPageComponent {
-  form: FormGroup;
-  formConfirm: FormGroup;
-  testForm: FormGroup;
+  public form: FormGroup;
+  public formConfirm: FormGroup;
+  public testForm: FormGroup;
 
-  genderOptions: MaleOptionsInterface[] = [];
+  public genderOptions: MaleOptionsInterface[] = [];
 
-  isSubmitting$: Observable<boolean>;
-  backendErrors$: Observable<string | null>;
-  confirmationCode$: Observable<string | null>;
+  public isSubmitting$: Observable<boolean>;
+  public backendErrors$: Observable<string | null>;
+  public confirmationCode$: Observable<string | null>;
+  public isSubmitted: boolean = false;
 
   image: any;
-
-  isConfirm: boolean = false;
 
   private captchaCode: string = '';
 
@@ -56,7 +55,47 @@ export class RegisterPageComponent {
     this.initializeValues();
   }
 
-  initializeValues(): void {
+  private initializeForm(): void {
+    this.form = new FormGroup(
+      {
+        captcha: new FormGroup({
+          text: new FormControl('', Validators.required),
+        }),
+        password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]),
+        confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]),
+        profile: new FormGroup({
+          login: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]),
+          email: new FormControl('', [Validators.required, Validators.email]),
+          isMale: new FormControl('', Validators.required),
+          name: new FormGroup({
+            first: new FormControl('', Validators.required),
+            last: new FormControl('', Validators.required),
+          }),
+          phone: new FormControl('', Validators.required)
+        }),
+      }, [
+      Validation.confirmedValidator('password', 'confirmPassword')
+    ]
+    );
+
+    this.formConfirm = this.fb.group({
+      pin: ['', Validators.required]
+    });
+
+    this.form
+      .get('profile')
+      .get('email')
+      .valueChanges
+      .subscribe((updatedEmail: string): void => {
+        this.form.patchValue({
+          profile: {
+            login: updatedEmail
+          },
+        });
+      });
+  }
+
+  private initializeValues(): void {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
     this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
     this.confirmationCode$ = this.store.pipe(select(confirmationCodeSelector));
@@ -74,49 +113,7 @@ export class RegisterPageComponent {
     ];
   }
 
-  initializeForm(): void {
-    this.form = new FormGroup(
-      {
-        captcha: new FormGroup({
-          text: new FormControl('', Validators.required),
-        }),
-        password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]),
-        confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]),
-        profile: new FormGroup({
-          login: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]),
-          email: new FormControl('', [Validators.required, Validators.email]),
-          isMale: new FormControl('', Validators.required),
-          name: new FormGroup({
-            first: new FormControl('', Validators.required),
-            last: new FormControl('', Validators.required),
-          }),
-          phone: new FormControl('', Validators.required),
-        }),
-      }, [
-        CustomValidators.ConfirmedValidator('password', 'confirmPassword'),
-      ]
-    );
-
-    this.formConfirm = this.fb.group({
-      pin: ['', Validators.required],
-    });
-
-    this.form
-      .get('profile')
-      .get('email')
-      .valueChanges
-      .subscribe((updatedEmail: string): void => {
-        this.form.patchValue({
-          profile: {
-            login: updatedEmail,
-          },
-        });
-      });
-
-    console.log(this.form);
-  }
-
-  updateCaptcha() {
+  public updateCaptcha(): void {
     this.commonService.getCaptcha().subscribe((resp) => {
       var uint8View = new Uint8Array(resp.body);
       const STRING_CHAR = String.fromCharCode.apply(null, uint8View);
@@ -131,10 +128,10 @@ export class RegisterPageComponent {
     });
   }
 
-  onSubmit(): void {
-
+  public onSubmit(): void {
+    this.isSubmitted = true;
+    
     if (this.form.invalid) {
-      this.form.markAllAsTouched();
       return;
     }
 
@@ -159,7 +156,7 @@ export class RegisterPageComponent {
     this.store.dispatch(registerAction({ request }));
   }
 
-  onConfirmSubmit(): void {
+  public onConfirmSubmit(): void {
     let ConfirmationCode = '';
     this.confirmationCode$.subscribe((c) => {
       ConfirmationCode = c;

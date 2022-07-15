@@ -6,7 +6,7 @@ import { ResetPasswordRequestInterface } from './../../types/reset-password/rese
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
@@ -22,29 +22,29 @@ import { resetMessagesAction } from '../../store/actions/common.action';
 @Component({
   selector: 'app-reset-password-page',
   templateUrl: './reset-password-page.component.html',
-  styleUrls: ['./reset-password-page.component.scss'],
+  styleUrls: ['./reset-password-page.component.scss']
 })
 export class ResetPasswordPageComponent {
-  form: FormGroup;
-  formConfirm: FormGroup;
+  public form: FormGroup;
+  public formConfirm: FormGroup;
 
-  isSubmitting$: Observable<boolean>;
-  backendErrors$: Observable<string | null>;
-  confirmationCode$: Observable<string | null>;
-  successMessage$: Observable<string | null>;
+  public isSubmitting$: Observable<boolean>;
+  public backendErrors$: Observable<string | null>;
+  public confirmationCode$: Observable<string | null>;
+  public successMessage$: Observable<string | null>;
+  public isSubmitted: boolean = false;
 
   image: any;
 
-  isConfirm: boolean = false;
+  public isConfirm: boolean = false;
 
   private captchaCode: string = '';
 
   constructor(
-    private fb: FormBuilder,
-    private sanitizer: DomSanitizer,
-    private commonService: CommonService,
-    private store: Store
-  ) {}
+    private readonly sanitizer: DomSanitizer,
+    private readonly commonService: CommonService,
+    private readonly store: Store
+  ) { }
 
   ngOnInit(): void {
     this.store.dispatch(resetMessagesAction());
@@ -62,16 +62,16 @@ export class ResetPasswordPageComponent {
     this.updateCaptcha();
   }
 
-  initializeForm(): void {
-    this.form = this.fb.group({
-      captcha: this.fb.group({
-        text: ['', Validators.required],
+  private initializeForm(): void {
+    this.form = new FormGroup({
+      captcha: new FormGroup({
+        text: new FormControl('', Validators.required),
       }),
-      login: ['', Validators.required],
+      login: new FormControl('', Validators.required),
     });
 
-    this.formConfirm = this.fb.group({
-      pin: ['', Validators.required],
+    this.formConfirm = new FormGroup({
+      pin: new FormControl('', Validators.required),
     });
   }
 
@@ -91,7 +91,11 @@ export class ResetPasswordPageComponent {
   }
 
   onSubmit(): void {
-    if (this.form.invalid) return;
+    this.isSubmitted = true;
+    
+    if (this.form.invalid) {
+      return;
+    }
 
     const request: ResetPasswordRequestInterface = {
       Captcha: {

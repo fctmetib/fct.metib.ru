@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -12,7 +12,7 @@ import {
 import { resetMessagesAction } from '../../store/actions/common.action';
 import { resetPasswordCompleteAction } from '../../store/actions/resetPassword.action';
 import { ResetPasswordCompleteRequestInterface } from './../../types/reset-password/resetPasswordCompleteRequest.interface';
-import { CustomValidators } from '../../tools/confirmPassword.tool';
+import CustomValidators from '../../tools/confirmPassword.tool';
 
 @Component({
   selector: 'app-confirm-password-page',
@@ -29,10 +29,9 @@ export class ConfirmPasswordPageComponent {
   completionCode: string = '';
 
   constructor(
-    private fb: FormBuilder,
-    private store: Store,
-    private route: ActivatedRoute
-  ) {}
+    private readonly store: Store,
+    private readonly route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.store.dispatch(resetMessagesAction());
@@ -52,11 +51,10 @@ export class ConfirmPasswordPageComponent {
   }
 
   initializeForm(): void {
-    this.form = this.fb.group({
-      password: ['', [Validators.required]],
-      confirmPassword: ['']
-    }, [CustomValidators.ConfirmedValidator('password', 'confirmPassword')]
-  )
+    this.form = new FormGroup({
+      password: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('')
+    }, [CustomValidators.confirmedValidator('password', 'confirmPassword')])
   }
 
   onSubmit(): void {

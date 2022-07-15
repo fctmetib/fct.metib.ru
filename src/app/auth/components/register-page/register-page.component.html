@@ -25,9 +25,9 @@
                        pInputText
                        placeholder="Имя"
                        formControlName="first"
-                       [ngClass]="{'ng-invalid ng-dirty': form.get('profile.name.first').invalid && form.get('profile.name.first').touched}">
+                       [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.name.first').invalid }">
                 <small class="p-error"
-                       *ngIf="form.get('profile.name.first').invalid && form.get('profile.name.first').touched">
+                       *ngIf="isSubmitted && form.get('profile.name.first').invalid">
                   <div *ngIf="form.get('profile.name.first').errors['required']">
                     Поле Имя не должно быть пустым
                   </div>
@@ -39,9 +39,9 @@
                        pInputText
                        placeholder="Фамилия"
                        formControlName="last"
-                       [ngClass]="{'ng-invalid ng-dirty': form.get('profile.name.last').invalid && form.get('profile.name.last').touched}">
+                       [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.name.last').invalid }">
                 <small class="p-error"
-                       *ngIf="form.get('profile.name.last').invalid && form.get('profile.name.last').touched">
+                       *ngIf="isSubmitted && form.get('profile.name.last').invalid">
                   <div *ngIf="form.get('profile.name.last').errors['required']">
                     Поле Фамилия не должно быть пустым
                   </div>
@@ -57,10 +57,10 @@
                            type="tel"
                            placeholder="Телефон"
                            formControlName="phone"
-                           [ngClass]="{'ng-invalid ng-dirty': form.get('profile.phone').invalid && form.get('profile.phone').touched}">
+                           [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.phone').invalid }">
               </p-inputMask>
               <small class="p-error"
-                     *ngIf="form.get('profile.phone').invalid && form.get('profile.phone').touched">
+                     *ngIf="isSubmitted && form.get('profile.phone').invalid ">
                 <div *ngIf="form.get('profile.phone').errors['required']">
                   Поле Телефон не должно быть пустым
                 </div>
@@ -72,8 +72,9 @@
                      pInputText
                      placeholder="Email"
                      formControlName="email"
-                     [ngClass]="{'ng-invalid ng-dirty': form.get('profile.email').invalid && form.get('profile.email').touched}">
-              <small class="p-error" *ngIf="form.get('profile.email').invalid && form.get('profile.email').touched">
+                     [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.email').invalid }">
+              <small class="p-error"
+                     *ngIf="isSubmitted && form.get('profile.email').invalid">
                 <div *ngIf="form.get('profile.email').errors['required']">
                   Поле Email не должно быть пустым
                 </div>
@@ -92,14 +93,14 @@
                      pInputText
                      placeholder="Логин"
                      formControlName="login"
-                     [ngClass]="{'ng-invalid ng-dirty': form.get('profile.login').invalid && form.get('profile.login').touched}">
+                     [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.login').invalid }">
               <!-- <small>
                 <div>
                   Логин
                 </div>
               </small> -->
               <small class="p-error"
-                     *ngIf="form.get('profile.login').invalid && form.get('profile.login').touched">
+                     *ngIf="isSubmitted && form.get('profile.login').invalid">
                 <div *ngIf="form.get('profile.login').errors['required']">
                   Поле Логин не должно быть пустым
                 </div>
@@ -115,7 +116,7 @@
                           [showClear]="false"
                           placeholder="Пол"
                           optionValue="value"
-                          [ngClass]="{'ng-invalid ng-dirty': form.get('profile.isMale').invalid && form.get('profile.isMale').touched}">
+                          [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('profile.isMale').invalid }">
                 <ng-template let-country
                              pTemplate="item">
                   <div class="country-item">
@@ -124,7 +125,7 @@
                 </ng-template>
               </p-dropdown>
               <small class="p-error"
-                     *ngIf="form.get('profile.isMale').invalid && form.get('profile.isMale').touched">
+                     *ngIf="isSubmitted && form.get('profile.isMale').invalid">
                 <div *ngIf="form.get('profile.isMale').errors['required']">
                   Поле Пол не должно быть пустым
                 </div>
@@ -142,9 +143,9 @@
                    pInputText
                    placeholder="Пароль"
                    formControlName="password"
-                   [ngClass]="{'ng-invalid ng-dirty': form.get('password').invalid && form.get('password').touched}">
+                   [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('password').invalid }">
             <small class="p-error"
-                   *ngIf="form.get('password').invalid && form.get('password').touched">
+                   *ngIf="isSubmitted && form.get('password').invalid">
               <div *ngIf="form.get('password').errors['required']">
                 Поле Пароль не должно быть пустым
               </div>
@@ -162,8 +163,9 @@
                    pInputText
                    placeholder="Подтвердите Пароль"
                    formControlName="confirmPassword"
-                   [ngClass]="{'ng-invalid ng-dirty': form.get('confirmPassword').invalid && form.get('confirmPassword').touched}">
-            <small class="p-error" *ngIf="form.get('confirmPassword').invalid && form.get('confirmPassword').touched">
+                   [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('confirmPassword').invalid }">
+            <small class="p-error"
+                   *ngIf="isSubmitted && form.get('confirmPassword').invalid">
               <div *ngIf="form.get('confirmPassword').errors['required']">
                 Поле Подтвердите Пароль не должно быть пустым
               </div>
@@ -183,9 +185,7 @@
           <div class="auth__body__form__fields__two-columns">
             <div class="auth__body__form__fields__field">
               <img id="image"
-                   [src]="image"
-                   height="50"
-                   width="200">
+                   [src]="image">
             </div>
             <div class="auth__body__form__fields__field">
               <input id="text"
@@ -193,9 +193,9 @@
                      pInputText
                      formControlName="text"
                      placeholder="Укажите текст с картинки"
-                     [ngClass]="{'ng-invalid ng-dirty': form.get('captcha.text').invalid && form.get('captcha.text').touched}">
+                     [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('captcha.text').invalid }">
               <small class="p-error"
-                     *ngIf="form.get('captcha.text').invalid && form.get('captcha.text').touched">
+                     *ngIf="isSubmitted && form.get('captcha.text').invalid">
                 <div *ngIf="form.get('captcha.text').errors['required']">
                   Поле Текст с Картинки не должно быть пустым
                 </div>
@@ -226,41 +226,42 @@
       </div>
     </form>
 
-  <form *ngIf="(confirmationCode$ | async)"
-        [formGroup]="formConfirm"
-        (ngSubmit)="onConfirmSubmit()">
-    <div class="auth__body__form__fields">
-      <div class="auth__body__form__fields__two-columns">
-        <div class="auth__body__form__fields__field">
-          <input id="pin"
-                 type="text"
-                 pInputText
-                 placeholder="Код"
-                 formControlName="pin"
-                 [ngClass]="{'ng-invalid ng-dirty': formConfirm.get('pin').invalid && formConfirm.get('pin').touched}">
-          <!-- <small class="p-error" *ngIf="formConfirm.get('pin').invalid && formConfirm.get('pin').touched">
-            <div *ngIf="formConfirm.get('pin').errors['required']">
-              Поле Код не должно быть пустым
-            </div>
-          </small> -->
-        </div>
-        <div class="auth__body__form__fields__field">
+    <form *ngIf="(confirmationCode$ | async)"
+          [formGroup]="formConfirm"
+          (ngSubmit)="onConfirmSubmit()">
+      <div class="auth__body__form__fields">
+        <div class="auth__body__form__fields__two-columns">
+          <div class="auth__body__form__fields__field">
+            <input id="pin"
+                   type="text"
+                   pInputText
+                   placeholder="Код"
+                   formControlName="pin"
+                   [ngClass]="{'mib-border-danger ng-dirty': formConfirm.get('pin').invalid && formConfirm.get('pin').touched}">
+            <!-- <small class="p-error" *ngIf="formConfirm.get('pin').invalid && formConfirm.get('pin').touched">
+              <div *ngIf="formConfirm.get('pin').errors['required']">
+                Поле Код не должно быть пустым
+              </div>
+            </small> -->
+          </div>
+          <div class="auth__body__form__fields__field">
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="actions actions_registration actions_additional">
-      <button pButton
-              class="additional-button"
-              [routerLink]="['/login']"
-              label="Авторизация"></button>
-      <button pButton
-              type="submit"
-              [disabled]="isSubmitting$ | async"
-              label="Завершить регистрацию"
-              class="main"></button>
-      <!-- <p-button styleClass="p-button-link" label="Забыли пароль?" [routerLink]="['/reset-password']"></p-button> -->
-    </div>
-  </form>
+      <div class="actions actions_registration actions_additional">
+        <button pButton
+                type="button"
+                class="additional-button"
+                [routerLink]="['/login']"
+                label="Авторизация"></button>
+        <button pButton
+                type="submit"
+                [disabled]="isSubmitting$ | async"
+                label="Завершить регистрацию"
+                class="main"></button>
+        <!-- <p-button styleClass="p-button-link" label="Забыли пароль?" [routerLink]="['/reset-password']"></p-button> -->
+      </div>
+    </form>
   </div>
 </div>

@@ -3,9 +3,12 @@
     <div class="auth__body__form__title">
       <h1>Личный кабинет</h1>
       <div class="close"
-           [routerLink]="['/']"><i class="pi pi-times"></i></div>
+           [routerLink]="['/']">
+           <i class="pi pi-times"></i>
+      </div>
     </div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form"
+          (ngSubmit)="onSubmit()">
       <div class="auth__body__form__fields">
         <div class="auth__body__form__fields__field">
           <input id="login"
@@ -13,8 +16,9 @@
                  pInputText
                  placeholder="Логин"
                  formControlName="login"
-                 [ngClass]="{'ng-invalid ng-dirty': form.get('login').invalid && form.get('login').touched}">
-          <small class="p-error" *ngIf="form.get('login').invalid && form.get('login').touched">
+                 [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('login').invalid }">
+          <small class="p-error"
+                 *ngIf="isSubmitted && form.get('login').invalid">
             <div *ngIf="form.get('login').errors['required']">
               Поле Логин не должно быть пустым
             </div>
@@ -26,16 +30,16 @@
             <input [type]="fieldTextType ? 'text' : 'password'"
                    pInputText placeholder="Пароль"
                    formControlName="password"
-                   [ngClass]="{'ng-invalid ng-dirty': form.get('password').invalid && form.get('password').touched}">
+                   [ngClass]="{ 'mib-border-danger ng-dirty': isSubmitted && form.get('password').invalid }">
             <button type="button"
                     pButton
                     pRipple
                     [icon]="fieldTextType ? 'pi pi-eye' : 'pi pi-eye-slash'"
                     styleClass="p-button-icon"
-                    (click)="showPassword()" ></button>
+                    (click)="this.fieldTextType = !this.fieldTextType"></button>
           </div>
           <small class="p-error"
-                 *ngIf="form.get('password').invalid && form.get('password').touched">
+                 *ngIf="isSubmitted && form.get('password').invalid">
             <div *ngIf="form.get('password').errors['required']">
               Поле Пароль не должно быть пустым
             </div>
@@ -43,7 +47,10 @@
         </div>
       </div>
       <div class="actions">
-        <button pButton type="submit" [disabled]="isSubmitting$ | async" label="Вход"></button>
+        <button pButton
+           type="submit"
+           [disabled]="isSubmitting$ | async"
+           label="Вход"></button>
       </div>
       <div class="actions actions_additional">
         <p-button styleClass="p-button-link"
