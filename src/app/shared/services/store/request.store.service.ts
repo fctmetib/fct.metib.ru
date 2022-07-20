@@ -14,7 +14,7 @@ export class RequestStoreService {
     new BehaviorSubject([]);
   private _loading$: Subject<boolean> = new Subject();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public setRequests(requests: RequestsResponseInterface[]) {
     this._requestStore = requests;
@@ -26,13 +26,12 @@ export class RequestStoreService {
   ): Observable<RequestsResponseInterface[]> {
     this._setLoading(true);
 
-    if (this._requestStore.length === 0 || isRefresh) {
-      this._fetch().subscribe((resp) => {
-        let result = resp.sort((a, b) => {
-          return b.ID - a.ID;
+    if (this._requestStore?.length === 0 || isRefresh) {
+      this._fetch()
+        .subscribe((resp: Array<RequestsResponseInterface>): void => {
+          const result = resp?.sort((a, b): number => b.ID - a.ID);
+          this.setRequests(result);
         });
-        this.setRequests(result);
-      });
     }
 
     this._setLoading(false);
