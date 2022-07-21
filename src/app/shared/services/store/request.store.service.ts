@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { RequestsResponseInterface } from '../../../client/modules/requests/types/requestResponse.interface';
+import { RequestsResponseInterface } from 'src/app/client/modules/requests/types/requestResponse.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +14,17 @@ export class RequestStoreService {
     new BehaviorSubject([]);
   private _loading$: Subject<boolean> = new Subject();
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
-  public setRequests(requests: RequestsResponseInterface[]) {
+  public setRequests(requests: RequestsResponseInterface[]): void {
     this._requestStore = requests;
     this._requests$.next(requests);
   }
 
-  public getRequests(
-    isRefresh: boolean = false
-  ): Observable<RequestsResponseInterface[]> {
-    this._setLoading(true);
+  public getRequests(isRefresh: boolean = false): Observable<RequestsResponseInterface[]> {
+    this._setLoading = true;
 
-    if (this._requestStore?.length === 0 || isRefresh) {
+    if (this._requestStore.length === 0 || isRefresh) {
       this._fetch()
         .subscribe((resp: Array<RequestsResponseInterface>): void => {
           const result = resp?.sort((a, b): number => b.ID - a.ID);
@@ -34,7 +32,7 @@ export class RequestStoreService {
         });
     }
 
-    this._setLoading(false);
+    this._setLoading = false;
     return this._requests$;
   }
 
@@ -43,11 +41,11 @@ export class RequestStoreService {
     this._requests$.next([]);
   }
 
-  public getLoading(): Observable<boolean> {
+  public get getLoading(): Observable<boolean> {
     return this._loading$;
   }
 
-  private _setLoading(state: boolean) {
+  private set _setLoading(state: boolean) {
     this._loading$.next(state);
   }
 

@@ -6,7 +6,6 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  HostListener,
   ViewChildren,
   Directive,
 } from '@angular/core';
@@ -16,14 +15,13 @@ import { RequestsService } from '../../services/requests.service';
 import { AgencyRequestCreateDialogComponent } from '../agency-request-create-dialog/agency-request-create-dialog.component';
 import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RequestStoreService } from '../../../../../shared/services/store/request.store.service';
-import { FileService } from 'src/app/shared/services/common/file.service';
+import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
 import { DocumentViewDialogComponent } from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component';
 
 @Directive({
   selector: '[tableHighlight]',
 })
-export class TableHighlightDirective {}
+export class TableHighlightDirective { }
 
 @Component({
   selector: 'app-requests-page',
@@ -32,8 +30,6 @@ export class TableHighlightDirective {}
 })
 export class RequestsPageComponent implements OnInit, OnDestroy {
   public requests$: Observable<RequestsResponseInterface[] | null>;
-  public loading$: Observable<boolean>;
-  // public requests: RequestsResponseInterface[];
 
   public selectedRequest: RequestsResponseInterface;
 
@@ -57,19 +53,18 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   private subscription$: Subscription = new Subscription();
 
   constructor(
-    public dialogService: DialogService,
-    private fb: FormBuilder,
-    private requestService: RequestsService,
-    private requestStoreService: RequestStoreService,
-    private fileService: FileService
-  ) {}
+    public readonly dialogService: DialogService,
+    private readonly fb: FormBuilder,
+    private readonly requestService: RequestsService,
+    private readonly requestStoreService: RequestStoreService
+  ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.initializeValues();
     this.fetch();
   }
 
-  initializeValues(): void {
+  private initializeValues(): void {
     this.items = [
       {
         id: 'create',
@@ -124,7 +119,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  public selectRow(request: RequestsResponseInterface) {
+  public selectRow(request: RequestsResponseInterface): void {
     this.subscription$.add(
       this.requestService
         .getRequestByIdAndParams(request.ID, true, true, true)
@@ -134,48 +129,41 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  public documentViewHandler(document) {
-    const data = {
+  public documentViewHandler(document: any): void {
+    this.openDocumentViewer({
       document,
       requestID: this.selectedRequest.ID,
-    }
-    this.openDocumentViewer(data)
+    });
   }
 
-  refresh(): void {
+  public refresh(): void {
     this.fetch(true);
   }
 
-  fetch(isRefresh?: boolean): void {
+  private fetch(isRefresh?: boolean): void {
+    this.requestStoreService.clear();
     this.requests$ = this.requestStoreService.getRequests(isRefresh);
-    this.loading$ = this.requestStoreService.getLoading();
   }
 
-  showCreateAgencyRequestDialog() {
+  private showCreateAgencyRequestDialog(): void {
     this.ref = this.dialogService.open(AgencyRequestCreateDialogComponent, {
       header: 'Реестр поручений',
       width: '85%',
       contentStyle: { height: '800px', overflow: 'auto' },
       baseZIndex: 10000,
     });
-
-    this.ref.onClose.subscribe((data: any) => {
-    });
   }
 
-  showCreateRequestDialog() {
+  private showCreateRequestDialog(): void {
     this.ref = this.dialogService.open(RequestCreateDialogComponent, {
       header: 'Создание заявки',
       width: '85%',
       contentStyle: { height: '800px', overflow: 'auto' },
       baseZIndex: 10000,
     });
-
-    this.ref.onClose.subscribe((data: any) => {
-    });
   }
 
-  customSort(event: SortEvent) {
+  public customSort(event: SortEvent): void {
     // let requests: any[] = [];
     // console.log(event);
     // //TODO: COMPLETE FILTER
@@ -200,7 +188,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     // this.requests = [...requests];
   }
 
-  showCorrectionDialog() {
+  private showCorrectionDialog(): void {
     this.ref = this.dialogService.open(RequestCorrectDialogComponent, {
       data: this.selectedItems,
       header: 'Заявка на коррекцию',
@@ -209,7 +197,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  showEditDialog() {
+  private showEditDialog(): void {
     let selectedRow = this.selectedItems[0];
 
     this.subscription$.add(
@@ -226,15 +214,12 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
               baseZIndex: 10000,
               data: selectedRow,
             });
-
-            this.ref.onClose.subscribe((data: any) => {
-            });
           }
         })
     );
   }
 
-  public initSend() {
+  private initSend(): void {
     let requestIDs = this.selectedItems.map((x) => x.ID);
     this.subscription$.add(
       this.requestService.sendInit(requestIDs).subscribe((response) => {
@@ -262,22 +247,20 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  public checkSelecteditems() {
+  public checkSelecteditems(): void {
     // TODO: rework on a better solution
-    this.items.forEach((i) => {
-      if (i.id === 'send') {
-        i.disabled = this.checkSelectedItemIsCreate();
-      }
-      if (i.id === 'remove') {
-        i.disabled = this.checkSelectedItemIsCreate();
-      }
-      if (i.id === 'edit') {
-        i.disabled = this.checkSelectedItemIsReadonly();
-        return;
-      }
-      if (i.id === 'edit') {
-        i.disabled = this.checkSelectedItemIsCreate();
-        return;
+    this.items.forEach((item: MenuItem): void => {
+      switch (item.id) {
+        case 'send':
+        case 'remove':
+          item.disabled = this.checkSelectedItemIsCreate();
+          break;
+        case 'edit':
+          item.disabled = this.checkSelectedItemIsReadonly();
+          break;
+        case 'edit':
+          item.disabled = this.checkSelectedItemIsCreate();
+          break;
       }
     });
   }
@@ -293,7 +276,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   //   console.log(ff)
   // }
 
-  private openDocumentViewer(document: any) {
+  private openDocumentViewer(document: any): void {
     this.refDocumentViewDialog = this.dialogService.open(
       DocumentViewDialogComponent,
       {
@@ -303,10 +286,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
         baseZIndex: 10000,
         data: document,
       }
-    );
-
-    this.subscription$.add(
-      this.refDocumentViewDialog.onClose.subscribe(() => {})
     );
   }
 
@@ -320,7 +299,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     return isCreated.length > 0 ? true : false;
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.subscription$.unsubscribe();
     if (this.ref) {
       this.ref.close();
