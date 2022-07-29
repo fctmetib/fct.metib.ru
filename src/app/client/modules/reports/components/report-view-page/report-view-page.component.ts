@@ -1,20 +1,22 @@
 import { ReportType } from './../../types/reports/report-type.class';
-import { ReportService } from '../../../../../shared/services/common/report.service';
-import { CryptoService } from './../../../../../shared/services/common/crypto.service';
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ReportService } from 'src/app/shared/services/common/report.service';
+import { CryptoService } from 'src/app/shared/services/common/crypto.service';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ReportTypeInterface } from '../../types/reports/report-type.interface';
 import { ReportColumntInterface } from '../../types/reports/report-column.interface';
 import { MenuItem } from 'primeng/api';
 import { Subject, Subscription } from 'rxjs';
 import { Table } from 'primeng/table';
+import saveAs from 'file-saver';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-report-view-page',
   templateUrl: './report-view-page.component.html',
   styleUrls: ['./report-view-page.component.scss'],
 })
-export class ReportViewPageComponent implements OnInit {
+export class ReportViewPageComponent implements OnInit, OnDestroy {
   @ViewChild('dt') dataTable: Table;
 
   public isLoading: boolean = false;
@@ -46,22 +48,24 @@ export class ReportViewPageComponent implements OnInit {
   private subscription$: Subscription = new Subscription();
 
   constructor(
-    private route: ActivatedRoute,
-    private reportService: ReportService,
-    private cryptoService: CryptoService
-  ) {}
+    private readonly route: ActivatedRoute,
+    private readonly reportService: ReportService,
+    private readonly cryptoService: CryptoService
+  ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.subscription$.add(
-      this.route.queryParams.subscribe((params: Params) => {
-        if (params['dt']) {
-          this.data = JSON.parse(this.cryptoService.decrypt(params['dt']));
-          this.prepareTable();
-          this.fetchReport();
-        } else {
-          this.isError = true;
-        }
-      })
+      this.route
+        .queryParams
+        .subscribe((params: Params): void => {
+          if (params['dt']) {
+            this.data = JSON.parse(this.cryptoService.decrypt(params['dt']));
+            this.prepareTable();
+            this.fetchReport();
+          } else {
+            this.isError = true;
+          }
+        })
     );
 
     this.items = [
@@ -88,7 +92,7 @@ export class ReportViewPageComponent implements OnInit {
     ];
   }
 
-  public setFilterFields() {
+  public setFilterFields(): void {
     this.filteredColumns = this.reportConfig.columns.map(x => x.name);
   }
 
@@ -97,37 +101,41 @@ export class ReportViewPageComponent implements OnInit {
   }
 
   set selectedColumns(val: any[]) {
-    this._selectedColumns = this.reportConfig.columns.filter(
-      (col: ReportColumntInterface) => val.includes(col)
-    );
-    this.reportConfig.columns.forEach((item) => {
-      if (val.includes(item)) {
-        item.visible = true;
-      } else {
-        item.visible = false;
-      }
-    });
+
+    this._selectedColumns = this.reportConfig
+      .columns
+      .filter(
+        (col: ReportColumntInterface) => val.includes(col)
+      );
+
+    this.reportConfig
+      .columns
+      .forEach((item: any): boolean => item.visible = val.includes(item));
   }
 
   public exportExcel(): void {
-    import('xlsx').then((xlsx) => {
-      let exportData: any[] = [];
-      this.reportData.forEach((item) => {
-        let object: any = {};
-        this.reportConfig.columns.forEach((column) => {
-          object[column.title] = item[column.name];
-        });
-        exportData.push(object);
+    let exportData: any[] = [];
+    this.reportData.forEach((item) => {
+      let object: any = {};
+      this.reportConfig.columns.forEach((column) => {
+        object[column.title] = item[column.name];
       });
-
-      const worksheet = xlsx.utils.json_to_sheet(exportData);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, {
-        bookType: 'xlsx',
-        type: 'array',
-      });
-      this.saveAsExcelFile(excelBuffer, 'отчет');
+      exportData.push(object);
     });
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    saveAs(
+      new Blob([excelBuffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
+      }),
+      `отчет_export_${new Date().getTime()}.xlsx`
+    );
   }
 
   public getColSpanIndex(): number {
@@ -144,38 +152,19 @@ export class ReportViewPageComponent implements OnInit {
   }
 
   @HostListener('document:contextmenu', ['$event'])
-  public selectColumn($event): void {
-    if ($event.target.id) {
-      if (+$event.target.id) {
-        //  if (this.reportConfig.columns[$event.target.id].type === 'number') {
-        this.selectedColumn = this.reportConfig.columns[$event.target.id];
-        this.selectedColumnIndex = $event.target.id;
-        this.selectedDisplay$.next(false);
-        //   }
-      }
+  public selectColumn($event: any): void {
+    if ($event.target.id && +$event.target.id) {
+      this.selectedColumn = this.reportConfig.columns[$event.target.id];
+      this.selectedColumnIndex = $event.target.id;
+      this.selectedDisplay$.next(false);
     }
   }
 
-  public paginate(event): void {
+  public paginate(event: any): void {
     let pageIndex = event.first / event.rows + 1;
     this.currentFirst = event.first;
     this.currentPage = pageIndex;
     this.currentRows = event.rows;
-  }
-
-  private saveAsExcelFile(buffer: any, fileName: string): void {
-    import('file-saver').then((FileSaver) => {
-      let EXCEL_TYPE =
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-      let EXCEL_EXTENSION = '.xlsx';
-      const data: Blob = new Blob([buffer], {
-        type: EXCEL_TYPE,
-      });
-      FileSaver.saveAs(
-        data,
-        fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
-      );
-    });
   }
 
   private prepareTable(): void {
@@ -247,12 +236,12 @@ export class ReportViewPageComponent implements OnInit {
     );
   }
 
-  private _getAllPagesCount() {
+  private _getAllPagesCount(): void {
     this.allPagesCount = null;
     this.allPagesCount = this.getDataForPageSum().length;
   }
 
-  private _sumByAllPages() {
+  private _sumByAllPages(): void {
     if (this.selectedColumn.type !== 'number') {
       return;
     }
@@ -265,7 +254,7 @@ export class ReportViewPageComponent implements OnInit {
     this.selectedDisplay$.next(true);
   }
 
-  private _sumByCurrentPage() {
+  private _sumByCurrentPage(): void {
     if (this.selectedColumn.type !== 'number') {
       return;
     }
@@ -278,7 +267,7 @@ export class ReportViewPageComponent implements OnInit {
     this.selectedDisplay$.next(true);
   }
 
-  private _hideAll() {
+  private _hideAll(): void {
     this.selectedDisplay$.next(false);
     this.allPagesCount = null;
   }
@@ -299,7 +288,7 @@ export class ReportViewPageComponent implements OnInit {
     return dataForSum;
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.subscription$.unsubscribe();
   }
 }
