@@ -539,17 +539,17 @@ export class MIBCommon {
           isOnDate: true,
         }
       },
-      {
-        title: 'История Накладных',
-        description: 'История накладных',
-        link: '',
-        type: 'DebtorDelay',
-        config: {
-          isDateFrom: true,
-          isDateTo: true,
-          isDebitor: true,
-        }
-      },
+      // {
+      //   title: 'История Накладных',
+      //   description: 'История накладных',
+      //   link: '',
+      //   type: 'DebtorDelay',
+      //   config: {
+      //     isDateFrom: true,
+      //     isDateTo: true,
+      //     isDebitor: true,
+      //   }
+      // },
       {
         title: 'Полученные Платежи',
         description:
