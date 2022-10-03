@@ -1,12 +1,12 @@
-import { FileModeInterface } from './../../../../../shared/types/file/file-model.interface';
+import { FileModeInterface } from '../../../../../shared/types/file/file-model.interface';
 import {
   crudErrorsSelector,
   crudSuccessSelector,
-} from './../../store/selectors';
+} from '../../store/selectors';
 import { select, Store } from '@ngrx/store';
-import { DeliveryInterface } from './../../../../../shared/types/delivery/delivery.interface';
-import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
-import { ClientRequestInterface } from './../../../../../shared/types/client/client-request.interface';
+import { DeliveryInterface } from '../../../../../shared/types/delivery/delivery.interface';
+import { DeliveryService } from '../../../../../shared/services/share/delivery.service';
+import { ClientRequestInterface } from '../../../../../shared/types/client/client-request.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';

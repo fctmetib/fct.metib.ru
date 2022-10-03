@@ -1,6 +1,11 @@
 button {
   border-radius: 10px !important;
   padding: 20px !important;
+  outline: none !important;
+  &:active,
+  &:focus {
+    outline: none !important;
+  }
 }
 
 button.basic {

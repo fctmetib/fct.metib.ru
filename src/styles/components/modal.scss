@@ -1,9 +1,11 @@
+@import "../_colors.scss";
 .modal-actions {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 
   .save {
+    width: 45%;
     /* main color */
     background: $main !important;
     color: $white !important;
@@ -15,8 +17,6 @@
   }
 
   .cancel {
-    border: 1px solid $main !important;
-    box-sizing: border-box;
-    border-radius: 10px;
+    width: 45%;
   }
 }

@@ -142,3 +142,11 @@
     padding-top: 38px !important;
   }
 }
+
+.me-grid {
+  display: grid;
+  grid-gap: 1rem;
+  &_2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

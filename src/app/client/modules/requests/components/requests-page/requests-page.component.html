@@ -29,7 +29,7 @@
              [rowsPerPageOptions]="[10,25,50]"
              [(selection)]="selectedItems"
              dataKey="ID"
-             (onRowSelect)="checkSelecteditems()"
+             (onRowSelect)="checkSelectedItems($event)"
              styleClass="p-datatable-customers mib-table"
              [paginator]="true"
              [metaKeySelection]="true"
@@ -162,65 +162,17 @@
           </tr>
         </ng-container>
         <ng-template #skeletonRequestsTemplate>
-          <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
+          <tr *ngFor="let i of [].constructor(5)">
             <td>
             </td>
-            <td>
+            <td *ngFor="let j of [].constructor(8)">
               <div class="m-td">
                 <div>
                   <p-skeleton width="10rem"></p-skeleton>
                 </div>
               </div>
             </td>
-            <td>
-              <div class="m-td">
-                <div>
-                  <p-skeleton width="10rem"></p-skeleton>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <div>
-                  <p-skeleton width="10rem"></p-skeleton>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <div>
-                  <p-skeleton width="10rem"></p-skeleton>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <div>
-                  <p-skeleton width="10rem"></p-skeleton>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <div>
-                  <p-skeleton width="10rem"></p-skeleton>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <div>
-                  <p-skeleton width="10rem"></p-skeleton>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <div>
-                  <p-skeleton width="10rem"></p-skeleton>
-                </div>
-              </div>
-            </td>
+
           </tr>
         </ng-template>
       </ng-template>
@@ -275,6 +227,7 @@
               icon="pi pi-times"
               class="p-button-text"></button>
       <button pButton
+              [disabled]="isFormInvalid"
               pRipple
               label="Подтвердить"
               icon="pi pi-check"

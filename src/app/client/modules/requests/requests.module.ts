@@ -46,6 +46,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RequestStoreService } from '../../../shared/services/store/request.store.service';
 import { DocumentViewDialogComponent } from '../../shared/components/dialogs/document-view-dialog/document-view-dialog.component';
+import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
   imports: [
@@ -81,6 +82,7 @@ import { DocumentViewDialogComponent } from '../../shared/components/dialogs/doc
     CardModule,
     MenubarModule,
     AvatarModule,
+    RippleModule,
   ],
   declarations: [
     //Components

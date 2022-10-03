@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   // new prod
-  apiUrl: 'https://api-factoring.metib.ru/api',
-  apiFileUploadUrl: 'https://api-factoring.metib.ru/api/',
+  apiUrl: 'https://api-factoring-test02.metib.ru/api',
+  apiFileUploadUrl: 'https://api-factoring-test02.metib.ru/api',
   // new dev
   // apiUrl: 'http://api-factoring-test.metib.ru/api/',
   // apiFileUploadUrl: 'http://api-factoring-test.metib.ru/api/',

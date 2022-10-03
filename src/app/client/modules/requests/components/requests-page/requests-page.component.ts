@@ -1,6 +1,6 @@
 import { RequestCorrectDialogComponent } from './../request-correct-dialog/request-correct-dialog.component';
 import { RequestCreateDialogComponent } from './../request-create-dialog/request-create-dialog.component';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, observable, Observable, Subscription } from 'rxjs';
 import { RequestsResponseInterface } from './../../types/requestResponse.interface';
 import {
   Component,
@@ -17,6 +17,7 @@ import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-req
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
 import { DocumentViewDialogComponent } from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component';
+import { tap } from 'rxjs/operators';
 
 @Directive({
   selector: '[tableHighlight]',
@@ -29,7 +30,7 @@ export class TableHighlightDirective { }
   styleUrls: ['./requests-page.component.scss'],
 })
 export class RequestsPageComponent implements OnInit, OnDestroy {
-  public requests$: Observable<RequestsResponseInterface[] | null>;
+  public requests$: BehaviorSubject<RequestsResponseInterface[]> = new BehaviorSubject<RequestsResponseInterface[]>(null);
 
   public selectedRequest: RequestsResponseInterface;
 
@@ -62,6 +63,10 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initializeValues();
     this.fetch();
+  }
+
+  public get isFormInvalid(): boolean {
+    return false;
   }
 
   private initializeValues(): void {
@@ -142,7 +147,9 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   private fetch(isRefresh?: boolean): void {
     this.requestStoreService.clear();
-    this.requests$ = this.requestStoreService.getRequests(isRefresh);
+    this.requestStoreService.getRequests(isRefresh).subscribe(res => {
+      this.requests$.next(res);
+    })
   }
 
   private showCreateAgencyRequestDialog(): void {
@@ -164,28 +171,33 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   public customSort(event: SortEvent): void {
-    // let requests: any[] = [];
-    // console.log(event);
-    // //TODO: COMPLETE FILTER
-    // requests = [...event.data].sort((data1, data2) => {
-    //   // console.log(data1['Number'])
-    //   let value1 = data1[event.field];
-    //   let value2 = data2[event.field];
-    //   let result = null;
-    //   if (value1 == null && value2 != null) {
-    //     result = -1;
-    //   } else if (value1 != null && value2 == null) {
-    //     result = 1;
-    //   } else if (value1 == null && value2 == null) {
-    //     result = 0;
-    //   } else if (typeof value1 === 'string' && typeof value2 === 'string') {
-    //     result = value1.localeCompare(value2);
-    //   } else {
-    //     result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
-    //   }
-    //   return event.order * result;
-    // });
-    // this.requests = [...requests];
+    const sortedRequests:RequestsResponseInterface[] = event.data.sort((i, j) => {
+      let elOne;
+      let elTwo;
+      switch (event.field) {
+        case 'Date':
+          elOne = Date.parse(i[event.field])
+          elTwo = Date.parse(j[event.field])
+          break
+        case 'Type':
+          elTwo = i[event.field].localeCompare(j[event.field]);
+          elOne = j[event.field].localeCompare(i[event.field]);
+          break
+        case 'Status':
+          elOne = i[event.field].localeCompare(j[event.field]);
+          elTwo = j[event.field].localeCompare(i[event.field]);
+          break
+        case 'Number':
+          elOne = i[event.field].replace(/[^0-9]/g, '');
+          elTwo = j[event.field].replace(/[^0-9]/g, '');
+          break;
+        default:
+          elOne = i[event.field]
+          elTwo = j[event.field]
+      }
+      return (event.order === 1) ? elOne - elTwo : elTwo - elOne;
+    })
+    this.requests$.next(sortedRequests);
   }
 
   private showCorrectionDialog(): void {
@@ -247,7 +259,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  public checkSelecteditems(): void {
+  public checkSelectedItems(evt): void {
+    evt.stopPropagation();
     // TODO: rework on a better solution
     this.items.forEach((item: MenuItem): void => {
       switch (item.id) {

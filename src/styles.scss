@@ -8,6 +8,9 @@
 
   button {
     height: 40px;
+    &:nth-child(n+2) {
+      margin-left: .5rem;
+    }
   }
 
   .button {
