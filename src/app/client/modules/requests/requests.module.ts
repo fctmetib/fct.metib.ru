@@ -1,10 +1,10 @@
 import { DocumentsViewComponent } from './components/requests-page/documents-view/documents-view.componet';
 import { ShipmentsViewComponent } from './components/requests-page/shipments-view/shipments-view.componet';
 import { RequestCorrectDialogComponent } from './components/request-correct-dialog/request-correct-dialog.component';
-import { BackendErrorMessagesModule } from './../../../shared/modules/backendErrorMessages/backendErrorMessages.module';
-import { SuccessMessagesModule } from './../../../shared/modules/successMessages/successMessages.module';
+import { BackendErrorMessagesModule } from 'src/app/shared/modules/backendErrorMessages/backendErrorMessages.module';
+import { SuccessMessagesModule } from 'src/app//shared/modules/successMessages/successMessages.module';
 import { CRUDEffect } from './store/effects/crud.effect';
-import { DeliveryService } from './../../../shared/services/share/delivery.service';
+import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
 import { RequestCreateDialogComponent } from './components/request-create-dialog/request-create-dialog.component';
 import { RequestsService } from './services/requests.service';
 import { StoreModule } from '@ngrx/store';
@@ -44,8 +44,7 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
 import { AgencyRequestCreateDialogComponent } from './components/agency-request-create-dialog/agency-request-create-dialog.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { RequestStoreService } from '../../../shared/services/store/request.store.service';
-import { DocumentViewDialogComponent } from '../../shared/components/dialogs/document-view-dialog/document-view-dialog.component';
+import { DocumentViewDialogComponent } from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component';
 
 @NgModule({
   imports: [
@@ -102,4 +101,4 @@ import { DocumentViewDialogComponent } from '../../shared/components/dialogs/doc
     CommonService,
   ],
 })
-export class RequestModule {}
+export class RequestModule { }

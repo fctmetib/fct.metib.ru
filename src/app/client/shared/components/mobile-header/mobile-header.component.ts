@@ -30,9 +30,9 @@ export class MobileHeaderComponent implements OnInit {
 
   public isAdmin: boolean = false;
 
-  constructor(private store: Store, private authService: AuthService, private router: Router) {}
+  constructor(private store: Store, private authService: AuthService, private router: Router) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
     this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
     this.factoring$ = this.store.pipe(select(factoringSelector));
@@ -40,21 +40,21 @@ export class MobileHeaderComponent implements OnInit {
     this.isAdmin = this.authService.isUserAdmin();
   }
 
-  switchToAdmin() {
+  public switchToAdmin(): void {
     this.authService.switchToAdmin();
   }
 
-  logout() {
+  public logout(): void {
     this.authService.logout()
   }
 
-  close() {
+  public close(): void {
     let toggler: any = document.getElementsByClassName('toggler')[0];
     toggler.checked = false;
   }
 
 
-  getInfo() {
+  public getInfo(): void {
     const url = this.router.url;
     switch (url) {
       case '/cabinet':
@@ -66,7 +66,7 @@ export class MobileHeaderComponent implements OnInit {
     }
   }
 
-  private showRequestsInfo() {
+  private showRequestsInfo(): void {
     this.close();
     this.introJS.setOptions({
       steps: [
@@ -97,7 +97,7 @@ export class MobileHeaderComponent implements OnInit {
     this.introJS.start();
   }
 
-  private showCabinetInfo() {
+  private showCabinetInfo(): void {
     this.close()
     this.introJS.setOptions({
       steps: [

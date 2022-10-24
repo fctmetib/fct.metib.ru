@@ -17,6 +17,7 @@ import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-req
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
 import { DocumentViewDialogComponent } from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component';
+import { ClientRequestSendingInitRequestInterface } from 'src/app/shared/types/client/client-request-sending-init-request.interface';
 
 @Directive({
   selector: '[tableHighlight]',
@@ -203,7 +204,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     this.subscription$.add(
       this.requestService
         .getRequestByIdAndParams(selectedRow.ID, true, true, true)
-        .subscribe((resp) => {
+        .subscribe((resp: RequestsResponseInterface): void => {
           selectedRow = resp;
 
           if (selectedRow) {
@@ -220,14 +221,16 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   private initSend(): void {
-    let requestIDs = this.selectedItems.map((x) => x.ID);
+    let requestIDs = this.selectedItems.map((x: RequestsResponseInterface): any => x.ID);
     this.subscription$.add(
-      this.requestService.sendInit(requestIDs).subscribe((response) => {
-        this.confirmForm.patchValue({
-          confirmCode: response.ConfirmationCode,
-        });
-        this.confirmDialog = true;
-      })
+      this.requestService
+        .sendInit(requestIDs)
+        .subscribe((response: ClientRequestSendingInitRequestInterface): void => {
+          this.confirmForm.patchValue({
+            confirmCode: response.ConfirmationCode,
+          });
+          this.confirmDialog = true;
+        })
     );
   }
 
@@ -240,10 +243,12 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     };
 
     this.subscription$.add(
-      this.requestService.sendConfirm(confirmData).subscribe((resp) => {
-        this.confirmDialog = false;
-        this.successRequestsDialogMessage = 'Заявка успешно подтверждена';
-      })
+      this.requestService
+        .sendConfirm(confirmData)
+        .subscribe(() => {
+          this.confirmDialog = false;
+          this.successRequestsDialogMessage = 'Заявка успешно подтверждена';
+        })
     );
   }
 

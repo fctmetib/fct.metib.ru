@@ -1,7 +1,7 @@
-import { ClientRequestStateInterface } from './../../../../shared/types/client/client-request-state.interface';
-import { ClientRequestSendingInitRequestInterface } from './../../../../shared/types/client/client-request-sending-init-request.interface';
-import { ConfirmRequestInterface } from './../../../../shared/types/common/confirm-request.interface';
-import { ClientRequestInterface } from './../../../../shared/types/client/client-request.interface';
+import { ClientRequestStateInterface } from 'src/app/shared/types/client/client-request-state.interface';
+import { ClientRequestSendingInitRequestInterface } from 'src/app/shared/types/client/client-request-sending-init-request.interface';
+import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
+import { ClientRequestInterface } from 'src/app/shared/types/client/client-request.interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -12,21 +12,22 @@ import { ClientShipmentInterface } from 'src/app/shared/types/client/client-ship
 
 @Injectable()
 export class RequestsService {
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) { }
 
   //#region REST
 
-  fetch(): Observable<RequestsResponseInterface[]> {
+  public fetch(): Observable<RequestsResponseInterface[]> {
     const url = `${environment.apiUrl}/request`;
     return this.http.get<RequestsResponseInterface[]>(url);
   }
 
-  add(data: ClientRequestInterface): Observable<RequestsResponseInterface> {
+  public add(data: ClientRequestInterface): Observable<RequestsResponseInterface> {
     const url = `${environment.apiUrl}/request`;
     return this.http.post<RequestsResponseInterface>(url, data);
   }
 
-  update(
+  public update(
     requestID: number,
     data: ClientRequestInterface
   ): Observable<RequestsResponseInterface> {
@@ -34,29 +35,29 @@ export class RequestsService {
     return this.http.post<RequestsResponseInterface>(url, data);
   }
 
-  delete(requestID: number): Observable<{}> {
+  public delete(requestID: number): Observable<{}> {
     const url = `${environment.apiUrl}/request/${requestID}`;
     return this.http.delete<{}>(url);
   }
 
   //#endregion
 
-  getFreeDocuments(): Observable<FileModeInterface[]> {
+  public getFreeDocuments(): Observable<FileModeInterface[]> {
     const url = `${environment.apiUrl}/request/freedocuments`;
     return this.http.get<FileModeInterface[]>(url);
   }
 
-  parseRequest(): Observable<ClientShipmentInterface[]> {
+  public parseRequest(): Observable<ClientShipmentInterface[]> {
     const url = `${environment.apiUrl}/request/send/parse`;
     return this.http.post<ClientShipmentInterface[]>(url, {});
   }
 
-  addFreeduty(data: number[]): Observable<RequestsResponseInterface[]> {
+  public addFreeduty(data: number[]): Observable<RequestsResponseInterface[]> {
     const url = `${environment.apiUrl}/request`;
     return this.http.post<RequestsResponseInterface[]>(url, data);
   }
 
-  getRequestByIdAndParams(
+  public getRequestByIdAndParams(
     requestID: number,
     includeShipments: boolean,
     includeDocuments: boolean,
@@ -66,14 +67,14 @@ export class RequestsService {
     return this.http.get<RequestsResponseInterface>(url);
   }
 
-  getStatesOfRequest(
+  public getStatesOfRequest(
     requestID: number
   ): Observable<ClientRequestStateInterface[]> {
     const url = `${environment.apiUrl}/request/${requestID}/states`;
     return this.http.get<ClientRequestStateInterface[]>(url);
   }
 
-  getRequestsWithFilter(
+  public getRequestsWithFilter(
     dateFrom: Date
   ): Observable<RequestsResponseInterface[]> {
     const url = `${environment.apiUrl}/request/filter/${dateFrom}`;
@@ -81,18 +82,18 @@ export class RequestsService {
   }
 
   // TODO: скорее всего возвращаются файлы
-  getDocumentsOfRequest(requestID: number): Observable<any[]> {
+  public getDocumentsOfRequest(requestID: number): Observable<any[]> {
     const url = `${environment.apiUrl}/request/${requestID}/documents`;
     return this.http.get<any[]>(url);
   }
 
   //TODO: нужно проверить, что возвращается
-  sendConfirm(data: ConfirmRequestInterface): Observable<any> {
+  public sendConfirm(data: ConfirmRequestInterface): Observable<any> {
     const url = `${environment.apiUrl}/request/send/confirm`;
     return this.http.post<any>(url, data);
   }
 
-  sendInit(
+  public sendInit(
     data: number[]
   ): Observable<ClientRequestSendingInitRequestInterface> {
     const url = `${environment.apiUrl}/request/send/init`;
