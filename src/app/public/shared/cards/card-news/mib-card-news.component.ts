@@ -46,7 +46,7 @@ export class MibCardNewsComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.imageSrc = `${environment.apiUrl}news/${this.id}/image`
+    this.imageSrc = `${environment.apiUrl}/news/${this.id}/image`
   }
 
   public openNews(id: string) {
