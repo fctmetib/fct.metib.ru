@@ -109,36 +109,39 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  private fillPartners() {
+  private fillPartners(): void {
     this.partners = [
-      '../../../../assets/public/partners/new/billa.png',
-      '../../../../assets/public/partners/new/diksi.png',
-      '../../../../assets/public/partners/new/familia.jpg',
-      '../../../../assets/public/partners/new/inmarko.png',
-      '../../../../assets/public/partners/new/katren.png',
-      '../../../../assets/public/partners/new/lamoda.png',
-      '../../../../assets/public/partners/new/lenta.png',
-      '../../../../assets/public/partners/new/leroy.png',
-      '../../../../assets/public/partners/new/mega.png',
-      '../../../../assets/public/partners/new/metro.jpg',
-      '../../../../assets/public/partners/new/mvideo.png',
-      '../../../../assets/public/partners/new/mysnov.png',
-      '../../../../assets/public/partners/new/nestle.png',
-      '../../../../assets/public/partners/new/obi.png',
-      '../../../../assets/public/partners/new/ok.png',
-      '../../../../assets/public/partners/new/petrovich.png',
-      '../../../../assets/public/partners/new/post.png',
-      '../../../../assets/public/partners/new/protek.png',
-      '../../../../assets/public/partners/new/stroylandiya.png',
-      '../../../../assets/public/partners/new/tvoydom.png',
-      '../../../../assets/public/partners/new/unilever.png',
-      '../../../../assets/public/partners/new/vimpel.png',
-      '../../../../assets/public/partners/new/vseinstrumenti.png',
-      '../../../../assets/public/partners/new/x5.png',
+      './assets/public/partners/new/ozon.jpg',
+      './assets/public/partners/new/lukoil.jpg',
+      './assets/public/partners/new/mts.png',
+      './assets/public/partners/new/nlmk.jpg',
+      './assets/public/partners/new/diksi.png',
+      './assets/public/partners/new/familia.jpg',
+      './assets/public/partners/new/inmarko.png',
+      './assets/public/partners/new/katren.png',
+      './assets/public/partners/new/lamoda.png',
+      './assets/public/partners/new/lenta.png',
+      './assets/public/partners/new/leroy.png',
+      './assets/public/partners/new/mega.png',
+      './assets/public/partners/new/metro.jpg',
+      './assets/public/partners/new/mvideo.png',
+      './assets/public/partners/new/mysnov.png',
+      './assets/public/partners/new/nestle.png',
+      './assets/public/partners/new/obi.png',
+      './assets/public/partners/new/ok.png',
+      './assets/public/partners/new/petrovich.png',
+      './assets/public/partners/new/post.png',
+      './assets/public/partners/new/protek.png',
+      './assets/public/partners/new/stroylandiya.png',
+      './assets/public/partners/new/tvoydom.png',
+      './assets/public/partners/new/unilever.png',
+      './assets/public/partners/new/vimpel.png',
+      './assets/public/partners/new/vseinstrumenti.png',
+      './assets/public/partners/new/x5.png',
     ];
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription$.unsubscribe();
   }
 
