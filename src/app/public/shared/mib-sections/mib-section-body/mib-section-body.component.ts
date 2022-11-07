@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'mib-section-body',
@@ -9,18 +9,18 @@ import { Component, Input, OnInit } from '@angular/core';
           {{ addonHeader }}
         </div>
         <ng-content></ng-content>
+        <div [innerHTML]="contentHTML" *ngIf="contentHTML"></div>
       </div>
     </div>
   `,
 })
-export class MibSectionBodyComponent implements OnInit {
+export class MibSectionBodyComponent {
   @Input()
-  theme: string = 'grey';
+  public theme: string = 'grey';
 
   @Input()
-  addonHeader: string;
+  public addonHeader: string;
 
-  constructor() {}
-
-  ngOnInit() {}
+  @Input()
+  public contentHTML: string;
 }

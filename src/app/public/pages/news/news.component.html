@@ -16,6 +16,4 @@
     поставок в сеть Спортмастер.
   </p> -->
 </mib-section-header-news>
-<mib-section-body>
-  {{currentNews?.Text}}
-</mib-section-body>
+<mib-section-body [contentHTML]="currentNews?.Text"></mib-section-body>
