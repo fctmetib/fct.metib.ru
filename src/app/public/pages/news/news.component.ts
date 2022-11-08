@@ -25,7 +25,6 @@ export class NewsComponent implements OnInit, OnDestroy {
     let id = this.activatedRoute.snapshot.params.id;
     this.subscription$.add(
       this.newsService.getNewsById(id).subscribe((newsResponse) => {
-        console.log(newsResponse);
         this.currentNews = newsResponse;
         this.imageSrc = `${environment.apiUrl}/news/${this.currentNews.ID}/image`;
       })
