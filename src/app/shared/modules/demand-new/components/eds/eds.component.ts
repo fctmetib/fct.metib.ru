@@ -1,22 +1,15 @@
-import {
-  currentUserFactoringSelector,
-  currentUserGeneralSelector,
-} from './../../../../../auth/store/selectors';
+import { currentUserGeneralSelector, } from './../../../../../auth/store/selectors';
 import { combineLatest, Observable } from 'rxjs';
 // System
 import {
   Component,
-  EventEmitter,
-  Input,
   OnDestroy,
-  OnInit,
-  Output,
+  OnInit
 } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
 // Interfaces
@@ -38,8 +31,8 @@ import { DemandConverter } from '../../tools/demand-converter';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
 import { DemandLoadingService } from '../../services/demand-loading.service';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { select, Store } from '@ngrx/store';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'eds',
@@ -51,8 +44,7 @@ export class EDSComponent implements OnInit, OnDestroy {
   public form: FormGroup;
 
   // Данные, для выпадающих списков
-  public organizationTypes: DemandSelectboxInterface[] =
-    DemandValuesIniter.organizationTypes;
+  public organizationTypes: DemandSelectboxInterface[] = DemandValuesIniter.organizationTypes;
   public ruleTypes: DemandSelectboxInterface[] = DemandValuesIniter.ruleTypes;
   public genderTypes: DemandSelectboxInterface[] =
     DemandValuesIniter.genderTypes;
@@ -60,7 +52,7 @@ export class EDSComponent implements OnInit, OnDestroy {
   public countryList: RegionInterface[] = [];
   public regionList: RegionInterface[] = [];
   public idCenterList: any[] = [];
-
+  
   // Системные переменные
   public requestLoading$: Observable<boolean>;
   public demandNavigationConfig: DemandNavigationInterface;
@@ -72,13 +64,14 @@ export class EDSComponent implements OnInit, OnDestroy {
 
   // Файлы
   public files: FileModeInterface[] = [];
-
+  public validations: Array<string> = environment.uploadFilesExt;
+  
   constructor(
-    private fb: FormBuilder,
-    private commonService: CommonService,
-    private _demandLoadingService: DemandLoadingService,
-    private _demandNavigationService: DemandNavigationService,
-    private store: Store
+    private readonly fb: FormBuilder,
+    private readonly commonService: CommonService,
+    private readonly _demandLoadingService: DemandLoadingService,
+    private readonly _demandNavigationService: DemandNavigationService,
+    private readonly store: Store
   ) {
     this._demandConverter = new DemandConverter();
   }

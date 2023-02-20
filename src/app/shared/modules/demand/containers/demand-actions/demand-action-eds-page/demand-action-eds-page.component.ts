@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { FileModeInterface } from './../../../../../types/file/file-model.interface';
 import { PersonInterface } from 'src/app/shared/types/common/person.interface';
 import { PassportInterface } from './../../../../../types/user/passport.interface';
@@ -11,7 +10,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
@@ -21,9 +20,7 @@ import {
   PostInterface,
   RegionInterface,
 } from 'src/app/shared/services/common/common.service';
-import { FileService } from 'src/app/shared/services/common/file.service';
 import { Observable, Subscription } from 'rxjs';
-import { map, switchMap, switchMapTo } from 'rxjs/operators';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -32,8 +29,8 @@ import { AddressModalComponent } from '../../../components/address/address.compo
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
-import * as JSZip from 'jszip';
-import { saveAs } from '@progress/kendo-file-saver';
+import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-demand-action-eds-page',
   templateUrl: './demand-action-eds-page.component.html',
@@ -48,7 +45,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   public isLoading: boolean;
   public alert: boolean;
   public alertMessage = [];
-
+  public validations: Array<string> = environment.uploadFilesExt;
+  
   public isRequestLoading: boolean = false;
 
   isUserVerified: boolean;
@@ -127,13 +125,12 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     private messageService: MessageService,
     private fb: FormBuilder,
     private commonService: CommonService,
-    private fileService: FileService,
     private route: ActivatedRoute,
     private router: Router,
     private demandService: DemandService
-  ) {}
+  ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.isUserVerified = this.authService.isUserVerified();
     this.initForm();
 
@@ -163,7 +160,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     this.router.navigate([`${baseUrl}/demand`]);
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.subscription$.unsubscribe();
     if (this._saveDraftAction$) {
       clearInterval(this._saveDraftAction$);
@@ -190,7 +187,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       });
   }
 
-  saveDraft() {
+  public saveDraft(): void {
     if (this.isEdit) {
       return;
     }
@@ -208,7 +205,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     );
   }
 
-  initForm() {
+  public initForm(): void {
     this.formEDS = this.fb.group({
       organizationType: [1],
       organizationLegalForm: [''],
@@ -297,7 +294,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     });
   }
 
-  onSubmit() {
+  public onSubmit(): void {
     this.isRequestLoading = true;
     this.subscription$.add(
       this.demandService.add(this.prepareData()).subscribe((resp) => {
@@ -358,7 +355,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     let passport: PassportInterface = {
       Date: this.formEDS?.value?.passportDate
         ? new Date(this.formEDS.value.passportDate).toISOString().slice(0, 19) +
-          '+03:00'
+        '+03:00'
         : null,
       IsForeign: false,
       IssuerCode: this.formEDS.value.passportCode,

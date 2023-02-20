@@ -18,6 +18,7 @@ export const environment = {
   // apiUrl: 'https://simple-factoring.metib.ru/api',
   limit: 10,
   cryptoPrivateKey: 'gqpwro9-12itvnmzxn2j3tsvnsdnn21n209fasxz',
+  uploadFilesExt: ['.jpg', '.jpeg', '.png', '.pdf']
 };
 
 /*

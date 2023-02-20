@@ -6,7 +6,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -15,13 +14,14 @@ import { switchMap } from 'rxjs/operators';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { FactoringInfoInterface } from 'src/app/shared/modules/demand/types/common/factoring/factoring-info.interface';
 import { CreateDemandMessageRequestInterface } from 'src/app/shared/modules/demand/types/requests/create-demand-message-request.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-demand-info',
   templateUrl: './demand-info.component.html',
   styleUrls: ['./demand-info.component.scss'],
 })
-export class DemandInfoComponent implements OnInit, OnDestroy {
+export class DemandInfoComponent implements OnInit {
   @Input()
   currentDemandInfo: FactoringInfoInterface;
 
@@ -32,15 +32,16 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
 
   public files: FileModeInterface[] = [];
   public items: MenuItem[] = [];
-
+  public validators: Array<string> = environment.uploadFilesExt;
+  
   public form: FormGroup;
 
   constructor(
-    private commonService: CommonService,
-    private fileService: FileService
-  ) {}
+    private readonly commonService: CommonService,
+    private readonly fileService: FileService
+  ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.currentDemandInfo.Steps.forEach((s) => {
       this.items.push({
         label: s.Title,
@@ -53,8 +54,6 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
       message: new FormControl('', [Validators.required]),
     });
   }
-
-  ngOnDestroy(): void {}
 
   public getType(type: string): string {
     let result: string = '';
@@ -124,7 +123,7 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
     this.files = this.files.filter((x) => x !== file);
   }
 
-  onSelect(event, type: string) {
+  public onSelect(event: any, type: string): void {
     let files: File[] = event.target.files;
 
     for (let file of files) {
@@ -145,7 +144,7 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
         .subscribe(
           (res: any) => {
             this.files = [];
-            switch(res.type) {
+            switch (res.type) {
               // загружается
               case 1:
                 // const progressResult = Math.round((100 * res.loaded) / res.total)
@@ -156,13 +155,13 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
                 break;
               // получил результат
               case 4:
-                 this.files.push({
-                   Code: res.body.Code,
-                   FileName: res.body.FileName,
-                   ID: res.body.ID,
-                   Size: res.body.Size,
-                   Identifier: type,
-                 });
+                this.files.push({
+                  Code: res.body.Code,
+                  FileName: res.body.FileName,
+                  ID: res.body.ID,
+                  Size: res.body.Size,
+                  Identifier: type,
+                });
                 break;
             }
           },
@@ -171,7 +170,7 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit() {
+  public onSubmit(): void {
     let fileCode = null;
     if (this.files[0]) fileCode = this.files[0].Code;
 

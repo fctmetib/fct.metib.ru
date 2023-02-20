@@ -314,9 +314,14 @@
         </div>
         <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
           <div>
-            <mib-file-uploader [existFile]="files" [title]="'Скан-копия паспорта
-            владельца ключа подписи'" [type]="'Passport'" (remove)="onRemove($event)" (add)="onAdd($event)"
-              [validations]="'.jpg, .jpeg, .png, .pdf'">
+            <mib-file-uploader
+              [existFile]="files"
+              [validations]="validations"
+              [title]="'Скан-копия паспорта
+            владельца ключа подписи'"
+              [type]="'Passport'"
+              (add)="onAdd($event)"
+              (remove)="onRemove($event)">
             </mib-file-uploader>
           </div>
         </ng-container>
@@ -397,8 +402,13 @@
         <label>
           Прикрепите заполненную заявку
         </label>
-        <mib-file-uploader [existFile]="files" [title]="'Скан заполненной заявки'" [type]="'Application'"
-          (remove)="onRemove($event)" (add)="onAdd($event)">
+        <mib-file-uploader
+          [existFile]="files"
+          [validations]="validations"
+          [title]="'Скан заполненной заявки'"
+          [type]="'Application'"
+          (add)="onAdd($event)"
+          (remove)="onRemove($event)">
         </mib-file-uploader>
 
       </div>

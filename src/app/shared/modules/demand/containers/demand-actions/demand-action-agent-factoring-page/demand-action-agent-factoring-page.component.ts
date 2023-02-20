@@ -3,18 +3,13 @@ import { BankInterface } from './../../../../../types/common/bank.interface';
 import { Observable, Subscription } from 'rxjs';
 import { CurrencyPipe, formatDate } from '@angular/common';
 import { CommonService } from 'src/app/shared/services/common/common.service';
-import { FileService } from 'src/app/shared/services/common/file.service';
-import { createDemandFactoringAction } from './../../../store/actions/createDemand.action';
-import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { isLoadingSelector } from './../../../../../../auth/store/selectors';
 import { FileModeInterface } from '../../../../../types/file/file-model.interface';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import {
   Component,
-  ElementRef,
   OnDestroy,
-  OnInit,
-  ViewChild,
+  OnInit
 } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
@@ -27,7 +22,6 @@ import { DemandEDIInterface } from '../../../types/common/demand-edi.interface';
 import { select, Store } from '@ngrx/store';
 import { errorSelector } from 'src/app/client/modules/requests/store/selectors';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
-import { switchMap } from 'rxjs/operators';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DemandService } from '../../../services/demand.service';
@@ -38,6 +32,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddressModalComponent } from '../../../components/address/address.component';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
 import { MessageService } from 'primeng/api';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-demand-action-agent-factoring-page',
@@ -45,8 +40,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./demand-action-agent-factoring-page.component.scss'],
 })
 export class DemandActionAgentFactoringPageComponent
-  implements OnInit, ExitGuard, OnDestroy
-{
+  implements OnInit, ExitGuard, OnDestroy {
   public isEdit: boolean = false;
   public currentDemand: any;
   public currentInformation: FactoringInfoInterface;
@@ -72,6 +66,7 @@ export class DemandActionAgentFactoringPageComponent
   public alert: boolean;
   public alertMessage = [];
   public addressDialog: boolean = false;
+  public validations: Array<string> = environment.uploadFilesExt;
 
   private currentAddressFormId: any;
 
@@ -89,7 +84,6 @@ export class DemandActionAgentFactoringPageComponent
 
   constructor(
     public dialogService: DialogService,
-    private currencyPipe: CurrencyPipe,
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
@@ -97,9 +91,8 @@ export class DemandActionAgentFactoringPageComponent
     private demandService: DemandService,
     private messageService: MessageService,
     private commonService: CommonService,
-    private store: Store,
-    private fileService: FileService
-  ) {}
+    private store: Store
+  ) { }
 
   ngOnInit() {
     this.isUserVerified = this.authService.isUserVerified();
@@ -206,9 +199,9 @@ export class DemandActionAgentFactoringPageComponent
     );
     this.formFactoring
       .get('otherBanks')
-      ['controls'][indexOtherBank].patchValue({
-        otherBankName: bank.Name,
-      });
+    ['controls'][indexOtherBank].patchValue({
+      otherBankName: bank.Name,
+    });
   }
 
   public onBankSelect(bankInfo: string) {
@@ -882,10 +875,10 @@ export class DemandActionAgentFactoringPageComponent
   private prepareData(): SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> {
     let data = this.prepareCoreData();
     let result: SaveDemandRequestInterface<CreateDemandFactoringRequestInterface> =
-      {
-        Data: data,
-        DraftID: this.currentDraftId,
-      };
+    {
+      Data: data,
+      DraftID: this.currentDraftId,
+    };
 
     return result;
   }

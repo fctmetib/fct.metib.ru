@@ -1,5 +1,3 @@
-import { ElementRef } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { DemandAddonAccountInterface } from './../../../../../types/common/demand-addon-account.interface';
 import { CurrencyPipe, formatDate } from '@angular/common';
 import {
@@ -8,13 +6,10 @@ import {
   Input,
   OnInit,
   Output,
-  OnDestroy,
-  ViewChild,
+  OnDestroy
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { DemandEDIInterface } from 'src/app/shared/modules/demand/types/common/demand-edi.interface';
 import { DemandObligationInterface } from 'src/app/shared/modules/demand/types/common/demand-obligation.interface';
@@ -31,6 +26,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { AddressModalComponent } from 'src/app/shared/modules/demand/components/address/address.component';
 import { BankInterface } from 'src/app/shared/types/common/bank.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-factoring-data',
@@ -72,6 +68,7 @@ export class FactoringDataComponent implements OnInit, OnDestroy {
   public resultsBankname: string[];
 
   public files: FileModeInterface[] = [];
+  public readonly validations: Array<string> = environment.uploadFilesExt;
 
   private ref: DynamicDialogRef;
   private currentAddressFormId: any;

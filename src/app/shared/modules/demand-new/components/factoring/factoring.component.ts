@@ -4,7 +4,7 @@ import { DemandConverter } from './../../tools/demand-converter';
 import { DoDemandPageActionType } from './../../types/navigation-service/do-demand-page-action-type';
 import { FormGenerator } from './../../tools/form-generator';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
 import { DemandActionType } from '../../types/common/demand-action-type';
 import { DemandNavigationService } from '../../services/demand-navigation.service';
@@ -19,6 +19,7 @@ import { DemandNavigationInterface } from '../../types/common/demand-navigation.
 import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
 import { BankInterface } from 'src/app/shared/types/common/bank.interface';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'factoring',
@@ -52,6 +53,7 @@ export class FactoringComponent implements OnInit {
 
   // Файлы
   public files: FileModeInterface[] = [];
+  public validations: Array<string> = environment.uploadFilesExt;
 
   //#region Factoring Request Region
   public resultsBIK: string[];
@@ -62,16 +64,16 @@ export class FactoringComponent implements OnInit {
   //#endregion
 
   constructor(
-    private fb: FormBuilder,
-    private commonService: CommonService,
-    private _demandLoadingService: DemandLoadingService,
-    private _demandNavigationService: DemandNavigationService
+    private readonly fb: FormBuilder,
+    private readonly commonService: CommonService,
+    private readonly _demandLoadingService: DemandLoadingService,
+    private readonly _demandNavigationService: DemandNavigationService
   ) {
     this._demandConverter = new DemandConverter();
     this._formGenerator = new FormGenerator(this.fb);
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this._initValues();
     this._initForm();
     this._initAdditionalData();
@@ -79,7 +81,7 @@ export class FactoringComponent implements OnInit {
     this._getCurrentDemand();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this._subscription$.unsubscribe();
   }
 

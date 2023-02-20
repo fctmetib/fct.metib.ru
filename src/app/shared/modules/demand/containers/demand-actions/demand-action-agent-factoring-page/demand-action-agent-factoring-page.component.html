@@ -573,44 +573,83 @@
               <p>Прикрепите необходимые файлы:</p>
             </div>
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader [existFile]="files" [title]="'Устав (Со всеми изменениями)'" [type]="'Regulations'"
+              <mib-file-uploader
+                [existFile]="files"
+                [validations]="validations"
+                [title]="'Устав (Со всеми изменениями)'"
+                [type]="'Regulations'"
                 (remove)="onRemove($event)" (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader [existFile]="files" [title]="'Паспорт генерального директора (Все страницы)'"
-                [type]="'GenDirPassport'" (remove)="onRemove($event)" (add)="onAdd($event)">
+              <mib-file-uploader
+                [existFile]="files"
+                [validations]="validations"
+                [title]="'Паспорт генерального директора (Все страницы)'"
+                [type]="'GenDirPassport'"
+                (remove)="onRemove($event)"
+                (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader [existFile]="files" [title]="'Протокол/решение о назначении генерального директора'"
-                [type]="'GenDirProtocol'" (remove)="onRemove($event)" (add)="onAdd($event)">
+              <mib-file-uploader
+                [existFile]="files"
+                [validations]="validations"
+                [title]="'Протокол/решение о назначении генерального директора'"
+                [type]="'GenDirProtocol'"
+                (remove)="onRemove($event)"
+                (add)="onAdd($event)">
               </mib-file-uploader>
 
             </div>
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader [existFile]="files" [title]="'Приказ о назначении генерального директора'"
-                [type]="'GenDirOrder'" (remove)="onRemove($event)" (add)="onAdd($event)">
+              <mib-file-uploader
+                [existFile]="files"
+                [validations]="validations"
+                [title]="'Приказ о назначении генерального директора'"
+                [type]="'GenDirOrder'"
+                (remove)="onRemove($event)"
+                (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader [existFile]="files" [title]="'Бухгалтерский Баланс'" [type]="'Balance'"
-                (remove)="onRemove($event)" (add)="onAdd($event)">
+              <mib-file-uploader
+                [existFile]="files"
+                [validations]="validations"
+                [title]="'Бухгалтерский Баланс'"
+                [type]="'Balance'"
+                (remove)="onRemove($event)"
+                (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader [existFile]="files" [title]="'ОСВ (оборотно-сальдовая ведомость)'" [type]="'OSV'"
-                (remove)="onRemove($event)" (add)="onAdd($event)">
+              <mib-file-uploader
+                [existFile]="files"
+                [title]="'ОСВ (оборотно-сальдовая ведомость)'"
+                [type]="'OSV'"
+                [validations]="validations"
+                (remove)="onRemove($event)"
+                (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6 p-lg-6">
-              <mib-file-uploader [existFile]="files" [title]="'Паспорта Учредителей'" [type]="'Shareholders'"
-                (remove)="onRemove($event)" (add)="onAdd($event)">
+              <mib-file-uploader
+                [existFile]="files"
+                [validations]="validations"
+                [title]="'Паспорта Учредителей'"
+                [type]="'Shareholders'"
+                (remove)="onRemove($event)"
+                (add)="onAdd($event)">
               </mib-file-uploader>
             </div>
             <div class="p-field p-col-12 p-md-6">
-              <mib-file-uploader [existFile]="files" [title]="'Договор поставки'" [type]="'ContractDelivery'"
-                (remove)="onRemove($event)" (add)="onAdd($event)">
+              <mib-file-uploader
+                [existFile]="files"
+                [validations]="validations"
+                [title]="'Договор поставки'"
+                [type]="'ContractDelivery'"
+                (remove)="onRemove($event)"
+                (add)="onAdd($event)">
               </mib-file-uploader>
 
             </div>

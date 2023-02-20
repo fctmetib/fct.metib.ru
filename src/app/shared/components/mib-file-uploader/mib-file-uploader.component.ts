@@ -67,7 +67,7 @@ import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-e
 })
 export class MibFileUploaderComponent implements OnInit {
   @Input()
-  validations: string;
+  validations: Array<string>;
 
   @Input()
   title: string;
@@ -97,13 +97,13 @@ export class MibFileUploaderComponent implements OnInit {
   private subscription$: Subscription = new Subscription();
 
   constructor(
-    private commonService: CommonService,
-    private fileService: FileService,
-    private dialogService: DialogService,
-    private authService: AuthService
-  ) {}
+    private readonly commonService: CommonService,
+    private readonly fileService: FileService,
+    private readonly dialogService: DialogService,
+    private readonly authService: AuthService
+  ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.fillCurrentFiles();
   }
 
@@ -119,13 +119,13 @@ export class MibFileUploaderComponent implements OnInit {
     return isInvalid;
   }
 
-  public removeFile(file: FileModeInterface) {
+  public removeFile(file: FileModeInterface): void {
     this.currentFiles = this.currentFiles.filter((x) => x !== file);
     this.remove.emit(file);
     this.resetFileInputs();
   }
 
-  public downloadFile(file) {
+  public downloadFile(file: any): void {
     const token = this.authService.getNormalToken();
     const link = document.createElement('a');
     link.href = `https://api-factoring.metib.ru/api/file/${file.Code}/content?Token=${token}`;
@@ -133,10 +133,13 @@ export class MibFileUploaderComponent implements OnInit {
     link.click();
   }
 
-  public onSelect(event) {
-    let files: File[] = event.target.files;
+  public onSelect(event: any): void {
 
-    for (let file of files) {
+    for (let file of event.target.files) {
+      if (this.validations?.some((ext: string): boolean => file.name.endsWith(ext)) === false) {
+        continue;
+      }
+
       this.resetLoader();
       let guid = Guid.newGuid();
 
@@ -198,18 +201,18 @@ export class MibFileUploaderComponent implements OnInit {
     }
   }
 
-  private resetLoader() {
+  private resetLoader(): void {
     this.fileUploadProgress = {
       progress: 0,
       isProgress: false,
     };
   }
 
-  private resetFileInputs() {
+  private resetFileInputs(): void {
     (<HTMLInputElement>document.getElementById(this.type)).value = '';
   }
 
-  private openErrorDialog() {
+  private openErrorDialog(): void {
     if (!this.refMibFileErrorDialog) {
       this.refMibFileErrorDialog = this.dialogService.open(
         MibFileErrorDialogComponent,
@@ -229,7 +232,7 @@ export class MibFileUploaderComponent implements OnInit {
     }
   }
 
-  private fillCurrentFiles() {
+  private fillCurrentFiles(): void {
     if (this.existFile) {
       this.existFile.forEach((file) => {
         if (file.Identifier === this.type) {

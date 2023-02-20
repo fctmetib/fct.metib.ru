@@ -23,6 +23,7 @@ import { DemandLoadingService } from '../../services/demand-loading.service';
 import { FormGenerator } from '../../tools/form-generator';
 import { DemandConverter } from '../../tools/demand-converter';
 import { DemandValuesIniter } from '../../tools/demand-values-initer';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'agent-factoring',
@@ -43,7 +44,8 @@ export class AgentFactoringComponent implements OnInit {
   public countryList: RegionInterface[] = [];
   public regionList: RegionInterface[] = [];
   public idCenterList: any[] = [];
-
+  public validations: Array<string> = environment.uploadFilesExt;
+  
   // Системные переменные
   public requestLoading$: Observable<boolean>;
   public demandNavigationConfig: DemandNavigationInterface;
