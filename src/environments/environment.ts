@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // new prod
-  apiUrl: 'https://api-factoring.metib.ru/api/',
+  apiUrl: 'https://api-factoring.metib.ru/api',
   apiFileUploadUrl: 'https://api-factoring.metib.ru/api/',
   // new dev
   // apiUrl: 'http://api-factoring-test.metib.ru/api/',
@@ -18,6 +18,7 @@ export const environment = {
   // apiUrl: 'https://simple-factoring.metib.ru/api',
   limit: 10,
   cryptoPrivateKey: 'gqpwro9-12itvnmzxn2j3tsvnsdnn21n209fasxz',
+  uploadFilesExt: ['.jpg', '.jpeg', '.png', '.pdf']
 };
 
 /*

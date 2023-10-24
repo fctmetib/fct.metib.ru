@@ -1,0 +1,146 @@
+.contracts-list {
+  .contract-item {
+    display: flex;
+    margin-bottom: 10px;
+
+    .item {
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #D4D4D4;
+    }
+
+    .contract-info {
+      width: 100%;
+      min-width: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .contract-info-name {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .contract-actions {
+        display: flex;
+        margin-bottom: 10px;
+
+        .icon {
+          margin-right: 10px;
+          font-size: 2rem;
+          color: #0C83F1;
+
+          .icon-own {
+            font-size: 2rem;
+            color: #0C83F1;
+          }
+        }
+      }
+
+      .contract-name {
+        display: flex;
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 8px;
+        align-items: center;
+
+        .icon {
+          &.arrow_right {
+            margin-left: 13px;
+            background: url('/assets/icons/arrow_right.png') no-repeat center center;
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+
+      .contract-number {
+        font-size: 0.875rem;
+        margin-bottom: 9px;
+        color: #989898;
+
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .contract-step {
+      text-align: center;
+      width: 40%;
+      min-width: 220px;
+
+      .price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #69CF74;
+        height: 47px;
+      }
+
+      .description {
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .icon {
+          margin-left: 10px;
+          font-size: 2rem;
+          color: #0C83F1;
+        }
+      }
+    }
+
+    .contract-delay {
+      text-align: center;
+      width: 40%;
+      min-width: 220px;
+
+      .price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #E74630;
+        height: 47px;
+      }
+
+      .description {
+        font-size: 0.875rem;
+        justify-content: end;
+      }
+    }
+
+    .contract-limit {
+      text-align: center;
+      width: 40%;
+      min-width: 220px;
+
+      .price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #0C83F1;
+        height: 47px;
+      }
+
+      .description {
+        font-size: 0.875rem;
+        justify-content: end;
+      }
+    }
+  }
+
+  .main-color {
+    color: #0C83F1;
+  }
+}
+
+.p-dialog-content {
+  height: 500px !important;
+}
+
+:host {
+  .p-datatable .p-datatable-header {
+    padding-left: 0px;
+    padding-right: 0px;
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,47 @@
+<p-toast></p-toast>
+<div [ngClass]="{'card-content': isUserVerified}">
+  <div class="header lg">
+    <div class="title">
+      <h2>Запрос на Факторинг</h2>
+    </div>
+    <div class="actions">
+      <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
+      (click)="back()" *ngIf="isEdit"></button>
+    </div>
+  </div>
+
+  <p-messages [(value)]="alertMessage" [enableService]="false"></p-messages>
+  <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
+  </metib-backend-error-messages>
+
+  <ng-container *ngIf="isLoading; else contentTemplate">
+    <p>Загрузка...</p>
+  </ng-container>
+  <ng-template #contentTemplate>
+    <ng-container *ngIf="isEdit; else createTemplate;">
+      <p-tabView class="mib-tabs">
+        <p-tabPanel header="Информация">
+          <app-demand-info [currentDemandInfo]="currentInformation" (sendMessage)="handleSendMessage($event)">
+          </app-demand-info>
+        </p-tabPanel>
+        <p-tabPanel header="Данные">
+          <app-factoring-data [isEdit]="true" [currentDemand]="currentDemand" [currentDraftId]="currentDraftId"
+            (save)="handleSave($event)" (create)="handleSubmit($event)" (back)="back()" [isRequestLoading]="isRequestLoading"></app-factoring-data>
+        </p-tabPanel>
+        <p-tabPanel header="Файлы">
+          <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files">
+          </app-demand-files>
+        </p-tabPanel>
+        <p-tabPanel header="Результат" *ngIf="isView">
+          <app-demand-result [result]="currentDemand.Result">
+          </app-demand-result>
+        </p-tabPanel>
+      </p-tabView>
+    </ng-container>
+    <ng-template #createTemplate>
+      <app-factoring-data (back)="back()" (removeFile)="handleRemoveFiles($event)" [isEdit]="false" [currentDemand]="currentDemand"
+        [currentDraftId]="currentDraftId" (save)="handleSave($event)" (create)="handleSubmit($event)" [isRequestLoading]="isRequestLoading">
+      </app-factoring-data>
+    </ng-template>
+  </ng-template>
+</div>

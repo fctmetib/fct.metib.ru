@@ -1,0 +1,246 @@
+<div [ngClass]="{'card-content': isUserVerified}">
+  <div class="header lg">
+    <div class="title">
+      <h2>Запросы</h2>
+      <div class="subheader">
+        Список Запросов
+      </div>
+    </div>
+    <div class="actions">
+      <button pButton pRipple type="button" label="История запросов" [routerLink]="['history']" class="basic"></button>
+    </div>
+  </div>
+
+ <div>
+    <button pButton pRipple type="button" label="[TEST] Посмотреть мои сертификаты" (click)="openCerts()" class="basic"></button>
+  </div>
+
+  <div class="p-grid">
+    <ng-container *ngFor="let action of actions">
+      <div *ngIf="action.isForDefaultClient && isUserVerified" class="p-col">
+        <div class="demand-action-card can-click" [routerLink]="[action.url]">
+          <div class="demand-action-content">
+            <div class="text">
+              {{action.text}}
+            </div>
+            <div class="icon arrow_right"></div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="action.isForNewClient && !isUserVerified" class="p-col">
+        <div class="demand-action-card can-click" [routerLink]="[action.url]">
+          <div class="demand-action-content">
+            <div class="text">
+              {{action.text}}
+            </div>
+            <div class="icon arrow_right"></div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+<p-dialog header="Работа с ЭЦП" [(visible)]="displayModal" [modal]="true" [style]="{width: '80vw'}" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false">
+  <p-progressSpinner *ngIf="isCertsLoading; else templateContent"></p-progressSpinner>
+  <ng-template #templateContent>
+    <div style="min-height: '50vh'">
+      <p-tabView>
+        <p-tabPanel header="Подпись сообщения">
+          <form #signatureForm="ngForm" novalidate (ngSubmit)="createSignature(thumbprint)">
+            <fieldset>
+              <legend>Создание подписи</legend>
+              <label for="message">Подписываемое сообщение: *</label>
+              <br>
+              <textarea id="message" pInputTextarea name="message" cols="80" rows="5" placeholder="Введите сообщение" autofocus required
+                [(ngModel)]="message">METIB</textarea>
+              <br><br>
+
+              <label for="certificate">Сертификат: *</label>
+              <br>
+              <p-dropdown  styleClass="mib-input"  id="certificate" name="certificate" [options]="certificateList"
+               [(ngModel)]="thumbprint"
+               optionLabel="name"
+               [filter]="true"
+               filterBy="name"
+               optionValue="thumbprint"
+               [showClear]="true"></p-dropdown>
+
+              <pre>{{certificateListError}}</pre>
+
+              <details *ngIf="thumbprint" (click)="showCertInfo(thumbprint)">
+                <summary>Информация о сертификате</summary>
+                <pre *ngIf="certInfo">{{certInfo | json}}</pre>
+                <pre *ngIf="!certInfo">Запрашивается...</pre>
+              </details>
+              <pre>{{certificateInfoError}}</pre>
+
+              <label>Тип подписи: *</label>
+              <br>
+              <label>
+                <input type="radio" name="detachedSignature" [value]="false"
+                  [(ngModel)]="detachedSignature">Совмещенная</label>
+              <br>
+              <label>
+                <input type="radio" name="detachedSignature" [value]="true"
+                  [(ngModel)]="detachedSignature">Отделенная</label>
+              <br><br>
+
+              <hr>
+              <p-button type="submit" [disabled]="!signatureForm.valid" label="Создать подпись" class="p-mr-1"></p-button>
+              <p-button type="button" [disabled]="!signatureForm.valid" label="Скачать подпись" (click)="download()"></p-button>
+            </fieldset>
+          </form>
+
+          <fieldset>
+            <legend>Результат</legend>
+            <label for="hash">Хеш (ГОСТ Р 34.11-2012 256 бит):</label><br>
+            <textarea id="hash" cols="80" rows="5" [(ngModel)]="hash" [placeholder]="hashStatus"></textarea>
+            <pre>{{hashError}}</pre>
+
+            <label for="signature">Подпись (PKCS7):</label><br>
+            <textarea id="signature" name="signature" cols="80" rows="30" [placeholder]="signatureStatus"
+              [(ngModel)]="signature"></textarea>
+            <pre>{{signatureError}}</pre>
+
+            <p>
+              Для
+              <a href="https://www.gosuslugi.ru/pgu/eds/" target="_blank" rel="nofollow noopener noreferrer"
+                title="Перейти к проверке подписи">проверки</a>
+              нужно создать файл со сгенерированной подписью в кодировке UTF-8 с расширением *.sgn
+              <br>
+              для отделенной подписи (или *.sig для совмещенной).
+            </p>
+          </fieldset>
+
+          <fieldset>
+            <legend>Информация о системе</legend>
+            <pre *ngIf="systemInfo">{{systemInfo | json}}</pre>
+            <pre>{{systemInfoError}}</pre>
+          </fieldset>
+        </p-tabPanel>
+        <p-tabPanel header="Подпись файла">
+          <form #signatureForm="ngForm" novalidate (ngSubmit)="createSignatureWithFile(thumbprint)">
+            <fieldset>
+              <legend>Создание подписи</legend>
+              <div class="addon-button mb-20">
+                <div class="addon-text">
+                  <p>
+                    Подписываемый файл:
+                  </p>
+                </div>
+                <div class="mib-uploader">
+                  <input type="file" id="All" (change)="onSelect($event, 'All')" hidden />
+                  <label for="All" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+                </div>
+              </div>
+              <br><br>
+
+              <label for="certificate">Сертификат: *</label>
+              <br>
+              <p-dropdown styleClass="mib-input"  id="certificate" name="certificate" [options]="certificateList"
+               [(ngModel)]="thumbprint"
+               optionLabel="name"
+               optionValue="thumbprint"
+               [showClear]="true"></p-dropdown>
+
+              <pre>{{certificateListError}}</pre>
+
+              <details *ngIf="thumbprint" (click)="showCertInfo(thumbprint)">
+                <summary>Информация о сертификате</summary>
+                <pre *ngIf="certInfo">{{certInfo | json}}</pre>
+                <pre *ngIf="!certInfo">Запрашивается...</pre>
+              </details>
+              <pre>{{certificateInfoError}}</pre>
+
+              <label>Тип подписи: *</label>
+              <br>
+              <label>
+                <input type="radio" name="detachedSignature" [value]="false"
+                  [(ngModel)]="detachedSignature">Совмещенная</label>
+              <br>
+              <label>
+                <input type="radio" name="detachedSignature" [value]="true"
+                  [(ngModel)]="detachedSignature">Отделенная</label>
+              <br><br>
+
+              <hr>
+              <p-button type="submit" [disabled]="!signatureForm.valid" label="Создать подпись" class="p-mr-1"></p-button>
+              <p-button type="button" [disabled]="!signatureForm.valid" label="Скачать подпись" (click)="downloadFile()"></p-button>
+            </fieldset>
+          </form>
+
+          <fieldset>
+            <legend>Результат</legend>
+            <label for="hash">Хеш (ГОСТ Р 34.11-2012 256 бит):</label><br>
+            <textarea id="hash" cols="80" rows="5" [(ngModel)]="hash" [placeholder]="hashStatus"></textarea>
+            <pre>{{hashError}}</pre>
+
+            <label for="fileSignature">Подпись (PKCS7):</label><br>
+            <textarea id="fileSignature" name="fileSignature" cols="80" rows="30" [placeholder]="signatureStatus"
+              [(ngModel)]="fileSignature"></textarea>
+            <pre>{{signatureError}}</pre>
+
+            <p>
+              Для
+              <a href="https://www.gosuslugi.ru/pgu/eds/" target="_blank" rel="nofollow noopener noreferrer"
+                title="Перейти к проверке подписи">проверки</a>
+              нужно создать файл со сгенерированной подписью в кодировке UTF-8 с расширением *.sgn
+              <br>
+              для отделенной подписи (или *.sig для совмещенной).
+            </p>
+          </fieldset>
+
+          <fieldset>
+            <legend>Информация о системе</legend>
+            <pre *ngIf="systemInfo">{{systemInfo | json}}</pre>
+            <pre>{{systemInfoError}}</pre>
+          </fieldset>
+        </p-tabPanel>
+
+        <p-tabPanel header="Проверка">
+            <fieldset>
+              <legend>Проверка подписи</legend>
+              <div class="addon-button mb-20">
+                <div class="addon-text">
+                  <p>
+                    Загрузите подписанный файл:
+                  </p>
+                </div>
+                <div class="mib-uploader">
+                  <input type="file" id="Rar" (change)="onSelect($event, 'Rar')" hidden />
+                  <label for="Rar" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+                </div>
+              </div>
+              <br><br>
+            </fieldset>
+
+          <fieldset>
+            <legend>Результат</legend>
+
+            <label for="eds">Подпись Файла (PKCS7):</label><br>
+            <textarea id="eds" name="eds" cols="80" rows="30" [placeholder]="signatureStatus"
+              [(ngModel)]="eds"></textarea>
+            <pre>{{signatureError}}</pre>
+
+            <hr>
+            <p>
+              Файлы:
+            </p>
+            <div *ngFor="let file of filesWithEDS">
+              <label>{{file.name}}</label> <br>
+              <div>
+                <!-- <img src="{{'data:image/jpg;base64,' + file}}" alt="" srcset=""> -->
+              </div>
+            </div>
+          </fieldset>
+        </p-tabPanel>
+    </p-tabView>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,137 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-formgrid p-grid form">
+    <!-- 1 row -->
+    <div class="p-field p-col-12 p-md-6 p-lg-4">
+      <label for="last">Фамилия</label>
+      <input id="last" type="text" pInputText placeholder="Фамилия" formControlName="last">
+      <div *ngIf="form.controls['last'].invalid">
+        <small *ngIf="form.controls['last'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6 p-lg-4">
+      <label for="first">Имя</label>
+      <input id="first" type="text" pInputText placeholder="Имя" formControlName="first">
+      <div *ngIf="form.controls['first'].invalid">
+        <small *ngIf="form.controls['first'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6 p-lg-4">
+      <label for="isMale">Пол</label>
+      <p-dropdown styleClass="mib-input" id="isMale" [options]="genderTypes" formControlName="isMale"
+        optionLabel="title" optionValue="value">
+      </p-dropdown>
+      <div *ngIf="form.controls['isMale'].invalid">
+        <small *ngIf="form.controls['isMale'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <!-- 2 row -->
+    <div class="p-field p-col-12 p-md-6 p-lg-6">
+      <label for="phone">Мобильный телефон</label>
+      <p-inputMask id="phone" type="tel" placeholder="Телефон" formControlName="phone" mask="+7-999-999-99-99">
+      </p-inputMask>
+      <div *ngIf="form.controls['phone'].invalid">
+        <small *ngIf="form.controls['phone'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6 p-lg-6">
+      <label for="email">E-mail</label>
+      <input id="email" type="email" pInputText placeholder="E-mail" formControlName="email">
+      <div *ngIf="form.controls['email'].invalid">
+        <small *ngIf="form.controls['email'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-fluid p-formgrid p-grid form">
+    <div class="p-col-12">
+      <div class="d-flex passport-confirm">
+        <div class="passport-owner">
+          <h1>Паспорт</h1>
+          <p class="description">Заполните паспортные данные</p>
+        </div>
+        <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+          <div>
+            <mib-file-uploader [existFile]="files" [title]="'Загрузите копию паспорта'" [type]="'Passport'"
+              (remove)="onRemove($event)" (add)="onAdd($event)">
+            </mib-file-uploader>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6 p-lg-3">
+      <label for="number">Серия и номер паспорт</label>
+      <p-inputMask id="phone" type="text" placeholder="Серия и номер паспорт" formControlName="number"
+        mask="99 99 999999"></p-inputMask>
+      <div *ngIf="form.controls['number'].invalid">
+        <small *ngIf="form.controls['number'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6 p-lg-3">
+      <label for="date">Дата выдачи</label>
+      <input id="date" type="date" pInputText placeholder="Дата выдачи" formControlName="date">
+      <div *ngIf="form.controls['date'].invalid">
+        <small *ngIf="form.controls['date'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6 p-lg-3">
+      <label for="issuerTitle">Кем выдан</label>
+      <input id="issuerTitle" type="text" pInputText placeholder="Кем выдан" formControlName="issuerTitle">
+      <div *ngIf="form.controls['issuerTitle'].invalid">
+        <small *ngIf="form.controls['issuerTitle'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6 p-lg-3">
+      <label for="issuerCode">Код подразделения</label>
+      <p-inputMask id="issuerCode" type="text" placeholder="Код подразделения" formControlName="issuerCode"
+        mask="999-999"></p-inputMask>
+      <div *ngIf="form.controls['issuerCode'].invalid">
+        <small *ngIf="form.controls['issuerCode'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+      <div *ngIf="files.length" style="width: 100%;">
+        <h2>Приложенные файлы</h2>
+        <ng-container *ngFor="let file of files">
+          <div class="addon-button mb-10" *ngIf="file.Identifier === 'Passport'">
+            <div class="action-box">
+              <div class="addon-text">
+                <p>
+                  {{file.FileName}}
+                </p>
+              </div>
+              <div class="mib-uploader">
+                <div class="mib-upload-warn" (click)="onRemove(file)">
+                  Удалить
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <div class="p-field p-col-12 p-md-12">
+      <label for="btn_submit">&nbsp;</label>
+      <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
+        class="btn-mib-submit p-button-outlined" [loading]="isRequestLoading"
+        [disabled]="form.invalid || isRequestLoading || isFilesInvalid()"></button>
+    </div>
+  </div>
+</form>

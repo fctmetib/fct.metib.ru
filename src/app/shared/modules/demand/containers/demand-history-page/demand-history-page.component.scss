@@ -1,0 +1,196 @@
+@import '../../../../../../../src/styles/_colors.scss';
+
+.demand-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  .demand-info {
+    padding-left: 30px;
+    padding-right: 20px;
+
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 100%;
+
+    .demand-card {
+      display: flex;
+      justify-content: space-between;
+
+      .demand-actions {
+        display: none;
+        // display: flex;
+        flex-direction: column;
+
+        button {
+          margin-top: 10px;
+        }
+      }
+    }
+
+    .demand-content {
+      display: flex;
+      align-items: center;
+
+      font-weight: 500;
+      font-size: 1.5rem;
+      line-height: 1.75rem;
+      color: $dark-blue;
+
+      .text {
+        p {
+          margin-bottom: 15px;
+          margin-top: 15px;
+        }
+      }
+
+      .icon {
+        &.arrow_right {
+          margin-left: 13px;
+          background: url('/assets/icons/arrow_right.png') no-repeat center center;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .demand-status-info {
+      display: flex;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+
+      .demand-status {
+        margin-right: 5px;
+
+        &.default {
+          color: $default;
+        }
+
+        &.success {
+          color: $success;
+        }
+
+        &.warning {
+          color: $warning;
+        }
+      }
+    }
+  }
+
+  .demand-manager {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    width: 300px;
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+    text-align: center;
+
+    .demand-manager-date {
+      font-size: 14px;
+      line-height: 16px;
+      margin-bottom: 10px;
+    }
+
+    .demand-manager-info {
+      padding: 14px;
+      font-size: 14px;
+      border: 1px solid $main;
+      box-sizing: border-box;
+      border-radius: 10px;
+      color: $main;
+    }
+  }
+}
+
+.demand-item:hover {
+  .demand-info {
+    .demand-card {
+      .demand-actions {
+        display: flex;
+      }
+    }
+  }
+}
+
+// desktop
+@media (max-width: 1300px) {
+
+}
+
+// mobile
+@media (max-width: 1300px) {
+  .actions {
+    p-dropdown {
+      width: 100%;
+    }
+    span {
+      margin-right: 0px;
+      width: 100%;
+      input {
+        width: 100%;
+      }
+    }
+    button {
+      width: 100%;
+    }
+  }
+  .demand-item {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+
+    .demand-info {
+      padding: 35px;
+      .demand-card {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .demand-actions {
+          width: 100%;
+          // visibility: flex;
+          display: flex;
+          justify-content: space-between;
+          flex-direction: row;
+
+          button {
+            margin-top: 10px;
+          }
+        }
+      }
+
+      .demand-content {
+        display: flex;
+        align-items: center;
+
+        .icon {
+          &.arrow_right {
+          }
+        }
+      }
+
+      .demand-status-info {
+        display: flex;
+
+      }
+    }
+
+    .demand-manager {
+      width: 100%;
+      .demand-manager-date {
+      }
+
+      .demand-manager-info {
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+@import '/src/styles/colors.scss';
+
+// Inputs
+input {
+  border: 1px solid #D6D6D6;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 20px 35px 20px 20px;
+  color: #102538;
+
+  &::placeholder {
+    color: #D6D6D6;
+  }
+
+  &:focus-visible {
+    outline: unset;
+  }
+
+  &.mib-border-danger {
+    border-color: #D6D6D6 !important;
+  }
+
+  &.mib-invalid {
+    background-image: url('../../../../../assets/icons/svg/icon-error.svg') !important;
+    background-repeat: no-repeat !important;
+    background-position-x: 95% !important;
+    background-position-y: 65% !important;
+    border-color: $warning !important;
+  }
+
+  &.ng-touched.ng-valid {
+    background-image: url('../../../../../assets/icons/svg/icon-success.svg') !important;
+    background-repeat: no-repeat !important;
+    background-position-x: 95% !important;
+    background-position-y: 65% !important;
+  }
+}
+
+.checkbox {
+  display: flex;
+  justify-content: space-between;
+  gap: 7px;
+  margin-top: 2px;
+
+  input[type="checkbox"] {
+    background: #DBDBDB !important;
+    border-radius: 5px !important;
+  }
+
+  label {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: #102538;
+  }
+}

@@ -26,7 +26,49 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": ["src/favicon.ico", "src/assets"],
+            "allowedCommonJsDependencies": [
+              "chart.js",
+              "crypto-pro",
+              "crypto-js",
+              "file-saver",
+              "xlsx",
+              "intro.js/intro.js",
+              "jszip"
+            ],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              {
+                "glob": "home.html",
+                "input": "src/app/public/pages-static/home-static/",
+                "output": "/"
+              },
+              {
+                "glob": "tariffs.html",
+                "input": "src/app/public/pages-static/tariffs-static/",
+                "output": "/"
+              },
+              {
+                "glob": "clients.html",
+                "input": "src/app/public/pages-static/clients-static/",
+                "output": "/"
+              },
+              {
+                "glob": "contacts.html",
+                "input": "src/app/public/pages-static/contacts-static/",
+                "output": "/"
+              },
+              {
+                "glob": "ogimagemain.jpg",
+                "input": "src/assets/images",
+                "output": "/"
+              },
+              {
+                "glob": "yandex_caad2a2455dcbf11.html",
+                "input": "src/app/public/verifications/",
+                "output": "/"
+              }
+            ],
             "styles": [
               "src/styles.scss",
               "node_modules/intro.js/introjs.css",
@@ -94,7 +136,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [ "src/favicon.ico", "src/assets" ],
             "styles": [
               "src/styles.scss",
               "node_modules/intro.js/introjs.css",
@@ -117,7 +159,7 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [ "**/node_modules/**" ]
           }
         },
         "e2e": {

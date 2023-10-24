@@ -1,0 +1,20 @@
+<ng-container [ngSwitch]="result?.Type">
+  <div *ngSwitchCase="'DigitalSignature'">
+    <div class="file-list">
+      <div class="file-list-item">
+        <div class="file-list-item__name">
+          {{result.Comment}}
+        </div>
+        <div (click)="downloadCert()" class="file-list-item__download-button">
+            Скачать
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchDefault>
+    <p>
+      Запрос обработан
+    </p>
+  </div>
+</ng-container>
+

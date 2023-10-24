@@ -1,0 +1,42 @@
+<p-tabView class="mib-tabs">
+  <p-tabPanel header="Информация">
+    <demand-info></demand-info>
+  </p-tabPanel>
+  <p-tabPanel header="Данные">
+    <ng-container [ngSwitch]="demandNavigationConfig.demandAction">
+      <ng-container *ngSwitchCase="demandAction.EDS">
+        <eds></eds>
+      </ng-container>
+      <ng-container *ngSwitchCase="demandAction.EDIT_PROFILE">
+        <profile></profile>
+      </ng-container>
+      <ng-container *ngSwitchCase="demandAction.FREE_REQUEST">
+        <free></free>
+      </ng-container>
+      <ng-container *ngSwitchCase="demandAction.SURETY">
+        <surety></surety>
+      </ng-container>
+      <ng-container *ngSwitchCase="demandAction.UPDATE_LIMIT">
+        <limit></limit>
+      </ng-container>
+      <ng-container *ngSwitchCase="demandAction.CREATE_DEBITOR">
+        <debitor></debitor>
+      </ng-container>
+      <ng-container *ngSwitchCase="demandAction.VERIFY">
+        <verify></verify>
+      </ng-container>
+      <ng-container *ngSwitchCase="demandAction.FACTORING">
+        <factoring></factoring>
+      </ng-container>
+      <ng-container *ngSwitchCase="demandAction.AGENT_FACTORING">
+        <agent-factoring></agent-factoring>
+      </ng-container>
+    </ng-container>
+  </p-tabPanel>
+  <p-tabPanel header="Файлы">
+    <demand-files></demand-files>
+  </p-tabPanel>
+  <p-tabPanel header="Результат">
+    <demand-result></demand-result>
+  </p-tabPanel>
+</p-tabView>

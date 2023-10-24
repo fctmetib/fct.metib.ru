@@ -112,3 +112,33 @@
     padding-top: 38px !important;
   }
 }
+
+@media (max-width: 1300px) {
+  aside {
+    display: none;
+  }
+
+  .desktop.header {
+    display: none !important;
+  }
+
+  .mobile.header {
+    display: block;
+  }
+
+  .container {
+    margin-top: 120px !important;
+  }
+
+  .page {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  .card-content {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-bottom: 26px !important;
+    padding-top: 38px !important;
+  }
+}

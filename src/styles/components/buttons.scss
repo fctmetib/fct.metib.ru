@@ -86,3 +86,51 @@ button.basic:hover {
     #89D3CF !important;
   border: unset !important;
 }
+
+.button-content {
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid  $main;
+}
+
+.addon-text {
+  border: solid 1px #c4c4c4;
+  width: 100%;
+  height: 90px;
+  border-radius: 10px;
+  padding-left: 10px;
+  align-items: center;
+  display: flex;
+}
+
+.addon-text-small {
+  text-align: center;
+  border: solid 1px #c4c4c4;
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.mib-small {
+  width: 130px !important;
+  padding: 10px !important;
+}
+
+.mib-button-icon {
+  height: 3.375rem;
+  width: 3.375rem;
+
+  border-radius: 10px;
+
+  background-color: $main;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  image {
+    width: 25px;
+    height: 25px;
+  }
+}

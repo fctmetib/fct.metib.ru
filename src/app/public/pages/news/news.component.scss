@@ -1,0 +1,29 @@
+
+// Desktop
+@media (min-width: 1300px) {
+  .news {
+    display: flex;
+    justify-content: space-between;
+    .news__image {
+      img {
+        width: 100%;
+        max-width: 400px;
+      }
+    }
+  }
+}
+
+// Mobile
+@media (max-width: 1300px) {
+  .news {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .news__image {
+      img {
+        width: 100%;
+        max-width: 550px;
+      }
+    }
+  }
+}

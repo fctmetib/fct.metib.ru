@@ -1,0 +1,94 @@
+<div class="info-header">
+  <div class="info-cards">
+    <div class="info-card">
+      <p><strong>Тип:</strong> {{getType(currentDemandInfo.Type)}}</p>
+    </div>
+    <div class="info-card">
+      <p><strong>Статус:</strong> {{getStatus(currentDemandInfo.Status)}}</p>
+    </div>
+    <div class="info-card">
+      <p><strong>Дата:</strong> {{currentDemandInfo.DateCreated | date:'dd.MM.yyyy'}}</p>
+    </div>
+    <div class="info-card">
+      <p><strong>Изменен:</strong> {{currentDemandInfo.DateModify | date:'dd.MM.yyyy HH:mm'}}</p>
+    </div>
+  </div>
+
+  <div class="manager">
+    <div class="header-block manager-info" *ngIf="currentDemandInfo?.Manager; else noManagerTmpl">
+      <div class="manager-info-name">
+        {{currentDemandInfo?.Manager?.Name}} ({{currentDemandInfo?.Manager?.Extension}})
+      </div>
+      <div class="manager-info-email">
+        {{currentDemandInfo?.Manager?.Email}}
+      </div>
+    </div>
+    <div class="header-block manager-ava" *ngIf="currentDemandInfo?.Manager;">
+      <ng-container>
+        <p-skeleton size="5rem"></p-skeleton>
+      </ng-container>
+    </div>
+    <ng-template #noManagerTmpl>
+      <div class="header-block manager-info">
+        <div class="manager-info-name">
+          Менеджер не назначен
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<p-steps [model]="items" [readonly]="true" [activeIndex]="selectedStepIndex"></p-steps>
+
+<h2>
+  Сообщения
+</h2>
+<div class="message-list">
+  <div class="message-item" *ngFor="let message of currentDemandInfo.Messages">
+    <div class="date">{{message.Date | date:'dd.MM.yyyy'}}</div>
+    <div class="message">{{message.Comment}}</div>
+    <div class="name">{{message.User}}</div>
+  </div>
+</div>
+
+<h2>
+  Новое сообщение
+</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <textarea rows="5" cols="30" pInputTextarea style="width: 100%; margin-bottom: 15px;"
+    formControlName="message"></textarea>
+  <div class="actions">
+    <div class="files">
+      <div class="addon-button mb-20">
+        <div class="addon-text">
+          <p>
+            При необходимости прикрепите файлы:
+          </p>
+        </div>
+        <div class="mib-uploader">
+          <input type="file" id="All" (change)="onSelect($event, 'All')" hidden />
+          <label for="All" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+        </div>
+      </div>
+      <div *ngIf="files.length">
+        <ng-container *ngFor="let file of files">
+          <div class="addon-button mb-10" *ngIf="file.Identifier === 'All'">
+            <div class="addon-text">
+              <p>
+                {{file.FileName}}
+              </p>
+            </div>
+            <div class="mib-uploader">
+              <div class="mib-upload-warn" (click)="removeFile(file)">
+                Удалить
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div>
+      <button type="submit" pButton label="Отправить" class="basic p-mr-2"></button>
+    </div>
+  </div>
+</form>

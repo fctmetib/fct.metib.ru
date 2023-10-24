@@ -1,0 +1,102 @@
+<div class="card-content" id="step1">
+  <header-page [title]="'Платежи'">
+    <div class="mib-action button-content p-mr-2" (click)="openDateModal()">
+      {{22.10.2021 | date: 'dd.MM.yyyy'}}
+    </div>
+    <div class="mib-action mib-button-icon excel-icon can-click"  pTooltip="Экспорт файла Excel">
+      <img src="../../../../../../assets/icons/mib-excel.png" alt="">
+    </div>
+  </header-page>
+
+
+  <p-table [value]="[]" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+    [loading]="isLoading" styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"
+    currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <div class="m-th">
+            <div>Дата</div>
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            <div>Сумма</div>
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            <div>Дебит</div>
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            <div>Кредит</div>
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            <div>Назначение</div>
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            <div>Плательщик</div>
+          </div>
+        </th>
+        <th>
+          <div class="m-th">
+            <div>Дебитор</div>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>
+          <div class="m-td">
+            <div>
+              {{item.DebtorTitle}}
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="m-td">
+            <div>{{item.ContractDeliveryNumber}}
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="m-td">
+            <div> {{item.ShipmentFullTitle}}</div>
+          </div>
+        </td>
+        <td>
+          <div class="m-td currency">
+            <div>{{item.ShipmentSumm | currency:'RUB':'symbol-narrow'}}</div>
+          </div>
+        </td>
+        <td>
+          <div class="m-td currency">
+            <div>{{item.DutyDebtor | currency:'RUB':'symbol-narrow'}}</div>
+          </div>
+        </td>
+        <td>
+          <div class="m-td">
+            <div>{{item.DateShipment | date:"dd.MM.yyyy"}}</div>
+          </div>
+        </td>
+        <td>
+          <div class="m-td red">
+            <div> {{item.DatePayment | date:"dd.MM.yyyy"}}</div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">Нет данных.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

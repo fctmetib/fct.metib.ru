@@ -1,0 +1,40 @@
+.mib-card-person {
+  height: 90px;
+  display: flex;
+  gap: 10px;
+
+  .ava {
+    width: 90px;
+    height: 90px;
+    background: #E3E3E3;
+    background-size: cover;
+    border-radius: 10px;
+  }
+
+  .person {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+
+    .name {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 21px;
+      color: #102538;
+    }
+
+    .position {
+      max-width: 350px;
+      font-size: 14px;
+      line-height: 16px;
+      color: #989898;
+    }
+
+    .email {
+      font-size: 14px;
+      line-height: 16px;
+      color: #0C83F1;
+    }
+  }
+}

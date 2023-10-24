@@ -1,0 +1,72 @@
+<nav>
+  <div class="desktop">
+    <div class="mib-container">
+      <div class="core">
+        <div class="logo">
+          <a [routerLink]="['/']">
+            <img src="/assets/images/logo_big_normal_svg.svg" alt="Логотип" />
+          </a>
+        </div>
+        <div class="links">
+          <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Главная</a>
+          <a [routerLink]="['/tariffs.html']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
+          <a [routerLink]="['/clients']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
+          <a [routerLink]="['/contacts']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
+        </div>
+      </div>
+      <div class="actions">
+        <mib-button [title]="'Личный кабинет'"
+                    [routerLink]="['login']"
+                    [icon]="'/assets/icons/button-icons/icon_key.svg'"
+                    [theme]="'regular'"></mib-button>
+      </div>
+    </div>
+  </div>
+  <div class="mobile">
+    <div class="logo">
+      <a [routerLink]="['/']">
+        <img src="/assets/images/logo_big_normal_svg.svg" alt="Логотип" />
+      </a>
+    </div>
+    <input type="checkbox" class="toggler" />
+    <div class="burger">
+      <div></div>
+    </div>
+    <div class="menu">
+      <div>
+        <div>
+          <ul class="mib-mb-20">
+            <div class="section-border"></div>
+            <li>
+              <a [routerLink]="['/']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Главная</a>
+            </li>
+            <div class="section-border"></div>
+            <li>
+              <a [routerLink]="['/tariffs.html']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
+            </li>
+            <div class="section-border"></div>
+            <li>
+              <a [routerLink]="['/clients']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
+            </li>
+            <div class="section-border"></div>
+            <li>
+              <a [routerLink]="['/contacts']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
+            </li>
+            <div class="section-border"></div>
+          </ul>
+          <div class="actions mib-mb-20">
+            <mib-button [title]="'Личный кабинет'"
+                        [icon]="'/assets/icons/button-icons/icon_key.svg'"
+                        [routerLink]="['/login']"
+                        [theme]="'regular'"
+                        [width]="100"></mib-button>
+          </div>
+          <div class="social mib-mb-20">
+            <mib-button [icon]="'/assets/icons/button-icons/icon_whatsapp.svg'"
+                        [theme]="'icon'"></mib-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

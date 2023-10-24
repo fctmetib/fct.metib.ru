@@ -1,0 +1,23 @@
+
+// Mobile
+@media (max-width: 1300px) {
+  .items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+  }
+
+}
+
+// Desktop
+@media (min-width: 1300px) {
+  .items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+  }
+}

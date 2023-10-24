@@ -1,0 +1,19 @@
+
+
+
+// Desktop
+@media (min-width: 1300px) {
+  .mib-section__header_news {
+    background-image: unset;
+    background-repeat: unset;
+    background-position: unset;
+    padding-top: 78px;
+  }
+}
+
+// Mobile
+@media (max-width: 1300px) {
+  .mib-section__header_news {
+    height: 550px;
+  }
+}

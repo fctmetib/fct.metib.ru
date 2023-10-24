@@ -1,0 +1,61 @@
+<footer>
+  <div class="mib-container">
+    <h2>Контакты</h2>
+
+    <div class="contacts">
+      <div class="location">
+        <img src="/assets/icons/svg/icon-place.svg" alt="">
+        <div class="address">
+          119180, г. Москва, ул. Большая <br> Полянка, д. 47, стр. 2
+        </div>
+      </div>
+      <div class="phones">
+        <img src="/assets/icons/svg/icon-phone.svg" alt="">
+        <div class="phones_list">
+          <p>
+            <a href="tel:+74957279797">+7 (495) 727-9797</a>
+          </p>
+          <p>
+            <a href="tel:+78002509797">+7 (800) 250-9797</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="map">
+    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A2f67fcd615265574608b925be005814b15ab5d32dce3bc8135f16ba7a27f1d32&amp;source=constructor" width="100%" height="280" frameborder="0"></iframe>
+  </div>
+  <div class="mib-container">
+    <div class="footer_menu">
+      <div class="logo">
+        <a [routerLink]="['/']">
+          <img src="/assets/images/logo_big_normal_svg.svg" alt="Логотип" />
+        </a>
+      </div>
+      <div class="links">
+        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Главная</a>
+        <a [routerLink]="['/tariffs.html']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
+        <a [routerLink]="['/contacts']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
+        <a [routerLink]="['/clients']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
+      </div>
+      <div class="actions">
+        <div class="actions__social">
+          <mib-button [icon]="'/assets/icons/button-icons/icon_whatsapp.svg'"
+                      [theme]="'icon'"
+                      (click)="openSocial('whatsapp')"></mib-button>
+        </div>
+        <mib-button [title]="'Личный кабинет'"
+                    [routerLink]="['login']"
+                    [icon]="'/assets/icons/button-icons/icon_key.svg'"
+                    [theme]="'regular'"></mib-button>
+      </div>
+    </div>
+    <div class="footer_info">
+      <p class="description">
+        Банк осуществляет свою деятельность на основании
+        Генеральной лицензии на осуществление банковских операций №2440, выданной Банком России 21.11.2014 г
+      </p>
+    </div>
+  </div>
+</footer>

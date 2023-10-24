@@ -1,0 +1,360 @@
+<div class="view-file-dialog">
+  <p class="subheader">Предварительный просмотр документа</p>
+  <iframe class="mib-file-view"></iframe>
+  <p-tabView styleClass="mib-tab">
+    <p-tabPanel header="Электронные подписи">
+      <p-table [value]="[]" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple" dataKey="ID"
+      styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true" tableHighlight
+      currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">
+      <!-- -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="ID">
+            <div class="m-th">
+              <div>
+                Номер
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Описание</div>
+            </div>
+          </th>
+          <th pSortableColumn="Number">
+            <div class="m-th">
+              <div>Тип
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="Date">
+            <div class="m-th">
+              <div>Статус
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="Type">
+            <div class="m-th">
+              <div>Создан
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="Status">
+            <div class="m-th">
+              <div>Доступен
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Фамилия</div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Имя</div>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-request>
+        <tr [pRowToggler]="request" class="can-click">
+          <td>
+            <p-tableCheckbox [value]="request"></p-tableCheckbox>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>{{request.ID}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td" tooltipPosition="bottom" pTooltip="{{request.Delivery.Title}}">
+              <div>{{request.Delivery.Title}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div> {{request.Number}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>{{request.Date | date: 'dd.MM.yyyy'}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div></div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>{{request.Status}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td" tooltipPosition="bottom" pTooltip="{{request.Delivery.Debtor}}">
+              <div>{{request.Delivery.Debtor}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td currency" tooltipPosition="bottom"
+              pTooltip="{{request.Summ | currency:'RUB':'symbol-narrow'}}">
+              <div>{{request.Summ | currency:'RUB':'symbol-narrow'}}</div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <ng-container *ngIf="!loading; else skeletonRequestsTemplate">
+          <tr>
+            <td colspan="8">Нет данных.</td>
+          </tr>
+        </ng-container>
+        <ng-template #skeletonRequestsTemplate>
+          <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
+            <td>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </ng-template>
+    </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Квитанции">
+      <p-table [value]="[]" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple" dataKey="ID"
+      styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true" tableHighlight
+      currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">
+      <!-- -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="ID">
+            <div class="m-th">
+              <div>
+                Номер
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Описание</div>
+            </div>
+          </th>
+          <th pSortableColumn="Number">
+            <div class="m-th">
+              <div>Тип
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="Date">
+            <div class="m-th">
+              <div>Статус
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="Type">
+            <div class="m-th">
+              <div>Создан
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="Status">
+            <div class="m-th">
+              <div>Доступен
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Фамилия</div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Имя</div>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-request>
+        <tr [pRowToggler]="request" class="can-click">
+          <td>
+            <p-tableCheckbox [value]="request"></p-tableCheckbox>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>{{request.ID}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td" tooltipPosition="bottom" pTooltip="{{request.Delivery.Title}}">
+              <div>{{request.Delivery.Title}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div> {{request.Number}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>{{request.Date | date: 'dd.MM.yyyy'}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div></div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>{{request.Status}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td" tooltipPosition="bottom" pTooltip="{{request.Delivery.Debtor}}">
+              <div>{{request.Delivery.Debtor}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td currency" tooltipPosition="bottom"
+              pTooltip="{{request.Summ | currency:'RUB':'symbol-narrow'}}">
+              <div>{{request.Summ | currency:'RUB':'symbol-narrow'}}</div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <ng-container *ngIf="!loading; else skeletonRequestsTemplate">
+          <tr>
+            <td colspan="8">Нет данных.</td>
+          </tr>
+        </ng-container>
+        <ng-template #skeletonRequestsTemplate>
+          <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
+            <td>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </ng-template>
+    </p-table>
+    </p-tabPanel>
+</p-tabView>
+</div>

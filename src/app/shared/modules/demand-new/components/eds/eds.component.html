@@ -1,0 +1,424 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-formgrid p-grid form">
+    <!-- 1 row -->
+    <div class="p-field p-col-12 p-md-3">
+      <label for="organizationType">Тип организации</label>
+      <p-dropdown styleClass="mib-input" id="organizationType" [options]="organizationTypes"
+        placeholder="Выберите Тип организации" formControlName="organizationType" optionLabel="title"
+        optionValue="value"></p-dropdown>
+    </div>
+    <div class="p-field p-col-12 p-md-9" *ngIf="form?.value?.organizationType === 1">
+      <label for="organizationLegalForm">Правовая форма</label>
+      <p-dropdown styleClass="mib-input" id="organizationLegalForm" [options]="ruleTypes"
+        placeholder="Выберите Правовую форму" formControlName="organizationLegalForm" optionLabel="title"
+        optionValue="value"></p-dropdown>
+    </div>
+  </div>
+  <div class="p-fluid p-formgrid p-grid form">
+    <div class="p-field p-col-12 p-md-3">
+      <label for="organizationShortName">Краткое наименование организации</label>
+      <input id="organizationShortName" type="text" pInputText placeholder="Краткое наименование организации"
+        formControlName="organizationShortName">
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="organizationFullName">Полное наименование организации</label>
+      <input id="organizationFullName" type="text" pInputText placeholder="Полное наименование организации"
+        formControlName="organizationFullName">
+    </div>
+    <!-- 2 row -->
+    <div class="p-field p-col-12 p-md-3">
+      <label for="organizationINN">ИНН</label>
+      <input id="organizationINN" type="text" pInputText placeholder="ИНН" minlength="10" maxlength="12"
+        formControlName="organizationINN">
+      <div *ngIf="form?.controls['organizationINN']?.invalid">
+        <small *ngIf="form?.controls['organizationINN']?.errors?.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+        <small *ngIf="form?.controls['organizationINN']?.errors.minlength" class="p-error">
+          Введите корректный ИНН (10 или 12 цифр).
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="organizationKPP">КПП</label>
+      <p-inputMask id="organizationKPP" mask="999999999" formControlName="organizationKPP" placeholder="КПП">
+      </p-inputMask>
+      <div *ngIf="form?.controls['organizationKPP']?.invalid">
+        <small *ngIf="form?.controls['organizationKPP']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="organizationOGRN">ОГРН</label>
+      <p-inputMask id="organizationOGRN" mask="9999999999999" formControlName="organizationOGRN" placeholder="ОГРН">
+      </p-inputMask>
+      <div *ngIf="form?.controls['organizationOGRN']?.invalid">
+        <small *ngIf="form?.controls['organizationOGRN']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="organizationOKPO">ОКПО</label>
+      <input id="organizationOKPO" type="text" pInputText placeholder="ОКПО" minlength="8" maxlength="10"
+        formControlName="organizationOKPO">
+      <div *ngIf="form?.controls['organizationOKPO']?.invalid">
+        <small *ngIf="form?.controls['organizationOKPO']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+        <small *ngIf="form?.controls['organizationOKPO']?.errors.minlength" class="p-error">
+          Введите корректный ОКПО (8 или 10 цифр).
+        </small>
+      </div>
+    </div>
+    <!-- 3 row -->
+    <div class="p-field p-col-12 p-md-3">
+      <label for="organizationPhone">Телефон</label>
+      <p-inputMask id="organizationPhone" type="tel" placeholder="Телефон" formControlName="organizationPhone"
+        mask="+7-999-999-99-99"></p-inputMask>
+      <div *ngIf="form?.controls['organizationPhone']?.invalid">
+        <small *ngIf="form?.controls['organizationPhone']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="organizationEmail">E-mail</label>
+      <input id="organizationEmail" type="email" pInputText placeholder="E-mail" formControlName="organizationEmail">
+      <div *ngIf="form?.controls['organizationEmail']?.invalid">
+        <small *ngIf="form?.controls['organizationEmail']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+        <small *ngIf="form?.controls['organizationEmail']?.errors.email" class="p-error">
+          Введите корректную почту.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-12">
+      <label for="organizationWEB">Адрес сайта</label>
+      <input id="organizationWEB" type="text" pInputText placeholder="Адрес сайта" formControlName="organizationWEB">
+      <div *ngIf="form?.controls['organizationWEB']?.invalid">
+        <small *ngIf="form?.controls['organizationWEB']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <!-- 4 row -->
+    <div class="p-col-12 p-md-12">
+      <demand-address-group [title]="'Юридический адрес'" [placeholder]="'Юридический адрес'"
+        [addressGroup]="form.get('organizationLegalAddress')" (onChange)="onLegalAddressChange()"
+        isOnChangeRequired="true">
+      </demand-address-group>
+    </div>
+    <div class="p-field p-col-12 p-md-12">
+      <div class="p-field-checkbox">
+        <p-checkbox formControlName="organizationIsActualAdressEqual" binary="true"
+          inputId="organizationIsActualAdressEqual" (onChange)="isAddressEqual('organizationActualAddress')">
+        </p-checkbox>
+        <label for="organizationIsActualAdressEqual"> Фактический адрес
+          совпадает с юридическим</label>
+      </div>
+    </div>
+    <div class="p-col-12 p-md-12" *ngIf="!form?.value?.organizationIsActualAdressEqual">
+      <demand-address-group [title]="'Фактический адрес'" [placeholder]="'Фактический адрес'"
+        [addressGroup]="form.get('organizationActualAddress')"></demand-address-group>
+    </div>
+    <div class="p-field p-col-12 p-md-12">
+      <div class="p-field-checkbox">
+        <p-checkbox formControlName="organizationIsLegalAdressEqual" binary="true"
+          inputId="organizationIsLegalAdressEqual" (onChange)="isAddressEqual('organizationPostAddress')">
+        </p-checkbox>
+        <label for="organizationIsLegalAdressEqual">Почтовый адрес совпадает
+          с юридическим</label>
+      </div>
+    </div>
+    <div class="p-col-12 p-md-12" *ngIf="!form?.value?.organizationIsLegalAdressEqual">
+      <demand-address-group [title]="'Почтовый адрес'" [placeholder]="'Почтовый адрес'"
+        [addressGroup]="form.get('organizationPostAddress')"></demand-address-group>
+    </div>
+    <!-- 5 row -->
+    <!-- <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+      <div class="p-field p-col-12 p-md-6">
+        <label> Прикрепите необходимые файлы </label>
+        <mib-file-uploader [existFile]="files" [title]="'Скан-Копия свидетельства ИНН организации'" [type]="'Inn'"
+          (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>
+          &nbsp;
+        </label>
+        <mib-file-uploader [existFile]="files" [title]="'Скан-Копия свидетельства ОГРН
+        организации'" [type]="'Ogrn'" (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+    </ng-container> -->
+    <div class="p-col-12">
+      <h1>
+        Данные о владельце сертификата
+      </h1>
+      <p class="description">Сертификат может быть издан только на текущего пользователя, лично заполняющего
+        запрос
+        на
+        издание
+        сертификата!</p>
+      <!-- В данном случае, сертификат будет издан на имя: Олег Кузнецов -->
+    </div>
+
+    <!-- 6 row -->
+    <div class="p-field p-col-12 p-md-3">
+      <label for="ownerSurname">Фамилия</label>
+      <input id="ownerSurname" type="text" pInputText placeholder="Фамилия" formControlName="ownerSurname">
+      <div *ngIf="form?.controls['ownerSurname']?.invalid">
+        <small *ngIf="form?.controls['ownerSurname']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="ownerName">Имя</label>
+      <input id="ownerName" type="text" pInputText placeholder="Имя" formControlName="ownerName">
+      <div *ngIf="form?.controls['ownerName']?.invalid">
+        <small *ngIf="form?.controls['ownerName']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="ownerMiddlename">Отчество</label>
+      <input id="ownerMiddlename" type="text" pInputText placeholder="Отчество" formControlName="ownerMiddlename">
+      <div *ngIf="form?.controls['ownerMiddlename']?.invalid">
+        <small *ngIf="form?.controls['ownerMiddlename']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="ownerGender">Пол</label>
+      <p-dropdown styleClass="mib-input" id="ownerGender" [options]="genderTypes" formControlName="ownerGender"
+        optionLabel="title" optionValue="value">
+      </p-dropdown>
+    </div>
+
+    <!-- 7 row -->
+    <div class="p-field p-col-12 p-md-3">
+      <label for="ownerSNILS">СНИЛС</label>
+      <p-inputMask id="ownerSNILS" mask="999-999-999 99" formControlName="ownerSNILS" placeholder="СНИЛС">
+      </p-inputMask>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="ownerINN">ИНН</label>
+      <input id="ownerINN" type="text" pInputText placeholder="ИНН" minlength="12" maxlength="12"
+        formControlName="ownerINN">
+      <div *ngIf="form.controls['ownerINN'].invalid">
+        <small *ngIf="form.controls['ownerINN'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+        <small *ngIf="form.controls['ownerINN'].errors.minlength" class="p-error">
+          Введите корректный ИНН (12 цифр).
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="ownerDateBurn">Дата рождения</label>
+      <input id="ownerDateBurn" type="date" pInputText placeholder="Дата рождения" formControlName="ownerDateBurn">
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="ownerPlaceBurn">Место рождения</label>
+      <input id="ownerPlaceBurn" type="text" pInputText placeholder="Место рождения" formControlName="ownerPlaceBurn">
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="ownerPhone">Мобильный телефон</label>
+      <input id="ownerPhone" type="tel" pInputText placeholder="Мобильный телефон" formControlName="ownerPhone">
+    </div>
+
+    <!-- 8 row -->
+    <div class="p-field p-col-12 p-md-6">
+      <label for="ownerWorkPosition">Должность</label>
+      <p-dropdown styleClass="mib-input" id="ownerWorkPosition" [options]="postList" placeholder="Выберите Должность"
+        formControlName="ownerWorkPosition" optionLabel="Title" optionValue="Title"></p-dropdown>
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label for="ownerEmail">E-mail</label>
+      <input id="ownerEmail" type="email" pInputText placeholder="E-mail" formControlName="ownerEmail">
+      <div *ngIf="form?.controls['ownerEmail']?.invalid">
+        <small *ngIf="form?.controls['ownerEmail']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+  </div>
+  <!-- 9 row -->
+  <!-- <div class="p-fluid p-formgrid p-grid form">
+    <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+      <div class="p-field p-col-12 p-md-6">
+        <label>
+          Прикрепите необходимые файлы
+        </label>
+        <mib-file-uploader [existFile]="files" [title]="'Скан-Копия СНИЛС владельца
+        ключа подписи'" [type]="'Snils'" (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>
+          &nbsp;
+        </label>
+        <mib-file-uploader [existFile]="files" [title]="'Скан-Копия приказа о назначении на
+        должность Генерального директора'" [type]="'Director'" (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+
+    </ng-container>
+  </div> -->
+  <div class="p-fluid p-formgrid p-grid form">
+    <!-- 10 row -->
+    <!-- <div class="p-field p-col-12 p-md-12">
+      <label for="ownerGeoPosition">Укажите географическое расположение</label>
+      <p-dropdown styleClass="mib-input" id="ownerGeoPosition" [options]="regionList"
+        placeholder="Выберите географическое расположение" formControlName="ownerGeoPosition" optionLabel="Title"
+        (onChange)="selectGeoPosition($event)" optionValue="Code"></p-dropdown>
+      <div *ngIf="idCenterList.length === 0">
+        <small class="p-error">
+          Укажите Ваше географическое расположение для выбора ближайших Центров идентификации
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-12" *ngIf="form?.value?.ownerGeoPosition">
+      <label for="ownerIdCenter">Укажите подходящий региональный Центр идентификации</label>
+      <p-dropdown styleClass="mib-input" id="ownerIdCenter" (onChange)="setIDCenter($event)" [options]="idCenterList"
+        placeholder="Выберите географическое расположение" formControlName="ownerIdCenter" optionLabel="name"
+        optionValue="guid"></p-dropdown>
+      <div *ngIf="!selectedIdCenter">
+        <small class="p-error">
+          Укажите подходящий региональный Центр идентификации
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-12" *ngIf="form?.value?.ownerIdCenter">
+      <p>
+        {{selectedIdCenter.name}} <br>
+        Адрес: {{selectedIdCenter.address}} <br>
+        Режим работы: {{selectedIdCenter.schedule}} <br>
+        Контакты: {{selectedIdCenter.email}} {{selectedIdCenter.phone}} <br>
+      </p>
+    </div> -->
+    <div class="p-col-12">
+      <div class="d-flex passport-confirm">
+        <div class="passport-owner">
+          <h1>Паспортные данные владельца сертификата</h1>
+          <p class="description">Заполните паспортные данные</p>
+        </div>
+        <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+          <div>
+            <mib-file-uploader
+              [existFile]="files"
+              [validations]="validations"
+              [title]="'Скан-копия паспорта
+            владельца ключа подписи'"
+              [type]="'Passport'"
+              (add)="onAdd($event)"
+              (remove)="onRemove($event)">
+            </mib-file-uploader>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- 11 row -->
+    <div class="p-field p-col-12 p-md-3">
+      <label for="passportNumber">Серия и номер паспорт</label>
+      <p-inputMask id="passportNumber" type="text" placeholder="Серия и номер паспорта" formControlName="passportNumber"
+        mask="99 99 999999"></p-inputMask>
+      <div *ngIf="form?.controls['passportNumber']?.invalid">
+        <small *ngIf="form?.controls['passportNumber']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="passportDate">Дата выдачи</label>
+      <input id="passportDate" type="date" pInputText placeholder="Дата выдачи" formControlName="passportDate">
+      <div *ngIf="form?.controls['passportDate']?.invalid">
+        <small *ngIf="form?.controls['passportDate']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="passportFrom">Кем выдан</label>
+      <input id="passportFrom" type="text" pInputText placeholder="Кем выдан" formControlName="passportFrom">
+      <div *ngIf="form?.controls['passportFrom']?.invalid">
+        <small *ngIf="form?.controls['passportFrom']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="passportCode">Код подразделения</label>
+      <p-inputMask id="passportCode" type="text" placeholder="Код подразделения" formControlName="passportCode"
+        mask="999-999"></p-inputMask>
+      <div *ngIf="form?.controls['passportCode']?.invalid">
+        <small *ngIf="form?.controls['passportCode']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-3">
+      <label for="passportNationality">Гражданство</label>
+      <p-dropdown styleClass="mib-input" id="passportNationality" [options]="countryList"
+        placeholder="Выберите гражданство" formControlName="passportNationality" optionLabel="Title"
+        optionValue="Identifier"></p-dropdown>
+      <div *ngIf="form?.controls['passportNationality']?.invalid">
+        <small *ngIf="form?.controls['passportNationality']?.errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+
+    <div class="p-col-12">
+      <h1>Внимание!</h1>
+    </div>
+
+    <div class="d-flex p-justify-between">
+      <p>1. Перед тем как отправить запрос на ЭЦП, скачайте заявку на выдачу сертификата и распечатайте её на принтере.
+        Она
+        обязательно Вам понадобится при сверке документов при получении сертификата!</p>
+      <button pButton pRipple type="button" (click)="getDigitalSignatureRequest()"
+        label="Скачать заявку на выдачу сертификата"
+        class="btn-mib-submit btn-attention addon-button__button "></button>
+    </div>
+    <!-- <p>2. После успешного сохранения запроса на ЭЦП, дождитесь приглашения от Калуги-Астрал (по e-mail) в <a
+        href="https://astral.ru/" target="_blank"> один из
+        центров выдачи сертификатов</a> для сверки документов и получения сертификата</p> -->
+    <p>Вы можете следить за состоянием Вашего запроса из личного кабинета по факторингу в разделе "Запросы"</p>
+
+
+    <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+      <div class="p-field p-col-12 p-md-12 application">
+        <label>
+          Прикрепите заполненную заявку
+        </label>
+        <mib-file-uploader
+          [existFile]="files"
+          [validations]="validations"
+          [title]="'Скан заполненной заявки'"
+          [type]="'Application'"
+          (add)="onAdd($event)"
+          (remove)="onRemove($event)">
+        </mib-file-uploader>
+
+      </div>
+    </ng-container>
+
+    <div class="p-field p-col-12 p-md-12">
+      <label for="btn_submit">&nbsp;</label>
+      <button id="btn_submit" pButton pRipple label="Сохранить запрос" [loading]="(requestLoading$ | async)"
+        [disabled]="form?.invalid || isFilesInvalid() || (requestLoading$ | async)"
+        class="btn-mib-submit p-button-outlined"></button>
+    </div>
+  </div>
+</form>

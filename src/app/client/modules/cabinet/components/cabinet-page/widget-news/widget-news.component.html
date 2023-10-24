@@ -1,0 +1,26 @@
+<div class="widget widget__news">
+  <div class="widget__header">
+    <h4 class="widget__title">
+      Новости
+    </h4>
+  </div>
+  <div class="widget__content widget__content-news">
+    <div class="news-row" *ngFor="let newsItem of newsList">
+      <div class="news-image">
+        <img [src]="getImageURL(newsItem.ID)" alt="">
+      </div>
+      <div class="news-content">
+        <div class="news-header">{{newsItem.Title}}</div>
+        <div class="news-description">{{newsItem.Text}}</div>
+      </div>
+      <div class="news-info">
+        <div class="news-date">{{newsItem.Date | date:"yyyy.MM.dd"}}</div>
+        <div class="news-action">
+          <a [routerLink]="['/news/', newsItem.ID]" target="_blank">
+            Читать
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

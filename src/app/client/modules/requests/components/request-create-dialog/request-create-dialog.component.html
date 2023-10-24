@@ -1,0 +1,580 @@
+<metib-backend-error-messages *ngIf="errorsMessage$ | async" [backendErrors]="errorsMessage$ | async">
+</metib-backend-error-messages>
+
+<metib-success-messages *ngIf="successMessage$ | async" [message]="successMessage$ | async"></metib-success-messages>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-formgrid p-grid form">
+    <div class="p-field p-col-12 p-md-6">
+      <label for="deliveryID">Договор поставки:</label>
+      <p-dropdown id="deliveryID" [options]="deliveries" placeholder="Выберите договор" formControlName="deliveryID"
+        optionLabel="Title" optionValue="ID" (onChange)="onDeliveryChange($event)"></p-dropdown>
+      <div *ngIf="form.controls['deliveryID'].invalid">
+        <small *ngIf="form.controls['deliveryID'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label for="freeDuty">Свободный лимит:</label>
+      <input id="freeDuty" type="text" pInputText placeholder="Свободный Лимит" readonly
+        value="{{freeDuty | currency:'RUB':'symbol-narrow'}}">
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label for="number">Номер заявки:</label>
+      <input id="number" type="text" pInputText placeholder="Номер Заявки" formControlName="number">
+      <div *ngIf="form.controls['number'].invalid">
+        <small *ngIf="form.controls['number'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label for="type">Тип заявки:</label>
+      <p-dropdown styleClass="mib-input"  id="type" [options]="types" formControlName="type" optionLabel="name" optionValue="value">
+      </p-dropdown>
+      <div *ngIf="form.controls['type'].invalid">
+        <small *ngIf="form.controls['type'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label for="date">Дата: </label>
+      <input id="date" type="date" pInputText placeholder="Дата" formControlName="date">
+      <div *ngIf="form.controls['date'].invalid">
+        <small *ngIf="form.controls['date'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label for="btn_submit">&nbsp;</label>
+      <button id="btn_submit" pButton pRipple type="submit" label="{{btnSubmitValue}}" class="btn-mib-submit"
+        [disabled]="form.invalid"></button>
+    </div>
+  </div>
+</form>
+
+<p-tabView>
+  <p-tabPanel header="Поставки">
+    <div class="card">
+      <div class="mib-toolbar">
+        <button type="button" pButton pRipple label="Добавить" class="p-mr-2" (click)="openNew(false)"></button>
+        <button type="button" pButton pRipple label="Редактировать" class="p-mr-2" (click)="openNew(true)"></button>
+        <button type="button" pButton pRipple label="Удалить ({{selectedShipments.length}})" class="p-mr-2"
+          (click)="deleteShipments()"></button>
+      </div>
+      <p-table [rows]="10" [rowHover]="true" [value]="shipments" selectionMode="multiple"
+        [(selection)]="selectedShipments">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>ID</div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Накладная</div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Дата накладной</div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Счёт-фактура</div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Дата счёт-фактуры</div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Дата поставки</div>
+              </div>
+            </th>
+            <th>
+              <div class="m-th">
+                <div>Сумма</div>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-shipment>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="shipment"></p-tableCheckbox>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>{{shipment.ID}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>{{shipment.AccountNumber}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>{{shipment.AccountDate | date:'dd/MM/yyyy'}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>{{shipment.InvoiceNumber}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>{{shipment.InvoiceDate | date:'dd/MM/yyyy'}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>{{shipment.DateShipment | date:'dd/MM/yyyy'}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td currency">
+                <div>{{shipment.Summ | currency:'RUB':'symbol'}}</div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <tr>
+            <td colspan="7" class="p-text-right"></td>
+            <td>{{getShipmentsSum(shipments) | currency:'RUB':'symbol' }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-dialog [style]="{width: '650px'}" [(visible)]="addDeliveryDialog" header="Накладная" [modal]="true"
+      [draggable]="false" [resizable]="false" styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="shipmentForm" (ngSubmit)="addShipment()">
+          <div class="p-field">
+            <label for="accountNumber">Накладная: </label>
+            <input id="accountNumber" type="text" pInputText placeholder="Накладная" formControlName="accountNumber">
+            <div *ngIf="shipmentForm.controls['accountNumber'].invalid">
+              <small *ngIf="shipmentForm.controls['accountNumber'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
+          <div class="p-field">
+            <label for="accountDate">Дата накладной: </label>
+            <p-calendar id="accountDate" selectOtherMonths="true" formControlName="accountDate" [maxDate]="maxDate"
+              placeholder="Дата накладной" [readonlyInput]="true"></p-calendar>
+            <div *ngIf="shipmentForm.controls['accountDate'].invalid">
+              <small *ngIf="shipmentForm.controls['accountDate'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
+          <div class="p-field">
+            <label for="invoiceNumber">Счет-фактура: </label>
+            <input id="invoiceNumber" type="text" pInputText placeholder="Счет-фактура" formControlName="invoiceNumber">
+            <div *ngIf="shipmentForm.controls['invoiceNumber'].invalid">
+              <small *ngIf="shipmentForm.controls['invoiceNumber'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
+          <div class="p-field">
+            <label for="invoiceDate">Дата счета-ф: </label>
+            <p-calendar id="invoiceDate" selectOtherMonths="true" formControlName="invoiceDate" [maxDate]="maxDate"
+              placeholder="Дата счета-ф" [readonlyInput]="true"></p-calendar>
+            <div *ngIf="shipmentForm.controls['invoiceDate'].invalid">
+              <small *ngIf="shipmentForm.controls['invoiceDate'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
+
+          <div class="p-field">
+            <label for="dateShipment">Дата поставки: </label>
+            <p-calendar id="dateShipment" selectOtherMonths="true" formControlName="dateShipment" [maxDate]="maxDate"
+              placeholder="Дата поставки" [readonlyInput]="true"></p-calendar>
+            <div *ngIf="shipmentForm.controls['dateShipment'].invalid">
+              <small *ngIf="shipmentForm.controls['dateShipment'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
+          <div class="p-field">
+            <label for="summ">Сумма: </label>
+            <input id="summ" type="number" pInputText placeholder="Сумма" formControlName="summ" min="1">
+            <div *ngIf="shipmentForm.controls['summ'].invalid">
+              <small *ngIf="shipmentForm.controls['summ'].errors.required" class="p-error">
+                Поле должно быть заполнено.
+              </small>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button pButton pRipple label="Сформировать" class="p-button-text save" type="submit"
+              [disabled]="shipmentForm.invalid"></button>
+            <button pButton pRipple label="Отменить" class="p-button-text cancel"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+    <p-dialog header="Ошибка" [(visible)]="rowDataValidateDialog" [style]="{width: '50vw'}" [baseZIndex]="10000"
+      [modal]="true" [draggable]="false" [resizable]="false">
+      <h3>Не удалось вставить накладные из буфера обмена!</h3>
+      <p>Проверьте порядок колонок:</p>
+      <ul>
+        <li>Номер счета-фактуры</li>
+        <li>Дата счета-фактуры</li>
+        <li>Номер накладной</li>
+        <li>Дата накладной</li>
+        <li>Сумма накладной</li>
+        <li>Дата поставки</li>
+      </ul>
+
+      <ng-container *ngIf="errorsShipments">
+        <p-accordion>
+          <p-accordionTab header="Подробнее">
+            <p>Не удалось вставить {{errorsShipments.length}} накладных из {{lengthShipments}}.</p>
+            <p>Пожалуйста, проверьте, следующие строки: </p>
+            <ul>
+              <li *ngFor="let item of errorsShipments">
+                {{item}}
+              </li>
+            </ul>
+          </p-accordionTab>
+        </p-accordion>
+      </ng-container>
+
+      <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="rowDataValidateDialog=false" label="ОК" styleClass="p-button-text">
+        </p-button>
+      </ng-template>
+    </p-dialog>
+  </p-tabPanel>
+  <p-tabPanel header="Скан-копии накладных">
+    <div class="mib-toolbar">
+      <input type="file" id="Scan" multiple="true" (change)="onSelect($event, 'Scan')"
+        accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
+      <label for="Scan" pButton pRipple class="p-mr-2 button" label="Добавить"></label>
+      <button type="button" pButton pRipple label="Удалить ({{selectedImages.length}})" class="p-mr-2"
+        (click)="removeFile()"></button>
+    </div>
+
+    <!-- TODO: REFACTOR IT -->
+    <p-table [value]="files" selectionMode="multiple" [(selection)]="selectedImages" dataKey="ID"
+      styleClass="p-datatable-customers mib-table" [metaKeySelection]="true">
+      <!-- -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                ID
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Номер
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Название
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Тип
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Статус
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Дата создания
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Активная...
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Фамилия
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Имя
+              </div>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-file let-rowIndex="rowIndex">
+        <ng-container *ngIf="file.Identifier === 'Scan'">
+          <tr [pSelectableRow]="file" [pSelectableRowIndex]="rowIndex">
+            <td>
+              <p-tableCheckbox [value]="file"></p-tableCheckbox>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  ID
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Номер
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  {{file.FileName}}
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Тип
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Статус
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Дата созд...
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Активная...
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Фамилия
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Имя
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+  <p-tabPanel header="Документы ЭДО">
+    <div class="mib-toolbar">
+      <input type="file" id="All" multiple="true" (change)="onSelect($event, 'All')"
+        accept="image/jpeg,image/png,image/gif,application/pdf" hidden />
+      <label for="All" pButton pRipple class="p-mr-2 button" label="Добавить"></label>
+      <button type="button" pButton pRipple label="Удалить ({{selectedImages.length}})" class="p-mr-2"
+        (click)="removeFile()"></button>
+    </div>
+
+    <!-- TODO: REFACTOR IT -->
+    <p-table [value]="files" selectionMode="multiple" [(selection)]="selectedImages" dataKey="ID"
+      styleClass="p-datatable-customers mib-table" [metaKeySelection]="true">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                ID
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Номер
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Название
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Тип
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Статус
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Дата создания
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Активная...
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Фамилия
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>
+                Имя
+              </div>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-file>
+        <ng-container *ngIf="file.Identifier === 'All'">
+          <tr [pSelectableRow]="file">
+            <td>
+              <p-tableCheckbox [value]="file"></p-tableCheckbox>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  ID
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Номер
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  {{file.FileName}}
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Тип
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Статус
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Дата создания
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Активная...
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Фамилия
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  Имя
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+</p-tabView>

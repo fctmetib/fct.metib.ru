@@ -1,0 +1,115 @@
+.steps {
+  margin-bottom: 42px;
+}
+
+.instruction {
+  margin-bottom: 16px;
+}
+
+.annotation {
+  p {
+    font-size: 14px;
+    line-height: 16px;
+    color: #828282;
+  }
+}
+
+.step-two {
+  text-align: left;
+  flex: 1 320px;
+
+  .pre-header {
+    text-align: left;
+  }
+
+  h2 {
+    padding: 0;
+    margin-top: 20px;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+}
+
+.step-three {
+  text-align: right;
+  flex: 1 720px;
+
+  .pre-header {
+    text-align: right;
+  }
+
+  h2 {
+    padding: 0;
+    margin-top: 20px;
+    margin-bottom: 24px;
+    text-align: right;
+  }
+
+  p {
+    text-align: right;
+  }
+}
+
+.step-description__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.line-bottom {
+  padding-bottom: 35px;
+  border-bottom: 1px solid #BDBDBD;
+}
+
+@media (max-width: 1300px) {
+  .line-right {
+    padding-bottom: 35px;
+    border-bottom: 1px solid #BDBDBD;
+  }
+}
+
+@media (min-width: 1300px) {
+  .line-right {
+    margin-bottom: -70px;
+    border-right: 1px solid #BDBDBD;
+  }
+}
+
+
+// Mobile
+@media (max-width: 1300px) {
+  .row {
+    .col {
+      .pre-header {
+        text-align: center;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      p {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .text-left {
+        p {
+          text-align: left;
+        }
+      }
+    }
+  }
+  .step-description__actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+// Desktop
+@media (min-width: 1300px) {
+  .step-description {
+    height: 50px;
+  }
+}

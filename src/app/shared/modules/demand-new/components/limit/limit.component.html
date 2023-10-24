@@ -1,0 +1,60 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-formgrid p-grid form">
+    <!-- 1 row -->
+    <div class="p-field p-col-12 p-md-12 p-lg-12">
+      <div class="addon-input">
+        <div class="text">Требуемый лимит</div>
+        <p-inputNumber formControlName="limit" mode="currency" currency="RUB" locale="ru-RU">
+        </p-inputNumber>
+      </div>
+      <div *ngIf="form.controls['limit'].invalid">
+        <small *ngIf="form.controls['limit'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <!-- 2 row -->
+    <div class="p-field p-col-12 p-md-12 p-lg-12">
+      <label for="comment">Комментарий</label>
+      <textarea id="comment" type="text" pInputTextarea placeholder="Комментарий" formControlName="comment"
+        style="resize: none;"></textarea>
+      <div *ngIf="form.controls['comment'].invalid">
+        <small *ngIf="form.controls['comment'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <!-- 3 row -->
+    <ng-container *ngIf="demandNavigationConfig.demandActionType !== demandActionType.EDIT_CREATED">
+      <div class="p-field p-col-12">
+        При необходимости прикрепите файлы:
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <mib-file-uploader [existFile]="files" [title]="'Оборотно-сальдовая ведомость по P/C
+            За последние 12 месяцев'" [type]="'OSV'" [required]="false" (remove)="onRemove($event)"
+          (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <mib-file-uploader [existFile]="files" [title]="'Отчётность на последнюю отчетную
+            дату ББиОПиУ'" [type]="'Balance'" [required]="false" (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <mib-file-uploader [existFile]="files" [title]="'Информационное письмо о займах и кредитах на текущую дату'"
+          [required]="false" [type]="'Loans'" (remove)="onRemove($event)" (add)="onAdd($event)">
+        </mib-file-uploader>
+      </div>
+    </ng-container>
+
+    <div class="p-field p-col-12 p-md-12">
+      <label for="btn_submit">&nbsp;</label>
+      <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
+        [loading]="(requestLoading$ | async)" class="btn-mib-submit p-button-outlined"
+        [disabled]="form.invalid || (requestLoading$ | async)"></button>
+    </div>
+  </div>
+</form>

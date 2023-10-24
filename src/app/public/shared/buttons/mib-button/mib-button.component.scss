@@ -1,0 +1,129 @@
+@import '/src/styles/colors.scss';
+
+button {
+  &.mib-button {
+    cursor: pointer;
+
+    box-sizing: border-box;
+    border-radius: 10px !important;
+
+    font-size: 0.875rem;
+    line-height: 1rem;
+
+    padding: 17px 20px 17px 20px !important;
+
+    &.default {
+      border: 1px solid $button-grey;
+      color: $button-grey;
+      background: transparent;
+
+      &:hover {
+        background: $main;
+        color: white;
+        border: 1px solid white;
+      }
+
+      &:disabled {
+        border: 1px solid $button-grey;
+        background: transparent;
+        color: $button-grey;
+      }
+    }
+
+    &.link {
+      border: unset;
+      background: transparent;
+      padding: 0px !important;
+      font-family: Ubuntu;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+      /* identical to box height */
+
+      text-decoration-line: underline;
+
+      color: #0C83F1;
+    }
+
+    &.regular {
+      border: unset;
+      color: white;
+      background: $main;
+      filter: drop-shadow(0px 10px 15px rgba(12, 131, 241, 0.2));
+
+      &:hover {
+        filter: drop-shadow(0px 10px 15px rgba(12, 131, 241, 0.6));
+      }
+
+      img {
+        &.mr-5 {
+          margin-right: 5px;
+        }
+      }
+
+      &:disabled {
+        border: 1px solid $button-grey;
+        background: transparent;
+        color: $button-grey;
+      }
+    }
+
+    &.icon {
+      height: 50px;
+      width: 50px;
+
+      color: $black;
+      background: transparent;
+      border: 2px solid $black;
+
+      padding: unset !important;
+
+      img {
+        margin: auto;
+      }
+
+      &:hover {
+        background: $main;
+        border: unset;
+
+        img {
+          filter: brightness(0) invert(1);
+        }
+      }
+    }
+
+    &.scroller {
+      height: 35px;
+      width: 35px;
+
+      background: transparent;
+
+      border: 1px solid #C7C7C7;
+
+      box-sizing: border-box;
+      filter: drop-shadow(0px 10px 15px rgba(12, 131, 241, 0.2));
+      border-radius: 10px;
+      transform: matrix(-1, 0, 0, 1, 0, 0);
+
+      padding: unset !important;
+
+      img {
+        margin: auto;
+      }
+
+      &:hover {
+        background: $main;
+        border: 1px solid $main;
+
+        img {
+          filter: brightness(0) invert(1);
+        }
+      }
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

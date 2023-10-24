@@ -1,0 +1,146 @@
+.card-organization-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  cursor: pointer;
+
+  .card-organization-row__organization {
+    display: flex;
+    flex-basis: 80%;
+    flex-direction: column;
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 30px;
+
+    .card-organization-row__organization__title {
+      h4 {
+        margin: 0px;
+        margin-bottom: 12px;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 28px;
+        color: #102538;
+      }
+    }
+
+    .card-organization-row__organization__description {
+      p {
+        margin: 0px;
+        margin-bottom: 16px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+        color: #9C9C9C;
+      }
+    }
+
+    .card-organization-row__organization__contacts {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 45px;
+
+      .card-organization-row__organization__contacts__contact {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        img {
+          margin-right: 6px;
+        }
+      }
+    }
+  }
+
+  .card-organization-row__information {
+    border: 1px solid #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-basis: 20%;
+    gap: 16px;
+
+    .card-organization-row__information__creditionals {
+      margin-bottom: 16px;
+
+      .card-organization-row__information__creditionals__creditional {
+        p {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 16px;
+          margin: 0px;
+        }
+      }
+    }
+
+    .card-organization-row__information__status {
+      box-sizing: border-box;
+      padding: 15px;
+      border-radius: 10px;
+
+      &.card-organization-row__information__status_progress {
+        border: 1px solid #009FD9;
+      }
+
+      &.card-organization-row__information__status_factoring {
+        border: 1px solid #FF7A00;
+      }
+    }
+  }
+}
+
+@media (max-width: 1300px) {
+  .card-organization-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    cursor: pointer;
+
+    .card-organization-row__organization {
+      flex-basis: 100%;
+
+      .card-organization-row__organization__title {
+        h4 {}
+      }
+
+      .card-organization-row__organization__description {
+        p {}
+      }
+
+      .card-organization-row__organization__contacts {
+
+        .card-organization-row__organization__contacts__contact {
+          img {}
+        }
+      }
+    }
+
+    .card-organization-row__information {
+      flex-basis: 100%;
+      padding-top: 24px;
+      padding-bottom: 24px;
+      .card-organization-row__information__creditionals {
+
+        .card-organization-row__information__creditionals__creditional {
+          p {}
+        }
+      }
+
+      .card-organization-row__information__status {
+
+        &.card-organization-row__information__status_progress {}
+
+        &.card-organization-row__information__status_factoring {}
+      }
+    }
+  }
+}

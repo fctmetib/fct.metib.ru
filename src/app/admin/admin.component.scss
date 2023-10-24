@@ -1,0 +1,122 @@
+main {
+  display: flex;
+  height: calc(100vh - 70px);
+
+  .page {
+    width: 100%;
+    margin-right: 10px;
+    margin-left: 10px;
+
+    .container {
+      margin-top: 10px;
+      display: flex;
+      height: calc(100vh - 70px);
+
+      .main-body {
+        width: 100%;
+      }
+    }
+  }
+
+  aside {
+    width: 350px;
+    padding-top: 28px;
+    padding-left: 44px;
+
+    .menu {
+      margin-top: 50px;
+    }
+  }
+}
+
+
+.card-content_simple {
+  background: #F9F9F9;
+}
+
+:host ::ng-deep {
+
+  /* Layout Styles */
+  .sub-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 22px;
+
+    .sub-header__title {
+      h2 {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 28px;
+        color: #102538;
+
+        margin-bottom: 8px;
+        margin-top: 16px;
+      }
+
+      p {
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+        color: #989898;
+
+        margin: 0px;
+      }
+    }
+
+    .sub-header__actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      input {
+        &.search {}
+      }
+
+      button {}
+
+      &.sub-header__actions_search {
+        input {
+          &.search {
+            width: 100%;
+            padding: 15px;
+            padding-left: 40px;
+            border: 1px solid #D6D6D6 !important;
+            box-sizing: border-box;
+            border-radius: 10px;
+            background-image: url('../../assets/admin/icons/icon-search.svg') !important;
+            background-repeat: no-repeat !important;
+            background-position: 15px !important;
+          }
+
+          &.search_small {
+            width: 280px;
+          }
+        }
+      }
+
+      &.sub-header__actions_search_large {
+        width: 100%;
+      }
+    }
+  }
+
+  .content {
+    &_cards {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    &_rows {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+}

@@ -1,0 +1,157 @@
+<section class="fluid">
+  <div class="content">
+
+    <h2>
+      Buttons
+    </h2>
+    <div class="items">
+      <mib-button [title]="'Обновить картинку'" [theme]="'link'"></mib-button>
+      <mib-button (click)="incrementButton(1)" [title]="'Скачать договор'"></mib-button>
+      <mib-button (click)="incrementButton(2)" [title]="'Личный кабинет'"
+        [icon]="'../../../../assets/icons/button-icons/icon_key.svg'" [theme]="'regular'"></mib-button>
+      <mib-button (click)="incrementButton(3)" [icon]="'../../../../assets/icons/button-icons/icon_whatsapp.svg'"
+        [theme]="'icon'"></mib-button>
+    </div>
+
+    <hr>
+
+    <h2>
+      Inputs
+    </h2>
+    {{ form.value | json }}
+    <div class="items grey" [formGroup]="form">
+      <input type="text" formControlName="name" placeholder="Имя">
+      <input type="phone" formControlName="phone" placeholder="Телефон">
+      <input type="email" formControlName="email" placeholder="Электронная почта">
+    </div>
+
+    <hr>
+
+    <h2>
+      Modals
+    </h2>
+
+    <hr>
+
+    <div class="items grey">
+      <mib-button (click)="openModal('get-finance')" [title]="'Получить финансирование'" [theme]="'regular'">
+      </mib-button>
+    </div>
+    <mib-modal id="get-finance" [width]="'350px'" [title]="'Финансирование'">
+      <form class="one-column" [formGroup]="form">
+        <input type="text" formControlName="name" placeholder="Имя">
+        <input type="phone" formControlName="phone" placeholder="Телефон">
+        <input type="email" formControlName="email" placeholder="Электронная почта">
+        <input type="text" placeholder="ИНН">
+        <div class="actions">
+          <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100" (click)="submit()"></mib-button>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" id="checkbox">
+          <label for="checkbox">Пожалуйста подтвердите Ваше согласие на обработку персональных данных</label>
+        </div>
+      </form>
+    </mib-modal>
+
+    <hr>
+
+    <h2>
+      Typography
+    </h2>
+
+    <div class="items rows ">
+      <h1>H1</h1>
+      <h2>H2</h2>
+      <p>Text text text</p>
+      <p class="accent">Accent Accent Accent</p>
+      <p class="description">Description Description Description</p>
+    </div>
+
+    <hr>
+
+    <h2>
+      Cards
+    </h2>
+
+    <h3>Promo</h3>
+    <div class="items grey">
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/money.png'" [size]="'xl'"
+        [text]="'Факторинг помогает разморозить деньги, зависшие в дебиторке, и сразу направить их в оборот'">
+      </mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/vector.png'" [size]="'xl'"
+        [text]="'Покрытие кассовых разрывов за счет поступления финансирования на следующий день после отгрузки товара'">
+      </mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/settings.png'" [size]="'xl'"
+        [text]="'Развитие бизнеса за счет ускорения оборачиваемости капитала'"></mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/safe.png'" [size]="'xl'"
+        [text]="'Отсутствие риска неоплаты со стороны Дебитора (при факторинге без регресса)'"></mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/normal.png'"
+        [text]="'Отсутствие залогового обеспечения'"></mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/agile.png'"
+        [text]="'Гибкость и прозрачность схемы работы по факторингу'"></mib-card-info>
+      <mib-card-info [icon]="'../../../../assets/icons/card-icons/summ.png'"
+        [text]="'Сумма финансирования устанавливается в зависимости от запроса клиента'"></mib-card-info>
+    </div>
+
+    <h3>News</h3>
+    <div class="items grey">
+      <mib-card-news [id]="'../../../../assets/public/images/news/news.png'" [title]="'Несем спорт в массы!'"
+        [date]="'01.09.2020'" [desc]="'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'">
+      </mib-card-news>
+    </div>
+    <!-- <hr>
+
+    <h2>
+      Icons
+    </h2> -->
+    <!--
+    <hr>-->
+
+    <hr>
+
+    <h2>
+      Sections
+    </h2>
+
+    <h3>Section Header</h3>
+    <mib-section-header [backgroundImageUrl]="'../../../../assets/public/news_one.png'">
+      <span class="date">01.09.2020</span>
+      <h1>Несем спорт в массы!</h1>
+      <p class="desc">
+        За последние пол года все больше и больше людей стали заботиться о
+        своем здоровье и физической форме. В связи с этим в адрес
+        Металлинвестбанк Факторинг участились запросы на финансирование
+        поставок в сеть Спортмастер.
+      </p>
+    </mib-section-header>
+
+    <h3>Section Text</h3>
+
+    <hr>
+
+    <h2>
+      Slider
+    </h2>
+
+    <div class="grey">
+      <mib-slider>
+        <div class="item">
+          <img src="../../../../assets/public/images/partners/logo.png" alt="">
+        </div>
+        <div class="item">
+          <img src="../../../../assets/public/images/partners/logo.png" alt="">
+        </div>
+        <div class="item">
+          <img src="../../../../assets/public/images/partners/logo.png" alt="">
+        </div>
+        <div class="item">
+          <img src="../../../../assets/public/images/partners/logo.png" alt="">
+        </div>
+        <div class="item">
+          <img src="../../../../assets/public/images/partners/logo.png" alt="">
+        </div>
+      </mib-slider>
+    </div>
+
+  </div>
+</section>

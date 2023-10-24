@@ -1,0 +1,113 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-formgrid p-grid form">
+    <!-- 1 row -->
+    <div class="p-field p-col-12 p-lg-6">
+      <label for="DebtorID">Дебитор</label>
+      <p-dropdown styleClass="mib-input" [options]="debtorList" formControlName="DebtorID" placeholder="Дебитор"
+        optionLabel="Title" optionValue="ID">
+      </p-dropdown>
+
+      <div *ngIf="form.controls['DebtorID'].invalid">
+        <small *ngIf="form.controls['DebtorID'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-lg-6">
+      <label for="VerificationType">Тип верификации</label>
+      <p-dropdown styleClass="mib-input" [options]="verificationTypes" formControlName="VerificationType"
+        (onChange)="changeVerificationType($event)" placeholder="Тип верификации" optionValue="value"
+        optionLabel="name">
+      </p-dropdown>
+      <div *ngIf="form.controls['VerificationType'].invalid">
+        <small *ngIf="form.controls['VerificationType'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+
+    <ng-container [ngSwitch]="currentTemplate">
+
+      <ng-container *ngSwitchCase="'ediTemplate'">
+        <!-- 2 row -->
+        <div class="p-field p-col-12 p-lg-6">
+          <input id="GLN" type="text" pInputText placeholder="GLN поставщика" formControlName="GLN">
+          <div *ngIf="form.controls['GLN'].invalid">
+            <small *ngIf="form.controls['GLN'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+        <div class="p-col-12 p-lg-6 p-grid">
+          <div class="p-field p-lg-6">
+            <div class="p-field-checkbox">
+              <p-checkbox binary="true" inputId="DocumentTypeORDER" formControlName="DocumentTypeORDER">
+              </p-checkbox>
+              <label for="DocumentTypeORDER">Заказ (ORDER)</label>
+            </div>
+          </div>
+          <div class="p-field p-lg-6">
+            <div class="p-field-checkbox">
+              <p-checkbox binary="true" inputId="DocumentTypeRECADV" formControlName="DocumentTypeRECADV">
+              </p-checkbox>
+              <label for="DocumentTypeRECADV">Уведомление о приёмке</label>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+      <ng-container *ngSwitchCase="'edoTemplate'">
+        <div class="p-col-12 p-lg-12 p-grid">
+          <div class="p-field p-lg-4">
+            <div class="p-field-checkbox">
+              <p-checkbox binary="true" inputId="DocumentTypeTorg12" formControlName="DocumentTypeTorg12">
+              </p-checkbox>
+              <label for="DocumentTypeTorg12">Торг-12</label>
+            </div>
+          </div>
+          <div class="p-field p-lg-4">
+            <div class="p-field-checkbox">
+              <p-checkbox binary="true" inputId="DocumentTypeInvoice" formControlName="DocumentTypeInvoice">
+              </p-checkbox>
+              <label for="DocumentTypeInvoice">Счет-Фактура</label>
+            </div>
+          </div>
+          <div class="p-field p-lg-4">
+            <div class="p-field-checkbox">
+              <p-checkbox binary="true" inputId="DocumentTypeAcceptance" formControlName="DocumentTypeAcceptance">
+              </p-checkbox>
+              <label for="DocumentTypeAcceptance">Акт о выполнении работ в формате ФНС</label>
+            </div>
+          </div>
+          <div class="p-field p-lg-4">
+            <div class="p-field-checkbox">
+              <p-checkbox binary="true" inputId="DocumentTypeNonformalized" formControlName="DocumentTypeNonformalized">
+              </p-checkbox>
+              <label for="DocumentTypeNonformalized">Неформализованный документ</label>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+
+    <!-- 3 row -->
+    <div class="p-field p-col-12 p-md-12 p-lg-12">
+      <textarea id="Comment" type="text" pInputTextarea placeholder="Комментарий" formControlName="Comment" rows="5"
+        style="resize: none;"></textarea>
+      <div *ngIf="form.controls['Comment'].invalid">
+        <small *ngIf="form.controls['Comment'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-12">
+      <label for="btn_submit">&nbsp;</label>
+      <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
+        [loading]="(requestLoading$ | async)" class="btn-mib-submit p-button-outlined"
+        [disabled]="form.invalid ||  (requestLoading$ | async)"></button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,95 @@
+.mib-card-tariff {
+  width: 204px;
+  height: 346px;
+
+  .header {
+    border-radius: 10px;
+
+    text-align: center;
+
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+
+    padding: 24px 36px;
+
+    &.purp {
+      background: #DEBCFF;
+      color: #7F00FF;
+
+      // border-bottom: 1px dashed #7F00FF;
+    }
+
+    &.blue {
+      color: #0C83F1;
+      background: #BCEBFF;
+
+      // border-bottom: 1px dashed #0C83F1;
+    }
+
+    &.green {
+      background: #C1FFCF;
+      color: #00C614;
+
+      // border-bottom: 1px dashed #00C614;
+    }
+
+    &.red {
+      background: #FFDCBC;
+      color: #FF7A00;
+
+      // border-bottom: 1px dashed #FF7A00;
+    }
+  }
+
+  .body {
+    width: 203px;
+    height: 232px;
+    background: #FFFFFF;
+    box-shadow: 0px 15px 25px rgba(12, 131, 241, 0.03);
+    border-radius: 10px;
+
+    padding: 27px 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .item {
+      display: flex;
+      flex: 1 1 175px;
+
+      .icon {
+        width: 25px;
+        height: 25px;
+        margin-right: 12px;
+      }
+
+      font-size: 12px;
+      line-height: 14px;
+      color: #656565;
+    }
+  }
+
+  .footer {
+    width: 204px;
+    height: 50px;
+    text-align: center;
+    background: linear-gradient(254.84deg, #3561A6 8.99%, rgba(255, 255, 255, 0) 64.13%), linear-gradient(252.66deg, #66ABC6 40.02%, rgba(255, 255, 255, 0) 151.07%), #89D3CF;
+    box-shadow: 0px 10px 15px rgba(12, 131, 241, 0.2);
+    border-radius: 10px;
+
+    font-size: 14px;
+    line-height: 16px;
+    color: #FFFFFF;
+
+    padding: 17px 21px;
+  }
+}
+
+/* Mobile */
+@media (max-width:1300px) {
+  .body {
+    text-align: left;
+  }
+}

@@ -1,0 +1,88 @@
+<p-toast></p-toast>
+<div [ngClass]="{'card-content': isUserVerified}">
+  <div class="header lg">
+    <div class="title">
+      <h2>Запрос на нового дебитора</h2>
+    </div>
+    <div class="actions">
+      <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
+        (click)="back()" *ngIf="isEdit"></button>
+    </div>
+  </div>
+
+  <p-messages [(value)]="alertMessage" [enableService]="false"></p-messages>
+  <metib-backend-error-messages *ngIf="errorAlert" [backendErrors]="errorMessage">
+  </metib-backend-error-messages>
+
+  <ng-container *ngIf="isEdit; else createTemplate;">
+    <p-tabView class="mib-tabs">
+      <p-tabPanel header="Информация">
+        <app-demand-info [currentDemandInfo]="currentInformation" (sendMessage)="handleSendMessage($event)">
+        </app-demand-info>
+      </p-tabPanel>
+      <p-tabPanel header="Данные">
+        <ng-container *ngTemplateOutlet="form; context: {formFree: formFree}"></ng-container>
+      </p-tabPanel>
+      <p-tabPanel header="Файлы">
+        <app-demand-files (removeFile)="handleRemoveFile($event)" [currentDemandFiles]="currentDemand.Files">
+        </app-demand-files>
+      </p-tabPanel>
+      <p-tabPanel header="Результат" *ngIf="isView">
+        <app-demand-result [result]="currentDemand.Result">
+        </app-demand-result>
+      </p-tabPanel>
+    </p-tabView>
+  </ng-container>
+  <ng-template #createTemplate>
+    <ng-container *ngTemplateOutlet="form; context: {formFree: formFree}"></ng-container>
+  </ng-template>
+
+  <ng-template #form let-formFree="formFree">
+    <form [formGroup]="formFree" (ngSubmit)="onSubmit()">
+      <div class="form-actions" *ngIf="!isEdit">
+        <button pButton pRipple type="button" label="Вернуться к списку запросов" class="p-button-outlined p-mr-2"
+          (click)="back()"></button>
+      </div>
+      <div class="p-fluid p-formgrid p-grid form">
+        <!-- 1 row -->
+        <div class="p-field p-col-12 p-md-12 p-lg-12">
+          <label for="Id">Дебитор</label>
+          <p-dropdown styleClass="mib-input"  [options]="debtors" formControlName="Id" id="Id" [filter]="true" filterBy="Title"
+            optionLabel="Title" optionValue="ID" editable="true" (change)="debtorChange()" (onChange)="debtorChange()">
+          </p-dropdown>
+          <small id="debtor-help">Выберите дебитора из списка или добавьте своего.</small>
+          <div *ngIf="formFree.controls['Id'].invalid">
+            <small *ngIf="formFree.controls['Id'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-12 p-lg-12" *ngIf="isNewDebtor">
+          <label for="INN">ИНН</label>
+          <input formControlName="INN" id="INN" type="text" pInputText aria-describedby="Инн">
+          <div *ngIf="formFree.controls['INN'].invalid">
+            <small *ngIf="formFree.controls['INN'].errors.required" class="p-error">
+              Поле должно быть заполнено.
+            </small>
+          </div>
+        </div>
+
+        <!-- 2 row -->
+        <ng-container *ngIf="!isEdit">
+          <div class="p-field p-col-12 p-md-6">
+            <mib-file-uploader [existFile]="files" [title]="'При необходимости прикрепите файлы:'" [required]="false" [type]="'All'"
+              (remove)="onRemove($event)" (add)="onAdd($event)">
+            </mib-file-uploader>
+          </div>
+        </ng-container>
+        <div class="p-field p-col-12 p-md-12">
+          <label for="btn_submit">&nbsp;</label>
+          <button id="btn_submit" pButton pRipple type="submit" label="Сохранить запрос"
+          [loading]="isRequestLoading"
+            class="btn-mib-submit p-button-outlined" [disabled]="formFree.invalid || isLoading || isRequestLoading"></button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</div>

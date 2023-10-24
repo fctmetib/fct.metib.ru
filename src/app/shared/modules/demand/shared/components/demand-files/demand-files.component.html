@@ -1,0 +1,10 @@
+<div class="file-list">
+  <div class="file-list-item" *ngFor="let item of currentDemandFiles" >
+    <div class="file-list-item__name">
+      {{item.FileName}}
+    </div>
+    <div class="file-list-item__remove-button" (click)="remove(item)">
+      Удалить
+    </div>
+  </div>
+</div>

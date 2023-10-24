@@ -1,0 +1,22 @@
+<p-carousel [value]="news" [numVisible]="3" [numScroll]="1" [circular]="false" [responsiveOptions]="responsiveOptions">
+  <ng-template let-news pTemplate="item">
+    <div class="mib-card-news can-click" (click)="openNews(news.ID)">
+      <div class="header">
+        <div class="date">
+          {{ news.Date | date:"dd.MM.yyyy"}}
+        </div>
+        <div class="image">
+          <img [src]="getUrl(news.ID)" />
+        </div>
+      </div>
+      <div class="body">
+        <div class="title">
+          {{news.Title }}
+        </div>
+        <div class="desc">
+          {{ news.Desc }}
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>

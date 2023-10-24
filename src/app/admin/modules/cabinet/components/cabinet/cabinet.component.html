@@ -1,0 +1,26 @@
+<div class="sub-header">
+  <div class="sub-header__title">
+    <h2>Новости</h2>
+    <p>Всего {{newsListFiltered?.length}} новости</p>
+  </div>
+  <form class="sub-header__actions sub-header__actions_search" [formGroup]="filterForm">
+    <input type="text" pInputText placeholder="Поиск" class="search search_small" formControlName="search" >
+    <button type="button" pButton label="Создать" class="basic" (click)="openCreateNews()"></button>
+  </form>
+</div>
+
+
+<div class="content content_cards">
+  <card-news
+    *ngFor="let newsItem of newsListDisplayed"
+    [id]="newsItem.ID"
+    [date]="newsItem.Date"
+    [title]="newsItem.Title"
+    [desc]="newsItem.Text"
+    (remove)="handleRemove($event)"
+    (open)="openCreateNews($event)">
+  </card-news>
+</div>
+
+<p-paginator #paginator [rows]="10" totalRecords="{{newsListFiltered.length}}" (onPageChange)="paginate($event)">
+</p-paginator>

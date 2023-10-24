@@ -1,0 +1,13 @@
+<ng-container *ngIf="preloader; else contentTemplate">
+  <div class="mib-preload">
+    Загрузка
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+</ng-container>
+<ng-template #contentTemplate>
+  <div class="pre-auth">
+    <div class="auth">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</ng-template>

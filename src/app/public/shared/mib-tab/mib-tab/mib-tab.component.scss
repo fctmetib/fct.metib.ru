@@ -1,0 +1,113 @@
+:host ::ng-deep {
+  .tabs-header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+
+    .line {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: #EAEAEA;
+      bottom: 0px;
+    }
+  }
+
+  .tab-label {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    color: #C0C0C0;
+
+    padding: 0px;
+    padding-bottom: 30px;
+
+    z-index: 1;
+  }
+
+  .active {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    color: #102538;
+    border-bottom: 2px #7FACCC solid;
+  }
+
+  .tabs-body {
+    display: flex;
+    padding-top: 50px;
+    justify-content: space-between;
+  }
+
+
+  @media (max-width: 1300px) {
+    .tabs-header {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      .line {
+        width: 0px;
+        height: 0px;
+      }
+    }
+
+    .tab-label {
+      margin: auto;
+      border: 1px solid #BDBDBD;
+      box-sizing: border-box;
+      border-radius: 10px;
+
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 21px;
+      color: #BDBDBD;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: unset;
+      height: 50px;
+      width: 290px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .active {
+      border: 1px solid white;
+      background: linear-gradient(254.84deg, #3561A6 8.99%, rgba(255, 255, 255, 0) 64.13%), linear-gradient(252.66deg, #66ABC6 40.02%, rgba(255, 255, 255, 0) 151.07%), #89D3CF;
+      border-radius: 10px;
+
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 21px;
+      color: #FFFFFF;
+    }
+
+    .tabs-body {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 34px;
+
+      padding-top: 50px;
+      text-align: left;
+
+      .image {
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

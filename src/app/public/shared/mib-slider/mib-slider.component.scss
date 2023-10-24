@@ -1,0 +1,28 @@
+.mib-slider {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+
+  .list {
+    flex-grow: 1;
+    display: flex;
+    overflow-x: scroll;
+    margin: 0px 27px 0px 27px;
+
+    &.default {
+      gap: 90px;
+    }
+
+    &.news {
+      gap: 30px;
+    }
+  }
+
+  .list::-webkit-scrollbar {
+    display: none;
+  }
+
+  #scroll-left {
+    order: -1;
+  }
+}

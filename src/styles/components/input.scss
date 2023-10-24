@@ -7,6 +7,16 @@ p-calendar,
   background: transparent !important;
 }
 
+p-inputMask {
+  border-radius: 10px !important;
+  background: transparent !important;
+}
+
+p-calendar {
+  border-radius: 10px !important;
+  background: transparent !important;
+}
+
 .p-dropdown {
   border: unset !important;
 }
@@ -40,7 +50,7 @@ p-calendar,
   z-index: -1;
 }
 
-.mib-upload-file+label {
+.mib-upload-file + label {
   font-size: 1.25em;
   font-weight: 700;
   color: white;
@@ -48,27 +58,23 @@ p-calendar,
   display: inline-block;
 }
 
-.mib-upload-file:focus+label,
-.mib-upload-file+label:hover {
+.mib-upload-file:focus + label,
+.mib-upload-file + label:hover {
   background-color: $warning;
 }
 
-.mib-upload-file+label {
+.mib-upload-file + label {
   cursor: pointer;
   /* "hand" cursor */
 }
 
-.ng-invalid {
-  border-color: $warning !important;
-}
-
-p-inputmask.ng-invalid {
+p-inputmask.mib-border-danger {
   input {
     border-color: $warning !important;
   }
 }
 
-p-calendar.ng-invalid {
+p-calendar.mib-border-danger {
   input {
     border-color: $warning !important;
   }
@@ -90,9 +96,7 @@ p-calendar.ng-invalid {
   background: transparent !important;
   border-radius: 10px !important;
   color: #102538 !important;
-
   border: 1px solid $main-mono;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -118,9 +122,7 @@ p-calendar.ng-invalid {
   background: transparent !important;
   border-radius: 10px !important;
   color: $warning !important;
-
   border: 1px solid $warning;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -151,7 +153,6 @@ p-calendar.ng-invalid {
   .progress {
     width: 100%;
     flex-direction: row;
-
   }
 
   &.mb-20 {
@@ -177,9 +178,7 @@ p-calendar.ng-invalid {
     background: $main;
     color: $white;
     border-radius: 10px;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
   }
@@ -259,4 +258,60 @@ p-inputnumber {
   &:focus-visible {
     outline: unset;
   }
+}
+
+.p-dropdown {
+  border-radius: 10px !important;
+}
+
+.p-dropdown .p-dropdown-trigger {
+  background: $main !important;
+  color: $white !important;
+}
+
+p-inputmask.mib-border-danger {
+  input {
+    border-color: #f44336 !important;
+  }
+}
+
+p-calendar.mib-border-danger {
+  input {
+    border-color: #f44336 !important;
+  }
+}
+
+// mobile
+@media (max-width: 1300px) {
+  .search-field {
+    width: 100%;
+  }
+}
+
+.mib-input.p-dropdown {
+  border: unset;
+
+  .p-dropdown-label {
+    border-radius: 10px;
+  }
+
+  .p-dropdown-trigger {
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+    border-radius: 10px;
+  }
+
+  &.p-focus {
+    outline: unset !important;
+    box-shadow: unset !important;
+    border-color: unset !important;
+  }
+
+  &:focus-visible {
+    outline: unset;
+  }
+}
+
+.mib-border-danger {
+  border-color: $warning !important;
 }

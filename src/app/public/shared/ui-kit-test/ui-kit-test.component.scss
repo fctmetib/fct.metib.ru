@@ -1,0 +1,28 @@
+.items {
+  border-radius: 20px;
+  padding: 45px;
+  display: flex;
+  gap: 20px;
+
+  flex-wrap: wrap;
+
+  &.rows {
+    flex-direction: column;
+  }
+
+  &.grey {
+    background-color: #ededed;
+  }
+}
+
+.container {
+  width: 900px;
+  margin: auto;
+}
+
+hr {
+  border: none;
+  color: #ededed;
+  background-color: #ededed;
+  height: 1px;
+}

@@ -201,3 +201,24 @@
     padding-left: 50px;
   }
 }
+
+
+.p-datatable .p-datatable-tbody {
+  tr {
+    &.success {
+      td {
+        .m-td {
+          border: 1px solid $success;
+        }
+      }
+    }
+    &.warn {
+      td {
+        .m-td {
+          border: 1px solid  $warning;
+        }
+      }
+    }
+
+  }
+}

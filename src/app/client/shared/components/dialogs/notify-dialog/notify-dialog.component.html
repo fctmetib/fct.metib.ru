@@ -1,0 +1,5 @@
+<mib-notify-accordion (readNotification)="readNotificationHandler($event)">
+  <mib-notify-accordion-group [id]="notificationItem.MessageID" [title]="notificationItem.Title" [date]="notificationItem.Date" *ngFor="let notificationItem of notificationsList">
+    <div [innerHTML]="notificationItem.Message"></div>
+  </mib-notify-accordion-group>
+</mib-notify-accordion>

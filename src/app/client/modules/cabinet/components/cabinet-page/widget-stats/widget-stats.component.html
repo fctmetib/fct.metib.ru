@@ -1,0 +1,30 @@
+<div class="widget widget__stats">
+  <div class="widget__header">
+    <h4 class="widget__title">
+      Статистика
+    </h4>
+    <span class="widget__subtitle">
+      Графики
+    </span>
+  </div>
+  <div class="widget__content">
+    <div class="widget__stats-chart widget__stats-chart__success">
+      <div class="widget__stats-header">
+        <div class="widget__stats-header__name">Лимит</div>
+        <div class="widget__stats-header__date">20.07.2021</div>
+      </div>
+      <div class="widget__chart">
+        <p-chart type="line" [data]="limitData"></p-chart>
+      </div>
+    </div>
+    <div class="widget__stats-chart widget__stats-chart__warning">
+      <div class="widget__stats-header">
+        <div class="widget__stats-header__name">Просрочка</div>
+        <div class="widget__stats-header__date">20.07.2021</div>
+      </div>
+      <div class="widget__chart">
+        <p-chart type="line" [data]="delayData"></p-chart>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-formgrid p-grid form">
+    <div class="p-field p-col-12 p-md-6">
+      <label for="date">Укажите дату создания: </label>
+      <p-calendar id="date" formControlName="Date" required [showIcon]="true" selectOtherMonths="true" inputId="icon"
+        [styleClass]="'dateSmall'" dateFormat="dd.mm.yy"></p-calendar>
+      <div *ngIf="form.controls['Date'].invalid">
+        <small *ngIf="form.controls['Date'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label for="title">Заголовок: </label>
+      <input id="title" type="text" pInputText placeholder="Название" formControlName="Title" required>
+      <div *ngIf="form.controls['Title'].invalid">
+        <small *ngIf="form.controls['Title'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-12">
+      <textarea id="text" pInputTextarea name="text" rows="8" placeholder="Содержание" formControlName="Text"
+        required></textarea>
+      <div *ngIf="form.controls['Text'].invalid">
+        <small *ngIf="form.controls['Text'].errors.required" class="p-error">
+          Поле должно быть заполнено.
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-12">
+      <div class="addon-button mb-20">
+        <div class="addon-text">
+          <p>
+            Загрузите картинку
+          </p>
+        </div>
+        <div class="mib-uploader">
+          <input
+            type="file"
+            id="Balance"
+            accept="validators.join()"
+            hidden
+            (change)="onSelect($event)"
+          />
+          <label for="Balance" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-field p-col-12 p-md-6 actions">
+      <button id="btn_submit" pButton pRipple type="submit" label="{{currentId ? 'Сохранить' : 'Создать'}}"
+        class="basic" [disabled]="form.invalid"></button>
+      <button id="btn_cancel" pButton pRipple type="button" label="Отмена" (click)="close()"
+        class="p-button-outlined"></button>
+    </div>
+  </div>
+</form>

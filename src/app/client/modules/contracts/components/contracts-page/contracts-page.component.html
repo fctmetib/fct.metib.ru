@@ -1,0 +1,233 @@
+<div class="card-content" id="step1">
+  <p-toolbar styleClass="p-mb-4 ml-0 additional-actions">
+    <ng-template pTemplate="left">
+      <div>
+        <button type="button" pButton label="{{btnShowAllText}}" class="basic p-mr-2"
+          (click)="showAllToggle()"></button>
+        <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="updateData()"></button>
+      </div>
+      <div>
+        <p-dropdown styleClass="mib-input"  [options]="debtorsList" placeholder="Выберите дебитора" optionLabel="Title" optionValue="ID"
+          [ngModel]="selectedDebtorDisplay" (ngModelChange)="onDebtorChange($event)" class="fix-width--200"></p-dropdown>
+      </div>
+    </ng-template>
+  </p-toolbar>
+  <ng-container *ngIf="isLoading; else contentTemplate">
+    <div class="contracts-list">
+      <div class="contract-item" *ngFor="let i of [1, 2, 3, 4, 5];">
+        <div class="contract-info item">
+          <div class="contract-name">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+          <div class="contract-number">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+          <div class="contract-type">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+        </div>
+        <div class="contract-step item">
+          <div class="price">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+          <div class="description">Уступлено
+          </div>
+        </div>
+        <div class="contract-delay item">
+          <div class="price">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+          <div class="description">Просрочка</div>
+        </div>
+        <div class="contract-limit item">
+          <div class="price">
+            <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+          </div>
+          <div class="description">Свободный лимит</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #contentTemplate>
+    <div class="contracts-list">
+      <div class="contract-item" *ngFor="let item of listDisplayContracts;">
+        <div class="contract-info item">
+          <div class="contract-info-name">
+            <div class="contract-name can-click">
+              {{item.Debtor.Title}}
+              <div class="icon arrow_right"></div>
+            </div>
+            <div class="contract-actions">
+              <div class="icon" pTooltip="Реквизиты" (click)="showPropertyDialog(item.ID)"><i class="pi pi-book"></i>
+              </div>
+              <div class="icon" pTooltip="Список накладных" (click)="showShipmentsDialog(item.ID)"><i
+                  class="pi pi-list"></i></div>
+            </div>
+          </div>
+          <div class="contract-number">{{item.Number}} от {{item.DateFrom | date:"dd.MM.yyyy"}}
+            <div class="contract-type"><span class="main-color">{{item.Tariff}},</span> {{item.Delay.Count}} к.д.</div>
+          </div>
+        </div>
+        <div class="contract-step item">
+          <div class="price">{{item?.Statistics?.DutyCustomer | currency:'RUB'}}</div>
+          <div class="description">Уступлено</div>
+        </div>
+        <div class="contract-delay item">
+          <div class="price">{{item?.Statistics?.DutyDebtor | currency:'RUB'}}</div>
+          <div class="description">Просрочка</div>
+        </div>
+        <div class="contract-limit item">
+          <div class="price">{{item?.Statistics?.FreeLimit | currency:'RUB'}}</div>
+          <div class="description">Свободный лимит</div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <p-paginator #paginator [rows]="10" totalRecords="{{listContractsFiltered.length}}" (onPageChange)="paginate($event)"
+    [ngClass]="{hidden:!noFilter}">
+  </p-paginator>
+</div>
+
+
+<p-dialog header="Реквизиты" [(visible)]="displayProperty" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false">
+  <ng-container *ngIf="isOrganizationLoading; else organizationTemplate">
+    <p class="p-m-0">Загрузка...</p>
+  </ng-container>
+  <ng-template #organizationTemplate>
+    <ng-container *ngIf="isOrganizationError; else noErrorOrganizationTemplate">
+      <metib-backend-error-messages [backendErrors]="'Ошибка! У Вас нет доступа, к этой организации.'">
+      </metib-backend-error-messages>
+    </ng-container>
+    <ng-template #noErrorOrganizationTemplate>
+      <p class="p-m-0">
+        <ng-container *ngFor="let line of getOrganizationList()">
+          {{line}} <br>
+        </ng-container>
+      </p>
+    </ng-template>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button (click)="copyDynamicText()" label="Скопировать" styleClass="p-button-text"></p-button>
+    <p-button (click)="displayProperty=false" label="Закрыть" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog header="Товарные Накладные" [(visible)]="displayShipments" [modal]="true" [style]="{width: '90vw'}"
+  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <ng-container *ngIf="isShipmentsLoading; else shipmentsTemplate">
+    <p class="p-m-0">Загрузка...</p>
+  </ng-container>
+  <ng-template #shipmentsTemplate>
+    <ng-container *ngIf="isShipmentsError; else noErrorShipmentsTemplate">
+      <metib-backend-error-messages [backendErrors]="'Ошибка!'"></metib-backend-error-messages>
+    </ng-container>
+    <ng-template #noErrorShipmentsTemplate>
+      <p-table [columns]="selectedColumns" [value]="currentShipments" dataKey="ID"
+        styleClass="p-datatable-customers mib-table header-add h-500">
+        <ng-template pTemplate="caption">
+          <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+            selectedItemsLabel="Выбрано колонок - {0}" [style]="{minWidth: '200px'}" placeholder="Выберите колонки">
+          </p-multiSelect>
+          <div class="mib-action mib-button-icon excel-icon can-click" (click)="exportExcel()" pTooltip="Экспорт файла Excel">
+            <img src="../../../../../../assets/icons/mib-excel.png" alt="">
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              <div class="m-th">
+                <div>
+                  {{col.header}}
+                </div>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              <ng-container [ngSwitch]="col.field">
+                <ng-container *ngSwitchCase="'DateAddon'">
+                  <div class="m-td">
+                    <div>
+                      {{product[col.field] | date:"dd.MM.yyyy"}}
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="'DatePayment'">
+                  <div class="m-td">
+                    <div>
+                      {{product[col.field] | date:"dd.MM.yyyy"}}
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="'DateShipment'">
+                  <div class="m-td">
+                    <div>
+                      {{product[col.field] | date:"dd.MM.yyyy"}}
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="'Summ'">
+                  <div class="m-td currency">
+                    <div>
+                      {{product[col.field] | currency:'RUB':'symbol-narrow'}}
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="'DutyDebtor'">
+                  <div class="m-td currency">
+                    <div>
+                      {{product[col.field] | currency:'RUB':'symbol-narrow'}}
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="'DutyCustomer'">
+                  <div class="m-td currency">
+                    <div>
+                      {{product[col.field] | currency:'RUB':'symbol-narrow'}}
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                  <div class="m-td">
+                    <div>
+                      {{product[col.field]}}
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <tr>
+            <td *ngFor="let col of selectedColumns">
+                <ng-container [ngSwitch]="col.field">
+                  <ng-container *ngSwitchCase="'DutyDebtor'">
+                    <div style="text-align: right;">
+                      {{ getSumDutyDebtor() | currency:'RUB':'symbol' }}
+                    </div>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'DutyCustomer'">
+                    <div style="text-align: right;">
+                      {{ getSumDutyCustomer() | currency:'RUB':'symbol' }}
+                    </div>
+                  </ng-container>
+                  <ng-container *ngSwitchDefault>
+                  </ng-container>
+                </ng-container>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-template>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayProperty=false" label="Закрыть" styleClass="p-button-text"></p-button>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayShipments=false" label="Закрыть" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>

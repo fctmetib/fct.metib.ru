@@ -1,0 +1,16 @@
+<div class="sub-header">
+  <form class="sub-header__actions sub-header__actions_search sub-header__actions_search_large" [formGroup]="filterForm">
+    <input type="text" pInputText placeholder="Поиск" formControlName="search" class="search">
+  </form>
+</div>
+<div class="content content_rows">
+  <ng-container *ngIf="(userList$ | async) && !isLoading || !(userList$ | async) && !isLoading; else loadingTemplate">
+    <card-user
+      *ngFor="let user of (userList$ | async)"
+      [user]="user"
+      (switchAccount)="reauthHandler($event)"></card-user>
+  </ng-container>
+  <ng-template #loadingTemplate>
+    Загрузка...
+  </ng-template>
+</div>

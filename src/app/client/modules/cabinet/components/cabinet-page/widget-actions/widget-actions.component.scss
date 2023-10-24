@@ -1,0 +1,24 @@
+.widget__content-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  .quick-action {
+    cursor: pointer;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(216.14deg, #009FD9 10.37%, rgba(0, 159, 217, 0) 93.52%), #4B75B1;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      cursor: pointer;
+    }
+  }
+}
+
+.widget__header {
+  margin-bottom: 26px;
+}
