@@ -45,7 +45,7 @@ const routes = [
     children: [
       {
         path: '',
-        component: HomeStaticComponent,
+        component: HomeComponent,
         title: 'Факторинг | Металлинвест Банк'
       },
       {

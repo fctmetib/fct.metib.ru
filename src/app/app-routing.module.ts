@@ -10,25 +10,25 @@ const routes: Routes = [
         .then((m) => m.PublicModule),
   },
   {
-    path: '',
+    path: 'auth',
     loadChildren: () =>
       import('./auth/auth.module')
         .then((m) => m.AuthModule),
   },
   {
-    path: '',
+    path: 'client',
     loadChildren: () =>
       import('./client/client.module')
         .then((m) => m.ClientModule),
   },
   {
-    path: '',
+    path: 'not-verify',
     loadChildren: () =>
       import('./not-verify-client/not-verify-client.module')
         .then((m) => m.NotVerifyClientModule),
   },
   {
-    path: '',
+    path: 'admin',
     loadChildren: () =>
       import('./admin/admin.module')
         .then((m) => m.AdminModule)
@@ -37,7 +37,7 @@ const routes: Routes = [
   { path: '**', redirectTo: '/404', pathMatch: 'full' },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', initialNavigation: 'enabledBlocking' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

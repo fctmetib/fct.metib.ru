@@ -27,7 +27,7 @@ registerLocaleData(localeRu, 'ru');
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
     BrowserAnimationsModule,
     ToastModule,
