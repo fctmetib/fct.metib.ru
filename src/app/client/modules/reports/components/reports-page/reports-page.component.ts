@@ -1,4 +1,3 @@
-import { CryptoService } from './../../../../../shared/services/common/crypto.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -16,7 +15,7 @@ export class ReportsPageComponent implements OnInit {
   public reportCards: ReportCardInterface[] = [];
   ref: DynamicDialogRef;
 
-  constructor(public dialogService: DialogService, private router: Router, private cryptoService: CryptoService) {}
+  constructor(public dialogService: DialogService, private router: Router) {}
 
   ngOnInit() {
     let mibCommon = new MIBCommon();
@@ -43,7 +42,7 @@ export class ReportsPageComponent implements OnInit {
   }
 
   private openReportDetails(data) {
-    let encryptedData = this.cryptoService.encrypt(JSON.stringify(data));
+    let encryptedData = null
     this.router.navigate(['/reports/report-view'], {
       queryParams: {
         dt: encryptedData

@@ -20,7 +20,7 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
 
   refInactiveDialog: DynamicDialogRef;
 
-  userActivity: NodeJS.Timeout;
+  userActivity: ReturnType<typeof setTimeout>;
   userInactive: Subject<any> = new Subject();
   private subscription$: Subscription = new Subscription();
 

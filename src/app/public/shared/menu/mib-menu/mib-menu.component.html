@@ -4,19 +4,19 @@
       <div class="core">
         <div class="logo">
           <a [routerLink]="['/']">
-            <img src="/assets/images/logo_big_normal_svg.svg" alt="Логотип" />
+            <img src="/assets/images/logo_big_normal_svg.svg" alt="Логотип"/>
           </a>
         </div>
         <div class="links">
-          <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Главная</a>
-          <a [routerLink]="['/tariffs.html']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
-          <a [routerLink]="['/clients']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
-          <a [routerLink]="['/contacts']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
+          <a [routerLink]="['/']" routerLinkActive="active">Главная</a>
+          <a [routerLink]="['/tariffs']" routerLinkActive="active">Тарифы</a>
+          <a [routerLink]="['/clients']" routerLinkActive="active">Клиентам</a>
+          <a [routerLink]="['/contacts']" routerLinkActive="active">Контакты</a>
         </div>
       </div>
       <div class="actions">
         <mib-button [title]="'Личный кабинет'"
-                    [routerLink]="['login']"
+                    [routerLink]="['/auth/login']"
                     [icon]="'/assets/icons/button-icons/icon_key.svg'"
                     [theme]="'regular'"></mib-button>
       </div>
@@ -25,10 +25,10 @@
   <div class="mobile">
     <div class="logo">
       <a [routerLink]="['/']">
-        <img src="/assets/images/logo_big_normal_svg.svg" alt="Логотип" />
+        <img src="/assets/images/logo_big_normal_svg.svg" alt="Лaоготип"/>
       </a>
     </div>
-    <input type="checkbox" class="toggler" />
+    <input type="checkbox" class="toggler"/>
     <div class="burger">
       <div></div>
     </div>
@@ -38,26 +38,30 @@
           <ul class="mib-mb-20">
             <div class="section-border"></div>
             <li>
-              <a [routerLink]="['/']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Главная</a>
+              <a [routerLink]="['/']" (click)="close()" routerLinkActive="active-link"
+                 [routerLinkActiveOptions]="{exact:true}">Главная</a>
             </li>
             <div class="section-border"></div>
             <li>
-              <a [routerLink]="['/tariffs.html']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
+              <a [routerLink]="['/tariffs.html']" (click)="close()" routerLinkActive="active-link"
+                 [routerLinkActiveOptions]="{exact:true}">Тарифы</a>
             </li>
             <div class="section-border"></div>
             <li>
-              <a [routerLink]="['/clients']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
+              <a [routerLink]="['/clients']" (click)="close()" routerLinkActive="active-link"
+                 [routerLinkActiveOptions]="{exact:true}">Клиентам</a>
             </li>
             <div class="section-border"></div>
             <li>
-              <a [routerLink]="['/contacts']" (click)="close()" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Контакты</a>
+              <a [routerLink]="['/contacts']" (click)="close()" routerLinkActive="active-link"
+                 [routerLinkActiveOptions]="{exact:true}">Контакты</a>
             </li>
             <div class="section-border"></div>
           </ul>
           <div class="actions mib-mb-20">
             <mib-button [title]="'Личный кабинет'"
                         [icon]="'/assets/icons/button-icons/icon_key.svg'"
-                        [routerLink]="['/login']"
+                        [routerLink]="['/auth/login']"
                         [theme]="'regular'"
                         [width]="100"></mib-button>
           </div>

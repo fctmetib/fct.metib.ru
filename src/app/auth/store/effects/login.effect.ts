@@ -1,4 +1,3 @@
-import { CryptoService } from './../../../shared/services/common/crypto.service';
 import { CurrentUserFactoringInterface } from '../../../shared/types/currentUserFactoring.interface';
 import { CookieService } from 'ngx-cookie';
 import { Injectable } from '@angular/core';
@@ -21,20 +20,26 @@ import { getCurrentUserAction } from '../actions/getCurrentUser.action';
 
 @Injectable()
 export class LoginEffect {
+
+  constructor(
+    private actions$: Actions,
+    private authService: AuthService,
+    private cookieService: CookieService,
+    private router: Router,
+    private store: Store
+  ) {}
+
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loginAction),
       switchMap(({ request }) => {
         return this.authService.login(request).pipe(
           map((response: AuthResponseInterface) => {
+            console.log('login res', response)
             let isAdmin = response.Roles.find((x) => x === 'Administrator');
             if (isAdmin) {
-              let crptInfo = this.cryptoService.encrypt(
-                JSON.stringify(response)
-              );
-
               // admin current user
-              this.cookieService.put('_cu_admin', crptInfo);
+              this.cookieService.put('_cu_admin', JSON.stringify(response));
 
               // admin base token
               let token = btoa(`${request.login}:${request.password}`);
@@ -44,12 +49,8 @@ export class LoginEffect {
 
               return loginAdminSuccessAction({ adminUserFactoring });
             } else {
-              let crptInfo = this.cryptoService.encrypt(
-                JSON.stringify(response)
-              );
-
               // current user
-              this.cookieService.put('_cu', crptInfo);
+              this.cookieService.put('_cu', JSON.stringify(response));
 
               // base token
               let token = btoa(`${request.login}:${request.password}`);
@@ -76,7 +77,8 @@ export class LoginEffect {
       this.actions$.pipe(
         ofType(loginSuccessAction),
         tap(() => {
-          this.router.navigateByUrl('/cabinet');
+          console.log('redirectAfterSubmit$')
+          this.router.navigateByUrl('client/cabinet');
         })
       ),
     { dispatch: false }
@@ -87,18 +89,10 @@ export class LoginEffect {
       this.actions$.pipe(
         ofType(loginAdminSuccessAction),
         tap(() => {
+          console.log('redirectAfterSubmitAdmin$')
           this.router.navigateByUrl('/admin/cabinet');
         })
       ),
     { dispatch: false }
   );
-
-  constructor(
-    private cryptoService: CryptoService,
-    private actions$: Actions,
-    private authService: AuthService,
-    private cookieService: CookieService,
-    private router: Router,
-    private store: Store
-  ) {}
 }

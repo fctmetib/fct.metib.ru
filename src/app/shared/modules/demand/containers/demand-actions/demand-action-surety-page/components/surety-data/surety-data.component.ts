@@ -77,7 +77,7 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
   private currentAddressFormId: any;
   private subscription$: Subscription = new Subscription();
 
-  private _saveDraftAction$: NodeJS.Timeout;
+  private _saveDraftAction$: ReturnType<typeof setTimeout>;
 
   constructor(
     public dialogService: DialogService,

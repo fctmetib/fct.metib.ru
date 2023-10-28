@@ -1,13 +1,11 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { NotFoundComponent } from './client/shared/not-found/not-found.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {NotFoundComponent} from './client/shared/not-found/not-found.component';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./public/public.module')
-        .then((m) => m.PublicModule),
+    loadChildren: () => import('./public/public.module').then(m => m.PublicModule),
   },
   {
     path: 'auth',
@@ -33,11 +31,13 @@ const routes: Routes = [
       import('./admin/admin.module')
         .then((m) => m.AdminModule)
   },
-  { path: '404', component: NotFoundComponent },
-  { path: '**', redirectTo: '/404', pathMatch: 'full' },
+  {path: '404', component: NotFoundComponent},
+  {path: '**', redirectTo: '/404', pathMatch: 'full'},
 ];
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', initialNavigation: 'enabledBlocking' })],
+  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled', initialNavigation: 'enabledBlocking'})],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -1,5 +1,4 @@
 import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
-import { CryptoService } from './../../../shared/services/common/crypto.service';
 import { CookieService } from 'ngx-cookie';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
@@ -18,9 +17,7 @@ export class GetCurrentUserAdminEffect {
         let userCookie = this.cookieService.get('_cu_admin');
         let user: AuthResponseInterface;
         if (userCookie) {
-          user = JSON.parse(
-            this.cryptoService.decrypt(userCookie)
-          ) as AuthResponseInterface;
+          user = JSON.parse(userCookie)
         }
 
         let userId;
@@ -39,12 +36,8 @@ export class GetCurrentUserAdminEffect {
         } else {
           return of(getCurrentUserAdminFailureAction());
         }
-        let adminUserFactoring = JSON.parse(
-          this.cryptoService.decrypt(userCookie)
-        ) as AuthResponseInterface;
 
-
-        return of(getCurrentUserAdminSuccessAction({ adminUserFactoring }));
+        return of(getCurrentUserAdminSuccessAction(null));
       })
     )
   );
@@ -52,7 +45,6 @@ export class GetCurrentUserAdminEffect {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private cryptoService: CryptoService,
     private cookieService: CookieService
   ) {}
 }

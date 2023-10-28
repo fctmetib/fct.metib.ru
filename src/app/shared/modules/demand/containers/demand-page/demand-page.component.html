@@ -12,7 +12,7 @@
   </div>
 
  <div>
-    <button pButton pRipple type="button" label="[TEST] Посмотреть мои сертификаты" (click)="openCerts()" class="basic"></button>
+    <button pButton pRipple type="button" label="[TEST] Посмотреть мои сертификаты" class="basic"></button>
   </div>
 
   <div class="p-grid">
@@ -49,7 +49,7 @@
     <div style="min-height: '50vh'">
       <p-tabView>
         <p-tabPanel header="Подпись сообщения">
-          <form #signatureForm="ngForm" novalidate (ngSubmit)="createSignature(thumbprint)">
+          <form #signatureForm="ngForm" novalidate>
             <fieldset>
               <legend>Создание подписи</legend>
               <label for="message">Подписываемое сообщение: *</label>
@@ -60,7 +60,7 @@
 
               <label for="certificate">Сертификат: *</label>
               <br>
-              <p-dropdown  styleClass="mib-input"  id="certificate" name="certificate" [options]="certificateList"
+              <p-dropdown  styleClass="mib-input"  name="certificate"
                [(ngModel)]="thumbprint"
                optionLabel="name"
                [filter]="true"
@@ -70,7 +70,7 @@
 
               <pre>{{certificateListError}}</pre>
 
-              <details *ngIf="thumbprint" (click)="showCertInfo(thumbprint)">
+              <details *ngIf="thumbprint">
                 <summary>Информация о сертификате</summary>
                 <pre *ngIf="certInfo">{{certInfo | json}}</pre>
                 <pre *ngIf="!certInfo">Запрашивается...</pre>
@@ -90,7 +90,7 @@
 
               <hr>
               <p-button type="submit" [disabled]="!signatureForm.valid" label="Создать подпись" class="p-mr-1"></p-button>
-              <p-button type="button" [disabled]="!signatureForm.valid" label="Скачать подпись" (click)="download()"></p-button>
+              <p-button type="button" [disabled]="!signatureForm.valid" label="Скачать подпись"></p-button>
             </fieldset>
           </form>
 
@@ -122,7 +122,7 @@
           </fieldset>
         </p-tabPanel>
         <p-tabPanel header="Подпись файла">
-          <form #signatureForm="ngForm" novalidate (ngSubmit)="createSignatureWithFile(thumbprint)">
+          <form #signatureForm="ngForm" novalidate>
             <fieldset>
               <legend>Создание подписи</legend>
               <div class="addon-button mb-20">
@@ -132,7 +132,7 @@
                   </p>
                 </div>
                 <div class="mib-uploader">
-                  <input type="file" id="All" (change)="onSelect($event, 'All')" hidden />
+                  <input type="file" id="All" hidden />
                   <label for="All" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
                 </div>
               </div>
@@ -140,7 +140,7 @@
 
               <label for="certificate">Сертификат: *</label>
               <br>
-              <p-dropdown styleClass="mib-input"  id="certificate" name="certificate" [options]="certificateList"
+              <p-dropdown styleClass="mib-input"  id="certificate" name="certificate" [options]="[]"
                [(ngModel)]="thumbprint"
                optionLabel="name"
                optionValue="thumbprint"
@@ -148,7 +148,7 @@
 
               <pre>{{certificateListError}}</pre>
 
-              <details *ngIf="thumbprint" (click)="showCertInfo(thumbprint)">
+              <details *ngIf="thumbprint">
                 <summary>Информация о сертификате</summary>
                 <pre *ngIf="certInfo">{{certInfo | json}}</pre>
                 <pre *ngIf="!certInfo">Запрашивается...</pre>
@@ -168,7 +168,7 @@
 
               <hr>
               <p-button type="submit" [disabled]="!signatureForm.valid" label="Создать подпись" class="p-mr-1"></p-button>
-              <p-button type="button" [disabled]="!signatureForm.valid" label="Скачать подпись" (click)="downloadFile()"></p-button>
+              <p-button type="button" [disabled]="!signatureForm.valid" label="Скачать подпись"></p-button>
             </fieldset>
           </form>
 
@@ -210,7 +210,7 @@
                   </p>
                 </div>
                 <div class="mib-uploader">
-                  <input type="file" id="Rar" (change)="onSelect($event, 'Rar')" hidden />
+                  <input type="file" id="Rar" hidden />
                   <label for="Rar" class="mib-upload"><i class="pi pi-paperclip mr-20"></i> Выбрать файл</label>
                 </div>
               </div>

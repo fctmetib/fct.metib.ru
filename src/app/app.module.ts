@@ -1,7 +1,7 @@
 import { ClientModule } from './client/client.module';
 
 import { AuthModule } from './auth/auth.module';
-import { environment } from './../environments/environment.prod';
+import { environment } from '../environments/environment.prod';
 import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { registerLocaleData } from '@angular/common';

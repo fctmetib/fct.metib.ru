@@ -23,7 +23,7 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private _subscription$: Subscription = new Subscription();
   private _draftId: number = 0;
-  private _saveDraftAction$: NodeJS.Timeout;
+  private _saveDraftAction$: ReturnType<typeof setTimeout>;
 
   constructor(
     public demandLoadingService: DemandLoadingService,

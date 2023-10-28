@@ -54,7 +54,7 @@ export class DemandActionDebitorPageComponent
 
   public isNewDebtor: boolean = false;
 
-  private _saveDraftAction$: NodeJS.Timeout;
+  private _saveDraftAction$: ReturnType<typeof setTimeout>;
   private subscription$: Subscription = new Subscription();
   isView: boolean;
 

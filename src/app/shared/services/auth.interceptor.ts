@@ -1,5 +1,4 @@
-import { AuthResponseInterface } from './../../auth/types/login/authResponse.interface';
-import { CryptoService } from './common/crypto.service';
+import { AuthResponseInterface } from '../../auth/types/login/authResponse.interface';
 import { CookieService } from 'ngx-cookie';
 import { Injectable } from '@angular/core';
 import {
@@ -18,26 +17,22 @@ import { Router } from '@angular/router';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private cookieService: CookieService,
-    private cryptoService: CryptoService,
     private auth: AuthService,
     private router: Router
   ) {}
 
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let userCookie = this.cookieService.get('_cu');
     let bt = this.cookieService.get('_bt');
 
-    let user: AuthResponseInterface;
+    let user;
     let token;
     if (userCookie) {
-      user = JSON.parse(
-        this.cryptoService.decrypt(userCookie)
-      ) as AuthResponseInterface;
-      token = user.Code;
+      user = JSON.parse(userCookie)
+      token = user.Code
     }
+
+    console.log('isAdmin', this.auth.isUserAdmin())
 
     if (this.auth.isUserAdmin()) {
       request = request.clone({
@@ -63,12 +58,11 @@ export class AuthInterceptor implements HttpInterceptor {
   private handleAuthError(error: HttpErrorResponse) {
     if (error.status === 401) {
       this.auth.logout();
-      this.router.navigate(['/login']),
-        {
-          queryParams: {
-            sessionFailed: true,
-          },
-        };
+      this.router.navigate(['/auth/login'], {
+        queryParams: {
+          sessionFailed: true,
+        },
+      });
     }
 
     return throwError(error);

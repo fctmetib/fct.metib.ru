@@ -79,7 +79,7 @@ export class DemandActionAgentFactoringPageComponent
   private ref: DynamicDialogRef;
   private subscription$: Subscription = new Subscription();
 
-  private _saveDraftAction$: NodeJS.Timeout;
+  private _saveDraftAction$: ReturnType<typeof setTimeout>;
   isView: boolean;
 
   constructor(

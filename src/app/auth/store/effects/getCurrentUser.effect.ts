@@ -1,5 +1,4 @@
 import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
-import { CryptoService } from './../../../shared/services/common/crypto.service';
 import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie';
@@ -25,9 +24,7 @@ export class GetCurrentUserEffect {
         let userCookie = this.cookieService.get('_cu');
         let user: AuthResponseInterface;
         if (userCookie) {
-          user = JSON.parse(
-            this.cryptoService.decrypt(userCookie)
-          ) as AuthResponseInterface;
+          user = JSON.parse(userCookie)
         }
 
         let userId;
@@ -52,15 +49,15 @@ export class GetCurrentUserEffect {
             let userCookie = this.cookieService.get('_cu');
             let currentUserFactoring: AuthResponseInterface;
             if (userCookie) {
-              currentUserFactoring = JSON.parse(
-                this.cryptoService.decrypt(userCookie)
-              ) as AuthResponseInterface;
+              currentUserFactoring = JSON.parse(userCookie)
             }
 
             let currentUser: CurrentUserInterface = {
               userGeneral: currentUserResponse,
               userFactoring: currentUserFactoring,
             };
+
+            console.log('currentUser getCurrentUser', currentUserResponse)
 
             return getCurrentUserSuccessAction({ currentUser });
           }),
@@ -77,7 +74,6 @@ export class GetCurrentUserEffect {
     private actions$: Actions,
     private authService: AuthService,
     private store: Store,
-    private cryptoService: CryptoService,
     private cookieService: CookieService
   ) {}
 }
