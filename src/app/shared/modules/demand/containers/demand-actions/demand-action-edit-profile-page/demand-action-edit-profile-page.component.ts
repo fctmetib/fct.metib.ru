@@ -1,26 +1,23 @@
-import { environment } from 'src/environments/environment';
-import { CookieService } from 'ngx-cookie';
-import { CryptoService } from './../../../../../services/common/crypto.service';
-import { DemandService } from './../../../services/demand.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
-import { select, Store } from '@ngrx/store';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { errorSelector, isLoadingSelector } from '../../../store/selectors';
-import { CommonService } from 'src/app/shared/services/common/common.service';
-import { FileService } from 'src/app/shared/services/common/file.service';
-import { Guid } from 'src/app/shared/classes/common/guid.class';
-import { switchMap } from 'rxjs/operators';
-import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
-import { DemandSelectboxInterface } from '../../../types/common/demand-selectbox.interface';
-import { formatDate } from '@angular/common';
-import { ExitGuard } from 'src/app/shared/services/exit.guard';
-import { MessageService } from 'primeng/api';
+import {environment} from 'src/environments/environment';
+import {CookieService} from 'ngx-cookie';
+import {DemandService} from '../../../services/demand.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from 'src/app/auth/services/auth.service';
+import {SaveDemandRequestInterface} from '../../../types/requests/save-demand-request.interface';
+import {select, Store} from '@ngrx/store';
+import {FileModeInterface} from 'src/app/shared/types/file/file-model.interface';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {errorSelector} from '../../../store/selectors';
+import {CommonService} from 'src/app/shared/services/common/common.service';
+import {FileService} from 'src/app/shared/services/common/file.service';
+import {FactoringInfoInterface} from '../../../types/common/factoring/factoring-info.interface';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {CreateDemandMessageRequestInterface} from '../../../types/requests/create-demand-message-request.interface';
+import {DemandSelectboxInterface} from '../../../types/common/demand-selectbox.interface';
+import {formatDate} from '@angular/common';
+import {ExitGuard} from 'src/app/shared/services/exit.guard';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-demand-action-edit-profile-page',
@@ -64,7 +61,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   private currentUserId: string;
 
   private avatarCode: string;
-  private _saveDraftAction$: NodeJS.Timeout;
+  private _saveDraftAction$: ReturnType<typeof setTimeout>;
   private subscription$: Subscription = new Subscription();
   isView: boolean;
 
@@ -78,9 +75,9 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     private route: ActivatedRoute,
     private router: Router,
     private fileService: FileService,
-    private cryptoService: CryptoService,
     private cookieService: CookieService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.isUserVerified = this.authService.isUserVerified();
@@ -89,7 +86,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
 
     this.subscription$.add(
       this.route.queryParams.subscribe((params: Params) => {
-        this.isView = params['View'] === 'true' ? true : false;
+        this.isView = params['View'] === 'true';
         if (params['ID'] && params['Edit'] === 'true') {
           this.isLoading = true;
           this.fetchDraft(params['ID']);
@@ -315,7 +312,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
       Passport: {
         Date: this.formEdit.value.date
           ? new Date(this.formEdit.value.date).toISOString().slice(0, 19) +
-            '+03:00'
+          '+03:00'
           : null,
         Expire: null,
         IsForeign: false,
@@ -363,7 +360,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     this.backendErrors$ = this.store.pipe(select(errorSelector));
 
     let encryptedJsonCurrentUser = this.cookieService.get('_cu');
-    let currentJsonUser = this.cryptoService.decrypt(encryptedJsonCurrentUser);
+    let currentJsonUser = null;
     let currentUser = JSON.parse(currentJsonUser);
 
     this.currentUserId = currentUser.UserID;
@@ -376,6 +373,7 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
       detail: 'Черновик успешно сохранен!',
     });
   }
+
   //#endregion
   canDeactivate(): boolean | Observable<boolean> {
     this.saveDraft();

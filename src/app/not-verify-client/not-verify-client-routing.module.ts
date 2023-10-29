@@ -5,7 +5,7 @@ import { NotVerifyClientComponent } from './not-verify-client.component';
 
 const routes = [
   {
-    path: 'not-verify',
+    path: '',
     component: NotVerifyClientComponent,
     canActivate: [AuthGuard],
     children: [

@@ -1,13 +1,12 @@
-import { ReportType } from './../../types/reports/report-type.class';
-import { ReportService } from 'src/app/shared/services/common/report.service';
-import { CryptoService } from 'src/app/shared/services/common/crypto.service';
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { ReportTypeInterface } from '../../types/reports/report-type.interface';
-import { ReportColumntInterface } from '../../types/reports/report-column.interface';
-import { MenuItem } from 'primeng/api';
-import { Subject, Subscription } from 'rxjs';
-import { Table } from 'primeng/table';
+import {ReportType} from '../../types/reports/report-type.class';
+import {ReportService} from 'src/app/shared/services/common/report.service';
+import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Params} from '@angular/router';
+import {ReportTypeInterface} from '../../types/reports/report-type.interface';
+import {ReportColumntInterface} from '../../types/reports/report-column.interface';
+import {MenuItem} from 'primeng/api';
+import {Subject, Subscription} from 'rxjs';
+import {Table} from 'primeng/table';
 import saveAs from 'file-saver';
 import * as XLSX from 'xlsx';
 
@@ -50,8 +49,8 @@ export class ReportViewPageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly reportService: ReportService,
-    private readonly cryptoService: CryptoService
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     this.subscription$.add(
@@ -59,7 +58,7 @@ export class ReportViewPageComponent implements OnInit, OnDestroy {
         .queryParams
         .subscribe((params: Params): void => {
           if (params['dt']) {
-            this.data = JSON.parse(this.cryptoService.decrypt(params['dt']));
+            this.data = null
             this.prepareTable();
             this.fetchReport();
           } else {
@@ -124,7 +123,7 @@ export class ReportViewPageComponent implements OnInit, OnDestroy {
     });
 
     const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+    const workbook = {Sheets: {data: worksheet}, SheetNames: ['data']};
     const excelBuffer: any = XLSX.write(workbook, {
       bookType: 'xlsx',
       type: 'array',
@@ -185,7 +184,7 @@ export class ReportViewPageComponent implements OnInit, OnDestroy {
       CustomerID: 0,
       DebtorID: data.debitor,
       Export: 'JSON',
-      PayedAgreement: data?.payed ? true : false,
+      PayedAgreement: !!data?.payed,
       Title: data.title,
       Type: data.type,
     };
@@ -284,8 +283,7 @@ export class ReportViewPageComponent implements OnInit, OnDestroy {
 
   private getDataForSum(): number[] {
     let columnName = this.reportConfig.columns[this.selectedColumnIndex].name;
-    let dataForSum = this.reportData.map((x) => x[columnName]);
-    return dataForSum;
+    return this.reportData.map((x) => x[columnName]);
   }
 
   public ngOnDestroy(): void {

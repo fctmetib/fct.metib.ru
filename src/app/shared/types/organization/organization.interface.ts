@@ -1,5 +1,5 @@
-import { AccountModelInterface } from "../account/account-model.interface";
-import { SignerInfoModelInterface } from "../signer/signer-info-model.interface";
+import {AccountModelInterface} from '../account/account-model.interface';
+import {SignerInfoModelInterface} from '../signer/signer-info-model.interface';
 
 export interface OrganizationInterface {
   ABSID: number;

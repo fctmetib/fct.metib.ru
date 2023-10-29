@@ -1,26 +1,24 @@
-import { CryptoService } from 'src/app/shared/services/common/crypto.service';
-import { DemandValuesIniter } from '../../tools/demand-values-initer';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { DemandConverter } from '../../tools/demand-converter';
-import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
-import { FormGenerator } from '../../tools/form-generator';
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
-import { DemandActionType } from '../../types/common/demand-action-type';
-import { DemandNavigationService } from '../../services/demand-navigation.service';
-import { DemandLoadingService } from '../../services/demand-loading.service';
+import {DemandValuesIniter} from '../../tools/demand-values-initer';
+import {FileModeInterface} from 'src/app/shared/types/file/file-model.interface';
+import {DemandConverter} from '../../tools/demand-converter';
+import {DoDemandPageActionType} from '../../types/navigation-service/do-demand-page-action-type';
+import {FormGenerator} from '../../tools/form-generator';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {DoDemandActionInterface} from '../../types/navigation-service/do-demand-action.interface';
+import {DemandActionType} from '../../types/common/demand-action-type';
+import {DemandNavigationService} from '../../services/demand-navigation.service';
+import {DemandLoadingService} from '../../services/demand-loading.service';
 import {
   CommonService,
   PostInterface,
   RegionInterface,
 } from 'src/app/shared/services/common/common.service';
-import { Observable, Subscription } from 'rxjs';
-import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
-import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
-import { BankInterface } from 'src/app/shared/types/common/bank.interface';
-import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
-import { CookieService } from 'ngx-cookie';
+import {Observable, Subscription} from 'rxjs';
+import {DemandNavigationInterface} from '../../types/common/demand-navigation.interface';
+import {DemandSelectboxInterface} from '../../types/demand-selectbox.interface';
+import {BankInterface} from 'src/app/shared/types/common/bank.interface';
+import {CookieService} from 'ngx-cookie';
 
 @Component({
   selector: 'profile',
@@ -61,6 +59,7 @@ export class ProfileComponent implements OnInit {
   public typesOfOwner: DemandSelectboxInterface[] = [];
   isRequestLoading: boolean = false; // this was an Input Property
   public banksFounded: BankInterface[];
+
   //#endregion
 
   constructor(
@@ -68,7 +67,6 @@ export class ProfileComponent implements OnInit {
     private commonService: CommonService,
     private _demandLoadingService: DemandLoadingService,
     private _demandNavigationService: DemandNavigationService,
-    private cryptoService: CryptoService,
     private cookieService: CookieService
   ) {
     this._demandConverter = new DemandConverter();
@@ -189,7 +187,7 @@ export class ProfileComponent implements OnInit {
   private _initValues() {
     // Только edit profile
     let encryptedJsonCurrentUser = this.cookieService.get('_cu');
-    let currentJsonUser = this.cryptoService.decrypt(encryptedJsonCurrentUser);
+    let currentJsonUser = null;
     let currentUser = JSON.parse(currentJsonUser);
     this.currentUserId = currentUser.UserID;
     //

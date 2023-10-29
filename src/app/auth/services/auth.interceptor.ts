@@ -11,14 +11,12 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
-import { CryptoService } from 'src/app/shared/services/common/crypto.service';
 import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private cookieService: CookieService,
-    private cryptoService: CryptoService,
     private auth: AuthService,
     private router: Router
   ) {}
@@ -41,9 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
     let user: AuthResponseInterface;
     let token;
     if (cookie) {
-      user = JSON.parse(
-        this.cryptoService.decrypt(cookie)
-      ) as AuthResponseInterface;
+      user = JSON.parse(cookie)
       token = user.Code;
     }
 
@@ -64,12 +60,12 @@ export class AuthInterceptor implements HttpInterceptor {
   private handleAuthError(error: HttpErrorResponse) {
     if (error.status === 401) {
       this.auth.logout();
-      this.router.navigate(['/login']),
-        {
-          queryParams: {
-            sessionFailed: true,
-          },
-        };
+      this.router.navigate(['/login'],   {
+        queryParams: {
+          sessionFailed: true,
+        },
+      })
+
     }
 
     return throwError(error);

@@ -39,7 +39,7 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
   public isRequestLoading: boolean = false;
   public isLoading: boolean = false;
 
-  private _saveDraftAction$: NodeJS.Timeout;
+  private _saveDraftAction$: ReturnType<typeof setTimeout>;
   private subscription$: Subscription = new Subscription();
   isView: boolean;
 

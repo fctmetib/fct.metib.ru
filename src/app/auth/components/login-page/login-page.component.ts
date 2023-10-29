@@ -97,6 +97,8 @@ export class LoginPageComponent implements OnInit {
       password: this.form.value.password,
     };
 
+    console.log('login-page request', request)
+
     this.store.dispatch(loginAction({ request }));
   }
 }

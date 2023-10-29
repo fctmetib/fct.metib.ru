@@ -29,7 +29,7 @@ import { UpdatePasswordDialogModule } from '../shared/modules/update-password-di
 
 const routes = [
   {
-    path: 'admin',
+    path: '',
     component: AdminComponent,
     canActivate: [AdminGuard],
     children: [

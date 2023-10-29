@@ -1,21 +1,19 @@
-import { CryptoService } from './../common/crypto.service';
-import { OrganizationInterface } from './../../types/organization/organization.interface';
-import { DeliveryInterface } from './../../types/delivery/delivery.interface';
-import { environment } from 'src/environments/environment';
+import {OrganizationInterface} from '../../types/organization/organization.interface';
+import {environment} from 'src/environments/environment';
 
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie';
-import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
+import {Observable, of} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {CookieService} from 'ngx-cookie';
+import {AuthResponseInterface} from 'src/app/auth/types/login/authResponse.interface';
 
 @Injectable()
 export class OrganizationService {
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
-    private cryptoService: CryptoService
-  ) {}
+  ) {
+  }
 
   /**
    * Получает полные данные об организации
@@ -28,9 +26,7 @@ export class OrganizationService {
     let user: AuthResponseInterface;
     let token;
     if (userCookie) {
-      user = JSON.parse(
-        this.cryptoService.decrypt(userCookie)
-      ) as AuthResponseInterface;
+      user = JSON.parse(userCookie)
       token = user.Code;
     }
 

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'mib-menu',
-  styleUrls: ['./mib-menu.component.scss'],
   templateUrl: './mib-menu.component.html',
+  styleUrls: ['./mib-menu.component.scss'],
 })
 export class MibMenuComponent implements OnInit {
 

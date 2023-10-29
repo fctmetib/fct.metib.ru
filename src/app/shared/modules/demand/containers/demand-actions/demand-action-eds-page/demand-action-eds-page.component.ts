@@ -46,7 +46,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   public alert: boolean;
   public alertMessage = [];
   public validations: Array<string> = environment.uploadFilesExt;
-  
+
   public isRequestLoading: boolean = false;
 
   isUserVerified: boolean;
@@ -110,7 +110,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   public currentDraftId: number = 0;
 
   private ref: DynamicDialogRef;
-  private _saveDraftAction$: NodeJS.Timeout;
+  private _saveDraftAction$: ReturnType<typeof setTimeout>;
   private subscription$: Subscription = new Subscription();
   public postList: PostInterface[] = [];
   public countryList: RegionInterface[] = [];

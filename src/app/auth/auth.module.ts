@@ -1,5 +1,3 @@
-import { CryptoProService } from './../shared/services/common/cryprto-pro.service';
-import { CryptoService } from './../shared/services/common/crypto.service';
 import { ResetPasswordEffect } from './store/effects/resetPassword.effect';
 import { ConfirmPasswordPageComponent } from './components/confirm-password-page/confirm-password-page.component';
 import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
@@ -19,11 +17,11 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { CommonService } from '../shared/services/common/common.service';
 import { RegisterEffect } from './store/effects/register.effect';
-import { BackendErrorMessagesModule } from './../shared/modules/backendErrorMessages/backendErrorMessages.module';
+import { BackendErrorMessagesModule } from '../shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { GetCurrentUserEffect } from './store/effects/getCurrentUser.effect';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { LoginEffect } from './store/effects/login.effect';
-import { SuccessMessagesModule } from './../shared/modules/successMessages/successMessages.module';
+import { SuccessMessagesModule } from '../shared/modules/successMessages/successMessages.module';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
@@ -73,8 +71,6 @@ import { TooltipModule } from 'primeng/tooltip';
   providers: [
     AuthService,
     CommonService,
-    CryptoService,
-    CryptoProService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

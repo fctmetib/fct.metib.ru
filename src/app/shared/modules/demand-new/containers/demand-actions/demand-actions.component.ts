@@ -1,21 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { saveAs } from '@progress/kendo-file-saver';
-import {
-  Certificate,
-  createAttachedSignature,
-  createDetachedSignature,
-  createHash,
-  getCertificate,
-  getSystemInfo,
-  getUserCertificates,
-  isValidSystemSetup,
-  SystemInfo,
-} from 'crypto-pro';
-import * as JSZip from 'jszip';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { CryptoProService } from 'src/app/shared/services/common/cryprto-pro.service';
 import { DemandNavigationService } from '../../services/demand-navigation.service';
 import { DemandAction } from '../../types/common/demand-action';
 import { DemandActionType } from '../../types/common/demand-action-type';
@@ -38,7 +24,6 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private _demandNavigationService: DemandNavigationService,
     private _router: Router,
-    private cryproService: CryptoProService
   ) {}
 
   ngOnInit() {
