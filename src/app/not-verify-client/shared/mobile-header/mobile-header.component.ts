@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
-import { currentUserFactoringSelector, currentUserGeneralSelector } from 'src/app/auth/store/selectors';
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
 import { factoringSelector } from 'src/app/client/store/selectors';
 
@@ -25,14 +24,14 @@ export class MobileHeaderComponent implements OnInit {
   baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
 
   public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
-  public currentUser$: Observable<CurrentUserGeneralInterface | null>;
+  public currentUser$: any
   public factoring$: Observable<CustomerInterface | null>;
 
   constructor(private store: Store, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
-    this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
+    // TODO: юзер из сторы
+    this.currentUser$ = null;
     this.factoring$ = this.store.pipe(select(factoringSelector));
   }
 

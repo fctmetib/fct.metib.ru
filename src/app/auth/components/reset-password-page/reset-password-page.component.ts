@@ -1,8 +1,4 @@
-import {
-  resetPasswordAction,
-  resetPasswordConfirmAction,
-} from './../../store/actions/resetPassword.action';
-import { ResetPasswordRequestInterface } from './../../types/reset-password/resetPasswordRequest.interface';
+import { ResetPasswordRequestInterface } from '../../types/reset-password/resetPasswordRequest.interface';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
@@ -11,13 +7,6 @@ import { select, Store } from '@ngrx/store';
 
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
 import { CommonService } from '../../../shared/services/common/common.service';
-import {
-  validationErrorsSelector,
-  isSubmittingSelector,
-  confirmationCodeSelector,
-  successMessageSelector,
-} from './../../store/selectors';
-import { resetMessagesAction } from '../../store/actions/common.action';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -28,10 +17,10 @@ export class ResetPasswordPageComponent {
   public form: FormGroup;
   public formConfirm: FormGroup;
 
-  public isSubmitting$: Observable<boolean>;
-  public backendErrors$: Observable<string | null>;
-  public confirmationCode$: Observable<string | null>;
-  public successMessage$: Observable<string | null>;
+  public isSubmitting$: any
+  public backendErrors$: any
+  public confirmationCode$: any
+  public successMessage$: any
   public isSubmitted: boolean = false;
 
   image: any;
@@ -47,17 +36,11 @@ export class ResetPasswordPageComponent {
   ) { }
 
   public ngOnInit(): void {
-    this.store.dispatch(resetMessagesAction());
-
     this.initializeForm();
     this.initializeValues();
   }
 
   public initializeValues(): void {
-    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
-    this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
-    this.confirmationCode$ = this.store.pipe(select(confirmationCodeSelector));
-    this.successMessage$ = this.store.pipe(select(successMessageSelector));
 
     this.updateCaptcha();
   }
@@ -104,8 +87,6 @@ export class ResetPasswordPageComponent {
       },
       Login: this.form.value.login,
     };
-
-    this.store.dispatch(resetPasswordAction({ request }));
   }
 
   public onConfirmSubmit(): void {
@@ -118,7 +99,5 @@ export class ResetPasswordPageComponent {
       ConfirmationCode,
       Pin: this.formConfirm.value.pin,
     };
-
-    this.store.dispatch(resetPasswordConfirmAction({ request }));
   }
 }

@@ -8,7 +8,6 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { ReauthRequestInterface } from 'src/app/auth/types/login/reauthRequest.interface';
 import { Store } from '@ngrx/store';
-import { reauthAction } from 'src/app/auth/store/actions/reauth.action';
 
 @Component({
   selector: 'users',
@@ -39,14 +38,6 @@ export class UsersComponent implements OnInit {
     });
 
     this.onChanges();
-  }
-
-  public reauthHandler(userId: string): void {
-    const request: ReauthRequestInterface = {
-      userId: userId
-    };
-
-    this.store.dispatch(reauthAction({ request }));
   }
 
   onChanges(): void {

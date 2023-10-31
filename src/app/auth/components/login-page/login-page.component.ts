@@ -4,14 +4,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 
-import { resetMessagesAction } from './../../store/actions/common.action';
 import { CommonService } from '../../../shared/services/common/common.service';
-import {
-  isSubmittingSelector,
-  validationErrorsSelector,
-} from './../../store/selectors';
 import { LoginRequestInterface } from '../../types/login/loginRequest.interface';
-import { loginAction } from '../../store/actions/login.action';
 
 @Component({
   selector: 'app-login-page',
@@ -43,8 +37,6 @@ export class LoginPageComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.store.dispatch(resetMessagesAction());
-
     this.initializeForm();
     this.initializeValues();
 
@@ -78,9 +70,6 @@ export class LoginPageComponent implements OnInit {
   }
 
   private initializeValues(): void {
-    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
-    this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
-
     this.commonService.getIP().subscribe((resp) => {
       this.currentIp = resp;
     });
@@ -97,8 +86,5 @@ export class LoginPageComponent implements OnInit {
       password: this.form.value.password,
     };
 
-    console.log('login-page request', request)
-
-    this.store.dispatch(loginAction({ request }));
   }
 }

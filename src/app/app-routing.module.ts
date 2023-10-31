@@ -9,27 +9,19 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () =>
-      import('./auth/auth.module')
-        .then((m) => m.AuthModule),
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: 'client',
-    loadChildren: () =>
-      import('./client/client.module')
-        .then((m) => m.ClientModule),
+    path: '',
+    loadChildren: () => import('./client/client.module').then((m) => m.ClientModule),
   },
   {
-    path: 'not-verify',
-    loadChildren: () =>
-      import('./not-verify-client/not-verify-client.module')
-        .then((m) => m.NotVerifyClientModule),
+    path: '',
+    loadChildren: () => import('./not-verify-client/not-verify-client.module').then((m) => m.NotVerifyClientModule),
   },
   {
-    path: 'admin',
-    loadChildren: () =>
-      import('./admin/admin.module')
-        .then((m) => m.AdminModule)
+    path: '',
+    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule)
   },
   {path: '404', component: NotFoundComponent},
   {path: '**', redirectTo: '/404', pathMatch: 'full'},

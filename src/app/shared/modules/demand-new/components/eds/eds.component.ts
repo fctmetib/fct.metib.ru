@@ -1,6 +1,4 @@
-import { currentUserGeneralSelector, } from './../../../../../auth/store/selectors';
 import { combineLatest, Observable } from 'rxjs';
-// System
 import {
   Component,
   OnDestroy,
@@ -12,12 +10,9 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
-// Interfaces
 import { DemandSelectboxInterface } from '../../types/demand-selectbox.interface';
-// Common Logic / Classes / Tools
 import { DemandValuesIniter } from '../../tools/demand-values-initer';
 import { FormGenerator } from '../../tools/form-generator';
-// Services
 import {
   CommonService,
   PostInterface,
@@ -52,7 +47,7 @@ export class EDSComponent implements OnInit, OnDestroy {
   public countryList: RegionInterface[] = [];
   public regionList: RegionInterface[] = [];
   public idCenterList: any[] = [];
-  
+
   // Системные переменные
   public requestLoading$: Observable<boolean>;
   public demandNavigationConfig: DemandNavigationInterface;
@@ -65,7 +60,7 @@ export class EDSComponent implements OnInit, OnDestroy {
   // Файлы
   public files: FileModeInterface[] = [];
   public validations: Array<string> = environment.uploadFilesExt;
-  
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly commonService: CommonService,
@@ -338,7 +333,8 @@ export class EDSComponent implements OnInit, OnDestroy {
   }
 
   private _getCurrentDemand(): void {
-    const storedUser$ = this.store.pipe(select(currentUserGeneralSelector));
+    // TODO: ЮЗЕР ИЗ СТОРЫ
+    const storedUser$: any = null;
     const currentDemand$ = this._demandNavigationService.currentDemand$;
 
     this._subscription$.add(
@@ -348,7 +344,7 @@ export class EDSComponent implements OnInit, OnDestroy {
         (storedUser, currentDemand) => ({
           storedUser,
           currentDemand,
-        })
+        } as any)
       ).subscribe((pair) => {
         const user = {
           ...pair.currentDemand.Person,

@@ -7,10 +7,6 @@ import { Observable, Subscription } from 'rxjs';
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
-import {
-  currentUserFactoringSelector,
-  currentUserGeneralSelector,
-} from 'src/app/auth/store/selectors';
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
 import { factoringSelector } from 'src/app/client/store/selectors';
 
@@ -37,7 +33,7 @@ export class HeaderComponent implements OnInit {
   baseAvatarProfileUrl = `${environment.apiUrl}/avatar/`;
 
   public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
-  public currentUser$: Observable<CurrentUserGeneralInterface | null>;
+  public currentUser$: null
   public factoring$: Observable<CustomerInterface | null>;
 
   private subscription$: Subscription = new Subscription();
@@ -51,10 +47,8 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.currentUserFactoring$ = this.store.pipe(
-      select(currentUserFactoringSelector)
-    );
-    this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
+    // TODO: ЮЗЕР ИЗ СТОРЫ
+    this.currentUser$ = null
     this.factoring$ = this.store.pipe(select(factoringSelector));
   }
 

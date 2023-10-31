@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
-import { adminUserFactoringSelector, currentUserFactoringSelector, currentUserGeneralSelector } from 'src/app/auth/store/selectors';
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
@@ -25,7 +24,8 @@ export class MobileHeaderComponent implements OnInit {
   constructor(private store: Store, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.adminUserFactoring$ = this.store.pipe(select(adminUserFactoringSelector));
+    // TODO: Юзер из сторы
+    this.adminUserFactoring$ = null
   }
 
   logout() {

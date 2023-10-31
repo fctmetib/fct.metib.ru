@@ -1,9 +1,8 @@
 import { Router } from '@angular/router';
-import { BankInterface } from './../../../../../types/common/bank.interface';
+import { BankInterface } from '../../../../../types/common/bank.interface';
 import { Observable, Subscription } from 'rxjs';
 import { CurrencyPipe, formatDate } from '@angular/common';
 import { CommonService } from 'src/app/shared/services/common/common.service';
-import { isLoadingSelector } from './../../../../../../auth/store/selectors';
 import { FileModeInterface } from '../../../../../types/file/file-model.interface';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import {
@@ -471,7 +470,6 @@ export class DemandActionAgentFactoringPageComponent
     this.countryList = mibCommon.getCountryList();
     this.regionList = mibCommon.getRegionList();
 
-    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
     this.backendErrors$ = this.store.pipe(select(errorSelector));
   }
 

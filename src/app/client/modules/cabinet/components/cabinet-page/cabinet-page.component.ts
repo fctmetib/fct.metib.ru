@@ -1,14 +1,9 @@
-import { StatisticsInterface } from './../../types/common/statistics.interface';
-import { ReportCardInterface } from './../../types/common/report-card.interface';
+import { StatisticsInterface } from '../../types/common/statistics.interface';
+import { ReportCardInterface } from '../../types/common/report-card.interface';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { AuthService } from '../../../../../auth/services/auth.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
-import {
-  currentUserFactoringSelector,
-  isLoadingSelector,
-} from 'src/app/auth/store/selectors';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { StatisticsService } from '../../services/statistics.service';
 
@@ -19,7 +14,7 @@ import { StatisticsService } from '../../services/statistics.service';
   encapsulation: ViewEncapsulation.None
 })
 export class CabinetPageComponent implements OnInit {
-  public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
+  public currentUserFactoring$: any
   public loading$: Observable<boolean | null>;
 
   public statistics: StatisticsInterface;
@@ -29,10 +24,8 @@ export class CabinetPageComponent implements OnInit {
 
   ngOnInit() {
     this.reportCardsInit();
-    this.loading$ = this.store.pipe(select(isLoadingSelector));
-    this.currentUserFactoring$ = this.store.pipe(
-      select(currentUserFactoringSelector)
-    );
+    // TODO: юзер из сторы
+    this.currentUserFactoring$ = null
     this.statisticsService.getClientStatistics().subscribe(resp => {
       this.statistics = resp;
     })

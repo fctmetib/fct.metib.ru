@@ -13,8 +13,8 @@ import { DoDemandPageActionType } from '../../types/navigation-service/do-demand
 
 @Component({
   selector: 'demand-action',
-  styleUrls: ['./demand-action.component.scss'],
   templateUrl: './demand-action.component.html',
+  styleUrls: ['./demand-action.component.scss'],
 })
 export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   public isUserVerified: boolean = true;

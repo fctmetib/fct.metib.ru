@@ -5,19 +5,9 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { select, Store } from '@ngrx/store';
 
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
-import {
-  registerAction,
-  registerConfirmAction,
-} from './../../store/actions/register.action';
 import { MaleOptionsInterface } from '../../types/common/maleOptions.interface';
-import { resetMessagesAction } from './../../store/actions/common.action';
 import { CommonService } from '../../../shared/services/common/common.service';
 import { RegisterRequestInterface } from '../../types/register/registerRequest.interface';
-import {
-  validationErrorsSelector,
-  isSubmittingSelector,
-  confirmationCodeSelector,
-} from './../../store/selectors';
 import Validation from '../../tools/confirmPassword.tool';
 
 @Component({
@@ -49,8 +39,6 @@ export class RegisterPageComponent {
   ) { }
 
   public ngOnInit(): void {
-    this.store.dispatch(resetMessagesAction());
-
     this.initializeForm();
     this.initializeValues();
   }
@@ -96,10 +84,6 @@ export class RegisterPageComponent {
   }
 
   private initializeValues(): void {
-    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
-    this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
-    this.confirmationCode$ = this.store.pipe(select(confirmationCodeSelector));
-
     this.updateCaptcha();
     this.genderOptions = [
       {
@@ -130,7 +114,7 @@ export class RegisterPageComponent {
 
   public onSubmit(): void {
     this.isSubmitted = true;
-    
+
     if (this.form.invalid) {
       return;
     }
@@ -152,8 +136,6 @@ export class RegisterPageComponent {
         Phone: this.form.value.profile.phone,
       },
     };
-
-    this.store.dispatch(registerAction({ request }));
   }
 
   public onConfirmSubmit(): void {
@@ -166,7 +148,5 @@ export class RegisterPageComponent {
       ConfirmationCode,
       Pin: this.formConfirm.value.pin,
     };
-
-    this.store.dispatch(registerConfirmAction({ request }));
   }
 }

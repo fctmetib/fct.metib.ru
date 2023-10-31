@@ -8,10 +8,6 @@ import { Observable, Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
-import {
-  currentUserFactoringSelector,
-  currentUserGeneralSelector,
-} from 'src/app/auth/store/selectors';
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
 import { factoringSelector } from 'src/app/client/store/selectors';
 
@@ -48,10 +44,8 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.currentUserFactoring$ = this.store.pipe(
-      select(currentUserFactoringSelector)
-    );
-    this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
+    // TODO: Юзер из сторы
+    this.currentUser$ = null
     this.factoring$ = this.store.pipe(select(factoringSelector));
 
     this.isAdmin = this.authService.isUserAdmin();
