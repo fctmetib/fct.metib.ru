@@ -1,0 +1,28 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main  # или имя вашего рабочего ветви
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@master
+      with:
+        host: 176.99.12.79
+        username: root
+        key: ${{ secrets.DEPLOY_KEY }}
+        script: |
+          cd fct.metib.ru
+          git reset --hard
+          git pull origin main --force
+          npm install --force
+          npm run-script build
+          pm2 reload fct.metib.ru
