@@ -1,11 +1,10 @@
 import { ActivatedRoute, Params } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
-
 import { CommonService } from '../../../shared/services/common/common.service';
 import { LoginRequestInterface } from '../../types/login/loginRequest.interface';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -32,8 +31,8 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     private readonly commonService: CommonService,
-    private readonly store: Store,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly authService: AuthService,
   ) { }
 
   public ngOnInit(): void {
@@ -86,5 +85,6 @@ export class LoginPageComponent implements OnInit {
       password: this.form.value.password,
     };
 
+    this.authService.login(request).pipe().subscribe();
   }
 }

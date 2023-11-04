@@ -1,27 +1,39 @@
-import {Router} from '@angular/router';
-import {ResetPasswordCompleteRequestInterface} from '../types/reset-password/resetPasswordCompleteRequest.interface';
-import {ResetPasswordConfirmRequestInterface} from '../types/reset-password/resetPasswordConfirmRequest.interface';
-import {ResetPasswordReponseInterface} from '../types/reset-password/resetPasswordResponse.interface';
-import {ResetPasswordRequestInterface} from '../types/reset-password/resetPasswordRequest.interface';
-import {CookieService} from 'ngx-cookie';
-import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Router } from '@angular/router';
+import { ResetPasswordCompleteRequestInterface } from '../types/reset-password/resetPasswordCompleteRequest.interface';
+import { ResetPasswordConfirmRequestInterface } from '../types/reset-password/resetPasswordConfirmRequest.interface';
+import { ResetPasswordReponseInterface } from '../types/reset-password/resetPasswordResponse.interface';
+import { ResetPasswordRequestInterface } from '../types/reset-password/resetPasswordRequest.interface';
+import { CookieService } from 'ngx-cookie';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
-import {RegisterRequestInterface} from 'src/app/auth/types/register/registerRequest.interface';
-import {CurrentUserGeneralInterface} from 'src/app/shared/types/currentUserGeneral.interface';
-import {LoginRequestInterface} from 'src/app/auth/types/login/loginRequest.interface';
-import {AuthResponseInterface} from 'src/app/auth/types/login/authResponse.interface';
-import {RegisterConfirmRequestInterface} from '../types/register/registerConfirmRequest.interface';
-import {RegisterReponseInterface} from '../types/register/registerResponse.interface';
-import {ReauthRequestInterface} from '../types/login/reauthRequest.interface';
-import {RequestStoreService} from 'src/app/shared/services/store/request.store.service';
-import {FreedutyStoreService} from 'src/app/shared/services/store/freeduty.store.service';
+import { environment } from 'src/environments/environment';
+import { RegisterRequestInterface } from 'src/app/auth/types/register/registerRequest.interface';
+import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
+import { LoginRequestInterface } from 'src/app/auth/types/login/loginRequest.interface';
+import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
+import { RegisterConfirmRequestInterface } from '../types/register/registerConfirmRequest.interface';
+import { RegisterReponseInterface } from '../types/register/registerResponse.interface';
+import { ReauthRequestInterface } from '../types/login/reauthRequest.interface';
+import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
+import { FreedutyStoreService } from 'src/app/shared/services/store/freeduty.store.service';
 import { isPlatformBrowser } from '@angular/common';
+import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
+import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
 
 @Injectable()
 export class AuthService {
+  public currentUser$ = new BehaviorSubject<CurrentUserInterface>(null);
+
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
@@ -30,8 +42,7 @@ export class AuthService {
     private requestStoreService: RequestStoreService,
     private freedutyStoreService: FreedutyStoreService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-  }
+  ) {}
 
   register(
     data: RegisterRequestInterface
@@ -50,14 +61,86 @@ export class AuthService {
     return this.http.post<AuthResponseInterface>(url, null);
   }
 
-  login(data: LoginRequestInterface): Observable<AuthResponseInterface> {
+  login(data: LoginRequestInterface): Observable<any> {
     const url = environment.apiUrl + '/user/login';
-    return this.http.post<AuthResponseInterface>(url, data);
+    return this.http.post<AuthResponseInterface>(url, data).pipe(
+      tap((response: AuthResponseInterface) => {
+        console.log('login res', response);
+        let isAdmin = response.Roles.find((x) => x === 'Administrator');
+        if (isAdmin) {
+          // admin current user
+          this.cookieService.put('_cu_admin', JSON.stringify(response));
+
+          // admin base token
+          let token = btoa(`${data.login}:${data.password}`);
+          this.cookieService.put('_bt_admin', token);
+
+          this.router.navigateByUrl('/admin/cabinet');
+        } else {
+          // current user
+          this.cookieService.put('_cu', JSON.stringify(response));
+
+          // base token
+          let token = btoa(`${data.login}:${data.password}`);
+          this.cookieService.put('_bt', token);
+
+          this.router.navigateByUrl('/client/cabinet');
+        }
+
+        this.initCurrentUser();
+      }),
+      catchError((errorResponse: HttpErrorResponse) => {
+        return of({ errors: errorResponse.error });
+      })
+    );
   }
 
-  getCurrentUser(id: number): Observable<CurrentUserGeneralInterface> {
-    const url = environment.apiUrl + `/user/${id}`;
-    return this.http.get<CurrentUserGeneralInterface>(url);
+  initCurrentUser(): Observable<CurrentUserGeneralInterface> {
+    let adminCookie = this.cookieService.get('_cu_admin');
+    let userCookie = this.cookieService.get('_cu');
+    let user: AuthResponseInterface;
+    if (userCookie) {
+      user = JSON.parse(userCookie);
+    }
+
+    let userId;
+
+    if (user) {
+      const token = user.Code;
+      userId = +user.UserID;
+
+      if (!token || !userId) {
+        return;
+      }
+    } else {
+      return;
+    }
+
+    const url = environment.apiUrl + `/user/${userId}`;
+    this.http
+      .get<CurrentUserGeneralInterface>(url)
+      .pipe(
+        tap((currentUserResponse: CurrentUserGeneralInterface) => {
+          let userCookie = this.cookieService.get('_cu');
+          let currentUserFactoring: AuthResponseInterface;
+          if (userCookie) {
+            currentUserFactoring = JSON.parse(userCookie);
+          }
+
+          let currentUser: CurrentUserInterface = {
+            userGeneral: currentUserResponse,
+            userFactoring: currentUserFactoring,
+          };
+
+          console.log('currentUser getCurrentUser', currentUserResponse);
+          console.log('ffff')
+          this.currentUser$.next(currentUser);
+        }),
+        catchError((error) => {
+          return of(error);
+        })
+      )
+      .subscribe();
   }
 
   /**
@@ -197,7 +280,7 @@ export class AuthService {
     let user: AuthResponseInterface;
     let token;
     if (cookie) {
-      user = JSON.parse(cookie)
+      user = JSON.parse(cookie);
       token = user.Code;
     }
 
@@ -216,31 +299,31 @@ export class AuthService {
    * This function return current user roles
    */
   private getUserRoles(): string[] {
-    let user: AuthResponseInterface
-    let admin: AuthResponseInterface
+    let user: AuthResponseInterface;
+    let admin: AuthResponseInterface;
 
     const adminCookie = this.cookieService.get('_cu_admin');
     const userCookie = this.cookieService.get('_cu');
 
     if (adminCookie) {
-      admin = JSON.parse(adminCookie)
+      admin = JSON.parse(adminCookie);
     }
 
     if (userCookie) {
-      user = JSON.parse(userCookie)
+      user = JSON.parse(userCookie);
     }
 
-    return (user?.Roles ?? admin?.Roles) ?? [];
+    return user?.Roles ?? admin?.Roles ?? [];
   }
 
   private getUserVerificationType(): AuthResponseInterface {
     const userCookie = this.cookieService.get('_cu');
 
     if (userCookie) {
-      return JSON.parse(userCookie)
+      return JSON.parse(userCookie);
     }
 
-    return null
+    return null;
   }
 
   //#endregion

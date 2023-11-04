@@ -1,7 +1,6 @@
 import {environment} from 'src/environments/environment';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Component, OnInit, PLATFORM_ID,  Inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
@@ -29,7 +28,6 @@ export class HeaderComponent implements OnInit {
   private refUpdatePasswordDialog: DynamicDialogRef;
 
   constructor(
-    private readonly store: Store,
     public readonly dialogService: DialogService,
     private readonly authService: AuthService,
     private readonly pageStoreService: PageStoreService,

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, filter, tap } from 'rxjs';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
@@ -16,6 +16,7 @@ import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserF
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
 import { UpdatePasswordDialogComponent } from '../../../../shared/modules/update-password-dialog/update-password-dialog.component';
 import { isPlatformBrowser } from '@angular/common';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -28,8 +29,9 @@ export class HeaderComponent implements OnInit {
   baseAvatarUrl = 'https://api-factoring.metib.ru/api/avatar';
   baseAvatarProfileUrl = `${environment.apiUrl}/avatar/`;
 
-  public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
-  public currentUser$: Observable<CurrentUserGeneralInterface | null>;
+  public currentUserFactoring$ = new BehaviorSubject<CurrentUserFactoringInterface>(null);
+  public currentUser$ = new BehaviorSubject<CurrentUserGeneralInterface>(null);
+
   public factoring$: Observable<CustomerInterface | null>;
 
   public isAdmin: boolean = false;
@@ -47,7 +49,15 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     // TODO: Юзер из сторы
-    this.currentUser$ = null
+    this.authService.currentUser$.pipe(
+      filter(Boolean),
+      tap((currentUser) => {
+        console.log('cringe', currentUser)
+        this.currentUser$.next(currentUser.userGeneral);
+        this.currentUserFactoring$.next(currentUser.userFactoring);
+      })
+    ).subscribe();
+    
     this.factoring$ = this.store.pipe(select(factoringSelector));
 
     this.isAdmin = this.authService.isUserAdmin();
