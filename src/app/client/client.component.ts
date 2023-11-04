@@ -1,6 +1,13 @@
 import { environment } from 'src/environments/environment';
 import { MenuItem } from 'primeng/api';
-import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationService } from './shared/services/notification.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -8,6 +15,7 @@ import { Subject, Subscription } from 'rxjs';
 import { InactiveDialogComponent } from '../shared/modules/inactive-dialog/inactive-dialog.component';
 import { LocalStorageService } from '../shared/services/common/localstorage.service';
 import { NotifyDialogComponent } from './shared/components/dialogs/notify-dialog/notify-dialog.component';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-client',
@@ -30,6 +38,7 @@ export class ClientComponent implements OnInit, OnDestroy {
     private router: Router,
     public dialogService: DialogService,
     private notifyService: NotificationService,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private localStorageService: LocalStorageService
   ) {
     this.setTimeout();
@@ -118,8 +127,12 @@ export class ClientComponent implements OnInit, OnDestroy {
     const _event: any = event;
 
     if (!_event.target.classList.contains('clickable')) {
-      if (document.getElementById('dropdownMenu').classList.contains('show')) {
-        document.getElementById('dropdownMenu').classList.remove('show');
+      if (isPlatformBrowser(this.platformId)) {
+        if (
+          document.getElementById('dropdownMenu').classList.contains('show')
+        ) {
+          document.getElementById('dropdownMenu').classList.remove('show');
+        }
       }
     }
   }

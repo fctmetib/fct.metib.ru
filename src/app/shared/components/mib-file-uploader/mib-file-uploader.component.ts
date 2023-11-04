@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-error-dialog.component';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'mib-file-uploader',
@@ -100,7 +101,8 @@ export class MibFileUploaderComponent implements OnInit {
     private readonly commonService: CommonService,
     private readonly fileService: FileService,
     private readonly dialogService: DialogService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   public ngOnInit(): void {
@@ -127,10 +129,12 @@ export class MibFileUploaderComponent implements OnInit {
 
   public downloadFile(file: any): void {
     const token = this.authService.getNormalToken();
-    const link = document.createElement('a');
-    link.href = `https://api-factoring.metib.ru/api/file/${file.Code}/content?Token=${token}`;
-    link.download = `certificate.crt`;
-    link.click();
+    if (isPlatformBrowser(this.platformId)) {
+      const link = document.createElement('a');
+      link.href = `https://api-factoring.metib.ru/api/file/${file.Code}/content?Token=${token}`;
+      link.download = `certificate.crt`;
+      link.click();
+    }
   }
 
   public onSelect(event: any): void {
@@ -209,7 +213,9 @@ export class MibFileUploaderComponent implements OnInit {
   }
 
   private resetFileInputs(): void {
-    (<HTMLInputElement>document.getElementById(this.type)).value = '';
+    if (isPlatformBrowser(this.platformId)) {
+      (<HTMLInputElement>document.getElementById(this.type)).value = '';
+    }
   }
 
   private openErrorDialog(): void {

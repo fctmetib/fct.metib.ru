@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'mib-menu',
@@ -9,12 +10,16 @@ export class MibMenuComponent implements OnInit {
 
   //TODO: add Input linksItems
 
-  constructor() {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object
+    ) {}
 
   ngOnInit() {}
 
   close() {
-    let toggler: any = document.getElementsByClassName('toggler')[0];
-    toggler.checked = false;
+    if (isPlatformBrowser(this.platformId)) {
+      let toggler: any = document.getElementsByClassName('toggler')[0];
+      toggler.checked = false;
+    }
   }
 }

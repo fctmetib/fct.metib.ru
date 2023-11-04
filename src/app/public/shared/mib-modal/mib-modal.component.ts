@@ -5,8 +5,11 @@ import {
   Input,
   OnInit,
   OnDestroy,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { MibModalService } from './mib-modal.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'mib-modal',
@@ -32,7 +35,8 @@ export class MibModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private mibModalService: MibModalService,
-    private el: ElementRef
+    private el: ElementRef,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.element = el.nativeElement;
   }
@@ -44,8 +48,10 @@ export class MibModalComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // перемещает элемент в конец страницы (перед </body>), для отображения поверх остального контента
-    document.body.appendChild(this.element);
+    if (isPlatformBrowser(this.platformId)) {
+      // перемещает элемент в конец страницы (перед </body>), для отображения поверх остального контента
+      document.body.appendChild(this.element);
+    }
 
     // закрывает окно при нажатии на фон
     // this.element.addEventListener('click', (el) => {
@@ -67,12 +73,16 @@ export class MibModalComponent implements OnInit, OnDestroy {
   // открывает окно
   open(): void {
     this.element.style.display = 'block';
-    document.body.classList.add('mib-modal-open');
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.classList.add('mib-modal-open');
+    }
   }
 
   // закрывает окно
   close(): void {
     this.element.style.display = 'none';
-    document.body.classList.remove('mib-modal-open');
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.classList.remove('mib-modal-open');
+    }
   }
 }

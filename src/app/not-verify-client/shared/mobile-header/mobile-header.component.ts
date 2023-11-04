@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
@@ -12,6 +12,7 @@ import { factoringSelector } from 'src/app/client/store/selectors';
 import * as introJs from 'intro.js/intro.js';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
+import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-mobile-header',
   templateUrl: './mobile-header.component.html',
@@ -27,7 +28,12 @@ export class MobileHeaderComponent implements OnInit {
   public currentUser$: any
   public factoring$: Observable<CustomerInterface | null>;
 
-  constructor(private store: Store, private authService: AuthService, private router: Router) {}
+  constructor(
+    private store: Store, 
+    private authService: AuthService, 
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+    ) {}
 
   ngOnInit() {
     // TODO: юзер из сторы
@@ -40,8 +46,10 @@ export class MobileHeaderComponent implements OnInit {
   }
 
   close() {
-    let toggler: any = document.getElementsByClassName('toggler')[0];
-    toggler.checked = false;
+    if (isPlatformBrowser(this.platformId)) {
+      let toggler: any = document.getElementsByClassName('toggler')[0];
+      toggler.checked = false;
+    }
   }
 
 

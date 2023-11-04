@@ -1,11 +1,14 @@
+import { isPlatformBrowser } from '@angular/common';
 import { FileModeInterface } from '../../../../../types/file/file-model.interface';
 import {
   Component,
   EventEmitter,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  PLATFORM_ID,
 } from '@angular/core';
 
 @Component({
@@ -22,6 +25,10 @@ export class DemandResultComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object) {
+  }
+
   public downloadCert() {
     let win: any = window;
     if (win.navigator && win.navigator.msSaveOrOpenBlob) {
@@ -36,11 +43,13 @@ export class DemandResultComponent implements OnInit, OnDestroy {
       win.navigator.msSaveOrOpenBlob(blob, `certificate.crt`);
     } else {
       // Download PDF in Chrome etc.
-      const source = `data:crt;base64,${this.result.CertificateData}`;
-      const link = document.createElement('a');
-      link.href = source;
-      link.download = `certificate.crt`;
-      link.click();
+      if (isPlatformBrowser(this.platformId)) {
+        const source = `data:crt;base64,${this.result.CertificateData}`;
+        const link = document.createElement('a');
+        link.href = source;
+        link.download = `certificate.crt`;
+        link.click();
+      }
     }
   }
 }

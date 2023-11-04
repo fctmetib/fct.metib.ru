@@ -10,7 +10,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
@@ -24,7 +24,7 @@ import { Observable, Subscription } from 'rxjs';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { ActivatedRoute, Params } from '@angular/router';
-import { formatDate } from '@angular/common';
+import { formatDate, isPlatformBrowser } from '@angular/common';
 import { AddressModalComponent } from '../../../components/address/address.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
@@ -127,7 +127,8 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     private commonService: CommonService,
     private route: ActivatedRoute,
     private router: Router,
-    private demandService: DemandService
+    private demandService: DemandService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   public ngOnInit(): void {
@@ -173,17 +174,20 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
       .subscribe((resp) => {
         let binaryData = [];
         binaryData.push(resp);
-        let downloadLink = document.createElement('a');
-        downloadLink.href = window.URL.createObjectURL(
-          new Blob(binaryData, { type: 'application/msword' })
-        );
+        
+        if (isPlatformBrowser(this.platformId)) {
+          let downloadLink = document.createElement('a');
+          downloadLink.href = window.URL.createObjectURL(
+            new Blob(binaryData, { type: 'application/msword' })
+          );
 
-        downloadLink.setAttribute(
-          'download',
-          'Заявка на выдачу сертификата.doc'
-        );
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
+          downloadLink.setAttribute(
+            'download',
+            'Заявка на выдачу сертификата.doc'
+          );
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+        }
       });
   }
 

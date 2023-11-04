@@ -1,12 +1,15 @@
 import {
   Component,
   EventEmitter,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  PLATFORM_ID,
 } from '@angular/core';
 import { DemandNavigationService } from '../../../services/demand-navigation.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'demand-result',
@@ -16,7 +19,10 @@ import { DemandNavigationService } from '../../../services/demand-navigation.ser
 export class DemandResultComponent implements OnInit, OnDestroy {
   public result: any;
 
-  constructor(private _demandNavigationService: DemandNavigationService) {}
+  constructor(
+    private _demandNavigationService: DemandNavigationService,
+    @Inject(PLATFORM_ID) private platformId: Object
+    ) {}
 
   ngOnInit() {
     this._initValues();
@@ -38,11 +44,13 @@ export class DemandResultComponent implements OnInit, OnDestroy {
       win.navigator.msSaveOrOpenBlob(blob, `certificate.crt`);
     } else {
       // Download PDF in Chrome etc.
-      const source = `data:crt;base64,${this.result.CertificateData}`;
-      const link = document.createElement('a');
-      link.href = source;
-      link.download = `certificate.crt`;
-      link.click();
+      if (isPlatformBrowser(this.platformId)) {
+        const source = `data:crt;base64,${this.result.CertificateData}`;
+        const link = document.createElement('a');
+        link.href = source;
+        link.download = `certificate.crt`;
+        link.click();
+      }
     }
   }
 
