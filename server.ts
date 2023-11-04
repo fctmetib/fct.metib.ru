@@ -5,6 +5,7 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { existsSync } from 'fs';
 import { join } from 'path';
+import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 
 import { AppServerModule } from './src/main.server';
 
@@ -28,12 +29,20 @@ export function app(): express.Express {
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'
   }));
-  
-  server.get('*', (req, res) => {
-    res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
-  });
-  
+
   // All regular routes use the Universal engine
+  server.get('*', (req, res) => {
+    res.render(indexHtml, {
+      req,
+      res,
+      providers: [
+        {provide: APP_BASE_HREF, useValue: req.baseUrl},
+        {provide: REQUEST, useValue: req},
+        {provide: RESPONSE, useValue: res}
+      ]
+    });
+  });
+
   server.get('*', (req, res, next) => {
     // Проверка, является ли запрос частью маршрутов, для которых нужно использовать клиентское приложение
     if (

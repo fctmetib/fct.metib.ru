@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
 import { MenuItem } from 'primeng/api';
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { InactiveDialogComponent } from '../shared/modules/inactive-dialog/inactive-dialog.component';
@@ -9,6 +9,7 @@ import { LocalStorageService } from '../shared/services/common/localstorage.serv
 import { AuthService } from '../auth/services/auth.service';
 import { OrganizationService } from '../shared/services/share/organization.service';
 import { OrganizationInterface } from '../shared/types/organization/organization.interface';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-not-verify-client',
@@ -33,6 +34,7 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private organizationService: OrganizationService,
     private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private localStorageService: LocalStorageService
   ) {}
 
@@ -117,8 +119,10 @@ export class NotVerifyClientComponent implements OnInit, OnDestroy {
     const _event: any = event;
 
     if (!_event.target.classList.contains('clickable')) {
-      if (document.getElementById('dropdownMenu').classList.contains('show')) {
-        document.getElementById('dropdownMenu').classList.remove('show');
+      if (isPlatformBrowser(this.platformId)) {
+        if (document.getElementById('dropdownMenu').classList.contains('show')) {
+          document.getElementById('dropdownMenu').classList.remove('show');
+        }
       }
     }
   }
