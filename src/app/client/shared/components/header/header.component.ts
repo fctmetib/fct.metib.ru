@@ -52,7 +52,6 @@ export class HeaderComponent implements OnInit {
     this.authService.currentUser$.pipe(
       filter(Boolean),
       tap((currentUser) => {
-        console.log('cringe', currentUser)
         this.currentUser$.next(currentUser.userGeneral);
         this.currentUserFactoring$.next(currentUser.userFactoring);
       })
