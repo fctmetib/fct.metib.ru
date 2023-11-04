@@ -6,15 +6,15 @@ export class LocalStorageService {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
   public setValue(key: string, data: any) {
-    let jsonData = JSON.stringify(data);
     if (isPlatformBrowser(this.platformId)) { 
+      let jsonData = JSON.stringify(data);
       localStorage.setItem(key, jsonData);
     }
   }
 
   public getValue<T>(key: string): T{
-    let jsonData = localStorage.getItem(key);
     if (isPlatformBrowser(this.platformId)) { 
+      let jsonData = localStorage.getItem(key);
       return JSON.parse(jsonData);
     }
   }
