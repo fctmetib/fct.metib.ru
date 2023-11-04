@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID,  Inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 import { adminUserFactoringSelector } from 'src/app/auth/store/selectors';
@@ -13,6 +13,7 @@ import { PageInterface } from '../types/page.interface';
 import { Subscription } from 'rxjs';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UpdatePasswordDialogComponent } from 'src/app/shared/modules/update-password-dialog/update-password-dialog.component';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -34,7 +35,8 @@ export class HeaderComponent implements OnInit {
     private readonly store: Store,
     public readonly dialogService: DialogService,
     private readonly authService: AuthService,
-    private readonly pageStoreService: PageStoreService
+    private readonly pageStoreService: PageStoreService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   public ngOnInit(): void {
@@ -69,6 +71,8 @@ export class HeaderComponent implements OnInit {
   }
 
   public openAccountOwner(): void {
-    document.getElementById('dropdownMenu').classList.toggle('show');
+    if (isPlatformBrowser(this.platformId)) {
+      document.getElementById('dropdownMenu').classList.toggle('show');
+    }
   }
 }

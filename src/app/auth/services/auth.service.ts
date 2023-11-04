@@ -4,7 +4,7 @@ import {ResetPasswordConfirmRequestInterface} from '../types/reset-password/rese
 import {ResetPasswordReponseInterface} from '../types/reset-password/resetPasswordResponse.interface';
 import {ResetPasswordRequestInterface} from '../types/reset-password/resetPasswordRequest.interface';
 import {CookieService} from 'ngx-cookie';
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
@@ -18,6 +18,7 @@ import {RegisterReponseInterface} from '../types/register/registerResponse.inter
 import {ReauthRequestInterface} from '../types/login/reauthRequest.interface';
 import {RequestStoreService} from 'src/app/shared/services/store/request.store.service';
 import {FreedutyStoreService} from 'src/app/shared/services/store/freeduty.store.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class AuthService {
@@ -27,7 +28,8 @@ export class AuthService {
     private router: Router,
     // Store services
     private requestStoreService: RequestStoreService,
-    private freedutyStoreService: FreedutyStoreService
+    private freedutyStoreService: FreedutyStoreService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
   }
 
@@ -141,7 +143,9 @@ export class AuthService {
   public logout(params?: string): void {
     this.cookieService.removeAll();
     this.clearStore();
-    localStorage.clear();
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.clear();
+    }
     switch (params) {
       case 'inActive':
         this.router.navigate(['/login'], {

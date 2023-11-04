@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { DemandAction } from '../../types/common/demand-action';
 import { DemandActionType } from '../../types/common/demand-action-type';
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'demand-action',
@@ -33,7 +34,8 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     private _demandNavigationService: DemandNavigationService,
     private _demandLoadingService: DemandLoadingService,
     private _messageService: MessageService,
-    private _demandService: DemandService
+    private _demandService: DemandService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
@@ -237,13 +239,15 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
     this._demandService.getDigitalSignatureRequest(data).subscribe((resp) => {
       let binaryData = [];
       binaryData.push(resp);
-      let downloadLink = document.createElement('a');
-      downloadLink.href = window.URL.createObjectURL(
-        new Blob(binaryData, { type: 'application/msword' })
-      );
-      downloadLink.setAttribute('download', 'Заявка_на_выдачу_сертификата.rtf');
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
+      if (isPlatformBrowser(this.platformId)) {
+        let downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(
+          new Blob(binaryData, { type: 'application/msword' })
+        );
+        downloadLink.setAttribute('download', 'Заявка_на_выдачу_сертификата.rtf');
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      }
     });
   }
 
