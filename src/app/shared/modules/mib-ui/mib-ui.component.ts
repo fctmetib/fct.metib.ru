@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
-  selector: 'app-mib-ui',
-  templateUrl: './mib-ui.component.html',
-  styles: [
-  ]
+	selector: 'app-mib-ui',
+	templateUrl: './mib-ui.component.html',
+	styles: []
 })
 export class MibUiComponent {
-
+	login() {
+		console.log('halo click!')
+	}
+	scrollTop() {
+		console.log('halo scroll!')
+	}
 }

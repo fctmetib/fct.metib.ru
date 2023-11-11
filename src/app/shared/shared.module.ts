@@ -7,6 +7,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MibFileErrorDialogComponent} from './components/mib-file-error-dialog/mib-file-error-dialog.component';
 import {AuthService} from '../auth/services/auth.service';
 import { MibUiComponent } from './modules/mib-ui/mib-ui.component';
+import { ButtonComponent } from './ui-kit/button.component';
 
 @NgModule({
   imports: [CommonModule, ProgressBarModule, FormsModule, ReactiveFormsModule],
@@ -20,6 +21,7 @@ import { MibUiComponent } from './modules/mib-ui/mib-ui.component';
     MibFileUploaderComponent,
     MibFileErrorDialogComponent,
     MibUiComponent,
+    ButtonComponent,
   ],
   providers: [AuthService],
 })
