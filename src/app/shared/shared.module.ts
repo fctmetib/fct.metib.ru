@@ -6,6 +6,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MibFileErrorDialogComponent} from './components/mib-file-error-dialog/mib-file-error-dialog.component';
 import {AuthService} from '../auth/services/auth.service';
+import { MibUiComponent } from './modules/mib-ui/mib-ui.component';
 
 @NgModule({
   imports: [CommonModule, ProgressBarModule, FormsModule, ReactiveFormsModule],
@@ -18,6 +19,7 @@ import {AuthService} from '../auth/services/auth.service';
     HeaderPageComponent,
     MibFileUploaderComponent,
     MibFileErrorDialogComponent,
+    MibUiComponent,
   ],
   providers: [AuthService],
 })
