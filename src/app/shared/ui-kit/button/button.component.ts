@@ -3,7 +3,7 @@ import {
 	ButtonColor,
 	ButtonSize,
 	ButtonType
-} from './button/interfaces/button.interface'
+} from '../button/interfaces/button.interface'
 
 @Component({
 	selector: 'app-button',
