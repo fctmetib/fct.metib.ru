@@ -1,13 +1,41 @@
 <p>mib-ui works! wow!</p>
+
+<app-button>
+	<gl-ref-icon
+		class="stroke"
+		btn-left-icon
+		name="fi_chevron-left"
+	></gl-ref-icon>
+	test text
+	<gl-ref-icon
+		class="stroke"
+		btn-right-icon
+		name="fi_chevron-right"
+	></gl-ref-icon>
+</app-button>
+
+<!-- <app-button (press)="scrollTop()" size="l" type="filled-primary"
+	><img src="./assets/icons/ui-kit-icons/fi_chevron-left.svg" btn-left-icon />
+	placeholder
+	<img btn-right-icon src="./assets/icons/ui-kit-icons/fi_chevron-right.svg"
+/></app-button>
 <app-button
+	[disabled]="true"
 	(press)="scrollTop()"
 	[rounded]="true"
 	size="l"
-	type="floating"
-	color="primary"
-	>halo</app-button
->
-<app-button color="accent" size="m" (click)="login()"
-	><span btn-right-icon>icoR</span> click me
-	<span btn-left-icon>icoL</span></app-button
->
+	type="filled-primary"
+	><img src="./assets/icons/ui-kit-icons/fi_chevron-left.svg" btn-left-icon />
+	placeholder
+	<img btn-right-icon src="./assets/icons/ui-kit-icons/fi_chevron-right.svg"
+/></app-button>
+<app-button size="m" type="filled-accent" (click)="login()"
+	><img src="./assets/icons/ui-kit-icons/fi_chevron-left.svg" btn-left-icon />
+	click
+	<img btn-right-icon src="./assets/icons/ui-kit-icons/fi_chevron-right.svg"
+/></app-button>
+<app-button disabled="true" size="m" type="filled-accent" (click)="login()"
+	><img src="./assets/icons/ui-kit-icons/fi_chevron-left.svg" btn-left-icon />
+	click
+	<img btn-right-icon src="./assets/icons/ui-kit-icons/fi_chevron-right.svg"
+/></app-button> -->

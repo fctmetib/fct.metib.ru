@@ -1,17 +1,1 @@
-@import '/src/styles/_colors.scss';
-@import '/src/styles/_layout.scss';
-@import '/src/styles/_components.scss';
-@import '/src/assets/ubuntu.scss';
-
-.mib-toolbar {
-  margin-bottom: 20px;
-
-  button {
-    height: 40px;
-  }
-
-  .button {
-    height: 42px;
-    border-radius: 10px;
-  }
-}
+@import 'src/styles/_vars.colors';

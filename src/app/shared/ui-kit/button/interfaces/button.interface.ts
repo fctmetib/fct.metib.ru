@@ -1,3 +1,10 @@
 export type ButtonSize = 'l' | 'm' | 's' | 'xs'
-export type ButtonType = 'filled' | 'floating' | 'outline' | 'ghost' | 'link'
-export type ButtonColor = 'primary' | 'accent' | 'secondary'
+export type ButtonType =
+	| 'filled-primary'
+	| 'filled-accent'
+	| 'filled-secondary'
+	| 'floating'
+	| 'outline-primary'
+	| 'outline-accent'
+	| 'ghost-primary'
+	| 'ghost-secondary'
