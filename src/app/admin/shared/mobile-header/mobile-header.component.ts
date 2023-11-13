@@ -1,14 +1,10 @@
 import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter, tap } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-
-import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
-import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
 @Component({
   selector: 'app-mobile-header',
   templateUrl: './mobile-header.component.html',
@@ -18,14 +14,17 @@ export class MobileHeaderComponent implements OnInit {
   items: MenuItem[];
   baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
 
-  public adminUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
-  public factoring$: Observable<CustomerInterface | null>;
+  public adminUserFactoring$ = new BehaviorSubject<CurrentUserFactoringInterface>(null);
 
-  constructor(private store: Store, private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    // TODO: Юзер из сторы
-    this.adminUserFactoring$ = null
+    this.authService.currentUserAdmin$.pipe(
+      filter(Boolean),
+      tap((currentUser) => {
+        this.adminUserFactoring$.next(currentUser.userFactoring);
+      })
+    ).subscribe();
   }
 
   logout() {

@@ -15,7 +15,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { CommonService } from '../shared/services/common/common.service';
 import { BackendErrorMessagesModule } from '../shared/modules/backendErrorMessages/backendErrorMessages.module';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { SuccessMessagesModule } from '../shared/modules/successMessages/successMessages.module';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
@@ -51,7 +50,6 @@ import { TooltipModule } from 'primeng/tooltip';
     ConfirmPasswordPageComponent,
   ],
   providers: [
-    AuthService,
     CommonService,
     {
       provide: HTTP_INTERCEPTORS,

@@ -46,18 +46,9 @@ export class DemandActionsComponent implements OnInit, OnDestroy {
     };
     this._demandNavigationService.updateDemandConfig(demandConfig);
 
-    const notVerify = 'not-verify';
-    const baseUrl = this.isUserVerified ? '' : notVerify;
+    const baseUrl = this.isUserVerified ? 'client' : 'not-verify';
 
-    console.log(`${baseUrl}/new-demand/demand-action`, {
-      queryParams: {
-        ID: 0, // Id запроса
-        Type: action, // Factoring, EDS и тд
-        Action: DemandActionType.CREATE, // Редактирование, создание и тд
-      }
-    })
-
-    this._router.navigate([`client/${baseUrl}/new-demand/demand-action`], {
+    this._router.navigate([`/${baseUrl}/new-demand/demand-action`], {
       queryParams: {
         ID: 0, // Id запроса
         Type: action, // Factoring, EDS и тд

@@ -3,19 +3,18 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Store, select } from '@ngrx/store';
-import { BehaviorSubject, Observable, Subscription, filter, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, filter, switchMap, tap } from 'rxjs';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
-import { factoringSelector } from 'src/app/client/store/selectors';
 
 import * as introJs from 'intro.js/intro.js';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
 import { UpdatePasswordDialogComponent } from '../../../../shared/modules/update-password-dialog/update-password-dialog.component';
 import { isPlatformBrowser } from '@angular/common';
+import { ClientService } from 'src/app/shared/services/common/client.service';
 
 @Component({
   selector: 'app-header',
@@ -32,7 +31,7 @@ export class HeaderComponent implements OnInit {
   public currentUserFactoring$ = new BehaviorSubject<CurrentUserFactoringInterface>(null);
   public currentUser$ = new BehaviorSubject<CurrentUserGeneralInterface>(null);
 
-  public factoring$: Observable<CustomerInterface | null>;
+  public factoring$ = new BehaviorSubject<CustomerInterface>(null);
 
   public isAdmin: boolean = false;
 
@@ -40,24 +39,25 @@ export class HeaderComponent implements OnInit {
   refUpdatePasswordDialog: DynamicDialogRef;
 
   constructor(
-    private store: Store,
     public dialogService: DialogService,
     private authService: AuthService,
+    private clientService: ClientService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
-    // TODO: Юзер из сторы
     this.authService.currentUser$.pipe(
       filter(Boolean),
       tap((currentUser) => {
         this.currentUser$.next(currentUser.userGeneral);
         this.currentUserFactoring$.next(currentUser.userFactoring);
+      }),
+      switchMap((currentUser) => this.clientService.getClientFactoringById(+currentUser.userFactoring.OrganizationID)),
+      tap((clientFactoring) => {
+        this.factoring$.next(clientFactoring)
       })
     ).subscribe();
-    
-    this.factoring$ = this.store.pipe(select(factoringSelector));
 
     this.isAdmin = this.authService.isUserAdmin();
   }

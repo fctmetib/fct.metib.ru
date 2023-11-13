@@ -1,12 +1,9 @@
 import {MenuItem} from 'primeng/api';
 import {Component, OnInit, HostListener} from '@angular/core';
-import {select, Store} from '@ngrx/store';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {Subject} from 'rxjs';
 import {Subscription} from 'rxjs';
 import {InactiveDialogComponent} from '../shared/modules/inactive-dialog/inactive-dialog.component';
-import {LocalStorageService} from '../shared/services/common/localstorage.service';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'admin',
@@ -21,30 +18,13 @@ export class AdminComponent implements OnInit {
   userInactive: Subject<any> = new Subject();
 
   private subscription$: Subscription = new Subscription();
-  public preloader: boolean = false;
 
   constructor(
-    private store: Store,
-    public dialogService: DialogService,
-    private router: Router,
-    private localStorageService: LocalStorageService
+    public dialogService: DialogService
   ) {
   }
 
   ngOnInit(): void {
-    this.preloader = true;
-    //TODO: rework it
-    // обновляет страницу, для изоляции стилей
-    if (this.localStorageService.getValue('fromPublic')) {
-      this.localStorageService.clearValue('fromPublic');
-      let currentUrl = this.router.url;
-      this.router.navigate([currentUrl]).then(() => {
-        window.location.reload();
-      });
-    } else {
-      this.preloader = false;
-    }
-
     this.items = [
       {
         label: 'Главная',

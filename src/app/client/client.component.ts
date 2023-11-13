@@ -30,7 +30,6 @@ export class ClientComponent implements OnInit, OnDestroy {
   userInactive: Subject<any> = new Subject();
 
   private subscription$: Subscription = new Subscription();
-  public preloader: boolean = false;
 
   items: MenuItem[];
 
@@ -48,19 +47,6 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.preloader = true;
-    //TODO: rework it
-    // обновляет страницу, для изоляции стилей
-    if (this.localStorageService.getValue('fromPublic')) {
-      this.localStorageService.clearValue('fromPublic');
-      let currentUrl = this.router.url;
-      this.router.navigate([currentUrl]).then(() => {
-        window.location.reload();
-      });
-    } else {
-      this.preloader = false;
-    }
-
     this.initMenu();
 
     this.subscription$.add(

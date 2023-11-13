@@ -30,15 +30,17 @@ import { isPlatformBrowser } from '@angular/common';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
+  public currentUserAdmin$ = new BehaviorSubject<CurrentUserInterface>(null);
   public currentUser$ = new BehaviorSubject<CurrentUserInterface>(null);
 
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
     private router: Router,
-    // Store services
     private requestStoreService: RequestStoreService,
     private freedutyStoreService: FreedutyStoreService,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -51,14 +53,35 @@ export class AuthService {
     return this.http.post<RegisterReponseInterface>(url, data);
   }
 
-  registerConfirm(data: RegisterConfirmRequestInterface): Observable<{}> {
+  registerConfirm(data: RegisterConfirmRequestInterface): Observable<any> {
     const url = environment.apiUrl + '/user/registration/confirm';
-    return this.http.post<{}>(url, data);
+    return this.http.post<any>(url, data);
   }
 
-  reauth(user: ReauthRequestInterface): Observable<AuthResponseInterface> {
+  reauth(user: ReauthRequestInterface): Observable<any> {
     const url = environment.apiUrl + `/user/reauth/${user.userId}`;
-    return this.http.post<AuthResponseInterface>(url, null);
+    return this.http.post<AuthResponseInterface>(url, null).pipe(
+      tap((response: AuthResponseInterface) => {
+        // second user
+        this.cookieService.put('_cu', JSON.stringify(response));
+
+        // second base token
+        let token = response.Code;
+        this.cookieService.put('_bt', token)
+
+        let currentUserFactoring: CurrentUserFactoringInterface = response;
+        this.currentUser$.next({
+          userFactoring: currentUserFactoring,
+          userGeneral: null
+        });
+
+        this.router.navigateByUrl('/client/cabinet');
+      }),
+      switchMap(() => this.initCurrentUser()),
+      catchError((errorResponse: HttpErrorResponse) => {
+        return of({errors: errorResponse.error});
+      })
+    );
   }
 
   login(data: LoginRequestInterface): Observable<any> {
@@ -86,9 +109,8 @@ export class AuthService {
 
           this.router.navigateByUrl('/client/cabinet');
         }
-
-        this.initCurrentUser();
       }),
+      switchMap(() => this.initCurrentUser()),
       catchError((errorResponse: HttpErrorResponse) => {
         return of({ errors: errorResponse.error });
       })
@@ -99,8 +121,8 @@ export class AuthService {
     let adminCookie = this.cookieService.get('_cu_admin');
     let userCookie = this.cookieService.get('_cu');
     let user: AuthResponseInterface;
-    if (userCookie) {
-      user = JSON.parse(userCookie);
+    if (userCookie || adminCookie) {
+      user = JSON.parse(userCookie || adminCookie);
     }
 
     let userId;
@@ -110,37 +132,42 @@ export class AuthService {
       userId = +user.UserID;
 
       if (!token || !userId) {
-        return;
+        return of();
       }
     } else {
-      return;
+      return of();
     }
 
-    const url = environment.apiUrl + `/user/${userId}`;
-    this.http
-      .get<CurrentUserGeneralInterface>(url)
+    return this.http
+      .get<CurrentUserGeneralInterface>(environment.apiUrl + `/user/${userId}`)
       .pipe(
         tap((currentUserResponse: CurrentUserGeneralInterface) => {
           let userCookie = this.cookieService.get('_cu');
           let currentUserFactoring: AuthResponseInterface;
           if (userCookie) {
             currentUserFactoring = JSON.parse(userCookie);
+            let currentUser: CurrentUserInterface = {
+              userGeneral: currentUserResponse,
+              userFactoring: currentUserFactoring,
+            };
+            this.currentUser$.next(currentUser);
           }
 
-          let currentUser: CurrentUserInterface = {
-            userGeneral: currentUserResponse,
-            userFactoring: currentUserFactoring,
-          };
-
-          console.log('currentUser getCurrentUser', currentUserResponse);
-          console.log('ffff')
-          this.currentUser$.next(currentUser);
+          let userAdminCookie = this.cookieService.get('_cu_admin');
+          let currentAdminFactoring: AuthResponseInterface;
+          if (userAdminCookie) {
+            currentAdminFactoring = JSON.parse(userAdminCookie);
+            let currentUser: CurrentUserInterface = {
+              userGeneral: currentUserResponse,
+              userFactoring: currentAdminFactoring,
+            };
+            this.currentUserAdmin$.next(currentUser);
+          }
         }),
         catchError((error) => {
           return of(error);
         })
-      )
-      .subscribe();
+      );
   }
 
   /**
@@ -231,7 +258,7 @@ export class AuthService {
     }
     switch (params) {
       case 'inActive':
-        this.router.navigate(['/login'], {
+        this.router.navigate(['/auth/login'], {
           queryParams: {
             inActive: true,
           },

@@ -13,6 +13,6 @@ export class AppComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.authService.initCurrentUser();
+    this.authService.initCurrentUser().pipe().subscribe();
   }
 }

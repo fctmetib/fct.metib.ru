@@ -1,8 +1,7 @@
 import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter, tap } from 'rxjs';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
@@ -24,22 +23,24 @@ export class MobileHeaderComponent implements OnInit {
   items: MenuItem[];
   baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
 
-  public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
-  public currentUser$: Observable<CurrentUserGeneralInterface | null>;
-  public factoring$: Observable<CustomerInterface | null>;
+  public currentUserFactoring$ = new BehaviorSubject<CurrentUserFactoringInterface>(null);
+  public currentUser$ = new BehaviorSubject<CurrentUserGeneralInterface>(null);
 
   public isAdmin: boolean = false;
 
   constructor(
-    private store: Store, 
     private authService: AuthService, private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
     ) { }
 
   public ngOnInit(): void {
-    // TODO: Юзер из сторы
-    this.currentUser$ = null
-    this.factoring$ = this.store.pipe(select(factoringSelector));
+    this.authService.currentUser$.pipe(
+      filter(Boolean),
+      tap((currentUser) => {
+        this.currentUser$.next(currentUser.userGeneral);
+        this.currentUserFactoring$.next(currentUser.userFactoring);
+      })
+    ).subscribe();
 
     this.isAdmin = this.authService.isUserAdmin();
   }

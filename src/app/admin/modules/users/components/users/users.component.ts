@@ -7,7 +7,7 @@ import { UsersService } from '../../services/users.service';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { ReauthRequestInterface } from 'src/app/auth/types/login/reauthRequest.interface';
-import { Store } from '@ngrx/store';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'users',
@@ -22,9 +22,9 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private pageStoreService: PageStoreService,
-    private store: Store,
     private formBuilder: FormBuilder,
-    private userService: UsersService
+    private userService: UsersService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
@@ -57,5 +57,13 @@ export class UsersComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+  }
+
+  public reauthHandler(userId: string): void {
+    const request: ReauthRequestInterface = {
+      userId: userId
+    };
+
+    this.authService.reauth(request).pipe().subscribe();
   }
 }

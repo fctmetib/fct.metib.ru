@@ -1,5 +1,5 @@
 import { ActivatedRoute, Params } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, finalize, tap } from 'rxjs';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from '../../../shared/services/common/common.service';
@@ -15,9 +15,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginPageComponent implements OnInit {
   public form: FormGroup;
 
-  public isSubmitting$: Observable<boolean> = new Observable<boolean>();
-  public backendErrors$: Observable<string | null>;
-  public isSubmitted: boolean = false;
+  public isSubmitting$ = new BehaviorSubject<boolean>(false);
 
   private currentIp: string = '';
 
@@ -38,6 +36,7 @@ export class LoginPageComponent implements OnInit {
   public ngOnInit(): void {
     this.initializeForm();
     this.initializeValues();
+    this.isSubmitting$.next(false);
 
     this.route.queryParams.subscribe((params: Params) => {
       if (params['inActive']) {
@@ -75,8 +74,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   public onSubmit(): void {
-
-    this.isSubmitted = true;
+    this.isSubmitting$.next(true);
     if (this.form.invalid) return;
 
     const request: LoginRequestInterface = {
@@ -85,6 +83,10 @@ export class LoginPageComponent implements OnInit {
       password: this.form.value.password,
     };
 
-    this.authService.login(request).pipe().subscribe();
+    this.authService.login(request).pipe(
+      finalize(() => {
+        this.isSubmitting$.next(false);
+      })
+    ).subscribe();
   }
 }

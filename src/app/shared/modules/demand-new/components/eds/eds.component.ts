@@ -1,4 +1,4 @@
-import { combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, Observable, tap } from 'rxjs';
 import {
   Component,
   OnDestroy,
@@ -26,8 +26,9 @@ import { DemandConverter } from '../../tools/demand-converter';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
 import { DemandLoadingService } from '../../services/demand-loading.service';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
-import { select, Store } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
 
 @Component({
   selector: 'eds',
@@ -62,11 +63,11 @@ export class EDSComponent implements OnInit, OnDestroy {
   public validations: Array<string> = environment.uploadFilesExt;
 
   constructor(
-    private readonly fb: FormBuilder,
-    private readonly commonService: CommonService,
-    private readonly _demandLoadingService: DemandLoadingService,
-    private readonly _demandNavigationService: DemandNavigationService,
-    private readonly store: Store
+    private fb: FormBuilder,
+    private commonService: CommonService,
+    private _demandLoadingService: DemandLoadingService,
+    private authService: AuthService,
+    private _demandNavigationService: DemandNavigationService,
   ) {
     this._demandConverter = new DemandConverter();
   }
@@ -333,8 +334,15 @@ export class EDSComponent implements OnInit, OnDestroy {
   }
 
   private _getCurrentDemand(): void {
-    // TODO: ЮЗЕР ИЗ СТОРЫ
-    const storedUser$: any = null;
+    const storedUser$ = new BehaviorSubject<CurrentUserGeneralInterface>(null);
+
+    this.authService.currentUser$.pipe(
+      filter(Boolean),
+      tap((currentUser) => {
+        storedUser$.next(currentUser.userGeneral);
+      })
+    ).subscribe();
+
     const currentDemand$ = this._demandNavigationService.currentDemand$;
 
     this._subscription$.add(
@@ -344,7 +352,7 @@ export class EDSComponent implements OnInit, OnDestroy {
         (storedUser, currentDemand) => ({
           storedUser,
           currentDemand,
-        } as any)
+        })
       ).subscribe((pair) => {
         const user = {
           ...pair.currentDemand.Person,

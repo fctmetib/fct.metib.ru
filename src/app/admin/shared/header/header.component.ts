@@ -1,7 +1,7 @@
 import {environment} from 'src/environments/environment';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter, tap } from 'rxjs';
 import { Component, OnInit, PLATFORM_ID,  Inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { PageStoreService } from '../services/page-store.service';
@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UpdatePasswordDialogComponent } from 'src/app/shared/modules/update-password-dialog/update-password-dialog.component';
 import { isPlatformBrowser } from '@angular/common';
+import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,7 @@ export class HeaderComponent implements OnInit {
   public baseAvatarUrl = 'https://api-factoring.metib.ru/api/avatar';
   public baseAvatarProfileUrl = `${environment.apiUrl}/avatar/`;
 
-  public adminUserFactoring$: any
+  public adminUserFactoring$ = new BehaviorSubject<CurrentUserFactoringInterface>(null);
   public page$: Observable<PageInterface>;
 
   private subscription$: Subscription = new Subscription();
@@ -35,8 +36,12 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    // TODO: Юзер из сторы
-    this.adminUserFactoring$ = null
+    this.authService.currentUserAdmin$.pipe(
+      filter(Boolean),
+      tap((currentUser) => {
+        this.adminUserFactoring$.next(currentUser.userFactoring);
+      })
+    ).subscribe();
     this.page$ = this.pageStoreService.getPage();
   }
 

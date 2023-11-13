@@ -1,12 +1,12 @@
 import { ResetPasswordRequestInterface } from '../../types/reset-password/resetPasswordRequest.interface';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, finalize, tap } from 'rxjs';
 import { Component } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
-
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
 import { CommonService } from '../../../shared/services/common/common.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -17,11 +17,10 @@ export class ResetPasswordPageComponent {
   public form: FormGroup;
   public formConfirm: FormGroup;
 
-  public isSubmitting$: any
-  public backendErrors$: any
-  public confirmationCode$: any
-  public successMessage$: any
-  public isSubmitted: boolean = false;
+  public isSubmitting$ = new BehaviorSubject<boolean>(false);
+  public backendErrors$ = new BehaviorSubject<any>(null);
+  public confirmationCode$ = new BehaviorSubject<any>(null);
+  public successMessage$ = new BehaviorSubject<any>(null);
 
   image: any;
 
@@ -30,9 +29,10 @@ export class ResetPasswordPageComponent {
   private captchaCode: string = '';
 
   constructor(
-    private readonly sanitizer: DomSanitizer,
-    private readonly commonService: CommonService,
-    private readonly store: Store
+    private sanitizer: DomSanitizer,
+    private commonService: CommonService,
+    private authService: AuthService,
+    private router: Router,
   ) { }
 
   public ngOnInit(): void {
@@ -41,7 +41,6 @@ export class ResetPasswordPageComponent {
   }
 
   public initializeValues(): void {
-
     this.updateCaptcha();
   }
 
@@ -74,7 +73,7 @@ export class ResetPasswordPageComponent {
   }
 
   public onSubmit(): void {
-    this.isSubmitted = true;
+    this.isSubmitting$.next(true);
 
     if (this.form.invalid) {
       return;
@@ -87,17 +86,32 @@ export class ResetPasswordPageComponent {
       },
       Login: this.form.value.login,
     };
+  
+    this.authService.resetPassword(request).pipe(
+      tap((res) => {
+        this.confirmationCode$.next(res.ConfirmationCode)
+      }),
+      finalize(() => {
+        this.isSubmitting$.next(false);
+      })
+    ).subscribe();
   }
 
   public onConfirmSubmit(): void {
-    let ConfirmationCode = '';
-    this.confirmationCode$.subscribe((c) => {
-      ConfirmationCode = c;
-    });
+    this.isSubmitting$.next(true);
 
     const request: RegisterConfirmRequestInterface = {
-      ConfirmationCode,
+      ConfirmationCode: this.confirmationCode$.value,
       Pin: this.formConfirm.value.pin,
     };
+
+    this.authService.resetPasswordConfirm(request).pipe(
+      tap(() => {
+        this.successMessage$.next('На указанную почту отправлена ссылка. Пожалуйста, перейдите по ней, для смены пароля')
+      }),
+      finalize(() => {
+        this.isSubmitting$.next(false);
+      })
+    ).subscribe();
   }
 }

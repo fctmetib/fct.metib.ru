@@ -1,11 +1,10 @@
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, finalize, of, tap } from 'rxjs';
 import { Component } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
-import { ActivatedRoute, Params } from '@angular/router';
-
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ResetPasswordCompleteRequestInterface } from '../../types/reset-password/resetPasswordCompleteRequest.interface';
 import CustomValidators from '../../tools/confirmPassword.tool';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-confirm-password-page',
@@ -15,15 +14,16 @@ import CustomValidators from '../../tools/confirmPassword.tool';
 export class ConfirmPasswordPageComponent {
   form: FormGroup;
 
-  isSubmitting$: Observable<boolean>;
-  backendErrors$: Observable<string | null>;
-  confirmationCode$: Observable<string | null>;
+  isSubmitting$= new BehaviorSubject<boolean>(false);
+  backendErrors$ = new BehaviorSubject<string>(null);
+  confirmationCode$= new BehaviorSubject<string>(null);
 
   completionCode: string = '';
 
   constructor(
-    private readonly store: Store,
-    private readonly route: ActivatedRoute
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
@@ -42,10 +42,25 @@ export class ConfirmPasswordPageComponent {
   }
 
   public onSubmit(): void {
+    this.isSubmitting$.next(true);
+
     const request: ResetPasswordCompleteRequestInterface = {
       CompletionCode: this.completionCode,
       Password: this.form.value.password
     };
+
+    this.authService.resetPasswordComplete(request).pipe(
+      tap(() => {
+        this.router.navigate(['/auth/login']);
+      }),
+      catchError((err) => {
+        this.backendErrors$.next(err)
+        return of()
+      }),
+      finalize(() => {
+        this.isSubmitting$.next(false);
+      })
+    ).subscribe();
   }
 }
 

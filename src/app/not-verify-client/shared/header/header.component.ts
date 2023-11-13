@@ -2,14 +2,11 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { Component, HostListener, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, Subscription, filter, switchMap, tap } from 'rxjs';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
-import { factoringSelector } from 'src/app/client/store/selectors';
-
 import * as introJs from 'intro.js/intro.js';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
@@ -17,6 +14,7 @@ import { OrganizationInterface } from '../../../shared/types/organization/organi
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UpdatePasswordDialogComponent } from 'src/app/shared/modules/update-password-dialog/update-password-dialog.component';
 import { isPlatformBrowser } from '@angular/common';
+import { ClientService } from 'src/app/shared/services/common/client.service';
 
 @Component({
   selector: 'app-header',
@@ -33,15 +31,16 @@ export class HeaderComponent implements OnInit {
   baseAvatarUrl = 'https://api-factoring.metib.ru/api/avatar';
   baseAvatarProfileUrl = `${environment.apiUrl}/avatar/`;
 
-  public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
-  public currentUser$: null
-  public factoring$: Observable<CustomerInterface | null>;
+  public currentUserFactoring$ = new BehaviorSubject<CurrentUserFactoringInterface>(null);
+  public currentUser$ = new BehaviorSubject<CurrentUserGeneralInterface>(null);
+
+  public factoring$ = new BehaviorSubject<CustomerInterface>(null);
 
   private subscription$: Subscription = new Subscription();
   refUpdatePasswordDialog: DynamicDialogRef;
 
   constructor(
-    private store: Store,
+    private clientService: ClientService,
     private authService: AuthService,
     public dialogService: DialogService,
     private router: Router,
@@ -49,9 +48,17 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // TODO: ЮЗЕР ИЗ СТОРЫ
-    this.currentUser$ = null
-    this.factoring$ = this.store.pipe(select(factoringSelector));
+    this.authService.currentUser$.pipe(
+      filter(Boolean),
+      tap((currentUser) => {
+        this.currentUser$.next(currentUser.userGeneral);
+        this.currentUserFactoring$.next(currentUser.userFactoring);
+      }),
+      switchMap((currentUser) => this.clientService.getClientFactoringById(+currentUser.userFactoring.OrganizationID)),
+      tap((clientFactoring) => {
+        this.factoring$.next(clientFactoring)
+      })
+    ).subscribe();
   }
 
   logout() {
