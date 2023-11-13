@@ -1,0 +1,84 @@
+:root {
+/* white-gradation */
+	--wgr-primary: #fff;
+	--wgr-secondary: #eff2f5;
+	--wgr-tertiary: #e1e5ea;
+	--wgr-quaternary: #c8cbd0;
+
+/* black-gradation */
+	--bgr-primary: #000;
+	--bgr-secondary: #0a0d10;
+	--bgr-tertiary: #151a1e;
+	--bgr-quaternary: #2f3337;
+
+/* white-text-icons */
+	--wti-primary: #fff;
+	--wti-secondary: #caccce;
+	--wti-tertiary: #9197a1;
+	--wti-quaternary: #5a6472;
+	
+/* black-text-icons */
+	--bti-primary: #090a0c;
+	--bti-secondary: #2d3339;
+	--bti-tertiary: #5e676e;
+	--bti-quaternary: #95999d;
+	
+/* overlay-primary */
+	--overlay-primary: rgba(9, 13, 17, 0.80);
+	--overlay-secondary: rgba(9, 13, 17, 0.60);
+	--overlay-tertiary: rgba(9, 13, 17, 0.40);
+	--overlay-quaternary: rgba(9, 13, 17, 0.20);
+
+/* main-color */
+	--mc-hover: #3687E2;
+	--mc-default: #1760CF;
+	--mc-active: #0D54A5;
+	--mc-quaternary: #C2D4F0;
+	--mc-quinary: #EDF1F8;
+	--mc-gradient-default: linear-gradient(114deg, #3686E2 0%, #0D54A5 100%)
+
+/* background-primary */
+	--bgp-hover: #1A57B2;
+	--bgp-default: #0F408A;
+	--bgp-active: #0A3576;
+	--bgp-quaternary:#BED3F4;
+	--bgp-quinary: #EAF1FB;
+	--bgp-gradient-default: linear-gradient(114deg, #1D61C9 0%, #00337F 100%, #043E95 100%);
+
+/* additional-color */
+	--additional-color-hover: #0BA3DA;
+	--additional-color-default: #0593C7;
+	--additional-color-active: #0083B2;
+	--additional-color-quaternary: #C8DFE7;
+	--additional-color-quinary: #EDF5F7;
+	--additional-color-gradient-default: linear-gradient(114deg, #36B5E2 0%, #0083B2 100%);
+
+/* background-accent */
+	--bga-hover: #CB4D51;
+	--bga-default: #CC3338;
+	--bga-active: #BD282D;
+	--bga-quaternary:#E6CBCC;
+	--bga-quinary:#F6EEEF;
+
+/* alert-color */
+	--ac-hover: #CB4D4D;
+	--ac-default: #C33;
+	--ac-active: #BD2828;
+	--ac-quaternary: #E6CBCB;
+	--ac-quinary: #F6EEEE;
+
+/* warning-color */
+	--wc-hover: #F0B642;
+	--wc-default: #F2A60D;
+	--wc-active: #C78505;
+	--wc-quaternary: #F2E1C0;
+	--wc-quinary: #FAF5EB;
+
+/* succes-color */
+	--succes-color-hover: #6AAF73;
+	--succes-color-default: #53AC5F;
+	--succes-color-active: #45A151;
+	--succes-color-quaternary: #D1E0D3;
+	--succes-color-quinary: #F0F4F1;
+
+}
