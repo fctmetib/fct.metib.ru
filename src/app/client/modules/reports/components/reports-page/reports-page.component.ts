@@ -5,6 +5,7 @@ import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { ReportCardInterface } from '../../../cabinet/types/common/report-card.interface';
 import { ControlConfigReportInterface } from '../../types/common/control-config.interface';
 import { ReportInitDialogComponent } from '../report-init-dialog/report-init-dialog.component';
+import { ReportService } from 'src/app/shared/services/common/report.service';
 
 @Component({
   selector: 'app-reports-page',
@@ -15,7 +16,10 @@ export class ReportsPageComponent implements OnInit {
   public reportCards: ReportCardInterface[] = [];
   ref: DynamicDialogRef;
 
-  constructor(public dialogService: DialogService, private router: Router) {}
+  constructor(
+    public dialogService: DialogService, 
+    private reportService: ReportService,
+    private router: Router) {}
 
   ngOnInit() {
     let mibCommon = new MIBCommon();
@@ -42,12 +46,8 @@ export class ReportsPageComponent implements OnInit {
   }
 
   private openReportDetails(data) {
-    let encryptedData = null
-    this.router.navigate(['/reports/report-view'], {
-      queryParams: {
-        dt: encryptedData
-      }
-    });
+    this.reportService.reportData$.next(data);
+    this.router.navigate(['/client/reports/report-view']);
   }
 
   ngOnDestroy() {

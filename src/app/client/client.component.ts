@@ -184,31 +184,31 @@ export class ClientComponent implements OnInit, OnDestroy {
           routerLink: 'cabinet',
           routerLinkActiveOptions: { exact: false },
         },
-        {
-          label: 'Заявки',
-          routerLink: 'requests',
-          routerLinkActiveOptions: { exact: false },
-        },
-        {
-          label: 'Свободная задолженность',
-          routerLink: 'freeduty',
-          routerLinkActiveOptions: { exact: false },
-        },
-        {
-          label: 'Договоры',
-          routerLink: 'contracts',
-          routerLinkActiveOptions: { exact: false },
-        },
-        {
-          label: 'Платежи',
-          routerLink: 'invoices',
-          routerLinkActiveOptions: { exact: false },
-        },
-        {
-          label: 'Просрочки Покупателя',
-          routerLink: 'delays',
-          routerLinkActiveOptions: { exact: false },
-        },
+        // {
+        //   label: 'Заявки',
+        //   routerLink: 'requests',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Свободная задолженность',
+        //   routerLink: 'freeduty',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Договоры',
+        //   routerLink: 'contracts',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Платежи',
+        //   routerLink: 'invoices',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Просрочки Покупателя',
+        //   routerLink: 'delays',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
         // {
         //   label: 'Запросы',
         //   routerLink: 'demand',
@@ -219,11 +219,11 @@ export class ClientComponent implements OnInit, OnDestroy {
           routerLink: 'new-demand',
           routerLinkActiveOptions: { exact: false },
         },
-        {
-          label: 'Электронные документы',
-          routerLink: 'documents',
-          routerLinkActiveOptions: { exact: false },
-        },
+        // {
+        //   label: 'Электронные документы',
+        //   routerLink: 'documents',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
         {
           label: 'Отчеты',
           routerLink: 'reports',
