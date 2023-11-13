@@ -1,0 +1,61 @@
+@import 'src/styles/_typography.vars';
+
+$md: (
+	'd': 1440px,
+	// desktop
+	't-h': 1024px,
+	// table horizontal
+	'mhtv': 768px,
+	// mobile horizontal and table vertical
+	'mv': 360px,
+	// mobile vertical
+);
+
+h1 {
+	@include h1-desktop;
+	@media (max-width: map-get($md, 't-h')) {
+		@include h1-mobile;
+	}
+}
+h2 {
+	@include h2-desktop;
+	@media (max-width: map-get($md, 't-h')) {
+		@include h2-mobile;
+	}
+}
+h3 {
+	@include h3-desktop;
+	@media (max-width: map-get($md, 't-h')) {
+		@include h3-mobile;
+	}
+}
+h4 {
+	@include h4-desktop;
+	@media (max-width: map-get($md, 't-h')) {
+		@include h4-mobile;
+	}
+}
+h5 {
+	@include h5-desktop;
+	@media (max-width: map-get($md, 't-h')) {
+		@include h5-mobile;
+	}
+}
+
+.body-text {
+	&_xl {
+		@include body-text-xl;
+	}
+	&_l {
+		@include body-text-l;
+	}
+	&_m {
+		@include body-text-m;
+	}
+	&_s {
+		@include body-text-s;
+	}
+	&_xs {
+		@include body-text-xs;
+	}
+}
