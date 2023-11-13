@@ -1,5 +1,4 @@
 import {NotificationService} from './shared/services/notification.service';
-import {GetFactoringEffect} from './store/effects/getFactoring.effect';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
 import {CommonModule} from '@angular/common';
@@ -20,7 +19,6 @@ import {MenubarModule} from 'primeng/menubar';
 import {MenuModule} from 'primeng/menu';
 import {AvatarModule} from 'primeng/avatar';
 import {ClientService} from '../shared/services/common/client.service';
-import {reducers} from './store/reducers';
 import {DeliveryService} from '../shared/services/share/delivery.service';
 import {OrganizationService} from '../shared/services/share/organization.service';
 import {ClientComponent} from './client.component';
@@ -45,8 +43,6 @@ import {NotifyDialogComponent} from './shared/components/dialogs/notify-dialog/n
     ButtonModule,
     RadioButtonModule,
     InputTextareaModule,
-    EffectsModule.forFeature([GetFactoringEffect]),
-    StoreModule.forFeature('client', reducers),
     DropdownModule,
     MenuModule,
     SkeletonModule,

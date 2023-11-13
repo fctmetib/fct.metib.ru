@@ -1,6 +1,5 @@
 import { DeliveryInterface } from './../../../../../../shared/types/delivery/delivery.interface';
 import { Component, Input, OnInit } from '@angular/core';
-import { factoringSelector } from 'src/app/client/store/selectors';
 import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
 import { StatisticsInterface } from '../../../types/common/statistics.interface';
 import { ClientService } from 'src/app/shared/services/common/client.service';

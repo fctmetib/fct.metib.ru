@@ -6,11 +6,9 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
-import { factoringSelector } from 'src/app/client/store/selectors';
 
 import * as introJs from 'intro.js/intro.js';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
-import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
 import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-mobile-header',

@@ -6,7 +6,6 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { DatePipe } from '@angular/common';
 import { DutyFilterRequestInterface } from 'src/app/shared/types/duty/duty-filter-request.interface';
 import { DutyInterface } from 'src/app/shared/types/duty/duty.interface';
-import { factoringSelector } from 'src/app/client/store/selectors';
 import { SelectedItemSortedInterface } from '../../types/common/selected-item-sorted.interface';
 import { DutyService } from 'src/app/shared/services/share/duty.service';
 import { Router } from '@angular/router';
@@ -56,11 +55,12 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
   }
 
   initializeValues(): void {
-    this.store.pipe(select(factoringSelector)).subscribe((factoring) => {
-      if (factoring) {
-        this.organizationId = factoring.ID;
-      }
-    });
+    // TODO: Переделать на реализацию без ngrx
+    // this.store.pipe(select(factoringSelector)).subscribe((factoring) => {
+    //   if (factoring) {
+    //     this.organizationId = factoring.ID;
+    //   }
+    // });
   }
 
   initializeForm() {
