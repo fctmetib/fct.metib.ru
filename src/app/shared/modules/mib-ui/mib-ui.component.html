@@ -5,86 +5,224 @@
 <h5>h5! mib-ui works!</h5>
 
 <hr />
-<app-button>
-	<metib-ref-icon
-		class="stroke"
-		btn-left-icon
-		name="fi_chevron-left"
-	></metib-ref-icon>
-	Placeholder
-	<metib-ref-icon
-		class="stroke"
-		btn-right-icon
-		name="fi_chevron-right"
-	></metib-ref-icon>
-</app-button>
 
-<app-button [disabled]="true">
-	<metib-ref-icon
-		class="stroke"
-		btn-left-icon
-		name="fi_chevron-left"
-	></metib-ref-icon>
-	Placeholder
-	<metib-ref-icon
-		class="stroke"
-		btn-right-icon
-		name="fi_chevron-right"
-	></metib-ref-icon>
-</app-button>
+<div class="btn-wrapper">
+	<app-button size="l">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder L
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
 
-<app-button size="m" type="filled-accent" (click)="login()">
-	<metib-ref-icon
-		class="stroke"
-		btn-left-icon
-		name="fi_chevron-left"
-	></metib-ref-icon>
-	Placeholder
-	<metib-ref-icon
-		class="stroke"
-		btn-right-icon
-		name="fi_chevron-right"
-	></metib-ref-icon>
-</app-button>
+	<app-button [disabled]="true" size="l">
+		<metib-ref-icon
+			btn-left-icon
+			class="stroke"
+			name="fi_chevron-left"
+		></metib-ref-icon>
+		Placeholder L-dz
+		<metib-ref-icon
+			btn-right-icon
+			class="stroke"
+			name="fi_chevron-right"
+		></metib-ref-icon>
+	</app-button>
 
-<app-button size="m" type="filled-accent" (click)="login()" [disabled]="true">
-	<metib-ref-icon
-		class="stroke"
-		btn-left-icon
-		name="fi_chevron-left"
-	></metib-ref-icon>
-	Placeholder
-	<metib-ref-icon
-		class="stroke"
-		btn-right-icon
-		name="fi_chevron-right"
-	></metib-ref-icon>
-</app-button>
+	<app-button size="m">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder M
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
 
-<app-button size="s" type="filled-accent" (click)="login()">
-	<metib-ref-icon
-		class="stroke btn-sm"
-		btn-left-icon
-		name="fi_chevron-left"
-	></metib-ref-icon>
-	Placeholder
-	<metib-ref-icon
-		class="stroke btn-sm"
-		btn-right-icon
-		name="fi_chevron-right"
-	></metib-ref-icon>
-</app-button>
+	<app-button size="s">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder S
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
 
-<app-button size="s" type="filled-accent" (click)="login()" [disabled]="true">
-	<metib-ref-icon
-		class="stroke btn-sm"
-		btn-left-icon
-		name="fi_chevron-left"
-	></metib-ref-icon>
-	Placeholder
-	<metib-ref-icon
-		class="stroke btn-sm"
-		btn-right-icon
-		name="fi_chevron-right"
-	></metib-ref-icon>
-</app-button>
+	<app-button size="xs">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder XS
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="l" type="filled-accent">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder L
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="m" type="filled-accent">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder M
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="s" type="filled-accent">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder S
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="xs" type="filled-accent">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder XS
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="l" type="filled-secondary">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder L
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="m" type="filled-secondary">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder M
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="s" type="filled-secondary">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder S
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="xs" type="filled-secondary">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder XS
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="l" type="floating">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder L-fl
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="m" type="floating">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder M-fl
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="s" type="floating">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder S-fl
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="xs" type="floating">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder XS-fl
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+</div>
+
+<hr />
+
+<div class="btn-wrapper">
+	<app-button size="l" type="outline-primary">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder L-out
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="l" type="outline-primary">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder L-out
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="m" type="outline-primary">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder M-out
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="s" type="outline-primary">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder S-out
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="xs" type="outline-accent">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder XS-out
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="l" type="ghost-primary">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder L-gost
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="l" type="ghost-secondary">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder L-gost-s
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button size="l" [disabled]="true">
+		<metib-ref-icon
+			class="stroke"
+			btn-left-icon
+			name="fi_chevron-left"
+		></metib-ref-icon>
+		Placeholder L-dz
+		<metib-ref-icon
+			class="stroke"
+			btn-right-icon
+			name="fi_chevron-right"
+		></metib-ref-icon>
+	</app-button>
+
+	<app-button size="s" type="filled-accent" (click)="login()" [disabled]="true">
+		<metib-ref-icon
+			class="stroke"
+			btn-left-icon
+			name="fi_chevron-left"
+		></metib-ref-icon>
+		Placeholder S-dz
+		<metib-ref-icon
+			class="stroke"
+			btn-right-icon
+			name="fi_chevron-right"
+		></metib-ref-icon>
+	</app-button>
+
+	<app-button size="xs" type="filled-accent" (click)="login()">
+		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
+		Placeholder XS
+		<metib-ref-icon class="stroke" name="fi_chevron-right"></metib-ref-icon>
+	</app-button>
+
+	<app-button
+		size="xs"
+		type="filled-accent"
+		(click)="login()"
+		[disabled]="true"
+	>
+		<metib-ref-icon
+			class="stroke"
+			btn-left-icon
+			name="fi_chevron-left"
+		></metib-ref-icon>
+		Placeholder XS-dz
+		<metib-ref-icon
+			class="stroke"
+			btn-right-icon
+			name="fi_chevron-right"
+		></metib-ref-icon>
+	</app-button>
+</div>
+
+<hr />
+
+<div texto-xl style="margin: 2rem 1rem" class="texto-xl">
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque expedita quam,
+	rem aut eaque a fuga aliquid iure! Quos, architecto?
+	<p texto-l class="texto-m">
+		Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, dolores?
+	</p>
+</div>
