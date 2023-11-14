@@ -46,26 +46,26 @@
 	--bgp-gradient-default: linear-gradient(114deg, #1D61C9 0%, #00337F 100%, #043E95 100%);
 
 /* additional-color */
-	--additional-color-hover: #0BA3DA;
-	--additional-color-default: #0593C7;
-	--additional-color-active: #0083B2;
-	--additional-color-quaternary: #C8DFE7;
-	--additional-color-quinary: #EDF5F7;
-	--additional-color-gradient-default: linear-gradient(114deg, #36B5E2 0%, #0083B2 100%);
+	--adc-hover: #0BA3DA;
+	--adc-default: #0593C7;
+	--adc-active: #0083B2;
+	--adc-quaternary: #C8DFE7;
+	--adc-quinary: #EDF5F7;
+	--adc-gradient-default: linear-gradient(114deg, #36B5E2 0%, #0083B2 100%);
 
-/* background-accent */
-	--bga-hover: #CB4D51;
-	--bga-default: #CC3338;
-	--bga-active: #BD282D;
-	--bga-quaternary:#E6CBCC;
-	--bga-quinary:#F6EEEF;
+/* accent-color */
+	--ac-hover: #CB4D51;
+	--ac-default: #CC3338;
+	--ac-active: #BD282D;
+	--ac-quaternary:#E6CBCC;
+	--ac-quinary:#F6EEEF;
 
 /* alert-color */
-	--ac-hover: #CB4D4D;
-	--ac-default: #C33;
-	--ac-active: #BD2828;
-	--ac-quaternary: #E6CBCB;
-	--ac-quinary: #F6EEEE;
+	--alc-hover: #CB4D4D;
+	--alc-default: #C33;
+	--alc-active: #BD2828;
+	--alc-quaternary: #E6CBCB;
+	--alc-quinary: #F6EEEE;
 
 /* warning-color */
 	--wc-hover: #F0B642;

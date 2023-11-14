@@ -1,0 +1,21 @@
+@import 'src/styles/helpers/_icon_tools';
+@import 'src/styles/_colors.vars';
+@import 'src/styles/_typography.vars.scss';
+
+// $test: (
+// 	'd': 1440px,
+// 	// desktop
+// 	't-h': 1024px,
+// 	// table horizontal
+// 	'mhtv': 768px,
+// 	// mobile horizontal and table vertical
+// 	'mv': 360px,
+// 	// mobile vertical
+// );
+
+// .btn {
+// 	@include icon-size(24px);
+// 	@media (max-width: map-get($test, 't-h')) {
+// 		@include icon-size(16px);
+// 	}
+// }

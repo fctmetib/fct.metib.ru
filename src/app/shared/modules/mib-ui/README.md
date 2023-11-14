@@ -11,5 +11,3 @@ ng g m shared/modules/mib-ui --dry-run
 ```
 
 ![Alt text](readmeAccets/test_btn.png)
-
-![Alt text](readmeAccets/property_css.png)

@@ -11,6 +11,14 @@ $md: (
 	// mobile vertical
 );
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+	@include heading-styles;
+}
+
 h1 {
 	@include h1-desktop;
 	@media (max-width: map-get($md, 't-h')) {
@@ -42,20 +50,40 @@ h5 {
 	}
 }
 
-.body-text {
+.text {
+	@include body-text;
 	&_xl {
-		@include body-text-xl;
+		@include text-xl;
 	}
 	&_l {
-		@include body-text-l;
+		@include text-l;
 	}
 	&_m {
-		@include body-text-m;
+		@include text-m;
 	}
 	&_s {
-		@include body-text-s;
+		@include text-s;
 	}
 	&_xs {
-		@include body-text-xs;
+		@include text-xs;
+	}
+}
+
+.highlight {
+	@include highlight-text;
+	&_xl {
+		@include highlight-xl;
+	}
+	&_l {
+		@include highlight-l;
+	}
+	&_m {
+		@include highlight-m;
+	}
+	&_s {
+		@include highlight-s;
+	}
+	&_xs {
+		@include highlight-xs;
 	}
 }

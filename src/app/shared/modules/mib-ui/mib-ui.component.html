@@ -1,41 +1,90 @@
-<h1>mib-ui works! wow!</h1>
+<h1>h1! mib-ui works!</h1>
+<h2>h2! mib-ui works!</h2>
+<h3>h3! mib-ui works!</h3>
+<h4>h4! mib-ui works!</h4>
+<h5>h5! mib-ui works!</h5>
 
+<hr />
 <app-button>
-	<gl-ref-icon
+	<metib-ref-icon
 		class="stroke"
 		btn-left-icon
 		name="fi_chevron-left"
-	></gl-ref-icon>
-	test text
-	<gl-ref-icon
+	></metib-ref-icon>
+	Placeholder
+	<metib-ref-icon
 		class="stroke"
 		btn-right-icon
 		name="fi_chevron-right"
-	></gl-ref-icon>
+	></metib-ref-icon>
 </app-button>
 
-<!-- <app-button (press)="scrollTop()" size="l" type="filled-primary"
-	><img src="./assets/icons/ui-kit-icons/fi_chevron-left.svg" btn-left-icon />
-	placeholder
-	<img btn-right-icon src="./assets/icons/ui-kit-icons/fi_chevron-right.svg"
-/></app-button>
-<app-button
-	[disabled]="true"
-	(press)="scrollTop()"
-	[rounded]="true"
-	size="l"
-	type="filled-primary"
-	><img src="./assets/icons/ui-kit-icons/fi_chevron-left.svg" btn-left-icon />
-	placeholder
-	<img btn-right-icon src="./assets/icons/ui-kit-icons/fi_chevron-right.svg"
-/></app-button>
-<app-button size="m" type="filled-accent" (click)="login()"
-	><img src="./assets/icons/ui-kit-icons/fi_chevron-left.svg" btn-left-icon />
-	click
-	<img btn-right-icon src="./assets/icons/ui-kit-icons/fi_chevron-right.svg"
-/></app-button>
-<app-button disabled="true" size="m" type="filled-accent" (click)="login()"
-	><img src="./assets/icons/ui-kit-icons/fi_chevron-left.svg" btn-left-icon />
-	click
-	<img btn-right-icon src="./assets/icons/ui-kit-icons/fi_chevron-right.svg"
-/></app-button> -->
+<app-button [disabled]="true">
+	<metib-ref-icon
+		class="stroke"
+		btn-left-icon
+		name="fi_chevron-left"
+	></metib-ref-icon>
+	Placeholder
+	<metib-ref-icon
+		class="stroke"
+		btn-right-icon
+		name="fi_chevron-right"
+	></metib-ref-icon>
+</app-button>
+
+<app-button size="m" type="filled-accent" (click)="login()">
+	<metib-ref-icon
+		class="stroke"
+		btn-left-icon
+		name="fi_chevron-left"
+	></metib-ref-icon>
+	Placeholder
+	<metib-ref-icon
+		class="stroke"
+		btn-right-icon
+		name="fi_chevron-right"
+	></metib-ref-icon>
+</app-button>
+
+<app-button size="m" type="filled-accent" (click)="login()" [disabled]="true">
+	<metib-ref-icon
+		class="stroke"
+		btn-left-icon
+		name="fi_chevron-left"
+	></metib-ref-icon>
+	Placeholder
+	<metib-ref-icon
+		class="stroke"
+		btn-right-icon
+		name="fi_chevron-right"
+	></metib-ref-icon>
+</app-button>
+
+<app-button size="s" type="filled-accent" (click)="login()">
+	<metib-ref-icon
+		class="stroke btn-sm"
+		btn-left-icon
+		name="fi_chevron-left"
+	></metib-ref-icon>
+	Placeholder
+	<metib-ref-icon
+		class="stroke btn-sm"
+		btn-right-icon
+		name="fi_chevron-right"
+	></metib-ref-icon>
+</app-button>
+
+<app-button size="s" type="filled-accent" (click)="login()" [disabled]="true">
+	<metib-ref-icon
+		class="stroke btn-sm"
+		btn-left-icon
+		name="fi_chevron-left"
+	></metib-ref-icon>
+	Placeholder
+	<metib-ref-icon
+		class="stroke btn-sm"
+		btn-right-icon
+		name="fi_chevron-right"
+	></metib-ref-icon>
+</app-button>

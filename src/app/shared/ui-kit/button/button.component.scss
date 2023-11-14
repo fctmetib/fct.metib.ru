@@ -2,53 +2,67 @@
 	display: flex;
 	align-items: center;
 	text-transform: capitalize;
+	&_l {
+		font-family: Inter;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 24px;
+		padding: 16px 20px;
+		border-radius: 8px;
+		border: none;
+	}
+	&_m {
+		font-family: Inter;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 20px;
+		padding: 12px 16px;
+		border-radius: 8px;
+		border: none;
+	}
+	&_s {
+		font-family: Inter;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 20px;
+		padding: 12px 16px;
+		border-radius: 8px;
+		border: none;
+		& > .btn_icon-wrapper > .btn-sm {
+			width: 16px;
+			max-width: 16px;
+			min-width: 16px;
+			height: 16px;
+			max-height: 16px;
+			min-height: 16px;
+		}
+	}
 }
 
-.btn_l {
-	font-family: Inter;
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 24px;
-	padding: 16px 20px;
-	border-radius: 8px;
-	border: none;
-}
-
-.btn_m {
-	font-family: Inter;
-	font-size: 14px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 20px;
-	padding: 12px 16px;
-	border-radius: 8px;
-	border: none;
-}
-
-.btn_s {
-	font-family: Inter;
-	font-size: 14px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 20px;
-	padding: 12px 16px !important;
-	border-radius: 8px !important;
-	border: none;
-}
+// .icon-ref-wrapper {
+// 	width: 16px;
+// 	max-width: 16px;
+// 	min-width: 16px;
+// 	height: 16px;
+// 	max-height: 16px;
+// 	min-height: 16px;
+// }
 
 .btn_filled-primary {
-	background: var(--main-color-default, #1760cf);
-	color: var(--text-icons-primary, #fff);
+	background: var(--mc-default);
+	color: var(--wti-primary);
 	&:hover {
-		background: var(--main-color-hover, #3687e2);
+		background: var(--mc-hover);
 	}
 	&:active {
-		background: var(--main-color-active, #0d54a5);
+		background: var(--mc-active);
 	}
 	&:disabled {
-		color: #5a6472;
-		background: var(--gradation-tertiary, #e1e5ea);
+		color: var(--wti-quaternary);
+		background: var(--wgr-tertiary);
 	}
 	&:disabled > div {
 		filter: invert(40%) sepia(6%) saturate(1058%) hue-rotate(176deg)
@@ -65,17 +79,17 @@
 }
 
 .btn_filled-accent {
-	background: var(--accent-color-default, #cc3338);
-	color: white;
+	background: var(--ac-default);
+	color: var(--wti-primary);
 	&:hover {
-		background: var(--accent-color-hover, #cb4d51);
+		background: var(--ac-hover);
 	}
 	&:active {
-		background: var(--accent-color-active, #bd282d);
+		background: var(--ac-active);
 	}
 	&:disabled {
-		color: #5a6472;
-		background: var(--gradation-tertiary, #e1e5ea);
+		color: var(--wti-quaternary);
+		background: var(--wgr-tertiary);
 	}
 	&:disabled > div {
 		filter: invert(40%) sepia(6%) saturate(1058%) hue-rotate(176deg)
