@@ -18,34 +18,34 @@
 	@include body-text;
 }
 
-@mixin custom-icon-filter {
-	metib-ref-icon {
-		// fill: #2d3339;
-		filter: invert(46%) sepia(23%) saturate(352%) hue-rotate(169deg)
-			brightness(95%) contrast(88%);
-	}
-}
-
 .btn {
 	@include btn;
 	&_l {
 		@include text-l;
 		padding: 16px 20px;
 		&.btn_filled-secondary {
-			@include custom-icon-filter;
+			metib-ref-icon {
+				@include icon-color(var(--bti-secondary));
+			}
 		}
 		&.btn_floating {
-			@include custom-icon-filter;
+			metib-ref-icon {
+				@include icon-color(var(--bti-secondary));
+			}
 		}
 	}
 	&_m {
 		@include text-m;
 		padding: 12px 16px;
 		&.btn_filled-secondary {
-			@include custom-icon-filter;
+			metib-ref-icon {
+				@include icon-color(var(--bti-secondary));
+			}
 		}
 		&.btn_floating {
-			@include custom-icon-filter;
+			metib-ref-icon {
+				@include icon-color(var(--bti-secondary));
+			}
 		}
 	}
 	&_s {
@@ -55,10 +55,14 @@
 			@include icon-size(16px);
 		}
 		&.btn_filled-secondary {
-			@include custom-icon-filter;
+			metib-ref-icon {
+				@include icon-color(var(--bti-secondary));
+			}
 		}
 		&.btn_floating {
-			@include custom-icon-filter;
+			metib-ref-icon {
+				@include icon-color(var(--bti-secondary));
+			}
 		}
 	}
 	&_xs {
@@ -68,10 +72,14 @@
 			@include icon-size(16px);
 		}
 		&.btn_filled-secondary {
-			@include custom-icon-filter;
+			metib-ref-icon {
+				@include icon-color(var(--bti-secondary));
+			}
 		}
 		&.btn_floating {
-			@include custom-icon-filter;
+			metib-ref-icon {
+				@include icon-color(var(--bti-secondary));
+			}
 		}
 	}
 }
