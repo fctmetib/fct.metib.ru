@@ -1,1 +1,30 @@
-<p>input works!</p>
+<div #box class="flex flex_column">
+	<div class="box-label">
+		<p #label class="text text_small c-ti-dark-tertiary">
+			<ng-content select="[input-label]"></ng-content>
+		</p>
+	</div>
+	<div class="box">
+		<ng-content></ng-content>
+		<div class="input_icon-wrapper left-wrapper" #iconLeft>
+			<ng-content select="[input-left-icon]"></ng-content>
+		</div>
+		<div class="input_icon-wrapper right-wrapper" #iconRight>
+			<ng-content select="[input-right-icon]"></ng-content>
+		</div>
+		<div class="textarea-panel flex flex_align-center flex_justify-between">
+			<p
+				id="textarea-panel-counter"
+				class="text text_tiny c-ti-dark-quaternary"
+			>
+				textLength/maxLength
+			</p>
+			icons
+		</div>
+	</div>
+	<div class="box-label box-label_message flex flex_column">
+		<p #message class="text text_small text_medium c-ti-dark-quaternary">
+			<ng-content select="[input-message]"></ng-content>
+		</p>
+	</div>
+</div>

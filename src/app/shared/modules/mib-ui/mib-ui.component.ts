@@ -20,6 +20,8 @@ import { Component } from '@angular/core'
 	]
 })
 export class MibUiComponent {
+	isShown = false
+
 	login() {
 		console.log('halo click!')
 	}
