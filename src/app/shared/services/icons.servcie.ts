@@ -11,7 +11,12 @@ export class IconsService {
 		private refIconService: RefIconService
 	) {}
 
-	public icons: string[] = ['fi_chevron-left', 'fi_chevron-right']
+	public icons: string[] = [
+		'fi_chevron-left',
+		'fi_chevron-right',
+		'fi_search',
+		'fi_x'
+	]
 
 	public async initIcons(): Promise<void> {
 		// Пример

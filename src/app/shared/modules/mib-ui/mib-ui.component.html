@@ -3,9 +3,10 @@
 <h3>h3! mib-ui works!</h3>
 <h4>h4! mib-ui works!</h4>
 <h5>h5! mib-ui works!</h5>
-
-<hr />
-
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+<h2 style="text-align: center; margin: 2rem 0 4rem">
+	{{ 'buttons' | titlecase }}
+</h2>
 <div class="btn-wrapper">
 	<app-button size="l">
 		<metib-ref-icon class="stroke" name="fi_chevron-left"></metib-ref-icon>
@@ -256,12 +257,11 @@
 	</app-button>
 </div>
 
-<hr />
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
 
-<div texto-xl style="margin: 2rem 1rem" class="texto-xl">
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque expedita quam,
-	rem aut eaque a fuga aliquid iure! Quos, architecto?
-	<p texto-l class="texto-m">
-		Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, dolores?
-	</p>
+<h2 style="text-align: center; margin: 2rem 0 4rem">
+	{{ 'inputs' | titlecase }}
+</h2>
+<div class="btn-wrapper">
+	<app-input class="test-input"></app-input>
 </div>

@@ -14,11 +14,11 @@ export class ButtonComponent {
 	@Input() disabled: boolean = false
 	@Output() press: EventEmitter<any> = new EventEmitter<any>()
 
-	ngAfterViewInit() {
-		console.log('ngAfterViewInit>>>')
-	}
+	// ngAfterViewInit() {
+	// 	console.log('ngAfterViewInit>>>')
+	// }
 
-	ngDoCheck() {
-		console.log('ngDoCheck>>>')
-	}
+	// ngDoCheck() {
+	// 	console.log('ngDoCheck>>>')
+	// }
 }

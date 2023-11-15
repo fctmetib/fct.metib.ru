@@ -5,6 +5,12 @@ import { Component } from '@angular/core'
 	templateUrl: './mib-ui.component.html',
 	styles: [
 		`
+			:host {
+				max-width: 1200px;
+				display: block;
+				margin: auto;
+				padding: 0 15px;
+			}
 			.btn-wrapper {
 				display: flex;
 				gap: 2rem;
