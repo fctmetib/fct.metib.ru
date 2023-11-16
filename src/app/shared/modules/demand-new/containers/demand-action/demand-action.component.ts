@@ -14,8 +14,8 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'demand-action',
-  styleUrls: ['./demand-action.component.scss'],
   templateUrl: './demand-action.component.html',
+  styleUrls: ['./demand-action.component.scss'],
 })
 export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   public isUserVerified: boolean = true;
@@ -76,9 +76,8 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public back() {
-    const notVerify = 'not-verify';
-    const baseUrl = this.isUserVerified ? '' : notVerify;
-    this._router.navigate([`${baseUrl}/new-demand`]);
+    const baseUrl = this.isUserVerified ? 'client' : 'not-verify';
+    this._router.navigate([`/${baseUrl}/new-demand`]);
   }
 
   public get demandType(): typeof DemandActionType {

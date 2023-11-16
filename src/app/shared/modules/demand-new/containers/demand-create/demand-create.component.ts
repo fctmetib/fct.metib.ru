@@ -10,8 +10,8 @@ import { SaveDemandRequestInterface } from '../../types/requests/save-demand-req
 
 @Component({
   selector: 'demand-create',
-  styleUrls: ['./demand-create.component.scss'],
   templateUrl: './demand-create.component.html',
+  styleUrls: ['./demand-create.component.scss'],
 })
 export class DemandCreateComponent implements OnInit, OnDestroy {
   public demandNavigationConfig: DemandNavigationInterface;

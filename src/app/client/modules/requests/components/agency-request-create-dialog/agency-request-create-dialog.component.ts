@@ -1,5 +1,4 @@
 import { DeliveryInterface } from './../../../../../shared/types/delivery/delivery.interface';
-import { Store } from '@ngrx/store';
 import { DeliveryService } from '../../../../../shared/services/share/delivery.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnDestroy } from '@angular/core';
@@ -37,8 +36,7 @@ export class AgencyRequestCreateDialogComponent implements OnDestroy {
     public ref: DynamicDialogRef,
     private fb: FormBuilder,
     private deliveryService: DeliveryService,
-    public config: DynamicDialogConfig,
-    public store: Store
+    public config: DynamicDialogConfig
   ) {}
 
   ngOnInit() {

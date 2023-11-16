@@ -1,19 +1,15 @@
 import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter, tap } from 'rxjs';
 import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
-import { currentUserFactoringSelector, currentUserGeneralSelector } from 'src/app/auth/store/selectors';
 import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
-import { factoringSelector } from 'src/app/client/store/selectors';
-
 import * as introJs from 'intro.js/intro.js';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
-import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
 import { isPlatformBrowser } from '@angular/common';
+
 @Component({
   selector: 'app-mobile-header',
   templateUrl: './mobile-header.component.html',
@@ -25,21 +21,23 @@ export class MobileHeaderComponent implements OnInit {
   items: MenuItem[];
   baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
 
-  public currentUserFactoring$: Observable<CurrentUserFactoringInterface | null>;
-  public currentUser$: Observable<CurrentUserGeneralInterface | null>;
-  public factoring$: Observable<CustomerInterface | null>;
+  public currentUserFactoring$ = new BehaviorSubject<CurrentUserFactoringInterface>(null);
+  public currentUser$ = new BehaviorSubject<CurrentUserGeneralInterface>(null);
 
   constructor(
-    private store: Store, 
     private authService: AuthService, 
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
     ) {}
 
   ngOnInit() {
-    this.currentUserFactoring$ = this.store.pipe(select(currentUserFactoringSelector));
-    this.currentUser$ = this.store.pipe(select(currentUserGeneralSelector));
-    this.factoring$ = this.store.pipe(select(factoringSelector));
+    this.authService.currentUser$.pipe(
+      filter(Boolean),
+      tap((currentUser) => {
+        this.currentUser$.next(currentUser.userGeneral);
+        this.currentUserFactoring$.next(currentUser.userFactoring);
+      })
+    ).subscribe();
   }
 
   logout() {

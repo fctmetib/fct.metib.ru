@@ -5,7 +5,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {ReportTypeInterface} from '../../types/reports/report-type.interface';
 import {ReportColumntInterface} from '../../types/reports/report-column.interface';
 import {MenuItem} from 'primeng/api';
-import {Subject, Subscription} from 'rxjs';
+import {Subject, Subscription, tap} from 'rxjs';
 import {Table} from 'primeng/table';
 import saveAs from 'file-saver';
 import * as XLSX from 'xlsx';
@@ -54,17 +54,13 @@ export class ReportViewPageComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscription$.add(
-      this.route
-        .queryParams
-        .subscribe((params: Params): void => {
-          if (params['dt']) {
-            this.data = null
-            this.prepareTable();
-            this.fetchReport();
-          } else {
-            this.isError = true;
-          }
+      this.reportService.reportData$.pipe(
+        tap((result) => {
+          this.data = result;
+          this.prepareTable();
+          this.fetchReport();
         })
+      ).subscribe()
     );
 
     this.items = [

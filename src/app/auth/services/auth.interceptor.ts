@@ -60,7 +60,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private handleAuthError(error: HttpErrorResponse) {
     if (error.status === 401) {
       this.auth.logout();
-      this.router.navigate(['/login'],   {
+      this.router.navigate(['/auth/login'],   {
         queryParams: {
           sessionFailed: true,
         },

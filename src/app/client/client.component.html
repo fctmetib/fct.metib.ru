@@ -1,29 +1,21 @@
-<ng-container *ngIf="preloader; else contentTemplate">
-  <div class="mib-preload">
-    Загрузка
-    <p-progressSpinner></p-progressSpinner>
-  </div>
-</ng-container>
-<ng-template #contentTemplate>
-  <main>
-    <aside>
-      <div class="logo">
-        <a [routerLink]="['/']">
-          <img src="../../../../../assets/images/logo_big_normal_svg.svg">
-        </a>
-      </div>
-      <div class="menu">
-        <p-menu [model]="items"></p-menu>
-      </div>
-    </aside>
-    <div class="page">
-      <app-header></app-header>
-      <app-mobile-header></app-mobile-header>
-      <section class="container">
-        <div class="main-body">
-          <router-outlet></router-outlet>
-        </div>
-      </section>
+<main>
+  <aside>
+    <div class="logo">
+      <a [routerLink]="['/']">
+        <img src="../../../../../assets/images/logo_big_normal_svg.svg">
+      </a>
     </div>
-  </main>
-</ng-template>
+    <div class="menu">
+      <p-menu [model]="items"></p-menu>
+    </div>
+  </aside>
+  <div class="page">
+    <app-header></app-header>
+    <app-mobile-header></app-mobile-header>
+    <section class="container">
+      <div class="main-body">
+        <router-outlet></router-outlet>
+      </div>
+    </section>
+  </div>
+</main>

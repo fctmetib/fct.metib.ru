@@ -16,7 +16,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from 'primeng/skeleton';
 import {CalendarModule} from 'primeng/calendar';
 import { CardNewsComponent } from '../../shared/components/cards/card-news/card-news.component';
-import { PageStoreService } from '../../shared/services/page-store.service';
 import { CabinetComponent } from './components/cabinet/cabinet.component';
 import { CreateNewsDialogComponent } from './components/create-news-dialog/create-news-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';

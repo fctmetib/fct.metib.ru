@@ -1,5 +1,4 @@
 import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
 import { Component, OnDestroy } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
@@ -27,7 +26,6 @@ export class RequestCorrectDialogComponent implements OnDestroy {
     public ref: DynamicDialogRef,
     private service: RequestsService,
     public config: DynamicDialogConfig,
-    public store: Store
   ) {}
 
   ngOnInit() {

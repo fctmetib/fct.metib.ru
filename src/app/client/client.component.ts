@@ -30,7 +30,6 @@ export class ClientComponent implements OnInit, OnDestroy {
   userInactive: Subject<any> = new Subject();
 
   private subscription$: Subscription = new Subscription();
-  public preloader: boolean = false;
 
   items: MenuItem[];
 
@@ -48,19 +47,6 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.preloader = true;
-    //TODO: rework it
-    // обновляет страницу, для изоляции стилей
-    if (this.localStorageService.getValue('fromPublic')) {
-      this.localStorageService.clearValue('fromPublic');
-      let currentUrl = this.router.url;
-      this.router.navigate([currentUrl]).then(() => {
-        window.location.reload();
-      });
-    } else {
-      this.preloader = false;
-    }
-
     this.initMenu();
 
     this.subscription$.add(
@@ -198,31 +184,31 @@ export class ClientComponent implements OnInit, OnDestroy {
           routerLink: 'cabinet',
           routerLinkActiveOptions: { exact: false },
         },
-        {
-          label: 'Заявки',
-          routerLink: 'requests',
-          routerLinkActiveOptions: { exact: false },
-        },
-        {
-          label: 'Свободная задолженность',
-          routerLink: 'freeduty',
-          routerLinkActiveOptions: { exact: false },
-        },
-        {
-          label: 'Договоры',
-          routerLink: 'contracts',
-          routerLinkActiveOptions: { exact: false },
-        },
-        {
-          label: 'Платежи',
-          routerLink: 'invoices',
-          routerLinkActiveOptions: { exact: false },
-        },
-        {
-          label: 'Просрочки Покупателя',
-          routerLink: 'delays',
-          routerLinkActiveOptions: { exact: false },
-        },
+        // {
+        //   label: 'Заявки',
+        //   routerLink: 'requests',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Свободная задолженность',
+        //   routerLink: 'freeduty',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Договоры',
+        //   routerLink: 'contracts',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Платежи',
+        //   routerLink: 'invoices',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
+        // {
+        //   label: 'Просрочки Покупателя',
+        //   routerLink: 'delays',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
         // {
         //   label: 'Запросы',
         //   routerLink: 'demand',
@@ -233,11 +219,11 @@ export class ClientComponent implements OnInit, OnDestroy {
           routerLink: 'new-demand',
           routerLinkActiveOptions: { exact: false },
         },
-        {
-          label: 'Электронные документы',
-          routerLink: 'documents',
-          routerLinkActiveOptions: { exact: false },
-        },
+        // {
+        //   label: 'Электронные документы',
+        //   routerLink: 'documents',
+        //   routerLinkActiveOptions: { exact: false },
+        // },
         {
           label: 'Отчеты',
           routerLink: 'reports',

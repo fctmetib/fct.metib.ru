@@ -5,7 +5,6 @@ import {MibFileUploaderComponent} from './components/mib-file-uploader/mib-file-
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MibFileErrorDialogComponent} from './components/mib-file-error-dialog/mib-file-error-dialog.component';
-import {AuthService} from '../auth/services/auth.service';
 
 @NgModule({
   imports: [CommonModule, ProgressBarModule, FormsModule, ReactiveFormsModule],
@@ -19,7 +18,7 @@ import {AuthService} from '../auth/services/auth.service';
     MibFileUploaderComponent,
     MibFileErrorDialogComponent,
   ],
-  providers: [AuthService],
+  providers: [],
 })
 export class SharedModule {
 }

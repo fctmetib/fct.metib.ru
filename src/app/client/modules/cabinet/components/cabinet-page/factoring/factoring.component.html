@@ -1,8 +1,8 @@
 <div class="header lg">
   <div class="title">
     <h1 class="display-1">
-      <ng-container *ngIf="factoring; else skeletonFactoringTitleTemplate">
-        {{factoring?.Title}}
+      <ng-container *ngIf="(factoring$ | async); else skeletonFactoringTitleTemplate">
+        {{(factoring$ | async)?.Title}}
       </ng-container>
       <ng-template #skeletonFactoringTitleTemplate>
         <p-skeleton width="20rem"  height="4rem" styleClass="p-mb-2"></p-skeleton>
@@ -10,16 +10,16 @@
     </h1>
     <div class="subheader info">
       <div class="organization">
-        <ng-container *ngIf="factoring; else skeletonOrganizationTemplate">
-          ИНН: {{factoring?.Organization.Inn}} КПП: {{factoring?.Organization?.Kpp}}
+        <ng-container *ngIf="(factoring$ | async); else skeletonOrganizationTemplate">
+          ИНН: {{(factoring$ | async)?.Organization.Inn}} КПП: {{(factoring$ | async)?.Organization?.Kpp}}
         </ng-container>
         <ng-template #skeletonOrganizationTemplate>
           <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
         </ng-template>
       </div>
       <div class="contract">
-        <ng-container *ngIf="factoring; else skeletonContractTemplate">
-          Договор Факторинга: {{factoring?.Contract.Number}} от {{factoring?.Contract.Date | date:
+        <ng-container *ngIf="(factoring$ | async); else skeletonContractTemplate">
+          Договор Факторинга: {{(factoring$ | async)?.Contract.Number}} от {{(factoring$ | async)?.Contract.Date | date:
             'dd/MM/yyyy'}}
         </ng-container>
         <ng-template #skeletonContractTemplate>

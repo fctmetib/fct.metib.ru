@@ -16,8 +16,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'primeng/toast';
-
-import { AuthService } from './auth/services/auth.service';
 import { HttpErrorInterceptor } from './shared/services/error.interceptor';
 import { MessageService } from 'primeng/api';
 import { CookieModule } from 'ngx-cookie';
@@ -44,7 +42,6 @@ registerLocaleData(localeRu, 'ru');
     AuthModule
   ],
   providers: [
-    AuthService,
     MessageService,
     { provide: LOCALE_ID, useValue: 'ru' },
     {

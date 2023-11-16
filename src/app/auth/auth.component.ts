@@ -9,26 +9,12 @@ import { LocalStorageService } from '../shared/services/common/localstorage.serv
 })
 export class AuthComponent implements OnInit {
 
-  public preloader: boolean = false;
-
   constructor(
     private router: Router,
     private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
-    this.preloader = true;
-    //TODO: rework it
-    // обновляет страницу, для изоляции стилей
-    if (this.localStorageService.getValue('fromPublic')) {
-      this.localStorageService.clearValue('fromPublic');
-      let currentUrl = this.router.url;
-      this.router.navigate([currentUrl]).then(() => {
-        window.location.reload();
-      });
-    } else {
-      this.preloader = false;
-    }
   }
 
   ngOnDestroy() {}

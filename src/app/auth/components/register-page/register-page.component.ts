@@ -1,24 +1,14 @@
-import { DomSanitizer, Title } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
+import { BehaviorSubject, catchError, finalize, of, tap } from 'rxjs';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
-
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
-import {
-  registerAction,
-  registerConfirmAction,
-} from './../../store/actions/register.action';
 import { MaleOptionsInterface } from '../../types/common/maleOptions.interface';
-import { resetMessagesAction } from './../../store/actions/common.action';
 import { CommonService } from '../../../shared/services/common/common.service';
 import { RegisterRequestInterface } from '../../types/register/registerRequest.interface';
-import {
-  validationErrorsSelector,
-  isSubmittingSelector,
-  confirmationCodeSelector,
-} from './../../store/selectors';
 import Validation from '../../tools/confirmPassword.tool';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-page',
@@ -32,25 +22,23 @@ export class RegisterPageComponent {
 
   public genderOptions: MaleOptionsInterface[] = [];
 
-  public isSubmitting$: Observable<boolean>;
-  public backendErrors$: Observable<string | null>;
-  public confirmationCode$: Observable<string | null>;
-  public isSubmitted: boolean = false;
+  public isSubmitting$ = new BehaviorSubject<boolean>(false);
+  public backendErrors$ = new BehaviorSubject<string>(null);
+  public confirmationCode$ = new BehaviorSubject<string>('');
 
   image: any;
 
   private captchaCode: string = '';
 
   constructor(
-    private readonly fb: FormBuilder,
-    private readonly sanitizer: DomSanitizer,
-    private readonly commonService: CommonService,
-    private readonly store: Store
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer,
+    private commonService: CommonService,
+    private router: Router,
+    private authService: AuthService,
   ) { }
 
   public ngOnInit(): void {
-    this.store.dispatch(resetMessagesAction());
-
     this.initializeForm();
     this.initializeValues();
   }
@@ -96,10 +84,6 @@ export class RegisterPageComponent {
   }
 
   private initializeValues(): void {
-    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
-    this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
-    this.confirmationCode$ = this.store.pipe(select(confirmationCodeSelector));
-
     this.updateCaptcha();
     this.genderOptions = [
       {
@@ -129,8 +113,8 @@ export class RegisterPageComponent {
   }
 
   public onSubmit(): void {
-    this.isSubmitted = true;
-    
+    this.isSubmitting$.next(true);
+
     if (this.form.invalid) {
       return;
     }
@@ -153,20 +137,43 @@ export class RegisterPageComponent {
       },
     };
 
-    this.store.dispatch(registerAction({ request }));
+    this.authService.register(request).pipe(
+      tap((result) => {
+        this.confirmationCode$.next(result.ConfirmationCode)
+      }),
+      catchError((error) => {
+        this.backendErrors$.next(error)
+        return of(error)
+      }),
+      finalize(() => {
+        this.isSubmitting$.next(false);
+      })
+    ).subscribe();
   }
 
   public onConfirmSubmit(): void {
-    let ConfirmationCode = '';
-    this.confirmationCode$.subscribe((c) => {
-      ConfirmationCode = c;
-    });
+    this.isSubmitting$.next(true);
 
     const request: RegisterConfirmRequestInterface = {
-      ConfirmationCode,
+      ConfirmationCode: this.confirmationCode$.value,
       Pin: this.formConfirm.value.pin,
     };
 
-    this.store.dispatch(registerConfirmAction({ request }));
+    this.authService.registerConfirm(request).pipe(
+      tap((result) => {
+        this.router.navigate(['/auth/login'], {
+          queryParams: {
+            successRegistration: true,
+          },
+        });
+      }),
+      catchError((error) => {
+        this.backendErrors$.next(error)
+        return of(error)
+      }),
+      finalize(() => {
+        this.isSubmitting$.next(false);
+      })
+    ).subscribe();
   }
 }

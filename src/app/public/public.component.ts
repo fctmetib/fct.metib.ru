@@ -9,10 +9,9 @@ import { LocalStorageService } from '../shared/services/common/localstorage.serv
 })
 export class PublicComponent implements OnInit {
 
-  constructor(private localStorageService: LocalStorageService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.localStorageService.setValue('fromPublic', true);
   }
 
   ngOnDestroy() {
