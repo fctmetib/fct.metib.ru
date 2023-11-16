@@ -1,6 +1,5 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { select, Store } from '@ngrx/store';
+import { Observable, Subscription, filter, first, switchMap, tap } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DatePipe } from '@angular/common';
@@ -10,6 +9,9 @@ import { SelectedItemSortedInterface } from '../../types/common/selected-item-so
 import { DutyService } from 'src/app/shared/services/share/duty.service';
 import { Router } from '@angular/router';
 import { FreedutyStoreService } from '../../../../../shared/services/store/freeduty.store.service';
+import { ClientService } from 'src/app/shared/services/common/client.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
+
 
 @Component({
   selector: 'app-freeduty-page',
@@ -39,11 +41,12 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
   private subscription$: Subscription = new Subscription();
 
   constructor(
-    private store: Store,
     private fb: FormBuilder,
     private router: Router,
     private storeService: FreedutyStoreService,
     private service: DutyService,
+    private authService: AuthService,
+    private clientService: ClientService,
     public dialogService: DialogService,
     public datepipe: DatePipe
   ) {}
@@ -51,16 +54,20 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initializeValues();
     this.initializeForm();
-    this.fetch(true, false);
   }
 
   initializeValues(): void {
-    // TODO: Переделать на реализацию без ngrx
-    // this.store.pipe(select(factoringSelector)).subscribe((factoring) => {
-    //   if (factoring) {
-    //     this.organizationId = factoring.ID;
-    //   }
-    // });
+    this.authService.currentUser$.pipe(
+      filter(Boolean),
+      first(),
+      switchMap((user) => this.clientService.getClientFactoringById(+user?.userFactoring?.OrganizationID)),
+      tap((result) => {
+        if (result) {
+          this.organizationId = result.ID;
+          this.fetch(true, false);
+        }
+      })
+    ).subscribe();
   }
 
   initializeForm() {
