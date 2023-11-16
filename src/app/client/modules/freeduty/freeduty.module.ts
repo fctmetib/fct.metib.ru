@@ -29,7 +29,6 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { DutyService } from 'src/app/shared/services/share/duty.service';
 import { FreedutyPageComponent } from './components/freeduty-page/freeduty-page.component';
 import { TooltipModule } from 'primeng/tooltip';
-import { FreedutyStoreService } from '../../../shared/services/store/freeduty.store.service';
 
 @NgModule({
   imports: [
