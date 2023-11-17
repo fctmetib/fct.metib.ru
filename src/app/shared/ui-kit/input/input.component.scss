@@ -3,6 +3,6 @@
 // 	min-width: 72px;
 // }
 
-.box:has(.input:focus) ~ .box-label p {
+.box-wrapper:has(input:focus) .box-label p {
 	background-color: red;
 }

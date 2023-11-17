@@ -6,7 +6,7 @@ import { MibUiComponent } from './mib-ui.component'
 import { RefIconModule } from '../../ui-kit/ref-icon/ref-icon.module'
 
 @NgModule({
-	imports: [CommonModule, ButtonModule, RefIconModule, InputModule],
+  imports: [CommonModule, ButtonModule, RefIconModule, InputModule],
 	declarations: [MibUiComponent]
 })
 export class MibUiModule {}
