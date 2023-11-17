@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
-  selector: 'app-autocomplete',
-  templateUrl: './autocomplete.component.html',
-  styleUrls: ['./autocomplete.component.scss']
+	selector: 'mib-autocomplete',
+	templateUrl: './autocomplete.component.html',
+	styleUrls: ['./autocomplete.component.scss']
 })
-export class AutocompleteComponent {
-
-}
+export class AutocompleteComponent {}

@@ -1,7 +1,7 @@
 import { Directive, ElementRef } from '@angular/core'
 
 @Directive({
-	selector: '[mibInput]'
+	selector: '[mibInputDirective]'
 })
 export class MetibInputDirective {
 	constructor(public el: ElementRef<HTMLInputElement>) {}

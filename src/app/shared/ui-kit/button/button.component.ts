@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { ButtonSize, ButtonType } from '../button/interfaces/button.interface'
 
 @Component({
-	selector: 'app-button',
+	selector: 'mib-button',
 	templateUrl: './button.component.html',
 	styleUrls: ['./button.component.scss']
 })

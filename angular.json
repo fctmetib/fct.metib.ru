@@ -1,278 +1,276 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-    "metallinvestbank-web": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
-      "root": "",
-      "sourceRoot": "src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/metallinvestbank-web/browser",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
-            "aot": true,
-            "allowedCommonJsDependencies": [
-              "chart.js",
-              "crypto-pro",
-              "crypto-js",
-              "file-saver",
-              "xlsx",
-              "intro.js/intro.js",
-              "jszip"
-            ],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "home.html",
-                "input": "src/app/public/pages-static/home-static/",
-                "output": "/"
-              },
-              {
-                "glob": "tariffs.html",
-                "input": "src/app/public/pages-static/tariffs-static/",
-                "output": "/"
-              },
-              {
-                "glob": "clients.html",
-                "input": "src/app/public/pages-static/clients-static/",
-                "output": "/"
-              },
-              {
-                "glob": "contacts.html",
-                "input": "src/app/public/pages-static/contacts-static/",
-                "output": "/"
-              },
-              {
-                "glob": "ogimagemain.jpg",
-                "input": "src/assets/images",
-                "output": "/"
-              },
-              {
-                "glob": "yandex_caad2a2455dcbf11.html",
-                "input": "src/app/public/verifications/",
-                "output": "/"
-              }
-            ],
-            "styles": [
-              "src/styles.scss",
-              "node_modules/intro.js/introjs.css",
-              "node_modules/primeng/resources/themes/saga-blue/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeflex/primeflex.css",
-              "node_modules/primeicons/primeicons.css"
-            ],
-            "scripts": [
-              "node_modules/intro.js/intro.js",
-              "node_modules/chart.js/dist/chart.js"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "1mb",
-                  "maximumError": "2mb"
-                }
-              ]
-            },
-            "development": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "1mb",
-                  "maximumError": "2mb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "metallinvestbank-web:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "metallinvestbank-web:build:production"
-            },
-            "development": {
-              "browserTarget": "metallinvestbank-web:build:development"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "metallinvestbank-web:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": [ "src/favicon.ico", "src/assets" ],
-            "styles": [
-              "src/styles.scss",
-              "node_modules/intro.js/introjs.css",
-              "node_modules/primeng/resources/themes/saga-blue/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeflex/primeflex.css",
-              "node_modules/primeicons/primeicons.css"
-            ],
-            "scripts": [
-              "node_modules/intro.js/intro.js",
-              "node_modules/chart.js/dist/chart.js"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [ "**/node_modules/**" ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "metallinvestbank-web:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "metallinvestbank-web:serve:production"
-            }
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/metallinvestbank-web/server",
-            "main": "server.ts",
-            "tsConfig": "tsconfig.server.json"
-          },
-          "configurations": {
-            "production": {
-              "outputHashing": "media",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "sourceMap": false,
-              "extractLicenses": true,
-              "vendorChunk": false
-            },
-            "development": {
-              "outputHashing": "media",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.prod.ts",
-                  "with": "src/environments/environment.ts"
-                }
-              ],
-              "optimization": false,
-              "sourceMap": true,
-              "extractLicenses": false,
-              "vendorChunk": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
-          "configurations": {
-            "development": {
-              "browserTarget": "metallinvestbank-web:build:development",
-              "serverTarget": "metallinvestbank-web:server:development"
-            },
-            "production": {
-              "browserTarget": "metallinvestbank-web:build:production",
-              "serverTarget": "metallinvestbank-web:server:production"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "prerender": {
-          "builder": "@nguniversal/builders:prerender",
-          "options": {
-            "routes": [
-              "/"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "metallinvestbank-web:build:production",
-              "serverTarget": "metallinvestbank-web:server:production"
-            },
-            "development": {
-              "browserTarget": "metallinvestbank-web:build:development",
-              "serverTarget": "metallinvestbank-web:server:development"
-            }
-          },
-          "defaultConfiguration": "production"
-        }
-      }
-    }
-  },
-  "defaultProject": "metallinvestbank-web",
-  "cli": {
-    "analytics": "237f2229-7701-48d3-81ef-7ca6020fd553"
-  }
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"version": 1,
+	"newProjectRoot": "projects",
+	"projects": {
+		"metallinvestbank-web": {
+			"projectType": "application",
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				},
+				"@schematics/angular:application": {
+					"strict": true
+				}
+			},
+			"root": "",
+			"sourceRoot": "src",
+			"prefix": "mib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:browser",
+					"options": {
+						"outputPath": "dist/metallinvestbank-web/browser",
+						"index": "src/index.html",
+						"main": "src/main.ts",
+						"polyfills": "src/polyfills.ts",
+						"tsConfig": "tsconfig.app.json",
+						"aot": true,
+						"allowedCommonJsDependencies": [
+							"chart.js",
+							"crypto-pro",
+							"crypto-js",
+							"file-saver",
+							"xlsx",
+							"intro.js/intro.js",
+							"jszip"
+						],
+						"assets": [
+							"src/favicon.ico",
+							"src/assets",
+							{
+								"glob": "home.html",
+								"input": "src/app/public/pages-static/home-static/",
+								"output": "/"
+							},
+							{
+								"glob": "tariffs.html",
+								"input": "src/app/public/pages-static/tariffs-static/",
+								"output": "/"
+							},
+							{
+								"glob": "clients.html",
+								"input": "src/app/public/pages-static/clients-static/",
+								"output": "/"
+							},
+							{
+								"glob": "contacts.html",
+								"input": "src/app/public/pages-static/contacts-static/",
+								"output": "/"
+							},
+							{
+								"glob": "ogimagemain.jpg",
+								"input": "src/assets/images",
+								"output": "/"
+							},
+							{
+								"glob": "yandex_caad2a2455dcbf11.html",
+								"input": "src/app/public/verifications/",
+								"output": "/"
+							}
+						],
+						"styles": [
+							"src/styles.scss",
+							"node_modules/intro.js/introjs.css",
+							"node_modules/primeng/resources/themes/saga-blue/theme.css",
+							"node_modules/primeng/resources/primeng.min.css",
+							"node_modules/primeflex/primeflex.css",
+							"node_modules/primeicons/primeicons.css"
+						],
+						"scripts": [
+							"node_modules/intro.js/intro.js",
+							"node_modules/chart.js/dist/chart.js"
+						]
+					},
+					"configurations": {
+						"production": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.prod.ts"
+								}
+							],
+							"optimization": true,
+							"outputHashing": "all",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"buildOptimizer": true,
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "4mb",
+									"maximumError": "5mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "1mb",
+									"maximumError": "2mb"
+								}
+							]
+						},
+						"development": {
+							"optimization": true,
+							"outputHashing": "all",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"buildOptimizer": true,
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "4mb",
+									"maximumError": "5mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "1mb",
+									"maximumError": "2mb"
+								}
+							]
+						}
+					}
+				},
+				"serve": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"options": {
+						"browserTarget": "metallinvestbank-web:build"
+					},
+					"configurations": {
+						"production": {
+							"browserTarget": "metallinvestbank-web:build:production"
+						},
+						"development": {
+							"browserTarget": "metallinvestbank-web:build:development"
+						}
+					}
+				},
+				"extract-i18n": {
+					"builder": "@angular-devkit/build-angular:extract-i18n",
+					"options": {
+						"browserTarget": "metallinvestbank-web:build"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "src/test.ts",
+						"polyfills": "src/polyfills.ts",
+						"tsConfig": "tsconfig.spec.json",
+						"karmaConfig": "karma.conf.js",
+						"assets": ["src/favicon.ico", "src/assets"],
+						"styles": [
+							"src/styles.scss",
+							"node_modules/intro.js/introjs.css",
+							"node_modules/primeng/resources/themes/saga-blue/theme.css",
+							"node_modules/primeng/resources/primeng.min.css",
+							"node_modules/primeflex/primeflex.css",
+							"node_modules/primeicons/primeicons.css"
+						],
+						"scripts": [
+							"node_modules/intro.js/intro.js",
+							"node_modules/chart.js/dist/chart.js"
+						]
+					}
+				},
+				"lint": {
+					"builder": "@angular-devkit/build-angular:tslint",
+					"options": {
+						"tsConfig": [
+							"tsconfig.app.json",
+							"tsconfig.spec.json",
+							"e2e/tsconfig.json"
+						],
+						"exclude": ["**/node_modules/**"]
+					}
+				},
+				"e2e": {
+					"builder": "@angular-devkit/build-angular:protractor",
+					"options": {
+						"protractorConfig": "e2e/protractor.conf.js",
+						"devServerTarget": "metallinvestbank-web:serve"
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "metallinvestbank-web:serve:production"
+						}
+					}
+				},
+				"server": {
+					"builder": "@angular-devkit/build-angular:server",
+					"options": {
+						"outputPath": "dist/metallinvestbank-web/server",
+						"main": "server.ts",
+						"tsConfig": "tsconfig.server.json"
+					},
+					"configurations": {
+						"production": {
+							"outputHashing": "media",
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.prod.ts"
+								}
+							],
+							"optimization": true,
+							"sourceMap": false,
+							"extractLicenses": true,
+							"vendorChunk": false
+						},
+						"development": {
+							"outputHashing": "media",
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.prod.ts",
+									"with": "src/environments/environment.ts"
+								}
+							],
+							"optimization": false,
+							"sourceMap": true,
+							"extractLicenses": false,
+							"vendorChunk": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve-ssr": {
+					"builder": "@nguniversal/builders:ssr-dev-server",
+					"configurations": {
+						"development": {
+							"browserTarget": "metallinvestbank-web:build:development",
+							"serverTarget": "metallinvestbank-web:server:development"
+						},
+						"production": {
+							"browserTarget": "metallinvestbank-web:build:production",
+							"serverTarget": "metallinvestbank-web:server:production"
+						}
+					},
+					"defaultConfiguration": "development"
+				},
+				"prerender": {
+					"builder": "@nguniversal/builders:prerender",
+					"options": {
+						"routes": ["/"]
+					},
+					"configurations": {
+						"production": {
+							"browserTarget": "metallinvestbank-web:build:production",
+							"serverTarget": "metallinvestbank-web:server:production"
+						},
+						"development": {
+							"browserTarget": "metallinvestbank-web:build:development",
+							"serverTarget": "metallinvestbank-web:server:development"
+						}
+					},
+					"defaultConfiguration": "production"
+				}
+			}
+		}
+	},
+	"defaultProject": "metallinvestbank-web",
+	"cli": {
+		"analytics": "237f2229-7701-48d3-81ef-7ca6020fd553"
+	}
 }
