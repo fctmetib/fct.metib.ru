@@ -1,8 +1,8 @@
-<div #box class="box-wrapper flex flex_column">
+<div #box class="box-wrapper flex">
 	<div class="box-label">
-		<p (click)="focus()" class="text text_small c-ti-dark-tertiary">
+		<span (click)="focus()" class="text text_small c-ti-dark-tertiary">
 			<ng-content select="[input-label]"></ng-content>
-		</p>
+		</span>
 	</div>
 	<div class="box">
 		<ng-content></ng-content>
@@ -17,6 +17,7 @@
 				id="textarea-panel-counter"
 				class="text text_tiny c-ti-dark-quaternary"
 			></p>
+			<metib-ref-icon *ngIf="false" class="stroke"></metib-ref-icon>
 		</div>
 	</div>
 	<div class="box-label box-label_message flex flex_column">

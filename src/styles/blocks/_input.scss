@@ -1,14 +1,36 @@
 @import 'src/styles/helpers/_icon_tools';
-@import 'src/styles/_colors.vars';
-@import 'src/styles/_typography.vars.scss';
 
-.test-input {
-	width: 360px;
+@mixin input {
+	// width: 360px;
 }
 
-.left-wrapper {
-	left: 12px;
+@mixin box {
+	position: relative;
+	width: 100%;
+	display: flex;
 }
-.right-wrapper {
-	right: 12px;
+
+@mixin box-label {
+	position: absolute;
+}
+
+.input {
+	@include input;
+}
+
+// sizes
+@mixin input-l {
+	height: 56px;
+}
+
+@mixin input-m {
+	height: 48px;
+}
+
+@mixin input-s {
+	height: 40px;
+}
+
+@mixin input-xs {
+	height: 32px;
 }

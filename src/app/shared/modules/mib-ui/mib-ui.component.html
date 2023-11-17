@@ -270,10 +270,12 @@
 <h2 style="text-align: center; margin: 2rem 0 4rem">
 	{{ 'inputs' | titlecase }}
 </h2>
-<div class="btn-wrapper">
-	<mib-input class="test-input">
+<div class="btn-wrapper flex-column gap-0">
+	<span>span text before →</span>
+	<mib-input>
 		<input mibInputDirective type="text" />
-		<ng-container input-label>label</ng-container>
+		<ng-container input-label>Label</ng-container>
 	</mib-input>
-	<div style="width: 100%; height: 10rem"></div>
+	<span>span text after →</span>
+	<div class="spacer-10"></div>
 </div>

@@ -1,0 +1,50 @@
+@import 'src/styles/_colors.vars.scss';
+
+.spacer {
+	width: 100%;
+	&-1 {
+		height: 1rem;
+	}
+	&-2 {
+		height: 2rem;
+	}
+	&-3 {
+		height: 3rem;
+	}
+	&-5 {
+		height: 5rem;
+	}
+	&-10 {
+		height: 10rem;
+	}
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-uppercase {
+	text-transform: uppercase;
+}
+
+.text-underline {
+	text-decoration: underline;
+}
+
+.container {
+	width: 100%;
+	max-width: 1248px;
+	margin: 0 auto;
+
+	&_large {
+		max-width: 1296px;
+	}
+}
+
+.overflow-hidden {
+	overflow: hidden;
+}
