@@ -1,6 +1,6 @@
 <div #box class="flex flex_column">
 	<div class="box-label">
-		<p #label class="text text_small c-ti-dark-tertiary">
+		<p (click)="blur()" class="text text_small c-ti-dark-tertiary">
 			<ng-content select="[input-label]"></ng-content>
 		</p>
 	</div>
@@ -16,10 +16,7 @@
 			<p
 				id="textarea-panel-counter"
 				class="text text_tiny c-ti-dark-quaternary"
-			>
-				textLength/maxLength
-			</p>
-			icons
+			></p>
 		</div>
 	</div>
 	<div class="box-label box-label_message flex flex_column">
