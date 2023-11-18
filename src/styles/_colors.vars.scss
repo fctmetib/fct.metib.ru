@@ -82,3 +82,61 @@
 	--succes-color-quinary: #F0F4F1;
 
 }
+
+span.c,
+.text.c,
+.c {
+  &-white {
+    color: var(--wgr-primary);
+  }
+
+  &-black {
+    color: var(--bgr-primary);
+  }
+
+  &-wgr-secondary {
+    color: var(--wgr-secondary)
+  }
+
+  &-wgr-tertiary {
+    color: var(--wgr-tertiary)
+  }
+
+  &-wgr-quaternary {
+    color: var(--wgr-quaternary)
+  }
+
+  &-bgr-primary {
+    color: var(--bgr-primary)
+  }
+
+  &-bgr-secondary {
+    color: var(--bgr-secondary)
+  }
+
+  &-bgr-tertinary {
+    color: var(--bgr-tertiary)
+  }
+
+  &-bgr-quaternary {
+    color: var(--bgr-quaternary)
+  }
+
+  &-bti-primary {
+    color: var(--bti-primary)
+  }
+
+  &-bti-secondary {
+    color: var(--bti-secondary)
+  }
+
+  &-bti-tertiary {
+    color: var(--bti-tertiary)
+  }
+
+  &-bti-quaternary {
+    color: var(--bti-quaternary)
+  }
+
+
+}

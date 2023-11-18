@@ -1,7 +1,74 @@
 @import 'src/styles/helpers/_icon_tools';
 
+.box-wrapper {
+	max-width: 360px;
+	position: relative;
+	& .box-label p {
+		position: absolute;
+		white-space: nowrap;
+		top: 2px;
+		left: 20px;
+		cursor: text;
+	}
+	&:has(input:focus) .box-label p {
+		display: block;
+		top: 2px;
+		transition: 0.2s;
+		@include highlight-text;
+		@include highlight-xs;
+		color: var(--mc-default);
+	}
+}
+
 @mixin input {
-	// width: 360px;
+	border-radius: var(--main-border-radius);
+	width: 100%;
+	@include body-text;
+	border: 1px solid transparent;
+	&_icon-wrapper {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		display: none;
+	}
+
+	&::placeholder {
+		color: transparent;
+	}
+}
+
+@mixin input-type-filled-secondary {
+	background: var(--wgr-secondary);
+	color: var(--bti-tertiary);
+	&.input {
+		outline: 0;
+		&:hover {
+			border: 1px solid var(--wgr-tertiary);
+			background: var(--wgr-secondary);
+			color: var(--bti-secondary);
+		}
+		&:focus {
+			border: 1px solid var(--mc-default);
+			color: var(--bti-primary);
+		}
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-tertiary);
+			border: none;
+		}
+	}
+}
+
+.input {
+	@include input();
+	&_l {
+		@include text-l;
+		padding: 22px 20px 10px;
+	}
+	// types
+	&_type-filled-secondary {
+		@include input-type-filled-secondary;
+	}
 }
 
 @mixin box {
@@ -12,10 +79,6 @@
 
 @mixin box-label {
 	position: absolute;
-}
-
-.input {
-	@include input;
 }
 
 // sizes
@@ -33,4 +96,8 @@
 
 @mixin input-xs {
 	height: 32px;
+}
+
+div.textarea-panel {
+	display: none !important;
 }
