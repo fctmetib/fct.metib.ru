@@ -12,6 +12,7 @@ export class InputComponent {
 	inputDirective!: MetibInputDirective
 
 	focus() {
+		console.log('halo')
 		this.inputDirective.el.nativeElement.focus()
 	}
 }

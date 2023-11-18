@@ -1,4 +1,42 @@
-<div #box class="box-wrapper flex">
+<div #box class="box-wrapper flex flex_column">
+	<div class="box-label">
+		<p (click)="focus()" class="text text_small c-ti-dark-tertiary">
+			<ng-content select="[input-label]"></ng-content>
+		</p>
+	</div>
+	<div class="box">
+		<ng-content></ng-content>
+		<div class="input_icon-wrapper left-wrapper" #iconLeft>
+			<ng-content select="[input-left-icon]"></ng-content>
+		</div>
+		<div class="input_icon-wrapper right-wrapper" #iconRight>
+			<ng-content select="[input-right-icon]"></ng-content>
+		</div>
+		<div
+			*ngIf="inputDirective.controls"
+			class="textarea-panel flex flex_align-center flex_justify-between"
+		>
+			<p
+				id="textarea-panel-counter"
+				class="text text_tiny c-ti-dark-quaternary"
+			>
+				textLength / maxLength
+			</p>
+			<mib-ref-icon
+				*ngIf="false"
+				class="stroke"
+				svgIcon="resize"
+			></mib-ref-icon>
+		</div>
+	</div>
+	<div class="box-label box-label_message flex flex_column">
+		<p #message class="text text_small text_medium c-ti-dark-quaternary">
+			<ng-content select="[input-message]"></ng-content>
+		</p>
+	</div>
+</div>
+
+<!-- <div #box class="box-wrapper flex">
 	<div class="box-label">
 		<span (click)="focus()" class="text text_small c-ti-dark-tertiary">
 			<ng-content select="[input-label]"></ng-content>
@@ -17,7 +55,7 @@
 				id="textarea-panel-counter"
 				class="text text_tiny c-ti-dark-quaternary"
 			></p>
-			<metib-ref-icon *ngIf="false" class="stroke"></metib-ref-icon>
+			<mib-ref-icon *ngIf="false" class="stroke"></mib-ref-icon>
 		</div>
 	</div>
 	<div class="box-label box-label_message flex flex_column">
@@ -25,4 +63,4 @@
 			<ng-content select="[input-message]"></ng-content>
 		</p>
 	</div>
-</div>
+</div> -->
