@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { InputSize } from '../../ui-kit/input/interfaces/input.interface'
 
 @Component({
 	selector: 'app-mib-ui',
@@ -21,6 +22,7 @@ import { Component } from '@angular/core'
 })
 export class MibUiComponent {
 	isShown = false
+	public inputSize: InputSize = 'l'
 
 	login() {
 		console.log('halo click!')

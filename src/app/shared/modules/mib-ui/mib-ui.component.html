@@ -273,8 +273,15 @@
 <div class="btn-wrapper flex-column gap-0">
 	<span>span text before →</span>
 	<mib-input>
-		<input mibInputDirective type="text" />
-		<ng-container input-label>Label</ng-container>
+		<input
+			MibInput
+			type="text"
+			formControlName="secretWord"
+			[size]="inputSize"
+			styleType="filled-secondary"
+			placeholder="Ваше секретное слово"
+		/>
+		<ng-container input-label>Секретное слово</ng-container>
 	</mib-input>
 	<span>span text after →</span>
 	<div class="spacer-10"></div>
