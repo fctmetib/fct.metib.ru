@@ -159,8 +159,7 @@ export class DemandHistoryPageComponent implements OnInit, OnDestroy {
   }
 
   edit(Type: string, ID: string, isView: boolean, isDraft: string) {
-    const notVerify = 'not-verify';
-    const baseUrl = this.isUserVerified ? '' : notVerify;
+    const baseUrl = this.isUserVerified ? 'client' : 'not-verify';
 
     let Edit = isDraft === 'Draft' ? true : false;
 
