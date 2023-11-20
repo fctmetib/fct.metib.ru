@@ -9,6 +9,7 @@
 		top: 2px;
 		left: 20px;
 		cursor: text;
+		transition: var(--main-transition);
 	}
 	&:has(input:focus) .box-label p {
 		display: block;
@@ -17,6 +18,7 @@
 		@include highlight-text;
 		@include highlight-xs;
 		color: var(--mc-default);
+		transition: var(--main-transition);
 	}
 }
 
@@ -26,10 +28,11 @@
 	@include body-text;
 	border: 1px solid transparent;
 	&_icon-wrapper {
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-		display: none;
+		display: flex;
+		// position: absolute;
+		// top: 50%;
+		// transform: translateY(-50%);
+		// display: none;
 	}
 
 	&::placeholder {
