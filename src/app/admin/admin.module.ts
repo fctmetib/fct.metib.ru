@@ -18,8 +18,6 @@ import {SkeletonModule} from 'primeng/skeleton';
 import {InactiveDialogModule} from '../shared/modules/inactive-dialog/inactive-dialog.module';
 import {AdminGuard} from '../shared/services/admin.guard';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
-
-import {AuthGuard} from '../shared/services/auth.guard';
 import {AdminComponent} from './admin.component';
 import {HeaderComponent} from './shared/header/header.component';
 import {MobileHeaderComponent} from './shared/mobile-header/mobile-header.component';

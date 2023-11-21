@@ -1,11 +1,9 @@
-import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { createDemandFactoringAction } from '../../../store/actions/createDemand.action';
 import { CreateDemandFactoringRequestInterface } from '../../../types/requests/create-demand-factoring-request.interface';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
@@ -47,7 +45,6 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
     private router: Router,
     private demandService: DemandService,
     private route: ActivatedRoute,
-    private store: Store
   ) {}
 
   ngOnInit() {

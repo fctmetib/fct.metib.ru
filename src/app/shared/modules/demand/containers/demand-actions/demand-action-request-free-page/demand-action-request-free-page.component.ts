@@ -2,14 +2,11 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DemandService } from './../../../services/demand.service';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { errorSelector, isLoadingSelector } from '../../../store/selectors';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { MessageService } from 'primeng/api';
 import { switchMap } from 'rxjs/operators';
@@ -58,8 +55,7 @@ export class DemandActionRequestFreePageComponent
     private messageService: MessageService,
     private fileService: FileService,
     private route: ActivatedRoute,
-    private router: Router,
-    private store: Store
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -263,8 +259,6 @@ export class DemandActionRequestFreePageComponent
   }
 
   private initValues(): void {
-    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
-    this.backendErrors$ = this.store.pipe(select(errorSelector));
   }
 
   private showSuccess() {

@@ -3,12 +3,9 @@ import { ShipmentsViewComponent } from './components/requests-page/shipments-vie
 import { RequestCorrectDialogComponent } from './components/request-correct-dialog/request-correct-dialog.component';
 import { BackendErrorMessagesModule } from 'src/app/shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { SuccessMessagesModule } from 'src/app//shared/modules/successMessages/successMessages.module';
-import { CRUDEffect } from './store/effects/crud.effect';
 import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
 import { RequestCreateDialogComponent } from './components/request-create-dialog/request-create-dialog.component';
 import { RequestsService } from './services/requests.service';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import { RequestsPageComponent } from './components/requests-page/requests-page.component';
 import { RequestsRoutingModule } from './requests-routing.module';
 import { CommonModule } from '@angular/common';
@@ -33,7 +30,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
-import { reducers } from './store/reducers';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { DialogModule } from 'primeng/dialog';
@@ -71,8 +67,6 @@ import { DocumentViewDialogComponent } from 'src/app/client/shared/components/di
     ProgressBarModule,
     ToolbarModule,
     MultiSelectModule,
-    EffectsModule.forFeature([CRUDEffect]),
-    StoreModule.forFeature('requests', reducers),
     BackendErrorMessagesModule,
     SuccessMessagesModule,
     RequestsRoutingModule,

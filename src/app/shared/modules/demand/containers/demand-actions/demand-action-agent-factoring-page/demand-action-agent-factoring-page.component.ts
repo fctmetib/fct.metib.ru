@@ -18,8 +18,6 @@ import { DemandPropertiesInterface } from '../../../types/common/demand-properti
 import { DemandAddonAccountInterface } from '../../../types/common/demand-addon-account.interface';
 import { DemandObligationInterface } from '../../../types/common/demand-obligation.interface';
 import { DemandEDIInterface } from '../../../types/common/demand-edi.interface';
-import { select, Store } from '@ngrx/store';
-import { errorSelector } from 'src/app/client/modules/requests/store/selectors';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -90,7 +88,6 @@ export class DemandActionAgentFactoringPageComponent
     private demandService: DemandService,
     private messageService: MessageService,
     private commonService: CommonService,
-    private store: Store
   ) { }
 
   ngOnInit() {
@@ -469,8 +466,6 @@ export class DemandActionAgentFactoringPageComponent
     this.typesOfOwner = mibCommon.getTypesOfOwner();
     this.countryList = mibCommon.getCountryList();
     this.regionList = mibCommon.getRegionList();
-
-    this.backendErrors$ = this.store.pipe(select(errorSelector));
   }
 
   private initForm(): void {
