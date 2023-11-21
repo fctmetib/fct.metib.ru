@@ -1,15 +1,13 @@
 <div #box class="box-wrapper flex flex_column">
-	<div class="box-label">
-		<p (click)="focus()" class="text text_l c-bti-tertiary">
-			<ng-content select="[input-label]"></ng-content>
-		</p>
-	</div>
+	<p (click)="focus()" class="box-label text text_l c-bti-tertiary">
+		<ng-content select="[input-label]"></ng-content>
+	</p>
 	<div class="box">
 		<ng-content></ng-content>
-		<div class="input_icon-wrapper left-wrapper" #iconLeft>
+		<div class="input_icon-wrapper left-wrapper" #iconsLeft>
 			<ng-content select="[input-left-icon]"></ng-content>
 		</div>
-		<div class="input_icon-wrapper right-wrapper" #iconRight>
+		<div class="input_icon-wrapper right-wrapper" #iconsRight>
 			<ng-content select="[input-right-icon]"></ng-content>
 		</div>
 		<div

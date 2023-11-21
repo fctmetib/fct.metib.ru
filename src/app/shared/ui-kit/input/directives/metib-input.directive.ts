@@ -21,7 +21,6 @@ import { Subscription, tap } from 'rxjs'
 })
 export class MetibInputDirective {
 	constructor(
-		public el: ElementRef<HTMLInputElement>,
 		@Optional() private ngControl: NgControl,
 		private cdr: ChangeDetectorRef,
 		public elementRef: ElementRef<HTMLElement>

@@ -54,11 +54,6 @@ import { InputSize } from '../../ui-kit/input/interfaces/input.interface'
 				transform: translateY(5%);
 			}
 			.label {
-				white-space: nowrap;
-				width: 100%;
-				font-size: 16px;
-				font-weight: 400;
-				line-height: 20px;
 				transition: 0.2s;
 			}
 			.input-wrap {
