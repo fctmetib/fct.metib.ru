@@ -70,8 +70,8 @@ export class DemandHistoryComponent implements OnInit, OnDestroy {
 
   public back(): void {
     const notVerify = 'not-verify';
-    const baseUrl = this.isUserVerified ? '' : notVerify;
-    this.router.navigate([`${baseUrl}//new-demand`]);
+    const baseUrl = this.isUserVerified ? 'client' : notVerify;
+    this.router.navigate([`${baseUrl}/new-demand`]);
   }
 
   fetch() {
@@ -168,7 +168,7 @@ export class DemandHistoryComponent implements OnInit, OnDestroy {
 
   edit(Type: string, ID: string, isDraft: string, isCompleted: boolean) {
     const notVerify = 'not-verify';
-    const baseUrl = this.isUserVerified ? '' : notVerify;
+    const baseUrl = this.isUserVerified ? 'client' : notVerify;
 
     let Edit = isDraft === 'Draft' ? true : false;
 

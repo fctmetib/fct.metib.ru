@@ -1,5 +1,3 @@
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
-import { StoreModule } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
@@ -9,8 +7,6 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        StoreModule.forRoot({router: routerReducer}),
-        StoreRouterConnectingModule.forRoot(),
       ],
       declarations: [
         AppComponent

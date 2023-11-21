@@ -8,7 +8,6 @@ import { MessageModule } from 'primeng/message';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { EffectSources } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -39,7 +38,7 @@ describe('DemandHistoryPageComponent', () => {
         HttpClientModule,
         RouterTestingModule,
       ],
-      providers: [FormBuilder, DemandService, EffectSources],
+      providers: [FormBuilder, DemandService],
     }).compileComponents();
   });
 

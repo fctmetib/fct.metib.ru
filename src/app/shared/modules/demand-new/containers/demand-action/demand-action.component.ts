@@ -115,7 +115,7 @@ export class DemandActionComponent implements OnInit, OnDestroy, AfterViewInit {
         // что отрисовать - возвращаем пользователя на страницу назад, для заполнения demand config
         if (!demandConfig) {
           const notVerify = 'not-verify';
-          const baseUrl = this.isUserVerified ? '' : notVerify;
+          const baseUrl = this.isUserVerified ? 'client' : notVerify;
           this._router.navigate([`${baseUrl}/new-demand`]);
         }
 

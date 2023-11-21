@@ -1,9 +1,4 @@
 import { FileModeInterface } from './../../../../../shared/types/file/file-model.interface';
-import {
-  crudErrorsSelector,
-  crudSuccessSelector,
-} from './../../store/selectors';
-import { select, Store } from '@ngrx/store';
 import { DeliveryInterface } from './../../../../../shared/types/delivery/delivery.interface';
 import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
 import { ClientRequestInterface } from './../../../../../shared/types/client/client-request.interface';
@@ -12,16 +7,13 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FinanceTypeInterface } from '../../types/common/finance-type.interface';
 import { Observable, Subscription } from 'rxjs';
-import {
-  addRequestAction,
-  setErrorAction,
-} from '../../store/actions/crud.action';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { PasteHandler } from 'src/app/shared/classes/common/past-handler.class';
+import { RequestsService } from '../../services/requests.service';
 
 @Component({
   selector: 'app-request-create-dialog',
@@ -80,12 +72,10 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
     private deliveryService: DeliveryService,
     public config: DynamicDialogConfig,
     private commonService: CommonService,
-    public store: Store
+    private requestService: RequestsService,
   ) {}
 
   ngOnInit() {
-    this.errorsMessage$ = this.store.pipe(select(crudErrorsSelector));
-    this.successMessage$ = this.store.pipe(select(crudSuccessSelector));
     this.initializeForm();
   }
 
@@ -157,10 +147,9 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
         Type: this.form.value.type,
       };
 
-      this.store.dispatch(addRequestAction({ request }));
+      this.requestService.add(request).pipe().subscribe();
     } else {
       let errors = 'Ошибка! Пожалуйста, добавьте минимум 1 поставку.';
-      this.store.dispatch(setErrorAction({ errors }));
       return;
     }
   }

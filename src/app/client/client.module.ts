@@ -1,6 +1,4 @@
 import {NotificationService} from './shared/services/notification.service';
-import {EffectsModule} from '@ngrx/effects';
-import {StoreModule} from '@ngrx/store';
 import {CommonModule} from '@angular/common';
 import {DropdownModule} from 'primeng/dropdown';
 import {CardModule} from 'primeng/card';

@@ -5,10 +5,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from 'src/app/auth/services/auth.service';
 import {SaveDemandRequestInterface} from '../../../types/requests/save-demand-request.interface';
-import {select, Store} from '@ngrx/store';
 import {FileModeInterface} from 'src/app/shared/types/file/file-model.interface';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {errorSelector} from '../../../store/selectors';
 import {CommonService} from 'src/app/shared/services/common/common.service';
 import {FileService} from 'src/app/shared/services/common/file.service';
 import {FactoringInfoInterface} from '../../../types/common/factoring/factoring-info.interface';
@@ -71,7 +69,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
     private messageService: MessageService,
     private fb: FormBuilder,
     private demandService: DemandService,
-    private store: Store,
     private route: ActivatedRoute,
     private router: Router,
     private fileService: FileService,
@@ -357,7 +354,6 @@ export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   }
 
   private initValues(): void {
-    this.backendErrors$ = this.store.pipe(select(errorSelector));
 
     let encryptedJsonCurrentUser = this.cookieService.get('_cu');
     let currentJsonUser = null;
