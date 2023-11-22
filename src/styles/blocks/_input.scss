@@ -1,4 +1,5 @@
 @import 'src/styles/helpers/_icon_tools';
+@import 'src/styles/_typography.vars.scss';
 
 .box-wrapper {
 	max-width: 360px;
@@ -11,22 +12,45 @@
 	--input-m-icons-gap: 8px;
 	--input-s-icons-gap: 8px;
 	--input-xs-icons-gap: 8px;
-	& .box-label {
+	.box-label {
+		top: 28%;
+		// top: 50%;
+		// transform: translateY(-50%);
 		position: absolute;
+		padding-left: 16px;
 		white-space: nowrap;
-		top: 2px;
-		left: 16px;
 		cursor: text;
 		transition: var(--main-transition);
 	}
-	&:has(input:focus) .box-label {
-		display: block;
-		top: 0px;
-		transition: 0.2s;
-		@include highlight-text;
-		@include highlight-xs;
-		color: var(--mc-default);
+	.box-right-iconly {
+		.right-wrapper {
+			display: flex;
+		}
+	}
+	.box-left-iconly {
+		.left-wrapper {
+			display: flex;
+		}
+	}
+	.input,
+	.left-wrapper {
 		transition: var(--main-transition);
+	}
+	&:has(input:focus) {
+		.input,
+		.left-wrapper {
+			padding-top: 12px;
+		}
+		.box-label {
+			display: block;
+			transform: unset;
+			top: 10px;
+			padding-left: 16px !important;
+			@include highlight-text;
+			@include highlight-xs;
+			color: var(--mc-default);
+			transition: var(--main-transition);
+		}
 	}
 }
 
@@ -35,16 +59,22 @@
 	width: 100%;
 	@include body-text;
 	border: 1px solid transparent;
-	&_icon-wrapper {
-		display: flex;
-		// position: absolute;
-		// top: 50%;
-		// transform: translateY(-50%);
-		// display: none;
-	}
-
 	&::placeholder {
 		color: transparent;
+	}
+}
+
+@mixin input-size($height, $iconSize, $iconsGap, $paddingsHorizontal: 16px) {
+	height: $height;
+	padding: 0 $paddingsHorizontal;
+	& ~ .input {
+		&_icon-wrapper {
+			mib-ref-icon {
+				@include icon-size($iconSize);
+				@include icon-color(var(--bti-secondary));
+			}
+			gap: $iconsGap;
+		}
 	}
 }
 
@@ -56,7 +86,6 @@
 		&:hover {
 			border: 1px solid var(--wgr-tertiary);
 			background: var(--wgr-secondary);
-			color: var(--bti-secondary);
 		}
 		&:focus {
 			border: 1px solid var(--mc-default);
@@ -70,66 +99,19 @@
 	}
 }
 
-.input {
-	@include input();
-	&_l {
-		@include text-l;
-		padding: 22px 20px 10px;
-	}
-	&_icon-wrapper {
-		top: 50%;
-		transform: translateY(-50%);
-		position: absolute;
-		display: flex;
-		&.right-wrapper {
-			right: 16px;
-		}
-		&.left-wrapper {
-			left: 16px;
-		}
-	}
-	// types
-	&_type-filled-secondary {
-		@include input-type-filled-secondary;
-	}
-}
-
-@mixin box {
-	position: relative;
-	width: 100%;
-	display: flex;
-}
-
-@mixin box-label {
-	position: absolute;
-}
-
-// sizes
-
-@mixin input-size($height, $iconSize, $iconsGap) {
-	height: $height;
-	mib-ref-icon {
-		@include icon-size($iconSize);
-	}
-	& ~ .input {
-		&_icon-wrapper {
-			gap: $iconsGap;
-			background-color: red;
-			padding: 5px;
-		}
-	}
-}
-
 @mixin input-l {
 	@include input-size(56px, var(--input-l-icon-size), var(--input-l-icons-gap));
+	@include text-l;
 }
 
 @mixin input-m {
 	@include input-size(48px, var(--input-m-icon-size), var(--input-m-icons-gap));
+	@include text-m;
 }
 
 @mixin input-s {
 	@include input-size(40px, var(--input-s-icon-size), var(--input-s-icons-gap));
+	@include text-m;
 }
 
 @mixin input-xs {
@@ -138,113 +120,40 @@
 		var(--input-xs-icon-size),
 		var(--input-xs-icons-gap)
 	);
+	@include text-s;
+}
+
+@mixin input-iconly($default_color) {
+	& ~ &_icon-wrapper mib-ref-icon,
+	& ~ .textarea-panel mib-ref-icon {
+		@include icon-color($default_color);
+	}
+}
+
+.input {
+	@include input();
+	&_l {
+		@include input-l;
+	}
+	&_icon-wrapper {
+		top: 50%;
+		transform: translateY(-50%);
+		position: absolute;
+		display: none;
+		&.right-wrapper {
+			right: 16px;
+			padding-left: 8px;
+		}
+		&.left-wrapper {
+			left: 16px;
+			padding-right: 4px;
+		}
+	}
+	&_type-filled-secondary {
+		@include input-type-filled-secondary;
+	}
 }
 
 div.textarea-panel {
 	display: none !important;
 }
-
-// .box-wrapper {
-// 	max-width: 360px;
-// 	position: relative;
-// 	& .box-label p {
-// 		position: absolute;
-// 		white-space: nowrap;
-// 		top: 2px;
-// 		left: 20px;
-// 		cursor: text;
-// 		transition: var(--main-transition);
-// 	}
-// 	&:has(input:focus) .box-label p {
-// 		display: block;
-// 		top: 2px;
-// 		transition: 0.2s;
-// 		@include highlight-text;
-// 		@include highlight-xs;
-// 		color: var(--mc-default);
-// 		transition: var(--main-transition);
-// 	}
-// }
-
-// @mixin input {
-// 	border-radius: var(--main-border-radius);
-// 	width: 100%;
-// 	@include body-text;
-// 	border: 1px solid transparent;
-// 	&_icon-wrapper {
-// 		display: flex;
-// 		// position: absolute;
-// 		// top: 50%;
-// 		// transform: translateY(-50%);
-// 		// display: none;
-// 	}
-
-// 	&::placeholder {
-// 		color: transparent;
-// 	}
-// }
-
-// @mixin input-type-filled-secondary {
-// 	background: var(--wgr-secondary);
-// 	color: var(--bti-tertiary);
-// 	&.input {
-// 		outline: 0;
-// 		&:hover {
-// 			border: 1px solid var(--wgr-tertiary);
-// 			background: var(--wgr-secondary);
-// 			color: var(--bti-secondary);
-// 		}
-// 		&:focus {
-// 			border: 1px solid var(--mc-default);
-// 			color: var(--bti-primary);
-// 		}
-// 		&:disabled {
-// 			color: var(--wti-quaternary);
-// 			background: var(--wgr-tertiary);
-// 			border: none;
-// 		}
-// 	}
-// }
-
-// .input {
-// 	@include input();
-// 	&_l {
-// 		@include text-l;
-// 		padding: 22px 20px 10px;
-// 	}
-// 	// types
-// 	&_type-filled-secondary {
-// 		@include input-type-filled-secondary;
-// 	}
-// }
-
-// @mixin box {
-// 	position: relative;
-// 	width: 100%;
-// 	display: flex;
-// }
-
-// @mixin box-label {
-// 	position: absolute;
-// }
-
-// // sizes
-// @mixin input-l {
-// 	height: 56px;
-// }
-
-// @mixin input-m {
-// 	height: 48px;
-// }
-
-// @mixin input-s {
-// 	height: 40px;
-// }
-
-// @mixin input-xs {
-// 	height: 32px;
-// }
-
-// div.textarea-panel {
-// 	display: none !important;
-// }

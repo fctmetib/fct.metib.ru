@@ -19,8 +19,9 @@ export class InputComponent implements AfterViewInit {
 	@ContentChild(MetibInputDirective, { descendants: true })
 	inputDirective!: MetibInputDirective
 
-	@ViewChild('iconsLeft') iconsLeft: ElementRef<HTMLDivElement>
-	@ViewChild('iconsRight') iconsRight: ElementRef<HTMLDivElement>
+	@ViewChild('label') label: ElementRef<HTMLSpanElement>
+	@ViewChild('iconsLeft') iconsLeftEl: ElementRef<HTMLDivElement>
+	@ViewChild('iconsRight') iconsRightEl: ElementRef<HTMLDivElement>
 	@ViewChild('box') box: ElementRef<HTMLDivElement>
 
 	constructor(private r2: Renderer2) {}
@@ -30,16 +31,8 @@ export class InputComponent implements AfterViewInit {
 	}
 
 	setIconPaddings() {
-		const leftLength = this.iconsLeft.nativeElement.children.length
-		const rightLength = this.iconsRight.nativeElement.children.length
-
-		const boxStyles = window.getComputedStyle(this.box.nativeElement)
-		const iconSize = boxStyles.getPropertyValue(
-			`--input-${this.inputDirective.size}-icon-size`
-		)
-		const iconsGap = boxStyles.getPropertyValue(
-			`--input-${this.inputDirective.size}-icons-gap`
-		)
+		const leftWidth = this.iconsLeftEl.nativeElement.clientWidth
+		const rightWidth = this.iconsRightEl.nativeElement.clientWidth
 
 		const inputStyles = window.getComputedStyle(
 			this.inputDirective.elementRef.nativeElement
@@ -48,13 +41,8 @@ export class InputComponent implements AfterViewInit {
 		const paddingRight = inputStyles.getPropertyValue('padding-right')
 		const paddingLeft = inputStyles.getPropertyValue('padding-left')
 
-		const newPaddingRight = `calc(${paddingRight} + ${iconSize} * ${rightLength} + ${
-			rightLength - 1
-		} * ${iconsGap})`
-
-		const newPaddingLeft = `calc(${paddingLeft} + ${iconSize} * ${leftLength} + ${
-			leftLength - 1
-		} * ${iconsGap})`
+		const newPaddingRight = `calc(${paddingRight} + ${rightWidth}px)`
+		const newPaddingLeft = `calc(${paddingLeft} + ${leftWidth}px)`
 
 		this.r2.setStyle(
 			this.inputDirective.elementRef.nativeElement,
@@ -67,6 +55,8 @@ export class InputComponent implements AfterViewInit {
 			'padding-left',
 			newPaddingLeft
 		)
+
+		this.r2.setStyle(this.label.nativeElement, 'padding-left', newPaddingLeft)
 	}
 
 	focus() {

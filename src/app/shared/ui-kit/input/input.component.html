@@ -1,8 +1,12 @@
 <div #box class="box-wrapper flex flex_column">
-	<p (click)="focus()" class="box-label text text_l c-bti-tertiary">
+	<span #label (click)="focus()" class="box-label text text_l c-bti-tertiary">
 		<ng-content select="[input-label]"></ng-content>
-	</p>
-	<div class="box">
+	</span>
+	<div
+		[class.box-right-iconly]="iconsRight.children.length"
+		[class.box-left-iconly]="iconsLeft.children.length"
+		class="box"
+	>
 		<ng-content></ng-content>
 		<div class="input_icon-wrapper left-wrapper" #iconsLeft>
 			<ng-content select="[input-left-icon]"></ng-content>
@@ -33,32 +37,3 @@
 		</p>
 	</div>
 </div>
-
-<!-- <div #box class="box-wrapper flex">
-	<div class="box-label">
-		<span (click)="focus()" class="text text_small c-ti-dark-tertiary">
-			<ng-content select="[input-label]"></ng-content>
-		</span>
-	</div>
-	<div class="box">
-		<ng-content></ng-content>
-		<div class="input_icon-wrapper left-wrapper" #iconLeft>
-			<ng-content select="[input-left-icon]"></ng-content>
-		</div>
-		<div class="input_icon-wrapper right-wrapper" #iconRight>
-			<ng-content select="[input-right-icon]"></ng-content>
-		</div>
-		<div class="textarea-panel flex flex_align-center flex_justify-between">
-			<p
-				id="textarea-panel-counter"
-				class="text text_tiny c-ti-dark-quaternary"
-			></p>
-			<mib-ref-icon *ngIf="false" class="stroke"></mib-ref-icon>
-		</div>
-	</div>
-	<div class="box-label box-label_message flex flex_column">
-		<p #message class="text text_small text_medium c-ti-dark-quaternary">
-			<ng-content select="[input-message]"></ng-content>
-		</p>
-	</div>
-</div> -->

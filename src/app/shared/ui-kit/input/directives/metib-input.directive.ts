@@ -23,7 +23,7 @@ export class MetibInputDirective {
 	constructor(
 		@Optional() private ngControl: NgControl,
 		private cdr: ChangeDetectorRef,
-		public elementRef: ElementRef<HTMLElement>
+		public elementRef: ElementRef<HTMLInputElement>
 	) {}
 
 	@Input() disabled: boolean = false
