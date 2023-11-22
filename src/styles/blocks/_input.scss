@@ -1,59 +1,6 @@
 @import 'src/styles/helpers/_icon_tools';
 @import 'src/styles/_typography.vars.scss';
 
-.box-wrapper {
-	max-width: 360px;
-	position: relative;
-	--input-l-icon-size: 20px;
-	--input-m-icon-size: 20px;
-	--input-s-icon-size: 20px;
-	--input-xs-icon-size: 16px;
-	--input-l-icons-gap: 8px;
-	--input-m-icons-gap: 8px;
-	--input-s-icons-gap: 8px;
-	--input-xs-icons-gap: 8px;
-	.box-label {
-		top: 28%;
-		// top: 50%;
-		// transform: translateY(-50%);
-		position: absolute;
-		padding-left: 16px;
-		white-space: nowrap;
-		cursor: text;
-		transition: var(--main-transition);
-	}
-	.box-right-iconly {
-		.right-wrapper {
-			display: flex;
-		}
-	}
-	.box-left-iconly {
-		.left-wrapper {
-			display: flex;
-		}
-	}
-	.input,
-	.left-wrapper {
-		transition: var(--main-transition);
-	}
-	&:has(input:focus) {
-		.input,
-		.left-wrapper {
-			padding-top: 12px;
-		}
-		.box-label {
-			display: block;
-			transform: unset;
-			top: 10px;
-			padding-left: 16px !important;
-			@include highlight-text;
-			@include highlight-xs;
-			color: var(--mc-default);
-			transition: var(--main-transition);
-		}
-	}
-}
-
 @mixin input {
 	border-radius: var(--main-border-radius);
 	width: 100%;
@@ -71,7 +18,6 @@
 		&_icon-wrapper {
 			mib-ref-icon {
 				@include icon-size($iconSize);
-				@include icon-color(var(--bti-secondary));
 			}
 			gap: $iconsGap;
 		}
@@ -80,7 +26,6 @@
 
 @mixin input-type-filled-secondary {
 	background: var(--wgr-secondary);
-	color: var(--bti-tertiary);
 	&.input {
 		outline: 0;
 		&:hover {
@@ -123,10 +68,96 @@
 	@include text-s;
 }
 
-@mixin input-iconly($default_color) {
-	& ~ &_icon-wrapper mib-ref-icon,
-	& ~ .textarea-panel mib-ref-icon {
-		@include icon-color($default_color);
+// @mixin input-iconly($default_color) {
+// 	& ~ &_icon-wrapper mib-ref-icon,
+// 	& ~ .textarea-panel mib-ref-icon {
+// 		@include icon-color($default_color);
+// 	}
+// }
+
+.box-wrapper {
+	max-width: 360px;
+	position: relative;
+	--input-l-icon-size: 20px;
+	--input-m-icon-size: 20px;
+	--input-s-icon-size: 20px;
+	--input-xs-icon-size: 16px;
+	--input-l-icons-gap: 8px;
+	--input-m-icons-gap: 8px;
+	--input-s-icons-gap: 8px;
+	--input-xs-icons-gap: 8px;
+	border-radius: var(--main-border-radius);
+	& mib-ref-icon {
+		@include icon-color(var(--bti-tertiary));
+	}
+	&:hover .box-label {
+		color: var(--bti-secondary);
+	}
+	&:hover .left-wrapper mib-ref-icon {
+		@include icon-color(var(--bti-secondary));
+	}
+	.box-label {
+		top: 28%;
+		// top: 50%;
+		// transform: translateY(-50%);
+		position: absolute;
+		padding-left: 16px;
+		white-space: nowrap;
+		cursor: text;
+		transition: var(--main-transition);
+	}
+	.box-right-iconly {
+		.right-wrapper {
+			display: flex;
+		}
+	}
+	.box-left-iconly {
+		.left-wrapper {
+			display: flex;
+		}
+	}
+	.input,
+	.left-wrapper {
+		transition: var(--main-transition);
+	}
+	&:has(input:focus) {
+		.input,
+		.left-wrapper {
+			padding-top: 12px;
+		}
+		.box-label {
+			display: block;
+			transform: unset;
+			top: 14%;
+			padding-left: 16px !important;
+			@include highlight-text;
+			@include highlight-xs;
+			color: var(--mc-default);
+			transition: var(--main-transition);
+		}
+	}
+	&:has(.input_l) {
+		.box-label {
+			@include text-l;
+		}
+	}
+	&:has(.input_m) {
+		.box-label {
+			@include text-m;
+		}
+	}
+	&:has(.input_s) {
+		.box-label {
+			@include text-s;
+		}
+	}
+	&:has(.input_xs) {
+		.box-label {
+			@include text-s;
+		}
+		mib-ref-icon {
+			@include icon-size(var(--input-s-icon-size));
+		}
 	}
 }
 
@@ -134,6 +165,15 @@
 	@include input();
 	&_l {
 		@include input-l;
+	}
+	&_m {
+		@include input-m;
+	}
+	&_s {
+		@include input-s;
+	}
+	&_xs {
+		@include input-xs;
 	}
 	&_icon-wrapper {
 		top: 50%;

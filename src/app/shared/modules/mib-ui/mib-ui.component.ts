@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { InputSize } from '../../ui-kit/input/interfaces/input.interface'
+import { FormControl, Validators } from '@angular/forms'
 
 @Component({
 	selector: 'app-mib-ui',
@@ -22,7 +23,12 @@ import { InputSize } from '../../ui-kit/input/interfaces/input.interface'
 })
 export class MibUiComponent {
 	isShown = false
-	public inputSize: InputSize = 'l'
+	public inputSizeL: InputSize = 'l'
+	public inputSizeM: InputSize = 'm'
+	public inputSizeS: InputSize = 's'
+	public inputSizeXS: InputSize = 'xs'
+
+	control = new FormControl(null, [Validators.required])
 
 	login() {
 		console.log('halo click!')
