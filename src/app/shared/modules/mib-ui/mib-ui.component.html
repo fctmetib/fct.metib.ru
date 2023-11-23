@@ -312,34 +312,39 @@
 	<h3>filled-secondary</h3>
 	<div class="spacer-3"></div>
 	<div class="input-wrapper">
-		<mib-input>
-			<input
-				MibInput
-				type="text"
-				formControlName="secretWord"
-				[size]="inputSizeL"
-				styleType="filled-secondary"
-				placeholder="Label"
-			/>
-			<ng-container input-label>Label</ng-container>
-			<mib-ref-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-ref-icon>
-			<mib-ref-icon
-				input-right-icon
-				c-bgr-secondary
-				class="stroke"
-				name="fi_chevron-left"
-			></mib-ref-icon>
-			<mib-ref-icon
-				input-right-icon
-				c-bgr-secondary
-				class="stroke"
-				name="fi_x"
-			></mib-ref-icon>
-		</mib-input>
+		<form [formGroup]="form">
+			<mib-input>
+				<input
+					MibInput
+					type="text"
+					formControlName="labelss"
+					required
+					[size]="inputSizeL"
+					styleType="filled-secondary"
+					placeholder="Label"
+				/>
+				<ng-container input-label>Label</ng-container>
+				<mib-ref-icon
+					class="stroke path"
+					input-left-icon
+					name="fi_search"
+				></mib-ref-icon>
+				<mib-ref-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-ref-icon>
+				<mib-ref-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_x"
+				></mib-ref-icon>
+			</mib-input>
+			<!-- {{ control.get('label').errors | json }} -->
+			<button (click)="lookIt()">check it</button>
+		</form>
 		<mib-input>
 			<ng-container input-label>Label</ng-container>
 			<input
@@ -373,7 +378,7 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="secretWord"
+				formControlName="label"
 				[size]="inputSizeS"
 				styleType="filled-secondary"
 				placeholder="Label"
@@ -401,7 +406,7 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="secretWord"
+				formControlName="label"
 				[size]="inputSizeXS"
 				styleType="filled-secondary"
 				placeholder="Label"
@@ -432,7 +437,7 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="secretWord"
+				formControlName="label"
 				[size]="inputSizeL"
 				styleType="floating"
 				placeholder="Label"
@@ -489,7 +494,7 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="secretWord"
+				formControlName="label"
 				[size]="inputSizeS"
 				styleType="floating"
 				placeholder="Label"
@@ -517,7 +522,7 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="secretWord"
+				formControlName="label"
 				[size]="inputSizeXS"
 				styleType="floating"
 				placeholder="Label"
@@ -548,7 +553,7 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="secretWord"
+				formControlName="label"
 				[size]="inputSizeL"
 				styleType="separated"
 				placeholder="Label"
@@ -605,7 +610,7 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="secretWord"
+				formControlName="label"
 				[size]="inputSizeS"
 				styleType="separated"
 				placeholder="Label"
@@ -633,7 +638,7 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="secretWord"
+				formControlName="label"
 				[size]="inputSizeXS"
 				styleType="separated"
 				placeholder="Label"

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { InputSize } from '../../ui-kit/input/interfaces/input.interface'
-import { FormControl, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 @Component({
 	selector: 'app-mib-ui',
@@ -26,7 +26,7 @@ import { FormControl, Validators } from '@angular/forms'
 		`
 	]
 })
-export class MibUiComponent {
+export class MibUiComponent implements OnInit {
 	isShownBtns = false
 	isShownInputs = true
 	public inputSizeL: InputSize = 'l'
@@ -34,12 +34,19 @@ export class MibUiComponent {
 	public inputSizeS: InputSize = 's'
 	public inputSizeXS: InputSize = 'xs'
 
-	control = new FormControl(null, [Validators.required])
+	form: FormGroup
 
-	login() {
-		console.log('halo click!')
+	constructor(private fb: FormBuilder) {}
+
+	ngOnInit(): void {
+		this.form = this.fb.group({
+			labelss: ['', Validators.required]
+		})
+
+		this.lookIt()
 	}
-	scrollTop() {
-		console.log('halo scroll!')
+
+	lookIt() {
+		console.log(this.form)
 	}
 }
