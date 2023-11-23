@@ -342,15 +342,14 @@
 					name="fi_x"
 				></mib-ref-icon>
 			</mib-input>
-			<!-- {{ control.get('label').errors | json }} -->
+			<!-- {{ control.get('label').errors | json }}  -->
 			<button (click)="lookIt()">check it</button>
-		</form>
+		</form> 
 		<mib-input>
 			<ng-container input-label>Label</ng-container>
 			<input
 				MibInput
 				type="text"
-				formControl="control"
 				[size]="inputSizeM"
 				styleType="filled-secondary"
 				placeholder="Label"
@@ -373,12 +372,11 @@
 				name="fi_x"
 			></mib-ref-icon>
 		</mib-input>
-		<mib-input>
+	<mib-input>
 			<ng-container input-label>Label</ng-container>
 			<input
 				MibInput
 				type="text"
-				formControlName="label"
 				[size]="inputSizeS"
 				styleType="filled-secondary"
 				placeholder="Label"
@@ -406,7 +404,6 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="label"
 				[size]="inputSizeXS"
 				styleType="filled-secondary"
 				placeholder="Label"
@@ -428,16 +425,15 @@
 				class="stroke"
 				name="fi_x"
 			></mib-ref-icon>
-		</mib-input>
+		</mib-input> 
 	</div>
 	<div class="spacer-3"></div>
 	<h3>floating</h3>
 	<div class="input-wrapper">
-		<mib-input>
+		 <mib-input>
 			<input
 				MibInput
 				type="text"
-				formControlName="label"
 				[size]="inputSizeL"
 				styleType="floating"
 				placeholder="Label"
@@ -466,7 +462,6 @@
 			<input
 				MibInput
 				type="text"
-				formControl="control"
 				[size]="inputSizeM"
 				styleType="floating"
 				placeholder="Label"
@@ -494,7 +489,6 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="label"
 				[size]="inputSizeS"
 				styleType="floating"
 				placeholder="Label"
@@ -522,7 +516,6 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="label"
 				[size]="inputSizeXS"
 				styleType="floating"
 				placeholder="Label"
@@ -544,7 +537,7 @@
 				class="stroke"
 				name="fi_x"
 			></mib-ref-icon>
-		</mib-input>
+		</mib-input> 
 	</div>
 	<div class="spacer-3"></div>
 	<h3>separated</h3>
@@ -553,7 +546,6 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="label"
 				[size]="inputSizeL"
 				styleType="separated"
 				placeholder="Label"
@@ -582,7 +574,6 @@
 			<input
 				MibInput
 				type="text"
-				formControl="control"
 				[size]="inputSizeM"
 				styleType="separated"
 				placeholder="Label"
@@ -610,7 +601,6 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="label"
 				[size]="inputSizeS"
 				styleType="separated"
 				placeholder="Label"
@@ -638,7 +628,6 @@
 			<input
 				MibInput
 				type="text"
-				formControlName="label"
 				[size]="inputSizeXS"
 				styleType="separated"
 				placeholder="Label"

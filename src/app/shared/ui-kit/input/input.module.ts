@@ -8,6 +8,6 @@ import { AutocompleteComponent } from './components/autocomplete.component'
 @NgModule({
 	imports: [CommonModule, RefIconModule],
 	declarations: [InputComponent, MetibInputDirective, AutocompleteComponent],
-  exports: [InputComponent, MetibInputDirective]
+	exports: [InputComponent, MetibInputDirective]
 })
-export class InputModule {}
+export class InputModule { }
