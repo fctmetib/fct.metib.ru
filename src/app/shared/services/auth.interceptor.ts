@@ -38,12 +38,14 @@ export class AuthInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           Authorization: token ? `Token ${token}` : '',
+          "MetibToken": token ? token : '',
         },
       });
     } else {
       request = request.clone({
         setHeaders: {
           Authorization: bt ? `Basic ${bt}` : '',
+          "MetibToken": token ? token : '',
         },
       });
     }

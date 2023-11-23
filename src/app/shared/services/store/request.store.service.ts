@@ -50,7 +50,14 @@ export class RequestStoreService {
   }
 
   private _fetch(): Observable<RequestsResponseInterface[]> {
-    const url = `${environment.apiUrl}/request`;
-    return this.http.get<RequestsResponseInterface[]>(url);
+    const url = `${environment.apiUrl}/v1/requests`;
+    return this.http.get<RequestsResponseInterface[]>(url, {
+      params: {
+        dateFrom: (new Date(2023, 9)).toDateString(),
+        dateTo: (new Date()).toDateString(),
+        includeShipments: true,
+        includeDocuments: false
+      }
+    });
   }
 }

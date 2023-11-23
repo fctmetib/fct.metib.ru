@@ -66,3 +66,14 @@
     border-radius: 10px;
   }
 }
+
+.stats {
+  display: flex;
+  flex-direction: row;
+  // flex-wrap: wrap;
+  gap: 24px;
+
+  .p-col {
+    width: 100%;
+  }
+}

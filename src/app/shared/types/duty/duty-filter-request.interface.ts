@@ -1,6 +1,5 @@
 export interface DutyFilterRequestInterface {
-  CustomerID: number;
-  DateFrom: Date;
-  DateTo: Date;
-  Free: boolean;
+  dateFrom: Date;
+  dateTo: Date;
+  freeOnly: boolean;
 }
