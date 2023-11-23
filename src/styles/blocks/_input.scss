@@ -28,10 +28,9 @@
 	background: var(--wgr-secondary);
 	&.input {
 		outline: 0;
-		&:hover {
-			border: 1px solid var(--wgr-tertiary);
-			background: var(--wgr-secondary);
-		}
+		// &:hover {
+		// 	border: 1px solid var(--wgr-tertiary);
+		// }
 		&:focus {
 			border: 1px solid var(--mc-default);
 			color: var(--bti-primary);
@@ -40,6 +39,25 @@
 			color: var(--wti-quaternary);
 			background: var(--wgr-tertiary);
 			border: none;
+		}
+	}
+}
+
+@mixin input-type-floating {
+	background: var(--wgr-primary);
+	&.input {
+		outline: 0;
+		&:focus {
+			border: 1px solid var(--mc-default);
+			box-shadow: var(--custom-floating-shadow);
+		}
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-tertiary);
+			box-shadow: none;
+			mib-ref-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
 		}
 	}
 }
@@ -87,14 +105,21 @@
 	--input-s-icons-gap: 8px;
 	--input-xs-icons-gap: 8px;
 	border-radius: var(--main-border-radius);
+	border: 1px solid transparent;
 	& mib-ref-icon {
 		@include icon-color(var(--bti-tertiary));
 	}
-	&:hover .box-label {
-		color: var(--bti-secondary);
+	&:hover:has(.input_type-filled-secondary) {
+		border: 1px solid var(--wgr-tertiary);
+	}
+	&:hover:has(.input_type-floating) {
+		box-shadow: var(--custom-floating-shadow);
 	}
 	&:hover .left-wrapper mib-ref-icon {
 		@include icon-color(var(--bti-secondary));
+	}
+	&:hover .box-label {
+		color: (var(--bti-secondary));
 	}
 	.box-label {
 		top: 28%;
@@ -210,6 +235,9 @@
 	}
 	&_type-filled-secondary {
 		@include input-type-filled-secondary;
+	}
+	&_type-floating {
+		@include input-type-floating;
 	}
 }
 
