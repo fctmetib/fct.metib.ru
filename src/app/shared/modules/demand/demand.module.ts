@@ -2,9 +2,6 @@ import {SuretyDataComponent} from './containers/demand-actions/demand-action-sur
 import {BackendErrorMessagesModule} from '../backendErrorMessages/backendErrorMessages.module';
 import {DialogModule} from 'primeng/dialog';
 import {SuccessMessagesModule} from '../successMessages/successMessages.module';
-import {GetDemandsEffect} from './store/effects/getDemands.effect';
-import {EffectsModule} from '@ngrx/effects';
-import {StoreModule} from '@ngrx/store';
 import {DemandService} from './services/demand.service';
 import {DemandRoutingModule} from './demand-routing.module';
 import {CommonModule, CurrencyPipe} from '@angular/common';
@@ -29,16 +26,11 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {MenubarModule} from 'primeng/menubar';
 import {AvatarModule} from 'primeng/avatar';
-import {reducers} from './store/reducers';
 import {FileUploadModule} from 'primeng/fileupload';
 import {CommonService} from '../../services/common/common.service';
 import {FileService} from '../../services/common/file.service';
-import {CreateDemandFactoringEffect} from './store/effects/createDemand.effect';
 import {InputMaskModule} from 'primeng/inputmask';
-import {RemoveDemandsEffect} from './store/effects/removeDemands.effect';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import {GetDraftsEffect} from './store/effects/getDrafts.effect';
-
 import {MessageService} from 'primeng/api';
 import {DemandPageComponent} from './containers/demand-page/demand-page.component';
 import {DemandHistoryPageComponent} from './containers/demand-history-page/demand-history-page.component';
@@ -99,13 +91,6 @@ import {SharedModule} from '../../shared.module';
     SkeletonModule,
     DropdownModule,
     FormsModule,
-    EffectsModule.forFeature([
-      GetDemandsEffect,
-      GetDraftsEffect,
-      CreateDemandFactoringEffect,
-      RemoveDemandsEffect,
-    ]),
-    StoreModule.forFeature('demands', reducers),
     ProgressBarModule,
     MultiSelectModule,
     DemandRoutingModule,

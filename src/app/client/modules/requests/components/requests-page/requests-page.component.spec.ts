@@ -8,15 +8,11 @@ import { MessageModule } from 'primeng/message';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { EffectsFeatureModule, EffectsModule, EffectSources, EffectsRootModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
-import { StoreModule } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { reducers } from '../../store/reducers';
 import { BackendErrorMessagesModule } from 'src/app/shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { SuccessMessagesModule } from 'src/app/shared/modules/successMessages/successMessages.module';
 
@@ -29,14 +25,11 @@ describe('RequestsPageComponent', () => {
       declarations: [RequestsPageComponent],
       imports: [
         CommonModule,
-        EffectsModule.forRoot([]),
         RequestsRoutingModule,
         FormsModule,
         ReactiveFormsModule,
         BackendErrorMessagesModule,
-        StoreRouterConnectingModule.forRoot(),
         SuccessMessagesModule,
-        StoreModule.forRoot({}),
         InputTextModule,
         DropdownModule,
         CardModule,
@@ -49,7 +42,7 @@ describe('RequestsPageComponent', () => {
         HttpClientModule,
         RouterTestingModule,
       ],
-      providers: [FormBuilder, RequestsService, EffectSources],
+      providers: [FormBuilder, RequestsService],
     }).compileComponents();
   });
 

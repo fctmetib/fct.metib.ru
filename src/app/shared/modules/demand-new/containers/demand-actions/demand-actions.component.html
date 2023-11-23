@@ -11,9 +11,9 @@
     </div>
   </div>
 
-  <div class="p-grid">
+  <div class="p-grid demand-action">
     <ng-container *ngFor="let action of actions">
-      <div *ngIf="action.isForDefaultClient && isUserVerified" class="p-col">
+      <div *ngIf="action.isForDefaultClient && isUserVerified" class="p-col action">
         <div class="demand-action-card can-click" (click)="openDemandAction(action.action)">
           <div class="demand-action-content">
             <div class="text">
@@ -23,7 +23,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="action.isForNewClient && !isUserVerified" class="p-col">
+      <div *ngIf="action.isForNewClient && !isUserVerified" class="p-col action">
         <div class="demand-action-card can-click" (click)="openDemandAction(action.action)">
           <div class="demand-action-content">
             <div class="text">

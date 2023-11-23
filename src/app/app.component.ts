@@ -1,9 +1,5 @@
-import { getCurrentUserAction } from './auth/store/actions/getCurrentUser.action';
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { getFactoringAction } from './client/store/actions/getFactoring.action';
-import { currentUserFactoringSelector } from './auth/store/selectors';
-import { CurrentUserFactoringInterface } from './shared/types/currentUserFactoring.interface';
+import { AuthService } from './auth/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,19 +9,10 @@ import { CurrentUserFactoringInterface } from './shared/types/currentUserFactori
 export class AppComponent implements OnInit {
 
   constructor(
-    private readonly store: Store
+    private authService: AuthService
   ) { }
 
   public ngOnInit(): void {
-    this.store.dispatch(getCurrentUserAction());
-
-    this.store
-      .pipe(select(currentUserFactoringSelector))
-      .subscribe((user: CurrentUserFactoringInterface): void => {
-        if (user && user.CustomerID !== 0) {
-          let organizationID = +user.OrganizationID;
-          this.store.dispatch(getFactoringAction({ organizationID }));
-        }
-      });
+    this.authService.initCurrentUser().pipe().subscribe();
   }
 }

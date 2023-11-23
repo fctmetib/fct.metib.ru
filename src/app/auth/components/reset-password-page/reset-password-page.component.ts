@@ -1,23 +1,12 @@
-import {
-  resetPasswordAction,
-  resetPasswordConfirmAction,
-} from './../../store/actions/resetPassword.action';
-import { ResetPasswordRequestInterface } from './../../types/reset-password/resetPasswordRequest.interface';
+import { ResetPasswordRequestInterface } from '../../types/reset-password/resetPasswordRequest.interface';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, finalize, tap } from 'rxjs';
 import { Component } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
-
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
 import { CommonService } from '../../../shared/services/common/common.service';
-import {
-  validationErrorsSelector,
-  isSubmittingSelector,
-  confirmationCodeSelector,
-  successMessageSelector,
-} from './../../store/selectors';
-import { resetMessagesAction } from '../../store/actions/common.action';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -28,11 +17,10 @@ export class ResetPasswordPageComponent {
   public form: FormGroup;
   public formConfirm: FormGroup;
 
-  public isSubmitting$: Observable<boolean>;
-  public backendErrors$: Observable<string | null>;
-  public confirmationCode$: Observable<string | null>;
-  public successMessage$: Observable<string | null>;
-  public isSubmitted: boolean = false;
+  public isSubmitting$ = new BehaviorSubject<boolean>(false);
+  public backendErrors$ = new BehaviorSubject<any>(null);
+  public confirmationCode$ = new BehaviorSubject<any>(null);
+  public successMessage$ = new BehaviorSubject<any>(null);
 
   image: any;
 
@@ -41,24 +29,18 @@ export class ResetPasswordPageComponent {
   private captchaCode: string = '';
 
   constructor(
-    private readonly sanitizer: DomSanitizer,
-    private readonly commonService: CommonService,
-    private readonly store: Store
+    private sanitizer: DomSanitizer,
+    private commonService: CommonService,
+    private authService: AuthService,
+    private router: Router,
   ) { }
 
   public ngOnInit(): void {
-    this.store.dispatch(resetMessagesAction());
-
     this.initializeForm();
     this.initializeValues();
   }
 
   public initializeValues(): void {
-    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
-    this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
-    this.confirmationCode$ = this.store.pipe(select(confirmationCodeSelector));
-    this.successMessage$ = this.store.pipe(select(successMessageSelector));
-
     this.updateCaptcha();
   }
 
@@ -91,7 +73,7 @@ export class ResetPasswordPageComponent {
   }
 
   public onSubmit(): void {
-    this.isSubmitted = true;
+    this.isSubmitting$.next(true);
 
     if (this.form.invalid) {
       return;
@@ -104,21 +86,32 @@ export class ResetPasswordPageComponent {
       },
       Login: this.form.value.login,
     };
-
-    this.store.dispatch(resetPasswordAction({ request }));
+  
+    this.authService.resetPassword(request).pipe(
+      tap((res) => {
+        this.confirmationCode$.next(res.ConfirmationCode)
+      }),
+      finalize(() => {
+        this.isSubmitting$.next(false);
+      })
+    ).subscribe();
   }
 
   public onConfirmSubmit(): void {
-    let ConfirmationCode = '';
-    this.confirmationCode$.subscribe((c) => {
-      ConfirmationCode = c;
-    });
+    this.isSubmitting$.next(true);
 
     const request: RegisterConfirmRequestInterface = {
-      ConfirmationCode,
+      ConfirmationCode: this.confirmationCode$.value,
       Pin: this.formConfirm.value.pin,
     };
 
-    this.store.dispatch(resetPasswordConfirmAction({ request }));
+    this.authService.resetPasswordConfirm(request).pipe(
+      tap(() => {
+        this.successMessage$.next('На указанную почту отправлена ссылка. Пожалуйста, перейдите по ней, для смены пароля')
+      }),
+      finalize(() => {
+        this.isSubmitting$.next(false);
+      })
+    ).subscribe();
   }
 }

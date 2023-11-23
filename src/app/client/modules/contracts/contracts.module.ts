@@ -24,7 +24,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { PaginatorModule } from 'primeng/paginator';
 import { SkeletonModule } from 'primeng/skeleton';
 import { DialogModule } from 'primeng/dialog';
-import { OrganizationService } from 'src/app/shared/services/share/organization.service';
 import { BackendErrorMessagesModule } from 'src/app/shared/modules/backendErrorMessages/backendErrorMessages.module';
 import { RequestsService } from '../requests/services/requests.service';
 import { ClipboardModule } from 'ngx-clipboard';

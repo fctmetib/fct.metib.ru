@@ -1,35 +1,33 @@
-import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { AvatarModule } from 'primeng/avatar';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
-import { DialogService } from 'primeng/dynamicdialog';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { MenuModule } from 'primeng/menu';
-import { MenubarModule } from 'primeng/menubar';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { SkeletonModule } from 'primeng/skeleton';
-import { InactiveDialogModule } from '../shared/modules/inactive-dialog/inactive-dialog.module';
-import { AdminGuard } from '../shared/services/admin.guard';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
-import { AuthGuard } from '../shared/services/auth.guard';
-import { AdminComponent } from './admin.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { MobileHeaderComponent } from './shared/mobile-header/mobile-header.component';
-import { AdminAuthInterceptor } from './shared/services/admin-auth.interceptor';
-import { PageStoreService } from './shared/services/page-store.service';
-import { UpdatePasswordDialogModule } from '../shared/modules/update-password-dialog/update-password-dialog.module';
+import {CommonModule} from '@angular/common';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
+import {AvatarModule} from 'primeng/avatar';
+import {ButtonModule} from 'primeng/button';
+import {CardModule} from 'primeng/card';
+import {CheckboxModule} from 'primeng/checkbox';
+import {DropdownModule} from 'primeng/dropdown';
+import {DialogService} from 'primeng/dynamicdialog';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {MenuModule} from 'primeng/menu';
+import {MenubarModule} from 'primeng/menubar';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {SkeletonModule} from 'primeng/skeleton';
+import {InactiveDialogModule} from '../shared/modules/inactive-dialog/inactive-dialog.module';
+import {AdminGuard} from '../shared/services/admin.guard';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {AdminComponent} from './admin.component';
+import {HeaderComponent} from './shared/header/header.component';
+import {MobileHeaderComponent} from './shared/mobile-header/mobile-header.component';
+import {AdminAuthInterceptor} from './shared/services/admin-auth.interceptor';
+import {PageStoreService} from './shared/services/page-store.service';
+import {UpdatePasswordDialogModule} from '../shared/modules/update-password-dialog/update-password-dialog.module';
 
 const routes = [
   {
-    path: '',
+    path: 'admin',
     component: AdminComponent,
     canActivate: [AdminGuard],
     children: [
@@ -102,4 +100,5 @@ const routes = [
     },
   ],
 })
-export class AdminModule {}
+export class AdminModule {
+}

@@ -1,11 +1,10 @@
 import { Paginator } from 'primeng/paginator';
 import { NewsService } from './../../../../shared/services/news.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageStoreService } from 'src/app/admin/shared/services/page-store.service';
 import { NewsInterface } from 'src/app/admin/shared/types/news.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { distinctUntilChanged, filter, map, tap } from 'rxjs/operators';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreateNewsDialogComponent } from '../create-news-dialog/create-news-dialog.component';
 

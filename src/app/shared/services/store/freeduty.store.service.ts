@@ -56,7 +56,12 @@ export class FreedutyStoreService {
   }
 
   private _fetch(data: DutyFilterRequestInterface): Observable<DutyInterface[]> {
-    const url = `${environment.apiUrl}/duty/filter`;
-    return this.http.post<DutyInterface[]>(url, data);
+    const url = `${environment.apiUrl}/v1/duties`;
+    return this.http.get<DutyInterface[]>(url);
+  }
+
+  public getFreeDuty(): Observable<DutyInterface[]> {
+    const url = `${environment.apiUrl}/v1/duties`;
+    return this.http.get<DutyInterface[]>(url);
   }
 }

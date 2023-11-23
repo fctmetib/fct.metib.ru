@@ -5,8 +5,6 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { CreateDemandFactoringRequestInterface } from '../../../types/requests/create-demand-factoring-request.interface';
 import { Observable, Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { createDemandFactoringAction } from '../../../store/actions/createDemand.action';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
@@ -45,8 +43,7 @@ export class DemandActionFactoringPageComponent
     private messageService: MessageService,
     private demandService: DemandService,
     private route: ActivatedRoute,
-    private router: Router,
-    private store: Store
+    private router: Router
   ) {}
 
   ngOnInit() {

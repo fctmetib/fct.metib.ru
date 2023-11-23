@@ -1,17 +1,10 @@
 import { ActivatedRoute, Params } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, finalize, tap } from 'rxjs';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
-
-import { resetMessagesAction } from './../../store/actions/common.action';
 import { CommonService } from '../../../shared/services/common/common.service';
-import {
-  isSubmittingSelector,
-  validationErrorsSelector,
-} from './../../store/selectors';
 import { LoginRequestInterface } from '../../types/login/loginRequest.interface';
-import { loginAction } from '../../store/actions/login.action';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -22,9 +15,7 @@ import { loginAction } from '../../store/actions/login.action';
 export class LoginPageComponent implements OnInit {
   public form: FormGroup;
 
-  public isSubmitting$: Observable<boolean> = new Observable<boolean>();
-  public backendErrors$: Observable<string | null>;
-  public isSubmitted: boolean = false;
+  public isSubmitting$ = new BehaviorSubject<boolean>(false);
 
   private currentIp: string = '';
 
@@ -38,15 +29,14 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     private readonly commonService: CommonService,
-    private readonly store: Store,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly authService: AuthService,
   ) { }
 
   public ngOnInit(): void {
-    this.store.dispatch(resetMessagesAction());
-
     this.initializeForm();
     this.initializeValues();
+    this.isSubmitting$.next(false);
 
     this.route.queryParams.subscribe((params: Params) => {
       if (params['inActive']) {
@@ -78,17 +68,13 @@ export class LoginPageComponent implements OnInit {
   }
 
   private initializeValues(): void {
-    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
-    this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
-
     this.commonService.getIP().subscribe((resp) => {
       this.currentIp = resp;
     });
   }
 
   public onSubmit(): void {
-
-    this.isSubmitted = true;
+    this.isSubmitting$.next(true);
     if (this.form.invalid) return;
 
     const request: LoginRequestInterface = {
@@ -97,8 +83,10 @@ export class LoginPageComponent implements OnInit {
       password: this.form.value.password,
     };
 
-    console.log('login-page request', request)
-
-    this.store.dispatch(loginAction({ request }));
+    this.authService.login(request).pipe(
+      finalize(() => {
+        this.isSubmitting$.next(false);
+      })
+    ).subscribe();
   }
 }

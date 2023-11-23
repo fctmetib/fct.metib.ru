@@ -18,12 +18,12 @@ export class RequestsService {
   //#region REST
 
   public fetch(): Observable<RequestsResponseInterface[]> {
-    const url = `${environment.apiUrl}/request`;
+    const url = `${environment.apiUrl}/v1/requests`;
     return this.http.get<RequestsResponseInterface[]>(url);
   }
 
   public add(data: ClientRequestInterface): Observable<RequestsResponseInterface> {
-    const url = `${environment.apiUrl}/request`;
+    const url = `${environment.apiUrl}/v1/requests`;
     return this.http.post<RequestsResponseInterface>(url, data);
   }
 
@@ -31,29 +31,29 @@ export class RequestsService {
     requestID: number,
     data: ClientRequestInterface
   ): Observable<RequestsResponseInterface> {
-    const url = `${environment.apiUrl}/request/${requestID}`;
+    const url = `${environment.apiUrl}/v1/requests/${requestID}`;
     return this.http.post<RequestsResponseInterface>(url, data);
   }
 
   public delete(requestID: number): Observable<{}> {
-    const url = `${environment.apiUrl}/request/${requestID}`;
+    const url = `${environment.apiUrl}/v1/requests/${requestID}`;
     return this.http.delete<{}>(url);
   }
 
   //#endregion
 
   public getFreeDocuments(): Observable<FileModeInterface[]> {
-    const url = `${environment.apiUrl}/request/freedocuments`;
+    const url = `${environment.apiUrl}/v1/requests/freedocuments`;
     return this.http.get<FileModeInterface[]>(url);
   }
 
   public parseRequest(): Observable<ClientShipmentInterface[]> {
-    const url = `${environment.apiUrl}/request/send/parse`;
+    const url = `${environment.apiUrl}/v1/requests/send/parse`;
     return this.http.post<ClientShipmentInterface[]>(url, {});
   }
 
   public addFreeduty(data: number[]): Observable<RequestsResponseInterface[]> {
-    const url = `${environment.apiUrl}/request`;
+    const url = `${environment.apiUrl}/v1/requests`;
     return this.http.post<RequestsResponseInterface[]>(url, data);
   }
 
@@ -63,21 +63,21 @@ export class RequestsService {
     includeDocuments: boolean,
     includeFiles: boolean
   ): Observable<RequestsResponseInterface> {
-    const url = `${environment.apiUrl}/request/${requestID}?includeShipments=${includeShipments}&includeDocuments=${includeDocuments}&includeFiles=${includeFiles}`;
+    const url = `${environment.apiUrl}/v1/requests/${requestID}?includeShipments=${includeShipments}&includeDocuments=${includeDocuments}&includeFiles=${includeFiles}`;
     return this.http.get<RequestsResponseInterface>(url);
   }
 
   public getStatesOfRequest(
     requestID: number
   ): Observable<ClientRequestStateInterface[]> {
-    const url = `${environment.apiUrl}/request/${requestID}/states`;
+    const url = `${environment.apiUrl}/v1/requests/${requestID}/states`;
     return this.http.get<ClientRequestStateInterface[]>(url);
   }
 
   public getRequestsWithFilter(
     dateFrom: Date
   ): Observable<RequestsResponseInterface[]> {
-    const url = `${environment.apiUrl}/request/filter/${dateFrom}`;
+    const url = `${environment.apiUrl}/v1/requests/filter/${dateFrom}`;
     return this.http.get<RequestsResponseInterface[]>(url);
   }
 
@@ -89,14 +89,14 @@ export class RequestsService {
 
   //TODO: нужно проверить, что возвращается
   public sendConfirm(data: ConfirmRequestInterface): Observable<any> {
-    const url = `${environment.apiUrl}/request/send/confirm`;
+    const url = `${environment.apiUrl}/v1/requests/send/confirm`;
     return this.http.post<any>(url, data);
   }
 
   public sendInit(
     data: number[]
   ): Observable<ClientRequestSendingInitRequestInterface> {
-    const url = `${environment.apiUrl}/request/send/init`;
+    const url = `${environment.apiUrl}/v1/requests/send/init`;
     return this.http.post<ClientRequestSendingInitRequestInterface>(url, data);
   }
 }

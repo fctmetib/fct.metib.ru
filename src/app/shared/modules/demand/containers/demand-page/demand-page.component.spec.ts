@@ -8,10 +8,7 @@ import { MessageModule } from 'primeng/message';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { EffectsFeatureModule, EffectsModule, EffectSources, EffectsRootModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
-import { StoreModule } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -41,7 +38,7 @@ describe('DemandPageComponent', () => {
         HttpClientModule,
         RouterTestingModule,
       ],
-      providers: [FormBuilder, DemandService, EffectSources],
+      providers: [FormBuilder, DemandService],
     }).compileComponents();
   });
 

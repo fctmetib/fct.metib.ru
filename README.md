@@ -12,13 +12,6 @@
 
 [Технический долг](https://github.com/mmartisynuk/metallinvestbank-web/blob/master/documentation/TODO.md).
 
-## Техническое описание
-
-В проекте используется:
-
-1. [NgRx](https://ngrx.io/) - библиотека, для управления состояниями.
-2. [PrimeNG](https://www.primefaces.org/) - библиотека с готовыми Angular UI компонентами.
-
 # Введение
 
 ## Запуск проекта

@@ -37,12 +37,6 @@
 - shared
 - - components - переиспользуемые компоненты модуля Client
 - - services - переиспользуемые сервисы 
-- store
-- - actions - Actions модуля Client
-- - effects - Effects модуля Client, отвечает за инкапсуляцию логики
-- - actionTypes - ActionTypes модуля Client
-- - reducers - Reducers модуля Client, отвечает за обновление Store
-- - selectors - Selectors модуля Client, выполняет задачи выборки данных из Store
 - types - модели данных
 - client...ts - основные файлы модуля 
 

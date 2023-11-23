@@ -58,7 +58,6 @@ import {FactoringComponent} from './components/factoring/factoring.component';
 import {DemandNavigationService} from './services/demand-navigation.service';
 import {DemandLoadingService} from './services/demand-loading.service';
 import {DemandService} from './services/demand.service';
-import {AuthService} from 'src/app/auth/services/auth.service';
 import {DemandResultComponent} from './components/common/demand-result/demand-result.component';
 import {DemandInfoComponent} from './components/common/demand-info/demand-info.component';
 import {AddressModalComponent} from './components/common/address/address.component';
@@ -136,7 +135,6 @@ import {DeliveryService} from '../../services/share/delivery.service';
     MessageService,
     CommonService,
     FileService,
-    AuthService,
     // Demand Services
     DemandNavigationService,
     DemandService,
