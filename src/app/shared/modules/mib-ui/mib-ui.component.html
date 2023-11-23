@@ -10,493 +10,652 @@
 		margin: 2rem 0 4rem;
 		display: flex;
 		justify-content: center;
+		gap: 1rem;
 	"
 >
 	{{ 'buttons' | titlecase }}
-	<button (click)="isShown = !isShown">{{ isShown ? 'Hide' : 'Show' }}</button>
+	<button (click)="isShownBtns = !isShownBtns">
+		{{ isShownBtns ? 'Hide' : 'Show' }}
+	</button>
 </h2>
-<div *ngIf="isShown" class="btn-wrapper">
-	<mib-button size="l">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		Placeholder
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+<div *ngIf="isShownBtns" class="wrapper">
+	<h3>filled-primary</h3>
+	<div class="btn-wrapper">
+		<mib-button size="l">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button [disabled]="true" size="l">
-		<mib-ref-icon btn-right-icon class="stroke" name="fi_search"></mib-ref-icon>
-		<mib-ref-icon btn-right-icon class="stroke" name="fi_x"></mib-ref-icon>
-		filled-primary dz
-		<mib-ref-icon
-			btn-left-icon
-			class="stroke"
-			name="fi_chevron-right"
-		></mib-ref-icon>
-		<mib-ref-icon
-			btn-right-icon
-			class="stroke"
-			name="fi_chevron-left"
-		></mib-ref-icon>
-	</mib-button>
+		<mib-button size="m">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="m">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-primary m
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="s">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="s">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-primary s
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="xs">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="xs">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-primary xs
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button [disabled]="true" size="l">
+			<mib-ref-icon
+				btn-left-icon
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				btn-right-icon
+				class="stroke"
+				name="fi_chevron-right"
+			></mib-ref-icon>
+			Disabled
+		</mib-button>
+	</div>
+	<div class="spacer-3"></div>
+	<h3>filled-accent</h3>
+	<div class="btn-wrapper">
+		<mib-button size="l" type="filled-accent">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="l" type="filled-accent">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-accent l
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="m" type="filled-accent">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button [disabled]="true" size="l" type="filled-accent">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-accent dz
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="s" type="filled-accent">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="m" type="filled-accent">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-accent m
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="xs" type="filled-accent">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="s" type="filled-accent">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-accent s
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button [disabled]="true" size="l" type="filled-accent">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Disabled
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
+	</div>
+	<div class="spacer-3"></div>
+	<h3>filled-secondary</h3>
+	<div class="btn-wrapper">
+		<mib-button size="l" type="filled-secondary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="xs" type="filled-accent">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-accent xs
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="m" type="filled-secondary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="l" type="filled-secondary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-secondary l
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="s" type="filled-secondary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button [disabled]="true" size="l" type="filled-secondary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-secondary dz
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="xs" type="filled-secondary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="m" type="filled-secondary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-secondary m
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button [disabled]="true" size="l" type="filled-secondary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Disabled
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
+	</div>
+	<div class="spacer-3"></div>
+	<h3>floating</h3>
+	<div class="btn-wrapper">
+		<mib-button size="l" type="floating">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="s" type="filled-secondary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-secondary s
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="m" type="floating">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="xs" type="filled-secondary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		filled-secondary xs
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="s" type="floating">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="l" type="floating">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		floating l
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="xs" type="floating">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button [disabled]="true" size="l" type="floating">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		floating dz
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button [disabled]="true" size="l" type="floating">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Disabled
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
+	</div>
+	<div class="spacer-3"></div>
+	<h3>outline-primary</h3>
+	<div class="btn-wrapper">
+		<mib-button size="l" type="outline-primary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="m" type="floating">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		floating m
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="m" type="outline-primary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="s" type="floating">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		floating s
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="s" type="outline-primary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="xs" type="floating">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		floating xs
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="xs" type="outline-primary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="l" type="outline-primary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		outline-primary l
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button [disabled]="true" size="l" type="outline-primary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Disabled
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
+	</div>
+	<div class="spacer-3"></div>
+	<h3>outline-accent</h3>
+	<div class="btn-wrapper">
+		<mib-button size="l" type="outline-accent">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button [disabled]="true" size="l" type="outline-primary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		outline-primary dz
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="m" type="outline-accent">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="m" type="outline-primary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		outline-primary m
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="s" type="outline-accent">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="s" type="outline-primary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		outline-primary s
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="xs" type="outline-accent">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="xs" type="outline-primary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		outline-primary xs
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button [disabled]="true" size="l" type="outline-accent">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Disabled
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
+	</div>
+	<div class="spacer-3"></div>
+	<h3>ghost-primary</h3>
+	<div class="btn-wrapper">
+		<mib-button size="l" type="ghost-primary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="l" type="outline-accent">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		outline-accent l
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="m" type="ghost-primary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button [disabled]="true" size="l" type="outline-accent">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		outline-accent dz
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="s" type="ghost-primary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="m" type="outline-accent">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		outline-accent m
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="xs" type="ghost-primary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="s" type="outline-accent">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		outline-accent s
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button [disabled]="true" size="l" type="ghost-primary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Disabled
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
+	</div>
+	<div class="spacer-3"></div>
+	<h3>ghost-secondary</h3>
+	<div class="btn-wrapper">
+		<mib-button size="l" type="ghost-secondary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="xs" type="outline-accent">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		outline-accent xs
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="m" type="ghost-secondary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="l" type="ghost-primary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		ghost-primary l
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="s" type="ghost-secondary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button [disabled]="true" size="l" type="ghost-primary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		ghost-primary dz
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button size="xs" type="ghost-secondary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Placeholder
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
 
-	<mib-button size="m" type="ghost-primary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		ghost-primary m
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
-
-	<mib-button size="s" type="ghost-primary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		ghost-primary s
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
-
-	<mib-button size="xs" type="ghost-primary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		ghost-primary xs
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
-
-	<mib-button size="l" type="ghost-secondary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		ghost-secondary l
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
-
-	<mib-button [disabled]="true" size="l" type="ghost-secondary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		ghost-secondary dz
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
-
-	<mib-button size="m" type="ghost-secondary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		ghost-secondary m
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
-
-	<mib-button size="s" type="ghost-secondary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		ghost-secondary s
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
-
-	<mib-button size="xs" type="ghost-secondary">
-		<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-		ghost-secondary xs
-		<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-	</mib-button>
+		<mib-button [disabled]="true" size="l" type="ghost-secondary">
+			<mib-ref-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+			Disabled
+			<mib-ref-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+		</mib-button>
+	</div>
 </div>
 
 <hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
 
-<h2 style="text-align: center; margin: 2rem 0 4rem">
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
 	{{ 'inputs' | titlecase }}
+	<button (click)="isShownInputs = !isShownInputs">
+		{{ isShownInputs ? 'Hide' : 'Show' }}
+	</button>
 </h2>
-<div class="btn-wrapper">
-	<mib-input>
-		<input
-			MibInput
-			type="text"
-			formControlName="secretWord"
-			[size]="inputSizeL"
-			styleType="filled-secondary"
-			placeholder="Ваше секретное слово"
-		/>
-		<ng-container input-label>Секретное L</ng-container>
-		<mib-ref-icon
-			class="stroke path"
-			input-left-icon
-			name="fi_search"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_chevron-left"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_x"
-		></mib-ref-icon>
-	</mib-input>
-	<mib-input>
-		<ng-container input-label>Секретное M</ng-container>
-		<input
-			MibInput
-			type="text"
-			formControl="control"
-			[size]="inputSizeM"
-			styleType="filled-secondary"
-			placeholder="Ваше секретное слово"
-		/>
-		<mib-ref-icon
-			class="stroke path"
-			input-left-icon
-			name="fi_search"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_chevron-left"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_x"
-		></mib-ref-icon>
-	</mib-input>
-	<mib-input>
-		<ng-container input-label>Секретное S</ng-container>
-		<input
-			MibInput
-			type="text"
-			formControlName="secretWord"
-			[size]="inputSizeS"
-			styleType="filled-secondary"
-			placeholder="Ваше секретное слово"
-		/>
-		<mib-ref-icon
-			class="stroke path"
-			input-left-icon
-			name="fi_search"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_chevron-left"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_x"
-		></mib-ref-icon>
-	</mib-input>
-	<mib-input>
-		<ng-container input-label>Секретное XS</ng-container>
-		<input
-			MibInput
-			type="text"
-			formControlName="secretWord"
-			[size]="inputSizeXS"
-			styleType="filled-secondary"
-			placeholder="Ваше секретное слово"
-		/>
-		<mib-ref-icon
-			class="stroke path"
-			input-left-icon
-			name="fi_search"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_chevron-left"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_x"
-		></mib-ref-icon>
-	</mib-input>
-
-	<mib-input>
-		<input
-			MibInput
-			type="text"
-			formControlName="secretWord"
-			[size]="inputSizeL"
-			styleType="floating"
-			placeholder="Ваше секретное слово"
-		/>
-		<ng-container input-label>Секретное L</ng-container>
-		<mib-ref-icon
-			class="stroke path"
-			input-left-icon
-			name="fi_search"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_chevron-left"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_x"
-		></mib-ref-icon>
-	</mib-input>
-	<mib-input>
-		<ng-container input-label>Секретное M</ng-container>
-		<input
-			MibInput
-			type="text"
-			formControl="control"
-			[size]="inputSizeM"
-			styleType="floating"
-			placeholder="Ваше секретное слово"
-		/>
-		<mib-ref-icon
-			class="stroke path"
-			input-left-icon
-			name="fi_search"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_chevron-left"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_x"
-		></mib-ref-icon>
-	</mib-input>
-	<mib-input>
-		<ng-container input-label>Секретное S</ng-container>
-		<input
-			MibInput
-			type="text"
-			formControlName="secretWord"
-			[size]="inputSizeS"
-			styleType="floating"
-			placeholder="Ваше секретное слово"
-		/>
-		<mib-ref-icon
-			class="stroke path"
-			input-left-icon
-			name="fi_search"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_chevron-left"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_x"
-		></mib-ref-icon>
-	</mib-input>
-	<mib-input>
-		<ng-container input-label>Секретное XS</ng-container>
-		<input
-			MibInput
-			type="text"
-			formControlName="secretWord"
-			[size]="inputSizeXS"
-			styleType="floating"
-			placeholder="Ваше секретное слово"
-		/>
-		<mib-ref-icon
-			class="stroke path"
-			input-left-icon
-			name="fi_search"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_chevron-left"
-		></mib-ref-icon>
-		<mib-ref-icon
-			input-right-icon
-			c-bgr-secondary
-			class="stroke"
-			name="fi_x"
-		></mib-ref-icon>
-	</mib-input>
+<div *ngIf="isShownInputs" class="wrapper">
+	<h3>filled-secondary</h3>
+	<div class="spacer-3"></div>
+	<div class="input-wrapper">
+		<mib-input>
+			<input
+				MibInput
+				type="text"
+				formControlName="secretWord"
+				[size]="inputSizeL"
+				styleType="filled-secondary"
+				placeholder="Label"
+			/>
+			<ng-container input-label>Label</ng-container>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				formControl="control"
+				[size]="inputSizeM"
+				styleType="filled-secondary"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				formControlName="secretWord"
+				[size]="inputSizeS"
+				styleType="filled-secondary"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				formControlName="secretWord"
+				[size]="inputSizeXS"
+				styleType="filled-secondary"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+	</div>
+	<div class="spacer-3"></div>
+	<h3>floating</h3>
+	<div class="input-wrapper">
+		<mib-input>
+			<input
+				MibInput
+				type="text"
+				formControlName="secretWord"
+				[size]="inputSizeL"
+				styleType="floating"
+				placeholder="Label"
+			/>
+			<ng-container input-label>Label</ng-container>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				formControl="control"
+				[size]="inputSizeM"
+				styleType="floating"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				formControlName="secretWord"
+				[size]="inputSizeS"
+				styleType="floating"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				formControlName="secretWord"
+				[size]="inputSizeXS"
+				styleType="floating"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+	</div>
+	<div class="spacer-3"></div>
+	<h3>separated</h3>
+	<div class="input-wrapper">
+		<mib-input>
+			<input
+				MibInput
+				type="text"
+				formControlName="secretWord"
+				[size]="inputSizeL"
+				styleType="separated"
+				placeholder="Label"
+			/>
+			<ng-container input-label>Label</ng-container>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				formControl="control"
+				[size]="inputSizeM"
+				styleType="separated"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				formControlName="secretWord"
+				[size]="inputSizeS"
+				styleType="separated"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				formControlName="secretWord"
+				[size]="inputSizeXS"
+				styleType="separated"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
+	</div>
 	<div class="spacer-10"></div>
 </div>

@@ -1,8 +1,8 @@
 :root {
 /* white-gradation */
 	--wgr-primary: #fff;
-	--wgr-secondary: #eff2f5;
-	--wgr-tertiary: #e1e5ea;
+	--wgr-secondary: #f2f4f7;
+	--wgr-tertiary: #e7eaee;
 	--wgr-quaternary: #c8cbd0;
 
 /* black-gradation */
@@ -24,17 +24,17 @@
 	--bti-quaternary: #95999d;
 	
 /* overlay-primary */
-	--overlay-primary: rgba(9, 13, 17, 0.80);
-	--overlay-secondary: rgba(9, 13, 17, 0.60);
-	--overlay-tertiary: rgba(9, 13, 17, 0.40);
-	--overlay-quaternary: rgba(9, 13, 17, 0.20);
+	--overlay-primary: #373c3f;
+	--overlay-secondary: #666a6d;
+	--overlay-tertiary: #94979b;
+	--overlay-quaternary: #c4c6c9;
 
 /* main-color */
 	--mc-hover: #3687E2;
 	--mc-default: #1760CF;
 	--mc-active: #0D54A5;
-	--mc-quaternary: #C2D4F0;
-	--mc-quinary: #EDF1F8;
+	--mc-quaternary: #dee8f7;
+	--mc-quinary: #f0f4f9;
 	--mc-gradient-default: linear-gradient(114deg, #3686E2 0%, #0D54A5 100%)
 
 /* background-primary */

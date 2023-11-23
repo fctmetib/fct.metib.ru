@@ -18,11 +18,17 @@ import { FormControl, Validators } from '@angular/forms'
 				gap: 2rem;
 				flex-wrap: wrap;
 			}
+			.input-wrapper {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+				gap: 2rem;
+			}
 		`
 	]
 })
 export class MibUiComponent {
-	isShown = false
+	isShownBtns = false
+	isShownInputs = true
 	public inputSizeL: InputSize = 'l'
 	public inputSizeM: InputSize = 'm'
 	public inputSizeS: InputSize = 's'

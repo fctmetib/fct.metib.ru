@@ -62,6 +62,27 @@
 	}
 }
 
+@mixin input-type-separated {
+	background: var(--wgr-primary);
+	&.input {
+		outline: 0;
+		border-bottom-right-radius: unset;
+		border-bottom-left-radius: unset;
+		border-bottom: 1px solid var(--wgr-tertiary);
+		&:focus {
+			border-bottom: 1px solid var(--wgr-tertiary);
+		}
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-tertiary);
+			box-shadow: none;
+			mib-ref-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
+		}
+	}
+}
+
 @mixin input-l {
 	@include input-size(56px, var(--input-l-icon-size), var(--input-l-icons-gap));
 	@include text-l;
@@ -86,13 +107,6 @@
 	@include text-s;
 }
 
-// @mixin input-iconly($default_color) {
-// 	& ~ &_icon-wrapper mib-ref-icon,
-// 	& ~ .textarea-panel mib-ref-icon {
-// 		@include icon-color($default_color);
-// 	}
-// }
-
 .box-wrapper {
 	max-width: 360px;
 	position: relative;
@@ -106,6 +120,7 @@
 	--input-xs-icons-gap: 8px;
 	border-radius: var(--main-border-radius);
 	border: 1px solid transparent;
+	transition: var(--main-transition);
 	& mib-ref-icon {
 		@include icon-color(var(--bti-tertiary));
 	}
@@ -114,6 +129,9 @@
 	}
 	&:hover:has(.input_type-floating) {
 		box-shadow: var(--custom-floating-shadow);
+	}
+	&:hover:has(.input_type-separated) input {
+		border-bottom: transparent;
 	}
 	&:hover .left-wrapper mib-ref-icon {
 		@include icon-color(var(--bti-secondary));
@@ -238,6 +256,9 @@
 	}
 	&_type-floating {
 		@include input-type-floating;
+	}
+	&_type-separated {
+		@include input-type-separated;
 	}
 }
 
