@@ -128,7 +128,6 @@
 		.box-label {
 			display: block;
 			transform: unset;
-			top: 14%;
 			padding-left: 16px !important;
 			@include highlight-text;
 			@include highlight-xs;
@@ -141,19 +140,39 @@
 			@include text-l;
 		}
 	}
+	&:has(.input_l):has(input:focus) {
+		.box-label {
+			top: 10px;
+		}
+	}
 	&:has(.input_m) {
 		.box-label {
 			@include text-m;
+		}
+		&:has(.input_m):has(input:focus) {
+			.box-label {
+				top: 8px;
+			}
 		}
 	}
 	&:has(.input_s) {
 		.box-label {
 			@include text-s;
 		}
+		&:has(.input_s):has(input:focus) {
+			.box-label {
+				top: 4px;
+			}
+		}
 	}
 	&:has(.input_xs) {
 		.box-label {
 			@include text-s;
+		}
+		&:has(.input_xs):has(input:focus) {
+			.box-label {
+				top: 2px;
+			}
 		}
 		mib-ref-icon {
 			@include icon-size(var(--input-s-icon-size));
