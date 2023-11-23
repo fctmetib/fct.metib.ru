@@ -99,13 +99,13 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
     if (this.filterForm.value.dateFrom && this.filterForm.value.dateTo) {
       if (this.organizationId) {
         let data: DutyFilterRequestInterface = {
-          CustomerID: this.organizationId,
-          DateFrom: new Date(this.filterForm.value.dateFrom),
-          DateTo: new Date(this.filterForm.value.dateTo),
-          Free: isFree,
+          // CustomerID: this.organizationId,
+          dateFrom: new Date(this.filterForm.value.dateFrom),
+          dateTo: new Date(this.filterForm.value.dateTo),
+          freeOnly: isFree,
         };
 
-        this.freeduty$ = this.storeService.getFreeduty(data, isRefresh);
+        this.freeduty$ = this.storeService.getFreeDuty(); // .getFreeduty(data, isRefresh);
         this.loading$ = this.storeService.getLoading();
       }
     }
@@ -210,7 +210,7 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
     this.subscription$.add(this.subscription$.add(this.service.createRequestsByDutyIds(flattenedRequestsId).subscribe(
       (response) => {
         this.closeRequestsModal();
-        this.router.navigate(['/requests']);
+        this.router.navigate(['/client/requests']);
       },
       (err) => {
         this.errorRequestsDialogMessage = err.error;

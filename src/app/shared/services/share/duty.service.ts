@@ -34,7 +34,7 @@ export class DutyService {
   createRequestsByDutyIds(
     data: number[]
   ): Observable<ClientRequestInterface[]> {
-    const url = `${environment.apiUrl}/request/freeduty`;
+    const url = `${environment.apiUrl}/v1/freeduty`;
     return this.http.post<ClientRequestInterface[]>(url, data);
   }
 }
