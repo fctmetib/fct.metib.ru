@@ -317,7 +317,7 @@
 				<input
 					MibInput
 					type="text"
-					formControlName="labelss"
+					formControlName="testPlaceholder"
 					required
 					[size]="inputSizeL"
 					styleType="filled-secondary"
@@ -342,9 +342,9 @@
 					name="fi_x"
 				></mib-ref-icon>
 			</mib-input>
-			<!-- {{ control.get('label').errors | json }}  -->
+			<!-- {{ form.get('testPlaceholder').errors | json }} -->
 			<button (click)="lookIt()">check it</button>
-		</form> 
+		</form>
 		<mib-input>
 			<ng-container input-label>Label</ng-container>
 			<input
@@ -372,7 +372,7 @@
 				name="fi_x"
 			></mib-ref-icon>
 		</mib-input>
-	<mib-input>
+		<mib-input>
 			<ng-container input-label>Label</ng-container>
 			<input
 				MibInput
@@ -425,12 +425,12 @@
 				class="stroke"
 				name="fi_x"
 			></mib-ref-icon>
-		</mib-input> 
+		</mib-input>
 	</div>
 	<div class="spacer-3"></div>
 	<h3>floating</h3>
 	<div class="input-wrapper">
-		 <mib-input>
+		<mib-input>
 			<input
 				MibInput
 				type="text"
@@ -537,7 +537,7 @@
 				class="stroke"
 				name="fi_x"
 			></mib-ref-icon>
-		</mib-input> 
+		</mib-input>
 	</div>
 	<div class="spacer-3"></div>
 	<h3>separated</h3>

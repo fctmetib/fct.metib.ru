@@ -40,13 +40,23 @@ export class MibUiComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.form = this.fb.group({
-			labelss: ['', Validators.required]
+			testPlaceholder: [
+				'',
+				[Validators.required, Validators.minLength(3), Validators.maxLength(10)]
+			]
 		})
 
 		this.lookIt()
 	}
 
 	lookIt() {
-		console.log(this.form)
+		console.log(
+			'ERR>>>',
+			this.form.errors,
+			'VALID>>>',
+			this.form.valid,
+			'VALUE>>>',
+			this.form.value
+		)
 	}
 }
