@@ -1,6 +1,6 @@
 export interface ClientShipmentInterface {
-  AccountNumber: string;
-  AccountDate: Date;
+  AccountNumber?: string;
+  AccountDate?: Date;
   InvoiceNumber: string;
   InvoiceDate: Date;
   WaybillNumber: string;

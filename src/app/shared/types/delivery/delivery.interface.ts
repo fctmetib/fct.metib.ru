@@ -14,3 +14,13 @@ export interface DeliveryInterface {
   Statistics: DeliveryStatisticsInterface;
   ID: number;
 }
+
+export interface DeliveryRef {
+  CurrencyCode: string;
+  Title: string;
+  CustomerID: number;
+  Customer: string;
+  DebtorID: number;
+  Debtor: string;
+  ID: number;
+}
