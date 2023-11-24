@@ -40,9 +40,6 @@
 	background: var(--wgr-secondary);
 	&.input {
 		outline: 0;
-		// &:hover {
-		// 	border: 1px solid var(--wgr-tertiary);
-		// }
 		&:focus {
 			border: 1px solid var(--mc-default);
 			color: var(--bti-primary);
@@ -141,17 +138,15 @@
 			border: 1px solid var(--wgr-tertiary);
 		}
 	}
-	// &:has(.ng-touched) {
-	// 	background-color: green;
-	// }
-	// &:hover:has(.input_type-filled-secondary) {
-	// 	border: 1px solid var(--wgr-tertiary);
-	// }
-	&:hover:has(.input_type-floating) {
-		box-shadow: var(--custom-floating-shadow);
+	&:has(.input_type-floating) {
+		:hover {
+			box-shadow: var(--custom-floating-shadow);
+		}
 	}
-	&:hover:has(.input_type-separated) input {
-		border-bottom: transparent;
+	&:has(.input_type-separated) {
+		:hover input {
+			border-bottom: transparent;
+		}
 	}
 	&:hover .left-wrapper mib-ref-icon {
 		@include icon-color(var(--bti-secondary));
@@ -159,32 +154,6 @@
 	&:hover .box-label {
 		color: (var(--bti-secondary));
 	}
-	// & .box-label:has(input:not(:placeholder-shown):not(:focus)) {
-	// 	top: 28%;
-	// 	// top: 50%;
-	// 	// transform: translateY(-50%);
-	// 	position: absolute;
-	// 	padding-left: 16px;
-	// 	white-space: nowrap;
-	// 	cursor: text;
-	// 	transition: var(--main-transition);
-	// }
-	// &:has(input:not(:placeholder-shown):not(:focus)) .box-label {
-	// 	display: block;
-	// 	transform: unset;
-	// 	padding-left: 16px !important;
-	// 	font-family: var(--ff-primary);
-	// 	font-style: normal;
-	// 	font-weight: var(--fw-medium);
-	// 	color: var(--bti-primary);
-	// 	transition: var(--transition);
-	// 	-webkit-user-select: text;
-	// 	user-select: text;
-	// 	font-size: 10px;
-	// 	line-height: 12px;
-	// 	color: var(--mc-default);
-	// 	transition: var(--main-transition);
-	// }
 	.box-label {
 		top: 28%;
 		// top: 50%;
@@ -214,6 +183,9 @@
 		.input,
 		.left-wrapper {
 			padding-top: 12px;
+			mib-ref-icon {
+				@include icon-color(var(--bti-secondary));
+			}
 		}
 		.box-label {
 			display: block;
@@ -234,59 +206,39 @@
 		@include box-label-styles(8px) {
 			@include text-m;
 		}
-		// .box-label {
-		// 	@include text-m;
-		// }
-		// &:has(.input_m):has(input:focus) {
-		// 	.box-label {
-		// 		top: 8px;
-		// 	}
-		// }
 	}
 	&:has(.input_s) {
 		@include box-label-styles(4px) {
-			@include text-s;
+			@include text-m;
 		}
-		// .box-label {
-		// 	@include text-s;
-		// }
-		// &:has(.input_s):has(input:focus) {
-		// 	.box-label {
-		// 		top: 4px;
-		// 	}
-		// }
 	}
 	&:has(.input_xs) {
 		@include box-label-styles(2px) {
 			@include text-s;
 		}
-		// .box-label {
-		// 	@include text-s;
-		// }
-		// &:has(.input_xs):has(input:focus) {
-		// 	.box-label {
-		// 		top: 2px;
-		// 	}
-		// }
 		mib-ref-icon {
 			@include icon-size(var(--input-s-icon-size));
 		}
 	}
-	&:has(.input_error) {
-		// border: 1px solid var(--alc-default);
-		background-color: red;
+	&:has(.input_active) {
 		.box-label {
-			color: var(--alc-default !important);
+			color: var(--succes-color-default) !important;
+		}
+		input {
+			border: 1px solid var(--succes-color-default) !important;
+		}
+	}
+	&:has(.input_error):has(input:not(.ng-pristine)) {
+		.box-label {
+			color: var(--alc-default) !important;
+		}
+		input {
+			border: 1px solid var(--alc-default) !important;
 		}
 		.left-wrapper {
 			mib-ref-icon {
-				@include icon-color(--alc-default);
+				@include icon-color(var(--alc-default) !important);
 			}
-		}
-	}
-	&:has(.input_active) {
-		.box-label {
-			color: green !important;
 		}
 	}
 }
@@ -327,14 +279,6 @@
 	}
 	&_type-separated {
 		@include input-type-separated;
-	}
-	&_active {
-		color: green !important;
-		border: 1px solid green !important;
-		// color: var(--bti-secondary);
-	}
-	&_error {
-		color: var(--alc-default);
 	}
 }
 
