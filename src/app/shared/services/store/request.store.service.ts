@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, finalize, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { RequestsResponseInterface } from 'src/app/client/modules/requests/types/requestResponse.interface';
 
@@ -26,13 +26,19 @@ export class RequestStoreService {
 
     if (this._requestStore.length === 0 || isRefresh) {
       this._fetch()
-        .subscribe((resp: Array<RequestsResponseInterface>): void => {
-          const result = resp?.sort((a, b): number => b.ID - a.ID);
-          this.setRequests(result);
-        });
+        .pipe(
+          tap((resp: Array<RequestsResponseInterface>) => {
+            const result = resp?.sort((a, b): number => b.ID - a.ID);
+            this.setRequests(result);
+          }),
+          finalize(() => {
+            
+            this._setLoading = false;
+          })
+        )
+        .subscribe();
     }
 
-    this._setLoading = false;
     return this._requests$;
   }
 

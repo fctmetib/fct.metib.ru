@@ -31,6 +31,7 @@ export class TableHighlightDirective { }
 })
 export class RequestsPageComponent implements OnInit, OnDestroy {
   public requests$: Observable<RequestsResponseInterface[] | null>;
+  public loading$: Observable<boolean>;
 
   public selectedRequest: RequestsResponseInterface;
 
@@ -66,6 +67,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   private initializeValues(): void {
+    this.loading$ = this.requestStoreService.getLoading;
     this.items = [
       {
         id: 'create',
