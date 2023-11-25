@@ -220,6 +220,20 @@
 			@include icon-size(var(--input-s-icon-size));
 		}
 	}
+	&:has(.input_error):has(input:not(.ng-pristine)):has(.input_type-separated) {
+		input {
+			border-top: transparent !important;
+			border-right: transparent !important;
+			border-left: transparent !important;
+		}
+	}
+	&:has(.input_active):has(input:not(.ng-pristine)):has(.input_type-separated) {
+		input {
+			border-top: transparent !important;
+			border-right: transparent !important;
+			border-left: transparent !important;
+		}
+	}
 	&:has(.input_active) {
 		.box-label {
 			color: var(--succes-color-default) !important;
@@ -234,6 +248,7 @@
 		}
 		input {
 			border: 1px solid var(--alc-default) !important;
+			color: var(--alc-default);
 		}
 		.left-wrapper {
 			mib-ref-icon {

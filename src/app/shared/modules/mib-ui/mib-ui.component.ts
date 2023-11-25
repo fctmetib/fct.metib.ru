@@ -43,6 +43,14 @@ export class MibUiComponent implements OnInit {
 			testPlaceholder: [
 				'',
 				[Validators.required, Validators.minLength(3), Validators.maxLength(10)]
+			],
+			testPlaceholder2: [
+				'',
+				[Validators.required, Validators.minLength(3), Validators.maxLength(10)]
+			],
+			testPlaceholder3: [
+				'',
+				[Validators.required, Validators.minLength(3), Validators.maxLength(10)]
 			]
 		})
 
