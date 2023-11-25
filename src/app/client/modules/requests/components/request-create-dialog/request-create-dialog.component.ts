@@ -187,8 +187,8 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
       if (shipment) {
         this.currentShipmentID = shipment.ID;
         this.shipmentForm.patchValue({
-          // accountNumber: shipment.AccountNumber || '',
-          // accountDate: new Date(shipment.AccountDate),
+          accountNumber: shipment.AccountNumber || null,
+          accountDate: shipment.AccountDate || null,
           invoiceNumber: shipment.InvoiceNumber,
           invoiceDate: new Date(shipment.InvoiceDate),
           dateShipment: new Date(shipment.DateShipment),
@@ -214,19 +214,20 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
 
   addShipment() {
     let shipment: ClientShipmentInterface = {
-      // AccountNumber: this.shipmentForm.value.accountNumber,
-      // AccountDate: this.shipmentForm.value.accountDate,
-      InvoiceNumber: this.shipmentForm.value.invoiceNumber,
-      InvoiceDate: this.shipmentForm.value.invoiceDate,
-      WaybillNumber: null,
-      WaybillDate: null,
-      DateShipment: this.shipmentForm.value.dateShipment,
-      DatePayment: null,
-      SummToFactor: null,
-      Summ: this.shipmentForm.value.summ,
       ID: Math.floor(Math.random() * 100),
+      DateShipment: this.shipmentForm.value.dateShipment,
+      InvoiceDate: this.shipmentForm.value.invoiceDate,
+      WaybillDate: this.shipmentForm.value.accountDate,
+      WaybillNumber: this.shipmentForm.value.accountNumber,
+      InvoiceNumber: this.shipmentForm.value.invoiceNumber,
+      Summ: this.shipmentForm.value.summ,
+      SummToFactor: 0,
+      AccountNumber: null,
+      AccountDate: null,
+      DatePayment: null,
     };
 
+    console.log(shipment)
     if (this.currentShipmentID) {
       shipment.ID = this.currentShipmentID;
       let shipmentIndex = this.shipments.indexOf(

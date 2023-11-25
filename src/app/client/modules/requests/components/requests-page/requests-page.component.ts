@@ -12,7 +12,6 @@ import {
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SortEvent, MenuItem } from 'primeng/api';
 import { RequestsService } from '../../services/requests.service';
-import { AgencyRequestCreateDialogComponent } from '../agency-request-create-dialog/agency-request-create-dialog.component';
 import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
@@ -70,46 +69,36 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     this.loading$ = this.requestStoreService.getLoading;
     this.items = [
       {
+        // todo: нужно
         id: 'create',
         label: 'Создать',
         command: () => this.showCreateRequestDialog(),
       },
+      // {
+      //   id: 'edit',
+      //   label: 'Редактировать',
+      //   command: () => this.showEditDialog(),
+      // },
+      // {
+      //   // todo: нужно
+      //   id: 'createCorrection',
+      //   label: 'Сделать коррекцию',
+      //   command: () => this.showCorrectionDialog(),
+      // },
       {
-        id: 'edit',
-        label: 'Редактировать',
-        command: () => this.showEditDialog(),
-      },
-      {
-        id: 'agency',
-        label: 'Агентская заявка',
-        command: () => this.showCreateAgencyRequestDialog(),
-      },
-      {
-        id: 'createFrom',
-        label: 'Создать из подтверждений',
-        routerLink: '',
-      },
-      {
-        id: 'createCorrection',
-        label: 'Сделать коррекцию',
-        command: () => this.showCorrectionDialog(),
-      },
-      {
+        // todo: нужно
         id: 'events',
         label: 'События',
         routerLink: '',
       },
       {
-        id: 'documents',
-        label: 'Документы',
-        routerLink: '',
-      },
-      {
+        // todo: нужно
         id: 'remove',
         label: 'Удалить',
         routerLink: '',
       },
       {
+        // todo: нужно
         id: 'send',
         label: 'Отправить',
         command: () => this.initSend(),
@@ -146,15 +135,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   private fetch(isRefresh?: boolean): void {
     this.requestStoreService.clear();
     this.requests$ = this.requestStoreService.getRequests(isRefresh);
-  }
-
-  private showCreateAgencyRequestDialog(): void {
-    this.ref = this.dialogService.open(AgencyRequestCreateDialogComponent, {
-      header: 'Реестр поручений',
-      width: '85%',
-      contentStyle: { height: '800px', overflow: 'auto' },
-      baseZIndex: 10000,
-    });
   }
 
   private showCreateRequestDialog(): void {
