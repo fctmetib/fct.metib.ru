@@ -14,19 +14,19 @@ const routes: Routes = [
 		loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
 	},
 	{
-		path: 'client',
+		path: '',
 		loadChildren: () =>
 			import('./client/client.module').then(m => m.ClientModule)
 	},
 	{
-		path: 'not-verify',
+		path: '',
 		loadChildren: () =>
 			import('./not-verify-client/not-verify-client.module').then(
 				m => m.NotVerifyClientModule
 			)
 	},
 	{
-		path: 'admin',
+		path: '',
 		loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
 	},
 	{ path: 'ui-test', component: MibUiComponent },
