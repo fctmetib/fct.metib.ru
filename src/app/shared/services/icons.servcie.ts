@@ -15,7 +15,9 @@ export class IconsService {
 		'fi_chevron-left',
 		'fi_chevron-right',
 		'fi_search',
-		'fi_x'
+		'fi_x',
+		'fi_menu',
+		'fi_chevron-down'
 	]
 
 	public async initIcons(): Promise<void> {
