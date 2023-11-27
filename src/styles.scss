@@ -2,3 +2,13 @@
 @import 'src/styles/layout/_global';
 @import 'src/styles/blocks/_button';
 @import 'src/styles/blocks/_input';
+
+:root {
+	--fw-regular: 400;
+	--fw-medium: 500;
+	--fw-semi-bold: 600;
+
+	--ff-primary: 'Inner', sans-serif;
+
+	--transition: 0;
+}

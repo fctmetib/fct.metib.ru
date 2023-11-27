@@ -15,7 +15,7 @@ import { ButtonSize, ButtonType } from '../button/interfaces/button.interface'
 	styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent implements AfterViewInit, DoCheck {
-	@Input() size: ButtonSize = 'l'
+	@Input() size: ButtonSize = 'xl'
 	@Input() type: ButtonType = 'filled-primary'
 	@Input() rounded: boolean = false
 	@Input() loading: boolean = false

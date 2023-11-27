@@ -191,8 +191,8 @@
 			display: block;
 			transform: unset;
 			padding-left: 16px !important;
-			@include highlight-text;
-			@include highlight-xs;
+			@include body-text;
+			font-weight: var(--fw-medium);
 			color: var(--mc-default);
 			transition: var(--main-transition);
 		}
