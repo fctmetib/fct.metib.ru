@@ -319,7 +319,7 @@
 					type="text"
 					formControlName="testPlaceholder"
 					required
-					[size]="inputSizeL"
+					[size]="inputSizeXL"
 					styleType="filled-secondary"
 					placeholder="Label"
 				/>
@@ -345,6 +345,33 @@
 		</div>
 		<!-- {{ form.get('testPlaceholder').errors | json }} -->
 		<!-- <button (click)="lookIt()">check it</button> -->
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				[size]="inputSizeL"
+				styleType="filled-secondary"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
 		<mib-input>
 			<ng-container input-label>Label</ng-container>
 			<input
@@ -378,33 +405,6 @@
 				MibInput
 				type="text"
 				[size]="inputSizeS"
-				styleType="filled-secondary"
-				placeholder="Label"
-			/>
-			<mib-ref-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-ref-icon>
-			<mib-ref-icon
-				input-right-icon
-				c-bgr-secondary
-				class="stroke"
-				name="fi_chevron-left"
-			></mib-ref-icon>
-			<mib-ref-icon
-				input-right-icon
-				c-bgr-secondary
-				class="stroke"
-				name="fi_x"
-			></mib-ref-icon>
-		</mib-input>
-		<mib-input>
-			<ng-container input-label>Label</ng-container>
-			<input
-				MibInput
-				type="text"
-				[size]="inputSizeXS"
 				styleType="filled-secondary"
 				placeholder="Label"
 			/>
@@ -437,7 +437,7 @@
 				<input
 					MibInput
 					type="text"
-					[size]="inputSizeL"
+					[size]="inputSizeXL"
 					formControlName="testPlaceholder2"
 					styleType="floating"
 					placeholder="Label"
@@ -462,6 +462,33 @@
 				></mib-ref-icon>
 			</mib-input>
 		</div>
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				[size]="inputSizeL"
+				styleType="floating"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
 		<mib-input>
 			<ng-container input-label>Label</ng-container>
 			<input
@@ -495,33 +522,6 @@
 				MibInput
 				type="text"
 				[size]="inputSizeS"
-				styleType="floating"
-				placeholder="Label"
-			/>
-			<mib-ref-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-ref-icon>
-			<mib-ref-icon
-				input-right-icon
-				c-bgr-secondary
-				class="stroke"
-				name="fi_chevron-left"
-			></mib-ref-icon>
-			<mib-ref-icon
-				input-right-icon
-				c-bgr-secondary
-				class="stroke"
-				name="fi_x"
-			></mib-ref-icon>
-		</mib-input>
-		<mib-input>
-			<ng-container input-label>Label</ng-container>
-			<input
-				MibInput
-				type="text"
-				[size]="inputSizeXS"
 				styleType="floating"
 				placeholder="Label"
 			/>
@@ -554,7 +554,7 @@
 				<input
 					MibInput
 					type="text"
-					[size]="inputSizeL"
+					[size]="inputSizeXL"
 					formControlName="testPlaceholder3"
 					styleType="separated"
 					placeholder="Label"
@@ -579,6 +579,33 @@
 				></mib-ref-icon>
 			</mib-input>
 		</div>
+		<mib-input>
+			<ng-container input-label>Label</ng-container>
+			<input
+				MibInput
+				type="text"
+				[size]="inputSizeL"
+				styleType="separated"
+				placeholder="Label"
+			/>
+			<mib-ref-icon
+				class="stroke path"
+				input-left-icon
+				name="fi_search"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-ref-icon>
+			<mib-ref-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-ref-icon>
+		</mib-input>
 		<mib-input>
 			<ng-container input-label>Label</ng-container>
 			<input
@@ -612,33 +639,6 @@
 				MibInput
 				type="text"
 				[size]="inputSizeS"
-				styleType="separated"
-				placeholder="Label"
-			/>
-			<mib-ref-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-ref-icon>
-			<mib-ref-icon
-				input-right-icon
-				c-bgr-secondary
-				class="stroke"
-				name="fi_chevron-left"
-			></mib-ref-icon>
-			<mib-ref-icon
-				input-right-icon
-				c-bgr-secondary
-				class="stroke"
-				name="fi_x"
-			></mib-ref-icon>
-		</mib-input>
-		<mib-input>
-			<ng-container input-label>Label</ng-container>
-			<input
-				MibInput
-				type="text"
-				[size]="inputSizeXS"
 				styleType="separated"
 				placeholder="Label"
 			/>
