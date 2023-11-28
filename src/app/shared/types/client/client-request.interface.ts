@@ -4,15 +4,30 @@ import { RequestSourceEnum } from './../enums/request-source.enum';
 import { RequestTypeEnum } from '../enums/request-type.enum';
 
 export interface ClientRequestInterface {
-  DeliveryID: number;
-  Type: RequestTypeEnum;
-  Source?: RequestSourceEnum,
-  Number?: string;
-  Title?: string;
-  Date: Date;
   ID?: number;
-  AgencyFlag?: boolean;
+  Number?: string;
+  Date: Date;
+  Delivery?: {
+    ID: number;
+    Debtor?: string;
+    DebtorID?: number;
+    Customer?: string;
+    CustomerID?: number;
+    Title?: string;
+    CurrencyCode?: string;
+  };
+  Type: RequestTypeEnum;
+  Status?: string;
+  Summ?: number;
+  ReadOnly?: boolean;
+  IsCorrected?: boolean;
   Shipments: ClientShipmentInterface[];
+  Documents?: any[];
+
+  DeliveryID?: number;
+  Source?: RequestSourceEnum,
+  Title?: string;
+  AgencyFlag?: boolean;
   Files?: FileModeInterface[]
 }
 // {"DeliveryID":20940,"Type":"Financing","Number":"","Title":"","Date":"2021-03-17T09:53:34+03:00","Shipments":[],"Files":[]}

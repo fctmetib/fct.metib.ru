@@ -1,12 +1,12 @@
 import { FileModeInterface } from './../../../../../shared/types/file/file-model.interface';
-import { DeliveryInterface } from './../../../../../shared/types/delivery/delivery.interface';
+import { DeliveryInterface, DeliveryRef } from './../../../../../shared/types/delivery/delivery.interface';
 import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
 import { ClientRequestInterface } from './../../../../../shared/types/client/client-request.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FinanceTypeInterface } from '../../types/common/finance-type.interface';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
 import { FileService } from 'src/app/shared/services/common/file.service';
@@ -14,6 +14,7 @@ import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { PasteHandler } from 'src/app/shared/classes/common/past-handler.class';
 import { RequestsService } from '../../services/requests.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-request-create-dialog',
@@ -27,7 +28,7 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
   form: FormGroup;
   shipmentForm: FormGroup;
 
-  public deliveries: DeliveryInterface[] = [];
+  public deliveries: DeliveryRef[] = [];
   public types: FinanceTypeInterface[] = [
     {
       name: 'Без финансирования',
@@ -71,6 +72,7 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
     private fileService: FileService,
     private deliveryService: DeliveryService,
     public config: DynamicDialogConfig,
+    private authService: AuthService,
     private commonService: CommonService,
     private requestService: RequestsService,
   ) {}
@@ -101,21 +103,11 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
     });
 
     this.subscription$.add(
-      this.deliveryService.getDeliveriesWithStats().subscribe((resp) => {
-        this.deliveries = resp
-          .sort(
-            (a, b) =>
-              new Date(a.DateTo).getTime() - new Date(b.DateTo).getTime()
-          )
-          .reverse();
-
-        if (this.config.data) {
-          let delivery: DeliveryInterface = this.deliveries.find(
-            (x) => x.ID === this.config.data.Delivery.ID
-          );
-          this.freeDuty = delivery.Statistics.DutyDebtor;
-        }
-      })
+      this.deliveryService.getDeliveriesRef(this.authService.currentUser$.value.userFactoring.DebtorID).pipe(
+        tap((result) => {
+          this.deliveries = result
+        })
+      ).subscribe()
     );
 
     if (this.config.data) {
@@ -138,27 +130,33 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     if (this.shipments.length > 0) {
+      const delivery: DeliveryRef = this.deliveries.find(x => x.ID === this.form.value.deliveryID);
+      console.log('del', delivery)
       const request: ClientRequestInterface = {
+        ID: 0,
+        IsCorrected: false,
+        ReadOnly: false,
+        Status: null,
+        Summ: 0,
         Date: new Date(this.form.value.date),
-        DeliveryID: this.form.value.deliveryID,
-        Files: this.files,
+        Delivery: {
+          ...delivery
+        },
+        Documents: this.files,
         Number: this.form.value.number,
         Shipments: this.shipments,
         Type: this.form.value.type,
       };
-
-      this.requestService.add(request).pipe().subscribe();
+      console.log('request', request)
+      this.requestService.add(request).pipe(
+        tap(() => {
+          this.ref.close();
+        })
+      ).subscribe();
     } else {
       let errors = 'Ошибка! Пожалуйста, добавьте минимум 1 поставку.';
       return;
     }
-  }
-
-  onDeliveryChange(event): void {
-    let delivery: DeliveryInterface = this.deliveries.find(
-      (x) => x.ID === event.value
-    );
-    this.freeDuty = delivery.Statistics.DutyDebtor;
   }
 
   //#region shipments
@@ -193,8 +191,8 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
       if (shipment) {
         this.currentShipmentID = shipment.ID;
         this.shipmentForm.patchValue({
-          accountNumber: shipment.AccountNumber || '',
-          accountDate: new Date(shipment.AccountDate),
+          accountNumber: shipment.AccountNumber || null,
+          accountDate: shipment.AccountDate || null,
           invoiceNumber: shipment.InvoiceNumber,
           invoiceDate: new Date(shipment.InvoiceDate),
           dateShipment: new Date(shipment.DateShipment),
@@ -220,19 +218,20 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
 
   addShipment() {
     let shipment: ClientShipmentInterface = {
-      AccountNumber: this.shipmentForm.value.accountNumber,
-      AccountDate: this.shipmentForm.value.accountDate,
-      InvoiceNumber: this.shipmentForm.value.invoiceNumber,
-      InvoiceDate: this.shipmentForm.value.invoiceDate,
-      WaybillNumber: null,
-      WaybillDate: null,
-      DateShipment: this.shipmentForm.value.dateShipment,
-      DatePayment: null,
-      SummToFactor: null,
-      Summ: this.shipmentForm.value.summ,
       ID: Math.floor(Math.random() * 100),
+      DateShipment: this.shipmentForm.value.dateShipment,
+      InvoiceDate: this.shipmentForm.value.invoiceDate,
+      WaybillDate: this.shipmentForm.value.accountDate,
+      WaybillNumber: this.shipmentForm.value.accountNumber,
+      InvoiceNumber: this.shipmentForm.value.invoiceNumber,
+      Summ: this.shipmentForm.value.summ,
+      // SummToFactor: 0,
+      // AccountNumber: null,
+      // AccountDate: null,
+      // DatePayment: null,
     };
 
+    console.log(shipment)
     if (this.currentShipmentID) {
       shipment.ID = this.currentShipmentID;
       let shipmentIndex = this.shipments.indexOf(
