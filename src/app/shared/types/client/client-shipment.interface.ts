@@ -6,8 +6,8 @@ export interface ClientShipmentInterface {
   WaybillNumber: string;
   WaybillDate: Date;
   DateShipment: Date;
-  DatePayment: Date;
+  DatePayment?: Date;
   Summ: number;
-  SummToFactor: number;
+  SummToFactor?: number;
   ID: number;
 }

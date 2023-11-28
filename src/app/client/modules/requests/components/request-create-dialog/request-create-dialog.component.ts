@@ -148,7 +148,11 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
         Type: this.form.value.type,
       };
       console.log('request', request)
-      this.requestService.add(request).pipe().subscribe();
+      this.requestService.add(request).pipe(
+        tap(() => {
+          this.ref.close();
+        })
+      ).subscribe();
     } else {
       let errors = 'Ошибка! Пожалуйста, добавьте минимум 1 поставку.';
       return;
@@ -221,10 +225,10 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
       WaybillNumber: this.shipmentForm.value.accountNumber,
       InvoiceNumber: this.shipmentForm.value.invoiceNumber,
       Summ: this.shipmentForm.value.summ,
-      SummToFactor: 0,
-      AccountNumber: null,
-      AccountDate: null,
-      DatePayment: null,
+      // SummToFactor: 0,
+      // AccountNumber: null,
+      // AccountDate: null,
+      // DatePayment: null,
     };
 
     console.log(shipment)
@@ -315,8 +319,8 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
 
       if (this.validateRowData(rowData)) {
         let shipment: ClientShipmentInterface = {
-          // AccountNumber: rowData.AccountNumber,
-          // AccountDate: rowData.AccountDate,
+          AccountNumber: rowData.AccountNumber,
+          AccountDate: rowData.AccountDate,
           InvoiceNumber: rowData.InvoiceNumber,
           InvoiceDate: rowData.InvoiceDate,
           WaybillNumber: null,
