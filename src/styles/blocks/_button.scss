@@ -6,59 +6,52 @@
 	--main-transition: 0.2s;
 }
 
-@mixin btn-xl {
-	height: 56px;
-	padding: 0 20px;
+@mixin btn-size($height, $paddingHorizontal, $paddingHorizontalOnly, $btnGap) {
+	height: $height;
+	padding: 0 $paddingHorizontal;
 	&.btn_only-iconly {
-		padding: 0 16px;
+		padding: 0 $paddingHorizontalOnly;
 	}
-	gap: 4px;
+	gap: $btnGap;
 	&,
 	span {
+		@content;
+	}
+}
+
+@mixin btn-xl {
+	@include btn-size(56px, 20px, 16px, 4px) {
 		@include text-l;
+	}
+	mib-ref-icon {
+		@include icon-size(var(--btn-xl-icon-size));
 	}
 }
 
 @mixin btn-l {
-	height: 48px;
-	padding: 0 16px;
-	&.btn_only-iconly {
-		padding: 0 14px;
-	}
-	gap: 4px;
-	&,
-	span {
+	@include btn-size(48px, 16px, 14px, 4px) {
 		@include text-m;
+	}
+	mib-ref-icon {
+		@include icon-size(var(--btn-l-icon-size));
 	}
 }
 
 @mixin btn-m {
-	height: 40px;
-	padding: 0 16px;
-	&.btn_only-iconly {
-		padding: 0 10px;
-	}
-	gap: 4px;
-	&,
-	span {
+	@include btn-size(40px, 16px, 10px, 4px) {
 		@include text-m;
 	}
-	metib-ref-icon,
-	.btn_icon-wrapper {
-		@include icon-size(20px);
+	mib-ref-icon {
+		@include icon-size(var(--btn-m-icon-size));
 	}
 }
 
 @mixin btn-s {
-	height: 32px;
-	padding: 0 12px;
-	&.btn_only-iconly {
-		padding: 0 8px;
-	}
-	gap: 4px;
-	&,
-	span {
+	@include btn-size(32px, 12px, 8px, 4px) {
 		@include text-s;
+	}
+	mib-ref-icon {
+		@include icon-size(var(--btn-s-icon-size));
 	}
 }
 
@@ -266,32 +259,20 @@
 		@include text-l;
 		padding: 16px 20px;
 		@include btn-xl;
-		& mib-ref-icon {
-			@include icon-size(var(--btn-xl-icon-size));
-		}
 	}
 	&_l {
 		@include text-m;
 		padding: 14px 16px;
 		@include btn-l;
-		& mib-ref-icon {
-			@include icon-size(var(--btn-l-icon-size));
-		}
 	}
 	&_m {
 		@include text-m;
 		padding: 10px 16px;
 		@include btn-m;
-		& mib-ref-icon {
-			@include icon-size(var(--btn-m-icon-size));
-		}
 	}
 	&_s {
 		@include text-s;
 		padding: 8px 12px;
 		@include btn-s;
-		mib-ref-icon {
-			@include icon-size(var(--btn-xl-icon-size));
-		}
 	}
 }
