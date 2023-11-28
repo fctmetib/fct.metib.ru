@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+	AfterViewInit,
+	ChangeDetectorRef,
+	Component,
+	DoCheck,
+	EventEmitter,
+	Input,
+	Output
+} from '@angular/core'
 import { ButtonSize, ButtonType } from '../button/interfaces/button.interface'
 
 @Component({
@@ -6,19 +14,21 @@ import { ButtonSize, ButtonType } from '../button/interfaces/button.interface'
 	templateUrl: './button.component.html',
 	styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent {
-	@Input() size: ButtonSize = 'l'
+export class ButtonComponent implements AfterViewInit, DoCheck {
+	@Input() size: ButtonSize = 'xl'
 	@Input() type: ButtonType = 'filled-primary'
 	@Input() rounded: boolean = false
 	@Input() loading: boolean = false
 	@Input() disabled: boolean = false
 	@Output() press: EventEmitter<any> = new EventEmitter<any>()
 
-	// ngAfterViewInit() {
-	// 	console.log('ngAfterViewInit>>>')
-	// }
+	constructor(private cdr: ChangeDetectorRef) {}
 
-	// ngDoCheck() {
-	// 	console.log('ngDoCheck>>>')
-	// }
+	ngAfterViewInit() {
+		this.cdr.detectChanges()
+	}
+
+	ngDoCheck() {
+		this.cdr.detectChanges()
+	}
 }

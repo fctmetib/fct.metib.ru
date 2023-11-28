@@ -1,4 +1,4 @@
-export type ButtonSize = 'l' | 'm' | 's' | 'xs'
+export type ButtonSize = 'xl' | 'l' | 'm' | 's'
 export type ButtonType =
 	| 'filled-primary'
 	| 'filled-accent'

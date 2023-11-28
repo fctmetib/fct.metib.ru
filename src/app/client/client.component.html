@@ -1,21 +1,105 @@
+<div class="mib-container">
+	<div class="mib-header">
+		<div class="mib-header__logo">
+			<a [routerLink]="['/']">
+				<div class="mib-logo"></div>
+			</a>
+		</div>
+		<div class="mib-header__mobile-menu">
+			<mib-button size="m" type="ghost-secondary">
+				<mib-ref-icon btn-icon class="stroke" name="fi_menu"> </mib-ref-icon>
+			</mib-button>
+		</div>
+		<div class="mib-header__content">
+			<div class="mib-header-left">
+				<div class="user-profile">
+					<div class="user-profile-wrapper">
+						<div class="rounded-square user-profile-avatar manager"></div>
+						<div class="user-profile-info">
+							<div class="user-profile-data">
+								<div class="user-profile-name text text_m text_medium">
+									Бирюкова Кристина Олеговна
+								</div>
+								<span class="text text_medium text_m c-bti-tertiary"
+									>(11-11)</span
+								>
+							</div>
+							<div class="user-profile-role text text_s c-bti-tertiary">
+								Ваш менеджер
+							</div>
+						</div>
+						<mib-button size="m" type="ghost-secondary">
+							<mib-ref-icon btn-icon class="stroke" name="fi_chevron-down">
+							</mib-ref-icon>
+						</mib-button>
+					</div>
+				</div>
+			</div>
+			<div class="mib-header-right">
+				<div class="user-profile">
+					<div class="user-profile-wrapper">
+						<div class="rounded-square user-profile-avatar customer"></div>
+						<div class="user-profile-info">
+							<div class="user-profile-data">
+								<div class="user-profile-name text text_m text_medium">
+									Назаров Егор Михайлович
+								</div>
+							</div>
+							<div class="user-profile-role c-bti-tertiary text text_s">
+								Пользователь
+							</div>
+						</div>
+						<mib-button size="m" type="ghost-secondary">
+							<mib-ref-icon btn-icon class="stroke" name="fi_chevron-down">
+							</mib-ref-icon>
+						</mib-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="spacer-10"></div>
+<hr />
 <main>
-  <aside>
-    <div class="logo">
-      <a [routerLink]="['/']">
-        <img src="../../../../../assets/images/logo_big_normal_svg.svg">
-      </a>
-    </div>
-    <div class="menu">
-      <p-menu [model]="items"></p-menu>
-    </div>
-  </aside>
-  <div class="page">
-    <app-header></app-header>
-    <app-mobile-header></app-mobile-header>
-    <section class="container">
-      <div class="main-body">
-        <router-outlet></router-outlet>
-      </div>
-    </section>
-  </div>
+	<aside>
+		<div class="logo">
+			<a [routerLink]="['/']">
+				<img src="../../../../../assets/images/logo_big_normal_svg.svg" />
+			</a>
+		</div>
+		<div class="menu">
+			<p-menu [model]="items"></p-menu>
+		</div>
+	</aside>
+	<div class="page">
+		<app-header></app-header>
+		<app-mobile-header></app-mobile-header>
+		<section class="container">
+			<div class="main-body">
+				<router-outlet></router-outlet>
+			</div>
+		</section>
+	</div>
 </main>
+<!-- <main>
+	<aside>
+		<div class="logo">
+			<a [routerLink]="['/']">
+				<img src="../../../../../assets/images/logo_big_normal_svg.svg" />
+			</a>
+		</div>
+		<div class="menu">
+			<p-menu [model]="items"></p-menu>
+		</div>
+	</aside>
+	<div class="page">
+		<app-header></app-header>
+		<app-mobile-header></app-mobile-header>
+		<section class="container">
+			<div class="main-body">
+				<router-outlet></router-outlet>
+			</div>
+		</section>
+	</div>
+</main> -->

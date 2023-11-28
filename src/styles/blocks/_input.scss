@@ -92,41 +92,41 @@
 	}
 }
 
-@mixin input-l {
-	@include input-size(56px, var(--input-l-icon-size), var(--input-l-icons-gap));
+@mixin input-xl {
+	@include input-size(
+		56px,
+		var(--input-xl-icon-size),
+		var(--input-xl-icons-gap)
+	);
 	@include text-l;
 }
 
+@mixin input-l {
+	@include input-size(48px, var(--input-l-icon-size), var(--input-l-icons-gap));
+	@include text-m;
+}
+
 @mixin input-m {
-	@include input-size(48px, var(--input-m-icon-size), var(--input-m-icons-gap));
+	@include input-size(40px, var(--input-m-icon-size), var(--input-m-icons-gap));
 	@include text-m;
 }
 
 @mixin input-s {
-	@include input-size(40px, var(--input-s-icon-size), var(--input-s-icons-gap));
-	@include text-m;
-}
-
-@mixin input-xs {
-	@include input-size(
-		32px,
-		var(--input-xs-icon-size),
-		var(--input-xs-icons-gap)
-	);
+	@include input-size(32px, var(--input-s-icon-size), var(--input-s-icons-gap));
 	@include text-s;
 }
 
 .box-wrapper {
 	max-width: 360px;
 	position: relative;
+	--input-xl-icon-size: 20px;
 	--input-l-icon-size: 20px;
 	--input-m-icon-size: 20px;
-	--input-s-icon-size: 20px;
-	--input-xs-icon-size: 16px;
+	--input-s-icon-size: 16px;
+	--input-xl-icons-gap: 8px;
 	--input-l-icons-gap: 8px;
 	--input-m-icons-gap: 8px;
 	--input-s-icons-gap: 8px;
-	--input-xs-icons-gap: 8px;
 	border-radius: var(--main-border-radius);
 	border: 1px solid transparent;
 	transition: var(--main-transition);
@@ -191,33 +191,34 @@
 			display: block;
 			transform: unset;
 			padding-left: 16px !important;
-			@include highlight-text;
-			@include highlight-xs;
+			@include body-text;
+			@include text-xs;
+			font-weight: var(--fw-medium);
 			color: var(--mc-default);
 			transition: var(--main-transition);
 		}
 	}
-	&:has(.input_l) {
+	&:has(.input_xl) {
 		@include box-label-styles(10px) {
 			@include text-l;
 		}
 	}
-	&:has(.input_m) {
+	&:has(.input_l) {
 		@include box-label-styles(8px) {
 			@include text-m;
 		}
 	}
-	&:has(.input_s) {
+	&:has(.input_m) {
 		@include box-label-styles(4px) {
 			@include text-m;
 		}
 	}
-	&:has(.input_xs) {
+	&:has(.input_s) {
 		@include box-label-styles(2px) {
 			@include text-s;
 		}
 		mib-ref-icon {
-			@include icon-size(var(--input-s-icon-size));
+			@include icon-size(var(--input-m-icon-size));
 		}
 	}
 	&:has(.input_error):has(input:not(.ng-pristine)):has(.input_type-separated) {
@@ -260,6 +261,9 @@
 
 .input {
 	@include input();
+	&_xl {
+		@include input-xl;
+	}
 	&_l {
 		@include input-l;
 	}
@@ -268,9 +272,6 @@
 	}
 	&_s {
 		@include input-s;
-	}
-	&_xs {
-		@include input-xs;
 	}
 	&_icon-wrapper {
 		top: 50%;
@@ -297,6 +298,10 @@
 	}
 }
 
+// div.textarea-panel {
+// 	display: none !important;
+// }
+
 div.textarea-panel {
-	display: none !important;
+	display: none;
 }

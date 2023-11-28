@@ -1,35 +1,180 @@
-main {
-  display: flex;
-  height: calc(100vh - 70px);
-  font-size: 14px;
-
-  .page {
-    width: 100%;
-    margin-right: 10px;
-    margin-left: 10px;
-
-    .container {
-      margin-top: 10px;
-      display: flex;
-      height: calc(100vh - 70px);
-
-      .main-body {
-        width: 100%;
-      }
-    }
-  }
-
-  aside {
-    width: 350px;
-    padding-top: 28px;
-    padding-left: 44px;
-
-    .menu {
-      margin-top: 50px;
-    }
-  }
+.mib-container {
+	// display: flex;
+	// min-width: 100%;
+	// flex-direction: column;
+	max-width: 1440px;
+	background-color: var(--wgr-primary);
+	margin: auto;
 }
 
+.mib-header {
+	// position: fixed;
+	position: relative;
+	width: 100%;
+	top: 0;
+	height: 64px;
+	display: flex;
+	align-items: center;
+	align-content: center;
+	z-index: 10;
+	transition: var(--main-transition);
+}
 
+.mib-header__logo {
+	padding: 12px 16px;
+	background-color: var(--wgr-primary);
+}
 
+.mib-logo {
+	height: 34px;
+	width: 176px;
+	background: url(../../assets/images/metall-invest-logo.svg);
+}
 
+.mib-header__mobile-menu {
+	display: none;
+}
+
+.mib-header__content {
+	display: flex;
+	align-items: center;
+	align-content: center;
+	flex: 1;
+	padding: 12px 32px;
+	height: 64px;
+}
+
+.mib-header-left {
+	display: flex;
+	align-items: center;
+}
+
+.mib-header-right {
+	align-items: center;
+	display: flex;
+	margin-left: auto;
+}
+
+.user-profile mib-button {
+	border-radius: 0px 8px 8px 0px;
+	border-left: 1px solid var(--wgr-tertiary);
+	&:hover {
+		background-color: var(--wgr-secondary);
+	}
+}
+
+.user-profile-wrapper {
+	display: flex;
+	flex: 1;
+	position: relative;
+	align-items: center;
+	gap: 12px;
+}
+
+.user-profile-wrapper:has(.manager) {
+	.user-profile-data {
+		display: flex;
+		align-items: center;
+	}
+	.user-profile-name {
+		width: 132px;
+	}
+}
+
+.user-profile-wrapper:has(.customer) {
+	.user-profile-name {
+		width: 170px;
+	}
+}
+
+.user-profile-data span {
+	white-space: nowrap;
+}
+
+.user-profile-name {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.rounded-square {
+	border-radius: var(--main-border-radius);
+}
+
+.user-profile-avatar {
+	width: 40px;
+	height: 40px;
+}
+
+.manager {
+	background: url(../../assets/images/woman-avatar.jpg);
+}
+
+.customer {
+	background: url(../../assets/images/user-avatar.jpg);
+}
+
+@media (max-width: 870px) {
+	.mib-header {
+		justify-content: space-between;
+		padding: 12px 16px;
+	}
+	.user-profile-wrapper:has(.manager) {
+		display: none;
+	}
+	.user-profile-wrapper:has(.customer) {
+		gap: 0;
+		.user-profile-info,
+		mib-button {
+			display: none;
+		}
+	}
+	.mib-header__content {
+		order: 2;
+		flex-grow: 0;
+		padding: 0;
+	}
+	.mib-header__logo {
+		order: 1;
+		.mib-logo {
+			height: 40px;
+			width: 40px;
+			background: url(../../assets/images/metall-invest-mobile-logo.svg);
+		}
+	}
+	.mib-header__mobile-menu {
+		display: block;
+	}
+}
+
+// main {
+//   display: flex;
+//   height: calc(100vh - 70px);
+//   font-size: 14px;
+
+//   .page {
+//     width: 100%;
+//     margin-right: 10px;
+//     margin-left: 10px;
+
+//     .container {
+//       margin-top: 10px;
+//       display: flex;
+//       height: calc(100vh - 70px);
+
+//       .main-body {
+//         width: 100%;
+//       }
+//     }
+//   }
+
+//   aside {
+//     width: 350px;
+//     padding-top: 28px;
+//     padding-left: 44px;
+
+//     .menu {
+//       margin-top: 50px;
+//     }
+//   }
+// }

@@ -1,4 +1,4 @@
-export type InputSize = 'l' | 'm' | 's' | 'xs'
+export type InputSize = 'xl' | 'l' | 'm' | 's'
 export type InputType = 'filled-secondary' | 'floating' | 'separated'
 export type InputStatus =
 	| 'disabled'

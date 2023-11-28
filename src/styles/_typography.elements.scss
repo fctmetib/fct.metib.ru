@@ -67,23 +67,7 @@ h5 {
 	&_xs {
 		@include text-xs;
 	}
-}
-
-.highlight {
-	@include highlight-text;
-	&_xl {
-		@include highlight-xl;
-	}
-	&_l {
-		@include highlight-l;
-	}
-	&_m {
-		@include highlight-m;
-	}
-	&_s {
-		@include highlight-s;
-	}
-	&_xs {
-		@include highlight-xs;
+	&_medium {
+		font-weight: var(--fw-medium);
 	}
 }
