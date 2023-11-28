@@ -218,17 +218,14 @@
 		}
 	}
 	&_ghost-primary {
-		background: var(--wgr-primary);
 		color: var(--mc-default);
 		font-weight: var(--fw-medium);
 		mib-ref-icon {
 			@include icon-color(var(--mc-default));
 		}
 		&:hover {
-			background-color: var(--mc-quinary);
 		}
 		&:active {
-			background: var(--mc-quaternary);
 		}
 		&:disabled {
 			color: var(--wti-quaternary);
@@ -239,16 +236,13 @@
 		}
 	}
 	&_ghost-secondary {
-		background: var(--wgr-primary);
 		color: var(--bti-secondary);
 		mib-ref-icon {
 			@include icon-color(var(--bti-secondary));
 		}
 		&:hover {
-			background-color: var(--wgr-secondary);
 		}
 		&:active {
-			background: var(--wgr-tertiary);
 		}
 		&:disabled {
 			color: var(--wti-quaternary);
