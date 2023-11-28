@@ -1,13 +1,13 @@
 export interface ClientShipmentInterface {
-  AccountNumber: string;
-  AccountDate: Date;
+  AccountNumber?: string;
+  AccountDate?: Date;
   InvoiceNumber: string;
   InvoiceDate: Date;
   WaybillNumber: string;
   WaybillDate: Date;
   DateShipment: Date;
-  DatePayment: Date;
+  DatePayment?: Date;
   Summ: number;
-  SummToFactor: number;
+  SummToFactor?: number;
   ID: number;
 }

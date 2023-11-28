@@ -18,7 +18,8 @@ export class IconsService {
 		'fi_x',
 		'fi_menu',
 		'fi_chevron-down',
-    'logotype'
+    	'logotype',
+		'fi_maximize-2'
 	]
 
 	public async initIcons(): Promise<void> {

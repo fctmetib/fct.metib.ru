@@ -7,60 +7,53 @@
   --main-transition: 0.2s;
 }
 
+@mixin btn-size($height, $paddingHorizontal, $paddingHorizontalOnly, $btnGap) {
+	height: $height;
+	padding: 0 $paddingHorizontal;
+	&.btn_only-iconly {
+		padding: 0 $paddingHorizontalOnly;
+	}
+	gap: $btnGap;
+	&,
+	span {
+		@content;
+	}
+}
+
 @mixin btn-xl {
-  height: 56px;
-  padding: 0 20px;
-  &.btn_only-iconly {
-    padding: 0 16px;
-  }
-  gap: 4px;
-  &,
-  span {
-    @include text-l;
-  }
+	@include btn-size(56px, 20px, 16px, 4px) {
+		@include text-l;
+	}
+	mib-ref-icon {
+		@include icon-size(var(--btn-xl-icon-size));
+	}
 }
 
 @mixin btn-l {
-  height: 48px;
-  padding: 0 16px;
-  &.btn_only-iconly {
-    padding: 0 14px;
-  }
-  gap: 4px;
-  &,
-  span {
-    @include text-m;
-  }
+	@include btn-size(48px, 16px, 14px, 4px) {
+		@include text-m;
+	}
+	mib-ref-icon {
+		@include icon-size(var(--btn-l-icon-size));
+	}
 }
 
 @mixin btn-m {
-  height: 40px;
-  padding: 0 16px;
-  &.btn_only-iconly {
-    padding: 0 10px;
-  }
-  gap: 4px;
-  &,
-  span {
-    @include text-m;
-  }
-  metib-ref-icon,
-  .btn_icon-wrapper {
-    @include icon-size(20px);
-  }
+	@include btn-size(40px, 16px, 10px, 4px) {
+		@include text-m;
+	}
+	mib-ref-icon {
+		@include icon-size(var(--btn-m-icon-size));
+	}
 }
 
 @mixin btn-s {
-  height: 32px;
-  padding: 0 12px;
-  &.btn_only-iconly {
-    padding: 0 8px;
-  }
-  gap: 4px;
-  &,
-  span {
-    @include text-s;
-  }
+	@include btn-size(32px, 12px, 8px, 4px) {
+		@include text-s;
+	}
+	mib-ref-icon {
+		@include icon-size(var(--btn-s-icon-size));
+	}
 }
 
 @mixin btn {
@@ -92,255 +85,197 @@
 }
 
 .btn {
-  @include btn;
-  --btn-xl-icon-size: 20px;
-  --btn-l-icon-size: 20px;
-  --btn-m-icon-size: 20px;
-  --btn-s-icon-size: 16px;
-
-  &_filled-primary {
-    background: var(--mc-default);
-    color: var(--wti-primary);
-    font-weight: var(--fw-medium);
-
-    &:hover {
-      background: var(--mc-hover);
-    }
-
-    &:active {
-      background: var(--mc-active);
-    }
-
-    &:disabled {
-      color: var(--wti-quaternary);
-      background: var(--wgr-tertiary);
-
-      mib-ref-icon {
-        @include icon-color(var(--wti-quaternary));
-      }
-    }
-  }
-
-  &_filled-accent {
-    background: var(--ac-default);
-    color: var(--wti-primary);
-    font-weight: var(--fw-medium);
-
-    &:hover {
-      background: var(--ac-hover);
-    }
-
-    &:active {
-      background: var(--ac-active);
-    }
-
-    &:disabled {
-      color: var(--wti-quaternary);
-      background: var(--wgr-tertiary);
-
-      mib-ref-icon {
-        @include icon-color(var(--wti-quaternary));
-      }
-    }
-  }
-
-  &_filled-secondary {
-    $color: var(--bti-secondary);
-    background: var(--wgr-secondary);
-    color: $color;
-
-    mib-ref-icon {
-      @include icon-color($color);
-    }
-
-    &:hover {
-      border: 1px solid var(--wgr-tertiary);
-      background: var(--wgr-secondary);
-    }
-
-    &:active {
-      background: var(--wgr-tertiary);
-    }
-
-    &:disabled {
-      $color: var(--wti-quaternary);
-      color: $color;
-      background: var(--wgr-tertiary);
-      border: none;
-
-      mib-ref-icon {
-        @include icon-color($color);
-      }
-    }
-  }
-
-  &_floating {
-    background: var(--wgr-primary);
-    color: var(--bti-secondary);
-
-    mib-ref-icon {
-      @include icon-color(var(--bti-secondary));
-    }
-
-    &:hover {
-      box-shadow: var(--custom-floating-shadow);
-    }
-
-    &:active {
-      background: var(--wgr-secondary);
-      box-shadow: var(--custom-floating-shadow);
-    }
-
-    &:disabled {
-      color: var(--wti-quaternary);
-      background: var(--wgr-tertiary);
-      box-shadow: none;
-
-      mib-ref-icon {
-        @include icon-color(var(--wti-quaternary));
-      }
-    }
-  }
-
-  &_outline-primary {
-    background: var(--wgr-primary);
-    color: var(--mc-default);
-    border: 1px solid var(--mc-default);
-
-    mib-ref-icon {
-      @include icon-color(var(--mc-default));
-    }
-
-    &:hover {
-      background-color: var(--mc-quinary);
-    }
-
-    &:active {
-      background: var(--mc-quaternary);
-    }
-
-    &:disabled {
-      color: var(--wti-quaternary);
-      background: var(--wgr-tertiary);
-      border: none;
-
-      mib-ref-icon {
-        @include icon-color(var(--wti-quaternary));
-      }
-    }
-  }
-
-  &_outline-accent {
-    background: var(--wgr-primary);
-    color: var(--ac-default);
-    border: 1px solid var(--ac-default);
-    font-weight: var(--fw-medium);
-
-    mib-ref-icon {
-      @include icon-color(var(--ac-default));
-    }
-
-    &:hover {
-      background-color: var(--ac-quinary);
-    }
-
-    &:active {
-      background: var(--ac-quaternary);
-    }
-
-    &:disabled {
-      color: var(--wti-quaternary);
-      background: var(--wgr-tertiary);
-      border: none;
-
-      mib-ref-icon {
-        @include icon-color(var(--wti-quaternary));
-      }
-    }
-  }
-
-  &_ghost-primary {
-    color: var(--mc-default);
-    font-weight: var(--fw-medium);
-
-    mib-ref-icon {
-      @include icon-color(var(--mc-default));
-    }
-
-    &:hover {
-    }
-
-    &:active {
-    }
-
-    &:disabled {
-      color: var(--wti-quaternary);
-
-      mib-ref-icon {
-        @include icon-color(var(--wti-quaternary));
-      }
-    }
-  }
-
-  &_ghost-secondary {
-    color: var(--bti-secondary);
-
-    mib-ref-icon {
-      @include icon-color(var(--bti-secondary));
-    }
-
-    &:hover {
-    }
-
-    &:active {
-    }
-
-    &:disabled {
-      color: var(--wti-quaternary);
-
-      mib-ref-icon {
-        @include icon-color(var(--wti-quaternary));
-      }
-    }
-  }
-
-  &_xl {
-    @include text-l;
-    padding: 16px 20px;
-    @include btn-xl;
-
-    & mib-ref-icon {
-      @include icon-size(var(--btn-xl-icon-size));
-    }
-  }
-
-  &_l {
-    @include text-m;
-    padding: 14px 16px;
-    @include btn-l;
-
-    & mib-ref-icon {
-      @include icon-size(var(--btn-l-icon-size));
-    }
-  }
-
-  &_m {
-    @include text-m;
-    padding: 10px 16px;
-    @include btn-m;
-
-    & mib-ref-icon {
-      @include icon-size(var(--btn-m-icon-size));
-    }
-  }
-
-  &_s {
-    @include text-s;
-    padding: 8px 12px;
-    @include btn-s;
-
-    mib-ref-icon {
-      @include icon-size(var(--btn-xl-icon-size));
-    }
-  }
+	@include btn;
+	--btn-xl-icon-size: 20px;
+	--btn-l-icon-size: 20px;
+	--btn-m-icon-size: 20px;
+	--btn-s-icon-size: 16px;
+	&_filled-primary {
+		background: var(--mc-default);
+		color: var(--wti-primary);
+		font-weight: var(--fw-medium);
+		&:hover {
+			background: var(--mc-hover);
+		}
+		&:active {
+			background: var(--mc-active);
+		}
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-tertiary);
+			mib-ref-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
+		}
+	}
+	&_filled-accent {
+		background: var(--ac-default);
+		color: var(--wti-primary);
+		font-weight: var(--fw-medium);
+		&:hover {
+			background: var(--ac-hover);
+		}
+		&:active {
+			background: var(--ac-active);
+		}
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-tertiary);
+			mib-ref-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
+		}
+	}
+	&_filled-secondary {
+		$color: var(--bti-secondary);
+		background: var(--wgr-secondary);
+		color: $color;
+		mib-ref-icon {
+			@include icon-color($color);
+		}
+		&:hover {
+			border: 1px solid var(--wgr-tertiary);
+			background: var(--wgr-secondary);
+		}
+		&:active {
+			background: var(--wgr-tertiary);
+		}
+		&:disabled {
+			$color: var(--wti-quaternary);
+			color: $color;
+			background: var(--wgr-tertiary);
+			border: none;
+			mib-ref-icon {
+				@include icon-color($color);
+			}
+		}
+	}
+	&_floating {
+		background: var(--wgr-primary);
+		color: var(--bti-secondary);
+		mib-ref-icon {
+			@include icon-color(var(--bti-secondary));
+		}
+		&:hover {
+			box-shadow: var(--custom-floating-shadow);
+		}
+		&:active {
+			background: var(--wgr-secondary);
+			box-shadow: var(--custom-floating-shadow);
+		}
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-tertiary);
+			box-shadow: none;
+			mib-ref-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
+		}
+	}
+	&_outline-primary {
+		background: var(--wgr-primary);
+		color: var(--mc-default);
+		border: 1px solid var(--mc-default);
+		mib-ref-icon {
+			@include icon-color(var(--mc-default));
+		}
+		&:hover {
+			background-color: var(--mc-quinary);
+		}
+		&:active {
+			background: var(--mc-quaternary);
+		}
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-tertiary);
+			border: none;
+			mib-ref-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
+		}
+	}
+	&_outline-accent {
+		background: var(--wgr-primary);
+		color: var(--ac-default);
+		border: 1px solid var(--ac-default);
+		font-weight: var(--fw-medium);
+		mib-ref-icon {
+			@include icon-color(var(--ac-default));
+		}
+		&:hover {
+			background-color: var(--ac-quinary);
+		}
+		&:active {
+			background: var(--ac-quaternary);
+		}
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-tertiary);
+			border: none;
+			mib-ref-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
+		}
+	}
+	&_ghost-primary {
+		background: var(--wgr-primary);
+		color: var(--mc-default);
+		font-weight: var(--fw-medium);
+		mib-ref-icon {
+			@include icon-color(var(--mc-default));
+		}
+		&:hover {
+			background-color: var(--mc-quinary);
+		}
+		&:active {
+			background: var(--mc-quaternary);
+		}
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-primary);
+			mib-ref-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
+		}
+	}
+	&_ghost-secondary {
+		background: var(--wgr-primary);
+		color: var(--bti-secondary);
+		mib-ref-icon {
+			@include icon-color(var(--bti-secondary));
+		}
+		&:hover {
+			background-color: var(--wgr-secondary);
+		}
+		&:active {
+			background: var(--wgr-tertiary);
+		}
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-primary);
+			mib-ref-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
+		}
+	}
+	&_xl {
+		@include text-l;
+		padding: 16px 20px;
+		@include btn-xl;
+	}
+	&_l {
+		@include text-m;
+		padding: 14px 16px;
+		@include btn-l;
+	}
+	&_m {
+		@include text-m;
+		padding: 10px 16px;
+		@include btn-m;
+	}
+	&_s {
+		@include text-s;
+		padding: 8px 12px;
+		@include btn-s;
+	}
 }

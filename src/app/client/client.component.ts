@@ -135,12 +135,12 @@ export class ClientComponent implements OnInit, OnDestroy {
 					routerLinkActiveOptions: { exact: false }
 				},
 				{
-					label: 'Заявки (в работе)',
+					label: 'Заявки',
 					routerLink: 'requests',
 					routerLinkActiveOptions: { exact: false }
 				},
 				{
-					label: 'Свободная задолженность (в работе)',
+					label: 'Свободная задолженность',
 					routerLink: 'freeduty',
 					routerLinkActiveOptions: { exact: false }
 				},
@@ -188,12 +188,12 @@ export class ClientComponent implements OnInit, OnDestroy {
 					routerLinkActiveOptions: { exact: false }
 				},
 				{
-					label: 'Заявки (в работе)',
+					label: 'Заявки',
 					routerLink: 'requests',
 					routerLinkActiveOptions: { exact: false }
 				},
 				{
-					label: 'Свободная задолженность (в работе)',
+					label: 'Свободная задолженность',
 					routerLink: 'freeduty',
 					routerLinkActiveOptions: { exact: false }
 				},

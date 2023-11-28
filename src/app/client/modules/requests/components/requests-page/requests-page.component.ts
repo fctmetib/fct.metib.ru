@@ -1,6 +1,6 @@
 import { RequestCorrectDialogComponent } from './../request-correct-dialog/request-correct-dialog.component';
 import { RequestCreateDialogComponent } from './../request-create-dialog/request-create-dialog.component';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, switchMap, tap } from 'rxjs';
 import { RequestsResponseInterface } from './../../types/requestResponse.interface';
 import {
   Component,
@@ -12,12 +12,13 @@ import {
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SortEvent, MenuItem } from 'primeng/api';
 import { RequestsService } from '../../services/requests.service';
-import { AgencyRequestCreateDialogComponent } from '../agency-request-create-dialog/agency-request-create-dialog.component';
 import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
 import { DocumentViewDialogComponent } from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component';
 import { ClientRequestSendingInitRequestInterface } from 'src/app/shared/types/client/client-request-sending-init-request.interface';
+import { SignService } from 'src/app/shared/services/share/sign.service';
+import { filter } from 'jszip';
 
 @Directive({
   selector: '[tableHighlight]',
@@ -31,6 +32,7 @@ export class TableHighlightDirective { }
 })
 export class RequestsPageComponent implements OnInit, OnDestroy {
   public requests$: Observable<RequestsResponseInterface[] | null>;
+  public loading$: Observable<boolean>;
 
   public selectedRequest: RequestsResponseInterface;
 
@@ -54,10 +56,11 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   private subscription$: Subscription = new Subscription();
 
   constructor(
-    public readonly dialogService: DialogService,
-    private readonly fb: FormBuilder,
-    private readonly requestService: RequestsService,
-    private readonly requestStoreService: RequestStoreService
+    public dialogService: DialogService,
+    private fb: FormBuilder,
+    private requestService: RequestsService,
+    private requestStoreService: RequestStoreService,
+    private signService: SignService,
   ) { }
 
   public ngOnInit(): void {
@@ -66,48 +69,39 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   private initializeValues(): void {
+    this.loading$ = this.requestStoreService.getLoading;
     this.items = [
       {
+        // todo: нужно
         id: 'create',
         label: 'Создать',
         command: () => this.showCreateRequestDialog(),
       },
+      // {
+      //   id: 'edit',
+      //   label: 'Редактировать',
+      //   command: () => this.showEditDialog(),
+      // },
+      // {
+      //   // todo: нужно
+      //   id: 'createCorrection',
+      //   label: 'Сделать коррекцию',
+      //   command: () => this.showCorrectionDialog(),
+      // },
       {
-        id: 'edit',
-        label: 'Редактировать',
-        command: () => this.showEditDialog(),
-      },
-      {
-        id: 'agency',
-        label: 'Агентская заявка',
-        command: () => this.showCreateAgencyRequestDialog(),
-      },
-      {
-        id: 'createFrom',
-        label: 'Создать из подтверждений',
-        routerLink: '',
-      },
-      {
-        id: 'createCorrection',
-        label: 'Сделать коррекцию',
-        command: () => this.showCorrectionDialog(),
-      },
-      {
+        // todo: нужно
         id: 'events',
         label: 'События',
         routerLink: '',
       },
       {
-        id: 'documents',
-        label: 'Документы',
-        routerLink: '',
-      },
-      {
+        // todo: нужно
         id: 'remove',
         label: 'Удалить',
         routerLink: '',
       },
       {
+        // todo: нужно
         id: 'send',
         label: 'Отправить',
         command: () => this.initSend(),
@@ -146,15 +140,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     this.requests$ = this.requestStoreService.getRequests(isRefresh);
   }
 
-  private showCreateAgencyRequestDialog(): void {
-    this.ref = this.dialogService.open(AgencyRequestCreateDialogComponent, {
-      header: 'Реестр поручений',
-      width: '85%',
-      contentStyle: { height: '800px', overflow: 'auto' },
-      baseZIndex: 10000,
-    });
-  }
-
   private showCreateRequestDialog(): void {
     this.ref = this.dialogService.open(RequestCreateDialogComponent, {
       header: 'Создание заявки',
@@ -162,6 +147,12 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       contentStyle: { height: '800px', overflow: 'auto' },
       baseZIndex: 10000,
     });
+
+    this.ref.onClose.pipe(
+      tap(() => {
+        this.fetch();
+      })
+    ).subscribe();
   }
 
   public customSort(event: SortEvent): void {
@@ -223,32 +214,40 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   private initSend(): void {
     let requestIDs = this.selectedItems.map((x: RequestsResponseInterface): any => x.ID);
     this.subscription$.add(
-      this.requestService
-        .sendInit(requestIDs)
-        .subscribe((response: ClientRequestSendingInitRequestInterface): void => {
-          this.confirmForm.patchValue({
-            confirmCode: response.ConfirmationCode,
-          });
-          this.confirmDialog = true;
+      this.signService.getActiveSession().pipe(
+        switchMap((result) => {
+          if (result) {
+            return this.requestService.send(requestIDs).pipe(
+              tap(() => this.fetch())
+              )
+          } else {
+            return this.signService.getPin().pipe(
+              tap(() => {
+                this.confirmDialog = true;
+              })
+            )
+          }
+        }),
+        tap(() => {
         })
+      ).subscribe()
     );
   }
 
   public confirmSend(): void {
+    let requestIDs = this.selectedItems.map((x: RequestsResponseInterface): any => x.ID);
     this.successRequestsDialogMessage = null;
     this.errorRequestsDialogMessage = null;
-    let confirmData: ConfirmRequestInterface = {
-      ConfirmationCode: this.confirmForm.value.confirmCode,
-      Pin: this.confirmForm.value.pin,
-    };
 
     this.subscription$.add(
-      this.requestService
-        .sendConfirm(confirmData)
-        .subscribe(() => {
+      this.signService.createSession(this.confirmForm.value.pin).pipe(
+        switchMap(() => this.requestService.send(requestIDs)),
+        tap(() => {
           this.confirmDialog = false;
+          this.fetch();
           this.successRequestsDialogMessage = 'Заявка успешно подтверждена';
         })
+      ).subscribe()
     );
   }
 

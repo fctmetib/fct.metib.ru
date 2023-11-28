@@ -14,6 +14,7 @@
 		<div class="input_icon-wrapper right-wrapper" #iconsRight>
 			<ng-content select="[input-right-icon]"></ng-content>
 		</div>
+		<!-- <div *ngIf="inputDirective.controls" class="textarea-panel"> -->
 		<div
 			*ngIf="inputDirective.controls"
 			class="textarea-panel flex flex_align-center flex_justify-between"
@@ -22,12 +23,15 @@
 				id="textarea-panel-counter"
 				class="text text_tiny c-ti-dark-quaternary"
 			>
-				textLength / maxLength
+				{{ textLength }}/{{ maxLength }}
 			</p>
+			<!-- *ngIf="false" -->
 			<mib-ref-icon
-				*ngIf="false"
 				class="stroke"
-				svgIcon="resize"
+				name="fi_maximize-2"
+				(mousedown)="startResize($event)"
+				(mouseup)="stopResize($event)"
+				(mousemove)="onMouseMove($event)"
 			></mib-ref-icon>
 		</div>
 	</div>
