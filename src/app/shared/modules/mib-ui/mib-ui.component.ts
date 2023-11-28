@@ -28,7 +28,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 })
 export class MibUiComponent implements OnInit {
 	isShownBtns = false
-	isShownInputs = true
+	isShownInputs = false
+	isShownTextarea = true
 	public inputSizeXL: InputSize = 'xl'
 	public inputSizeL: InputSize = 'l'
 	public inputSizeM: InputSize = 'm'

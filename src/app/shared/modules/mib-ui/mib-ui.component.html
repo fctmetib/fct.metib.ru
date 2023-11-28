@@ -663,3 +663,128 @@
 	</div>
 	<div class="spacer-10"></div>
 </div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'textarea' | titlecase }}
+	<button (click)="isShownTextarea = !isShownTextarea">
+		{{ isShownTextarea ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownTextarea" class="wrapper">
+	<h3>filled-secondary</h3>
+	<div class="spacer-3"></div>
+	<div class="input-wrapper">
+		<div class="test-input">
+			<span>basic input</span>
+			<mib-input>
+				<input
+					MibInput
+					type="text"
+					required
+					[size]="inputSizeXL"
+					styleType="filled-secondary"
+					placeholder="Label"
+				/>
+				<ng-container input-label>Label</ng-container>
+				<mib-ref-icon
+					class="stroke path"
+					input-left-icon
+					name="fi_search"
+				></mib-ref-icon>
+				<mib-ref-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-ref-icon>
+				<mib-ref-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_x"
+				></mib-ref-icon>
+			</mib-input>
+			<div class="spacer-3"></div>
+			<span>input without label</span>
+			<mib-input>
+				<input
+					MibInput
+					type="text"
+					required
+					[size]="inputSizeXL"
+					styleType="filled-secondary"
+					placeholder="Label"
+				/>
+				<mib-ref-icon
+					class="stroke path"
+					input-left-icon
+					name="fi_search"
+				></mib-ref-icon>
+				<mib-ref-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-ref-icon>
+				<mib-ref-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_x"
+				></mib-ref-icon>
+			</mib-input>
+			<div class="spacer-3"></div>
+			<span>textarea</span>
+			<mib-input>
+				<mib-ref-icon
+					class="stroke path"
+					input-left-icon
+					name="fi_search"
+				></mib-ref-icon>
+				<mib-ref-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-ref-icon>
+				<mib-ref-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_x"
+				></mib-ref-icon>
+				<ng-container input-label>Label</ng-container>
+				<textarea
+					[maxLength]="250"
+					MibInput
+					[size]="inputSizeXL"
+					styleType="filled-secondary"
+					placeholder="Дополнительные сведения операции"
+				></textarea>
+			</mib-input>
+			<div class="spacer-3"></div>
+			<span>textarea w/o icons</span>
+			<mib-input>
+				<ng-container input-label>Label</ng-container>
+				<textarea
+					[maxLength]="250"
+					MibInput
+					[size]="inputSizeXL"
+					styleType="filled-secondary"
+					placeholder="Дополнительные сведения операции"
+				></textarea>
+			</mib-input>
+		</div>
+	</div>
+	<div class="spacer-10"></div>
+</div>
