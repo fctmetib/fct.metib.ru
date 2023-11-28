@@ -1,94 +1,27 @@
-<div class="desktop header">
-  <div class="manager">
-    <div class="header-block manager-greatings">
-      Ваш менеджер:
-    </div>
-    <div class="header-block manager-info">
-      <div class="manager-info-name">
-        <ng-container *ngIf="(factoring$ | async); else skeletonFactoringManagerTemplate">
-          {{(factoring$ | async)?.Manager?.Name ? (factoring$ | async)?.Manager?.Name : 'Менеджер не назначен'}} ({{(factoring$ | async)?.Manager?.Extension}})
-        </ng-container>
-        <ng-template #skeletonFactoringManagerTemplate>
-          <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-        </ng-template>
-      </div>
-      <div class="manager-info-email">
-        <ng-container *ngIf="(factoring$ | async); else skeletonFactoringEmailTemplate">
-          {{(factoring$ | async)?.Manager?.Email}}
-        </ng-container>
-        <ng-template #skeletonFactoringEmailTemplate>
-          <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
-        </ng-template>
-      </div>
-    </div>
-    <div class="header-block manager-ava">
-      <ng-container *ngIf="(factoring$ | async); else skeletonFactoringAvatarTemplate">
-        <ng-container *ngIf="(factoring$ | async)?.Manager?.Avatar; else placeholderAvaTemplate">
-          <img src="{{baseAvatarUrl}}/{{(factoring$ | async)?.Manager?.Avatar}}">
-        </ng-container>
-        <ng-template #placeholderAvaTemplate>
-          <img src="/assets/images/mib_ava.png">
-        </ng-template>
-      </ng-container>
-      <ng-template #skeletonFactoringAvatarTemplate>
-        <p-skeleton size="5rem"></p-skeleton>
-      </ng-template>
-    </div>
-  </div>
-  <div class="account">
-    <div class="header-block account-ava">
-      <ng-container *ngIf="(currentUser$ | async)?.Avatar; else skeletonFactoringAvatarProfileTemplate">
-        <img src="{{baseAvatarProfileUrl}}/{{(currentUser$ | async)?.Avatar}}">
-      </ng-container>
-      <ng-template #skeletonFactoringAvatarProfileTemplate>
-        <img src="/assets/images/mib_ava.png">
-      </ng-template>
-    </div>
-    <div class="header-block account-owner clickable" (click)="openAccountOwner()" id="headerBlock">
-      <div class="account-info-name clickable">
-        <ng-container *ngIf="(currentUserFactoring$ | async); else skeletonUserNameTemplate">
-          {{(currentUserFactoring$ | async)?.Name}}
-        </ng-container>
-        <ng-template #skeletonUserNameTemplate>
-          <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
-        </ng-template>
-      </div>
-      <div class="account-info-email clickable">
-        <ng-container *ngIf="(currentUserFactoring$ | async); else skeletonUserEmailTemplate">
-          {{(currentUser$ | async)?.Profile.Email}}
-        </ng-container>
-        <ng-template #skeletonUserEmailTemplate>
-          <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
-        </ng-template>
-      </div>
-    </div>
-    <div id="dropdownMenu" class="dropdown-content">
-      <div class="items">
-        <div class="item" (click)="switchToAdmin()" *ngIf="isAdmin">
-          <div class="icon">
-            <img src="../../../../../assets/icons/header-icons/info_icon.svg">
-          </div>
-          <a>В панель Администратора</a>
+<div class="header">
+  <div class="container flex flex_justify-between">
+    <div class="manager flex gap-12">
+      <mib-avatar [showImage]="false">АК</mib-avatar>
+      <div class="flex flex_column">
+        <div class="flex">
+          <p class="text name text_m text_medium c-bti-primary">Бирюкова Кристина Олеговна</p>
+          <p class="text text_m text_medium c-bti-tertiary">(11-11)</p>
         </div>
-        <!-- <div class="item" (click)="getInfo()">
-          <div class="icon">
-            <img src="../../../../../assets/icons/header-icons/info_icon.svg">
-          </div>
-          <a>Справка</a>
-        </div> -->
-        <div class="item" (click)="openUpdatePassword()">
-          <div class="icon grey">
-            <img src="../../../../../assets/icons/header-icons/change_password_icon.svg">
-          </div>
-          <a>Сменить Пароль</a>
-        </div>
-        <div class="item" (click)="logout()">
-          <div class="icon grey">
-            <img src="../../../../../assets/icons/header-icons/exit_icon.svg">
-          </div>
-          <a href="#" >Выйти</a>
-        </div>
+        <p class="text text_s label c-bti-tertiary">Ваш менеджер</p>
       </div>
+      <mib-button size="m" type="ghost-secondary">
+        <mib-ref-icon btn-icon class="stroke" name="fi_chevron-down"></mib-ref-icon>
+      </mib-button>
+    </div>
+    <div class="manager user flex gap-12">
+      <mib-avatar [showImage]="false">КА</mib-avatar>
+      <div class="flex flex_column">
+        <p class="text name text_m text_medium c-bti-primary">Назаров Егор Михайлович</p>
+        <p class="text text_s label c-bti-tertiary">Пользователь</p>
+      </div>
+      <mib-button size="m" type="ghost-secondary">
+        <mib-ref-icon btn-icon class="stroke" name="fi_chevron-down"></mib-ref-icon>
+      </mib-button>
     </div>
   </div>
 </div>

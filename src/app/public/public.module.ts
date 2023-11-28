@@ -93,7 +93,7 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     CheckboxModule,
     ButtonModule,
   ],
-  exports: [RouterModule],
+  exports: [RouterModule, MibButtonComponent],
   declarations: [
     PublicComponent,
     HomeComponent,

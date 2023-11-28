@@ -1,0 +1,7 @@
+<div class="avatar flex flex_center" [ngClass]="'avatar_' + type" [class.show-image]="showImage">
+  <p class="text text_l text_medium"><ng-content></ng-content></p>
+  <img [src]="src" alt="">
+  <mib-button size="l" type="ghost-primary">
+    <mib-ref-icon btn-icon class="stroke" name="fi_chevron-down"></mib-ref-icon>
+  </mib-button>
+</div>

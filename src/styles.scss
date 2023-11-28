@@ -1,14 +1,26 @@
-@import 'src/styles/layout/_reset.scss';
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+@import 'src/styles/layout/reset.scss';
 @import 'src/styles/layout/_global';
-@import 'src/styles/blocks/_button';
-@import 'src/styles/blocks/_input';
+@import 'src/styles/blocks/main';
+
 
 :root {
-	--fw-regular: 400;
-	--fw-medium: 500;
-	--fw-semi-bold: 600;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semi-bold: 600;
+  --ff-primary: 'Inter', sans-serif;
+  --transition: .2s ease;
+}
 
-	--ff-primary: 'Inner', sans-serif;
-
-	--transition: 0;
+* {
+  user-select: none;
 }

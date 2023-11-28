@@ -97,3 +97,17 @@
 	font-size: 10px;
 	line-height: 12px;
 }
+
+@mixin text-overflow($line_count) {
+  display: -webkit-box;
+  -webkit-line-clamp: $line_count;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: normal;
+  word-break: break-all;
+
+  &.expanded {
+    -webkit-line-clamp: initial;
+    overflow: auto;
+  }
+}

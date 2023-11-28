@@ -1,3 +1,5 @@
+@import "src/styles/helpers/colors";
+
 :root {
 /* white-gradation */
 	--wgr-primary: #fff;
@@ -16,13 +18,13 @@
 	--wti-secondary: #caccce;
 	--wti-tertiary: #9197a1;
 	--wti-quaternary: #5a6472;
-	
+
 /* black-text-icons */
 	--bti-primary: #090a0c;
 	--bti-secondary: #2d3339;
 	--bti-tertiary: #5e676e;
 	--bti-quaternary: #95999d;
-	
+
 /* overlay-primary */
 	--overlay-primary: #373c3f;
 	--overlay-secondary: #666a6d;
@@ -35,7 +37,7 @@
 	--mc-active: #0D54A5;
 	--mc-quaternary: #dee8f7;
 	--mc-quinary: #f0f4f9;
-	--mc-gradient-default: linear-gradient(114deg, #3686E2 0%, #0D54A5 100%)
+	--mc-gradient-default: linear-gradient(114deg, #3686E2 0%, #0D54A5 100%);
 
 /* background-primary */
 	--bgp-hover: #1A57B2;
@@ -80,63 +82,5 @@
 	--succes-color-active: #45A151;
 	--succes-color-quaternary: #D1E0D3;
 	--succes-color-quinary: #F0F4F1;
-
-}
-
-span.c,
-.text.c,
-.c {
-  &-white {
-    color: var(--wgr-primary);
-  }
-
-  &-black {
-    color: var(--bgr-primary);
-  }
-
-  &-wgr-secondary {
-    color: var(--wgr-secondary)
-  }
-
-  &-wgr-tertiary {
-    color: var(--wgr-tertiary)
-  }
-
-  &-wgr-quaternary {
-    color: var(--wgr-quaternary)
-  }
-
-  &-bgr-primary {
-    color: var(--bgr-primary)
-  }
-
-  &-bgr-secondary {
-    color: var(--bgr-secondary)
-  }
-
-  &-bgr-tertinary {
-    color: var(--bgr-tertiary)
-  }
-
-  &-bgr-quaternary {
-    color: var(--bgr-quaternary)
-  }
-
-  &-bti-primary {
-    color: var(--bti-primary)
-  }
-
-  &-bti-secondary {
-    color: var(--bti-secondary)
-  }
-
-  &-bti-tertiary {
-    color: var(--bti-tertiary)
-  }
-
-  &-bti-quaternary {
-    color: var(--bti-quaternary)
-  }
-
 
 }

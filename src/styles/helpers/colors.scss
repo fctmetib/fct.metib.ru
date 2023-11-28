@@ -1,0 +1,73 @@
+span.c,
+.text.c,
+.c {
+
+  // white gradation
+  &-wgr-primary {
+    color: var(--wgr-primary)
+  }
+
+  &-wgr-secondary {
+    color: var(--wgr-secondary)
+  }
+
+  &-wgr-tertiory {
+    color: var(--wgr-tertiory)
+  }
+
+  &-wgr-quaternary {
+    color: var(--wgr-quaternary)
+  }
+
+  // black gradation
+  &-bgr-primary {
+    color: var(--bgr-primary)
+  }
+
+  &-bgr-secondary {
+    color: var(--bgr-secondary)
+  }
+
+  &-bgr-tertiory {
+    color: var(--bgr-tertiory)
+  }
+
+  &-bgr-quaternary {
+    color: var(--bgr-quaternary)
+  }
+
+  // text icons white
+  &-wti-primary {
+    color: var(--wti-primary)
+  }
+
+  &-wti-secondary {
+    color: var(--wti-secondary)
+  }
+
+  &-wti-tertiory {
+    color: var(--wti-tertiory)
+  }
+
+  &-wti-quaternary {
+    color: var(--wti-quaternary)
+  }
+
+
+  // text icons black
+  &-bti-primary {
+    color: var(--bti-primary)
+  }
+
+  &-bti-secondary {
+    color: var(--bti-secondary)
+  }
+
+  &-bti-tertiory {
+    color: var(--bti-tertiory)
+  }
+
+  &-bti-quaternary {
+    color: var(--bti-quaternary)
+  }
+}
