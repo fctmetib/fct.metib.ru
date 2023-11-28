@@ -192,6 +192,7 @@
 			transform: unset;
 			padding-left: 16px !important;
 			@include body-text;
+			@include text-xs;
 			font-weight: var(--fw-medium);
 			color: var(--mc-default);
 			transition: var(--main-transition);

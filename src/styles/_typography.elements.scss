@@ -67,10 +67,7 @@ h5 {
 	&_xs {
 		@include text-xs;
 	}
-	&_regular {
-		font-weight: var(--fw-regular);
-	}
 	&_medium {
-		font-weight: var(--medium);
+		font-weight: var(--fw-medium);
 	}
 }
