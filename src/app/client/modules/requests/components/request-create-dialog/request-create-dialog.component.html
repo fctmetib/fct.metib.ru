@@ -8,7 +8,7 @@
     <div class="p-field p-col-12 p-md-6">
       <label for="deliveryID">Договор поставки:</label>
       <p-dropdown id="deliveryID" [options]="deliveries" placeholder="Выберите договор" formControlName="deliveryID"
-        optionLabel="Title" optionValue="ID" (onChange)="onDeliveryChange($event)"></p-dropdown>
+        optionLabel="Title" optionValue="ID"></p-dropdown>
       <div *ngIf="form.controls['deliveryID'].invalid">
         <small *ngIf="form.controls['deliveryID'].errors.required" class="p-error">
           Поле должно быть заполнено.

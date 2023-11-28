@@ -156,7 +156,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
-        <ng-container *ngIf="(requests$ | async)?.length !== 0; else skeletonRequestsTemplate">
+        <ng-container *ngIf="!(loading$ | async); else skeletonRequestsTemplate">
           <tr>
             <td colspan="9">Нет данных.</td>
           </tr>

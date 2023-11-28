@@ -83,20 +83,12 @@ export class RequestsService {
 
   // TODO: скорее всего возвращаются файлы
   public getDocumentsOfRequest(requestID: number): Observable<any[]> {
-    const url = `${environment.apiUrl}/request/${requestID}/documents`;
-    return this.http.get<any[]>(url);
+    return this.http.get<any[]>(`${environment.apiUrl}/request/${requestID}/documents`);
   }
 
-  //TODO: нужно проверить, что возвращается
-  public sendConfirm(data: ConfirmRequestInterface): Observable<any> {
-    const url = `${environment.apiUrl}/v1/requests/send/confirm`;
-    return this.http.post<any>(url, data);
-  }
-
-  public sendInit(
+  public send(
     data: number[]
   ): Observable<ClientRequestSendingInitRequestInterface> {
-    const url = `${environment.apiUrl}/v1/requests/send/init`;
-    return this.http.post<ClientRequestSendingInitRequestInterface>(url, data);
+    return this.http.post<ClientRequestSendingInitRequestInterface>(`${environment.apiUrl}/v1/requests/send`, data);
   }
 }

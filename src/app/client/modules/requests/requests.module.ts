@@ -37,7 +37,6 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
-import { AgencyRequestCreateDialogComponent } from './components/agency-request-create-dialog/agency-request-create-dialog.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DocumentViewDialogComponent } from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component';
@@ -84,7 +83,6 @@ import { DocumentViewDialogComponent } from 'src/app/client/shared/components/di
     RequestsPageComponent,
     RequestCreateDialogComponent,
     RequestCorrectDialogComponent,
-    AgencyRequestCreateDialogComponent,
   ],
   providers: [
     DialogService,
