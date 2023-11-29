@@ -1,0 +1,17 @@
+<div (mouseenter)="isHover = true" (mouseleave)="isHover = false" class="cash-panel" [ngClass]="classes">
+  <div class="flex flex_column gap-4">
+    <div class="flex flex_align-center">
+      <p class="text text_m text_medium c-bti-tertiary flex_grow">Ваш лимит</p>
+      <mib-ref-icon class="stroke" name="fi_info"></mib-ref-icon>
+    </div>
+    <h3>1 000 000₽</h3>
+  </div>
+  <mib-spacing type="xs2"></mib-spacing>
+  <div class="flex">
+    <p class="text text_m c-bti-tertiary flex_grow">Актуально на 10.10.2023</p>
+    <mib-link>
+      Подробнее
+      <mib-ref-icon *ngIf="isHover" link-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+    </mib-link>
+  </div>
+</div>

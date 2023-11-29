@@ -3,7 +3,7 @@ import {Component, OnInit, HostListener} from '@angular/core';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {Subject} from 'rxjs';
 import {Subscription} from 'rxjs';
-import {InactiveDialogComponent} from '../shared/modules/inactive-dialog/inactive-dialog.component';
+import {InactiveDialogComponent} from '../shared/modules/old-modules/inactive-dialog/inactive-dialog.component';
 
 @Component({
   selector: 'admin',
@@ -54,24 +54,24 @@ export class AdminComponent implements OnInit {
   }
 
   public openInactive() {
-    if (!this.refInactiveDialog) {
-      this.refInactiveDialog = this.dialogService.open(
-        InactiveDialogComponent,
-        {
-          header: 'Внимание',
-          width: '50%',
-          contentStyle: {'max-height': '550px', overflow: 'auto'},
-          baseZIndex: 10000,
-        }
-      );
-
-      this.subscription$.add(
-        this.refInactiveDialog.onClose.subscribe(() => {
-          this.refInactiveDialog = null;
-          this.setTimeout();
-        })
-      );
-    }
+    // if (!this.refInactiveDialog) {
+    //   this.refInactiveDialog = this.dialogService.open(
+    //     InactiveDialogComponent,
+    //     {
+    //       header: 'Внимание',
+    //       width: '50%',
+    //       contentStyle: {'max-height': '550px', overflow: 'auto'},
+    //       baseZIndex: 10000,
+    //     }
+    //   );
+    //
+    //   this.subscription$.add(
+    //     this.refInactiveDialog.onClose.subscribe(() => {
+    //       this.refInactiveDialog = null;
+    //       this.setTimeout();
+    //     })
+    //   );
+    // }
   }
 
   setTimeout() {

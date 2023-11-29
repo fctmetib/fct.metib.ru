@@ -20,7 +20,7 @@ const routes = [
       },
       {
         path: 'freeduty',
-        loadChildren: () => import('./modules/freeduty/freeduty.module').then(m => m.FreedutyModule),
+        loadChildren: () => import('./modules/freeduty/free-duty.module').then(m => m.FreeDutyModule),
       },
       {
         path: 'invoices',
@@ -38,13 +38,13 @@ const routes = [
         path: 'reports',
         loadChildren: () => import('./modules/reports/reports.module').then(m => m.ReportsModule),
       },
-      {
-        path: 'demand',
-        loadChildren: () => import('../shared/modules/demand/demand.module').then(m => m.DemandModule)
-      },
+      // {
+      //   path: 'demand',
+      //   loadChildren: () => import('../shared/modules/old-modules/demand/demand.module').then(m => m.DemandModule)
+      // },
       {
         path: 'new-demand',
-        loadChildren: () => import('../shared/modules/demand-new/demand-new.module').then(m => m.DemandNewModule)
+        loadChildren: () => import('../shared/modules/old-modules/demand-new/demand-new.module').then(m => m.DemandNewModule)
       },
       {
         path: 'delays',

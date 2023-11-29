@@ -1,6 +1,6 @@
-import { BankRequisitesInterface } from './../../types/bank/bank-requisites.interface';
+import { BankRequisitesInterface } from '../../types/bank/bank-requisites.interface';
 import { ReportCardInterface } from 'src/app/client/modules/cabinet/types/common/report-card.interface';
-import { DemandSelectboxInterface } from '../../modules/demand/types/common/demand-selectbox.interface';
+import {DemandSelectboxInterface} from '../../modules/old-modules/demand-new/types/demand-selectbox.interface';
 
 export class MIBCommon {
   private legalForms: DemandSelectboxInterface[] = [];

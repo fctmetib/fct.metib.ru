@@ -22,18 +22,16 @@ import {ClientComponent} from './client.component'
 import {HeaderComponent} from './shared/components/header/header.component'
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 import {AuthInterceptor} from '../shared/services/auth.interceptor'
-import {MobileHeaderComponent} from './shared/components/mobile-header/mobile-header.component'
 import {DialogService} from 'primeng/dynamicdialog'
-import {InactiveDialogModule} from '../shared/modules/inactive-dialog/inactive-dialog.module'
 import {AccordionModule} from 'primeng/accordion'
 import {MIBNotifyAccordionComponent} from './shared/components/mib-notify-accordion/mib-notify-accordion.component'
 import {MIBNotifyAccordionGroupComponent} from './shared/components/mib-notify-accordion/mib-notify-accordion-group.component'
-import {UpdatePasswordDialogModule} from '../shared/modules/update-password-dialog/update-password-dialog.module'
 import {NotifyDialogComponent} from './shared/components/dialogs/notify-dialog/notify-dialog.component'
 import {ButtonModule as ButtonModule22} from '../shared/ui-kit/button/button.module'
 import {RefIconModule} from '../shared/ui-kit/ref-icon/ref-icon.module'
 import {AvatarModule} from '../shared/ui-kit/avatar/avatar.module';
 import {SidebarModule} from '../shared/ui-kit/sidebar/sidebar.module';
+import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module';
 
 @NgModule({
   imports: [
@@ -55,18 +53,16 @@ import {SidebarModule} from '../shared/ui-kit/sidebar/sidebar.module';
     CardModule,
     MenubarModule,
     AvatarModule,
-    InactiveDialogModule,
-    UpdatePasswordDialogModule,
     ButtonModule22,
     RefIconModule,
     SidebarModule,
+    SpacingModule,
   ],
   declarations: [
     ClientComponent,
     NotifyDialogComponent,
     // Layout
     HeaderComponent,
-    MobileHeaderComponent,
     // Components
     MIBNotifyAccordionGroupComponent,
     MIBNotifyAccordionComponent

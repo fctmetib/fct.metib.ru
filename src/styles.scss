@@ -1,16 +1,13 @@
 
 html, body {
   height: 100%;
+  background: var(--wgr-primary);
   overflow: hidden;
-}
-
-body {
-  margin: 0;
 }
 
 @import 'src/styles/layout/reset.scss';
 @import 'src/styles/layout/_global';
-@import 'src/styles/blocks/main';
+@import 'src/styles/components/main';
 
 
 :root {
@@ -24,3 +21,35 @@ body {
 * {
   user-select: none;
 }
+
+// TODO: ПОМЕНЯТЬ ЦВЕТ
+::-webkit-scrollbar {
+  background-color: var(--wgr-primary);
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--wgr-tertiary);
+  border-radius: 4px;
+  &:active {
+    background-color: var(--wgr-quaternary);
+  }
+}
+
+.separator {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background-color: var(--wgr-tertiary);
+
+  &:not(.vertical) {
+    height: 1px;
+  }
+
+  &.vertical {
+    width: 1px;
+  }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

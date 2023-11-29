@@ -15,7 +15,6 @@ import {MenuModule} from 'primeng/menu';
 import {MenubarModule} from 'primeng/menubar';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {SkeletonModule} from 'primeng/skeleton';
-import {InactiveDialogModule} from '../shared/modules/inactive-dialog/inactive-dialog.module';
 import {AdminGuard} from '../shared/services/admin.guard';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {AdminComponent} from './admin.component';
@@ -23,7 +22,6 @@ import {HeaderComponent} from './shared/header/header.component';
 import {MobileHeaderComponent} from './shared/mobile-header/mobile-header.component';
 import {AdminAuthInterceptor} from './shared/services/admin-auth.interceptor';
 import {PageStoreService} from './shared/services/page-store.service';
-import {UpdatePasswordDialogModule} from '../shared/modules/update-password-dialog/update-password-dialog.module';
 
 const routes = [
   {
@@ -33,27 +31,19 @@ const routes = [
     children: [
       {
         path: 'cabinet',
-        loadChildren: () =>
-          import('./modules/cabinet/cabinet.module').then(
-            (m) => m.CabinetModule
-          ),
+        loadChildren: () => import('./modules/cabinet/cabinet.module').then((m) => m.CabinetModule),
       },
       {
         path: 'organizations',
-        loadChildren: () =>
-          import('./modules/organizations/organizations.module').then(
-            (m) => m.OrganizationsModule
-          ),
+        loadChildren: () => import('./modules/organizations/organizations.module').then((m) => m.OrganizationsModule),
       },
       {
         path: 'tests',
-        loadChildren: () =>
-          import('./modules/tests/tests.module').then((m) => m.TestsModule),
+        loadChildren: () => import('./modules/tests/tests.module').then((m) => m.TestsModule),
       },
       {
         path: 'users',
-        loadChildren: () =>
-          import('./modules/users/users.module').then((m) => m.UsersModule),
+        loadChildren: () => import('./modules/users/users.module').then((m) => m.UsersModule),
       },
     ],
   },
@@ -79,8 +69,6 @@ const routes = [
     AvatarModule,
     FormsModule,
     ReactiveFormsModule,
-    InactiveDialogModule,
-    UpdatePasswordDialogModule,
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],

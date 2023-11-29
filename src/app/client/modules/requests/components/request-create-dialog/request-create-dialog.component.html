@@ -1,8 +1,3 @@
-<metib-backend-error-messages *ngIf="errorsMessage$ | async" [backendErrors]="errorsMessage$ | async">
-</metib-backend-error-messages>
-
-<metib-success-messages *ngIf="successMessage$ | async" [message]="successMessage$ | async"></metib-success-messages>
-
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="p-fluid p-formgrid p-grid form">
     <div class="p-field p-col-12 p-md-6">

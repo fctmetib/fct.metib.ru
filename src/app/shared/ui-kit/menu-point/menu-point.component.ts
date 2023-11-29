@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {MenuPointDevice} from './intefaces/menu-point.interface';
+import {DeviceType} from '../../interfaces/shared.interface';
 
 @Component({
   selector: 'mib-menu-point',
@@ -8,7 +8,7 @@ import {MenuPointDevice} from './intefaces/menu-point.interface';
 })
 export class MenuPointComponent {
 
-  @Input() device: MenuPointDevice = 'desktop'
+  @Input() device: DeviceType = 'desktop'
   @Input() link: string = ''
   @ViewChild('leftIcon') leftIcon: ElementRef<HTMLDivElement>
 

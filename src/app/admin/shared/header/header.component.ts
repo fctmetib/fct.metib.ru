@@ -8,9 +8,9 @@ import { PageStoreService } from '../services/page-store.service';
 import { PageInterface } from '../types/page.interface';
 import { Subscription } from 'rxjs';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { UpdatePasswordDialogComponent } from 'src/app/shared/modules/update-password-dialog/update-password-dialog.component';
 import { isPlatformBrowser } from '@angular/common';
 import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
+import {UpdatePasswordDialogComponent} from '../../../shared/modules/old-modules/update-password-dialog/update-password-dialog.component';
 
 @Component({
   selector: 'app-header',

@@ -1,0 +1,32 @@
+@import "src/shared/styles/vars.colors";
+
+:host {
+  height: 100%;
+  width: 100%;
+}
+
+@mixin drawer {
+  height: 100%;
+  width: 100%;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  background-color: map-get($project-colors, "gradation", 700);
+  border-radius: 24px 0 0 0;
+}
+
+@mixin drawer-content {
+  padding: 0 72px 0 48px;
+  overflow-y: auto;
+  height: calc(100% - 80px);
+}
+
+.drawer {
+  @include drawer;
+
+  &_content {
+    @include drawer-content;
+  }
+}

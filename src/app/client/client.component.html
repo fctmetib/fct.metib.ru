@@ -1,9 +1,13 @@
 <div class="full-height flex w-100">
   <mib-sidebar></mib-sidebar>
-  <div class="flex flex_column flex_grow">
-    <app-header></app-header>
-    <div class="scrollable container">
-      <router-outlet></router-outlet>
+  <main class="flex_grow">
+    <app-header #header></app-header>
+    <mib-spacing [customSpace]="header.height"></mib-spacing>
+    <div class="scrollable flex flex_column scroll-y" [ngStyle]="styles">
+      <div class="container">
+        <router-outlet></router-outlet>
+        <mib-spacing type="xl2"></mib-spacing>
+      </div>
     </div>
-  </div>
+  </main>
 </div>

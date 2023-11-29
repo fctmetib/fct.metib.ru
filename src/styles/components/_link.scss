@@ -1,0 +1,114 @@
+@import "src/styles/helpers/icon_tools";
+@import "src/styles/typography.vars";
+
+$text-selectors: 'span';
+
+@mixin link-size($height, $icon-size) {
+  height: $height;
+
+  #{$text-selectors} {
+    @content
+  }
+
+  .link_icon-wrapper, mib-ref-icon {
+    @include icon-size($icon-size)
+  }
+}
+
+@mixin link {
+  gap: 4px;
+  cursor: pointer;
+
+  #{$text-selectors} {
+    @include body-text;
+    transition: var(--transition);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+@mixin link-ghost-primary {
+  #{$text-selectors} {
+    font-weight: var(--fw-medium);
+  }
+  @include link-color(var(--mc-default));
+  &:hover {
+    @include link-color(var(--mc-hover));
+  }
+  &:active {
+    @include link-color(var(--mc-active));
+  }
+}
+
+@mixin link-ghost-secondary {
+  @include link-color(var(--bti-tertiary));
+  &:hover {
+    @include link-color(var(--bti-secondary));
+  }
+  &:active {
+    @include link-color(var(--bti-primary));
+  }
+}
+
+@mixin link-color($color) {
+  #{$text-selectors} {
+    color: $color
+  }
+  .link_icon-wrapper, mib-ref-icon {
+    @include icon-color($color)
+  }
+}
+
+.link {
+
+  @include link;
+
+  &_l {
+    @include link-size(24px, 20px) {
+      @include text-l;
+    };
+  }
+
+  &_m {
+    @include link-size(20px, 20px) {
+      @include text-m;
+    };
+  }
+
+  &_s {
+    @include link-size(16px, 16px) {
+      @include text-s;
+    };
+  }
+
+  &_type {
+    &-ghost {
+      &-primary {
+        @include link-ghost-primary;
+      }
+
+      &-secondary {
+        @include link-ghost-secondary;
+      }
+    }
+  }
+
+
+  &_icon-wrapper {
+    display: none;
+  }
+
+  &_left-iconly {
+    .link_left-icon-wrapper {
+      display: flex;
+    }
+  }
+
+  &_right-iconly {
+    .link_right-icon-wrapper {
+      display: flex;
+    }
+  }
+}

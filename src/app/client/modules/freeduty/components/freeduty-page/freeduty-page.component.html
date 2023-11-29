@@ -200,7 +200,7 @@
       </ng-template>
     </ng-template>
   </p-table>
-</div> 
+</div>
 
 <!-- Filter Form -->
 <p-dialog [style]="{width: '450px'}" [(visible)]="filterDialog" [draggable]="false" [resizable]="false"
@@ -221,16 +221,11 @@
       </div>
     </form>
   </ng-template>
-</p-dialog> 
+</p-dialog>
 <!-- Request Form -->
  <p-dialog [style]="{width: '950px'}" [(visible)]="requestsDialog" header="Создать заявку" [modal]="true"
   [draggable]="false" [resizable]="false" styleClass="p-fluid">
   <ng-template pTemplate="content">
-    <metib-backend-error-messages *ngIf="errorRequestsDialogMessage" [backendErrors]="errorRequestsDialogMessage">
-    </metib-backend-error-messages>
-
-    <metib-success-messages *ngIf="successRequestsDialogMessage" [message]="successRequestsDialogMessage">
-    </metib-success-messages>
     <p-table [value]="selectedItemsSorted" dataKey="contract">
       <ng-template pTemplate="header">
         <tr>

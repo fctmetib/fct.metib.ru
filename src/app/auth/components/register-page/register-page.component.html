@@ -3,13 +3,6 @@
     <div class="auth__body__form__title">
       <h1>Регистрация</h1>
     </div>
-    <metib-backend-error-messages *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async">
-    </metib-backend-error-messages>
-
-    <metib-success-messages *ngIf="confirmationCode$ | async" [message]="
-        'На указанный номер телефона отправлен код. Пожалуйста, введите его в поле КОД'
-      ">
-    </metib-success-messages>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="auth__body__form__fields">

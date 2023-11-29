@@ -1,4 +1,4 @@
-import { FreedutyRoutingModule } from './../../freeduty-routing.module';
+import { FreeDutyRoutingModule } from '../../free-duty-routing.module';
 import { FreedutyPageComponent } from './freeduty-page.component';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ButtonModule } from 'primeng/button';
@@ -25,7 +25,7 @@ describe('FreedutyPageComponent', () => {
       declarations: [FreedutyPageComponent],
       imports: [
         CommonModule,
-        FreedutyRoutingModule,
+        FreeDutyRoutingModule,
         FormsModule,
         ReactiveFormsModule,
         BackendErrorMessagesModule,

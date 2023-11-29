@@ -28,6 +28,8 @@ import {WidgetStatsComponent} from './components/cabinet-page/widget-stats/widge
 import {WidgetActionsComponent} from './components/cabinet-page/widget-actions/widget-actions.component';
 import {WidgetNewsComponent} from './components/cabinet-page/widget-news/widget-news.component';
 import {CabinetNewsService} from './services/news.service';
+import {SpacingModule} from '../../../shared/ui-kit/spacing/spacing.module';
+import {CashPanelModule} from '../../../shared/modules/cash-panel/cash-panel.module';
 
 @NgModule({
   imports: [
@@ -51,6 +53,8 @@ import {CabinetNewsService} from './services/news.service';
     AvatarModule,
     CabinetRoutingModule,
     ChartModule,
+    SpacingModule,
+    CashPanelModule,
   ],
   declarations: [
     CabinetPageComponent,

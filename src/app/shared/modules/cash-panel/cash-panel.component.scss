@@ -1,0 +1,44 @@
+@import "src/styles/helpers/icon_tools";
+
+:host {
+  display: block;
+  flex-grow: 1;
+}
+
+@mixin cash-panel {
+  transition: var(--transition);
+  width: 100%;
+  padding: 16px;
+  background-color: var(--wgr-primary);
+}
+
+@mixin cash-panel-desktop {
+  border: 1px solid var(--wgr-tertiary);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+
+@mixin cash-panel-mobile {
+  border-bottom: 1px solid var(--wgr-tertiary);
+}
+
+.cash-panel {
+  @include cash-panel;
+
+  &:hover {
+  }
+
+  &_desktop {
+    @include cash-panel-desktop;
+  }
+
+  &_mobile {
+    @include cash-panel-desktop;
+  }
+
+  mib-ref-icon[name='fi_info'] {
+    @include icon-size(16px);
+    @include icon-color(var(--bti-tertiary))
+  }
+}

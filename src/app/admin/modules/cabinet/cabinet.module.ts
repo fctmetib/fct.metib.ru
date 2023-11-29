@@ -1,4 +1,4 @@
-import { NewsService } from './../../shared/services/news.service';
+import { NewsService } from '../../shared/services/news.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

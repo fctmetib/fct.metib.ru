@@ -1,4 +1,3 @@
-import { ViewFileDialogComponent } from './../../../../../shared/modules/view-file-dialog/view-file-dialog.component';
 import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
@@ -19,22 +18,22 @@ export class DocumentsPageComponent implements OnInit {
   ngOnInit() {}
 
   public openUpdatePassword() {
-    if (!this.refUpdatePasswordDialog) {
-      this.refUpdatePasswordDialog = this.dialogService.open(
-        ViewFileDialogComponent,
-        {
-          header: 'Редактировать документ',
-          width: '976px',
-          contentStyle: { 'max-height': '677px', overflow: 'auto' },
-          baseZIndex: 10000,
-        }
-      );
-
-      this.subscription$.add(
-        this.refUpdatePasswordDialog.onClose.subscribe(() => {
-          this.refUpdatePasswordDialog = null;
-        })
-      );
-    }
+    // if (!this.refUpdatePasswordDialog) {
+    //   this.refUpdatePasswordDialog = this.dialogService.open(
+    //     ViewFileDialogComponent,
+    //     {
+    //       header: 'Редактировать документ',
+    //       width: '976px',
+    //       contentStyle: { 'max-height': '677px', overflow: 'auto' },
+    //       baseZIndex: 10000,
+    //     }
+    //   );
+    //
+    //   this.subscription$.add(
+    //     this.refUpdatePasswordDialog.onClose.subscribe(() => {
+    //       this.refUpdatePasswordDialog = null;
+    //     })
+    //   );
+    // }
   }
 }

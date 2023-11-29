@@ -20,13 +20,6 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		loadChildren: () =>
-			import('./not-verify-client/not-verify-client.module').then(
-				m => m.NotVerifyClientModule
-			)
-	},
-	{
-		path: '',
 		loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
 	},
 	{ path: 'ui-test', component: MibUiComponent },

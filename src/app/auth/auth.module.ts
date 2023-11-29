@@ -1,28 +1,27 @@
-import { ConfirmPasswordPageComponent } from './components/confirm-password-page/confirm-password-page.component';
-import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {ConfirmPasswordPageComponent} from './components/confirm-password-page/confirm-password-page.component';
+import {ResetPasswordPageComponent} from './components/reset-password-page/reset-password-page.component';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { MessagesModule } from 'primeng/messages';
-import { MessageModule } from 'primeng/message';
-import { InputMaskModule } from 'primeng/inputmask';
-import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import {CardModule} from 'primeng/card';
+import {ButtonModule} from 'primeng/button';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {InputMaskModule} from 'primeng/inputmask';
+import {InputTextModule} from 'primeng/inputtext';
+import {DropdownModule} from 'primeng/dropdown';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
-import { CommonService } from '../shared/services/common/common.service';
-import { BackendErrorMessagesModule } from '../shared/modules/backendErrorMessages/backendErrorMessages.module';
-import { SuccessMessagesModule } from '../shared/modules/successMessages/successMessages.module';
-import { RegisterPageComponent } from './components/register-page/register-page.component';
-import { LoginPageComponent } from './components/login-page/login-page.component';
-import { AuthRoutingModule } from './auth-routing.module';
-import { AuthComponent } from './auth.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './services/auth.interceptor';
-import { TooltipModule } from 'primeng/tooltip';
+import {CommonService} from '../shared/services/common/common.service';
+import {RegisterPageComponent} from './components/register-page/register-page.component';
+import {LoginPageComponent} from './components/login-page/login-page.component';
+import {AuthRoutingModule} from './auth-routing.module';
+import {AuthComponent} from './auth.component';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthInterceptor} from './services/auth.interceptor';
+import {TooltipModule} from 'primeng/tooltip';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,8 +29,6 @@ import { TooltipModule } from 'primeng/tooltip';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BackendErrorMessagesModule,
-    SuccessMessagesModule,
     InputTextModule,
     DropdownModule,
     ProgressSpinnerModule,
@@ -58,4 +55,5 @@ import { TooltipModule } from 'primeng/tooltip';
     },
   ],
 })
-export class AuthModule {}
+export class AuthModule {
+}
