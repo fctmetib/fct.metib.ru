@@ -12,13 +12,11 @@ import {
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SortEvent, MenuItem } from 'primeng/api';
 import { RequestsService } from '../../services/requests.service';
-import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
 import { DocumentViewDialogComponent } from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component';
-import { ClientRequestSendingInitRequestInterface } from 'src/app/shared/types/client/client-request-sending-init-request.interface';
 import { SignService } from 'src/app/shared/services/share/sign.service';
-import { filter } from 'jszip';
+import { EventsViewComponent } from './events-view/events-view.component';
 
 @Directive({
   selector: '[tableHighlight]',
@@ -38,6 +36,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   public displayModal: boolean;
   public ref: DynamicDialogRef;
+  public eventViewRef: DynamicDialogRef;
   public items: MenuItem[] = [];
 
   public confirmForm: FormGroup;
@@ -92,13 +91,13 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
         // todo: нужно
         id: 'events',
         label: 'События',
-        routerLink: '',
+        command: () => this.getEvents(),
       },
       {
         // todo: нужно
         id: 'remove',
         label: 'Удалить',
-        routerLink: '',
+        command: () => this.removeRequests(),
       },
       {
         // todo: нужно
@@ -308,5 +307,32 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     if (this.ref) {
       this.ref.close();
     }
+  }
+
+  private getEvents(): void {
+    let requestID = this.selectedItems.map((x: RequestsResponseInterface): any => x.ID)[0];
+    this.requestService.getRequestEvents(requestID).pipe(
+      tap((events) => {
+        this.eventViewRef = this.dialogService.open(
+          EventsViewComponent,
+          {
+            header: 'История',
+            width: '50%',
+            contentStyle: { 'max-height': '550px', overflow: 'auto' },
+            baseZIndex: 10000,
+            data: events,
+          }
+        );
+      })
+    ).subscribe();
+  }
+
+  private removeRequests(): void {
+    let requestIDs = this.selectedItems.map((x: RequestsResponseInterface): any => x.ID);
+    this.requestService.delete(requestIDs).pipe(
+      tap(() => {
+        this.fetch();
+      })
+    ).subscribe();
   }
 }

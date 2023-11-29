@@ -1,0 +1,14 @@
+<div class="events-view" *ngIf="(events$ | async) as events">
+    <div class="event" *ngFor="let event of events">
+        <div class="about">
+            <div>Статус: {{event.Title}}</div>
+            <div>Автор: {{event.Author}}</div>
+            <div>Дата: {{event.Date | date:"dd.MM.yyyy HH:mm"}}</div>
+        </div>
+        <div class="state-events" *ngIf="events.StateEvents">
+            <div class="state" *ngFor="let stateEvent of events.StateEvents">
+                <span>{{stateEvent.Comment}}</span>
+            </div>
+        </div>
+    </div>
+</div>

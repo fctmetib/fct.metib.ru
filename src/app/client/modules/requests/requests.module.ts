@@ -40,6 +40,7 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DocumentViewDialogComponent } from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component';
+import { EventsViewComponent } from './components/requests-page/events-view/events-view.component';
 
 @NgModule({
   imports: [
@@ -79,6 +80,7 @@ import { DocumentViewDialogComponent } from 'src/app/client/shared/components/di
     DocumentsViewComponent,
     ShipmentsViewComponent,
     DocumentViewDialogComponent,
+    EventsViewComponent,
     // Containers
     RequestsPageComponent,
     RequestCreateDialogComponent,

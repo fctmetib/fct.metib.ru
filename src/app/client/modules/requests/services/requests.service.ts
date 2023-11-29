@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { RequestsResponseInterface } from '../types/requestResponse.interface';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
+import { RequestEventsInterface } from '../types/request-events.interface';
 
 @Injectable()
 export class RequestsService {
@@ -35,9 +36,11 @@ export class RequestsService {
     return this.http.post<RequestsResponseInterface>(url, data);
   }
 
-  public delete(requestID: number): Observable<{}> {
-    const url = `${environment.apiUrl}/v1/requests/${requestID}`;
-    return this.http.delete<{}>(url);
+  public delete(requestIDs: number[]): Observable<{}> {
+    const url = `${environment.apiUrl}/v1/requests`;
+    return this.http.delete<{}>(url, {
+      body: requestIDs
+    });
   }
 
   //#endregion
@@ -90,5 +93,9 @@ export class RequestsService {
     data: number[]
   ): Observable<ClientRequestSendingInitRequestInterface> {
     return this.http.post<ClientRequestSendingInitRequestInterface>(`${environment.apiUrl}/v1/requests/send`, data);
+  }
+
+  public getRequestEvents(requestID: number): Observable<RequestEventsInterface[]> {
+    return this.http.get<RequestEventsInterface[]>(`${environment.apiUrl}/v1/requests/${requestID}/states`)
   }
 }
