@@ -6,6 +6,7 @@ import { MibUiComponent } from './mib-ui.component'
 import { RefIconModule } from '../../ui-kit/ref-icon/ref-icon.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { SpacingModule } from '../../ui-kit/spacing/spacing.module'
+import { BadgeModule } from '../../ui-kit/badge/badge.module'
 
 @NgModule({
 	imports: [
@@ -15,7 +16,8 @@ import { SpacingModule } from '../../ui-kit/spacing/spacing.module'
 		ButtonModule,
 		RefIconModule,
 		InputModule,
-		SpacingModule
+		SpacingModule,
+		BadgeModule
 	],
 	declarations: [MibUiComponent]
 })

@@ -788,3 +788,31 @@
 	</div>
 	<mib-spacing type="l"></mib-spacing>
 </div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'badges' | titlecase }}
+	<button (click)="isShownBadges = !isShownBadges">
+		{{ isShownBadges ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownBadges" class="wrapper">
+	<h3>filled-secondary</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div class="input-wrapper">
+		<div class="test-input">
+			<span>badge</span>
+			<mib-badge></mib-badge>
+		</div>
+		<mib-spacing type="xl2"></mib-spacing>
+	</div>
+</div>
