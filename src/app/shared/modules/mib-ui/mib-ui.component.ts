@@ -12,7 +12,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 				display: block;
 				margin: auto;
 				padding: 0 15px;
-        overflow-y: scroll;
+				overflow: auto;
+				height: -webkit-fill-available;
 			}
 			.btn-wrapper {
 				display: flex;
@@ -30,7 +31,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 export class MibUiComponent implements OnInit {
 	isShownBtns = false
 	isShownInputs = false
-	isShownTextarea = true
+	isShownTextarea = false
+	isShownBadges = true
 	public inputSizeXL: InputSize = 'xl'
 	public inputSizeL: InputSize = 'l'
 	public inputSizeM: InputSize = 'm'

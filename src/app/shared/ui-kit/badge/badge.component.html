@@ -1,0 +1,10 @@
+<div
+	class="badge flex flex_center"
+	[ngClass]="'badge_type-' + type + ' badge_' + size"
+	[class.badge_extended]="extended"
+>
+	<mib-ref-icon badge-icon class="stroke" name="fi_check"></mib-ref-icon>
+	<p class="text text_l text_medium">
+		<ng-content></ng-content>
+	</p>
+</div>
