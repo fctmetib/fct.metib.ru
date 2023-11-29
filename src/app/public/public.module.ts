@@ -6,7 +6,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {HomeComponent} from './pages/home/home.component';
 import {UIKitTestComponent} from './shared/ui-kit-test/ui-kit-test.component';
-import {MibButtonComponent} from './shared/buttons/mib-button/mib-button.component';
 import {MibMenuComponent} from './shared/menu/mib-menu/mib-menu.component';
 import {MibCardInfoComponent} from './shared/cards/card-info/mib-card-info.component';
 import {TariffsComponent} from './pages/tariffs/tariffs.component';
@@ -93,7 +92,7 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     CheckboxModule,
     ButtonModule,
   ],
-  exports: [RouterModule, MibButtonComponent],
+  exports: [RouterModule],
   declarations: [
     PublicComponent,
     HomeComponent,
@@ -113,7 +112,6 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     UIKitTestComponent,
     MibMenuComponent,
     MibFooterComponent,
-    MibButtonComponent,
     MibSliderPartnersComponent,
     MibSliderNewsComponent,
     // CARDS

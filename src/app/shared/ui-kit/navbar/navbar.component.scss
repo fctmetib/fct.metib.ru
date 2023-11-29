@@ -1,0 +1,20 @@
+@import "src/styles/colors.vars";
+
+:host {
+  border-bottom: 1px solid transparent;
+
+  &:has(.navbar_separator) {
+    border-color: var(--wgr-tertiary);
+  }
+}
+
+.navbar {
+
+  &_separator {
+    gap: 32px;
+  }
+
+  &_filled {
+    padding: 2px;
+  }
+}

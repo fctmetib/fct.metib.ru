@@ -1,0 +1,122 @@
+@import "src/styles/helpers/icon_tools";
+@import "src/styles/typography.vars";
+
+$text-selectors: 'span';
+
+@mixin navbar-point {
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+    transition: var(--transition);
+  }
+
+  transition: color var(--transition), background-color var(--transition);
+
+  #{$text-selectors} {
+    @include body-text;
+    transition: var(--transition);
+    font-weight: var(--fw-medium);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+@mixin navbar-point-separator {
+  padding-bottom: 12px;
+
+  &.navbar-point {
+    &_selected {
+      &::before {
+        background-color: var(--mc-default);
+      }
+    }
+  }
+
+  @include navbar-point-color(var(--bti-tertiary));
+  &:hover {
+    @include navbar-point-color(var(--bti-secondary));
+  }
+  &:active {
+    @include navbar-point-color(var(--bti-primary));
+  }
+}
+
+@mixin navbar-point-filled {
+  @include navbar-point-color(var(--bti-tertiary));
+  &:hover {
+    @include navbar-point-color(var(--bti-secondary));
+  }
+  &:active {
+    @include navbar-point-color(var(--bti-primary));
+  }
+
+  &.navbar-point_l {
+    padding: 10px 14px;
+  }
+
+  &.navbar-point_m {
+    padding: 8px 14px;
+  }
+}
+
+@mixin navbar-point-color($color) {
+  #{$text-selectors} {
+    color: $color
+  }
+  mib-ref-icon {
+    @include icon-color($color)
+  }
+}
+
+.navbar-point {
+
+  @include navbar-point;
+
+  &_icon-wrapper, mib-ref-icon {
+    @include icon-size(20px)
+  }
+
+  &_l {
+    @include text-l;
+  }
+
+  &_m {
+    @include text-m;
+  }
+
+  &_type {
+    &-separator {
+      @include navbar-point-separator;
+    }
+
+    &-filled {
+      &.navbar-point_l {
+      }
+
+      &.navbar-point_m {
+      }
+    }
+  }
+
+
+  &_icon-wrapper {
+    display: none;
+  }
+
+  &_left-iconly {
+    .navbar-point_left-icon-wrapper {
+      display: flex;
+    }
+  }
+}

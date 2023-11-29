@@ -66,7 +66,7 @@
   background-color: transparent;
   border: 1px solid transparent;
   @include body-text;
-  transition: var(--main-transition);
+  transition: color var(--transition), background-color var(--transition);
   &_left-iconly .btn_left-wrapper {
     display: block;
   }

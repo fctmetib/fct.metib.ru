@@ -56,7 +56,7 @@ $text-selectors: 'span';
   #{$text-selectors} {
     color: $color
   }
-  .link_icon-wrapper, mib-ref-icon {
+  mib-ref-icon {
     @include icon-color($color)
   }
 }

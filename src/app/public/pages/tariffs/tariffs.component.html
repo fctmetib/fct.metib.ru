@@ -18,8 +18,7 @@
       [theme]="'blue'"
       (consultation)="onConsultationHandler()"
       [title]="'Business'"
-      [items]="['Отсрочка до
-  3-х лет', 'Финансирование до 100%', 'Фиксированный комиссионный параметр за каждый день пользования деньгами']">
+      [items]="['Отсрочка до 3-х лет', 'Финансирование до 100%', 'Фиксированный комиссионный параметр за каждый день пользования деньгами']">
     </mib-card-tariff>
     <mib-card-tariff
       [theme]="'green'"
@@ -47,8 +46,8 @@
     <input type="text" formControlName="inn" placeholder="ИНН организации" minlength="10" maxlength="12">
     <input type="text" formControlName="comment" placeholder="Ваш комментарий">
     <div class="actions">
-      <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"
-        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid() || isRequestLoading"></mib-button>
+<!--      <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"-->
+<!--        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid() || isRequestLoading"></mib-button>-->
     </div>
     <div class="checkbox">
       <input type="checkbox" id="checkbox" formControlName="isAccept">
@@ -73,8 +72,8 @@
       [ngClass]="{'mib-invalid': financeForm.controls['inn'].invalid && financeForm.controls['inn'].touched}">
     <input type="text" formControlName="comment" placeholder="Ваш комментарий">
     <div class="actions">
-      <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"
-        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid() || isRequestLoading"></mib-button>
+<!--      <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"-->
+<!--        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid() || isRequestLoading"></mib-button>-->
     </div>
     <div class="checkbox">
       <p-checkbox name="checkbox" binary="true" inputId="checkbox" formControlName="isAccept"></p-checkbox>

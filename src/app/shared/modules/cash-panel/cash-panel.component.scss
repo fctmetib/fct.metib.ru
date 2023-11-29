@@ -2,7 +2,7 @@
 
 :host {
   display: block;
-  flex-grow: 1;
+  flex: 1 0 360px;
 }
 
 @mixin cash-panel {
@@ -23,10 +23,15 @@
   border-bottom: 1px solid var(--wgr-tertiary);
 }
 
+@mixin cash-panel-hover {
+  box-shadow: var(--shadow-small);
+}
+
 .cash-panel {
   @include cash-panel;
 
   &:hover {
+    @include cash-panel-hover;
   }
 
   &_desktop {

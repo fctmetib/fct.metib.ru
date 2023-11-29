@@ -11,7 +11,7 @@
     <p class="text text_m c-bti-tertiary flex_grow">Актуально на 10.10.2023</p>
     <mib-link>
       Подробнее
-      <mib-ref-icon *ngIf="isHover" link-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+      <mib-ref-icon [@opacityViewAnimation]="{value: '', params: {enterTime: 200, leaveTime: 0}}" *ngIf="isHover" link-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
     </mib-link>
   </div>
 </div>

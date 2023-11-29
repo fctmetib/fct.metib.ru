@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 				display: block;
 				margin: auto;
 				padding: 0 15px;
+        overflow-y: scroll;
 			}
 			.btn-wrapper {
 				display: flex;

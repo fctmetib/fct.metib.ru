@@ -1,10 +1,14 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectorRef, Component, Input} from '@angular/core';
 import {DeviceType} from '../../interfaces/shared.interface';
+import {OpacityViewAnimation} from '../../animations/animations';
 
 @Component({
   selector: 'mib-cash-panel',
   templateUrl: './cash-panel.component.html',
-  styleUrls: ['./cash-panel.component.scss']
+  styleUrls: ['./cash-panel.component.scss'],
+  animations: [
+    OpacityViewAnimation
+  ]
 })
 export class CashPanelComponent {
 
