@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {DeviceType} from '../../interfaces/shared.interface';
 import {OpacityViewAnimation} from '../../animations/animations';
 
@@ -10,15 +10,20 @@ import {OpacityViewAnimation} from '../../animations/animations';
     OpacityViewAnimation
   ]
 })
-export class CashPanelComponent {
+export class CashPanelComponent implements AfterViewInit {
 
   @Input() device: DeviceType = 'desktop'
 
   public isHover: boolean = false;
+  public viewMounted: boolean = false;
 
   get classes() {
     return {
-      [`cash-panel_${this.device}`]: true
+      [`cash-panel_${this.device}`]: true,
     }
+  }
+
+  ngAfterViewInit() {
+    this.viewMounted = true;
   }
 }

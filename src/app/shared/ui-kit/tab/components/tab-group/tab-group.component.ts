@@ -1,10 +1,10 @@
 import {
   AfterContentInit, ChangeDetectorRef,
   Component,
-  ContentChildren, EventEmitter, Input, OnChanges,
+  ContentChildren, EventEmitter, Input,
   OnDestroy,
   OnInit, Output,
-  QueryList, SimpleChanges
+  QueryList,
 } from '@angular/core';
 import {BehaviorSubject, Subscription, tap, merge} from "rxjs";
 import {TabItemComponent} from "../tab-item/tab-item.component";

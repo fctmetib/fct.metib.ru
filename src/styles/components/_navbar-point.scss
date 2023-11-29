@@ -37,6 +37,7 @@ $text-selectors: 'span';
 
   &.navbar-point {
     &_selected {
+      @include navbar-point-color(var(--bti-primary));
       &::before {
         background-color: var(--mc-default);
       }

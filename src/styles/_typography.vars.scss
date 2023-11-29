@@ -73,7 +73,7 @@
 	font-weight: var(--fw-regular);
 	font-style: normal;
 	color: var(--bti-primary);
-	transition: var(--transition);
+	transition: color var(--transition);
 	user-select: text;
 }
 

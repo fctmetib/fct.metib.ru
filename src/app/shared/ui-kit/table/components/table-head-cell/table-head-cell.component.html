@@ -1,0 +1,7 @@
+<div class="table-head-cell flex flex_align-center gap-8">
+  <input *ngIf="showCheckbox" [id]="checkboxId" type="checkbox">
+  <div class="flex gap-4">
+    <label [for]="checkboxId"><ng-content></ng-content></label>
+    <ng-content select="[table-head-cell-icon]"></ng-content>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-<div (mouseenter)="isHover = true" (mouseleave)="isHover = false" class="cash-panel" [ngClass]="classes">
+<div (mouseenter)="isHover = true" (mouseleave)="isHover = false" class="cash-panel" [ngClass]="classes" [class.main-transition]="viewMounted">
   <div class="flex flex_column gap-4">
     <div class="flex flex_align-center">
       <p class="text text_m text_medium c-bti-tertiary flex_grow">Ваш лимит</p>

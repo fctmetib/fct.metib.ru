@@ -23,33 +23,35 @@ import {ButtonModule} from '../../../shared/ui-kit/button/button.module';
 import {CommonModule} from '@angular/common';
 import {FreeDutyRoutingModule} from './free-duty-routing.module';
 import {DeliveryService} from '../../../shared/services/share/delivery.service';
+import {TableModule} from '../../../shared/ui-kit/table/table.module';
 
 @NgModule({
   declarations: [FreedutyPageComponent],
-  imports: [
-    CommonModule,
-    InputTextModule,
-    CheckboxModule,
-    ButtonModule,
-    RadioButtonModule,
-    TieredMenuModule,
-    DynamicDialogModule,
-    InputTextareaModule,
-    DialogModule,
-    FileUploadModule,
-    FormsModule,
-    TooltipModule,
-    ToolbarModule,
-    FreeDutyRoutingModule,
-    ReactiveFormsModule,
-    MenubarModule,
-    AvatarModule,
-    SpacingModule,
-    TabModule,
-    NavbarModule,
-    InputModule,
-    ButtonModule
-  ],
+    imports: [
+        CommonModule,
+        InputTextModule,
+        CheckboxModule,
+        ButtonModule,
+        RadioButtonModule,
+        TieredMenuModule,
+        DynamicDialogModule,
+        InputTextareaModule,
+        DialogModule,
+        FileUploadModule,
+        FormsModule,
+        TooltipModule,
+        ToolbarModule,
+        FreeDutyRoutingModule,
+        ReactiveFormsModule,
+        MenubarModule,
+        AvatarModule,
+        SpacingModule,
+        TabModule,
+        NavbarModule,
+        InputModule,
+        ButtonModule,
+        TableModule
+    ],
   providers: [DialogService, DeliveryService, DutyService]
 })
 export class FreeDutyModule {
