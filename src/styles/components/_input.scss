@@ -257,6 +257,19 @@
 			}
 		}
 	}
+	&:has(textarea) {
+		display: flex;
+		padding: 10px 16px 34px 16px;
+		align-items: flex-start;
+		gap: 8px;
+		background-color: antiquewhite;
+		input {
+			background-color: transparent;
+		}
+		div.textarea-panel {
+			display: flex;
+		}
+	}
 }
 
 .input {
