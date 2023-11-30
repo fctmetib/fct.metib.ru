@@ -1,3 +1,27 @@
+@import "src/styles/typography.vars";
+
 :host {
-  flex-grow: 1;
+  height: 100%;
+  flex: var(--table-flex);
+}
+
+$text-selectors: 'label';
+
+.table-cell {
+  height: 100%;
+  padding: 12px 8px 12px 0;
+  #{$text-selectors} {
+    @include body-text;
+    @include text-m;
+  }
+  &_type {
+    &-main {
+      #{$text-selectors} {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+    }
+  }
 }

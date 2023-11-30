@@ -24,6 +24,7 @@ import {CommonModule} from '@angular/common';
 import {FreeDutyRoutingModule} from './free-duty-routing.module';
 import {DeliveryService} from '../../../shared/services/share/delivery.service';
 import {TableModule} from '../../../shared/ui-kit/table/table.module';
+import {RefIconModule} from '../../../shared/ui-kit/ref-icon/ref-icon.module';
 
 @NgModule({
   declarations: [FreedutyPageComponent],
@@ -50,7 +51,8 @@ import {TableModule} from '../../../shared/ui-kit/table/table.module';
         NavbarModule,
         InputModule,
         ButtonModule,
-        TableModule
+        TableModule,
+        RefIconModule
     ],
   providers: [DialogService, DeliveryService, DutyService]
 })

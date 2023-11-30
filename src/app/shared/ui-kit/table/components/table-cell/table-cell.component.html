@@ -1,0 +1,12 @@
+<ng-template #content><ng-content></ng-content></ng-template>
+
+<div class="table-cell flex flex_align-center gap-8" [ngClass]="classes" [ngSwitch]="type" [title]="title">
+  <ng-container *ngSwitchCase="'main'">
+    <input [id]="checkboxId" type="checkbox">
+    <label [for]="checkboxId"><ng-container *ngTemplateOutlet="content"></ng-container></label>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'text'">
+    <label><ng-container *ngTemplateOutlet="content"></ng-container></label>
+  </ng-container>
+</div>

@@ -1,1 +1,6 @@
-<ng-content></ng-content>
+<div class="table-row flex" [class.table-row_underlined]="underlined" [class.table-row_has-button]="wrapper.children.length">
+  <ng-content></ng-content>
+  <div class="table-row_button-wrapper flex flex_align-center" #wrapper>
+    <ng-content select="[table-row-button]"></ng-content>
+  </div>
+</div>
