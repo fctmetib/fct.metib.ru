@@ -4,7 +4,7 @@
 
 <ng-container [ngSwitch]="type">
   <ng-container *ngSwitchCase="'main'">
-    <mib-checkbox align="" [id]="checkboxId" *ngIf="showCheckbox"></mib-checkbox>
+    <mib-checkbox [formControl]="control" align="" [id]="checkboxId" *ngIf="showCheckbox"></mib-checkbox>
     <div class="flex flex_column">
       <label [for]="checkboxId"><ng-container *ngTemplateOutlet="title"></ng-container></label>
       <p *ngIf="contracted" class="text text_s c-bti-tertiary"><ng-container *ngTemplateOutlet="description"></ng-container></p>

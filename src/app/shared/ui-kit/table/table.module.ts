@@ -7,6 +7,7 @@ import { TableCellComponent } from './components/table-cell/table-cell.component
 import { TableComponent } from './table.component';
 import { TableFooterComponent } from './components/table-footer/table-footer.component';
 import {CheckboxModule} from '../checkbox/checkbox.module';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 
@@ -29,7 +30,8 @@ import {CheckboxModule} from '../checkbox/checkbox.module';
     ],
   imports: [
     CommonModule,
-    CheckboxModule
+    CheckboxModule,
+    ReactiveFormsModule
   ]
 })
 export class TableModule { }

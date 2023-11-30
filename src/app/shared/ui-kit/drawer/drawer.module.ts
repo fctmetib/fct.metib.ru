@@ -5,12 +5,14 @@ import { DrawerHeaderComponent } from './components/drawer-header/drawer-header.
 import {ButtonModule} from '../button/button.module';
 import {RefIconModule} from '../ref-icon/ref-icon.module';
 import {SpacingModule} from '../spacing/spacing.module';
+import { DrawerFooterComponent } from './components/drawer-footer/drawer-footer.component';
 
 
 @NgModule({
   declarations: [
     DrawerComponent,
     DrawerHeaderComponent,
+    DrawerFooterComponent,
   ],
   imports: [
     CommonModule,
@@ -18,10 +20,11 @@ import {SpacingModule} from '../spacing/spacing.module';
     RefIconModule,
     SpacingModule,
   ],
-  exports: [
-    DrawerComponent,
-    DrawerHeaderComponent
-  ]
+    exports: [
+        DrawerComponent,
+        DrawerHeaderComponent,
+        DrawerFooterComponent
+    ]
 })
 export class DrawerModule {
 }

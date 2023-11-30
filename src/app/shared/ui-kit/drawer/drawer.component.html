@@ -1,8 +1,13 @@
 <div class="drawer" @drawerAnimation>
-  <ng-content select="[drawer-header]"></ng-content>
-  <div class="drawer_content">
+  <div #header>
+    <ng-content select="[drawer-header]"></ng-content>
+  </div>
+  <div class="drawer-content" [style.height]="height">
     <mib-spacing type="m"></mib-spacing>
     <ng-content></ng-content>
     <mib-spacing type="m"></mib-spacing>
+  </div>
+  <div #footer>
+    <ng-content select="[drawer-footer]"></ng-content>
   </div>
 </div>

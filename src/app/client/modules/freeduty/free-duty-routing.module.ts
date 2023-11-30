@@ -1,4 +1,4 @@
-import { FreedutyPageComponent } from './components/freeduty-page/freeduty-page.component';
+import { FreeDutyPageComponent } from './pages/free-duty-page/free-duty-page.component';
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -9,7 +9,7 @@ const routes = [
     children: [
       {
         path: '',
-        component: FreedutyPageComponent,
+        component: FreeDutyPageComponent,
       },
     ],
   },

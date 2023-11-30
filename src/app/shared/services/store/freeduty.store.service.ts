@@ -1,6 +1,6 @@
 import { environment } from 'src/environments/environment';
 import { DutyFilterRequestInterface } from '../../types/duty/duty-filter-request.interface';
-import { DutyInterface } from '../../types/duty/duty.interface';
+import { Duty } from '../../types/duty/duty';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -9,16 +9,16 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class FreedutyStoreService {
-  private _freeDutyStore: DutyInterface[] = [];
+  private _freeDutyStore: Duty[] = [];
 
-  private _freeduty$: BehaviorSubject<DutyInterface[]> = new BehaviorSubject(
+  private _freeduty$: BehaviorSubject<Duty[]> = new BehaviorSubject(
     []
   );
   private _loading$: Subject<boolean> = new Subject();
 
   constructor(private http: HttpClient) {}
 
-  public setFreeduty(freeduty: DutyInterface[]) {
+  public setFreeduty(freeduty: Duty[]) {
     this._freeDutyStore = freeduty;
     this._freeduty$.next(freeduty);
   }
@@ -26,7 +26,7 @@ export class FreedutyStoreService {
   public getFreeduty(
     data: DutyFilterRequestInterface,
     isRefresh: boolean = false
-  ): Observable<DutyInterface[]> {
+  ): Observable<Duty[]> {
     this._setLoading(true);
 
     if (this._freeDutyStore.length === 0 || isRefresh) {
@@ -55,13 +55,10 @@ export class FreedutyStoreService {
     this._loading$.next(state);
   }
 
-  private _fetch(data: DutyFilterRequestInterface): Observable<DutyInterface[]> {
+  private _fetch(data: DutyFilterRequestInterface): Observable<Duty[]> {
     const url = `${environment.apiUrl}/v1/duties`;
-    return this.http.get<DutyInterface[]>(url);
+    return this.http.get<Duty[]>(url);
   }
 
-  public getFreeDuty(): Observable<DutyInterface[]> {
-    const url = `${environment.apiUrl}/v1/duties`;
-    return this.http.get<DutyInterface[]>(url);
-  }
+
 }

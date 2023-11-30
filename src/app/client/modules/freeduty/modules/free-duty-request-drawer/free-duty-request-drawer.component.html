@@ -12,24 +12,24 @@
       <mib-table-head-cell>ИД</mib-table-head-cell>
       <mib-table-head-cell>Контракт</mib-table-head-cell>
       <mib-table-head-cell>№ поставки</mib-table-head-cell>
-      <mib-table-head-cell>№ </mib-table-head-cell>
+      <mib-table-head-cell>С/ф №</mib-table-head-cell>
       <mib-table-head-cell>Остаток задолженности</mib-table-head-cell>
     </mib-table-head>
-    <mib-table-row *ngFor="let i of [0,1]" [underlined]="true">
+    <mib-table-row *ngFor="let duty of dutiesVisible" [underlined]="true">
       <mib-table-cell>
-        <ng-container table-cell-title>12221079</ng-container>
+        <ng-container table-cell-title>{{duty.ID}}</ng-container>
       </mib-table-cell>
       <mib-table-cell>
-        <ng-container table-cell-title>2304/17</ng-container>
+        <ng-container table-cell-title>{{duty.Contract.ID}}</ng-container>
       </mib-table-cell>
       <mib-table-cell>
-        <ng-container table-cell-title>1706</ng-container>
+        <ng-container table-cell-title>{{duty.Number}}</ng-container>
       </mib-table-cell>
       <mib-table-cell>
-        <ng-container table-cell-title>1578</ng-container>
+        <ng-container table-cell-title>{{duty.NumberInvoice}}</ng-container>
       </mib-table-cell>
       <mib-table-cell>
-        <ng-container table-cell-title>{{1000000 | number}}</ng-container>
+        <ng-container table-cell-title>{{duty.Rest | number}}</ng-container>
       </mib-table-cell>
       <mib-button table-row-button size="s" type="ghost-secondary">
         <mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
@@ -39,16 +39,21 @@
       <mib-table-cell type="blank">
         <div class="flex flex_column gap-4">
           <p class="text text_xs c-bti-tertiary">Кол-во поставок</p>
-          <p class="text text_s text_medium c-bti-primary">15 позиций</p>
+          <p class="text text_s text_medium c-bti-primary">{{data.data.length}} {{toolsService.declineWord(data.data.length, ['позиция', 'позиции', 'позиций'])}}</p>
         </div>
       </mib-table-cell>
       <mib-table-cell type="blank" class="flex_justify-end">
         <div class="flex flex_column gap-4 flex_align-end">
           <p class="text text_xs c-bti-tertiary">Сумма задолженности</p>
-          <p class="text text_s text_medium c-bti-primary">1 000 000,00</p>
+          <p class="text text_s text_medium c-bti-primary">{{fullRest | number}}</p>
         </div>
       </mib-table-cell>
     </mib-table-row>
-    <mib-table-footer></mib-table-footer>
+    <mib-table-footer>
+      <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="data.data.length" [pagesToShow]="PAGINATOR_PAGE_TO_SHOW" [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"></mib-paginator>
+    </mib-table-footer>
   </mib-table>
+  <mib-drawer-footer drawer-footer>
+    <mib-button type="filled-primary">Создать заявку</mib-button>
+  </mib-drawer-footer>
 </mib-drawer>

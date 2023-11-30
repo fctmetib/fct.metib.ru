@@ -69,6 +69,10 @@ $text-selectors: '&, span';
 	background-color: transparent;
 	border: 1px solid transparent;
 	@include body-text;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 	transition: color var(--main-transition), background-color var(--main-transition), border-color var(--main-transition);
 	&_left-iconly .btn_left-wrapper {
 		display: block;

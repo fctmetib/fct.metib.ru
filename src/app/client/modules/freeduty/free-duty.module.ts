@@ -12,7 +12,7 @@ import {DialogModule} from 'primeng/dialog'
 import {TieredMenuModule} from 'primeng/tieredmenu'
 import {FileUploadModule} from 'primeng/fileupload'
 import {DutyService} from 'src/app/shared/services/share/duty.service'
-import {FreedutyPageComponent} from './components/freeduty-page/freeduty-page.component'
+import {FreeDutyPageComponent} from './pages/free-duty-page/free-duty-page.component'
 import {TooltipModule} from 'primeng/tooltip'
 import {SpacingModule} from '../../../shared/ui-kit/spacing/spacing.module';
 import {TabModule} from '../../../shared/ui-kit/tab/tab.module';
@@ -26,9 +26,13 @@ import {TableModule} from '../../../shared/ui-kit/table/table.module';
 import {RefIconModule} from '../../../shared/ui-kit/ref-icon/ref-icon.module';
 import {FreeDutyRequestDrawerModule} from './modules/free-duty-request-drawer/free-duty-request-drawer.module';
 import {FreeDutyRequestDrawerService} from './modules/free-duty-request-drawer/free-duty-request-drawer.service';
+import {FreeDutyService} from './pages/free-duty-page/services/free-duty.service';
+import {PaginatorModule} from '../../../shared/ui-kit/paginator/paginator.module';
+import {ToolsService} from '../../../shared/services/tools.service';
+import {RubModule} from '../../../shared/pipes/rub/rub.module';
 
 @NgModule({
-  declarations: [FreedutyPageComponent],
+  declarations: [FreeDutyPageComponent],
   imports: [
     CommonModule,
     InputTextModule,
@@ -54,13 +58,16 @@ import {FreeDutyRequestDrawerService} from './modules/free-duty-request-drawer/f
     ButtonModule,
     TableModule,
     RefIconModule,
-    FreeDutyRequestDrawerModule
+    FreeDutyRequestDrawerModule,
+    PaginatorModule,
+    RubModule,
   ],
   providers: [
     DialogService,
     DeliveryService,
     DutyService,
-    FreeDutyRequestDrawerService
+    FreeDutyRequestDrawerService,
+    FreeDutyService
   ]
 })
 export class FreeDutyModule {

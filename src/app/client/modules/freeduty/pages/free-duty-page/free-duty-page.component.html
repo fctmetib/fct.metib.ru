@@ -17,65 +17,66 @@
           <p class="text text_m c-bti-tertiary">-</p>
           <input type="date" mibInput/>
         </div>
-        <mib-button (press)="openDrawer()" type="filled-primary">Создать заявку (0)</mib-button>
+        <mib-button [disabled]="!selectedDutiesCount" (press)="openDrawer()" type="filled-primary">Создать заявку ({{selectedDutiesCount}})</mib-button>
       </div>
     </div>
     <mib-spacing type="xs"></mib-spacing>
     <mib-tab-item value="1">
       <mib-table>
         <mib-table-head>
-          <mib-table-head-cell [showCheckbox]="true">ИД</mib-table-head-cell>
+          <mib-table-head-cell (onCheck)="severalDutiesChecked = $event" [checked]="severalDutiesChecked" [showCheckbox]="true">ИД</mib-table-head-cell>
           <mib-table-head-cell>Контракт</mib-table-head-cell>
           <mib-table-head-cell>№ поставки</mib-table-head-cell>
           <mib-table-head-cell>Дата поставки</mib-table-head-cell>
           <mib-table-head-cell>С/ф №</mib-table-head-cell>
           <mib-table-head-cell>С/ф дата</mib-table-head-cell>
-          <mib-table-head-cell>Дата задолженности</mib-table-head-cell>
+          <mib-table-head-cell>Задолженность</mib-table-head-cell>
           <mib-table-head-cell>Дата Платежа</mib-table-head-cell>
           <mib-table-head-cell>Внешняя ссылка</mib-table-head-cell>
           <mib-table-head-cell>Остаток задолженности</mib-table-head-cell>
           <mib-table-head-cell>Сумма поставки</mib-table-head-cell>
         </mib-table-head>
-        <mib-table-row *ngFor="let i of [0,1]; let last = last" [underlined]="!last">
-          <mib-table-cell type="main">
-            <ng-container table-cell-title>{{i}}</ng-container>
+        <mib-table-row *ngFor="let duty of dutiesVisible; let last = last" [underlined]="!last">
+          <mib-table-cell [checked]="duty.checked" (onCheck)="onRowCheck($event, duty)" type="main">
+            <ng-container table-cell-title>{{duty.ID}}</ng-container>
           </mib-table-cell>
           <mib-table-cell>
-            <ng-container table-cell-title>Контракт</ng-container>
+            <ng-container table-cell-title>{{duty.Contract.ID}}</ng-container>
           </mib-table-cell>
           <mib-table-cell>
-            <ng-container table-cell-title>№ поставки</ng-container>
+            <ng-container table-cell-title>{{duty.Number}}</ng-container>
           </mib-table-cell>
           <mib-table-cell>
-            <ng-container table-cell-title>Дата поставки</ng-container>
+            <ng-container table-cell-title>{{duty.Date | date: 'dd.MM.YYYY'}}</ng-container>
           </mib-table-cell>
           <mib-table-cell>
-            <ng-container table-cell-title>С/ф №</ng-container>
+            <ng-container table-cell-title>{{duty.NumberInvoice}}</ng-container>
           </mib-table-cell>
           <mib-table-cell>
-            <ng-container table-cell-title>С/ф дата</ng-container>
+            <ng-container table-cell-title>{{duty.DateInvoice | date: 'dd.MM.YYYY' }}</ng-container>
           </mib-table-cell>
           <mib-table-cell>
-            <ng-container table-cell-title>Дата задолженности</ng-container>
+            <ng-container table-cell-title>{{duty.Statistics.PaymentExpire ? 'Есть' : 'Отсутствует'}}</ng-container>
           </mib-table-cell>
           <mib-table-cell>
-            <ng-container table-cell-title>Дата Платежа</ng-container>
+            <ng-container table-cell-title>{{duty.DatePayment | date: 'dd.MM.YYYY'}}</ng-container>
           </mib-table-cell>
           <mib-table-cell>
-            <ng-container table-cell-title>Внешняя ссылка</ng-container>
+            <ng-container table-cell-title>{{duty.RefNum}}</ng-container>
           </mib-table-cell>
           <mib-table-cell>
-            <ng-container table-cell-title>Остаток задолженности</ng-container>
+            <ng-container table-cell-title>{{duty.Rest | rub}}</ng-container>
           </mib-table-cell>
           <mib-table-cell>
-            <ng-container table-cell-title>Сумма поставки</ng-container>
+            <ng-container table-cell-title>{{duty.Summ | rub}}</ng-container>
           </mib-table-cell>
           <mib-button table-row-button size="s" type="ghost-secondary">
             <mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
           </mib-button>
         </mib-table-row>
-<!--        <mib-table-footer>-->
-<!--        </mib-table-footer>-->
+        <mib-table-footer [underlined]="!(loading$ | async)">
+          <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="duties.length" [pagesToShow]="PAGINATOR_PAGE_TO_SHOW" [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"></mib-paginator>
+        </mib-table-footer>
       </mib-table>
     </mib-tab-item>
     <mib-tab-item value="2">

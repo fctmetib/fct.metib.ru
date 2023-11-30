@@ -12,7 +12,7 @@ export class FreeDutyRequestDrawerService {
   ) {
   }
 
-  open(data?: DrawerData) {
+  open<T>(data?: DrawerData<T>) {
     const config: DrawerData = {
       state: 'view'
     }

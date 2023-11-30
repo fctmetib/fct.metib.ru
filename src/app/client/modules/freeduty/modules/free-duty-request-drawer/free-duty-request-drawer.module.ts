@@ -10,24 +10,28 @@ import {RefIconModule} from '../../../../../shared/ui-kit/ref-icon/ref-icon.modu
 import {SelectModule} from '../../../../../shared/ui-kit/select/select.module';
 import {DropdownPointModule} from '../../../../../shared/ui-kit/dropdown-point/dropdown-point.module';
 import {ReactiveFormsModule} from '@angular/forms';
+import {CheckboxModule} from '../../../../../shared/ui-kit/checkbox/checkbox.module';
+import {PaginatorModule} from '../../../../../shared/ui-kit/paginator/paginator.module';
 
 
 @NgModule({
   declarations: [
     FreeDutyRequestDrawerComponent
   ],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    MatDialogModule,
-    SpacingModule,
-    TableModule,
-    ButtonModule,
-    RefIconModule,
-    SelectModule,
-    DropdownPointModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        DrawerModule,
+        MatDialogModule,
+        SpacingModule,
+        TableModule,
+        ButtonModule,
+        RefIconModule,
+        SelectModule,
+        DropdownPointModule,
+        ReactiveFormsModule,
+        CheckboxModule,
+        PaginatorModule
+    ]
 })
 export class FreeDutyRequestDrawerModule {
 }

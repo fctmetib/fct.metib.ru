@@ -1,5 +1,5 @@
 <div class="table-head-cell flex flex_align-center gap-8" [title]="label.innerText">
-  <mib-checkbox align="" [id]="checkboxId" *ngIf="showCheckbox"></mib-checkbox>
+  <mib-checkbox [formControl]="control" align="" [id]="checkboxId" *ngIf="showCheckbox"></mib-checkbox>
   <div class="flex gap-4">
     <label class="user-select-none" #label [for]="checkboxId"><ng-content></ng-content></label>
     <ng-content select="[table-head-cell-icon]"></ng-content>
