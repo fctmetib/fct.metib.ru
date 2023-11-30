@@ -68,7 +68,6 @@
 	align-items: center;
 	border-radius: var(--badge-border-radius);
 	@include body-text;
-	user-select: none;
 	&:not(.badge_extended) {
 		padding: 2px;
 		.badge-text {
@@ -107,6 +106,7 @@
 		background: var(--mc-quaternary);
 		.badge-text {
 			color: var(--mc-active);
+			user-select: none;
 		}
 		mib-ref-icon {
 			@include icon-color(var(--mc-active));
