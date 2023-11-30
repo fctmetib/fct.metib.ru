@@ -1,12 +1,21 @@
 <ng-template #content><ng-content></ng-content></ng-template>
+<ng-template #title><ng-content select="[table-cell-title]"></ng-content></ng-template>
+<ng-template #description><ng-content select="[table-cell-description]"></ng-content></ng-template>
 
-<div class="table-cell flex flex_align-center gap-8" [ngClass]="classes" [ngSwitch]="type" [title]="title">
+<ng-container [ngSwitch]="type">
   <ng-container *ngSwitchCase="'main'">
-    <input [id]="checkboxId" type="checkbox">
-    <label [for]="checkboxId"><ng-container *ngTemplateOutlet="content"></ng-container></label>
+    <mib-checkbox align="" [id]="checkboxId" *ngIf="showCheckbox"></mib-checkbox>
+    <div class="flex flex_column">
+      <label [for]="checkboxId"><ng-container *ngTemplateOutlet="title"></ng-container></label>
+      <p *ngIf="contracted" class="text text_s c-bti-tertiary"><ng-container *ngTemplateOutlet="description"></ng-container></p>
+    </div>
   </ng-container>
 
   <ng-container *ngSwitchCase="'text'">
-    <label><ng-container *ngTemplateOutlet="content"></ng-container></label>
+    <label><ng-container *ngTemplateOutlet="title"></ng-container></label>
   </ng-container>
-</div>
+
+  <ng-container *ngSwitchCase="'blank'">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
+</ng-container>

@@ -37,17 +37,39 @@
           <mib-table-head-cell>Сумма поставки</mib-table-head-cell>
         </mib-table-head>
         <mib-table-row *ngFor="let i of [0,1]; let last = last" [underlined]="!last">
-          <mib-table-cell type="main">{{i}}</mib-table-cell>
-          <mib-table-cell>Контракт</mib-table-cell>
-          <mib-table-cell>№ поставки</mib-table-cell>
-          <mib-table-cell>Дата поставки</mib-table-cell>
-          <mib-table-cell>С/ф №</mib-table-cell>
-          <mib-table-cell>С/ф дата</mib-table-cell>
-          <mib-table-cell>Дата задолженности</mib-table-cell>
-          <mib-table-cell>Дата Платежа</mib-table-cell>
-          <mib-table-cell>Внешняя ссылка</mib-table-cell>
-          <mib-table-cell>Остаток задолженности</mib-table-cell>
-          <mib-table-cell>Сумма поставки</mib-table-cell>
+          <mib-table-cell type="main">
+            <ng-container table-cell-title>{{i}}</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>Контракт</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>№ поставки</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>Дата поставки</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>С/ф №</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>С/ф дата</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>Дата задолженности</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>Дата Платежа</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>Внешняя ссылка</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>Остаток задолженности</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>Сумма поставки</ng-container>
+          </mib-table-cell>
           <mib-button table-row-button size="s" type="ghost-secondary">
             <mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
           </mib-button>

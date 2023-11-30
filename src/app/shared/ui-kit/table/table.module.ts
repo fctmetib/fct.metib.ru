@@ -6,6 +6,7 @@ import { TableHeadCellComponent } from './components/table-head-cell/table-head-
 import { TableCellComponent } from './components/table-cell/table-cell.component';
 import { TableComponent } from './table.component';
 import { TableFooterComponent } from './components/table-footer/table-footer.component';
+import {CheckboxModule} from '../checkbox/checkbox.module';
 
 
 
@@ -26,8 +27,9 @@ import { TableFooterComponent } from './components/table-footer/table-footer.com
         TableCellComponent,
         TableFooterComponent
     ],
-    imports: [
-        CommonModule
-    ]
+  imports: [
+    CommonModule,
+    CheckboxModule
+  ]
 })
 export class TableModule { }
