@@ -1,50 +1,34 @@
 @import 'src/styles/helpers/icon_tools';
 @import 'src/styles/_typography.vars.scss';
 
-// @mixin badge-extended($width, $height) {
-// 	&:not(.badge_extended) {
-// 		width: $width;
-// 		height: $height;
-// 	}
-// }
+@mixin badge-extended($width, $height) {
+	&:not(.badge_extended) {
+		width: $width;
+		height: $height;
+	}
+}
 
-// @mixin badge-size($paddingVertical, $paddingHorizontal, $gap, $width, $height) {
-// 	padding: $paddingVertical $paddingHorizontal;
-// 	gap: $gap;
-// 	@content;
-// 	@include badge-extended($width, $height);
-// 	@content;
-// }
-
-// @include badge-size(4px, 8px, 4px) {
-// 	@include text-s;
-// 	@include badge-extended(24px, 24px);
-// 	mib-ref-icon {
-// 		@include icon-size(var(--badge-l-icon-size));
-// 	}
-// }
+@mixin badge-size($paddingVertical, $paddingHorizontal, $gap) {
+	padding: $paddingVertical $paddingHorizontal;
+	gap: $gap;
+	@content;
+}
 
 @mixin badge-l {
-	padding: 4px 8px;
-	gap: 4px;
-	@include text-s;
-	&:not(.badge_extended) {
-		width: 24px;
-		height: 24px;
+	@include badge-size(4px, 8px, 4px) {
+		@include text-s;
 	}
+	@include badge-extended(24px, 24px);
 	mib-ref-icon {
 		@include icon-size(var(--badge-l-icon-size));
 	}
 }
 
 @mixin badge-m {
-	padding: 2px 6px;
-	gap: 4px;
-	@include text-s;
-	&:not(.badge_extended) {
-		width: 20px;
-		height: 20px;
+	@include badge-size(2px, 6px, 4px) {
+		@include text-s;
 	}
+	@include badge-extended(20px, 20px);
 	mib-ref-icon {
 		@include icon-size(var(--badge-m-icon-size));
 	}
