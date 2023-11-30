@@ -24,12 +24,33 @@
     <mib-tab-item value="1">
       <mib-table>
         <mib-table-head>
-          <mib-table-head-cell>test</mib-table-head-cell>
-          <mib-table-head-cell>hest</mib-table-head-cell>
+          <mib-table-head-cell [showCheckbox]="true">ИД</mib-table-head-cell>
+          <mib-table-head-cell>Контракт</mib-table-head-cell>
+          <mib-table-head-cell>№ поставки</mib-table-head-cell>
+          <mib-table-head-cell>Дата поставки</mib-table-head-cell>
+          <mib-table-head-cell>С/ф №</mib-table-head-cell>
+          <mib-table-head-cell>С/ф дата</mib-table-head-cell>
+          <mib-table-head-cell>Дата задолженности</mib-table-head-cell>
+          <mib-table-head-cell>Дата Платежа</mib-table-head-cell>
+          <mib-table-head-cell>Внешняя ссылка</mib-table-head-cell>
+          <mib-table-head-cell>Остаток задолженности</mib-table-head-cell>
+          <mib-table-head-cell>Сумма поставки</mib-table-head-cell>
         </mib-table-head>
-        <mib-table-row>
-          <mib-table-cell></mib-table-cell>
-          <mib-table-cell></mib-table-cell>
+        <mib-table-row *ngFor="let i of [1,1]; let idx = index" [underlined]="idx < 1">
+          <mib-table-cell type="main">{{idx}}</mib-table-cell>
+          <mib-table-cell>Контракт</mib-table-cell>
+          <mib-table-cell>№ поставки</mib-table-cell>
+          <mib-table-cell>Дата поставки</mib-table-cell>
+          <mib-table-cell>С/ф №</mib-table-cell>
+          <mib-table-cell>С/ф дата</mib-table-cell>
+          <mib-table-cell>Дата задолженности</mib-table-cell>
+          <mib-table-cell>Дата Платежа</mib-table-cell>
+          <mib-table-cell>Внешняя ссылка</mib-table-cell>
+          <mib-table-cell>Остаток задолженности</mib-table-cell>
+          <mib-table-cell>Сумма поставки</mib-table-cell>
+          <mib-button table-row-button size="s" type="ghost-secondary">
+            <mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
+          </mib-button>
         </mib-table-row>
       </mib-table>
     </mib-tab-item>

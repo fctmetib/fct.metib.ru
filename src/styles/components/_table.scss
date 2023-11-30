@@ -6,12 +6,16 @@ $text-selectors: 'label, span';
 @mixin table-head-cell {
   height: 100%;
   width: 100%;
-  padding-right: 8px;
+  padding: 10px 8px 10px 0;
 
   #{$text-selectors} {
     @include body-text;
     @include text-s;
     @include text-overflow(1);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   mib-ref-icon {

@@ -21,7 +21,8 @@ export class IconsService {
 		'logotype',
 		'fi_maximize-2',
 		'fi_info',
-		'fi_check'
+		'fi_check',
+    'fi_more-vertical'
 	]
 
 	public async initIcons(): Promise<void> {

@@ -7,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TableHeadCellComponent implements OnInit {
   checkboxId: string;
-  @Input() showCheckbox: boolean = true;
+  @Input() showCheckbox: boolean = false;
 
   ngOnInit() {
     this.checkboxId = 'checkbox-' + Math.random().toString(36).substr(2, 9);
