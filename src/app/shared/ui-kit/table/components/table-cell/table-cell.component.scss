@@ -13,6 +13,7 @@ $text-selectors: 'label';
   #{$text-selectors} {
     @include body-text;
     @include text-m;
+    @include text-overflow(1)
   }
   &_type {
     &-main {

@@ -17,7 +17,7 @@
           <p class="text text_m c-bti-tertiary">-</p>
           <input type="date" mibInput/>
         </div>
-        <mib-button type="filled-primary">Создать заявку (0)</mib-button>
+        <mib-button (press)="openDrawer()" type="filled-primary">Создать заявку (0)</mib-button>
       </div>
     </div>
     <mib-spacing type="xs"></mib-spacing>
@@ -36,8 +36,8 @@
           <mib-table-head-cell>Остаток задолженности</mib-table-head-cell>
           <mib-table-head-cell>Сумма поставки</mib-table-head-cell>
         </mib-table-head>
-        <mib-table-row *ngFor="let i of [1,1]; let idx = index" [underlined]="idx < 1">
-          <mib-table-cell type="main">{{idx}}</mib-table-cell>
+        <mib-table-row *ngFor="let i of [0,1]; let last = last" [underlined]="!last">
+          <mib-table-cell type="main">{{i}}</mib-table-cell>
           <mib-table-cell>Контракт</mib-table-cell>
           <mib-table-cell>№ поставки</mib-table-cell>
           <mib-table-cell>Дата поставки</mib-table-cell>
@@ -52,6 +52,8 @@
             <mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
           </mib-button>
         </mib-table-row>
+<!--        <mib-table-footer>-->
+<!--        </mib-table-footer>-->
       </mib-table>
     </mib-tab-item>
     <mib-tab-item value="2">

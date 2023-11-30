@@ -1,22 +1,27 @@
 @import 'src/styles/_typography.vars';
 
 $md: (
-	'd': 1440px,
-	// desktop
-	't-h': 1024px,
-	// table horizontal
-	'mhtv': 768px,
-	// mobile horizontal and table vertical
-	'mv': 360px,
-	// mobile vertical
+  // desktop
+  'd': 1440px,
+  // table horizontal
+  't-h': 1024px,
+  // mobile horizontal and table vertical
+  'mhtv': 768px,
+  // mobile vertical
+  'mv': 360px,
 );
 
 h1,
 h2,
 h3,
 h4,
-h5 {
+h5,
+.headline {
 	@include heading-styles;
+}
+
+.headline {
+  @include headline-desktop;
 }
 
 h1 {

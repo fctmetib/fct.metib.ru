@@ -1,0 +1,30 @@
+@mixin drawer-cdk {
+  height: 100%;
+  width: 100%;
+  position: absolute !important;
+  top: 0;
+  right: 0;
+}
+
+@mixin mat-modal-reset {
+  .mat-mdc-dialog-container {
+    --mat-dialog-transition-duration: 0 !important;
+    .mdc-dialog__surface {
+      border-radius: unset;
+      background-color: unset;
+      box-shadow: unset;
+      overflow: hidden;
+      &:before {
+        content: unset;
+      }
+    }
+  }
+  .mdc-dialog, .mdc-dialog__scrim {
+    left: unset;
+  }
+}
+
+.drawer-cdk {
+  @include drawer-cdk;
+  @include mat-modal-reset;
+}

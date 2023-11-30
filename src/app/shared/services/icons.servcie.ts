@@ -22,7 +22,9 @@ export class IconsService {
 		'fi_maximize-2',
 		'fi_info',
 		'fi_check',
-    'fi_more-vertical'
+    'fi_more-vertical',
+    'fi_chevrons-right',
+    'fi_edit-3'
 	]
 
 	public async initIcons(): Promise<void> {

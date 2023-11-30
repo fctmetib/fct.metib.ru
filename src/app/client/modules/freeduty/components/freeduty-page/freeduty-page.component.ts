@@ -1,16 +1,17 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable, Subscription, filter, first, switchMap, tap } from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DialogService } from 'primeng/dynamicdialog';
-import { DatePipe } from '@angular/common';
-import { DutyFilterRequestInterface } from 'src/app/shared/types/duty/duty-filter-request.interface';
-import { DutyInterface } from 'src/app/shared/types/duty/duty.interface';
-import { SelectedItemSortedInterface } from '../../types/common/selected-item-sorted.interface';
-import { DutyService } from 'src/app/shared/services/share/duty.service';
-import { Router } from '@angular/router';
-import { FreedutyStoreService } from '../../../../../shared/services/store/freeduty.store.service';
-import { ClientService } from 'src/app/shared/services/common/client.service';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Observable, Subscription, filter, first, switchMap, tap} from 'rxjs';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {DialogService} from 'primeng/dynamicdialog';
+import {DatePipe} from '@angular/common';
+import {DutyFilterRequestInterface} from 'src/app/shared/types/duty/duty-filter-request.interface';
+import {DutyInterface} from 'src/app/shared/types/duty/duty.interface';
+import {SelectedItemSortedInterface} from '../../types/common/selected-item-sorted.interface';
+import {DutyService} from 'src/app/shared/services/share/duty.service';
+import {Router} from '@angular/router';
+import {FreedutyStoreService} from '../../../../../shared/services/store/freeduty.store.service';
+import {ClientService} from 'src/app/shared/services/common/client.service';
+import {AuthService} from 'src/app/auth/services/auth.service';
+import {FreeDutyRequestDrawerService} from '../../modules/free-duty-request-drawer/free-duty-request-drawer.service';
 
 
 @Component({
@@ -48,8 +49,15 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private clientService: ClientService,
     public dialogService: DialogService,
-    public datepipe: DatePipe
-  ) {}
+    public datepipe: DatePipe,
+
+
+
+
+
+    private freeDutyRequestDrawerService: FreeDutyRequestDrawerService
+  ) {
+  }
 
   ngOnInit() {
     this.initializeValues();
@@ -112,10 +120,10 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
   }
 
   getFreedutySum(dutyItems: DutyInterface[]) {
-    if(dutyItems) {
-    return dutyItems.reduce((sum, current) =>
-      sum + current.Summ, 0
-    )
+    if (dutyItems) {
+      return dutyItems.reduce((sum, current) =>
+        sum + current.Summ, 0
+      )
     }
   }
 
@@ -131,6 +139,7 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
   saveFilter() {
     this.closeDateModal();
   }
+
   //#endregion
 
   //#region requests modal
@@ -207,15 +216,15 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.subscription$.add(this.subscription$.add(this.service.createRequestsByDutyIds(flattenedRequestsId).subscribe(
-      (response) => {
-        this.closeRequestsModal();
-        this.router.navigate(['/client/requests']);
-      },
-      (err) => {
-        this.errorRequestsDialogMessage = err.error;
-      }
-    )));
+    // this.subscription$.add(this.subscription$.add(this.service.createRequestsByDutyIds(flattenedRequestsId).subscribe(
+    //   (response) => {
+    //     this.closeRequestsModal();
+    //     this.router.navigate(['/client/requests']);
+    //   },
+    //   (err) => {
+    //     this.errorRequestsDialogMessage = err.error;
+    //   }
+    // )));
   }
 
   closeRequestsModal(): void {
@@ -225,5 +234,9 @@ export class FreedutyPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription$.unsubscribe();
   }
+
   //#endregion
+  openDrawer() {
+    this.freeDutyRequestDrawerService.open()
+  }
 }

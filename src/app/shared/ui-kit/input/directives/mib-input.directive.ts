@@ -21,7 +21,7 @@ import {Subscription, tap} from 'rxjs'
 })
 export class MibInputDirective {
   constructor(
-    @Optional() private ngControl: NgControl,
+    @Optional() public ngControl: NgControl,
     private cdr: ChangeDetectorRef,
     public elementRef: ElementRef<HTMLInputElement>
   ) {

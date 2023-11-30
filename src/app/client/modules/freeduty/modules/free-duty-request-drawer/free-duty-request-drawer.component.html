@@ -1,0 +1,37 @@
+<mib-drawer [formGroup]="form">
+  <mib-drawer-header (onClose)="dialogRef.close()" drawer-header></mib-drawer-header>
+  <div class="flex flex_column gap-4">
+    <h4>Создание заявки</h4>
+    <p class="text text_m c-bti-secondary">По выбранным заявкам Вы сможете составить заявку на факторинг</p>
+  </div>
+  <mib-spacing type="s"></mib-spacing>
+  <p class="headline">Договора поставки</p>
+  <mib-spacing type="xs"></mib-spacing>
+  <mib-table>
+    <mib-table-head>
+      <mib-table-head-cell>ИД</mib-table-head-cell>
+      <mib-table-head-cell>Контракт</mib-table-head-cell>
+      <mib-table-head-cell>№ поставки</mib-table-head-cell>
+      <mib-table-head-cell>№ </mib-table-head-cell>
+      <mib-table-head-cell>Остаток задолженности</mib-table-head-cell>
+    </mib-table-head>
+    <mib-table-row>
+      <mib-table-cell>12221079</mib-table-cell>
+      <mib-table-cell>2304/17</mib-table-cell>
+      <mib-table-cell>1706</mib-table-cell>
+      <mib-table-cell>1578</mib-table-cell>
+      <mib-table-cell>{{1000000 | number}}</mib-table-cell>
+      <mib-button table-row-button size="s" type="ghost-secondary">
+        <mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
+      </mib-button>
+    </mib-table-row>
+    <mib-table-row>
+      <mib-table-head-cell>Trash</mib-table-head-cell>
+      <mib-table-head-cell></mib-table-head-cell>
+      <mib-table-head-cell></mib-table-head-cell>
+      <mib-table-head-cell></mib-table-head-cell>
+      <mib-table-head-cell>Trash</mib-table-head-cell>
+    </mib-table-row>
+    <mib-table-footer></mib-table-footer>
+  </mib-table>
+</mib-drawer>

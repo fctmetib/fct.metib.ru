@@ -1,4 +1,3 @@
-
 import {NgModule} from '@angular/core'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {InputTextModule} from 'primeng/inputtext'
@@ -25,36 +24,44 @@ import {FreeDutyRoutingModule} from './free-duty-routing.module';
 import {DeliveryService} from '../../../shared/services/share/delivery.service';
 import {TableModule} from '../../../shared/ui-kit/table/table.module';
 import {RefIconModule} from '../../../shared/ui-kit/ref-icon/ref-icon.module';
+import {FreeDutyRequestDrawerModule} from './modules/free-duty-request-drawer/free-duty-request-drawer.module';
+import {FreeDutyRequestDrawerService} from './modules/free-duty-request-drawer/free-duty-request-drawer.service';
 
 @NgModule({
   declarations: [FreedutyPageComponent],
-    imports: [
-        CommonModule,
-        InputTextModule,
-        CheckboxModule,
-        ButtonModule,
-        RadioButtonModule,
-        TieredMenuModule,
-        DynamicDialogModule,
-        InputTextareaModule,
-        DialogModule,
-        FileUploadModule,
-        FormsModule,
-        TooltipModule,
-        ToolbarModule,
-        FreeDutyRoutingModule,
-        ReactiveFormsModule,
-        MenubarModule,
-        AvatarModule,
-        SpacingModule,
-        TabModule,
-        NavbarModule,
-        InputModule,
-        ButtonModule,
-        TableModule,
-        RefIconModule
-    ],
-  providers: [DialogService, DeliveryService, DutyService]
+  imports: [
+    CommonModule,
+    InputTextModule,
+    CheckboxModule,
+    ButtonModule,
+    RadioButtonModule,
+    TieredMenuModule,
+    DynamicDialogModule,
+    InputTextareaModule,
+    DialogModule,
+    FileUploadModule,
+    FormsModule,
+    TooltipModule,
+    ToolbarModule,
+    FreeDutyRoutingModule,
+    ReactiveFormsModule,
+    MenubarModule,
+    AvatarModule,
+    SpacingModule,
+    TabModule,
+    NavbarModule,
+    InputModule,
+    ButtonModule,
+    TableModule,
+    RefIconModule,
+    FreeDutyRequestDrawerModule
+  ],
+  providers: [
+    DialogService,
+    DeliveryService,
+    DutyService,
+    FreeDutyRequestDrawerService
+  ]
 })
 export class FreeDutyModule {
 }

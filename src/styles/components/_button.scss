@@ -14,6 +14,13 @@
 	}
 }
 
+@mixin btn-color($color) {
+  color: $color;
+  mib-ref-icon {
+    @include icon-color($color);
+  }
+}
+
 @mixin btn-xl {
 	@include btn-size(56px, 20px, 16px, 4px) {
 		@include text-l;
@@ -62,7 +69,7 @@ $text-selectors: '&, span';
 	background-color: transparent;
 	border: 1px solid transparent;
 	@include body-text;
-	transition: var(--main-transition);
+	transition: color var(--main-transition), background-color var(--main-transition), border-color var(--main-transition);
 	&_left-iconly .btn_left-wrapper {
 		display: block;
 	}
@@ -249,49 +256,39 @@ $text-selectors: '&, span';
 	}
 
 	&_ghost-primary {
-		color: var(--mc-default);
 		font-weight: var(--fw-medium);
 
-		mib-ref-icon {
-			@include icon-color(var(--mc-default));
-		}
+    @include btn-color(var(--mc-default));
 
 		&:hover {
+      @include btn-color(var(--mc-hover));
 		}
 
 		&:active {
+      @include btn-color(var(--mc-active));
 		}
 
 		&:disabled {
-			color: var(--wti-quaternary);
+      @include btn-color(var(--wti-quaternary));
 			background: var(--wgr-primary);
-
-			mib-ref-icon {
-				@include icon-color(var(--wti-quaternary));
-			}
 		}
 	}
 
 	&_ghost-secondary {
-		color: var(--bti-secondary);
 
-		mib-ref-icon {
-			@include icon-color(var(--bti-secondary));
-		}
+    @include btn-color(var(--bti-secondary));
 
 		&:hover {
+      @include btn-color(var(--bti-tertiary));
 		}
 
 		&:active {
+      @include btn-color(var(--bti-primary));
 		}
 
 		&:disabled {
-			color: var(--wti-quaternary);
+      @include btn-color(var(--bti-quaternary));
 			background: var(--wgr-primary);
-
-			mib-ref-icon {
-				@include icon-color(var(--wti-quaternary));
-			}
 		}
 	}
 

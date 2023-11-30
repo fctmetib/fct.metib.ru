@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {TableCellSize} from '../table-cell/interfaces/table-cell.interface';
 
 @Component({
   selector: 'mib-table-head',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./table-head.component.scss']
 })
 export class TableHeadComponent {
+  @Input() set size(value: TableCellSize) {
+    this._size = value;
+  }
 
+  public _size: TableCellSize = 'm'
 }

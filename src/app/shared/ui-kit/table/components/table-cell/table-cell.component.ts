@@ -9,13 +9,17 @@ import {TableCellSize, TableCellType} from './interfaces/table-cell.interface';
 export class TableCellComponent implements OnInit {
   checkboxId: string;
   @Input() type: TableCellType = 'text';
-  @Input() size: TableCellSize = 'm'
+  @Input() set size(value: TableCellSize) {
+    this._size = value;
+  }
   @Input() title: string = ''
+
+  public _size: TableCellSize = 'm'
 
   get classes() {
     return {
       [`table-cell_type-${this.type}`]: true,
-      [`table-cell_${this.size}`]: true,
+      [`table-cell_${this._size}`]: true,
     }
   }
 
