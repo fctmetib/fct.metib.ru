@@ -68,11 +68,11 @@
 	align-items: center;
 	border-radius: var(--badge-border-radius);
 	@include body-text;
-	user-select: none;
 	&:not(.badge_extended) {
 		padding: 2px;
 		.badge-text {
 			font-weight: var(--fw-medium);
+			user-select: none;
 		}
 	}
 	&_l {
@@ -103,6 +103,9 @@
 	--badge-m-icon-size: 16px;
 	--badge-s-icon-size: 12px;
 
+	& .badge-text {
+		user-select: none;
+	}
 	&_type-filled-primary {
 		background: var(--mc-quaternary);
 		.badge-text {
