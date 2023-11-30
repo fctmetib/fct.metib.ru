@@ -25,11 +25,11 @@ import {DeliveryService} from '../../../shared/services/share/delivery.service';
 import {TableModule} from '../../../shared/ui-kit/table/table.module';
 import {RefIconModule} from '../../../shared/ui-kit/ref-icon/ref-icon.module';
 import {FreeDutyRequestDrawerModule} from './modules/free-duty-request-drawer/free-duty-request-drawer.module';
-import {FreeDutyRequestDrawerService} from './modules/free-duty-request-drawer/free-duty-request-drawer.service';
-import {FreeDutyService} from './pages/free-duty-page/services/free-duty.service';
+import {FreeDutyRequestDrawerService} from './modules/free-duty-request-drawer/free-duty-request-drawer.service';;
 import {PaginatorModule} from '../../../shared/ui-kit/paginator/paginator.module';
 import {ToolsService} from '../../../shared/services/tools.service';
 import {RubModule} from '../../../shared/pipes/rub/rub.module';
+import {FreeDutyService} from './services/free-duty.service';
 
 @NgModule({
   declarations: [FreeDutyPageComponent],

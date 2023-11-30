@@ -93,6 +93,10 @@ $text-selectors: '&, span';
 
 .btn {
 	@include btn;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 	--btn-xl-icon-size: 20px;
 	--btn-l-icon-size: 20px;
 	--btn-m-icon-size: 20px;

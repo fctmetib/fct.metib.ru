@@ -12,11 +12,11 @@ import {FreedutyStoreService} from '../../../../../shared/services/store/freedut
 import {ClientService} from 'src/app/shared/services/common/client.service';
 import {AuthService} from 'src/app/auth/services/auth.service';
 import {FreeDutyRequestDrawerService} from '../../modules/free-duty-request-drawer/free-duty-request-drawer.service';
-import {FreeDutyService} from './services/free-duty.service';
 import {takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
 import {AdvancedDuty} from './interfaces/free-duty.interface';
 import {DrawerStateEnum} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
+import {FreeDutyService} from '../../services/free-duty.service';
 
 
 @Component({

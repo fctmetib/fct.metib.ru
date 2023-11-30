@@ -1,4 +1,4 @@
-<mib-drawer [formGroup]="form">
+<mib-drawer>
   <mib-drawer-header (onClose)="dialogRef.close()" drawer-header></mib-drawer-header>
   <div class="flex flex_column gap-4">
     <h4>Создание заявки</h4>
@@ -54,6 +54,6 @@
     </mib-table-footer>
   </mib-table>
   <mib-drawer-footer drawer-footer>
-    <mib-button type="filled-primary">Создать заявку</mib-button>
+    <mib-button [loading]="!!(sending$ | async)" (press)="submit()" type="filled-primary">Создать заявку</mib-button>
   </mib-drawer-footer>
 </mib-drawer>

@@ -1,10 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {tap} from 'rxjs';
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
 import {AdvancedDuty} from '../../pages/free-duty-page/interfaces/free-duty.interface';
 import {ToolsService} from '../../../../../shared/services/tools.service';
+import {FreeDutyService} from '../../services/free-duty.service';
+import {RequestsService} from '../../services/requests.service';
+import {BehaviorSubject, finalize, tap} from 'rxjs';
 
 @Component({
   selector: 'mib-free-duty-request-drawer',
@@ -13,7 +14,7 @@ import {ToolsService} from '../../../../../shared/services/tools.service';
 })
 export class FreeDutyRequestDrawerComponent implements OnInit {
 
-  public form: FormGroup
+  public sending$ = new BehaviorSubject<boolean>(false)
 
   public PAGINATOR_ITEMS_PER_PAGE = 6;
   public PAGINATOR_PAGE_TO_SHOW = 5;
@@ -21,23 +22,16 @@ export class FreeDutyRequestDrawerComponent implements OnInit {
   public dutiesVisible: AdvancedDuty[] = []
 
   constructor(
-    private fb: FormBuilder,
     public dialogRef: MatDialogRef<FreeDutyRequestDrawerComponent>,
     public toolsService: ToolsService,
+    private freeDutyService: FreeDutyService,
+    private requestsService: RequestsService,
     @Inject(MAT_DIALOG_DATA) public data: DrawerData<AdvancedDuty[]>
   ) {
   }
 
   ngOnInit() {
     this.onPageChange(1)
-    this.form = this.fb.group({
-      selected: ['test']
-    })
-    this.form.valueChanges.pipe(
-      tap((val) => {
-        console.log(val)
-      })
-    ).subscribe()
   }
 
   get fullRest() {
@@ -49,5 +43,17 @@ export class FreeDutyRequestDrawerComponent implements OnInit {
     const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE;
 
     this.dutiesVisible = this.data.data.slice(startIndex, endIndex);
+  }
+
+  submit() {
+    this.sending$.next(true)
+    this.requestsService.createRequest(this.data.data.map(x => x.ID)).pipe(
+      tap((response) => {
+        this.dialogRef.close(response)
+      }),
+      finalize(() => {
+        this.sending$.next(false)
+      })
+    ).subscribe()
   }
 }
