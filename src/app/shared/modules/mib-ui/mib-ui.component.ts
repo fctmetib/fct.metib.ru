@@ -25,6 +25,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 				grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
 				gap: 2rem;
 			}
+			.test-badge {
+				display: flex;
+				gap: 5px;
+			}
 		`
 	]
 })

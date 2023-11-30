@@ -1,0 +1,149 @@
+@import 'src/styles/helpers/icon_tools';
+@import 'src/styles/_typography.vars.scss';
+
+// @mixin badge-extended($width, $height) {
+// 	&:not(.badge_extended) {
+// 		width: $width;
+// 		height: $height;
+// 	}
+// }
+
+// @mixin badge-size($paddingVertical, $paddingHorizontal, $gap, $width, $height) {
+// 	padding: $paddingVertical $paddingHorizontal;
+// 	gap: $gap;
+// 	@content;
+// 	@include badge-extended($width, $height);
+// 	@content;
+// }
+
+// @include badge-size(4px, 8px, 4px) {
+// 	@include text-s;
+// 	@include badge-extended(24px, 24px);
+// 	mib-ref-icon {
+// 		@include icon-size(var(--badge-l-icon-size));
+// 	}
+// }
+
+@mixin badge-l {
+	padding: 4px 8px;
+	gap: 4px;
+	@include text-s;
+	&:not(.badge_extended) {
+		width: 24px;
+		height: 24px;
+	}
+	mib-ref-icon {
+		@include icon-size(var(--badge-l-icon-size));
+	}
+}
+
+@mixin badge-m {
+	padding: 2px 6px;
+	gap: 4px;
+	@include text-s;
+	&:not(.badge_extended) {
+		width: 20px;
+		height: 20px;
+	}
+	mib-ref-icon {
+		@include icon-size(var(--badge-m-icon-size));
+	}
+}
+
+@mixin badge-s {
+	padding: 2px 4px;
+	gap: 4px;
+	&:not(.badge_extended) {
+		width: 16px;
+		height: 16px;
+	}
+	@include text-xs;
+	mib-ref-icon {
+		@include icon-size(var(--badge-s-icon-size));
+	}
+}
+
+@mixin badge {
+	display: inline-flex;
+	align-items: center;
+	border-radius: var(--badge-border-radius);
+	@include body-text;
+	&:not(.badge_extended) {
+		padding: 2px;
+		.badge-text {
+			font-weight: var(--fw-medium);
+		}
+	}
+	&_l {
+		@include badge-l;
+	}
+	&_m {
+		@include badge-m;
+	}
+	&_s {
+		@include badge-s;
+	}
+
+	&.badge_extended {
+		mib-ref-icon {
+			display: block;
+		}
+	}
+}
+
+@mixin badge-icon {
+	display: none;
+}
+
+.badge {
+	@include badge;
+
+	--badge-l-icon-size: 16px;
+	--badge-m-icon-size: 16px;
+	--badge-s-icon-size: 12px;
+
+	&_type-filled-primary {
+		background: var(--mc-quaternary);
+		.badge-text {
+			color: var(--mc-active);
+		}
+		mib-ref-icon {
+			@include icon-color(var(--mc-active));
+		}
+	}
+
+	&_type-filled-secondary {
+		background: var(--wgr-secondary);
+		border: 1px solid var(--wgr-tertiary);
+		.badge-text {
+			color: var(--bti-secondary);
+		}
+		mib-ref-icon {
+			@include icon-color(var(--bti-secondary));
+		}
+	}
+
+	&_type-filled-accent {
+		background: var(--ac-quaternary);
+		.badge-text {
+			color: var(--ac-active);
+		}
+		mib-ref-icon {
+			@include icon-color(var(--ac-active));
+		}
+	}
+
+	&_type-filled-success {
+		background: var(--succes-color-quaternary);
+		.badge-text {
+			color: var(--succes-color-active);
+		}
+		mib-ref-icon {
+			@include icon-color(var(--succes-color-active));
+		}
+	}
+
+	mib-ref-icon {
+		@include badge-icon;
+	}
+}
