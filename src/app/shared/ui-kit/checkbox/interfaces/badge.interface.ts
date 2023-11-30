@@ -1,2 +1,1 @@
-export interface BadgeInterface {
-}
+export type MibCheckboxSize = 'l' | 'm' | 's'

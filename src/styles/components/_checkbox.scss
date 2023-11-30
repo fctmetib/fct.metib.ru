@@ -1,0 +1,85 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+
+$trs: 0.2s;
+// $trs: 0.2s ease;
+$checkbox: 0.3s ease-in-out;
+$skeleton: 1.5s ease-in-out;
+$floating: 2.5s ease-in-out;
+$spinner: 0.6s linear;
+
+@mixin checkbox-l {
+	width: 24px;
+	height: 24px;
+	border-radius: 8px;
+	mib-ref-icon {
+		@include icon-size(20px);
+	}
+}
+
+@mixin checkbox-m {
+	width: 20px;
+	height: 20px;
+	border-radius: 6px;
+	mib-ref-icon {
+		@include icon-size(16px);
+	}
+}
+
+@mixin checkbox-s {
+	width: 16px;
+	height: 16px;
+	border-radius: 4px;
+	mib-ref-icon {
+		@include icon-size(12px);
+	}
+}
+
+@mixin checkbox-control {
+	transition: $trs;
+	border: 1px solid var(--wgr-tertiary);
+	background-color: var(--wgr-secondary);
+	position: relative;
+	&.checked {
+		background: var(--mc-default);
+		border-color: transparent;
+	}
+}
+
+@mixin checkbox-icon {
+	position: absolute;
+	z-index: 5;
+	opacity: 1;
+	transform: translate(-50%, -50%) rotateX(0deg);
+	top: 50%;
+	left: 50%;
+}
+
+.checkbox {
+	position: relative;
+	cursor: pointer;
+
+	.text {
+		user-select: none;
+	}
+
+	.mib-ref-icon {
+		@include icon-color(var(--wgr-primary));
+		@include checkbox-icon;
+	}
+	&-control {
+		@include checkbox-control;
+		&_l {
+			@include checkbox-l;
+		}
+		&_m {
+			@include checkbox-m;
+		}
+		&_s {
+			@include checkbox-s;
+		}
+	}
+	&-input {
+		position: absolute;
+		left: -9999px;
+	}
+}

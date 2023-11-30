@@ -1,10 +1,78 @@
-import { Component } from '@angular/core';
+import { Component, Input, ViewEncapsulation, forwardRef } from '@angular/core'
+import { MibCheckboxSize } from './interfaces/badge.interface'
+import { NG_VALUE_ACCESSOR } from '@angular/forms'
+import { animate, style, transition, trigger } from '@angular/animations'
 
 @Component({
-  selector: 'mib-checkbox',
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss']
+	host: {
+		class: 'flex_align-self-start'
+	},
+	selector: 'mib-checkbox',
+	templateUrl: './checkbox.component.html',
+	styleUrls: ['./checkbox.component.scss'],
+	encapsulation: ViewEncapsulation.None,
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => CheckboxComponent),
+			multi: true
+		}
+	],
+	animations: [
+		trigger('checkboxAnimation', [
+			transition(':enter', [
+				style({
+					transform: 'translate(-50%,-90%) rotateX(-60deg)'
+				}),
+				animate(
+					'300ms ease',
+					style({
+						transform: 'translate(-50%,-50%) rotateX(0deg)'
+					})
+				)
+			]),
+			transition(':leave', [
+				style({
+					transform: 'translate(-50%,-50%) rotateX(0deg)'
+				}),
+				animate(
+					'200ms ease',
+					style({
+						transform: 'translate(-50%,-20%) rotateX(60deg)'
+					})
+				)
+			])
+		])
+	]
 })
 export class CheckboxComponent {
+	@Input() size: MibCheckboxSize = 'l'
+	@Input() class: string = ''
 
+	public value: boolean = false
+
+	ngAfterViewInit() {}
+
+	onChange: any = () => {}
+	onTouch: any = () => {}
+
+	writeValue(value: boolean): void {
+		this.value = value
+		this.onChange(this.value)
+	}
+
+	registerOnChange(fn: any): void {
+		this.onChange = fn
+	}
+
+	registerOnTouched(fn: any): void {
+		this.onTouch = fn
+	}
+
+	onCheckboxChange(event: Event): void {
+		event.stopPropagation()
+		event.preventDefault()
+		this.value = !this.value
+		this.writeValue(this.value)
+	}
 }
