@@ -31,7 +31,7 @@ registerLocaleData(localeRu, 'ru')
     MibUiModule,
     CookieModule.forRoot(),
     ClientModule,
-    AuthModule
+    AuthModule,
   ],
   providers: [
     MessageService,

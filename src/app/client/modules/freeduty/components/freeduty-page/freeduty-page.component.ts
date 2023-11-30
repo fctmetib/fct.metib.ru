@@ -14,9 +14,9 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 
 
 @Component({
-  selector: 'app-freeduty-page',
-  templateUrl: './freeduty-page.component.html',
-  styleUrls: ['./freeduty-page.component.scss'],
+  selector: 'app-free-duty-page',
+  templateUrl: './free-duty-page.component.html',
+  styleUrls: ['./free-duty-page.component.scss'],
   providers: [DatePipe],
 })
 export class FreedutyPageComponent implements OnInit, OnDestroy {

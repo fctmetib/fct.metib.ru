@@ -7,7 +7,7 @@ import {
 	Input,
 	Output
 } from '@angular/core'
-import { ButtonSize, ButtonType } from '../button/interfaces/button.interface'
+import { ButtonSize, ButtonType } from './interfaces/button.interface'
 
 @Component({
 	selector: 'mib-button',
@@ -15,7 +15,7 @@ import { ButtonSize, ButtonType } from '../button/interfaces/button.interface'
 	styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent implements AfterViewInit, DoCheck {
-	@Input() size: ButtonSize = 'xl'
+	@Input() size: ButtonSize = 'm'
 	@Input() type: ButtonType = 'filled-primary'
 	@Input() rounded: boolean = false
 	@Input() loading: boolean = false

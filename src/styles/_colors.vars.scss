@@ -21,7 +21,7 @@
 
 	/* black-text-icons */
 	--bti-primary: #090a0c;
-	--bti-secondary: #24292e;
+	--bti-secondary: #2d3339;
 	--bti-tertiary: #5e676e;
 	--bti-quaternary: #95999d;
 
@@ -87,4 +87,9 @@
 	--succes-color-active: #45a151;
 	--succes-color-quaternary: #d1e0d3;
 	--succes-color-quinary: #f0f4f1;
+
+	/* shadows */
+	--shadow-big: 0px 16px 32px 0px rgba(9, 13, 17, 0.1);
+	--shadow-normal: 0px 8px 16px 0px rgba(9, 13, 17, 0.08);
+	--shadow-small: 0px 4px 12px 0px rgba(9, 13, 17, 0.06);
 }

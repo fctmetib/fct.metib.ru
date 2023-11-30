@@ -1,0 +1,33 @@
+@import "src/styles/typography.vars";
+@import "src/styles/helpers/icon_tools";
+
+$text-selectors: 'label, span';
+
+@mixin table-head-cell {
+  height: 100%;
+  width: 100%;
+  padding-right: 8px;
+
+  #{$text-selectors} {
+    @include body-text;
+    @include text-s;
+    @include text-overflow(1);
+  }
+
+  mib-ref-icon {
+    @include icon-size(20px)
+  }
+}
+
+@mixin table-color($color) {
+  #{$text-selectors} {
+    color: $color;
+  }
+  mib-ref-icon {
+    @include icon-color($color)
+  }
+}
+
+.table-head-cell {
+  @include table-head-cell;
+}

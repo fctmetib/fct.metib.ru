@@ -9,7 +9,7 @@ import {
 	ViewChild,
 	ViewEncapsulation
 } from '@angular/core'
-import { MetibInputDirective } from './directives/metib-input.directive'
+import { MibInputDirective } from './directives/mib-input.directive'
 import { fromEvent, tap } from 'rxjs'
 
 @Component({
@@ -21,10 +21,10 @@ import { fromEvent, tap } from 'rxjs'
 export class InputComponent
 	implements AfterContentInit, AfterViewInit, AfterViewChecked
 {
-	@ContentChild(MetibInputDirective, { descendants: true })
-	inputDirective!: MetibInputDirective
+	@ContentChild(MibInputDirective, { descendants: true })
+	inputDirective!: MibInputDirective
 
-	@ViewChild('label') label: ElementRef<HTMLSpanElement>
+	@ViewChild('label') labelEl: ElementRef<HTMLSpanElement>
 	@ViewChild('iconsLeft') iconsLeftEl: ElementRef<HTMLDivElement>
 	@ViewChild('iconsRight') iconsRightEl: ElementRef<HTMLDivElement>
 	@ViewChild('box') box: ElementRef<HTMLDivElement>
@@ -33,7 +33,8 @@ export class InputComponent
 	constructor(private r2: Renderer2) {}
 
 	ngAfterViewInit(): void {
-		this.setIconPaddings(), this.updateClasses()
+		this.setIconPaddings()
+    this.updateClasses()
 		// console.log(
 		// 	'inputDirectiveRefNative :>> ',
 		// 	this.inputDirective.elementRef.nativeElement
@@ -66,7 +67,7 @@ export class InputComponent
 			newPaddingLeft
 		)
 
-		this.r2.setStyle(this.label.nativeElement, 'padding-left', newPaddingLeft)
+		this.r2.setStyle(this.labelEl.nativeElement, 'padding-left', newPaddingLeft)
 	}
 
 	focus() {

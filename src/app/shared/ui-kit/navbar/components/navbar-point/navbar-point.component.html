@@ -1,0 +1,13 @@
+<button
+  class="navbar-point flex flex_align-center"
+  [ngClass]="classes"
+  [disabled]="disabled"
+  (click)="press.emit($event)"
+  [class.navbar-point_loading]="loading"
+>
+  <div class="navbar-point_icon-wrapper navbar-point_left-icon-wrapper">
+    <ng-content select="[navbar-point-left-icon]"></ng-content>
+  </div>
+  <span><ng-content></ng-content></span>
+  <ng-content select="[navbar-point-tag]"></ng-content>
+</button>

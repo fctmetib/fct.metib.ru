@@ -21,12 +21,12 @@ $text-selectors: 'span';
 
   #{$text-selectors} {
     @include body-text;
-    transition: var(--transition);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
   }
+
 }
 
 @mixin link-ghost-primary {
@@ -56,7 +56,7 @@ $text-selectors: 'span';
   #{$text-selectors} {
     color: $color
   }
-  .link_icon-wrapper, mib-ref-icon {
+  mib-ref-icon {
     @include icon-color($color)
   }
 }

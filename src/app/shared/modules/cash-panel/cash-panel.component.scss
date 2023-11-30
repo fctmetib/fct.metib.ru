@@ -2,11 +2,10 @@
 
 :host {
   display: block;
-  flex-grow: 1;
+  flex: 1 0 360px;
 }
 
 @mixin cash-panel {
-  transition: var(--transition);
   width: 100%;
   padding: 16px;
   background-color: var(--wgr-primary);
@@ -23,10 +22,15 @@
   border-bottom: 1px solid var(--wgr-tertiary);
 }
 
+@mixin cash-panel-hover {
+  box-shadow: var(--shadow-small);
+}
+
 .cash-panel {
   @include cash-panel;
 
   &:hover {
+    @include cash-panel-hover;
   }
 
   &_desktop {
@@ -41,4 +45,8 @@
     @include icon-size(16px);
     @include icon-color(var(--bti-tertiary))
   }
+}
+
+.main-transition {
+  transition: var(--transition);
 }
