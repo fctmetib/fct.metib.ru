@@ -893,3 +893,31 @@
 		<mib-spacing type="xl"></mib-spacing>
 	</div>
 </div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'checkbox' | titlecase }}
+	<button (click)="isShownSwitch = !isShownSwitch">
+		{{ isShownSwitch ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownSwitch" class="wrapper">
+	<h3>filled-secondary</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div class="input-wrapper">
+		<h5>checkbox:</h5>
+		<div class="test-badge">
+			<mib-checkbox></mib-checkbox>
+		</div>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+</div>

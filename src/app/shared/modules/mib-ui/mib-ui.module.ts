@@ -7,6 +7,7 @@ import { RefIconModule } from '../../ui-kit/ref-icon/ref-icon.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { SpacingModule } from '../../ui-kit/spacing/spacing.module'
 import { BadgeModule } from '../../ui-kit/badge/badge.module'
+import { CheckboxModule } from '../../ui-kit/checkbox/checkbox.module'
 
 @NgModule({
 	imports: [
@@ -17,7 +18,8 @@ import { BadgeModule } from '../../ui-kit/badge/badge.module'
 		RefIconModule,
 		InputModule,
 		SpacingModule,
-		BadgeModule
+		BadgeModule,
+		CheckboxModule
 	],
 	declarations: [MibUiComponent]
 })
