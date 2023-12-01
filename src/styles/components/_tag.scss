@@ -2,4 +2,43 @@
 
 .tag {
 	@include tag;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	gap: 4px;
+	&_filled-primary {
+		@include filled-primary(
+			$color: (
+				main: var(--mc-default),
+				bg: var(--mc-quinary)
+			)
+		);
+	}
+	&.selected {
+		background-color: aqua;
+	}
+	&_l {
+		@include text-l;
+		padding: 8px 16px;
+		mib-ref-icon {
+			@include icon-size(20px);
+			@include icon-color(var(--mc-default));
+		}
+	}
+	&_m {
+		@include text-m;
+		padding: 6px 12px;
+		mib-ref-icon {
+			@include icon-size(20px);
+			@include icon-color(var(--mc-default));
+		}
+	}
+	&_s {
+		@include text-s;
+		padding: 4px 8px;
+		mib-ref-icon {
+			@include icon-size(16px);
+			@include icon-color(var(--mc-default));
+		}
+	}
 }

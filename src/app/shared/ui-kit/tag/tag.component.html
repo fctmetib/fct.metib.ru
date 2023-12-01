@@ -1,6 +1,7 @@
 <button
 	[disabled]="status === 'disabled'"
-	(click)="onClick.emit(value); press.emit($event)"
+	(click)="this.selected = !this.selected; press.emit($event)"
+	[class.selected]="selected"
 	[attr.status]="status"
 	class="tag flex"
 	[ngClass]="'tag_' + size + ' tag_' + type + ' ' + flex"

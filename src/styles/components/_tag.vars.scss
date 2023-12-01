@@ -1,7 +1,44 @@
 @import 'src/styles/helpers/_icon_tools.scss';
 
+@mixin filled-primary($color) {
+	background-color: map-get($color, bg);
+
+	& {
+		font-weight: var(--fw-medium);
+		color: map-get($color, main);
+	}
+}
+
+@mixin tag-iconly($color) {
+	mib-ref-icon {
+		@include icon-color($color);
+	}
+}
+
+@mixin tag-disabled {
+	$color: var(--wti-quaternary);
+	cursor: not-allowed;
+	background-color: var(--wgr-secondary);
+
+	& {
+		font-weight: var(--fw-regular);
+		color: $color;
+	}
+
+	&.tag {
+		&_primary {
+			& {
+				font-weight: var(--fw-medium);
+			}
+		}
+	}
+
+	@include tag-iconly($color);
+}
+
 @mixin tag {
-	border: 1px solid red;
+	border: 1px solid transparent;
+	border-radius: var(--main-border-radius);
 	cursor: pointer;
 	line-height: 100%;
 	width: 100%;
@@ -18,10 +55,20 @@
 		display: none;
 	}
 
-	&,
-	& > span {
+	& {
 		@include body-text;
 		user-select: none;
 		white-space: nowrap;
+	}
+	& {
+		transition: var(--main-transition);
+	}
+	overflow: hidden;
+
+	&.tag {
+		&:disabled,
+		&[status='disabled'] {
+			@include tag-disabled;
+		}
 	}
 }

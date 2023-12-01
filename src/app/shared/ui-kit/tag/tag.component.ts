@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+	AfterViewInit,
+	Component,
+	EventEmitter,
+	Input,
+	Output
+} from '@angular/core'
 import { TagSize, TagStatus, TagType } from './interfaces/tag.interface'
 
 @Component({
@@ -6,8 +12,7 @@ import { TagSize, TagStatus, TagType } from './interfaces/tag.interface'
 	templateUrl: './tag.component.html',
 	styleUrls: ['./tag.component.scss']
 })
-export class TagComponent {
-	@Input() value?: any
+export class TagComponent implements AfterViewInit {
 	@Input() size: TagSize = 'l'
 	@Input() status: TagStatus = 'default'
 	@Input() flex: string = 'flex_center'
@@ -15,6 +20,8 @@ export class TagComponent {
 	@Input() disabled: boolean = false
 	@Output() onClick: EventEmitter<any> = new EventEmitter<any>()
 	@Output() press: EventEmitter<any> = new EventEmitter<any>()
+
+	selected: boolean = false
 
 	ngAfterViewInit() {
 		if (this.disabled) this.status = 'disabled'

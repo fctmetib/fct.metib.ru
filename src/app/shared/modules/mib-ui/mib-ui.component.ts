@@ -28,6 +28,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 			.test-badge {
 				display: flex;
 				gap: 5px;
+				margin: 2rem 0;
 			}
 		`
 	]
@@ -43,6 +44,8 @@ export class MibUiComponent implements OnInit {
 	public inputSizeL: InputSize = 'l'
 	public inputSizeM: InputSize = 'm'
 	public inputSizeS: InputSize = 's'
+
+	selected: boolean = true
 
 	form: FormGroup
 

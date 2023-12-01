@@ -941,14 +941,60 @@
 	</button>
 </h2>
 <div *ngIf="isShownTag" class="wrapper">
-	<h3>filled-secondary</h3>
+	<h3>filled-primary</h3>
 	<mib-spacing type="l"></mib-spacing>
+	<h5>tag:</h5>
 	<div style="display: flex; gap: 2rem">
-		<h5>tag:</h5>
 		<div class="test-badge">
-			<mib-tag>primary tag</mib-tag>
-			<mib-tag type="filled-accent">accent tag</mib-tag>
+			<mib-tag>
+				<mib-ref-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-ref-icon>
+				<mib-ref-icon tag-right-icon class="stroke" name="fi_x"></mib-ref-icon>
+				placeholder
+			</mib-tag>
+			<mib-tag size="m">
+				<mib-ref-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-ref-icon>
+				<mib-ref-icon tag-right-icon class="stroke" name="fi_x"></mib-ref-icon>
+				primary
+			</mib-tag>
+			<mib-tag size="s">
+				<mib-ref-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-ref-icon>
+				<mib-ref-icon tag-right-icon class="stroke" name="fi_x"></mib-ref-icon>
+				primary
+			</mib-tag>
+			<mib-tag>
+				<mib-ref-icon tag-right-icon class="stroke" name="fi_x"></mib-ref-icon>
+			</mib-tag>
 		</div>
 	</div>
-	<mib-spacing type="l"></mib-spacing>
+	<h5>tag with icons:</h5>
+	<div style="display: flex; gap: 2rem">
+		<div class="test-badge">
+			<mib-tag
+				>primary tag
+				<mib-ref-icon tag-right-icon class="stroke" name="fi_x"></mib-ref-icon>
+			</mib-tag>
+			<mib-tag type="filled-accent">
+				<mib-ref-icon tag-right-icon class="stroke" name="fi_x"></mib-ref-icon>
+				<mib-ref-icon
+					tag-left-icon
+					class="stroke"
+					name="fi_chevron-right"
+				></mib-ref-icon>
+				accent tag</mib-tag
+			>
+		</div>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
 </div>
