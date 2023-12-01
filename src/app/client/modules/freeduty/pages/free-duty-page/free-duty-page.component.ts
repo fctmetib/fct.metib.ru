@@ -19,6 +19,7 @@ import {DrawerStateEnum} from '../../../../../shared/ui-kit/drawer/interfaces/dr
 import {FreeDutyService} from '../../services/free-duty.service';
 import {ToolsService} from '../../../../../shared/services/tools.service';
 import {AnimationService} from '../../../../../shared/animations/animations.service';
+import {Properties} from 'csstype';
 
 const ANIMATION_CONFIG = {
   translateDistance: '-3%',
@@ -39,6 +40,16 @@ const ANIMATION_CONFIG = {
 export class FreeDutyPageComponent implements OnInit, OnDestroy {
 
   public loading$ = new BehaviorSubject<boolean>(false)
+
+  public skeletonWithoutUnderline: Properties = {
+    height: '48px',
+    width: '100%'
+  };
+  public skeleton: Properties = {
+    ...this.skeletonWithoutUnderline,
+    borderBottom: '1px solid var(--wgr-tertiary)'
+  };
+
 
   public PAGINATOR_ITEMS_PER_PAGE = 16;
   public PAGINATOR_PAGE_TO_SHOW = 5;
