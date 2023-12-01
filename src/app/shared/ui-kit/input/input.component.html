@@ -1,13 +1,11 @@
 
-<h1>{{label.children | json}}</h1>
 <div #box class="box-wrapper flex flex_column">
 	<span
 		#label
 		(click)="focus()"
 		[class.box_without-label]="!label.children.length"
 		class="box-label text c-bti-tertiary"
-		>{{ label.children.length | json }}
-		{{ box.children.length | json }}
+		>
 		<ng-content select="[input-label]"></ng-content>
 	</span>
 	<div

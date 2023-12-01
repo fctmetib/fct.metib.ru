@@ -7,6 +7,9 @@
   @include body-text;
   transition: color var(--transition), background-color var(--transition), border-color var(--transition);
   border: 1px solid transparent;
+  &::placeholder {
+    color: transparent;
+  }
 }
 
 @mixin box-label-styles($top) {
