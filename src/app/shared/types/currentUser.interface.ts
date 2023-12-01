@@ -1,7 +1,7 @@
-import { CurrentUserGeneralInterface } from './currentUserGeneral.interface';
-import { CurrentUserFactoringInterface } from "./currentUserFactoring.interface";
+import { CurrentUserGeneral } from './currentUserGeneral';
+import { CurrentUserFactoring } from "./currentUserFactoring";
 
 export interface CurrentUserInterface {
-  userFactoring: CurrentUserFactoringInterface;
-  userGeneral: CurrentUserGeneralInterface
+  userFactoring: CurrentUserFactoring;
+  userGeneral: CurrentUserGeneral
 }

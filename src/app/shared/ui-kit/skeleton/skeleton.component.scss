@@ -1,0 +1,25 @@
+.skeleton {
+  &.dark {
+    background: linear-gradient(-45deg, var(--bti-secondary), var(--bti-tertiary), var(--bti-secondary));
+    background-size: 400% 400%;
+  }
+
+  &.light {
+    background: linear-gradient(-45deg, var(--wgr-tertiary), var(--wgr-quaternary), var(--wgr-tertiary));
+    background-size: 400% 400%;
+  }
+
+  animation: gradient 1.5s infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 100% 50%
+  }
+  50% {
+    background-position: 0 50%
+  }
+  100% {
+    background-position: 100% 50%
+  }
+}

@@ -4,7 +4,6 @@ import {DropdownModule} from 'primeng/dropdown'
 import {CardModule} from 'primeng/card'
 import {ButtonModule} from 'primeng/button'
 import {ClientRoutingModule} from './client-routing.module'
-import {SkeletonModule} from 'primeng/skeleton'
 import {ProgressSpinnerModule} from 'primeng/progressspinner'
 
 import {NgModule} from '@angular/core'
@@ -32,6 +31,7 @@ import {RefIconModule} from '../shared/ui-kit/ref-icon/ref-icon.module'
 import {AvatarModule} from '../shared/ui-kit/avatar/avatar.module';
 import {SidebarModule} from '../shared/ui-kit/sidebar/sidebar.module';
 import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module';
+import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module';
 
 @NgModule({
   imports: [
@@ -44,7 +44,6 @@ import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module';
     InputTextareaModule,
     DropdownModule,
     MenuModule,
-    SkeletonModule,
     ProgressSpinnerModule,
     FormsModule,
     ClientRoutingModule,
@@ -57,6 +56,7 @@ import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module';
     RefIconModule,
     SidebarModule,
     SpacingModule,
+    SkeletonModule,
   ],
   declarations: [
     ClientComponent,

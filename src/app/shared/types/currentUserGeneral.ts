@@ -1,7 +1,7 @@
 import { PassportInterface } from './user/passport.interface';
 import { ProfileInterface } from './user/profile.interface';
 
-export interface CurrentUserGeneralInterface {
+export interface CurrentUserGeneral {
   Id: number
   Profile: ProfileInterface
   Passport: PassportInterface

@@ -18,16 +18,16 @@ import {
 
 import { environment } from 'src/environments/environment';
 import { RegisterRequestInterface } from 'src/app/auth/types/register/registerRequest.interface';
-import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
+import { CurrentUserGeneral } from 'src/app/shared/types/currentUserGeneral';
 import { LoginRequestInterface } from 'src/app/auth/types/login/loginRequest.interface';
-import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
+import { AuthRes } from 'src/app/auth/types/login/authRes';
 import { RegisterConfirmRequestInterface } from '../types/register/registerConfirmRequest.interface';
 import { RegisterReponseInterface } from '../types/register/registerResponse.interface';
 import { ReauthRequestInterface } from '../types/login/reauthRequest.interface';
 import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
 import { FreedutyStoreService } from 'src/app/shared/services/store/freeduty.store.service';
 import { isPlatformBrowser } from '@angular/common';
-import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
+import { CurrentUserFactoring } from 'src/app/shared/types/currentUserFactoring';
 import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
 
 @Injectable({
@@ -60,8 +60,8 @@ export class AuthService {
 
   reauth(user: ReauthRequestInterface): Observable<any> {
     const url = environment.apiUrl + `/user/reauth/${user.userId}`;
-    return this.http.post<AuthResponseInterface>(url, null).pipe(
-      tap((response: AuthResponseInterface) => {
+    return this.http.post<AuthRes>(url, null).pipe(
+      tap((response: AuthRes) => {
         // second user
         this.cookieService.put('_cu', JSON.stringify(response));
 
@@ -69,7 +69,7 @@ export class AuthService {
         let token = response.Code;
         this.cookieService.put('_bt', token)
 
-        let currentUserFactoring: CurrentUserFactoringInterface = response;
+        let currentUserFactoring: CurrentUserFactoring = response;
         this.currentUser$.next({
           userFactoring: currentUserFactoring,
           userGeneral: null
@@ -86,8 +86,8 @@ export class AuthService {
 
   login(data: LoginRequestInterface): Observable<any> {
     const url = environment.apiUrl + '/user/login';
-    return this.http.post<AuthResponseInterface>(url, data).pipe(
-      tap((response: AuthResponseInterface) => {
+    return this.http.post<AuthRes>(url, data).pipe(
+      tap((response: AuthRes) => {
         console.log('login res', response);
         let isAdmin = response.Roles.find((x) => x === 'Administrator');
         if (isAdmin) {
@@ -117,10 +117,10 @@ export class AuthService {
     );
   }
 
-  initCurrentUser(): Observable<CurrentUserGeneralInterface> {
+  initCurrentUser(): Observable<CurrentUserGeneral> {
     let adminCookie = this.cookieService.get('_cu_admin');
     let userCookie = this.cookieService.get('_cu');
-    let user: AuthResponseInterface;
+    let user: AuthRes;
     if (userCookie || adminCookie) {
       user = JSON.parse(userCookie || adminCookie);
     }
@@ -139,11 +139,11 @@ export class AuthService {
     }
 
     return this.http
-      .get<CurrentUserGeneralInterface>(environment.apiUrl + `/user/${userId}`)
+      .get<CurrentUserGeneral>(environment.apiUrl + `/user/${userId}`)
       .pipe(
-        tap((currentUserResponse: CurrentUserGeneralInterface) => {
+        tap((currentUserResponse: CurrentUserGeneral) => {
           let userCookie = this.cookieService.get('_cu');
-          let currentUserFactoring: AuthResponseInterface;
+          let currentUserFactoring: AuthRes;
           if (userCookie) {
             currentUserFactoring = JSON.parse(userCookie);
             let currentUser: CurrentUserInterface = {
@@ -154,7 +154,7 @@ export class AuthService {
           }
 
           let userAdminCookie = this.cookieService.get('_cu_admin');
-          let currentAdminFactoring: AuthResponseInterface;
+          let currentAdminFactoring: AuthRes;
           if (userAdminCookie) {
             currentAdminFactoring = JSON.parse(userAdminCookie);
             let currentUser: CurrentUserInterface = {
@@ -218,7 +218,7 @@ export class AuthService {
     }
   }
 
-  public getUserFromStore(): AuthResponseInterface {
+  public getUserFromStore(): AuthRes {
     const userCookie = this.cookieService.get('_cu');
     return JSON.parse(userCookie);
   }
@@ -304,7 +304,7 @@ export class AuthService {
       cookie = this.cookieService.get('_cu');
     }
 
-    let user: AuthResponseInterface;
+    let user: AuthRes;
     let token;
     if (cookie) {
       user = JSON.parse(cookie);
@@ -326,8 +326,8 @@ export class AuthService {
    * This function return current user roles
    */
   private getUserRoles(): string[] {
-    let user: AuthResponseInterface;
-    let admin: AuthResponseInterface;
+    let user: AuthRes;
+    let admin: AuthRes;
 
     const adminCookie = this.cookieService.get('_cu_admin');
     const userCookie = this.cookieService.get('_cu');
@@ -343,7 +343,7 @@ export class AuthService {
     return user?.Roles ?? admin?.Roles ?? [];
   }
 
-  private getUserVerificationType(): AuthResponseInterface {
+  private getUserVerificationType(): AuthRes {
     const userCookie = this.cookieService.get('_cu');
 
     if (userCookie) {

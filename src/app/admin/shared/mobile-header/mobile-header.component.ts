@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { BehaviorSubject, Observable, filter, tap } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
+import { CurrentUserFactoring } from 'src/app/shared/types/currentUserFactoring';
 @Component({
   selector: 'app-mobile-header',
   templateUrl: './mobile-header.component.html',
@@ -14,7 +14,7 @@ export class MobileHeaderComponent implements OnInit {
   items: MenuItem[];
   baseAvatarUrl = "https://api-factoring.metib.ru/api/avatar";
 
-  public adminUserFactoring$ = new BehaviorSubject<CurrentUserFactoringInterface>(null);
+  public adminUserFactoring$ = new BehaviorSubject<CurrentUserFactoring>(null);
 
   constructor(private authService: AuthService, private router: Router) {}
 
