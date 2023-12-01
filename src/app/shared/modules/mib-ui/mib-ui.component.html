@@ -916,9 +916,38 @@
 	<div style="display: flex; gap: 2rem">
 		<h5>checkbox:</h5>
 		<div class="test-badge">
-			<mib-checkbox></mib-checkbox>
+			<mib-checkbox size="l"></mib-checkbox>
 			<mib-checkbox size="m"></mib-checkbox>
 			<mib-checkbox size="s"></mib-checkbox>
+		</div>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'tag' | titlecase }}
+	<button (click)="isShownTag = !isShownTag">
+		{{ isShownTag ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownTag" class="wrapper">
+	<h3>filled-secondary</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div style="display: flex; gap: 2rem">
+		<h5>tag:</h5>
+		<div class="test-badge">
+			<mib-tag>primary tag</mib-tag>
+			<mib-tag type="filled-accent">accent tag</mib-tag>
 		</div>
 	</div>
 	<mib-spacing type="l"></mib-spacing>
