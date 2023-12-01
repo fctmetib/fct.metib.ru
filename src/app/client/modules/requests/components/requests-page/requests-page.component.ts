@@ -1,6 +1,6 @@
 import { RequestCorrectDialogComponent } from './../request-correct-dialog/request-correct-dialog.component';
 import { RequestCreateDialogComponent } from './../request-create-dialog/request-create-dialog.component';
-import { Observable, Subscription, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { RequestsResponseInterface } from './../../types/requestResponse.interface';
 import {
   Component,
@@ -32,7 +32,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   public requests$: Observable<RequestsResponseInterface[] | null>;
   public loading$: Observable<boolean>;
 
-  public selectedRequest: RequestsResponseInterface;
+  public selectedRequest$ = new BehaviorSubject<RequestsResponseInterface>(null);
 
   public displayModal: boolean;
   public ref: DynamicDialogRef;
@@ -71,7 +71,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     this.loading$ = this.requestStoreService.getLoading;
     this.items = [
       {
-        // todo: нужно
         id: 'create',
         label: 'Создать',
         command: () => this.showCreateRequestDialog(),
@@ -88,19 +87,16 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       //   command: () => this.showCorrectionDialog(),
       // },
       {
-        // todo: нужно
         id: 'events',
         label: 'События',
         command: () => this.getEvents(),
       },
       {
-        // todo: нужно
         id: 'remove',
         label: 'Удалить',
         command: () => this.removeRequests(),
       },
       {
-        // todo: нужно
         id: 'send',
         label: 'Отправить',
         command: () => this.initSend(),
@@ -118,7 +114,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       this.requestService
         .getRequestByIdAndParams(request.ID, true, true, true)
         .subscribe((requestWithAdditionalData) => {
-          this.selectedRequest = requestWithAdditionalData;
+          this.selectedRequest$.next(requestWithAdditionalData);
         })
     );
   }
@@ -126,7 +122,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   public documentViewHandler(document: any): void {
     this.openDocumentViewer({
       document,
-      requestID: this.selectedRequest.ID,
+      requestID: this.selectedRequest$.value.ID,
     });
   }
 

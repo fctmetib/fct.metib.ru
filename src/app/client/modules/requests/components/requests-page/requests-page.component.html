@@ -229,19 +229,19 @@
 </div>
 
 <div class="card-content card-content__tabs">
-  <ng-container *ngIf="!selectedRequest; else selectedRequestTemplate">
+  <ng-container *ngIf="!(selectedRequest$ | async); else selectedRequestTemplate">
     <div class="card-content__text-center">
       Для просмотра Накладных и Документов - нажмите, на любую заявку.
     </div>
   </ng-container>
   <ng-template #selectedRequestTemplate>
-    <p>ID Заявки: <strong> {{selectedRequest.ID}}</strong></p>
+    <p>ID Заявки: <strong> {{(selectedRequest$ | async).ID}}</strong></p>
     <p-tabView>
       <p-tabPanel header="Накладные">
-        <shipments-view [shipments]="selectedRequest.Shipments"></shipments-view>
+        <shipments-view [request$]="selectedRequest$"></shipments-view>
       </p-tabPanel>
       <p-tabPanel header="Документы">
-        <documents-view [documents]="selectedRequest.Documents"
+        <documents-view [documents]="selectedRequest$"
                         (documentView)="documentViewHandler($event)"></documents-view>
       </p-tabPanel>
     </p-tabView>

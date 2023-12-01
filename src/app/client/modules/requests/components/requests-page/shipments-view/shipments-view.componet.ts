@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'shipments-view',
   template: `
-    <p-table [value]="shipments">
+    <p-table [value]="(request$ | async)?.Shipments">
       <ng-template pTemplate="header">
         <tr>
           <th>
@@ -62,7 +62,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ShipmentsViewComponent implements OnInit {
   @Input()
-  shipments: any[];
+  request$: any;
 
   constructor() {}
 
