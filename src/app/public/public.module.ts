@@ -30,9 +30,9 @@ import {InputMaskModule} from 'primeng/inputmask';
 import {DialogModule} from 'primeng/dialog';
 import {CheckboxModule} from 'primeng/checkbox';
 import {CarouselModule} from 'primeng/carousel';
-import {ButtonModule} from 'primeng/button';
 import {MibSliderNewsComponent} from './shared/mib-slider-news/mib-slider-news.component';
 import {HomeStaticComponent} from './pages-static/home-static/home-static.component';
+import {ButtonModule} from '../shared/ui-kit/button/button.module';
 
 const routes = [
   {

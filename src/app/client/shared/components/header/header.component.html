@@ -1,27 +1,33 @@
 <div class="header" #header>
   <div class="container container_large flex flex_justify-between">
-    <div class="manager flex gap-12">
-      <mib-avatar [showImage]="false">АК</mib-avatar>
-      <div class="flex flex_column">
-        <div class="flex">
-          <p class="text name text_m text_medium c-bti-primary">Бирюкова Кристина Олеговна</p>
-          <p class="text text_m text_medium c-bti-tertiary">(11-11)</p>
+    <mib-skeleton *ngIf="factoringLoading$ | async; else managerTemplate" [styles]="skeleton"></mib-skeleton>
+    <ng-template #managerTemplate>
+      <div class="manager flex gap-12">
+        <mib-avatar [showImage]="false">{{managerInitials}}</mib-avatar>
+        <div class="flex flex_column">
+          <div class="flex">
+            <p class="text name text_m text_medium c-bti-primary">{{manager?.Name ?? 'Отсутствует'}} </p>
+            <p class="text text_m text_medium c-bti-tertiary" *ngIf="manager?.Extension as value">({{value}})</p>
+          </div>
+          <p class="text text_s label c-bti-tertiary">Ваш менеджер</p>
         </div>
-        <p class="text text_s label c-bti-tertiary">Ваш менеджер</p>
+        <mib-button size="m" type="ghost-secondary">
+          <mib-ref-icon btn-icon class="stroke" name="fi_chevron-down"></mib-ref-icon>
+        </mib-button>
       </div>
-      <mib-button size="m" type="ghost-secondary">
-        <mib-ref-icon btn-icon class="stroke" name="fi_chevron-down"></mib-ref-icon>
-      </mib-button>
-    </div>
-    <div class="manager user flex gap-12">
-      <mib-avatar [showImage]="false">КА</mib-avatar>
-      <div class="flex flex_column">
-        <p class="text name text_m text_medium c-bti-primary">Назаров Егор Михайлович</p>
-        <p class="text text_s label c-bti-tertiary">Пользователь</p>
+    </ng-template>
+    <mib-skeleton *ngIf="userLoading$ | async; else userTemplate" [styles]="skeleton"></mib-skeleton>
+    <ng-template #userTemplate>
+      <div class="manager user flex gap-12">
+        <mib-avatar [showImage]="false">{{nameInitials}}</mib-avatar>
+        <div class="flex flex_column">
+          <p class="text name text_m text_medium c-bti-primary">{{name}}</p>
+          <p class="text text_s label c-bti-tertiary">Пользователь</p>
+        </div>
+        <mib-button size="m" type="ghost-secondary">
+          <mib-ref-icon btn-icon class="stroke" name="fi_chevron-down"></mib-ref-icon>
+        </mib-button>
       </div>
-      <mib-button size="m" type="ghost-secondary">
-        <mib-ref-icon btn-icon class="stroke" name="fi_chevron-down"></mib-ref-icon>
-      </mib-button>
-    </div>
+    </ng-template>
   </div>
 </div>

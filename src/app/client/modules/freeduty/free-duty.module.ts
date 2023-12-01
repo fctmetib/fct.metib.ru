@@ -30,6 +30,9 @@ import {PaginatorModule} from '../../../shared/ui-kit/paginator/paginator.module
 import {ToolsService} from '../../../shared/services/tools.service';
 import {RubModule} from '../../../shared/pipes/rub/rub.module';
 import {FreeDutyService} from './services/free-duty.service';
+import {SkeletonModule} from '../../../shared/ui-kit/skeleton/skeleton.module';
+import {SelectModule} from '../../../shared/ui-kit/select/select.module';
+import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdown-point.module';
 
 @NgModule({
   declarations: [FreeDutyPageComponent],
@@ -61,6 +64,9 @@ import {FreeDutyService} from './services/free-duty.service';
     FreeDutyRequestDrawerModule,
     PaginatorModule,
     RubModule,
+    SkeletonModule,
+    SelectModule,
+    DropdownPointModule,
   ],
   providers: [
     DialogService,

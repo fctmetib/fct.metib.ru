@@ -11,7 +11,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
-import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
+import { AuthRes } from 'src/app/auth/types/login/authRes';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -36,7 +36,7 @@ export class AuthInterceptor implements HttpInterceptor {
       cookie = this.cookieService.get('_cu');
     }
 
-    let user: AuthResponseInterface;
+    let user: AuthRes;
     let token;
     if (cookie) {
       user = JSON.parse(cookie)

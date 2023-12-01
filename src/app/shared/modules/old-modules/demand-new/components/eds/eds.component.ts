@@ -28,7 +28,7 @@ import { DemandLoadingService } from '../../services/demand-loading.service';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
+import { CurrentUserGeneral } from 'src/app/shared/types/currentUserGeneral';
 
 @Component({
   selector: 'eds',
@@ -334,7 +334,7 @@ export class EDSComponent implements OnInit, OnDestroy {
   }
 
   private _getCurrentDemand(): void {
-    const storedUser$ = new BehaviorSubject<CurrentUserGeneralInterface>(null);
+    const storedUser$ = new BehaviorSubject<CurrentUserGeneral>(null);
 
     this.authService.currentUser$.pipe(
       filter(Boolean),

@@ -1,6 +1,6 @@
-import { DeliveryInterface } from './../../../../../../shared/types/delivery/delivery.interface';
+import { DeliveryInterface } from '../../../../../../shared/types/delivery/delivery.interface';
 import { Component, Input, OnInit } from '@angular/core';
-import { CustomerInterface } from 'src/app/shared/types/customer/customer.interface';
+import { Customer } from 'src/app/shared/types/customer/customer';
 import { StatisticsInterface } from '../../../types/common/statistics.interface';
 import { ClientService } from 'src/app/shared/services/common/client.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -15,7 +15,7 @@ export class FactoringComponent implements OnInit {
   @Input()
   stats: StatisticsInterface;
 
-  public factoring$ = new BehaviorSubject<CustomerInterface>(null);
+  public factoring$ = new BehaviorSubject<Customer>(null);
 
   public deliveries: DeliveryInterface[] = [];
 

@@ -1,4 +1,4 @@
-export interface AuthResponseInterface {
+export interface AuthRes {
   Code: string;
   CustomerID: number;
   Date: Date;

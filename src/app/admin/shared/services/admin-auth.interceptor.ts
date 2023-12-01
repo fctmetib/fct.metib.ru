@@ -11,7 +11,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {AuthService} from 'src/app/auth/services/auth.service';
 import {Router} from '@angular/router';
-import {AuthResponseInterface} from 'src/app/auth/types/login/authResponse.interface';
+import {AuthRes} from 'src/app/auth/types/login/authRes';
 
 @Injectable()
 export class AdminAuthInterceptor implements HttpInterceptor {

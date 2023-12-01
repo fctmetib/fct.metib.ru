@@ -3,6 +3,26 @@
   <h3>Свободная задолженность</h3>
   <mib-spacing type="m"></mib-spacing>
 </div>
+<div class="container container_large">
+  <mib-select [formControl]="control">
+    <mib-dropdown-point type="ghost" [value]="1">
+      <mib-ref-icon dropdown-point-left-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+      dog
+      <mib-ref-icon dropdown-point-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+    </mib-dropdown-point>
+    <mib-dropdown-point type="ghost" [value]="2">
+      <mib-ref-icon dropdown-point-left-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+      cat
+      <mib-ref-icon dropdown-point-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+    </mib-dropdown-point>
+    <mib-dropdown-point type="ghost" [value]="3">
+      <mib-ref-icon dropdown-point-left-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+      house
+      <mib-ref-icon dropdown-point-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+    </mib-dropdown-point>
+  </mib-select>
+  <mib-spacing type="m"></mib-spacing>
+</div>
 <mib-tab-group>
   <mib-navbar class="container container_large">
     <mib-navbar-point value="1">Свободные</mib-navbar-point>
@@ -36,44 +56,49 @@
           <mib-table-head-cell>Остаток задолженности</mib-table-head-cell>
           <mib-table-head-cell>Сумма поставки</mib-table-head-cell>
         </mib-table-head>
-        <mib-table-row [@slideAnimation]="dutyAnimationStates[duty.ID]" *ngFor="let duty of dutiesVisible; let last = last" [underlined]="!last">
-          <mib-table-cell [checked]="duty.checked" (onCheck)="onRowCheck($event, duty)" type="main">
-            <ng-container table-cell-title>{{duty.ID}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Contract.ID}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Number}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Date | date: 'dd.MM.YYYY'}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.NumberInvoice}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.DateInvoice | date: 'dd.MM.YYYY' }}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Statistics.PaymentExpire ? 'Есть' : 'Отсутствует'}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.DatePayment | date: 'dd.MM.YYYY'}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.RefNum}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Rest | rub}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Summ | rub}}</ng-container>
-          </mib-table-cell>
-          <mib-button table-row-button size="s" type="ghost-secondary">
-            <mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
-          </mib-button>
-        </mib-table-row>
+        <ng-container *ngIf="loading$ | async; else table">
+          <mib-skeleton [styles]="last ? skeletonWithoutUnderline : skeleton" *ngFor="let i of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; let last = last"></mib-skeleton>
+        </ng-container>
+        <ng-template #table>
+          <mib-table-row [@slideAnimation]="dutyAnimationStates[duty.ID]" *ngFor="let duty of dutiesVisible; let last = last" [underlined]="!last">
+            <mib-table-cell [checked]="duty.checked" (onCheck)="onRowCheck($event, duty)" type="main">
+              <ng-container table-cell-title>{{duty.ID}}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{duty.Contract.ID}}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{duty.Number}}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{duty.Date | date: 'dd.MM.YYYY'}}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{duty.NumberInvoice}}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{duty.DateInvoice | date: 'dd.MM.YYYY' }}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{duty.Statistics.PaymentExpire ? 'Есть' : 'Отсутствует'}}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{duty.DatePayment | date: 'dd.MM.YYYY'}}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{duty.RefNum}}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{duty.Rest | rub}}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{duty.Summ | rub}}</ng-container>
+            </mib-table-cell>
+            <mib-button table-row-button size="s" type="ghost-secondary">
+              <mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
+            </mib-button>
+          </mib-table-row>
+        </ng-template>
         <mib-table-footer [underlined]="!(loading$ | async)">
           <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="duties.length" [pagesToShow]="PAGINATOR_PAGE_TO_SHOW" [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"></mib-paginator>
         </mib-table-footer>
