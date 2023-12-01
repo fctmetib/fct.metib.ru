@@ -3,17 +3,20 @@ import { trigger, transition, style, animate } from '@angular/animations';
 interface AnimationConfig {
   direction: 'left' | 'right' | 'top' | 'bottom';
   translateDistance?: string;
-  duration?: string;
+  duration?: number;
   startOpacity?: number;
   endOpacity?: number;
+  triggerEvent?: 'enter' | 'leave' | 'change';
 }
+
 
 const defaultConfig: AnimationConfig = {
   direction: 'left',
   translateDistance: '100%',
-  duration: '200ms',
+  duration: 200,
   startOpacity: 0,
-  endOpacity: 1
+  endOpacity: 1,
+  triggerEvent: 'change'
 };
 
 export class AnimationService {
@@ -25,24 +28,28 @@ export class AnimationService {
     return { ...defaultConfig, ...config };
   }
 
-  generateSlideInAnimation(config: Partial<AnimationConfig>) {
+  generateAnimation(config: Partial<AnimationConfig>) {
     const effectiveConfig = this.getEffectiveConfig(config);
-    const translateDirection = this.getTranslateDirection(effectiveConfig.direction, true, effectiveConfig.translateDistance);
-    return trigger('slideInAnimation', [
-      transition(':enter', [
-        style({ opacity: effectiveConfig.startOpacity, transform: `translate${translateDirection}` }),
-        animate(`${effectiveConfig.duration} ease`, style({ opacity: effectiveConfig.endOpacity, transform: 'translateX(0)' }))
-      ])
-    ]);
-  }
+    const translateDirection = this.getTranslateDirection(effectiveConfig.direction, effectiveConfig.triggerEvent !== 'leave', effectiveConfig.translateDistance);
 
-  generateSlideOutAnimation(config: Partial<AnimationConfig>) {
-    const effectiveConfig = this.getEffectiveConfig(config);
-    const translateDirection = this.getTranslateDirection(effectiveConfig.direction, false, effectiveConfig.translateDistance);
-    return trigger('slideOutAnimation', [
-      transition(':leave', [
-        style({ opacity: effectiveConfig.startOpacity, transform: 'translateX(0)' }),
-        animate(`${effectiveConfig.duration} ease`, style({ opacity: effectiveConfig.endOpacity, transform: `translate${translateDirection}` }))
+    let transitionState: string;
+    switch (effectiveConfig.triggerEvent) {
+      case 'enter':
+        transitionState = ':enter';
+        break;
+      case 'leave':
+        transitionState = ':leave';
+        break;
+      case 'change':
+      default:
+        transitionState = 'false => true'; // Отлавливаем любое изменение состояния
+        break;
+    }
+
+    return trigger('slideAnimation', [
+      transition(transitionState, [
+        style({ opacity: effectiveConfig.startOpacity, transform: `translate(0, 0)` }),
+        animate(`${effectiveConfig.duration}ms ease`, style({ opacity: effectiveConfig.endOpacity, transform: `translate${translateDirection}` }))
       ])
     ]);
   }

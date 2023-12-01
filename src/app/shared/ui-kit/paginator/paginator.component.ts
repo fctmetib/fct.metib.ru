@@ -9,11 +9,13 @@ import {tap} from 'rxjs';
   styleUrls: ['./paginator.component.scss']
 })
 export class PaginatorComponent implements OnInit {
-  private _totalCount: number;
+  private _totalCount: number = 0;
+  private _itemsPerPage: number = 1;
 
   @Input() set totalCount(value: number) {
     this._totalCount = value
     this.totalPages = Math.ceil(this._totalCount / this._itemsPerPage);
+    this.updatePageControl();
   }
 
   @Input() pagesToShow: number;
@@ -24,7 +26,6 @@ export class PaginatorComponent implements OnInit {
     this.updatePageControl();
   }
 
-  private _itemsPerPage: number;
 
   @Output() pageChange = new EventEmitter<number>();
 
@@ -32,7 +33,7 @@ export class PaginatorComponent implements OnInit {
   public totalPages: number;
 
   private updatePageControl() {
-    if (this.pageControl.value > this.totalPages) {
+    if (this.totalPages && this.pageControl.value > this.totalPages) {
       this.pageControl.setValue(this.totalPages);
     }
   }

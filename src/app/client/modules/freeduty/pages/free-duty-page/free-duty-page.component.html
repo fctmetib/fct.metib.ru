@@ -36,7 +36,7 @@
           <mib-table-head-cell>Остаток задолженности</mib-table-head-cell>
           <mib-table-head-cell>Сумма поставки</mib-table-head-cell>
         </mib-table-head>
-        <mib-table-row @slideOutAnimation *ngFor="let duty of dutiesVisible; let last = last" [underlined]="!last">
+        <mib-table-row [@slideAnimation]="dutyAnimationStates[duty.ID]" *ngFor="let duty of dutiesVisible; let last = last" [underlined]="!last">
           <mib-table-cell [checked]="duty.checked" (onCheck)="onRowCheck($event, duty)" type="main">
             <ng-container table-cell-title>{{duty.ID}}</ng-container>
           </mib-table-cell>

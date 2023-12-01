@@ -1,5 +1,5 @@
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Observable, Subscription, filter, first, switchMap, tap, Subject, interval, BehaviorSubject, finalize} from 'rxjs';
+import {Observable, Subscription, filter, first, switchMap, tap, Subject, interval, BehaviorSubject, finalize, zip, forkJoin} from 'rxjs';
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {DialogService} from 'primeng/dynamicdialog';
 import {DatePipe} from '@angular/common';
@@ -19,8 +19,13 @@ import {DrawerStateEnum} from '../../../../../shared/ui-kit/drawer/interfaces/dr
 import {FreeDutyService} from '../../services/free-duty.service';
 import {ToolsService} from '../../../../../shared/services/tools.service';
 import {AnimationService} from '../../../../../shared/animations/animations.service';
-import {trigger} from '@angular/animations';
 
+const ANIMATION_CONFIG = {
+  translateDistance: '-3%',
+  endOpacity: 0,
+  startOpacity: 1,
+  duration: 300
+}
 
 @Component({
   selector: 'app-free-duty-page',
@@ -28,18 +33,10 @@ import {trigger} from '@angular/animations';
   styleUrls: ['./free-duty-page.component.scss'],
   providers: [AutoUnsubscribeService],
   animations: [
-    new AnimationService().generateSlideOutAnimation({
-      direction: 'left',
-      translateDistance: '3%',
-      endOpacity: 0.5,
-      startOpacity: 1,
-      duration: '300ms'
-    })
+    new AnimationService().generateAnimation(ANIMATION_CONFIG)
   ]
 })
 export class FreeDutyPageComponent implements OnInit, OnDestroy {
-
-  public test: any[]
 
   public loading$ = new BehaviorSubject<boolean>(false)
 
@@ -49,6 +46,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 
   public duties: AdvancedDuty[] = []
   public dutiesVisible: AdvancedDuty[] = []
+  public dutyAnimationStates: Record<number, boolean> = {};
 
   public selectedDutiesCount: number = 0
   public severalDutiesChecked: boolean = false;
@@ -66,6 +64,10 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     this.freeDutyService.getFreeDuty().pipe(
       tap(data => {
         this.duties = data.map(x => ({...x, checked: false}));
+        // Инициализация состояния анимации
+        this.duties.forEach(duty => {
+          this.dutyAnimationStates[duty.ID] = false;
+        });
         this.onPageChange(this.currentPage)
       }),
       finalize(() => this.loading$.next(false))
@@ -82,18 +84,29 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     }).afterClosed().pipe(
       filter(Boolean),
       tap(() => {
-        this.selectedDuties.forEach(duty => this.removeDutyById(duty.ID))
-        this.onPageChange(this.currentPage)
+        forkJoin(this.selectedDuties.map(duty => this.removeDutyById(duty.ID))).subscribe(() => {
+          this.onPageChange(this.currentPage)
+        })
       })
     ).subscribe()
   }
 
-  removeDutyById(id: number) {
-    const index = this.duties.findIndex(duty => duty.ID === id);
-    if (index > -1) {
-      this.duties.splice(index, 1);
-    }
+  removeDutyById(id: number): Observable<void> {
+    return new Observable(observer => {
+      // Изменение состояния анимации
+      this.dutyAnimationStates[id] = true;
+
+      // Устанавливаем таймер для удаления элемента после завершения анимации
+      setTimeout(() => {
+        // Удаляем элемент по ID
+        this.duties = this.duties.filter(duty => duty.ID !== id);
+        observer.next(); // Сигнал об успешном выполнении
+        observer.complete(); // Завершаем Observable
+      }, ANIMATION_CONFIG.duration-10);
+    });
   }
+
+
 
   onPageChange(page: number) {
     this.currentPage = page;
