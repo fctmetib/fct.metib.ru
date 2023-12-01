@@ -15,7 +15,7 @@
       <mib-table-head-cell>С/ф №</mib-table-head-cell>
       <mib-table-head-cell>Остаток задолженности</mib-table-head-cell>
     </mib-table-head>
-    <mib-table-row *ngFor="let duty of dutiesVisible" [underlined]="true">
+    <mib-table-row *ngFor="let duty of dutiesVisible; trackBy: trackByFunction" [underlined]="true">
       <mib-table-cell>
         <ng-container table-cell-title>{{duty.ID}}</ng-container>
       </mib-table-cell>

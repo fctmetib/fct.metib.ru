@@ -17,20 +17,35 @@ import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubs
 import {AdvancedDuty} from './interfaces/free-duty.interface';
 import {DrawerStateEnum} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
 import {FreeDutyService} from '../../services/free-duty.service';
+import {ToolsService} from '../../../../../shared/services/tools.service';
+import {AnimationService} from '../../../../../shared/animations/animations.service';
+import {trigger} from '@angular/animations';
 
 
 @Component({
   selector: 'app-free-duty-page',
   templateUrl: './free-duty-page.component.html',
   styleUrls: ['./free-duty-page.component.scss'],
-  providers: [AutoUnsubscribeService]
+  providers: [AutoUnsubscribeService],
+  animations: [
+    new AnimationService().generateSlideOutAnimation({
+      direction: 'left',
+      translateDistance: '3%',
+      endOpacity: 0.5,
+      startOpacity: 1,
+      duration: '300ms'
+    })
+  ]
 })
 export class FreeDutyPageComponent implements OnInit, OnDestroy {
+
+  public test: any[]
 
   public loading$ = new BehaviorSubject<boolean>(false)
 
   public PAGINATOR_ITEMS_PER_PAGE = 16;
   public PAGINATOR_PAGE_TO_SHOW = 5;
+  public currentPage: number = 1;
 
   public duties: AdvancedDuty[] = []
   public dutiesVisible: AdvancedDuty[] = []
@@ -41,6 +56,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   constructor(
     private au: AutoUnsubscribeService,
     private freeDutyService: FreeDutyService,
+    private toolsService: ToolsService,
     private freeDutyRequestDrawerService: FreeDutyRequestDrawerService
   ) {
   }
@@ -50,7 +66,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     this.freeDutyService.getFreeDuty().pipe(
       tap(data => {
         this.duties = data.map(x => ({...x, checked: false}));
-        this.onPageChange(1)
+        this.onPageChange(this.currentPage)
       }),
       finalize(() => this.loading$.next(false))
     ).subscribe()
@@ -63,10 +79,25 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     this.freeDutyRequestDrawerService.open<AdvancedDuty[]>({
       state: DrawerStateEnum.CREATE,
       data: this.selectedDuties
-    })
+    }).afterClosed().pipe(
+      filter(Boolean),
+      tap(() => {
+        this.selectedDuties.forEach(duty => this.removeDutyById(duty.ID))
+        this.onPageChange(this.currentPage)
+      })
+    ).subscribe()
+  }
+
+  removeDutyById(id: number) {
+    const index = this.duties.findIndex(duty => duty.ID === id);
+    if (index > -1) {
+      this.duties.splice(index, 1);
+    }
   }
 
   onPageChange(page: number) {
+    this.currentPage = page;
+
     const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE;
     const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE;
 

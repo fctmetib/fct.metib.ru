@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
 import {FreeDutyRequestDrawerComponent} from './free-duty-request-drawer.component';
 import {drawerConfig} from '../../../../../shared/ui-kit/drawer/drawer.tools';
@@ -12,7 +12,7 @@ export class FreeDutyRequestDrawerService {
   ) {
   }
 
-  open<T>(data?: DrawerData<T>) {
+  open<T>(data?: DrawerData<T>): MatDialogRef<FreeDutyRequestDrawerComponent, number[]> {
     const config: DrawerData = {
       state: 'view'
     }

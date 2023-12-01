@@ -15,4 +15,8 @@ export class FreeDutyService {
   public getFreeDuty(): Observable<Duty[]> {
     return this.http.get<Duty[]>(`${environment.apiUrl}/v1/duties`);
   }
+
+  freeDuty(ids: number[]): Observable<number[]> {
+    return this.http.post<number[]>(`${environment.apiUrl}/v1/freeduty`, ids)
+  }
 }

@@ -4,13 +4,13 @@ import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.
 import {AdvancedDuty} from '../../pages/free-duty-page/interfaces/free-duty.interface';
 import {ToolsService} from '../../../../../shared/services/tools.service';
 import {FreeDutyService} from '../../services/free-duty.service';
-import {RequestsService} from '../../services/requests.service';
 import {BehaviorSubject, finalize, tap} from 'rxjs';
+import {Duty} from '../../../../../shared/types/duty/duty';
 
 @Component({
   selector: 'mib-free-duty-request-drawer',
   templateUrl: './free-duty-request-drawer.component.html',
-  styleUrls: ['./free-duty-request-drawer.component.scss']
+  styleUrls: ['./free-duty-request-drawer.component.scss'],
 })
 export class FreeDutyRequestDrawerComponent implements OnInit {
 
@@ -25,9 +25,12 @@ export class FreeDutyRequestDrawerComponent implements OnInit {
     public dialogRef: MatDialogRef<FreeDutyRequestDrawerComponent>,
     public toolsService: ToolsService,
     private freeDutyService: FreeDutyService,
-    private requestsService: RequestsService,
     @Inject(MAT_DIALOG_DATA) public data: DrawerData<AdvancedDuty[]>
   ) {
+  }
+
+  trackByFunction(index, data: Duty) {
+    return data.ID
   }
 
   ngOnInit() {
@@ -47,7 +50,7 @@ export class FreeDutyRequestDrawerComponent implements OnInit {
 
   submit() {
     this.sending$.next(true)
-    this.requestsService.createRequest(this.data.data.map(x => x.ID)).pipe(
+    this.freeDutyService.freeDuty(this.data.data.map(x => x.ID)).pipe(
       tap((response) => {
         this.dialogRef.close(response)
       }),
