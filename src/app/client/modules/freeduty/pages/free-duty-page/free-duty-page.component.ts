@@ -1,4 +1,4 @@
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import {Observable, Subscription, filter, first, switchMap, tap, Subject, interval, BehaviorSubject, finalize, zip, forkJoin} from 'rxjs';
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {DialogService} from 'primeng/dynamicdialog';
@@ -50,6 +50,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     borderBottom: '1px solid var(--wgr-tertiary)'
   };
 
+  public control: FormControl = new FormControl<any>(2)
 
   public PAGINATOR_ITEMS_PER_PAGE = 16;
   public PAGINATOR_PAGE_TO_SHOW = 5;
@@ -71,6 +72,9 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.control.valueChanges.pipe(
+      tap(val => console.log(val))
+    ).subscribe()
     this.loading$.next(true)
     this.freeDutyService.getFreeDuty().pipe(
       tap(data => {

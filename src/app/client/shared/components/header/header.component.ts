@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
   }
 
   get managerInitials() {
-    return this.getInitials(this.manager?.Name ?? 'Н')
+    return this.getInitials(this.manager?.Name ?? 'О')
   }
 
   get name() {

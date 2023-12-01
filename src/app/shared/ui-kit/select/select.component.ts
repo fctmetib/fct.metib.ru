@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, Component, ContentChildren, forwardRef, QueryList} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, ContentChildren, forwardRef, Input, QueryList} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DropdownPointComponent} from '../dropdown-point/dropdown-point.component';
 
@@ -14,15 +14,35 @@ import {DropdownPointComponent} from '../dropdown-point/dropdown-point.component
     }
   ]
 })
-export class SelectComponent implements ControlValueAccessor, AfterContentInit, AfterViewInit  {
+export class SelectComponent implements ControlValueAccessor, AfterContentInit, AfterViewInit {
   @ContentChildren(forwardRef(() => DropdownPointComponent)) options: QueryList<DropdownPointComponent>;
+  @Input() multi: boolean = false;
 
-  showDropdown = false;
-  selectedOption: DropdownPointComponent | null = null;
   private innerValue: any;
 
-  onChange = (option: any) => {};
-  onTouched = () => {};
+  public showDropdown = false;
+  public selectedOption: DropdownPointComponent | null = null;
+  public selectedOptions: DropdownPointComponent[] = [];
+
+  /**
+   * Проверяет, выбрана ли опция с заданным значением.
+   * @param value Значение для проверки.
+   * @returns Возвращает true, если опция выбрана, иначе false.
+   */
+  matchOption(value: any): boolean {
+    if (this.multi) {
+      // Для мульти-выбора проверяем, содержится ли значение в массиве selectedOptions
+      return this.selectedOptions.some(option => option.value === value);
+    } else {
+      // Для одиночного выбора проверяем, совпадает ли значение с selectedOption
+      return this.selectedOption && this.selectedOption.value === value;
+    }
+  }
+
+  onChange = (option: any) => {
+  };
+  onTouched = () => {
+  };
 
   writeValue(obj: any): void {
     this.innerValue = obj;
@@ -32,14 +52,27 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   }
 
   private updateSelectedOption(): void {
-    this.selectedOption = this.options.find(option => option.value === this.innerValue) || null;
+    if (this.multi) {
+      this.selectedOptions = this.options.filter(option => {
+          const boolean = Array.isArray(this.innerValue) && this.innerValue.includes(option.value)
+          option.control.setValue(boolean)
+          return boolean
+        }
+      );
+    } else {
+      this.selectedOption = this.options.find(option => option.value === this.innerValue) || null;
+    }
   }
+
   ngAfterViewInit(): void {
     this.updateSelectedOption();
   }
 
   ngAfterContentInit(): void {
-    this.options.changes.subscribe(() => this.updateSelectedOption());
+    this.options.forEach(option => option.showCheckbox = this.multi)
+    this.options.changes.subscribe(() => {
+      this.updateSelectedOption()
+    });
   }
 
   registerOnChange(fn: any): void {
@@ -55,8 +88,23 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   }
 
   selectOption(option: DropdownPointComponent): void {
-    this.selectedOption = option;
-    this.onChange(option.value);
-    this.toggleDropdown();
+    if (this.multi) {
+      const index = this.selectedOptions.findIndex(opt => opt.value === option.value);
+
+      if (index === -1 && option.control.value) {
+        // Если опция не выбрана и чекбокс активен, добавляем её в массив
+        this.selectedOptions.push(option);
+      } else if (index > -1 && !option.control.value) {
+        // Если опция уже выбрана и чекбокс неактивен, удаляем её из массива
+        this.selectedOptions.splice(index, 1);
+      }
+
+      this.onChange(this.selectedOptions.map(opt => opt.value));
+    } else {
+      this.selectedOption = option;
+      this.onChange(option.value);
+      this.toggleDropdown();
+    }
   }
+
 }

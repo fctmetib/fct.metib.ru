@@ -3,6 +3,26 @@
   <h3>Свободная задолженность</h3>
   <mib-spacing type="m"></mib-spacing>
 </div>
+<div class="container container_large">
+  <mib-select [formControl]="control">
+    <mib-dropdown-point type="ghost" [value]="1">
+      <mib-ref-icon dropdown-point-left-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+      dog
+      <mib-ref-icon dropdown-point-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+    </mib-dropdown-point>
+    <mib-dropdown-point type="ghost" [value]="2">
+      <mib-ref-icon dropdown-point-left-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+      cat
+      <mib-ref-icon dropdown-point-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+    </mib-dropdown-point>
+    <mib-dropdown-point type="ghost" [value]="3">
+      <mib-ref-icon dropdown-point-left-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+      house
+      <mib-ref-icon dropdown-point-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+    </mib-dropdown-point>
+  </mib-select>
+  <mib-spacing type="m"></mib-spacing>
+</div>
 <mib-tab-group>
   <mib-navbar class="container container_large">
     <mib-navbar-point value="1">Свободные</mib-navbar-point>
