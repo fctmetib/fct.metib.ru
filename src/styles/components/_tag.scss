@@ -1,0 +1,5 @@
+@import 'src/styles/components/_tag.vars';
+
+.tag {
+	@include tag;
+}

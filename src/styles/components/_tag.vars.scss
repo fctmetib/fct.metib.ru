@@ -1,0 +1,27 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+
+@mixin tag {
+	border: 1px solid red;
+	cursor: pointer;
+	line-height: 100%;
+	width: 100%;
+
+	&_left-iconly .tag_left-wrapper {
+		display: block;
+	}
+
+	&_right-iconly .tag_right-wrapper {
+		display: block;
+	}
+
+	&_icon-wrapper {
+		display: none;
+	}
+
+	&,
+	& > span {
+		@include body-text;
+		user-select: none;
+		white-space: nowrap;
+	}
+}
