@@ -6,39 +6,102 @@
 	justify-content: center;
 	align-items: center;
 	gap: 4px;
+
 	&_filled-primary {
 		@include filled-primary(
 			$color: (
 				main: var(--mc-default),
-				bg: var(--mc-quinary)
+				bg: var(--mc-quinary),
+				hovr: var(--mc-hover),
+				actv: var(--mc-quaternary),
+				selectext: var(--wgr-primary),
+				selecactive: var(--mc-active)
 			)
 		);
 	}
-	&.selected {
-		background-color: aqua;
+
+	&_filled-accent {
+		@include filled-accent(
+			$color: (
+				main: var(--ac-default),
+				bg: var(--ac-quinary),
+				hovr: var(--ac-hover),
+				actv: var(--ac-quaternary),
+				selectext: var(--wgr-primary),
+				selecactive: var(--ac-active)
+			)
+		);
 	}
+
+	&_filled-secondary {
+		@include filled-secondary(
+			$color: (
+				main: var(--bti-secondary),
+				mainselect: var(--mc-quinary),
+				bg: var(--wgr-secondary),
+				bgselect: var(--wgr-secondary),
+				hovr: var(--wgr-tertiary),
+				hovrselect: var(--mc-hover),
+				actv: var(--wgr-tertiary),
+				actvselect: var(--mc-quaternary),
+				selectext: var(--mc-default)
+			)
+		);
+	}
+
+	&_floating {
+		@include floating(
+			$color: (
+				main: var(--bti-secondary),
+				mainselect: var(--mc-default),
+				bg: var(--wgr-primary),
+				bgselect: var(--wgr-primary),
+				hovr: var(--shadow-normal),
+				hovrselect: var(--mc-hover),
+				actv: var(--wgr-secondary),
+				actvselect: var(--wgr-secondary),
+				selectext: var(--mc-default)
+			)
+		);
+	}
+
+	&_outline {
+		@include outline(
+			$color: (
+				main: var(--bti-secondary),
+				mainselect: var(--mc-default),
+				bg: var(--wgr-tertiary),
+				bgselect: var(--mc-quaternary),
+				hovr: var(--wgr-quaternary),
+				hovrselect: var(--mc-hover),
+				actv: var(--wgr-secondary),
+				actvselect: var(--mc-active),
+				selectext: var(--mc-default)
+			)
+		);
+	}
+
 	&_l {
 		@include text-l;
 		padding: 8px 16px;
 		mib-ref-icon {
 			@include icon-size(20px);
-			@include icon-color(var(--mc-default));
 		}
 	}
+
 	&_m {
 		@include text-m;
 		padding: 6px 12px;
 		mib-ref-icon {
 			@include icon-size(20px);
-			@include icon-color(var(--mc-default));
 		}
 	}
+
 	&_s {
 		@include text-s;
 		padding: 4px 8px;
 		mib-ref-icon {
 			@include icon-size(16px);
-			@include icon-color(var(--mc-default));
 		}
 	}
 }

@@ -27,8 +27,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 			}
 			.test-badge {
 				display: flex;
-				gap: 5px;
+				gap: 1rem;
 				margin: 2rem 0;
+				flex-wrap: wrap;
 			}
 		`
 	]
