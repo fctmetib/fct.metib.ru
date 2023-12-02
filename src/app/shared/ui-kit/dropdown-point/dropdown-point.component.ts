@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, TemplateRef, ViewChild} from '@angular/core';
 import {SelectComponent} from '../select/select.component';
 import {DropdownPointSize, DropdownPointType} from './interfaces/dropdown-point.interface';
 import {FormControl} from '@angular/forms';
+import {DropdownComponent} from '../dropdown/dropdown.component';
 
 @Component({
   selector: 'mib-dropdown-point',
@@ -14,6 +15,7 @@ export class DropdownPointComponent implements AfterViewInit {
   @ViewChild('rightIcon') rightIcon?: ElementRef<HTMLDivElement>
 
   @Input() value: any;
+  @Input() text: string = '';
   @Input() set showCheckbox(value: boolean) {
     this._showCheckbox =value
   }
@@ -25,7 +27,7 @@ export class DropdownPointComponent implements AfterViewInit {
   public _showCheckbox: boolean = false
 
   constructor(
-    public selectComponent: SelectComponent
+    public selectComponent: SelectComponent,
   ) {
   }
 

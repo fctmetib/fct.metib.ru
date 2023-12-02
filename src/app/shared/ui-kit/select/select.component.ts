@@ -1,6 +1,20 @@
-import {AfterContentInit, AfterViewInit, Component, ContentChildren, forwardRef, Input, QueryList} from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  ContentChildren,
+  ElementRef,
+  forwardRef,
+  Input,
+  QueryList, Renderer2,
+  ViewChild
+} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DropdownPointComponent} from '../dropdown-point/dropdown-point.component';
+import {InputSize} from '../input/interfaces/input.interface';
+import {SelectType} from './interfaces/select.interface';
+import {SetPaddings} from '../input/services/set-paddings.service';
+import {DropdownService} from '../dropdown/services/dropdown.service';
 
 @Component({
   selector: 'mib-select',
@@ -15,14 +29,49 @@ import {DropdownPointComponent} from '../dropdown-point/dropdown-point.component
   ]
 })
 export class SelectComponent implements ControlValueAccessor, AfterContentInit, AfterViewInit {
+  @ViewChild('select') select: ElementRef<HTMLDivElement>
+  @ViewChild('leftIcon') leftIcon: ElementRef<HTMLDivElement>
+  @ViewChild('rightIcon') rightIcon: ElementRef<HTMLDivElement>
   @ContentChildren(forwardRef(() => DropdownPointComponent)) options: QueryList<DropdownPointComponent>;
   @Input() multi: boolean = false;
+  @Input() size: InputSize = 'm';
+  @Input() type: SelectType = 'filled-secondary';
 
   private innerValue: any;
+  private viewMounted: boolean = false;
 
-  public showDropdown = false;
   public selectedOption: DropdownPointComponent | null = null;
   public selectedOptions: DropdownPointComponent[] = [];
+
+  constructor(
+    private r2: Renderer2,
+    private dropdownService: DropdownService
+  ) {
+  }
+
+  get showDropdown() {
+    return this.dropdownService.isMenuOpen
+  }
+
+  get classes() {
+    return {
+      [`select_${this.size}`]: true,
+      [`select_type-${this.type}`]: true,
+      'select_right-iconly': this.rightIcon?.nativeElement?.children?.length,
+      'select_left-iconly': this.leftIcon?.nativeElement?.children?.length,
+      'select-transition': this.viewMounted,
+    }
+  }
+
+  setIconPaddings() {
+    setTimeout(() => {
+      SetPaddings({
+        leftEl: this.leftIcon.nativeElement,
+        rightEl: this.rightIcon.nativeElement,
+        element: this.select.nativeElement,
+      }, this.r2)
+    })
+  }
 
   /**
    * Проверяет, выбрана ли опция с заданным значением.
@@ -65,7 +114,10 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   }
 
   ngAfterViewInit(): void {
+    this.setIconPaddings()
     this.updateSelectedOption();
+
+    this.viewMounted = true
   }
 
   ngAfterContentInit(): void {
@@ -83,8 +135,8 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     this.onTouched = fn;
   }
 
-  toggleDropdown(): void {
-    this.showDropdown = !this.showDropdown;
+  close(): void {
+    this.dropdownService.closeMenu()
   }
 
   selectOption(option: DropdownPointComponent): void {
@@ -103,7 +155,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     } else {
       this.selectedOption = option;
       this.onChange(option.value);
-      this.toggleDropdown();
+      this.close();
     }
   }
 

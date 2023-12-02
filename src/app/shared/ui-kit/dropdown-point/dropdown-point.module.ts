@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DropdownPointComponent } from './dropdown-point.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {DropdownPointComponent} from './dropdown-point.component';
 import {CheckboxModule} from '../checkbox/checkbox.module';
 import {ReactiveFormsModule} from '@angular/forms';
-
 
 
 @NgModule({
@@ -19,4 +18,5 @@ import {ReactiveFormsModule} from '@angular/forms';
     ReactiveFormsModule
   ]
 })
-export class DropdownPointModule { }
+export class DropdownPointModule {
+}

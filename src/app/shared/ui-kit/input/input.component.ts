@@ -11,6 +11,7 @@ import {
 } from '@angular/core'
 import {MibInputDirective} from './directives/mib-input.directive'
 import {fromEvent, tap} from 'rxjs'
+import {SetPaddings} from './services/set-paddings.service';
 
 @Component({
   selector: 'mib-input',
@@ -19,8 +20,7 @@ import {fromEvent, tap} from 'rxjs'
   encapsulation: ViewEncapsulation.None
 })
 export class InputComponent implements AfterContentInit, AfterViewInit, AfterViewChecked {
-  @ContentChild(MibInputDirective, {descendants: true})
-  inputDirective!: MibInputDirective
+  @ContentChild(MibInputDirective, {descendants: true}) inputDirective!: MibInputDirective
 
   @ViewChild('label') labelEl: ElementRef<HTMLSpanElement>
   @ViewChild('iconsLeft') iconsLeftEl: ElementRef<HTMLDivElement>
@@ -41,7 +41,9 @@ export class InputComponent implements AfterContentInit, AfterViewInit, AfterVie
   public maxLength: number = 0
   public textLength: number = 0
 
-  constructor(private r2: Renderer2) {
+  constructor(
+    private r2: Renderer2,
+  ) {
   }
 
   ngAfterViewInit(): void {
@@ -82,32 +84,13 @@ export class InputComponent implements AfterContentInit, AfterViewInit, AfterVie
   }
 
   setIconPaddings() {
-    const leftWidth = this.iconsLeftEl.nativeElement.clientWidth
-    const rightWidth = this.iconsRightEl.nativeElement.clientWidth
-
-    const inputStyles = window.getComputedStyle(
-      this.inputDirective.elementRef.nativeElement
-    )
-
-    const paddingRight = inputStyles.getPropertyValue('padding-right')
-    const paddingLeft = inputStyles.getPropertyValue('padding-left')
-
-    const newPaddingRight = `calc(${paddingRight} + ${rightWidth}px)`
-    const newPaddingLeft = `calc(${paddingLeft} + ${leftWidth}px)`
-
-    this.r2.setStyle(
-      this.inputDirective.elementRef.nativeElement,
-      'padding-right',
-      newPaddingRight
-    )
-
-    this.r2.setStyle(
-      this.inputDirective.elementRef.nativeElement,
-      'padding-left',
-      newPaddingLeft
-    )
-
-    this.r2.setStyle(this.labelEl.nativeElement, 'padding-left', newPaddingLeft)
+    SetPaddings({
+      leftEl: this.iconsLeftEl.nativeElement,
+      rightEl: this.iconsRightEl.nativeElement,
+      element: this.inputDirective.elementRef.nativeElement,
+    }, this.r2, ({newPaddingLeft}) => {
+      this.r2.setStyle(this.labelEl.nativeElement, 'padding-left', newPaddingLeft)
+    })
   }
 
   focus() {

@@ -1,10 +1,11 @@
+
 <div class="dropdown-point flex flex_align-center" (click)="select()" [ngClass]="classes">
   <div class="flex gap-8 flex_align-center flex_grow">
     <mib-checkbox [formControl]="control" *ngIf="_showCheckbox"></mib-checkbox>
     <div class="dropdown-point_icon-wrapper dropdown-point_left-icon-wrapper" #leftIcon>
       <ng-content select="[dropdown-point-left-icon]"></ng-content>
     </div>
-    <ng-content></ng-content>
+    {{text}}
     <ng-content select="[dropdown-point-tag]"></ng-content>
   </div>
   <div class="dropdown-point_icon-wrapper dropdown-point_left-icon-wrapper" #rightIcon>

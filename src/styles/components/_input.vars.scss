@@ -10,6 +10,23 @@
   &::placeholder {
     color: transparent;
   }
+
+  &_icon-wrapper {
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    display: none;
+
+    &.right-wrapper {
+      right: 16px;
+      padding-left: 8px;
+    }
+
+    &.left-wrapper {
+      left: 16px;
+      padding-right: 4px;
+    }
+  }
 }
 
 @mixin box-label-styles($top) {
@@ -27,7 +44,7 @@
 @mixin input-size($height, $iconSize, $iconsGap, $paddingsHorizontal: 16px) {
   height: $height;
   padding: 0 $paddingsHorizontal;
-  & ~ .input {
+  & ~ .input, & ~ .select {
     &_icon-wrapper {
       mib-ref-icon {
         @include icon-size($iconSize);
@@ -38,96 +55,107 @@
   }
 }
 
+
 @mixin input-type-filled-secondary {
+  background: var(--wgr-secondary);
+  border-bottom: 1px solid transparent;
+
+  &.input, &.select {
+    outline: 0;
+
+    &:hover {
+      border-bottom-color: var(--wgr-tertiary);
+    }
+
+    &:focus {
+      border: 1px solid var(--mc-default);
+      color: var(--bti-primary);
+    }
+
+    &:disabled {
+      color: var(--wti-quaternary);
+      background: var(--wgr-tertiary);
+      border: none;
+    }
+  }
+}
+
+@mixin input-addiction-filled-secondary {
   &:has(&_type-filled-secondary) {
 
   }
   &_type-filled-secondary {
-    background: var(--wgr-secondary);
-    border-bottom: 1px solid transparent;
-
-    &.input {
-      outline: 0;
-
-      &:hover {
-        border-bottom-color: var(--wgr-tertiary);
-      }
-
-      &:focus {
-        border: 1px solid var(--mc-default);
-        color: var(--bti-primary);
-      }
-
-      &:disabled {
-        color: var(--wti-quaternary);
-        background: var(--wgr-tertiary);
-        border: none;
-      }
-    }
+    @include input-type-filled-secondary;
   }
 }
 
 @mixin input-type-floating {
-  &:has(&_type-floating) {
+  background: var(--wgr-primary);
 
-  }
-  &_type-floating {
-    background: var(--wgr-primary);
+  &.input, &.select {
+    outline: 0;
 
-    &.input {
-      outline: 0;
+    &:hover {
+      box-shadow: var(--custom-floating-shadow);
+    }
 
-      &:hover {
-        &:hover {
-          box-shadow: var(--custom-floating-shadow);
-        }
-      }
+    &:focus {
+      border: 1px solid var(--mc-default);
+      box-shadow: var(--custom-floating-shadow);
+    }
 
-      &:focus {
-        border: 1px solid var(--mc-default);
-        box-shadow: var(--custom-floating-shadow);
-      }
+    &:disabled {
+      color: var(--wti-quaternary);
+      background: var(--wgr-tertiary);
+      box-shadow: none;
 
-      &:disabled {
-        color: var(--wti-quaternary);
-        background: var(--wgr-tertiary);
-        box-shadow: none;
-
-        mib-ref-icon {
-          @include icon-color(var(--wti-quaternary));
-        }
+      mib-ref-icon {
+        @include icon-color(var(--wti-quaternary));
       }
     }
   }
 }
 
+@mixin input-addiction-floating {
+  &:has(&_type-floating) {
+
+  }
+  &_type-floating {
+    @include input-type-floating;
+  }
+}
+
 @mixin input-type-separated {
+  background: var(--wgr-primary);
+
+  &.input {
+    outline: 0;
+    border-bottom-right-radius: unset;
+    border-bottom-left-radius: unset;
+    border-bottom: 1px solid var(--wgr-tertiary);
+
+    &:focus {
+      border-bottom: 1px solid var(--wgr-tertiary);
+    }
+
+    &:disabled {
+      color: var(--wti-quaternary);
+      background: var(--wgr-tertiary);
+      box-shadow: none;
+
+      mib-ref-icon {
+        @include icon-color(var(--wti-quaternary));
+      }
+    }
+  }
+}
+
+@mixin input-addiction-separated {
   &:has(&_type-separated) {
 
   }
   &_type-separated {
-    background: var(--wgr-primary);
-
-    &.input {
-      outline: 0;
-      border-bottom-right-radius: unset;
-      border-bottom-left-radius: unset;
-      border-bottom: 1px solid var(--wgr-tertiary);
-
-      &:focus {
-        border-bottom: 1px solid var(--wgr-tertiary);
-      }
-
-      &:disabled {
-        color: var(--wti-quaternary);
-        background: var(--wgr-tertiary);
-        box-shadow: none;
-
-        mib-ref-icon {
-          @include icon-color(var(--wti-quaternary));
-        }
-      }
-    }
+    @include input-type-separated;
   }
 }
 

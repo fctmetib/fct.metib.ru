@@ -1,5 +1,64 @@
-@import "src/styles/components/input";
+@import "src/styles/typography.vars";
+@import "src/styles/components/input.vars";
+
+$text-selectors: '&, span';
 
 .select {
+  position: relative;
+  @include input;
 
+  mib-ref-icon {
+    @include icon-color(var(--bti-tertiary));
+  }
+
+
+  &:hover {
+    .select_icon-wrapper mib-ref-icon {
+      @include icon-color(var(--bti-secondary));
+    }
+  }
+
+  cursor: pointer;
+
+  #{$text-selectors} {
+    @include body-text;
+    @include text-l;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  &_right-iconly, &_left-iconly {
+    .select_icon-wrapper {
+      display: flex;
+    }
+  }
+
+  &_type {
+    &-filled {
+      &-secondary {
+        @include input-type-filled-secondary;
+      }
+    }
+    &-floating {
+      @include input-type-floating;
+    }
+  }
+
+  &_xl {
+    @include input-xl;
+  }
+
+  &_l {
+    @include input-l;
+  }
+
+  &_m {
+    @include input-m;
+  }
+
+  &_s {
+    @include input-s;
+  }
 }

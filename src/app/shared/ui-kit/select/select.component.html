@@ -1,5 +1,13 @@
-<div class="select">
-  <div class="select_icon-wrapper select_icon-left-wrapper"></div>
-  <ng-content></ng-content>
-  <div class="select_icon-wrapper select_icon-right-wrapper"></div>
+<div [mibDropdownTrigger]="dropdown" #select class="select flex flex_align-center" [ngClass]="classes">
+  <div class="select_icon-wrapper left-wrapper" #leftIcon>
+    <ng-content select="[select-left-icon]"></ng-content>
+  </div>
+  <span class="text">{{selectedOption?.text}}</span>
+  <div class="select_icon-wrapper right-wrapper" #rightIcon>
+    <ng-content select="[select-right-icon]"></ng-content>
+  </div>
 </div>
+
+<mib-dropdown #dropdown>
+  <ng-content></ng-content>
+</mib-dropdown>
