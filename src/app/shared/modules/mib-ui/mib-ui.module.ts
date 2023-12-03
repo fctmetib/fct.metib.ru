@@ -9,6 +9,7 @@ import { SpacingModule } from '../../ui-kit/spacing/spacing.module'
 import { BadgeModule } from '../../ui-kit/badge/badge.module'
 import { CheckboxModule } from '../../ui-kit/checkbox/checkbox.module'
 import { TagModule } from '../../ui-kit/tag/tag.module'
+import { RadioModule } from '../../ui-kit/radio/radio.module'
 
 @NgModule({
 	imports: [
@@ -21,7 +22,8 @@ import { TagModule } from '../../ui-kit/tag/tag.module'
 		SpacingModule,
 		BadgeModule,
 		CheckboxModule,
-		TagModule
+		TagModule,
+		RadioModule
 	],
 	declarations: [MibUiComponent]
 })

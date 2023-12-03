@@ -39,8 +39,8 @@ export class MibUiComponent implements OnInit {
 	isShownInputs = false
 	isShownTextarea = false
 	isShownBadges = false
-	isShownSwitch = false
-	isShownTag = true
+	isShownSwitch = true
+	isShownTag = false
 	public inputSizeXL: InputSize = 'xl'
 	public inputSizeL: InputSize = 'l'
 	public inputSizeM: InputSize = 'm'
