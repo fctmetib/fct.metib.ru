@@ -18,7 +18,6 @@ export class ClientComponent implements  AfterViewInit, OnDestroy {
   @ViewChild('scrollable') scrollable!: ElementRef<HTMLDivElement>;
 
   private resizeObserver!: ResizeObserver;
-  private mutationObserver!: MutationObserver;
 
   public withoutScroll: boolean = !this.toolsService.mobileAndTabletCheck();
 
@@ -37,27 +36,17 @@ export class ClientComponent implements  AfterViewInit, OnDestroy {
         this.checkScroll(this.scrollable.nativeElement);
       });
       this.resizeObserver.observe(this.scrollable.nativeElement);
-
-      // // MutationObserver
-      // this.mutationObserver = new MutationObserver(mutations => {
-      //   this.checkScroll(this.scrollable.nativeElement);
-      // });
-      // this.mutationObserver.observe(this.scrollable.nativeElement, { childList: true, subtree: true });
     }
   }
 
   private checkScroll(element: HTMLDivElement) {
     this.withoutScroll = element.scrollHeight <= element.clientHeight;
-    console.log(element.scrollHeight, element.clientHeight);
     this.cdr.detectChanges();
   }
 
   ngOnDestroy() {
     if (this.resizeObserver && this.scrollable) {
       this.resizeObserver.unobserve(this.scrollable.nativeElement);
-    }
-    if (this.mutationObserver) {
-      this.mutationObserver.disconnect();
     }
   }
 }

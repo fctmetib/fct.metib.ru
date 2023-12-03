@@ -6,9 +6,12 @@ $text-selectors: '&, span';
 @mixin dropdown-point-size($height, $icon-size) {
   height: $height;
 
-  &_icon-wrapper, &_icon-wrapper mib-ref-icon {
-    @include icon-size($icon-size);
+  .dropdown-point {
+    &_icon-wrapper, &_icon-wrapper mib-ref-icon {
+      @include icon-size($icon-size);
+    }
   }
+
 }
 
 @mixin dropdown-point-outline {
@@ -132,7 +135,6 @@ $text-selectors: '&, span';
       display: flex;
     }
   }
-
   &_right-iconly {
     .dropdown-point_right-icon-wrapper {
       display: flex;

@@ -3,12 +3,6 @@
   <h3>Свободная задолженность</h3>
   <mib-spacing type="m"></mib-spacing>
 </div>
-<div class="container container_large">
-  <mib-select [formControl]="control">
-    <mib-dropdown-point *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13]; let last = last" [value]="i" [text]="'dog ' + i" [underlined]="!last"></mib-dropdown-point>
-  </mib-select>
-  <mib-spacing type="m"></mib-spacing>
-</div>
 <mib-tab-group>
   <mib-navbar class="container container_large">
     <mib-navbar-point value="1">Свободные</mib-navbar-point>
@@ -30,7 +24,7 @@
     <mib-tab-item value="1">
       <mib-table>
         <mib-table-head>
-          <mib-table-head-cell (onCheck)="severalDutiesChecked = $event" [checked]="severalDutiesChecked" [showCheckbox]="true">ИД</mib-table-head-cell>
+          <mib-table-head-cell [sortable]="true" (onCheck)="severalDutiesChecked = $event" [checked]="severalDutiesChecked" [showCheckbox]="true">ИД</mib-table-head-cell>
           <mib-table-head-cell>Контракт</mib-table-head-cell>
           <mib-table-head-cell>№ поставки</mib-table-head-cell>
           <mib-table-head-cell>Дата поставки</mib-table-head-cell>

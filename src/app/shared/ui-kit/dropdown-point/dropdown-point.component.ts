@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, ElementRef, Input, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, Optional, TemplateRef, ViewChild} from '@angular/core';
 import {SelectComponent} from '../select/select.component';
 import {DropdownPointSize, DropdownPointType} from './interfaces/dropdown-point.interface';
 import {FormControl} from '@angular/forms';
-import {DropdownComponent} from '../dropdown/dropdown.component';
+import {DropdownService} from '../dropdown/services/dropdown.service';
 
 @Component({
   selector: 'mib-dropdown-point',
@@ -28,17 +28,21 @@ export class DropdownPointComponent implements AfterViewInit {
   public _showCheckbox: boolean = false
 
   constructor(
-    public selectComponent: SelectComponent,
+    private dropdownService: DropdownService,
+    @Optional() public selectComponent?: SelectComponent,
   ) {
   }
 
   get selected() {
-    return this.selectComponent.matchOption(this.value)
+    return this.selectComponent?.matchOption(this.value)
   }
 
   select(): void {
     if (this._showCheckbox) this.control.setValue(!this.control.value)
-    this.selectComponent.selectOption(this);
+    this.selectComponent?.selectOption(this);
+    if (!this.selectComponent) {
+      this.dropdownService.closeMenu()
+    }
   }
 
   ngAfterViewInit() {

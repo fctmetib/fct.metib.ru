@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import {Directive, ElementRef, HostListener, Input} from '@angular/core';
 import {DropdownComponent} from '../dropdown.component';
 import {DropdownService} from '../services/dropdown.service';
 
@@ -14,9 +14,9 @@ export class DropdownDirective {
     private menuService: DropdownService
   ) {}
 
-  @HostListener('click')
-  onClick() {
-    this.menuService.toggleMenu(this.menu, this.elRef);
+  @HostListener('click', ['$event'])
+  onClick($event: any) {
+    $event.stopPropagation()
+    this.menuService.toggleMenu(this.menu, this.elRef.nativeElement);
   }
-
 }

@@ -34,8 +34,14 @@ $text-selectors: '&, span';
     transition: var(--transition)
   }
 
-  &_right-iconly, &_left-iconly {
-    .select_icon-wrapper {
+  &_left-iconly {
+    .select_left-icon-wrapper {
+      display: flex;
+    }
+  }
+
+  &_right-iconly {
+    .select_right-icon-wrapper {
       display: flex;
     }
   }
