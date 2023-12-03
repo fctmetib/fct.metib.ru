@@ -4,10 +4,16 @@
   <mib-spacing type="m"></mib-spacing>
 </div>
 <div class="container container_large">
-  <mib-select [formControl]="control">
-    <mib-dropdown-point [value]="1">dog</mib-dropdown-point>
-    <mib-dropdown-point [value]="2">cat</mib-dropdown-point>
-    <mib-dropdown-point [value]="3">house</mib-dropdown-point>
+  <mib-select [formControl]="control" type="floating">
+    <mib-ref-icon select-left-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+    <mib-ref-icon select-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+    <mib-dropdown-point [value]="1" text="dog"></mib-dropdown-point>
+    <mib-dropdown-point [value]="12" text="dog"></mib-dropdown-point>
+    <mib-dropdown-point [value]="13" text="dog"></mib-dropdown-point>
+    <mib-dropdown-point [value]="14" text="dog"></mib-dropdown-point>
+    <mib-dropdown-point [value]="15" text="dog"></mib-dropdown-point>
+    <mib-dropdown-point [value]="2" text="cat"></mib-dropdown-point>
+    <mib-dropdown-point [value]="3" text="house"></mib-dropdown-point>
   </mib-select>
   <mib-spacing type="m"></mib-spacing>
 </div>

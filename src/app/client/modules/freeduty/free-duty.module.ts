@@ -27,7 +27,6 @@ import {RefIconModule} from '../../../shared/ui-kit/ref-icon/ref-icon.module';
 import {FreeDutyRequestDrawerModule} from './modules/free-duty-request-drawer/free-duty-request-drawer.module';
 import {FreeDutyRequestDrawerService} from './modules/free-duty-request-drawer/free-duty-request-drawer.service';;
 import {PaginatorModule} from '../../../shared/ui-kit/paginator/paginator.module';
-import {ToolsService} from '../../../shared/services/tools.service';
 import {RubModule} from '../../../shared/pipes/rub/rub.module';
 import {FreeDutyService} from './services/free-duty.service';
 import {SkeletonModule} from '../../../shared/ui-kit/skeleton/skeleton.module';

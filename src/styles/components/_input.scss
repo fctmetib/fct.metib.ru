@@ -18,11 +18,21 @@
   border-radius: var(--main-border-radius);
   transition: var(--main-transition);
 
+  .box-label {
+    @include body-text;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-left: 16px;
+    white-space: nowrap;
+    cursor: text;
+  }
+
   &-transition {
     .box-label {
       transition: var(--main-transition);
     }
-    .input {
+    .input, .left-wrapper {
       transition: var(--main-transition);
     }
   }
@@ -31,21 +41,13 @@
     @include icon-color(var(--bti-tertiary));
   }
 
-  &:hover .input_icon-wrapper mib-ref-icon {
-    @include icon-color(var(--bti-secondary));
-  }
-
-  &:hover .box-label {
-    color: var(--bti-secondary);
-  }
-
-  .box-label {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding-left: 16px;
-    white-space: nowrap;
-    cursor: text;
+  &:hover {
+    .input_icon-wrapper mib-ref-icon {
+      @include icon-color(var(--bti-secondary));
+    }
+    .box-label {
+      color: var(--bti-secondary);
+    }
   }
 
   .box-right-iconly, .box-left-iconly {
@@ -62,12 +64,11 @@
     }
 
     .box-label {
-      transform: unset;
-      padding-left: 16px !important;
-      @include body-text;
       @include text-xs;
       font-weight: var(--fw-medium);
       color: var(--mc-default);
+      transform: unset;
+      padding-left: 16px !important;
       //transition: var(--main-transition);
     }
   }
@@ -136,27 +137,10 @@
     @include input-s;
   }
 
-  &_icon-wrapper {
-    top: 50%;
-    transform: translateY(-50%);
-    position: absolute;
-    display: none;
-
-    &.right-wrapper {
-      right: 16px;
-      padding-left: 8px;
-    }
-
-    &.left-wrapper {
-      left: 16px;
-      padding-right: 4px;
-    }
-  }
-
   // INPUT TYPES WITH BOX-WRAPPER ADDICTION
-  @include input-type-filled-secondary;
-  @include input-type-floating;
-  @include input-type-separated;
+  @include input-addiction-filled-secondary;
+  @include input-addiction-floating;
+  @include input-addiction-separated;
 }
 
 div.textarea-panel {
