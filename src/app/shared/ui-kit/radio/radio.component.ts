@@ -4,6 +4,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { MibRadioSize } from './interfaces/radio.interface'
 
 @Component({
+	host: {
+		'[class]': 'align'
+	},
 	selector: 'mib-radio',
 	templateUrl: './radio.component.html',
 	styleUrls: ['./radio.component.scss'],
