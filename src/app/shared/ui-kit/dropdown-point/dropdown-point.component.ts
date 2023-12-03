@@ -3,6 +3,7 @@ import {SelectComponent} from '../select/select.component';
 import {DropdownPointSize, DropdownPointType} from './interfaces/dropdown-point.interface';
 import {FormControl} from '@angular/forms';
 import {DropdownService} from '../dropdown/services/dropdown.service';
+import {AutoCompleteComponent} from '../auto-complete/auto-complete.component';
 
 @Component({
   selector: 'mib-dropdown-point',
@@ -30,6 +31,7 @@ export class DropdownPointComponent implements AfterViewInit {
   constructor(
     private dropdownService: DropdownService,
     @Optional() public selectComponent?: SelectComponent,
+    @Optional() public autoCompleteComponent?: AutoCompleteComponent,
   ) {
   }
 
@@ -40,7 +42,8 @@ export class DropdownPointComponent implements AfterViewInit {
   select(): void {
     if (this._showCheckbox) this.control.setValue(!this.control.value)
     this.selectComponent?.selectOption(this);
-    if (!this.selectComponent) {
+    this.autoCompleteComponent?.selectOption(this)
+    if (!this.selectComponent && !this.autoCompleteComponent) {
       this.dropdownService.closeMenu()
     }
   }

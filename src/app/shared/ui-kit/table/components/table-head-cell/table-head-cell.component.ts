@@ -14,6 +14,7 @@ export class TableHeadCellComponent implements OnInit, OnChanges {
   @Input() sortable: boolean = false;
   @Input() selected: boolean = false;
   @Output() onCheck = new EventEmitter<boolean>();
+  @Output() onToggle = new EventEmitter<boolean>()
 
   control: FormControl = new FormControl<boolean>(false)
 
@@ -35,5 +36,6 @@ export class TableHeadCellComponent implements OnInit, OnChanges {
 
   toggle() {
     this.selected = !this.selected
+    this.onToggle.emit(this.selected)
   }
 }

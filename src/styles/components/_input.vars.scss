@@ -41,11 +41,13 @@
   }
 
   &:has(input:disabled) {
-    @include icon-color(var(--bti-quaternary));
+    @include input-color(var(--bti-quaternary));
   }
 
   &:has(input:focus),
   &:has(input:not(:placeholder-shown):not(:focus)) {
+    @include input-color(var(--bti-secondary));
+
     .input,
     .left-wrapper {
       padding-top: 12px;
