@@ -1,1 +1,22 @@
-<p>radio works!</p>
+<label class="flex flex_align-center radio w100" [ngClass]="class">
+	<input
+		type="radio"
+		[checked]="value"
+		(click)="onRadioChange($event)"
+		class="radio-input"
+	/>
+	<span
+		[class.checked]="value"
+		class="radio-control flex flex_center"
+		[ngClass]="'radio-control_' + size"
+	>
+		<mib-ref-icon
+			style="stroke: red"
+			@radioAnimation
+			*ngIf="value"
+			class="stroke"
+			name="fi_check"
+		></mib-ref-icon>
+	</span>
+	<ng-content></ng-content>
+</label>

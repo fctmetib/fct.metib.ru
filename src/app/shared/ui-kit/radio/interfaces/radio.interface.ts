@@ -1,1 +1,1 @@
-export type RadioSize = 'l' | 'm' | 's'
+export type MibRadioSize = 'l' | 'm' | 's'
