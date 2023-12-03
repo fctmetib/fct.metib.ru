@@ -3,7 +3,11 @@
   <main class="flex_grow">
     <app-header #header></app-header>
     <mib-spacing [customSpace]="header.height"></mib-spacing>
-    <div class="scrollable flex flex_column scroll-y" [ngStyle]="styles">
+    <div #scrollable class="scrollable flex flex_column"
+         [class.scroll-y]="!scrollService.isScrollBlocked$.value"
+         [class.overflow-y]="scrollService.isScrollBlocked$.value"
+         [ngStyle]="{'height': 'calc(100vh - ' + (header?.height ?? 0) + 'px)'}"
+         [class.without-scroll]="withoutScroll || scrollService.isScrollBlocked$.value">
       <router-outlet></router-outlet>
       <mib-spacing type="xl2"></mib-spacing>
     </div>

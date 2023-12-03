@@ -15,6 +15,7 @@ export class DropdownPointComponent implements AfterViewInit {
   @ViewChild('rightIcon') rightIcon?: ElementRef<HTMLDivElement>
 
   @Input() value: any;
+  @Input() underlined: boolean = false;
   @Input() text: string = '';
   @Input() set showCheckbox(value: boolean) {
     this._showCheckbox =value
@@ -46,6 +47,7 @@ export class DropdownPointComponent implements AfterViewInit {
 
   get classes() {
     return {
+      'dropdown-point_underlined': this.underlined,
       'dropdown-point_selected': this.selected,
       'dropdown-point-transition': this.viewMounted,
       [`dropdown-point_${this.size}`]: true,

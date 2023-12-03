@@ -4,16 +4,8 @@
   <mib-spacing type="m"></mib-spacing>
 </div>
 <div class="container container_large">
-  <mib-select [formControl]="control" type="floating">
-    <mib-ref-icon select-left-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-    <mib-ref-icon select-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-    <mib-dropdown-point [value]="1" text="dog"></mib-dropdown-point>
-    <mib-dropdown-point [value]="12" text="dog"></mib-dropdown-point>
-    <mib-dropdown-point [value]="13" text="dog"></mib-dropdown-point>
-    <mib-dropdown-point [value]="14" text="dog"></mib-dropdown-point>
-    <mib-dropdown-point [value]="15" text="dog"></mib-dropdown-point>
-    <mib-dropdown-point [value]="2" text="cat"></mib-dropdown-point>
-    <mib-dropdown-point [value]="3" text="house"></mib-dropdown-point>
+  <mib-select [formControl]="control">
+    <mib-dropdown-point *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13]; let last = last" [value]="i" [text]="'dog ' + i" [underlined]="!last"></mib-dropdown-point>
   </mib-select>
   <mib-spacing type="m"></mib-spacing>
 </div>
@@ -27,9 +19,9 @@
     <div class="flex flex_justify-between">
       <div class="flex gap-16">
         <div class="flex flex_align-center gap-4">
-          <input type="date" mibInput/>
+          <input styleType="outline" type="date" mibInput/>
           <p class="text text_m c-bti-tertiary">-</p>
-          <input type="date" mibInput/>
+          <input styleType="outline" type="date" mibInput/>
         </div>
         <mib-button [disabled]="!selectedDutiesCount" (press)="openDrawer()" type="filled-primary">Создать заявку ({{selectedDutiesCount}})</mib-button>
       </div>

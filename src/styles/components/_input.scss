@@ -32,44 +32,15 @@
     .box-label {
       transition: var(--main-transition);
     }
+
     .input, .left-wrapper {
       transition: var(--main-transition);
-    }
-  }
-
-  mib-ref-icon {
-    @include icon-color(var(--bti-tertiary));
-  }
-
-  &:hover {
-    .input_icon-wrapper mib-ref-icon {
-      @include icon-color(var(--bti-secondary));
-    }
-    .box-label {
-      color: var(--bti-secondary);
     }
   }
 
   .box-right-iconly, .box-left-iconly {
     .input_icon-wrapper {
       display: flex;
-    }
-  }
-
-  &:has(input:focus),
-  &:has(input:not(:placeholder-shown):not(:focus)) {
-    .input,
-    .left-wrapper {
-      padding-top: 12px;
-    }
-
-    .box-label {
-      @include text-xs;
-      font-weight: var(--fw-medium);
-      color: var(--mc-default);
-      transform: unset;
-      padding-left: 16px !important;
-      //transition: var(--main-transition);
     }
   }
 
@@ -102,20 +73,13 @@
   }
 
   &:has(textarea) {
-    display: flex;
-    padding: 10px 16px 34px 16px;
-    align-items: flex-start;
-    gap: 8px;
-    background-color: antiquewhite;
-
-    input {
-      background-color: transparent;
-    }
-
-    div.textarea-panel {
-      display: flex;
-    }
+    @include textarea;
   }
+
+  @include input-addiction-xl;
+  @include input-addiction-l;
+  @include input-addiction-m;
+  @include input-addiction-s;
 }
 
 .input {
@@ -138,11 +102,27 @@
   }
 
   // INPUT TYPES WITH BOX-WRAPPER ADDICTION
-  @include input-addiction-filled-secondary;
-  @include input-addiction-floating;
-  @include input-addiction-separated;
+  &_type-filled-secondary {
+    @include input-type-filled-secondary;
+  }
+
+  &_type-floating {
+    @include input-type-floating;
+  }
+
+  &_type-outline {
+    @include input-type-outline;
+  }
+
+  &_type-separated {
+    @include input-type-separated;
+  }
 }
 
 div.textarea-panel {
   display: none;
+}
+
+.input, .box-wrapper {
+  @include input-states-from-wrapper;
 }

@@ -12,7 +12,6 @@ $text-selectors: '&, span';
 }
 
 @mixin dropdown-point-outline {
-  border-bottom: 1px solid transparent;
   &:hover {
     border-bottom-color: var(--wgr-tertiary);
   }
@@ -22,6 +21,9 @@ $text-selectors: '&, span';
   }
 
   &.dropdown-point {
+    &_underlined {
+      border-bottom: 1px solid var(--wgr-secondary);
+    }
     &_selected {
       border-bottom-color: transparent;
       background: var(--wgr-secondary);

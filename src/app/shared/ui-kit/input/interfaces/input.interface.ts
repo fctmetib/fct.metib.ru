@@ -1,5 +1,5 @@
 export type InputSize = 'xl' | 'l' | 'm' | 's'
-export type InputType = 'filled-secondary' | 'floating' | 'separated'
+export type InputType = 'filled-secondary' | 'floating' | 'separated' | 'outline'
 export type InputStatus =
 	| 'disabled'
 	| 'active'
