@@ -40,15 +40,13 @@
 	border-radius: 50%;
 	transition: var(--transition);
 	position: relative;
-	display: inline-block;
 	cursor: pointer;
 	background-color: var(--wgr-secondary);
 	border: 1px solid var(--wgr-tertiary);
 	&::before {
 		content: '';
-		display: inline-block;
 		border-radius: 50%;
-		transition: border-color 0.2s;
+		transition: var(--transition);
 		position: absolute;
 	}
 
