@@ -12,8 +12,6 @@ import {DropdownPointModule} from '../../../../../shared/ui-kit/dropdown-point/d
 import {ReactiveFormsModule} from '@angular/forms';
 import {CheckboxModule} from '../../../../../shared/ui-kit/checkbox/checkbox.module';
 import {PaginatorModule} from '../../../../../shared/ui-kit/paginator/paginator.module';
-import {RequestsService} from '../../services/requests.service';
-
 
 @NgModule({
   declarations: [
@@ -32,9 +30,6 @@ import {RequestsService} from '../../services/requests.service';
     ReactiveFormsModule,
     CheckboxModule,
     PaginatorModule,
-  ],
-  providers: [
-    RequestsService
   ]
 })
 export class FreeDutyRequestDrawerModule {

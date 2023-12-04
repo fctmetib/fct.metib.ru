@@ -1,5 +1,3 @@
-import {DocumentsViewComponent} from './components/requests-page/documents-view/documents-view.componet';
-import {ShipmentsViewComponent} from './components/requests-page/shipments-view/shipments-view.componet';
 import {RequestCorrectDialogComponent} from './components/request-correct-dialog/request-correct-dialog.component';
 import {DeliveryService} from 'src/app/shared/services/share/delivery.service';
 import {RequestCreateDialogComponent} from './components/request-create-dialog/request-create-dialog.component';
@@ -38,6 +36,8 @@ import {CommonService} from 'src/app/shared/services/common/common.service';
 import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {DocumentViewDialogComponent} from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component';
+import {DocumentsViewComponent} from './components/requests-page/no-touch-this/documents-view/documents-view.componet';
+import {ShipmentsViewComponent} from './components/requests-page/no-touch-this/shipments-view/shipments-view.componet';
 
 @NgModule({
   imports: [
