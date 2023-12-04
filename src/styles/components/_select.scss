@@ -6,6 +6,7 @@ $text-selectors: '&, span';
 .select {
   position: relative;
   @include input;
+  @include input-states-from-wrapper;
 
   mib-ref-icon {
     @include icon-color(var(--bti-tertiary));
@@ -29,8 +30,18 @@ $text-selectors: '&, span';
     user-select: none;
   }
 
-  &_right-iconly, &_left-iconly {
-    .select_icon-wrapper {
+  &-transition {
+    transition: var(--transition)
+  }
+
+  &_left-iconly {
+    .select_left-icon-wrapper {
+      display: flex;
+    }
+  }
+
+  &_right-iconly {
+    .select_right-icon-wrapper {
       display: flex;
     }
   }
@@ -43,6 +54,9 @@ $text-selectors: '&, span';
     }
     &-floating {
       @include input-type-floating;
+    }
+    &-outline {
+      @include input-type-outline;
     }
   }
 

@@ -9,6 +9,7 @@ import {Customer} from '../../../../shared/types/customer/customer';
 import {MenuItem} from 'primeng/api';
 import {ClientService} from '../../../../shared/services/common/client.service';
 import {Properties} from 'csstype';
+import {DropdownService} from '../../../../shared/ui-kit/dropdown/services/dropdown.service';
 
 @Component({
   selector: 'app-header',
@@ -41,6 +42,7 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private toolsService: ToolsService,
     private clientService: ClientService,
+    public dropdownService: DropdownService
   ) {
   }
 

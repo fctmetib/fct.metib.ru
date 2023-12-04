@@ -1,8 +1,9 @@
-import {AfterViewInit, Component, ElementRef, Input, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, Optional, TemplateRef, ViewChild} from '@angular/core';
 import {SelectComponent} from '../select/select.component';
 import {DropdownPointSize, DropdownPointType} from './interfaces/dropdown-point.interface';
 import {FormControl} from '@angular/forms';
-import {DropdownComponent} from '../dropdown/dropdown.component';
+import {DropdownService} from '../dropdown/services/dropdown.service';
+import {AutoCompleteComponent} from '../auto-complete/auto-complete.component';
 
 @Component({
   selector: 'mib-dropdown-point',
@@ -15,6 +16,7 @@ export class DropdownPointComponent implements AfterViewInit {
   @ViewChild('rightIcon') rightIcon?: ElementRef<HTMLDivElement>
 
   @Input() value: any;
+  @Input() underlined: boolean = false;
   @Input() text: string = '';
   @Input() set showCheckbox(value: boolean) {
     this._showCheckbox =value
@@ -27,17 +29,23 @@ export class DropdownPointComponent implements AfterViewInit {
   public _showCheckbox: boolean = false
 
   constructor(
-    public selectComponent: SelectComponent,
+    private dropdownService: DropdownService,
+    @Optional() public selectComponent?: SelectComponent,
+    @Optional() public autoCompleteComponent?: AutoCompleteComponent,
   ) {
   }
 
   get selected() {
-    return this.selectComponent.matchOption(this.value)
+    return this.selectComponent?.matchOption(this.value)
   }
 
   select(): void {
     if (this._showCheckbox) this.control.setValue(!this.control.value)
-    this.selectComponent.selectOption(this);
+    this.selectComponent?.selectOption(this);
+    this.autoCompleteComponent?.selectOption(this)
+    if (!this.selectComponent && !this.autoCompleteComponent) {
+      this.dropdownService.closeMenu()
+    }
   }
 
   ngAfterViewInit() {
@@ -46,6 +54,7 @@ export class DropdownPointComponent implements AfterViewInit {
 
   get classes() {
     return {
+      'dropdown-point_underlined': this.underlined,
       'dropdown-point_selected': this.selected,
       'dropdown-point-transition': this.viewMounted,
       [`dropdown-point_${this.size}`]: true,

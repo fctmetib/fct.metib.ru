@@ -1,6 +1,5 @@
 import {NotificationService} from './shared/services/notification.service'
 import {CommonModule} from '@angular/common'
-import {DropdownModule} from 'primeng/dropdown'
 import {CardModule} from 'primeng/card'
 import {ButtonModule} from 'primeng/button'
 import {ClientRoutingModule} from './client-routing.module'
@@ -32,6 +31,9 @@ import {AvatarModule} from '../shared/ui-kit/avatar/avatar.module';
 import {SidebarModule} from '../shared/ui-kit/sidebar/sidebar.module';
 import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module';
 import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module';
+import {DropdownModule} from '../shared/ui-kit/dropdown/dropdown.module';
+import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-point.module';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 @NgModule({
   imports: [
@@ -42,7 +44,6 @@ import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module';
     ButtonModule,
     RadioButtonModule,
     InputTextareaModule,
-    DropdownModule,
     MenuModule,
     ProgressSpinnerModule,
     FormsModule,
@@ -57,6 +58,9 @@ import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module';
     SidebarModule,
     SpacingModule,
     SkeletonModule,
+    DropdownModule,
+    DropdownPointModule,
+    ClipboardModule,
   ],
   declarations: [
     ClientComponent,

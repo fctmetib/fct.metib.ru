@@ -25,13 +25,16 @@ import {DeliveryService} from '../../../shared/services/share/delivery.service';
 import {TableModule} from '../../../shared/ui-kit/table/table.module';
 import {RefIconModule} from '../../../shared/ui-kit/ref-icon/ref-icon.module';
 import {FreeDutyRequestDrawerModule} from './modules/free-duty-request-drawer/free-duty-request-drawer.module';
-import {FreeDutyRequestDrawerService} from './modules/free-duty-request-drawer/free-duty-request-drawer.service';;
+import {FreeDutyRequestDrawerService} from './modules/free-duty-request-drawer/free-duty-request-drawer.service';
+
+;
 import {PaginatorModule} from '../../../shared/ui-kit/paginator/paginator.module';
 import {RubModule} from '../../../shared/pipes/rub/rub.module';
 import {FreeDutyService} from './services/free-duty.service';
 import {SkeletonModule} from '../../../shared/ui-kit/skeleton/skeleton.module';
 import {SelectModule} from '../../../shared/ui-kit/select/select.module';
 import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdown-point.module';
+import {AutoCompleteModule} from '../../../shared/ui-kit/auto-complete/auto-complete.module';
 
 @NgModule({
   declarations: [FreeDutyPageComponent],
@@ -66,6 +69,7 @@ import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdow
     SkeletonModule,
     SelectModule,
     DropdownPointModule,
+    AutoCompleteModule,
   ],
   providers: [
     DialogService,

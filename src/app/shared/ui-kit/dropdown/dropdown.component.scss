@@ -1,11 +1,24 @@
 :host {
-  display: none;
+  margin-top: 8px;
   position: absolute;
-  border: 1px solid #ccc;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  opacity: 0;
+  pointer-events: none;
   z-index: 1000;
+  max-height: 260px;
   &.dropdown-open {
-    display: block;
+    pointer-events: visible;
   }
+}
+.dropdown {
+  border-radius: 8px;
+  background: var(--wgr-primary);
+  box-shadow: var(--shadow-big);
+
+  padding: 4px 0;
+  overflow: hidden;
+
+  transition: var(--transition);
+}
+.content {
+  height: 100%;
 }

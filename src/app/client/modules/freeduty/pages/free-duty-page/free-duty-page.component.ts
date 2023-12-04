@@ -1,5 +1,19 @@
 import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
-import {Observable, Subscription, filter, first, switchMap, tap, Subject, interval, BehaviorSubject, finalize, zip, forkJoin} from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  filter,
+  first,
+  switchMap,
+  tap,
+  Subject,
+  interval,
+  BehaviorSubject,
+  finalize,
+  zip,
+  forkJoin,
+  map
+} from 'rxjs';
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {DialogService} from 'primeng/dynamicdialog';
 import {DatePipe} from '@angular/common';
@@ -12,7 +26,7 @@ import {FreedutyStoreService} from '../../../../../shared/services/store/freedut
 import {ClientService} from 'src/app/shared/services/common/client.service';
 import {AuthService} from 'src/app/auth/services/auth.service';
 import {FreeDutyRequestDrawerService} from '../../modules/free-duty-request-drawer/free-duty-request-drawer.service';
-import {takeUntil} from 'rxjs/operators';
+import {startWith, takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
 import {AdvancedDuty} from './interfaces/free-duty.interface';
 import {DrawerStateEnum} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
@@ -50,6 +64,27 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     borderBottom: '1px solid var(--wgr-tertiary)'
   };
 
+  options: any[] = [
+    {
+      text: 'Рафлс',
+      value: 1
+    },
+    {
+      text: 'Не рафлс',
+      value: 2
+    },
+    {
+      text: 'Комару',
+      value: 3
+    },
+    {
+      text: 'Че ты творишь',
+      value: 4
+    },
+  ]
+  filtered: Observable<string[]>;
+
+
   public control: FormControl = new FormControl<any>(2)
 
   public PAGINATOR_ITEMS_PER_PAGE = 16;
@@ -71,7 +106,35 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  private _filter(value: any): string[] {
+    let filterValue = '';
+
+    // Проверяем, является ли value строкой, если нет, пробуем привести к строке
+    if (typeof value === 'string') {
+      filterValue = value.toLowerCase();
+    } else if (value != null && value.toString) {
+      filterValue = value.toString().toLowerCase();
+    }
+
+    console.log(filterValue);
+
+    // Фильтруем опции
+    const filteredOptions = this.options.filter(option =>
+      option.text.toLowerCase().includes(filterValue)
+    );
+
+    console.log(filteredOptions);
+
+    // Возвращаем отфильтрованные опции
+    return filteredOptions;
+  }
+
   ngOnInit() {
+
+    this.filtered = this.control.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
     this.control.valueChanges.pipe(
       tap(val => console.log(val))
     ).subscribe()
@@ -117,10 +180,9 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
         this.duties = this.duties.filter(duty => duty.ID !== id);
         observer.next(); // Сигнал об успешном выполнении
         observer.complete(); // Завершаем Observable
-      }, ANIMATION_CONFIG.duration-10);
+      }, ANIMATION_CONFIG.duration - 10);
     });
   }
-
 
 
   onPageChange(page: number) {

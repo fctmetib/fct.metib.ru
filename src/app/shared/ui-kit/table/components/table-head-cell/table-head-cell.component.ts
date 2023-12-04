@@ -10,8 +10,11 @@ import {tap} from 'rxjs';
 export class TableHeadCellComponent implements OnInit, OnChanges {
   checkboxId: string;
   @Input() showCheckbox: boolean = false;
-  @Input() checked: boolean;
+  @Input() checked: boolean = false;
+  @Input() sortable: boolean = false;
+  @Input() selected: boolean = false;
   @Output() onCheck = new EventEmitter<boolean>();
+  @Output() onToggle = new EventEmitter<boolean>()
 
   control: FormControl = new FormControl<boolean>(false)
 
@@ -29,5 +32,10 @@ export class TableHeadCellComponent implements OnInit, OnChanges {
     if (changes.checked) {
       this.control.setValue(this.checked, { emitEvent: false });
     }
+  }
+
+  toggle() {
+    this.selected = !this.selected
+    this.onToggle.emit(this.selected)
   }
 }

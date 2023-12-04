@@ -3,20 +3,6 @@
   <h3>Свободная задолженность</h3>
   <mib-spacing type="m"></mib-spacing>
 </div>
-<div class="container container_large">
-  <mib-select [formControl]="control" type="floating">
-    <mib-ref-icon select-left-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-    <mib-ref-icon select-right-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
-    <mib-dropdown-point [value]="1" text="dog"></mib-dropdown-point>
-    <mib-dropdown-point [value]="12" text="dog"></mib-dropdown-point>
-    <mib-dropdown-point [value]="13" text="dog"></mib-dropdown-point>
-    <mib-dropdown-point [value]="14" text="dog"></mib-dropdown-point>
-    <mib-dropdown-point [value]="15" text="dog"></mib-dropdown-point>
-    <mib-dropdown-point [value]="2" text="cat"></mib-dropdown-point>
-    <mib-dropdown-point [value]="3" text="house"></mib-dropdown-point>
-  </mib-select>
-  <mib-spacing type="m"></mib-spacing>
-</div>
 <mib-tab-group>
   <mib-navbar class="container container_large">
     <mib-navbar-point value="1">Свободные</mib-navbar-point>
@@ -24,21 +10,35 @@
   </mib-navbar>
   <div class="container container_large">
     <mib-spacing type="m"></mib-spacing>
+    <mib-auto-complete [style.max-width]="360+'px'">
+      <mib-input autocomplete-input>
+        <ng-container input-label>label</ng-container>
+        <input [formControl]="control" styleType="outline" mibInput>
+      </mib-input>
+      <mib-dropdown-point *ngFor="let i of filtered | async" [value]="i.value" [text]="i.text"></mib-dropdown-point>
+    </mib-auto-complete>
+  </div>
+  <div class="container container_large">
+    <mib-spacing type="m"></mib-spacing>
     <div class="flex flex_justify-between">
       <div class="flex gap-16">
         <div class="flex flex_align-center gap-4">
-          <input type="date" mibInput/>
+          <input styleType="outline" type="date" mibInput/>
           <p class="text text_m c-bti-tertiary">-</p>
-          <input type="date" mibInput/>
+          <input styleType="outline" type="date" mibInput/>
         </div>
-        <mib-button [disabled]="!selectedDutiesCount" (press)="openDrawer()" type="filled-primary">Создать заявку ({{selectedDutiesCount}})</mib-button>
+        <mib-button [disabled]="!selectedDutiesCount" (press)="openDrawer()" type="filled-primary">Создать заявку
+          ({{selectedDutiesCount}})
+        </mib-button>
       </div>
     </div>
     <mib-spacing type="xs"></mib-spacing>
     <mib-tab-item value="1">
       <mib-table>
         <mib-table-head>
-          <mib-table-head-cell (onCheck)="severalDutiesChecked = $event" [checked]="severalDutiesChecked" [showCheckbox]="true">ИД</mib-table-head-cell>
+          <mib-table-head-cell [sortable]="true" (onCheck)="severalDutiesChecked = $event"
+                               [checked]="severalDutiesChecked" [showCheckbox]="true">ИД
+          </mib-table-head-cell>
           <mib-table-head-cell>Контракт</mib-table-head-cell>
           <mib-table-head-cell>№ поставки</mib-table-head-cell>
           <mib-table-head-cell>Дата поставки</mib-table-head-cell>
@@ -51,10 +51,12 @@
           <mib-table-head-cell>Сумма поставки</mib-table-head-cell>
         </mib-table-head>
         <ng-container *ngIf="loading$ | async; else table">
-          <mib-skeleton [styles]="last ? skeletonWithoutUnderline : skeleton" *ngFor="let i of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; let last = last"></mib-skeleton>
+          <mib-skeleton [styles]="last ? skeletonWithoutUnderline : skeleton"
+                        *ngFor="let i of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; let last = last"></mib-skeleton>
         </ng-container>
         <ng-template #table>
-          <mib-table-row [@slideAnimation]="dutyAnimationStates[duty.ID]" *ngFor="let duty of dutiesVisible; let last = last" [underlined]="!last">
+          <mib-table-row [@slideAnimation]="dutyAnimationStates[duty.ID]"
+                         *ngFor="let duty of dutiesVisible; let last = last" [underlined]="!last">
             <mib-table-cell [checked]="duty.checked" (onCheck)="onRowCheck($event, duty)" type="main">
               <ng-container table-cell-title>{{duty.ID}}</ng-container>
             </mib-table-cell>
@@ -94,7 +96,9 @@
           </mib-table-row>
         </ng-template>
         <mib-table-footer [underlined]="!(loading$ | async)">
-          <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="duties.length" [pagesToShow]="PAGINATOR_PAGE_TO_SHOW" [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"></mib-paginator>
+          <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="duties.length"
+                         [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+                         [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"></mib-paginator>
         </mib-table-footer>
       </mib-table>
     </mib-tab-item>
@@ -103,8 +107,6 @@
     </mib-tab-item>
   </div>
 </mib-tab-group>
-
-
 
 
 <!--<div class="card-content" id="step1">-->

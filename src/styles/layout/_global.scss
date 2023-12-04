@@ -3,12 +3,14 @@
 @import 'src/styles/_fonts.scss';
 
 .scroll {
+
+
   &-y {
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   &-x {
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 }
 

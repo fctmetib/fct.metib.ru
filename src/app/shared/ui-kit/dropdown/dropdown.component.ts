@@ -1,23 +1,50 @@
-import {Component, ElementRef, HostBinding, HostListener, Input} from '@angular/core';
+import {Component, ElementRef, HostBinding, HostListener, Inject, Input} from '@angular/core';
 import {DropdownService} from './services/dropdown.service';
 import {Properties} from 'csstype';
+import {ScrollService} from '../../services/scroll.service';
+import {WINDOW} from '../../../core/tokens/window.token';
+import {animate, style, state, transition, trigger} from '@angular/animations';
+import {ToolsService} from '../../services/tools.service';
+
+const ANIMATION_DURATION = 200;
 
 @Component({
   selector: 'mib-dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.scss']
+  styleUrls: ['./dropdown.component.scss'],
+  animations: [
+    trigger('dropdownAnimation', [
+      state('false', style({
+        opacity: 0,
+        transform: 'translateY(-10px)'
+      })),
+      state('true', style({
+        opacity: 1,
+        transform: 'translateY(0)'
+      })),
+      transition('false <=> true', [
+        animate(`${ANIMATION_DURATION}ms ease`)
+      ]),
+    ])
+  ]
 })
 export class DropdownComponent {
 
   @HostBinding('style') style: Properties = {};
-  @HostBinding('class.dropdown-open') isVisible = false;
+  @HostBinding('@dropdownAnimation') @HostBinding('class.dropdown-open') isVisible = false;
   @HostBinding('class.dropdown-above') isAbove = false;
+  @Input() reference: HTMLElement | null = null
 
-  private lastTrigger: ElementRef | null = null;
+  private lastTrigger: HTMLElement | null = null;
+  private timeoutId: any = null;
+  public id: string = this.toolsService.generateId()
 
   constructor(
     public menuService: DropdownService,
-    private elRef: ElementRef
+    private toolsService: ToolsService,
+    private elRef: ElementRef,
+    private scrollService: ScrollService,
+    @Inject(WINDOW) private window: Window
   ) {
   }
 
@@ -25,6 +52,9 @@ export class DropdownComponent {
   }
 
   ngOnDestroy() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
   }
 
   @HostListener('window:resize')
@@ -34,31 +64,59 @@ export class DropdownComponent {
     }
   }
 
-  toggle(trigger: ElementRef) {
+  @HostListener('document:click', ['$event.target'])
+  onDocumentClick(target: HTMLElement) {
+    if (this.isVisible && this.lastTrigger &&
+      !this.elRef.nativeElement.contains(target)) {
+      this.menuService.closeMenu();
+    }
+  }
+
+  toggle(trigger: HTMLElement) {
     this.isVisible = !this.isVisible;
     this.lastTrigger = trigger; // Сохраняем последний триггер
 
     if (this.isVisible) {
-      setTimeout(() => this.positionMenu(trigger));
+      this.scrollService.blockScroll()
+      requestAnimationFrame(() => this.positionMenu(trigger));
     } else {
       this.close();
     }
   }
 
+
   close() {
+    this.scrollService.allowScroll();
     this.isVisible = false;
-    this.isAbove = false;  // Сбросить состояние
+    this.isAbove = false;
+
+    // Очистка предыдущего таймера
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+
+    // Установка нового таймера
+    this.timeoutId = setTimeout(() => {
+      if (!this.isVisible) {
+        this.style = {};
+      }
+      this.timeoutId = null;
+    }, ANIMATION_DURATION);
   }
 
-  positionMenu(trigger: ElementRef) {
-    const triggerRect = trigger.nativeElement.getBoundingClientRect();
-    const menuRect = this.elRef.nativeElement.getBoundingClientRect();
 
-    let topStyle, widthStyle;
+  positionMenu(trigger: HTMLElement) {
+    const triggerRect = this.reference?.getBoundingClientRect() ?? trigger.getBoundingClientRect();
+    const containerRect = this.elRef.nativeElement.parentElement.getBoundingClientRect();
+    const menuRect = this.elRef.nativeElement.getBoundingClientRect();
+    const menuStyles = this.window.getComputedStyle(this.elRef.nativeElement);
+
+    let topStyle, leftStyle, widthStyle;
 
     // Позиционирование сверху или снизу
     const bottomSpaceAvailable = window.innerHeight - triggerRect.bottom;
-    if (bottomSpaceAvailable >= menuRect.height) {
+    const menuHeight = menuRect.height + parseInt(menuStyles.marginTop)
+    if (bottomSpaceAvailable >= menuHeight) {
       this.isAbove = false;
       topStyle = `${triggerRect.bottom}px`;
     } else {
@@ -67,22 +125,17 @@ export class DropdownComponent {
     }
 
     // Установка ширины меню равной ширине триггера
+    leftStyle = `${triggerRect.left - containerRect.left}px`;
+
+    // Установка ширины меню равной ширине триггера
     widthStyle = `${triggerRect.width}px`;
 
     // Обновление стилей
     this.style = {
       position: 'absolute',
       top: topStyle,
+      left: leftStyle,
       width: widthStyle
     };
-  }
-
-  @HostListener('document:click', ['$event.target'])
-  onDocumentClick(target: HTMLElement) {
-    if (this.isVisible && this.lastTrigger &&
-      !this.elRef.nativeElement.contains(target) &&
-      !this.lastTrigger.nativeElement.contains(target)) {
-      this.menuService.closeMenu();
-    }
   }
 }

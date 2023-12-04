@@ -6,13 +6,15 @@ $text-selectors: '&, span';
 @mixin dropdown-point-size($height, $icon-size) {
   height: $height;
 
-  &_icon-wrapper, &_icon-wrapper mib-ref-icon {
-    @include icon-size($icon-size);
+  .dropdown-point {
+    &_icon-wrapper, &_icon-wrapper mib-ref-icon {
+      @include icon-size($icon-size);
+    }
   }
+
 }
 
 @mixin dropdown-point-outline {
-  border-bottom: 1px solid transparent;
   &:hover {
     border-bottom-color: var(--wgr-tertiary);
   }
@@ -22,6 +24,9 @@ $text-selectors: '&, span';
   }
 
   &.dropdown-point {
+    &_underlined {
+      border-bottom: 1px solid var(--wgr-secondary);
+    }
     &_selected {
       border-bottom-color: transparent;
       background: var(--wgr-secondary);
@@ -130,7 +135,6 @@ $text-selectors: '&, span';
       display: flex;
     }
   }
-
   &_right-iconly {
     .dropdown-point_right-icon-wrapper {
       display: flex;

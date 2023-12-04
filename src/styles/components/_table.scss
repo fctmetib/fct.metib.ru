@@ -21,6 +21,7 @@ $text-selectors: 'label, span';
   mib-ref-icon {
     @include icon-size(20px)
   }
+  @include table-color(var(--bti-secondary))
 }
 
 @mixin table-color($color) {
@@ -34,4 +35,9 @@ $text-selectors: 'label, span';
 
 .table-head-cell {
   @include table-head-cell;
+  .cursor-pointer {
+    &, & > * {
+      cursor: pointer;
+    }
+  }
 }

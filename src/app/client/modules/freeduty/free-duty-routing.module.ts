@@ -1,7 +1,7 @@
-import { FreeDutyPageComponent } from './pages/free-duty-page/free-duty-page.component';
+import {FreeDutyPageComponent} from './pages/free-duty-page/free-duty-page.component';
 
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
 
 const routes = [
   {
@@ -19,4 +19,5 @@ const routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class FreeDutyRoutingModule {}
+export class FreeDutyRoutingModule {
+}
