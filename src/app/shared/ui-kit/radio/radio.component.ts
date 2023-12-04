@@ -9,41 +9,7 @@ import { MibRadioSize } from './interfaces/radio.interface'
 	},
 	selector: 'mib-radio',
 	templateUrl: './radio.component.html',
-	styleUrls: ['./radio.component.scss'],
-	encapsulation: ViewEncapsulation.None,
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => RadioComponent),
-			multi: true
-		}
-	],
-	animations: [
-		trigger('radioAnimation', [
-			transition(':enter', [
-				style({
-					transform: 'translate(-50%,-90%) rotateX(-60deg)'
-				}),
-				animate(
-					'300ms ease',
-					style({
-						transform: 'translate(-50%,-50%) rotateX(0deg)'
-					})
-				)
-			]),
-			transition(':leave', [
-				style({
-					transform: 'translate(-50%,-50%) rotateX(0deg)'
-				}),
-				animate(
-					'200ms ease',
-					style({
-						transform: 'translate(-50%,-20%) rotateX(60deg)'
-					})
-				)
-			])
-		])
-	]
+	styleUrls: ['./radio.component.scss']
 })
 export class RadioComponent implements ControlValueAccessor {
 	public value: boolean = false

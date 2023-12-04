@@ -1,2 +1,1 @@
-export interface SwitchInterface {
-}
+export type MibSwitchSize = 'l' | 'm' | 's'

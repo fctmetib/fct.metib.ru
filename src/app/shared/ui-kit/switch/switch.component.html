@@ -1,1 +1,15 @@
-<p>switch works!</p>
+<label class="flex flex_align-center switch w-100" [ngClass]="class">
+	<input
+		type="checkbox"
+		[checked]="value"
+		(click)="onSwitchChange($event)"
+		class="switch-input"
+	/>
+	<span
+		[class.checked]="value"
+		class="switch-control flex flex_center"
+		[ngClass]="'switch-control_' + size"
+	>
+	</span>
+	<ng-content></ng-content>
+</label>

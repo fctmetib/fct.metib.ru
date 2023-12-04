@@ -1,0 +1,15 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+
+@mixin switch {
+	position: relative;
+	cursor: pointer;
+	background-color: red;
+}
+
+.switch {
+	@include switch;
+
+	.text {
+		user-select: none;
+	}
+}
