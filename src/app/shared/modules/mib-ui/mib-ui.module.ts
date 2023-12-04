@@ -10,6 +10,7 @@ import { BadgeModule } from '../../ui-kit/badge/badge.module'
 import { CheckboxModule } from '../../ui-kit/checkbox/checkbox.module'
 import { TagModule } from '../../ui-kit/tag/tag.module'
 import { RadioModule } from '../../ui-kit/radio/radio.module'
+import { SwitchModule } from '../../ui-kit/switch/switch.module'
 
 @NgModule({
 	imports: [
@@ -23,7 +24,8 @@ import { RadioModule } from '../../ui-kit/radio/radio.module'
 		BadgeModule,
 		CheckboxModule,
 		TagModule,
-		RadioModule
+		RadioModule,
+		SwitchModule
 	],
 	declarations: [MibUiComponent]
 })
