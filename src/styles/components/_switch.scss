@@ -1,9 +1,93 @@
 @import 'src/styles/helpers/_icon_tools.scss';
 
+@mixin switch-l {
+	width: 32px;
+	height: 24px;
+
+	&::before {
+		content: '';
+		width: 18px;
+		height: 18px;
+	}
+}
+
+@mixin switch-m {
+	width: 28px;
+	height: 20px;
+
+	&::before {
+		content: '';
+		width: 14px;
+		height: 14px;
+	}
+}
+
+@mixin switch-s {
+	width: 24px;
+	height: 16px;
+
+	&::before {
+		content: '';
+		width: 10px;
+		height: 10px;
+	}
+}
+
+@mixin switch-control {
+	transition: var(--transition);
+	position: relative;
+	border: 1px solid transparent;
+	border-radius: 16px;
+
+	&.checked {
+		background-color: var(--succes-color-default);
+		transition: var(--transition);
+	}
+
+	&::before {
+		content: '';
+		border-radius: 50%;
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		background-color: var(--wgr-quaternary);
+		transition: var(--transition);
+	}
+
+	&:hover::before {
+		background-color: var(--wgr-quaternary);
+		transition: var(--transition);
+	}
+
+	&:hover {
+		background-color: var(--wgr-primary);
+		border: 1px solid var(--wgr-tertiary);
+	}
+
+	&:active {
+		background-color: var(--wgr-tertiary);
+	}
+
+	&.checked::before {
+		background-color: var(--wgr-primary);
+		top: 2px;
+		left: 11px;
+	}
+
+	&.checked:hover {
+		background-color: var(--succes-color-hover);
+		border: 1px solid var(--succes-color-hover);
+	}
+
+	&.checked:active {
+		background-color: var(--succes-color-active);
+		border: 1px solid var(--succes-color-active);
+	}
+}
+
 @mixin switch {
 	position: relative;
 	cursor: pointer;
-	background-color: red;
 }
 
 .switch {
@@ -11,5 +95,26 @@
 
 	.text {
 		user-select: none;
+	}
+
+	&-control {
+		@include switch-control;
+
+		&_l {
+			@include switch-l;
+		}
+
+		&_m {
+			@include switch-m;
+		}
+
+		&_s {
+			@include switch-s;
+		}
+	}
+
+	&-input {
+		position: absolute;
+		left: -9999px;
 	}
 }
