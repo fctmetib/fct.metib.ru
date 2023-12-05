@@ -44,6 +44,7 @@ import { TableModule } from 'src/app/shared/ui-kit/table/table.module'
 import { SkeletonModule } from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import { RefIconModule } from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
 import { PaginatorModule } from 'src/app/shared/ui-kit/paginator/paginator.module'
+import { RequestDrawerModule } from './modules/request-drawer/request-drawer.module'
 
 @NgModule({
 	imports: [
@@ -80,6 +81,7 @@ import { PaginatorModule } from 'src/app/shared/ui-kit/paginator/paginator.modul
 		InputModule,
 		RefIconModule,
 		PaginatorModule
+		// RequestDrawerModule
 	],
 	declarations: [
 		//Components

@@ -5,6 +5,8 @@ import {
 	Observable,
 	Subscription,
 	finalize,
+	forkJoin,
+	filter,
 	switchMap,
 	tap
 } from 'rxjs'
@@ -24,9 +26,18 @@ import { RequestStoreService } from 'src/app/shared/services/store/request.store
 import { DocumentViewDialogComponent } from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component'
 import { ClientRequestSendingInitRequestInterface } from 'src/app/shared/types/client/client-request-sending-init-request.interface'
 import { SignService } from 'src/app/shared/services/share/sign.service'
-import { filter } from 'jszip'
+// import { filter } from 'jszip'
 import { Properties } from 'csstype'
 import { AdvancedRequests } from './interfaces/requests-page.interface'
+import { RequestDrawerService } from '../../modules/request-drawer/request-drawer.service'
+import { DrawerStateEnum } from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
+
+const ANIMATION_CONFIG = {
+	translateDistance: '-3%',
+	endOpacity: 0,
+	startOpacity: 1,
+	duration: 300
+}
 
 @Directive({
 	selector: '[tableHighlight]'
@@ -39,7 +50,10 @@ export class TableHighlightDirective {}
 	styleUrls: ['./requests-page.component.scss']
 })
 export class RequestsPageComponent implements OnInit, OnDestroy {
-	constructor(private requestsService: RequestsService) {}
+	constructor(
+		private requestsService: RequestsService,
+		private requestDrawerService: RequestDrawerService
+	) {}
 
 	public loading$ = new BehaviorSubject<boolean>(false)
 
@@ -88,7 +102,38 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 	}
 
 	openDrawer() {
-		console.log('halo')
+		this.requestDrawerService
+			.open<AdvancedRequests[]>({
+				state: DrawerStateEnum.CREATE,
+				data: this.selectedRequests
+			})
+			.afterClosed()
+			.pipe(
+				filter(Boolean),
+				tap(() => {
+					forkJoin(
+						this.selectedRequests.map(duty => this.removeDutyById(duty.ID))
+					).subscribe(() => {
+						this.onPageChange(this.currentPage)
+					})
+				})
+			)
+			.subscribe()
+	}
+
+	removeDutyById(id: number): Observable<void> {
+		return new Observable(observer => {
+			// Изменение состояния анимации
+			this.requestAnimationStates[id] = true
+
+			// Устанавливаем таймер для удаления элемента после завершения анимации
+			setTimeout(() => {
+				// Удаляем элемент по ID
+				this.requests = this.requests.filter(duty => duty.ID !== id)
+				observer.next() // Сигнал об успешном выполнении
+				observer.complete() // Завершаем Observable
+			}, ANIMATION_CONFIG.duration - 10)
+		})
 	}
 
 	onPageChange(page: number) {

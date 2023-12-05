@@ -46,9 +46,7 @@ export class RequestsService {
 		return this.http.get<RequestsResponse[]>(url)
 	}
 
-	public add(
-		data: ClientRequestInterface
-	): Observable<RequestsResponse> {
+	public add(data: ClientRequestInterface): Observable<RequestsResponse> {
 		const url = `${environment.apiUrl}/v1/requests`
 		return this.http.post<RequestsResponse>(url, data)
 	}
@@ -100,9 +98,7 @@ export class RequestsService {
 		return this.http.get<ClientRequestStateInterface[]>(url)
 	}
 
-	public getRequestsWithFilter(
-		dateFrom: Date
-	): Observable<RequestsResponse[]> {
+	public getRequestsWithFilter(dateFrom: Date): Observable<RequestsResponse[]> {
 		const url = `${environment.apiUrl}/v1/requests/filter/${dateFrom}`
 		return this.http.get<RequestsResponse[]>(url)
 	}
