@@ -7,13 +7,10 @@ import { RequestsRoutingModule } from './requests-routing.module'
 import { CommonModule } from '@angular/common'
 import { DropdownModule } from 'primeng/dropdown'
 import { CardModule } from 'primeng/card'
-import { ButtonModule } from 'primeng/button'
-import { TableModule } from 'primeng/table'
 import { MultiSelectModule } from 'primeng/multiselect'
 import { ProgressBarModule } from 'primeng/progressbar'
 import { SliderModule } from 'primeng/slider'
 import { TabViewModule } from 'primeng/tabview'
-import { SkeletonModule } from 'primeng/skeleton'
 import { CalendarModule } from 'primeng/calendar'
 import { TooltipModule } from 'primeng/tooltip'
 import { AccordionModule } from 'primeng/accordion'
@@ -42,9 +39,9 @@ import { ShipmentsViewComponent } from './components/requests-page/no-touch-this
 import { SpacingModule } from 'src/app/shared/ui-kit/spacing/spacing.module'
 import { TabModule } from 'src/app/shared/ui-kit/tab/tab.module'
 import { InputModule } from 'src/app/shared/ui-kit/input/input.module'
-import { ButtonModule as ButtonModule22 } from 'src/app/shared/ui-kit/button/button.module'
-import { TableModule as TableModule22 } from 'src/app/shared/ui-kit/table/table.module'
-import { SkeletonModule as SkeletonModule22 } from 'src/app/shared/ui-kit/skeleton/skeleton.module'
+import { ButtonModule } from 'src/app/shared/ui-kit/button/button.module'
+import { TableModule } from 'src/app/shared/ui-kit/table/table.module'
+import { SkeletonModule } from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import { RefIconModule } from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
 
 @NgModule({
@@ -80,9 +77,6 @@ import { RefIconModule } from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
 		SpacingModule,
 		TabModule,
 		InputModule,
-		ButtonModule22,
-		TableModule22,
-		SkeletonModule22,
 		RefIconModule
 	],
 	declarations: [

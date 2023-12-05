@@ -1,7 +1,7 @@
 import { RequestCorrectDialogComponent } from './../request-correct-dialog/request-correct-dialog.component'
 import { RequestCreateDialogComponent } from './../request-create-dialog/request-create-dialog.component'
 import { Observable, Subscription, switchMap, tap } from 'rxjs'
-import { RequestsResponseInterface } from './../../types/requestResponse.interface'
+import { RequestsResponse } from './../../types/requestResponse.interface'
 import {
 	Component,
 	OnInit,
@@ -35,7 +35,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
 	// ----------------- test data/methods ---------------
 
-	requestsData: RequestsResponseInterface[] = []
+	requestsData: RequestsResponse[] = []
 	public loading = false
 
 	ngOnInit() {
@@ -46,7 +46,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 	ngOnDestroy() {}
 
 	loadRequestData() {
-		this.requestsService.getRequestData().subscribe(requests => {
+		this.requestsService.getRequests().subscribe(requests => {
 			this.requestsData = requests
 			console.log('requests :>> ', requests)
 			console.log('requestsData :>> ', this.requestsData)

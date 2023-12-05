@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
-import { RequestsResponseInterface } from '../types/requestResponse.interface'
+import { RequestsResponse } from '../types/requestResponse.interface'
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface'
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface'
 
@@ -21,8 +21,8 @@ export class RequestsService {
 		)
 	}
 
-	public getRequestData(): Observable<RequestsResponseInterface[]> {
-		return this.http.get<RequestsResponseInterface[]>(
+	public getRequests(): Observable<RequestsResponse[]> {
+		return this.http.get<RequestsResponse[]>(
 			`${environment.apiUrl}/v1/requests`
 		)
 	}
@@ -41,24 +41,24 @@ export class RequestsService {
 
 	//#region REST
 
-	public fetch(): Observable<RequestsResponseInterface[]> {
+	public fetch(): Observable<RequestsResponse[]> {
 		const url = `${environment.apiUrl}/v1/requests`
-		return this.http.get<RequestsResponseInterface[]>(url)
+		return this.http.get<RequestsResponse[]>(url)
 	}
 
 	public add(
 		data: ClientRequestInterface
-	): Observable<RequestsResponseInterface> {
+	): Observable<RequestsResponse> {
 		const url = `${environment.apiUrl}/v1/requests`
-		return this.http.post<RequestsResponseInterface>(url, data)
+		return this.http.post<RequestsResponse>(url, data)
 	}
 
 	public update(
 		requestID: number,
 		data: ClientRequestInterface
-	): Observable<RequestsResponseInterface> {
+	): Observable<RequestsResponse> {
 		const url = `${environment.apiUrl}/v1/requests/${requestID}`
-		return this.http.post<RequestsResponseInterface>(url, data)
+		return this.http.post<RequestsResponse>(url, data)
 	}
 
 	public delete(requestID: number): Observable<{}> {
@@ -78,9 +78,9 @@ export class RequestsService {
 		return this.http.post<ClientShipmentInterface[]>(url, {})
 	}
 
-	public addFreeduty(data: number[]): Observable<RequestsResponseInterface[]> {
+	public addFreeduty(data: number[]): Observable<RequestsResponse[]> {
 		const url = `${environment.apiUrl}/v1/requests`
-		return this.http.post<RequestsResponseInterface[]>(url, data)
+		return this.http.post<RequestsResponse[]>(url, data)
 	}
 
 	public getRequestByIdAndParams(
@@ -88,9 +88,9 @@ export class RequestsService {
 		includeShipments: boolean,
 		includeDocuments: boolean,
 		includeFiles: boolean
-	): Observable<RequestsResponseInterface> {
+	): Observable<RequestsResponse> {
 		const url = `${environment.apiUrl}/v1/requests/${requestID}?includeShipments=${includeShipments}&includeDocuments=${includeDocuments}&includeFiles=${includeFiles}`
-		return this.http.get<RequestsResponseInterface>(url)
+		return this.http.get<RequestsResponse>(url)
 	}
 
 	public getStatesOfRequest(
@@ -102,9 +102,9 @@ export class RequestsService {
 
 	public getRequestsWithFilter(
 		dateFrom: Date
-	): Observable<RequestsResponseInterface[]> {
+	): Observable<RequestsResponse[]> {
 		const url = `${environment.apiUrl}/v1/requests/filter/${dateFrom}`
-		return this.http.get<RequestsResponseInterface[]>(url)
+		return this.http.get<RequestsResponse[]>(url)
 	}
 
 	// TODO: скорее всего возвращаются файлы

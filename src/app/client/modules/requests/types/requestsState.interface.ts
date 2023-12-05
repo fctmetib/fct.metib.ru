@@ -1,9 +1,9 @@
-import { RequestsResponseInterface } from "./requestResponse.interface";
+import { RequestsResponse } from "./requestResponse.interface";
 
 export interface RequestsStateInterface {
   isLoading: boolean
   error: string | null
-  data: RequestsResponseInterface[] | null
+  data: RequestsResponse[] | null
   isSubmitting: boolean;
   crudSuccessMessage: string | null;
   crudError: string | null;

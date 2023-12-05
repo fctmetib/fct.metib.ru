@@ -3,7 +3,7 @@ import { ClientRequestDocumentInterface } from 'src/app/shared/types/client/clie
 import { DeliveryReferenceInterface } from 'src/app/shared/types/delivery/delivery-reference.interface';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 
-export interface RequestsResponseInterface {
+export interface RequestsResponse {
   Number: string;
   Date: Date;
   Delivery: DeliveryReferenceInterface;

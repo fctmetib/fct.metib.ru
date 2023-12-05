@@ -8,7 +8,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FinanceTypeInterface } from '../../types/common/finance-type.interface';
 import { Observable, Subscription, tap } from 'rxjs';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
-import { RequestsResponseInterface } from '../../types/requestResponse.interface';
+import { RequestsResponse } from '../../types/requestResponse.interface';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
@@ -111,7 +111,7 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
     );
 
     if (this.config.data) {
-      let selectedRow: RequestsResponseInterface = this.config.data;
+      let selectedRow: RequestsResponse = this.config.data;
 
       if (selectedRow.Shipments) {
         this.shipments = selectedRow.Shipments;
