@@ -1,7 +1,13 @@
 import { RequestCorrectDialogComponent } from './../request-correct-dialog/request-correct-dialog.component'
 import { RequestCreateDialogComponent } from './../request-create-dialog/request-create-dialog.component'
-import { Observable, Subscription, switchMap, tap } from 'rxjs'
-import { RequestsResponse } from './../../types/requestResponse.interface'
+import {
+	BehaviorSubject,
+	Observable,
+	Subscription,
+	finalize,
+	switchMap,
+	tap
+} from 'rxjs'
 import {
 	Component,
 	OnInit,
@@ -19,6 +25,8 @@ import { DocumentViewDialogComponent } from 'src/app/client/shared/components/di
 import { ClientRequestSendingInitRequestInterface } from 'src/app/shared/types/client/client-request-sending-init-request.interface'
 import { SignService } from 'src/app/shared/services/share/sign.service'
 import { filter } from 'jszip'
+import { Properties } from 'csstype'
+import { AdvancedRequests } from './interfaces/requests-page.interface'
 
 @Directive({
 	selector: '[tableHighlight]'
@@ -33,31 +41,78 @@ export class TableHighlightDirective {}
 export class RequestsPageComponent implements OnInit, OnDestroy {
 	constructor(private requestsService: RequestsService) {}
 
-	// ----------------- test data/methods ---------------
+	public loading$ = new BehaviorSubject<boolean>(false)
 
-	requestsData: RequestsResponse[] = []
-	public loading = false
+	public skeletonWithoutUnderline: Properties = {
+		height: '48px',
+		width: '100%'
+	}
+	public skeleton: Properties = {
+		...this.skeletonWithoutUnderline,
+		borderBottom: '1px solid var(--wgr-tertiary)'
+	}
+
+	public PAGINATOR_ITEMS_PER_PAGE = 1
+	public PAGINATOR_PAGE_TO_SHOW = 1
+	public currentPage: number = 1
+
+	public requests: AdvancedRequests[] = []
+	public requestsVisible: AdvancedRequests[] = []
+	public requestAnimationStates: Record<number, boolean> = {}
+
+	public selectedRequestCount: number = 0
+	public severalRequestsChecked: boolean = false
 
 	ngOnInit() {
 		this.loadRequestData()
-		console.log('requestsData :>> ', this.requestsData)
 	}
 
 	ngOnDestroy() {}
 
 	loadRequestData() {
-		this.requestsService.getRequests().subscribe(requests => {
-			this.requestsData = requests
-			console.log('requests :>> ', requests)
-			console.log('requestsData :>> ', this.requestsData)
-		})
+		this.loading$.next(true)
+		this.requestsService
+			.getRequests()
+			.pipe(
+				tap(data => {
+					this.requests = data.map(x => ({ ...x, checked: false }))
+					// Инициализация состояния анимации
+					this.requests.forEach(req => {
+						this.requestAnimationStates[req.ID] = false
+					})
+					this.onPageChange(this.currentPage)
+				}),
+				finalize(() => this.loading$.next(false))
+			)
+			.subscribe()
 	}
 
-	selectedRequestCount = 0
-
-	btnClick() {
+	openDrawer() {
 		console.log('halo')
 	}
+
+	onPageChange(page: number) {
+		this.currentPage = page
+
+		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+
+		this.selectedRequestCount = 0
+		this.severalRequestsChecked = false
+
+		this.requestsVisible = this.requests.slice(startIndex, endIndex)
+	}
+
+	onRowCheck(boolean: boolean, req: AdvancedRequests) {
+		req.checked = boolean
+
+		this.selectedRequestCount = this.selectedRequests.length
+	}
+
+	get selectedRequests() {
+		return this.requestsVisible.filter(x => x.checked)
+	}
+
 	// ---------------- end test data/methods ----------------
 
 	// МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ

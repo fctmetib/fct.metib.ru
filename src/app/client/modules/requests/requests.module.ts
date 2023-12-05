@@ -43,6 +43,7 @@ import { ButtonModule } from 'src/app/shared/ui-kit/button/button.module'
 import { TableModule } from 'src/app/shared/ui-kit/table/table.module'
 import { SkeletonModule } from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import { RefIconModule } from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
+import { PaginatorModule } from 'src/app/shared/ui-kit/paginator/paginator.module'
 
 @NgModule({
 	imports: [
@@ -77,7 +78,8 @@ import { RefIconModule } from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
 		SpacingModule,
 		TabModule,
 		InputModule,
-		RefIconModule
+		RefIconModule,
+		PaginatorModule
 	],
 	declarations: [
 		//Components
