@@ -16,7 +16,7 @@ const routes = [
       },
       {
         path: 'requests',
-        loadChildren: () => import('./modules/requests/requests.module').then(m => m.RequestModule),
+        loadChildren: () => import('./modules/requests/requests.module').then(m => m.RequestsModule),
       },
       {
         path: 'freeduty',

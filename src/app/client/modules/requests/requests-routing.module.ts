@@ -1,7 +1,6 @@
-import { RequestsPageComponent } from './components/requests-page/requests-page.component';
-
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {RequestsPageComponent} from './pages/requests-page/requests-page.component';
 
 const routes = [
   {
@@ -19,4 +18,5 @@ const routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class RequestsRoutingModule {}
+export class RequestsRoutingModule {
+}
