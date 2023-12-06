@@ -51,9 +51,9 @@ export class TableHighlightDirective {}
 })
 export class RequestsPageComponent implements OnInit, OnDestroy {
 	constructor(
-		private requestsService: RequestsService,
-		private requestDrawerService: RequestDrawerService
-	) {}
+		private requestsService: RequestsService
+	) // private requestDrawerService: RequestDrawerService
+	{}
 
 	public loading$ = new BehaviorSubject<boolean>(false)
 
@@ -102,24 +102,28 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 	}
 
 	openDrawer() {
-		this.requestDrawerService
-			.open<AdvancedRequests[]>({
-				state: DrawerStateEnum.CREATE,
-				data: this.selectedRequests
-			})
-			.afterClosed()
-			.pipe(
-				filter(Boolean),
-				tap(() => {
-					forkJoin(
-						this.selectedRequests.map(duty => this.removeDutyById(duty.ID))
-					).subscribe(() => {
-						this.onPageChange(this.currentPage)
-					})
-				})
-			)
-			.subscribe()
+		console.log('halo')
 	}
+
+	// openDrawer() {
+	// 	this.requestDrawerService
+	// 		.open<AdvancedRequests[]>({
+	// 			state: DrawerStateEnum.CREATE,
+	// 			data: this.selectedRequests
+	// 		})
+	// 		.afterClosed()
+	// 		.pipe(
+	// 			filter(Boolean),
+	// 			tap(() => {
+	// 				forkJoin(
+	// 					this.selectedRequests.map(duty => this.removeDutyById(duty.ID))
+	// 				).subscribe(() => {
+	// 					this.onPageChange(this.currentPage)
+	// 				})
+	// 			})
+	// 		)
+	// 		.subscribe()
+	// }
 
 	removeDutyById(id: number): Observable<void> {
 		return new Observable(observer => {
