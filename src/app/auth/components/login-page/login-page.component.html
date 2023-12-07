@@ -1,14 +1,19 @@
 <app-header></app-header>
 <mib-spacing [customSpace]="65"></mib-spacing>
 <mib-spacing type="l"></mib-spacing>
-<div class="form flex flex_column">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form flex flex_column">
 	<h3>Личный кабинет</h3>
 	<mib-spacing type="s"></mib-spacing>
 	<mib-input>
 		<input
+			id="login"
 			mibInput
 			type="text"
-			required
+			formControlName="login"
+			[ngClass]="{
+				'mib-border-danger ng-dirty':
+					(isSubmitting$ | async) && form.get('login').invalid
+			}"
 			[size]="inputSizeXL"
 			styleType="filled-secondary"
 			placeholder="Введите логин"
@@ -19,11 +24,16 @@
 	<mib-input>
 		<input
 			mibInput
-			type="text"
+			[type]="fieldTextType ? 'text' : 'password'"
 			required
 			[size]="inputSizeXL"
 			styleType="filled-secondary"
+			formControlName="password"
 			placeholder="Введите пароль"
+			[ngClass]="{
+				'mib-border-danger ng-dirty':
+					(isSubmitting$ | async) && form.get('password').invalid
+			}"
 		/>
 		<ng-container input-label>Введите пароль</ng-container>
 		<mib-ref-icon
@@ -36,14 +46,20 @@
 	<mib-link> Забыли пароль? </mib-link>
 	<mib-spacing type="m"></mib-spacing>
 	<div class="flex gap-16">
-		<mib-button size="l" type="filled-secondary" class="flex_grow"
+		<mib-button
+			[routerLink]="['/auth/register']"
+			size="l"
+			type="filled-secondary"
+			class="flex_grow"
 			>Регистрация</mib-button
 		>
-		<mib-button size="l" class="flex_grow">Войти</mib-button>
+		<mib-button size="l" merge_type="filled-primary, submit" class="flex_grow"
+			>Войти</mib-button
+		>
 	</div>
-</div>
+</form>
 <mib-spacing type="xl2"></mib-spacing>
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+<!-- <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
 	<div class="auth__body__form__fields">
 		<div class="auth__body__form__fields__field">
 			<input
@@ -118,7 +134,7 @@
 			[routerLink]="['/auth/reset-password']"
 		></p-button>
 	</div>
-</form>
+</form> -->
 
 <!-- <div class="auth__body">
   <div class="auth__body__form">
