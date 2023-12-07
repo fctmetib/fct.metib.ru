@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
 import { AuthService } from 'src/app/auth/services/auth.service'
 import { ToolsService } from '../../services/tools.service'
 import { BehaviorSubject, filter, finalize, switchMap, tap } from 'rxjs'
@@ -17,6 +17,9 @@ import { DropdownService } from '../../ui-kit/dropdown/services/dropdown.service
 	styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+	@Input() signnedIn: boolean = false
+	@Input() showUpHeader: boolean = false
+
 	@ViewChild('header') el: ElementRef<HTMLDivElement>
 
 	items: MenuItem[]

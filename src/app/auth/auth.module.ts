@@ -21,6 +21,7 @@ import { AuthComponent } from './auth.component'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthInterceptor } from './services/auth.interceptor'
 import { TooltipModule } from 'primeng/tooltip'
+import { HeaderModule } from '../shared/modules/header/header.module'
 
 @NgModule({
 	imports: [
@@ -37,7 +38,8 @@ import { TooltipModule } from 'primeng/tooltip'
 		MessagesModule,
 		ButtonModule,
 		InputMaskModule,
-		TooltipModule
+		TooltipModule,
+		HeaderModule
 	],
 	declarations: [
 		AuthComponent,

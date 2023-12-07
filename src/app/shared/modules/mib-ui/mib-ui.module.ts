@@ -11,6 +11,7 @@ import { CheckboxModule } from '../../ui-kit/checkbox/checkbox.module'
 import { TagModule } from '../../ui-kit/tag/tag.module'
 import { RadioModule } from '../../ui-kit/radio/radio.module'
 import { SwitchModule } from '../../ui-kit/switch/switch.module'
+import { HeaderModule } from '../header/header.module'
 
 @NgModule({
 	imports: [
@@ -25,7 +26,8 @@ import { SwitchModule } from '../../ui-kit/switch/switch.module'
 		CheckboxModule,
 		TagModule,
 		RadioModule,
-		SwitchModule
+		SwitchModule,
+		HeaderModule
 	],
 	declarations: [MibUiComponent]
 })
