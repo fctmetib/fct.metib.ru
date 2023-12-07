@@ -1,0 +1,37 @@
+@import "src/styles/typography.vars";
+
+:host {
+  background-color: var(--wgr-primary);
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.header {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--wgr-secondary);
+}
+
+.container {
+  padding: 0 32px;
+}
+
+.manager {
+}
+
+.name {
+  @include text-overflow(1);
+  max-width: 132px;
+}
+
+.user {
+  .name {
+    max-width: 176px;
+  }
+}
+
+.label {
+  padding: 2px 0;
+}

@@ -32,6 +32,12 @@ ng g m shared/modules/mib-ui --dry-run
  ng g c shared/ui-kit/switch/switch --flat --skip-tests --dry-run // fx update parent module
  ng g c shared/ui-kit/tag/tag --flat --skip-tests --dry-run
  ng g c shared/ui-kit/input/components/autocomplete --flat --skip-tests --dry-run
+
+ //--- add header module
+src\app\shared\modules\header\header.component.html
+ng g m shared/modules/header/header --flat --dry-run
+ //---
+
 // add m
 ng g m shared/ui-kit/input --dry-run
 ng g m shared/ui-kit/badge --dry-run
