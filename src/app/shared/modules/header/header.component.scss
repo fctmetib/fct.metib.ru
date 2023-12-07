@@ -1,37 +1,53 @@
-@import "src/styles/typography.vars";
+@import 'src/styles/typography.vars';
+@import 'src/styles/helpers/icon_tools';
 
 :host {
-  background-color: var(--wgr-primary);
-  position: absolute;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  width: 100%;
+	background-color: var(--wgr-primary);
+	position: absolute;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	width: 100%;
 }
 
 .header {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--wgr-secondary);
+	padding: 12px 0;
+	border-bottom: 1px solid var(--wgr-secondary);
+}
+
+.unsignned {
+	border-bottom: 1px solid var(--wgr-secondary);
+	& .container {
+		max-width: 1136px;
+		> div {
+			max-width: 625px;
+		}
+	}
 }
 
 .container {
-  padding: 0 32px;
-}
-
-.manager {
+	padding: 0 32px;
 }
 
 .name {
-  @include text-overflow(1);
-  max-width: 132px;
+	@include text-overflow(1);
+	max-width: 132px;
 }
 
 .user {
-  .name {
-    max-width: 176px;
-  }
+	.name {
+		max-width: 176px;
+	}
 }
 
 .label {
-  padding: 2px 0;
+	padding: 2px 0;
+}
+
+.logotype {
+	background-color: var(--wgr-primary);
+	padding: 12px 16px;
+	mib-ref-icon {
+		@include icon-size(unset);
+	}
 }

@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { CardModule } from 'primeng/card'
-import { ButtonModule } from 'primeng/button'
+import { ButtonModule as ButtonModule22 } from 'primeng/button'
 import { MessagesModule } from 'primeng/messages'
 import { MessageModule } from 'primeng/message'
 import { InputMaskModule } from 'primeng/inputmask'
@@ -22,6 +22,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthInterceptor } from './services/auth.interceptor'
 import { TooltipModule } from 'primeng/tooltip'
 import { HeaderModule } from '../shared/modules/header/header.module'
+import { SpacingModule } from '../shared/ui-kit/spacing/spacing.module'
+import { InputModule } from '../shared/ui-kit/input/input.module'
+import { RefIconModule } from '../shared/ui-kit/ref-icon/ref-icon.module'
+import { LinkModule } from '../shared/ui-kit/link/link.module'
+import { ButtonModule } from '../shared/ui-kit/button/button.module'
 
 @NgModule({
 	imports: [
@@ -33,13 +38,18 @@ import { HeaderModule } from '../shared/modules/header/header.module'
 		InputTextModule,
 		DropdownModule,
 		ProgressSpinnerModule,
+		ButtonModule22,
 		CardModule,
 		MessageModule,
 		MessagesModule,
 		ButtonModule,
 		InputMaskModule,
 		TooltipModule,
-		HeaderModule
+		HeaderModule,
+		SpacingModule,
+		InputModule,
+		RefIconModule,
+		LinkModule
 	],
 	declarations: [
 		AuthComponent,

@@ -15,10 +15,10 @@
 }
 
 @mixin btn-color($color) {
-  color: $color;
-  mib-ref-icon {
-    @include icon-color($color);
-  }
+	color: $color;
+	mib-ref-icon {
+		@include icon-color($color);
+	}
 }
 
 @mixin btn-xl {
@@ -65,15 +65,17 @@ $text-selectors: '&, span';
 	align-items: center;
 	white-space: nowrap;
 	gap: 4px;
+	width: 100%;
 	border-radius: var(--main-border-radius);
 	background-color: transparent;
 	border: 1px solid transparent;
 	@include body-text;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-	transition: color var(--main-transition), background-color var(--main-transition), border-color var(--main-transition);
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	transition: color var(--main-transition),
+		background-color var(--main-transition), border-color var(--main-transition);
 	&_left-iconly .btn_left-wrapper {
 		display: block;
 	}
@@ -94,9 +96,9 @@ $text-selectors: '&, span';
 .btn {
 	@include btn;
 
-  &:disabled {
-    cursor: not-allowed;
-  }
+	&:disabled {
+		cursor: not-allowed;
+	}
 	--btn-xl-icon-size: 20px;
 	--btn-l-icon-size: 20px;
 	--btn-m-icon-size: 20px;
@@ -266,36 +268,35 @@ $text-selectors: '&, span';
 	&_ghost-primary {
 		font-weight: var(--fw-medium);
 
-    @include btn-color(var(--mc-default));
+		@include btn-color(var(--mc-default));
 
 		&:hover {
-      @include btn-color(var(--mc-hover));
+			@include btn-color(var(--mc-hover));
 		}
 
 		&:active {
-      @include btn-color(var(--mc-active));
+			@include btn-color(var(--mc-active));
 		}
 
 		&:disabled {
-      @include btn-color(var(--wti-quaternary));
+			@include btn-color(var(--wti-quaternary));
 			background: var(--wgr-primary);
 		}
 	}
 
 	&_ghost-secondary {
-
-    @include btn-color(var(--bti-secondary));
+		@include btn-color(var(--bti-secondary));
 
 		&:hover {
-      @include btn-color(var(--bti-tertiary));
+			@include btn-color(var(--bti-tertiary));
 		}
 
 		&:active {
-      @include btn-color(var(--bti-primary));
+			@include btn-color(var(--bti-primary));
 		}
 
 		&:disabled {
-      @include btn-color(var(--bti-quaternary));
+			@include btn-color(var(--bti-quaternary));
 			background: var(--wgr-primary);
 		}
 	}

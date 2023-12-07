@@ -88,7 +88,30 @@
 	</div>
 </ng-container>
 <ng-template #second>
-	<div class="test1">HEADER DEFAULT WITHOUT LOG IN</div>
+	<div class="unsignned">
+		<div
+			class="container container_large flex flex_justify-between flex_align-center"
+		>
+			<div class="flex flex_grow flex_wrap flex_justify-between">
+				<div routerLink="#" class="logotype cursor-pointer">
+					<mib-ref-icon name="logotype"></mib-ref-icon>
+				</div>
+				<div class="flex flex_center gap-32">
+					<a class="text text_m cursor-pointer" routerLink="#">Клиентам</a>
+					<a class="text text_m cursor-pointer" routerLink="#">Тарифы</a>
+					<a class="text text_m cursor-pointer" routerLink="#">Главная</a>
+					<a class="text text_m cursor-pointer" routerLink="#">Контакты</a>
+				</div>
+			</div>
+			<mib-button btn_left-iconly type="filled-secondary" size="m">
+				<mib-ref-icon
+					btn-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-ref-icon>
+			</mib-button>
+		</div>
+	</div>
 	<ng-container *ngIf="showUpHeader">
 		<div class="test-2">UP HEADER PLUS</div>
 	</ng-container>
