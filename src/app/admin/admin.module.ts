@@ -18,10 +18,10 @@ import { SkeletonModule } from 'primeng/skeleton'
 import { AdminGuard } from '../shared/services/admin.guard'
 import { ProgressSpinnerModule } from 'primeng/progressspinner'
 import { AdminComponent } from './admin.component'
-import { HeaderComponent } from './shared/header/header.component'
 import { MobileHeaderComponent } from './shared/mobile-header/mobile-header.component'
 import { AdminAuthInterceptor } from './shared/services/admin-auth.interceptor'
 import { PageStoreService } from './shared/services/page-store.service'
+import { HeaderModule } from '../shared/modules/header/header.module'
 
 const routes = [
 	{
@@ -75,15 +75,11 @@ const routes = [
 		AvatarModule,
 		FormsModule,
 		ReactiveFormsModule,
+		HeaderModule,
 		RouterModule.forChild(routes)
 	],
 	exports: [RouterModule],
-	declarations: [
-		// Layout
-		AdminComponent,
-		HeaderComponent,
-		MobileHeaderComponent
-	],
+	declarations: [AdminComponent, MobileHeaderComponent],
 	providers: [
 		PageStoreService,
 		DialogService,

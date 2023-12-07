@@ -1,15 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { AuthService } from 'src/app/auth/services/auth.service'
-import { ToolsService } from '../../services/tools.service'
+import { AuthService } from '../../../../auth/services/auth.service'
+import { ToolsService } from '../../../../shared/services/tools.service'
 import { BehaviorSubject, filter, finalize, switchMap, tap } from 'rxjs'
-import { environment } from 'src/environments/environment'
-import { CurrentUserFactoring } from '../../types/currentUserFactoring'
-import { CurrentUserGeneral } from '../../types/currentUserGeneral'
-import { Customer } from '../../types/customer/customer'
+import { environment } from '../../../../../environments/environment'
+import { CurrentUserFactoring } from '../../../../shared/types/currentUserFactoring'
+import { CurrentUserGeneral } from '../../../../shared/types/currentUserGeneral'
+import { Customer } from '../../../../shared/types/customer/customer'
 import { MenuItem } from 'primeng/api'
-import { ClientService } from '../../services/common/client.service'
+import { ClientService } from '../../../../shared/services/common/client.service'
 import { Properties } from 'csstype'
-import { DropdownService } from '../../ui-kit/dropdown/services/dropdown.service'
+import { DropdownService } from '../../../../shared/ui-kit/dropdown/services/dropdown.service'
 
 @Component({
 	selector: 'app-header',
