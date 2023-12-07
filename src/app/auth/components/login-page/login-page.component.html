@@ -1,4 +1,83 @@
-<div class="auth__body">
+<h1>halo</h1>
+<hr />
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+	<div class="auth__body__form__fields">
+		<div class="auth__body__form__fields__field">
+			<input
+				id="login"
+				type="text"
+				pInputText
+				placeholder="Логин"
+				formControlName="login"
+				[ngClass]="{
+					'mib-border-danger ng-dirty':
+						(isSubmitting$ | async) && form.get('login').invalid
+				}"
+			/>
+			<small
+				class="p-error"
+				*ngIf="(isSubmitting$ | async) && form.get('login').invalid"
+			>
+				<div *ngIf="form.get('login').errors['required']">
+					Поле Логин не должно быть пустым
+				</div>
+			</small>
+		</div>
+
+		<div class="auth__body__form__fields__field">
+			<div class="p-inputgroup">
+				<input
+					[type]="fieldTextType ? 'text' : 'password'"
+					pInputText
+					placeholder="Пароль"
+					formControlName="password"
+					[ngClass]="{
+						'mib-border-danger ng-dirty':
+							(isSubmitting$ | async) && form.get('password').invalid
+					}"
+				/>
+				<button
+					type="button"
+					pButton
+					pRipple
+					[icon]="fieldTextType ? 'pi pi-eye' : 'pi pi-eye-slash'"
+					styleClass="p-button-icon"
+					(click)="this.fieldTextType = !this.fieldTextType"
+				></button>
+			</div>
+			<small
+				class="p-error"
+				*ngIf="(isSubmitting$ | async) && form.get('password').invalid"
+			>
+				<div *ngIf="form.get('password').errors['required']">
+					Поле Пароль не должно быть пустым
+				</div>
+			</small>
+		</div>
+	</div>
+	<div class="actions">
+		<button
+			pButton
+			type="submit"
+			[disabled]="isSubmitting$ | async"
+			label="Вход"
+		></button>
+	</div>
+	<div class="actions actions_additional">
+		<p-button
+			styleClass="p-button-link"
+			[routerLink]="['/auth/register']"
+			label="Регистрация"
+		></p-button>
+		<p-button
+			styleClass="p-button-link"
+			label="Забыли пароль?"
+			[routerLink]="['/auth/reset-password']"
+		></p-button>
+	</div>
+</form>
+
+<!-- <div class="auth__body">
   <div class="auth__body__form">
     <div class="auth__body__form__title">
       <h1>Личный кабинет</h1>
@@ -83,9 +162,9 @@
       </div>
     </form>
   </div>
-  <!--  <div class="auth__body__promo">
+   <div class="auth__body__promo">
     <div class="auth__body__promo__image">
      <img src="../../../../assets/auth/promo_money_.png" alt="Деньги">
     </div>
-  </div> -->
-</div>
+  </div>
+</div> -->
