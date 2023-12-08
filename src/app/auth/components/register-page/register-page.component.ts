@@ -1,179 +1,197 @@
-import { DomSanitizer } from '@angular/platform-browser';
-import { BehaviorSubject, catchError, finalize, of, tap } from 'rxjs';
-import { Component } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
-import { MaleOptionsInterface } from '../../types/common/maleOptions.interface';
-import { CommonService } from '../../../shared/services/common/common.service';
-import { RegisterRequestInterface } from '../../types/register/registerRequest.interface';
-import Validation from '../../tools/confirmPassword.tool';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser'
+import { BehaviorSubject, catchError, finalize, of, tap } from 'rxjs'
+import { Component } from '@angular/core'
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
+import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface'
+import { MaleOptionsInterface } from '../../types/common/maleOptions.interface'
+import { CommonService } from '../../../shared/services/common/common.service'
+import { RegisterRequestInterface } from '../../types/register/registerRequest.interface'
+import Validation from '../../tools/confirmPassword.tool'
+import { AuthService } from '../../services/auth.service'
+import { Router } from '@angular/router'
+import { InputSize } from 'src/app/shared/ui-kit/input/interfaces/input.interface'
 
 @Component({
-  selector: 'app-register-page',
-  templateUrl: './register-page.component.html',
-  styleUrls: ['./register-page.component.scss'],
+	selector: 'app-register-page',
+	templateUrl: './register-page.component.html',
+	styleUrls: ['./register-page.component.scss']
 })
 export class RegisterPageComponent {
-  public form: FormGroup;
-  public formConfirm: FormGroup;
-  public testForm: FormGroup;
+	public inputSizeXL: InputSize = 'xl'
 
-  public genderOptions: MaleOptionsInterface[] = [];
+	public form: FormGroup
+	public formConfirm: FormGroup
+	public testForm: FormGroup
 
-  public isSubmitting$ = new BehaviorSubject<boolean>(false);
-  public backendErrors$ = new BehaviorSubject<string>(null);
-  public confirmationCode$ = new BehaviorSubject<string>('');
+	public genderOptions: MaleOptionsInterface[] = []
 
-  image: any;
+	public isSubmitting$ = new BehaviorSubject<boolean>(false)
+	public backendErrors$ = new BehaviorSubject<string>(null)
+	public confirmationCode$ = new BehaviorSubject<string>('')
 
-  private captchaCode: string = '';
+	image: any
 
-  constructor(
-    private fb: FormBuilder,
-    private sanitizer: DomSanitizer,
-    private commonService: CommonService,
-    private router: Router,
-    private authService: AuthService,
-  ) { }
+	private captchaCode: string = ''
 
-  public ngOnInit(): void {
-    this.initializeForm();
-    this.initializeValues();
-  }
+	constructor(
+		private fb: FormBuilder,
+		private sanitizer: DomSanitizer,
+		private commonService: CommonService,
+		private router: Router,
+		private authService: AuthService
+	) {}
 
-  private initializeForm(): void {
-    this.form = new FormGroup(
-      {
-        captcha: new FormGroup({
-          text: new FormControl('', Validators.required),
-        }),
-        password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]),
-        confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]),
-        profile: new FormGroup({
-          login: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]),
-          email: new FormControl('', [Validators.required, Validators.email]),
-          isMale: new FormControl('', Validators.required),
-          name: new FormGroup({
-            first: new FormControl('', Validators.required),
-            last: new FormControl('', Validators.required),
-          }),
-          phone: new FormControl('', Validators.required)
-        }),
-      }, [
-      Validation.confirmedValidator('password', 'confirmPassword')
-    ]
-    );
+	public ngOnInit(): void {
+		this.initializeForm()
+		this.initializeValues()
+	}
 
-    this.formConfirm = this.fb.group({
-      pin: ['', Validators.required]
-    });
+	private initializeForm(): void {
+		this.form = new FormGroup(
+			{
+				captcha: new FormGroup({
+					text: new FormControl('', Validators.required)
+				}),
+				password: new FormControl('', [
+					Validators.required,
+					Validators.minLength(6),
+					Validators.pattern(/^[^А-Яа-я]+$/)
+				]),
+				confirmPassword: new FormControl('', [
+					Validators.required,
+					Validators.minLength(6),
+					Validators.pattern(/^[^А-Яа-я]+$/)
+				]),
+				profile: new FormGroup({
+					login: new FormControl({ value: '', disabled: true }, [
+						Validators.required,
+						Validators.minLength(6)
+					]),
+					email: new FormControl('', [Validators.required, Validators.email]),
+					isMale: new FormControl('', Validators.required),
+					name: new FormGroup({
+						first: new FormControl('', Validators.required),
+						last: new FormControl('', Validators.required)
+					}),
+					phone: new FormControl('', Validators.required)
+				})
+			},
+			[Validation.confirmedValidator('password', 'confirmPassword')]
+		)
 
-    this.form
-      .get('profile')
-      .get('email')
-      .valueChanges
-      .subscribe((updatedEmail: string): void => {
-        this.form.patchValue({
-          profile: {
-            login: updatedEmail
-          },
-        });
-      });
-  }
+		this.formConfirm = this.fb.group({
+			pin: ['', Validators.required]
+		})
 
-  private initializeValues(): void {
-    this.updateCaptcha();
-    this.genderOptions = [
-      {
-        name: 'Мужской',
-        value: true,
-      },
-      {
-        name: 'Женский',
-        value: false,
-      }
-    ];
-  }
+		this.form
+			.get('profile')
+			.get('email')
+			.valueChanges.subscribe((updatedEmail: string): void => {
+				this.form.patchValue({
+					profile: {
+						login: updatedEmail
+					}
+				})
+			})
+	}
 
-  public updateCaptcha(): void {
-    this.commonService.getCaptcha().subscribe((resp) => {
-      var uint8View = new Uint8Array(resp.body);
-      const STRING_CHAR = String.fromCharCode.apply(null, uint8View);
-      let base64String = btoa(STRING_CHAR);
-      this.image = this.sanitizer.bypassSecurityTrustUrl(
-        `data:image/jpg;base64, ` + base64String
-      );
+	private initializeValues(): void {
+		this.updateCaptcha()
+		this.genderOptions = [
+			{
+				name: 'Мужской',
+				value: true
+			},
+			{
+				name: 'Женский',
+				value: false
+			}
+		]
+	}
 
-      this.captchaCode = resp.headers.get('Content-Disposition');
-      this.captchaCode = this.captchaCode.split('=').pop();
-      this.captchaCode = this.captchaCode.split('.')[0];
-    });
-  }
+	public updateCaptcha(): void {
+		this.commonService.getCaptcha().subscribe(resp => {
+			var uint8View = new Uint8Array(resp.body)
+			const STRING_CHAR = String.fromCharCode.apply(null, uint8View)
+			let base64String = btoa(STRING_CHAR)
+			this.image = this.sanitizer.bypassSecurityTrustUrl(
+				`data:image/jpg;base64, ` + base64String
+			)
 
-  public onSubmit(): void {
-    this.isSubmitting$.next(true);
+			this.captchaCode = resp.headers.get('Content-Disposition')
+			this.captchaCode = this.captchaCode.split('=').pop()
+			this.captchaCode = this.captchaCode.split('.')[0]
+		})
+	}
 
-    if (this.form.invalid) {
-      return;
-    }
+	public onSubmit(): void {
+		this.isSubmitting$.next(true)
 
-    const request: RegisterRequestInterface = {
-      Captcha: {
-        Code: this.captchaCode,
-        Text: this.form.value.captcha.text,
-      },
-      Password: this.form.value.password,
-      Profile: {
-        Email: this.form.value.profile.email,
-        IsMale: this.form.value.profile.isMale,
-        Login: this.form.value.profile.email,
-        Name: {
-          First: this.form.value.profile.name.first,
-          Last: this.form.value.profile.name.last,
-        },
-        Phone: this.form.value.profile.phone,
-      },
-    };
+		if (this.form.invalid) {
+			return
+		}
 
-    this.authService.register(request).pipe(
-      tap((result) => {
-        this.confirmationCode$.next(result.ConfirmationCode)
-      }),
-      catchError((error) => {
-        this.backendErrors$.next(error)
-        return of(error)
-      }),
-      finalize(() => {
-        this.isSubmitting$.next(false);
-      })
-    ).subscribe();
-  }
+		const request: RegisterRequestInterface = {
+			Captcha: {
+				Code: this.captchaCode,
+				Text: this.form.value.captcha.text
+			},
+			Password: this.form.value.password,
+			Profile: {
+				Email: this.form.value.profile.email,
+				IsMale: this.form.value.profile.isMale,
+				Login: this.form.value.profile.email,
+				Name: {
+					First: this.form.value.profile.name.first,
+					Last: this.form.value.profile.name.last
+				},
+				Phone: this.form.value.profile.phone
+			}
+		}
 
-  public onConfirmSubmit(): void {
-    this.isSubmitting$.next(true);
+		this.authService
+			.register(request)
+			.pipe(
+				tap(result => {
+					this.confirmationCode$.next(result.ConfirmationCode)
+				}),
+				catchError(error => {
+					this.backendErrors$.next(error)
+					return of(error)
+				}),
+				finalize(() => {
+					this.isSubmitting$.next(false)
+				})
+			)
+			.subscribe()
+	}
 
-    const request: RegisterConfirmRequestInterface = {
-      ConfirmationCode: this.confirmationCode$.value,
-      Pin: this.formConfirm.value.pin,
-    };
+	public onConfirmSubmit(): void {
+		this.isSubmitting$.next(true)
 
-    this.authService.registerConfirm(request).pipe(
-      tap((result) => {
-        this.router.navigate(['/auth/login'], {
-          queryParams: {
-            successRegistration: true,
-          },
-        });
-      }),
-      catchError((error) => {
-        this.backendErrors$.next(error)
-        return of(error)
-      }),
-      finalize(() => {
-        this.isSubmitting$.next(false);
-      })
-    ).subscribe();
-  }
+		const request: RegisterConfirmRequestInterface = {
+			ConfirmationCode: this.confirmationCode$.value,
+			Pin: this.formConfirm.value.pin
+		}
+
+		this.authService
+			.registerConfirm(request)
+			.pipe(
+				tap(result => {
+					this.router.navigate(['/auth/login'], {
+						queryParams: {
+							successRegistration: true
+						}
+					})
+				}),
+				catchError(error => {
+					this.backendErrors$.next(error)
+					return of(error)
+				}),
+				finalize(() => {
+					this.isSubmitting$.next(false)
+				})
+			)
+			.subscribe()
+	}
 }
