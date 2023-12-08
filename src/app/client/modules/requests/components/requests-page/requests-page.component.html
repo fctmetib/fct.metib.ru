@@ -98,6 +98,16 @@
               <div>Сумма заявки</div>
             </div>
           </th>
+          <th>
+            <div class="m-th">
+              <div>Только чтение</div>
+            </div>
+          </th>
+          <th>
+            <div class="m-th">
+              <div>Коррекция</div>
+            </div>
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-request>
@@ -127,13 +137,15 @@
           </td>
           <td>
             <div class="m-td">
-              <!-- TODO:: rework it on PIPE -->
               <div [ngSwitch]="request.Type">
                 <div *ngSwitchCase="'Financing'">
                   С финансированием
                 </div>
                 <div *ngSwitchCase="'NonFinancing'">
                   Без финансирования
+                </div>
+                <div *ngSwitchCase="'Correction'">
+                  Коррекция
                 </div>
               </div>
             </div>
@@ -153,6 +165,16 @@
               <div>{{ request.Summ | currency:'RUB':'symbol-narrow' }}</div>
             </div>
           </td>
+          <td>
+            <div class="m-td">
+              <div>{{request.ReadOnly ? 'Да' : 'Нет'}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="m-td">
+              <div>{{request.IsCorrected ? 'Да' : 'Нет'}}</div>
+            </div>
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
@@ -164,6 +186,20 @@
         <ng-template #skeletonRequestsTemplate>
           <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
             <td>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="m-td">
+                <div>
+                  <p-skeleton width="10rem"></p-skeleton>
+                </div>
+              </div>
             </td>
             <td>
               <div class="m-td">

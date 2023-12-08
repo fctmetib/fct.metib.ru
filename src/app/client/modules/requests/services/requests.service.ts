@@ -1,7 +1,7 @@
 import { ClientRequestStateInterface } from 'src/app/shared/types/client/client-request-state.interface';
 import { ClientRequestSendingInitRequestInterface } from 'src/app/shared/types/client/client-request-sending-init-request.interface';
 import { ConfirmRequestInterface } from 'src/app/shared/types/common/confirm-request.interface';
-import { ClientRequestInterface } from 'src/app/shared/types/client/client-request.interface';
+import { ClientRequestInterface, CorrectionRequestInterface } from 'src/app/shared/types/client/client-request.interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -28,12 +28,19 @@ export class RequestsService {
     return this.http.post<RequestsResponseInterface>(url, data);
   }
 
+  uploadDocument(document: any, requestID: number, documentType: string) {
+    return this.http.post(`${environment.apiUrl}/v1/requests/${requestID}/${documentType}`, document);
+  }
+
+  public addCorrection(data: CorrectionRequestInterface): Observable<number> {
+    return this.http.post<number>(`${environment.apiUrl}/v1/requests/correction`, data)
+  }
+
   public update(
-    requestID: number,
     data: ClientRequestInterface
   ): Observable<RequestsResponseInterface> {
-    const url = `${environment.apiUrl}/v1/requests/${requestID}`;
-    return this.http.post<RequestsResponseInterface>(url, data);
+    const url = `${environment.apiUrl}/v1/requests`;
+    return this.http.put<RequestsResponseInterface>(url, data);
   }
 
   public delete(requestIDs: number[]): Observable<{}> {
@@ -64,9 +71,8 @@ export class RequestsService {
     requestID: number,
     includeShipments: boolean,
     includeDocuments: boolean,
-    includeFiles: boolean
   ): Observable<RequestsResponseInterface> {
-    const url = `${environment.apiUrl}/v1/requests/${requestID}?includeShipments=${includeShipments}&includeDocuments=${includeDocuments}&includeFiles=${includeFiles}`;
+    const url = `${environment.apiUrl}/v1/requests/${requestID}?includeShipments=${includeShipments}&includeDocuments=${includeDocuments}`;
     return this.http.get<RequestsResponseInterface>(url);
   }
 

@@ -8,6 +8,7 @@ export interface RequestsResponseInterface {
   Date: Date;
   Delivery: DeliveryReferenceInterface;
   Type: string;
+  IsCorrected?: boolean;
   ReadOnly?: boolean;
   Status: string;
   Summ: number;

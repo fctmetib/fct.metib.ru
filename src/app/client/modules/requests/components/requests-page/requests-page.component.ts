@@ -75,17 +75,17 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
         label: 'Создать',
         command: () => this.showCreateRequestDialog(),
       },
-      // {
-      //   id: 'edit',
-      //   label: 'Редактировать',
-      //   command: () => this.showEditDialog(),
-      // },
-      // {
-      //   // todo: нужно
-      //   id: 'createCorrection',
-      //   label: 'Сделать коррекцию',
-      //   command: () => this.showCorrectionDialog(),
-      // },
+      {
+        id: 'edit',
+        label: 'Редактировать',
+        command: () => this.showEditDialog(),
+      },
+      {
+        // todo: нужно
+        id: 'createCorrection',
+        label: 'Сделать коррекцию',
+        command: () => this.showCorrectionDialog(),
+      },
       {
         id: 'events',
         label: 'События',
@@ -112,7 +112,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   public selectRow(request: RequestsResponseInterface): void {
     this.subscription$.add(
       this.requestService
-        .getRequestByIdAndParams(request.ID, true, true, true)
+        .getRequestByIdAndParams(request.ID, true, true)
         .subscribe((requestWithAdditionalData) => {
           this.selectedRequest$.next(requestWithAdditionalData);
         })
@@ -138,8 +138,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   private showCreateRequestDialog(): void {
     this.ref = this.dialogService.open(RequestCreateDialogComponent, {
       header: 'Создание заявки',
-      width: '85%',
-      contentStyle: { height: '800px', overflow: 'auto' },
       baseZIndex: 10000,
     });
 
@@ -176,34 +174,46 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   private showCorrectionDialog(): void {
-    this.ref = this.dialogService.open(RequestCorrectDialogComponent, {
-      data: this.selectedItems,
-      header: 'Заявка на коррекцию',
-      width: '85%',
-      baseZIndex: 10000,
-    });
+    let selectedRow = this.selectedItems[0];
+
+    if (selectedRow && !selectedRow.IsCorrected) {
+      this.ref = this.dialogService.open(RequestCorrectDialogComponent, {
+        data: this.selectedItems,
+        header: 'Заявка на коррекцию',
+        width: '85%',
+        baseZIndex: 10000,
+      });
+      this.ref.onClose.pipe(
+        tap(() => {
+          this.fetch();
+        })
+      ).subscribe()
+    }
+
   }
 
   private showEditDialog(): void {
     let selectedRow = this.selectedItems[0];
 
-    this.subscription$.add(
-      this.requestService
-        .getRequestByIdAndParams(selectedRow.ID, true, true, true)
-        .subscribe((resp: RequestsResponseInterface): void => {
-          selectedRow = resp;
-
-          if (selectedRow) {
-            this.ref = this.dialogService.open(RequestCreateDialogComponent, {
-              header: 'Редактирование заявки',
-              width: '70%',
-              contentStyle: { height: '800px', overflow: 'auto' },
-              baseZIndex: 10000,
-              data: selectedRow,
-            });
-          }
-        })
-    );
+    if (selectedRow && !selectedRow.ReadOnly) {
+      this.subscription$.add(
+        this.requestService
+          .getRequestByIdAndParams(selectedRow.ID, true, true)
+          .subscribe((resp: RequestsResponseInterface): void => {
+            selectedRow = resp;
+  
+            if (selectedRow) {
+              this.ref = this.dialogService.open(RequestCreateDialogComponent, {
+                header: 'Редактирование заявки',
+                width: '70%',
+                contentStyle: { height: '800px', overflow: 'auto' },
+                baseZIndex: 10000,
+                data: selectedRow,
+              });
+            }
+          })
+      );
+    }
   }
 
   private initSend(): void {

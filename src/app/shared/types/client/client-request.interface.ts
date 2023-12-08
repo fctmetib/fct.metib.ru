@@ -31,3 +31,14 @@ export interface ClientRequestInterface {
   Files?: FileModeInterface[]
 }
 // {"DeliveryID":20940,"Type":"Financing","Number":"","Title":"","Date":"2021-03-17T09:53:34+03:00","Shipments":[],"Files":[]}
+
+export interface CorrectionRequestInterface {
+  ID: number;
+  Date: Date;
+  ShipmentsCorrections: ShipmentCorrectionInterface[];
+}
+
+export interface ShipmentCorrectionInterface {
+  ShipmentID: number;
+  Amount: number;
+}

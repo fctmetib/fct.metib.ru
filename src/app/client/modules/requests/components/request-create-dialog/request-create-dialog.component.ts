@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FinanceTypeInterface } from '../../types/common/finance-type.interface';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Observable, Subscription, forkJoin, of, switchMap, tap } from 'rxjs';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 import { RequestsResponseInterface } from '../../types/requestResponse.interface';
 import { FileService } from 'src/app/shared/services/common/file.service';
@@ -65,6 +65,7 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
   public selectedImages: any[] = [];
 
   private subscription$: Subscription = new Subscription();
+  public filesToUpload: any[] = [];
 
   constructor(
     public ref: DynamicDialogRef,
@@ -129,30 +130,78 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    let existRequest: RequestsResponseInterface = this.config.data;
+
+    console.log('sdasdasd', this.filesToUpload)
     if (this.shipments.length > 0) {
-      const delivery: DeliveryRef = this.deliveries.find(x => x.ID === this.form.value.deliveryID);
-      console.log('del', delivery)
-      const request: ClientRequestInterface = {
-        ID: 0,
-        IsCorrected: false,
-        ReadOnly: false,
-        Status: null,
-        Summ: 0,
-        Date: new Date(this.form.value.date),
-        Delivery: {
-          ...delivery
-        },
-        Documents: this.files,
-        Number: this.form.value.number,
-        Shipments: this.shipments,
-        Type: this.form.value.type,
-      };
-      console.log('request', request)
-      this.requestService.add(request).pipe(
-        tap(() => {
-          this.ref.close();
-        })
-      ).subscribe();
+
+      if (existRequest) {
+        const delivery: DeliveryRef = this.deliveries.find(x => x.ID === this.form.value.deliveryID);
+
+        const request: ClientRequestInterface = {
+          ID: existRequest.ID,
+          IsCorrected: false,
+          ReadOnly: false,
+          Status: null,
+          Summ: 0,
+          Date: new Date(this.form.value.date),
+          Delivery: {
+            ...delivery
+          },
+          Documents: this.files,
+          Number: this.form.value.number,
+          Shipments: this.shipments,
+          Type: this.form.value.type,
+        };
+  
+        this.requestService.update(request).pipe(
+          switchMap((result) => {
+            if (this.filesToUpload.length > 0) {
+              const uploadObservables = this.filesToUpload.map(file => {
+                return this.requestService.uploadDocument(file, result[0], 'Document ');
+              });
+              return forkJoin(uploadObservables);
+            }
+            return of(result);
+          }),
+          tap(() => {
+            this.ref.close();
+          })
+        ).subscribe();
+      } else {
+        const delivery: DeliveryRef = this.deliveries.find(x => x.ID === this.form.value.deliveryID);
+
+        const request: ClientRequestInterface = {
+          ID: 0,
+          IsCorrected: false,
+          ReadOnly: false,
+          Status: null,
+          Summ: 0,
+          Date: new Date(this.form.value.date),
+          Delivery: {
+            ...delivery
+          },
+          Documents: this.files,
+          Number: this.form.value.number,
+          Shipments: this.shipments,
+          Type: this.form.value.type,
+        };
+  
+        this.requestService.add(request).pipe(
+          switchMap((result) => {
+            if (this.filesToUpload.length > 0) {
+              const uploadObservables = this.filesToUpload.map(file => {
+                return this.requestService.uploadDocument(file, result[0], 'Document ');
+              });
+              return forkJoin(uploadObservables);
+            }
+            return of(result);
+          }),
+          tap(() => {
+            this.ref.close();
+          })
+        ).subscribe();
+      }
     } else {
       let errors = 'Ошибка! Пожалуйста, добавьте минимум 1 поставку.';
       return;
@@ -397,4 +446,50 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
   }
 
   //#endregion
+
+  
+  handleFileInput(event: any, type: string): void {
+    const files: FileList = event.target.files;
+    const fileReadPromises = [];
+  
+    for (let i = 0; i < files.length; i++) {
+      fileReadPromises.push(this.readFileData(files[i], '', type));
+    }
+  
+    Promise.all(fileReadPromises)
+      .then(() => {
+        console.log("Все файлы успешно обработаны");
+      })
+      .catch(error => {
+        console.error("Ошибка при обработке файлов:", error);
+      });
+  }
+  
+  readFileData(file: File, description: '', documentType: string): Promise<void> {
+    const currentUser = this.authService.currentUser$.value;
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+  
+      fileReader.onload = () => {
+        const fileData = fileReader.result;
+        const document = {
+          Description: description,
+          DocumentTypeID: 40,
+          Title: file.name,
+          OwnerTypeID: 20,
+          OwnerID: 'Owner ID',
+          Data: fileData
+        };
+        this.filesToUpload.push(document);
+        resolve();
+      };
+  
+      fileReader.onerror = (error) => {
+        console.error("Ошибка чтения файла:", error);
+        reject(error);
+      };
+  
+      fileReader.readAsArrayBuffer(file);
+    });
+  }
 }
