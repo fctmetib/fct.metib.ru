@@ -43,17 +43,24 @@
 		></mib-ref-icon>
 	</mib-input>
 	<mib-spacing type="xs"></mib-spacing>
-	<mib-link> Забыли пароль? </mib-link>
+	<mib-link title="Забыли пароль" [routerLink]="['/auth/reset-password']">
+		Забыли пароль?
+	</mib-link>
 	<mib-spacing type="m"></mib-spacing>
 	<div class="flex gap-16">
 		<mib-button
+			title="Регистрация"
 			[routerLink]="['/auth/register']"
 			size="l"
 			type="filled-secondary"
 			class="flex_grow"
 			>Регистрация</mib-button
 		>
-		<mib-button size="l" merge_type="filled-primary, submit" class="flex_grow"
+		<mib-button
+			title="Войти"
+			size="l"
+			merge_type="filled-primary, submit"
+			class="flex_grow"
 			>Войти</mib-button
 		>
 	</div>

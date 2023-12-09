@@ -9,6 +9,7 @@ import { RefIconModule } from '../../ui-kit/ref-icon/ref-icon.module'
 import { SpacingModule } from '../../ui-kit/spacing/spacing.module'
 import { DropdownPointModule } from '../../ui-kit/dropdown-point/dropdown-point.module'
 import { ClipboardModule } from '@angular/cdk/clipboard'
+import { RouterLink } from '@angular/router'
 
 @NgModule({
 	declarations: [HeaderComponent],
@@ -21,7 +22,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard'
 		RefIconModule,
 		SpacingModule,
 		DropdownPointModule,
-		ClipboardModule
+		ClipboardModule,
+		RouterLink
 	],
 	exports: [HeaderComponent]
 })

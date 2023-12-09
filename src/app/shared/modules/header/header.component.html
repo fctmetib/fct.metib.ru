@@ -93,17 +93,47 @@
 			class="container container_large flex flex_justify-between flex_align-center"
 		>
 			<div class="flex flex_grow flex_wrap flex_justify-between">
-				<div routerLink="#" class="logotype cursor-pointer">
+				<div
+					title="МеталлИнвесБанк"
+					[routerLink]="['/']"
+					class="logotype cursor-pointer"
+				>
 					<mib-ref-icon name="logotype"></mib-ref-icon>
 				</div>
 				<div class="flex flex_center gap-32">
-					<a class="text text_m cursor-pointer" routerLink="#">Клиентам</a>
-					<a class="text text_m cursor-pointer" routerLink="#">Тарифы</a>
-					<a class="text text_m cursor-pointer" routerLink="#">Главная</a>
-					<a class="text text_m cursor-pointer" routerLink="#">Контакты</a>
+					<a
+						title="Перейти на страницу: Клиентам"
+						class="text text_m cursor-pointer"
+						[routerLink]="['/clients']"
+						>Клиентам</a
+					>
+					<a
+						title="Перейти на страницу: Тарифы"
+						class="text text_m cursor-pointer"
+						[routerLink]="['/tariffs']"
+						>Тарифы</a
+					>
+					<a
+						title="Перейти на страницу: Главная"
+						class="text text_m cursor-pointer"
+						[routerLink]="['/']"
+						>Главная</a
+					>
+					<a
+						title="Перейти на страницу: Контакты"
+						class="text text_m cursor-pointer"
+						[routerLink]="['/contacts']"
+						>Контакты</a
+					>
 				</div>
 			</div>
-			<mib-button btn_left-iconly type="filled-secondary" size="m">
+			<mib-button
+				[routerLink]="['/']"
+				title="Перейти на страницу: Главная"
+				btn_left-iconly
+				type="filled-secondary"
+				size="m"
+			>
 				<mib-ref-icon
 					btn-icon
 					class="stroke"
