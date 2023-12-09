@@ -1,5 +1,7 @@
 import { Component, ContentChildren, ElementRef, Input, QueryList, AfterContentInit } from '@angular/core';
 import { LinkSize, LinkType } from './interfaces/link.interface';
+import {RightIconDirective} from '../../directives/right-icon/right-icon.directive';
+import {LeftIconDirective} from '../../directives/left-icon/left-icon.directive';
 
 @Component({
   selector: 'mib-link',
@@ -8,8 +10,8 @@ import { LinkSize, LinkType } from './interfaces/link.interface';
 })
 export class LinkComponent implements AfterContentInit {
 
-  @ContentChildren('leftIcon', { descendants: true, read: ElementRef }) leftIcons: QueryList<ElementRef>;
-  @ContentChildren('link-right-icon', { descendants: true, read: ElementRef }) rightIcons: QueryList<ElementRef>;
+  @ContentChildren(LeftIconDirective) leftIcons: QueryList<LeftIconDirective>;
+  @ContentChildren(RightIconDirective) rightIcons: QueryList<RightIconDirective>;
 
   @Input() size: LinkSize = 'm';
   @Input() type: LinkType = 'ghost-primary';
@@ -19,13 +21,11 @@ export class LinkComponent implements AfterContentInit {
   }
 
   get classes() {
-    const leftIconExists = this.leftIcons?.some(el => el.nativeElement.nodeType !== Node.COMMENT_NODE);
-    const rightIconExists = this.rightIcons?.some(el => el.nativeElement.nodeType !== Node.COMMENT_NODE);
     return {
       [`link_${this.size}`]: true,
       [`link_type-${this.type}`]: true,
-      'link_left-iconly': leftIconExists,
-      'link_right-iconly': rightIconExists
+      'link_left-iconly': this.leftIcons.length,
+      'link_right-iconly': this.rightIcons.length
     }
   }
 }

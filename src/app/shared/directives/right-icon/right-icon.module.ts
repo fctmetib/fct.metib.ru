@@ -7,6 +7,9 @@ import {RightIconDirective} from './right-icon.directive';
   declarations: [
     RightIconDirective
   ],
+  exports: [
+    RightIconDirective
+  ],
   imports: [
     CommonModule
   ]

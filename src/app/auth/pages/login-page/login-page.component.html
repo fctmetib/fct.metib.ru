@@ -2,12 +2,12 @@
   <h3>Личный кабинет</h3>
   <mib-spacing type="s"></mib-spacing>
   <mib-input>
-    <input mibInput formControlName="login" [size]="inputSize" styleType="filled-secondary" placeholder="Введите логин"/>
+    <input autocomplete="login" mibInput formControlName="login" [size]="inputSize" styleType="filled-secondary" placeholder="Введите логин"/>
     <ng-container input-label>Введите логин</ng-container>
   </mib-input>
   <mib-spacing type="xs"></mib-spacing>
   <mib-input>
-    <input mibInput [size]="inputSize" styleType="filled-secondary" formControlName="password" placeholder="Введите пароль"/>
+    <input autocomplete="password" type="password" mibInput [size]="inputSize" styleType="filled-secondary" formControlName="password" placeholder="Введите пароль"/>
     <ng-container input-label>Введите пароль</ng-container>
     <mib-ref-icon class="stroke path" input-right-icon name="fi_eye"></mib-ref-icon>
   </mib-input>

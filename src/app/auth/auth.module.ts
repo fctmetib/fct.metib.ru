@@ -28,6 +28,7 @@ import {RefIconModule} from '../shared/ui-kit/ref-icon/ref-icon.module'
 import {LinkModule} from '../shared/ui-kit/link/link.module'
 import {ButtonModule} from '../shared/ui-kit/button/button.module'
 import {NgxMaskModule} from 'ngx-mask';
+import {RightIconModule} from '../shared/directives/right-icon/right-icon.module';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import {NgxMaskModule} from 'ngx-mask';
     InputModule,
     RefIconModule,
     LinkModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    RightIconModule
   ],
   declarations: [
     AuthComponent,
