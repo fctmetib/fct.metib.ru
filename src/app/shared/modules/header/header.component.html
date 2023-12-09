@@ -1,87 +1,150 @@
 <div class="header flex flex_column" [ngClass]="classes" #header>
-  <div *ngIf="showExtension" class="extension">
-    <div class="container flex flex_justify-between flex_align-center">
-      <div class="flex gap-16">
-        <a class="text text_s" [routerLink]="['/']">Частным клиентам</a>
-        <a class="text text_s" [routerLink]="['/']">Корпоративным клиентам</a>
-        <a class="text text_s" [routerLink]="['/']">Лизинг</a>
-        <a class="text text_s" [routerLink]="['/']">Факторинг</a>
-        <a class="text text_s" [routerLink]="['/']">Финансовым институтам</a>
-      </div>
-      <div class="flex gap-24">
-        <mib-link size="s" type="ghost-secondary" [routerLink]="['/']">Москва</mib-link>
-        <mib-link size="s" type="ghost-secondary" [routerLink]="['/']">Поддержка</mib-link>
-      </div>
-    </div>
-  </div>
-  <div class="header-inner">
-    <div class="container flex flex_justify-between" [class.container_large]="signedIn">
-      <ng-container *ngIf="signedIn; else unsignedTemplate">
-        <mib-skeleton *ngIf="factoringLoading$ | async; else managerTemplate" [styles]="skeleton"></mib-skeleton>
-        <ng-template #managerTemplate>
-          <div [mibDropdownTrigger]="managerPanel" class="manager flex gap-12">
-            <mib-avatar [showImage]="false">{{ managerInitials }}</mib-avatar>
-            <div class="flex flex_column">
-              <div class="flex">
-                <p class="text name text_m text_medium c-bti-primary">{{ manager?.Name ?? 'Отсутствует' }} </p>
-                <p class="text text_m text_medium c-bti-tertiary" *ngIf="manager?.Extension as value">({{ value }})</p>
-              </div>
-              <p class="text text_s label c-bti-tertiary">Ваш менеджер</p>
-            </div>
-            <mib-button size="m" type="ghost-secondary">
-              <mib-ref-icon btn-icon class="stroke"
-                            [name]="managerPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'"></mib-ref-icon>
-            </mib-button>
-          </div>
-          <mib-dropdown #managerPanel>
-            <mib-spacing dropdown-spacing type="s"></mib-spacing>
-            <mib-dropdown-point [text]="manager?.Email ?? 'Почта отсутствует'" [cdkCopyToClipboard]="manager?.Email">
-              <mib-ref-icon dropdown-point-right-icon class="stroke" name="fi_copy"></mib-ref-icon>
-            </mib-dropdown-point>
-          </mib-dropdown>
-        </ng-template>
-        <mib-skeleton *ngIf="userLoading$ | async; else userTemplate" [styles]="skeleton"></mib-skeleton>
-        <ng-template #userTemplate>
-          <div [mibDropdownTrigger]="userPanel" class="manager user flex gap-12">
-            <mib-avatar [showImage]="false">{{ nameInitials }}</mib-avatar>
-            <div class="flex flex_column">
-              <p class="text name text_m text_medium c-bti-primary">{{ name }}</p>
-              <p class="text text_s label c-bti-tertiary">Пользователь</p>
-            </div>
-            <mib-button size="m" type="ghost-secondary">
-              <mib-ref-icon
-                btn-icon
-                class="stroke"
-                [name]="userPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'"
-              ></mib-ref-icon>
-            </mib-button>
-          </div>
-          <mib-dropdown #userPanel>
-            <mib-spacing dropdown-spacing type="s"></mib-spacing>
-            <mib-dropdown-point text="Выйти">
-              <mib-ref-icon
-                dropdown-point-left-icon
-                class="stroke"
-                name="fi_log-out"
-              ></mib-ref-icon>
-            </mib-dropdown-point>
-          </mib-dropdown>
-        </ng-template>
-      </ng-container>
-      <ng-template #unsignedTemplate>
-        <div class="flex flex_grow gap-16">
-          <mib-ref-icon [routerLink]="['/']" name="logotype"></mib-ref-icon>
-          <div class="flex flex_center gap-32">
-            <a title="Перейти на страницу: Главная" class="text text_m" [routerLink]="['/']">Главная</a>
-            <a title="Перейти на страницу: Клиентам" class="text text_m" [routerLink]="['/clients']">Клиентам</a>
-            <a title="Перейти на страницу: Тарифы" class="text text_m" [routerLink]="['/tariffs']">Тарифы</a>
-            <a title="Перейти на страницу: Контакты" class="text text_m" [routerLink]="['/contacts']">Контакты</a>
-          </div>
-        </div>
-        <mib-button [routerLink]="['/']" type="filled-secondary" size="m">
-          <mib-ref-icon btn-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
-        </mib-button>
-      </ng-template>
-    </div>
-  </div>
+	<div *ngIf="showExtension" class="extension">
+		<div class="container flex flex_justify-between flex_align-center">
+			<div class="flex gap-16">
+				<a class="text text_s" [routerLink]="['/']">Частным клиентам</a>
+				<a class="text text_s" [routerLink]="['/']">Корпоративным клиентам</a>
+				<a class="text text_s" [routerLink]="['/']">Лизинг</a>
+				<a class="text text_s" [routerLink]="['/']">Факторинг</a>
+				<a class="text text_s" [routerLink]="['/']">Финансовым институтам</a>
+			</div>
+			<div class="flex gap-24">
+				<mib-link size="s" type="ghost-secondary" [routerLink]="['/']"
+					>Москва</mib-link
+				>
+				<mib-link size="s" type="ghost-secondary" [routerLink]="['/']"
+					>Поддержка</mib-link
+				>
+			</div>
+		</div>
+	</div>
+	<div class="header-inner">
+		<div
+			class="container flex flex_justify-between"
+			[class.container_large]="signedIn"
+		>
+			<ng-container *ngIf="signedIn; else unsignedTemplate">
+				<mib-skeleton
+					*ngIf="factoringLoading$ | async; else managerTemplate"
+					[styles]="skeleton"
+				></mib-skeleton>
+				<ng-template #managerTemplate>
+					<div [mibDropdownTrigger]="managerPanel" class="manager flex gap-12">
+						<mib-avatar [showImage]="false">{{ managerInitials }}</mib-avatar>
+						<div class="flex flex_column">
+							<div class="flex">
+								<p class="text name text_m text_medium c-bti-primary">
+									{{ manager?.Name ?? 'Отсутствует' }} 
+								</p>
+								<p
+									class="text text_m text_medium c-bti-tertiary"
+									*ngIf="manager?.Extension as value"
+								>
+									({{ value }})
+								</p>
+							</div>
+							<p class="text text_s label c-bti-tertiary">Ваш менеджер</p>
+						</div>
+						<mib-button size="m" type="ghost-secondary">
+							<mib-ref-icon
+								btn-icon
+								class="stroke"
+								[name]="
+									managerPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'
+								"
+							></mib-ref-icon>
+						</mib-button>
+					</div>
+					<mib-dropdown #managerPanel>
+						<mib-spacing dropdown-spacing type="s"></mib-spacing>
+						<mib-dropdown-point
+							[text]="manager?.Email ?? 'Почта отсутствует'"
+							[cdkCopyToClipboard]="manager?.Email"
+						>
+							<mib-ref-icon
+								dropdown-point-right-icon
+								class="stroke"
+								name="fi_copy"
+							></mib-ref-icon>
+						</mib-dropdown-point>
+					</mib-dropdown>
+				</ng-template>
+				<mib-skeleton
+					*ngIf="userLoading$ | async; else userTemplate"
+					[styles]="skeleton"
+				></mib-skeleton>
+				<ng-template #userTemplate>
+					<div
+						[mibDropdownTrigger]="userPanel"
+						class="manager user flex gap-12"
+					>
+						<mib-avatar [showImage]="false">{{ nameInitials }}</mib-avatar>
+						<div class="flex flex_column">
+							<p class="text name text_m text_medium c-bti-primary">
+								{{ name }}
+							</p>
+							<p class="text text_s label c-bti-tertiary">Пользователь</p>
+						</div>
+						<mib-button size="m" type="ghost-secondary">
+							<mib-ref-icon
+								btn-icon
+								class="stroke"
+								[name]="
+									userPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'
+								"
+							></mib-ref-icon>
+						</mib-button>
+					</div>
+					<mib-dropdown #userPanel>
+						<mib-spacing dropdown-spacing type="s"></mib-spacing>
+						<mib-dropdown-point (click)="logout()" text="Выйти">
+							<mib-ref-icon
+								dropdown-point-left-icon
+								class="stroke"
+								name="fi_log-out"
+							></mib-ref-icon>
+						</mib-dropdown-point>
+					</mib-dropdown>
+				</ng-template>
+			</ng-container>
+			<ng-template #unsignedTemplate>
+				<div class="flex flex_grow gap-16">
+					<mib-ref-icon [routerLink]="['/']" name="logotype"></mib-ref-icon>
+					<div class="flex flex_center gap-32">
+						<a
+							title="Перейти на страницу: Главная"
+							class="text text_m"
+							[routerLink]="['/']"
+							>Главная</a
+						>
+						<a
+							title="Перейти на страницу: Клиентам"
+							class="text text_m"
+							[routerLink]="['/clients']"
+							>Клиентам</a
+						>
+						<a
+							title="Перейти на страницу: Тарифы"
+							class="text text_m"
+							[routerLink]="['/tariffs']"
+							>Тарифы</a
+						>
+						<a
+							title="Перейти на страницу: Контакты"
+							class="text text_m"
+							[routerLink]="['/contacts']"
+							>Контакты</a
+						>
+					</div>
+				</div>
+				<mib-button [routerLink]="['/']" type="filled-secondary" size="m">
+					<mib-ref-icon
+						btn-icon
+						class="stroke"
+						name="fi_chevron-left"
+					></mib-ref-icon>
+				</mib-button>
+			</ng-template>
+		</div>
+	</div>
 </div>

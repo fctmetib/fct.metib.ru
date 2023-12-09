@@ -24,7 +24,6 @@ export class CabinetPageComponent implements OnInit {
 		this.reportCardsInit()
 		this.statisticsService.getClientStatistics().subscribe(resp => {
 			this.statistics = resp
-			console.log('statistics :>> ', this.statistics)
 		})
 	}
 
