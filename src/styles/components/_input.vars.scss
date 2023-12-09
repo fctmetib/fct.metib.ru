@@ -44,6 +44,7 @@
     @include input-color(var(--bti-quaternary));
   }
 
+  // STATUSES
   &:has(input:focus),
   &:has(input:not(:placeholder-shown):not(:focus)) {
     @include input-color(var(--bti-secondary));
@@ -59,6 +60,18 @@
       color: var(--mc-default);
       transform: unset;
       padding-left: 16px !important;
+    }
+  }
+
+  &:not(:has(input:focus)),
+  &:not(:has(input:not(:placeholder-shown):not(:focus))) {
+    &:has(.input_error) {
+      @include input-color(var(--alc-default))
+    }
+    &:has(.input_active) {
+      .box-label {
+        color: var(--success-default)
+      }
     }
   }
 }
@@ -204,6 +217,21 @@
   }
 }
 
+@mixin input-error {
+  &, &:hover, &:focus {
+    $color: var(--alc-default);
+    border-color: $color;
+    @include input-color($color)
+  }
+}
+
+@mixin input-active {
+  &, &:hover, &:focus {
+    $color: var(--success-default);
+    border-color: $color;
+  }
+}
+
 @mixin input-xl {
   @include input-size(
       56px,
@@ -229,7 +257,7 @@
 }
 
 @mixin input-addiction-xl {
-  &:has(&_xl) {
+  &:has(.input_xl) {
     @include box-label-styles(10px) {
       @include text-l;
     }
@@ -237,7 +265,7 @@
 }
 
 @mixin input-addiction-l {
-  &:has(&_l) {
+  &:has(.input_l) {
     @include box-label-styles(8px) {
       @include text-m;
     }
@@ -245,7 +273,7 @@
 }
 
 @mixin input-addiction-m {
-  &:has(&_m) {
+  &:has(.input_m) {
     @include box-label-styles(4px) {
       @include text-m;
     }
@@ -253,7 +281,7 @@
 }
 
 @mixin input-addiction-s {
-  &:has(&_s) {
+  &:has(.input_s) {
     @include box-label-styles(2px) {
       @include text-s;
     }
@@ -278,4 +306,13 @@
   div.textarea-panel {
     display: flex;
   }
+
+  //&:has(.input_error) {
+  //  .box-label {
+  //    color: var(--alc-default);
+  //  }
+  //  .input_error {
+  //    @include input-error;
+  //  }
+  //}
 }

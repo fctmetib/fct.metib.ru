@@ -1,47 +1,60 @@
-<ng-container [formGroup]="form">
+<ng-container [formGroup]="refForm">
   <mib-spacing type="s"></mib-spacing>
-  <mib-input>
-    <input mibInput type="text" formControlName="first" [size]="inputSizeL" styleType="filled-secondary"
-           placeholder="Ваши Фамилия Имя"/>
-    <ng-container input-label>Ваши Фамилия Имя</ng-container>
-  </mib-input>
-  <mib-spacing type="xs"></mib-spacing>
-  <mib-input>
-    <input mibInput mask="+7-999-999-9999" placeholder="Телефон" formControlName="phone" [size]="inputSizeL"
-           styleType="filled-secondary"/>
-    <ng-container input-label>Телефон</ng-container>
-  </mib-input>
-  <mib-spacing type="xs"></mib-spacing>
-  <mib-input>
-    <input mibInput type="email" placeholder="E-mail" formControlName="email" [size]="inputSizeL"
-           styleType="filled-secondary"/>
-    <ng-container input-label>E-mail</ng-container>
-  </mib-input>
-  <mib-spacing type="xs"></mib-spacing>
-  <mib-input>
-    <input mibInput type="password" [size]="inputSizeL" styleType="filled-secondary" formControlName="password"
-           placeholder="Введите пароль"/>
-    <ng-container input-label>Введите пароль</ng-container>
-    <mib-ref-icon class="stroke path" input-right-icon name="fi_eye"></mib-ref-icon>
-  </mib-input>
-  <mib-spacing type="xs"></mib-spacing>
-  <div class="flex gap-16">
-    <img [src]="image" alt=""/>
-    <div class="flex flex_column gap-8">
+  <div class="flex flex_column gap-xs">
+    <mib-input>
+      <input mibInput type="text" formControlName="lastAndFirstName" [size]="inputSize" styleType="filled-secondary"/>
+      <ng-container input-label>Ваши Фамилия Имя</ng-container>
+    </mib-input>
+    <ng-container formGroupName="Profile">
       <mib-input>
-        <input mibInput formControlName="text" placeholder="Текст с картинки" [size]="inputSizeL"
+        <input mibInput prefix="+7 " mask="(000) 000-00-00" formControlName="Phone" [size]="inputSize"
                styleType="filled-secondary"/>
-        <ng-container input-label>Текст с картинки</ng-container>
+        <ng-container input-label>Телефон</ng-container>
       </mib-input>
-      <mib-link>
-        <mib-ref-icon mibRightIcon class="stroke" name="fi_refresh-ccw"></mib-ref-icon>
-        Обновить картинку
-      </mib-link>
-    </div>
+      <mib-input>
+        <input mibInput type="email" formControlName="Email" [size]="inputSize" styleType="filled-secondary"/>
+        <ng-container input-label>E-mail</ng-container>
+      </mib-input>
+      <mib-select [size]="inputSize" formControlName="IsMale">
+        <mib-dropdown-point [value]="true" text="Мужской"></mib-dropdown-point>
+        <mib-dropdown-point [value]="false" text="Женский"></mib-dropdown-point>
+      </mib-select>
+    </ng-container>
+    <mib-input>
+      <input #password mibInput type="password" [size]="inputSize" styleType="filled-secondary"
+             formControlName="Password"/>
+      <ng-container input-label>Введите пароль</ng-container>
+      <mib-ref-icon [passwordHider]="[password]" class="stroke path" input-right-icon
+                    [name]="password.type === 'password' ? 'fi_eye' : 'fi_eye-off'"></mib-ref-icon>
+    </mib-input>
+    <mib-input>
+      <input #confirmPassword mibInput type="password" [size]="inputSize" styleType="filled-secondary"
+             formControlName="ConfirmPassword"/>
+      <ng-container input-label>Подтвердите пароль</ng-container>
+      <mib-ref-icon [passwordHider]="[confirmPassword]" class="stroke path" input-right-icon
+                    [name]="confirmPassword.type === 'password' ? 'fi_eye' : 'fi_eye-off'"></mib-ref-icon>
+    </mib-input>
   </div>
+  <mib-spacing type="xs"></mib-spacing>
+  <ng-container formGroupName="Captcha">
+    <div class="flex gap-16">
+      <img [src]="image" alt=""/>
+      <div class="flex flex_column gap-xs2">
+        <mib-input>
+          <input mibInput formControlName="Text" [size]="inputSize" styleType="filled-secondary"/>
+          <ng-container input-label>Текст с картинки</ng-container>
+        </mib-input>
+        <mib-link>
+          <mib-ref-icon mibRightIcon class="stroke" name="fi_refresh-ccw"></mib-ref-icon>
+          Обновить картинку
+        </mib-link>
+      </div>
+    </div>
+  </ng-container>
   <mib-spacing type="m"></mib-spacing>
   <div class="flex gap-16">
-    <mib-button [routerLink]="['/auth/register']" size="l" type="filled-secondary" class="flex_grow">Авторизация</mib-button>
+    <mib-button [routerLink]="['/auth/register']" size="l" type="filled-secondary" class="flex_grow">Авторизация
+    </mib-button>
     <mib-button size="l" class="flex_grow" (press)="onSubmit()">Продолжить</mib-button>
   </div>
 </ng-container>

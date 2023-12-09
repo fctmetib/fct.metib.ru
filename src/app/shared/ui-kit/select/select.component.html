@@ -1,10 +1,11 @@
 <div [mibDropdownTrigger]="dropdown" #select class="select flex flex_align-center" [ngClass]="classes">
   <div class="select_icon-wrapper left-wrapper" #leftIcon>
-    <ng-content select="[select-left-icon]"></ng-content>
+    <ng-content select="[mibLeftIcon]"></ng-content>
   </div>
   <span class="text">{{selectedOption?.text}}</span>
   <div class="select_icon-wrapper right-wrapper" #rightIcon>
-    <ng-content select="[select-right-icon]"></ng-content>
+    <ng-content select="[mibRightIcon]"></ng-content>
+    <mib-ref-icon class="stroke" [name]="showDropdown ? 'fi_chevron-up' : 'fi_chevron-down'"></mib-ref-icon>
   </div>
 </div>
 

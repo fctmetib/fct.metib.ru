@@ -125,7 +125,7 @@ export class DropdownComponent {
     }
 
     // Установка ширины меню равной ширине триггера
-    leftStyle = `${triggerRect.left - containerRect.left}px`;
+    leftStyle = trigger.offsetLeft + 'px';
 
     // Установка ширины меню равной ширине триггера
     widthStyle = `${triggerRect.width}px`;

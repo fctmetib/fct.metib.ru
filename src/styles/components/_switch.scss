@@ -40,7 +40,7 @@
 	border-radius: 16px;
 
 	&.checked {
-		background-color: var(--succes-color-default);
+		background-color: var(--succes-default);
 		transition: var(--transition);
 	}
 
@@ -75,13 +75,13 @@
 	}
 
 	&.checked:hover {
-		background-color: var(--succes-color-hover);
-		border: 1px solid var(--succes-color-hover);
+		background-color: var(--succes-hover);
+		border: 1px solid var(--succes-hover);
 	}
 
 	&.checked:active {
-		background-color: var(--succes-color-active);
-		border: 1px solid var(--succes-color-active);
+		background-color: var(--succes-active);
+		border: 1px solid var(--succes-active);
 	}
 }
 

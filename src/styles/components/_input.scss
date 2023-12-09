@@ -44,38 +44,11 @@
     }
   }
 
-  &:has(.input_xl) {
-    @include box-label-styles(10px) {
-      @include text-l;
-    }
-  }
-
-  &:has(.input_l) {
-    @include box-label-styles(8px) {
-      @include text-m;
-    }
-  }
-
-  &:has(.input_m) {
-    @include box-label-styles(4px) {
-      @include text-m;
-    }
-  }
-
-  &:has(.input_s) {
-    @include box-label-styles(2px) {
-      @include text-s;
-    }
-
-    mib-ref-icon {
-      @include icon-size(var(--input-m-icon-size));
-    }
-  }
-
   &:has(textarea) {
     @include textarea;
   }
 
+  // SIZES
   @include input-addiction-xl;
   @include input-addiction-l;
   @include input-addiction-m;
@@ -116,6 +89,16 @@
 
   &_type-separated {
     @include input-type-separated;
+  }
+
+  // STATUSES
+  &.input, &.select {
+    &_error {
+      @include input-error;
+    }
+    &_active {
+      @include input-active;
+    }
   }
 }
 

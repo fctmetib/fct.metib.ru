@@ -7,9 +7,9 @@
   </mib-input>
   <mib-spacing type="xs"></mib-spacing>
   <mib-input>
-    <input autocomplete="password" type="password" mibInput [size]="inputSize" styleType="filled-secondary" formControlName="password" placeholder="Введите пароль"/>
+    <input #password autocomplete="password" type="password" mibInput [size]="inputSize" styleType="filled-secondary" formControlName="password" placeholder="Введите пароль"/>
     <ng-container input-label>Введите пароль</ng-container>
-    <mib-ref-icon class="stroke path" input-right-icon name="fi_eye"></mib-ref-icon>
+    <mib-ref-icon [passwordHider]="[password]" class="stroke" input-right-icon [name]="password.type === 'password' ? 'fi_eye' : 'fi_eye-off'"></mib-ref-icon>
   </mib-input>
   <mib-spacing type="xs"></mib-spacing>
   <mib-link [routerLink]="['/auth/reset-password']">

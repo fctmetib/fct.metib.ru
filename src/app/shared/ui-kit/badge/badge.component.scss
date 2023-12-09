@@ -123,12 +123,12 @@
 	}
 
 	&_type-filled-success {
-		background: var(--succes-color-quaternary);
+		background: var(--succes-quaternary);
 		.badge-text {
-			color: var(--succes-color-active);
+			color: var(--succes-active);
 		}
 		mib-ref-icon {
-			@include icon-color(var(--succes-color-active));
+			@include icon-color(var(--succes-active));
 		}
 	}
 

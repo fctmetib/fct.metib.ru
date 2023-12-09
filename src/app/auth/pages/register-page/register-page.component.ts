@@ -1,5 +1,5 @@
 import { DomSanitizer } from '@angular/platform-browser'
-import { BehaviorSubject, catchError, finalize, of, tap } from 'rxjs'
+import {BehaviorSubject, catchError, finalize, of, takeWhile, tap} from 'rxjs'
 import { Component } from '@angular/core'
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface'
@@ -10,20 +10,21 @@ import Validation from '../../tools/confirmPassword.tool'
 import { AuthService } from '../../services/auth.service'
 import { Router } from '@angular/router'
 import { InputSize } from 'src/app/shared/ui-kit/input/interfaces/input.interface'
+import {AutoUnsubscribeService} from '../../../shared/services/auto-unsubscribe.service';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
 	selector: 'app-register-page',
 	templateUrl: './register-page.component.html',
-	styleUrls: ['./register-page.component.scss']
+	styleUrls: ['./register-page.component.scss'],
+  providers: [AutoUnsubscribeService],
 })
 export class RegisterPageComponent {
-	public inputSizeL: InputSize = 'l'
+	public inputSize: InputSize = 'l'
 
-	public form: FormGroup
+  public form: FormGroup
+  public refForm: FormGroup
 	public formConfirm: FormGroup
-	public testForm: FormGroup
-
-	public genderOptions: MaleOptionsInterface[] = []
 
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
 	public backendErrors$ = new BehaviorSubject<string>(null)
@@ -38,15 +39,76 @@ export class RegisterPageComponent {
 		private sanitizer: DomSanitizer,
 		private commonService: CommonService,
 		private router: Router,
-		private authService: AuthService
+		private authService: AuthService,
+    private au: AutoUnsubscribeService
 	) {}
+
+  get lastAndFirstName() {
+    return this.refForm.get('lastAndFirstName') as FormControl
+  }
+
+  get firstName() {
+    return this.refForm.get('Profile.Name.First') as FormControl
+  }
+
+  get lastName() {
+    return this.refForm.get('Profile.Name.Last') as FormControl
+  }
 
 	public ngOnInit(): void {
 		this.initializeForm()
 		this.initializeValues()
+    this.watchForms()
 	}
 
+
+
+
+
+  private watchForms() {
+    this.lastAndFirstName.valueChanges.pipe(
+      tap((value: string) => {
+        const [last, first] = value.split(' ');
+        this.firstName.setValue(first);
+        this.lastName.setValue(last);
+      }),
+      takeUntil(this.au.destroyer)
+    ).subscribe()
+  }
+
+
+
+
+
+
+
+
+
+
 	private initializeForm(): void {
+
+    const passwordValidators = [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]
+
+    this.refForm = this.fb.group( {
+      Password: [null, passwordValidators],
+      ConfirmPassword: [null, passwordValidators],
+      lastAndFirstNames: [null, [Validators.required]],
+      Profile: this.fb.group({
+        Email: [null, [Validators.required, Validators.email]],
+        IsMale: [true, [Validators.required]],
+        Phone: [null, [Validators.required]],
+        Name: this.fb.group({
+          First: [null, [Validators.required]],
+          Last: [null, [Validators.required]]
+        }),
+      }),
+      Captcha: this.fb.group({
+        Text: [null, [Validators.required]],
+        Code: [null, [Validators.required]]
+      }),
+    })
+
+
 		this.form = new FormGroup(
 			{
 				captcha: new FormGroup({
@@ -96,18 +158,8 @@ export class RegisterPageComponent {
 	}
 
 	private initializeValues(): void {
-		this.updateCaptcha()
-		this.genderOptions = [
-			{
-				name: 'Мужской',
-				value: true
-			},
-			{
-				name: 'Женский',
-				value: false
-			}
-		]
-	}
+    this.updateCaptcha()
+  }
 
 	public updateCaptcha(): void {
 		this.commonService.getCaptcha().subscribe(resp => {

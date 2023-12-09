@@ -1,24 +1,24 @@
 .spacing {
   &.xs2 {
-    height: 8px;
+    height:var(--spacing-desktop-xs2);
   }
   &.xs {
-    height: 16px;
+    height: var(--spacing-desktop-xs);
   }
   &.s {
-    height: 24px;
+    height: var(--spacing-desktop-s);
   }
   &.m {
-    height: 32px;
+    height: var(--spacing-desktop-m);
   }
   &.l {
-    height: 48px;
+    height: var(--spacing-desktop-l);
   }
   &.xl {
-    height: 72px;
+    height: var(--spacing-desktop-xl);
   }
   &.xl2 {
-    height: 96px;
+    height: var(--spacing-desktop-xl2);
   }
 }
 

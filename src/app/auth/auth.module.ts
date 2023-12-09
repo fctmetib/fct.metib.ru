@@ -29,6 +29,9 @@ import {LinkModule} from '../shared/ui-kit/link/link.module'
 import {ButtonModule} from '../shared/ui-kit/button/button.module'
 import {NgxMaskModule} from 'ngx-mask';
 import {RightIconModule} from '../shared/directives/right-icon/right-icon.module';
+import {PasswordHiderModule} from '../shared/directives/password-hider/password-hider.module';
+import {SelectModule} from '../shared/ui-kit/select/select.module';
+import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-point.module';
 
 @NgModule({
   imports: [
@@ -53,7 +56,10 @@ import {RightIconModule} from '../shared/directives/right-icon/right-icon.module
     RefIconModule,
     LinkModule,
     NgxMaskModule.forRoot(),
-    RightIconModule
+    RightIconModule,
+    PasswordHiderModule,
+    SelectModule,
+    DropdownPointModule
   ],
   declarations: [
     AuthComponent,

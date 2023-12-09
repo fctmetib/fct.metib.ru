@@ -162,3 +162,14 @@
 		gap: 64px;
 	}
 }
+
+
+.gap {
+  &-xs2 {
+    gap: var(--spacing-desktop-xs2);
+  }
+
+  &-xs {
+    gap: var(--spacing-desktop-xs);
+  }
+}

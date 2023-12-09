@@ -35,13 +35,13 @@ $text-selectors: '&, span';
   }
 
   &_left-iconly {
-    .select_left-icon-wrapper {
+    .left-wrapper {
       display: flex;
     }
   }
 
   &_right-iconly {
-    .select_right-icon-wrapper {
+    .right-wrapper {
       display: flex;
     }
   }
@@ -62,17 +62,29 @@ $text-selectors: '&, span';
 
   &_xl {
     @include input-xl;
+    span {
+      @include text-l
+    }
   }
 
   &_l {
     @include input-l;
+    span {
+      @include text-m
+    }
   }
 
   &_m {
     @include input-m;
+    span {
+      @include text-m
+    }
   }
 
   &_s {
     @include input-s;
+    span {
+      @include text-s
+    }
   }
 }

@@ -1,9 +1,10 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Directive,
   ElementRef,
   HostBinding,
-  HostListener,
+  HostListener, Inject,
   Input,
   Optional
 } from '@angular/core'
@@ -15,15 +16,17 @@ import {
 } from '../interfaces/input.interface'
 import {AbstractControl, NgControl, Validators} from '@angular/forms'
 import {Subscription, tap} from 'rxjs'
+import {DOCUMENT} from '@angular/common';
 
 @Directive({
   selector: '[mibInput]'
 })
-export class MibInputDirective {
+export class MibInputDirective implements AfterViewInit {
   constructor(
     @Optional() public ngControl: NgControl,
     private cdr: ChangeDetectorRef,
-    public elementRef: ElementRef<HTMLInputElement>
+    public elementRef: ElementRef<HTMLInputElement>,
+    @Inject(DOCUMENT) private doc: Document
   ) {
   }
 
