@@ -14,7 +14,7 @@
 				'mib-border-danger':
 					(isSubmitting$ | async) && form.get('profile.name.first').invalid
 			}"
-			[size]="inputSizeXL"
+			[size]="inputSizeL"
 			styleType="filled-secondary"
 			placeholder="Ваши Фамилия Имя"
 		/>
@@ -31,7 +31,7 @@
 				'mib-border-danger':
 					(isSubmitting$ | async) && form.get('profile.name.last').invalid
 			}"
-			[size]="inputSizeXL"
+			[size]="inputSizeL"
 			styleType="filled-secondary"
 			placeholder="Фамилия"
 		/>
@@ -49,7 +49,7 @@
 				'mib-border-danger':
 					(isSubmitting$ | async) && form.get('profile.phone').invalid
 			}"
-			[size]="inputSizeXL"
+			[size]="inputSizeL"
 			styleType="filled-secondary"
 		/>
 		<ng-container input-label>Телефон</ng-container>
@@ -66,7 +66,7 @@
 				'mib-border-danger':
 					(isSubmitting$ | async) && form.get('profile.email').invalid
 			}"
-			[size]="inputSizeXL"
+			[size]="inputSizeL"
 			styleType="filled-secondary"
 		/>
 		<ng-container input-label>E-mail</ng-container>
@@ -76,7 +76,7 @@
 		<input
 			mibInput
 			type="password"
-			[size]="inputSizeXL"
+			[size]="inputSizeL"
 			styleType="filled-secondary"
 			formControlName="password"
 			placeholder="Введите пароль"
@@ -109,7 +109,7 @@
 						'mib-border-danger':
 							(isSubmitting$ | async) && form.get('captcha.text').invalid
 					}"
-					[size]="inputSizeXL"
+					[size]="inputSizeL"
 					styleType="filled-secondary"
 				/>
 				<ng-container input-label>Текст с картинки</ng-container>

@@ -17,7 +17,7 @@ import { InputSize } from 'src/app/shared/ui-kit/input/interfaces/input.interfac
 	styleUrls: ['./register-page.component.scss']
 })
 export class RegisterPageComponent {
-	public inputSizeXL: InputSize = 'xl'
+	public inputSizeL: InputSize = 'l'
 
 	public form: FormGroup
 	public formConfirm: FormGroup

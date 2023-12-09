@@ -14,7 +14,7 @@
 				'mib-border-danger ng-dirty':
 					(isSubmitting$ | async) && form.get('login').invalid
 			}"
-			[size]="inputSizeXL"
+			[size]="inputSizeL"
 			styleType="filled-secondary"
 			placeholder="Введите логин"
 		/>
@@ -26,7 +26,7 @@
 			mibInput
 			[type]="fieldTextType ? 'text' : 'password'"
 			required
-			[size]="inputSizeXL"
+			[size]="inputSizeL"
 			styleType="filled-secondary"
 			formControlName="password"
 			placeholder="Введите пароль"

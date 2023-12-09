@@ -28,6 +28,7 @@
 	border-bottom: 1px solid var(--wgr-secondary);
 	& .container {
 		max-width: 1136px;
+		padding: 0;
 		> div {
 			max-width: 625px;
 		}
