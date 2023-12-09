@@ -37,9 +37,10 @@
 		/>
 		<ng-container input-label>Введите пароль</ng-container>
 		<mib-ref-icon
+			(click)="this.fieldTextType = !this.fieldTextType"
 			class="stroke path"
 			input-right-icon
-			name="fi_eye"
+			[name]="fieldTextType ? 'fi_eye' : 'fi_eye-off'"
 		></mib-ref-icon>
 	</mib-input>
 	<mib-spacing type="xs"></mib-spacing>
