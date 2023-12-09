@@ -4,12 +4,15 @@ import {LeftIconDirective} from './left-icon.directive';
 
 
 @NgModule({
-  declarations: [
-    LeftIconDirective
-  ],
-  imports: [
-    CommonModule
-  ]
+    declarations: [
+        LeftIconDirective
+    ],
+    exports: [
+        LeftIconDirective
+    ],
+    imports: [
+        CommonModule
+    ]
 })
 export class LeftIconModule {
 }

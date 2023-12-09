@@ -1,8 +1,8 @@
-<ng-container [formGroup]="refForm">
+<ng-container [formGroup]="form">
   <mib-spacing type="s"></mib-spacing>
   <div class="flex flex_column gap-xs">
     <mib-input>
-      <input mibInput type="text" formControlName="lastAndFirstName" [size]="inputSize" styleType="filled-secondary"/>
+      <input mibInput formControlName="lastAndFirstNames" [size]="inputSize" styleType="filled-secondary"/>
       <ng-container input-label>Ваши Фамилия Имя</ng-container>
     </mib-input>
     <ng-container formGroupName="Profile">
@@ -44,20 +44,28 @@
           <input mibInput formControlName="Text" [size]="inputSize" styleType="filled-secondary"/>
           <ng-container input-label>Текст с картинки</ng-container>
         </mib-input>
-        <mib-link>
-          <mib-ref-icon mibRightIcon class="stroke" name="fi_refresh-ccw"></mib-ref-icon>
+        <mib-link (press)="updateCaptcha()">
+          <mib-ref-icon mibLeftIcon class="stroke" name="fi_refresh-ccw"></mib-ref-icon>
           Обновить картинку
         </mib-link>
       </div>
     </div>
   </ng-container>
-  <mib-spacing type="m"></mib-spacing>
-  <div class="flex gap-16">
-    <mib-button [routerLink]="['/auth/register']" size="l" type="filled-secondary" class="flex_grow">Авторизация
-    </mib-button>
-    <mib-button size="l" class="flex_grow" (press)="onSubmit()">Продолжить</mib-button>
-  </div>
 </ng-container>
+<ng-container *ngIf="confirmationCode.valid">
+  <mib-spacing type="xs"></mib-spacing>
+  <mib-input [formGroup]="formConfirm">
+    <input mibInput formControlName="Pin" [size]="inputSize" styleType="filled-secondary"/>
+    <ng-container input-label>Смс код</ng-container>
+  </mib-input>
+</ng-container>
+<mib-spacing type="m"></mib-spacing>
+<div class="flex gap-16">
+  <mib-button [routerLink]="['/auth/register']" size="l" type="filled-secondary" class="flex_grow">Авторизация
+  </mib-button>
+  <mib-button *ngIf="confirmationCode.invalid" [disabled]="form.invalid" size="l" class="flex_grow" (press)="onSubmit()">Продолжить</mib-button>
+  <mib-button *ngIf="confirmationCode.valid" [disabled]="formConfirm.invalid" size="l" class="flex_grow" (press)="onSubmit()">Завершить регистрацию</mib-button>
+</div>
 
 
 <!--<hr />-->

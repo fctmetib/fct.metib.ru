@@ -1,4 +1,4 @@
-import { Component, ContentChildren, ElementRef, Input, QueryList, AfterContentInit } from '@angular/core';
+import {Component, ContentChildren, ElementRef, Input, QueryList, AfterContentInit, Output, EventEmitter} from '@angular/core';
 import { LinkSize, LinkType } from './interfaces/link.interface';
 import {RightIconDirective} from '../../directives/right-icon/right-icon.directive';
 import {LeftIconDirective} from '../../directives/left-icon/left-icon.directive';
@@ -15,6 +15,7 @@ export class LinkComponent implements AfterContentInit {
 
   @Input() size: LinkSize = 'm';
   @Input() type: LinkType = 'ghost-primary';
+  @Output() press = new EventEmitter()
 
   ngAfterContentInit() {
     console.log(this.rightIcons)

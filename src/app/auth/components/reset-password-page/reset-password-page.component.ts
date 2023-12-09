@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { BehaviorSubject, Observable, finalize, tap } from 'rxjs';
 import { Component } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { RegisterConfirmRequestInterface } from '../../types/register/registerConfirmRequest.interface';
+import { RegisterConfirmReq } from '../../types/register/registerConfirmReq';
 import { CommonService } from '../../../shared/services/common/common.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -86,7 +86,7 @@ export class ResetPasswordPageComponent {
       },
       Login: this.form.value.login,
     };
-  
+
     this.authService.resetPassword(request).pipe(
       tap((res) => {
         this.confirmationCode$.next(res.ConfirmationCode)
@@ -100,7 +100,7 @@ export class ResetPasswordPageComponent {
   public onConfirmSubmit(): void {
     this.isSubmitting$.next(true);
 
-    const request: RegisterConfirmRequestInterface = {
+    const request: RegisterConfirmReq = {
       ConfirmationCode: this.confirmationCode$.value,
       Pin: this.formConfirm.value.pin,
     };

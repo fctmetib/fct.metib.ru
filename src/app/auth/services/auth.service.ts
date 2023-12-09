@@ -17,11 +17,11 @@ import {
 } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { RegisterRequestInterface } from 'src/app/auth/types/register/registerRequest.interface';
+import { RegisterReq } from 'src/app/auth/types/register/registerReq';
 import { CurrentUserGeneral } from 'src/app/shared/types/currentUserGeneral';
 import { LoginRequestInterface } from 'src/app/auth/types/login/loginRequest.interface';
 import { AuthRes } from 'src/app/auth/types/login/authRes';
-import { RegisterConfirmRequestInterface } from '../types/register/registerConfirmRequest.interface';
+import { RegisterConfirmReq } from '../types/register/registerConfirmReq';
 import { RegisterReponseInterface } from '../types/register/registerResponse.interface';
 import { ReauthRequestInterface } from '../types/login/reauthRequest.interface';
 import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
@@ -47,13 +47,13 @@ export class AuthService {
   ) {}
 
   register(
-    data: RegisterRequestInterface
+    data: RegisterReq
   ): Observable<RegisterReponseInterface> {
     const url = environment.apiUrl + '/user/registration/init';
     return this.http.post<RegisterReponseInterface>(url, data);
   }
 
-  registerConfirm(data: RegisterConfirmRequestInterface): Observable<any> {
+  registerConfirm(data: RegisterConfirmReq): Observable<any> {
     const url = environment.apiUrl + '/user/registration/confirm';
     return this.http.post<any>(url, data);
   }
