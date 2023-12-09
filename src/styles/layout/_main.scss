@@ -25,16 +25,6 @@
   text-decoration: underline;
 }
 
-.container {
-  width: 100%;
-  max-width: 1232px;
-  padding: 0 32px;
-  margin: 0 auto;
-  &_large {
-    max-width: 100%;
-  }
-}
-
 .cursor {
   &-pointer {
     cursor: pointer;

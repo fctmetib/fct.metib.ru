@@ -32,3 +32,15 @@
     user-select: none;
   }
 }
+
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 32px;
+  margin: 0 auto;
+  &_large {
+    max-width: 100%;
+  }
+}
+

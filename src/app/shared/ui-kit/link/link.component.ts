@@ -1,66 +1,31 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {LinkSize, LinkType} from './interfaces/link.interface';
+import { Component, ContentChildren, ElementRef, Input, QueryList, AfterContentInit } from '@angular/core';
+import { LinkSize, LinkType } from './interfaces/link.interface';
 
 @Component({
   selector: 'mib-link',
   templateUrl: './link.component.html',
   styleUrls: ['./link.component.scss']
 })
-export class LinkComponent implements OnInit, AfterViewInit, OnDestroy {
+export class LinkComponent implements AfterContentInit {
 
-  private mutationObserver: MutationObserver;
+  @ContentChildren('leftIcon', { descendants: true, read: ElementRef }) leftIcons: QueryList<ElementRef>;
+  @ContentChildren('link-right-icon', { descendants: true, read: ElementRef }) rightIcons: QueryList<ElementRef>;
 
-  @ViewChild('leftIcon', {static: false}) leftIcon: ElementRef<HTMLDivElement>
-  @ViewChild('rightIcon', {static: false}) rightIcon: ElementRef<HTMLDivElement>
+  @Input() size: LinkSize = 'm';
+  @Input() type: LinkType = 'ghost-primary';
 
-  @Input() size: LinkSize = 'm'
-  @Input() type: LinkType = 'ghost-primary'
-
-  classes: {[key: string] : boolean} = {}
-
-  ngOnInit() {
-    this.updateClasses()
+  ngAfterContentInit() {
+    console.log(this.rightIcons)
   }
 
-  ngAfterViewInit() {
-    this.initMutationObserver();
-  }
-
-  private initMutationObserver() {
-    this.mutationObserver = new MutationObserver(mutations => {
-      mutations.forEach(mutation => {
-        if (mutation.type === 'childList') {
-          // Вызови здесь метод, который обновляет классы
-          this.updateClasses();
-        }
-      });
-    });
-
-    this.observeIcons();
-  }
-
-  private observeIcons() {
-    if (this.leftIcon) {
-      this.mutationObserver.observe(this.leftIcon.nativeElement, { childList: true });
-    }
-    if (this.rightIcon) {
-      this.mutationObserver.observe(this.rightIcon.nativeElement, { childList: true });
-    }
-  }
-
-
-  private updateClasses() {
-    this.classes = {
+  get classes() {
+    const leftIconExists = this.leftIcons?.some(el => el.nativeElement.nodeType !== Node.COMMENT_NODE);
+    const rightIconExists = this.rightIcons?.some(el => el.nativeElement.nodeType !== Node.COMMENT_NODE);
+    return {
       [`link_${this.size}`]: true,
       [`link_type-${this.type}`]: true,
-      'link_left-iconly': Boolean(this.leftIcon?.nativeElement?.querySelector('[link-left-icon]')),
-      'link_right-iconly': Boolean(this.rightIcon?.nativeElement?.querySelector('[link-right-icon]'))
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.mutationObserver) {
-      this.mutationObserver.disconnect();
+      'link_left-iconly': leftIconExists,
+      'link_right-iconly': rightIconExists
     }
   }
 }

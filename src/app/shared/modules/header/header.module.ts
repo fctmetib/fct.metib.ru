@@ -10,21 +10,23 @@ import { SpacingModule } from '../../ui-kit/spacing/spacing.module'
 import { DropdownPointModule } from '../../ui-kit/dropdown-point/dropdown-point.module'
 import { ClipboardModule } from '@angular/cdk/clipboard'
 import { RouterLink } from '@angular/router'
+import {LinkModule} from '../../ui-kit/link/link.module';
 
 @NgModule({
 	declarations: [HeaderComponent],
-	imports: [
-		CommonModule,
-		SkeletonModule,
-		AvatarModule,
-		ButtonModule,
-		DropdownModule,
-		RefIconModule,
-		SpacingModule,
-		DropdownPointModule,
-		ClipboardModule,
-		RouterLink
-	],
+    imports: [
+        CommonModule,
+        SkeletonModule,
+        AvatarModule,
+        ButtonModule,
+        DropdownModule,
+        RefIconModule,
+        SpacingModule,
+        DropdownPointModule,
+        ClipboardModule,
+        RouterLink,
+        LinkModule
+    ],
 	exports: [HeaderComponent]
 })
 export class HeaderModule {}

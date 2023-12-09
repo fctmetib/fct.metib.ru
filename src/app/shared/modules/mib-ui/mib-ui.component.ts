@@ -7,9 +7,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 	templateUrl: './mib-ui.component.html',
 	styles: [
 		`
-			:host:has(app-header) {
+			:host:has(mib-header) {
 				padding: 8rem 15px;
-				& app-header {
+				& mib-header {
 					padding: 5px;
 				}
 			}

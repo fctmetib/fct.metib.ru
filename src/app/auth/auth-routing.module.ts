@@ -3,9 +3,9 @@ import { ResetPasswordPageComponent } from './components/reset-password-page/res
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { LoginedGuard } from './../shared/services/logined.guard';
-import { RegisterPageComponent } from './components/register-page/register-page.component';
-import { LoginPageComponent } from './components/login-page/login-page.component';
+import { LoginedGuard } from '../shared/services/logined.guard';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthComponent } from './auth.component';
 
 const routes = [

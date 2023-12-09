@@ -16,7 +16,7 @@ import { InputSize } from 'src/app/shared/ui-kit/input/interfaces/input.interfac
 export class LoginPageComponent implements OnInit {
 	public form: FormGroup
 
-	public inputSizeL: InputSize = 'l'
+	public inputSize: InputSize = 'l'
 
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
 
