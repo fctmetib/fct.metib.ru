@@ -97,6 +97,13 @@
 					</div>
 					<mib-dropdown #userPanel>
 						<mib-spacing dropdown-spacing type="s"></mib-spacing>
+						<mib-dropdown-point (click)="logout()" text="Сменить аккаунт">
+							<mib-ref-icon
+								dropdown-point-left-icon
+								class="stroke"
+								name="fi_refresh-ccw"
+							></mib-ref-icon>
+						</mib-dropdown-point>
 						<mib-dropdown-point (click)="logout()" text="Выйти">
 							<mib-ref-icon
 								dropdown-point-left-icon
