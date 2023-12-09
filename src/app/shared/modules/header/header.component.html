@@ -103,25 +103,25 @@
 				<div class="flex flex_center gap-32">
 					<a
 						title="Перейти на страницу: Клиентам"
-						class="text text_m cursor-pointer"
+						class="text text_m"
 						[routerLink]="['/clients']"
 						>Клиентам</a
 					>
 					<a
 						title="Перейти на страницу: Тарифы"
-						class="text text_m cursor-pointer"
+						class="text text_m"
 						[routerLink]="['/tariffs']"
 						>Тарифы</a
 					>
 					<a
 						title="Перейти на страницу: Главная"
-						class="text text_m cursor-pointer"
+						class="text text_m"
 						[routerLink]="['/']"
 						>Главная</a
 					>
 					<a
 						title="Перейти на страницу: Контакты"
-						class="text text_m cursor-pointer"
+						class="text text_m"
 						[routerLink]="['/contacts']"
 						>Контакты</a
 					>
@@ -143,6 +143,24 @@
 		</div>
 	</div>
 	<ng-container *ngIf="showUpHeader">
-		<div class="upHeader">UP HEADER PLUS</div>
+		<div class="upheader">
+			<div class="container flex flex_justify-between flex_align-center">
+				<div class="flex gap-16">
+					<a class="text text_s" [routerLink]="['/']">Частным клиентам</a>
+					<a class="text text_s" [routerLink]="['/']">Корпоративным клиентам</a>
+					<a class="text text_s" [routerLink]="['/']">Лизинг</a>
+					<a class="text text_s" [routerLink]="['/']">Факторинг</a>
+					<a class="text text_s" [routerLink]="['/']">Финансовым институтам</a>
+				</div>
+				<div class="flex gap-24">
+					<mib-link class="cursor-pointer" [routerLink]="['/']">
+						Москва
+					</mib-link>
+					<mib-link class="cursor-pointer" [routerLink]="['/']">
+						Поддержка
+					</mib-link>
+				</div>
+			</div>
+		</div>
 	</ng-container>
 </ng-template>

@@ -24,14 +24,28 @@
 	border-bottom: 1px solid var(--wgr-secondary);
 }
 
-.unsignned {
-	border-bottom: 1px solid var(--wgr-secondary);
+.unsignned,
+.upheader {
 	& .container {
 		max-width: 1136px;
 		padding: 0;
+	}
+}
+
+.unsignned {
+	border-bottom: 1px solid var(--wgr-secondary);
+	& .container {
+		padding: 12px 0;
 		> div {
 			max-width: 625px;
 		}
+	}
+}
+
+.upheader {
+	background-color: var(--wgr-secondary);
+	& .container {
+		padding: 16px 0;
 	}
 }
 
@@ -56,7 +70,6 @@
 
 .logotype {
 	background-color: var(--wgr-primary);
-	padding: 12px 16px;
 	mib-ref-icon {
 		@include icon-size(unset);
 	}
