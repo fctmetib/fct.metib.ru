@@ -1,4 +1,16 @@
-<div class="header lg">
+<h3>{{ (factoring$ | async)?.Title }}</h3>
+<mib-spacing type="xs"></mib-spacing>
+<div class="flex gap-12">
+	<p class="text text_m">ИНН: {{ (factoring$ | async)?.Organization?.Inn }}</p>
+	<div class="separator vertical"></div>
+	<p class="text text_m">КПП: {{ (factoring$ | async)?.Organization?.Kpp }}</p>
+	<div class="separator vertical"></div>
+	<p class="text text_m">
+		Договор Факторинга: {{ (factoring$ | async)?.Contract.Number }} от
+		{{ (factoring$ | async)?.Contract.Date | date : 'dd/MM/yyyy' }}
+	</p>
+</div>
+<!-- <div class="header lg">
   <div class="title">
     <h1 class="display-1">
       <ng-container *ngIf="(factoring$ | async); else skeletonFactoringTitleTemplate">
@@ -80,4 +92,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

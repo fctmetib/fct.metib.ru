@@ -10,12 +10,14 @@
 			<p class="text text_m text_medium c-bti-tertiary flex_grow">Ваш лимит</p>
 			<mib-ref-icon class="stroke" name="fi_info"></mib-ref-icon>
 		</div>
-		<h3>{{ viewLimit ? viewLimit : ' --- ' }}</h3>
+		<h3>
+			{{ viewLimit | currency : 'RUB' : 'symbol-narrow' }}
+		</h3>
 	</div>
 	<mib-spacing type="xs2"></mib-spacing>
 	<div class="flex">
 		<p class="text text_m c-bti-tertiary flex_grow">
-			Актульно до: {{ relevantAt ? relevantAt : ' --- ' }}
+			Актульно на: {{ relevantAt ? relevantAt : ' --- ' }}
 		</p>
 		<mib-link>
 			Подробнее
