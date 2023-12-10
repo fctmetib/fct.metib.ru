@@ -15,8 +15,8 @@ import { OpacityViewAnimation } from '../../animations/animations'
 })
 export class CashPanelComponent implements AfterViewInit {
 	@Input() device: DeviceType = 'desktop'
-	@Input() viewLimit: number
-	@Input() relevantAt: string
+	@Input() panelTitle: string
+	@Input() panelData: string
 
 	public isHover: boolean = false
 	public viewMounted: boolean = false

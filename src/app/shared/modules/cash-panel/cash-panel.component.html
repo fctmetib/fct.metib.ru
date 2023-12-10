@@ -7,11 +7,13 @@
 >
 	<div class="flex flex_column gap-4">
 		<div class="flex flex_align-center">
-			<p class="text text_m text_medium c-bti-tertiary flex_grow">Ваш лимит</p>
+			<p class="text text_m text_medium c-bti-tertiary flex_grow">
+				{{ panelTitle }}
+			</p>
 			<mib-ref-icon class="stroke" name="fi_info"></mib-ref-icon>
 		</div>
 		<h3>
-			{{ viewLimit | currency : 'RUB' : 'symbol-narrow' }}
+			{{ panelData | currency : 'RUB' : 'symbol-narrow' }}
 		</h3>
 	</div>
 	<mib-spacing type="xs2"></mib-spacing>

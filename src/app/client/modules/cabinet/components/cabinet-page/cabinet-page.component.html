@@ -16,6 +16,17 @@
 	<app-factoring></app-factoring>
 	<mib-spacing type="s"></mib-spacing>
 	<div class="flex flex_wrap gap-16">
-		<mib-cash-panel [viewLimit]="statistics?.Limit"></mib-cash-panel>
+		<mib-cash-panel
+			[panelData]="statistics?.Limit"
+			panelTitle="Лимит финансирования"
+		></mib-cash-panel>
+		<mib-cash-panel
+			[panelData]="statistics?.UsedLimit"
+			panelTitle="Уступлено"
+		></mib-cash-panel>
+		<mib-cash-panel
+			[panelData]="statistics?.DelayAmount"
+			panelTitle="Просрочка покупателя"
+		></mib-cash-panel>
 	</div>
 </div>
