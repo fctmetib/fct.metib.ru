@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
-import { ResetPasswordCompleteRequestInterface } from '../types/reset-password/resetPasswordCompleteRequest.interface';
+import { ResetPasswordCompleteReq } from '../types/reset-password/resetPasswordCompleteReq';
 import { ResetPasswordConfirmRequestInterface } from '../types/reset-password/resetPasswordConfirmRequest.interface';
-import { ResetPasswordReponseInterface } from '../types/reset-password/resetPasswordResponse.interface';
-import { ResetPasswordRequestInterface } from '../types/reset-password/resetPasswordRequest.interface';
+import { ResetPasswordRes } from '../types/reset-password/resetPasswordResponse.interface';
+import { ResetPasswordReq } from '../types/reset-password/resetPasswordReq';
 import { CookieService } from 'ngx-cookie';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -174,11 +174,9 @@ export class AuthService {
    * Called first
    * @param data
    */
-  resetPassword(
-    data: ResetPasswordRequestInterface
-  ): Observable<ResetPasswordReponseInterface> {
+  resetPassword(data: ResetPasswordReq): Observable<ResetPasswordRes> {
     const url = environment.apiUrl + '/user/password/forget';
-    return this.http.post<ResetPasswordReponseInterface>(url, data);
+    return this.http.post<ResetPasswordRes>(url, data);
   }
 
   /**
@@ -197,7 +195,7 @@ export class AuthService {
    * @param data
    */
   resetPasswordComplete(
-    data: ResetPasswordCompleteRequestInterface
+    data: ResetPasswordCompleteReq
   ): Observable<{}> {
     const url = environment.apiUrl + '/user/password/recovery/complete';
     return this.http.post<{}>(url, data);

@@ -13,8 +13,9 @@ export class LinkComponent implements AfterContentInit {
   @ContentChildren(LeftIconDirective) leftIcons: QueryList<LeftIconDirective>;
   @ContentChildren(RightIconDirective) rightIcons: QueryList<RightIconDirective>;
 
-  @Input() size: LinkSize = 'm';
+  @Input() size: LinkSize = 'l';
   @Input() type: LinkType = 'ghost-primary';
+  @Input() disabled: boolean = false;
   @Output() press = new EventEmitter()
 
   ngAfterContentInit() {

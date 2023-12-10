@@ -1,6 +1,6 @@
 import { CaptchaInterface } from '../../../shared/types/common/captcha.interface';
 
-export interface ResetPasswordRequestInterface {
+export interface ResetPasswordReq {
   Login: string;
   Captcha: CaptchaInterface
 }

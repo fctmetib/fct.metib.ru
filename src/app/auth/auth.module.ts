@@ -1,5 +1,3 @@
-import {ConfirmPasswordPageComponent} from './components/confirm-password-page/confirm-password-page.component'
-import {ResetPasswordPageComponent} from './components/reset-password-page/reset-password-page.component'
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
@@ -14,8 +12,8 @@ import {DropdownModule} from 'primeng/dropdown'
 import {ProgressSpinnerModule} from 'primeng/progressspinner'
 
 import {CommonService} from '../shared/services/common/common.service'
-import {RegisterPageComponent} from './pages/register-page/register-page.component'
-import {LoginPageComponent} from './pages/login-page/login-page.component'
+import {RegisterPageComponent} from './pages/register/register-page.component'
+import {LoginPageComponent} from './pages/login/login-page.component'
 import {AuthRoutingModule} from './auth-routing.module'
 import {AuthComponent} from './auth.component'
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
@@ -33,36 +31,40 @@ import {PasswordHiderModule} from '../shared/directives/password-hider/password-
 import {SelectModule} from '../shared/ui-kit/select/select.module';
 import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-point.module';
 import {LeftIconModule} from '../shared/directives/left-icon/left-icon.module';
+import {ResetPasswordPageComponent} from './pages/reset-password/reset-password-page.component';
+import {ConfirmPasswordPageComponent} from './pages/confirm-password/confirm-password-page.component';
+import {SmsConfirmationModule} from './modules/sms-confirmation/sms-confirmation.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        AuthRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        InputTextModule,
-        DropdownModule,
-        ProgressSpinnerModule,
-        ButtonModule22,
-        CardModule,
-        MessageModule,
-        MessagesModule,
-        ButtonModule,
-        InputMaskModule,
-        TooltipModule,
-        HeaderModule,
-        SpacingModule,
-        InputModule,
-        RefIconModule,
-        LinkModule,
-        NgxMaskModule.forRoot(),
-        RightIconModule,
-        PasswordHiderModule,
-        SelectModule,
-        DropdownPointModule,
-        LeftIconModule
-    ],
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    DropdownModule,
+    ProgressSpinnerModule,
+    ButtonModule22,
+    CardModule,
+    MessageModule,
+    MessagesModule,
+    ButtonModule,
+    InputMaskModule,
+    TooltipModule,
+    HeaderModule,
+    SpacingModule,
+    InputModule,
+    RefIconModule,
+    LinkModule,
+    NgxMaskModule.forRoot(),
+    RightIconModule,
+    PasswordHiderModule,
+    SelectModule,
+    DropdownPointModule,
+    LeftIconModule,
+    SmsConfirmationModule
+  ],
   declarations: [
     AuthComponent,
     LoginPageComponent,

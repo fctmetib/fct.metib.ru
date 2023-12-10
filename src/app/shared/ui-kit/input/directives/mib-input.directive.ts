@@ -33,7 +33,7 @@ export class MibInputDirective implements AfterViewInit {
   @Input() disabled: boolean = false
   @Input() controls: boolean = true
   @Input() custom: InputCustom = ''
-  @Input() size: InputSize = 'm'
+  @Input() size: InputSize = 'l'
   @Input() status?: InputStatus
   @Input() class: string = ''
   @Input() placeholder: string = ''

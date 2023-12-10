@@ -1,9 +1,10 @@
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 
-import { Observable, Observer, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BankInterface } from '../../types/common/bank.interface';
+import {map, Observable, Observer, of} from 'rxjs';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {BankInterface} from '../../types/common/bank.interface';
+import {DomSanitizer} from '@angular/platform-browser';
 
 export interface PostInterface {
   ID: number;
@@ -22,7 +23,11 @@ export interface RegionInterface {
 
 @Injectable()
 export class CommonService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private sanitizer: DomSanitizer
+  ) {
+  }
 
   getIdCenters(code): Observable<any[]> {
     let url = `${environment.apiUrl}/caluga/identificationPoints?code=${code}`;
@@ -33,10 +38,12 @@ export class CommonService {
     let url = `${environment.apiUrl}/public/posts`;
     return this.http.get<PostInterface[]>(url);
   }
+
   getRegions(): Observable<RegionInterface[]> {
     let url = `${environment.apiUrl}/public/regions`;
     return this.http.get<RegionInterface[]>(url);
   }
+
   getCountries(): Observable<RegionInterface[]> {
     let url = `${environment.apiUrl}/public/countries`;
     return this.http.get<RegionInterface[]>(url);
@@ -58,12 +65,29 @@ export class CommonService {
     return this.http.get<string>(url);
   }
 
-  getCaptcha(): Observable<any> {
+  getCaptcha(): Observable<{ image: any; code: string }> {
     const url = environment.apiUrl + '/captcha';
     return this.http.get(url, {
       observe: 'response',
       responseType: 'arraybuffer',
-    });
+    }).pipe(
+      map((resp: HttpResponse<ArrayBuffer>) => {
+        const uint8View = new Uint8Array(resp.body);
+        const STRING_CHAR = String.fromCharCode.apply(null, uint8View);
+        const base64String = btoa(STRING_CHAR);
+        const image = this.sanitizer.bypassSecurityTrustUrl(`data:image/jpg;base64, ` + base64String);
+
+        // Извлекаем код из заголовков ответа
+        const contentDisposition = resp.headers.get('Content-Disposition');
+        let code = '';
+        if (contentDisposition) {
+          const fileName = contentDisposition.split('=').pop();
+          code = fileName ? fileName.split('.')[0] : '';
+        }
+
+        return { image, code };
+      })
+    );
   }
 
   getBase64(file): Observable<Uint8Array[]> {

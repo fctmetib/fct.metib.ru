@@ -1,4 +1,4 @@
-<button (click)="press.emit($event)" class="link flex flex_align-center" [ngClass]="classes">
+<button [disabled]="disabled" (click)="press.emit($event)" class="link flex flex_align-center" [ngClass]="classes">
   <div class="link_icon-wrapper link_left-icon-wrapper" #leftIcon>
     <ng-content select="[mibLeftIcon]"></ng-content>
   </div>

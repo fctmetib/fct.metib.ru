@@ -47,6 +47,11 @@ export class RegisterPageComponent {
     return this.form.get('Profile.Name.First') as FormControl
   }
 
+  get phone() {
+    return this.form.get('Profile.Phone') as FormControl
+  }
+
+
   get lastName() {
     return this.form.get('Profile.Name.Last') as FormControl
   }
@@ -57,6 +62,10 @@ export class RegisterPageComponent {
 
   get login() {
     return this.form.get('Profile.Login') as FormControl
+  }
+
+  get captchaText() {
+    return this.form.get('Captcha.Text') as FormControl
   }
 
   get captchaCode() {
@@ -73,7 +82,7 @@ export class RegisterPageComponent {
 
   public ngOnInit(): void {
     this.initForms()
-    this.initializeValues()
+    this.initValues()
     this.watchForms()
   }
 
@@ -134,22 +143,15 @@ export class RegisterPageComponent {
     })
   }
 
-  private initializeValues(): void {
+  private initValues(): void {
     this.updateCaptcha()
   }
 
   public updateCaptcha(): void {
-    this.commonService.getCaptcha().subscribe(resp => {
-      const uint8View = new Uint8Array(resp.body)
-      const STRING_CHAR = String.fromCharCode.apply(null, uint8View)
-      let base64String = btoa(STRING_CHAR)
-      this.image = this.sanitizer.bypassSecurityTrustUrl(
-        `data:image/jpg;base64, ` + base64String
-      )
-
-      const code = resp.headers.get('Content-Disposition').split('=').pop().split('.')[0]
-      this.captchaCode.setValue(code)
-    })
+    this.commonService.getCaptcha().subscribe(({image, code}) => {
+      this.image = image;
+      this.captchaCode.setValue(code);
+    });
   }
 
   public onSubmit(): void {
@@ -190,9 +192,22 @@ export class RegisterPageComponent {
         this.backendErrors$.next(error)
         return of(error)
       }),
-      finalize(() => {
-        this.isSubmitting$.next(false)
-      })
+      finalize(() => this.isSubmitting$.next(false))
     ).subscribe()
+  }
+
+  onConfirm($event: string) {
+    this.pin.setValue($event)
+    this.onConfirmSubmit()
+  }
+
+  onResend() {
+    this.onSubmit()
+  }
+
+  onBack() {
+    this.captchaText.reset()
+    this.confirmationCode.reset()
+    this.updateCaptcha()
   }
 }

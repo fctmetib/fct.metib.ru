@@ -96,6 +96,11 @@ $text-selectors: 'span';
   }
 
 
+  &:disabled {
+    @include link-color(var(--wti-quaternary));
+    cursor: not-allowed;
+  }
+
   &_icon-wrapper {
     display: none;
   }

@@ -1,3 +1,3 @@
-export interface ResetPasswordReponseInterface {
+export interface ResetPasswordRes {
   ConfirmationCode: string;
 }

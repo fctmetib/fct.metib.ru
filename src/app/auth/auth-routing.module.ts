@@ -1,12 +1,12 @@
-import { ConfirmPasswordPageComponent } from './components/confirm-password-page/confirm-password-page.component';
-import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
 
-import { LoginedGuard } from '../shared/services/logined.guard';
-import { RegisterPageComponent } from './pages/register-page/register-page.component';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { AuthComponent } from './auth.component';
+import {LoginedGuard} from '../shared/services/logined.guard';
+import {RegisterPageComponent} from './pages/register/register-page.component';
+import {LoginPageComponent} from './pages/login/login-page.component';
+import {AuthComponent} from './auth.component';
+import {ResetPasswordPageComponent} from './pages/reset-password/reset-password-page.component';
+import {ConfirmPasswordPageComponent} from './pages/confirm-password/confirm-password-page.component';
 
 const routes = [
   {
@@ -42,4 +42,5 @@ const routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {
+}
