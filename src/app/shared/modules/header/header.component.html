@@ -30,7 +30,12 @@
 				></mib-skeleton>
 				<ng-template #managerTemplate>
 					<div [mibDropdownTrigger]="managerPanel" class="manager flex gap-12">
-						<mib-avatar [showImage]="false">{{ managerInitials }}</mib-avatar>
+						<ng-container *ngIf="manager?.Avatar; else showInitials">
+							<mib-avatar [src]="managerAvatar" [showImage]="true"></mib-avatar>
+						</ng-container>
+						<ng-template #showInitials>
+							<mib-avatar [showImage]="false">{{ managerInitials }}</mib-avatar>
+						</ng-template>
 						<div class="flex flex_column">
 							<div class="flex">
 								<p class="text name text_m text_medium c-bti-primary">
@@ -78,6 +83,15 @@
 						[mibDropdownTrigger]="userPanel"
 						class="manager user flex gap-12"
 					>
+						<!-- <ng-container *ngIf="currentUserAvatar; else nameInitials">
+							<mib-avatar
+								[src]="currentUserAvatar"
+								[showImage]="true"
+							></mib-avatar>
+						</ng-container>
+						<ng-template #nameInitials>
+							<mib-avatar [showImage]="false">{{ nameInitials }}</mib-avatar>
+						</ng-template> -->
 						<mib-avatar [showImage]="false">{{ nameInitials }}</mib-avatar>
 						<div class="flex flex_column">
 							<p class="text name text_m text_medium c-bti-primary">
