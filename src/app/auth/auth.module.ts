@@ -28,12 +28,12 @@ import {ButtonModule} from '../shared/ui-kit/button/button.module'
 import {NgxMaskModule} from 'ngx-mask';
 import {RightIconModule} from '../shared/directives/right-icon/right-icon.module';
 import {PasswordHiderModule} from '../shared/directives/password-hider/password-hider.module';
-import {SelectModule} from '../shared/ui-kit/select/select.module';
 import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-point.module';
 import {LeftIconModule} from '../shared/directives/left-icon/left-icon.module';
 import {ResetPasswordPageComponent} from './pages/reset-password/reset-password-page.component';
 import {ConfirmPasswordPageComponent} from './pages/confirm-password/confirm-password-page.component';
 import {SmsConfirmationModule} from './modules/sms-confirmation/sms-confirmation.module';
+import {SelectModule} from '../shared/ui-kit/select/select.module';
 
 @NgModule({
   imports: [

@@ -1,87 +1,52 @@
 <p>request-drawer works!</p>
 <mib-drawer>
-	<mib-drawer-header
-		(onClose)="dialogRef.close()"
-		drawer-header
-	></mib-drawer-header>
-	<div class="flex flex_column gap-4">
-		<h4>Создание заявки</h4>
-		<p class="text text_m c-bti-secondary">
-			По выбранным заявкам Вы сможете составить заявку на факторинг
-		</p>
-	</div>
-	<mib-spacing type="s"></mib-spacing>
-	<p class="headline">Договора поставки</p>
-	<mib-spacing type="xs"></mib-spacing>
-	<mib-table>
-		<mib-table-head>
-			<mib-table-head-cell>ИД</mib-table-head-cell>
-			<mib-table-head-cell>Контракт</mib-table-head-cell>
-			<mib-table-head-cell>№ поставки</mib-table-head-cell>
-			<mib-table-head-cell>С/ф №</mib-table-head-cell>
-			<mib-table-head-cell>Остаток задолженности</mib-table-head-cell>
-		</mib-table-head>
-		<mib-table-row [underlined]="true">
-			<!-- <mib-table-row *ngFor="let duty of dutiesVisible; trackBy: trackByFunction" [underlined]="true"> -->
-			<mib-table-cell>
-				<ng-container table-cell-title>halo</ng-container>
-			</mib-table-cell>
-			<mib-table-cell>
-				<ng-container table-cell-title>halo2</ng-container>
-			</mib-table-cell>
-			<mib-table-cell>
-				<ng-container table-cell-title>halo3</ng-container>
-			</mib-table-cell>
-			<mib-table-cell>
-				<ng-container table-cell-title>halo4</ng-container>
-			</mib-table-cell>
-			<mib-table-cell>
-				<ng-container table-cell-title>halo5</ng-container>
-			</mib-table-cell>
-			<!-- <mib-table-cell>
-          <ng-container table-cell-title>{{duty.ID}}</ng-container>
-        </mib-table-cell> -->
-			<!-- <mib-table-cell>
-          <ng-container table-cell-title>{{duty.Contract.ID}}</ng-container>
-        </mib-table-cell> -->
-			<!-- <mib-table-cell>
-          <ng-container table-cell-title>{{duty.Number}}</ng-container>
-        </mib-table-cell> -->
-			<!-- <mib-table-cell>
-          <ng-container table-cell-title>{{duty.NumberInvoice}}</ng-container>
-        </mib-table-cell> -->
-			<!-- <mib-table-cell>
-          <ng-container table-cell-title>{{duty.Rest | number}}</ng-container>
-        </mib-table-cell> -->
-			<mib-button table-row-button size="s" type="ghost-secondary">
-				<mib-ref-icon
-					class="stroke"
-					btn-icon
-					name="fi_more-vertical"
-				></mib-ref-icon>
-			</mib-button>
-		</mib-table-row>
-		<mib-table-row>
-			<mib-table-cell type="blank">
-				<div class="flex flex_column gap-4">
-					<p class="text text_xs c-bti-tertiary">Кол-во поставок</p>
-					<p class="text text_s text_medium c-bti-primary">100500</p>
-					<!-- <p class="text text_s text_medium c-bti-primary">{{data.data.length}} {{toolsService.declineWord(data.data.length, ['позиция', 'позиции', 'позиций'])}}</p> -->
-				</div>
-			</mib-table-cell>
-			<mib-table-cell type="blank" class="flex_justify-end">
-				<div class="flex flex_column gap-4 flex_align-end">
-					<p class="text text_xs c-bti-tertiary">Сумма задолженности</p>
-					<p class="text text_s text_medium c-bti-primary">123</p>
-					<!-- <p class="text text_s text_medium c-bti-primary">{{fullRest | number}}</p> -->
-				</div>
-			</mib-table-cell>
-		</mib-table-row>
-		<!-- <mib-table-footer>
-        <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="data.data.length" [pagesToShow]="PAGINATOR_PAGE_TO_SHOW" [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"></mib-paginator>
-      </mib-table-footer> -->
-	</mib-table>
-	<!-- <mib-drawer-footer drawer-footer>
-      <mib-button [loading]="!!(sending$ | async)" (press)="submit()" type="filled-primary">Создать заявку</mib-button>
-    </mib-drawer-footer> -->
+  <mib-drawer-header
+    (onClose)="dialogRef.close()"
+    drawer-header
+  ></mib-drawer-header>
+  <h4>Создание заявки</h4>
+  <mib-spacing type="xs"></mib-spacing>
+  <mib-select [size]="size" placeholder="Выберите договор поставки" type="outline">
+    <ng-container mibSelectLabel>Договор поставки</ng-container>
+  </mib-select>
+  <mib-spacing type="xs"></mib-spacing>
+  <div class="flex flex_column gap-12">
+    <div class="flex gap-12">
+      <mib-input>
+        <ng-container input-label>Номер заявки</ng-container>
+        <input [size]="size" mibInput>
+      </mib-input>
+      <mib-select [size]="size" placeholder="Тип заявки">
+      </mib-select>
+    </div>
+    <mib-input>
+      <ng-container input-label>Дата заявки</ng-container>
+      <input [size]="size" type="date" mibInput>
+    </mib-input>
+    <mib-input>
+      <ng-container input-label>Свободный лимит</ng-container>
+      <input [size]="size" mibInput>
+    </mib-input>
+  </div>
+  <mib-spacing type="s"></mib-spacing>
+  <h5 class="headline">Поставки</h5>
+  <mib-spacing type="xs2"></mib-spacing>
+  <div class="information-panel">Необходимо прикрепить документ договора поставки</div>
+  <mib-spacing type="xs"></mib-spacing>
+  <mib-button [size]="size">
+    Добавить договор поставки
+    <mib-ref-icon btn-left-icon class="stroke" name="fi_plus"></mib-ref-icon>
+  </mib-button>
+  <mib-spacing type="s"></mib-spacing>
+  <h5 class="headline">Копии накладных</h5>
+  <mib-spacing type="xs2"></mib-spacing>
+  <div class="information-panel">Необходимо прикрепить скан-копии накладных для отправки на модерацию</div>
+  <mib-spacing type="xs"></mib-spacing>
+  <div class="flex flex_column gap-12">
+    <mib-dnd headline="Прикрепите скан-копию документа"></mib-dnd>
+    <p class="text text_xs c-bti-tertiary">Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG</p>
+  </div>
+  <mib-drawer-footer drawer-footer>
+    <mib-button [size]="size" type="filled-primary">Создать заявку</mib-button>
+  </mib-drawer-footer>
 </mib-drawer>

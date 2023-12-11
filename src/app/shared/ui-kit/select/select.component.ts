@@ -1,7 +1,7 @@
 import {
   AfterContentInit,
   AfterViewInit,
-  Component,
+  Component, ContentChild,
   ContentChildren,
   ElementRef,
   forwardRef,
@@ -15,6 +15,8 @@ import {InputSize} from '../input/interfaces/input.interface';
 import {SelectType} from './interfaces/select.interface';
 import {SetPaddings} from '../input/services/set-paddings.service';
 import {DropdownService} from '../dropdown/services/dropdown.service';
+import {DropdownComponent} from '../dropdown/dropdown.component';
+import {SelectLabelDirective} from './directives/select-label.directive';
 
 @Component({
   selector: 'mib-select',
@@ -29,11 +31,14 @@ import {DropdownService} from '../dropdown/services/dropdown.service';
   ]
 })
 export class SelectComponent implements ControlValueAccessor, AfterContentInit, AfterViewInit {
+  @ViewChild(DropdownComponent) menu: DropdownComponent
   @ViewChild('select') select: ElementRef<HTMLDivElement>
   @ViewChild('leftIcon') leftIcon: ElementRef<HTMLDivElement>
   @ViewChild('rightIcon') rightIcon: ElementRef<HTMLDivElement>
   @ContentChildren(forwardRef(() => DropdownPointComponent)) options: QueryList<DropdownPointComponent>;
+  @ContentChild(SelectLabelDirective) label: SelectLabelDirective
   @Input() multi: boolean = false;
+  @Input() placeholder: string = 'Выберите опцию'
   @Input() size: InputSize = 'm';
   @Input() type: SelectType = 'filled-secondary';
 
@@ -50,7 +55,11 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   }
 
   get showDropdown() {
-    return this.dropdownService.isMenuOpen
+    const menuId = this.menu?.id
+    if (menuId) {
+      return this.dropdownService.isMenuOpened(menuId)
+    }
+    return false
   }
 
   get classes() {

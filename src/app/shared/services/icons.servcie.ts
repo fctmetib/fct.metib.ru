@@ -30,7 +30,10 @@ export class IconsService {
 		'fi_log-out',
 		'fi_eye',
 		'fi_refresh-ccw',
-		'fi_eye-off'
+		'fi_eye-off',
+    'fi_frown',
+    'fi_plus',
+    'fi_file-text'
 	]
 
 	public async initIcons(): Promise<void> {

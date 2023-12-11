@@ -4,6 +4,8 @@ import {PersistenceService} from '../../../shared/services/persistence.service';
 import {FormControl, Validators} from '@angular/forms';
 import {AutoUnsubscribeService} from '../../../shared/services/auto-unsubscribe.service';
 import {takeUntil} from 'rxjs/operators';
+import {InputSize} from '../../../shared/ui-kit/input/interfaces/input.interface';
+import {ButtonSize} from '../../../shared/ui-kit/button/interfaces/button.interface';
 
 @Component({
   selector: 'mib-sms-confirmation',
@@ -13,7 +15,6 @@ import {takeUntil} from 'rxjs/operators';
 })
 export class SmsConfirmationComponent implements OnInit {
   @Input() loading: boolean = false
-  @Input() phone: string = ''
   @Output() back = new EventEmitter()
   @Output() confirm = new EventEmitter<string>()
   @Output() resend = new EventEmitter()
@@ -21,6 +22,8 @@ export class SmsConfirmationComponent implements OnInit {
   public delayDate$ = new BehaviorSubject<number>(0);
   public delay: number = 0;
   public SECONDS: number = 60
+
+  public size: InputSize | ButtonSize = 'l'
 
   public control = new FormControl(null, [Validators.required])
 

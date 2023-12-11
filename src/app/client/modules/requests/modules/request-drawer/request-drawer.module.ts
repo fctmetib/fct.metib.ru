@@ -13,6 +13,8 @@ import {ReactiveFormsModule} from '@angular/forms'
 import {CheckboxModule} from '../../../../../shared/ui-kit/checkbox/checkbox.module'
 import {PaginatorModule} from '../../../../../shared/ui-kit/paginator/paginator.module'
 import {RequestDrawerService} from './request-drawer.service';
+import {InputModule} from '../../../../../shared/ui-kit/input/input.module';
+import {MibDragAndDropModule} from '../../../../../shared/ui-kit/drag-and-drop/mib-drag-and-drop.module';
 
 @NgModule({
   declarations: [RequestDrawerComponent],
@@ -28,7 +30,9 @@ import {RequestDrawerService} from './request-drawer.service';
     DropdownPointModule,
     ReactiveFormsModule,
     CheckboxModule,
-    PaginatorModule
+    PaginatorModule,
+    InputModule,
+    MibDragAndDropModule
   ],
   providers: [
     RequestDrawerService

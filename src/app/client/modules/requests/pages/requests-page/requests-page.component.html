@@ -12,12 +12,7 @@
 					<p class="text text_m c-bti-tertiary">-</p>
 					<input styleType="outline" type="date" mibInput />
 				</div>
-				<mib-button
-					[disabled]="!selectedRequestCount"
-					(press)="openDrawer()"
-					type="filled-primary"
-					>Создать заявку ({{ selectedRequestCount }})
-				</mib-button>
+				<mib-button (press)="openDrawer()" type="filled-primary">Создать заявку</mib-button>
 			</div>
 		</div>
 		<mib-spacing type="xs"></mib-spacing>

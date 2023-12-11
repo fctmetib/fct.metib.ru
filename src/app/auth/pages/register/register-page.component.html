@@ -62,12 +62,16 @@
   </ng-container>
   <mib-spacing type="m"></mib-spacing>
   <div class="flex gap-16">
-    <mib-button [routerLink]="['/auth/register']" size="l" type="filled-secondary" class="flex_grow">Авторизация</mib-button>
+    <mib-button [routerLink]="['/auth/login']" size="l" type="filled-secondary" class="flex_grow">Авторизация</mib-button>
     <mib-button *ngIf="confirmationCode.invalid" [disabled]="form.invalid" [loading]="!!(isSubmitting$ | async)" size="l" class="flex_grow" (press)="onSubmit()">Продолжить</mib-button>
   </div>
 </ng-container>
 <ng-template #confirmation>
-  <mib-sms-confirmation (back)="onBack()" (confirm)="onConfirm($event)" (resend)="onResend()" [loading]="!!(isSubmitting$ | async)" [phone]="phone.value">Завершить регистрацию</mib-sms-confirmation>
+  <mib-sms-confirmation (back)="onBack()" (confirm)="onConfirm($event)" (resend)="onResend()" [loading]="!!(isSubmitting$ | async)">
+    <ng-container sms-text>
+      На номер телефона <span class="c-mc-default text_medium">{{phone.value | mask: '+0(000)000-00-00'}}</span> отправлен код подтверждения регистрации
+    </ng-container>
+    Завершить регистрацию</mib-sms-confirmation>
 </ng-template>
 
 
