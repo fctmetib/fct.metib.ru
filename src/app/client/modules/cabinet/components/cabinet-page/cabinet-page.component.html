@@ -19,14 +19,17 @@
 		<mib-cash-panel
 			[panelData]="statistics?.Limit"
 			panelTitle="Лимит финансирования"
+			[link]="['/contacts']"
 		></mib-cash-panel>
 		<mib-cash-panel
 			[panelData]="statistics?.UsedLimit"
 			panelTitle="Уступлено"
+			[link]="['/tariffs']"
 		></mib-cash-panel>
 		<mib-cash-panel
 			[panelData]="statistics?.DelayAmount"
 			panelTitle="Просрочка покупателя"
+			[link]="['/clients']"
 		></mib-cash-panel>
 	</div>
 </div>

@@ -17,6 +17,7 @@ export class CashPanelComponent implements AfterViewInit {
 	@Input() device: DeviceType = 'desktop'
 	@Input() panelTitle: string
 	@Input() panelData: string
+	@Input() link?: string
 
 	public isHover: boolean = false
 	public viewMounted: boolean = false
