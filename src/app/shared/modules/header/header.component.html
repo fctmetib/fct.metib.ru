@@ -31,7 +31,11 @@
 				<ng-template #managerTemplate>
 					<div [mibDropdownTrigger]="managerPanel" class="manager flex gap-12">
 						<ng-container *ngIf="manager?.Avatar; else showInitials">
-							<mib-avatar [src]="managerAvatar" [showImage]="true"></mib-avatar>
+							<mib-avatar
+								[showArrow]="false"
+								[src]="managerAvatar"
+								[showImage]="true"
+							></mib-avatar>
 						</ng-container>
 						<ng-template #showInitials>
 							<mib-avatar [showImage]="false">{{ managerInitials }}</mib-avatar>
@@ -130,7 +134,11 @@
 			</ng-container>
 			<ng-template #unsignedTemplate>
 				<div class="flex flex_grow gap-16">
-					<mib-ref-icon class="cursor-pointer" [routerLink]="['/']" name="logotype"></mib-ref-icon>
+					<mib-ref-icon
+						class="cursor-pointer"
+						[routerLink]="['/']"
+						name="logotype"
+					></mib-ref-icon>
 					<div class="flex flex_center gap-32">
 						<a
 							title="Перейти на страницу: Главная"

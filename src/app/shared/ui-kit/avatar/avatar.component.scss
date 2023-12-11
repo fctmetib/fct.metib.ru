@@ -5,6 +5,9 @@
 	&::before {
 		opacity: 1;
 	}
+	&.showArrow mib-button {
+		opacity: 1;
+	}
 }
 
 @mixin avatar-host {
@@ -36,7 +39,7 @@
 		}
 	}
 
-	&:before {
+	&.showArrow:before {
 		transition: 0.2s ease;
 		content: '';
 		position: absolute;
