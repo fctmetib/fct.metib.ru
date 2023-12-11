@@ -16,7 +16,7 @@ export class RequestDrawerService {
 		}
 		return this.dialog.open(
 			RequestDrawerComponent,
-			drawerConfig(Object.assign(config, data))
+			drawerConfig(data?.maxWidth, Object.assign(config, data))
 		)
 	}
 }

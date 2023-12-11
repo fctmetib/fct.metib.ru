@@ -7,6 +7,7 @@ import {RequestDrawerService} from './request-drawer.service'
 import {BehaviorSubject} from 'rxjs'
 import {InputSize} from '../../../../../shared/ui-kit/input/interfaces/input.interface';
 import {ButtonSize} from '../../../../../shared/ui-kit/button/interfaces/button.interface';
+import {DeliveryAgreementDrawerService} from '../delivery-agreement-drawer/delivery-agreement-drawer.service';
 
 @Component({
   selector: 'mib-request-drawer',
@@ -22,11 +23,16 @@ export class RequestDrawerComponent implements OnInit {
     public dialogRef: MatDialogRef<RequestDrawerComponent>,
     public toolsService: ToolsService,
     private requestsService: RequestDrawerService,
+    private deliveryAgreementDrawerService: DeliveryAgreementDrawerService,
     @Inject(MAT_DIALOG_DATA) public data: DrawerData<AdvancedRequests[]>
   ) {
   }
 
   ngOnInit() {
+  }
+
+  openDeliveryAgreement() {
+    this.deliveryAgreementDrawerService.open({maxWidth: 492})
   }
 
 }

@@ -16,6 +16,6 @@ export class FreeDutyRequestDrawerService {
     const config: DrawerData = {
       state: 'view'
     }
-    return this.dialog.open(FreeDutyRequestDrawerComponent, drawerConfig(Object.assign(config, data)))
+    return this.dialog.open(FreeDutyRequestDrawerComponent, drawerConfig(data?.maxWidth, Object.assign(config, data)))
   }
 }

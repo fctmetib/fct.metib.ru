@@ -15,6 +15,8 @@ import {PaginatorModule} from '../../../../../shared/ui-kit/paginator/paginator.
 import {RequestDrawerService} from './request-drawer.service';
 import {InputModule} from '../../../../../shared/ui-kit/input/input.module';
 import {MibDragAndDropModule} from '../../../../../shared/ui-kit/drag-and-drop/mib-drag-and-drop.module';
+import {InformationModule} from '../../../../../shared/ui-kit/information/information.module';
+import {DeliveryAgreementDrawerModule} from '../delivery-agreement-drawer/delivery-agreement-drawer.module';
 
 @NgModule({
   declarations: [RequestDrawerComponent],
@@ -32,7 +34,9 @@ import {MibDragAndDropModule} from '../../../../../shared/ui-kit/drag-and-drop/m
     CheckboxModule,
     PaginatorModule,
     InputModule,
-    MibDragAndDropModule
+    MibDragAndDropModule,
+    InformationModule,
+    DeliveryAgreementDrawerModule
   ],
   providers: [
     RequestDrawerService

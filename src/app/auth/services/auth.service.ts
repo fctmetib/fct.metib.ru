@@ -44,7 +44,13 @@ export class AuthService {
     private requestStoreService: RequestStoreService,
     private freedutyStoreService: FreedutyStoreService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    // // second user
+    // this.cookieService.put('_cu', JSON.stringify({"UserID":2484,"StaffID":18490,"ManagerID":0,"OrganizationID":22854,"CustomerID":1505,"DebtorID":0,"IP":"127.0.0.1","Login":"tdmariorioli","Name":"Сновский Владимир","Code":"7c4d9c8d-651c-4962-9472-3bf68e0b08d8","Date":"2023-12-11T18:11:33+03:00","Expire":"2023-12-11T22:11:33+03:00","Roles":["User","Staff","Customer"]}
+    // ));
+    //
+    // this.cookieService.put('_bt', 'dGRtYXJpb3Jpb2xpOjEyMzQ1Ng==')
+  }
 
   register(
     data: RegisterReq

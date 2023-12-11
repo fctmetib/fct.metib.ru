@@ -1,3 +1,5 @@
+import {DrawerMaxWidthType} from '../drawer.tools';
+
 export enum DrawerStateEnum {
   EDIT = 'edit',
   CREATE = 'create',
@@ -7,6 +9,7 @@ export enum DrawerStateEnum {
 export type DrawerState = 'edit' | 'create' | 'view'
 
 export interface DrawerData<T = any> {
-  state: DrawerState
+  state?: DrawerState,
+  maxWidth?: DrawerMaxWidthType,
   data?: T
 }
