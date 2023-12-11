@@ -1,0 +1,7 @@
+@import "src/styles/helpers/icon_tools";
+
+.icon {
+  &-small {
+    @include icon-size(16px)
+  }
+}

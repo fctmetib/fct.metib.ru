@@ -1,0 +1,24 @@
+<div mibDrop (fileDropped)="onDrop($event)" [class.disabled]="loading"
+     class="drag-and-drop flex flex_center text-center flex_column gap-4" (click)="openFileManager()">
+  <ng-container *ngIf="!dropDirective?.fileOver; else fileOver">
+    <div class="flex flex_align-center gap-4">
+      <mib-ref-icon class="stroke" name="fi_file-text"></mib-ref-icon>
+      <p class="text text_m text_medium">{{headline}}</p>
+    </div>
+    <div class="flex flex_align-center gap-4">
+      <p class="text text_s c-bti-secondary">Перетащите файл сюда или</p>
+      <mib-link size="s">выберите файл на диске</mib-link>
+    </div>
+  </ng-container>
+  <ng-template #fileOver>
+    <p class="text text_s c-bti-tertiary">Перетащите файл сюда</p>
+  </ng-template>
+</div>
+<input
+  (change)="onChangeFile()"
+  type="file"
+  [multiple]="multiple"
+  [accept]="accept.join(',')"
+  #loader
+  style="display: none;"
+/>

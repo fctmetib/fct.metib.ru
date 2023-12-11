@@ -1,0 +1,23 @@
+@import "src/styles/helpers/icon_tools";
+
+.drag-and-drop {
+  cursor: pointer;
+
+  min-height: 64px;
+
+  border-radius: 8px;
+  padding: 12px;
+
+  background-color: var(--wgr-primary);
+  outline: 1px dashed var(--wgr-tertiary);
+  &.disabled {
+  }
+  &:not(.disabled).dragging {
+    background-color: var(--wgr-secondary);
+  }
+}
+
+mib-ref-icon[name="fi_file-text"] {
+  @include icon-size(16px);
+  @include icon-color(var(--bti-primary))
+}

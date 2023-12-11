@@ -3,8 +3,12 @@ import {DropdownComponent} from '../dropdown.component';
 
 @Injectable()
 export class DropdownService {
-  public isMenuOpen = false;
+  private isMenuOpen = false;
   private currentMenu: DropdownComponent | null = null;
+
+  isMenuOpened(id: string) {
+    return this.isMenuOpen && this.currentMenu.id === id;
+  }
 
   toggleMenu(menu: DropdownComponent, trigger: HTMLElement) {
     this.isMenuOpen = this.currentMenu?.id !== menu?.id || !this.isMenuOpen;

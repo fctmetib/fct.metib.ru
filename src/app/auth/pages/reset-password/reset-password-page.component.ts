@@ -7,6 +7,8 @@ import {RegisterConfirmReq} from '../../types/register/registerConfirmReq';
 import {CommonService} from '../../../shared/services/common/common.service';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
+import {InputSize} from '../../../shared/ui-kit/input/interfaces/input.interface';
+import {ButtonSize} from '../../../shared/ui-kit/button/interfaces/button.interface';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -23,6 +25,7 @@ export class ResetPasswordPageComponent {
 
   public image: string;
 
+  public size: InputSize | ButtonSize = 'l'
   constructor(
     private sanitizer: DomSanitizer,
     private commonService: CommonService,
