@@ -9,9 +9,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 		`
 			:host:has(mib-header) {
 				padding: 8rem 15px;
-				& mib-header {
-					padding: 5px;
-				}
 			}
 			:host {
 				max-width: 1200px;

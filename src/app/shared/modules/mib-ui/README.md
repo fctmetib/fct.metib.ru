@@ -38,6 +38,14 @@ src\app\shared\modules\header\header.component.html
 ng g m shared/modules/header/header --flat --dry-run
  //---
 
+ //--- new-demand
+src\app\shared\modules\new-demand
+ng g m shared/modules/new-demand/new-demand --flat --dry-run
+ng g i shared/modules/new-demand/interfaces/new-demand.interface --dry-run
+ng g c shared/modules/new-demand/new-demand --flat --skip-tests  --dry-run
+
+ //---
+
 // add m
 ng g m shared/ui-kit/input --dry-run
 ng g m shared/ui-kit/badge --dry-run
