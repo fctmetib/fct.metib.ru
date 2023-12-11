@@ -1,7 +1,14 @@
 <div class="container container_large">
 	<mib-spacing type="m"></mib-spacing>
 	<h2>Запросы</h2>
-	<mib-new-demand></mib-new-demand>
+	<mib-spacing type="m"></mib-spacing>
+	<div class="flex flex_wrap gap-16">
+		<mib-new-demand
+			*ngFor="let action of actions"
+			[demandTitle]="action.text"
+			[link]="['history']"
+		></mib-new-demand>
+	</div>
 </div>
 <mib-spacing type="xl2"></mib-spacing>
 <hr />

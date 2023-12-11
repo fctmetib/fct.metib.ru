@@ -1,0 +1,53 @@
+@import 'src/styles/helpers/icon_tools';
+
+:host {
+	display: block;
+	flex: 1 0 428px;
+}
+
+@mixin new-demand {
+	width: 100%;
+	padding: 16px;
+	background-color: var(--wgr-primary);
+}
+
+@mixin new-demand-desktop {
+	border: 1px solid var(--wgr-tertiary);
+	border-radius: 16px;
+}
+
+@mixin new-demand-mobile {
+	display: flex;
+	width: 360px;
+	padding: 12px 16px 16px 16px;
+	border-bottom: 1px solid var(--wgr-tertiary);
+}
+
+@mixin new-demand-hover {
+	box-shadow: var(--shadow-small);
+}
+
+.new-demand {
+	@include new-demand;
+
+	&:hover {
+		@include new-demand-hover;
+	}
+
+	&_desktop {
+		@include new-demand-desktop;
+	}
+
+	&_mobile {
+		@include new-demand-mobile;
+	}
+
+	mib-ref-icon[name='fi_plus'] {
+		@include icon-size(20px);
+		@include icon-color(var(--mc-default));
+	}
+}
+
+.transition {
+	transition: var(--transition);
+}

@@ -99,21 +99,21 @@
 }
 
 @mixin text-overflow($line_count) {
-  display: -webkit-box;
-  -webkit-line-clamp: $line_count;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  white-space: normal;
-  word-break: break-all;
+	display: -webkit-box;
+	-webkit-line-clamp: $line_count;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	white-space: normal;
+	word-break: break-all;
 
-  &.expanded {
-    -webkit-line-clamp: initial;
-    overflow: auto;
-  }
+	&.expanded {
+		-webkit-line-clamp: initial;
+		overflow: auto;
+	}
 }
 
 @mixin headline-desktop {
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: -0.08px;
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: -0.08px;
 }

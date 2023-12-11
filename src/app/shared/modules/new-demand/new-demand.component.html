@@ -1,1 +1,35 @@
-<p>halo new demand module</p>
+<div
+	(mouseenter)="isHover = true"
+	(mouseleave)="isHover = false"
+	class="new-demand flex flex_column cursor-pointer"
+	[ngClass]="classes"
+	[class.transition]="viewMounted"
+>
+	<div class="headline">{{ demandTitle }}</div>
+	<p class="text text_m">
+		{{
+			demandText
+				? demandText
+				: 'Запрос на подтверждение или авторизацию документа с использованием электронной цифровой подписи.'
+		}}
+	</p>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="flex flex_justify-between">
+		<mib-link>
+			Новый запрос
+			<mib-ref-icon
+				[@opacityViewAnimation]="{
+					value: '',
+					params: { enterTime: 200, leaveTime: 0 }
+				}"
+				*ngIf="isHover"
+				mibRightIcon
+				class="stroke"
+				name="fi_plus"
+			></mib-ref-icon>
+		</mib-link>
+		<mib-link [routerLink]="link" type="ghost-secondary">
+			{{ historyNumber ? historyNumber : '12' }} в истории
+		</mib-link>
+	</div>
+</div>
