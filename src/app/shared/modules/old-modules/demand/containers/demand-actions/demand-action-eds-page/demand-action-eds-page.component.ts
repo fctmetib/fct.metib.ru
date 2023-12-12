@@ -20,7 +20,7 @@ import {
 } from 'src/app/shared/services/common/common.service';
 import { Observable, Subscription } from 'rxjs';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
-import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { FactoringInfo } from '../../../types/common/factoring/factoring.info';
 import { ActivatedRoute, Params } from '@angular/router';
 import { formatDate, isPlatformBrowser } from '@angular/common';
 import { AddressModalComponent } from '../../../components/address/address.component';
@@ -40,7 +40,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
   public isEdit: boolean = false;
   public currentDemand: any;
   public resultDemand: any;
-  public currentInformation: FactoringInfoInterface;
+  public currentInformation: FactoringInfo;
 
   public isLoading: boolean;
   public alert: boolean;

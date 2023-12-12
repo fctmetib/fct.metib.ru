@@ -6,7 +6,7 @@ import {CreateDemandFactoringRequestInterface} from '../../../types/requests/cre
 import {Observable, Subscription} from 'rxjs';
 import {MessageService} from 'primeng/api';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {FactoringInfoInterface} from '../../../types/common/factoring/factoring-info.interface';
+import {FactoringInfo} from '../../../types/common/factoring/factoring.info';
 import {CreateDemandMessageRequestInterface} from '../../../types/requests/create-demand-message-request.interface';
 import {ExitGuard} from 'src/app/shared/services/exit.guard';
 import {FileModeInterface} from '../../../../../../types/file/file-model.interface';
@@ -28,7 +28,7 @@ export class DemandActionFactoringPageComponent
   public currentDraftId: number = 0;
 
   public currentDemand: any;
-  public currentInformation: FactoringInfoInterface;
+  public currentInformation: FactoringInfo;
 
   public isEdit: boolean = false;
   public isLoading: boolean = false;

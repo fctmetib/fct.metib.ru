@@ -1,16 +1,16 @@
-import { DoDemandPageActionType } from '../../../types/navigation-service/do-demand-page-action-type';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
-import { CommonService } from 'src/app/shared/services/common/common.service';
-import { FileService } from 'src/app/shared/services/common/file.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { switchMap } from 'rxjs/operators';
-import { Guid } from 'src/app/shared/classes/common/guid.class';
-import { DemandNavigationService } from '../../../services/demand-navigation.service';
-import { DoDemandActionInterface } from '../../../types/navigation-service/do-demand-action.interface';
-import {FactoringInfoInterface} from '../../../../demand/types/common/factoring/factoring-info.interface';
+import {DoDemandPageActionType} from '../../../types/navigation-service/do-demand-page-action-type';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FileModeInterface} from 'src/app/shared/types/file/file-model.interface';
+import {CommonService} from 'src/app/shared/services/common/common.service';
+import {FileService} from 'src/app/shared/services/common/file.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {MenuItem} from 'primeng/api';
+import {switchMap} from 'rxjs/operators';
+import {Guid} from 'src/app/shared/classes/common/guid.class';
+import {DemandNavigationService} from '../../../services/demand-navigation.service';
+import {DoDemandActionInterface} from '../../../types/navigation-service/do-demand-action.interface';
 import {CreateDemandMessageRequestInterface} from '../../../types/requests/create-demand-message-request.interface';
+import {FactoringInfo} from '../../../../../../shared/modules/old-modules/demand/types/common/factoring/factoring.info';
 
 @Component({
   selector: 'demand-info',
@@ -18,7 +18,7 @@ import {CreateDemandMessageRequestInterface} from '../../../types/requests/creat
   styleUrls: ['./demand-info.component.scss'],
 })
 export class DemandInfoComponent implements OnInit, OnDestroy {
-  public currentDemandInfo: FactoringInfoInterface;
+  public currentDemandInfo: FactoringInfo;
 
   public selectedStepIndex = 0;
 
@@ -31,14 +31,16 @@ export class DemandInfoComponent implements OnInit, OnDestroy {
     private commonService: CommonService,
     private fileService: FileService,
     private _demandNavigationService: DemandNavigationService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this._initValues();
     this._initForm();
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+  }
 
   public getType(type: string): string {
     let result: string = '';

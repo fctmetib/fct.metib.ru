@@ -4,10 +4,11 @@ import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.
 import {AdvancedRequests} from '../../pages/requests-page/interfaces/requests-page.interface'
 import {ToolsService} from '../../../../../shared/services/tools.service'
 import {RequestDrawerService} from './request-drawer.service'
-import {BehaviorSubject} from 'rxjs'
+import {BehaviorSubject, filter, tap} from 'rxjs'
 import {InputSize} from '../../../../../shared/ui-kit/input/interfaces/input.interface';
 import {ButtonSize} from '../../../../../shared/ui-kit/button/interfaces/button.interface';
 import {DeliveryAgreementDrawerService} from '../delivery-agreement-drawer/delivery-agreement-drawer.service';
+import {DeliveryAgreement} from '../delivery-agreement-drawer/interfaces/delivery-agreement.interface';
 
 @Component({
   selector: 'mib-request-drawer',
@@ -18,6 +19,7 @@ export class RequestDrawerComponent implements OnInit {
   public sending$ = new BehaviorSubject<boolean>(false)
 
   public size: InputSize | ButtonSize = 'm'
+  public deliveryAgreements: DeliveryAgreement[] = []
 
   constructor(
     public dialogRef: MatDialogRef<RequestDrawerComponent>,
@@ -32,7 +34,14 @@ export class RequestDrawerComponent implements OnInit {
   }
 
   openDeliveryAgreement() {
-    this.deliveryAgreementDrawerService.open({maxWidth: 492})
+    const drawer = this.deliveryAgreementDrawerService.open({maxWidth: 492})
+
+    drawer.afterClosed().pipe(
+      filter(Boolean),
+      tap(data => {
+        this.deliveryAgreements.push(data);
+      })
+    ).subscribe()
   }
 
 }

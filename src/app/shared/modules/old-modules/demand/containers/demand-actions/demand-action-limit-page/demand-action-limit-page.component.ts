@@ -11,7 +11,7 @@ import { FileService } from 'src/app/shared/services/common/file.service';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { DemandService } from '../../../services/demand.service';
-import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { FactoringInfo } from '../../../types/common/factoring/factoring.info';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 
@@ -25,7 +25,7 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
 
   public isEdit: boolean = false;
   public currentDemand: any;
-  public currentInformation: FactoringInfoInterface;
+  public currentInformation: FactoringInfo;
 
   public alert: boolean;
   public alertMessage = [];

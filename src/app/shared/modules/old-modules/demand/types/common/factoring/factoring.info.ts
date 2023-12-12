@@ -2,7 +2,7 @@ import { ManagerReferenceInterface } from "src/app/shared/types/manager/manager-
 import { DemandMessageInterface } from "../../demand-message.interface";
 import { DemandStepInterface } from "../../demand-step.interface";
 
-export interface FactoringInfoInterface {
+export interface FactoringInfo {
   ID: number,
   Messages: DemandMessageInterface[],
   DateCreated: Date,

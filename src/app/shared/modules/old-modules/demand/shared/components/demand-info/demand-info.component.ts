@@ -13,7 +13,7 @@ import { MenuItem } from 'primeng/api';
 import { switchMap } from 'rxjs/operators';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { environment } from 'src/environments/environment';
-import {FactoringInfoInterface} from '../../../types/common/factoring/factoring-info.interface';
+import {FactoringInfo} from '../../../types/common/factoring/factoring.info';
 import {CreateDemandMessageRequestInterface} from '../../../types/requests/create-demand-message-request.interface';
 
 @Component({
@@ -23,7 +23,7 @@ import {CreateDemandMessageRequestInterface} from '../../../types/requests/creat
 })
 export class DemandInfoComponent implements OnInit {
   @Input()
-  currentDemandInfo: FactoringInfoInterface;
+  currentDemandInfo: FactoringInfo;
 
   @Output()
   sendMessage: EventEmitter<any> = new EventEmitter<any>();

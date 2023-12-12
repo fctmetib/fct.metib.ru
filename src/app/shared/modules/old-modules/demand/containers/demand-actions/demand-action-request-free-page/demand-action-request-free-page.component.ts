@@ -10,7 +10,7 @@ import { FileModeInterface } from 'src/app/shared/types/file/file-model.interfac
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { MessageService } from 'primeng/api';
 import { switchMap } from 'rxjs/operators';
-import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { FactoringInfo } from '../../../types/common/factoring/factoring.info';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
 
@@ -44,7 +44,7 @@ export class DemandActionRequestFreePageComponent
   private subscription$: Subscription = new Subscription();
 
   public currentDemand: any;
-  public currentInformation: FactoringInfoInterface;
+  public currentInformation: FactoringInfo;
   isView: boolean;
 
   constructor(

@@ -44,7 +44,7 @@ const routes = [
       // },
       {
         path: 'new-demand',
-        loadChildren: () => import('../shared/modules/old-modules/demand-new/demand-new.module').then(m => m.DemandNewModule)
+        loadChildren: () => import('../client/modules/demand-new/demand-new.module').then(m => m.DemandNewModule)
       },
       {
         path: 'delays',

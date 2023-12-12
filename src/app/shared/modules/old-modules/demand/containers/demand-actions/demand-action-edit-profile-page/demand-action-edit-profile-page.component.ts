@@ -9,7 +9,7 @@ import {FileModeInterface} from 'src/app/shared/types/file/file-model.interface'
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {CommonService} from 'src/app/shared/services/common/common.service';
 import {FileService} from 'src/app/shared/services/common/file.service';
-import {FactoringInfoInterface} from '../../../types/common/factoring/factoring-info.interface';
+import {FactoringInfo} from '../../../types/common/factoring/factoring.info';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {CreateDemandMessageRequestInterface} from '../../../types/requests/create-demand-message-request.interface';
 import {DemandSelectboxInterface} from '../../../types/common/demand-selectbox.interface';
@@ -25,7 +25,7 @@ import {MessageService} from 'primeng/api';
 export class DemandActionEditProfilePageComponent implements OnInit, ExitGuard {
   public isEdit: boolean = false;
   public currentDemand: any;
-  public currentInformation: FactoringInfoInterface;
+  public currentInformation: FactoringInfo;
   private currentDraftId: number = 0;
 
   isUserVerified: boolean;

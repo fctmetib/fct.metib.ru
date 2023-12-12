@@ -19,7 +19,7 @@ import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-
 import { Observable, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
-import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { FactoringInfo } from '../../../types/common/factoring/factoring.info';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
 
 @Component({
@@ -32,7 +32,7 @@ export class DemandActionDebitorPageComponent
 {
   public isEdit: boolean = false;
   public currentDemand: any;
-  public currentInformation: FactoringInfoInterface;
+  public currentInformation: FactoringInfo;
   private currentDraftId: number = 0;
 
   public isUserVerified: boolean;

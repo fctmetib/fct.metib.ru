@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
 import { DemandService } from '../../../services/demand.service';
-import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { FactoringInfo } from '../../../types/common/factoring/factoring.info';
 import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
@@ -45,7 +45,7 @@ export class DemandActionVerificationPageComponent
 
   public currentTemplate: string = 'ediTemplate';
   public currentDemand: any;
-  public currentInformation: FactoringInfoInterface;
+  public currentInformation: FactoringInfo;
   isView: boolean;
 
   constructor(

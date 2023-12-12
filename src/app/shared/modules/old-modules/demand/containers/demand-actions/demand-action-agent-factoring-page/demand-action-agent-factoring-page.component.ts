@@ -17,7 +17,7 @@ import { DemandAddonAccountInterface } from '../../../types/common/demand-addon-
 import { DemandObligationInterface } from '../../../types/common/demand-obligation.interface';
 import { DemandEDIInterface } from '../../../types/common/demand-edi.interface';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
-import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { FactoringInfo } from '../../../types/common/factoring/factoring.info';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DemandService } from '../../../services/demand.service';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
@@ -40,7 +40,7 @@ export class DemandActionAgentFactoringPageComponent
   implements OnInit, ExitGuard, OnDestroy {
   public isEdit: boolean = false;
   public currentDemand: any;
-  public currentInformation: FactoringInfoInterface;
+  public currentInformation: FactoringInfo;
   private currentDraftId: number = 0;
 
   public isUserVerified: boolean;

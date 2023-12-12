@@ -9,7 +9,7 @@ import { CreateDemandMessageRequestInterface } from '../../../types/requests/cre
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { DemandService } from '../../../services/demand.service';
 import { MessageService } from 'primeng/api';
-import { FactoringInfoInterface } from '../../../types/common/factoring/factoring-info.interface';
+import { FactoringInfo } from '../../../types/common/factoring/factoring.info';
 
 @Component({
   selector: 'app-demand-action-surety-page',
@@ -27,7 +27,7 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
   public currentDraftId: number = 0;
 
   public currentDemand: any;
-  public currentInformation: FactoringInfoInterface;
+  public currentInformation: FactoringInfo;
 
   public isRequestLoading: boolean = false;
 

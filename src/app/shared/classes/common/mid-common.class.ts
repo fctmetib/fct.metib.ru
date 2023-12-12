@@ -1,6 +1,6 @@
-import { BankRequisitesInterface } from '../../types/bank/bank-requisites.interface';
-import { ReportCardInterface } from 'src/app/client/modules/cabinet/types/common/report-card.interface';
-import {DemandSelectboxInterface} from '../../modules/old-modules/demand-new/types/demand-selectbox.interface';
+import {BankRequisitesInterface} from '../../types/bank/bank-requisites.interface';
+import {ReportCardInterface} from 'src/app/client/modules/cabinet/types/common/report-card.interface';
+import {DemandSelectboxInterface} from '../../../client/modules/demand-new/types/demand-selectbox.interface';
 
 export class MIBCommon {
   private legalForms: DemandSelectboxInterface[] = [];
@@ -629,15 +629,15 @@ export class MIBCommon {
     ];
 
     this.bankRequisites = {
-      Title: "ПАО АКБ \"Металлинвестбанк\"",
-      COR: "30101810300000000176",
-      BIK: "044525176",
-      INN: "7709138570",
-      KPP: "775001001",
-      OKPO: "17535627",
-      OGRN: "1027700218666",
-      Address: "119180, г. Москва, ул. Большая Полянка, д. 47, стр. 2",
-      Phone: "+7-495-727-9797"
+      Title: 'ПАО АКБ "Металлинвестбанк"',
+      COR: '30101810300000000176',
+      BIK: '044525176',
+      INN: '7709138570',
+      KPP: '775001001',
+      OKPO: '17535627',
+      OGRN: '1027700218666',
+      Address: '119180, г. Москва, ул. Большая Полянка, д. 47, стр. 2',
+      Phone: '+7-495-727-9797'
     }
   }
 }
