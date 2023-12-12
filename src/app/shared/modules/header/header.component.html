@@ -10,11 +10,21 @@
 			</div>
 			<div class="flex gap-24">
 				<mib-link size="s" type="ghost-secondary" [routerLink]="['/']"
-					>Москва</mib-link
-				>
+					>Москва
+					<mib-ref-icon
+						mibRightIcon
+						class="stroke"
+						name="fi_chevron-down"
+					></mib-ref-icon>
+				</mib-link>
 				<mib-link size="s" type="ghost-secondary" [routerLink]="['/']"
-					>Поддержка</mib-link
-				>
+					>+7 (495) 727-9797
+					<mib-ref-icon
+						mibRightIcon
+						class="stroke"
+						name="fi_chevron-down"
+					></mib-ref-icon>
+				</mib-link>
 			</div>
 		</div>
 	</div>
@@ -168,13 +178,23 @@
 						>
 					</div>
 				</div>
-				<mib-button [routerLink]="['/']" type="filled-secondary" size="m">
-					<mib-ref-icon
-						btn-icon
-						class="stroke"
-						name="fi_chevron-left"
-					></mib-ref-icon>
-				</mib-button>
+				<ng-container *ngIf="!authService?.isUserLoggedIn; else loggedInUser">
+					<mib-button
+						[routerLink]="['/auth/login']"
+						type="filled-primary"
+						size="m"
+						>Личный кабинет
+					</mib-button>
+				</ng-container>
+				<ng-template #loggedInUser>
+					<mib-button [routerLink]="['/']" type="filled-secondary" size="m">
+						<mib-ref-icon
+							btn-icon
+							class="stroke"
+							name="fi_chevron-left"
+						></mib-ref-icon>
+					</mib-button>
+				</ng-template>
 			</ng-template>
 		</div>
 	</div>

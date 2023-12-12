@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	constructor(
-		private authService: AuthService,
+		public authService: AuthService,
 		private toolsService: ToolsService,
 		private clientService: ClientService,
 		public dropdownService: DropdownService
