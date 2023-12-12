@@ -5,7 +5,7 @@
 	[ngClass]="classes"
 	[class.transition]="viewMounted"
 >
-	<div class="headline">{{ demandTitle }}</div>
+	<div class="headline">{{ demandTitle ? demandTitle : 'Запрос на ЭЦП' }}</div>
 	<p class="text text_m">
 		{{
 			demandText
