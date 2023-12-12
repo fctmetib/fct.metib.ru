@@ -3,11 +3,11 @@
 	<h2>Запросы</h2>
 	<mib-spacing type="m"></mib-spacing>
 	<div class="flex flex_wrap gap-16">
-		<mib-new-demand
+		<mib-request-card
 			*ngFor="let action of actions"
 			[demandTitle]="action.text"
 			[link]="['history']"
-		></mib-new-demand>
+		></mib-request-card>
 	</div>
 </div>
 <mib-spacing type="xl2"></mib-spacing>

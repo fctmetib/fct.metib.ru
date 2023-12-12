@@ -5,41 +5,41 @@
 	flex: 1 0 428px;
 }
 
-@mixin new-demand {
+@mixin request-card {
 	width: 100%;
 	padding: 16px;
 	background-color: var(--wgr-primary);
 }
 
-@mixin new-demand-desktop {
+@mixin request-card-desktop {
 	border: 1px solid var(--wgr-tertiary);
 	border-radius: 16px;
 }
 
-@mixin new-demand-mobile {
+@mixin request-card-mobile {
 	display: flex;
 	width: 360px;
 	padding: 12px 16px 16px 16px;
 	border-bottom: 1px solid var(--wgr-tertiary);
 }
 
-@mixin new-demand-hover {
+@mixin request-card-hover {
 	box-shadow: var(--shadow-small);
 }
 
-.new-demand {
-	@include new-demand;
+.request-card {
+	@include request-card;
 
 	&:hover {
-		@include new-demand-hover;
+		@include request-card-hover;
 	}
 
 	&_desktop {
-		@include new-demand-desktop;
+		@include request-card-desktop;
 	}
 
 	&_mobile {
-		@include new-demand-mobile;
+		@include request-card-mobile;
 	}
 
 	mib-ref-icon[name='fi_plus'] {

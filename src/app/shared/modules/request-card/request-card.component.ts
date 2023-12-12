@@ -3,12 +3,12 @@ import { DeviceType } from '../../interfaces/shared.interface'
 import { OpacityViewAnimation } from '../../animations/animations'
 
 @Component({
-	selector: 'mib-new-demand',
-	templateUrl: './new-demand.component.html',
-	styleUrls: ['./new-demand.component.scss'],
+	selector: 'mib-request-card',
+	templateUrl: './request-card.component.html',
+	styleUrls: ['./request-card.component.scss'],
 	animations: [OpacityViewAnimation]
 })
-export class NewDemandComponent implements AfterViewInit {
+export class RequestCardComponent implements AfterViewInit {
 	@Input() device: DeviceType = 'desktop'
 	@Input() demandTitle: string
 	@Input() demandText: string
@@ -20,7 +20,7 @@ export class NewDemandComponent implements AfterViewInit {
 
 	get classes() {
 		return {
-			[`new-demand_${this.device}`]: true
+			[`request-card_${this.device}`]: true
 		}
 	}
 

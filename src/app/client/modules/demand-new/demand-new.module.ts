@@ -62,7 +62,7 @@ import { FreeComponent } from './components/free/free.component'
 import { LimitComponent } from './components/limit/limit.component'
 import { SpacingModule } from 'src/app/shared/ui-kit/spacing/spacing.module'
 import { SharedModule } from '../../../shared/shared.module'
-import { NewDemandModule } from '../../../shared/modules/new-demand/new-demand.module'
+import { RequestCardModule } from '../../../shared/modules/request-card/request-card.module'
 import { ExitGuard } from '../../../shared/services/exit.guard'
 import { CommonService } from '../../../shared/services/common/common.service'
 import { FileService } from '../../../shared/services/common/file.service'
@@ -106,7 +106,7 @@ import { NavbarModule } from 'src/app/shared/ui-kit/navbar/navbar.module'
 		AvatarModule,
 		SharedModule,
 		SpacingModule,
-		NewDemandModule,
+		RequestCardModule,
 		TabModule,
 		NavbarModule
 	],
