@@ -1,25 +1,57 @@
 <ng-container [formGroup]="form">
-  <h3>Личный кабинет</h3>
-  <mib-spacing type="s"></mib-spacing>
-  <mib-input>
-    <input autocomplete="login" mibInput formControlName="login" [size]="inputSize" styleType="filled-secondary" placeholder="Введите логин"/>
-    <ng-container input-label>Введите логин</ng-container>
-  </mib-input>
-  <mib-spacing type="xs"></mib-spacing>
-  <mib-input>
-    <input #password autocomplete="password" type="password" mibInput [size]="inputSize" styleType="filled-secondary" formControlName="password" placeholder="Введите пароль"/>
-    <ng-container input-label>Введите пароль</ng-container>
-    <mib-ref-icon [passwordHider]="[password]" class="stroke" input-right-icon [name]="password.type === 'password' ? 'fi_eye' : 'fi_eye-off'"></mib-ref-icon>
-  </mib-input>
-  <mib-spacing type="xs"></mib-spacing>
-  <mib-link [routerLink]="['/auth/reset-password']">
-    Забыли пароль?
-  </mib-link>
-  <mib-spacing type="m"></mib-spacing>
-  <div class="flex gap-16">
-    <mib-button [routerLink]="['/auth/register']" size="l" type="filled-secondary" class="flex_grow">Регистрация</mib-button>
-    <mib-button (press)="onSubmit()" size="l" class="flex_grow">Войти</mib-button>
-  </div>
+	<h3>Личный кабинет</h3>
+	<mib-spacing type="s"></mib-spacing>
+	<mib-input>
+		<input
+			autocomplete="login"
+			mibInput
+			formControlName="login"
+			[size]="inputSize"
+			styleType="filled-secondary"
+			placeholder="Введите логин"
+		/>
+		<ng-container input-label>Введите логин</ng-container>
+	</mib-input>
+	<mib-spacing type="xs"></mib-spacing>
+	<mib-input>
+		<input
+			#password
+			autocomplete="password"
+			type="password"
+			mibInput
+			[size]="inputSize"
+			styleType="filled-secondary"
+			formControlName="password"
+			placeholder="Введите пароль"
+		/>
+		<ng-container input-label>Введите пароль</ng-container>
+		<mib-ref-icon
+			[passwordHider]="[password]"
+			class="stroke"
+			input-right-icon
+			[name]="password.type === 'password' ? 'fi_eye' : 'fi_eye-off'"
+		></mib-ref-icon>
+	</mib-input>
+	<mib-spacing type="xs"></mib-spacing>
+	<mib-link [routerLink]="['/auth/reset-password']"> Забыли пароль? </mib-link>
+	<mib-spacing type="m"></mib-spacing>
+	<div class="flex gap-16">
+		<mib-button
+			[routerLink]="['/auth/register']"
+			size="l"
+			type="filled-secondary"
+			class="flex_grow"
+			>Регистрация</mib-button
+		>
+		<mib-button
+			[loading]="!!(isSubmitting$ | async)"
+			[disabled]="form.invalid"
+			(press)="onSubmit()"
+			size="l"
+			class="flex_grow"
+			>Войти</mib-button
+		>
+	</div>
 </ng-container>
 <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
 	<div class="auth__body__form__fields">
