@@ -1,4 +1,4 @@
-<div class="container container_large">
+<!-- <div class="container container_large">
 	<mib-spacing type="m"></mib-spacing>
 	<h2>Запросы</h2>
 	<mib-spacing type="m"></mib-spacing>
@@ -29,7 +29,16 @@
 				class="basic"
 			></button>
 		</div>
-	</div>
+	</div> -->
+<div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<a
+		class="cursor-pointer"
+		[routerLink]="['/client/new-demand/home']"
+		routerLinkActive="router-link-active"
+		>Go demand-new-home.component →</a
+	>
+	<mib-spacing type="m"></mib-spacing>
 
 	<div class="p-grid demand-action">
 		<ng-container *ngFor="let action of actions">

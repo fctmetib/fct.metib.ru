@@ -69,6 +69,7 @@ import {FileService} from '../../../shared/services/common/file.service';
 import {DeliveryService} from '../../../shared/services/share/delivery.service';
 import {SuccessMessagesModule} from '../../../shared/modules/old-modules/successMessages/successMessages.module';
 import {BackendErrorMessagesModule} from '../../../shared/modules/old-modules/backendErrorMessages/backendErrorMessages.module';
+import { DemandNewHomeComponent } from './pages/demand-new-home/demand-new-home.component';
 
 @NgModule({
   imports: [
@@ -130,7 +131,8 @@ import {BackendErrorMessagesModule} from '../../../shared/modules/old-modules/ba
     VerifyComponent,
     DebitorComponent,
     // Modals
-    AddressModalComponent
+    AddressModalComponent,
+    DemandNewHomeComponent
   ],
   providers: [
     ExitGuard,

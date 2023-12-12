@@ -43,7 +43,11 @@ src\app\shared\modules\new-demand
 ng g m shared/modules/new-demand/new-demand --flat --dry-run
 ng g i shared/modules/new-demand/interfaces/new-demand.interface --dry-run
 ng g c shared/modules/new-demand/new-demand --flat --skip-tests  --dry-run
+ //---
 
+ //--- new-demand-home
+src\app\client\modules\demand-new\pages
+ng g c client/modules/demand-new/pages/demand-new-home --skip-tests --dry-run
  //---
 
 // add m
