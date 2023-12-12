@@ -224,7 +224,7 @@ export class AuthService {
 
   get isUserLoggedIn(): boolean {
     const userCookie = this.cookieService.get('_cu');
-    return Boolean(JSON.parse(userCookie));
+    return Boolean(userCookie);
   }
 
   public getUserFromStore(): AuthRes {
