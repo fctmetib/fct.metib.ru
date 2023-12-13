@@ -2,27 +2,28 @@
 	<mib-spacing type="m"></mib-spacing>
 	<h3>Запросы</h3>
 	<mib-spacing type="m"></mib-spacing>
-	<mib-tab-group>
-		<mib-navbar class="container container_large">
-			<mib-navbar-point value="1">Список запросов</mib-navbar-point>
-			<mib-navbar-point value="2">Черновики</mib-navbar-point>
-			<mib-navbar-point value="3">История запросов</mib-navbar-point>
-		</mib-navbar>
-		<mib-spacing type="s"></mib-spacing>
-		<div class="container container_large">
-			<mib-tab-item value="1">
-				<div class="flex flex_wrap gap-16">
-					<mib-request-card [link]="['history']"></mib-request-card>
-				</div>
-			</mib-tab-item>
-			<mib-spacing type="m"></mib-spacing>
-			<mib-tab-item value="2">
-				<h3>Черновики</h3>
-			</mib-tab-item>
-			<mib-tab-item value="3">
-				<h3>История запросов</h3>
-			</mib-tab-item>
-		</div>
-	</mib-tab-group>
 </div>
+<mib-tab-group>
+	<mib-navbar class="container container_large">
+		<mib-navbar-point value="1">Список запросов</mib-navbar-point>
+		<mib-navbar-point value="2">Черновики</mib-navbar-point>
+		<mib-navbar-point value="3">История запросов</mib-navbar-point>
+	</mib-navbar>
+	<mib-spacing type="s"></mib-spacing>
+	<div class="container container_large">
+		<mib-tab-item value="1">
+			<div class="flex flex_wrap gap-16">
+				<mib-request-card [link]="['history']"></mib-request-card>
+			</div>
+		</mib-tab-item>
+		<mib-spacing type="m"></mib-spacing>
+		<mib-tab-item value="2">
+			<h3>Черновики</h3>
+		</mib-tab-item>
+		<mib-tab-item value="3">
+			<h3>История запросов</h3>
+		</mib-tab-item>
+	</div>
+</mib-tab-group>
+
 <mib-spacing type="xl2"></mib-spacing>
