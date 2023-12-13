@@ -14,6 +14,8 @@
         <input formControlName="Number" [size]="size" mibInput>
       </mib-input>
       <mib-select formControlName="Type" [size]="size" placeholder="Тип заявки">
+        <mib-dropdown-point [value]="RequestTypeEnum.NON_FINANCING" text="Без финансирования"></mib-dropdown-point>
+        <mib-dropdown-point [value]="RequestTypeEnum.FINANCING" text="С финансированием"></mib-dropdown-point>
       </mib-select>
     </div>
     <mib-input>
@@ -112,6 +114,6 @@
     <p class="text text_xs c-bti-tertiary">Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG</p>
   </div>
   <mib-drawer-footer drawer-footer>
-    <mib-button [size]="size" type="filled-primary">Создать заявку</mib-button>
+    <mib-button [disabled]="form.invalid" (press)="onSubmit()" [size]="size" type="filled-primary">Создать заявку</mib-button>
   </mib-drawer-footer>
 </mib-drawer>

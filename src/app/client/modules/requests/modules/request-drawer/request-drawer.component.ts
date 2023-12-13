@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface'
 import {RequestDrawerService} from './request-drawer.service'
-import {BehaviorSubject, defer, filter, finalize, of, tap} from 'rxjs'
+import {BehaviorSubject, defer, filter, finalize, forkJoin, of, switchMap, tap} from 'rxjs'
 import {InputSize} from '../../../../../shared/ui-kit/input/interfaces/input.interface';
 import {ButtonSize} from '../../../../../shared/ui-kit/button/interfaces/button.interface';
 import {DeliveryAgreement, ShipmentReq} from '../delivery-agreement-drawer/interfaces/delivery-agreement.interface';
@@ -10,7 +10,7 @@ import {DeliveryAgreementDrawerService} from '../delivery-agreement-drawer/servi
 import {DeliveryAgreementService} from '../delivery-agreement-drawer/services/delivery-agreement.service';
 import {AuthService} from '../../../../../auth/services/auth.service';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Document, RequestReq, RequestRes, RequestStatusEnum, RequestTypeEnum} from '../../interfaces/request.interface';
+import {Document, RequestReq, RequestRes, RequestTypeEnum} from '../../interfaces/request.interface';
 import {takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
 import {FileDnd} from '../../../../../shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
@@ -23,11 +23,12 @@ import {RequestsService} from '../../services/requests.service';
   providers: [AutoUnsubscribeService]
 })
 export class RequestDrawerComponent implements OnInit {
-  public sending$ = new BehaviorSubject<boolean>(false)
+  public isSubmitting$ = new BehaviorSubject<boolean>(false)
 
   public form: FormGroup
 
   public existingRequest?: RequestRes
+  public RequestTypeEnum = RequestTypeEnum
 
   public size: InputSize | ButtonSize = 'm'
   public deliveries: DeliveryAgreement[] = []
@@ -98,16 +99,16 @@ export class RequestDrawerComponent implements OnInit {
 
   addShipment(shipment: ShipmentReq) {
     const control: FormGroup = this.fb.group({
-      AccountNumber: [null, [Validators.required]],
-      AccountDate: [null, [Validators.required]],
-      InvoiceNumber: [null, [Validators.required]],
-      InvoiceDate: [null, [Validators.required]],
-      WaybillNumber: [null, [Validators.required]],
-      WaybillDate: [null, [Validators.required]],
-      DateShipment: [null, [Validators.required]],
-      DatePayment: [null, [Validators.required]],
-      Summ: [null, [Validators.required]],
-      SummToFactor: [null, [Validators.required]],
+      AccountNumber: [null],
+      AccountDate: [null],
+      InvoiceNumber: [null],
+      InvoiceDate: [null],
+      WaybillNumber: [null],
+      WaybillDate: [null],
+      DateShipment: [null],
+      DatePayment: [null],
+      Summ: [null],
+      SummToFactor: [null],
     })
     control.patchValue(shipment)
     this.shipments.push(control)
@@ -116,12 +117,12 @@ export class RequestDrawerComponent implements OnInit {
   addDocument(data: Document) {
     const control: FormGroup = this.fb.group({
       Number: [null],
-      Title: [null],
+      Title: [null],//
       Location: [null],
-      Description: [null],
+      Description: [null],//
       DocumentStatusID: [null],
       DocumentStatus: [null],
-      DocumentTypeID: [null],
+      DocumentTypeID: [null],//
       DocumentType: [null],
       DocumentTypeTitle: [null],
       Available: [null],
@@ -134,9 +135,9 @@ export class RequestDrawerComponent implements OnInit {
       CreatorLastName: [null],
       CreatorFirstName: [null],
       DocumentID: [null],
-      OwnerTypeID: [null],
-      OwnerID: [null],
-      Data: [null]
+      OwnerTypeID: [null],//
+      OwnerID: [null],//
+      Data: [null],//
     });
     control.patchValue(data)
     this.documents.push(control)
@@ -151,6 +152,8 @@ export class RequestDrawerComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.isSubmitting$.next(true)
+
     const request: RequestReq = this.form.getRawValue()
     const documents: Document[] = this.documents.value;
     const shipments: ShipmentReq[] = this.shipments.value
@@ -160,20 +163,21 @@ export class RequestDrawerComponent implements OnInit {
         if (this.isEditing && this.existingRequest) {
           return this.requestsService.update(this.existingRequest.ID, request)
         } else {
-          return
+          return this.requestsService.create(request)
         }
       }).pipe(
-        tap(() => {
+        switchMap(result => {
           if (documents.length > 0) {
             const uploadObservables = documents.map(document => {
-              // return this.requestsService.uploadDocument(document, result[0], 'Document ');
+              return this.requestsService.uploadDocument(document, result[0], 'Document ');
             });
-            // return forkJoin(uploadObservables);
+            return forkJoin(uploadObservables);
           }
-          // return of(result);
+          return of(result);
         }),
         finalize(() => {
-          // this.ref.close();
+          this.dialogRef.close()
+          this.isSubmitting$.next(false)
         })
       ).subscribe()
     } else {
@@ -183,10 +187,10 @@ export class RequestDrawerComponent implements OnInit {
 
   private initForms() {
     this.form = this.fb.group({
-      Number: [null, [Validators.required]],
-      Date: [null, [Validators.required]],
+      Number: [null],
+      Date: [null],
       Type: [RequestTypeEnum.NON_FINANCING, [Validators.required]],
-      Status: [null, [Validators.required]],
+      Status: [null],
       Summ: [0, [Validators.required]],
       ReadOnly: [false, [Validators.required]],
       IsCorrected: [false, [Validators.required]],

@@ -1,24 +1,22 @@
 import {ClientRequestStateInterface} from 'src/app/shared/types/client/client-request-state.interface'
 import {ClientRequestSendingInitRequestInterface} from 'src/app/shared/types/client/client-request-sending-init-request.interface'
-import {ClientRequestInterface} from 'src/app/shared/types/client/client-request.interface'
 import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
 import {HttpClient} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
 import {FileMode} from 'src/app/shared/types/file/file-model.interface'
 import {ClientShipmentInterface} from 'src/app/shared/types/client/client-shipment.interface'
-import {RequestReq, RequestRes} from '../interfaces/request.interface';
+import {Document, RequestReq, RequestRes} from '../interfaces/request.interface';
 
 @Injectable()
 export class RequestsService {
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient
+  ) {
   }
 
-  createRequest(ids: number[]): Observable<number[]> {
-    return this.http.post<number[]>(
-      `${environment.apiUrl}/v1/requests/send`,
-      ids
-    )
+  public create(data: RequestReq): Observable<RequestRes> {
+    return this.http.post<RequestRes>(`${environment.apiUrl}/v1/requests`, data)
   }
 
   public getRequests(): Observable<RequestRes[]> {
@@ -30,6 +28,16 @@ export class RequestsService {
   public update(requestID: number, data: Partial<RequestReq>): Observable<RequestRes> {
     return this.http.post<RequestRes>(`${environment.apiUrl}/v1/requests/${requestID}`, data)
   }
+
+
+  public uploadDocument(document: Document, requestID: number, documentType: string) {
+    return this.http.post(`${environment.apiUrl}/v1/requests/${requestID}/${documentType}`, document);
+  }
+
+  sendRequest(ids: number[]): Observable<number[]> {
+    return this.http.post<number[]>(`${environment.apiUrl}/v1/requests/send`, ids)
+  }
+
 
   // МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ
   // МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ
@@ -48,11 +56,6 @@ export class RequestsService {
   public fetch(): Observable<RequestRes[]> {
     const url = `${environment.apiUrl}/v1/requests`
     return this.http.get<RequestRes[]>(url)
-  }
-
-  public add(data: ClientRequestInterface): Observable<RequestRes> {
-    const url = `${environment.apiUrl}/v1/requests`
-    return this.http.post<RequestRes>(url, data)
   }
 
   // public update(
