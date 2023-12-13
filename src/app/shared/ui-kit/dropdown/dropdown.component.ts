@@ -107,7 +107,6 @@ export class DropdownComponent {
 
   positionMenu(trigger: HTMLElement) {
     const triggerRect = this.reference?.getBoundingClientRect() ?? trigger.getBoundingClientRect();
-    const containerRect = this.elRef.nativeElement.parentElement.getBoundingClientRect();
     const menuRect = this.elRef.nativeElement.getBoundingClientRect();
     const menuStyles = this.window.getComputedStyle(this.elRef.nativeElement);
 
@@ -115,27 +114,39 @@ export class DropdownComponent {
 
     // Позиционирование сверху или снизу
     const bottomSpaceAvailable = window.innerHeight - triggerRect.bottom;
-    const menuHeight = menuRect.height + parseInt(menuStyles.marginTop)
-    if (bottomSpaceAvailable >= menuHeight) {
-      this.isAbove = false;
-      topStyle = `${triggerRect.bottom}px`;
+    const menuHeight = menuRect.height + parseInt(menuStyles.marginTop);
+    this.isAbove = bottomSpaceAvailable < menuHeight;
+
+    topStyle = this.isAbove
+      ? `${triggerRect.top - menuRect.height}px`
+      : `${triggerRect.bottom}px`;
+
+    // Ширина меню: если ширина меню больше ширины триггера, используем ширину меню
+    widthStyle = menuRect.width > triggerRect.width ? `${menuRect.width}px` : `${triggerRect.width}px`;
+
+    // Позиционирование по горизонтали
+    const spaceRight = window.innerWidth - triggerRect.right;
+    const spaceLeft = triggerRect.left;
+
+    if (menuRect.width > triggerRect.width) {
+      if (spaceRight < menuRect.width && spaceLeft > menuRect.width) {
+        // Если справа недостаточно места, но слева достаточно, смещаем влево
+        leftStyle = `${triggerRect.left + triggerRect.width - menuRect.width}px`;
+      } else {
+        // Иначе выравниваем по левому краю триггера
+        leftStyle = `${triggerRect.left}px`;
+      }
     } else {
-      this.isAbove = true;
-      topStyle = `${triggerRect.top - menuRect.height}px`;
+      // Если ширина меню меньше или равна ширине триггера, выравниваем по левому краю триггера
+      leftStyle = `${triggerRect.left}px`;
     }
-
-    // Установка ширины меню равной ширине триггера
-    leftStyle = trigger.offsetLeft + 'px';
-
-    // Установка ширины меню равной ширине триггера
-    widthStyle = `${triggerRect.width}px`;
 
     // Обновление стилей
     this.style = {
-      position: 'absolute',
       top: topStyle,
       left: leftStyle,
       width: widthStyle
     };
   }
+
 }

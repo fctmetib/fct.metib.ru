@@ -1,12 +1,10 @@
-<mib-drawer>
-  <mib-drawer-header
-    (onClose)="dialogRef.close()"
-    drawer-header
-  ></mib-drawer-header>
+<mib-drawer [formGroup]="form">
+  <mib-drawer-header (onClose)="dialogRef.close()" drawer-header></mib-drawer-header>
   <h4>Создание новой заявки</h4>
   <mib-spacing type="xs"></mib-spacing>
-  <mib-select [size]="size" placeholder="Выберите договор поставки" type="outline">
+  <mib-select [formControl]="deliveryIdControl" [size]="size" placeholder="Выберите договор поставки" type="outline">
     <ng-container mibSelectLabel>Договор поставки</ng-container>
+    <mib-dropdown-point *ngFor="let delivery of deliveries" [text]="delivery.Title" [value]="delivery.ID"></mib-dropdown-point>
   </mib-select>
   <mib-spacing type="xs"></mib-spacing>
   <div class="flex flex_column gap-12">
@@ -30,7 +28,7 @@
   <mib-spacing type="s"></mib-spacing>
   <h5 class="headline">Поставки</h5>
   <mib-spacing type="xs2"></mib-spacing>
-  <mib-information *ngIf="!deliveryAgreements.length; else deliveryAgreementsTemplate" type="alert">
+  <mib-information *ngIf="!shipments.controls.length; else deliveryAgreementsTemplate" type="alert">
     <ng-container information-text>Необходимо прикрепить документ договора поставки</ng-container>
   </mib-information>
   <ng-template #deliveryAgreementsTemplate>
@@ -43,25 +41,31 @@
         <mib-table-head-cell>Дата поставки</mib-table-head-cell>
         <mib-table-head-cell>Сумма</mib-table-head-cell>
       </mib-table-head>
-      <mib-table-row>
+      <mib-table-row *ngFor="let shipment of shipments.controls; let idx = index">
         <mib-table-cell type="main">
-          <ng-container table-cell-title>314</ng-container>
+          <ng-container table-cell-title>{{shipment.get('WaybillNumber').value}}</ng-container>
         </mib-table-cell>
         <mib-table-cell>
-          <ng-container table-cell-title>24.04.2022</ng-container>
+          <ng-container table-cell-title>{{shipment.get('WaybillDate').value | date: 'dd.MM.YYYY'}}</ng-container>
         </mib-table-cell>
         <mib-table-cell>
-          <ng-container table-cell-title>1212</ng-container>
+          <ng-container table-cell-title>{{shipment.get('InvoiceNumber').value}}</ng-container>
         </mib-table-cell>
         <mib-table-cell>
-          <ng-container table-cell-title>24.04.2022</ng-container>
+          <ng-container table-cell-title>{{shipment.get('InvoiceDate').value | date: 'dd.MM.YYYY'}}</ng-container>
         </mib-table-cell>
         <mib-table-cell>
-          <ng-container table-cell-title>27.04.2022</ng-container>
+          <ng-container table-cell-title>{{shipment.get('DateShipment').value | date: 'dd.MM.YYYY'}}</ng-container>
         </mib-table-cell>
         <mib-table-cell>
-          <ng-container table-cell-title>1 000 000,00</ng-container>
+          <ng-container table-cell-title>{{shipment.get('Summ').value | rub}}</ng-container>
         </mib-table-cell>
+        <mib-button table-row-button [mibDropdownTrigger]="shipmentMenu" size="s" type="ghost-secondary">
+          <mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
+        </mib-button>
+        <mib-dropdown #shipmentMenu>
+          <mib-dropdown-point (press)="removeShipment(idx)" text="Удалить"></mib-dropdown-point>
+        </mib-dropdown>
       </mib-table-row>
     </mib-table>
   </ng-template>
@@ -78,7 +82,7 @@
   </mib-information>
   <mib-spacing type="xs"></mib-spacing>
   <div class="flex flex_column gap-12">
-    <mib-dnd headline="Прикрепите скан-копию документа"></mib-dnd>
+    <mib-dnd [accept]="['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'image/jpeg', 'image/png']" headline="Прикрепите скан-копию документа"></mib-dnd>
     <p class="text text_xs c-bti-tertiary">Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG</p>
   </div>
   <mib-drawer-footer drawer-footer>

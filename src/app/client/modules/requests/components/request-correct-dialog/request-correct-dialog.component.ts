@@ -1,11 +1,11 @@
-import { Subscription } from 'rxjs';
-import { Component, OnDestroy } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { RequestsResponse } from '../../types/requestResponse.interface';
-import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
-import { RequestsService } from '../../services/requests.service';
-import { ClientRequestInterface } from 'src/app/shared/types/client/client-request.interface';
-import { RequestTypeEnum } from 'src/app/shared/types/enums/request-type.enum';
+import {Subscription} from 'rxjs';
+import {Component, OnDestroy} from '@angular/core';
+import {DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
+import {RequestsResponse} from '../../types/requestResponse.interface';
+import {ClientShipmentInterface} from 'src/app/shared/types/client/client-shipment.interface';
+import {RequestsService} from '../../services/requests.service';
+import {ClientRequestInterface} from 'src/app/shared/types/client/client-request.interface';
+import {RequestTypeEnum} from '../../interfaces/request.interface';
 
 @Component({
   selector: 'app-request-correct-dialog',
@@ -26,7 +26,8 @@ export class RequestCorrectDialogComponent implements OnDestroy {
     public ref: DynamicDialogRef,
     private service: RequestsService,
     public config: DynamicDialogConfig,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.initValues();
@@ -53,7 +54,7 @@ export class RequestCorrectDialogComponent implements OnDestroy {
       DeliveryID: this.request.Delivery.ID,
       ID: this.request.ID,
       Shipments: this.changedShipments,
-      Type: RequestTypeEnum.Correction,
+      Type: RequestTypeEnum.CORRECTION,
     };
     this.subscription$.add(
       this.service.add(data).subscribe((resp) => {
