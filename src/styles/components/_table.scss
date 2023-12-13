@@ -33,6 +33,11 @@ $text-selectors: 'label';
   }
 }
 
+mib-table-row:last-child .table-row {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
 .table-head-cell {
   @include table-head-cell;
   .cursor-pointer {

@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
 import {AdvancedRequests} from '../../pages/requests-page/interfaces/requests-page.interface';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'mib-delivery-agreement-drawer',
@@ -11,7 +11,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 })
 export class DeliveryAgreementDrawerComponent implements OnInit {
 
-  private form: FormGroup
+  public form: FormGroup
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DrawerData<AdvancedRequests[]>,
@@ -25,6 +25,21 @@ export class DeliveryAgreementDrawerComponent implements OnInit {
   }
 
   private initForm() {
-    this.form = this.fb.group({})
+    this.form = this.fb.group({
+      AccountNumber: [null, [Validators.required]],
+      AccountDate: [null, [Validators.required]],
+      InvoiceNumber: [null, [Validators.required]],
+      InvoiceDate: [null, [Validators.required]],
+      WaybillNumber: [null, [Validators.required]],
+      WaybillDate: [null, [Validators.required]],
+      DateShipment: [null, [Validators.required]],
+      DatePayment: [null, [Validators.required]],
+      Summ: [null, [Validators.required]],
+      SummToFactor: [null, [Validators.required]],
+    })
+  }
+
+  onSubmit() {
+    this.dialogRef.close(this.form.getRawValue())
   }
 }

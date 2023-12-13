@@ -1,1 +1,3 @@
-export interface RequestDrawerData {}
+export interface RequestDrawerData {
+
+}

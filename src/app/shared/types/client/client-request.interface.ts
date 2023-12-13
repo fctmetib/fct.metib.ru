@@ -1,7 +1,7 @@
-import { FileModeInterface } from './../file/file-model.interface';
+import { FileModeInterface } from '../file/file-model.interface';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
-import { RequestSourceEnum } from './../enums/request-source.enum';
-import { RequestTypeEnum } from '../enums/request-type.enum';
+import { RequestSourceEnum } from '../enums/request-source.enum';
+import {RequestTypeEnum} from '../../../client/modules/requests/interfaces/request.interface';
 
 export interface ClientRequestInterface {
   ID?: number;

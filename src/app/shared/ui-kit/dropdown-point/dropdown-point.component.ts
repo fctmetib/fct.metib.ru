@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, Optional, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Optional, Output, TemplateRef, ViewChild} from '@angular/core';
 import {SelectComponent} from '../select/select.component';
 import {DropdownPointSize, DropdownPointType} from './interfaces/dropdown-point.interface';
 import {FormControl} from '@angular/forms';
@@ -18,11 +18,13 @@ export class DropdownPointComponent implements AfterViewInit {
   @Input() value: any;
   @Input() underlined: boolean = false;
   @Input() text: string = '';
+  @Input() disabled: boolean = false;
   @Input() set showCheckbox(value: boolean) {
     this._showCheckbox =value
   }
   @Input() size: DropdownPointSize = 'm'
   @Input() type: DropdownPointType = 'outline'
+  @Output() press = new EventEmitter()
 
   public viewMounted: boolean = false;
   public control: FormControl = new FormControl<boolean>(false)
@@ -40,6 +42,7 @@ export class DropdownPointComponent implements AfterViewInit {
   }
 
   select(): void {
+    this.press.emit()
     if (this._showCheckbox) this.control.setValue(!this.control.value)
     this.selectComponent?.selectOption(this);
     this.autoCompleteComponent?.selectOption(this)
