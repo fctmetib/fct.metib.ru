@@ -5,11 +5,13 @@
 	[ngClass]="classes"
 	[class.transition]="viewMounted"
 >
-	<div class="headline">{{ demandTitle ? demandTitle : 'Запрос на ЭЦП' }}</div>
-	<p class="text text_m">
+	<div class="headline">
+		{{ requestTitle ? requestTitle : 'Запрос на ЭЦП' }}
+	</div>
+	<p class="flex_grow text text_m">
 		{{
-			demandText
-				? demandText
+			requestText
+				? requestText
 				: 'Запрос на подтверждение или авторизацию документа с использованием электронной цифровой подписи.'
 		}}
 	</p>
@@ -29,7 +31,7 @@
 			></mib-ref-icon>
 		</mib-link>
 		<mib-link [routerLink]="link" type="ghost-secondary">
-			{{ historyNumber ? historyNumber : '12' }} в истории
+			{{ requestQuantity ? requestQuantity : '12' }} в истории
 		</mib-link>
 	</div>
 </div>

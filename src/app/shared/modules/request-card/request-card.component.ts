@@ -10,9 +10,9 @@ import { OpacityViewAnimation } from '../../animations/animations'
 })
 export class RequestCardComponent implements AfterViewInit {
 	@Input() device: DeviceType = 'desktop'
-	@Input() demandTitle: string
-	@Input() demandText: string
-	@Input() historyNumber: string
+	@Input() requestTitle: string
+	@Input() requestText: string
+	@Input() requestQuantity: number
 	@Input() link?: string
 
 	public isHover: boolean = false

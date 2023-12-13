@@ -5,7 +5,8 @@ import { DemandNewRoutingModule } from './demand-new-routing.module'
 import { CommonModule, CurrencyPipe } from '@angular/common'
 import { DropdownModule } from 'primeng/dropdown'
 import { CardModule } from 'primeng/card'
-import { ButtonModule } from 'primeng/button'
+import { ButtonModule } from 'src/app/shared/ui-kit/button/button.module'
+import { ButtonModule as ButtonModule22 } from 'primeng/button'
 import { TableModule } from 'primeng/table'
 import { MultiSelectModule } from 'primeng/multiselect'
 import { ProgressBarModule } from 'primeng/progressbar'
@@ -78,7 +79,7 @@ import { NavbarModule } from 'src/app/shared/ui-kit/navbar/navbar.module'
 		CommonModule,
 		InputTextModule,
 		CheckboxModule,
-		ButtonModule,
+		ButtonModule22,
 		FileUploadModule,
 		ProgressSpinnerModule,
 		RadioButtonModule,
@@ -108,7 +109,8 @@ import { NavbarModule } from 'src/app/shared/ui-kit/navbar/navbar.module'
 		SpacingModule,
 		RequestCardModule,
 		TabModule,
-		NavbarModule
+		NavbarModule,
+		ButtonModule
 	],
 	declarations: [
 		// Containers

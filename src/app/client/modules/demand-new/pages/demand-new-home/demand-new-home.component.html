@@ -13,8 +13,17 @@
 	<div class="container container_large">
 		<mib-tab-item value="1">
 			<div class="flex flex_wrap gap-16">
-				<mib-request-card [link]="['history']"></mib-request-card>
+				<mib-request-card
+					*ngFor="let request of requestList$"
+					[requestTitle]="request.title"
+					[requestText]="request.description"
+					[requestQuantity]="request.quantity"
+					[link]="['history']"
+				></mib-request-card>
 			</div>
+			<mib-spacing type="s"></mib-spacing>
+			<mib-button type="filled-primary">Запрос на свободную тему</mib-button>
+			<mib-spacing type="xl2"></mib-spacing>
 		</mib-tab-item>
 		<mib-spacing type="m"></mib-spacing>
 		<mib-tab-item value="2">
@@ -25,5 +34,3 @@
 		</mib-tab-item>
 	</div>
 </mib-tab-group>
-
-<mib-spacing type="xl2"></mib-spacing>
