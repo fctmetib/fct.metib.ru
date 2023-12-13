@@ -1,30 +1,17 @@
 import {
   BehaviorSubject,
   Observable,
-  Subscription,
   finalize,
   forkJoin,
   filter,
-  switchMap,
   tap
 } from 'rxjs'
 import {
   Component,
   OnInit,
   OnDestroy,
-  ViewChildren,
-  Directive
 } from '@angular/core'
-import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog'
-import {SortEvent, MenuItem} from 'primeng/api'
 import {RequestsService} from '../../services/requests.service'
-import {ConfirmRequestInterface} from 'src/app/shared/types/common/confirm-request.interface'
-import {FormBuilder, FormGroup, Validators} from '@angular/forms'
-import {RequestStoreService} from 'src/app/shared/services/store/request.store.service'
-import {DocumentViewDialogComponent} from 'src/app/client/shared/components/dialogs/document-view-dialog/document-view-dialog.component'
-import {ClientRequestSendingInitRequestInterface} from 'src/app/shared/types/client/client-request-sending-init-request.interface'
-import {SignService} from 'src/app/shared/services/share/sign.service'
-// import { filter } from 'jszip'
 import {Properties} from 'csstype'
 import {AdvancedRequests} from './interfaces/requests-page.interface'
 import {RequestDrawerService} from '../../modules/request-drawer/request-drawer.service'
@@ -35,12 +22,6 @@ const ANIMATION_CONFIG = {
   endOpacity: 0,
   startOpacity: 1,
   duration: 300
-}
-
-@Directive({
-  selector: '[tableHighlight]'
-})
-export class TableHighlightDirective {
 }
 
 @Component({

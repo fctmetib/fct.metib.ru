@@ -1,5 +1,5 @@
-import { RequestsResponse } from '../../../types/requestResponse.interface'
+import {RequestRes} from '../../../interfaces/request.interface';
 
-export interface AdvancedRequests extends RequestsResponse {
+export interface AdvancedRequests extends RequestRes {
 	checked: boolean
 }

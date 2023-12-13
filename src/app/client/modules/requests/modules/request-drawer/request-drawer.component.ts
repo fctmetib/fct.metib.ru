@@ -1,9 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface'
-import {AdvancedRequests} from '../../pages/requests-page/interfaces/requests-page.interface'
 import {RequestDrawerService} from './request-drawer.service'
-import {BehaviorSubject, filter, tap} from 'rxjs'
+import {BehaviorSubject, defer, filter, finalize, of, tap} from 'rxjs'
 import {InputSize} from '../../../../../shared/ui-kit/input/interfaces/input.interface';
 import {ButtonSize} from '../../../../../shared/ui-kit/button/interfaces/button.interface';
 import {DeliveryAgreement, ShipmentReq} from '../delivery-agreement-drawer/interfaces/delivery-agreement.interface';
@@ -11,10 +10,11 @@ import {DeliveryAgreementDrawerService} from '../delivery-agreement-drawer/servi
 import {DeliveryAgreementService} from '../delivery-agreement-drawer/services/delivery-agreement.service';
 import {AuthService} from '../../../../../auth/services/auth.service';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Document, RequestReq, RequestStatusEnum, RequestTypeEnum} from '../../interfaces/request.interface';
+import {Document, RequestReq, RequestRes, RequestStatusEnum, RequestTypeEnum} from '../../interfaces/request.interface';
 import {takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
 import {FileDnd} from '../../../../../shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
+import {RequestsService} from '../../services/requests.service';
 
 @Component({
   selector: 'mib-request-drawer',
@@ -27,14 +27,17 @@ export class RequestDrawerComponent implements OnInit {
 
   public form: FormGroup
 
+  public existingRequest?: RequestRes
+
   public size: InputSize | ButtonSize = 'm'
   public deliveries: DeliveryAgreement[] = []
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: DrawerData<AdvancedRequests[]>,
+    @Inject(MAT_DIALOG_DATA) public data: DrawerData<RequestRes>,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<RequestDrawerComponent>,
-    private requestsService: RequestDrawerService,
+    private requestDrawerService: RequestDrawerService,
+    private requestsService: RequestsService,
     private deliveryAgreementService: DeliveryAgreementService,
     private deliveryAgreementDrawerService: DeliveryAgreementDrawerService,
     private authService: AuthService,
@@ -64,9 +67,17 @@ export class RequestDrawerComponent implements OnInit {
     return this.form.get('Delivery') as FormControl
   }
 
+  get isEditing() {
+    return this.data.state === 'edit'
+  }
+
   ngOnInit() {
     this.initForms()
     this.watchForms()
+
+    this.existingRequest = this.data.data
+    if (this.existingRequest) this.form.patchValue(this.existingRequest)
+
     this.deliveryAgreementService.getRefs(this.factoring.DebtorID).pipe(
       tap(data => {
         this.deliveries = data;
@@ -140,93 +151,45 @@ export class RequestDrawerComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // let existRequest: RequestReq = this.config.data;
-    //
-    // if (this.shipments.length > 0) {
-    //
-    //   if (existRequest) {
-    //     const delivery: DeliveryRef = this.deliveries.find(x => x.ID === this.form.value.deliveryID);
-    //
-    //     const request: ClientRequestInterface = {
-    //       ID: existRequest.ID,
-    //       IsCorrected: false,
-    //       ReadOnly: false,
-    //       Status: null,
-    //       Summ: 0,
-    //       Date: new Date(this.form.value.date),
-    //       Delivery: {
-    //         ...delivery
-    //       },
-    //       Documents: this.files,
-    //       Number: this.form.value.number,
-    //       Shipments: this.shipments,
-    //       Type: this.form.value.type,
-    //     };
-    //
-    //     this.requestService.update(request).pipe(
-    //       switchMap((result) => {
-    //         if (this.filesToUpload.length > 0) {
-    //           const uploadObservables = this.filesToUpload.map(file => {
-    //             return this.requestService.uploadDocument(file, result[0], 'Document ');
-    //           });
-    //           return forkJoin(uploadObservables);
-    //         }
-    //         return of(result);
-    //       }),
-    //       tap(() => {
-    //         this.ref.close();
-    //       })
-    //     ).subscribe();
-    //   } else {
-    //     const delivery: DeliveryRef = this.deliveries.find(x => x.ID === this.form.value.deliveryID);
-    //
-    //     const request: ClientRequestInterface = {
-    //       ID: 0,
-    //       IsCorrected: false,
-    //       ReadOnly: false,
-    //       Status: null,
-    //       Summ: 0,
-    //       Date: new Date(this.form.value.date),
-    //       Delivery: {
-    //         ...delivery
-    //       },
-    //       Documents: this.files,
-    //       Number: this.form.value.number,
-    //       Shipments: this.shipments,
-    //       Type: this.form.value.type,
-    //     };
-    //
-    //     this.requestService.add(request).pipe(
-    //       switchMap((result) => {
-    //         if (this.filesToUpload.length > 0) {
-    //           const uploadObservables = this.filesToUpload.map(file => {
-    //             return this.requestService.uploadDocument(file, result[0], 'Document ');
-    //           });
-    //           return forkJoin(uploadObservables);
-    //         }
-    //         return of(result);
-    //       }),
-    //       tap(() => {
-    //         this.ref.close();
-    //       })
-    //     ).subscribe();
-    //   }
-    // } else {
-    //   let errors = 'Ошибка! Пожалуйста, добавьте минимум 1 поставку.';
-    //   return;
-    // }
+    const request: RequestReq = this.form.getRawValue()
+    const documents: Document[] = this.documents.value;
+    const shipments: ShipmentReq[] = this.shipments.value
+
+    if (shipments.length > 0) {
+      defer(() => {
+        if (this.isEditing && this.existingRequest) {
+          return this.requestsService.update(this.existingRequest.ID, request)
+        } else {
+          return
+        }
+      }).pipe(
+        tap(() => {
+          if (documents.length > 0) {
+            const uploadObservables = documents.map(document => {
+              // return this.requestsService.uploadDocument(document, result[0], 'Document ');
+            });
+            // return forkJoin(uploadObservables);
+          }
+          // return of(result);
+        }),
+        finalize(() => {
+          // this.ref.close();
+        })
+      ).subscribe()
+    } else {
+      let errors = 'Ошибка! Пожалуйста, добавьте минимум 1 поставку.';
+    }
   }
 
   private initForms() {
-    let test: RequestReq
     this.form = this.fb.group({
       Number: [null, [Validators.required]],
       Date: [null, [Validators.required]],
       Type: [RequestTypeEnum.NON_FINANCING, [Validators.required]],
-      Status: [RequestStatusEnum, [Validators.required]],
-      Summ: [null, [Validators.required]],
-      ReadOnly: [null, [Validators.required]],
-      IsCorrected: [null, [Validators.required]],
+      Status: [null, [Validators.required]],
+      Summ: [0, [Validators.required]],
+      ReadOnly: [false, [Validators.required]],
+      IsCorrected: [false, [Validators.required]],
       Delivery: this.fb.group({
         CurrencyCode: [null, [Validators.required]],
         Title: [null, [Validators.required]],
