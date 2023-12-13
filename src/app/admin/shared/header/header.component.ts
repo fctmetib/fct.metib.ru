@@ -9,7 +9,7 @@ import { PageInterface } from '../types/page.interface'
 import { Subscription } from 'rxjs'
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog'
 import { isPlatformBrowser } from '@angular/common'
-import { CurrentUserFactoring } from 'src/app/shared/types/currentUserFactoring'
+import { UserFactoring } from 'src/app/shared/types/userFactoring'
 import { UpdatePasswordDialogComponent } from '../../../shared/modules/old-modules/update-password-dialog/update-password-dialog.component'
 
 @Component({
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
 	public baseAvatarUrl = 'https://api-factoring.metib.ru/api/avatar'
 	public baseAvatarProfileUrl = `${environment.apiUrl}/avatar/`
 
-	public adminUserFactoring$ = new BehaviorSubject<CurrentUserFactoring>(null)
+	public adminUserFactoring$ = new BehaviorSubject<UserFactoring>(null)
 	public page$: Observable<PageInterface>
 
 	private subscription$: Subscription = new Subscription()

@@ -1,8 +1,8 @@
 import { CaptchaInterface } from '../../../shared/types/common/captcha.interface';
-import { ProfileInterface } from '../../../shared/types/user/profile.interface';
+import { Profile } from '../../../shared/types/user/profile';
 
 export interface RegisterReq {
-  Profile: ProfileInterface
+  Profile: Profile
   Password: string
   Captcha: CaptchaInterface
 }

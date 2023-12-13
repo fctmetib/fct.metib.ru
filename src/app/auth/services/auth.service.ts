@@ -18,7 +18,7 @@ import {
 
 import { environment } from 'src/environments/environment';
 import { RegisterReq } from 'src/app/auth/types/register/registerReq';
-import { CurrentUserGeneral } from 'src/app/shared/types/currentUserGeneral';
+import { UserGeneral } from 'src/app/shared/types/userGeneral';
 import { LoginRequestInterface } from 'src/app/auth/types/login/loginRequest.interface';
 import { AuthRes } from 'src/app/auth/types/login/authRes';
 import { RegisterConfirmReq } from '../types/register/registerConfirmReq';
@@ -27,15 +27,15 @@ import { ReauthRequestInterface } from '../types/login/reauthRequest.interface';
 import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
 import { FreedutyStoreService } from 'src/app/shared/services/store/freeduty.store.service';
 import { isPlatformBrowser } from '@angular/common';
-import { CurrentUserFactoring } from 'src/app/shared/types/currentUserFactoring';
-import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
+import { UserFactoring } from 'src/app/shared/types/userFactoring';
+import { CurrentUser } from 'src/app/shared/types/currentUser';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  public currentUserAdmin$ = new BehaviorSubject<CurrentUserInterface>(null);
-  public currentUser$ = new BehaviorSubject<CurrentUserInterface>(null);
+  public currentUserAdmin$ = new BehaviorSubject<CurrentUser>(null);
+  public currentUser$ = new BehaviorSubject<CurrentUser>(null);
 
   constructor(
     private http: HttpClient,
@@ -75,7 +75,7 @@ export class AuthService {
         let token = response.Code;
         this.cookieService.put('_bt', token)
 
-        let currentUserFactoring: CurrentUserFactoring = response;
+        let currentUserFactoring: UserFactoring = response;
         this.currentUser$.next({
           userFactoring: currentUserFactoring,
           userGeneral: null
@@ -123,7 +123,7 @@ export class AuthService {
     );
   }
 
-  initCurrentUser(): Observable<CurrentUserGeneral> {
+  initCurrentUser(): Observable<UserGeneral> {
     let adminCookie = this.cookieService.get('_cu_admin');
     let userCookie = this.cookieService.get('_cu');
     let user: AuthRes;
@@ -145,14 +145,14 @@ export class AuthService {
     }
 
     return this.http
-      .get<CurrentUserGeneral>(environment.apiUrl + `/user/${userId}`)
+      .get<UserGeneral>(environment.apiUrl + `/user/${userId}`)
       .pipe(
-        tap((currentUserResponse: CurrentUserGeneral) => {
+        tap((currentUserResponse: UserGeneral) => {
           let userCookie = this.cookieService.get('_cu');
           let currentUserFactoring: AuthRes;
           if (userCookie) {
             currentUserFactoring = JSON.parse(userCookie);
-            let currentUser: CurrentUserInterface = {
+            let currentUser: CurrentUser = {
               userGeneral: currentUserResponse,
               userFactoring: currentUserFactoring,
             };
@@ -163,7 +163,7 @@ export class AuthService {
           let currentAdminFactoring: AuthRes;
           if (userAdminCookie) {
             currentAdminFactoring = JSON.parse(userAdminCookie);
-            let currentUser: CurrentUserInterface = {
+            let currentUser: CurrentUser = {
               userGeneral: currentUserResponse,
               userFactoring: currentAdminFactoring,
             };

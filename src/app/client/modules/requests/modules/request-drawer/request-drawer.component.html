@@ -86,22 +86,16 @@
       </mib-table-head>
       <mib-table-row *ngFor="let document of documents.controls; let idx = index">
         <mib-table-cell type="main">
-          <ng-container table-cell-title>{{document.get('WaybillNumber').value}}</ng-container>
+          <ng-container table-cell-title>{{idx + 1}}</ng-container>
         </mib-table-cell>
         <mib-table-cell>
-          <ng-container table-cell-title>{{document.get('WaybillDate').value | date: 'dd.MM.YYYY'}}</ng-container>
+          <ng-container table-cell-title>{{document.get('Title').value}}</ng-container>
         </mib-table-cell>
         <mib-table-cell>
-          <ng-container table-cell-title>{{document.get('InvoiceNumber').value}}</ng-container>
+          <ng-container table-cell-title>{{document.get('Description').value}}</ng-container>
         </mib-table-cell>
         <mib-table-cell>
-          <ng-container table-cell-title>{{document.get('InvoiceDate').value | date: 'dd.MM.YYYY'}}</ng-container>
-        </mib-table-cell>
-        <mib-table-cell>
-          <ng-container table-cell-title>{{document.get('DateShipment').value | date: 'dd.MM.YYYY'}}</ng-container>
-        </mib-table-cell>
-        <mib-table-cell>
-          <ng-container table-cell-title>{{document.get('Summ').value | rub}}</ng-container>
+          <ng-container table-cell-title>{{document.get('DocumentTypeID').value}}</ng-container>
         </mib-table-cell>
         <mib-button table-row-button [mibDropdownTrigger]="documentMenu" size="s" type="ghost-secondary">
           <mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>

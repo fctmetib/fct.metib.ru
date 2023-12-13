@@ -6,7 +6,7 @@ import {RequestDrawerService} from './request-drawer.service'
 import {BehaviorSubject, filter, tap} from 'rxjs'
 import {InputSize} from '../../../../../shared/ui-kit/input/interfaces/input.interface';
 import {ButtonSize} from '../../../../../shared/ui-kit/button/interfaces/button.interface';
-import {DeliveryAgreement, Shipment, ShipmentReq} from '../delivery-agreement-drawer/interfaces/delivery-agreement.interface';
+import {DeliveryAgreement, ShipmentReq} from '../delivery-agreement-drawer/interfaces/delivery-agreement.interface';
 import {DeliveryAgreementDrawerService} from '../delivery-agreement-drawer/services/delivery-agreement-drawer.service';
 import {DeliveryAgreementService} from '../delivery-agreement-drawer/services/delivery-agreement.service';
 import {AuthService} from '../../../../../auth/services/auth.service';
@@ -14,10 +14,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angul
 import {Document, RequestReq, RequestStatusEnum, RequestTypeEnum} from '../../interfaces/request.interface';
 import {takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
-import {FileMode} from '../../../../../shared/types/file/file-model.interface';
-import {Base64Url, FileDnd} from '../../../../../shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
-import {Guid} from '../../../../../shared/classes/common/guid.class';
-import {FileService} from '../../../../../shared/services/common/file.service';
+import {FileDnd} from '../../../../../shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
 
 @Component({
   selector: 'mib-request-drawer',
@@ -42,7 +39,6 @@ export class RequestDrawerComponent implements OnInit {
     private deliveryAgreementDrawerService: DeliveryAgreementDrawerService,
     private authService: AuthService,
     private au: AutoUnsubscribeService,
-    private fileService: FileService,
   ) {
   }
 
@@ -58,6 +54,10 @@ export class RequestDrawerComponent implements OnInit {
 
   get factoring() {
     return this.authService.currentUser$.value.userFactoring
+  }
+
+  get user() {
+    return this.authService.currentUser$.value.userGeneral
   }
 
   get delivery(): FormControl<DeliveryAgreement> {
@@ -104,33 +104,28 @@ export class RequestDrawerComponent implements OnInit {
 
   addDocument(data: Document) {
     const control: FormGroup = this.fb.group({
-      // Number: [null],
-      // Title: [null],
-      // Location: [null],
-      // Description: [null],
-      // DocumentStatusID: [null, [Validators.required]],
-      // DocumentStatus: [null],
-      // DocumentTypeID: [null, [Validators.required]],
-      // DocumentType: [null],
-      // DocumentTypeTitle: [null],
-      // Available: [null, [Validators.required]],
-      // Removed: [null, [Validators.required]],
-      // ActiveOrganizationID: [null, [Validators.required]],
-      // ActiveOrganization: [null],
-      // CreatedTime: [null, [Validators.required]],
-      // AuthorOrganizationID: [null, [Validators.required]],
-      // AuthorOrganization: [null],
-      // CreatorLastName: [null],
-      // CreatorFirstName: [null],
-      // DocumentID: [null, [Validators.required]],
-      // OwnerTypeID: [null, [Validators.required]],
-      // OwnerID: [null, [Validators.required]],
-      // Data: [null]
-      ID: [null, [Validators.required]],
-      Code: [null, [Validators.required]],
-      FileName: [null, [Validators.required]],
-      Size: [null, [Validators.required]],
-      Identifier: [null, [Validators.required]],
+      Number: [null],
+      Title: [null],
+      Location: [null],
+      Description: [null],
+      DocumentStatusID: [null],
+      DocumentStatus: [null],
+      DocumentTypeID: [null],
+      DocumentType: [null],
+      DocumentTypeTitle: [null],
+      Available: [null],
+      Removed: [null],
+      ActiveOrganizationID: [null],
+      ActiveOrganization: [null],
+      CreatedTime: [null],
+      AuthorOrganizationID: [null],
+      AuthorOrganization: [null],
+      CreatorLastName: [null],
+      CreatorFirstName: [null],
+      DocumentID: [null],
+      OwnerTypeID: [null],
+      OwnerID: [null],
+      Data: [null]
     });
     control.patchValue(data)
     this.documents.push(control)
@@ -142,6 +137,84 @@ export class RequestDrawerComponent implements OnInit {
 
   removeDocument(idx: number) {
     this.documents.removeAt(idx)
+  }
+
+  onSubmit(): void {
+    // let existRequest: RequestReq = this.config.data;
+    //
+    // if (this.shipments.length > 0) {
+    //
+    //   if (existRequest) {
+    //     const delivery: DeliveryRef = this.deliveries.find(x => x.ID === this.form.value.deliveryID);
+    //
+    //     const request: ClientRequestInterface = {
+    //       ID: existRequest.ID,
+    //       IsCorrected: false,
+    //       ReadOnly: false,
+    //       Status: null,
+    //       Summ: 0,
+    //       Date: new Date(this.form.value.date),
+    //       Delivery: {
+    //         ...delivery
+    //       },
+    //       Documents: this.files,
+    //       Number: this.form.value.number,
+    //       Shipments: this.shipments,
+    //       Type: this.form.value.type,
+    //     };
+    //
+    //     this.requestService.update(request).pipe(
+    //       switchMap((result) => {
+    //         if (this.filesToUpload.length > 0) {
+    //           const uploadObservables = this.filesToUpload.map(file => {
+    //             return this.requestService.uploadDocument(file, result[0], 'Document ');
+    //           });
+    //           return forkJoin(uploadObservables);
+    //         }
+    //         return of(result);
+    //       }),
+    //       tap(() => {
+    //         this.ref.close();
+    //       })
+    //     ).subscribe();
+    //   } else {
+    //     const delivery: DeliveryRef = this.deliveries.find(x => x.ID === this.form.value.deliveryID);
+    //
+    //     const request: ClientRequestInterface = {
+    //       ID: 0,
+    //       IsCorrected: false,
+    //       ReadOnly: false,
+    //       Status: null,
+    //       Summ: 0,
+    //       Date: new Date(this.form.value.date),
+    //       Delivery: {
+    //         ...delivery
+    //       },
+    //       Documents: this.files,
+    //       Number: this.form.value.number,
+    //       Shipments: this.shipments,
+    //       Type: this.form.value.type,
+    //     };
+    //
+    //     this.requestService.add(request).pipe(
+    //       switchMap((result) => {
+    //         if (this.filesToUpload.length > 0) {
+    //           const uploadObservables = this.filesToUpload.map(file => {
+    //             return this.requestService.uploadDocument(file, result[0], 'Document ');
+    //           });
+    //           return forkJoin(uploadObservables);
+    //         }
+    //         return of(result);
+    //       }),
+    //       tap(() => {
+    //         this.ref.close();
+    //       })
+    //     ).subscribe();
+    //   }
+    // } else {
+    //   let errors = 'Ошибка! Пожалуйста, добавьте минимум 1 поставку.';
+    //   return;
+    // }
   }
 
   private initForms() {
@@ -178,19 +251,15 @@ export class RequestDrawerComponent implements OnInit {
     ).subscribe()
   }
 
-  onDocumentLoad({file, arrayBuffer}: FileDnd) {
-      const guid = Guid.newGuid();
-      this.fileService.uploadFileChunks(arrayBuffer, file.name, file.size.toString(), guid).pipe(
-        tap(res => {
-          switch(res.type) {
-            case 1:
-              break;
-            case 4:
-              const body = res.body
-              this.documents.push(body)
-              break;
-          }
-        })
-      ).subscribe()
+  onDocumentLoad({file, url}: FileDnd) {
+    const document: Document = {
+      Description: '',
+      DocumentTypeID: 40,
+      Title: file.name,
+      OwnerTypeID: 20,
+      OwnerID: this.user.ID,
+      Data: url
+    };
+    this.addDocument(document)
   }
 }

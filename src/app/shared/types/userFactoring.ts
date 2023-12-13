@@ -1,4 +1,4 @@
-export interface CurrentUserFactoring {
+export interface UserFactoring {
   Code: string;
   CustomerID: number;
   Date: Date;
