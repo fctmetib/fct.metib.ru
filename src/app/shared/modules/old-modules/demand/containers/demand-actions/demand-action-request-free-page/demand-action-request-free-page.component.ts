@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { MessageService } from 'primeng/api';
 import { switchMap } from 'rxjs/operators';
@@ -36,7 +36,7 @@ export class DemandActionRequestFreePageComponent
   public isRequestLoading: boolean = false;
   public isLoading: boolean = false;
 
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
 
   private currentDraftId: number = 0;
 
@@ -142,7 +142,7 @@ export class DemandActionRequestFreePageComponent
     );
   }
 
-  handleRemoveFile(file: FileModeInterface) {
+  handleRemoveFile(file: FileMode) {
     this.currentDemand.Files = this.currentDemand.Files.filter(
       (x) => x !== file
     );

@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 // Interfaces & Types
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { DemandActionType } from '../../types/common/demand-action-type';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
 // Services
@@ -33,7 +33,7 @@ export class FreeComponent implements OnInit {
   private _formGenerator: FormGenerator;
 
   // Файлы
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
 
   constructor(
     private fb: FormBuilder,

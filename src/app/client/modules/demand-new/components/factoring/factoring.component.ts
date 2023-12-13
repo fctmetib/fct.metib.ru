@@ -1,5 +1,5 @@
 import { DemandValuesIniter } from './../../tools/demand-values-initer';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { DemandConverter } from './../../tools/demand-converter';
 import { DoDemandPageActionType } from './../../types/navigation-service/do-demand-page-action-type';
 import { FormGenerator } from './../../tools/form-generator';
@@ -52,7 +52,7 @@ export class FactoringComponent implements OnInit {
   public selectedIdCenter: any;
 
   // Файлы
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
   public validations: Array<string> = environment.uploadFilesExt;
 
   //#region Factoring Request Region

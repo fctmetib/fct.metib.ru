@@ -1,4 +1,4 @@
-import { FileModeInterface } from "src/app/shared/types/file/file-model.interface";
+import { FileMode } from "src/app/shared/types/file/file-model.interface";
 import { ManagerReferenceInterface } from "src/app/shared/types/manager/manager-reference.interface";
 import { DemandMessageInterface } from "./demand-new-message.interface";
 import { DemandRequirementInterface } from "./demand-new-requirement.interface";
@@ -16,7 +16,7 @@ export interface DemandBaseNewInterface<T> {
   Requirements: DemandRequirementInterface[];
   Steps: DemandStepInterface[];
   Messages: DemandMessageInterface[];
-  Files: FileModeInterface[];
+  Files: FileMode[];
   Data: T;
   Result: DemandResultDataInterface;
   ID: number;

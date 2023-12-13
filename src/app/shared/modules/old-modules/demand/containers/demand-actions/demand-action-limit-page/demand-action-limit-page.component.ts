@@ -9,7 +9,7 @@ import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { DemandService } from '../../../services/demand.service';
 import { FactoringInfo } from '../../../types/common/factoring/factoring.info';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
@@ -32,7 +32,7 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
 
   public formFree: FormGroup;
 
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
 
   private currentDraftId: number = 0;
 
@@ -113,7 +113,7 @@ export class DemandActionLimitPageComponent implements OnInit, OnDestroy, ExitGu
     );
   }
 
-  handleRemoveFile(file: FileModeInterface) {
+  handleRemoveFile(file: FileMode) {
     this.currentDemand.Files = this.currentDemand.Files.filter(
       (x) => x !== file
     );

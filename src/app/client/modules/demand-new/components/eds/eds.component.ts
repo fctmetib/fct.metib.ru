@@ -18,7 +18,7 @@ import {
   PostInterface,
   RegionInterface,
 } from 'src/app/shared/services/common/common.service';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { DemandNavigationService } from '../../services/demand-navigation.service';
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DemandActionType } from '../../types/common/demand-action-type';
@@ -59,7 +59,7 @@ export class EDSComponent implements OnInit, OnDestroy {
   public selectedIdCenter: any;
 
   // Файлы
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
   public validations: Array<string> = environment.uploadFilesExt;
 
   constructor(

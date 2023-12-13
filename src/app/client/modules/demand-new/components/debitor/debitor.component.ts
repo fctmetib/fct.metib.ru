@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DebtorInterface } from '../../types/debtor-interface';
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
 import { DemandActionType } from '../../types/common/demand-action-type';
 // Services
@@ -34,7 +34,7 @@ export class DebitorComponent implements OnInit {
   private _formGenerator: FormGenerator;
 
   // Файлы
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
 
   //#region Debtor
   public debtors: DebtorInterface[] = [];

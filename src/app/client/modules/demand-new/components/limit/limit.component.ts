@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 // Interfaces & Types
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { DoDemandActionInterface } from '../../types/navigation-service/do-demand-action.interface';
 import { DemandNavigationInterface } from '../../types/common/demand-navigation.interface';
 import { DemandActionType } from '../../types/common/demand-action-type';
@@ -32,7 +32,7 @@ export class LimitComponent implements OnInit {
   private _formGenerator: FormGenerator;
 
   // Файлы
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
 
   constructor(
     private fb: FormBuilder,

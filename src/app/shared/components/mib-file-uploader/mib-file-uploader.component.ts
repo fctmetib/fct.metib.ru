@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { MibFileErrorDialogComponent } from '../mib-file-error-dialog/mib-file-error-dialog.component';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -80,7 +80,7 @@ export class MibFileUploaderComponent implements OnInit {
   required: boolean = true;
 
   @Input()
-  existFile: FileModeInterface[] = [];
+  existFile: FileMode[] = [];
 
   @Output()
   remove = new EventEmitter<any>();
@@ -121,7 +121,7 @@ export class MibFileUploaderComponent implements OnInit {
     return isInvalid;
   }
 
-  public removeFile(file: FileModeInterface): void {
+  public removeFile(file: FileMode): void {
     this.currentFiles = this.currentFiles.filter((x) => x !== file);
     this.remove.emit(file);
     this.resetFileInputs();
@@ -147,61 +147,61 @@ export class MibFileUploaderComponent implements OnInit {
       this.resetLoader();
       let guid = Guid.newGuid();
 
-      this.subscription$.add(
-        this.commonService
-          .getBase64(file)
-          .pipe(
-            switchMap((res) => {
-              return this.fileService.uploadFileChunks(
-                res,
-                file.name,
-                file.size.toString(),
-                guid
-              );
-            })
-          )
-          .subscribe(
-            (res: any) => {
-              switch (res.type) {
-                // загружается
-                case 1:
-                  const progressResult = Math.round(
-                    (100 * res.loaded) / res.total
-                  );
-
-                  this.fileUploadProgress = {
-                    progress: progressResult,
-                    isProgress: true,
-                  };
-                  break;
-                case 2:
-                  if (!res.ok) {
-                    // TODO: показать ошибку
-                    this.openErrorDialog();
-                  }
-                  break;
-                // получил результат
-                case 4:
-                  let file = {
-                    Code: res.body.Code,
-                    FileName: res.body.FileName,
-                    ID: res.body.ID,
-                    Size: res.body.Size,
-                    Identifier: this.type,
-                  };
-                  this.currentFiles.push(file);
-                  this.add.emit(file);
-                  this.resetLoader();
-                  break;
-                default:
-                  break;
-              }
-            },
-            (err) => {
-              console.log(err);
-            }
-          )
-      );
+      // this.subscription$.add(
+      //   this.commonService
+      //     .getBase64(file)
+      //     .pipe(
+      //       switchMap((res) => {
+      //         return this.fileService.uploadFileChunks(
+      //           res,
+      //           file.name,
+      //           file.size.toString(),
+      //           guid
+      //         );
+      //       })
+      //     )
+      //     .subscribe(
+      //       (res: any) => {
+      //         switch (res.type) {
+      //           // загружается
+      //           case 1:
+      //             const progressResult = Math.round(
+      //               (100 * res.loaded) / res.total
+      //             );
+      //
+      //             this.fileUploadProgress = {
+      //               progress: progressResult,
+      //               isProgress: true,
+      //             };
+      //             break;
+      //           case 2:
+      //             if (!res.ok) {
+      //               // TODO: показать ошибку
+      //               this.openErrorDialog();
+      //             }
+      //             break;
+      //           // получил результат
+      //           case 4:
+      //             let file = {
+      //               Code: res.body.Code,
+      //               FileName: res.body.FileName,
+      //               ID: res.body.ID,
+      //               Size: res.body.Size,
+      //               Identifier: this.type,
+      //             };
+      //             this.currentFiles.push(file);
+      //             this.add.emit(file);
+      //             this.resetLoader();
+      //             break;
+      //           default:
+      //             break;
+      //         }
+      //       },
+      //       (err) => {
+      //         console.log(err);
+      //       }
+      //     )
+      // );
     }
   }
 

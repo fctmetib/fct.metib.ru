@@ -1,4 +1,4 @@
-import { FileModeInterface } from './../../../../../shared/types/file/file-model.interface';
+import { FileMode } from './../../../../../shared/types/file/file-model.interface';
 import { DeliveryInterface, DeliveryRef } from './../../../../../shared/types/delivery/delivery.interface';
 import { DeliveryService } from './../../../../../shared/services/share/delivery.service';
 import { ClientRequestInterface } from './../../../../../shared/types/client/client-request.interface';
@@ -47,7 +47,7 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
   public addDeliveryDialog: boolean;
   public rowDataValidateDialog: boolean;
 
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
   public uploadedFiles: File[] = [];
 
   //#region dynamic variables
@@ -265,37 +265,37 @@ export class RequestCreateDialogComponent implements OnInit, OnDestroy {
     for (let file of files) {
       let guid = Guid.newGuid();
 
-      this.subscription$.add(
-        this.commonService.getBase64(file).subscribe((res) => {
-          this.fileService
-            .uploadFileChunks(res, file.name, file.size.toString(), guid)
-            .subscribe(
-              (res: any) => {
-                switch(res.type) {
-                  // загружается
-                  case 1:
-                    // const progressResult = Math.round((100 * res.loaded) / res.total)
-                    // this.fileUploadProgress = {
-                    //  progress: progressResult,
-                    //  type
-                    // }
-                    break;
-                  // получил результат
-                  case 4:
-                     this.files.push({
-                       Code: res.body.Code,
-                       FileName: res.body.FileName,
-                       ID: res.body.ID,
-                       Size: res.body.Size,
-                       Identifier: type,
-                     });
-                    break;
-                }
-              },
-              (err) => console.log(err)
-            );
-        })
-      );
+      // this.subscription$.add(
+      //   this.commonService.getBase64(file).subscribe((res) => {
+      //     this.fileService
+      //       .uploadFileChunks(res, file.name, file.size.toString(), guid)
+      //       .subscribe(
+      //         (res: any) => {
+      //           switch(res.type) {
+      //             // загружается
+      //             case 1:
+      //               // const progressResult = Math.round((100 * res.loaded) / res.total)
+      //               // this.fileUploadProgress = {
+      //               //  progress: progressResult,
+      //               //  type
+      //               // }
+      //               break;
+      //             // получил результат
+      //             case 4:
+      //                this.files.push({
+      //                  Code: res.body.Code,
+      //                  FileName: res.body.FileName,
+      //                  ID: res.body.ID,
+      //                  Size: res.body.Size,
+      //                  Identifier: type,
+      //                });
+      //               break;
+      //           }
+      //         },
+      //         (err) => console.log(err)
+      //       );
+      //   })
+      // );
     }
   }
   //#endregion

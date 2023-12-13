@@ -10,7 +10,7 @@ import { DoDemandActionInterface } from '../../types/navigation-service/do-deman
 import { DemandActionType } from '../../types/common/demand-action-type';
 import { MIBCommon } from 'src/app/shared/classes/common/mid-common.class';
 import { DoDemandPageActionType } from '../../types/navigation-service/do-demand-page-action-type';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 // Services
 import {
   CommonService,
@@ -45,7 +45,7 @@ export class AgentFactoringComponent implements OnInit {
   public regionList: RegionInterface[] = [];
   public idCenterList: any[] = [];
   public validations: Array<string> = environment.uploadFilesExt;
-  
+
   // Системные переменные
   public requestLoading$: Observable<boolean>;
   public demandNavigationConfig: DemandNavigationInterface;
@@ -58,7 +58,7 @@ export class AgentFactoringComponent implements OnInit {
   public selectedIdCenter: any;
 
   // Файлы
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
 
   //#region Agent Factoring Request
   public resultsBIK: string[];

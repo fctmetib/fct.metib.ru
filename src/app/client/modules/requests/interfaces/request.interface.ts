@@ -1,4 +1,4 @@
-import {FileModeInterface} from '../../../../shared/types/file/file-model.interface';
+import {FileMode} from '../../../../shared/types/file/file-model.interface';
 import {DeliveryAgreement, Shipment} from '../modules/delivery-agreement-drawer/interfaces/delivery-agreement.interface';
 import {Base64Url} from '../../../../shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
 
@@ -24,7 +24,7 @@ export interface RequestReq {
   IsCorrected: boolean;
   Shipments: Shipment[];
   Documents: Document[];
-  Files: FileModeInterface[];
+  Files: FileMode[];
 }
 
 export interface RequestRes extends RequestReq {

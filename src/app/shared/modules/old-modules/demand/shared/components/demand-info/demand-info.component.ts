@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
 import {
@@ -30,7 +30,7 @@ export class DemandInfoComponent implements OnInit {
 
   public selectedStepIndex = 0;
 
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
   public items: MenuItem[] = [];
   public validators: Array<string> = environment.uploadFilesExt;
 
@@ -119,7 +119,7 @@ export class DemandInfoComponent implements OnInit {
     return result;
   }
 
-  public removeFile(file: FileModeInterface): void {
+  public removeFile(file: FileMode): void {
     this.files = this.files.filter((x) => x !== file);
   }
 

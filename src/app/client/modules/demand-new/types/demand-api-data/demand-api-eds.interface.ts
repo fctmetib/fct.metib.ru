@@ -1,4 +1,4 @@
-import { FileModeInterface } from "src/app/shared/types/file/file-model.interface";
+import { FileMode } from "src/app/shared/types/file/file-model.interface";
 import { DemandAction } from "../common/demand-action";
 
 export interface DemandAPIInterface {
@@ -101,5 +101,5 @@ export interface DemandAPIInterface {
   PersonalAgreement: boolean;
   identificationPointGuid: string;
   Type: DemandAction;
-  Files: FileModeInterface[];
+  Files: FileMode[];
 }

@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { DemandNavigationService } from '../../../services/demand-navigation.service';
 import { DoDemandActionInterface } from '../../../types/navigation-service/do-demand-action.interface';
 import { DoDemandPageActionType } from '../../../types/navigation-service/do-demand-page-action-type';
@@ -18,7 +18,7 @@ import { DoDemandPageActionType } from '../../../types/navigation-service/do-dem
   styleUrls: ['./demand-files.component.scss'],
 })
 export class DemandFilesComponent implements OnInit, OnDestroy {
-  public currentDemandFiles: FileModeInterface[] = [];
+  public currentDemandFiles: FileMode[] = [];
 
   private _subscription$: Subscription = new Subscription();
 
@@ -32,7 +32,7 @@ export class DemandFilesComponent implements OnInit, OnDestroy {
     this._subscription$.unsubscribe();
   }
 
-  remove(file: FileModeInterface) {
+  remove(file: FileMode) {
     const doActionData: DoDemandActionInterface = {
       data: file,
       type: DoDemandPageActionType.REMOVE_FILE,

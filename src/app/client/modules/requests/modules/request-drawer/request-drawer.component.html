@@ -73,7 +73,7 @@
   <mib-spacing type="s"></mib-spacing>
   <h5 class="headline">Копии накладных</h5>
   <mib-spacing type="xs2"></mib-spacing>
-  <mib-information *ngIf="false; else copiesTemplate" type="alert">
+  <mib-information *ngIf="!documents.controls.length; else copiesTemplate" type="alert">
     <ng-container information-text>Необходимо прикрепить скан-копии накладных для отправки на модерацию</ng-container>
   </mib-information>
   <ng-template #copiesTemplate>

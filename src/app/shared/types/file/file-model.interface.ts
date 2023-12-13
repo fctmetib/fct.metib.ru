@@ -1,4 +1,4 @@
-export interface FileModeInterface {
+export interface FileMode {
   ID: number;
   Identifier: string;
   Code: string;

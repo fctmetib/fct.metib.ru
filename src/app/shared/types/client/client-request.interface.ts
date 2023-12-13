@@ -1,4 +1,4 @@
-import { FileModeInterface } from '../file/file-model.interface';
+import { FileMode } from '../file/file-model.interface';
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface';
 import { RequestSourceEnum } from '../enums/request-source.enum';
 import {RequestTypeEnum} from '../../../client/modules/requests/interfaces/request.interface';
@@ -28,6 +28,6 @@ export interface ClientRequestInterface {
   Source?: RequestSourceEnum,
   Title?: string;
   AgencyFlag?: boolean;
-  Files?: FileModeInterface[]
+  Files?: FileMode[]
 }
 // {"DeliveryID":20940,"Type":"Financing","Number":"","Title":"","Date":"2021-03-17T09:53:34+03:00","Shipments":[],"Files":[]}

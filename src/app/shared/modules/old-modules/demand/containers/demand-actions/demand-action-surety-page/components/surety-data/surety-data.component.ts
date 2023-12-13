@@ -18,7 +18,7 @@ import {Guid} from 'src/app/shared/classes/common/guid.class';
 import {MIBCommon} from 'src/app/shared/classes/common/mid-common.class';
 import {CommonService} from 'src/app/shared/services/common/common.service';
 import {FileService} from 'src/app/shared/services/common/file.service';
-import {FileModeInterface} from 'src/app/shared/types/file/file-model.interface';
+import {FileMode} from 'src/app/shared/types/file/file-model.interface';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {MessageService} from 'primeng/api';
 import {BankInterface} from 'src/app/shared/types/common/bank.interface';
@@ -71,7 +71,7 @@ export class SuretyDataComponent implements OnInit, OnDestroy {
   public resultsBIK: string[];
   public resultsBankname: string[];
 
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
 
   private ref: DynamicDialogRef;
   private currentAddressFormId: any;

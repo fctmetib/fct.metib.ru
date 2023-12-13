@@ -7,7 +7,7 @@ import { Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
 import { RequestsResponse } from '../types/requestResponse.interface'
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface'
+import { FileMode } from 'src/app/shared/types/file/file-model.interface'
 import { ClientShipmentInterface } from 'src/app/shared/types/client/client-shipment.interface'
 
 @Injectable()
@@ -66,9 +66,9 @@ export class RequestsService {
 
 	//#endregion
 
-	public getFreeDocuments(): Observable<FileModeInterface[]> {
+	public getFreeDocuments(): Observable<FileMode[]> {
 		const url = `${environment.apiUrl}/v1/requests/freedocuments`
-		return this.http.get<FileModeInterface[]>(url)
+		return this.http.get<FileMode[]>(url)
 	}
 
 	public parseRequest(): Observable<ClientShipmentInterface[]> {

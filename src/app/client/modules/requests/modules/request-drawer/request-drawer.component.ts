@@ -14,8 +14,10 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angul
 import {Document, RequestReq, RequestStatusEnum, RequestTypeEnum} from '../../interfaces/request.interface';
 import {takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
-import {FileModeInterface} from '../../../../../shared/types/file/file-model.interface';
+import {FileMode} from '../../../../../shared/types/file/file-model.interface';
 import {Base64Url, FileDnd} from '../../../../../shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
+import {Guid} from '../../../../../shared/classes/common/guid.class';
+import {FileService} from '../../../../../shared/services/common/file.service';
 
 @Component({
   selector: 'mib-request-drawer',
@@ -39,7 +41,8 @@ export class RequestDrawerComponent implements OnInit {
     private deliveryAgreementService: DeliveryAgreementService,
     private deliveryAgreementDrawerService: DeliveryAgreementDrawerService,
     private authService: AuthService,
-    private au: AutoUnsubscribeService
+    private au: AutoUnsubscribeService,
+    private fileService: FileService,
   ) {
   }
 
@@ -101,28 +104,33 @@ export class RequestDrawerComponent implements OnInit {
 
   addDocument(data: Document) {
     const control: FormGroup = this.fb.group({
-      Number: [null],
-      Title: [null],
-      Location: [null],
-      Description: [null],
-      DocumentStatusID: [null, [Validators.required]],
-      DocumentStatus: [null],
-      DocumentTypeID: [null, [Validators.required]],
-      DocumentType: [null],
-      DocumentTypeTitle: [null],
-      Available: [null, [Validators.required]],
-      Removed: [null, [Validators.required]],
-      ActiveOrganizationID: [null, [Validators.required]],
-      ActiveOrganization: [null],
-      CreatedTime: [null, [Validators.required]],
-      AuthorOrganizationID: [null, [Validators.required]],
-      AuthorOrganization: [null],
-      CreatorLastName: [null],
-      CreatorFirstName: [null],
-      DocumentID: [null, [Validators.required]],
-      OwnerTypeID: [null, [Validators.required]],
-      OwnerID: [null, [Validators.required]],
-      Data: [null]
+      // Number: [null],
+      // Title: [null],
+      // Location: [null],
+      // Description: [null],
+      // DocumentStatusID: [null, [Validators.required]],
+      // DocumentStatus: [null],
+      // DocumentTypeID: [null, [Validators.required]],
+      // DocumentType: [null],
+      // DocumentTypeTitle: [null],
+      // Available: [null, [Validators.required]],
+      // Removed: [null, [Validators.required]],
+      // ActiveOrganizationID: [null, [Validators.required]],
+      // ActiveOrganization: [null],
+      // CreatedTime: [null, [Validators.required]],
+      // AuthorOrganizationID: [null, [Validators.required]],
+      // AuthorOrganization: [null],
+      // CreatorLastName: [null],
+      // CreatorFirstName: [null],
+      // DocumentID: [null, [Validators.required]],
+      // OwnerTypeID: [null, [Validators.required]],
+      // OwnerID: [null, [Validators.required]],
+      // Data: [null]
+      ID: [null, [Validators.required]],
+      Code: [null, [Validators.required]],
+      FileName: [null, [Validators.required]],
+      Size: [null, [Validators.required]],
+      Identifier: [null, [Validators.required]],
     });
     control.patchValue(data)
     this.documents.push(control)
@@ -170,10 +178,19 @@ export class RequestDrawerComponent implements OnInit {
     ).subscribe()
   }
 
-  onDocumentLoad($event: FileDnd) {
-    // this.documents.push({
-    //   Data: $event.url,
-    //   DocumentStatusID
-    // })
+  onDocumentLoad({file, arrayBuffer}: FileDnd) {
+      const guid = Guid.newGuid();
+      this.fileService.uploadFileChunks(arrayBuffer, file.name, file.size.toString(), guid).pipe(
+        tap(res => {
+          switch(res.type) {
+            case 1:
+              break;
+            case 4:
+              const body = res.body
+              this.documents.push(body)
+              break;
+          }
+        })
+      ).subscribe()
   }
 }

@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
 import { DemandService } from '../../../services/demand.service';
 import { FactoringInfo } from '../../../types/common/factoring/factoring.info';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { DeliveryService } from 'src/app/shared/services/share/delivery.service';
 import { MibArray } from 'src/app/shared/classes/arrays/mib-array.class';
@@ -197,7 +197,7 @@ export class DemandActionVerificationPageComponent
     );
   }
 
-  handleRemoveFile(file: FileModeInterface) {
+  handleRemoveFile(file: FileMode) {
     this.currentDemand.Files = this.currentDemand.Files.filter(
       (x) => x !== file
     );

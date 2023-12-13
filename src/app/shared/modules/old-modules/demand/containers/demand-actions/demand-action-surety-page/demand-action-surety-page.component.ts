@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { CreateDemandFactoringRequestInterface } from '../../../types/requests/create-demand-factoring-request.interface';
 import { CreateDemandMessageRequestInterface } from '../../../types/requests/create-demand-message-request.interface';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
@@ -126,11 +126,11 @@ export class DemandActionSuretyPageComponent implements OnInit, ExitGuard {
     );
   }
 
-  handleRemoveFiles(files: FileModeInterface[]) {
+  handleRemoveFiles(files: FileMode[]) {
     this.currentDemand.Files = files;
   }
 
-  handleRemoveFile(file: FileModeInterface) {
+  handleRemoveFile(file: FileMode) {
     this.currentDemand.Files = this.currentDemand.Files.filter(
       (x) => x !== file
     );

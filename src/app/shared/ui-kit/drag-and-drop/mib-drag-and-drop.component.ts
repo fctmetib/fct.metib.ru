@@ -33,16 +33,37 @@ export class MibDragAndDropComponent {
     this.onLoad.emit();
 
     files.forEach((file: File) => {
-      if (!this.accept.includes(file.type)) return console.warn(this.accept, 'Поддерживаются, но передан', file.type);
+      if (!this.accept.includes(file.type)) {
+        return console.warn(this.accept, 'Поддерживаются, но передан', file.type);
+      }
 
+      Promise.all([this.readFileAsDataURL(file), this.readFileAsArrayBuffer(file)])
+        .then(([url, arrayBuffer]) => {
+          const value = { file, url, arrayBuffer };
+          this.onChange.emit(value);
+        })
+        .catch(error => console.error('Ошибка чтения файла', error));
+    });
+  }
+
+  private readFileAsDataURL(file: File): Promise<string | ArrayBuffer> {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => {
-        const value = {file, url: reader.result};
-        this.onChange.emit(value);
-      };
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error);
       reader.readAsDataURL(file);
     });
   }
+
+  private readFileAsArrayBuffer(file: File): Promise<ArrayBuffer> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as ArrayBuffer);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
 
   public onDrop(data: { files: File[] }) {
     if (!this.loading) {

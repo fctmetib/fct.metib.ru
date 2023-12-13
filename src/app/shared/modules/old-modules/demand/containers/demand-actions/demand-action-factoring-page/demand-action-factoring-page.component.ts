@@ -9,7 +9,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FactoringInfo} from '../../../types/common/factoring/factoring.info';
 import {CreateDemandMessageRequestInterface} from '../../../types/requests/create-demand-message-request.interface';
 import {ExitGuard} from 'src/app/shared/services/exit.guard';
-import {FileModeInterface} from '../../../../../../types/file/file-model.interface';
+import {FileMode} from '../../../../../../types/file/file-model.interface';
 
 @Component({
   selector: 'app-demand-action-factoring-page',
@@ -131,11 +131,11 @@ export class DemandActionFactoringPageComponent
     );
   }
 
-  handleRemoveFiles(files: FileModeInterface[]) {
+  handleRemoveFiles(files: FileMode[]) {
     this.currentDemand.Files = files;
   }
 
-  handleRemoveFile(file: FileModeInterface) {
+  handleRemoveFile(file: FileMode) {
     this.currentDemand.Files = this.currentDemand.Files.filter(
       (x) => x !== file
     );

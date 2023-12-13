@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { Guid } from 'src/app/shared/classes/common/guid.class';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { FileService } from 'src/app/shared/services/common/file.service';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { DemandService } from '../../../services/demand.service';
 import { SaveDemandRequestInterface } from '../../../types/requests/save-demand-request.interface';
 import { Observable, Subscription } from 'rxjs';
@@ -47,7 +47,7 @@ export class DemandActionDebitorPageComponent
 
   public isRequestLoading: boolean = false;
 
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
 
   public isLoading: boolean = false;
   public debtors: DebtorInterface[] = [];
@@ -131,7 +131,7 @@ export class DemandActionDebitorPageComponent
     );
   }
 
-  handleRemoveFile(file: FileModeInterface) {
+  handleRemoveFile(file: FileMode) {
     this.currentDemand.Files = this.currentDemand.Files.filter(
       (x) => x !== file
     );

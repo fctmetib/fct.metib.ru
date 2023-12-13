@@ -29,7 +29,7 @@ import { ExitGuard } from 'src/app/shared/services/exit.guard';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import {BankInterface} from '../../../../../../types/common/bank.interface';
-import {FileModeInterface} from '../../../../../../types/file/file-model.interface';
+import {FileMode} from '../../../../../../types/file/file-model.interface';
 
 @Component({
   selector: 'app-demand-action-agent-factoring-page',
@@ -52,7 +52,7 @@ export class DemandActionAgentFactoringPageComponent
   public resultsBIK: string[];
   public resultsBankname: string[];
 
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
 
   public organizationTypes: DemandSelectboxInterface[] = [];
   public ruleTypes: DemandSelectboxInterface[] = [];
@@ -258,7 +258,7 @@ export class DemandActionAgentFactoringPageComponent
     );
   }
 
-  handleRemoveFile(file: FileModeInterface) {
+  handleRemoveFile(file: FileMode) {
     this.currentDemand.Files = this.currentDemand.Files.filter(
       (x) => x !== file
     );

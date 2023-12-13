@@ -2,7 +2,7 @@ import { DemandEDSDataInterface } from '../types/demand-form-data/demand-eds-dat
 import { OrganizationDataInterface } from 'src/app/shared/types/organization/organization-data.interface';
 import { PersonInterface } from 'src/app/shared/types/common/person.interface';
 import { PassportInterface } from 'src/app/shared/types/user/passport.interface';
-import { FileModeInterface } from 'src/app/shared/types/file/file-model.interface';
+import { FileMode } from 'src/app/shared/types/file/file-model.interface';
 import { CreateDemandEDSRequestInterface } from '../types/requests/create-demand-eds-request.interface';
 import { DemandEDIInterface } from '../types/demand-edi.interface';
 import { DemandObligationInterface } from '../types/demand-obligation.interface';
@@ -13,7 +13,7 @@ import { CreateDemandFactoringRequestInterface } from '../types/requests/create-
 export class DemandConverterToAPI {
   public convertEDSToApiData(
     form: DemandEDSDataInterface,
-    files: FileModeInterface[]
+    files: FileMode[]
   ) {
     let organization: OrganizationDataInterface = {
       Email: form.organizationEmail,
@@ -81,7 +81,7 @@ export class DemandConverterToAPI {
     return data;
   }
 
-  convertVerifyToApiData(form: any, files: FileModeInterface[]) {
+  convertVerifyToApiData(form: any, files: FileMode[]) {
     let DocumentTypes: string[] = [];
 
     if (form.DocumentTypeTorg12) {
@@ -115,7 +115,7 @@ export class DemandConverterToAPI {
     return result;
   }
 
-  convertDebitorToApiData(form: any, files: FileModeInterface[]) {
+  convertDebitorToApiData(form: any, files: FileMode[]) {
     let result = {
       ID: form.ID,
       INN: form.INN,
@@ -127,7 +127,7 @@ export class DemandConverterToAPI {
     return result;
   }
 
-  convertLimitToApiData(form: any, files: FileModeInterface[]) {
+  convertLimitToApiData(form: any, files: FileMode[]) {
     let result = {
       Limit: form.limit,
       Comment: form.comment,
@@ -137,7 +137,7 @@ export class DemandConverterToAPI {
     return result;
   }
 
-  public convertFreeToApiData(form: any, files: FileModeInterface[]) {
+  public convertFreeToApiData(form: any, files: FileMode[]) {
     let result: any = {
       Question: form.question,
       Subject: form.subject,
@@ -148,7 +148,7 @@ export class DemandConverterToAPI {
     return result;
   }
 
-  public convertProfileToApiData(form: any, files: FileModeInterface[]) {
+  public convertProfileToApiData(form: any, files: FileMode[]) {
     let result: any = {
       Avatar: form.avatarCode,
       Passport: {
@@ -180,7 +180,7 @@ export class DemandConverterToAPI {
     return result;
   }
 
-  public convertSuretyToApiData(form: any, files: FileModeInterface[]) {
+  public convertSuretyToApiData(form: any, files: FileMode[]) {
     let listEDI: DemandEDIInterface[] = [];
 
     let listObligations: DemandObligationInterface[] = [];
@@ -408,7 +408,7 @@ export class DemandConverterToAPI {
     return result;
   }
 
-  public convertAgentFactoringToApiData(form: any, files: FileModeInterface[]) {
+  public convertAgentFactoringToApiData(form: any, files: FileMode[]) {
     let listEDI: DemandEDIInterface[] = [];
 
     let listObligations: DemandObligationInterface[] = [];
@@ -628,7 +628,7 @@ export class DemandConverterToAPI {
     return result;
   }
 
-  public convertFactoringToApiData(form: any, files: FileModeInterface[]) {
+  public convertFactoringToApiData(form: any, files: FileMode[]) {
     let listEDI: DemandEDIInterface[] = [];
 
     let listObligations: DemandObligationInterface[] = [];

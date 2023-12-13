@@ -28,7 +28,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { ExitGuard } from 'src/app/shared/services/exit.guard';
 import { environment } from 'src/environments/environment';
-import {FileModeInterface} from '../../../../../../types/file/file-model.interface';
+import {FileMode} from '../../../../../../types/file/file-model.interface';
 import {PassportInterface} from '../../../../../../types/user/passport.interface';
 
 @Component({
@@ -51,7 +51,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
 
   isUserVerified: boolean;
   formEDS: FormGroup;
-  public files: FileModeInterface[] = [];
+  public files: FileMode[] = [];
 
   organizationTypes: DemandSelectboxInterface[] = [
     {
@@ -431,7 +431,7 @@ export class DemandActionEDSPageComponent implements OnInit, ExitGuard {
     );
   }
 
-  handleRemoveFile(file: FileModeInterface) {
+  handleRemoveFile(file: FileMode) {
     this.currentDemand.Files = this.currentDemand.Files.filter(
       (x) => x !== file
     );

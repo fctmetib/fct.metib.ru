@@ -7,7 +7,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FileModeInterface } from '../../types/file/file-model.interface';
+import { FileMode } from '../../types/file/file-model.interface';
 import { Translator } from '../../classes/common/translator.class';
 
 @Injectable()
@@ -20,35 +20,27 @@ export class FileService {
   }
 
   //TODO: нужно узнать что передавать
-  addFile(): Observable<FileModeInterface> {
+  addFile(): Observable<FileMode> {
     let url = `${environment.apiUrl}/file`;
-    return this.http.post<FileModeInterface>(url, {});
+    return this.http.post<FileMode>(url, {});
   }
 
-  uploadFileChunks(
-    file: Uint8Array[],
-    fileName: string,
-    fileSize: string,
-    guid: string
-  ): Observable<HttpEvent<FileModeInterface>> {
+  uploadFileChunks(file: ArrayBuffer, fileName: string, fileSize: string, guid: string): Observable<HttpEvent<FileMode>> {
 
     const fileNameNormal = this._translator.translitToEnglish(fileName);
 
-    let headers: HttpHeaders = new HttpHeaders();
+    let headers = new HttpHeaders();
     headers = headers.append('Upload-ChunkNumber', '1');
     headers = headers.append('Upload-FileName', fileNameNormal);
     headers = headers.append('Upload-GUID', guid);
     headers = headers.append('Upload-TotalSize', fileSize);
 
-    let url = `${environment.apiFileUploadUrl}/file/chunks`;
 
-    const upload$: Observable<HttpEvent<FileModeInterface>> =
-      this.http.post<FileModeInterface>(url, file, {
-        headers,
-        reportProgress: true,
-        observe: 'events',
-      });
-    return upload$;
+    return this.http.post<FileMode>(`${environment.apiFileUploadUrl}/file/chunks`, file, {
+      headers,
+      reportProgress: true,
+      observe: 'events',
+    });
   }
 
   uploadAvatar(file: Blob, fileName: string): Observable<string> {
@@ -59,9 +51,9 @@ export class FileService {
     return this.http.post<string>(url, formdata);
   }
 
-  getFileByCode(code: string): Observable<FileModeInterface> {
+  getFileByCode(code: string): Observable<FileMode> {
     let url = `${environment.apiUrl}/file/${code}`;
-    return this.http.get<FileModeInterface>(url);
+    return this.http.get<FileMode>(url);
   }
 
   getFileContentByCode(code: string): Observable<any> {
