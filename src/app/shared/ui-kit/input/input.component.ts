@@ -16,8 +16,7 @@ import {SetPaddings} from './services/set-paddings.service';
 @Component({
   selector: 'mib-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./input.component.scss']
 })
 export class InputComponent implements AfterContentInit, AfterViewInit, AfterViewChecked {
   @ContentChild(MibInputDirective, {descendants: true}) inputDirective!: MibInputDirective

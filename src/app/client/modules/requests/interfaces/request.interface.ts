@@ -32,26 +32,26 @@ export interface RequestRes extends RequestReq {
 }
 
 export interface Document {
-  Number: string;
-  Title: string;
-  Location: string;
-  Description: string;
+  Number?: string;
+  Title?: string;
+  Location?: string;
+  Description?: string;
   DocumentStatusID: number;
-  DocumentStatus: string;
+  DocumentStatus?: string;
   DocumentTypeID: number;
-  DocumentType: string;
-  DocumentTypeTitle: string;
+  DocumentType?: string;
+  DocumentTypeTitle?: string;
   Available: boolean;
   Removed: boolean;
   ActiveOrganizationID: number;
-  ActiveOrganization: string;
+  ActiveOrganization?: string;
   CreatedTime: Date;
   AuthorOrganizationID: number;
-  AuthorOrganization: string;
-  CreatorLastName: string;
-  CreatorFirstName: string;
+  AuthorOrganization?: string;
+  CreatorLastName?: string;
+  CreatorFirstName?: string;
   DocumentID: number;
   OwnerTypeID: number;
   OwnerID: number;
-  Data: Base64Url;
+  Data?: Base64Url;
 }
