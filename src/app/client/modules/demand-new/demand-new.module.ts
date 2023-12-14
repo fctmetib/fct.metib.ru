@@ -73,6 +73,10 @@ import { BackendErrorMessagesModule } from '../../../shared/modules/old-modules/
 import { DemandNewHomeComponent } from './pages/demand-new-home/demand-new-home.component'
 import { TabModule } from 'src/app/shared/ui-kit/tab/tab.module'
 import { NavbarModule } from 'src/app/shared/ui-kit/navbar/navbar.module'
+import { InputModule } from 'src/app/shared/ui-kit/input/input.module'
+import { RefIconModule } from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
+import { SelectModule } from 'src/app/shared/ui-kit/select/select.module'
+import { DropdownPointModule } from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 
 @NgModule({
 	imports: [
@@ -110,7 +114,11 @@ import { NavbarModule } from 'src/app/shared/ui-kit/navbar/navbar.module'
 		RequestCardModule,
 		TabModule,
 		NavbarModule,
-		ButtonModule
+		ButtonModule,
+		InputModule,
+		RefIconModule,
+		SelectModule,
+		DropdownPointModule
 	],
 	declarations: [
 		// Containers

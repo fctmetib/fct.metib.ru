@@ -27,7 +27,33 @@
 		</mib-tab-item>
 		<mib-spacing type="m"></mib-spacing>
 		<mib-tab-item value="2">
-			<h3>Черновики</h3>
+			<mib-spacing type="m"></mib-spacing>
+			<div class="inputs-line flex flex_justify-between">
+				<mib-input>
+					<input
+						mibInput
+						type="text"
+						styleType="filled-secondary"
+						placeholder="Поиск по запросам"
+					/>
+					<ng-container input-label>Поиск по запросам</ng-container>
+					<mib-ref-icon
+						class="stroke path"
+						input-left-icon
+						name="fi_search"
+					></mib-ref-icon>
+				</mib-input>
+				<mib-select placeholder="Прогресс заполнения">
+					<mib-dropdown-point
+						[value]="true"
+						text="Заполнено на 100%"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="false"
+						text="Заполнено на 50%"
+					></mib-dropdown-point>
+				</mib-select>
+			</div>
 		</mib-tab-item>
 		<mib-tab-item value="3">
 			<h3>История запросов</h3>

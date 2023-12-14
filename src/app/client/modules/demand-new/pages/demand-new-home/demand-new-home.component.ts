@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
 import { IQueryList } from '../mock-data-service/data.models'
 import { DataService } from '../mock-data-service/data.srrvice'
+import { InputSize } from 'src/app/shared/ui-kit/input/interfaces/input.interface'
 
 @Component({
 	selector: 'mib-demand-new-home',
