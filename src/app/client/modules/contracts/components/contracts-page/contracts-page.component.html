@@ -114,7 +114,7 @@
 <p-dialog header="Товарные Накладные" [(visible)]="displayShipments" [modal]="true" [style]="{width: '90vw'}"
   [baseZIndex]="10000" [draggable]="false" [resizable]="false">
   <ng-container *ngIf="isShipmentsLoading; else shipmentsTemplate">
-    <p class="p-m-0">Загрузка...</p>
+    <p class="p-m-0">Загрузка....</p>
   </ng-container>
   <ng-template #shipmentsTemplate>
     <ng-container *ngIf="isShipmentsError; else noErrorShipmentsTemplate">
