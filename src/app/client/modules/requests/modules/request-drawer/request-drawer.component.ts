@@ -5,9 +5,9 @@ import {RequestDrawerService} from './request-drawer.service'
 import {BehaviorSubject, defer, filter, finalize, forkJoin, of, switchMap, tap} from 'rxjs'
 import {InputSize} from '../../../../../shared/ui-kit/input/interfaces/input.interface';
 import {ButtonSize} from '../../../../../shared/ui-kit/button/interfaces/button.interface';
-import {DeliveryAgreement, ShipmentReq} from '../delivery-agreement-drawer/interfaces/delivery-agreement.interface';
-import {DeliveryAgreementDrawerService} from '../delivery-agreement-drawer/services/delivery-agreement-drawer.service';
-import {DeliveryAgreementService} from '../delivery-agreement-drawer/services/delivery-agreement.service';
+import {DeliveryAgreement, ShipmentReq} from '../shipment-drawer/interfaces/shipment.interface';
+import {ShipmentDrawerService} from '../shipment-drawer/services/shipment-drawer.service';
+import {DeliveryService} from '../shipment-drawer/services/delivery.service';
 import {AuthService} from '../../../../../auth/services/auth.service';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Document, RequestReq, RequestRes, RequestTypeEnum} from '../../interfaces/request.interface';
@@ -15,6 +15,8 @@ import {takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
 import {FileDnd} from '../../../../../shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
 import {RequestsService} from '../../services/requests.service';
+import {FormsPresetsService} from '../../../../../shared/services/forms-presets.service';
+import {ToolsService} from '../../../../../shared/services/tools.service';
 
 @Component({
   selector: 'mib-request-drawer',
@@ -39,10 +41,12 @@ export class RequestDrawerComponent implements OnInit {
     public dialogRef: MatDialogRef<RequestDrawerComponent>,
     private requestDrawerService: RequestDrawerService,
     private requestsService: RequestsService,
-    private deliveryAgreementService: DeliveryAgreementService,
-    private deliveryAgreementDrawerService: DeliveryAgreementDrawerService,
+    private deliveryAgreementService: DeliveryService,
+    private shipmentDrawerService: ShipmentDrawerService,
     private authService: AuthService,
     private au: AutoUnsubscribeService,
+    private formsPresetsService: FormsPresetsService,
+    private toolsService: ToolsService
   ) {
   }
 
@@ -86,8 +90,8 @@ export class RequestDrawerComponent implements OnInit {
     ).subscribe()
   }
 
-  openDeliveryAgreement() {
-    const drawer = this.deliveryAgreementDrawerService.open({maxWidth: 492})
+  openShipment() {
+    const drawer = this.shipmentDrawerService.open({maxWidth: 492})
 
     drawer.afterClosed().pipe(
       filter(Boolean),
@@ -98,18 +102,7 @@ export class RequestDrawerComponent implements OnInit {
   }
 
   addShipment(shipment: ShipmentReq) {
-    const control: FormGroup = this.fb.group({
-      AccountNumber: [null],
-      AccountDate: [null],
-      InvoiceNumber: [null],
-      InvoiceDate: [null],
-      WaybillNumber: [null],
-      WaybillDate: [null],
-      DateShipment: [null],
-      DatePayment: [null],
-      Summ: [null],
-      SummToFactor: [null],
-    })
+    const control: FormGroup = this.formsPresetsService.shipment(Validators.required, shipment)
     control.patchValue(shipment)
     this.shipments.push(control)
   }
@@ -154,7 +147,11 @@ export class RequestDrawerComponent implements OnInit {
   onSubmit(): void {
     this.isSubmitting$.next(true)
 
-    const {Documents, Date: requestDate, ...request}: RequestReq = this.form.getRawValue()
+    const {Documents, ...data}: RequestReq = this.form.getRawValue()
+    const request: RequestReq = {
+      Documents: [],
+      ...this.toolsService.transformDatesToISO(data)
+    }
     const documents: Document[] = this.documents.value;
     const shipments: ShipmentReq[] = this.shipments.value
 
@@ -163,11 +160,7 @@ export class RequestDrawerComponent implements OnInit {
         if (this.isEditing && this.existingRequest) {
           return this.requestsService.update(this.existingRequest.ID, request)
         } else {
-          return this.requestsService.create({
-            Documents: [],
-            Date: new Date(requestDate).toISOString(),
-            ...request
-          })
+          return this.requestsService.create(request)
         }
       }).pipe(
         switchMap(result => {

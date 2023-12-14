@@ -1,5 +1,5 @@
 import {FileMode} from '../../../../shared/types/file/file-model.interface';
-import {DeliveryAgreement, Shipment} from '../modules/delivery-agreement-drawer/interfaces/delivery-agreement.interface';
+import {DeliveryAgreement, Shipment} from '../modules/shipment-drawer/interfaces/shipment.interface';
 import {Base64Url} from '../../../../shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
 
 export enum RequestStatusEnum {
