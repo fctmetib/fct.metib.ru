@@ -46,10 +46,10 @@ export class MibDragAndDropComponent {
     });
   }
 
-  private readFileAsDataURL(file: File): Promise<string | ArrayBuffer> {
+  private readFileAsDataURL(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
+      reader.onload = () => resolve(reader.result as string);
       reader.onerror = () => reject(reader.error);
       reader.readAsDataURL(file);
     });

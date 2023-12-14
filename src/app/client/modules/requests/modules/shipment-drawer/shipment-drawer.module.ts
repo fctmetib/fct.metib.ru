@@ -9,6 +9,7 @@ import {InputModule} from '../../../../../shared/ui-kit/input/input.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ShipmentDrawerService} from './services/shipment-drawer.service';
 import {NgxMaskModule} from 'ngx-mask';
+import {RightIconModule} from '../../../../../shared/directives/right-icon/right-icon.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {NgxMaskModule} from 'ngx-mask';
         SpacingModule,
         InputModule,
         ReactiveFormsModule,
-        NgxMaskModule
+        NgxMaskModule,
+        RightIconModule
     ],
   providers: [
     ShipmentDrawerService

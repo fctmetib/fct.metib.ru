@@ -65,40 +65,46 @@
 					<mib-table-head-cell>Тип запроса</mib-table-head-cell>
 					<mib-table-head-cell>Прогресс заполнения</mib-table-head-cell>
 				</mib-table-head>
-				<!-- <ng-container> -->
-				<!-- *ngIf="loading$ | async; else table"
-          [styles]="last ? skeletonWithoutUnderline : skeleton"
-          *ngFor="let i of [1]; let last = last" -->
-				<!-- <mib-skeleton></mib-skeleton>
-				</ng-container> -->
-				<!-- <ng-template #table> -->
-				<mib-table-row *ngFor="let draft of draftList$">
-					<mib-table-cell type="main">
-						<ng-container table-cell-title>{{ draft.number }}</ng-container>
-					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title
-							><mib-badge type="filled-secondary" [extended]="true" size="l">{{
-								draft.type
-							}}</mib-badge></ng-container
-						>
-					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title
-							><mib-badge type="filled-secondary" [extended]="true" size="l"
-								>Заполнено на {{ draft.progress }}</mib-badge
-							></ng-container
-						>
-					</mib-table-cell>
-					<mib-button table-row-button size="s" type="ghost-secondary">
-						<mib-ref-icon
-							class="stroke draft"
-							btn-icon
-							name="fi_edit"
-						></mib-ref-icon>
-					</mib-button>
-				</mib-table-row>
-				<!-- </ng-template> -->
+				<ng-container *ngIf="loading$ | async; else table">
+					<mib-skeleton
+						[styles]="last ? skeletonWithoutUnderline : skeleton"
+						*ngFor="let i of [1, 1, 1, 1, 1, 1, 1]; let last = last"
+					></mib-skeleton>
+				</ng-container>
+				<ng-template #table>
+					<mib-table-row
+						*ngFor="let draft of draftList$; let last = last"
+						[underlined]="!last"
+					>
+						<mib-table-cell type="main">
+							<ng-container table-cell-title>{{ draft.number }}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title
+								><mib-badge
+									type="filled-secondary"
+									[extended]="true"
+									size="l"
+									>{{ draft.type }}</mib-badge
+								></ng-container
+							>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title
+								><mib-badge type="filled-secondary" [extended]="true" size="l"
+									>Заполнено на {{ draft.progress }}</mib-badge
+								></ng-container
+							>
+						</mib-table-cell>
+						<mib-button table-row-button size="s" type="ghost-secondary">
+							<mib-ref-icon
+								class="stroke draft"
+								btn-icon
+								name="fi_edit"
+							></mib-ref-icon>
+						</mib-button>
+					</mib-table-row>
+				</ng-template>
 				<mib-table-footer>
 					<mib-paginator></mib-paginator>
 				</mib-table-footer>

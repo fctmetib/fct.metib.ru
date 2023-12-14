@@ -3,7 +3,7 @@ name: Deploy to VPS
 on:
   push:
     branches:
-      - main  # или имя вашего рабочего ветви
+      - ui-ref  # или имя вашего рабочего ветви
 
 jobs:
   deploy:
@@ -22,7 +22,7 @@ jobs:
         script: |
           cd fct.metib.ru
           git reset --hard
-          git pull origin main --force
+          git pull origin ui-ref --force
           npm install --force
           npm run-script build:ssr
           pm2 reload fct.metib.ru

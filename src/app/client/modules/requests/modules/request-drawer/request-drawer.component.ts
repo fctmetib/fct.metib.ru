@@ -10,13 +10,13 @@ import {ShipmentDrawerService} from '../shipment-drawer/services/shipment-drawer
 import {DeliveryService} from '../shipment-drawer/services/delivery.service';
 import {AuthService} from '../../../../../auth/services/auth.service';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Document, RequestReq, RequestRes, RequestTypeEnum} from '../../interfaces/request.interface';
+import {Document, DocumentType, RequestReq, RequestRes, RequestTypeEnum} from '../../interfaces/request.interface';
 import {takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
 import {FileDnd} from '../../../../../shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
 import {RequestsService} from '../../services/requests.service';
 import {FormsPresetsService} from '../../../../../shared/services/forms-presets.service';
-import {ToolsService} from '../../../../../shared/services/tools.service';
+import {extractBase64, ToolsService} from '../../../../../shared/services/tools.service';
 
 @Component({
   selector: 'mib-request-drawer',
@@ -171,7 +171,7 @@ export class RequestDrawerComponent implements OnInit {
                 ...document,
                 OwnerID: requestId
               }
-              return this.requestsService.uploadDocument(modifiedDocument, requestId, 'Document ');
+              return this.requestsService.uploadDocument(modifiedDocument, requestId, DocumentType.CUSTOMER_REQUEST_SCAN);
             });
             return forkJoin(uploadObservables);
           }
@@ -226,7 +226,7 @@ export class RequestDrawerComponent implements OnInit {
       DocumentTypeID: 40,
       Title: file.name,
       OwnerTypeID: 20,
-      Data: url
+      Data: extractBase64(url)
     };
     this.addDocument(document)
   }
