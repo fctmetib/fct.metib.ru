@@ -3,8 +3,8 @@ import {
   AfterViewChecked,
   AfterViewInit,
   Component,
-  ContentChild,
-  ElementRef,
+  ContentChild, ContentChildren,
+  ElementRef, QueryList,
   Renderer2,
   ViewChild,
   ViewEncapsulation
@@ -12,11 +12,18 @@ import {
 import {MibInputDirective} from './directives/mib-input.directive'
 import {fromEvent, tap} from 'rxjs'
 import {SetPaddings} from './services/set-paddings.service';
+import {LeftIconDirective} from '../../directives/left-icon/left-icon.directive';
+import {Property} from 'csstype';
+import Left = Property.Left;
+import {AutoUnsubscribeService} from '../../services/auto-unsubscribe.service';
+import {startWith, takeUntil} from 'rxjs/operators';
+import {RightIconDirective} from '../../directives/right-icon/right-icon.directive';
 
 @Component({
   selector: 'mib-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss']
+  styleUrls: ['./input.component.scss'],
+  providers: [AutoUnsubscribeService]
 })
 export class InputComponent implements AfterContentInit, AfterViewInit, AfterViewChecked {
   @ContentChild(MibInputDirective, {descendants: true}) inputDirective!: MibInputDirective
@@ -26,8 +33,12 @@ export class InputComponent implements AfterContentInit, AfterViewInit, AfterVie
   @ViewChild('iconsRight') iconsRightEl: ElementRef<HTMLDivElement>
   @ViewChild('box') box: ElementRef<HTMLDivElement>
   @ViewChild('message') messageRef?: ElementRef
+  @ContentChildren(LeftIconDirective) leftIcons: QueryList<LeftIconDirective>
+  @ContentChildren(RightIconDirective) rightIcons: QueryList<RightIconDirective>
 
   public viewMounted: boolean = false;
+  contentReady = false;
+  viewReady = false;
 
   isResizing: boolean = false
   startPosX: number = 0
@@ -42,11 +53,18 @@ export class InputComponent implements AfterContentInit, AfterViewInit, AfterVie
 
   constructor(
     private r2: Renderer2,
+    private au: AutoUnsubscribeService
   ) {
   }
 
   ngAfterViewInit(): void {
-    this.setIconPaddings()
+    this.leftIcons.changes.pipe(
+      startWith(null),
+      tap(() => {
+        this.setIconPaddings();
+      }),
+      takeUntil(this.au.destroyer)
+    ).subscribe();
     this.updateClasses()
     setTimeout(() => this.viewMounted = true)
   }
@@ -75,6 +93,12 @@ export class InputComponent implements AfterContentInit, AfterViewInit, AfterVie
       }
     } else {
       throw new Error('mib-input should contains <input mibInput/>!')
+    }
+  }
+
+  private trySetIconPaddings() {
+    if (this.contentReady && this.viewReady) {
+      this.setIconPaddings();
     }
   }
 

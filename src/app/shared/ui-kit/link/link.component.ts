@@ -19,7 +19,6 @@ export class LinkComponent implements AfterContentInit {
   @Output() press = new EventEmitter()
 
   ngAfterContentInit() {
-    console.log(this.rightIcons)
   }
 
   get classes() {

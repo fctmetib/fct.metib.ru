@@ -114,6 +114,6 @@
     <p class="text text_xs c-bti-tertiary">Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG</p>
   </div>
   <mib-drawer-footer drawer-footer>
-    <mib-button [disabled]="form.invalid" (press)="onSubmit()" [size]="size" type="filled-primary">Создать заявку</mib-button>
+    <mib-button [disabled]="form.invalid" [loading]="!!(isSubmitting$ | async)" (press)="onSubmit()" [size]="size" type="filled-primary">Создать заявку</mib-button>
   </mib-drawer-footer>
 </mib-drawer>

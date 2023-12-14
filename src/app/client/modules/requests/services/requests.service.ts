@@ -15,8 +15,8 @@ export class RequestsService {
   ) {
   }
 
-  public create(data: RequestReq): Observable<RequestRes> {
-    return this.http.post<RequestRes>(`${environment.apiUrl}/v1/requests`, data)
+  public create(data: RequestReq): Observable<number[]> {
+    return this.http.post<number[]>(`${environment.apiUrl}/v1/requests`, data)
   }
 
   public getRequests(): Observable<RequestRes[]> {
@@ -25,8 +25,8 @@ export class RequestsService {
     )
   }
 
-  public update(requestID: number, data: Partial<RequestReq>): Observable<RequestRes> {
-    return this.http.post<RequestRes>(`${environment.apiUrl}/v1/requests/${requestID}`, data)
+  public update(requestID: number, data: Partial<RequestReq>): Observable<number[]> {
+    return this.http.post<number[]>(`${environment.apiUrl}/v1/requests/${requestID}`, data)
   }
 
 

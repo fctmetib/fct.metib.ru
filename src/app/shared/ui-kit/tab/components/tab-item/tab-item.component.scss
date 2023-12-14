@@ -1,0 +1,10 @@
+:host {
+  opacity: 1;
+  pointer-events: visible;
+  position: static;
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+  }
+}

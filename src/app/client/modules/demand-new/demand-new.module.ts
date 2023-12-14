@@ -81,7 +81,7 @@ import { TableModule } from 'src/app/shared/ui-kit/table/table.module'
 import { PaginatorModule } from 'src/app/shared/ui-kit/paginator/paginator.module'
 import { SkeletonModule } from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import { BadgeModule } from 'src/app/shared/ui-kit/badge/badge.module'
-import { LeftIconModule } from 'src/app/shared/directives/left-icon/left-icon.module'
+import { LeftIconModule } from '../../../shared/directives/left-icon/left-icon.module'
 
 @NgModule({
 	imports: [
@@ -124,11 +124,11 @@ import { LeftIconModule } from 'src/app/shared/directives/left-icon/left-icon.mo
 		RefIconModule,
 		SelectModule,
 		DropdownPointModule,
-		TableModule,
 		PaginatorModule,
-		SkeletonModule,
 		BadgeModule,
-		LeftIconModule
+		LeftIconModule,
+		TableModule,
+		SkeletonModule
 	],
 	declarations: [
 		// Containers
