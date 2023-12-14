@@ -154,7 +154,7 @@ export class RequestDrawerComponent implements OnInit {
   onSubmit(): void {
     this.isSubmitting$.next(true)
 
-    const request: RequestReq = this.form.getRawValue()
+    const {Documents, Date: requestDate, ...request}: RequestReq = this.form.getRawValue()
     const documents: Document[] = this.documents.value;
     const shipments: ShipmentReq[] = this.shipments.value
 
@@ -163,7 +163,11 @@ export class RequestDrawerComponent implements OnInit {
         if (this.isEditing && this.existingRequest) {
           return this.requestsService.update(this.existingRequest.ID, request)
         } else {
-          return this.requestsService.create(request)
+          return this.requestsService.create({
+            Documents: [],
+            Date: new Date(requestDate).toISOString(),
+            ...request
+          })
         }
       }).pipe(
         switchMap(result => {

@@ -8,21 +8,23 @@ import {SpacingModule} from '../../../../../shared/ui-kit/spacing/spacing.module
 import {InputModule} from '../../../../../shared/ui-kit/input/input.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DeliveryAgreementDrawerService} from './services/delivery-agreement-drawer.service';
+import {NgxMaskModule} from 'ngx-mask';
 
 
 @NgModule({
   declarations: [
     DeliveryAgreementDrawerComponent
   ],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    MatDialogModule,
-    ButtonModule,
-    SpacingModule,
-    InputModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        CommonModule,
+        DrawerModule,
+        MatDialogModule,
+        ButtonModule,
+        SpacingModule,
+        InputModule,
+        ReactiveFormsModule,
+        NgxMaskModule
+    ],
   providers: [
     DeliveryAgreementDrawerService
   ]

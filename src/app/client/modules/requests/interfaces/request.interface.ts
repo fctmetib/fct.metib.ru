@@ -15,7 +15,7 @@ export enum RequestTypeEnum {
 
 export interface RequestReq {
   Number: string;
-  Date: Date;
+  Date: string;
   Delivery: DeliveryAgreement;
   Type: RequestTypeEnum;
   Status: RequestStatusEnum;
