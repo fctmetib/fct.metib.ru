@@ -7,12 +7,12 @@ import { DropdownModule } from 'primeng/dropdown'
 import { CardModule } from 'primeng/card'
 import { ButtonModule } from 'src/app/shared/ui-kit/button/button.module'
 import { ButtonModule as ButtonModule22 } from 'primeng/button'
-import { TableModule } from 'primeng/table'
+import { TableModule as TableModule22 } from 'primeng/table'
 import { MultiSelectModule } from 'primeng/multiselect'
 import { ProgressBarModule } from 'primeng/progressbar'
 import { SliderModule } from 'primeng/slider'
 import { TabViewModule } from 'primeng/tabview'
-import { SkeletonModule } from 'primeng/skeleton'
+import { SkeletonModule as SkeletonModule22 } from 'primeng/skeleton'
 import { ToastModule } from 'primeng/toast'
 import { StepsModule } from 'primeng/steps'
 import { InputNumberModule } from 'primeng/inputnumber'
@@ -77,6 +77,11 @@ import { InputModule } from 'src/app/shared/ui-kit/input/input.module'
 import { RefIconModule } from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
 import { SelectModule } from 'src/app/shared/ui-kit/select/select.module'
 import { DropdownPointModule } from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
+import { TableModule } from 'src/app/shared/ui-kit/table/table.module'
+import { PaginatorModule } from 'src/app/shared/ui-kit/paginator/paginator.module'
+import { SkeletonModule } from 'src/app/shared/ui-kit/skeleton/skeleton.module'
+import { BadgeModule } from 'src/app/shared/ui-kit/badge/badge.module'
+import { LeftIconModule } from 'src/app/shared/directives/left-icon/left-icon.module'
 
 @NgModule({
 	imports: [
@@ -93,9 +98,9 @@ import { DropdownPointModule } from 'src/app/shared/ui-kit/dropdown-point/dropdo
 		TabViewModule,
 		AutoCompleteModule,
 		SliderModule,
-		TableModule,
+		TableModule22,
 		StepsModule,
-		SkeletonModule,
+		SkeletonModule22,
 		DropdownModule,
 		FormsModule,
 		ProgressBarModule,
@@ -118,7 +123,12 @@ import { DropdownPointModule } from 'src/app/shared/ui-kit/dropdown-point/dropdo
 		InputModule,
 		RefIconModule,
 		SelectModule,
-		DropdownPointModule
+		DropdownPointModule,
+		TableModule,
+		PaginatorModule,
+		SkeletonModule,
+		BadgeModule,
+		LeftIconModule
 	],
 	declarations: [
 		// Containers

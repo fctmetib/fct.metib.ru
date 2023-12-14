@@ -9,9 +9,9 @@
 		<mib-navbar-point value="2">Черновики</mib-navbar-point>
 		<mib-navbar-point value="3">История запросов</mib-navbar-point>
 	</mib-navbar>
-	<mib-spacing type="s"></mib-spacing>
 	<div class="container container_large">
 		<mib-tab-item value="1">
+			<mib-spacing type="s"></mib-spacing>
 			<div class="flex flex_wrap gap-16">
 				<mib-request-card
 					*ngFor="let request of requestList$"
@@ -25,8 +25,81 @@
 			<mib-button type="filled-primary">Запрос на свободную тему</mib-button>
 			<mib-spacing type="xl2"></mib-spacing>
 		</mib-tab-item>
-		<mib-spacing type="m"></mib-spacing>
 		<mib-tab-item value="2">
+			<mib-spacing type="m"></mib-spacing>
+			<div class="inputs-line flex flex_justify-between">
+				<mib-input>
+					<input
+						mibInput
+						type="text"
+						styleType="filled-secondary"
+						placeholder="Поиск по запросам"
+					/>
+					<ng-container input-label>Поиск по запросам</ng-container>
+					<mib-ref-icon
+						mibLeftIcon
+						class="stroke path"
+						name="fi_search"
+					></mib-ref-icon>
+				</mib-input>
+				<mib-select placeholder="Прогресс заполнения">
+					<mib-dropdown-point
+						[value]="true"
+						text="Заполнено на 100%"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="false"
+						text="Заполнено на 50%"
+					></mib-dropdown-point>
+				</mib-select>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-table>
+				<mib-table-head>
+					<mib-table-head-cell
+						(onCheck)="severalRequestsChecked = $event"
+						[checked]="severalRequestsChecked"
+						[showCheckbox]="true"
+						>Запрос
+					</mib-table-head-cell>
+					<mib-table-head-cell>Тип запроса</mib-table-head-cell>
+					<mib-table-head-cell>Прогресс заполнения</mib-table-head-cell>
+				</mib-table-head>
+				<ng-container>
+					<mib-skeleton
+						[styles]="last ? skeletonWithoutUnderline : skeleton"
+						*ngFor="let i of [1]; let last = last"
+					></mib-skeleton>
+				</ng-container>
+				<ng-template #table>
+					<mib-table-row>
+						<mib-table-cell type="main">
+							<ng-container table-cell-title>sdfsdf</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>вапап</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>вап ывп</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>вап ывп</ng-container>
+						</mib-table-cell>
+						<mib-button table-row-button size="s" type="ghost-secondary">
+							<mib-ref-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-ref-icon>
+						</mib-button>
+					</mib-table-row>
+				</ng-template>
+				<mib-table-footer>
+					<mib-paginator></mib-paginator>
+				</mib-table-footer>
+			</mib-table>
+		</mib-tab-item>
+		<mib-tab-item value="3">
 			<mib-spacing type="m"></mib-spacing>
 			<div class="inputs-line flex flex_justify-between">
 				<mib-input>
@@ -43,20 +116,47 @@
 						name="fi_search"
 					></mib-ref-icon>
 				</mib-input>
-				<mib-select placeholder="Прогресс заполнения">
+				<mib-select placeholder="Выберите статус запроса">
 					<mib-dropdown-point
 						[value]="true"
-						text="Заполнено на 100%"
+						text="Статус А"
 					></mib-dropdown-point>
 					<mib-dropdown-point
 						[value]="false"
-						text="Заполнено на 50%"
+						text="Статус Б"
 					></mib-dropdown-point>
 				</mib-select>
 			</div>
-		</mib-tab-item>
-		<mib-tab-item value="3">
-			<h3>История запросов</h3>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-table>
+				<mib-table-head>
+					<mib-table-head-cell [showCheckbox]="true"
+						>Номер запроса</mib-table-head-cell
+					>
+					<mib-table-head-cell>Тип запроса</mib-table-head-cell>
+					<mib-table-head-cell>Дата запроса</mib-table-head-cell>
+					<mib-table-head-cell>Статус запроса</mib-table-head-cell>
+					<mib-table-head-cell>Статус запроса</mib-table-head-cell>
+					<mib-table-head-cell>Ответственный</mib-table-head-cell>
+				</mib-table-head>
+				<mib-skeleton
+					[styles]="last ? skeletonWithoutUnderline : skeleton"
+					*ngFor="let i of [1]; let last = last"
+				></mib-skeleton>
+				<ng-container>
+					<mib-skeleton></mib-skeleton>
+				</ng-container>
+				<ng-template #table>
+					<mib-table-row>
+						<mib-table-cell type="main">
+							<ng-container table-cell-title> </ng-container>
+						</mib-table-cell>
+					</mib-table-row>
+				</ng-template>
+				<mib-table-footer>
+					<mib-paginator></mib-paginator>
+				</mib-table-footer>
+			</mib-table>
 		</mib-tab-item>
 	</div>
 </mib-tab-group>
