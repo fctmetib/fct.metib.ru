@@ -12,6 +12,10 @@ export interface FIO {
   secondName: Word
 }
 
+export function extractBase64(dataURL: string): string {
+  return dataURL.split(',')[1];
+}
+
 @Injectable({
   providedIn: 'root'
 })

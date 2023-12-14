@@ -1,6 +1,5 @@
 import {FileMode} from '../../../../shared/types/file/file-model.interface';
 import {DeliveryAgreement, Shipment} from '../modules/shipment-drawer/interfaces/shipment.interface';
-import {Base64Url} from '../../../../shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
 
 export enum RequestStatusEnum {
 
@@ -12,6 +11,11 @@ export enum RequestTypeEnum {
   CORRECTION = 'Correction'
 }
 
+
+export enum DocumentType {
+  CUSTOMER_REQUEST_SCAN = 'customerrequestscan',
+  DOCUMENT = 'Document'
+}
 
 export interface RequestReq {
   Number: string;
@@ -53,5 +57,5 @@ export interface Document {
   DocumentID?: number;
   OwnerTypeID: number;
   OwnerID: number;
-  Data?: Base64Url;
+  Data?: string;
 }
