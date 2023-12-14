@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
-import { IQueryList } from '../mock-data-service/data.models'
+import {
+	IDraftList,
+	IHistoryList,
+	IQueryList
+} from '../mock-data-service/data.models'
 import { DataService } from '../mock-data-service/data.srrvice'
 import { AnimationService } from 'src/app/shared/animations/animations.service'
 import { Properties } from 'csstype'
@@ -20,6 +24,8 @@ const ANIMATION_CONFIG = {
 })
 export class DemandNewHomeComponent implements OnInit {
 	requestList$: IQueryList[] = []
+	draftList$: IDraftList[] = []
+	historyList$: IHistoryList[] = []
 
 	public loading$ = new BehaviorSubject<boolean>(false)
 
@@ -46,8 +52,25 @@ export class DemandNewHomeComponent implements OnInit {
 	constructor(private requestList: DataService) {}
 
 	ngOnInit(): void {
-		this.requestList
+		this.getRequestList()
+		this.getDraftList()
+	}
+
+	getRequestList() {
+		return this.requestList
 			.getRequestList()
 			.subscribe(list => (this.requestList$ = list))
+	}
+
+	getDraftList() {
+		return this.requestList
+			.getDraftList()
+			.subscribe(list => (this.draftList$ = list))
+	}
+
+	getHistoryList() {
+		return this.requestList
+			.getHistoryList()
+			.subscribe(list => (this.historyList$ = list))
 	}
 }

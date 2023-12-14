@@ -25,6 +25,7 @@ export class IconsService {
 		'fi_more-vertical',
 		'fi_chevrons-right',
 		'fi_edit-3',
+		'fi_edit',
 		'fi_chevron-up',
 		'fi_copy',
 		'fi_log-out',
