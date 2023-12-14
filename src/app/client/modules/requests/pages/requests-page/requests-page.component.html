@@ -38,8 +38,7 @@
 				<ng-container *ngIf="loading$ | async; else table">
 					<mib-skeleton
 						[styles]="last ? skeletonWithoutUnderline : skeleton"
-						*ngFor="let i of [1]; let last = last"
-					></mib-skeleton>
+            *ngFor="let i of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; let last = last"></mib-skeleton>
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
@@ -102,7 +101,7 @@
 				<mib-table-footer [underlined]="!(loading$ | async)">
 					<mib-paginator
 						(pageChange)="onPageChange($event)"
-						[totalCount]="requestsVisible.length"
+						[totalCount]="requests.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 					></mib-paginator>

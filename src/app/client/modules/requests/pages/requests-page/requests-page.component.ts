@@ -47,8 +47,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     borderBottom: '1px solid var(--wgr-tertiary)'
   }
 
-  public PAGINATOR_ITEMS_PER_PAGE = 1
-  public PAGINATOR_PAGE_TO_SHOW = 1
+  public PAGINATOR_ITEMS_PER_PAGE = 16
+  public PAGINATOR_PAGE_TO_SHOW = 5
   public currentPage: number = 1
 
   public requests: AdvancedRequests[] = []

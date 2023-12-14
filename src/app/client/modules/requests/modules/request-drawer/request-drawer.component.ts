@@ -107,27 +107,27 @@ export class RequestDrawerComponent implements OnInit {
     this.shipments.push(control)
   }
 
-  addDocument(data: Document) {
+  addDocument(data: Partial<Document>) {
     const control: FormGroup = this.fb.group({
-      Number: [null],
+      // Number: [null],
       Title: [null],//
-      Location: [null],
+      // Location: [null],
       Description: [null],//
-      DocumentStatusID: [null],
-      DocumentStatus: [null],
+      // DocumentStatusID: [null],
+      // DocumentStatus: [null],
       DocumentTypeID: [null],//
-      DocumentType: [null],
-      DocumentTypeTitle: [null],
-      Available: [null],
-      Removed: [null],
-      ActiveOrganizationID: [null],
-      ActiveOrganization: [null],
-      CreatedTime: [null],
-      AuthorOrganizationID: [null],
-      AuthorOrganization: [null],
-      CreatorLastName: [null],
-      CreatorFirstName: [null],
-      DocumentID: [null],
+      // DocumentType: [null],
+      // DocumentTypeTitle: [null],
+      // Available: [null],
+      // Removed: [null],
+      // ActiveOrganizationID: [null],
+      // ActiveOrganization: [null],
+      // CreatedTime: [null],
+      // AuthorOrganizationID: [null],
+      // AuthorOrganization: [null],
+      // CreatorLastName: [null],
+      // CreatorFirstName: [null],
+      // DocumentID: [null],
       OwnerTypeID: [null],//
       OwnerID: [null],//
       Data: [null],//
@@ -166,7 +166,12 @@ export class RequestDrawerComponent implements OnInit {
         switchMap(result => {
           if (documents.length > 0) {
             const uploadObservables = documents.map(document => {
-              return this.requestsService.uploadDocument(document, result[0], 'Document ');
+              const requestId = result[0]
+              const modifiedDocument: Document = {
+                ...document,
+                OwnerID: requestId
+              }
+              return this.requestsService.uploadDocument(modifiedDocument, requestId, 'Document ');
             });
             return forkJoin(uploadObservables);
           }
@@ -216,12 +221,11 @@ export class RequestDrawerComponent implements OnInit {
   }
 
   onDocumentLoad({file, url}: FileDnd) {
-    const document: Document = {
-      Description: '',
+    const document: Partial<Document> = {
+      Description: `description ${file.name}`,
       DocumentTypeID: 40,
       Title: file.name,
       OwnerTypeID: 20,
-      OwnerID: this.user.ID,
       Data: url
     };
     this.addDocument(document)

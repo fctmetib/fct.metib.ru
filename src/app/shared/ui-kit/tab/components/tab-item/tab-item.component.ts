@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, HostBinding, Input} from '@angular/core';
 
 @Component({
   selector: 'mib-tab-item',
@@ -9,10 +9,14 @@ export class TabItemComponent {
 
   @Input() value: string = ''
 
-  constructor() {
+  @HostBinding('class.hidden') get isHidden(): boolean {
+    return !this.selected;
   }
 
   public selected: boolean = false;
+
+  constructor() {
+  }
 
   setSelected(value: boolean) {
     this.selected = value
