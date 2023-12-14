@@ -21,6 +21,23 @@ export class ToolsService {
     return `f${(~~(Math.random() * 1e8)).toString(16)}`;
   };
 
+  public transformDatesToISO(obj: any): any {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}.\d{3}Z)?$/; // Регулярное выражение для проверки даты
+
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const value = obj[key];
+        if (typeof value === 'string' && dateRegex.test(value)) {
+          // Если строка соответствует формату даты
+          obj[key] = new Date(value).toISOString();
+        }
+      }
+    }
+
+    return obj;
+  }
+
+
   public deepFilter<T = any>(array: T[], searchValue: string): T[] {
     return array.filter(request =>
         request && Object.values(request).some((value: any) =>

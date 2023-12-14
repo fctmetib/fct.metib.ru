@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {DeliveryAgreement} from '../interfaces/delivery-agreement.interface';
+import {DeliveryAgreement} from '../interfaces/shipment.interface';
 import {environment} from '../../../../../../../environments/environment';
 
 @Injectable()
-export class DeliveryAgreementService {
+export class DeliveryService {
   constructor(
     private http: HttpClient
   ) {

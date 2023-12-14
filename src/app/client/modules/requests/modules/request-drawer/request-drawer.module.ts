@@ -16,8 +16,8 @@ import {RequestDrawerService} from './request-drawer.service';
 import {InputModule} from '../../../../../shared/ui-kit/input/input.module';
 import {MibDragAndDropModule} from '../../../../../shared/ui-kit/drag-and-drop/mib-drag-and-drop.module';
 import {InformationModule} from '../../../../../shared/ui-kit/information/information.module';
-import {DeliveryAgreementDrawerModule} from '../delivery-agreement-drawer/delivery-agreement-drawer.module';
-import {DeliveryAgreementService} from '../delivery-agreement-drawer/services/delivery-agreement.service';
+import {ShipmentDrawerModule} from '../shipment-drawer/shipment-drawer.module';
+import {DeliveryService} from '../shipment-drawer/services/delivery.service';
 import {RubModule} from '../../../../../shared/pipes/rub/rub.module';
 import {DropdownModule} from '../../../../../shared/ui-kit/dropdown/dropdown.module';
 
@@ -39,13 +39,13 @@ import {DropdownModule} from '../../../../../shared/ui-kit/dropdown/dropdown.mod
     InputModule,
     MibDragAndDropModule,
     InformationModule,
-    DeliveryAgreementDrawerModule,
+    ShipmentDrawerModule,
     RubModule,
     DropdownModule
   ],
   providers: [
     RequestDrawerService,
-    DeliveryAgreementService
+    DeliveryService
   ]
 })
 export class RequestDrawerModule {
