@@ -25,10 +25,11 @@
 			placeholder="Введите пароль"
 		/>
 		<ng-container input-label>Введите пароль</ng-container>
+		<!-- input-right-icon -->
 		<mib-ref-icon
 			[passwordHider]="[password]"
 			class="stroke"
-			input-right-icon
+			mibRightIcon
 			[name]="password.type === 'password' ? 'fi_eye' : 'fi_eye-off'"
 		></mib-ref-icon>
 	</mib-input>
