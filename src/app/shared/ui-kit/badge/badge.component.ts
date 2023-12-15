@@ -10,4 +10,5 @@ export class BadgeComponent {
 	@Input() size: MibBadgeSize = 'l'
 	@Input() type: MibBadgeType = 'filled-primary'
 	@Input() extended: boolean = false
+	@Input() showIcon: boolean = false
 }

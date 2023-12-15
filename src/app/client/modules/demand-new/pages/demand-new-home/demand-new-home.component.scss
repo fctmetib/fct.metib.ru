@@ -1,3 +1,18 @@
-.inputs-line * {
+@import 'src/styles/helpers/_icon_tools.scss';
+
+.draft-controls * {
 	width: 280px;
+}
+
+.draft {
+	@include icon-color(var(--mc-default));
+}
+
+.history-controls {
+	& :nth-child(1) {
+		width: 412px;
+	}
+	& :nth-child(2) {
+		width: 210px;
+	}
 }

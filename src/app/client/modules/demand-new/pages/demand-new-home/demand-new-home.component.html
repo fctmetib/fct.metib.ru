@@ -27,7 +27,7 @@
 		</mib-tab-item>
 		<mib-tab-item value="2">
 			<mib-spacing type="m"></mib-spacing>
-			<div class="inputs-line flex flex_justify-between">
+			<div class="draft-controls flex flex_justify-between">
 				<mib-input>
 					<input
 						mibInput
@@ -65,31 +65,42 @@
 					<mib-table-head-cell>Тип запроса</mib-table-head-cell>
 					<mib-table-head-cell>Прогресс заполнения</mib-table-head-cell>
 				</mib-table-head>
-				<ng-container>
+				<ng-container *ngIf="loading$ | async; else table">
 					<mib-skeleton
 						[styles]="last ? skeletonWithoutUnderline : skeleton"
-						*ngFor="let i of [1]; let last = last"
+						*ngFor="let i of [1, 1, 1, 1, 1, 1, 1]; let last = last"
 					></mib-skeleton>
 				</ng-container>
 				<ng-template #table>
-					<mib-table-row>
+					<mib-table-row
+						*ngFor="let draft of draftList$; let last = last"
+						[underlined]="!last"
+					>
 						<mib-table-cell type="main">
-							<ng-container table-cell-title>sdfsdf</ng-container>
+							<ng-container table-cell-title>{{ draft.number }}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>вапап</ng-container>
+							<ng-container table-cell-title
+								><mib-badge
+									type="filled-secondary"
+									[extended]="true"
+									size="l"
+									>{{ draft.type }}</mib-badge
+								></ng-container
+							>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>вап ывп</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>вап ывп</ng-container>
+							<ng-container table-cell-title
+								><mib-badge type="filled-secondary" [extended]="true" size="l"
+									>Заполнено на {{ draft.progress }}</mib-badge
+								></ng-container
+							>
 						</mib-table-cell>
 						<mib-button table-row-button size="s" type="ghost-secondary">
 							<mib-ref-icon
-								class="stroke"
+								class="stroke draft"
 								btn-icon
-								name="fi_more-vertical"
+								name="fi_edit"
 							></mib-ref-icon>
 						</mib-button>
 					</mib-table-row>
@@ -101,7 +112,7 @@
 		</mib-tab-item>
 		<mib-tab-item value="3">
 			<mib-spacing type="m"></mib-spacing>
-			<div class="inputs-line flex flex_justify-between">
+			<div class="history-controls flex flex_justify-between">
 				<mib-input>
 					<input
 						mibInput
@@ -119,11 +130,11 @@
 				<mib-select placeholder="Выберите статус запроса">
 					<mib-dropdown-point
 						[value]="true"
-						text="Статус А"
+						text="В работе"
 					></mib-dropdown-point>
 					<mib-dropdown-point
 						[value]="false"
-						text="Статус Б"
+						text="Завершено"
 					></mib-dropdown-point>
 				</mib-select>
 			</div>
@@ -149,7 +160,27 @@
 				<ng-template #table>
 					<mib-table-row>
 						<mib-table-cell type="main">
-							<ng-container table-cell-title> </ng-container>
+							<ng-container table-cell-title>sdfsdfsdf</ng-container>
+						</mib-table-cell>
+						<mib-table-cell type="main">
+							<ng-container table-cell-title
+								><mib-badge [extended]="true" size="l"
+									>Запрос на ЭЦП</mib-badge
+								></ng-container
+							>
+						</mib-table-cell>
+						<mib-table-cell type="main">
+							<ng-container table-cell-title>00.00.0000</ng-container>
+						</mib-table-cell>
+						<mib-table-cell type="main">
+							<ng-container table-cell-title
+								><mib-badge [extended]="true" size="l"
+									>В работе</mib-badge
+								></ng-container
+							>
+						</mib-table-cell>
+						<mib-table-cell type="main">
+							<ng-container table-cell-title>фыва-фывав-афыва</ng-container>
 						</mib-table-cell>
 					</mib-table-row>
 				</ng-template>
