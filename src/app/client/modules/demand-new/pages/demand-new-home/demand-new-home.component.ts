@@ -23,10 +23,11 @@ const ANIMATION_CONFIG = {
 	animations: [new AnimationService().generateAnimation(ANIMATION_CONFIG)]
 })
 export class DemandNewHomeComponent implements OnInit {
-	requestList$: IQueryList[] = []
-	draft$: IDraftList[] = []
-	draftList$: IDraftList[] = []
-	historyList$: IHistoryList[] = []
+	requestLists: IQueryList[] = []
+	drafts: IDraftList[] = []
+	draftLists: IDraftList[] = []
+	historys: IHistoryList[] = []
+	historyLists: IHistoryList[] = []
 
 	public loading$ = new BehaviorSubject<boolean>(false)
 
@@ -47,18 +48,20 @@ export class DemandNewHomeComponent implements OnInit {
 	severalRequestsChecked: boolean = false
 
 	public requestsAnimationStates: Record<number, boolean> = {}
+	public historyAnimationStates: Record<number, boolean> = {}
 
 	constructor(private requestList: DataService) {}
 
 	ngOnInit(): void {
 		this.getRequestList()
 		this.getDraftList()
+		this.getHistoryList()
 	}
 
 	getRequestList() {
 		return this.requestList
 			.getRequestList()
-			.subscribe(list => (this.requestList$ = list))
+			.subscribe(list => (this.requestLists = list))
 	}
 
 	getDraftList() {
@@ -68,9 +71,9 @@ export class DemandNewHomeComponent implements OnInit {
 				.getDraftList()
 				.pipe(
 					tap(data => {
-						this.draft$ = data.map(x => ({ ...x, checked: false }))
+						this.drafts = data.map(x => ({ ...x, checked: false }))
 						// Инициализация состояния анимации
-						this.draft$.forEach(draft => {
+						this.drafts.forEach(draft => {
 							this.requestsAnimationStates[draft.id] = false
 						})
 						this.onPageChange(this.currentPage)
@@ -82,9 +85,24 @@ export class DemandNewHomeComponent implements OnInit {
 	}
 
 	getHistoryList() {
-		return this.requestList
-			.getHistoryList()
-			.subscribe(list => (this.historyList$ = list))
+		this.loading$.next(true)
+		setTimeout(() => {
+			this.requestList
+				.getHistoryList()
+				.pipe(
+					tap(data => {
+						console.log('data :>> ', data)
+						this.historys = data.map(x => ({ ...x, checked: false }))
+						// Инициализация состояния анимации
+						this.historys.forEach(history => {
+							this.historyAnimationStates[history.id] = false
+						})
+						this.onPageChange(this.currentPage)
+					}),
+					finalize(() => this.loading$.next(false))
+				)
+				.subscribe()
+		}, 5000)
 	}
 
 	onPageChange(page: number) {
@@ -96,6 +114,9 @@ export class DemandNewHomeComponent implements OnInit {
 		this.selectedRequestsCount = 0
 		this.severalRequestsChecked = false
 
-		this.draftList$ = this.draft$.slice(startIndex, endIndex)
+		this.historyLists = this.historys.slice(startIndex, endIndex)
+		this.draftLists = this.drafts.slice(startIndex, endIndex)
+		console.log('draftlist :>> ', this.draftLists)
+		console.log('historyLists :>> ', this.historyLists)
 	}
 }

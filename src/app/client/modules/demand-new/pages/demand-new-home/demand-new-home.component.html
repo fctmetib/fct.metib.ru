@@ -14,7 +14,7 @@
 			<mib-spacing type="s"></mib-spacing>
 			<div class="flex flex_wrap gap-16">
 				<mib-request-card
-					*ngFor="let request of requestList$"
+					*ngFor="let request of requestLists"
 					[requestTitle]="request.title"
 					[requestText]="request.description"
 					[requestQuantity]="request.quantity"
@@ -73,7 +73,8 @@
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
-						*ngFor="let draft of draftList$; let last = last"
+						[@slideAnimation]="requestsAnimationStates[draft.id]"
+						*ngFor="let draft of draftLists; let last = last"
 						[underlined]="!last"
 					>
 						<mib-table-cell type="main">
@@ -108,7 +109,7 @@
 				<mib-table-footer [underlined]="!(loading$ | async)">
 					<mib-paginator
 						(pageChange)="onPageChange($event)"
-						[totalCount]="draft$.length"
+						[totalCount]="drafts.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 					></mib-paginator>
@@ -155,32 +156,43 @@
 					<mib-table-head-cell>Статус запроса</mib-table-head-cell>
 					<mib-table-head-cell>Ответственный</mib-table-head-cell>
 				</mib-table-head>
-				<mib-skeleton
-					[styles]="last ? skeletonWithoutUnderline : skeleton"
-					*ngFor="let i of [1]; let last = last"
-				></mib-skeleton>
-				<ng-container>
-					<mib-skeleton></mib-skeleton>
+				<ng-container *ngIf="loading$ | async; else table2">
+					<mib-skeleton
+						[styles]="last ? skeletonWithoutUnderline : skeleton"
+						*ngFor="let i of [1]; let last = last"
+					></mib-skeleton>
 				</ng-container>
-				<ng-template #table>
-					<mib-table-row>
+				<ng-template #table2>
+					<mib-table-row
+						[@slideAnimation]="historyAnimationStates[history.id]"
+						*ngFor="let history of historyLists; let last = last"
+						[underlined]="!last"
+					>
 						<mib-table-cell type="main">
-							<ng-container table-cell-title>sdfsdfsdf</ng-container>
+							<ng-container table-cell-title>{{ history.number }}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell type="main">
 							<ng-container table-cell-title
-								><mib-badge [extended]="true" size="l"
-									>Запрос на ЭЦП</mib-badge
+								><mib-badge
+									type="filled-secondary"
+									[extended]="true"
+									size="l"
+									>{{ history.type }}</mib-badge
 								></ng-container
 							>
 						</mib-table-cell>
 						<mib-table-cell type="main">
-							<ng-container table-cell-title>00.00.0000</ng-container>
+							<ng-container table-cell-title>{{
+								history.date | date
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell type="main">
 							<ng-container table-cell-title
-								><mib-badge [extended]="true" size="l"
-									>В работе</mib-badge
+								><mib-badge
+									type="filled-secondary"
+									[extended]="true"
+									size="l"
+									>{{ history.status ? 'В работе' : 'Завершено' }}</mib-badge
 								></ng-container
 							>
 						</mib-table-cell>

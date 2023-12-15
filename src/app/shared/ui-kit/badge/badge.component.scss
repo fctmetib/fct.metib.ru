@@ -51,6 +51,7 @@
 	display: inline-flex;
 	align-items: center;
 	border-radius: var(--badge-border-radius);
+	white-space: nowrap;
 	@include body-text;
 	&:not(.badge_extended) {
 		padding: 2px;
