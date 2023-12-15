@@ -51,7 +51,7 @@ export const historylist: IHistoryList[] = [
 		status: true,
 		charge: {
 			name: 'Бирюкова Кристина (11-11)',
-			avatarUrl: './assets/123'
+			avatarUrl: './assets/images/woman-avatar.jpg'
 		}
 	},
 	{
@@ -62,7 +62,7 @@ export const historylist: IHistoryList[] = [
 		status: true,
 		charge: {
 			name: 'Бирюкова Кристина (11-11)',
-			avatarUrl: './assets/123'
+			avatarUrl: './assets/images/woman-avatar.jpg'
 		}
 	},
 	{
@@ -73,7 +73,7 @@ export const historylist: IHistoryList[] = [
 		status: true,
 		charge: {
 			name: 'Бирюкова Кристина (11-11)',
-			avatarUrl: './assets/123'
+			avatarUrl: './assets/images/woman-avatar.jpg'
 		}
 	},
 	{
@@ -81,10 +81,10 @@ export const historylist: IHistoryList[] = [
 		number: '142/02-2016',
 		type: 'Запрос на ЭЦП',
 		date: '2014-06-09T00:00:00',
-		status: true,
+		status: false,
 		charge: {
 			name: 'Бирюкова Кристина (11-11)',
-			avatarUrl: './assets/123'
+			avatarUrl: './assets/images/woman-avatar.jpg'
 		}
 	},
 	{
@@ -95,7 +95,7 @@ export const historylist: IHistoryList[] = [
 		status: true,
 		charge: {
 			name: 'Бирюкова Кристина (11-11)',
-			avatarUrl: './assets/123'
+			avatarUrl: './assets/images/woman-avatar.jpg'
 		}
 	},
 	{
@@ -103,10 +103,10 @@ export const historylist: IHistoryList[] = [
 		number: '1345/05-2018',
 		type: 'Запрос на ЭЦП',
 		date: '2013-07-09T00:00:00',
-		status: true,
+		status: false,
 		charge: {
 			name: 'Бирюкова Кристина (11-11)',
-			avatarUrl: './assets/123'
+			avatarUrl: './assets/images/woman-avatar.jpg'
 		}
 	},
 	{
@@ -117,7 +117,40 @@ export const historylist: IHistoryList[] = [
 		status: true,
 		charge: {
 			name: 'Бирюкова Кристина (11-11)',
-			avatarUrl: './assets/123'
+			avatarUrl: './assets/images/woman-avatar.jpg'
+		}
+	},
+	{
+		id: 8,
+		number: '3455/03-20xzc14',
+		type: 'Запрос на ЭЦП',
+		date: '2022-03-09T00:00:00',
+		status: true,
+		charge: {
+			name: 'Бирюкова Кристина (11-11)',
+			avatarUrl: './assets/images/woman-avatar.jpg'
+		}
+	},
+	{
+		id: 9,
+		number: '3455/03-2018764',
+		type: 'Запрос на ЭЦП',
+		date: '2022-03-09T00:00:00',
+		status: false,
+		charge: {
+			name: 'Бирюкова Кристина (11-11)',
+			avatarUrl: './assets/images/woman-avatar.jpg'
+		}
+	},
+	{
+		id: 10,
+		number: '3455/03-243544',
+		type: 'Запрос на ЭЦП',
+		date: '2022-03-09T00:00:00',
+		status: true,
+		charge: {
+			name: 'Бирюкова Кристина (11-11)',
+			avatarUrl: './assets/images/woman-avatar.jpg'
 		}
 	}
 ]

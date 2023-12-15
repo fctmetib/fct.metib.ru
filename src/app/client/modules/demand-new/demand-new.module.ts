@@ -24,7 +24,7 @@ import { CheckboxModule } from 'primeng/checkbox'
 import { RadioButtonModule } from 'primeng/radiobutton'
 import { InputTextareaModule } from 'primeng/inputtextarea'
 import { MenubarModule } from 'primeng/menubar'
-import { AvatarModule } from 'primeng/avatar'
+import { AvatarModule as AvatarModule22 } from 'primeng/avatar'
 import { FileUploadModule } from 'primeng/fileupload'
 import { InputMaskModule } from 'primeng/inputmask'
 import { ProgressSpinnerModule } from 'primeng/progressspinner'
@@ -82,6 +82,7 @@ import { PaginatorModule } from 'src/app/shared/ui-kit/paginator/paginator.modul
 import { SkeletonModule } from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import { BadgeModule } from 'src/app/shared/ui-kit/badge/badge.module'
 import { LeftIconModule } from '../../../shared/directives/left-icon/left-icon.module'
+import { AvatarModule } from 'src/app/shared/ui-kit/avatar/avatar.module'
 
 @NgModule({
 	imports: [
@@ -113,7 +114,7 @@ import { LeftIconModule } from '../../../shared/directives/left-icon/left-icon.m
 		CardModule,
 		DialogModule,
 		MenubarModule,
-		AvatarModule,
+		AvatarModule22,
 		SharedModule,
 		SpacingModule,
 		RequestCardModule,
@@ -128,7 +129,8 @@ import { LeftIconModule } from '../../../shared/directives/left-icon/left-icon.m
 		BadgeModule,
 		LeftIconModule,
 		TableModule,
-		SkeletonModule
+		SkeletonModule,
+		AvatarModule
 	],
 	declarations: [
 		// Containers

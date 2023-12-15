@@ -1,26 +1,27 @@
-@import "src/styles/typography.vars";
+@import 'src/styles/typography.vars';
+@import 'src/styles/helpers/_icon_tools';
 
 $text-selectors: 'label';
 
 :host.table-cell {
-  flex: var(--table-flex);
-  padding: 12px 8px 12px 0;
-  #{$text-selectors} {
-    @include body-text;
-    @include text-m;
-    @include text-overflow(1)
-  }
-  &_type {
-    &-main {
-      #{$text-selectors} {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-    }
-  }
-  .description {
-    padding: 2px 0;
-  }
+	flex: var(--table-flex);
+	padding: 12px 8px 12px 0;
+	#{$text-selectors} {
+		@include body-text;
+		@include text-m;
+		@include text-overflow(1);
+	}
+	&_type {
+		&-main {
+			#{$text-selectors} {
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+		}
+	}
+	.description {
+		padding: 2px 0;
+	}
 }

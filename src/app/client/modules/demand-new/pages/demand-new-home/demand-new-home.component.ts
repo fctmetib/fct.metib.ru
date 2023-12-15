@@ -91,7 +91,6 @@ export class DemandNewHomeComponent implements OnInit {
 				.getHistoryList()
 				.pipe(
 					tap(data => {
-						console.log('data :>> ', data)
 						this.historys = data.map(x => ({ ...x, checked: false }))
 						// Инициализация состояния анимации
 						this.historys.forEach(history => {
@@ -116,7 +115,5 @@ export class DemandNewHomeComponent implements OnInit {
 
 		this.historyLists = this.historys.slice(startIndex, endIndex)
 		this.draftLists = this.drafts.slice(startIndex, endIndex)
-		console.log('draftlist :>> ', this.draftLists)
-		console.log('historyLists :>> ', this.historyLists)
 	}
 }

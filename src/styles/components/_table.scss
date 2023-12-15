@@ -1,48 +1,59 @@
-@import "src/styles/typography.vars";
-@import "src/styles/helpers/icon_tools";
+@import 'src/styles/typography.vars';
+@import 'src/styles/helpers/icon_tools';
 
 $text-selectors: 'label';
 
 @mixin table-head-cell {
-  height: 100%;
-  width: 100%;
-  padding: 10px 8px 10px 0;
+	height: 100%;
+	width: 100%;
+	padding: 10px 8px 10px 0;
 
-  #{$text-selectors} {
-    @include body-text;
-    @include text-s;
-    @include text-overflow(1);
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+	#{$text-selectors} {
+		@include body-text;
+		@include text-s;
+		@include text-overflow(1);
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
 
-  mib-ref-icon {
-    @include icon-size(20px)
-  }
-  @include table-color(var(--bti-secondary))
+	mib-ref-icon {
+		@include icon-size(20px);
+	}
+	@include table-color(var(--bti-secondary));
 }
 
 @mixin table-color($color) {
-  #{$text-selectors} {
-    color: $color;
-  }
-  mib-ref-icon {
-    @include icon-color($color)
-  }
+	#{$text-selectors} {
+		color: $color;
+	}
+	mib-ref-icon {
+		@include icon-color($color);
+	}
 }
 
 mib-table-row:last-child .table-row {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
 }
 
 .table-head-cell {
-  @include table-head-cell;
-  .cursor-pointer {
-    &, & > * {
-      cursor: pointer;
-    }
-  }
+	@include table-head-cell;
+	.cursor-pointer {
+		&,
+		& > * {
+			cursor: pointer;
+		}
+	}
+}
+
+.table-cell {
+	&_type {
+		&-person {
+			mib-avatar {
+				@include icon-size(24px);
+			}
+		}
+	}
 }
