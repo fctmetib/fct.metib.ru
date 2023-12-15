@@ -77,11 +77,16 @@
 }
 
 @mixin badge-icon {
-	display: none;
+	&:not(.showIcon) {
+		mib-ref-icon {
+			display: none;
+		}
+	}
 }
 
 .badge {
 	@include badge;
+	@include badge-icon;
 
 	--badge-l-icon-size: 16px;
 	--badge-m-icon-size: 16px;
@@ -130,9 +135,5 @@
 		mib-ref-icon {
 			@include icon-color(var(--success-active));
 		}
-	}
-
-	mib-ref-icon {
-		@include badge-icon;
 	}
 }
