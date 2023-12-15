@@ -105,8 +105,13 @@
 						</mib-button>
 					</mib-table-row>
 				</ng-template>
-				<mib-table-footer>
-					<mib-paginator></mib-paginator>
+				<mib-table-footer [underlined]="!(loading$ | async)">
+					<mib-paginator
+						(pageChange)="onPageChange($event)"
+						[totalCount]="draft$.length"
+						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+					></mib-paginator>
 				</mib-table-footer>
 			</mib-table>
 		</mib-tab-item>

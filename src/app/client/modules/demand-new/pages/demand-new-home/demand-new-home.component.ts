@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, finalize, tap } from 'rxjs'
 import {
 	IDraftList,
 	IHistoryList,
@@ -24,6 +24,7 @@ const ANIMATION_CONFIG = {
 })
 export class DemandNewHomeComponent implements OnInit {
 	requestList$: IQueryList[] = []
+	draft$: IDraftList[] = []
 	draftList$: IDraftList[] = []
 	historyList$: IHistoryList[] = []
 
@@ -45,9 +46,7 @@ export class DemandNewHomeComponent implements OnInit {
 	selectedRequestsCount: number
 	severalRequestsChecked: boolean = false
 
-	dutiesVisible: any
-	duties: any
-	selectedDuties: any
+	public requestsAnimationStates: Record<number, boolean> = {}
 
 	constructor(private requestList: DataService) {}
 
@@ -63,14 +62,40 @@ export class DemandNewHomeComponent implements OnInit {
 	}
 
 	getDraftList() {
-		return this.requestList
-			.getDraftList()
-			.subscribe(list => (this.draftList$ = list))
+		this.loading$.next(true)
+		setTimeout(() => {
+			this.requestList
+				.getDraftList()
+				.pipe(
+					tap(data => {
+						this.draft$ = data.map(x => ({ ...x, checked: false }))
+						// Инициализация состояния анимации
+						this.draft$.forEach(draft => {
+							this.requestsAnimationStates[draft.id] = false
+						})
+						this.onPageChange(this.currentPage)
+					}),
+					finalize(() => this.loading$.next(false))
+				)
+				.subscribe()
+		}, 5000)
 	}
 
 	getHistoryList() {
 		return this.requestList
 			.getHistoryList()
 			.subscribe(list => (this.historyList$ = list))
+	}
+
+	onPageChange(page: number) {
+		this.currentPage = page
+
+		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+
+		this.selectedRequestsCount = 0
+		this.severalRequestsChecked = false
+
+		this.draftList$ = this.draft$.slice(startIndex, endIndex)
 	}
 }

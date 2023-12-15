@@ -125,25 +125,25 @@ export const historylist: IHistoryList[] = [
 export const draftlist: IDraftList[] = [
 	{
 		id: 1,
-		number: '1085/08-2015',
+		number: '1085/08-201524',
 		type: 'Запрос на ЭЦП',
 		progress: '30%'
 	},
 	{
 		id: 2,
-		number: '1086/09-2015',
+		number: '1086/09-20452615',
 		type: 'Запрос на ЭЦП',
 		progress: '50%'
 	},
 	{
 		id: 3,
-		number: '105/02-2015',
+		number: '105/02-2746015',
 		type: 'Запрос на ЭЦП',
 		progress: '35%'
 	},
 	{
 		id: 4,
-		number: '142/02-2016',
+		number: '142/02-2016746',
 		type: 'Запрос на ЭЦП',
 		progress: '67%'
 	},
@@ -161,8 +161,98 @@ export const draftlist: IDraftList[] = [
 	},
 	{
 		id: 7,
-		number: '3455/03-2014',
+		number: '3455/03-223454',
 		type: 'Запрос на ЭЦП',
 		progress: '20%'
+	},
+	{
+		id: 8,
+		number: '1085/08-202435',
+		type: 'Запрос на ЭЦП',
+		progress: '30%'
+	},
+	{
+		id: 9,
+		number: '1086/09-20234',
+		type: 'Запрос на ЭЦП',
+		progress: '50%'
+	},
+	{
+		id: 10,
+		number: '105/02-2015',
+		type: 'Запрос на ЭЦП',
+		progress: '35%'
+	},
+	{
+		id: 11,
+		number: '142/02-20235',
+		type: 'Запрос на ЭЦП',
+		progress: '67%'
+	},
+	{
+		id: 12,
+		number: '3524/09-22345',
+		type: 'Запрос на ЭЦП',
+		progress: '90%'
+	},
+	{
+		id: 13,
+		number: '1345/05-23456',
+		type: 'Запрос на ЭЦП',
+		progress: '70%'
+	},
+	{
+		id: 14,
+		number: '3455/03-2345614',
+		type: 'Запрос на ЭЦП',
+		progress: '20%'
+	},
+	{
+		id: 15,
+		number: '1085/08-56355',
+		type: 'Запрос на ЭЦП',
+		progress: '30%'
+	},
+	{
+		id: 16,
+		number: '1086/09-546',
+		type: 'Запрос на ЭЦП',
+		progress: '50%'
+	},
+	{
+		id: 17,
+		number: '105/02-20143',
+		type: 'Запрос на ЭЦП',
+		progress: '35%'
+	},
+	{
+		id: 18,
+		number: '142/02-20432',
+		type: 'Запрос на ЭЦП',
+		progress: '67%'
+	},
+	{
+		id: 19,
+		number: '3524/09-2245',
+		type: 'Запрос на ЭЦП',
+		progress: '90%'
+	},
+	{
+		id: 20,
+		number: '1345/05-22435',
+		type: 'Запрос на ЭЦП',
+		progress: '70%'
+	},
+	{
+		id: 21,
+		number: '3455/03-2356',
+		type: 'Запрос на ЭЦП',
+		progress: '20%'
+	},
+	{
+		id: 22,
+		number: '3455/03-2245',
+		type: 'Запрос на ЭЦП',
+		progress: '60%'
 	}
 ]
