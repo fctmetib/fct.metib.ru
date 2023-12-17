@@ -45,9 +45,24 @@ ng g i shared/modules/new-demand/interfaces/new-demand.interface --dry-run
 ng g c shared/modules/new-demand/new-demand --flat --skip-tests  --dry-run
  //---
 
- //--- new-demand-home
-src\app\client\modules\demand-new\pages
-ng g c client/modules/demand-new/pages/demand-new-home --skip-tests --dry-run
+ //--- demand-drawer
+src\app\client\modules\demand-new\modules\demand-drawer
+ng g i client/modules/demand-new/modules/demand-drawer/interfaces/demand-drawer.interface  --dry-run
+ng g m client/modules/demand-new/modules/demand-drawer/demand-drawer --flat --dry-run
+ng g s client/modules/demand-new/modules/demand-drawer/demand-drawer --skip-tests --dry-run
+ng g c client/modules/demand-new/modules/demand-drawer --skip-tests --dry-run
+ //---
+
+ //--- new-demand/modules
+src\app\client\modules\demand-new\modules\demand-drawer
+ng g c client/modules/demand-new/modules/demand-drawer --skip-tests --dry-run
+ //---
+
+ //--- toaster
+src\app\shared\ui-kit\
+ng g i shared/ui-kit/toaster/interfaces/toaster.interface  --dry-run
+ng g m shared/ui-kit/toaster/toaster --flat  --dry-run
+ng g c shared/ui-kit/toaster/toaster --flat  --skip-tests --dry-run
  //---
 
 // add m

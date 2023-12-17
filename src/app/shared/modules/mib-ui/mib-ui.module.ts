@@ -12,6 +12,7 @@ import { TagModule } from '../../ui-kit/tag/tag.module'
 import { RadioModule } from '../../ui-kit/radio/radio.module'
 import { SwitchModule } from '../../ui-kit/switch/switch.module'
 import { HeaderModule } from '../header/header.module'
+import { ToasterModule } from '../../ui-kit/toaster/toaster.module'
 
 @NgModule({
 	imports: [
@@ -27,7 +28,8 @@ import { HeaderModule } from '../header/header.module'
 		TagModule,
 		RadioModule,
 		SwitchModule,
-		HeaderModule
+		HeaderModule,
+		ToasterModule
 	],
 	declarations: [MibUiComponent]
 })

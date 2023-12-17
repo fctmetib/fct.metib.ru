@@ -1,26 +1,26 @@
 :host {
-  height: 48px;
-  display: block;
+	height: 48px;
+	display: block;
 }
 .table-row {
-  position: relative;
-  height: 100%;
-  padding: var(--table-paddings);
-  display: flex;
-  background: var(--wgr-primary);
-  &_underlined {
-    border-bottom: 1px solid var(--wgr-tertiary);
-  }
-  &_button-wrapper {
-    display: none;
-    position: absolute;
-    right: 0;
-    height: 100%;
-    padding: 8px 8px 8px 0;
-  }
-  &_has-button {
-    .table-row_button-wrapper {
-      display: flex;
-    }
-  }
+	position: relative;
+	height: 100%;
+	padding: var(--table-paddings);
+	display: flex;
+	background: var(--wgr-primary);
+	&_underlined {
+		border-bottom: 1px solid var(--wgr-secondary);
+	}
+	&_button-wrapper {
+		display: none;
+		position: absolute;
+		right: 0;
+		height: 100%;
+		padding: 8px 8px 8px 0;
+	}
+	&_has-button {
+		.table-row_button-wrapper {
+			display: flex;
+		}
+	}
 }
