@@ -22,8 +22,9 @@
 				></mib-request-card>
 			</div>
 			<mib-spacing type="s"></mib-spacing>
-			<mib-button type="filled-primary">Запрос на свободную тему</mib-button>
-			<mib-demand-drawer></mib-demand-drawer>
+			<mib-button (press)="openDrawer()" type="filled-primary"
+				>Запрос на свободную тему</mib-button
+			>
 			<mib-spacing type="xl2"></mib-spacing>
 		</mib-tab-item>
 		<mib-tab-item value="2">

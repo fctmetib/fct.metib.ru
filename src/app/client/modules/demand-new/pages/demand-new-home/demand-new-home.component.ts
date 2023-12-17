@@ -8,6 +8,9 @@ import {
 import { DataService } from '../mock-data-service/data.srrvice'
 import { AnimationService } from 'src/app/shared/animations/animations.service'
 import { Properties } from 'csstype'
+import { DemandDrawerService } from '../../modules/demand-drawer/demand-drawer.service'
+import { DrawerStateEnum } from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
+import { RequestRes } from '../../../requests/interfaces/request.interface'
 
 const ANIMATION_CONFIG = {
 	translateDistance: '-3%',
@@ -50,7 +53,10 @@ export class DemandNewHomeComponent implements OnInit {
 	public requestsAnimationStates: Record<number, boolean> = {}
 	public historyAnimationStates: Record<number, boolean> = {}
 
-	constructor(private requestList: DataService) {}
+	constructor(
+		private requestList: DataService,
+		private demandDrawerService: DemandDrawerService
+	) {}
 
 	ngOnInit(): void {
 		this.getRequestList()
@@ -115,5 +121,14 @@ export class DemandNewHomeComponent implements OnInit {
 
 		this.historyLists = this.historys.slice(startIndex, endIndex)
 		this.draftLists = this.drafts.slice(startIndex, endIndex)
+	}
+
+	openDrawer() {
+		this.demandDrawerService
+			.open<RequestRes[]>({
+				state: DrawerStateEnum.CREATE
+			})
+			.afterClosed()
+			.subscribe()
 	}
 }
