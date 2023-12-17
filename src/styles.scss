@@ -19,28 +19,29 @@ body {
 	--main-border-radius: 8px;
 	--custom-floating-shadow: 0px 8px 16px 0px rgba(9, 13, 17, 0.1);
 	--main-transition: 0.2s;
+	--normal-shadow: 0px 8px 16px 0px rgba(9, 13, 17, 0.08);
 
-  --spacing-desktop-xs2: 8px;
-  --spacing-desktop-xs: 16px;
-  --spacing-desktop-s: 24px;
-  --spacing-desktop-m: 32px;
-  --spacing-desktop-l: 48px;
-  --spacing-desktop-xl: 72px;
-  --spacing-desktop-xl2: 96px;
-  //--spacing-mobile-xs2: 8px;
-  //--spacing-mobile-xs: 16px;
-  //--spacing-mobile-s: 24px;
-  //--spacing-mobile-m: 32px;
-  //--spacing-mobile-l: 48px;
-  //--spacing-mobile-xl: 72px;
-  //--spacing-mobile-xl2: 96px;
+	--spacing-desktop-xs2: 8px;
+	--spacing-desktop-xs: 16px;
+	--spacing-desktop-s: 24px;
+	--spacing-desktop-m: 32px;
+	--spacing-desktop-l: 48px;
+	--spacing-desktop-xl: 72px;
+	--spacing-desktop-xl2: 96px;
+	//--spacing-mobile-xs2: 8px;
+	//--spacing-mobile-xs: 16px;
+	//--spacing-mobile-s: 24px;
+	//--spacing-mobile-m: 32px;
+	//--spacing-mobile-l: 48px;
+	//--spacing-mobile-xl: 72px;
+	//--spacing-mobile-xl2: 96px;
 }
 
 * {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 // TODO: ПОМЕНЯТЬ ЦВЕТ
@@ -50,7 +51,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  border: 4px solid var(--wgr-primary);
+	border: 4px solid var(--wgr-primary);
 	background-color: var(--wgr-tertiary);
 	border-radius: 12px;
 	&:active {

@@ -1,0 +1,58 @@
+@import 'src/styles/helpers/icon_tools';
+
+@mixin toaster-color($color, $background-color) {
+	background-color: $background-color;
+
+	mib-ref-icon {
+		@include icon-color($color);
+	}
+
+	& .last-icon {
+		mib-ref-icon {
+			@include icon-color(var(--bti-secondary));
+		}
+	}
+}
+
+@mixin toaster-desktop {
+	display: flex;
+	max-width: 608px;
+	padding: 12px 16px;
+}
+
+@mixin toaster-mobile {
+	display: flex;
+	max-width: 328px;
+	padding: 12px;
+}
+
+.toaster {
+	color: var(--bti-primary);
+	border-radius: var(--main-border-radius);
+
+	mib-ref-icon {
+		@include icon-size(20px);
+	}
+
+	&_type {
+		&-default {
+			@include toaster-color(var(--bti-primary), var(--wti-primary));
+			box-shadow: var(--normal-shadow);
+		}
+		&-success {
+			@include toaster-color(var(--success-active), var(--success-quinary));
+		}
+		&-failure {
+			@include toaster-color(var(--alc-default), var(--alc-quinary));
+		}
+	}
+
+	&_device {
+		&-desktop {
+			@include toaster-desktop;
+		}
+		&-mobile {
+			@include toaster-mobile;
+		}
+	}
+}

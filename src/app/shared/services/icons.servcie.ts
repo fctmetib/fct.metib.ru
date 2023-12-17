@@ -34,7 +34,8 @@ export class IconsService {
 		'fi_eye-off',
 		'fi_frown',
 		'fi_plus',
-		'fi_file-text'
+		'fi_file-text',
+		'fi_alert-octagon'
 	]
 
 	public async initIcons(): Promise<void> {
