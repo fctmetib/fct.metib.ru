@@ -83,6 +83,7 @@ import { SkeletonModule } from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import { BadgeModule } from 'src/app/shared/ui-kit/badge/badge.module'
 import { LeftIconModule } from '../../../shared/directives/left-icon/left-icon.module'
 import { AvatarModule } from 'src/app/shared/ui-kit/avatar/avatar.module'
+import { DemandDrawerModule } from './modules/demand-drawer/demand-drawer.module'
 
 @NgModule({
 	imports: [
@@ -130,7 +131,8 @@ import { AvatarModule } from 'src/app/shared/ui-kit/avatar/avatar.module'
 		LeftIconModule,
 		TableModule,
 		SkeletonModule,
-		AvatarModule
+		AvatarModule,
+		DemandDrawerModule
 	],
 	declarations: [
 		// Containers
