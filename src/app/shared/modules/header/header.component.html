@@ -178,7 +178,7 @@
 						>
 					</div>
 				</div>
-				<ng-container *ngIf="!authService?.isUserLoggedIn; else loggedInUser">
+				<ng-container *ngIf="showProfileButton || showProfileButton && !authService?.isUserLoggedIn; else loggedInUser">
 					<mib-button
 						[routerLink]="['/auth/login']"
 						type="filled-primary"

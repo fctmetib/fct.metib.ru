@@ -34,6 +34,8 @@ import {FreeDutyService} from '../../services/free-duty.service';
 import {ToolsService} from '../../../../../shared/services/tools.service';
 import {AnimationService} from '../../../../../shared/animations/animations.service';
 import {Properties} from 'csstype';
+import {TableDataService} from '../../../../../shared/ui-kit/table/services/table.service';
+import {validate} from 'codelyzer/walkerFactory/walkerFn';
 
 const ANIMATION_CONFIG = {
   translateDistance: '-3%',
@@ -91,7 +93,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   public PAGINATOR_PAGE_TO_SHOW = 5;
   public currentPage: number = 1;
 
-  public duties: AdvancedDuty[] = []
+  public duties$ = new BehaviorSubject<AdvancedDuty[]>([])
   public dutiesVisible: AdvancedDuty[] = []
   public dutyAnimationStates: Record<number, boolean> = {};
 
@@ -102,6 +104,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     private au: AutoUnsubscribeService,
     private freeDutyService: FreeDutyService,
     private toolsService: ToolsService,
+    private tableDataService: TableDataService,
     private freeDutyRequestDrawerService: FreeDutyRequestDrawerService
   ) {
   }
@@ -141,14 +144,19 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     this.loading$.next(true)
     this.freeDutyService.getFreeDuty().pipe(
       tap(data => {
-        this.duties = data.map(x => ({...x, checked: false}));
+        this.duties$.next(data.map(x => ({...x, checked: false})));
         // Инициализация состояния анимации
-        this.duties.forEach(duty => {
+        this.duties$.value.forEach(duty => {
           this.dutyAnimationStates[duty.ID] = false;
         });
-        this.onPageChange(this.currentPage)
       }),
       finalize(() => this.loading$.next(false))
+    ).subscribe()
+    this.duties$.pipe(
+      tap(() => {
+        this.onPageChange(this.currentPage);
+      }),
+      takeUntil(this.au.destroyer)
     ).subscribe()
   }
 
@@ -177,7 +185,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
       // Устанавливаем таймер для удаления элемента после завершения анимации
       setTimeout(() => {
         // Удаляем элемент по ID
-        this.duties = this.duties.filter(duty => duty.ID !== id);
+        this.duties$.next(this.duties$.value.filter(duty => duty.ID !== id));
         observer.next(); // Сигнал об успешном выполнении
         observer.complete(); // Завершаем Observable
       }, ANIMATION_CONFIG.duration - 10);
@@ -194,7 +202,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     this.selectedDutiesCount = 0
     this.severalDutiesChecked = false;
 
-    this.dutiesVisible = this.duties.slice(startIndex, endIndex);
+    this.dutiesVisible = this.duties$.value.slice(startIndex, endIndex);
   }
 
   onRowCheck(boolean: boolean, duty: AdvancedDuty) {
@@ -205,6 +213,14 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 
   get selectedDuties() {
     return this.dutiesVisible.filter(x => x.checked)
+  }
+
+  public onSort(ascending: boolean, key: string) {
+    this.duties$.next(this.tableDataService.sortData(this.duties$.value, ascending, key))
+  }
+
+  public onSortByDates(ascending: boolean, key: string) {
+    this.duties$.next(this.tableDataService.sortDataByDate(this.duties$.value, ascending, key))
   }
 
   // freeduty$: Observable<DutyInterface[] | null>;

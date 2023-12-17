@@ -27,6 +27,7 @@ import {DropdownService} from '../../ui-kit/dropdown/services/dropdown.service'
 export class HeaderComponent implements OnInit {
   @Input() signedIn: boolean = false
   @Input() showExtension: boolean = false
+  @Input() showProfileButton: boolean = false;
 
   @ViewChild('header') el: ElementRef<HTMLDivElement>
 

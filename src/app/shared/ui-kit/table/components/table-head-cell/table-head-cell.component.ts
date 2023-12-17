@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {tap} from 'rxjs';
+import {ToolsService} from '../../../../services/tools.service';
+import {TableComponent} from '../../table.component';
 
 @Component({
   selector: 'mib-table-head-cell',
@@ -12,11 +14,20 @@ export class TableHeadCellComponent implements OnInit, OnChanges {
   @Input() showCheckbox: boolean = false;
   @Input() checked: boolean = false;
   @Input() sortable: boolean = false;
-  @Input() selected: boolean = false;
   @Output() onCheck = new EventEmitter<boolean>();
-  @Output() onToggle = new EventEmitter<boolean>()
+  @Output() onSort = new EventEmitter<boolean>()
 
   control: FormControl = new FormControl<boolean>(false)
+
+  id: string = this.toolsService.generateId();
+  selected: boolean = false;
+  selectedAsSortable: boolean = false;
+
+  constructor(
+    private toolsService: ToolsService,
+    private tableComponent: TableComponent
+  ) {
+  }
 
   ngOnInit() {
     this.checkboxId = 'checkbox-' + Math.random().toString(36).substr(2, 9);
@@ -35,7 +46,11 @@ export class TableHeadCellComponent implements OnInit, OnChanges {
   }
 
   toggle() {
-    this.selected = !this.selected
-    this.onToggle.emit(this.selected)
+    if (this.sortable) {
+      this.selected = this.selectedAsSortable ? !this.selected : false
+      this.onSort.emit(this.selected)
+      this.tableComponent.selectHeadCell(this)
+    }
   }
+
 }
