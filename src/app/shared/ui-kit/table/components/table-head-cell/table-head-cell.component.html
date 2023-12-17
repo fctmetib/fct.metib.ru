@@ -1,7 +1,7 @@
 <div class="table-head-cell flex flex_align-center gap-8" [title]="label.innerText">
   <mib-checkbox [formControl]="control" align="" [id]="checkboxId" *ngIf="showCheckbox"></mib-checkbox>
   <div class="content flex gap-4">
-    <label class="user-select-none" #label [for]="checkboxId"><ng-content></ng-content></label>
-    <mib-ref-icon (click)="toggle()" *ngIf="sortable" class="stroke cursor-pointer" [name]="selected ? 'fi_chevron-up' : 'fi_chevron-down'"></mib-ref-icon>
+    <label [class.cursor-pointer]="sortable || showCheckbox" [class.user-select-none]="selectedAsSortable || showCheckbox" #label [for]="sortable ? '' : checkboxId" (click)="toggle()"><ng-content></ng-content></label>
+    <mib-ref-icon *ngIf="selectedAsSortable" class="stroke cursor-pointer" [name]="selected ? 'fi_chevron-up' : 'fi_chevron-down'"></mib-ref-icon>
   </div>
 </div>

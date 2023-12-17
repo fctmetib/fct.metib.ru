@@ -18,6 +18,15 @@ export class TableComponent implements AfterContentInit {
     this._size = value;
   }
 
+  @Input() set isLoading(value: boolean) {
+    this._isLoading = value;
+    if (!this._isLoading) {
+      this.toggleFirstColumn()
+    }
+  }
+
+  public selectedHeadCell?: TableHeadCellComponent
+  public _isLoading: boolean = false;
   public _size: TableCellSize = 'm'
 
   ngAfterContentInit() {
@@ -30,5 +39,17 @@ export class TableComponent implements AfterContentInit {
         })
       })
     ).subscribe()
+  }
+
+  toggleFirstColumn() {
+    const cell = this.headCells.find(cell => cell.sortable);
+    cell?.toggle()
+  }
+
+  selectHeadCell(component: TableHeadCellComponent) {
+    this.selectedHeadCell = component
+    this.headCells.forEach(cell => {
+      cell.selectedAsSortable = cell.id === component.id
+    })
   }
 }
