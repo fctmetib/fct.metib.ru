@@ -1238,3 +1238,28 @@
 	</div>
 	<mib-spacing type="xl2"></mib-spacing>
 </div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'FileCellComponent' | titlecase }}
+	<button (click)="isShownFileCell = !isShownFileCell">
+		{{ isShownFileCell ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownFileCell" class="wrapper">
+	<div style="display: flex; gap: 2rem">
+		<h5>FileCellComponent</h5>
+		<mib-file-cell></mib-file-cell>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>

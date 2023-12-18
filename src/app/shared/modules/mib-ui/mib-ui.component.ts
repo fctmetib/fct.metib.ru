@@ -46,7 +46,8 @@ export class MibUiComponent implements OnInit {
 	isShownTag = false
 	isShownHeader = false
 	isShownToaster = false
-	isShownMedia = true
+	isShownMedia = false
+	isShownFileCell = true
 
 	public inputSizeXL: InputSize = 'xl'
 	public inputSizeL: InputSize = 'l'

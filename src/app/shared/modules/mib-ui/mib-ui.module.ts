@@ -14,6 +14,7 @@ import { SwitchModule } from '../../ui-kit/switch/switch.module'
 import { HeaderModule } from '../header/header.module'
 import { ToasterModule } from '../../ui-kit/toaster/toaster.module'
 import { MediaModule } from '../../ui-kit/media/media.module'
+import { FileCellModule } from '../../ui-kit/file-cell/file-cell.module'
 
 @NgModule({
 	imports: [
@@ -31,7 +32,8 @@ import { MediaModule } from '../../ui-kit/media/media.module'
 		SwitchModule,
 		HeaderModule,
 		ToasterModule,
-		MediaModule
+		MediaModule,
+		FileCellModule
 	],
 	declarations: [MibUiComponent]
 })

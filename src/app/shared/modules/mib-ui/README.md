@@ -72,6 +72,13 @@ ng g m shared/ui-kit/media/media --flat  --dry-run
 ng g c shared/ui-kit/media/media --flat  --skip-tests --dry-run
  //---
 
+ //--- file-cell
+src\app\shared\ui-kit\file-cell
+ng g i shared/ui-kit/file-cell/interfaces/file-cell.interface  --dry-run
+ng g m shared/ui-kit/file-cell/file-cell --flat  --dry-run
+ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
+ //---
+
 // add m
 ng g m shared/ui-kit/input --dry-run
 ng g m shared/ui-kit/badge --dry-run
