@@ -35,7 +35,10 @@ export class IconsService {
 		'fi_frown',
 		'fi_plus',
 		'fi_file-text',
-		'fi_alert-octagon'
+		'fi_alert-octagon',
+		'telegram',
+		'vk',
+		'whatsapp'
 	]
 
 	public async initIcons(): Promise<void> {

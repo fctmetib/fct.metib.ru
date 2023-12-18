@@ -1,0 +1,47 @@
+@import 'src/styles/helpers/icon_tools';
+@import 'src/styles/_colors.vars';
+
+@mixin media-color($color, $background-color) {
+	background-color: $background-color;
+	mib-ref-icon {
+		@include icon-color($color);
+	}
+}
+
+.media {
+	display: flex;
+	width: 32px;
+	height: 32px;
+	padding: 4px;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+	background-color: var(--bg-social-color);
+	border-radius: var(--main-border-radius);
+	transition: var(--transition);
+	mib-ref-icon {
+		@include icon-color(var(--bti-secondary));
+		@include icon-size(24px);
+	}
+
+	&_type {
+		&-telegram {
+			&:hover,
+			&:active {
+				@include media-color(var(--main-telegram), var(--bg-telegram));
+			}
+		}
+		&-whatsapp {
+			&:hover,
+			&:active {
+				@include media-color(var(--main-whatsapp), var(--bg-whatsapp));
+			}
+		}
+		&-vk {
+			&:hover,
+			&:active {
+				@include media-color(var(--main-vk), var(--bg-vk));
+			}
+		}
+	}
+}
