@@ -66,40 +66,17 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     borderBottom: '1px solid var(--wgr-tertiary)'
   };
 
-  options: any[] = [
-    {
-      text: 'Рафлс',
-      value: 1
-    },
-    {
-      text: 'Не рафлс',
-      value: 2
-    },
-    {
-      text: 'Комару',
-      value: 3
-    },
-    {
-      text: 'Че ты творишь',
-      value: 4
-    },
-  ]
-  filtered: Observable<string[]>;
-
-
   public control: FormControl = new FormControl<any>(2)
 
   public PAGINATOR_ITEMS_PER_PAGE = 16;
   public PAGINATOR_PAGE_TO_SHOW = 5;
-  public currentPage: number = 1;
 
-  public currentDuties$ = new BehaviorSubject<AdvancedDuty[]>([])
+  public currentPage$ = new BehaviorSubject<number>(1)
 
-  public onlyFreeDuties: AdvancedDuty[] = []
-  public duties: AdvancedDuty[] = []
-
-  public dutiesVisible: AdvancedDuty[] = []
+  public duties$ = new BehaviorSubject<AdvancedDuty[]>([])
   public dutyAnimationStates: Record<number, boolean> = {};
+
+  public freeOnly: boolean = false;
 
   public selectedDutiesCount: number = 0
   public severalDutiesChecked: boolean = false;
@@ -113,25 +90,8 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  private _filter(value: any): string[] {
-    let filterValue = '';
-
-    // Проверяем, является ли value строкой, если нет, пробуем привести к строке
-    if (typeof value === 'string') {
-      filterValue = value.toLowerCase();
-    } else if (value != null && value.toString) {
-      filterValue = value.toString().toLowerCase();
-    }
-
-    // Фильтруем опции
-    const filteredOptions = this.options.filter(option =>
-      option.text.toLowerCase().includes(filterValue)
-    );
-
-    console.log(filteredOptions);
-
-    // Возвращаем отфильтрованные опции
-    return filteredOptions;
+  get paginationStartIndex() {
+    return (this.currentPage$.value - 1) * this.PAGINATOR_ITEMS_PER_PAGE
   }
 
   public createAdvancedDuty = (duty: Duty) => {
@@ -143,36 +103,28 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  setCurrentDuties(duties: AdvancedDuty[]) {
-    this.currentDuties$.next(duties)
+  selectTab(freeOnly: boolean) {
+    this.freeOnly = freeOnly;
+    this.onPageChange(1)
   }
 
   ngOnInit() {
-    this.filtered = this.control.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
-    );
-    this.control.valueChanges.pipe(
-      tap(val => console.log(val))
-    ).subscribe()
-    this.loading$.next(true)
-    zip(
-      this.freeDutyService.getFreeDuty().pipe(
-        tap(duties => {
-          this.duties = duties.map(this.createAdvancedDuty)
-          this.setCurrentDuties(this.duties)
-        }),
-      ),
-      this.freeDutyService.getFreeDuty(true).pipe(
-        tap(duties => this.onlyFreeDuties = duties.map(this.createAdvancedDuty))
-      )
-    ).pipe(
-      finalize(() => this.loading$.next(false))
-    ).subscribe()
 
-    this.currentDuties$.pipe(
-      tap(duties => {
-        this.onPageChange(this.currentPage);
+    this.currentPage$.pipe(
+      switchMap(() => {
+        this.loading$.next(true)
+        return this.freeDutyService.getFreeDuty({
+          freeOnly: this.freeOnly,
+          rowsOnPage: this.PAGINATOR_ITEMS_PER_PAGE,
+          offSet: this.currentPage$.value,
+        }).pipe(
+          tap(duties => {
+            this.duties$.next(duties.map(x => this.createAdvancedDuty(x)))
+          }),
+          finalize(() => {
+            this.loading$.next(false)
+          })
+        )
       }),
       takeUntil(this.au.destroyer)
     ).subscribe()
@@ -187,10 +139,9 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
       data: this.selectedDuties
     }).afterClosed().pipe(
       filter(Boolean),
+      switchMap(() => forkJoin(this.selectedDuties.map(duty => this.removeDutyById(duty.ID)))),
       tap(() => {
-        forkJoin(this.selectedDuties.map(duty => this.removeDutyById(duty.ID))).subscribe(() => {
-          this.onPageChange(this.currentPage)
-        })
+        this.onPageChange(this.currentPage$.value)
       })
     ).subscribe()
   }
@@ -203,7 +154,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
       // Устанавливаем таймер для удаления элемента после завершения анимации
       setTimeout(() => {
         // Удаляем элемент по ID
-        this.currentDuties$.next(this.currentDuties$.value.filter(duty => duty.ID !== id));
+        this.duties$.next(this.duties$.value.filter(duty => duty.ID !== id));
         observer.next(); // Сигнал об успешном выполнении
         observer.complete(); // Завершаем Observable
       }, ANIMATION_CONFIG.duration - 10);
@@ -212,15 +163,9 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 
 
   onPageChange(page: number) {
-    this.currentPage = page;
-
-    const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE;
-    const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE;
-
+    this.currentPage$.next(page);
     this.selectedDutiesCount = 0
     this.severalDutiesChecked = false;
-
-    this.dutiesVisible = this.currentDuties$.value.slice(startIndex, endIndex);
   }
 
   onRowCheck(boolean: boolean, duty: AdvancedDuty) {
@@ -230,15 +175,15 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   }
 
   get selectedDuties() {
-    return this.dutiesVisible.filter(x => x.checked)
+    return this.duties$.value.filter(x => x.checked)
   }
 
   public onSort(ascending: boolean, key: string) {
-    this.currentDuties$.next(this.tableDataService.sortData(this.currentDuties$.value, ascending, key))
+    this.duties$.next(this.tableDataService.sortData(this.duties$.value, ascending, key))
   }
 
   public onSortByDates(ascending: boolean, key: string) {
-    this.currentDuties$.next(this.tableDataService.sortDataByDate(this.currentDuties$.value, ascending, key))
+    this.duties$.next(this.tableDataService.sortDataByDate(this.duties$.value, ascending, key))
   }
 
   // freeduty$: Observable<DutyInterface[] | null>;

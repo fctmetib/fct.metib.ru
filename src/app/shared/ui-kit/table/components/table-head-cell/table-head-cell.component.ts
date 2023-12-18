@@ -48,9 +48,20 @@ export class TableHeadCellComponent implements OnInit, OnChanges {
   toggle() {
     if (this.sortable) {
       this.selected = this.selectedAsSortable ? !this.selected : false
-      this.onSort.emit(this.selected)
-      this.tableComponent.selectHeadCell(this)
+      this.onChange()
     }
   }
 
+  onChange() {
+    this.onSort.emit(this.selected)
+    this.tableComponent.selectHeadCell(this)
+  }
+
+
+  setSelectedValue(value: boolean) {
+    if (this.sortable) {
+      this.selected = value
+      this.onChange()
+    }
+  }
 }

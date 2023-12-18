@@ -3,6 +3,7 @@ import {TableCellSize, TableCellType} from './interfaces/table-cell.interface';
 import {FormControl} from '@angular/forms';
 import {tap} from 'rxjs';
 import {TableComponent} from '../../table.component';
+import {distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
   host: {
@@ -43,6 +44,7 @@ export class TableCellComponent implements OnInit, OnChanges {
     this.checkboxId = 'checkbox-' + Math.random().toString(36).substr(2, 9);
 
     this.control.valueChanges.pipe(
+      distinctUntilChanged(),
       tap((value) => {
         this.onCheck.emit(value)
       })
