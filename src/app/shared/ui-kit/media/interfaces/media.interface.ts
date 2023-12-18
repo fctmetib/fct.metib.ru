@@ -1,2 +1,1 @@
-export interface MediaInterface {
-}
+export type MediaType = 'telegram' | 'whatsapp' | 'vk'
