@@ -93,7 +93,11 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   public PAGINATOR_PAGE_TO_SHOW = 5;
   public currentPage: number = 1;
 
-  public duties$ = new BehaviorSubject<AdvancedDuty[]>([])
+  public currentDuties$ = new BehaviorSubject<AdvancedDuty[]>([])
+
+  public onlyFreeDuties: AdvancedDuty[] = []
+  public duties: AdvancedDuty[] = []
+
   public dutiesVisible: AdvancedDuty[] = []
   public dutyAnimationStates: Record<number, boolean> = {};
 
@@ -119,8 +123,6 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
       filterValue = value.toString().toLowerCase();
     }
 
-    console.log(filterValue);
-
     // Фильтруем опции
     const filteredOptions = this.options.filter(option =>
       option.text.toLowerCase().includes(filterValue)
@@ -132,8 +134,20 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     return filteredOptions;
   }
 
-  ngOnInit() {
+  public createAdvancedDuty = (duty: Duty) => {
+    this.dutyAnimationStates[duty.ID] = false;
 
+    return {
+      ...duty,
+      checked: false
+    }
+  }
+
+  setCurrentDuties(duties: AdvancedDuty[]) {
+    this.currentDuties$.next(duties)
+  }
+
+  ngOnInit() {
     this.filtered = this.control.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
@@ -142,18 +156,22 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
       tap(val => console.log(val))
     ).subscribe()
     this.loading$.next(true)
-    this.freeDutyService.getFreeDuty().pipe(
-      tap(data => {
-        this.duties$.next(data.map(x => ({...x, checked: false})));
-        // Инициализация состояния анимации
-        this.duties$.value.forEach(duty => {
-          this.dutyAnimationStates[duty.ID] = false;
-        });
-      }),
+    zip(
+      this.freeDutyService.getFreeDuty().pipe(
+        tap(duties => {
+          this.duties = duties.map(this.createAdvancedDuty)
+          this.setCurrentDuties(this.duties)
+        }),
+      ),
+      this.freeDutyService.getFreeDuty(true).pipe(
+        tap(duties => this.onlyFreeDuties = duties.map(this.createAdvancedDuty))
+      )
+    ).pipe(
       finalize(() => this.loading$.next(false))
     ).subscribe()
-    this.duties$.pipe(
-      tap(() => {
+
+    this.currentDuties$.pipe(
+      tap(duties => {
         this.onPageChange(this.currentPage);
       }),
       takeUntil(this.au.destroyer)
@@ -185,7 +203,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
       // Устанавливаем таймер для удаления элемента после завершения анимации
       setTimeout(() => {
         // Удаляем элемент по ID
-        this.duties$.next(this.duties$.value.filter(duty => duty.ID !== id));
+        this.currentDuties$.next(this.currentDuties$.value.filter(duty => duty.ID !== id));
         observer.next(); // Сигнал об успешном выполнении
         observer.complete(); // Завершаем Observable
       }, ANIMATION_CONFIG.duration - 10);
@@ -202,7 +220,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     this.selectedDutiesCount = 0
     this.severalDutiesChecked = false;
 
-    this.dutiesVisible = this.duties$.value.slice(startIndex, endIndex);
+    this.dutiesVisible = this.currentDuties$.value.slice(startIndex, endIndex);
   }
 
   onRowCheck(boolean: boolean, duty: AdvancedDuty) {
@@ -216,11 +234,11 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   }
 
   public onSort(ascending: boolean, key: string) {
-    this.duties$.next(this.tableDataService.sortData(this.duties$.value, ascending, key))
+    this.currentDuties$.next(this.tableDataService.sortData(this.currentDuties$.value, ascending, key))
   }
 
   public onSortByDates(ascending: boolean, key: string) {
-    this.duties$.next(this.tableDataService.sortDataByDate(this.duties$.value, ascending, key))
+    this.currentDuties$.next(this.tableDataService.sortDataByDate(this.currentDuties$.value, ascending, key))
   }
 
   // freeduty$: Observable<DutyInterface[] | null>;

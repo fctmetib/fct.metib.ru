@@ -12,8 +12,12 @@ export class FreeDutyService {
   ) {
   }
 
-  public getFreeDuty(): Observable<Duty[]> {
-    return this.http.get<Duty[]>(`${environment.apiUrl}/v1/duties`);
+  public getFreeDuty(freeOnly: boolean = false): Observable<Duty[]> {
+    return this.http.get<Duty[]>(`${environment.apiUrl}/v1/duties`, {
+      params: {
+        freeOnly
+      }
+    });
   }
 
   freeDuty(ids: number[]): Observable<number[]> {

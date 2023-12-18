@@ -2,6 +2,7 @@ import {Component, EventEmitter, HostBinding, Input, OnChanges, OnInit, Output, 
 import {TableCellSize, TableCellType} from './interfaces/table-cell.interface';
 import {FormControl} from '@angular/forms';
 import {tap} from 'rxjs';
+import {TableComponent} from '../../table.component';
 
 @Component({
   host: {
@@ -24,6 +25,11 @@ export class TableCellComponent implements OnInit, OnChanges {
   public checkboxId: string;
 
   control: FormControl = new FormControl<boolean>(false)
+
+  constructor(
+    private table: TableComponent
+  ) {
+  }
 
   @HostBinding('class')
   get classes() {
