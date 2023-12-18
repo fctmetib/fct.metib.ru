@@ -23,9 +23,9 @@
     <div class="flex flex_justify-between">
       <div class="flex gap-16">
         <div class="flex flex_align-center gap-4">
-          <input styleType="outline" type="date" mibInput/>
+          <input [formControl]="dateFrom" styleType="outline" type="date" mibInput/>
           <p class="text text_m c-bti-tertiary">-</p>
-          <input styleType="outline" type="date" mibInput/>
+          <input [formControl]="dateTo" styleType="outline" type="date" mibInput/>
         </div>
         <mib-button [disabled]="!selectedDutiesCount" (press)="openDrawer()" type="filled-primary">Создать заявку
           ({{selectedDutiesCount}})

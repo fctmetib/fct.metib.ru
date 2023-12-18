@@ -40,6 +40,10 @@ export class TableCellComponent implements OnInit, OnChanges {
     }
   }
 
+  toggle() {
+    this.control.setValue(!this.control.value)
+  }
+
   ngOnInit() {
     this.checkboxId = 'checkbox-' + Math.random().toString(36).substr(2, 9);
 

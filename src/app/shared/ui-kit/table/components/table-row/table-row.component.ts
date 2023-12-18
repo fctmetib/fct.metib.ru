@@ -11,4 +11,9 @@ export class TableRowComponent {
   @ContentChildren(TableCellComponent) cells: QueryList<TableCellComponent>
   @Input() device: DeviceType = 'desktop';
   @Input() underlined: boolean = false;
+
+  selectRow() {
+    const cell = this.cells.find(cell => cell.showCheckbox);
+    cell?.toggle()
+  }
 }

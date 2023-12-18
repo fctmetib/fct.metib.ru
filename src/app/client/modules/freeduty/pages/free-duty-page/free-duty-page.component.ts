@@ -1,32 +1,18 @@
 import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import {
   Observable,
-  Subscription,
+  combineLatest,
   filter,
-  first,
   switchMap,
   tap,
-  Subject,
-  interval,
   BehaviorSubject,
   finalize,
-  zip,
-  forkJoin,
-  map
+  forkJoin, merge,
 } from 'rxjs';
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {DialogService} from 'primeng/dynamicdialog';
-import {DatePipe} from '@angular/common';
-import {DutyFilterRequestInterface} from 'src/app/shared/types/duty/duty-filter-request.interface';
 import {Duty} from 'src/app/shared/types/duty/duty';
-import {SelectedItemSortedInterface} from '../../types/common/selected-item-sorted.interface';
-import {DutyService} from 'src/app/shared/services/share/duty.service';
-import {Router} from '@angular/router';
-import {FreedutyStoreService} from '../../../../../shared/services/store/freeduty.store.service';
-import {ClientService} from 'src/app/shared/services/common/client.service';
-import {AuthService} from 'src/app/auth/services/auth.service';
 import {FreeDutyRequestDrawerService} from '../../modules/free-duty-request-drawer/free-duty-request-drawer.service';
-import {startWith, takeUntil} from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
 import {AdvancedDuty} from './interfaces/free-duty.interface';
 import {DrawerStateEnum} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
@@ -35,7 +21,6 @@ import {ToolsService} from '../../../../../shared/services/tools.service';
 import {AnimationService} from '../../../../../shared/animations/animations.service';
 import {Properties} from 'csstype';
 import {TableDataService} from '../../../../../shared/ui-kit/table/services/table.service';
-import {validate} from 'codelyzer/walkerFactory/walkerFn';
 
 const ANIMATION_CONFIG = {
   translateDistance: '-3%',
@@ -77,6 +62,8 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   public dutyAnimationStates: Record<number, boolean> = {};
 
   public freeOnly: boolean = false;
+  public dateFrom = new FormControl<string>('')
+  public dateTo = new FormControl<string>('')
 
   public selectedDutiesCount: number = 0
   public severalDutiesChecked: boolean = false;
@@ -113,11 +100,19 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
     this.currentPage$.pipe(
       switchMap(() => {
         this.loading$.next(true)
-        return this.freeDutyService.getFreeDuty({
+        const req = {
           freeOnly: this.freeOnly,
           rowsOnPage: this.PAGINATOR_ITEMS_PER_PAGE,
           offSet: this.currentPage$.value,
-        }).pipe(
+        }
+
+        const setOptionalDate = (date: string, key: string) => {
+          if (date) req[key] = new Date(date).toISOString()
+        }
+        setOptionalDate(this.dateFrom.value, 'dateFrom')
+        setOptionalDate(this.dateTo.value, 'dateTo')
+
+        return this.freeDutyService.getFreeDuty(req).pipe(
           tap(duties => {
             this.duties$.next(duties.map(x => this.createAdvancedDuty(x)))
           }),
@@ -128,6 +123,8 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.au.destroyer)
     ).subscribe()
+
+    this.watchForms()
   }
 
   ngOnDestroy() {
@@ -184,6 +181,15 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 
   public onSortByDates(ascending: boolean, key: string) {
     this.duties$.next(this.tableDataService.sortDataByDate(this.duties$.value, ascending, key))
+  }
+
+  private watchForms() {
+    merge(this.dateFrom.valueChanges, this.dateTo.valueChanges).pipe(
+      tap(() => {
+        this.onPageChange(1);
+      }),
+      takeUntil(this.au.destroyer)
+    ).subscribe();
   }
 
   // freeduty$: Observable<DutyInterface[] | null>;
