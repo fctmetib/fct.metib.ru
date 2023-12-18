@@ -5,8 +5,8 @@
 </div>
 <mib-tab-group>
   <mib-navbar class="container container_large">
-    <mib-navbar-point (press)="setCurrentDuties(onlyFreeDuties)" value="1">Свободные</mib-navbar-point>
-    <mib-navbar-point (press)="setCurrentDuties(duties)" value="2">Все задолженности</mib-navbar-point>
+    <mib-navbar-point (press)="selectTab(true)" value="1">Свободные</mib-navbar-point>
+    <mib-navbar-point (press)="selectTab(false)" value="2">Все задолженности</mib-navbar-point>
   </mib-navbar>
   <!-- <div class="container container_large">
     <mib-spacing type="m"></mib-spacing>
@@ -23,9 +23,9 @@
     <div class="flex flex_justify-between">
       <div class="flex gap-16">
         <div class="flex flex_align-center gap-4">
-          <input styleType="outline" type="date" mibInput/>
+          <input [formControl]="dateFrom" styleType="outline" type="date" mibInput/>
           <p class="text text_m c-bti-tertiary">-</p>
-          <input styleType="outline" type="date" mibInput/>
+          <input [formControl]="dateTo" styleType="outline" type="date" mibInput/>
         </div>
         <mib-button [disabled]="!selectedDutiesCount" (press)="openDrawer()" type="filled-primary">Создать заявку
           ({{selectedDutiesCount}})
@@ -55,7 +55,7 @@
       </ng-container>
       <ng-template #table>
         <mib-table-row [@slideAnimation]="dutyAnimationStates[duty.ID]"
-                       *ngFor="let duty of dutiesVisible; let last = last" [underlined]="!last">
+                       *ngFor="let duty of duties$ | async; let last = last" [underlined]="!last">
           <mib-table-cell [checked]="duty.checked" (onCheck)="onRowCheck($event, duty)" type="main">
             <ng-container table-cell-title>{{duty.ID}}</ng-container>
           </mib-table-cell>
@@ -95,7 +95,7 @@
         </mib-table-row>
       </ng-template>
       <mib-table-footer [underlined]="!(loading$ | async)">
-        <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="currentDuties$.value.length"
+        <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="duties$.value.length"
                        [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
                        [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"></mib-paginator>
       </mib-table-footer>

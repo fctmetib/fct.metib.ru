@@ -1,51 +1,65 @@
-<ng-template #content><ng-content></ng-content></ng-template>
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
 <ng-template #title
-	><ng-content select="[table-cell-title]"></ng-content
-></ng-template>
+>
+  <ng-content select="[table-cell-title]"></ng-content
+  >
+</ng-template>
 <ng-template #description
-	><ng-content select="[table-cell-description]"></ng-content
-></ng-template>
+>
+  <ng-content select="[table-cell-description]"></ng-content
+  >
+</ng-template>
 <ng-template #pers
-	><ng-content select="[table-cell-person]"></ng-content
-></ng-template>
+>
+  <ng-content select="[table-cell-person]"></ng-content
+  >
+</ng-template>
 
 <ng-container [ngSwitch]="type">
-	<ng-container *ngSwitchCase="'main'">
-		<mib-checkbox
-			[formControl]="control"
-			align=""
-			[id]="checkboxId"
-			*ngIf="showCheckbox"
-		></mib-checkbox>
-		<div class="flex flex_column">
-			<label [for]="checkboxId"
-				><ng-container *ngTemplateOutlet="title"></ng-container
-			></label>
-			<p *ngIf="contracted" class="text text_s c-bti-tertiary">
-				<ng-container *ngTemplateOutlet="description"></ng-container>
-			</p>
-		</div>
-	</ng-container>
+  <ng-container *ngSwitchCase="'main'">
+    <mib-checkbox
+      [formControl]="control"
+      align=""
+      [id]="checkboxId"
+      *ngIf="showCheckbox"
+    ></mib-checkbox>
+    <div class="flex flex_column">
+      <label [for]="checkboxId"
+      >
+        <ng-container *ngTemplateOutlet="title"></ng-container
+        >
+      </label>
+      <p *ngIf="contracted" class="text text_s c-bti-tertiary">
+        <ng-container *ngTemplateOutlet="description"></ng-container>
+      </p>
+    </div>
+  </ng-container>
 
-	<ng-container *ngSwitchCase="'text'">
-		<label><ng-container *ngTemplateOutlet="title"></ng-container></label>
-	</ng-container>
+  <ng-container *ngSwitchCase="'text'">
+    <label>
+      <ng-container *ngTemplateOutlet="title"></ng-container>
+    </label>
+  </ng-container>
 
-	<ng-container *ngSwitchCase="'blank'">
-		<ng-container *ngTemplateOutlet="content"></ng-container>
-	</ng-container>
+  <ng-container *ngSwitchCase="'blank'">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
 
-	<ng-container *ngSwitchCase="'person'">
-		<div class="flex gap-8 flex_align-center">
-			<ng-container *ngTemplateOutlet="pers"></ng-container>
-			<div class="flex flex_column">
-				<label [for]="checkboxId"
-					><ng-container *ngTemplateOutlet="title"></ng-container
-				></label>
-				<p *ngIf="contracted" class="text text_s c-bti-tertiary">
-					<ng-container *ngTemplateOutlet="description"></ng-container>
-				</p>
-			</div>
-		</div>
-	</ng-container>
+  <ng-container *ngSwitchCase="'person'">
+    <div class="flex gap-8 flex_align-center">
+      <ng-container *ngTemplateOutlet="pers"></ng-container>
+      <div class="flex flex_column">
+        <label [for]="checkboxId"
+        >
+          <ng-container *ngTemplateOutlet="title"></ng-container
+          >
+        </label>
+        <p *ngIf="contracted" class="text text_s c-bti-tertiary">
+          <ng-container *ngTemplateOutlet="description"></ng-container>
+        </p>
+      </div>
+    </div>
+  </ng-container>
 </ng-container>

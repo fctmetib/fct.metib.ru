@@ -55,7 +55,8 @@ export class CheckboxComponent implements ControlValueAccessor {
 
 	ngAfterViewInit() {}
 
-	onChange: any = () => {}
+	onChange: any = () => {
+  }
 	onTouch: any = () => {}
 
 	writeValue(value: boolean): void {
@@ -63,18 +64,18 @@ export class CheckboxComponent implements ControlValueAccessor {
 		this.onChange(this.value)
 	}
 
-	registerOnChange(fn: any): void {
-		this.onChange = fn
-	}
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
 
 	registerOnTouched(fn: any): void {
 		this.onTouch = fn
 	}
 
-	onCheckboxChange(event: Event): void {
-		event.stopPropagation()
-		event.preventDefault()
-		this.value = !this.value
-		this.writeValue(this.value)
-	}
+  onCheckboxChange(event: Event): void {
+    this.value = !this.value;
+    this.writeValue(this.value);
+  }
+
 }
