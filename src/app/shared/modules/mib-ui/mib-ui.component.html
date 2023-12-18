@@ -4,11 +4,6 @@
 <h4>h4! mib-ui works!</h4>
 <h5>h5! mib-ui works!</h5>
 
-<mib-toaster>
-	<ng-container toaster-text>Description</ng-container>
-	<ng-container toaster-header>Headline</ng-container>
-</mib-toaster>
-
 <hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
 <h2
 	style="
@@ -1169,6 +1164,75 @@
 		<h5>header 1:</h5>
 		<mib-header showExtention="true"></mib-header>
 		<!-- <app-header></app-header> -->
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'toaster' | titlecase }}
+	<button (click)="isShownToaster = !isShownToaster">
+		{{ isShownToaster ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownToaster" class="wrapper">
+	<h3>toaster</h3>
+	<mib-spacing type="xs2"></mib-spacing>
+	<mib-toaster>
+		<ng-container toaster-text>Description</ng-container>
+		<ng-container toaster-header>Headline</ng-container>
+	</mib-toaster>
+	<mib-spacing type="xs2"></mib-spacing>
+	<mib-toaster type="success" showDescription="false">
+		<ng-container toaster-text>Description</ng-container>
+		<ng-container toaster-header>Headline</ng-container>
+	</mib-toaster>
+	<mib-spacing type="xs2"></mib-spacing>
+	<h4>mobile/[showDescription]="false"</h4>
+	<mib-spacing type="xs2"></mib-spacing>
+	<mib-toaster type="success" device="mobile" [showDescription]="false">
+		<ng-container toaster-text>Description</ng-container>
+		<ng-container toaster-header>Headline</ng-container>
+	</mib-toaster>
+	<mib-spacing type="xs2"></mib-spacing>
+	<mib-toaster type="default" showDescription="false">
+		<ng-container toaster-text>Description</ng-container>
+		<ng-container toaster-header>Headline</ng-container>
+	</mib-toaster>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'media' | titlecase }}
+	<button (click)="isShownMedia = !isShownMedia">
+		{{ isShownMedia ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownMedia" class="wrapper">
+	<h3>filled-secondary</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div style="display: flex; gap: 2rem">
+		<h5>media</h5>
+		<mib-media></mib-media>
 	</div>
 	<mib-spacing type="xl2"></mib-spacing>
 </div>

@@ -65,6 +65,13 @@ ng g m shared/ui-kit/toaster/toaster --flat  --dry-run
 ng g c shared/ui-kit/toaster/toaster --flat  --skip-tests --dry-run
  //---
 
+ //--- media
+src\app\shared\ui-kit\media
+ng g i shared/ui-kit/media/interfaces/media.interface  --dry-run
+ng g m shared/ui-kit/media/media --flat  --dry-run
+ng g c shared/ui-kit/media/media --flat  --skip-tests --dry-run
+ //---
+
 // add m
 ng g m shared/ui-kit/input --dry-run
 ng g m shared/ui-kit/badge --dry-run

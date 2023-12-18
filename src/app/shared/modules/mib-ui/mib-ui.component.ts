@@ -44,7 +44,10 @@ export class MibUiComponent implements OnInit {
 	isShownBadges = false
 	isShownSwitch = false
 	isShownTag = false
-	isShownHeader = true
+	isShownHeader = false
+	isShownToaster = false
+	isShownMedia = true
+
 	public inputSizeXL: InputSize = 'xl'
 	public inputSizeL: InputSize = 'l'
 	public inputSizeM: InputSize = 'm'
