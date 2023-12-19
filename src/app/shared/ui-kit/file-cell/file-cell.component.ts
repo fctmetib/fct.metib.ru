@@ -5,7 +5,7 @@ import {
 	FileCellSize,
 	FileCellStatus
 } from './interfaces/file-cell.interface'
-import { throwError } from 'rxjs'
+import { Subscription, throwError } from 'rxjs'
 
 @Component({
 	selector: 'mib-file-cell',
@@ -18,6 +18,7 @@ export class FileCellComponent {
 	public file: File | null = null
 	public status: FileCellStatus
 	public content: FileCellContent
+	public uploadSub: Subscription
 
 	constructor(private http: HttpClient) {}
 
@@ -40,8 +41,6 @@ export class FileCellComponent {
 	}
 
 	ngOnInit(): void {}
-
-	onFileSelected($event: Event) {}
 
 	onChange(event: any) {
 		const file: File = event.target.files[0]
@@ -68,7 +67,7 @@ export class FileCellComponent {
 
 			this.status = 'uploading'
 
-			upload$.subscribe({
+			this.uploadSub = upload$.subscribe({
 				next: () => {
 					this.status = 'success'
 				},
@@ -78,5 +77,16 @@ export class FileCellComponent {
 				}
 			})
 		}
+	}
+
+	cancelUpload() {
+		this.uploadSub.unsubscribe()
+		this.reset()
+	}
+
+	reset() {
+		this.file = null
+		this.status = ''
+		this.fileName = ''
 	}
 }

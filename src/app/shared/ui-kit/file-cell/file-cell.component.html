@@ -2,35 +2,35 @@
 	<input
 		type="file"
 		class="file-input"
-		(change)="onFileSelected($event)"
+		(change)="onChange($event)"
 		#fileUpload
 	/>
-	<div (click)="fileUpload.click()" class="file-upload cursor-pointer">
-		{{ fileName || 'Загрузить файл' }}
-	</div>
-
-	<div *ngIf="file">
-		<section class="file-info">
-			File details:
-			<ul>
-				<li>Name: {{ file.name }}</li>
-				<li>Type: {{ file.type }}</li>
-				<li>Size: {{ file.size }} bytes</li>
-			</ul>
-		</section>
-
-		<button
-			class="btn flex flex_center flex_grow btn_m btn_filled-primary"
-			(click)="onUpload()"
-		>
-			Upload the file
-		</button>
-
-		<section [ngSwitch]="status">
+	<div class="flex flex_center gap-8 file-upload cursor-pointer">
+		<ng-container [ngSwitch]="status">
 			<p *ngSwitchCase="'uploading'">⏳ Uploading...</p>
 			<p *ngSwitchCase="'success'">✅ Done!</p>
 			<p *ngSwitchCase="'fail'">❌ Error!</p>
-			<p *ngSwitchDefault>😶 Waiting to upload...</p>
-		</section>
+			<p *ngSwitchDefault>
+				<mib-ref-icon style="stroke: gray" name="fi_file"></mib-ref-icon>
+			</p>
+		</ng-container>
+		<div class="flex_grow">
+			<span (click)="fileUpload.click()">
+				{{ fileName || 'Загрузить файл' }}
+			</span>
+			<span *ngIf="status">{{ file.size / 1000 | number : '1.1-2' }} мб</span>
+		</div>
+		<mib-ref-icon
+			title="Загрузить"
+			(click)="onUpload()"
+			style="stroke: gray"
+			name="fi_download"
+		></mib-ref-icon>
+		<mib-ref-icon
+			title="Сбросить"
+			(click)="cancelUpload()"
+			style="stroke: gray"
+			name="fi_x"
+		></mib-ref-icon>
 	</div>
 </div>
