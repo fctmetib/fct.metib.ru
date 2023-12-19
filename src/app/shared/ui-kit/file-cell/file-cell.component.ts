@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http'
-import { Component } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import {
 	FileCellContent,
+	FileCellSize,
 	FileCellStatus
 } from './interfaces/file-cell.interface'
 import { throwError } from 'rxjs'
@@ -12,6 +13,8 @@ import { throwError } from 'rxjs'
 	styleUrls: ['./file-cell.component.scss']
 })
 export class FileCellComponent {
+	@Input() size: FileCellSize = 'm'
+	public fileName = ''
 	public file: File | null = null
 	public status: FileCellStatus
 	public content: FileCellContent
@@ -21,23 +24,24 @@ export class FileCellComponent {
 	get classes() {
 		return {
 			[`file-cell_status-${this.status}`]: true,
-			[`file-cell_content-${this.content}`]: true
+			[`file-cell_content-${this.content}`]: true,
+			[`file-cell_size-${this.size}`]: true
 		}
 	}
 
-	get ContentType() {
-		// switch (this.file) {
-		//   case value:
-
-		//     break;
-
-		//   default:
-		//     break;
-		// }
-		return console.log('this.file', this.file)
+	get IconName() {
+		let icon = ''
+		switch (this.content) {
+			case 'document':
+				icon = 'fi_file'
+				break
+		}
+		return icon
 	}
 
 	ngOnInit(): void {}
+
+	onFileSelected($event: Event) {}
 
 	onChange(event: any) {
 		const file: File = event.target.files[0]
@@ -45,22 +49,13 @@ export class FileCellComponent {
 		if (file) {
 			this.status = 'initial'
 			this.file = file
-			if (this.file) {
-				if (this.file.type === 'image/png') {
-					console.log('IMAGE')
-					this.content = 'image'
-				} else {
-					this.content = 'document'
-					console.log('DOCUMENT')
-				}
+			this.fileName = file.name
+			const ft = this.file.type
+			if (ft === 'image/png' || ft === 'image/jpg' || ft === 'image/jpeg') {
+				this.content = 'image'
+			} else {
+				this.content = 'document'
 			}
-			// if (this.file.type === 'image/png' || 'image/jpg' || 'image/jpeg') {
-			// 	this.content = 'image'
-			// } else {
-			// 	this.content = 'document'
-			// }
-			console.log('this.file.type :>> ', this.file.type)
-			console.log('this.content :>> ', this.content)
 		}
 	}
 

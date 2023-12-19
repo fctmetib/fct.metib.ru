@@ -38,7 +38,9 @@ export class IconsService {
 		'fi_alert-octagon',
 		'telegram',
 		'vk',
-		'whatsapp'
+		'whatsapp',
+		'fi_file',
+		'fi_download'
 	]
 
 	public async initIcons(): Promise<void> {

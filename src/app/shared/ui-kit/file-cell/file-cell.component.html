@@ -2,9 +2,12 @@
 	<input
 		type="file"
 		class="file-input"
-		(change)="onChange($event)"
+		(change)="onFileSelected($event)"
 		#fileUpload
 	/>
+	<div (click)="fileUpload.click()" class="file-upload cursor-pointer">
+		{{ fileName || 'Загрузить файл' }}
+	</div>
 
 	<div *ngIf="file">
 		<section class="file-info">
