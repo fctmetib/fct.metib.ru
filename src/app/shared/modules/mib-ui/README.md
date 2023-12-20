@@ -10,6 +10,7 @@ ng g m shared/modules/mib-ui --dry-run
 
 ```
 
+P
 ![Alt text](readmeAccets/test_btn.png)
 
 ![Alt text](readmeAccets/test_input.png)
@@ -51,6 +52,14 @@ ng g i client/modules/demand-new/modules/demand-drawer/interfaces/demand-drawer.
 ng g m client/modules/demand-new/modules/demand-drawer/demand-drawer --flat --dry-run
 ng g s client/modules/demand-new/modules/demand-drawer/demand-drawer --skip-tests --dry-run
 ng g c client/modules/demand-new/modules/demand-drawer --skip-tests --dry-run
+ //---
+
+ //--- request-browser-drawer
+src\app\client\modules\requests\modules\request-drawer
+ng g i client/modules/requests/modules/request-browser-drawer/interfaces/request-browser-drawer.interface  --dry-run
+ng g m client/modules/requests/modules/request-browser-drawer/request-browser-drawer --flat --dry-run
+ng g s client/modules/requests/modules/request-browser-drawer/request-browser-drawer --skip-tests --dry-run
+ng g c client/modules/requests/modules/request-browser-drawer --skip-tests --dry-run
  //---
 
  //--- new-demand/modules
