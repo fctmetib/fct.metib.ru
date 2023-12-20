@@ -40,6 +40,11 @@
 			<ng-container input-label>Дата заявки</ng-container>
 			<input formControlName="Date" [size]="size" type="date" mibInput />
 		</mib-input>
+    <mib-input>
+      <ng-container input-label>Свободный лимит</ng-container>
+      <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+      <input readonly [formControl]="freeLimitControl" [size]="size" mibInput />
+    </mib-input>
 	</div>
 	<mib-spacing type="s"></mib-spacing>
 	<h5 class="headline">Поставки</h5>

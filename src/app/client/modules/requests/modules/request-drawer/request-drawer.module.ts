@@ -20,29 +20,31 @@ import {ShipmentDrawerModule} from '../shipment-drawer/shipment-drawer.module';
 import {DeliveryService} from '../shipment-drawer/services/delivery.service';
 import {RubModule} from '../../../../../shared/pipes/rub/rub.module';
 import {DropdownModule} from '../../../../../shared/ui-kit/dropdown/dropdown.module';
+import {RightIconModule} from '../../../../../shared/directives/right-icon/right-icon.module';
 
 @NgModule({
   declarations: [RequestDrawerComponent],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    MatDialogModule,
-    SpacingModule,
-    TableModule,
-    ButtonModule,
-    RefIconModule,
-    SelectModule,
-    DropdownPointModule,
-    ReactiveFormsModule,
-    CheckboxModule,
-    PaginatorModule,
-    InputModule,
-    MibDragAndDropModule,
-    InformationModule,
-    ShipmentDrawerModule,
-    RubModule,
-    DropdownModule
-  ],
+    imports: [
+        CommonModule,
+        DrawerModule,
+        MatDialogModule,
+        SpacingModule,
+        TableModule,
+        ButtonModule,
+        RefIconModule,
+        SelectModule,
+        DropdownPointModule,
+        ReactiveFormsModule,
+        CheckboxModule,
+        PaginatorModule,
+        InputModule,
+        MibDragAndDropModule,
+        InformationModule,
+        ShipmentDrawerModule,
+        RubModule,
+        DropdownModule,
+        RightIconModule
+    ],
   providers: [
     RequestDrawerService,
     DeliveryService
