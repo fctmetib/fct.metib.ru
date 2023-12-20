@@ -1,18 +1,30 @@
 <div class="drawer-header flex" [ngClass]="classes">
-  <div class="left flex_grow flex gap-8">
-    <mib-button size="m" (press)="onClose.emit()" type="filled-secondary">
-      <mib-ref-icon btn-icon class="stroke" name="fi_chevrons-right"></mib-ref-icon>
-    </mib-button>
-    <mib-button size="m" *ngIf="showMaximize" type="ghost-secondary">
-      На весь экран
-      <mib-ref-icon btn-left-icon class="stroke" name="fi_maximize-2"></mib-ref-icon>
-    </mib-button>
-  </div>
-  <div *ngIf="showProgressBar" class="progress-bar"></div>
-  <div class="right flex_grow flex flex_justify-end">
-    <mib-button *ngIf="showEdits" type="ghost-primary">
-      Редактировать
-      <mib-ref-icon btn-left-icon class="stroke" name="fi_edit-3"></mib-ref-icon>
-    </mib-button>
-  </div>
+	<div class="left flex_grow flex gap-8">
+		<mib-button size="m" (press)="onClose.emit()" type="filled-secondary">
+			<mib-ref-icon
+				btn-icon
+				class="stroke"
+				name="fi_chevrons-right"
+			></mib-ref-icon>
+		</mib-button>
+		<mib-button size="m" *ngIf="showMaximize" type="ghost-secondary">
+			На весь экран
+			<mib-ref-icon
+				btn-left-icon
+				class="stroke"
+				name="fi_maximize-2"
+			></mib-ref-icon>
+		</mib-button>
+	</div>
+	<div *ngIf="showProgressBar" class="progress-bar">halo</div>
+	<div class="right flex_grow flex flex_justify-end">
+		<mib-button *ngIf="showEdits" type="ghost-primary">
+			Редактировать
+			<mib-ref-icon
+				btn-left-icon
+				class="stroke"
+				name="fi_edit-3"
+			></mib-ref-icon>
+		</mib-button>
+	</div>
 </div>

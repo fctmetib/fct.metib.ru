@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core'
+import {FormBuilder} from '@angular/forms'
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
+import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
+import {RequestRes} from '../../interfaces/request.interface'
 
 @Component({
-  selector: 'mib-request-browser-drawer',
-  templateUrl: './request-browser-drawer.component.html',
-  styleUrls: ['./request-browser-drawer.component.scss']
+	selector: 'mib-request-browser-drawer',
+	templateUrl: './request-browser-drawer.component.html',
+	styleUrls: ['./request-browser-drawer.component.scss']
 })
 export class RequestBrowserDrawerComponent {
-
+	constructor(
+		@Inject(MAT_DIALOG_DATA) public data: DrawerData<RequestRes>,
+		private fb: FormBuilder,
+		public dialogRef: MatDialogRef<RequestBrowserDrawerComponent>
+	) {}
 }

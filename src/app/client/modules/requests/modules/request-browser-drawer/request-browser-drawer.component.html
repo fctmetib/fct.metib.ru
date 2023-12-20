@@ -1,1 +1,18 @@
-<p>request-browser-drawer works!</p>
+<mib-drawer>
+	<mib-drawer-header
+		showProgressBar="true"
+		showMaximize="true"
+		showEdits="true"
+		(onClose)="dialogRef.close()"
+		drawer-header
+	></mib-drawer-header>
+	<h4>Номер заявки</h4>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="flex gap-4">
+		<span class="text text_m c-bti-secondary">Создана 12.12.2023</span>
+		<span class="text text_m c-bti-quaternary"
+			>откорректирована 12.12.2023</span
+		>
+	</div>
+	<mib-spacing type="xs"></mib-spacing>
+</mib-drawer>
