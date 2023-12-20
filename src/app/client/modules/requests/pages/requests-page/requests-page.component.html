@@ -1,3 +1,4 @@
+<mib-request-browser-drawer></mib-request-browser-drawer>
 <div class="container container_large">
 	<mib-spacing type="m"></mib-spacing>
 	<h3>Заявки</h3>
@@ -12,7 +13,9 @@
 					<p class="text text_m c-bti-tertiary">-</p>
 					<input styleType="outline" type="date" mibInput />
 				</div>
-				<mib-button (press)="openDrawer()" type="filled-primary">Создать заявку</mib-button>
+				<mib-button (press)="openDrawer()" type="filled-primary"
+					>Создать заявку</mib-button
+				>
 			</div>
 		</div>
 		<mib-spacing type="xs"></mib-spacing>
@@ -38,7 +41,11 @@
 				<ng-container *ngIf="loading$ | async; else table">
 					<mib-skeleton
 						[styles]="last ? skeletonWithoutUnderline : skeleton"
-            *ngFor="let i of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; let last = last"></mib-skeleton>
+						*ngFor="
+							let i of [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+							let last = last
+						"
+					></mib-skeleton>
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
