@@ -67,13 +67,13 @@ export class FileCellComponent {
 			this.uploadSub = this.filesService
 				.uploadFileWithProgress(this.file)
 				.subscribe({
-					next: next => {
-						switch (next.type) {
+					next: event => {
+						switch (event.type) {
 							case HttpEventType.UploadProgress:
 								console.log('HttpEventType :>> ', HttpEventType)
 								this.status = 'uploading'
-								if (next.total) {
-									this.progress = Math.round((100 * next.loaded) / next.total)
+								if (event.total) {
+									this.progress = Math.round((100 * event.loaded) / event.total)
 									console.log('progress :>> ', this.progress)
 								}
 								break

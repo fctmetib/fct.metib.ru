@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core'
+import {Component, Inject, OnInit} from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MatDialogRef } from '@angular/material/dialog'
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import { ButtonSize } from 'src/app/shared/ui-kit/button/interfaces/button.interface'
 import { InputSize } from 'src/app/shared/ui-kit/input/interfaces/input.interface'
+import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
 
 @Component({
 	selector: 'mib-demand-drawer',
@@ -16,7 +17,8 @@ export class DemandDrawerComponent implements OnInit {
 
 	constructor(
 		private fb: FormBuilder,
-		public dialogRef: MatDialogRef<DemandDrawerComponent>
+		public dialogRef: MatDialogRef<DemandDrawerComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DrawerData
 	) {}
 
 	ngOnInit(): void {

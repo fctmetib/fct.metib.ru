@@ -41,7 +41,7 @@ export class RequestDrawerComponent implements OnInit {
     public dialogRef: MatDialogRef<RequestDrawerComponent>,
     private requestDrawerService: RequestDrawerService,
     private requestsService: RequestsService,
-    private deliveryAgreementService: DeliveryService,
+    private deliveryService: DeliveryService,
     private shipmentDrawerService: ShipmentDrawerService,
     private authService: AuthService,
     private au: AutoUnsubscribeService,
@@ -51,6 +51,7 @@ export class RequestDrawerComponent implements OnInit {
   }
 
   public deliveryIdControl = new FormControl(null, [Validators.required])
+  public freeLimitControl = new FormControl(0)
 
   get shipments() {
     return this.form.get('Shipments') as FormArray
@@ -83,7 +84,7 @@ export class RequestDrawerComponent implements OnInit {
     this.existingRequest = this.data.data
     if (this.existingRequest) this.form.patchValue(this.existingRequest)
 
-    this.deliveryAgreementService.getRefs(this.factoring.DebtorID).pipe(
+    this.deliveryService.getRefs(this.factoring.DebtorID).pipe(
       tap(data => {
         this.deliveries = data;
       })
@@ -216,6 +217,8 @@ export class RequestDrawerComponent implements OnInit {
         const delivery = this.deliveries.find(x => x.ID === deliveryId)
         this.delivery.setValue(delivery)
       }),
+      switchMap(deliveryId => this.deliveryService.getFreeLimit(deliveryId)),
+      tap(limit => this.freeLimitControl.setValue(limit)),
       takeUntil(this.au.destroyer)
     ).subscribe()
   }

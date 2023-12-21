@@ -124,11 +124,6 @@ export class DemandNewHomeComponent implements OnInit {
 	}
 
 	openDrawer() {
-		this.demandDrawerService
-			.open<RequestRes[]>({
-				state: DrawerStateEnum.CREATE
-			})
-			.afterClosed()
-			.subscribe()
+		this.demandDrawerService.open({state: DrawerStateEnum.CREATE}).afterClosed().subscribe()
 	}
 }
