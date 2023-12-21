@@ -5,7 +5,7 @@
 	@include tag-iconly(map-get($color, main));
 
 	& {
-		font-weight: var(--fw-medium);
+		font-weight: var(--fw-regular);
 		color: map-get($color, main);
 	}
 
@@ -37,7 +37,7 @@
 	@include tag-iconly(map-get($color, main));
 
 	& {
-		font-weight: var(--fw-medium);
+		font-weight: var(--fw-regular);
 		color: map-get($color, main);
 	}
 
@@ -69,7 +69,7 @@
 	@include tag-iconly(map-get($color, main));
 
 	& {
-		font-weight: var(--fw-medium);
+		font-weight: var(--fw-regular);
 		color: map-get($color, main);
 	}
 
@@ -103,7 +103,7 @@
 	@include tag-iconly(map-get($color, main));
 
 	& {
-		font-weight: var(--fw-medium);
+		font-weight: var(--fw-regular);
 		color: map-get($color, main);
 	}
 
@@ -136,7 +136,7 @@
 	@include tag-iconly(map-get($color, main));
 
 	& {
-		font-weight: var(--fw-medium);
+		font-weight: var(--fw-regular);
 		color: map-get($color, main);
 	}
 
@@ -184,7 +184,7 @@
 	&.tag {
 		&_primary {
 			& {
-				font-weight: var(--fw-medium);
+				font-weight: var(--fw-regular);
 			}
 		}
 	}

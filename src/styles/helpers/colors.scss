@@ -1,80 +1,78 @@
 span.c,
 .text.c,
 .c {
+	// main
+	&-mc {
+		&-default {
+			color: var(--mc-default);
+		}
+	}
 
-  // main
-  &-mc {
-    &-default {
-      color: var(--mc-default)
-    }
-  }
+	// white gradation
+	&-wgr-primary {
+		color: var(--wgr-primary);
+	}
 
-  // white gradation
-  &-wgr-primary {
-    color: var(--wgr-primary)
-  }
+	&-wgr-secondary {
+		color: var(--wgr-secondary);
+	}
 
-  &-wgr-secondary {
-    color: var(--wgr-secondary)
-  }
+	&-wgr-tertiary {
+		color: var(--wgr-tertiary);
+	}
 
-  &-wgr-tertiary {
-    color: var(--wgr-tertiary)
-  }
+	&-wgr-quaternary {
+		color: var(--wgr-quaternary);
+	}
 
-  &-wgr-quaternary {
-    color: var(--wgr-quaternary)
-  }
+	// black gradation
+	&-bgr-primary {
+		color: var(--bgr-primary);
+	}
 
-  // black gradation
-  &-bgr-primary {
-    color: var(--bgr-primary)
-  }
+	&-bgr-secondary {
+		color: var(--bgr-secondary);
+	}
 
-  &-bgr-secondary {
-    color: var(--bgr-secondary)
-  }
+	&-bgr-tertiary {
+		color: var(--bgr-tertiary);
+	}
 
-  &-bgr-tertiary {
-    color: var(--bgr-tertiary)
-  }
+	&-bgr-quaternary {
+		color: var(--bgr-quaternary);
+	}
 
-  &-bgr-quaternary {
-    color: var(--bgr-quaternary)
-  }
+	// text icons white
+	&-wti-primary {
+		color: var(--wti-primary);
+	}
 
-  // text icons white
-  &-wti-primary {
-    color: var(--wti-primary)
-  }
+	&-wti-secondary {
+		color: var(--wti-secondary);
+	}
 
-  &-wti-secondary {
-    color: var(--wti-secondary)
-  }
+	&-wti-tertiary {
+		color: var(--wti-tertiary);
+	}
 
-  &-wti-tertiary {
-    color: var(--wti-tertiary)
-  }
+	&-wti-quaternary {
+		color: var(--wti-quaternary);
+	}
 
-  &-wti-quaternary {
-    color: var(--wti-quaternary)
-  }
+	// text icons black
+	&-bti-primary {
+		color: var(--bti-primary);
+	}
 
+	&-bti-secondary {
+		color: var(--bti-secondary);
+	}
 
-  // text icons black
-  &-bti-primary {
-    color: var(--bti-primary)
-  }
+	&-bti-tertiary {
+		color: var(--bti-tertiary);
+	}
 
-  &-bti-secondary {
-    color: var(--bti-secondary)
-  }
-
-  &-bti-tertiary {
-    color: var(--bti-tertiary)
-  }
-
-  &-bti-quaternary {
-    color: var(--bti-quaternary)
-  }
+	&-bti-quaternary {
+		color: var(--bti-quaternary);
+	}
 }

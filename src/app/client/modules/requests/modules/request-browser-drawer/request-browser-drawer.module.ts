@@ -8,6 +8,8 @@ import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {RefIconModule} from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
 import {RequestBrowserDrawerService} from './request-browser-drawer.service'
+import {TagModule} from 'src/app/shared/ui-kit/tag/tag.module'
+import {CashPanelModule} from 'src/app/shared/modules/cash-panel/cash-panel.module'
 
 @NgModule({
 	declarations: [RequestBrowserDrawerComponent],
@@ -18,7 +20,9 @@ import {RequestBrowserDrawerService} from './request-browser-drawer.service'
 		SpacingModule,
 		TableModule,
 		ButtonModule,
-		RefIconModule
+		RefIconModule,
+		TagModule,
+		CashPanelModule
 	],
 	providers: [RequestBrowserDrawerService]
 })

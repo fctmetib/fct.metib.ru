@@ -1,14 +1,14 @@
 @import 'src/styles/_typography.vars';
 
 $md: (
-  // desktop
-  'd': 1440px,
-  // table horizontal
-  't-h': 1024px,
-  // mobile horizontal and table vertical
-  'mhtv': 768px,
-  // mobile vertical
-  'mv': 360px,
+	// desktop
+	'd': 1440px,
+	// table horizontal
+	't-h': 1024px,
+	// mobile horizontal and table vertical
+	'mhtv': 768px,
+	// mobile vertical
+	'mv': 360px
 );
 
 h1,
@@ -21,7 +21,7 @@ h5,
 }
 
 .headline {
-  @include headline-desktop;
+	@include headline-desktop;
 }
 
 h1 {
@@ -71,6 +71,9 @@ h5 {
 	}
 	&_xs {
 		@include text-xs;
+	}
+	&_regular {
+		font-weight: var(--fw-regular);
 	}
 	&_medium {
 		font-weight: var(--fw-medium);

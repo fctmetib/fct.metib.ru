@@ -1,11 +1,6 @@
-import {
-	AfterViewInit,
-	ChangeDetectorRef,
-	Component,
-	Input
-} from '@angular/core'
-import { DeviceType } from '../../interfaces/shared.interface'
-import { OpacityViewAnimation } from '../../animations/animations'
+import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core'
+import {DeviceType} from '../../interfaces/shared.interface'
+import {OpacityViewAnimation} from '../../animations/animations'
 
 @Component({
 	selector: 'mib-cash-panel',
@@ -18,6 +13,7 @@ export class CashPanelComponent implements AfterViewInit {
 	@Input() panelTitle: string
 	@Input() panelData: string
 	@Input() link?: string
+	@Input() extracted: false
 
 	public isHover: boolean = false
 	public viewMounted: boolean = false
