@@ -1,16 +1,16 @@
-import { environment } from 'src/environments/environment'
+import {environment} from 'src/environments/environment'
 
-import { Observable, catchError, of, throwError } from 'rxjs'
+import {Observable, catchError, of, throwError} from 'rxjs'
 import {
 	HttpClient,
 	HttpErrorResponse,
 	HttpEvent,
 	HttpHeaders
 } from '@angular/common/http'
-import { Injectable } from '@angular/core'
-import { FileMode } from '../../types/file/file-model.interface'
-import { Translator } from '../../classes/common/translator.class'
-import { IFile } from '../../interfaces/files.interface'
+import {Injectable} from '@angular/core'
+import {FileMode} from '../../types/file/file-model.interface'
+import {Translator} from '../../classes/common/translator.class'
+import {IFile} from '../../interfaces/files.interface'
 
 @Injectable()
 export class FileService {

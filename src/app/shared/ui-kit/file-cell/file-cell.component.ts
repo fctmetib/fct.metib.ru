@@ -1,12 +1,12 @@
-import { HttpClient, HttpEventType } from '@angular/common/http'
-import { Component, Input } from '@angular/core'
+import {HttpClient, HttpEventType} from '@angular/common/http'
+import {Component, Input} from '@angular/core'
 import {
 	FileCellContent,
 	FileCellSize,
 	FileCellStatus
 } from './interfaces/file-cell.interface'
-import { Subscription, throwError } from 'rxjs'
-import { FileService } from '../../services/common/file.service'
+import {Subscription, throwError} from 'rxjs'
+import {FileService} from '../../services/common/file.service'
 
 @Component({
 	selector: 'mib-file-cell',
@@ -66,21 +66,27 @@ export class FileCellComponent {
 			// const upload$ = this.filesService
 			this.uploadSub = this.filesService
 				.uploadFileWithProgress(this.file)
-				.subscribe(event => {
-					switch (event.type) {
-						case HttpEventType.UploadProgress:
-							console.log('HttpEventType :>> ', HttpEventType)
-							this.status = 'uploading'
-							if (event.total) {
-								this.progress = Math.round((100 * event.loaded) / event.total)
-								console.log('progress :>> ', this.progress)
-							}
-							break
-						case HttpEventType.Response:
-							setTimeout(() => {
-								this.status = 'success'
-							})
-							break
+				.subscribe({
+					next: next => {
+						switch (next.type) {
+							case HttpEventType.UploadProgress:
+								console.log('HttpEventType :>> ', HttpEventType)
+								this.status = 'uploading'
+								if (next.total) {
+									this.progress = Math.round((100 * next.loaded) / next.total)
+									console.log('progress :>> ', this.progress)
+								}
+								break
+							case HttpEventType.Response:
+								setTimeout(() => {
+									this.status = 'success'
+								})
+								break
+						}
+					},
+					error: err => {
+						this.status = 'fail'
+						throwError(() => err)
 					}
 				})
 		}
