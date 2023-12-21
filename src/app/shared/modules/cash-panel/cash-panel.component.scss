@@ -1,52 +1,63 @@
-@import "src/styles/helpers/icon_tools";
+@import 'src/styles/helpers/icon_tools';
 
 :host {
-  display: block;
-  flex: 1 0 360px;
+	display: block;
+	flex: 1 0 360px;
 }
 
 @mixin cash-panel {
-  width: 100%;
-  padding: 16px;
-  background-color: var(--wgr-primary);
+	width: 100%;
+	padding: 16px;
+	background-color: var(--wgr-primary);
 }
 
 @mixin cash-panel-desktop {
-  border: 1px solid var(--wgr-tertiary);
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
+	border: 1px solid var(--wgr-tertiary);
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 }
 
 @mixin cash-panel-mobile {
-  border-bottom: 1px solid var(--wgr-tertiary);
+	border-bottom: 1px solid var(--wgr-tertiary);
 }
 
 @mixin cash-panel-hover {
-  box-shadow: var(--shadow-small);
+	box-shadow: var(--shadow-small);
 }
 
 .cash-panel {
-  @include cash-panel;
+	@include cash-panel;
 
-  &:hover {
-    @include cash-panel-hover;
-  }
+	&:hover {
+		@include cash-panel-hover;
+	}
 
-  &_desktop {
-    @include cash-panel-desktop;
-  }
+	&_desktop {
+		@include cash-panel-desktop;
+	}
 
-  &_mobile {
-    @include cash-panel-desktop;
-  }
+	&_mobile {
+		@include cash-panel-desktop;
+	}
 
-  mib-ref-icon[name='fi_info'] {
-    @include icon-size(16px);
-    @include icon-color(var(--bti-tertiary))
-  }
+	mib-ref-icon[name='fi_info'] {
+		@include icon-size(16px);
+		@include icon-color(var(--bti-tertiary));
+	}
 }
 
 .main-transition {
-  transition: var(--transition);
+	transition: var(--transition);
+}
+
+.extracted {
+	padding: 12px 16px;
+	border-radius: 8px;
+	border: 1px solid var(--wgr-tertiary);
+	background: var(--wgr-primary);
+	mib-ref-icon[name='fi_info'] {
+		@include icon-size(20px);
+		@include icon-color(var(--bti-tertiary));
+	}
 }

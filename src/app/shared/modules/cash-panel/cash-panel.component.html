@@ -1,4 +1,5 @@
 <div
+	*ngIf="!extracted; else unextracted"
 	(mouseenter)="isHover = true"
 	(mouseleave)="isHover = false"
 	class="cash-panel"
@@ -26,7 +27,7 @@
 			<mib-ref-icon
 				[@opacityViewAnimation]="{
 					value: '',
-					params: { enterTime: 200, leaveTime: 0 }
+					params: {enterTime: 200, leaveTime: 0}
 				}"
 				*ngIf="isHover"
 				mibRightIcon
@@ -36,3 +37,19 @@
 		</mib-link>
 	</div>
 </div>
+<ng-template #unextracted>
+	<div
+		[class.extracted]="extracted"
+		class="flex flex_justify-center flex_justify-between"
+	>
+		<div class="flex flex_align-center gap-4">
+			<span class="text text_m text_regular c-bti-tertiary">
+				{{ panelTitle }}
+			</span>
+			<span class="text_medium c-bti-primary">
+				{{ panelData | currency : 'RUB' : 'symbol-narrow' }}
+			</span>
+		</div>
+		<mib-ref-icon class="stroke" name="fi_info"></mib-ref-icon>
+	</div>
+</ng-template>
