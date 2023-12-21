@@ -56,6 +56,12 @@
 	border-radius: 8px;
 	border: 1px solid var(--wgr-tertiary);
 	background: var(--wgr-primary);
+	& .paneldata {
+		color: var(--bti-primary);
+	}
+	& .alert {
+		color: var(--alc-active);
+	}
 	mib-ref-icon[name='fi_info'] {
 		@include icon-size(20px);
 		@include icon-color(var(--bti-tertiary));

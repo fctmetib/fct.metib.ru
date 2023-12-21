@@ -10,6 +10,7 @@ import {RequestRes} from '../../interfaces/request.interface'
 	styleUrls: ['./request-browser-drawer.component.scss']
 })
 export class RequestBrowserDrawerComponent {
+	datas = 1000000
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData<RequestRes>,
 		private fb: FormBuilder,

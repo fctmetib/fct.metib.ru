@@ -34,10 +34,10 @@
 		panelData="1000000"
 	></mib-cash-panel>
 	<mib-spacing type="xs"></mib-spacing>
-	<mib-cash-panel
-		extracted="true"
-		panelTitle="Просрочка:"
-		panelData="1000000"
-	></mib-cash-panel>
+	<mib-cash-panel extracted="true" panelTitle="Просрочка:">
+		<ng-container alert
+			>{{ datas | currency : 'RUB' : 'symbol-narrow' }}
+		</ng-container>
+	</mib-cash-panel>
 	<mib-spacing type="xs"></mib-spacing>
 </mib-drawer>

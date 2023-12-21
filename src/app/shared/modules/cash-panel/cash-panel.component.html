@@ -43,12 +43,15 @@
 		class="flex flex_justify-center flex_justify-between"
 	>
 		<div class="flex flex_align-center gap-4">
-			<span class="text text_m text_regular c-bti-tertiary">
+			<span class="text text_m text_regular">
 				{{ panelTitle }}
 			</span>
-			<span class="text_medium c-bti-primary">
+			<span class="paneldata text_medium c-bti-secondary">
 				{{ panelData | currency : 'RUB' : 'symbol-narrow' }}
 			</span>
+			<p class="alert">
+				<ng-content select="[alert]"></ng-content>
+			</p>
 		</div>
 		<mib-ref-icon class="stroke" name="fi_info"></mib-ref-icon>
 	</div>
