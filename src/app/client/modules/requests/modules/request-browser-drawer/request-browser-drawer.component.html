@@ -39,5 +39,39 @@
 			>{{ datas | currency : 'RUB' : 'symbol-narrow' }}
 		</ng-container>
 	</mib-cash-panel>
-	<mib-spacing type="xs"></mib-spacing>
+	<mib-spacing type="m"></mib-spacing>
+	<mib-tab-group>
+		<mib-navbar>
+			<mib-navbar-point value="1">События</mib-navbar-point>
+			<mib-navbar-point value="2">Поставки</mib-navbar-point>
+			<mib-navbar-point value="3">Копии накладных</mib-navbar-point>
+		</mib-navbar>
+		<div class="">
+			<mib-tab-item value="1">
+				<mib-spacing type="m"></mib-spacing>
+				<h2>События</h2>
+				<mib-spacing type="m"></mib-spacing>
+			</mib-tab-item>
+			<mib-tab-item value="2">
+				<mib-spacing type="m"></mib-spacing>
+				<h2>Поставки</h2>
+				<mib-spacing type="m"></mib-spacing>
+				<div class="flex">
+					<mib-button type="filled-primary">
+						<mib-ref-icon
+							btn-left-icon
+							class="stroke"
+							name="fi_plus"
+						></mib-ref-icon>
+						Добавить договор
+					</mib-button>
+				</div>
+			</mib-tab-item>
+			<mib-tab-item value="3">
+				<mib-spacing type="m"></mib-spacing>
+				<h2>Копии накладных</h2>
+				<mib-spacing type="m"></mib-spacing>
+			</mib-tab-item>
+		</div>
+	</mib-tab-group>
 </mib-drawer>

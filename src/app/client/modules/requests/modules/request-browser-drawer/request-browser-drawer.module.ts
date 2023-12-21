@@ -10,6 +10,9 @@ import {RefIconModule} from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
 import {RequestBrowserDrawerService} from './request-browser-drawer.service'
 import {TagModule} from 'src/app/shared/ui-kit/tag/tag.module'
 import {CashPanelModule} from 'src/app/shared/modules/cash-panel/cash-panel.module'
+import {TabModule} from 'src/app/shared/ui-kit/tab/tab.module'
+import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
+import {LeftIconModule} from 'src/app/shared/directives/left-icon/left-icon.module'
 
 @NgModule({
 	declarations: [RequestBrowserDrawerComponent],
@@ -22,7 +25,10 @@ import {CashPanelModule} from 'src/app/shared/modules/cash-panel/cash-panel.modu
 		ButtonModule,
 		RefIconModule,
 		TagModule,
-		CashPanelModule
+		CashPanelModule,
+		TabModule,
+		NavbarModule,
+		LeftIconModule
 	],
 	providers: [RequestBrowserDrawerService]
 })
