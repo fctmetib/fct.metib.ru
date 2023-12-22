@@ -9,6 +9,7 @@ import { TableFooterComponent } from './components/table-footer/table-footer.com
 import {CheckboxModule} from '../checkbox/checkbox.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RefIconModule} from '../ref-icon/ref-icon.module';
+import {ClickOnElementModule} from '../../directives/click-on-element/click-on-element.module';
 
 
 
@@ -33,7 +34,8 @@ import {RefIconModule} from '../ref-icon/ref-icon.module';
         CommonModule,
         CheckboxModule,
         ReactiveFormsModule,
-        RefIconModule
+        RefIconModule,
+        ClickOnElementModule
     ]
 })
 export class TableModule { }

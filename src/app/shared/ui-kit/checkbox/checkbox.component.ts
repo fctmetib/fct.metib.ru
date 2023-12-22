@@ -74,6 +74,8 @@ export class CheckboxComponent implements ControlValueAccessor {
 	}
 
   onCheckboxChange(event: Event): void {
+    event.preventDefault()
+    event.stopPropagation()
     this.value = !this.value;
     this.writeValue(this.value);
   }

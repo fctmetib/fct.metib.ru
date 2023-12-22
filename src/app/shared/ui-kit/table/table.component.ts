@@ -104,13 +104,12 @@ export class TableComponent implements AfterContentInit, OnDestroy {
   }
 
   onCheckboxClick(index, value: boolean) {
-    console.log('this.shiftKeyHeldDown', this.shiftKeyHeldDown, 'lastCheckedIndex', this.lastCheckedIndex)
     if (this.shiftKeyHeldDown && this.lastCheckedIndex !== null) {
       const start = Math.min(this.lastCheckedIndex, index);
       const end = Math.max(this.lastCheckedIndex, index);
       for (let i = start; i <= end; i++) {
         // Здесь должен быть код для выделения строки, например:
-        this.cells.get(i).control.setValue(value);
+        // this.cells.get(i).control.setValue(value);
       }
     } else {
       // Здесь код для обработки одиночного клика
