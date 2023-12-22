@@ -12,7 +12,10 @@ import {TagModule} from 'src/app/shared/ui-kit/tag/tag.module'
 import {CashPanelModule} from 'src/app/shared/modules/cash-panel/cash-panel.module'
 import {TabModule} from 'src/app/shared/ui-kit/tab/tab.module'
 import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
-import {LeftIconModule} from 'src/app/shared/directives/left-icon/left-icon.module'
+import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
+import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
+import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
+import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 
 @NgModule({
 	declarations: [RequestBrowserDrawerComponent],
@@ -28,7 +31,10 @@ import {LeftIconModule} from 'src/app/shared/directives/left-icon/left-icon.modu
 		CashPanelModule,
 		TabModule,
 		NavbarModule,
-		LeftIconModule
+		SelectModule,
+		DropdownPointModule,
+		SkeletonModule,
+		PaginatorModule
 	],
 	providers: [RequestBrowserDrawerService]
 })

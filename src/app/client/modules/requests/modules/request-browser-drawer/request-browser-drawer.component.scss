@@ -1,0 +1,9 @@
+.supply-select-width {
+	max-width: 280px;
+}
+
+mib-table-footer {
+	& mib-select {
+		width: auto;
+	}
+}
