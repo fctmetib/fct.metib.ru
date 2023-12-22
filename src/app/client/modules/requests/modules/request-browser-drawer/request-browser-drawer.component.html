@@ -54,9 +54,7 @@
 			</mib-tab-item>
 			<mib-tab-item value="2">
 				<mib-spacing type="m"></mib-spacing>
-				<h2>Поставки</h2>
-				<mib-spacing type="m"></mib-spacing>
-				<div class="flex">
+				<div class="flex flex_justify-between">
 					<mib-button type="filled-primary">
 						<mib-ref-icon
 							btn-left-icon
@@ -65,7 +63,69 @@
 						></mib-ref-icon>
 						Добавить договор
 					</mib-button>
+					<mib-select
+						class="supply-select-width"
+						placeholder="4 из 9 колонн в таблице"
+					>
+						<mib-dropdown-point
+							[value]="true"
+							text="6 из 9 колонн в таблице"
+						></mib-dropdown-point>
+						<mib-dropdown-point
+							[value]="false"
+							text="9 из 9 колонн в таблице"
+						></mib-dropdown-point>
+					</mib-select>
 				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<mib-table>
+					<mib-table-head>
+						<mib-table-head-cell [showCheckbox]="true">ИД </mib-table-head-cell>
+						<mib-table-head-cell>Дата поставки</mib-table-head-cell>
+						<mib-table-head-cell>Дата платежа</mib-table-head-cell>
+						<mib-table-head-cell>Сумма уступки</mib-table-head-cell>
+					</mib-table-head>
+					<mib-table-row>
+						<mib-table-cell type="main">
+							<ng-container table-cell-title>sdf 1</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>dsf 2</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>dsf 3</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>dsf 4</ng-container>
+						</mib-table-cell>
+						<mib-button table-row-button size="s" type="ghost-secondary">
+							<mib-ref-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-ref-icon>
+						</mib-button>
+					</mib-table-row>
+					<mib-table-footer>
+						<div class="flex flex_align-center flex_grow">
+							<mib-select type="floating" placeholder="5 рядов">
+								<mib-dropdown-point
+									[value]="true"
+									text="10 рядов"
+								></mib-dropdown-point>
+								<mib-dropdown-point
+									[value]="false"
+									text="20 рядов"
+								></mib-dropdown-point>
+							</mib-select>
+						</div>
+						<mib-paginator
+							[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+							[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+						></mib-paginator>
+						<div class="flex flex_align-center flex_grow"></div>
+					</mib-table-footer>
+				</mib-table>
 			</mib-tab-item>
 			<mib-tab-item value="3">
 				<mib-spacing type="m"></mib-spacing>

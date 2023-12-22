@@ -10,6 +10,10 @@ import {RequestRes} from '../../interfaces/request.interface'
 	styleUrls: ['./request-browser-drawer.component.scss']
 })
 export class RequestBrowserDrawerComponent {
+	public PAGINATOR_ITEMS_PER_PAGE = 5
+	public PAGINATOR_PAGE_TO_SHOW = 5
+	public currentPage: number = 1
+
 	datas = 1000000
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData<RequestRes>,
