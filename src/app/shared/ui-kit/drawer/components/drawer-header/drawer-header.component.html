@@ -16,7 +16,18 @@
 			></mib-ref-icon>
 		</mib-button>
 	</div>
-	<div *ngIf="showProgressBar" class="progress-bar">halo</div>
+	<div *ngIf="showProgressBar" class="flex flex_column progress-bar">
+		<div class="wrap flex flex_justify-center text text_m c-bti-secondary">
+			<span>{{ progress }}</span>
+			<span> из {{ maxPage }}</span>
+		</div>
+		<div class="line">
+			<div
+				class="progress"
+				[ngStyle]="{width: (progress / maxPage) * 100 + '%'}"
+			></div>
+		</div>
+	</div>
 	<div class="right flex_grow flex flex_justify-end">
 		<mib-button *ngIf="showEdits" type="ghost-primary">
 			Редактировать
