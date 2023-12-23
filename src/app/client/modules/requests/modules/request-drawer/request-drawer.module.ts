@@ -24,27 +24,27 @@ import {RightIconModule} from '../../../../../shared/directives/right-icon/right
 
 @NgModule({
   declarations: [RequestDrawerComponent],
-    imports: [
-        CommonModule,
-        DrawerModule,
-        MatDialogModule,
-        SpacingModule,
-        TableModule,
-        ButtonModule,
-        RefIconModule,
-        SelectModule,
-        DropdownPointModule,
-        ReactiveFormsModule,
-        CheckboxModule,
-        PaginatorModule,
-        InputModule,
-        MibDragAndDropModule,
-        InformationModule,
-        ShipmentDrawerModule,
-        RubModule,
-        DropdownModule,
-        RightIconModule
-    ],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    MatDialogModule,
+    SpacingModule,
+    TableModule,
+    ButtonModule,
+    RefIconModule,
+    SelectModule,
+    DropdownPointModule,
+    ReactiveFormsModule,
+    CheckboxModule,
+    PaginatorModule,
+    InputModule,
+    MibDragAndDropModule,
+    InformationModule,
+    ShipmentDrawerModule,
+    RubModule,
+    DropdownModule,
+    RightIconModule
+  ],
   providers: [
     RequestDrawerService,
     DeliveryService

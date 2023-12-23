@@ -3,14 +3,13 @@ import {RequestBrowserDrawerComponent} from './request-browser-drawer.component'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {MatDialog, MatDialogRef} from '@angular/material/dialog'
 import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
+import {RequestBrowserDrawer} from './interfaces/request-browser.drawer';
 
 @Injectable()
 export class RequestBrowserDrawerService {
 	constructor(private dialog: MatDialog) {}
 
-	open<T>(
-		data?: DrawerData<T>
-	): MatDialogRef<RequestBrowserDrawerComponent, number[]> {
+	open(data?: DrawerData<RequestBrowserDrawer>): MatDialogRef<RequestBrowserDrawerComponent> {
 		const config: DrawerData = {
 			state: 'view'
 		}
