@@ -15,9 +15,7 @@
 				<mib-button (press)="openDrawer()" type="filled-primary"
 					>Создать заявку</mib-button
 				>
-				<mib-button (press)="openBrowserDrawer()" type="filled-primary"
-					>Просмотр заявки</mib-button
-				>
+				<!-- <mib-button type="filled-primary">Просмотр заявки</mib-button> -->
 			</div>
 		</div>
 		<mib-spacing type="xs"></mib-spacing>
@@ -56,6 +54,7 @@
 						[underlined]="!last"
 					>
 						<mib-table-cell
+							(click)="openBrowserDrawer(req.ID)"
 							[checked]="req.checked"
 							(onCheck)="onRowCheck($event, req)"
 							type="main"

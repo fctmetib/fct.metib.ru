@@ -1,3 +1,4 @@
 export interface RequestBrowserDrawer {
-  requestId: string
+	requestId: number
+	// requestId: string
 }
