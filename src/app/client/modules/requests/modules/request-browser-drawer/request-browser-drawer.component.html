@@ -5,20 +5,22 @@
 		(onClose)="dialogRef.close()"
 		drawer-header
 	></mib-drawer-header>
-	<h4>Номер заявки</h4>
+	<h4>Номер заявки: {{ requestData?.Number }}</h4>
 	<mib-spacing type="xs2"></mib-spacing>
 	<div class="flex gap-4">
-		<span class="text text_m c-bti-secondary">Создана 12.12.2023</span>
+		<span class="text text_m c-bti-secondary"
+			>Создана {{ requestData?.Date | date }}</span
+		>
 		<span class="text text_m c-bti-quaternary"
-			>откорректирована 12.12.2023</span
+			>откорректирована {{ requestData?.Date | date }}</span
 		>
 	</div>
 	<mib-spacing type="xs"></mib-spacing>
 	<div class="flex gap-8">
-		<mib-tag size="m">Статус заявки</mib-tag>
-		<mib-tag type="filled-secondary" class="text_regular" size="m"
-			>Тип заявки</mib-tag
-		>
+		<mib-tag size="m">{{ requestData?.Status }}</mib-tag>
+		<mib-tag type="filled-secondary" class="text_regular" size="m">{{
+			requestData?.Type
+		}}</mib-tag>
 	</div>
 	<mib-spacing type="xs"></mib-spacing>
 	<mib-cash-panel
@@ -35,7 +37,7 @@
 	<mib-spacing type="xs"></mib-spacing>
 	<mib-cash-panel extracted="true" panelTitle="Просрочка:">
 		<ng-container alert
-			>{{ datas | currency : 'RUB' : 'symbol-narrow' }}
+			>{{ requestData?.Summ | currency : 'RUB' : 'symbol-narrow' }}
 		</ng-container>
 	</mib-cash-panel>
 	<mib-spacing type="m"></mib-spacing>
@@ -84,18 +86,26 @@
 						<mib-table-head-cell>Дата платежа</mib-table-head-cell>
 						<mib-table-head-cell>Сумма уступки</mib-table-head-cell>
 					</mib-table-head>
-					<mib-table-row>
+					<mib-table-row *ngFor="let shipment of requestData?.Shipments">
 						<mib-table-cell type="main">
-							<ng-container table-cell-title>sdf 1</ng-container>
+							<ng-container table-cell-title>{{
+								requestData?.Number
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>dsf 2</ng-container>
+							<ng-container table-cell-title>{{
+								shipment?.AccountDate
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>dsf 3</ng-container>
+							<ng-container table-cell-title>{{
+								shipment?.DatePayment
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>dsf 4</ng-container>
+							<ng-container table-cell-title>{{
+								shipment?.Summ | currency : 'RUB' : 'symbol-narrow'
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-button table-row-button size="s" type="ghost-secondary">
 							<mib-ref-icon

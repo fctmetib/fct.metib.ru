@@ -20,8 +20,8 @@ export class RequestsService {
 		return this.http.get<RequestRes[]>(`${environment.apiUrl}/v1/requests`)
 	}
 
-	public getRequest(requestID: number): Observable<RequestRes[]> {
-		return this.http.get<RequestRes[]>(
+	public getRequest(requestID: number): Observable<RequestRes> {
+		return this.http.get<RequestRes>(
 			`${environment.apiUrl}/v1/requests/${requestID}`
 		)
 	}
