@@ -5,6 +5,8 @@ import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interfa
 import {RequestBrowserDrawer} from './interfaces/request-browser.drawer'
 import {RequestReq} from '../../interfaces/request.interface'
 import {RequestsService} from '../../services/requests.service'
+import {BehaviorSubject} from 'rxjs'
+import {Properties} from 'csstype'
 
 @Component({
 	selector: 'mib-request-browser-drawer',
@@ -12,6 +14,38 @@ import {RequestsService} from '../../services/requests.service'
 	styleUrls: ['./request-browser-drawer.component.scss']
 })
 export class RequestBrowserDrawerComponent implements OnInit {
+	public loading$ = new BehaviorSubject<boolean>(false)
+
+	public skeletonWithoutUnderline: Properties = {
+		height: '48px',
+		width: '100%'
+	}
+
+	public skeletonTitle: Properties = {
+		height: '60px',
+		width: '100%'
+	}
+
+	public skeletonTags: Properties = {
+		height: '34px',
+		width: '100%'
+	}
+
+	public skeletonCashPanel: Properties = {
+		height: '170px',
+		width: '100%'
+	}
+
+	public skeletonTabGroup: Properties = {
+		height: '271px',
+		width: '100%'
+	}
+
+	public skeleton: Properties = {
+		...this.skeletonWithoutUnderline,
+		borderBottom: '1px solid var(--wgr-tertiary)'
+	}
+
 	public PAGINATOR_ITEMS_PER_PAGE = 5
 	public PAGINATOR_PAGE_TO_SHOW = 5
 	public currentPage: number = 1
@@ -19,7 +53,6 @@ export class RequestBrowserDrawerComponent implements OnInit {
 	public currentRequestId: number
 	public requestData: RequestReq
 
-	datas = 1000000
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData<RequestBrowserDrawer>,
 		private fb: FormBuilder,
@@ -28,11 +61,18 @@ export class RequestBrowserDrawerComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		this.getCurrentRequest()
+	}
+
+	getCurrentRequest() {
+		this.loading$.next(true)
 		this.currentRequestId = this.data?.data?.requestId
 		this.requestsService.getRequest(this.currentRequestId).subscribe({
 			next: request => {
 				this.requestData = request
-				console.log('requestData :>> ', this.requestData)
+			},
+			complete: () => {
+				this.loading$.next(false)
 			}
 		})
 	}
