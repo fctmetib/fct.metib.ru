@@ -20,6 +20,12 @@ export class RequestsService {
 		return this.http.get<RequestRes[]>(`${environment.apiUrl}/v1/requests`)
 	}
 
+	public getFreeLimit(deliveryID: number): Observable<number> {
+		return this.http.get<number>(
+			`${environment.apiUrl}/v1/deliveries/FreeLimit?deliveryID=${deliveryID}`
+		)
+	}
+
 	public getRequest(requestID: number): Observable<RequestRes> {
 		return this.http.get<RequestRes>(
 			`${environment.apiUrl}/v1/requests/${requestID}`
