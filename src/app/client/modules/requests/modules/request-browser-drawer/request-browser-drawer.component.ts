@@ -5,8 +5,9 @@ import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interfa
 import {RequestBrowserDrawer} from './interfaces/request-browser.drawer'
 import {RequestReq} from '../../interfaces/request.interface'
 import {RequestsService} from '../../services/requests.service'
-import {BehaviorSubject, of, switchMap} from 'rxjs'
+import {BehaviorSubject, of, switchMap, tap} from 'rxjs'
 import {Properties} from 'csstype'
+import {AdvancedRequests} from '../../pages/requests-page/interfaces/requests-page.interface'
 
 @Component({
 	selector: 'mib-request-browser-drawer',
@@ -52,7 +53,14 @@ export class RequestBrowserDrawerComponent implements OnInit {
 
 	public currentRequestId: number
 	public requestData: RequestReq
+	public requests: AdvancedRequests[] = []
+	public allRequests: AdvancedRequests[] = []
 	freeLimit: number = 0
+
+	public selectedRequestCount: number = 0
+	public severalRequestsChecked: boolean = false
+
+	public requestAnimationStates: Record<number, boolean> = {}
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData<RequestBrowserDrawer>,
@@ -63,6 +71,7 @@ export class RequestBrowserDrawerComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getCurrentRequest()
+		this.getAllRequest()
 	}
 
 	getCurrentRequest() {
@@ -88,5 +97,34 @@ export class RequestBrowserDrawerComponent implements OnInit {
 					this.loading$.next(false)
 				}
 			})
+	}
+
+	getAllRequest() {
+		this.loading$.next(true)
+		this.requestsService
+			.getRequests()
+			.pipe(
+				tap(data => {
+					this.requests = data.map(x => ({...x, checked: false}))
+					// Инициализация состояния анимации
+					this.requests.forEach(req => {
+						this.requestAnimationStates[req.ID] = false
+					})
+					this.onPageChange(this.currentPage)
+				})
+			)
+			.subscribe({complete: () => this.loading$.next(false)})
+	}
+
+	onPageChange(page: number) {
+		this.currentPage = page
+
+		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+
+		this.selectedRequestCount = 0
+		this.severalRequestsChecked = false
+
+		this.allRequests = this.requests.slice(startIndex, endIndex)
 	}
 }

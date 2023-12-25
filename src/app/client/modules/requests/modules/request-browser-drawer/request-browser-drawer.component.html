@@ -95,6 +95,10 @@
 						>
 							<mib-dropdown-point
 								[value]="true"
+								text="4 из 9 колонн в таблице"
+							></mib-dropdown-point>
+							<mib-dropdown-point
+								[value]="true"
 								text="6 из 9 колонн в таблице"
 							></mib-dropdown-point>
 							<mib-dropdown-point
@@ -174,8 +178,124 @@
 				</mib-tab-item>
 				<mib-tab-item value="3">
 					<mib-spacing type="m"></mib-spacing>
-					<h2>Копии накладных</h2>
-					<mib-spacing type="m"></mib-spacing>
+					<div class="flex flex_justify-between">
+						<div></div>
+						<mib-select
+							class="supply-select-width"
+							placeholder="9 из 9 колонн в таблице"
+						>
+							<mib-dropdown-point
+								[value]="true"
+								text="4 из 9 колонн в таблице"
+							></mib-dropdown-point>
+							<mib-dropdown-point
+								[value]="true"
+								text="6 из 9 колонн в таблице"
+							></mib-dropdown-point>
+							<mib-dropdown-point
+								[value]="false"
+								text="9 из 9 колонн в таблице"
+							></mib-dropdown-point>
+						</mib-select>
+					</div>
+					<mib-spacing type="xs"></mib-spacing>
+					<mib-table>
+						<mib-table-head>
+							<mib-table-head-cell
+								[sortable]="true"
+								(pageChange)="onPageChange($event)"
+								[showCheckbox]="true"
+								(onCheck)="severalRequestsChecked = $event"
+								[checked]="severalRequestsChecked"
+								>ИД
+							</mib-table-head-cell>
+							<mib-table-head-cell>№ заявки</mib-table-head-cell>
+							<mib-table-head-cell>Дата заявки</mib-table-head-cell>
+							<mib-table-head-cell>Договор поставки</mib-table-head-cell>
+							<mib-table-head-cell>Тип заявки</mib-table-head-cell>
+							<mib-table-head-cell>Статус</mib-table-head-cell>
+							<mib-table-head-cell>Доступ</mib-table-head-cell>
+							<mib-table-head-cell>Корректировка</mib-table-head-cell>
+							<mib-table-head-cell>Сумма</mib-table-head-cell>
+						</mib-table-head>
+						<ng-container *ngIf="loading$ | async; else table2">
+							<mib-skeleton
+								[styles]="last ? skeletonWithoutUnderline : skeleton"
+								*ngFor="let i of [1]; let last = last"
+							></mib-skeleton>
+						</ng-container>
+						<ng-template #table2>
+							<mib-table-row *ngFor="let req of allRequests">
+								<mib-table-cell type="main">
+									<ng-container table-cell-title>{{ req.ID }}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{ req.Number }}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										req.Date | date : 'dd.MM.YYYY'
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										req.Delivery.CustomerID
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										req.Delivery.Title
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{ req.Status }}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										req.Shipments ? 'Есть' : 'Отсутствует'
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										req.IsCorrected ? 'Да' : 'Нет'
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										req.Summ | currency : 'RUR'
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-button table-row-button size="s" type="ghost-secondary">
+									<mib-ref-icon
+										class="stroke"
+										btn-icon
+										name="fi_more-vertical"
+									></mib-ref-icon>
+								</mib-button>
+							</mib-table-row>
+						</ng-template>
+						<mib-table-footer [underlined]="!(loading$ | async)">
+							<div class="flex flex_align-center flex_grow">
+								<mib-select type="floating" placeholder="5 рядов">
+									<mib-dropdown-point
+										[value]="true"
+										text="10 рядов"
+									></mib-dropdown-point>
+									<mib-dropdown-point
+										[value]="false"
+										text="20 рядов"
+									></mib-dropdown-point>
+								</mib-select>
+							</div>
+							<mib-paginator
+								(pageChange)="onPageChange($event)"
+								[totalCount]="requests.length"
+								[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+								[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+							></mib-paginator>
+							<div class="flex flex_align-center flex_grow"></div>
+						</mib-table-footer>
+					</mib-table>
 				</mib-tab-item>
 			</div>
 		</mib-tab-group>
