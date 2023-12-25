@@ -127,8 +127,10 @@ export class AuthService {
     let adminCookie = this.cookieService.get('_cu_admin');
     let userCookie = this.cookieService.get('_cu');
     let user: AuthRes;
-    if (userCookie || adminCookie) {
-      user = JSON.parse(userCookie || adminCookie);
+    if (userCookie) {
+      user = JSON.parse(userCookie);
+    } else if (adminCookie) {
+      user = JSON.parse(adminCookie);
     }
 
     let userId;

@@ -33,6 +33,6 @@
   </div>
   <mib-spacing type="m"></mib-spacing>
   <mib-drawer-footer drawer-footer>
-    <mib-button (click)="onSubmit()">Создать поставку</mib-button>
+    <mib-button [disabled]="form.invalid" (click)="onSubmit()">Создать поставку</mib-button>
   </mib-drawer-footer>
 </mib-drawer>

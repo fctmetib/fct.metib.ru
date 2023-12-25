@@ -4,7 +4,7 @@ import {
   AfterViewInit,
   Component,
   ContentChild, ContentChildren,
-  ElementRef, QueryList,
+  ElementRef, Inject, PLATFORM_ID, QueryList,
   Renderer2,
   ViewChild,
   ViewEncapsulation
@@ -52,6 +52,7 @@ export class InputComponent implements AfterContentInit, AfterViewInit, AfterVie
   public textLength: number = 0
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId,
     private r2: Renderer2,
     private au: AutoUnsubscribeService
   ) {
@@ -111,7 +112,7 @@ export class InputComponent implements AfterContentInit, AfterViewInit, AfterVie
       leftEl: this.iconsLeftEl.nativeElement,
       rightEl: this.iconsRightEl.nativeElement,
       element: this.inputDirective.elementRef.nativeElement,
-    }, this.r2, ({newPaddingLeft}) => {
+    }, this.platformId, this.r2, ({newPaddingLeft}) => {
       this.r2.setStyle(this.labelEl.nativeElement, 'padding-left', newPaddingLeft)
     })
   }

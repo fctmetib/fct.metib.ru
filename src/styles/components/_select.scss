@@ -31,7 +31,7 @@ $text-selectors: '&, span';
 	}
 
 	&-transition {
-		transition: var(--transition);
+		transition: color var(--transition), background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
 	}
 
 	&_left-iconly {

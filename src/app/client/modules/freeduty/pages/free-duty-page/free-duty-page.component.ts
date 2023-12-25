@@ -1,7 +1,6 @@
-import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
+import { FormControl} from '@angular/forms';
 import {
   Observable,
-  combineLatest,
   filter,
   switchMap,
   tap,
@@ -21,6 +20,7 @@ import {ToolsService} from '../../../../../shared/services/tools.service';
 import {AnimationService} from '../../../../../shared/animations/animations.service';
 import {Properties} from 'csstype';
 import {TableDataService} from '../../../../../shared/ui-kit/table/services/table.service';
+import {DataCount} from '../../../../../shared/interfaces/shared.interface';
 
 const ANIMATION_CONFIG = {
   translateDistance: '-3%',
@@ -58,6 +58,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 
   public currentPage$ = new BehaviorSubject<number>(1)
 
+  public dutiesCount?: DataCount
   public duties$ = new BehaviorSubject<AdvancedDuty[]>([])
   public dutyAnimationStates: Record<number, boolean> = {};
 
@@ -71,7 +72,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   constructor(
     private au: AutoUnsubscribeService,
     private freeDutyService: FreeDutyService,
-    private toolsService: ToolsService,
+    public toolsService: ToolsService,
     private tableDataService: TableDataService,
     private freeDutyRequestDrawerService: FreeDutyRequestDrawerService
   ) {
@@ -112,9 +113,13 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
         setOptionalDate(this.dateFrom.value, 'dateFrom')
         setOptionalDate(this.dateTo.value, 'dateTo')
 
-        return this.freeDutyService.getFreeDuty(req).pipe(
+        return this.freeDutyService.getFreeDuties(req).pipe(
           tap(duties => {
             this.duties$.next(duties.map(x => this.createAdvancedDuty(x)))
+          }),
+          switchMap(() => this.freeDutyService.getFreeDutyCount(req)),
+          tap(data => {
+            this.dutiesCount = data;
           }),
           finalize(() => {
             this.loading$.next(false)

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../../environments/environment';
 import {Duty} from '../../../../shared/types/duty/duty';
+import {DataCount} from '../../../../shared/interfaces/shared.interface';
 
 /**
  * Интерфейс для параметров запроса получения списка свободной задолженности.
@@ -42,16 +43,25 @@ export class FreeDutyService {
   ) {
   }
 
+  public getFreeDutyConfig(data?: GetFreeDutyReq) {
+    const defaultConfig = {freeOnly: false};
+    return {...defaultConfig, ...data};
+  }
+
   /**
    * Получить список свободной задолженности за период.
    *
    * @param data Параметры запроса для получения списка задолженностей.
    * @returns Observable, который эмитит массив задолженностей.
    */
-  public getFreeDuty(data?: GetFreeDutyReq): Observable<Duty[]> {
-    const defaultConfig = { freeOnly: false };
-    const params = { ...defaultConfig, ...data };
-    return this.http.get<Duty[]>(`${environment.apiUrl}/v1/duties`, { params });
+  public getFreeDuties(data?: GetFreeDutyReq): Observable<Duty[]> {
+    const params = this.getFreeDutyConfig(data)
+    return this.http.get<Duty[]>(`${environment.apiUrl}/v1/duties`, {params});
+  }
+
+  public getFreeDutyCount(data?: GetFreeDutyReq): Observable<DataCount> {
+    const params = this.getFreeDutyConfig(data)
+    return this.http.get<DataCount>(`${environment.apiUrl}/v1/duties/count`, {params})
   }
 
   freeDuty(ids: number[]): Observable<number[]> {

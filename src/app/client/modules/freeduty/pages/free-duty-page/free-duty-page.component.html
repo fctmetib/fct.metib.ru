@@ -51,7 +51,7 @@
       </mib-table-head>
       <ng-container *ngIf="loading$ | async; else table">
         <mib-skeleton [styles]="last ? skeletonWithoutUnderline : skeleton"
-                      *ngFor="let i of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; let last = last"></mib-skeleton>
+                      *ngFor="let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE); let last = last"></mib-skeleton>
       </ng-container>
       <ng-template #table>
         <mib-table-row [@slideAnimation]="dutyAnimationStates[duty.ID]"
@@ -95,7 +95,7 @@
         </mib-table-row>
       </ng-template>
       <mib-table-footer [underlined]="!(loading$ | async)">
-        <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="duties$.value.length"
+        <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="dutiesCount?.TotalItems ?? 0"
                        [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
                        [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"></mib-paginator>
       </mib-table-footer>

@@ -148,44 +148,24 @@
 				<mib-table-head-cell>Описание</mib-table-head-cell>
 				<mib-table-head-cell>Тип документа</mib-table-head-cell>
 			</mib-table-head>
-			<mib-table-row
-				*ngFor="let document of documents.controls; let idx = index"
-			>
+			<mib-table-row *ngFor="let document of documents.controls; let idx = index">
 				<mib-table-cell type="main">
 					<ng-container table-cell-title>{{ idx + 1 }}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						document.get('Title').value
-					}}</ng-container>
+					<ng-container table-cell-title>{{document.get('Title').value}}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						document.get('Description').value
-					}}</ng-container>
+					<ng-container table-cell-title>{{document.get('Description').value}}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						document.get('DocumentTypeID').value
-					}}</ng-container>
+					<ng-container table-cell-title>{{document.get('DocumentTypeID').value}}</ng-container>
 				</mib-table-cell>
-				<mib-button
-					table-row-button
-					[mibDropdownTrigger]="documentMenu"
-					size="s"
-					type="ghost-secondary"
-				>
-					<mib-ref-icon
-						class="stroke"
-						btn-icon
-						name="fi_more-vertical"
-					></mib-ref-icon>
+				<mib-button table-row-button [mibDropdownTrigger]="documentMenu" size="s" type="ghost-secondary">
+					<mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
 				</mib-button>
 				<mib-dropdown #documentMenu>
-					<mib-dropdown-point
-						(press)="removeDocument(idx)"
-						text="Удалить"
-					></mib-dropdown-point>
+					<mib-dropdown-point (press)="removeDocument(idx)" text="Удалить"></mib-dropdown-point>
 				</mib-dropdown>
 			</mib-table-row>
 		</mib-table>

@@ -4,8 +4,8 @@ import {
   Component, ContentChild,
   ContentChildren,
   ElementRef,
-  forwardRef,
-  Input,
+  forwardRef, Inject,
+  Input, PLATFORM_ID,
   QueryList, Renderer2,
   ViewChild
 } from '@angular/core';
@@ -49,6 +49,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   public selectedOptions: DropdownPointComponent[] = [];
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId,
     private r2: Renderer2,
     private dropdownService: DropdownService
   ) {
@@ -78,7 +79,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
         leftEl: this.leftIcon.nativeElement,
         rightEl: this.rightIcon.nativeElement,
         element: this.select.nativeElement,
-      }, this.r2)
+      }, this.platformId, this.r2)
     })
   }
 

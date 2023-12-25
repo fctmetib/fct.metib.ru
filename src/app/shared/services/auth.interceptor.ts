@@ -32,8 +32,6 @@ export class AuthInterceptor implements HttpInterceptor {
       token = user.Code
     }
 
-    console.log('isAdmin', this.auth.isUserAdmin())
-
     if (this.auth.isUserAdmin()) {
       request = request.clone({
         setHeaders: {
@@ -41,6 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
           "MetibToken": token ? token : '',
         },
       });
+
     } else {
       request = request.clone({
         setHeaders: {
