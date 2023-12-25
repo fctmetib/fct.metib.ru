@@ -22,8 +22,9 @@ jobs:
         script: |
           cd fct.metib.ru
           git fetch --all
-          git reset --hard
+          git reset --hard origin/ui-ref
           git pull origin ui-ref --force
           npm install --force
           npm run-script build:ssr
           pm2 reload fct.metib.ru
+
