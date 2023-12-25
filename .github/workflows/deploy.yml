@@ -21,6 +21,7 @@ jobs:
         key: ${{ secrets.DEPLOY_KEY }}
         script: |
           cd fct.metib.ru
+          git fetch --all
           git reset --hard
           git pull origin ui-ref --force
           npm install --force
