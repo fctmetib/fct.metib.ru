@@ -8,6 +8,7 @@ import {RequestsService} from '../../services/requests.service'
 import {BehaviorSubject, of, switchMap, tap} from 'rxjs'
 import {Properties} from 'csstype'
 import {AdvancedRequests} from '../../pages/requests-page/interfaces/requests-page.interface'
+import {Shipment} from '../shipment-drawer/interfaces/shipment.interface'
 
 @Component({
 	selector: 'mib-request-browser-drawer',
@@ -53,6 +54,7 @@ export class RequestBrowserDrawerComponent implements OnInit {
 
 	public currentRequestId: number
 	public requestData: RequestReq
+	public request: Shipment[]
 	public requests: AdvancedRequests[] = []
 	public allRequests: AdvancedRequests[] = []
 	freeLimit: number = 0
@@ -89,6 +91,15 @@ export class RequestBrowserDrawerComponent implements OnInit {
 					console.log('freeLimit :>> ', this.freeLimit)
 					this.requestData = response
 					return of(response)
+				}),
+				tap(data => {
+					console.log('data :>> ', data)
+					this.request = data.Shipments.map(x => ({...x, checked: false}))
+					// Инициализация состояния анимации
+					this.request.forEach(req => {
+						this.requestAnimationStates[req.ID] = false
+					})
+					this.onPageChange2(this.currentPage)
 				})
 			)
 			.subscribe({
@@ -125,6 +136,20 @@ export class RequestBrowserDrawerComponent implements OnInit {
 		this.selectedRequestCount = 0
 		this.severalRequestsChecked = false
 
+		// this.requestData.Shipments = this.request?.slice(startIndex, endIndex)
 		this.allRequests = this.requests.slice(startIndex, endIndex)
+	}
+
+	onPageChange2(page: number) {
+		this.currentPage = page
+
+		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+
+		this.selectedRequestCount = 0
+		this.severalRequestsChecked = false
+
+		this.requestData.Shipments = this.request?.slice(startIndex, endIndex)
+		// this.allRequests = this.requests.slice(startIndex, endIndex)
 	}
 }

@@ -127,7 +127,7 @@
 							<mib-table-row *ngFor="let shipment of requestData?.Shipments">
 								<mib-table-cell type="main">
 									<ng-container table-cell-title>{{
-										requestData?.Number
+										shipment?.ID
 									}}</ng-container>
 								</mib-table-cell>
 								<mib-table-cell>
@@ -168,10 +168,12 @@
 								</mib-select>
 							</div>
 							<mib-paginator
+								(pageChange)="onPageChange2($event)"
 								[totalCount]="requestData?.Shipments.length"
 								[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 								[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 							></mib-paginator>
+							{{ requestData?.Shipments.length | json }}
 							<div class="flex flex_align-center flex_grow"></div>
 						</mib-table-footer>
 					</mib-table>
@@ -203,7 +205,6 @@
 						<mib-table-head>
 							<mib-table-head-cell
 								[sortable]="true"
-								(pageChange)="onPageChange($event)"
 								[showCheckbox]="true"
 								(onCheck)="severalRequestsChecked = $event"
 								[checked]="severalRequestsChecked"
