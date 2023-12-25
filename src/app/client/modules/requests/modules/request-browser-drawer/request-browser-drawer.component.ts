@@ -78,13 +78,12 @@ export class RequestBrowserDrawerComponent implements OnInit {
 					console.log('response :>> ', response)
 					console.log('response.del.id :>> ', response.Delivery.ID)
 					console.log('freeLimit :>> ', this.freeLimit)
+					this.requestData = response
 					return of(response)
 				})
 			)
 			.subscribe({
-				next: request => {
-					this.requestData = request
-				},
+				// unsubscribe
 				complete: () => {
 					this.loading$.next(false)
 				}
