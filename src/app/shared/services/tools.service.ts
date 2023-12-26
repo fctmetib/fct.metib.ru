@@ -41,6 +41,21 @@ export class ToolsService {
     return obj;
   }
 
+  safeJson(data: string) {
+    try {
+      const split = data.split(';')
+      const splitLength = split.length
+      if (splitLength) {
+        const source = split[0];
+        if (source) return JSON.parse(source)
+        return source
+      }
+      return null
+    } catch (e) {
+      console.error('Ошибка при парсинге json произошла ошибка', e)
+      return null
+    }
+  }
 
   public deepFilter<T = any>(array: T[], searchValue: string): T[] {
     return array.filter(request =>

@@ -12,13 +12,15 @@ import { catchError } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
 import { AuthRes } from 'src/app/auth/types/login/authRes';
+import {ToolsService} from '../../shared/services/tools.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private cookieService: CookieService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private toolsService: ToolsService
   ) {}
 
   intercept(
@@ -39,7 +41,7 @@ export class AuthInterceptor implements HttpInterceptor {
     let user: AuthRes;
     let token;
     if (cookie) {
-      user = JSON.parse(cookie)
+      user = this.toolsService.safeJson(cookie)
       token = user.Code;
     }
 
