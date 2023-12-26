@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core'
 import {Properties} from 'csstype'
 import {BehaviorSubject, finalize, tap} from 'rxjs'
 import {InvoicesService} from '../../services/invoices.service'
+import {ClientInvoiceInterface} from 'src/app/shared/types/client/client-invoice.interface'
 
 @Component({
 	selector: 'mib-invoices-page',
@@ -24,8 +25,12 @@ export class InvoicesPageComponent implements OnInit {
 	public PAGINATOR_PAGE_TO_SHOW = 5
 	public currentPage: number = 1
 
-	selectedRequestsCount: number
-	severalRequestsChecked: boolean = false
+	public selectedRequestCount: number = 0
+	public severalRequestsChecked: boolean = false
+
+	invoceRequests: ClientInvoiceInterface[] = []
+
+	public invoicesAnimationStates: Record<number, boolean> = {}
 
 	constructor(public invoicesService: InvoicesService) {}
 
@@ -40,6 +45,7 @@ export class InvoicesPageComponent implements OnInit {
 			.pipe(
 				tap(data => {
 					console.log('data :>> ', data)
+					this.invoceRequests = data
 				}),
 				finalize(() => this.loading$.next(false))
 			)
