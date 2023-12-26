@@ -69,7 +69,7 @@ ng g c client/modules/demand-new/modules/demand-drawer --skip-tests --dry-run
 
  //--- invoice
 src\app\client\modules\invoices
-ng g c client/modules/invoices/modules/invoice-page --skip-tests --dry-run
+ng g c client/modules/invoices/pages/invoice-page --skip-tests --dry-run
  //---
 
  //--- toaster

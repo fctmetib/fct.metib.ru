@@ -17,7 +17,7 @@ import {RadioButtonModule} from 'primeng/radiobutton'
 import {InputTextareaModule} from 'primeng/inputtextarea'
 import {MenubarModule} from 'primeng/menubar'
 import {AvatarModule} from 'primeng/avatar'
-import {InvoicesPageComponent} from './components/invoices-page/invoices-page.component'
+import {InvoicePageComponent} from './components/invoice-page/invoice-page.component'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
@@ -27,7 +27,8 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {RefIconModule} from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
-import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
+import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module';
+import { InvoicesPageComponent } from './pages/invoices-page/invoices-page.component'
 
 @NgModule({
 	imports: [
@@ -59,7 +60,7 @@ import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 		RefIconModule,
 		PaginatorModule
 	],
-	declarations: [InvoicesPageComponent],
+	declarations: [InvoicePageComponent, InvoicesPageComponent],
 	providers: [DatePipe]
 })
 export class InvoicesModule {}
