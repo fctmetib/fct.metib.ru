@@ -1,4 +1,106 @@
-<div class="card-content" id="step1">
+<div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<h3>Платежи</h3>
+	<mib-spacing type="m"></mib-spacing>
+</div>
+<div class="container container_large">
+	<div class="flex flex_justify-between">
+		<div class="flex flex_align-center gap-4">
+			<input styleType="outline" type="date" mibInput />
+			<p class="text text_m c-bti-tertiary">-</p>
+			<input styleType="outline" type="date" mibInput />
+		</div>
+		<mib-select placeholder="8 из 8 колонн в таблице">
+			<mib-dropdown-point
+				[value]="true"
+				text="8 из 8 колонн в таблице"
+			></mib-dropdown-point>
+			<mib-dropdown-point
+				[value]="false"
+				text="6 из 8 колонн в таблице"
+			></mib-dropdown-point>
+			<mib-dropdown-point
+				[value]="false"
+				text="2 из 8 колонн в таблице"
+			></mib-dropdown-point>
+		</mib-select>
+	</div>
+	<mib-spacing type="xs"></mib-spacing>
+	<mib-table>
+		<mib-table-head>
+			<mib-table-head-cell
+				[sortable]="true"
+				(onCheck)="severalRequestsChecked = $event"
+				[checked]="severalRequestsChecked"
+				[showCheckbox]="true"
+				>ИД
+			</mib-table-head-cell>
+			<mib-table-head-cell>№ заявки</mib-table-head-cell>
+			<mib-table-head-cell>Дата заявки</mib-table-head-cell>
+			<mib-table-head-cell>Договор поставки</mib-table-head-cell>
+			<mib-table-head-cell>Тип заявки</mib-table-head-cell>
+			<mib-table-head-cell>Статус</mib-table-head-cell>
+			<mib-table-head-cell>Доступ</mib-table-head-cell>
+			<mib-table-head-cell>Корректировка</mib-table-head-cell>
+			<mib-table-head-cell>Сумма</mib-table-head-cell>
+		</mib-table-head>
+		<ng-container *ngIf="loading$ | async; else table">
+			<mib-skeleton
+				[styles]="last ? skeletonWithoutUnderline : skeleton"
+				*ngFor="
+					let i of [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+					let last = last
+				"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #table>
+			<mib-table-row>
+				<mib-table-cell type="main">
+					<ng-container table-cell-title>sdf</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>sdf</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>dsf</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>dsf</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>sdf</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>sdf</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>sdf</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>sdf</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>dsf</ng-container>
+				</mib-table-cell>
+				<mib-button table-row-button size="s" type="ghost-secondary">
+					<mib-ref-icon
+						class="stroke"
+						btn-icon
+						name="fi_more-vertical"
+					></mib-ref-icon>
+				</mib-button>
+			</mib-table-row>
+		</ng-template>
+		<mib-table-footer [underlined]="!(loading$ | async)">
+			<mib-paginator
+				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+				[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+			></mib-paginator>
+		</mib-table-footer>
+	</mib-table>
+</div>
+
+<!-- <div class="card-content" id="step1">
   <header-page [title]="'Платежи'">
     <div class="mib-action button-content p-mr-2" (click)="openDateModal()">
       {{22.10.2021 | date: 'dd.MM.yyyy'}}
@@ -99,4 +201,4 @@
       </tr>
     </ng-template>
   </p-table>
-</div>
+</div> -->

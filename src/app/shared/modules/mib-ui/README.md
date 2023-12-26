@@ -67,6 +67,11 @@ src\app\client\modules\demand-new\modules\demand-drawer
 ng g c client/modules/demand-new/modules/demand-drawer --skip-tests --dry-run
  //---
 
+ //--- invoice
+src\app\client\modules\invoices
+ng g c client/modules/invoices/modules/invoice-page --skip-tests --dry-run
+ //---
+
  //--- toaster
 src\app\shared\ui-kit\
 ng g i shared/ui-kit/toaster/interfaces/toaster.interface  --dry-run
