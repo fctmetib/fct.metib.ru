@@ -163,7 +163,7 @@
                 </div>
                 <mib-paginator
                   (pageChange)="onShipmentsPageChange($event)"
-                  [totalCount]="shipments.length"
+                  [totalCount]="shipments?.length"
                   [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
                   [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
                 ></mib-paginator>
@@ -234,7 +234,7 @@
                 </div>
                 <mib-paginator
                   (pageChange)="onDocumentsPageChange($event)"
-                  [totalCount]="documents.length"
+                  [totalCount]="documents?.length"
                   [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
                   [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
                 ></mib-paginator>

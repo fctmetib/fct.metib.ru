@@ -29,6 +29,7 @@ import { FreedutyStoreService } from 'src/app/shared/services/store/freeduty.sto
 import { isPlatformBrowser } from '@angular/common';
 import { UserFactoring } from 'src/app/shared/types/userFactoring';
 import { CurrentUser } from 'src/app/shared/types/currentUser';
+import {ToolsService} from '../../shared/services/tools.service';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
+    private toolsService: ToolsService,
     private router: Router,
     private requestStoreService: RequestStoreService,
     private freedutyStoreService: FreedutyStoreService,
@@ -128,9 +130,9 @@ export class AuthService {
     let userCookie = this.cookieService.get('_cu');
     let user: AuthRes;
     if (userCookie) {
-      user = JSON.parse(userCookie);
+      user = this.toolsService.safeJson(userCookie);
     } else if (adminCookie) {
-      user = JSON.parse(adminCookie);
+      user = this.toolsService.safeJson(adminCookie);
     }
 
     let userId;
@@ -348,7 +350,7 @@ export class AuthService {
     }
 
     if (userCookie) {
-      user = JSON.parse(userCookie);
+      user = this.toolsService.safeJson(userCookie)
     }
 
     return user?.Roles ?? admin?.Roles ?? [];
@@ -358,7 +360,7 @@ export class AuthService {
     const userCookie = this.cookieService.get('_cu');
 
     if (userCookie) {
-      return JSON.parse(userCookie);
+      return this.toolsService.safeJson(userCookie)
     }
 
     return null;
