@@ -1,13 +1,14 @@
-import {Component} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import {Properties} from 'csstype'
-import {BehaviorSubject} from 'rxjs'
+import {BehaviorSubject, finalize, tap} from 'rxjs'
+import {InvoicesService} from '../../services/invoices.service'
 
 @Component({
 	selector: 'mib-invoices-page',
 	templateUrl: './invoices-page.component.html',
 	styleUrls: ['./invoices-page.component.scss']
 })
-export class InvoicesPageComponent {
+export class InvoicesPageComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
 
 	public skeletonWithoutUnderline: Properties = {
@@ -25,4 +26,23 @@ export class InvoicesPageComponent {
 
 	selectedRequestsCount: number
 	severalRequestsChecked: boolean = false
+
+	constructor(public invoicesService: InvoicesService) {}
+
+	ngOnInit(): void {
+		this.getInvoices()
+	}
+
+	getInvoices() {
+		this.loading$.next(true)
+		this.invoicesService
+			.getInvoices()
+			.pipe(
+				tap(data => {
+					console.log('data :>> ', data)
+				}),
+				finalize(() => this.loading$.next(false))
+			)
+			.subscribe()
+	}
 }

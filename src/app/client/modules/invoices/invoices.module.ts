@@ -27,8 +27,9 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {RefIconModule} from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
-import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module';
-import { InvoicesPageComponent } from './pages/invoices-page/invoices-page.component'
+import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
+import {InvoicesPageComponent} from './pages/invoices-page/invoices-page.component'
+import {InvoicesService} from './services/invoices.service'
 
 @NgModule({
 	imports: [
@@ -61,6 +62,6 @@ import { InvoicesPageComponent } from './pages/invoices-page/invoices-page.compo
 		PaginatorModule
 	],
 	declarations: [InvoicePageComponent, InvoicesPageComponent],
-	providers: [DatePipe]
+	providers: [DatePipe, InvoicesService]
 })
 export class InvoicesModule {}
