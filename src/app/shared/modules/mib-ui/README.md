@@ -54,6 +54,14 @@ ng g s client/modules/demand-new/modules/demand-drawer/demand-drawer --skip-test
 ng g c client/modules/demand-new/modules/demand-drawer --skip-tests --dry-run
  //---
 
+ //--- invoice-drawer
+src\app\client\modules\invoices\modules
+ng g i client/modules/invoices/modules/invoice-drawer/interfaces/invoice-drawer.interface  --dry-run
+ng g m client/modules/invoices/modules/invoice-drawer/invoice-drawer --flat --dry-run
+ng g s client/modules/invoices/modules/invoice-drawer/invoice-drawer --skip-tests --dry-run
+ng g c client/modules/invoices/modules/invoice-drawer/ --skip-tests --dry-run
+ //---
+
  //--- request-browser-drawer
 src\app\client\modules\requests\modules\request-drawer
 ng g i client/modules/requests/modules/request-browser-drawer/interfaces/request-browser-drawer.interface  --dry-run
