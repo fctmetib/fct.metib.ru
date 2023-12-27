@@ -4,9 +4,7 @@ import {Observable} from 'rxjs'
 import {ClientInvoiceInterface} from 'src/app/shared/types/client/client-invoice.interface'
 import {environment} from 'src/environments/environment'
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class InvoicesService {
 	public dateFrom: string = '2023-07-25'
 	public dateTo: string = '2023-07-25'
