@@ -6,6 +6,7 @@ import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interfa
 import {InvoiceDrawer} from './interfaces/invoice-drawer.interface'
 import {ClientInvoiceInterface} from '../../interfaces/client-invoice.interface'
 import {InvoicesService} from '../../services/invoices.service'
+import {InputSize} from 'src/app/shared/ui-kit/input/interfaces/input.interface'
 
 @Component({
 	selector: 'mib-invoice-drawer',
@@ -30,6 +31,11 @@ export class InvoiceDrawerComponent implements OnInit {
 		height: '20px'
 	}
 
+	public skeletonTabGroup: Properties = {
+		...this.skeletonWithoutUnderline,
+		height: '271px'
+	}
+
 	public skeleton: Properties = {
 		...this.skeletonWithoutUnderline,
 		borderBottom: '1px solid var(--wgr-tertiary)'
@@ -44,9 +50,11 @@ export class InvoiceDrawerComponent implements OnInit {
 
 	public invoiceAnimationStates: Record<number, boolean> = {}
 
-	datas = 10000000
+	public inputSize: InputSize = 'l'
 	invoiceID: number
 	currentInvoice: ClientInvoiceInterface
+
+	datas = 1000000
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData<InvoiceDrawer>,

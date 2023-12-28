@@ -16,6 +16,7 @@ import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
+import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
 
 @NgModule({
 	declarations: [InvoiceDrawerComponent],
@@ -34,7 +35,8 @@ import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 		SkeletonModule,
 		PaginatorModule,
 		DropdownModule,
-		RubModule
+		RubModule,
+		InputModule
 	],
 	providers: [InvoiceDrawerService]
 })

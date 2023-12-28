@@ -1,38 +1,57 @@
-<div #box class="box-wrapper flex flex_column" [class.box-wrapper-transition]="viewMounted">
-	<span #label (click)="focus()"
-        [class.box_without-label]="!label.children.length"
-        class="box-label text c-bti-tertiary">
+<div
+	#box
+	class="box-wrapper flex flex_column"
+	[class.box-wrapper-transition]="viewMounted"
+>
+	<span
+		#label
+		(click)="focus()"
+		[class.box_without-label]="!label.children.length"
+		class="box-label text c-bti-tertiary"
+	>
 		<ng-content select="[input-label]"></ng-content>
 	</span>
-  <div
-    [class.box-right-iconly]="iconsRight.children.length"
-    [class.box-left-iconly]="iconsLeft.children.length"
-    class="box"
-  >
-    <ng-content></ng-content>
-    <div class="input_icon-wrapper left-wrapper" #iconsLeft>
-      <ng-content select="[mibLeftIcon]"></ng-content>
-    </div>
-    <div class="input_icon-wrapper right-wrapper" #iconsRight>
-      <ng-content select="[mibRightIcon]"></ng-content>
-    </div>
-    <div *ngIf="inputDirective.controls" class="textarea-panel flex flex_align-center flex_justify-between">
-      <p id="textarea-panel-counter" class="text text_tiny c-ti-dark-quaternary">
-        {{ textLength }}/{{ maxLength }}
-      </p>
-      <mib-ref-icon
-        *ngIf="false"
-        class="stroke"
-        name="fi_maximize-2"
-        (mousedown)="startResize($event)"
-        (mouseup)="stopResize($event)"
-        (mousemove)="onMouseMove($event)"
-      ></mib-ref-icon>
-    </div>
-  </div>
-  <div class="box-label box-label_message flex flex_column">
-    <p #message class="text text_small text_medium c-ti-dark-quaternary">
-      <ng-content select="[input-message]"></ng-content>
-    </p>
-  </div>
+	<span #title class="box-title text_s text c-bti-tertiary">
+		<ng-content select="[input-title]"></ng-content>
+	</span>
+	<div
+		[class.box-right-iconly]="iconsRight.children.length"
+		[class.box-left-iconly]="iconsLeft.children.length"
+		class="box"
+	>
+		<ng-content></ng-content>
+		<span #description class="box-description text_m text c-bti-tertiary">
+			<ng-content select="[input-description]"></ng-content>
+		</span>
+		<div class="input_icon-wrapper left-wrapper" #iconsLeft>
+			<ng-content select="[mibLeftIcon]"></ng-content>
+		</div>
+		<div class="input_icon-wrapper right-wrapper" #iconsRight>
+			<ng-content select="[mibRightIcon]"></ng-content>
+		</div>
+		<div
+			*ngIf="inputDirective.controls"
+			class="textarea-panel flex flex_align-center flex_justify-between"
+		>
+			<p
+				id="textarea-panel-counter"
+				class="text text_tiny c-ti-dark-quaternary"
+			>
+				{{ textLength }}/{{ maxLength }}
+			</p>
+			<mib-ref-icon
+				*ngIf="false"
+				class="stroke"
+				name="fi_maximize-2"
+				(mousedown)="startResize($event)"
+				(mouseup)="stopResize($event)"
+				(mousemove)="onMouseMove($event)"
+			></mib-ref-icon>
+		</div>
+	</div>
+	<div class="box-label box-label_message flex flex_column">
+		<p #message class="text text_small text_medium c-ti-dark-quaternary">
+			<ng-content select="[input-message]"></ng-content>
+		</p>
+	</div>
 </div>
