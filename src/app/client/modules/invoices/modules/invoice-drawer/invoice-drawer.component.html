@@ -8,12 +8,19 @@
 		<mib-skeleton [styles]="skeletonTitle" *ngFor="let i of [1]"></mib-skeleton>
 	</ng-container>
 	<ng-template #title>
-		<h4>Платеж на: {{ datas | currency : 'RUB' }}</h4>
+		<h4>Платеж на: {{ currentInvoice?.Amount | currency : 'RUB' }}</h4>
 	</ng-template>
 	<mib-spacing type="xs2"></mib-spacing>
-	<div class="flex gap-4">
-		<span class="text text_m c-bti-secondary">Дата платежа</span>
-		<span class="text text_m c-bti-secondary">24.04.2022</span>
-		<mib-spacing type="xs"></mib-spacing>
-	</div>
+	<ng-container *ngIf="loading$ | async; else date">
+		<mib-skeleton [styles]="skeletonDate" *ngFor="let i of [1]"></mib-skeleton>
+	</ng-container>
+	<ng-template #date>
+		<div class="flex gap-4">
+			<span class="text text_m c-bti-secondary">Дата платежа</span>
+			<span class="text text_m c-bti-secondary">{{
+				currentInvoice?.Date | date : 'dd.MM.YYYY'
+			}}</span>
+			<mib-spacing type="xs"></mib-spacing>
+		</div>
+	</ng-template>
 </mib-drawer>
