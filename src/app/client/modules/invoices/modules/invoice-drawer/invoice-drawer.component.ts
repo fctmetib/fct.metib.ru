@@ -1,9 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {Properties} from 'csstype'
-import {BehaviorSubject} from 'rxjs'
+import {BehaviorSubject, finalize, map, tap} from 'rxjs'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {InvoiceDrawer} from './interfaces/invoice-drawer.interface'
+import {ClientInvoiceInterface} from '../../interfaces/client-invoice.interface'
+import {InvoicesService} from '../../services/invoices.service'
 
 @Component({
 	selector: 'mib-invoice-drawer',
@@ -20,7 +22,12 @@ export class InvoiceDrawerComponent implements OnInit {
 
 	public skeletonTitle: Properties = {
 		...this.skeletonWithoutUnderline,
-		height: '60px'
+		height: '28px'
+	}
+
+	public skeletonDate: Properties = {
+		...this.skeletonWithoutUnderline,
+		height: '20px'
 	}
 
 	public skeleton: Properties = {
@@ -38,15 +45,34 @@ export class InvoiceDrawerComponent implements OnInit {
 	public invoiceAnimationStates: Record<number, boolean> = {}
 
 	datas = 10000000
-	datasID: DrawerData<InvoiceDrawer>
+	invoiceID: number
+	currentInvoice: ClientInvoiceInterface
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData<InvoiceDrawer>,
-		public dialogRef: MatDialogRef<InvoiceDrawerComponent>
+		public dialogRef: MatDialogRef<InvoiceDrawerComponent>,
+		private invoicesService: InvoicesService
 	) {}
 
+	getCurrentInvoice() {
+		this.loading$.next(true)
+		this.invoiceID = this.data?.data?.invoiceId
+		this.invoicesService
+			.getInvoices()
+			.pipe(
+				map(invoice => {
+					this.currentInvoice = invoice.find(i => i.ID !== this.invoiceID)
+					console.log('currentInvoice :>> ', this.currentInvoice)
+				}),
+				finalize(() => {
+					this.loading$.next(false)
+				})
+			)
+			.subscribe()
+	}
+
 	ngOnInit(): void {
-		this.datasID = this.data
-		console.log('datasID :>> ', this.datasID)
+		console.log('invoiceID :>> ', this.invoiceID)
+		this.getCurrentInvoice()
 	}
 }
