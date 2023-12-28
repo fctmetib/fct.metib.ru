@@ -30,6 +30,7 @@ import {RefIconModule} from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
 import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 import {InvoicesPageComponent} from './pages/invoices-page/invoices-page.component'
 import {InvoicesService} from './services/invoices.service'
+import {InvoiceDrawerModule} from './modules/invoice-drawer/invoice-drawer.module'
 
 @NgModule({
 	imports: [
@@ -59,9 +60,10 @@ import {InvoicesService} from './services/invoices.service'
 		TableModule,
 		SkeletonModule,
 		RefIconModule,
-		PaginatorModule
+		PaginatorModule,
+		InvoiceDrawerModule
 	],
 	declarations: [InvoicePageComponent, InvoicesPageComponent],
-	providers: [DatePipe, InvoicesService]
+	providers: [InvoicesService]
 })
 export class InvoicesModule {}

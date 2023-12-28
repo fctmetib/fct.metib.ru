@@ -58,7 +58,7 @@
 				*ngFor="let invoice of invoceRequests; let last = last"
 				[underlined]="!last"
 			>
-				<mib-table-cell type="main">
+				<mib-table-cell (click)="openDrawer(invoice.ID)" type="main">
 					<ng-container table-cell-title>{{
 						invoice.Date | date : 'dd.MM.YYYY'
 					}}</ng-container>

@@ -2,7 +2,9 @@ import {Component, OnInit} from '@angular/core'
 import {Properties} from 'csstype'
 import {BehaviorSubject, finalize, tap} from 'rxjs'
 import {InvoicesService} from '../../services/invoices.service'
-import {ClientInvoiceInterface} from 'src/app/shared/types/client/client-invoice.interface'
+import {ClientInvoiceInterface} from '../../interfaces/client-invoice.interface'
+import {InvoiceDrawerService} from '../../modules/invoice-drawer/invoice-drawer.service'
+import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 
 @Component({
 	selector: 'mib-invoices-page',
@@ -32,7 +34,10 @@ export class InvoicesPageComponent implements OnInit {
 
 	public invoicesAnimationStates: Record<number, boolean> = {}
 
-	constructor(public invoicesService: InvoicesService) {}
+	constructor(
+		public invoicesService: InvoicesService,
+		private invoiceDrawerService: InvoiceDrawerService
+	) {}
 
 	ngOnInit(): void {
 		this.getInvoices()
@@ -50,5 +55,12 @@ export class InvoicesPageComponent implements OnInit {
 				finalize(() => this.loading$.next(false))
 			)
 			.subscribe()
+	}
+
+	openDrawer(invoiceId: number) {
+		console.log('DRAWER!!! number>>', invoiceId)
+		this.invoiceDrawerService.open({
+			data: {invoiceId: invoiceId}
+		})
 	}
 }

@@ -1,2 +1,3 @@
-export interface InvoiceDrawerInterface {
+export interface InvoiceDrawer {
+	invoiceId: number
 }

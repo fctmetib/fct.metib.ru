@@ -1,1 +1,19 @@
-<p>invoice-drawer works!</p>
+<mib-drawer>
+	<mib-drawer-header
+		(onClose)="dialogRef.close()"
+		showMaximize="true"
+		drawer-header
+	></mib-drawer-header>
+	<ng-container *ngIf="loading$ | async; else title">
+		<mib-skeleton [styles]="skeletonTitle" *ngFor="let i of [1]"></mib-skeleton>
+	</ng-container>
+	<ng-template #title>
+		<h4>Платеж на: {{ datas | currency : 'RUB' }}</h4>
+	</ng-template>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="flex gap-4">
+		<span class="text text_m c-bti-secondary">Дата платежа</span>
+		<span class="text text_m c-bti-secondary">24.04.2022</span>
+		<mib-spacing type="xs"></mib-spacing>
+	</div>
+</mib-drawer>

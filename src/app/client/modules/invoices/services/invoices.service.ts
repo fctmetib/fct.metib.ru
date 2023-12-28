@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
-import {ClientInvoiceInterface} from 'src/app/shared/types/client/client-invoice.interface'
+import {ClientInvoiceInterface} from '../interfaces/client-invoice.interface'
 import {environment} from 'src/environments/environment'
 
 @Injectable()
