@@ -1,6 +1,9 @@
-<div class="contracted-form" [class.extended]="extended" [ngClass]="classes">
+<div class="contracted-form" [class.extended]="extended">
 	<mib-spacing type="xs2"></mib-spacing>
-	<div class="flex flex_align-center flex_justify-between">
+	<div
+		(click)="this.extended = !this.extended"
+		class="cursor-pointer flex flex_align-center flex_justify-between"
+	>
 		<div class="flex gap-6">
 			<span class="text text_m text_medium c-bti-primary">
 				<ng-content select="[contacted-label]"></ng-content>
@@ -11,11 +14,7 @@
 				>
 			</ng-container>
 		</div>
-		<mib-button
-			(click)="this.extended = !this.extended"
-			size="m"
-			type="ghost-secondary"
-		>
+		<mib-button size="m" type="ghost-secondary">
 			<mib-ref-icon
 				btn-icon
 				class="stroke"

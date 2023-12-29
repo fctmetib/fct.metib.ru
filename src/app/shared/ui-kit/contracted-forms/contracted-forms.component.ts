@@ -18,12 +18,5 @@ export class ContractedFormsComponent {
 	@Input() mainBank: boolean = false
 	@Input() showBadge: boolean = true
 
-	@Output() onClick: EventEmitter<any> = new EventEmitter<any>()
-	@Output() press: EventEmitter<any> = new EventEmitter<any>()
-
-	get classes() {
-		return {
-			[`contacted-form_type-${this.device}`]: true
-		}
-	}
+	@Output() onClick: EventEmitter<Event>
 }
