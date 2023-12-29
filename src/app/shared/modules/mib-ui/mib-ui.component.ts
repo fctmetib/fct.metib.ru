@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core'
-import { InputSize } from '../../ui-kit/input/interfaces/input.interface'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import {Component, OnInit} from '@angular/core'
+import {InputSize} from '../../ui-kit/input/interfaces/input.interface'
+import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 
 @Component({
 	selector: 'app-mib-ui',
@@ -47,7 +47,8 @@ export class MibUiComponent implements OnInit {
 	isShownHeader = false
 	isShownToaster = false
 	isShownMedia = false
-	isShownFileCell = true
+	isShownFileCell = false
+	isContracted = true
 
 	public inputSizeXL: InputSize = 'xl'
 	public inputSizeL: InputSize = 'l'

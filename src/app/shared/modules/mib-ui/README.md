@@ -95,6 +95,13 @@ ng g m shared/ui-kit/media/media --flat  --dry-run
 ng g c shared/ui-kit/media/media --flat  --skip-tests --dry-run
  //---
 
+ //--- contracted-forms
+src\app\shared\ui-kit\contracted-forms
+ng g i shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface  --dry-run
+ng g m shared/ui-kit/contracted-forms/contracted-forms --flat  --dry-run
+ng g c shared/ui-kit/contracted-forms/contracted-forms --flat  --skip-tests --dry-run
+ //---
+
  //--- file-cell
 src\app\shared\ui-kit\file-cell
 ng g i shared/ui-kit/file-cell/interfaces/file-cell.interface  --dry-run

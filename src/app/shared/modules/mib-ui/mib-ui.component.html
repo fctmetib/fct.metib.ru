@@ -1263,3 +1263,28 @@
 	<mib-spacing type="xl2"></mib-spacing>
 	<mib-spacing type="xl2"></mib-spacing>
 </div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'Contracted-forms' | titlecase }}
+	<button (click)="isContracted = !isContracted">
+		{{ isContracted ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isContracted" style="margin-bottom: 10rem" class="wrapper">
+	<div style="display: flex; gap: 2rem">
+		<h5>Contracted-forms</h5>
+		<mib-contracted-forms></mib-contracted-forms>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>
