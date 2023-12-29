@@ -17,6 +17,7 @@ import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
+import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/contracted-forms.module'
 
 @NgModule({
 	declarations: [InvoiceDrawerComponent],
@@ -36,7 +37,8 @@ import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
 		PaginatorModule,
 		DropdownModule,
 		RubModule,
-		InputModule
+		InputModule,
+		ContractedFormsModule
 	],
 	providers: [InvoiceDrawerService]
 })
