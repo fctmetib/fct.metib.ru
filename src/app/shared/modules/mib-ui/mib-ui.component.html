@@ -1281,9 +1281,17 @@
 	</button>
 </h2>
 <div *ngIf="isContracted" style="margin-bottom: 10rem" class="wrapper">
-	<div style="display: flex; gap: 2rem">
-		<h5>Contracted-forms</h5>
-		<mib-contracted-forms></mib-contracted-forms>
+	<div>
+		<h5>Contracted-form:</h5>
+		<mib-contracted-forms>
+			<ng-container contacted-label>ПАО АКБ "МЕТАЛЛИНВЕСТБАНК"</ng-container>
+			<ng-container contracted-bill>30101810300000000176</ng-container>
+			<ng-container contracted-open>22.11.2022</ng-container>
+			<ng-container contracted-close>22.11.2022</ng-container>
+			<ng-container contracted-description
+				>Для основных транзакций</ng-container
+			>
+		</mib-contracted-forms>
 	</div>
 	<mib-spacing type="xl2"></mib-spacing>
 	<mib-spacing type="xl2"></mib-spacing>
