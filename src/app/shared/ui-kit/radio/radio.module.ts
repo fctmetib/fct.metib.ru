@@ -3,11 +3,11 @@ import {CommonModule} from '@angular/common'
 import {RadioComponent} from './radio.component'
 import {RefIconModule} from '../ref-icon/ref-icon.module'
 import {RadioGroupComponent} from './components/radio-group.component'
-import {ReactiveFormsModule} from '@angular/forms'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
 	declarations: [RadioComponent, RadioGroupComponent],
-	exports: [RadioComponent],
-	imports: [CommonModule, RefIconModule, ReactiveFormsModule]
+	exports: [RadioComponent, RadioGroupComponent],
+	imports: [CommonModule, RefIconModule, ReactiveFormsModule, FormsModule]
 })
 export class RadioModule {}

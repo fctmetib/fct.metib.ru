@@ -26,18 +26,20 @@
 				</div>
 				<div>
 					<mib-spacing type="x"></mib-spacing>
-					<div class="flex">
-						<div class="flex flex_justify-start w-100">
-							<mib-radio value="true" formControlName="IsMale">
-								<ng-container>Мужчина</ng-container>
-							</mib-radio>
-						</div>
-						<div class="flex flex_justify-start w-100">
-							<mib-radio value="false" formControlName="IsMale">
-								<ng-container>Женщина</ng-container>
-							</mib-radio>
-						</div>
-					</div>
+					<mib-radio-group>
+						<!-- <div class="flex">
+							<div class="flex flex_justify-start w-100"> -->
+						<mib-radio>
+							<ng-container>Мужчина</ng-container>
+						</mib-radio>
+						<!-- </div>
+							<div class="flex flex_justify-start w-100"> -->
+						<mib-radio>
+							<ng-container>Женщина</ng-container>
+						</mib-radio>
+						<!-- </div>
+						</div> -->
+					</mib-radio-group>
 					<mib-spacing type="x"></mib-spacing>
 				</div>
 				<mib-input>
