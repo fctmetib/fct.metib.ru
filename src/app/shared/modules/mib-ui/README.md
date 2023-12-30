@@ -95,6 +95,11 @@ ng g m shared/ui-kit/media/media --flat  --dry-run
 ng g c shared/ui-kit/media/media --flat  --skip-tests --dry-run
  //---
 
+ //--- radio-group
+src\app\shared\ui-kit\radio-group
+ng g c shared/ui-kit/radio/components/radio-group --flat  --skip-tests --dry-run
+ //---
+
  //--- contracted-forms
 src\app\shared\ui-kit\contracted-forms
 ng g i shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface  --dry-run

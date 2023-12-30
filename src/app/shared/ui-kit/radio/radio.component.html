@@ -5,11 +5,15 @@
 		(click)="onRadioChange($event)"
 		class="radio-input"
 	/>
-	<span
-		[class.checked]="value"
-		class="radio-control flex flex_center"
-		[ngClass]="'radio-control_' + size"
-	>
-	</span>
-	<ng-content></ng-content>
+	<div class="flex gap-8">
+		<span
+			[class.checked]="value"
+			class="radio-control flex flex_center"
+			[ngClass]="'radio-control_' + size"
+		>
+		</span>
+		<span class="text text_m c-bti-secondary">
+			<ng-content></ng-content>
+		</span>
+	</div>
 </label>

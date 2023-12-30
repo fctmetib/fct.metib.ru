@@ -1,4 +1,5 @@
 <ng-container *ngIf="confirmationCode.invalid; else confirmation">
+	<h3>Регистрация</h3>
 	<ng-container [formGroup]="form">
 		<mib-spacing type="s"></mib-spacing>
 		<div class="flex flex_column gap-xs">
@@ -22,6 +23,22 @@
 						/>
 						<ng-container input-label>Фамилия</ng-container>
 					</mib-input>
+				</div>
+				<div>
+					<mib-spacing type="x"></mib-spacing>
+					<div class="flex">
+						<div class="flex flex_justify-start w-100">
+							<mib-radio value="true" formControlName="IsMale">
+								<ng-container>Мужчина</ng-container>
+							</mib-radio>
+						</div>
+						<div class="flex flex_justify-start w-100">
+							<mib-radio value="false" formControlName="IsMale">
+								<ng-container>Женщина</ng-container>
+							</mib-radio>
+						</div>
+					</div>
+					<mib-spacing type="x"></mib-spacing>
 				</div>
 				<mib-input>
 					<input
@@ -62,7 +79,7 @@
 						name="fi_lock"
 					></mib-ref-icon>
 				</mib-input>
-				<mib-select [size]="inputSize" formControlName="IsMale">
+				<!-- <mib-select [size]="inputSize" formControlName="IsMale">
 					<mib-dropdown-point
 						[value]="true"
 						text="Мужской"
@@ -71,7 +88,7 @@
 						[value]="false"
 						text="Женский"
 					></mib-dropdown-point>
-				</mib-select>
+				</mib-select> -->
 			</ng-container>
 			<mib-input>
 				<input
