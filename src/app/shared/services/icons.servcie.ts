@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core'
-import { DomSanitizer } from '@angular/platform-browser'
-import { RefIconService } from '../ui-kit/ref-icon/services/ref-icon.service'
+import {Injectable} from '@angular/core'
+import {DomSanitizer} from '@angular/platform-browser'
+import {RefIconService} from '../ui-kit/ref-icon/services/ref-icon.service'
 
 @Injectable({
 	providedIn: 'root'
@@ -40,7 +40,8 @@ export class IconsService {
 		'vk',
 		'whatsapp',
 		'fi_file',
-		'fi_download'
+		'fi_download',
+		'fi_lock'
 	]
 
 	public async initIcons(): Promise<void> {

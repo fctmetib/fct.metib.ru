@@ -9,205 +9,209 @@ import Validation from '../../tools/confirmPassword.tool'
 import {AuthService} from '../../services/auth.service'
 import {Router} from '@angular/router'
 import {InputSize} from 'src/app/shared/ui-kit/input/interfaces/input.interface'
-import {AutoUnsubscribeService} from '../../../shared/services/auto-unsubscribe.service';
-import {takeUntil} from 'rxjs/operators';
+import {AutoUnsubscribeService} from '../../../shared/services/auto-unsubscribe.service'
+import {takeUntil} from 'rxjs/operators'
 
 @Component({
-  selector: 'app-register-page',
-  templateUrl: './register-page.component.html',
-  styleUrls: ['./register-page.component.scss'],
-  providers: [AutoUnsubscribeService],
+	selector: 'app-register-page',
+	templateUrl: './register-page.component.html',
+	styleUrls: ['./register-page.component.scss'],
+	providers: [AutoUnsubscribeService]
 })
 export class RegisterPageComponent {
-  public inputSize: InputSize = 'l'
+	public inputSize: InputSize = 'l'
 
-  public form: FormGroup
-  public formConfirm: FormGroup
+	public form: FormGroup
+	public formConfirm: FormGroup
 
-  public isSubmitting$ = new BehaviorSubject<boolean>(false)
-  public backendErrors$ = new BehaviorSubject<string>(null)
+	public isSubmitting$ = new BehaviorSubject<boolean>(false)
+	public backendErrors$ = new BehaviorSubject<string>(null)
 
-  image: any
+	image: any
 
-  constructor(
-    private fb: FormBuilder,
-    private sanitizer: DomSanitizer,
-    private commonService: CommonService,
-    private router: Router,
-    private authService: AuthService,
-    private au: AutoUnsubscribeService
-  ) {
-  }
+	constructor(
+		private fb: FormBuilder,
+		private sanitizer: DomSanitizer,
+		private commonService: CommonService,
+		private router: Router,
+		private authService: AuthService,
+		private au: AutoUnsubscribeService
+	) {}
 
-  get lastAndFirstName() {
-    return this.form.get('lastAndFirstNames') as FormControl
-  }
+	// get lastAndFirstName() {
+	//   return this.form.get('lastAndFirstNames') as FormControl
+	// }
 
-  get firstName() {
-    return this.form.get('Profile.Name.First') as FormControl
-  }
+	get firstName() {
+		return this.form.get('Profile.First') as FormControl
+	}
 
-  get phone() {
-    return this.form.get('Profile.Phone') as FormControl
-  }
+	get phone() {
+		return this.form.get('Profile.Phone') as FormControl
+	}
 
+	get lastName() {
+		return this.form.get('Profile.Last') as FormControl
+	}
 
-  get lastName() {
-    return this.form.get('Profile.Name.Last') as FormControl
-  }
+	get email() {
+		return this.form.get('Profile.Email') as FormControl
+	}
 
-  get email() {
-    return this.form.get('Profile.Email') as FormControl
-  }
+	get login() {
+		return this.form.get('Profile.Login') as FormControl
+	}
 
-  get login() {
-    return this.form.get('Profile.Login') as FormControl
-  }
+	get captchaText() {
+		return this.form.get('Captcha.Text') as FormControl
+	}
 
-  get captchaText() {
-    return this.form.get('Captcha.Text') as FormControl
-  }
+	get captchaCode() {
+		return this.form.get('Captcha.Code') as FormControl
+	}
 
-  get captchaCode() {
-    return this.form.get('Captcha.Code') as FormControl
-  }
+	get confirmationCode() {
+		return this.formConfirm.get('ConfirmationCode') as FormControl
+	}
 
-  get confirmationCode() {
-    return this.formConfirm.get('ConfirmationCode') as FormControl
-  }
+	get pin() {
+		return this.formConfirm.get('Pin') as FormControl
+	}
 
-  get pin() {
-    return this.formConfirm.get('Pin') as FormControl
-  }
+	public ngOnInit(): void {
+		this.initForms()
+		this.initValues()
+		this.watchForms()
+	}
 
-  public ngOnInit(): void {
-    this.initForms()
-    this.initValues()
-    this.watchForms()
-  }
+	private watchForms() {
+		this.email.valueChanges
+			.pipe(
+				tap(email => {
+					this.login.setValue(email)
+				}),
+				takeUntil(this.au.destroyer)
+			)
+			.subscribe()
 
+		this.form.valueChanges
+			.pipe(
+				tap(form => {
+					console.log('form', form)
+				}),
+				takeUntil(this.au.destroyer)
+			)
+			.subscribe()
+	}
 
-  private watchForms() {
-    this.lastAndFirstName.valueChanges.pipe(
-      tap((value: string) => {
-        const [last, first] = value.split(' ');
-        this.firstName.setValue(first);
-        this.lastName.setValue(last);
-      }),
-      takeUntil(this.au.destroyer)
-    ).subscribe()
+	private initForms(): void {
+		const passwordValidators = [
+			Validators.required,
+			Validators.minLength(6),
+			Validators.pattern(/^[^А-Яа-я]+$/)
+		]
 
-    this.email.valueChanges.pipe(
-      tap(email => {
-        this.login.setValue(email)
-      }),
-      takeUntil(this.au.destroyer)
-    ).subscribe()
+		this.form = this.fb.group(
+			{
+				Password: [null, passwordValidators],
+				ConfirmPassword: [null, passwordValidators],
+				Profile: this.fb.group({
+					First: [null, [Validators.required]],
+					Last: [null, [Validators.required]],
+					Email: [null, [Validators.required, Validators.email]],
+					IsMale: [true, [Validators.required]],
+					Login: [true, [Validators.required, Validators.minLength(6)]],
+					Phone: [null, [Validators.required]]
+				}),
+				Captcha: this.fb.group({
+					Text: [null, [Validators.required]],
+					Code: [null, [Validators.required]]
+				})
+			},
+			{
+				validators: [
+					Validation.confirmedValidator('Password', 'ConfirmPassword')
+				]
+			}
+		)
 
-    this.form.valueChanges.pipe(
-      tap(form => {
-        console.log('form', form)
-      }),
-      takeUntil(this.au.destroyer)
-    ).subscribe()
-  }
+		this.formConfirm = this.fb.group({
+			ConfirmationCode: [null, Validators.required],
+			Pin: [null, [Validators.required]]
+		})
+	}
 
+	private initValues(): void {
+		this.updateCaptcha()
+	}
 
-  private initForms(): void {
+	public updateCaptcha(): void {
+		this.commonService.getCaptcha().subscribe(({image, code}) => {
+			this.image = image
+			this.captchaCode.setValue(code)
+		})
+	}
 
-    const passwordValidators = [Validators.required, Validators.minLength(6), Validators.pattern(/^[^А-Яа-я]+$/)]
+	public onSubmit(): void {
+		this.isSubmitting$.next(true)
 
-    this.form = this.fb.group({
-      Password: [null, passwordValidators],
-      ConfirmPassword: [null, passwordValidators],
-      lastAndFirstNames: [null, [Validators.required]],
-      Profile: this.fb.group({
-        Email: [null, [Validators.required, Validators.email]],
-        IsMale: [true, [Validators.required]],
-        Login: [true, [Validators.required, Validators.minLength(6)]],
-        Phone: [null, [Validators.required]],
-        Name: this.fb.group({
-          First: [null, [Validators.required]],
-          Last: [null, [Validators.required]]
-        }),
-      }),
-      Captcha: this.fb.group({
-        Text: [null, [Validators.required]],
-        Code: [null, [Validators.required]]
-      }),
-    }, {validators: [Validation.confirmedValidator('Password', 'ConfirmPassword')]})
+		if (this.form.invalid) return
 
-    this.formConfirm = this.fb.group({
-      ConfirmationCode: [null, Validators.required],
-      Pin: [null, [Validators.required]]
-    })
-  }
+		const request: RegisterReq = this.form.getRawValue()
 
-  private initValues(): void {
-    this.updateCaptcha()
-  }
+		this.authService
+			.register(request)
+			.pipe(
+				tap(result => {
+					this.confirmationCode.setValue(result.ConfirmationCode)
+				}),
+				catchError(error => {
+					this.backendErrors$.next(error)
+					return of(error)
+				}),
+				finalize(() => {
+					this.isSubmitting$.next(false)
+				})
+			)
+			.subscribe()
+	}
 
-  public updateCaptcha(): void {
-    this.commonService.getCaptcha().subscribe(({image, code}) => {
-      this.image = image;
-      this.captchaCode.setValue(code);
-    });
-  }
+	public onConfirmSubmit(): void {
+		this.isSubmitting$.next(true)
 
-  public onSubmit(): void {
-    this.isSubmitting$.next(true)
+		const request: RegisterConfirmReq = this.formConfirm.getRawValue()
 
-    if (this.form.invalid) return
+		this.authService
+			.registerConfirm(request)
+			.pipe(
+				tap(result => {
+					this.router.navigate(['/auth/login'], {
+						queryParams: {
+							successRegistration: true
+						}
+					})
+				}),
+				catchError(error => {
+					this.backendErrors$.next(error)
+					return of(error)
+				}),
+				finalize(() => this.isSubmitting$.next(false))
+			)
+			.subscribe()
+	}
 
-    const request: RegisterReq = this.form.getRawValue()
+	onConfirm($event: string) {
+		this.pin.setValue($event)
+		this.onConfirmSubmit()
+	}
 
-    this.authService.register(request).pipe(
-      tap(result => {
-        this.confirmationCode.setValue(result.ConfirmationCode)
-      }),
-      catchError(error => {
-        this.backendErrors$.next(error)
-        return of(error)
-      }),
-      finalize(() => {
-        this.isSubmitting$.next(false)
-      })
-    ).subscribe()
-  }
+	onResend() {
+		this.onSubmit()
+	}
 
-  public onConfirmSubmit(): void {
-    this.isSubmitting$.next(true)
-
-    const request: RegisterConfirmReq = this.formConfirm.getRawValue()
-
-    this.authService.registerConfirm(request).pipe(
-      tap(result => {
-        this.router.navigate(['/auth/login'], {
-          queryParams: {
-            successRegistration: true
-          }
-        })
-      }),
-      catchError(error => {
-        this.backendErrors$.next(error)
-        return of(error)
-      }),
-      finalize(() => this.isSubmitting$.next(false))
-    ).subscribe()
-  }
-
-  onConfirm($event: string) {
-    this.pin.setValue($event)
-    this.onConfirmSubmit()
-  }
-
-  onResend() {
-    this.onSubmit()
-  }
-
-  onBack() {
-    this.captchaText.reset()
-    this.confirmationCode.reset()
-    this.updateCaptcha()
-  }
+	onBack() {
+		this.captchaText.reset()
+		this.confirmationCode.reset()
+		this.updateCaptcha()
+	}
 }

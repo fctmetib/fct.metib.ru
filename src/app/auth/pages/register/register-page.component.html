@@ -2,16 +2,27 @@
 	<ng-container [formGroup]="form">
 		<mib-spacing type="s"></mib-spacing>
 		<div class="flex flex_column gap-xs">
-			<mib-input>
-				<input
-					mibInput
-					formControlName="lastAndFirstNames"
-					[size]="inputSize"
-					styleType="filled-secondary"
-				/>
-				<ng-container input-label>Ваши Фамилия Имя</ng-container>
-			</mib-input>
 			<ng-container formGroupName="Profile">
+				<div class="flex gap-8">
+					<mib-input>
+						<input
+							mibInput
+							formControlName="First"
+							[size]="inputSize"
+							styleType="filled-secondary"
+						/>
+						<ng-container input-label>Имя</ng-container>
+					</mib-input>
+					<mib-input>
+						<input
+							mibInput
+							formControlName="Last"
+							[size]="inputSize"
+							styleType="filled-secondary"
+						/>
+						<ng-container input-label>Фамилия</ng-container>
+					</mib-input>
+				</div>
 				<mib-input>
 					<input
 						mibInput
@@ -30,8 +41,26 @@
 						formControlName="Email"
 						[size]="inputSize"
 						styleType="filled-secondary"
+						#Email
 					/>
 					<ng-container input-label>E-mail</ng-container>
+				</mib-input>
+				<mib-input>
+					<input
+						mibInput
+						type="text"
+						formControlName="Login"
+						[size]="inputSize"
+						styleType="separated"
+						[readonly]="true"
+						[(ngModel)]="Email.value"
+					/>
+					<ng-container input-label>Ваш логин</ng-container>
+					<mib-ref-icon
+						class="stroke path"
+						mibRightIcon
+						name="fi_lock"
+					></mib-ref-icon>
 				</mib-input>
 				<mib-select [size]="inputSize" formControlName="IsMale">
 					<mib-dropdown-point
