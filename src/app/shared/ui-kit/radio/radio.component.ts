@@ -1,7 +1,7 @@
-import { animate, style, transition, trigger } from '@angular/animations'
-import { Component, Input, ViewEncapsulation, forwardRef } from '@angular/core'
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
-import { MibRadioSize } from './interfaces/radio.interface'
+import {animate, style, transition, trigger} from '@angular/animations'
+import {Component, Input, ViewEncapsulation, forwardRef} from '@angular/core'
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
+import {MibRadioSize} from './interfaces/radio.interface'
 
 @Component({
 	host: {
@@ -18,6 +18,7 @@ export class RadioComponent implements ControlValueAccessor {
 	@Input() class: string = ''
 	@Input() align: string = 'flex_align-self-start'
 	@Input() id: string = ''
+	@Input() point: boolean
 
 	onChange: any = () => {}
 

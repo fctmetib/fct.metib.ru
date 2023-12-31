@@ -5,28 +5,36 @@ import {
 	ContentChildren,
 	OnDestroy,
 	OnInit,
-	QueryList
+	QueryList,
+	forwardRef
 } from '@angular/core'
 import {RadioComponent} from '../radio.component'
 import {BehaviorSubject, Subscription, tap} from 'rxjs'
-import {ControlValueAccessor} from '@angular/forms'
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
 
 @Component({
 	selector: 'mib-radio-group',
 	templateUrl: './radio-group.component.html',
-	styleUrls: ['./radio-group.component.scss']
+	styleUrls: ['./radio-group.component.scss'],
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => RadioGroupComponent),
+			multi: true
+		}
+	]
 })
 export class RadioGroupComponent
 	implements ControlValueAccessor, OnInit, OnDestroy, AfterContentInit
 {
-	@ContentChildren(RadioComponent, {descendants: true})
+	@ContentChildren(RadioComponent)
 	radioButton!: QueryList<RadioComponent>
 
 	private subscriptions: Subscription[] = []
 
 	public radioValue$ = new BehaviorSubject<boolean>(true)
 
-	public value = null
+	public point = true
 
 	constructor(private cdr: ChangeDetectorRef) {}
 
@@ -39,23 +47,23 @@ export class RadioGroupComponent
 	}
 
 	ngAfterContentInit(): void {
-		console.log('AFTER-VIEW-INIT>>>')
-		console.log('radioButtons :>> ', this.radioButton)
+		// console.log('AFTER-VIEW-INIT>>>')
+		// console.log('radioButtons :>> ', this.radioButton)
 		this.radioButton.changes.subscribe(() => {
-			this.resetSubscriptions()
-			this.subscribeToItems()
+			// 	this.resetSubscriptions()
+			// 	this.subscribeToItems()
 		})
 		let btn = this.radioButton.get(0)
 		let value = this.radioButton.get(0)?.value
 		console.log('btn :>> ', btn)
 		if (btn) {
-			btn.value = true
-			this.setActiveRadio(value)
-			console.log('btn.value :>> ', btn.value)
+			value = true
+			// this.setActiveRadio(value)
+			// 	console.log('btn.value :>> ', btn.value)
 		}
 	}
 
-	setActiveRadio(value) {
+	setActiveRadio(value: boolean) {
 		this.radioValue$.next(value)
 		this.cdr.detectChanges()
 	}
@@ -87,7 +95,7 @@ export class RadioGroupComponent
 	onTouch: any = () => {}
 
 	writeValue(value: boolean): void {
-		this.value = value
+		this.point = value
 	}
 
 	registerOnChange(fn: any): void {

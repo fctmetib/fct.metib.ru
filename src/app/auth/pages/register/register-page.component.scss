@@ -1,6 +1,12 @@
 img {
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  border: 1px solid var(--wgr-primary);
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	border: 1px solid var(--wgr-primary);
+}
+
+mib-radio-group {
+	mib-radio {
+		width: 100%;
+	}
 }
