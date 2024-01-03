@@ -1,6 +1,20 @@
 import {animate, style, transition, trigger} from '@angular/animations'
-import {Component, Input, ViewEncapsulation, forwardRef} from '@angular/core'
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
+import {
+	AfterContentInit,
+	Component,
+	ContentChildren,
+	Input,
+	OnInit,
+	QueryList,
+	Self,
+	ViewEncapsulation,
+	forwardRef
+} from '@angular/core'
+import {
+	ControlValueAccessor,
+	NG_VALUE_ACCESSOR,
+	NgControl
+} from '@angular/forms'
 import {MibRadioSize} from './interfaces/radio.interface'
 
 @Component({
@@ -11,22 +25,24 @@ import {MibRadioSize} from './interfaces/radio.interface'
 	templateUrl: './radio.component.html',
 	styleUrls: ['./radio.component.scss']
 })
-export class RadioComponent implements ControlValueAccessor {
-	public value: boolean = false
-
+export class RadioComponent implements ControlValueAccessor, OnInit {
 	@Input() size: MibRadioSize = 'm'
 	@Input() class: string = ''
 	@Input() align: string = 'flex_align-self-start'
-	@Input() id: string = ''
-	@Input() point: boolean
 
-	onChange: any = () => {}
+	@Input() value: any
+	check: any
+	onChange = (value: any) => {}
+	onTouched = () => {}
+	constructor(@Self() private ngControl: NgControl) {
+		ngControl.valueAccessor = this
+	}
 
-	onTouch: any = () => {}
-
-	writeValue(value: boolean): void {
-		this.value = value
-		this.onChange(this.value)
+	ngOnInit() {
+		this.ngControl.control.valueChanges.subscribe(value => {
+			if (this.check === value) return
+			this.writeValue(value)
+		})
 	}
 
 	registerOnChange(fn: any): void {
@@ -34,17 +50,15 @@ export class RadioComponent implements ControlValueAccessor {
 	}
 
 	registerOnTouched(fn: any): void {
-		this.onTouch = fn
+		this.onTouched = fn
 	}
 
-	setDisabledState?(isDisabled: boolean): void {
-		console.log('radio disabled not implemented!')
+	writeValue(value: any) {
+		this.check = value
 	}
 
-	onRadioChange(event: Event): void {
-		event.stopPropagation()
-		event.preventDefault()
-		this.value = !this.value
-		this.writeValue(this.value)
+	onRadioChange() {
+		this.check = this.check === this.value ? null : this.value
+		this.onChange(this.check)
 	}
 }

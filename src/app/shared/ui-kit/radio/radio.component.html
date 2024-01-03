@@ -1,13 +1,9 @@
 <label #radioButton class="flex flex_align-center radio w100" [ngClass]="class">
-	<input
-		type="radio"
-		[checked]="value"
-		(click)="onRadioChange($event)"
-		class="radio-input"
-	/>
+	<input type="radio" [checked]="check" class="radio-input" [value]="value" />
 	<div class="flex gap-8">
 		<span
-			[class.checked]="value"
+			(click)="onRadioChange()"
+			[class.checked]="check === value ? 'checked' : ''"
 			class="radio-control flex flex_center"
 			[ngClass]="'radio-control_' + size"
 		>

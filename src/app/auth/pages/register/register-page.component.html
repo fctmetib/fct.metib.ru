@@ -26,11 +26,11 @@
 				</div>
 				<div>
 					<mib-spacing type="x"></mib-spacing>
-					<mib-radio-group formControlName="IsMale">
-						<mib-radio [point]="true">
+					<mib-radio-group>
+						<mib-radio formControlName="IsMale" [value]="true">
 							<ng-container>Мужчина</ng-container>
 						</mib-radio>
-						<mib-radio [point]="true">
+						<mib-radio formControlName="IsMale" [value]="false">
 							<ng-container>Женщина</ng-container>
 						</mib-radio>
 					</mib-radio-group>

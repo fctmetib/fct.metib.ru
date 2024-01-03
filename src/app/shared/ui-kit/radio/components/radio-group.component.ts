@@ -15,18 +15,17 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
 @Component({
 	selector: 'mib-radio-group',
 	templateUrl: './radio-group.component.html',
-	styleUrls: ['./radio-group.component.scss'],
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => RadioGroupComponent),
-			multi: true
-		}
-	]
+	styleUrls: ['./radio-group.component.scss']
+	// providers: [
+	// 	{
+	// 		provide: NG_VALUE_ACCESSOR,
+	// 		useExisting: forwardRef(() => RadioGroupComponent),
+	// 		multi: true
+	// 	}
+	// ]
 })
-export class RadioGroupComponent
-	implements ControlValueAccessor, OnInit, OnDestroy, AfterContentInit
-{
+// implements ControlValueAccessor, OnInit, OnDestroy, AfterContentInit
+export class RadioGroupComponent {
 	@ContentChildren(RadioComponent)
 	radioButton!: QueryList<RadioComponent>
 
@@ -34,75 +33,75 @@ export class RadioGroupComponent
 
 	public radioValue$ = new BehaviorSubject<boolean>(true)
 
-	public point = true
+	public value = true
 
 	constructor(private cdr: ChangeDetectorRef) {}
 
-	ngOnInit(): void {
-		console.log('ON-INIT>>>')
-	}
+	// ngOnInit(): void {
+	// 	console.log('ON-INIT>>>')
+	// }
 
-	get radioValue() {
-		return this.radioValue$.value
-	}
+	// get radioValue() {
+	// 	return this.radioValue$.value
+	// }
 
-	ngAfterContentInit(): void {
-		// console.log('AFTER-VIEW-INIT>>>')
-		// console.log('radioButtons :>> ', this.radioButton)
-		this.radioButton.changes.subscribe(() => {
-			// 	this.resetSubscriptions()
-			// 	this.subscribeToItems()
-		})
-		let btn = this.radioButton.get(0)
-		let value = this.radioButton.get(0)?.value
-		console.log('btn :>> ', btn)
-		if (btn) {
-			value = true
-			// this.setActiveRadio(value)
-			// 	console.log('btn.value :>> ', btn.value)
-		}
-	}
+	// ngAfterContentInit(): void {
+	// 	// console.log('AFTER-VIEW-INIT>>>')
+	// 	// console.log('radioButtons :>> ', this.radioButton)
+	// 	this.radioButton.changes.subscribe(() => {
+	// 		// 	this.resetSubscriptions()
+	// 		// 	this.subscribeToItems()
+	// 	})
+	// 	let btn = this.radioButton.get(0)
+	// 	let value = this.radioButton.get(0)?.value
+	// 	console.log('btn :>> ', btn)
+	// 	if (btn) {
+	// 		value = true
+	// 		// this.setActiveRadio(value)
+	// 		// 	console.log('btn.value :>> ', btn.value)
+	// 	}
+	// }
 
-	setActiveRadio(value: boolean) {
-		this.radioValue$.next(value)
-		this.cdr.detectChanges()
-	}
+	// setActiveRadio(value: boolean) {
+	// 	this.radioValue$.next(value)
+	// 	this.cdr.detectChanges()
+	// }
 
-	private resetSubscriptions() {
-		this.subscriptions.forEach(sub => sub.unsubscribe())
-		this.subscriptions = []
-	}
+	// private resetSubscriptions() {
+	// 	this.subscriptions.forEach(sub => sub.unsubscribe())
+	// 	this.subscriptions = []
+	// }
 
-	updateTabsAndButtons = () => {
-		this.radioButton.forEach(radio => {
-			console.log('radio :>> ', radio)
-			this.cdr.detectChanges()
-		})
+	// updateTabsAndButtons = () => {
+	// 	this.radioButton.forEach(radio => {
+	// 		console.log('radio :>> ', radio)
+	// 		this.cdr.detectChanges()
+	// 	})
 
-		this.cdr.detectChanges()
-	}
+	// 	this.cdr.detectChanges()
+	// }
 
-	private subscribeToItems() {
-		this.updateTabsAndButtons()
-	}
+	// private subscribeToItems() {
+	// 	this.updateTabsAndButtons()
+	// }
 
-	ngOnDestroy(): void {
-		this.subscriptions.forEach(sub => sub.unsubscribe())
-	}
+	// ngOnDestroy(): void {
+	// 	this.subscriptions.forEach(sub => sub.unsubscribe())
+	// }
 
-	onChange: any = () => {}
+	// onChange: any = () => {}
 
-	onTouch: any = () => {}
+	// onTouch: any = () => {}
 
-	writeValue(value: boolean): void {
-		this.point = value
-	}
+	// writeValue(value: boolean): void {
+	// 	this.value = value
+	// }
 
-	registerOnChange(fn: any): void {
-		this.onChange = fn
-	}
+	// registerOnChange(fn: any): void {
+	// 	this.onChange = fn
+	// }
 
-	registerOnTouched(fn: any): void {
-		this.onTouch = fn
-	}
+	// registerOnTouched(fn: any): void {
+	// 	this.onTouch = fn
+	// }
 }
