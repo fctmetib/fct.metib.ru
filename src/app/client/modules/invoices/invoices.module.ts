@@ -3,7 +3,6 @@ import {InvoicesRoutingModule} from './invoices-routing.module'
 import {CommonModule, DatePipe} from '@angular/common'
 import {DropdownModule as DropdownModule22} from 'primeng/dropdown'
 import {CardModule} from 'primeng/card'
-import {ButtonModule as ButtonModule22} from 'primeng/button'
 import {TableModule as TableModule22} from 'primeng/table'
 import {MultiSelectModule} from 'primeng/multiselect'
 import {ProgressBarModule} from 'primeng/progressbar'
@@ -37,7 +36,6 @@ import {InvoiceDrawerModule} from './modules/invoice-drawer/invoice-drawer.modul
 		CommonModule,
 		InputTextModule,
 		CheckboxModule,
-		ButtonModule22,
 		RadioButtonModule,
 		InputTextareaModule,
 		SliderModule,

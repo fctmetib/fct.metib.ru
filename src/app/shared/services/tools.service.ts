@@ -45,7 +45,6 @@ export class ToolsService {
     try {
       const split = data.split(';');
       const source = split.length > 0 ? split[0].trim() : null;
-      console.log(typeof source); // должно вывести 'string'
       if (source && source !== 'undefined') { // Проверяем, не равна ли source строке 'undefined'
         return JSON.parse(source);
       } else {

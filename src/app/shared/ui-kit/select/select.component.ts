@@ -17,6 +17,7 @@ import {setPaddings} from '../input/services/set-paddings.service';
 import {DropdownService} from '../dropdown/services/dropdown.service';
 import {DropdownComponent} from '../dropdown/dropdown.component';
 import {SelectLabelDirective} from './directives/select-label.directive';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   selector: 'mib-select',
@@ -74,13 +75,15 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   }
 
   setIconPaddings() {
-    setTimeout(() => {
-      setPaddings({
-        leftEl: this.leftIcon.nativeElement,
-        rightEl: this.rightIcon.nativeElement,
-        element: this.select.nativeElement,
-      }, this.r2, this.platformId)
-    })
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        setPaddings({
+          leftEl: this.leftIcon.nativeElement,
+          rightEl: this.rightIcon.nativeElement,
+          element: this.select.nativeElement,
+        }, this.r2)
+      })
+    }
   }
 
   /**

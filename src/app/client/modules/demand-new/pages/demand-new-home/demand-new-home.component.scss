@@ -1,10 +1,8 @@
 @import 'src/styles/helpers/_icon_tools.scss';
 
-.draft-controls *,
-.history-controls * {
-	width: 280px;
+input, mib-select {
+  width: 280px;
 }
-
 .draft {
 	@include icon-color(var(--mc-default));
 }

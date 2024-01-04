@@ -12,26 +12,22 @@ export interface InputIconsPaddings {
   newPaddingLeft: string
 }
 
-export const setPaddings = ({leftEl, rightEl, element}: SetInputIconsPaddings, r2: Renderer2, platformId, callback?: (data: InputIconsPaddings) => void) => {
-  // Проверяем, что код выполняется в браузере
-  if (isPlatformBrowser(platformId)) {
-    const leftWidth = leftEl.clientWidth
-    const rightWidth = rightEl.clientWidth
+export const setPaddings = ({leftEl, rightEl, element}: SetInputIconsPaddings, r2: Renderer2, callback?: (data: InputIconsPaddings) => void) => {
+  const leftWidth = leftEl.clientWidth
+  const rightWidth = rightEl.clientWidth
 
-    const inputStyles = window.getComputedStyle(element)
+  const inputStyles = window.getComputedStyle(element)
 
-    const paddingRight = inputStyles.getPropertyValue('padding-right')
-    const paddingLeft = inputStyles.getPropertyValue('padding-left')
+  const paddingRight = inputStyles.getPropertyValue('padding-right')
+  const paddingLeft = inputStyles.getPropertyValue('padding-left')
 
-    const newPaddingRight = `calc(${paddingRight} + ${rightWidth}px)`
-    const newPaddingLeft = `calc(${paddingLeft} + ${leftWidth}px)`
+  const newPaddingRight = `calc(${paddingRight} + ${rightWidth}px)`
+  const newPaddingLeft = `calc(${paddingLeft} + ${leftWidth}px)`
 
-    console.log(paddingLeft, leftWidth, newPaddingLeft)
+  console.log(paddingLeft, leftWidth, newPaddingLeft)
 
-    r2.setStyle(element, 'padding-right', newPaddingRight)
-    r2.setStyle(element, 'padding-left', newPaddingLeft)
+  r2.setStyle(element, 'padding-right', newPaddingRight)
+  r2.setStyle(element, 'padding-left', newPaddingLeft)
 
-    callback?.({newPaddingRight, newPaddingLeft})
-  }
-  // Можно добавить else блок для обработки серверного рендеринга, если нужно
+  callback?.({newPaddingRight, newPaddingLeft})
 }

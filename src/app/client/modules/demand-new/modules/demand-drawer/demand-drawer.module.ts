@@ -13,17 +13,17 @@ import {TextareaModule} from '../../../../../shared/ui-kit/textarea/textarea.mod
 
 @NgModule({
   declarations: [DemandDrawerComponent],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    MatDialogModule,
-    SpacingModule,
-    ButtonModule,
-    IconModule,
-    MibDragAndDropModule,
-    InputModule,
-    // TextareaModule
-  ],
+    imports: [
+        CommonModule,
+        DrawerModule,
+        MatDialogModule,
+        SpacingModule,
+        ButtonModule,
+        IconModule,
+        MibDragAndDropModule,
+        InputModule,
+        TextareaModule,
+    ],
   providers: [DemandDrawerService]
 })
 export class DemandDrawerModule {

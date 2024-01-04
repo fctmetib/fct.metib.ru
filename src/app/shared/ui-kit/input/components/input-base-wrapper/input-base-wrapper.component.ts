@@ -3,8 +3,8 @@ import {
   Component,
   ContentChild,
   ContentChildren,
-  ElementRef,
-  Inject,
+  ElementRef, forwardRef,
+  Inject, Optional,
   PLATFORM_ID,
   QueryList,
   Renderer2,
@@ -18,6 +18,9 @@ import {setPaddings} from '../../services/set-paddings.service';
 import {AutoUnsubscribeService} from '../../../../services/auto-unsubscribe.service';
 import {MibInputDirective} from '../../directives/mib-input.directive';
 import {MibTextareaDirective} from '../../../textarea/directives/mib-textarea.directive';
+import {isPlatformBrowser} from '@angular/common';
+import {InputComponent} from '../../input.component';
+import {TextareaComponent} from '../../../textarea/textarea.component';
 
 @Component({
   selector: 'mib-input-base-wrapper',
@@ -26,9 +29,6 @@ import {MibTextareaDirective} from '../../../textarea/directives/mib-textarea.di
   providers: [AutoUnsubscribeService]
 })
 export class InputBaseWrapperComponent implements AfterViewInit {
-  @ContentChild(MibInputDirective, {descendants: true}) inputDirective: MibInputDirective
-  @ContentChild(MibTextareaDirective, {descendants: true}) textareaDirective: MibTextareaDirective
-
   @ViewChild('label') labelEl: ElementRef<HTMLSpanElement>
   @ViewChild('iconsLeftRef') iconsLeftEl: ElementRef<HTMLDivElement>
   @ViewChild('iconsRightRef') iconsRightEl: ElementRef<HTMLDivElement>
@@ -42,7 +42,9 @@ export class InputBaseWrapperComponent implements AfterViewInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private r2: Renderer2,
-    private au: AutoUnsubscribeService
+    private au: AutoUnsubscribeService,
+    @Optional() private input: InputComponent,
+    @Optional() private textarea: TextareaComponent
   ) {
   }
 
@@ -51,11 +53,11 @@ export class InputBaseWrapperComponent implements AfterViewInit {
   }
 
   get directive(): MibInputDirective | MibTextareaDirective {
-    return this.inputDirective || this.textareaDirective
+    return this.input?.inputDirective || this.textarea?.textareaDirective
   }
 
   get isTextarea() {
-    return this.element.tagName === 'TEXTAREA'
+    return this.element?.tagName === 'TEXTAREA'
   }
 
   ngAfterViewInit(): void {
@@ -73,13 +75,15 @@ export class InputBaseWrapperComponent implements AfterViewInit {
   }
 
   setIconPaddings() {
-    setPaddings({
-      leftEl: this.iconsLeftEl.nativeElement,
-      rightEl: this.iconsRightEl.nativeElement,
-      element: this.element,
-    }, this.r2, this.platformId, ({newPaddingLeft}) => {
-      this.r2.setStyle(this.labelEl.nativeElement, 'padding-left', newPaddingLeft)
-    })
+    if (isPlatformBrowser(this.platformId)) {
+      setPaddings({
+        leftEl: this.iconsLeftEl.nativeElement,
+        rightEl: this.iconsRightEl.nativeElement,
+        element: this.element,
+      }, this.r2, ({newPaddingLeft}) => {
+        this.r2.setStyle(this.labelEl.nativeElement, 'padding-left', newPaddingLeft)
+      })
+    }
   }
 
   updateClasses() {
@@ -95,7 +99,7 @@ export class InputBaseWrapperComponent implements AfterViewInit {
   }
 
   focus() {
-    this.inputDirective.elementRef.nativeElement.focus()
+    this.element?.focus()
   }
 
 }

@@ -1,8 +1,10 @@
 import {
-  Component,
+  Component, ContentChild, forwardRef,
   ViewChild,
 } from '@angular/core'
 import {InputBaseWrapperComponent} from './components/input-base-wrapper/input-base-wrapper.component';
+import {MibInputDirective} from './directives/mib-input.directive';
+import {MibTextareaDirective} from '../textarea/directives/mib-textarea.directive';
 
 @Component({
   selector: 'mib-input',
@@ -10,5 +12,5 @@ import {InputBaseWrapperComponent} from './components/input-base-wrapper/input-b
   styleUrls: ['./input.component.scss'],
 })
 export class InputComponent {
-  @ViewChild(InputBaseWrapperComponent) wrapper: InputBaseWrapperComponent
+  @ContentChild(MibInputDirective, {descendants: true}) inputDirective: MibInputDirective
 }
