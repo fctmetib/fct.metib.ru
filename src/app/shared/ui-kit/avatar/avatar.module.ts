@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AvatarComponent} from './avatar.component';
-import {RefIconModule} from '../ref-icon/ref-icon.module';
+import {IconModule} from '../ref-icon/icon.module';
 import {ButtonModule} from '../button/button.module';
 
 
@@ -14,7 +14,7 @@ import {ButtonModule} from '../button/button.module';
   ],
   imports: [
     CommonModule,
-    RefIconModule,
+    IconModule,
     ButtonModule
   ]
 })

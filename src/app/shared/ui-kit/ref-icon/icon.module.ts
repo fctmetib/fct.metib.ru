@@ -15,4 +15,4 @@ import { RefIconComponent } from './ref-icon.component';
         CommonModule
     ]
 })
-export class RefIconModule { }
+export class IconModule { }

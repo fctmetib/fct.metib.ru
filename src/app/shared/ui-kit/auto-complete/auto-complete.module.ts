@@ -4,7 +4,7 @@ import {AutoCompleteComponent} from './auto-complete.component';
 import {InputModule} from '../input/input.module';
 import {DropdownModule} from '../dropdown/dropdown.module';
 import {DropdownPointModule} from '../dropdown-point/dropdown-point.module';
-import {RefIconModule} from '../ref-icon/ref-icon.module';
+import {IconModule} from '../ref-icon/icon.module';
 import {SpacingModule} from '../spacing/spacing.module';
 
 
@@ -20,7 +20,7 @@ import {SpacingModule} from '../spacing/spacing.module';
     InputModule,
     DropdownModule,
     DropdownPointModule,
-    RefIconModule,
+    IconModule,
     SpacingModule
   ]
 })

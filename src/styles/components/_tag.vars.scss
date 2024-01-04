@@ -166,7 +166,7 @@
 }
 
 @mixin tag-iconly($color) {
-	mib-ref-icon {
+	mib-icon {
 		@include icon-color($color);
 	}
 }

@@ -8,7 +8,7 @@ import {RefIconService} from '../ui-kit/ref-icon/services/ref-icon.service'
 export class IconsService {
 	constructor(
 		private domSanitizer: DomSanitizer,
-		private refIconService: RefIconService
+		private iconService: RefIconService
 	) {}
 
 	public icons: string[] = [
@@ -47,7 +47,7 @@ export class IconsService {
 	public async initIcons(): Promise<void> {
 		// Пример
 		for (const icon of this.icons) {
-			await this.refIconService.registerIconFromAssets(
+			await this.iconService.registerIconFromAssets(
 				icon,
 				`assets/icons/ui-kit-icons/${icon}.svg`
 			)

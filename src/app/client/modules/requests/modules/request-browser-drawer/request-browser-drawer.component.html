@@ -88,7 +88,7 @@
             <mib-spacing type="m"></mib-spacing>
             <div class="flex flex_justify-between">
               <mib-button (press)="openShipment()"  type="filled-primary">
-                <mib-ref-icon btn-left-icon class="stroke" name="fi_plus"></mib-ref-icon>
+                <mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
                 Добавить договор
               </mib-button>
               <mib-select
@@ -141,11 +141,11 @@
                     }}</ng-container>
                 </mib-table-cell>
                 <mib-button table-row-button size="s" type="ghost-secondary">
-                  <mib-ref-icon
+                  <mib-icon
                     class="stroke"
                     btn-icon
                     name="fi_more-vertical"
-                  ></mib-ref-icon>
+                  ></mib-icon>
                 </mib-button>
               </mib-table-row>
               <mib-table-footer [underlined]="!(loading$ | async)">
@@ -215,7 +215,7 @@
                   <ng-container table-cell-title>{{document.DocumentTypeID}}</ng-container>
                 </mib-table-cell>
                 <mib-button table-row-button size="s" type="ghost-secondary">
-                  <mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
+                  <mib-icon class="stroke" btn-icon name="fi_more-vertical"></mib-icon>
                 </mib-button>
 
               </mib-table-row>

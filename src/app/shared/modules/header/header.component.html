@@ -11,19 +11,19 @@
 			<div class="flex gap-24">
 				<mib-link size="s" type="ghost-secondary" [routerLink]="['/']"
 					>Москва
-					<mib-ref-icon
+					<mib-icon
 						mibRightIcon
 						class="stroke"
 						name="fi_chevron-down"
-					></mib-ref-icon>
+					></mib-icon>
 				</mib-link>
 				<mib-link size="s" type="ghost-secondary" [routerLink]="['/']"
 					>+7 (495) 727-9797
-					<mib-ref-icon
+					<mib-icon
 						mibRightIcon
 						class="stroke"
 						name="fi_chevron-down"
-					></mib-ref-icon>
+					></mib-icon>
 				</mib-link>
 			</div>
 		</div>
@@ -65,13 +65,13 @@
 							<p class="text text_s label c-bti-tertiary">Ваш менеджер</p>
 						</div>
 						<mib-button size="m" type="ghost-secondary">
-							<mib-ref-icon
+							<mib-icon
 								btn-icon
 								class="stroke"
 								[name]="
 									managerPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'
 								"
-							></mib-ref-icon>
+							></mib-icon>
 						</mib-button>
 					</div>
 					<mib-dropdown #managerPanel>
@@ -80,11 +80,11 @@
 							[text]="manager?.Email ?? 'Почта отсутствует'"
 							[cdkCopyToClipboard]="manager?.Email"
 						>
-							<mib-ref-icon
+							<mib-icon
 								dropdown-point-right-icon
 								class="stroke"
 								name="fi_copy"
-							></mib-ref-icon>
+							></mib-icon>
 						</mib-dropdown-point>
 					</mib-dropdown>
 				</ng-template>
@@ -116,41 +116,41 @@
 							<p class="text text_s label c-bti-tertiary">Пользователь</p>
 						</div>
 						<mib-button size="m" type="ghost-secondary">
-							<mib-ref-icon
+							<mib-icon
 								btn-icon
 								class="stroke"
 								[name]="
 									userPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'
 								"
-							></mib-ref-icon>
+							></mib-icon>
 						</mib-button>
 					</div>
 					<mib-dropdown #userPanel>
 						<mib-spacing dropdown-spacing type="s"></mib-spacing>
 						<mib-dropdown-point (click)="logout()" text="Сменить аккаунт">
-							<mib-ref-icon
+							<mib-icon
 								dropdown-point-left-icon
 								class="stroke"
 								name="fi_refresh-ccw"
-							></mib-ref-icon>
+							></mib-icon>
 						</mib-dropdown-point>
 						<mib-dropdown-point (click)="logout()" text="Выйти">
-							<mib-ref-icon
+							<mib-icon
 								dropdown-point-left-icon
 								class="stroke"
 								name="fi_log-out"
-							></mib-ref-icon>
+							></mib-icon>
 						</mib-dropdown-point>
 					</mib-dropdown>
 				</ng-template>
 			</ng-container>
 			<ng-template #unsignedTemplate>
 				<div class="flex flex_grow gap-16">
-					<mib-ref-icon
+					<mib-icon
 						class="cursor-pointer"
 						[routerLink]="['/']"
 						name="logotype"
-					></mib-ref-icon>
+					></mib-icon>
 					<div class="flex flex_center gap-32">
 						<a
 							title="Перейти на страницу: Главная"
@@ -188,11 +188,11 @@
 				</ng-container>
 				<ng-template #loggedInUser>
 					<mib-button [routerLink]="['/']" type="filled-secondary" size="m">
-						<mib-ref-icon
+						<mib-icon
 							btn-icon
 							class="stroke"
 							name="fi_chevron-left"
-						></mib-ref-icon>
+						></mib-icon>
 					</mib-button>
 				</ng-template>
 			</ng-template>

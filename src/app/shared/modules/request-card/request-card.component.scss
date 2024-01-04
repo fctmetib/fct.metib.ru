@@ -43,7 +43,7 @@
 		@include request-card-mobile;
 	}
 
-	mib-ref-icon[name='fi_plus'] {
+	mib-icon[name='fi_plus'] {
 		@include icon-size(20px);
 		@include icon-color(var(--mc-default));
 	}

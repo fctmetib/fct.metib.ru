@@ -1,11 +1,11 @@
 <div class="flex">
   <mib-button size="m" (click)="onPageChange(pageControl.value - 1)" type="ghost-secondary">
-    <mib-ref-icon btn-icon class="stroke" name="fi_chevron-left"></mib-ref-icon>
+    <mib-icon btn-icon class="stroke" name="fi_chevron-left"></mib-icon>
   </mib-button>
   <mib-paginator-point [selected]="pageControl.value === page" *ngFor="let page of pages" (click)="onSelectPage(page)">
     <a class="page-link">{{page}}</a>
   </mib-paginator-point>
   <mib-button size="m" (click)="onPageChange(pageControl.value + 1)" type="ghost-secondary">
-    <mib-ref-icon btn-icon class="stroke" name="fi_chevron-right"></mib-ref-icon>
+    <mib-icon btn-icon class="stroke" name="fi_chevron-right"></mib-icon>
   </mib-button>
 </div>

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MibDragAndDropComponent} from './mib-drag-and-drop.component';
 import {DropDirective} from "./directives/drop.directive";
-import {RefIconModule} from '../ref-icon/ref-icon.module';
+import {IconModule} from '../ref-icon/icon.module';
 import {LinkModule} from '../link/link.module';
 
 @NgModule({
@@ -15,7 +15,7 @@ import {LinkModule} from '../link/link.module';
   ],
   imports: [
     CommonModule,
-    RefIconModule,
+    IconModule,
     LinkModule,
   ]
 })

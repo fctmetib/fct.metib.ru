@@ -10,7 +10,8 @@ import {AuthService} from '../../services/auth.service'
 import {Router} from '@angular/router'
 import {InputSize} from 'src/app/shared/ui-kit/input/interfaces/input.interface'
 import {AutoUnsubscribeService} from '../../../shared/services/auto-unsubscribe.service'
-import {takeUntil} from 'rxjs/operators'
+import {delay, takeUntil} from 'rxjs/operators'
+import {Properties} from 'csstype';
 
 @Component({
 	selector: 'app-register-page',
@@ -26,8 +27,15 @@ export class RegisterPageComponent {
 
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
 	public backendErrors$ = new BehaviorSubject<string>(null)
+  public isCaptchaLoading$ = new BehaviorSubject<boolean>(false)
 
-	image: any
+	public image: string
+  public captchaSkeleton: Properties = {
+    width: '100%',
+    height: '80px',
+    borderRadius: '8px',
+    border: '1px solid var(--wgr-tertiary)'
+  }
 
 	constructor(
 		private fb: FormBuilder,
@@ -146,10 +154,16 @@ export class RegisterPageComponent {
 	}
 
 	public updateCaptcha(): void {
-		this.commonService.getCaptcha().subscribe(({image, code}) => {
-			this.image = image
-			this.captchaCode.setValue(code)
-		})
+    this.isCaptchaLoading$.next(true)
+		this.commonService.getCaptcha().pipe(
+      tap(({image, code}) => {
+        this.image = image
+        this.captchaCode.setValue(code)
+      }),
+      finalize(() => {
+        this.isCaptchaLoading$.next(false)
+      })
+    ).subscribe()
 	}
 
 	public onSubmit(): void {

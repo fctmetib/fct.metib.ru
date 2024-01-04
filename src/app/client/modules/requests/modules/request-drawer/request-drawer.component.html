@@ -108,11 +108,11 @@
 					size="s"
 					type="ghost-secondary"
 				>
-					<mib-ref-icon
+					<mib-icon
 						class="stroke"
 						btn-icon
 						name="fi_more-vertical"
-					></mib-ref-icon>
+					></mib-icon>
 				</mib-button>
 				<mib-dropdown #shipmentMenu>
 					<mib-dropdown-point
@@ -126,7 +126,7 @@
 	<mib-spacing type="xs"></mib-spacing>
 	<mib-button (press)="openShipment()" [size]="size">
 		Добавить договор поставки
-		<mib-ref-icon btn-left-icon class="stroke" name="fi_plus"></mib-ref-icon>
+		<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
 	</mib-button>
 	<mib-spacing type="s"></mib-spacing>
 	<h5 class="headline">Копии накладных</h5>
@@ -162,7 +162,7 @@
 					<ng-container table-cell-title>{{document.get('DocumentTypeID').value}}</ng-container>
 				</mib-table-cell>
 				<mib-button table-row-button [mibDropdownTrigger]="documentMenu" size="s" type="ghost-secondary">
-					<mib-ref-icon class="stroke" btn-icon name="fi_more-vertical"></mib-ref-icon>
+					<mib-icon class="stroke" btn-icon name="fi_more-vertical"></mib-icon>
 				</mib-button>
 				<mib-dropdown #documentMenu>
 					<mib-dropdown-point (press)="removeDocument(idx)" text="Удалить"></mib-dropdown-point>

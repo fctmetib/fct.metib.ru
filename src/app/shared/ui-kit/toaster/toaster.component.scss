@@ -3,12 +3,12 @@
 @mixin toaster-color($color, $background-color) {
 	background-color: $background-color;
 
-	mib-ref-icon {
+	mib-icon {
 		@include icon-color($color);
 	}
 
 	& .last-icon {
-		mib-ref-icon {
+		mib-icon {
 			@include icon-color(var(--bti-secondary));
 		}
 	}
@@ -30,7 +30,7 @@
 	color: var(--bti-primary);
 	border-radius: var(--main-border-radius);
 
-	mib-ref-icon {
+	mib-icon {
 		@include icon-size(20px);
 	}
 

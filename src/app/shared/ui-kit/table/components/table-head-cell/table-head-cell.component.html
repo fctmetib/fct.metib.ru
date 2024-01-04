@@ -2,6 +2,6 @@
   <mib-checkbox [formControl]="control" align="" [id]="checkboxId" *ngIf="showCheckbox"></mib-checkbox>
   <div class="content flex gap-4">
     <label [class.cursor-pointer]="sortable || showCheckbox" [class.user-select-none]="selectedAsSortable || showCheckbox" #label [for]="sortable ? '' : checkboxId" (click)="toggle()"><ng-content></ng-content></label>
-    <mib-ref-icon *ngIf="selectedAsSortable" class="stroke cursor-pointer" [name]="selected ? 'fi_chevron-up' : 'fi_chevron-down'"></mib-ref-icon>
+    <mib-icon *ngIf="selectedAsSortable" class="stroke cursor-pointer" [name]="selected ? 'fi_chevron-up' : 'fi_chevron-down'"></mib-icon>
   </div>
 </div>

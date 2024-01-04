@@ -1,14 +1,23 @@
-import {Component, EventEmitter, HostBinding, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  ContentChildren,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  QueryList,
+  SimpleChanges
+} from '@angular/core';
 import {TableCellSize, TableCellType} from './interfaces/table-cell.interface';
 import {FormControl} from '@angular/forms';
 import {tap} from 'rxjs';
 import {TableComponent} from '../../table.component';
 import {distinctUntilChanged} from 'rxjs/operators';
+import {TableRowComponent} from '../table-row/table-row.component';
 
 @Component({
-  host: {
-    'class': 'table-cell flex flex_align-center gap-8'
-  },
   selector: 'mib-table-cell',
   templateUrl: './table-cell.component.html',
   styleUrls: ['./table-cell.component.scss']
@@ -16,11 +25,12 @@ import {distinctUntilChanged} from 'rxjs/operators';
 export class TableCellComponent implements OnInit, OnChanges {
   @Input() type: TableCellType = 'text';
   @Input() set size(value: TableCellSize) {this._size = value;}
-  @HostBinding('title') @Input() title: string = ''
   @Input() checked: boolean;
   @Input() showCheckbox: boolean = true;
   @Input() contracted: boolean = false;
   @Output() onCheck = new EventEmitter<boolean>();
+  @Output() press = new EventEmitter<any>();
+  @HostBinding('title') @Input() title: string = ''
 
   public _size: TableCellSize = 'm'
   public checkboxId: string;
@@ -28,7 +38,7 @@ export class TableCellComponent implements OnInit, OnChanges {
   control: FormControl = new FormControl<boolean>(false)
 
   constructor(
-    private table: TableComponent
+    private table: TableComponent,
   ) {
   }
 

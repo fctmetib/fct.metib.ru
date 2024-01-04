@@ -2,7 +2,7 @@
      class="drag-and-drop flex flex_center text-center flex_column gap-4" (click)="openFileManager()">
   <ng-container *ngIf="!dropDirective?.fileOver; else fileOver">
     <div class="flex flex_align-center gap-4">
-      <mib-ref-icon class="stroke" name="fi_file-text"></mib-ref-icon>
+      <mib-icon class="stroke" name="fi_file-text"></mib-icon>
       <p class="text text_m text_medium">{{headline}}</p>
     </div>
     <div class="flex flex_align-center gap-4">

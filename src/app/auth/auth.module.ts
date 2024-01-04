@@ -22,7 +22,7 @@ import {TooltipModule} from 'primeng/tooltip'
 import {HeaderModule} from '../shared/modules/header/header.module'
 import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module'
 import {InputModule} from '../shared/ui-kit/input/input.module'
-import {RefIconModule} from '../shared/ui-kit/ref-icon/ref-icon.module'
+import {IconModule} from '../shared/ui-kit/ref-icon/icon.module'
 import {LinkModule} from '../shared/ui-kit/link/link.module'
 import {ButtonModule} from '../shared/ui-kit/button/button.module'
 import {NgxMaskModule} from 'ngx-mask'
@@ -35,38 +35,40 @@ import {ConfirmPasswordPageComponent} from './pages/confirm-password/confirm-pas
 import {SmsConfirmationModule} from './modules/sms-confirmation/sms-confirmation.module'
 import {SelectModule} from '../shared/ui-kit/select/select.module'
 import {RadioModule} from '../shared/ui-kit/radio/radio.module'
+import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		AuthRoutingModule,
-		FormsModule,
-		HttpClientModule,
-		ReactiveFormsModule,
-		InputTextModule,
-		DropdownModule,
-		ProgressSpinnerModule,
-		ButtonModule22,
-		CardModule,
-		MessageModule,
-		MessagesModule,
-		ButtonModule,
-		InputMaskModule,
-		TooltipModule,
-		HeaderModule,
-		SpacingModule,
-		InputModule,
-		RefIconModule,
-		LinkModule,
-		NgxMaskModule.forRoot(),
-		RightIconModule,
-		PasswordHiderModule,
-		SelectModule,
-		DropdownPointModule,
-		LeftIconModule,
-		SmsConfirmationModule,
-		RadioModule
-	],
+    imports: [
+        CommonModule,
+        AuthRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        DropdownModule,
+        ProgressSpinnerModule,
+        ButtonModule22,
+        CardModule,
+        MessageModule,
+        MessagesModule,
+        ButtonModule,
+        InputMaskModule,
+        TooltipModule,
+        HeaderModule,
+        SpacingModule,
+        InputModule,
+        IconModule,
+        LinkModule,
+        NgxMaskModule.forRoot(),
+        RightIconModule,
+        PasswordHiderModule,
+        SelectModule,
+        DropdownPointModule,
+        LeftIconModule,
+        SmsConfirmationModule,
+        RadioModule,
+        SkeletonModule
+    ],
 	declarations: [
 		AuthComponent,
 		LoginPageComponent,

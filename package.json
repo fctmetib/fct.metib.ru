@@ -9,9 +9,10 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "check-cover": "ng test --watch=false --code-coverage",
-    "dev:ssr": "ng run metallinvestbank-web:serve-ssr",
+    "dev:ssr": "ng run metallinvestbank-web:serve-ssr:development",
     "serve:ssr": "node dist/metallinvestbank-web/server/main.js",
-    "build:ssr": "ng build && ng run metallinvestbank-web:server",
+    "start:dev": "ng serve --configuration development",
+    "build:dev": "ng build --configuration development",
     "prerender": "ng run metallinvestbank-web:prerender"
   },
   "private": true,

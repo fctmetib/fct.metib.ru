@@ -26,12 +26,12 @@
 		/>
 		<ng-container input-label>Введите пароль</ng-container>
 		<!-- input-right-icon -->
-		<mib-ref-icon
+		<mib-icon
 			[passwordHider]="[password]"
 			class="stroke"
 			mibRightIcon
 			[name]="password.type === 'password' ? 'fi_eye' : 'fi_eye-off'"
-		></mib-ref-icon>
+		></mib-icon>
 	</mib-input>
 	<mib-spacing type="xs"></mib-spacing>
 	<mib-link [routerLink]="['/auth/reset-password']"> Забыли пароль? </mib-link>

@@ -4,7 +4,7 @@
 	width: 24px;
 	height: 24px;
 	border-radius: 8px;
-	mib-ref-icon {
+	mib-icon {
 		@include icon-size(20px);
 	}
 }
@@ -13,7 +13,7 @@
 	width: 20px;
 	height: 20px;
 	border-radius: 6px;
-	mib-ref-icon {
+	mib-icon {
 		@include icon-size(16px);
 	}
 }
@@ -22,7 +22,7 @@
 	width: 16px;
 	height: 16px;
 	border-radius: 4px;
-	mib-ref-icon {
+	mib-icon {
 		@include icon-size(12px);
 	}
 }
@@ -71,7 +71,7 @@
 		user-select: none;
 	}
 
-	mib-ref-icon {
+	mib-icon {
 		@include icon-color(var(--wgr-primary));
 		@include checkbox-icon;
 	}

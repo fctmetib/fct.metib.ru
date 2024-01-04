@@ -24,18 +24,14 @@
 						<ng-container input-label>Фамилия</ng-container>
 					</mib-input>
 				</div>
-				<div>
-					<mib-spacing type="x"></mib-spacing>
-					<mib-radio-group>
-						<mib-radio formControlName="IsMale" [value]="true">
-							<ng-container>Мужчина</ng-container>
-						</mib-radio>
-						<mib-radio formControlName="IsMale" [value]="false">
-							<ng-container>Женщина</ng-container>
-						</mib-radio>
-					</mib-radio-group>
-					<mib-spacing type="x"></mib-spacing>
-				</div>
+        <mib-radio-group formControlName="IsMale">
+          <mib-radio [value]="true">
+            <ng-container>Мужчина</ng-container>
+          </mib-radio>
+          <mib-radio [value]="false">
+            <ng-container>Женщина</ng-container>
+          </mib-radio>
+        </mib-radio-group>
 				<mib-input>
 					<input
 						mibInput
@@ -69,11 +65,11 @@
 						[(ngModel)]="Email.value"
 					/>
 					<ng-container input-label>Ваш логин</ng-container>
-					<mib-ref-icon
+					<mib-icon
 						class="stroke path"
 						mibRightIcon
 						name="fi_lock"
-					></mib-ref-icon>
+					></mib-icon>
 				</mib-input>
 				<!-- <mib-select [size]="inputSize" formControlName="IsMale">
 					<mib-dropdown-point
@@ -96,12 +92,12 @@
 					formControlName="Password"
 				/>
 				<ng-container input-label>Введите пароль</ng-container>
-				<mib-ref-icon
+				<mib-icon
 					[passwordHider]="[password]"
 					class="stroke path"
 					mibRightIcon
 					[name]="password.type === 'password' ? 'fi_eye' : 'fi_eye-off'"
-				></mib-ref-icon>
+				></mib-icon>
 			</mib-input>
 			<mib-input>
 				<input
@@ -113,19 +109,22 @@
 					formControlName="ConfirmPassword"
 				/>
 				<ng-container input-label>Подтвердите пароль</ng-container>
-				<mib-ref-icon
+				<mib-icon
 					[passwordHider]="[confirmPassword]"
 					class="stroke path"
 					mibRightIcon
 					[name]="confirmPassword.type === 'password' ? 'fi_eye' : 'fi_eye-off'"
-				></mib-ref-icon>
+				></mib-icon>
 			</mib-input>
 		</div>
 		<mib-spacing type="xs"></mib-spacing>
 		<ng-container formGroupName="Captcha">
 			<div class="flex gap-16">
-				<img [src]="image" alt="" />
-				<div class="flex flex_column gap-xs2">
+				<mib-skeleton class="flex_grow" [styles]="captchaSkeleton" *ngIf="isCaptchaLoading$ | async; else captchaImage"></mib-skeleton>
+        <ng-template #captchaImage>
+          <img class="flex_grow" [src]="image" alt="" />
+        </ng-template>
+				<div class="flex_grow flex flex_column gap-xs2">
 					<mib-input>
 						<input
 							mibInput
@@ -136,11 +135,11 @@
 						<ng-container input-label>Текст с картинки</ng-container>
 					</mib-input>
 					<mib-link (press)="updateCaptcha()">
-						<mib-ref-icon
+						<mib-icon
 							mibLeftIcon
 							class="stroke"
 							name="fi_refresh-ccw"
-						></mib-ref-icon>
+						></mib-icon>
 						Обновить картинку
 					</mib-link>
 				</div>
@@ -166,7 +165,7 @@
 			size="l"
 			type="filled-secondary"
 			class="flex_grow"
-			>Авторизация</mib-button
+			>Есть аккаунт?</mib-button
 		>
 		<mib-button
 			*ngIf="confirmationCode.invalid"
@@ -196,370 +195,3 @@
 		Завершить регистрацию</mib-sms-confirmation
 	>
 </ng-template>
-
-<!--<hr />-->
-<!--<div class="auth__body">-->
-<!--	<div class="auth__body__form auth__body__form_registration">-->
-<!--		<div class="auth__body__form__title">-->
-<!--			<h1>Регистрация</h1>-->
-<!--		</div>-->
-
-<!--		<form [formGroup]="form" (ngSubmit)="onSubmit()">-->
-<!--			<div class="auth__body__form__fields">-->
-<!--				&lt;!&ndash; Profile &ndash;&gt;-->
-<!--				<div formGroupName="profile">-->
-<!--					&lt;!&ndash; Name &ndash;&gt;-->
-<!--					<div formGroupName="name">-->
-<!--						<div class="auth__body__form__fields__two-columns">-->
-<!--							<div class="auth__body__form__fields__field">-->
-<!--								<input-->
-<!--									id="first"-->
-<!--									type="text"-->
-<!--									pInputText-->
-<!--									placeholder="Имя"-->
-<!--									formControlName="first"-->
-<!--									[ngClass]="{-->
-<!--										'mib-border-danger':-->
-<!--											(isSubmitting$ | async) &&-->
-<!--											form.get('profile.name.first').invalid-->
-<!--									}"-->
-<!--								/>-->
-<!--								<small-->
-<!--									class="p-error"-->
-<!--									*ngIf="-->
-<!--										(isSubmitting$ | async) &&-->
-<!--										form.get('profile.name.first').invalid-->
-<!--									"-->
-<!--								>-->
-<!--									<div-->
-<!--										*ngIf="form.get('profile.name.first').errors['required']"-->
-<!--									>-->
-<!--										Поле Имя не должно быть пустым-->
-<!--									</div>-->
-<!--								</small>-->
-<!--							</div>-->
-<!--							<div class="auth__body__form__fields__field">-->
-<!--								<input-->
-<!--									id="last"-->
-<!--									type="text"-->
-<!--									pInputText-->
-<!--									placeholder="Фамилия"-->
-<!--									formControlName="last"-->
-<!--									[ngClass]="{-->
-<!--										'mib-border-danger':-->
-<!--											(isSubmitting$ | async) &&-->
-<!--											form.get('profile.name.last').invalid-->
-<!--									}"-->
-<!--								/>-->
-<!--								<small-->
-<!--									class="p-error"-->
-<!--									*ngIf="-->
-<!--										(isSubmitting$ | async) &&-->
-<!--										form.get('profile.name.last').invalid-->
-<!--									"-->
-<!--								>-->
-<!--									<div *ngIf="form.get('profile.name.last').errors['required']">-->
-<!--										Поле Фамилия не должно быть пустым-->
-<!--									</div>-->
-<!--								</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-
-<!--					<div class="auth__body__form__fields__two-columns">-->
-<!--						<div class="auth__body__form__fields__field">-->
-<!--							<p-inputMask-->
-<!--								id="phone"-->
-<!--								mask="+7-999-999-9999"-->
-<!--								type="tel"-->
-<!--								placeholder="Телефон"-->
-<!--								formControlName="phone"-->
-<!--								[ngClass]="{-->
-<!--									'mib-border-danger':-->
-<!--										(isSubmitting$ | async) && form.get('profile.phone').invalid-->
-<!--								}"-->
-<!--							>-->
-<!--							</p-inputMask>-->
-<!--							<small-->
-<!--								class="p-error"-->
-<!--								*ngIf="-->
-<!--									(isSubmitting$ | async) && form.get('profile.phone').invalid-->
-<!--								"-->
-<!--							>-->
-<!--								<div *ngIf="form.get('profile.phone').errors['required']">-->
-<!--									Поле Телефон не должно быть пустым-->
-<!--								</div>-->
-<!--							</small>-->
-<!--						</div>-->
-<!--						<div class="auth__body__form__fields__field">-->
-<!--							<input-->
-<!--								id="email"-->
-<!--								type="email"-->
-<!--								pInputText-->
-<!--								placeholder="Email"-->
-<!--								formControlName="email"-->
-<!--								[ngClass]="{-->
-<!--									'mib-border-danger':-->
-<!--										(isSubmitting$ | async) && form.get('profile.email').invalid-->
-<!--								}"-->
-<!--							/>-->
-<!--							<small-->
-<!--								class="p-error"-->
-<!--								*ngIf="-->
-<!--									(isSubmitting$ | async) && form.get('profile.email').invalid-->
-<!--								"-->
-<!--							>-->
-<!--								<div *ngIf="form.get('profile.email').errors['required']">-->
-<!--									Поле Email не должно быть пустым-->
-<!--								</div>-->
-<!--								<div *ngIf="form.get('profile.email').errors['email']">-->
-<!--									Введите корректный Email адрес-->
-<!--								</div>-->
-<!--							</small>-->
-<!--						</div>-->
-<!--					</div>-->
-
-<!--					<div class="auth__body__form__fields__two-columns">-->
-<!--						<div-->
-<!--							class="auth__body__form__fields__field"-->
-<!--							pTooltip="Ваш Логин, используется для входа в систему"-->
-<!--						>-->
-<!--							<input-->
-<!--								id="login"-->
-<!--								type="text"-->
-<!--								pInputText-->
-<!--								placeholder="Логин"-->
-<!--								formControlName="login"-->
-<!--								[ngClass]="{-->
-<!--									'mib-border-danger':-->
-<!--										(isSubmitting$ | async) && form.get('profile.login').invalid-->
-<!--								}"-->
-<!--							/>-->
-<!--							&lt;!&ndash; <small>-->
-<!--                <div>-->
-<!--                  Логин-->
-<!--                </div>-->
-<!--              </small> &ndash;&gt;-->
-<!--							<small-->
-<!--								class="p-error"-->
-<!--								*ngIf="-->
-<!--									(isSubmitting$ | async) && form.get('profile.login').invalid-->
-<!--								"-->
-<!--							>-->
-<!--								<div *ngIf="form.get('profile.login').errors['required']">-->
-<!--									Поле Логин не должно быть пустым-->
-<!--								</div>-->
-<!--							</small>-->
-<!--						</div>-->
-<!--						<div class="auth__body__form__fields__field">-->
-<!--							<p-dropdown-->
-<!--								id="isMale"-->
-<!--								[options]="genderOptions"-->
-<!--								formControlName="isMale"-->
-<!--								optionLabel="name"-->
-<!--								styleClass="gender-select"-->
-<!--								[showClear]="false"-->
-<!--								placeholder="Пол"-->
-<!--								optionValue="value"-->
-<!--								[ngClass]="{-->
-<!--									'mib-border-danger':-->
-<!--										(isSubmitting$ | async) &&-->
-<!--										form.get('profile.isMale').invalid-->
-<!--								}"-->
-<!--							>-->
-<!--								<ng-template let-country pTemplate="item">-->
-<!--									<div class="country-item">-->
-<!--										<div>{{ country.name }}</div>-->
-<!--									</div>-->
-<!--								</ng-template>-->
-<!--							</p-dropdown>-->
-<!--							<small-->
-<!--								class="p-error"-->
-<!--								*ngIf="-->
-<!--									(isSubmitting$ | async) && form.get('profile.isMale').invalid-->
-<!--								"-->
-<!--							>-->
-<!--								<div *ngIf="form.get('profile.isMale').errors['required']">-->
-<!--									Поле Пол не должно быть пустым-->
-<!--								</div>-->
-<!--							</small>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</div>-->
-
-<!--				&lt;!&ndash; Password &ndash;&gt;-->
-<!--				<div class="auth__body__form__fields__two-columns">-->
-<!--					<div class="auth__body__form__fields__field">-->
-<!--						<input-->
-<!--							id="password"-->
-<!--							type="password"-->
-<!--							pInputText-->
-<!--							placeholder="Пароль"-->
-<!--							formControlName="password"-->
-<!--							[ngClass]="{-->
-<!--								'mib-border-danger':-->
-<!--									(isSubmitting$ | async) && form.get('password').invalid-->
-<!--							}"-->
-<!--						/>-->
-<!--						<small-->
-<!--							class="p-error"-->
-<!--							*ngIf="(isSubmitting$ | async) && form.get('password').invalid"-->
-<!--						>-->
-<!--							<div *ngIf="form.get('password').errors['required']">-->
-<!--								Поле Пароль не должно быть пустым-->
-<!--							</div>-->
-<!--							<div *ngIf="form.get('password').errors['pattern']">-->
-<!--								Поле Пароль не должно содержать кириллицу-->
-<!--							</div>-->
-<!--							<div *ngIf="form.get('password').errors['minlength']">-->
-<!--								Поле Пароль быть более шести символов-->
-<!--							</div>-->
-<!--						</small>-->
-<!--					</div>-->
-<!--					<div class="auth__body__form__fields__field">-->
-<!--						<input-->
-<!--							id="confirmPassword"-->
-<!--							type="password"-->
-<!--							pInputText-->
-<!--							placeholder="Подтвердите Пароль"-->
-<!--							formControlName="confirmPassword"-->
-<!--							[ngClass]="{-->
-<!--								'mib-border-danger':-->
-<!--									(isSubmitting$ | async) && form.get('confirmPassword').invalid-->
-<!--							}"-->
-<!--						/>-->
-<!--						<small-->
-<!--							class="p-error"-->
-<!--							*ngIf="-->
-<!--								(isSubmitting$ | async) && form.get('confirmPassword').invalid-->
-<!--							"-->
-<!--						>-->
-<!--							<div *ngIf="form.get('confirmPassword').errors['required']">-->
-<!--								Поле Подтвердите Пароль не должно быть пустым-->
-<!--							</div>-->
-<!--							<div *ngIf="form.get('confirmPassword').errors['pattern']">-->
-<!--								Поле Пароль не должно содерждать киррилицу-->
-<!--							</div>-->
-<!--							<div *ngIf="form.get('confirmPassword').errors['minlength']">-->
-<!--								Поле Пароль быть более шести символов-->
-<!--							</div>-->
-<!--							<div-->
-<!--								*ngIf="form.get('confirmPassword').errors['confirmedValidator']"-->
-<!--							>-->
-<!--								Пароли должны совпадать.-->
-<!--							</div>-->
-<!--						</small>-->
-<!--					</div>-->
-<!--				</div>-->
-
-<!--				&lt;!&ndash; Captcha &ndash;&gt;-->
-<!--				<div formGroupName="captcha">-->
-<!--					<div class="auth__body__form__fields__two-columns">-->
-<!--						<div class="auth__body__form__fields__field">-->
-<!--							<img id="image" [src]="image" />-->
-<!--						</div>-->
-<!--						<div class="auth__body__form__fields__field">-->
-<!--							<input-->
-<!--								id="text"-->
-<!--								type="text"-->
-<!--								pInputText-->
-<!--								formControlName="text"-->
-<!--								placeholder="Укажите текст с картинки"-->
-<!--								[ngClass]="{-->
-<!--									'mib-border-danger':-->
-<!--										(isSubmitting$ | async) && form.get('captcha.text').invalid-->
-<!--								}"-->
-<!--							/>-->
-<!--							<small-->
-<!--								class="p-error"-->
-<!--								*ngIf="-->
-<!--									(isSubmitting$ | async) && form.get('captcha.text').invalid-->
-<!--								"-->
-<!--							>-->
-<!--								<div *ngIf="form.get('captcha.text').errors['required']">-->
-<!--									Поле Текст с Картинки не должно быть пустым-->
-<!--								</div>-->
-<!--							</small>-->
-<!--							<div class="auth__body__form__fields__field">-->
-<!--								<p-button-->
-<!--									styleClass="p-button-link p-mb-4 registration-link"-->
-<!--									(click)="updateCaptcha()"-->
-<!--									label="Обновить картинку"-->
-<!--								>-->
-<!--								</p-button>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div-->
-<!--				class="actions actions_registration actions_additional"-->
-<!--				*ngIf="!(confirmationCode$ | async)"-->
-<!--			>-->
-<!--				<button-->
-<!--					pButton-->
-<!--					class="additional-button"-->
-<!--					[routerLink]="['/auth/login']"-->
-<!--					label="Авторизация"-->
-<!--				></button>-->
-<!--				<button-->
-<!--					pButton-->
-<!--					type="submit"-->
-<!--					[disabled]="isSubmitting$ | async"-->
-<!--					label="Зарегистрироваться"-->
-<!--					class="main"-->
-<!--				></button>-->
-<!--				&lt;!&ndash; <p-button styleClass="p-button-link" label="Забыли пароль?" [routerLink]="['/reset-password']"></p-button> &ndash;&gt;-->
-<!--			</div>-->
-<!--		</form>-->
-
-<!--		<form-->
-<!--			*ngIf="confirmationCode$ | async"-->
-<!--			[formGroup]="formConfirm"-->
-<!--			(ngSubmit)="onConfirmSubmit()"-->
-<!--		>-->
-<!--			<div class="auth__body__form__fields">-->
-<!--				<div class="auth__body__form__fields__two-columns">-->
-<!--					<div class="auth__body__form__fields__field">-->
-<!--						<input-->
-<!--							id="pin"-->
-<!--							type="text"-->
-<!--							pInputText-->
-<!--							placeholder="Код"-->
-<!--							formControlName="pin"-->
-<!--							[ngClass]="{-->
-<!--								'mib-border-danger':-->
-<!--									formConfirm.get('pin').invalid &&-->
-<!--									formConfirm.get('pin').touched-->
-<!--							}"-->
-<!--						/>-->
-<!--						&lt;!&ndash; <small class="p-error" *ngIf="formConfirm.get('pin').invalid && formConfirm.get('pin').touched">-->
-<!--              <div *ngIf="formConfirm.get('pin').errors['required']">-->
-<!--                Поле Код не должно быть пустым-->
-<!--              </div>-->
-<!--            </small> &ndash;&gt;-->
-<!--					</div>-->
-<!--					<div class="auth__body__form__fields__field"></div>-->
-<!--				</div>-->
-<!--			</div>-->
-
-<!--			<div class="actions actions_registration actions_additional">-->
-<!--				<button-->
-<!--					pButton-->
-<!--					type="button"-->
-<!--					class="additional-button"-->
-<!--					[routerLink]="['/auth/login']"-->
-<!--					label="Авторизация"-->
-<!--				></button>-->
-<!--				<button-->
-<!--					pButton-->
-<!--					type="submit"-->
-<!--					[disabled]="isSubmitting$ | async"-->
-<!--					label="Завершить регистрацию"-->
-<!--					class="main"-->
-<!--				></button>-->
-<!--				&lt;!&ndash; <p-button styleClass="p-button-link" label="Забыли пароль?" [routerLink]="['/reset-password']"></p-button> &ndash;&gt;-->
-<!--			</div>-->
-<!--		</form>-->
-<!--	</div>-->
-<!--</div>-->

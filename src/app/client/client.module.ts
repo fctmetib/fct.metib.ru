@@ -24,7 +24,7 @@ import {AccordionModule} from 'primeng/accordion'
 import {MIBNotifyAccordionComponent} from './shared/components/mib-notify-accordion/mib-notify-accordion.component'
 import {MIBNotifyAccordionGroupComponent} from './shared/components/mib-notify-accordion/mib-notify-accordion-group.component'
 import {NotifyDialogComponent} from './shared/components/dialogs/notify-dialog/notify-dialog.component'
-import {RefIconModule} from '../shared/ui-kit/ref-icon/ref-icon.module'
+import {IconModule} from '../shared/ui-kit/ref-icon/icon.module'
 import {AvatarModule} from '../shared/ui-kit/avatar/avatar.module'
 import {SidebarModule} from '../shared/ui-kit/sidebar/sidebar.module'
 import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module'
@@ -52,7 +52,7 @@ import {HeaderModule} from '../shared/modules/header/header.module'
     CardModule,
     MenubarModule,
     AvatarModule,
-    RefIconModule,
+    IconModule,
     SidebarModule,
     SpacingModule,
     SkeletonModule,

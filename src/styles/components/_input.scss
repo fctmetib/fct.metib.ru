@@ -27,6 +27,12 @@
     white-space: nowrap;
     cursor: text;
   }
+  &_textarea {
+    .box-label {
+      top: 8px;
+      transform: unset;
+    }
+  }
 
   &-transition {
     .box-label {
@@ -42,10 +48,6 @@
     .input_icon-wrapper {
       display: flex;
     }
-  }
-
-  &:has(textarea) {
-    @include textarea;
   }
 
   // SIZES
@@ -102,10 +104,10 @@
   }
 }
 
-div.textarea-panel {
-  display: none;
-}
-
 .input, .box-wrapper {
   @include input-states-from-wrapper;
+}
+
+textarea {
+  @include textarea;
 }

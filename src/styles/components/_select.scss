@@ -9,12 +9,12 @@ $text-selectors: '&, span';
 	@include input-states-from-wrapper;
 	white-space: nowrap;
 
-	mib-ref-icon {
+	mib-icon {
 		@include icon-color(var(--bti-tertiary));
 	}
 
 	&:hover {
-		.select_icon-wrapper mib-ref-icon {
+		.select_icon-wrapper mib-icon {
 			@include icon-color(var(--bti-secondary));
 		}
 	}

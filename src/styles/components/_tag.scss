@@ -84,7 +84,7 @@
 	&_l {
 		@include text-l;
 		padding: 8px 16px;
-		mib-ref-icon {
+		mib-icon {
 			@include icon-size(20px);
 		}
 	}
@@ -92,7 +92,7 @@
 	&_m {
 		@include text-m;
 		padding: 6px 12px;
-		mib-ref-icon {
+		mib-icon {
 			@include icon-size(20px);
 		}
 	}
@@ -100,7 +100,7 @@
 	&_s {
 		@include text-s;
 		padding: 4px 8px;
-		mib-ref-icon {
+		mib-icon {
 			@include icon-size(16px);
 		}
 	}

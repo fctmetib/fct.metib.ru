@@ -7,7 +7,7 @@ $text-selectors: '&, span';
   height: $height;
 
   .dropdown-point {
-    &_icon-wrapper, &_icon-wrapper mib-ref-icon {
+    &_icon-wrapper, &_icon-wrapper mib-icon {
       @include icon-size($icon-size);
     }
   }
@@ -88,7 +88,7 @@ $text-selectors: '&, span';
     color: $color;
   }
 
-  .dropdown-point_icon-wrapper mib-ref-icon {
+  .dropdown-point_icon-wrapper mib-icon {
     @include icon-color($color);
   }
 }

@@ -26,7 +26,7 @@ import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
-import {RefIconModule} from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
+import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 import {InvoicesPageComponent} from './pages/invoices-page/invoices-page.component'
 import {InvoicesService} from './services/invoices.service'
@@ -59,7 +59,7 @@ import {InvoiceDrawerModule} from './modules/invoice-drawer/invoice-drawer.modul
 		SelectModule,
 		TableModule,
 		SkeletonModule,
-		RefIconModule,
+		IconModule,
 		PaginatorModule,
 		InvoiceDrawerModule
 	],

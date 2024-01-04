@@ -19,7 +19,7 @@
 	<div class="flex flex_justify-between">
 		<mib-link>
 			Новый запрос
-			<mib-ref-icon
+			<mib-icon
 				[@opacityViewAnimation]="{
 					value: '',
 					params: { enterTime: 200, leaveTime: 0 }
@@ -28,7 +28,7 @@
 				mibRightIcon
 				class="stroke"
 				name="fi_plus"
-			></mib-ref-icon>
+			></mib-icon>
 		</mib-link>
 		<mib-link [routerLink]="link" type="ghost-secondary">
 			{{ requestQuantity ? requestQuantity : 'нет' }} в истории

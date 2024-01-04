@@ -11,7 +11,7 @@
 			<p *ngSwitchCase="'success'">✅ Done!</p>
 			<p *ngSwitchCase="'fail'">❌ Error!</p>
 			<p *ngSwitchDefault>
-				<mib-ref-icon style="stroke: gray" name="fi_file"></mib-ref-icon>
+				<mib-icon style="stroke: gray" name="fi_file"></mib-icon>
 			</p>
 		</ng-container>
 		<div class="flex_grow">
@@ -20,17 +20,17 @@
 			</span>
 			<span *ngIf="status">{{ file.size / 1000 | number : '1.1-2' }} мб</span>
 		</div>
-		<mib-ref-icon
+		<mib-icon
 			title="Загрузить"
 			(click)="onUpload()"
 			style="stroke: gray"
 			name="fi_download"
-		></mib-ref-icon>
-		<mib-ref-icon
+		></mib-icon>
+		<mib-icon
 			title="Сбросить"
 			(click)="cancelUpload()"
 			style="stroke: gray"
 			name="fi_x"
-		></mib-ref-icon>
+		></mib-icon>
 	</div>
 </div>

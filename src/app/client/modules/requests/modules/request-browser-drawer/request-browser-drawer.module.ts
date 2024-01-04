@@ -6,7 +6,7 @@ import {MatDialogModule} from '@angular/material/dialog'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
-import {RefIconModule} from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
+import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {RequestBrowserDrawerService} from './request-browser-drawer.service'
 import {TagModule} from 'src/app/shared/ui-kit/tag/tag.module'
 import {CashPanelModule} from 'src/app/shared/modules/cash-panel/cash-panel.module'
@@ -28,7 +28,7 @@ import {RubModule} from '../../../../../shared/pipes/rub/rub.module';
     SpacingModule,
     TableModule,
     ButtonModule,
-    RefIconModule,
+    IconModule,
     TagModule,
     CashPanelModule,
     TabModule,

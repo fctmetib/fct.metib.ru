@@ -23,7 +23,7 @@ import {CommonModule} from '@angular/common'
 import {FreeDutyRoutingModule} from './free-duty-routing.module'
 import {DeliveryService} from '../../../shared/services/share/delivery.service'
 import {TableModule} from '../../../shared/ui-kit/table/table.module'
-import {RefIconModule} from '../../../shared/ui-kit/ref-icon/ref-icon.module'
+import {IconModule} from '../../../shared/ui-kit/ref-icon/icon.module'
 import {FreeDutyRequestDrawerModule} from './modules/free-duty-request-drawer/free-duty-request-drawer.module'
 import {PaginatorModule} from '../../../shared/ui-kit/paginator/paginator.module'
 import {RubModule} from '../../../shared/pipes/rub/rub.module'
@@ -59,7 +59,7 @@ import {AutoCompleteModule} from '../../../shared/ui-kit/auto-complete/auto-comp
 		InputModule,
 		ButtonModule,
 		TableModule,
-		RefIconModule,
+		IconModule,
 		FreeDutyRequestDrawerModule,
 		PaginatorModule,
 		RubModule,

@@ -6,7 +6,7 @@ import {MatDialogModule} from '@angular/material/dialog'
 import {SpacingModule} from '../../../../../shared/ui-kit/spacing/spacing.module'
 import {TableModule} from '../../../../../shared/ui-kit/table/table.module'
 import {ButtonModule} from '../../../../../shared/ui-kit/button/button.module'
-import {RefIconModule} from '../../../../../shared/ui-kit/ref-icon/ref-icon.module'
+import {IconModule} from '../../../../../shared/ui-kit/ref-icon/icon.module'
 import {SelectModule} from '../../../../../shared/ui-kit/select/select.module'
 import {DropdownPointModule} from '../../../../../shared/ui-kit/dropdown-point/dropdown-point.module'
 import {ReactiveFormsModule} from '@angular/forms'
@@ -31,7 +31,7 @@ import {RightIconModule} from '../../../../../shared/directives/right-icon/right
     SpacingModule,
     TableModule,
     ButtonModule,
-    RefIconModule,
+    IconModule,
     SelectModule,
     DropdownPointModule,
     ReactiveFormsModule,

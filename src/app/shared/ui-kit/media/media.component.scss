@@ -3,7 +3,7 @@
 
 @mixin media-color($color, $background-color) {
 	background-color: $background-color;
-	mib-ref-icon {
+	mib-icon {
 		@include icon-color($color);
 	}
 }
@@ -19,7 +19,7 @@
 	background-color: var(--bg-social-color);
 	border-radius: var(--main-border-radius);
 	transition: var(--transition);
-	mib-ref-icon {
+	mib-icon {
 		@include icon-color(var(--bti-secondary));
 		@include icon-size(24px);
 	}

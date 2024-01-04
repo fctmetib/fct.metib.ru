@@ -75,7 +75,7 @@ $text-selectors: 'span';
   #{$text-selectors} {
     color: $color
   }
-  mib-ref-icon {
+  mib-icon {
     @include icon-color($color)
   }
 }
@@ -84,7 +84,7 @@ $text-selectors: 'span';
 
   @include navbar-point;
 
-  &_icon-wrapper, mib-ref-icon {
+  &_icon-wrapper, mib-icon {
     @include icon-size(20px)
   }
 

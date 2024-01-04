@@ -1,6 +1,6 @@
 <div class="information flex flex_column gap-4" [ngClass]="classes">
   <div class="flex gap-4" *ngIf="showHeader">
-    <mib-ref-icon *ngIf="showIcon" class="stroke" name="fi_info"></mib-ref-icon>
+    <mib-icon *ngIf="showIcon" class="stroke" name="fi_info"></mib-icon>
     <p class="text text_m text_medium"><ng-content select="[information-header]"></ng-content></p>
   </div>
   <p class="text text_m"><ng-content select="[information-text]"></ng-content></p>

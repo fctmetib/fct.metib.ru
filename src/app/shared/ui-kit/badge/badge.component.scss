@@ -19,7 +19,7 @@
 		@include text-s;
 	}
 	@include badge-extended(24px, 24px);
-	mib-ref-icon {
+	mib-icon {
 		@include icon-size(var(--badge-l-icon-size));
 	}
 }
@@ -29,7 +29,7 @@
 		@include text-s;
 	}
 	@include badge-extended(20px, 20px);
-	mib-ref-icon {
+	mib-icon {
 		@include icon-size(var(--badge-m-icon-size));
 	}
 }
@@ -42,7 +42,7 @@
 		height: 16px;
 	}
 	@include text-xs;
-	mib-ref-icon {
+	mib-icon {
 		@include icon-size(var(--badge-s-icon-size));
 	}
 }
@@ -71,7 +71,7 @@
 	}
 
 	&.badge_extended {
-		mib-ref-icon {
+		mib-icon {
 			display: block;
 		}
 	}
@@ -79,7 +79,7 @@
 
 @mixin badge-icon {
 	&:not(.showIcon) {
-		mib-ref-icon {
+		mib-icon {
 			display: none;
 		}
 	}
@@ -102,7 +102,7 @@
 			color: var(--mc-active);
 			user-select: none;
 		}
-		mib-ref-icon {
+		mib-icon {
 			@include icon-color(var(--mc-active));
 		}
 	}
@@ -113,7 +113,7 @@
 		.badge-text {
 			color: var(--bti-secondary);
 		}
-		mib-ref-icon {
+		mib-icon {
 			@include icon-color(var(--bti-secondary));
 		}
 	}
@@ -123,7 +123,7 @@
 		.badge-text {
 			color: var(--ac-active);
 		}
-		mib-ref-icon {
+		mib-icon {
 			@include icon-color(var(--ac-active));
 		}
 	}
@@ -133,7 +133,7 @@
 		.badge-text {
 			color: var(--success-active);
 		}
-		mib-ref-icon {
+		mib-icon {
 			@include icon-color(var(--success-active));
 		}
 	}

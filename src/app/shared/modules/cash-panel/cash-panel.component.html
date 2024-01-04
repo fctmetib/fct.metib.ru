@@ -11,7 +11,7 @@
 			<p class="text text_m text_medium c-bti-tertiary flex_grow">
 				{{ panelTitle }}
 			</p>
-			<mib-ref-icon class="stroke" name="fi_info"></mib-ref-icon>
+			<mib-icon class="stroke" name="fi_info"></mib-icon>
 		</div>
 		<h3>
 			{{ panelData | currency : 'RUB' : 'symbol-narrow' }}
@@ -24,7 +24,7 @@
 		</p>
 		<mib-link [routerLink]="link">
 			Подробнее
-			<mib-ref-icon
+			<mib-icon
 				[@opacityViewAnimation]="{
 					value: '',
 					params: {enterTime: 200, leaveTime: 0}
@@ -33,7 +33,7 @@
 				mibRightIcon
 				class="stroke"
 				name="fi_chevron-right"
-			></mib-ref-icon>
+			></mib-icon>
 		</mib-link>
 	</div>
 </div>
@@ -53,6 +53,6 @@
 				<ng-content select="[alert]"></ng-content>
 			</p>
 		</div>
-		<mib-ref-icon class="stroke" name="fi_info"></mib-ref-icon>
+		<mib-icon class="stroke" name="fi_info"></mib-icon>
 	</div>
 </ng-template>

@@ -3,8 +3,11 @@
 
 $text-selectors: 'label';
 
-:host.table-cell {
-	flex: var(--table-flex);
+:host {
+  flex: var(--table-flex);
+}
+
+.table-cell {
 	padding: 12px 8px 12px 0;
 	#{$text-selectors} {
 		@include body-text;

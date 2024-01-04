@@ -39,7 +39,7 @@ import { InputModule } from 'src/app/shared/ui-kit/input/input.module'
 import { ButtonModule } from 'src/app/shared/ui-kit/button/button.module'
 import { TableModule } from 'src/app/shared/ui-kit/table/table.module'
 import { SkeletonModule } from 'src/app/shared/ui-kit/skeleton/skeleton.module'
-import { RefIconModule } from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
+import { IconModule } from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import { PaginatorModule } from 'src/app/shared/ui-kit/paginator/paginator.module'
 import { RequestDrawerModule } from './modules/request-drawer/request-drawer.module'
 import { DocumentsViewComponent } from './pages/requests-page/no-touch-this/documents-view/documents-view.componet'
@@ -80,7 +80,7 @@ import { RequestBrowserDrawerModule } from './modules/request-browser-drawer/req
 		SpacingModule,
 		TabModule,
 		InputModule,
-		RefIconModule,
+		IconModule,
 		PaginatorModule,
 		RequestDrawerModule,
 		RequestBrowserDrawerModule

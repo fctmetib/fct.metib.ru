@@ -45,40 +45,41 @@
   }
 
   // STATUSES
-  &:has(input:focus),
-  &:has(input:not(:placeholder-shown):not(:focus)) {
-    @include input-color(var(--bti-secondary));
+  @each $element in ('input', 'textarea') {
+    &:has(#{$element}:focus), &:has(#{$element}:not(:placeholder-shown):not(:focus)) {
+      @include input-color(var(--bti-secondary));
 
-    .input,
-    .left-wrapper {
-      padding-top: 12px;
-    }
+      .input,
+      .left-wrapper {
+        padding-top: 12px;
+      }
 
-    .box-label {
-      @include text-xs;
-      font-weight: var(--fw-medium);
-      color: var(--mc-default);
-      transform: unset;
-      padding-left: 16px !important;
-    }
-  }
-
-  &:not(:has(input:focus)),
-  &:not(:has(input:not(:placeholder-shown):not(:focus))) {
-    &:has(.input_error) {
-      @include input-color(var(--alc-default))
-    }
-    &:has(.input_active) {
       .box-label {
-        color: var(--success-default)
+        @include text-xs;
+        font-weight: var(--fw-medium);
+        color: var(--mc-default);
+        transform: unset;
+        padding-left: 16px !important;
+      }
+    }
+
+    &:not(:has(#{$element}:focus)),
+    &:not(:has(#{$element}:not(:placeholder-shown):not(:focus))) {
+      &:has(.input_error) {
+        @include input-color(var(--alc-default))
+      }
+      &:has(.input_active) {
+        .box-label {
+          color: var(--success-default)
+        }
       }
     }
   }
 }
 
 @mixin input-color($color) {
-  .input_icon-wrapper mib-ref-icon,
-  .select_icon-wrapper mib-ref-icon, {
+  .input_icon-wrapper mib-icon,
+  .select_icon-wrapper mib-icon, {
     @include icon-color($color);
   }
   &,
@@ -93,20 +94,23 @@
   .box-label {
     @content;
   }
-  &:has(input:focus),
-  &:has(input:not(:placeholder-shown)) {
-    .box-label {
-      top: $top;
+  @each $element in ('input', 'textarea') {
+    &:has(#{$element}:focus),
+    &:has(#{$element}:not(:placeholder-shown)) {
+      .box-label {
+        top: $top;
+      }
     }
   }
 }
+
 
 @mixin input-size($height, $iconSize, $iconsGap, $paddingsHorizontal: 16px) {
   height: $height;
   padding: 0 $paddingsHorizontal;
   & ~ .input, & ~ .select {
     &_icon-wrapper {
-      mib-ref-icon {
+      mib-icon {
         @include icon-size($iconSize);
       }
 
@@ -160,7 +164,7 @@
       background: var(--wgr-tertiary);
       box-shadow: none;
 
-      mib-ref-icon {
+      mib-icon {
         @include icon-color(var(--wti-quaternary));
       }
     }
@@ -184,7 +188,7 @@
       background: var(--wgr-tertiary);
       box-shadow: none;
 
-      mib-ref-icon {
+      mib-icon {
         @include icon-color(var(--wti-quaternary));
       }
     }
@@ -194,6 +198,10 @@
 
 @mixin input-type-separated {
   background: var(--wgr-primary);
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  border: unset;
 
   &.input {
     outline: 0;
@@ -210,7 +218,7 @@
       background: var(--wgr-tertiary);
       box-shadow: none;
 
-      mib-ref-icon {
+      mib-icon {
         @include icon-color(var(--wti-quaternary));
       }
     }
@@ -286,33 +294,12 @@
       @include text-s;
     }
 
-    mib-ref-icon {
+    mib-icon {
       @include icon-size(var(--input-m-icon-size));
     }
   }
 }
 
 @mixin textarea {
-  display: flex;
-  padding: 10px 16px 34px 16px;
-  align-items: flex-start;
-  gap: 8px;
-  background-color: antiquewhite;
-
-  input {
-    background-color: transparent;
-  }
-
-  div.textarea-panel {
-    display: flex;
-  }
-
-  //&:has(.input_error) {
-  //  .box-label {
-  //    color: var(--alc-default);
-  //  }
-  //  .input_error {
-  //    @include input-error;
-  //  }
-  //}
+  resize: none;
 }

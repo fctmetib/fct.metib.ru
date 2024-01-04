@@ -20,7 +20,7 @@ $text-selectors: 'label';
     }
 	}
 
-	mib-ref-icon {
+	mib-icon {
 		@include icon-size(20px);
 	}
 	@include table-color(var(--bti-secondary));
@@ -30,7 +30,7 @@ $text-selectors: 'label';
 	#{$text-selectors} {
 		color: $color;
 	}
-	mib-ref-icon {
+	mib-icon {
 		@include icon-color($color);
 	}
 }

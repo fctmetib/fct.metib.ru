@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InformationComponent } from './information.component';
-import {RefIconModule} from '../ref-icon/ref-icon.module';
+import {IconModule} from '../ref-icon/icon.module';
 
 
 
@@ -14,7 +14,7 @@ import {RefIconModule} from '../ref-icon/ref-icon.module';
   ],
   imports: [
     CommonModule,
-    RefIconModule
+    IconModule
   ]
 })
 export class InformationModule { }

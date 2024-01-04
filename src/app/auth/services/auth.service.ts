@@ -241,12 +241,8 @@ export class AuthService {
    * Если да, то открывает доступ к полноценному кабинету, иначе открывает доступ только к 1 вкладке меню "Запросы"
    */
   public isUserVerified(): boolean {
-    const user = this.getUserVerificationType();
-    if (user.CustomerID === 0) {
-      return false;
-    } else {
-      return true;
-    }
+    const user: AuthRes | null = this.getUserVerificationType();
+    return user?.CustomerID !== 0;
   }
 
   /**
@@ -356,7 +352,7 @@ export class AuthService {
     return user?.Roles ?? admin?.Roles ?? [];
   }
 
-  private getUserVerificationType(): AuthRes {
+  private getUserVerificationType(): null | AuthRes {
     const userCookie = this.cookieService.get('_cu');
 
     if (userCookie) {

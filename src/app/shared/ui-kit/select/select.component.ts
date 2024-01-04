@@ -13,7 +13,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DropdownPointComponent} from '../dropdown-point/dropdown-point.component';
 import {InputSize} from '../input/interfaces/input.interface';
 import {SelectType} from './interfaces/select.interface';
-import {SetPaddings} from '../input/services/set-paddings.service';
+import {setPaddings} from '../input/services/set-paddings.service';
 import {DropdownService} from '../dropdown/services/dropdown.service';
 import {DropdownComponent} from '../dropdown/dropdown.component';
 import {SelectLabelDirective} from './directives/select-label.directive';
@@ -49,7 +49,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   public selectedOptions: DropdownPointComponent[] = [];
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private r2: Renderer2,
     private dropdownService: DropdownService
   ) {
@@ -75,11 +75,11 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
 
   setIconPaddings() {
     setTimeout(() => {
-      SetPaddings({
+      setPaddings({
         leftEl: this.leftIcon.nativeElement,
         rightEl: this.rightIcon.nativeElement,
         element: this.select.nativeElement,
-      }, this.platformId, this.r2)
+      }, this.r2, this.platformId)
     })
   }
 

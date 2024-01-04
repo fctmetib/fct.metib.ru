@@ -7,7 +7,7 @@ import {MatDialogModule} from '@angular/material/dialog'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
-import {RefIconModule} from 'src/app/shared/ui-kit/ref-icon/ref-icon.module'
+import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {TabModule} from 'src/app/shared/ui-kit/tab/tab.module'
 import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
@@ -28,7 +28,7 @@ import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/cont
 		SpacingModule,
 		TableModule,
 		ButtonModule,
-		RefIconModule,
+		IconModule,
 		TabModule,
 		NavbarModule,
 		SelectModule,

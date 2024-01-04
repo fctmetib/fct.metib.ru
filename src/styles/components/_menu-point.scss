@@ -16,7 +16,7 @@ $text-selectors: '&, span';
   -moz-border-radius: 8px;
   border-radius: 8px;
 
-  &_icon-wrapper, mib-ref-icon {
+  &_icon-wrapper, mib-icon {
     @include icon-size(16px);
   }
 
@@ -41,7 +41,7 @@ $text-selectors: '&, span';
     color: $color;
   }
 
-  mib-ref-icon {
+  mib-icon {
     @include icon-color($color)
   }
 }

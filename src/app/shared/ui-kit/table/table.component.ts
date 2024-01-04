@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, ContentChildren, HostListener, Input, OnDestroy, QueryList} from '@angular/core';
+import {AfterContentInit, Component, ContentChildren, forwardRef, HostListener, Input, OnDestroy, QueryList} from '@angular/core';
 import {TableCellSize} from './components/table-cell/interfaces/table-cell.interface';
 import {TableRowComponent} from './components/table-row/table-row.component';
 import {TableHeadCellComponent} from './components/table-head-cell/table-head-cell.component';
@@ -15,9 +15,9 @@ import {TableCellComponent} from './components/table-cell/table-cell.component';
 })
 export class TableComponent implements AfterContentInit, OnDestroy {
 
-  @ContentChildren(TableRowComponent) rows: QueryList<TableRowComponent>
-  @ContentChildren(TableHeadCellComponent, {descendants: true}) headCells: QueryList<TableHeadCellComponent>
-  @ContentChildren(TableCellComponent, {descendants: true}) cells: QueryList<TableCellComponent>
+  @ContentChildren(forwardRef(() => TableRowComponent)) rows: QueryList<TableRowComponent>
+  @ContentChildren(forwardRef(() => TableHeadCellComponent), {descendants: true}) headCells: QueryList<TableHeadCellComponent>
+  @ContentChildren(forwardRef(() => TableCellComponent), {descendants: true}) cells: QueryList<TableCellComponent>
 
   @Input() set size(value: TableCellSize) {
     this._size = value;

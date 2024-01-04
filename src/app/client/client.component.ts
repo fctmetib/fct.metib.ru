@@ -19,7 +19,7 @@ export class ClientComponent implements  AfterViewInit, OnDestroy {
 
   private resizeObserver!: ResizeObserver;
 
-  public withoutScroll: boolean = !this.toolsService.mobileAndTabletCheck();
+  public withoutScroll: boolean = !this.toolsService.mobileAndTabletCheck(isPlatformBrowser(this.platformId));
 
   constructor(
     public scrollService: ScrollService,
@@ -30,7 +30,7 @@ export class ClientComponent implements  AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId) && !this.toolsService.mobileAndTabletCheck()) {
+    if (isPlatformBrowser(this.platformId) && !this.toolsService.mobileAndTabletCheck(isPlatformBrowser(this.platformId))) {
       // ResizeObserver
       this.resizeObserver = new ResizeObserver(entries => {
         this.checkScroll(this.scrollable.nativeElement);

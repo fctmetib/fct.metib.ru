@@ -13,7 +13,7 @@ import { RefIconService } from './services/ref-icon.service'
 import { BehaviorSubject, Subscription, tap } from 'rxjs'
 
 @Component({
-	selector: 'mib-ref-icon',
+	selector: 'mib-icon',
 	templateUrl: './ref-icon.component.html',
 	styleUrls: ['./ref-icon.component.scss']
 })

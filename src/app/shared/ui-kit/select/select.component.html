@@ -11,13 +11,13 @@
   <span class="text">{{selectedOption?.text ?? placeholder}}</span>
   <div class="select_icon-wrapper right-wrapper" #rightIcon>
     <ng-content select="[mibRightIcon]"></ng-content>
-    <mib-ref-icon class="stroke" [name]="showDropdown ? 'fi_chevron-up' : 'fi_chevron-down'"></mib-ref-icon>
+    <mib-icon class="stroke" [name]="showDropdown ? 'fi_chevron-up' : 'fi_chevron-down'"></mib-icon>
   </div>
 </div>
 
 <mib-dropdown #dropdown>
   <ng-content></ng-content>
   <mib-dropdown-point [value]="null" *ngIf="!options.length" [text]="placeholder">
-<!--    <mib-ref-icon dropdown-point-right-icon class="stroke" name="fi_frown"></mib-ref-icon>-->
+<!--    <mib-icon dropdown-point-right-icon class="stroke" name="fi_frown"></mib-icon>-->
   </mib-dropdown-point>
 </mib-dropdown>

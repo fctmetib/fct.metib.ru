@@ -1,0 +1,24 @@
+<mib-input-base-wrapper>
+  <ng-container input-base-label>
+    <ng-content select="[textarea-label]"></ng-content>
+  </ng-container>
+
+  <ng-container input-base-message>
+    <ng-content select="[textarea-message]"></ng-content>
+  </ng-container>
+
+  <ng-content></ng-content>
+  <div *ngIf="controls" class="textarea-panel flex flex_align-center flex_justify-between">
+    <p id="textarea-panel-counter" class="text text_tiny c-ti-dark-quaternary">
+      {{ textLength }}/{{ maxLength }}
+    </p>
+    <mib-icon
+      *ngIf="false"
+      class="stroke"
+      name="fi_maximize-2"
+      (mousedown)="startResize($event)"
+      (mouseup)="stopResize($event)"
+      (mousemove)="onMouseMove($event)"
+    ></mib-icon>
+  </div>
+</mib-input-base-wrapper>
