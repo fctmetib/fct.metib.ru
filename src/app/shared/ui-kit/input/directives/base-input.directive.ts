@@ -4,6 +4,8 @@ import {AutoUnsubscribeService} from '../../../services/auto-unsubscribe.service
 import {InputStatus} from '../interfaces/input.interface';
 import {tap} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {InputBaseWrapperComponent} from '../components/input-base-wrapper/input-base-wrapper.component';
+import {ClassesObject, ToolsService} from '../../../services/tools.service';
 
 @Directive({
   selector: '[mibBaseInput]',
@@ -25,6 +27,7 @@ export class BaseInputDirective {
     protected cdr: ChangeDetectorRef,
     protected au: AutoUnsubscribeService,
     protected r2: Renderer2,
+    protected toolsService: ToolsService,
     public elementRef: ElementRef<HTMLInputElement | HTMLTextAreaElement>,
   ) {
   }
@@ -37,18 +40,16 @@ export class BaseInputDirective {
     return this.control?.dirty
   }
 
-  addClasses(classesObj: { [key: string]: boolean }): void {
-    Object.keys(classesObj).forEach(className => {
-      if (classesObj[className]) {
-        this.r2.addClass(this.elementRef.nativeElement, className);
-      }
-    });
+  addClasses(classesObj: ClassesObject): void {
+    this.toolsService.parseClassesObject(classesObj, className => {
+      this.r2.addClass(this.elementRef.nativeElement, className);
+    })
   }
 
-  generateClasses(selector: string = 'input') {
+  classes() {
     return {
-      [selector]: true,
-      [`${selector}_${this.status}`]: true,
+      'input': true,
+      [`input_${this.status}`]: true,
     }
   }
 

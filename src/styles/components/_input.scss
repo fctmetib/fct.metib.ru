@@ -21,16 +21,20 @@
   .box-label {
     @include body-text;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding-left: 16px;
     white-space: nowrap;
     cursor: text;
   }
+
+  &_input {
+    .box-label {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
   &_textarea {
     .box-label {
       top: 8px;
-      transform: unset;
     }
   }
 

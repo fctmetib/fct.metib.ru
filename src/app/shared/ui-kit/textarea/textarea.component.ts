@@ -1,8 +1,11 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ContentChild, Input} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ContentChild, HostBinding, Input, Renderer2, ViewChild} from '@angular/core';
 import {MibTextareaDirective} from './directives/mib-textarea.directive';
 import {fromEvent, tap} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../services/auto-unsubscribe.service';
+import {InputCustom, InputSize, InputType} from '../input/interfaces/input.interface';
+import {InputBaseWrapperComponent} from '../input/components/input-base-wrapper/input-base-wrapper.component';
+import {ToolsService} from '../../services/tools.service';
 
 @Component({
   selector: 'mib-textarea',
@@ -12,8 +15,12 @@ import {AutoUnsubscribeService} from '../../services/auto-unsubscribe.service';
 })
 export class TextareaComponent implements AfterViewInit {
   @ContentChild(MibTextareaDirective, {descendants: true}) textareaDirective: MibTextareaDirective
+  @ViewChild(InputBaseWrapperComponent) base: InputBaseWrapperComponent
 
   @Input() controls: boolean = true
+  @Input() custom: InputCustom = ''
+  @Input() size: InputSize = 'm'
+  @Input() styleType: InputType = 'filled-secondary'
 
   isResizing: boolean = false
   startPosX: number = 0
@@ -24,8 +31,19 @@ export class TextareaComponent implements AfterViewInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private au: AutoUnsubscribeService
+    private au: AutoUnsubscribeService,
+    private r2: Renderer2,
+    private toolsService: ToolsService,
   ) {
+  }
+
+  get classes() {
+    const classes = this.textareaDirective.classes()
+    return {
+      ...classes,
+      [`input_${this.size}`]: true,
+      [`input_type-${this.styleType}`]: true,
+    }
   }
 
   get textareaElement(): HTMLTextAreaElement {
@@ -46,6 +64,11 @@ export class TextareaComponent implements AfterViewInit {
         }),
         takeUntil(this.au.destroyer)
       ).subscribe()
+
+      this.toolsService.parseClassesObject(this.classes, className => {
+        this.r2.addClass(this.base.box.nativeElement, className);
+      })
+
     } else {
       throw new Error('mib-textarea should contains <input mibTextarea/>!')
     }

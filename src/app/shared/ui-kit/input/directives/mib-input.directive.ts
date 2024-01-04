@@ -20,28 +20,32 @@ import {DOCUMENT} from '@angular/common';
 import {AutoUnsubscribeService} from '../../../services/auto-unsubscribe.service';
 import {takeUntil} from 'rxjs/operators';
 import {BaseInputDirective} from './base-input.directive';
+import {InputBaseWrapperComponent} from '../components/input-base-wrapper/input-base-wrapper.component';
+import {ToolsService} from '../../../services/tools.service';
 
 @Directive({
   selector: '[mibInput]',
 })
 export class MibInputDirective extends BaseInputDirective implements AfterViewInit {
-  constructor(
-    @Optional() public ngControl: NgControl,
-    protected cdr: ChangeDetectorRef,
-    protected au: AutoUnsubscribeService,
-    protected r2: Renderer2,
-    public elementRef: ElementRef<HTMLInputElement>,
-  ) {
-    super(ngControl, cdr, au, r2, elementRef)
-  }
 
   @Input() custom: InputCustom = ''
   @Input() size: InputSize = 'm'
   @Input() styleType: InputType = 'filled-secondary'
 
+  constructor(
+    @Optional() public ngControl: NgControl,
+    protected cdr: ChangeDetectorRef,
+    protected au: AutoUnsubscribeService,
+    protected r2: Renderer2,
+    protected toolsService: ToolsService,
+    public elementRef: ElementRef<HTMLInputElement>
+  ) {
+    super(ngControl, cdr, au, r2, toolsService, elementRef)
+  }
+
   @HostBinding(`class`)
   get getClasses() {
-    const classes = super.generateClasses();
+    const classes = super.classes();
     return {
       ...classes,
       [`input_${this.size}`]: true,

@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 
+export type ClassesObject = { [key: string]: boolean }
+
 export interface TransliterateMap {
   [key: string]: string;
 }
@@ -39,6 +41,14 @@ export class ToolsService {
     }
 
     return obj;
+  }
+
+  parseClassesObject(classesObj: ClassesObject, callback: (string) => void) {
+    Object.keys(classesObj).forEach(className => {
+      if (classesObj[className]) {
+        callback(className)
+      }
+    });
   }
 
   safeJson(data: string) {

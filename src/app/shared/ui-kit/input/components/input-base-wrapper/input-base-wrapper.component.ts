@@ -1,9 +1,8 @@
 import {
   AfterViewInit,
   Component,
-  ContentChild,
   ContentChildren,
-  ElementRef, forwardRef,
+  ElementRef,
   Inject, Optional,
   PLATFORM_ID,
   QueryList,
@@ -48,7 +47,7 @@ export class InputBaseWrapperComponent implements AfterViewInit {
   ) {
   }
 
-  get element(): HTMLInputElement | HTMLTextAreaElement {
+  get inputElement(): HTMLInputElement | HTMLTextAreaElement {
     return this.directive?.elementRef?.nativeElement
   }
 
@@ -57,7 +56,11 @@ export class InputBaseWrapperComponent implements AfterViewInit {
   }
 
   get isTextarea() {
-    return this.element?.tagName === 'TEXTAREA'
+    return this.inputElement?.tagName === 'TEXTAREA'
+  }
+
+  get selector() {
+    return this.isTextarea ? 'textarea' : 'input'
   }
 
   ngAfterViewInit(): void {
@@ -76,30 +79,39 @@ export class InputBaseWrapperComponent implements AfterViewInit {
 
   setIconPaddings() {
     if (isPlatformBrowser(this.platformId)) {
-      setPaddings({
-        leftEl: this.iconsLeftEl.nativeElement,
-        rightEl: this.iconsRightEl.nativeElement,
-        element: this.element,
-      }, this.r2, ({newPaddingLeft}) => {
-        this.r2.setStyle(this.labelEl.nativeElement, 'padding-left', newPaddingLeft)
-      })
+      if (this.isTextarea) {
+      } else {
+        setPaddings({
+          leftEl: this.iconsLeftEl.nativeElement,
+          rightEl: this.iconsRightEl.nativeElement,
+          element: this.inputElement,
+        }, this.r2, ({newPaddingLeft}) => {
+          this.r2.setStyle(this.labelEl.nativeElement, 'padding-left', newPaddingLeft)
+        })
+      }
     }
   }
 
   updateClasses() {
-    this.directive?.addClasses(this.classes)
+    this.directive?.addClasses(this.directiveClasses)
+  }
+
+  get directiveClasses() {
+    return {
+      [`${this.selector}_right-iconly}`]: Boolean(this.rightIcons.length),
+      [`${this.selector}_left-iconly}`]: Boolean(this.leftIcons.length),
+    }
   }
 
   get classes() {
-    const selector = this.isTextarea ? 'textarea' : 'input'
     return {
-      [`${selector}_right-iconly}`]: Boolean(this.rightIcons.length),
-      [`${selector}_left-iconly}`]: Boolean(this.leftIcons.length),
+      [`box-wrapper_${this.selector}`]: true,
+      'box-wrapper-transition': this.viewMounted
     }
   }
 
   focus() {
-    this.element?.focus()
+    this.inputElement?.focus()
   }
 
 }
