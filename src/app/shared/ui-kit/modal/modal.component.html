@@ -1,0 +1,13 @@
+<div class="madal" @modalAnimation>
+	<div #header>
+		<ng-content select="[modal-header]"></ng-content>
+	</div>
+	<div class="madal-content">
+		<mib-spacing type="m"></mib-spacing>
+		<ng-content></ng-content>
+		<mib-spacing type="m"></mib-spacing>
+	</div>
+	<div class="footer" #footer>
+		<ng-content select="modai-footer"></ng-content>
+	</div>
+</div>

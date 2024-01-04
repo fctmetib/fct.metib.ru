@@ -88,6 +88,16 @@ ng g m shared/ui-kit/toaster/toaster --flat  --dry-run
 ng g c shared/ui-kit/toaster/toaster --flat  --skip-tests --dry-run
  //---
 
+ //--- modal
+src\app\shared\ui-kit
+ng g i shared/ui-kit/modal/interfaces/modal.interface  --dry-run
+ng g m shared/ui-kit/modal/modal --flat  --dry-run
+ng g c shared/ui-kit/modal/modal --flat  --skip-tests --dry-run
+//--- modal-components
+ng g c shared/ui-kit/modal/components/modal-footer  --skip-tests --dry-run
+ng g c shared/ui-kit/modal/components/modal-header  --skip-tests --dry-run
+ //---
+
  //--- media
 src\app\shared\ui-kit\media
 ng g i shared/ui-kit/media/interfaces/media.interface  --dry-run
