@@ -1317,16 +1317,21 @@
 	<div class="">
 		<h5>modal:</h5>
 		<mib-modal>
-			<mib-modal-header modal-header>
-				<ng-container modal-title>Halo modal title</ng-container>
+			<mib-modal-header modal-header title="Halo title modal">
 			</mib-modal-header>
-			<span>
+			<p class="text text_m">
 				Отследить статус запроса Вы сможете на странице запросов во вкладке
 				“История запросов”
-			</span>
+			</p>
 			<mib-modal-footer modal-footer>
-				<ng-container modal-left-btn>Перейти к запросу</ng-container>
-				<ng-container modal-right-btn>На главную</ng-container>
+				<ng-container>
+					<mib-button class="flex_grow" size="m" type="filled-primary">
+						Перейти к запросу
+					</mib-button>
+					<mib-button class="flex_grow" size="m" type="filled-secondary">
+						На главную
+					</mib-button>
+				</ng-container>
 			</mib-modal-footer>
 		</mib-modal>
 	</div>
