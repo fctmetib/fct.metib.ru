@@ -1,22 +1,25 @@
 :host {
-	height: 100%;
-	width: 100%;
+	// height: 100%;
+	// width: 100%;
 }
 
 @mixin modal {
-	height: 100%;
-	width: 100%;
+	display: flex;
+	width: 432px;
+	padding: 32px;
+	flex-direction: column;
+	align-items: flex-start;
 
-	position: absolute;
-	top: 0;
-	right: 0;
+	border-radius: 16px;
+	background: var(--Gradation-Primary, #fff);
 
-	background-color: var(--wgr-primary);
+	/* Shadow/Normal */
+	box-shadow: 0px 8px 16px 0px rgba(9, 13, 17, 0.08);
 }
 
 @mixin modal-content {
-	padding: 0 32px;
-	overflow-y: scroll;
+	// padding: 0 32px;
+	// overflow-y: scroll;
 }
 
 .modal {
@@ -27,9 +30,9 @@
 	}
 
 	.footer {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
+		// position: absolute;
+		// bottom: 0;
+		// left: 0;
+		// width: 100%;
 	}
 }

@@ -16,6 +16,7 @@ import {ToasterModule} from '../../ui-kit/toaster/toaster.module'
 import {MediaModule} from '../../ui-kit/media/media.module'
 import {FileCellModule} from '../../ui-kit/file-cell/file-cell.module'
 import {ContractedFormsModule} from '../../ui-kit/contracted-forms/contracted-forms.module'
+import {ModalModule} from '../../ui-kit/modal/modal.module'
 
 @NgModule({
 	imports: [
@@ -35,7 +36,8 @@ import {ContractedFormsModule} from '../../ui-kit/contracted-forms/contracted-fo
 		ToasterModule,
 		MediaModule,
 		FileCellModule,
-		ContractedFormsModule
+		ContractedFormsModule,
+		ModalModule
 	],
 	declarations: [MibUiComponent]
 })

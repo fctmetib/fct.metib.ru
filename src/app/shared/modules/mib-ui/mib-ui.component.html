@@ -1296,3 +1296,40 @@
 	<mib-spacing type="xl2"></mib-spacing>
 	<mib-spacing type="xl2"></mib-spacing>
 </div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'modal' | titlecase }}
+	<button (click)="isModal = !isModal">
+		{{ isModal ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isModal" style="margin-bottom: 10rem" class="wrapper">
+	<div class="">
+		<h5>modal:</h5>
+		<mib-modal>
+			<mib-modal-header modal-header>
+				<ng-container modal-title>Halo modal title</ng-container>
+			</mib-modal-header>
+			<span>
+				Отследить статус запроса Вы сможете на странице запросов во вкладке
+				“История запросов”
+			</span>
+			<mib-modal-footer modal-footer>
+				<ng-container modal-left-btn>Перейти к запросу</ng-container>
+				<ng-container modal-right-btn>На главную</ng-container>
+			</mib-modal-footer>
+		</mib-modal>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>
