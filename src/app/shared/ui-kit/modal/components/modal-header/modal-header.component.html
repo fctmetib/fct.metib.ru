@@ -1,7 +1,5 @@
 <div class="modal-header flex flex_align-center gap-8">
-	<h4 class="flex_grow">
-		<ng-content select="[modal-title]"></ng-content>
-	</h4>
+	<h4 class="flex_grow">{{ title }}</h4>
 	<mib-button size="m" (press)="onClose.emit()" type="ghost-secondary">
 		<mib-ref-icon btn-icon class="stroke" name="fi_x"></mib-ref-icon>
 	</mib-button>

@@ -1,18 +1,3 @@
 <div class="modal-footer flex flex_align-center gap-16">
-	<mib-button
-		class="flex_grow"
-		size="m"
-		(press)="onPressLeftBtn.emit()"
-		type="filled-primary"
-	>
-		<ng-content select="[modal-left-btn]"></ng-content>
-	</mib-button>
-	<mib-button
-		class="flex_grow"
-		size="m"
-		(press)="onPressRightBtn.emit()"
-		type="filled-secondary"
-	>
-		<ng-content select="[modal-right-btn]"></ng-content>
-	</mib-button>
+	<ng-content></ng-content>
 </div>
