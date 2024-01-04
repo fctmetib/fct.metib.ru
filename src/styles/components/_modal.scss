@@ -1,0 +1,12 @@
+@mixin modal-cdk {
+	background-color: red($color: #000000);
+	// height: 100%;
+	// width: 100%;
+	// position: absolute !important;
+	// top: 0;
+	// right: 0;
+}
+
+.modal-cdk {
+	@include modal-cdk;
+}
