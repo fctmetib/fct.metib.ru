@@ -3,12 +3,8 @@
     <ng-content select="[textarea-label]"></ng-content>
   </ng-container>
 
-  <ng-container input-base-message>
-    <ng-content select="[textarea-message]"></ng-content>
-  </ng-container>
-
   <ng-content></ng-content>
-  <div *ngIf="controls" class="textarea-panel flex flex_align-center flex_justify-between">
+  <div *ngIf="controls && maxLength > -1" class="textarea-panel flex flex_align-center flex_justify-between">
     <p id="textarea-panel-counter" class="text text_tiny c-ti-dark-quaternary">
       {{ textLength }}/{{ maxLength }}
     </p>
