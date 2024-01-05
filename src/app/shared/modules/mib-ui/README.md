@@ -101,6 +101,9 @@ src\app\shared\ui-kit\modal\components
 ng g c shared/ui-kit/modal/components/banner-success  --skip-tests --dry-run
 ng g c shared/ui-kit/modal/components/banner-failure  --skip-tests --dry-run
 ng g c shared/ui-kit/modal/components/banner-info  --skip-tests --dry-run
+//---modal-content
+ng g c shared/ui-kit/modal/components/new-shipment-modal  --skip-tests --dry-run
+ng g c shared/ui-kit/modal/components/pin-modal  --skip-tests --dry-run
 
  //---
 

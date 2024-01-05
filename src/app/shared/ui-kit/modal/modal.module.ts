@@ -9,6 +9,8 @@ import {IconModule} from '../ref-icon/icon.module'
 import {BannerSuccessComponent} from './components/banner-success/banner-success.component'
 import {BannerFailureComponent} from './components/banner-failure/banner-failure.component'
 import {BannerInfoComponent} from './components/banner-info/banner-info.component'
+import {NewShipmentModalComponent} from './components/new-shipment-modal/new-shipment-modal.component'
+import {PinModalComponent} from './components/pin-modal/pin-modal.component'
 
 @NgModule({
 	declarations: [
@@ -17,7 +19,9 @@ import {BannerInfoComponent} from './components/banner-info/banner-info.componen
 		ModalHeaderComponent,
 		BannerSuccessComponent,
 		BannerFailureComponent,
-		BannerInfoComponent
+		BannerInfoComponent,
+		NewShipmentModalComponent,
+		PinModalComponent
 	],
 	imports: [CommonModule, ButtonModule, IconModule, SpacingModule],
 	exports: [
@@ -26,7 +30,9 @@ import {BannerInfoComponent} from './components/banner-info/banner-info.componen
 		ModalHeaderComponent,
 		BannerSuccessComponent,
 		BannerFailureComponent,
-		BannerInfoComponent
+		BannerInfoComponent,
+		NewShipmentModalComponent,
+		PinModalComponent
 	]
 })
 export class ModalModule {}
