@@ -1,0 +1,21 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+@import 'src/styles/_colors.vars.scss';
+
+.failure-banner {
+	position: relative;
+	width: 368px;
+	height: 96px;
+	padding: 24px 0px;
+	border-radius: 8px;
+	border: 1px solid var(--alc-quaternary);
+	background: var(--alc-quinary);
+	div {
+		position: absolute;
+		padding: 12px;
+		border-radius: 64px;
+		border: 2px solid var(--alc-quaternary);
+		background: var(--alc-default);
+		z-index: 2;
+		@include icon-color(--wgr-primary);
+	}
+}

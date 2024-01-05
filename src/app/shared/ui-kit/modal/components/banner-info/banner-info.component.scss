@@ -1,0 +1,25 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+@import 'src/styles/_colors.vars.scss';
+
+.info-banner {
+	position: relative;
+	width: 368px;
+	height: 96px;
+	overflow: hidden;
+	border-radius: 8px;
+	border: 1px solid var(--adc-quaternary);
+	background: var(--adc-quinary);
+	mib-icon[name='logo_round'] {
+		@include icon-size(180px);
+		@include icon-color(var(--adc-quaternary));
+	}
+	div {
+		position: absolute;
+		padding: 12px;
+		border-radius: 64px;
+		border: 2px solid var(--adc-quaternary);
+		background: var(--adc-default);
+		z-index: 2;
+		@include icon-color(--wgr-primary);
+	}
+}

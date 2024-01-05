@@ -41,7 +41,8 @@ export class IconsService {
 		'whatsapp',
 		'fi_file',
 		'fi_download',
-		'fi_lock'
+		'fi_lock',
+		'logo_round'
 	]
 
 	public async initIcons(): Promise<void> {
