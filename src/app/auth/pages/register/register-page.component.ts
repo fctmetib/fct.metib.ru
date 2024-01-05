@@ -128,7 +128,7 @@ export class RegisterPageComponent {
 					Last: [null, [Validators.required]],
 					Email: [null, [Validators.required, Validators.email]],
 					IsMale: [true, [Validators.required]],
-					Login: [true, [Validators.required, Validators.minLength(6)]],
+					Login: [null, [Validators.required, Validators.minLength(6)]],
 					Phone: [null, [Validators.required]]
 				}),
 				Captcha: this.fb.group({

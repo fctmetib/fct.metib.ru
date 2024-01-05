@@ -45,11 +45,10 @@
 		@include input-color(var(--bti-quaternary));
 	}
 
-	// STATUSES
-	@each $element in ('input', 'textarea') {
-		&:has(#{$element}:focus),
-		&:has(#{$element}:not(:placeholder-shown):not(:focus)) {
-			@include input-color(var(--bti-secondary));
+  // STATUSES
+  @each $element in ('input', 'textarea') {
+    &:has(#{$element}:not([readonly]):focus), &:has(#{$element}:not(:placeholder-shown)) {
+      @include input-color(var(--bti-secondary));
 
 			input,
 			.left-wrapper {
@@ -60,27 +59,15 @@
 				margin-top: 12px;
 			}
 
-			.box-label {
-				@include text-xs;
-				font-weight: var(--fw-medium);
-				color: var(--mc-default);
-				transform: unset;
-				//padding-left: 16px !important;
-			}
-		}
-
-		&:not(:has(#{$element}:focus)),
-		&:not(:has(#{$element}:not(:placeholder-shown):not(:focus))) {
-			&:has(.input_error) {
-				@include input-color(var(--alc-default));
-			}
-			&:has(.input_active) {
-				.box-label {
-					color: var(--success-default);
-				}
-			}
-		}
-	}
+      .box-label {
+        @include text-xs;
+        font-weight: var(--fw-medium);
+        color: var(--mc-default);
+        transform: unset;
+        //padding-left: 16px !important;
+      }
+    }
+  }
 }
 
 @mixin input-color($color) {
@@ -97,17 +84,17 @@
 }
 
 @mixin box-label-styles($top) {
-	.box-label {
-		@content;
-	}
-	@each $element in ('input', 'textarea') {
-		&:has(#{$element}:focus),
-		&:has(#{$element}:not(:placeholder-shown)) {
-			.box-label {
-				top: $top;
-			}
-		}
-	}
+  .box-label {
+    @content;
+  }
+  @each $element in ('input', 'textarea') {
+    &:has(#{$element}:not([readonly]):focus),
+    &:has(#{$element}:not(:placeholder-shown)) {
+      .box-label {
+        top: $top;
+      }
+    }
+  }
 }
 
 @mixin input-size($height, $iconSize, $iconsGap, $paddingsHorizontal: 16px) {
