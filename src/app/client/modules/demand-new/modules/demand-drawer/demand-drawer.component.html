@@ -14,8 +14,9 @@
 	<mib-spacing type="xs"></mib-spacing>
   <mib-textarea [controls]="false">
     <ng-container textarea-label>Текст обращения</ng-container>
-    <textarea mibTextarea></textarea>
+    <textarea [maxLength]="300" autosize mibTextarea></textarea>
   </mib-textarea>
+
 	<mib-spacing type="s"></mib-spacing>
 	<p class="text text_m text_medium">
 		При необходимости прикрепите документы в поле ниже

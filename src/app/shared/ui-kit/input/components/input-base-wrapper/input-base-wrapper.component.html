@@ -1,5 +1,5 @@
-<div #box class="box-wrapper flex flex_column" [ngClass]="classes">
-	<span #label (click)="focus()" [class.box_without-label]="!label.children.length" class="box-label text c-bti-tertiary">
+<div (click)="focus()" #box class="box-wrapper flex flex_column" [ngClass]="classes">
+	<span #label [class.box_without-label]="!label.children.length" class="box-label text c-bti-tertiary">
 		<ng-content select="[input-base-label]"></ng-content>
 	</span>
   <div [class.box-right-iconly]="rightIcons.length" [class.box-left-iconly]="leftIcons.length" class="box">

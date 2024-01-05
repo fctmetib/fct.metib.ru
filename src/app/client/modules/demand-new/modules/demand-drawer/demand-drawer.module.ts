@@ -10,20 +10,22 @@ import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
 import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
 import {DemandDrawerService} from './demand-drawer.service'
 import {TextareaModule} from '../../../../../shared/ui-kit/textarea/textarea.module';
+import {AutosizeModule} from 'ngx-autosize';
 
 @NgModule({
   declarations: [DemandDrawerComponent],
-    imports: [
-        CommonModule,
-        DrawerModule,
-        MatDialogModule,
-        SpacingModule,
-        ButtonModule,
-        IconModule,
-        MibDragAndDropModule,
-        InputModule,
-        TextareaModule,
-    ],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    MatDialogModule,
+    SpacingModule,
+    ButtonModule,
+    IconModule,
+    MibDragAndDropModule,
+    InputModule,
+    TextareaModule,
+    AutosizeModule,
+  ],
   providers: [DemandDrawerService]
 })
 export class DemandDrawerModule {
