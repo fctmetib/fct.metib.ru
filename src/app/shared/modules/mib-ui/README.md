@@ -96,6 +96,12 @@ ng g c shared/ui-kit/modal/modal --flat  --skip-tests --dry-run
 //--- modal-components
 ng g c shared/ui-kit/modal/components/modal-footer  --skip-tests --dry-run
 ng g c shared/ui-kit/modal/components/modal-header  --skip-tests --dry-run
+// --modal-banner
+src\app\shared\ui-kit\modal\components
+ng g c shared/ui-kit/modal/components/banner-success  --skip-tests --dry-run
+ng g c shared/ui-kit/modal/components/banner-failure  --skip-tests --dry-run
+ng g c shared/ui-kit/modal/components/banner-info  --skip-tests --dry-run
+
  //---
 
  //--- media

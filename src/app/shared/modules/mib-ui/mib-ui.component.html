@@ -47,11 +47,7 @@
 		</mib-button>
 
 		<mib-button [disabled]="true" size="xl">
-			<mib-icon
-				btn-left-icon
-				class="stroke"
-				name="fi_chevron-left"
-			></mib-icon>
+			<mib-icon btn-left-icon class="stroke" name="fi_chevron-left"></mib-icon>
 			<mib-icon
 				btn-right-icon
 				class="stroke"
@@ -355,11 +351,7 @@
 				styleType="filled-secondary"
 				placeholder="Label"
 			/>
-			<mib-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-icon>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
 			<mib-icon
 				input-right-icon
 				c-bgr-secondary
@@ -382,11 +374,7 @@
 				styleType="filled-secondary"
 				placeholder="Label"
 			/>
-			<mib-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-icon>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
 			<mib-icon
 				input-right-icon
 				c-bgr-secondary
@@ -409,11 +397,7 @@
 				styleType="filled-secondary"
 				placeholder="Label"
 			/>
-			<mib-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-icon>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
 			<mib-icon
 				input-right-icon
 				c-bgr-secondary
@@ -472,11 +456,7 @@
 				styleType="floating"
 				placeholder="Label"
 			/>
-			<mib-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-icon>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
 			<mib-icon
 				input-right-icon
 				c-bgr-secondary
@@ -499,11 +479,7 @@
 				styleType="floating"
 				placeholder="Label"
 			/>
-			<mib-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-icon>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
 			<mib-icon
 				input-right-icon
 				c-bgr-secondary
@@ -526,11 +502,7 @@
 				styleType="floating"
 				placeholder="Label"
 			/>
-			<mib-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-icon>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
 			<mib-icon
 				input-right-icon
 				c-bgr-secondary
@@ -589,11 +561,7 @@
 				styleType="separated"
 				placeholder="Label"
 			/>
-			<mib-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-icon>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
 			<mib-icon
 				input-right-icon
 				c-bgr-secondary
@@ -616,11 +584,7 @@
 				styleType="separated"
 				placeholder="Label"
 			/>
-			<mib-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-icon>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
 			<mib-icon
 				input-right-icon
 				c-bgr-secondary
@@ -643,11 +607,7 @@
 				styleType="separated"
 				placeholder="Label"
 			/>
-			<mib-icon
-				class="stroke path"
-				input-left-icon
-				name="fi_search"
-			></mib-icon>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
 			<mib-icon
 				input-right-icon
 				c-bgr-secondary
@@ -1317,8 +1277,10 @@
 	<div class="">
 		<h5>modal:</h5>
 		<mib-modal>
-			<mib-modal-header modal-header title="Halo title modal">
+			<mib-modal-header modal-header title="Запрос отправлен">
 			</mib-modal-header>
+			<mib-banner-success></mib-banner-success>
+			<mib-spacing type="xs"></mib-spacing>
 			<p class="text text_m">
 				Отследить статус запроса Вы сможете на странице запросов во вкладке
 				“История запросов”
@@ -1334,6 +1296,13 @@
 				</ng-container>
 			</mib-modal-footer>
 		</mib-modal>
+		<mib-spacing type="m"></mib-spacing>
+		<mib-banner-success></mib-banner-success>
+		<mib-spacing type="m"></mib-spacing>
+		<mib-banner-failure></mib-banner-failure>
+		<mib-spacing type="m"></mib-spacing>
+		<mib-banner-info></mib-banner-info>
+		<mib-spacing type="m"></mib-spacing>
 	</div>
 	<mib-spacing type="xl2"></mib-spacing>
 	<mib-spacing type="xl2"></mib-spacing>
