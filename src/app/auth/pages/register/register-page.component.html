@@ -50,7 +50,6 @@
 						formControlName="Email"
 						[size]="inputSize"
 						styleType="filled-secondary"
-						#Email
 					/>
 					<ng-container input-label>E-mail</ng-container>
 				</mib-input>
@@ -61,8 +60,7 @@
 						formControlName="Login"
 						[size]="inputSize"
 						styleType="separated"
-						[readonly]="true"
-						[(ngModel)]="Email.value"
+            readonly
 					/>
 					<ng-container input-label>Ваш логин</ng-container>
 					<mib-icon
