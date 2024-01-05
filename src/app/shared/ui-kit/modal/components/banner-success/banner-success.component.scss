@@ -3,14 +3,14 @@
 
 .success-banner {
 	position: relative;
-	width: 368px;
+	max-width: 368px;
 	height: 96px;
 	overflow: hidden;
 	border-radius: 8px;
 	border: 1px solid var(--success-quaternary);
 	background: var(--success-quinary);
 	mib-icon[name='logo_round'] {
-		@include icon-size(180px);
+		@include icon-size(128px);
 		@include icon-color(var(--success-quaternary));
 	}
 	div {
