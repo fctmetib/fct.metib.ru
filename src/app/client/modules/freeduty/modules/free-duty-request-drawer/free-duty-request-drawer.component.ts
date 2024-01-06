@@ -1,7 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
-import {AdvancedDuty} from '../../pages/free-duty-page/interfaces/free-duty.interface';
 import {ToolsService} from '../../../../../shared/services/tools.service';
 import {FreeDutyService} from '../../services/free-duty.service';
 import {BehaviorSubject, finalize, tap} from 'rxjs';
@@ -19,13 +18,13 @@ export class FreeDutyRequestDrawerComponent implements OnInit {
   public PAGINATOR_ITEMS_PER_PAGE = 6;
   public PAGINATOR_PAGE_TO_SHOW = 5;
 
-  public dutiesVisible: AdvancedDuty[] = []
+  public dutiesVisible: Duty[] = []
 
   constructor(
     public dialogRef: MatDialogRef<FreeDutyRequestDrawerComponent>,
     public toolsService: ToolsService,
     private freeDutyService: FreeDutyService,
-    @Inject(MAT_DIALOG_DATA) public data: DrawerData<AdvancedDuty[]>
+    @Inject(MAT_DIALOG_DATA) public data: DrawerData<Duty[]>
   ) {
   }
 

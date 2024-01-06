@@ -47,11 +47,7 @@
           ></mib-skeleton>
         </ng-container>
         <ng-template #table>
-          <mib-table-row
-            [@slideAnimation]="requestAnimationStates[req.ID]"
-            *ngFor="let req of requestsVisible; let last = last"
-            [underlined]="!last"
-          >
+          <mib-table-row *ngFor="let req of requestsVisible; let last = last" [rowId]="req.ID" [underlined]="!last">
             <mib-table-cell
               (click)="openBrowserDrawer(req.ID)"
               [checked]="req.checked"
@@ -105,7 +101,7 @@
             </mib-button>
           </mib-table-row>
         </ng-template>
-        <mib-table-footer [underlined]="!(loading$ | async)">
+        <mib-table-footer [lined]="!(loading$ | async)">
           <mib-paginator
             (pageChange)="onPageChange($event)"
             [totalCount]="requests.length"

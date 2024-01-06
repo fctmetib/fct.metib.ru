@@ -1,13 +1,11 @@
 import {
   BehaviorSubject,
-  Observable,
   finalize,
-  forkJoin,
   filter,
-  tap, switchMap, merge
+  tap, switchMap, merge, forkJoin
 } from 'rxjs'
 import {Component, OnInit, OnDestroy} from '@angular/core'
-import {GetRequestsReq, RequestsService} from '../../services/requests.service'
+import {RequestsService} from '../../services/requests.service'
 import {Properties} from 'csstype'
 import {AdvancedRequests} from './interfaces/requests-page.interface'
 import {RequestDrawerService} from '../../modules/request-drawer/request-drawer.service'
@@ -17,13 +15,7 @@ import {FormControl} from '@angular/forms';
 import {ToolsService} from '../../../../../shared/services/tools.service';
 import {takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
-
-const ANIMATION_CONFIG = {
-  translateDistance: '-3%',
-  endOpacity: 0,
-  startOpacity: 1,
-  duration: 300
-}
+import {TableRowAnimationService} from '../../../../../shared/ui-kit/table/services/table-row-animation.service';
 
 @Component({
   selector: 'app-requests-page',
@@ -50,7 +42,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   public requests: AdvancedRequests[] = []
   public requestsVisible: AdvancedRequests[] = []
-  public requestAnimationStates: Record<number, boolean> = {}
 
   public selectedRequestCount: number = 0
   public severalRequestsChecked: boolean = false
@@ -63,7 +54,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     private requestDrawerService: RequestDrawerService,
     private requestBrowserDrawerService: RequestBrowserDrawerService,
     private toolsService: ToolsService,
-    private au: AutoUnsubscribeService
+    private au: AutoUnsubscribeService,
+    private tableRowAnimationService: TableRowAnimationService
   ) {
   }
 
@@ -95,10 +87,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     return this.requestsService.getRequests(req).pipe(
       tap(data => {
         this.requests = data.map(x => ({...x, checked: false}))
-        // Инициализация состояния анимации
-        this.requests.forEach(req => {
-          this.requestAnimationStates[req.ID] = false
-        })
         this.onPageChange(this.currentPage$.value)
       }),
       finalize(() => this.loading$.next(false))
@@ -116,13 +104,24 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
         filter(Boolean),
         tap(() => {
           forkJoin(
-            this.selectedRequests.map(duty => this.removeDutyById(duty.ID))
-          ).subscribe(() => {
-            this.onPageChange(this.currentPage$.value)
-          })
+            this.selectedRequests.map(request => this.tableRowAnimationService.animateRowAndAwaitCompletion(request.ID).pipe(
+              tap(() => {
+                this.removeRequestById(request.ID);
+              })
+            ))
+          ).pipe(
+            finalize(() => this.onPageChange(this.currentPage$.value))
+          ).subscribe()
         })
       )
       .subscribe()
+  }
+
+  // Метод удаления строки по ID
+  removeRequestById(id: number) {
+    // Здесь логика удаления строки из данных компонента
+    // Например, если это массив объектов с ID
+    this.requests = this.requests.filter(request => request.ID !== id);
   }
 
   openBrowserDrawer(requestId: number) {
@@ -130,21 +129,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       data: {
         requestId: requestId
       }
-    })
-  }
-
-  removeDutyById(id: number): Observable<void> {
-    return new Observable(observer => {
-      // Изменение состояния анимации
-      this.requestAnimationStates[id] = true
-
-      // Устанавливаем таймер для удаления элемента после завершения анимации
-      setTimeout(() => {
-        // Удаляем элемент по ID
-        this.requests = this.requests.filter(duty => duty.ID !== id)
-        observer.next() // Сигнал об успешном выполнении
-        observer.complete() // Завершаем Observable
-      }, ANIMATION_CONFIG.duration - 10)
     })
   }
 
@@ -179,6 +163,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       takeUntil(this.au.destroyer)
     ).subscribe();
   }
+
   // ---------------- end test data/methods ----------------
 
   // МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ

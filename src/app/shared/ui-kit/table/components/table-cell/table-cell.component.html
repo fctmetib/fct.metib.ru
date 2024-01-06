@@ -15,7 +15,7 @@
   <ng-container [ngSwitch]="type">
     <ng-container *ngSwitchCase="'main'">
       <mib-checkbox
-        (click)="$event.stopPropagation()"
+        (click)="handleCheckboxClick(); $event.stopPropagation()"
         [formControl]="control"
         align=""
         [id]="checkboxId"

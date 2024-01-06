@@ -23,8 +23,8 @@ import {TableRowComponent} from '../table-row/table-row.component';
   styleUrls: ['./table-cell.component.scss']
 })
 export class TableCellComponent implements OnInit, OnChanges {
-  @Input() type: TableCellType = 'text';
   @Input() set size(value: TableCellSize) {this._size = value;}
+  @Input() type: TableCellType = 'text';
   @Input() checked: boolean;
   @Input() showCheckbox: boolean = true;
   @Input() contracted: boolean = false;
@@ -39,7 +39,12 @@ export class TableCellComponent implements OnInit, OnChanges {
 
   constructor(
     private table: TableComponent,
+    private row: TableRowComponent,
   ) {
+  }
+
+  get state() {
+    return Boolean(this.control?.value)
   }
 
   @HostBinding('class')
@@ -52,6 +57,7 @@ export class TableCellComponent implements OnInit, OnChanges {
 
   toggle() {
     this.control.setValue(!this.control.value)
+    this.handleCheckboxClick()
   }
 
   ngOnInit() {
@@ -69,5 +75,13 @@ export class TableCellComponent implements OnInit, OnChanges {
     if (changes.checked) {
       this.control.setValue(this.checked, { emitEvent: false });
     }
+  }
+
+  handleCheckboxClick() {
+    setTimeout(() => {
+      if (this.type === 'main') {
+        this.table.onCheckboxClick(this.row.rowId, this.state);
+      }
+    })
   }
 }

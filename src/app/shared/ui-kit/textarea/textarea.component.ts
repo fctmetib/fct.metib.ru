@@ -1,4 +1,14 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ContentChild, HostBinding, Input, Renderer2, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  forwardRef,
+  HostBinding,
+  Input,
+  Renderer2,
+  ViewChild
+} from '@angular/core';
 import {MibTextareaDirective} from './directives/mib-textarea.directive';
 import {fromEvent, tap} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -15,7 +25,7 @@ import {ToolsService} from '../../services/tools.service';
 })
 export class TextareaComponent implements AfterViewInit {
   @ContentChild(MibTextareaDirective, {descendants: true}) textareaDirective: MibTextareaDirective
-  @ViewChild(InputBaseWrapperComponent) base: InputBaseWrapperComponent
+  @ViewChild(forwardRef(() => InputBaseWrapperComponent)) base: InputBaseWrapperComponent
 
   @Input() controls: boolean = true
   @Input() custom: InputCustom = ''

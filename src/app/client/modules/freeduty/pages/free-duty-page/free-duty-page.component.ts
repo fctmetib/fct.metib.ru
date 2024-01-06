@@ -1,44 +1,36 @@
-import { FormControl} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import {
-  Observable,
   filter,
   switchMap,
   tap,
   BehaviorSubject,
   finalize,
-  forkJoin, merge,
+  forkJoin, merge, zip,
 } from 'rxjs';
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {Duty} from 'src/app/shared/types/duty/duty';
 import {FreeDutyRequestDrawerService} from '../../modules/free-duty-request-drawer/free-duty-request-drawer.service';
 import {takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
-import {AdvancedDuty} from './interfaces/free-duty.interface';
 import {DrawerStateEnum} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
 import {FreeDutyService} from '../../services/free-duty.service';
 import {ToolsService} from '../../../../../shared/services/tools.service';
-import {AnimationService} from '../../../../../shared/animations/animations.service';
 import {Properties} from 'csstype';
 import {TableDataService} from '../../../../../shared/ui-kit/table/services/table.service';
 import {DataCount} from '../../../../../shared/interfaces/shared.interface';
-
-const ANIMATION_CONFIG = {
-  translateDistance: '-3%',
-  endOpacity: 0,
-  startOpacity: 1,
-  duration: 300
-}
+import {TableRowAnimationService} from '../../../../../shared/ui-kit/table/services/table-row-animation.service';
+import {TableSelectionEvent} from '../../../../../shared/ui-kit/table/interfaces/table.interface';
+import {TableComponent} from '../../../../../shared/ui-kit/table/table.component';
 
 @Component({
   selector: 'app-free-duty-page',
   templateUrl: './free-duty-page.component.html',
   styleUrls: ['./free-duty-page.component.scss'],
   providers: [AutoUnsubscribeService],
-  animations: [
-    new AnimationService().generateAnimation(ANIMATION_CONFIG)
-  ]
 })
 export class FreeDutyPageComponent implements OnInit, OnDestroy {
+
+  @ViewChild(TableComponent) table: TableComponent
 
   public loading$ = new BehaviorSubject<boolean>(false)
 
@@ -59,36 +51,25 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   public currentPage$ = new BehaviorSubject<number>(1)
 
   public dutiesCount?: DataCount
-  public duties$ = new BehaviorSubject<AdvancedDuty[]>([])
-  public dutyAnimationStates: Record<number, boolean> = {};
+  public duties$ = new BehaviorSubject<Duty[]>([])
+  public dutiesSelection: TableSelectionEvent = {
+    selectedCount: 0,
+    selectedIds: []
+  }
+  public selectedDuties: Duty[] = []
 
-  public freeOnly: boolean = false;
+  public freeOnly: boolean = true;
   public dateFrom = new FormControl<string>('')
   public dateTo = new FormControl<string>('')
-
-  public selectedDutiesCount: number = 0
-  public severalDutiesChecked: boolean = false;
 
   constructor(
     private au: AutoUnsubscribeService,
     private freeDutyService: FreeDutyService,
     public toolsService: ToolsService,
     private tableDataService: TableDataService,
-    private freeDutyRequestDrawerService: FreeDutyRequestDrawerService
+    private freeDutyRequestDrawerService: FreeDutyRequestDrawerService,
+    private tableRowAnimationService: TableRowAnimationService
   ) {
-  }
-
-  get paginationStartIndex() {
-    return (this.currentPage$.value - 1) * this.PAGINATOR_ITEMS_PER_PAGE
-  }
-
-  public createAdvancedDuty = (duty: Duty) => {
-    this.dutyAnimationStates[duty.ID] = false;
-
-    return {
-      ...duty,
-      checked: false
-    }
   }
 
   selectTab(freeOnly: boolean) {
@@ -97,7 +78,6 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.currentPage$.pipe(
       switchMap(() => {
         this.loading$.next(true)
@@ -110,20 +90,16 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
         const setOptionalDate = (date: string, key: string) => {
           if (date) req[key] = new Date(date).toISOString()
         }
+
         setOptionalDate(this.dateFrom.value, 'dateFrom')
         setOptionalDate(this.dateTo.value, 'dateTo')
 
-        return this.freeDutyService.getFreeDuties(req).pipe(
-          tap(duties => {
-            this.duties$.next(duties.map(x => this.createAdvancedDuty(x)))
-          }),
-          switchMap(() => this.freeDutyService.getFreeDutyCount(req)),
-          tap(data => {
-            this.dutiesCount = data;
-          }),
-          finalize(() => {
-            this.loading$.next(false)
-          })
+        return zip(
+          this.freeDutyService.getFreeDuties(req).pipe(tap(duties => this.duties$.next(duties))),
+          this.freeDutyService.getFreeDutyCount(req).pipe(tap(data => this.dutiesCount = data)
+          ).pipe(
+            finalize(() => this.loading$.next(false))
+          )
         )
       }),
       takeUntil(this.au.destroyer)
@@ -136,48 +112,30 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
   }
 
   openDrawer() {
-    this.freeDutyRequestDrawerService.open<AdvancedDuty[]>({
+    this.freeDutyRequestDrawerService.open({
       state: DrawerStateEnum.CREATE,
       data: this.selectedDuties
     }).afterClosed().pipe(
       filter(Boolean),
-      switchMap(() => forkJoin(this.selectedDuties.map(duty => this.removeDutyById(duty.ID)))),
       tap(() => {
-        this.onPageChange(this.currentPage$.value)
+        forkJoin(this.selectedDuties.map(duty => this.tableRowAnimationService.animateRowAndAwaitCompletion(duty.ID).pipe(
+          tap(() => {
+            this.removeDutyById(duty.ID)
+          })
+        ))).pipe(
+          finalize(() => this.onPageChange(this.currentPage$.value))
+        ).subscribe()
       })
     ).subscribe()
   }
 
-  removeDutyById(id: number): Observable<void> {
-    return new Observable(observer => {
-      // Изменение состояния анимации
-      this.dutyAnimationStates[id] = true;
-
-      // Устанавливаем таймер для удаления элемента после завершения анимации
-      setTimeout(() => {
-        // Удаляем элемент по ID
-        this.duties$.next(this.duties$.value.filter(duty => duty.ID !== id));
-        observer.next(); // Сигнал об успешном выполнении
-        observer.complete(); // Завершаем Observable
-      }, ANIMATION_CONFIG.duration - 10);
-    });
+  removeDutyById(id: number) {
+    this.duties$.next(this.duties$.value.filter(duty => duty.ID !== id));
   }
-
 
   onPageChange(page: number) {
     this.currentPage$.next(page);
-    this.selectedDutiesCount = 0
-    this.severalDutiesChecked = false;
-  }
-
-  onRowCheck(boolean: boolean, duty: AdvancedDuty) {
-    duty.checked = boolean
-
-    this.selectedDutiesCount = this.selectedDuties.length
-  }
-
-  get selectedDuties() {
-    return this.duties$.value.filter(x => x.checked)
+    this.table.deselect()
   }
 
   public onSort(ascending: boolean, key: string) {
@@ -195,6 +153,11 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.au.destroyer)
     ).subscribe();
+  }
+
+  onSelectionChanged(event: TableSelectionEvent) {
+    this.dutiesSelection = event;
+    this.selectedDuties = this.duties$.value.filter(duty => event.selectedIds.includes(duty.ID))
   }
 
   // freeduty$: Observable<DutyInterface[] | null>;

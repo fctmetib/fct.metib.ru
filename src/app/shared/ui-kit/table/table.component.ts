@@ -1,4 +1,15 @@
-import {AfterContentInit, Component, ContentChildren, forwardRef, HostListener, Input, OnDestroy, QueryList} from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  ContentChildren,
+  EventEmitter,
+  forwardRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  Output,
+  QueryList
+} from '@angular/core';
 import {TableCellSize} from './components/table-cell/interfaces/table-cell.interface';
 import {TableRowComponent} from './components/table-row/table-row.component';
 import {TableHeadCellComponent} from './components/table-head-cell/table-head-cell.component';
@@ -6,6 +17,7 @@ import {forkJoin, Subject, switchMap, tap} from 'rxjs';
 import {startWith, takeUntil} from 'rxjs/operators';
 import {AutoUnsubscribeService} from '../../services/auto-unsubscribe.service';
 import {TableCellComponent} from './components/table-cell/table-cell.component';
+import {TableSelectionEvent} from './interfaces/table.interface';
 
 @Component({
   selector: 'mib-table',
@@ -29,6 +41,9 @@ export class TableComponent implements AfterContentInit, OnDestroy {
       this.selectFirstColumn()
     }
   }
+
+  @Output() selectionChange = new EventEmitter<TableSelectionEvent>
+
   private unsubscribe$ = new Subject<void>();
   public selectedHeadCell?: TableHeadCellComponent
   public _isLoading: boolean = false;
@@ -52,24 +67,6 @@ export class TableComponent implements AfterContentInit, OnDestroy {
         })
       })
     ).subscribe()
-
-    this.cells.changes.pipe(
-      startWith(null),
-      switchMap(() => {
-        this.unsubscribe$.next();
-
-        const cellsTriggers$ = this.cells.map((cell, index) =>
-          cell.onCheck.pipe(
-            tap(value => {
-              this.onCheckboxClick(index, value);
-            }),
-            takeUntil(this.unsubscribe$)
-          )
-        );
-        return forkJoin(cellsTriggers$);
-      }),
-      takeUntil(this.au.destroyer)
-    ).subscribe();
   }
 
   ngOnDestroy() {
@@ -103,18 +100,29 @@ export class TableComponent implements AfterContentInit, OnDestroy {
     }
   }
 
-  onCheckboxClick(index, value: boolean) {
+  getIndexById(rowId) {
+    return this.rows.toArray().findIndex(row => row.rowId === rowId);
+  }
+
+  onCheckboxClick(rowId, value: boolean) {
+    const index = this.getIndexById(rowId);
     if (this.shiftKeyHeldDown && this.lastCheckedIndex !== null) {
       const start = Math.min(this.lastCheckedIndex, index);
       const end = Math.max(this.lastCheckedIndex, index);
       for (let i = start; i <= end; i++) {
         // Здесь должен быть код для выделения строки, например:
-        // this.cells.get(i).control.setValue(value);
+        this.rows.get(i)?.cell?.control?.setValue?.(value);
       }
-    } else {
-      // Здесь код для обработки одиночного клика
-      // this.rows[index].selected = event.target.checked;
     }
     if (!this.shiftKeyHeldDown) this.lastCheckedIndex = index;
+    const selectedRows = this.rows.toArray().filter(row => row.state)
+    this.selectionChange.emit({
+      selectedCount: selectedRows.length,
+      selectedIds: selectedRows.map(row => row.rowId)
+    })
+  }
+
+  deselect() {
+    this.headCells.get(0).control.setValue(false)
   }
 }

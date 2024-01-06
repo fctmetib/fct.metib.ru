@@ -27,16 +27,15 @@
           <p class="text text_m c-bti-tertiary">-</p>
           <input [formControl]="dateTo" styleType="outline" type="date" mibInput/>
         </div>
-        <mib-button [disabled]="!selectedDutiesCount" (press)="openDrawer()" type="filled-primary">Создать заявку
-          ({{selectedDutiesCount}})
+        <mib-button [disabled]="!dutiesSelection.selectedCount" (press)="openDrawer()" type="filled-primary">Создать заявку
+          ({{dutiesSelection.selectedCount}})
         </mib-button>
       </div>
     </div>
     <mib-spacing type="xs"></mib-spacing>
-    <mib-table [isLoading]="loading$ | async">
+    <mib-table [isLoading]="loading$ | async"  (selectionChange)="onSelectionChanged($event)">
       <mib-table-head>
-        <mib-table-head-cell [sortable]="true" (onCheck)="severalDutiesChecked = $event"
-                             [checked]="severalDutiesChecked" [showCheckbox]="true" (onSort)="onSort($event, 'ID')">ИД
+        <mib-table-head-cell [sortable]="true" [showCheckbox]="true" (onSort)="onSort($event, 'ID')">ИД
         </mib-table-head-cell>
         <mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Contract.Id')">Контракт</mib-table-head-cell>
         <mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Number')">№ поставки</mib-table-head-cell>
@@ -54,9 +53,8 @@
                       *ngFor="let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE); let last = last"></mib-skeleton>
       </ng-container>
       <ng-template #table>
-        <mib-table-row [@slideAnimation]="dutyAnimationStates[duty.ID]"
-                       *ngFor="let duty of duties$ | async; let last = last" [underlined]="!last">
-          <mib-table-cell [checked]="duty.checked" (onCheck)="onRowCheck($event, duty)" type="main">
+        <mib-table-row [rowId]="duty.ID" *ngFor="let duty of duties$ | async; let last = last" [underlined]="!last">
+          <mib-table-cell type="main">
             <ng-container table-cell-title>{{duty.ID}}</ng-container>
           </mib-table-cell>
           <mib-table-cell>
@@ -94,7 +92,7 @@
           </mib-button>
         </mib-table-row>
       </ng-template>
-      <mib-table-footer [underlined]="!(loading$ | async)">
+      <mib-table-footer [lined]="!(loading$ | async)">
         <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="dutiesCount?.TotalItems ?? 0"
                        [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
                        [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"></mib-paginator>

@@ -5,6 +5,9 @@ import {ModalModule} from '../../../ui-kit/modal/modal.module';
 import {ButtonModule} from '../../../ui-kit/button/button.module';
 import {SpacingModule} from '../../../ui-kit/spacing/spacing.module';
 import {TableModule} from '../../../ui-kit/table/table.module';
+import {DropdownPointModule} from '../../../ui-kit/dropdown-point/dropdown-point.module';
+import {PaginatorModule} from '../../../ui-kit/paginator/paginator.module';
+import {SelectModule} from '../../../ui-kit/select/select.module';
 
 
 
@@ -17,7 +20,10 @@ import {TableModule} from '../../../ui-kit/table/table.module';
     ModalModule,
     ButtonModule,
     SpacingModule,
-    TableModule
+    TableModule,
+    DropdownPointModule,
+    PaginatorModule,
+    SelectModule
   ]
 })
 export class RequestCorrectionModalModule { }

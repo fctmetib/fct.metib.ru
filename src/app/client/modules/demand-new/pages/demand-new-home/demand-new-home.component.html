@@ -108,7 +108,7 @@
 						</mib-button>
 					</mib-table-row>
 				</ng-template>
-				<mib-table-footer [underlined]="!(loading$ | async)">
+				<mib-table-footer [lined]="!(loading$ | async)">
 					<mib-paginator
 						(pageChange)="onPageChange($event)"
 						[totalCount]="drafts.length"
@@ -219,7 +219,7 @@
 						</mib-button>
 					</mib-table-row>
 				</ng-template>
-				<mib-table-footer [underlined]="!(loading$ | async)">
+				<mib-table-footer [lined]="!(loading$ | async)">
 					<mib-paginator
 						(pageChange)="onPageChange($event)"
 						[totalCount]="historys.length"
