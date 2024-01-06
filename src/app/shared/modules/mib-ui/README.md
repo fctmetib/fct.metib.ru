@@ -134,6 +134,12 @@ ng g m shared/ui-kit/file-cell/file-cell --flat  --dry-run
 ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
  //---
 
+ //--- modals-modules
+ src\app\shared\modules\modals\new-shipment-modal
+ ng g m shared/modules/modals/new-shipment-modal/new-shipment-modal --flat --dry-run
+ ng g m shared/modules/modals/pin-modal/pin-modal --flat --dry-run
+ //---
+
 // add m
 ng g m shared/ui-kit/input --dry-run
 ng g m shared/ui-kit/badge --dry-run
