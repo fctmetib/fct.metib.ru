@@ -137,7 +137,9 @@ ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
  //--- modals-modules
  src\app\shared\modules\modals\new-shipment-modal
  ng g m shared/modules/modals/new-shipment-modal/new-shipment-modal --flat --dry-run
+ ng g s shared/modules/modals/new-shipment-modal/new-shipment-modal --flat --skip-tests --dry-run
  ng g m shared/modules/modals/pin-modal/pin-modal --flat --dry-run
+ ng g s shared/modules/modals/pin-modal/pin-modal --flat --skip-tests --dry-run
  //---
 
 // add m
