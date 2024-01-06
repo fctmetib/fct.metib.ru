@@ -59,3 +59,17 @@ export interface Document {
 	OwnerID: number
 	Data?: string
 }
+
+export interface RequestState {
+  Name: string;
+  Title: string;
+  Date: Date;
+  Events: RequestStateEvent[]
+}
+
+export interface RequestStateEvent {
+  Identifier: string;
+  Comment: string;
+  Manager: string;
+  Date: string;
+}

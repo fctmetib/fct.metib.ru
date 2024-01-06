@@ -18,6 +18,7 @@ import {MibUiModule} from './shared/modules/mib-ui/mib-ui.module';
 import {appInitializer} from './shared/factories/init.factory';
 import {IconsService} from './shared/services/icons.servcie';
 import {MibCoreModule} from './core/mib-core.module';
+import {MatDialogModule} from '@angular/material/dialog';
 
 registerLocaleData(localeRu, 'ru')
 
@@ -34,6 +35,7 @@ registerLocaleData(localeRu, 'ru')
     CookieModule.forRoot(),
     ClientModule,
     AuthModule,
+    MatDialogModule
   ],
   providers: [
     MessageService,

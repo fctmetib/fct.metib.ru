@@ -1,123 +1,122 @@
 <div class="container container_large">
-	<mib-spacing type="m"></mib-spacing>
-	<h3>Заявки</h3>
-	<mib-spacing type="m"></mib-spacing>
+  <mib-spacing type="m"></mib-spacing>
+  <h3>Заявки</h3>
+  <mib-spacing type="m"></mib-spacing>
 </div>
 <mib-tab-group>
-	<div class="container container_large">
-		<div class="flex flex_justify-between">
-			<div class="flex gap-16">
-				<div class="flex flex_align-center gap-4">
-					<input styleType="outline" type="date" mibInput />
-					<p class="text text_m c-bti-tertiary">-</p>
-					<input styleType="outline" type="date" mibInput />
-				</div>
-				<mib-button (press)="openDrawer()" type="filled-primary"
-					>Создать заявку</mib-button
-				>
-				<!-- <mib-button type="filled-primary">Просмотр заявки</mib-button> -->
-			</div>
-		</div>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-tab-item>
-			<mib-table>
-				<mib-table-head>
-					<mib-table-head-cell
-						[sortable]="true"
-						(onCheck)="severalRequestsChecked = $event"
-						[checked]="severalRequestsChecked"
-						[showCheckbox]="true"
-						>ИД
-					</mib-table-head-cell>
-					<mib-table-head-cell>№ заявки</mib-table-head-cell>
-					<mib-table-head-cell>Дата заявки</mib-table-head-cell>
-					<mib-table-head-cell>Договор поставки</mib-table-head-cell>
-					<mib-table-head-cell>Тип заявки</mib-table-head-cell>
-					<mib-table-head-cell>Статус</mib-table-head-cell>
-					<mib-table-head-cell>Доступ</mib-table-head-cell>
-					<mib-table-head-cell>Корректировка</mib-table-head-cell>
-					<mib-table-head-cell>Сумма</mib-table-head-cell>
-				</mib-table-head>
-				<ng-container *ngIf="loading$ | async; else table">
-					<mib-skeleton
-						[styles]="last ? skeletonWithoutUnderline : skeleton"
-						*ngFor="
+  <div class="container container_large">
+    <div class="flex flex_justify-between">
+      <div class="flex gap-16">
+        <div class="flex flex_align-center gap-12">
+          <input styleType="outline" type="date" mibInput [formControl]="dateFrom"/>
+          <input styleType="outline" type="date" mibInput [formControl]="dateTo"/>
+          <mib-button (press)="refresh()" type="outline-primary">
+            <mib-icon btn-icon class="stroke" name="fi_refresh-ccw"></mib-icon>
+          </mib-button>
+        </div>
+        <mib-button (press)="openDrawer()" type="filled-primary">Создать заявку</mib-button>
+      </div>
+    </div>
+    <mib-spacing type="xs"></mib-spacing>
+    <mib-tab-item>
+      <mib-table>
+        <mib-table-head>
+          <mib-table-head-cell
+            [sortable]="true"
+            (onCheck)="severalRequestsChecked = $event"
+            [checked]="severalRequestsChecked"
+            [showCheckbox]="true"
+          >ИД
+          </mib-table-head-cell>
+          <mib-table-head-cell>№ заявки</mib-table-head-cell>
+          <mib-table-head-cell>Дата заявки</mib-table-head-cell>
+          <mib-table-head-cell>Договор поставки</mib-table-head-cell>
+          <mib-table-head-cell>Тип заявки</mib-table-head-cell>
+          <mib-table-head-cell>Статус</mib-table-head-cell>
+          <mib-table-head-cell>Доступ</mib-table-head-cell>
+          <mib-table-head-cell>Корректировка</mib-table-head-cell>
+          <mib-table-head-cell>Сумма</mib-table-head-cell>
+        </mib-table-head>
+        <ng-container *ngIf="loading$ | async; else table">
+          <mib-skeleton
+            [styles]="last ? skeletonWithoutUnderline : skeleton"
+            *ngFor="
 							let i of [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 							let last = last
 						"
-					></mib-skeleton>
-				</ng-container>
-				<ng-template #table>
-					<mib-table-row
-						[@slideAnimation]="requestAnimationStates[req.ID]"
-						*ngFor="let req of requestsVisible; let last = last"
-						[underlined]="!last"
-					>
-						<mib-table-cell
-							(click)="openBrowserDrawer(req.ID)"
-							[checked]="req.checked"
-							(onCheck)="onRowCheck($event, req)"
-							type="main"
-						>
-							<ng-container table-cell-title>{{ req.ID }}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{ req.Number }}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.Date | date : 'dd.MM.YYYY'
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.Delivery.CustomerID
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.Delivery.Title
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{ req.Status }}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.Shipments ? 'Есть' : 'Отсутствует'
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.IsCorrected ? 'Да' : 'Нет'
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.Summ | currency : 'RUR'
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-button table-row-button size="s" type="ghost-secondary">
-							<mib-icon
-								class="stroke"
-								btn-icon
-								name="fi_more-vertical"
-							></mib-icon>
-						</mib-button>
-					</mib-table-row>
-				</ng-template>
-				<mib-table-footer [underlined]="!(loading$ | async)">
-					<mib-paginator
-						(pageChange)="onPageChange($event)"
-						[totalCount]="requests.length"
-						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
-					></mib-paginator>
-				</mib-table-footer>
-			</mib-table>
-		</mib-tab-item>
-		<mib-tab-item> </mib-tab-item>
-	</div>
+          ></mib-skeleton>
+        </ng-container>
+        <ng-template #table>
+          <mib-table-row
+            [@slideAnimation]="requestAnimationStates[req.ID]"
+            *ngFor="let req of requestsVisible; let last = last"
+            [underlined]="!last"
+          >
+            <mib-table-cell
+              (click)="openBrowserDrawer(req.ID)"
+              [checked]="req.checked"
+              (onCheck)="onRowCheck($event, req)"
+              type="main"
+            >
+              <ng-container table-cell-title>{{ req.ID }}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{ req.Number }}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{
+                req.Date | date : 'dd.MM.YYYY'
+                }}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{
+                req.Delivery.CustomerID
+                }}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{
+                req.Delivery.Title
+                }}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{ req.Status }}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{
+                req.Shipments ? 'Есть' : 'Отсутствует'
+                }}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{
+                req.IsCorrected ? 'Да' : 'Нет'
+                }}</ng-container>
+            </mib-table-cell>
+            <mib-table-cell>
+              <ng-container table-cell-title>{{
+                req.Summ | currency : 'RUR'
+                }}</ng-container>
+            </mib-table-cell>
+            <mib-button table-row-button size="s" type="ghost-secondary">
+              <mib-icon
+                class="stroke"
+                btn-icon
+                name="fi_more-vertical"
+              ></mib-icon>
+            </mib-button>
+          </mib-table-row>
+        </ng-template>
+        <mib-table-footer [underlined]="!(loading$ | async)">
+          <mib-paginator
+            (pageChange)="onPageChange($event)"
+            [totalCount]="requests.length"
+            [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+            [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+          ></mib-paginator>
+        </mib-table-footer>
+      </mib-table>
+    </mib-tab-item>
+    <mib-tab-item></mib-tab-item>
+  </div>
 </mib-tab-group>
 
 <!--<p-toast></p-toast>-->

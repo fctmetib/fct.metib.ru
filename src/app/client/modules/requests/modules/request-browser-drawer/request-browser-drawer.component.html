@@ -1,10 +1,5 @@
 <mib-drawer>
-  <mib-drawer-header
-    showMaximize="true"
-    showEdits="true"
-    (onClose)="dialogRef.close()"
-    drawer-header
-  ></mib-drawer-header>
+  <mib-drawer-header [showEdits]="false" (onClose)="dialogRef.close()" drawer-header></mib-drawer-header>
   <ng-container *ngIf="loading$ | async; else title">
     <mib-skeleton [styles]="skeletonTitle" *ngFor="let i of [1]"></mib-skeleton>
   </ng-container>
@@ -12,12 +7,8 @@
     <h4>Номер заявки: {{ requestData?.Number }}</h4>
     <mib-spacing type="xs2"></mib-spacing>
     <div class="flex gap-4">
-			<span class="text text_m c-bti-secondary"
-      >Создана {{ requestData?.Date | date }}</span
-      >
-      <span class="text text_m c-bti-quaternary"
-      >откорректирована {{ requestData?.Date | date }}</span
-      >
+      <span class="text text_m c-bti-secondary">Создана {{ requestData?.Date | date }}</span>
+      <span class="text text_m c-bti-quaternary">откорректирована {{ requestData?.Date | date }}</span>
     </div>
   </ng-template>
   <mib-spacing type="xs"></mib-spacing>
@@ -27,94 +18,68 @@
   <ng-template #tags>
     <div class="flex gap-8">
       <mib-tag size="m">{{ requestData?.Status }}</mib-tag>
-      <mib-tag type="filled-secondary" class="text_regular" size="m">{{
-        requestData?.Type
-        }}</mib-tag>
+      <mib-tag type="filled-secondary" class="text_regular" size="m">{{requestData?.Type}}</mib-tag>
     </div>
   </ng-template>
   <mib-spacing type="xs"></mib-spacing>
-  <ng-container *ngIf="loading$ | async; else cashPanel">
-    <mib-skeleton
-      [styles]="skeletonCashPanel"
-      *ngFor="let i of [1]"
-    ></mib-skeleton>
-  </ng-container>
+  <mib-skeleton *ngIf="loading$ | async; else cashPanel" [styles]="skeletonCashPanel"></mib-skeleton>
   <ng-template #cashPanel>
-    <mib-cash-panel
-      extracted="true"
-      panelTitle="Ваш лимит:"
-      [panelData]="0"
-    ></mib-cash-panel>
+    <mib-cash-panel extracted="true" panelTitle="Ваш лимит:" [panelData]="0"></mib-cash-panel>
     <mib-spacing type="xs"></mib-spacing>
-    <mib-cash-panel
-      extracted="true"
-      panelTitle="Уступлено:"
-      [panelData]="concededSum"
-    >
-    </mib-cash-panel>
+    <mib-cash-panel extracted="true" panelTitle="Уступлено:" [panelData]="concededSum"></mib-cash-panel>
     <mib-spacing type="xs"></mib-spacing>
     <mib-cash-panel extracted="true" panelTitle="Просрочка:">
       <ng-container alert>{{ overdueSum | rub }}</ng-container>
     </mib-cash-panel>
   </ng-template>
   <mib-spacing type="m"></mib-spacing>
-  <ng-container *ngIf="loading$ | async; else tabGroup">
-    <mib-skeleton
-      [styles]="skeletonTabGroup"
-      *ngFor="let i of [1]"
-    ></mib-skeleton>
-  </ng-container>
+  <mib-skeleton *ngIf="loading$ | async; else tabGroup" [styles]="skeletonTabGroup"></mib-skeleton>
   <ng-template #tabGroup>
     <mib-tab-group>
       <mib-navbar>
-        <!-- <mib-navbar-point value="1">События</mib-navbar-point> -->
+        <mib-navbar-point value="1">События</mib-navbar-point>
         <mib-navbar-point value="2">Поставки</mib-navbar-point>
         <mib-navbar-point value="3">Копии накладных</mib-navbar-point>
       </mib-navbar>
       <div>
         <ng-container *ngIf="loading$ | async; else tabItems">
           <mib-skeleton
+            *ngFor="let i of [1,1,1,1,1,1]; let last = last"
             [styles]="last ? skeletonWithoutUnderline : skeleton"
-            *ngFor="let i of [1]; let last = last"
           ></mib-skeleton>
         </ng-container>
         <ng-template #tabItems>
-          <!-- <mib-tab-item value="1">
-          <mib-spacing type="m"></mib-spacing>
-          <h2>События</h2>
-          <mib-spacing type="m"></mib-spacing>
-        </mib-tab-item> -->
+          <mib-tab-item value="1">
+            <mib-spacing type="m"></mib-spacing>
+            <h2>События</h2>
+            <mib-spacing type="m"></mib-spacing>
+          </mib-tab-item>
           <mib-tab-item value="2">
             <mib-spacing type="m"></mib-spacing>
             <div class="flex flex_justify-between">
-              <mib-button (press)="openShipment()"  type="filled-primary">
-                <mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
-                Добавить договор
+              <mib-button (press)="openCorrectionModal()" type="filled-primary">
+                <mib-icon btn-left-icon class="stroke" name="fi_edit"></mib-icon>
+                Создать коррекцию
               </mib-button>
-              <mib-select
-                class="supply-select-width"
-                placeholder="4 из 9 колонн в таблице"
-              >
-                <mib-dropdown-point
-                  [value]="true"
-                  text="4 из 9 колонн в таблице"
-                ></mib-dropdown-point>
-                <mib-dropdown-point
-                  [value]="true"
-                  text="6 из 9 колонн в таблице"
-                ></mib-dropdown-point>
-                <mib-dropdown-point
-                  [value]="false"
-                  text="9 из 9 колонн в таблице"
-                ></mib-dropdown-point>
-              </mib-select>
+<!--              <mib-select class="supply-select-width" placeholder="Выберите тип отображения">-->
+<!--                <mib-dropdown-point-->
+<!--                  [value]="true"-->
+<!--                  text="4 из 9 колонн в таблице"-->
+<!--                ></mib-dropdown-point>-->
+<!--                <mib-dropdown-point-->
+<!--                  [value]="true"-->
+<!--                  text="6 из 9 колонн в таблице"-->
+<!--                ></mib-dropdown-point>-->
+<!--                <mib-dropdown-point-->
+<!--                  [value]="false"-->
+<!--                  text="9 из 9 колонн в таблице"-->
+<!--                ></mib-dropdown-point>-->
+<!--              </mib-select>-->
             </div>
             <mib-spacing type="xs"></mib-spacing>
             <mib-table>
               <mib-table-head>
-                <mib-table-head-cell [showCheckbox]="true"
-                >ИД
-                </mib-table-head-cell>
+                <mib-table-head-cell [showCheckbox]="true">ИД</mib-table-head-cell>
                 <mib-table-head-cell>Дата поставки</mib-table-head-cell>
                 <mib-table-head-cell>Дата платежа</mib-table-head-cell>
                 <mib-table-head-cell>Сумма уступки</mib-table-head-cell>

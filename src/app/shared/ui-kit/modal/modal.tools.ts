@@ -7,8 +7,8 @@ export const modalConfig: (
 	data?: any
 ) => MatDialogConfig = (width: ModalDefaultWidth = 432, data?: any) => {
 	return {
-		disableClose: true,
-		autoFocus: true,
+		disableClose: false,
+		autoFocus: false,
 		panelClass: 'modal-cdk',
 		width: `${width}${typeof width === 'number' ? 'px' : ''}`,
 		data

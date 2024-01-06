@@ -77,6 +77,17 @@ export class ToolsService {
     );
   }
 
+  subtractFromDate(date: Date, { days = 0, months = 0, years = 0 }: { days?: number; months?: number; years?: number; }): Date {
+    const result = new Date(date); // Создаем копию переданной даты, чтобы не изменять оригинал
+
+    // Отнимаем года, месяцы и дни
+    result.setDate(result.getDate() - days);
+    result.setMonth(result.getMonth() - months);
+    result.setFullYear(result.getFullYear() - years);
+
+    return result;
+  }
+
   combineDateTime(date: string, time: string) {
     const defaultTime = '12:30:00';
     const actualTime = time || defaultTime;

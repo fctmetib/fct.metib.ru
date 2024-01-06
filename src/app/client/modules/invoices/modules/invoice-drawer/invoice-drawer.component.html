@@ -4,16 +4,12 @@
 		showMaximize="true"
 		drawer-header
 	></mib-drawer-header>
-	<ng-container *ngIf="loading$ | async; else title">
-		<mib-skeleton [styles]="skeletonTitle" *ngFor="let i of [1]"></mib-skeleton>
-	</ng-container>
-	<ng-template #title>
-		<h4>Платеж на: {{ currentInvoice?.Amount | currency : 'RUB' }}</h4>
+  <mib-skeleton *ngIf="loading$ | async; else title" [styles]="skeletonTitle"></mib-skeleton>
+  <ng-template #title>
+		<h4>Платеж на: {{ currentInvoice?.Amount | rub }}</h4>
 	</ng-template>
 	<mib-spacing type="xs2"></mib-spacing>
-	<ng-container *ngIf="loading$ | async; else date">
-		<mib-skeleton [styles]="skeletonDate" *ngFor="let i of [1]"></mib-skeleton>
-	</ng-container>
+  <mib-skeleton *ngIf="loading$ | async; else date" [styles]="skeletonDate"></mib-skeleton>
 	<ng-template #date>
 		<div class="flex gap-4">
 			<span class="text text_m c-bti-secondary">Дата платежа</span>
@@ -23,12 +19,14 @@
 		</div>
 	</ng-template>
 	<mib-spacing type="xs"></mib-spacing>
-	<mib-input>
-		<input type="text" mibInput [size]="inputSize" styleType="separated" />
-		<!-- <ng-container input-title>Назначение платежа</ng-container> -->
-		<ng-container input-label>Назначение платежа</ng-container>
-		<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
-	</mib-input>
+  <mib-skeleton *ngIf="loading$ | async; else textareaTemplate" [styles]="skeletonTextarea"></mib-skeleton>
+  <ng-template #textareaTemplate>
+    <mib-textarea>
+      <ng-container textarea-label>Назначение платежа</ng-container>
+      <textarea readonly autosize [value]="currentInvoice?.Comment" mibTextarea></textarea>
+      <mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
+    </mib-textarea>
+  </ng-template>
 	<mib-spacing type="m"></mib-spacing>
 	<ng-container *ngIf="loading$ | async; else tabGroup">
 		<mib-skeleton
@@ -45,7 +43,7 @@
 			<div>
 				<ng-container *ngIf="loading$ | async; else tabItems">
 					<mib-skeleton
-						[styles]="last ? skeletonWithoutUnderline : skeleton"
+						[styles]="last ? skeletonWithoutUnderline : skeletonTable"
 						*ngFor="let i of [1]; let last = last"
 					></mib-skeleton>
 				</ng-container>

@@ -5,10 +5,12 @@ import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interfa
 import {RequestBrowserDrawer} from './interfaces/request-browser.drawer'
 import {Document, RequestReq} from '../../interfaces/request.interface'
 import {RequestsService} from '../../services/requests.service'
-import {BehaviorSubject, filter, finalize, switchMap, tap} from 'rxjs'
+import {BehaviorSubject, finalize, switchMap, tap} from 'rxjs'
 import {Properties} from 'csstype'
 import {Shipment} from '../shipment-drawer/interfaces/shipment.interface'
-import {ShipmentDrawerService} from '../shipment-drawer/services/shipment-drawer.service';
+import {
+  RequestCorrectionModalService
+} from '../../../../../shared/modules/modals/request-correction-modal/request-correction-modal.service';
 
 @Component({
   selector: 'mib-request-browser-drawer',
@@ -76,7 +78,7 @@ export class RequestBrowserDrawerComponent implements OnInit {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<RequestBrowserDrawerComponent>,
     public requestsService: RequestsService,
-    private shipmentDrawerService: ShipmentDrawerService
+    private correctionModalService: RequestCorrectionModalService
   ) {
   }
 
@@ -135,15 +137,7 @@ export class RequestBrowserDrawerComponent implements OnInit {
     this.documentsList = this.onPageChange($event, this.documents)
   }
 
-  openShipment() {
-    const drawer = this.shipmentDrawerService.open({maxWidth: 492})
-
-    drawer.afterClosed().pipe(
-      filter(Boolean),
-      tap(shipment => {
-        console.log(shipment)
-        // this.shipments = [shipment, ...this.shipments]
-      })
-    ).subscribe()
+  openCorrectionModal() {
+    this.correctionModalService.open()
   }
 }

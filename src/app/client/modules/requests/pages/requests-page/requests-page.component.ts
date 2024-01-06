@@ -4,15 +4,19 @@ import {
   finalize,
   forkJoin,
   filter,
-  tap, switchMap
+  tap, switchMap, merge
 } from 'rxjs'
 import {Component, OnInit, OnDestroy} from '@angular/core'
-import {RequestsService} from '../../services/requests.service'
+import {GetRequestsReq, RequestsService} from '../../services/requests.service'
 import {Properties} from 'csstype'
 import {AdvancedRequests} from './interfaces/requests-page.interface'
 import {RequestDrawerService} from '../../modules/request-drawer/request-drawer.service'
 import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {RequestBrowserDrawerService} from '../../modules/request-browser-drawer/request-browser-drawer.service'
+import {FormControl} from '@angular/forms';
+import {ToolsService} from '../../../../../shared/services/tools.service';
+import {takeUntil} from 'rxjs/operators';
+import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
 
 const ANIMATION_CONFIG = {
   translateDistance: '-3%',
@@ -24,15 +28,10 @@ const ANIMATION_CONFIG = {
 @Component({
   selector: 'app-requests-page',
   templateUrl: './requests-page.component.html',
-  styleUrls: ['./requests-page.component.scss']
+  styleUrls: ['./requests-page.component.scss'],
+  providers: [AutoUnsubscribeService]
 })
 export class RequestsPageComponent implements OnInit, OnDestroy {
-  constructor(
-    private requestsService: RequestsService,
-    private requestDrawerService: RequestDrawerService,
-    private requestBrowserDrawerService: RequestBrowserDrawerService
-  ) {
-  }
 
   public loading$ = new BehaviorSubject<boolean>(false)
 
@@ -47,7 +46,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   public PAGINATOR_ITEMS_PER_PAGE = 16
   public PAGINATOR_PAGE_TO_SHOW = 5
-  public currentPage: number = 1
+  public currentPage$ = new BehaviorSubject<number>(1)
 
   public requests: AdvancedRequests[] = []
   public requestsVisible: AdvancedRequests[] = []
@@ -56,8 +55,28 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   public selectedRequestCount: number = 0
   public severalRequestsChecked: boolean = false
 
+  public dateFrom: FormControl = new FormControl<string>('')
+  public dateTo: FormControl = new FormControl<string>('')
+
+  constructor(
+    private requestsService: RequestsService,
+    private requestDrawerService: RequestDrawerService,
+    private requestBrowserDrawerService: RequestBrowserDrawerService,
+    private toolsService: ToolsService,
+    private au: AutoUnsubscribeService
+  ) {
+  }
+
   ngOnInit() {
-    this.loadRequestsData()
+    const {dateFrom, dateTo} = this.toolsService.convertDatesInObjectToInput({
+      dateFrom: this.toolsService.subtractFromDate(new Date(), {days: 14}).toISOString(),
+      dateTo: new Date().toISOString()
+    })
+    this.dateFrom.setValue(dateFrom)
+    this.dateTo.setValue(dateTo)
+
+    this.loadRequestsData().subscribe()
+    this.watchForms()
   }
 
   ngOnDestroy() {
@@ -65,17 +84,25 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   loadRequestsData() {
     this.loading$.next(true)
-    this.requestsService.getRequests().pipe(
+
+    const req = {}
+    const setOptionalDate = (date: string, key: string) => {
+      if (date) req[key] = new Date(date).toISOString()
+    }
+    setOptionalDate(this.dateFrom.value, 'dateFrom')
+    setOptionalDate(this.dateTo.value, 'dateTo')
+
+    return this.requestsService.getRequests(req).pipe(
       tap(data => {
         this.requests = data.map(x => ({...x, checked: false}))
         // Инициализация состояния анимации
         this.requests.forEach(req => {
           this.requestAnimationStates[req.ID] = false
         })
-        this.onPageChange(this.currentPage)
+        this.onPageChange(this.currentPage$.value)
       }),
       finalize(() => this.loading$.next(false))
-    ).subscribe()
+    )
   }
 
   openDrawer() {
@@ -91,7 +118,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
           forkJoin(
             this.selectedRequests.map(duty => this.removeDutyById(duty.ID))
           ).subscribe(() => {
-            this.onPageChange(this.currentPage)
+            this.onPageChange(this.currentPage$.value)
           })
         })
       )
@@ -122,7 +149,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(page: number) {
-    this.currentPage = page
+    this.currentPage$.next(page)
 
     const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
     const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
@@ -143,6 +170,15 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     return this.requestsVisible.filter(x => x.checked)
   }
 
+  private watchForms() {
+    merge(this.dateFrom.valueChanges, this.dateTo.valueChanges).pipe(
+      switchMap(() => this.loadRequestsData()),
+      tap(() => {
+        this.onPageChange(1);
+      }),
+      takeUntil(this.au.destroyer)
+    ).subscribe();
+  }
   // ---------------- end test data/methods ----------------
 
   // МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ
@@ -435,4 +471,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   //     this.ref.close();
   //   }
   // }
+  refresh() {
+    this.loadRequestsData().subscribe()
+  }
 }

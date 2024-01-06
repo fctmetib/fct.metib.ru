@@ -21,6 +21,10 @@ import {DeliveryService} from '../shipment-drawer/services/delivery.service';
 import {RubModule} from '../../../../../shared/pipes/rub/rub.module';
 import {DropdownModule} from '../../../../../shared/ui-kit/dropdown/dropdown.module';
 import {RightIconModule} from '../../../../../shared/directives/right-icon/right-icon.module';
+import {
+  RequestCorrectionModalService
+} from '../../../../../shared/modules/modals/request-correction-modal/request-correction-modal.service';
+import {RequestCorrectionModalModule} from '../../../../../shared/modules/modals/request-correction-modal/request-correction-modal.module';
 
 @NgModule({
   declarations: [RequestDrawerComponent],
@@ -43,11 +47,13 @@ import {RightIconModule} from '../../../../../shared/directives/right-icon/right
     ShipmentDrawerModule,
     RubModule,
     DropdownModule,
-    RightIconModule
+    RightIconModule,
+    RequestCorrectionModalModule
   ],
   providers: [
     RequestDrawerService,
-    DeliveryService
+    DeliveryService,
+    RequestCorrectionModalService
   ]
 })
 export class RequestDrawerModule {

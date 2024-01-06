@@ -1,4 +1,3 @@
-import {ClientRequestStateInterface} from 'src/app/shared/types/client/client-request-state.interface'
 import {ClientRequestSendingInitRequestInterface} from 'src/app/shared/types/client/client-request-sending-init-request.interface'
 import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
@@ -6,19 +5,44 @@ import {HttpClient} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
 import {FileMode} from 'src/app/shared/types/file/file-model.interface'
 import {ClientShipmentInterface} from 'src/app/shared/types/client/client-shipment.interface'
-import {Document, RequestReq, RequestRes} from '../interfaces/request.interface'
+import {Document, RequestReq, RequestRes, RequestState} from '../interfaces/request.interface'
+
+export interface GetRequestsReq {
+  dateFrom?: string
+  dateTo?: string
+  includeShipments?: boolean
+  includeDocuments?: boolean
+}
 
 @Injectable()
 export class RequestsService {
-	constructor(private http: HttpClient) {}
+	constructor(
+    private http: HttpClient
+  ) {}
 
-	public create(data: RequestReq): Observable<number[]> {
-		return this.http.post<number[]>(`${environment.apiUrl}/v1/requests`, data)
+  public getRequestsConfig(data?: GetRequestsReq) {
+    const defaultConfig = {};
+    return {...defaultConfig, ...data};
+  }
+
+  /**
+   * Получить список свободной задолженности за период.
+   *
+   * @param data Параметры запроса для получения списка задолженностей.
+   * @returns Observable, который эмитит массив заявок.
+   */
+	public getRequests(data?: GetRequestsReq): Observable<RequestRes[]> {
+    const params = this.getRequestsConfig(data);
+		return this.http.get<RequestRes[]>(`${environment.apiUrl}/v1/requests`, {params})
 	}
 
-	public getRequests(): Observable<RequestRes[]> {
-		return this.http.get<RequestRes[]>(`${environment.apiUrl}/v1/requests`)
-	}
+  public getStates(requestID: number): Observable<RequestState[]> {
+    return this.http.get<RequestState[]>(`${environment.apiUrl}/v1/requests/${requestID}/states`)
+  }
+
+  public create(data: RequestReq): Observable<number[]> {
+    return this.http.post<number[]>(`${environment.apiUrl}/v1/requests`, data)
+  }
 
 	public getFreeLimit(deliveryID: number): Observable<number> {
 		return this.http.get<number>(
@@ -27,19 +51,11 @@ export class RequestsService {
 	}
 
 	public getRequest(requestID: number): Observable<RequestRes> {
-		return this.http.get<RequestRes>(
-			`${environment.apiUrl}/v1/requests/${requestID}`
-		)
+		return this.http.get<RequestRes>(`${environment.apiUrl}/v1/requests/${requestID}`)
 	}
 
-	public update(
-		requestID: number,
-		data: Partial<RequestReq>
-	): Observable<number[]> {
-		return this.http.post<number[]>(
-			`${environment.apiUrl}/v1/requests/${requestID}`,
-			data
-		)
+	public update(requestID: number, data: Partial<RequestReq>): Observable<number[]> {
+		return this.http.post<number[]>(`${environment.apiUrl}/v1/requests/${requestID}`, data)
 	}
 
 	public uploadDocument(
@@ -117,13 +133,6 @@ export class RequestsService {
 	): Observable<RequestRes> {
 		const url = `${environment.apiUrl}/v1/requests/${requestID}?includeShipments=${includeShipments}&includeDocuments=${includeDocuments}&includeFiles=${includeFiles}`
 		return this.http.get<RequestRes>(url)
-	}
-
-	public getStatesOfRequest(
-		requestID: number
-	): Observable<ClientRequestStateInterface[]> {
-		const url = `${environment.apiUrl}/v1/requests/${requestID}/states`
-		return this.http.get<ClientRequestStateInterface[]>(url)
 	}
 
 	public getRequestsWithFilter(dateFrom: Date): Observable<RequestRes[]> {

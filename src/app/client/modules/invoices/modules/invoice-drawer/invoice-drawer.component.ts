@@ -31,12 +31,17 @@ export class InvoiceDrawerComponent implements OnInit {
 		height: '20px'
 	}
 
+  public skeletonTextarea: Properties = {
+    ...this.skeletonWithoutUnderline,
+    height: '64px'
+  }
+
 	public skeletonTabGroup: Properties = {
 		...this.skeletonWithoutUnderline,
 		height: '271px'
 	}
 
-	public skeleton: Properties = {
+	public skeletonTable: Properties = {
 		...this.skeletonWithoutUnderline,
 		borderBottom: '1px solid var(--wgr-tertiary)'
 	}
