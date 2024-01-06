@@ -1,0 +1,49 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+@import 'src/styles/_colors.vars.scss';
+
+.banner {
+	position: relative;
+	height: 96px;
+	overflow: hidden;
+	border-radius: 8px;
+	mib-icon[name='logo_round'] {
+		@include icon-size(128px);
+	}
+	div {
+		position: absolute;
+		padding: 12px;
+		border-radius: 64px;
+		z-index: 2;
+		@include icon-color(--wgr-primary);
+	}
+	&.modal_success {
+		border: 1px solid var(--success-quaternary);
+		background: var(--success-quinary);
+		mib-icon[name='logo_round'] {
+			@include icon-color(var(--success-quaternary));
+		}
+		div {
+			border: 2px solid var(--success-quaternary);
+			background: var(--success-default);
+		}
+	}
+	&.modal_info {
+		border: 1px solid var(--adc-quaternary);
+		background: var(--adc-quinary);
+		mib-icon[name='logo_round'] {
+			@include icon-color(var(--adc-quaternary));
+		}
+		div {
+			border: 2px solid var(--adc-quaternary);
+			background: var(--adc-default);
+		}
+	}
+	&.modal_fail {
+		border: 1px solid var(--alc-quaternary);
+		background: var(--alc-quinary);
+		div {
+			border: 2px solid var(--alc-quaternary);
+			background: var(--alc-default);
+		}
+	}
+}

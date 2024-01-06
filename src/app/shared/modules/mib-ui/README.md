@@ -104,8 +104,9 @@ ng g c shared/ui-kit/modal/components/banner-info  --skip-tests --dry-run
 //---modal-content
 ng g c shared/ui-kit/modal/components/new-shipment-modal  --skip-tests --dry-run
 ng g c shared/ui-kit/modal/components/pin-modal  --skip-tests --dry-run
-
- //---
+ //---banner-modal
+ng g c shared/ui-kit/modal/components/banner-modal  --skip-tests --dry-run
+ng g i shared/ui-kit/modal/components/banner-modal/interfaces/banner-modal.interface
 
  //--- media
 src\app\shared\ui-kit\media

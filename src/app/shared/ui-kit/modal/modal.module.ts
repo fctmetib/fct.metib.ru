@@ -11,6 +11,7 @@ import {BannerFailureComponent} from './components/banner-failure/banner-failure
 import {BannerInfoComponent} from './components/banner-info/banner-info.component'
 import {NewShipmentModalComponent} from './components/new-shipment-modal/new-shipment-modal.component'
 import {PinModalComponent} from './components/pin-modal/pin-modal.component'
+import {BannerModalComponent} from './components/banner-modal/banner-modal.component'
 
 @NgModule({
 	declarations: [
@@ -21,7 +22,8 @@ import {PinModalComponent} from './components/pin-modal/pin-modal.component'
 		BannerFailureComponent,
 		BannerInfoComponent,
 		NewShipmentModalComponent,
-		PinModalComponent
+		PinModalComponent,
+		BannerModalComponent
 	],
 	imports: [CommonModule, ButtonModule, IconModule, SpacingModule],
 	exports: [
@@ -32,7 +34,8 @@ import {PinModalComponent} from './components/pin-modal/pin-modal.component'
 		BannerFailureComponent,
 		BannerInfoComponent,
 		NewShipmentModalComponent,
-		PinModalComponent
+		PinModalComponent,
+		BannerModalComponent
 	]
 })
 export class ModalModule {}
