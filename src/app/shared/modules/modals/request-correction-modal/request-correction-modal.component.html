@@ -48,6 +48,6 @@
   <mib-spacing type="m"></mib-spacing>
   <mib-modal-footer>
     <mib-button>Отправить заявку</mib-button>
-    <mib-button type="filled-secondary">Отменить изменения</mib-button>
+    <mib-button (press)="dialogRef.close()" type="filled-secondary">Отменить изменения</mib-button>
   </mib-modal-footer>
 </mib-modal>

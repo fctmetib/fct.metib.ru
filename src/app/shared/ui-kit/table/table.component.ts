@@ -124,5 +124,9 @@ export class TableComponent implements AfterContentInit, OnDestroy {
 
   deselect() {
     this.headCells.get(0).control.setValue(false)
+    this.selectionChange.emit({
+      selectedCount: 0,
+      selectedIds: []
+    })
   }
 }

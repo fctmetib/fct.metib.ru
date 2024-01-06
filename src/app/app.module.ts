@@ -19,6 +19,7 @@ import {appInitializer} from './shared/factories/init.factory';
 import {IconsService} from './shared/services/icons.servcie';
 import {MibCoreModule} from './core/mib-core.module';
 import {MatDialogModule} from '@angular/material/dialog';
+import {AuthService} from './auth/services/auth.service';
 
 registerLocaleData(localeRu, 'ru')
 
@@ -49,7 +50,7 @@ registerLocaleData(localeRu, 'ru')
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
       multi: true,
-      deps: [IconsService]
+      deps: [IconsService, AuthService]
     },
   ],
   bootstrap: [AppComponent],

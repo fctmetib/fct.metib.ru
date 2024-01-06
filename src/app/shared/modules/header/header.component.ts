@@ -109,26 +109,22 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.userLoading$.next(true)
     this.factoringLoading$.next(true)
-    this.authService.currentUser$
-      .pipe(
-        filter(Boolean),
-        tap(currentUser => {
-          this.currentUser$.next(currentUser.userGeneral)
-          currentUser.userGeneral
-          this.currentUserFactoring$.next(currentUser.userFactoring)
-          console.log(currentUser)
-          this.userLoading$.next(false)
-        }),
-        switchMap(currentUser =>
-          this.clientService
-            .getClientFactoringById(+currentUser.userFactoring.OrganizationID)
-            .pipe(finalize(() => this.factoringLoading$.next(false)))
-        ),
-        tap(clientFactoring => {
-          this.factoring$.next(clientFactoring)
-        })
-      )
-      .subscribe()
+    this.authService.currentUser$.pipe(
+      filter(Boolean),
+      tap(currentUser => {
+        this.currentUser$.next(currentUser.userGeneral)
+        this.currentUserFactoring$.next(currentUser.userFactoring)
+        this.userLoading$.next(false)
+      }),
+      switchMap(currentUser =>
+        this.clientService
+          .getClientFactoringById(+currentUser.userFactoring.OrganizationID)
+          .pipe(finalize(() => this.factoringLoading$.next(false)))
+      ),
+      tap(clientFactoring => {
+        this.factoring$.next(clientFactoring)
+      })
+    ).subscribe()
 
     this.isAdmin = this.authService.isUserAdmin()
   }

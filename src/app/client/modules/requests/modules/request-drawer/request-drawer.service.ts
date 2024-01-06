@@ -3,14 +3,13 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 import { DrawerData } from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface'
 import { RequestDrawerComponent } from './request-drawer.component'
 import { drawerConfig } from '../../../../../shared/ui-kit/drawer/drawer.tools'
+import {RequestRes} from '../../interfaces/request.interface';
 
 @Injectable()
 export class RequestDrawerService {
 	constructor(private dialog: MatDialog) {}
 
-	open<T>(
-		data?: DrawerData<T>
-	): MatDialogRef<RequestDrawerComponent, number[]> {
+	open(data?: DrawerData<RequestRes[]>): MatDialogRef<RequestDrawerComponent, number[]> {
 		const config: DrawerData = {
 			state: 'view'
 		}

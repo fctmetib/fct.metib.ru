@@ -1,11 +1,11 @@
-import { Router } from '@angular/router';
-import { ResetPasswordCompleteReq } from '../types/reset-password/resetPasswordCompleteReq';
-import { ResetPasswordConfirmRequestInterface } from '../types/reset-password/resetPasswordConfirmRequest.interface';
-import { ResetPasswordRes } from '../types/reset-password/resetPasswordResponse.interface';
-import { ResetPasswordReq } from '../types/reset-password/resetPasswordReq';
-import { CookieService } from 'ngx-cookie';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {Router} from '@angular/router';
+import {ResetPasswordCompleteReq} from '../types/reset-password/resetPasswordCompleteReq';
+import {ResetPasswordConfirmRequestInterface} from '../types/reset-password/resetPasswordConfirmRequest.interface';
+import {ResetPasswordRes} from '../types/reset-password/resetPasswordResponse.interface';
+import {ResetPasswordReq} from '../types/reset-password/resetPasswordReq';
+import {CookieService} from 'ngx-cookie';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {
   BehaviorSubject,
   Observable,
@@ -16,19 +16,19 @@ import {
   tap,
 } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
-import { RegisterReq } from 'src/app/auth/types/register/registerReq';
-import { UserGeneral } from 'src/app/shared/types/userGeneral';
-import { LoginRequestInterface } from 'src/app/auth/types/login/loginRequest.interface';
-import { AuthRes } from 'src/app/auth/types/login/authRes';
-import { RegisterConfirmReq } from '../types/register/registerConfirmReq';
-import { RegisterReponseInterface } from '../types/register/registerResponse.interface';
-import { ReauthRequestInterface } from '../types/login/reauthRequest.interface';
-import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
-import { FreedutyStoreService } from 'src/app/shared/services/store/freeduty.store.service';
-import { isPlatformBrowser } from '@angular/common';
-import { UserFactoring } from 'src/app/shared/types/userFactoring';
-import { CurrentUser } from 'src/app/shared/types/currentUser';
+import {environment} from 'src/environments/environment';
+import {RegisterReq} from 'src/app/auth/types/register/registerReq';
+import {UserGeneral} from 'src/app/shared/types/userGeneral';
+import {LoginRequestInterface} from 'src/app/auth/types/login/loginRequest.interface';
+import {AuthRes} from 'src/app/auth/types/login/authRes';
+import {RegisterConfirmReq} from '../types/register/registerConfirmReq';
+import {RegisterReponseInterface} from '../types/register/registerResponse.interface';
+import {ReauthRequestInterface} from '../types/login/reauthRequest.interface';
+import {RequestStoreService} from 'src/app/shared/services/store/request.store.service';
+import {FreedutyStoreService} from 'src/app/shared/services/store/freeduty.store.service';
+import {isPlatformBrowser} from '@angular/common';
+import {UserFactoring} from 'src/app/shared/types/userFactoring';
+import {CurrentUser} from 'src/app/shared/types/currentUser';
 import {ToolsService} from '../../shared/services/tools.service';
 
 @Injectable({
@@ -120,7 +120,7 @@ export class AuthService {
       }),
       switchMap(() => this.initCurrentUser()),
       catchError((errorResponse: HttpErrorResponse) => {
-        return of({ errors: errorResponse.error });
+        return of({errors: errorResponse.error});
       })
     );
   }
@@ -148,36 +148,34 @@ export class AuthService {
       return of();
     }
 
-    return this.http
-      .get<UserGeneral>(environment.apiUrl + `/user/${userId}`)
-      .pipe(
-        tap((currentUserResponse: UserGeneral) => {
-          let userCookie = this.cookieService.get('_cu');
-          let currentUserFactoring: AuthRes;
-          if (userCookie) {
-            currentUserFactoring = JSON.parse(userCookie);
-            let currentUser: CurrentUser = {
-              userGeneral: currentUserResponse,
-              userFactoring: currentUserFactoring,
-            };
-            this.currentUser$.next(currentUser);
-          }
+    return this.http.get<UserGeneral>(environment.apiUrl + `/user/${userId}`).pipe(
+      tap((currentUserResponse: UserGeneral) => {
+        let userCookie = this.cookieService.get('_cu');
+        let currentUserFactoring: AuthRes;
+        if (userCookie) {
+          currentUserFactoring = this.toolsService.safeJson(userCookie);
+          let currentUser: CurrentUser = {
+            userGeneral: currentUserResponse,
+            userFactoring: currentUserFactoring,
+          };
+          this.currentUser$.next(currentUser);
+        }
 
-          let userAdminCookie = this.cookieService.get('_cu_admin');
-          let currentAdminFactoring: AuthRes;
-          if (userAdminCookie) {
-            currentAdminFactoring = JSON.parse(userAdminCookie);
-            let currentUser: CurrentUser = {
-              userGeneral: currentUserResponse,
-              userFactoring: currentAdminFactoring,
-            };
-            this.currentUserAdmin$.next(currentUser);
-          }
-        }),
-        catchError((error) => {
-          return of(error);
-        })
-      );
+        let userAdminCookie = this.cookieService.get('_cu_admin');
+        let currentAdminFactoring: AuthRes;
+        if (userAdminCookie) {
+          currentAdminFactoring = this.toolsService.safeJson(userAdminCookie);
+          let currentUser: CurrentUser = {
+            userGeneral: currentUserResponse,
+            userFactoring: currentAdminFactoring,
+          };
+          this.currentUserAdmin$.next(currentUser);
+        }
+      }),
+      catchError((error) => {
+        return of(error);
+      })
+    );
   }
 
   /**
