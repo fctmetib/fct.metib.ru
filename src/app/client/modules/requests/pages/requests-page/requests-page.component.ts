@@ -95,7 +95,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
     return this.requestsService.getRequests(req).pipe(
       tap(data => {
-        this.requests = data.map(x => ({...x, checked: false}))
+        this.requests = data
         this.onPageChange(this.currentPage$.value)
       }),
       finalize(() => this.loading$.next(false))
@@ -134,7 +134,10 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
       data: {
         requestId: requestId
       }
-    })
+    }).afterClosed().pipe(
+      filter(Boolean),
+      switchMap(() => this.loadRequestsData())
+    ).subscribe()
   }
 
   onPageChange(page: number) {

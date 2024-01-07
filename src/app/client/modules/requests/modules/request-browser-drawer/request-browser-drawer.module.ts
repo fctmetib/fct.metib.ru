@@ -18,28 +18,30 @@ import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 import {DropdownModule} from '../../../../../shared/ui-kit/dropdown/dropdown.module';
 import {RubModule} from '../../../../../shared/pipes/rub/rub.module';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
 	declarations: [RequestBrowserDrawerComponent],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    MatDialogModule,
-    SpacingModule,
-    TableModule,
-    ButtonModule,
-    IconModule,
-    TagModule,
-    CashPanelModule,
-    TabModule,
-    NavbarModule,
-    SelectModule,
-    DropdownPointModule,
-    SkeletonModule,
-    PaginatorModule,
-    DropdownModule,
-    RubModule
-  ],
+    imports: [
+        CommonModule,
+        DrawerModule,
+        MatDialogModule,
+        SpacingModule,
+        TableModule,
+        ButtonModule,
+        IconModule,
+        TagModule,
+        CashPanelModule,
+        TabModule,
+        NavbarModule,
+        SelectModule,
+        DropdownPointModule,
+        SkeletonModule,
+        PaginatorModule,
+        DropdownModule,
+        RubModule,
+        MatTooltipModule
+    ],
 	providers: [RequestBrowserDrawerService]
 })
 export class RequestBrowserDrawerModule {}

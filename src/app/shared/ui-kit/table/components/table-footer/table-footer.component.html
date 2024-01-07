@@ -1,1 +1,10 @@
-<ng-content></ng-content>
+<div class="flex flex_column flex_align-center">
+  <mib-table-quick-action-island *ngIf="table.selectedRows.length">
+    <ng-container table-quick-action-island-left>
+      <ng-content select="[table-footer-action]"></ng-content>
+    </ng-container>
+  </mib-table-quick-action-island>
+  <div class="flex flex_center">
+    <ng-content></ng-content>
+  </div>
+</div>

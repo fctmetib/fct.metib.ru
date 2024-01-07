@@ -86,6 +86,7 @@
           </mib-table-row>
         </ng-template>
         <mib-table-footer [lined]="!(loading$ | async)">
+          <ng-container table-footer-action>Подписать</ng-container>
           <mib-paginator
             (pageChange)="onPageChange($event)"
             [totalCount]="requests.length"

@@ -2,10 +2,10 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  ContentChild,
+  ContentChild, ContentChildren,
   forwardRef,
   HostBinding,
-  Input,
+  Input, QueryList,
   Renderer2,
   ViewChild
 } from '@angular/core';
@@ -16,6 +16,8 @@ import {AutoUnsubscribeService} from '../../services/auto-unsubscribe.service';
 import {InputCustom, InputSize, InputType} from '../input/interfaces/input.interface';
 import {InputBaseWrapperComponent} from '../input/components/input-base-wrapper/input-base-wrapper.component';
 import {ToolsService} from '../../services/tools.service';
+import {LeftIconDirective} from '../../directives/left-icon/left-icon.directive';
+import {RightIconDirective} from '../../directives/right-icon/right-icon.directive';
 
 @Component({
   selector: 'mib-textarea',
@@ -25,6 +27,10 @@ import {ToolsService} from '../../services/tools.service';
 })
 export class TextareaComponent implements AfterViewInit {
   @ContentChild(MibTextareaDirective, {descendants: true}) textareaDirective: MibTextareaDirective
+
+  @ContentChildren(LeftIconDirective, {descendants: true}) leftIcons: QueryList<LeftIconDirective>
+  @ContentChildren(RightIconDirective, {descendants: true}) rightIcons: QueryList<RightIconDirective>
+
   @ViewChild(forwardRef(() => InputBaseWrapperComponent)) base: InputBaseWrapperComponent
 
   @Input() controls: boolean = true

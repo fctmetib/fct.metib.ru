@@ -28,12 +28,12 @@
 			<mib-select formControlName="Type" [size]="size" placeholder="Тип заявки">
 				<mib-dropdown-point
 					[value]="RequestTypeEnum.NON_FINANCING"
-					text="Без финансирования"
+					[text]="requestsService.getRequestTypeTranslation(RequestTypeEnum.NON_FINANCING)"
 				></mib-dropdown-point>
 				<mib-dropdown-point
 					[value]="RequestTypeEnum.FINANCING"
-					text="С финансированием"
-				></mib-dropdown-point>
+          [text]="requestsService.getRequestTypeTranslation(RequestTypeEnum.FINANCING)"
+        ></mib-dropdown-point>
 			</mib-select>
 		</div>
 		<mib-input>

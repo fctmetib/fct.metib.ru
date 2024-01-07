@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
 import {FileMode} from 'src/app/shared/types/file/file-model.interface'
 import {ClientShipmentInterface} from 'src/app/shared/types/client/client-shipment.interface'
-import {Document, RequestReq, RequestRes, RequestState} from '../interfaces/request.interface'
+import {Document, RequestCorrection, RequestReq, RequestRes, RequestState, RequestTypeEnum} from '../interfaces/request.interface'
 
 export interface GetRequestsReq {
   dateFrom?: string
@@ -19,6 +19,17 @@ export class RequestsService {
 	constructor(
     private http: HttpClient
   ) {}
+
+  getRequestTypeTranslation(type: RequestTypeEnum) {
+    switch (type) {
+      case RequestTypeEnum.CORRECTION:
+        return 'Откорректированная'
+      case RequestTypeEnum.FINANCING:
+        return 'С финансированием';
+      case RequestTypeEnum.NON_FINANCING:
+        return 'Без финансирование';
+    }
+  }
 
   public getRequestsConfig(data?: GetRequestsReq) {
     const defaultConfig = {};
@@ -75,6 +86,11 @@ export class RequestsService {
 			ids
 		)
 	}
+
+  correction(data: RequestCorrection): Observable<any> {
+    console.log(data)
+    return this.http.post(`${environment.apiUrl}/v1/requests/correction`, data)
+  }
 
 	// МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ
 	// МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ

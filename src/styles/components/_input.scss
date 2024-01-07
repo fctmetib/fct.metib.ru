@@ -13,7 +13,12 @@
   --input-s-icons-gap: 8px;
 }
 
+.box {
+  height: 100%;
+}
+
 .box-wrapper {
+  height: 100%;
   position: relative;
   border-radius: var(--main-border-radius);
   transition: var(--main-transition);
@@ -29,13 +34,25 @@
     user-select: none;
   }
 
+  &:not(&_without-label) {
+    .box-wrapper {
+      &_input {
+        input {
+          padding-top: 12px;
+        }
+      }
+      &_textarea {
+        textarea {
+          margin-top: 12px;
+        }
+      }
+    }
+  }
+
   &_input {
     .box-label {
       top: 50%;
       transform: translateY(-50%);
-    }
-    input {
-      padding-top: 12px;
     }
   }
 
@@ -43,10 +60,6 @@
     .box-label {
       top: 8px;
     }
-    textarea {
-      margin-top: 12px;
-    }
-
     &.input {
       padding-bottom: 10px;
     }

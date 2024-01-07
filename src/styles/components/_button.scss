@@ -95,9 +95,13 @@ $text-selectors: '&, span';
 .btn {
 	@include btn;
 
-	&:disabled {
-		cursor: not-allowed;
-	}
+  &:disabled {
+    background-color: transparent;
+    cursor: not-allowed;
+    border: none;
+
+    @include btn-color(var(--bti-quaternary));
+  }
 	--btn-xl-icon-size: 20px;
 	--btn-l-icon-size: 20px;
 	--btn-m-icon-size: 20px;
@@ -105,8 +109,8 @@ $text-selectors: '&, span';
 
 	&_filled-primary {
 		background: var(--mc-default);
-		color: var(--wti-primary);
 		font-weight: var(--fw-medium);
+    @include btn-color(var(--wti-primary));
 
 		&:hover {
 			background: var(--mc-hover);
@@ -117,19 +121,14 @@ $text-selectors: '&, span';
 		}
 
 		&:disabled {
-			color: var(--wti-quaternary);
 			background: var(--wgr-tertiary);
-
-			mib-icon {
-				@include icon-color(var(--wti-quaternary));
-			}
 		}
 	}
 
 	&_filled-accent {
 		background: var(--ac-default);
-		color: var(--wti-primary);
 		font-weight: var(--fw-medium);
+    @include btn-color(var(--wti-primary));
 
 		&:hover {
 			background: var(--ac-hover);
@@ -140,23 +139,13 @@ $text-selectors: '&, span';
 		}
 
 		&:disabled {
-			color: var(--wti-quaternary);
 			background: var(--wgr-tertiary);
-
-			mib-icon {
-				@include icon-color(var(--wti-quaternary));
-			}
 		}
 	}
 
 	&_filled-secondary {
-		$color: var(--bti-secondary);
 		background: var(--wgr-secondary);
-		color: $color;
-
-		mib-icon {
-			@include icon-color($color);
-		}
+    @include btn-color(var(--bti-secondary));
 
 		&:hover {
 			border: 1px solid var(--wgr-tertiary);
@@ -168,24 +157,13 @@ $text-selectors: '&, span';
 		}
 
 		&:disabled {
-			$color: var(--wti-quaternary);
-			color: $color;
-			background: var(--wgr-tertiary);
-			border: none;
-
-			mib-icon {
-				@include icon-color($color);
-			}
+			background: var(--wgr-secondary);
 		}
 	}
 
 	&_floating {
 		background: var(--wgr-primary);
-		color: var(--bti-secondary);
-
-		mib-icon {
-			@include icon-color(var(--bti-secondary));
-		}
+    @include btn-color(var(--bti-secondary));
 
 		&:hover {
 			box-shadow: var(--custom-floating-shadow);
@@ -197,24 +175,15 @@ $text-selectors: '&, span';
 		}
 
 		&:disabled {
-			color: var(--wti-quaternary);
-			background: var(--wgr-tertiary);
+			background: var(--wgr-secondary);
 			box-shadow: none;
-
-			mib-icon {
-				@include icon-color(var(--wti-quaternary));
-			}
 		}
 	}
 
 	&_outline-primary {
 		background: var(--wgr-primary);
-		color: var(--mc-default);
 		border: 1px solid var(--mc-default);
-
-		mib-icon {
-			@include icon-color(var(--mc-default));
-		}
+    @include btn-color(var(--mc-default));
 
 		&:hover {
 			background-color: var(--mc-quinary);
@@ -225,42 +194,26 @@ $text-selectors: '&, span';
 		}
 
 		&:disabled {
-			color: var(--wti-quaternary);
 			background: var(--wgr-tertiary);
-			border: none;
-
-			mib-icon {
-				@include icon-color(var(--wti-quaternary));
-			}
 		}
 	}
 
 	&_outline-accent {
-		background: var(--wgr-primary);
-		color: var(--ac-default);
 		border: 1px solid var(--ac-default);
 		font-weight: var(--fw-medium);
 
-		mib-icon {
-			@include icon-color(var(--ac-default));
-		}
+    @include btn-color(var(--ac-default));
 
 		&:hover {
-			background-color: var(--ac-quinary);
+			background-color: var(--ac-hover);
 		}
 
 		&:active {
-			background: var(--ac-quaternary);
+			background: var(--ac-active);
 		}
 
 		&:disabled {
-			color: var(--wti-quaternary);
-			background: var(--wgr-tertiary);
-			border: none;
-
-			mib-icon {
-				@include icon-color(var(--wti-quaternary));
-			}
+			background: var(--wgr-secondary);
 		}
 	}
 
@@ -276,11 +229,6 @@ $text-selectors: '&, span';
 		&:active {
 			@include btn-color(var(--mc-active));
 		}
-
-		&:disabled {
-			@include btn-color(var(--wti-quaternary));
-			background: var(--wgr-primary);
-		}
 	}
 
 	&_ghost-secondary {
@@ -293,12 +241,19 @@ $text-selectors: '&, span';
 		&:active {
 			@include btn-color(var(--bti-primary));
 		}
-
-		&:disabled {
-			@include btn-color(var(--bti-quaternary));
-			background: var(--wgr-primary);
-		}
 	}
+
+  &_ghost-alert {
+    @include btn-color(var(--alc-default));
+
+    &:hover {
+      @include btn-color(var(--alc-hover));
+    }
+
+    &:active {
+      @include btn-color(var(--alc-active));
+    }
+  }
 
 	&_xl {
 		@include text-l;

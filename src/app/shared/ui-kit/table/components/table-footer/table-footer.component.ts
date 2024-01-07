@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {TableComponent} from '../../table.component';
 
 @Component({
   host: {
@@ -10,4 +11,9 @@ import {Component, Input} from '@angular/core';
 })
 export class TableFooterComponent {
   @Input() lined: boolean = true;
+
+  constructor(
+    public table: TableComponent
+  ) {
+  }
 }

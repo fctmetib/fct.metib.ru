@@ -33,8 +33,6 @@ export class InputBaseWrapperComponent implements AfterViewInit {
   @ViewChild('iconsRightRef') iconsRightEl: ElementRef<HTMLDivElement>
   @ViewChild('box') box: ElementRef<HTMLDivElement>
   @ViewChild('message') messageRef?: ElementRef
-  @ContentChildren(LeftIconDirective) leftIcons: QueryList<LeftIconDirective>
-  @ContentChildren(RightIconDirective) rightIcons: QueryList<RightIconDirective>
 
   public viewMounted: boolean = false;
 
@@ -51,6 +49,10 @@ export class InputBaseWrapperComponent implements AfterViewInit {
     return this.directive?.elementRef?.nativeElement
   }
 
+  get component(): InputComponent | TextareaComponent {
+    return this.isTextarea ? this.textarea : this.input
+  }
+
   get directive(): MibInputDirective | MibTextareaDirective {
     return this.input?.inputDirective || this.textarea?.textareaDirective
   }
@@ -64,13 +66,13 @@ export class InputBaseWrapperComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.leftIcons.changes.pipe(
+    this.component.leftIcons.changes.pipe(
       startWith(null),
       tap(() => this.setIconPaddings()),
       takeUntil(this.au.destroyer)
     ).subscribe();
     setTimeout(() => this.viewMounted = true)
-    merge(this.leftIcons.changes, this.rightIcons.changes).pipe(
+    merge(this.component.leftIcons.changes, this.component.rightIcons.changes).pipe(
       startWith(null),
       tap(() => this.updateClasses()),
       takeUntil(this.au.destroyer)
@@ -98,15 +100,16 @@ export class InputBaseWrapperComponent implements AfterViewInit {
 
   get directiveClasses() {
     return {
-      [`${this.selector}_right-iconly}`]: Boolean(this.rightIcons.length),
-      [`${this.selector}_left-iconly}`]: Boolean(this.leftIcons.length),
+      [`${this.selector}_right-iconly}`]: Boolean(this.component.rightIcons.length),
+      [`${this.selector}_left-iconly}`]: Boolean(this.component.leftIcons.length),
     }
   }
 
   get classes() {
     return {
       [`box-wrapper_${this.selector}`]: true,
-      'box-wrapper-transition': this.viewMounted
+      'box-wrapper-transition': this.viewMounted,
+      'box-wrapper_without-label': !this.labelEl?.nativeElement?.children?.length
     }
   }
 

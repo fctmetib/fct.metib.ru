@@ -57,6 +57,10 @@ export class TableComponent implements AfterContentInit, OnDestroy {
   ) {
   }
 
+  get selectedRows() {
+    return this.rows.toArray().filter(row => row.state)
+  }
+
   ngAfterContentInit() {
     const headCell = this.headCells.get(0);
     headCell.control.valueChanges.pipe(
@@ -65,7 +69,9 @@ export class TableComponent implements AfterContentInit, OnDestroy {
           const cell = row.cells.get(0);
           cell.control.setValue(value)
         })
-      })
+        this.emit()
+      }),
+      takeUntil(this.au.destroyer)
     ).subscribe()
   }
 
@@ -115,6 +121,10 @@ export class TableComponent implements AfterContentInit, OnDestroy {
       }
     }
     if (!this.shiftKeyHeldDown) this.lastCheckedIndex = index;
+    this.emit()
+  }
+
+  emit() {
     const selectedRows = this.rows.toArray().filter(row => row.state)
     this.selectionChange.emit({
       selectedCount: selectedRows.length,
