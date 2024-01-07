@@ -53,11 +53,6 @@ export class MibInputDirective extends BaseInputDirective implements AfterViewIn
     }
   }
 
-  @HostBinding('custom')
-  get getCustom() {
-    return this.custom
-  }
-
   ngAfterViewInit() {
     super.ngAfterViewInit()
   }

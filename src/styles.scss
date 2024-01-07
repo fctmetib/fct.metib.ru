@@ -8,7 +8,7 @@ body {
 @import 'src/styles/layout/reset.scss';
 @import 'src/styles/layout/_global';
 @import 'src/styles/components/main';
-@import 'src/app/shared/styles/pin-modal';
+@import 'src/styles/modals/main';
 
 :root {
 	--fw-regular: 400;

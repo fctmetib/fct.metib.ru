@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "check-cover": "ng test --watch=false --code-coverage",
-    "dev:ssr": "ng run metallinvestbank-web:serve-ssr:development",
+    "dev:ssr": "ng run metallinvestbank-web:serve-ssr",
     "serve:ssr": "node dist/metallinvestbank-web/server/main.js",
     "start:dev": "ng serve --configuration development",
     "build:dev": "ng build --configuration development",

@@ -85,7 +85,7 @@
             </mib-button>
           </mib-table-row>
         </ng-template>
-        <mib-table-footer (onDelete)="deleteRequests($event)" (onAction)="requestSign()" [lined]="!(loading$ | async)">
+        <mib-table-footer [actionLoading]="isSigningPreparing$ | async" (onDelete)="deleteRequests($event)" (onAction)="requestSign()" [lined]="!(loading$ | async)">
           <ng-container table-footer-action>Подписать</ng-container>
           <mib-paginator
             (pageChange)="onPageChange($event)"

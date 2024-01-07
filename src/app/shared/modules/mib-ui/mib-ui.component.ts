@@ -4,7 +4,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {MatDialogRef} from '@angular/material/dialog'
 import {NewShipmentModalComponent} from '../modals/new-shipment-modal/new-shipment-modal.component'
 import {NewShipmentModalService} from '../modals/new-shipment-modal/new-shipment-modal.service'
-import {PinModalService} from '../modals/pin-modal/pin-modal.service'
 
 @Component({
 	selector: 'app-mib-ui',
@@ -67,7 +66,6 @@ export class MibUiComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
 		private newShipmentModalService: NewShipmentModalService,
-		private pinModalService: PinModalService
 	) {}
 
 	ngOnInit(): void {
@@ -105,6 +103,5 @@ export class MibUiComponent implements OnInit {
 	}
 
 	openPinModal() {
-		this.pinModalService.open()
 	}
 }

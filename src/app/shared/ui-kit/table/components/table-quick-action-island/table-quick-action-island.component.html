@@ -1,5 +1,5 @@
 <div class="table-quick-action-island flex flex_justify-between">
-  <mib-button (press)="footer.onAction.emit()" size="s" type="ghost-primary">
+  <mib-button [loading]="footer.actionLoading" (press)="footer.onAction.emit()" size="s" type="ghost-primary">
     <ng-content select="[table-quick-action-island-left]"></ng-content>
   </mib-button>
   <div class="flex flex_align-center gap-2">

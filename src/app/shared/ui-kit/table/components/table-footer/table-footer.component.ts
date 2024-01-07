@@ -3,7 +3,7 @@ import {TableComponent} from '../../table.component';
 
 @Component({
   host: {
-    '[class.table-footer_underlined]': 'lined'
+    '[class.table-footer_lined]': 'lined'
   },
   selector: 'mib-table-footer',
   templateUrl: './table-footer.component.html',
@@ -11,6 +11,7 @@ import {TableComponent} from '../../table.component';
 })
 export class TableFooterComponent {
   @Input() lined: boolean = true;
+  @Input() actionLoading: boolean = false;
 
   @Output() onAction = new EventEmitter<void>()
   @Output() onDelete = new EventEmitter<any[]>()

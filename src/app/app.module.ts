@@ -20,6 +20,7 @@ import {IconsService} from './shared/services/icons.servcie';
 import {MibCoreModule} from './core/mib-core.module';
 import {MatDialogModule} from '@angular/material/dialog';
 import {AuthService} from './auth/services/auth.service';
+import {RequestsService} from './client/modules/requests/services/requests.service';
 
 registerLocaleData(localeRu, 'ru')
 
@@ -40,6 +41,7 @@ registerLocaleData(localeRu, 'ru')
   ],
   providers: [
     MessageService,
+    RequestsService,
     {provide: LOCALE_ID, useValue: 'ru'},
     {
       provide: HTTP_INTERCEPTORS,

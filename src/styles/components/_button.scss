@@ -112,13 +112,15 @@ $text-selectors: '&, span';
 		font-weight: var(--fw-medium);
     @include btn-color(var(--wti-primary));
 
-		&:hover {
-			background: var(--mc-hover);
-		}
+		&:not(:disabled) {
+      &:hover {
+        background: var(--mc-hover);
+      }
 
-		&:active {
-			background: var(--mc-active);
-		}
+      &:active {
+        background: var(--mc-active);
+      }
+    }
 
 		&:disabled {
 			background: var(--wgr-tertiary);
@@ -130,13 +132,15 @@ $text-selectors: '&, span';
 		font-weight: var(--fw-medium);
     @include btn-color(var(--wti-primary));
 
-		&:hover {
-			background: var(--ac-hover);
-		}
+		&:not(:disabled) {
+      &:hover {
+        background: var(--ac-hover);
+      }
 
-		&:active {
-			background: var(--ac-active);
-		}
+      &:active {
+        background: var(--ac-active);
+      }
+    }
 
 		&:disabled {
 			background: var(--wgr-tertiary);
@@ -147,13 +151,15 @@ $text-selectors: '&, span';
 		background: var(--wgr-secondary);
     @include btn-color(var(--bti-secondary));
 
-		&:hover {
-			border: 1px solid var(--wgr-tertiary);
-			background: var(--wgr-secondary);
-		}
+		&:not(:disabled) {
+      &:hover {
+        border: 1px solid var(--wgr-tertiary);
+        background: var(--wgr-secondary);
+      }
 
-		&:active {
-			background: var(--wgr-tertiary);
+      &:active {
+        background: var(--wgr-tertiary);
+      }
 		}
 
 		&:disabled {
@@ -165,13 +171,15 @@ $text-selectors: '&, span';
 		background: var(--wgr-primary);
     @include btn-color(var(--bti-secondary));
 
-		&:hover {
-			box-shadow: var(--custom-floating-shadow);
-		}
+		&:not(:disabled) {
+      &:hover {
+        box-shadow: var(--custom-floating-shadow);
+      }
 
-		&:active {
-			background: var(--wgr-secondary);
-			box-shadow: var(--custom-floating-shadow);
+      &:active {
+        background: var(--wgr-secondary);
+        box-shadow: var(--custom-floating-shadow);
+      }
 		}
 
 		&:disabled {
@@ -185,13 +193,15 @@ $text-selectors: '&, span';
 		border: 1px solid var(--mc-default);
     @include btn-color(var(--mc-default));
 
-		&:hover {
-			background-color: var(--mc-quinary);
-		}
+		&:not(:disabled) {
+      &:hover {
+        background-color: var(--mc-quinary);
+      }
 
-		&:active {
-			background: var(--mc-quaternary);
-		}
+      &:active {
+        background: var(--mc-quaternary);
+      }
+    }
 
 		&:disabled {
 			background: var(--wgr-tertiary);
@@ -204,13 +214,15 @@ $text-selectors: '&, span';
 
     @include btn-color(var(--ac-default));
 
-		&:hover {
-			background-color: var(--ac-hover);
-		}
+		&:not(:disabled) {
+      &:hover {
+        background-color: var(--ac-hover);
+      }
 
-		&:active {
-			background: var(--ac-active);
-		}
+      &:active {
+        background: var(--ac-active);
+      }
+    }
 
 		&:disabled {
 			background: var(--wgr-secondary);
@@ -222,36 +234,42 @@ $text-selectors: '&, span';
 
 		@include btn-color(var(--mc-default));
 
-		&:hover {
-			@include btn-color(var(--mc-hover));
-		}
+		&:not(:disabled) {
+      &:hover {
+        @include btn-color(var(--mc-hover));
+      }
 
-		&:active {
-			@include btn-color(var(--mc-active));
-		}
+      &:active {
+        @include btn-color(var(--mc-active));
+      }
+    }
 	}
 
 	&_ghost-secondary {
 		@include btn-color(var(--bti-secondary));
 
-		&:hover {
-			@include btn-color(var(--bti-tertiary));
-		}
+		&:not(:disabled) {
+      &:hover {
+        @include btn-color(var(--bti-tertiary));
+      }
 
-		&:active {
-			@include btn-color(var(--bti-primary));
-		}
+      &:active {
+        @include btn-color(var(--bti-primary));
+      }
+    }
 	}
 
   &_ghost-alert {
     @include btn-color(var(--alc-default));
 
-    &:hover {
-      @include btn-color(var(--alc-hover));
-    }
+    &:not(:disabled) {
+      &:hover {
+        @include btn-color(var(--alc-hover));
+      }
 
-    &:active {
-      @include btn-color(var(--alc-active));
+      &:active {
+        @include btn-color(var(--alc-active));
+      }
     }
   }
 

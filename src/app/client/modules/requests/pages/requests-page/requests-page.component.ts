@@ -18,6 +18,8 @@ import {TableRowAnimationService} from '../../../../../shared/ui-kit/table/servi
 import {TableSelectionEvent} from '../../../../../shared/ui-kit/table/interfaces/table.interface';
 import {TableComponent} from '../../../../../shared/ui-kit/table/table.component';
 import {RequestRes} from '../../interfaces/request.interface';
+import {SignService} from '../../../../../shared/services/share/sign.service';
+import {SignPinModalService} from '../../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service';
 
 @Component({
   selector: 'app-requests-page',
@@ -29,6 +31,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   @ViewChild(TableComponent) table: TableComponent
 
+  public isSigningPreparing$ = new BehaviorSubject<boolean>(false)
   public loading$ = new BehaviorSubject<boolean>(false)
 
   public skeletonWithoutUnderline: Properties = {
@@ -60,7 +63,9 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     private requestDrawerService: RequestDrawerService,
     private requestBrowserDrawerService: RequestBrowserDrawerService,
     private au: AutoUnsubscribeService,
-    private tableRowAnimationService: TableRowAnimationService
+    private tableRowAnimationService: TableRowAnimationService,
+    private signService: SignService,
+    private signPinModalService: SignPinModalService
   ) {
   }
 
@@ -104,9 +109,9 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   openDrawer() {
     this.requestDrawerService.open({
-        state: DrawerStateEnum.CREATE,
-        data: this.selectedRequests
-      })
+      state: DrawerStateEnum.CREATE,
+      data: this.selectedRequests
+    })
       .afterClosed()
       .pipe(
         filter(Boolean),
@@ -179,7 +184,25 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     ).subscribe()
   }
 
-  requestSign() {
-
+  requestSign(): void {
+    const requestIDs = this.table.selectedRows.map(req => req.rowId);
+    this.isSigningPreparing$.next(true)
+    this.signService.getActiveSession().pipe(
+      switchMap(result => {
+        if (result) {
+          return this.requestsService.send(requestIDs)
+        } else {
+          return this.signService.getPin().pipe(
+            switchMap(() => {
+              this.isSigningPreparing$.next(false)
+              return this.signPinModalService.open(requestIDs).afterClosed()
+            })
+          )
+        }
+      }),
+      switchMap(() => this.loadRequestsData()),
+      finalize(() => this.isSigningPreparing$.next(false))
+    ).subscribe()
   }
+
 }

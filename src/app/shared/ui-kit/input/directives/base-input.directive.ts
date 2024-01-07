@@ -1,10 +1,9 @@
 import {ChangeDetectorRef, Directive, ElementRef, HostBinding, HostListener, Input, Optional, Renderer2} from '@angular/core';
-import {AbstractControl, NgControl, Validators} from '@angular/forms';
+import {NgControl, Validators} from '@angular/forms';
 import {AutoUnsubscribeService} from '../../../services/auto-unsubscribe.service';
 import {InputStatus} from '../interfaces/input.interface';
 import {tap} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {InputBaseWrapperComponent} from '../components/input-base-wrapper/input-base-wrapper.component';
 import {ClassesObject, ToolsService} from '../../../services/tools.service';
 
 @Directive({
@@ -72,7 +71,7 @@ export class BaseInputDirective {
     this.updateStatus()
     if (this.control) {
       this.control.statusChanges.pipe(
-        tap(this.updateStatus),
+        tap(() => this.updateStatus),
         takeUntil(this.au.destroyer)
       ).subscribe()
     }

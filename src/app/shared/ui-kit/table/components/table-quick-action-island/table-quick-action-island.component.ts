@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {TableFooterComponent} from '../table-footer/table-footer.component';
 
 @Component({
