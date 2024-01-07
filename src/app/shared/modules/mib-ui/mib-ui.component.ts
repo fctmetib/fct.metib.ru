@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core'
 import {InputSize} from '../../ui-kit/input/interfaces/input.interface'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
+import {MatDialogRef} from '@angular/material/dialog'
+import {NewShipmentModalComponent} from '../modals/new-shipment-modal/new-shipment-modal.component'
+import {NewShipmentModalService} from '../modals/new-shipment-modal/new-shipment-modal.service'
+import {PinModalService} from '../modals/pin-modal/pin-modal.service'
 
 @Component({
 	selector: 'app-mib-ui',
@@ -60,7 +64,11 @@ export class MibUiComponent implements OnInit {
 
 	form: FormGroup
 
-	constructor(private fb: FormBuilder) {}
+	constructor(
+		private fb: FormBuilder,
+		private newShipmentModalService: NewShipmentModalService,
+		private pinModalService: PinModalService
+	) {}
 
 	ngOnInit(): void {
 		this.form = this.fb.group({
@@ -90,5 +98,13 @@ export class MibUiComponent implements OnInit {
 			'VALUE>>>',
 			this.form.value
 		)
+	}
+
+	openNewShipmentModal() {
+		this.newShipmentModalService.open()
+	}
+
+	openPinModal() {
+		this.pinModalService.open()
 	}
 }

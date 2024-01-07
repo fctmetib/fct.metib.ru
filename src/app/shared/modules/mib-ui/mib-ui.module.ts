@@ -17,6 +17,8 @@ import {MediaModule} from '../../ui-kit/media/media.module'
 import {FileCellModule} from '../../ui-kit/file-cell/file-cell.module'
 import {ContractedFormsModule} from '../../ui-kit/contracted-forms/contracted-forms.module'
 import {ModalModule} from '../../ui-kit/modal/modal.module'
+import {PinModalModule} from '../modals/pin-modal/pin-modal.module'
+import {NewShipmentModalModule} from '../modals/new-shipment-modal/new-shipment-modal.module'
 
 @NgModule({
 	imports: [
@@ -37,7 +39,9 @@ import {ModalModule} from '../../ui-kit/modal/modal.module'
 		MediaModule,
 		FileCellModule,
 		ContractedFormsModule,
-		ModalModule
+		ModalModule,
+		PinModalModule,
+		NewShipmentModalModule
 	],
 	declarations: [MibUiComponent]
 })

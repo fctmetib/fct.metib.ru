@@ -1275,15 +1275,17 @@
 </h2>
 <div *ngIf="isModal" style="margin-bottom: 10rem" class="wrapper">
 	<div class="">
-		<h5>modal:</h5>
-		<!-- <mib-modal>
+		<h5>modal: success</h5>
+		<mib-modal>
 			<mib-modal-header title="Запрос отправлен"> </mib-modal-header>
-			<mib-banner-success></mib-banner-success>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-banner-modal type="success"></mib-banner-modal>
 			<mib-spacing type="xs"></mib-spacing>
 			<p class="text text_m">
 				Отследить статус запроса Вы сможете на странице запросов во вкладке
 				“История запросов”
 			</p>
+			<mib-spacing type="m"></mib-spacing>
 			<mib-modal-footer>
 				<ng-container>
 					<mib-button class="flex_grow" size="m" type="filled-primary">
@@ -1294,8 +1296,55 @@
 					</mib-button>
 				</ng-container>
 			</mib-modal-footer>
-		</mib-modal> -->
-
+		</mib-modal>
+		<mib-spacing type="m"></mib-spacing>
+		<h5>modal: fail</h5>
+		<mib-modal>
+			<mib-modal-header title="Что-то пошло не так..."> </mib-modal-header>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-banner-modal type="fail"></mib-banner-modal>
+			<mib-spacing type="xs"></mib-spacing>
+			<p class="text text_m">
+				К сожалению, у нас не получилось сформировать запрос, проверьте
+				правильность заполнения запроса и попробуйте снова
+			</p>
+			<mib-spacing type="m"></mib-spacing>
+			<mib-modal-footer>
+				<ng-container>
+					<mib-button class="flex_grow" size="m" type="filled-primary">
+						Перейти к черновику
+					</mib-button>
+					<mib-button class="flex_grow" size="m" type="filled-secondary">
+						Отмена
+					</mib-button>
+				</ng-container>
+			</mib-modal-footer>
+		</mib-modal>
+		<mib-spacing type="m"></mib-spacing>
+		<h5>modal: info</h5>
+		<mib-modal>
+			<mib-modal-header title="Запрос на модерации"> </mib-modal-header>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-banner-modal type="info"></mib-banner-modal>
+			<mib-spacing type="xs"></mib-spacing>
+			<p class="text text_m">
+				Отследить статус и процесс реализации заявки вы сможете на странице
+				запросов во вкладке “История запросов”
+			</p>
+			<mib-spacing type="m"></mib-spacing>
+			<mib-modal-footer>
+				<ng-container>
+					<mib-button class="flex_grow" size="m" type="filled-primary">
+						Перейти к запросу
+					</mib-button>
+					<mib-button class="flex_grow" size="m" type="filled-secondary">
+						На главную
+					</mib-button>
+				</ng-container>
+			</mib-modal-footer>
+		</mib-modal>
+		<mib-spacing type="m"></mib-spacing>
+		<h5>banners</h5>
 		<mib-spacing type="m"></mib-spacing>
 		<mib-banner-modal type="success"></mib-banner-modal>
 		<mib-spacing type="m"></mib-spacing>
@@ -1304,84 +1353,16 @@
 		<mib-banner-modal type="info"></mib-banner-modal>
 		<mib-spacing type="m"></mib-spacing>
 		<h5>new-shipment-modal:</h5>
-		<!-- <mib-modal>
-			<mib-modal-header modal-header title="Новая поставка"> </mib-modal-header>
-			<mib-new-shipment-modal></mib-new-shipment-modal>
-			<mib-modal-footer modal-footer>
-				<ng-container>
-					<mib-button class="flex_grow" size="m" type="filled-primary">
-						Сохранить заявку
-					</mib-button>
-					<mib-button class="flex_grow" size="m" type="filled-secondary">
-						Отмена
-					</mib-button>
-				</ng-container>
-			</mib-modal-footer>
-		</mib-modal> -->
+		<!-- <mib-new-shipment-modal></mib-new-shipment-modal> -->
+		<mib-button (click)="openNewShipmentModal()" type="filled-primary">
+			модал ship
+		</mib-button>
 		<mib-spacing type="m"></mib-spacing>
 		<h5>pin-modal:</h5>
-		<!-- <mib-modal>
-			<mib-modal-header title="Введите PIN-код"> </mib-modal-header>
-			<mib-pin-modal></mib-pin-modal>
-			<mib-modal-footer>
-				<ng-container>
-					<mib-button class="flex_grow" size="m" type="filled-primary">
-						Подтвердить
-					</mib-button>
-					<mib-button class="flex_grow" size="m" type="filled-secondary">
-						Отмена
-					</mib-button>
-				</ng-container>
-			</mib-modal-footer>
-		</mib-modal> -->
-		<mib-spacing type="m"></mib-spacing>
-		<h5>banner-modal: success</h5>
-		<!-- <mib-modal>
-			<mib-modal-header title="banner title"> </mib-modal-header>
-			<mib-banner-modal type="success"></mib-banner-modal>
-			<mib-modal-footer>
-				<ng-container>
-					<mib-button class="flex_grow" size="m" type="filled-primary">
-						Подтвердить
-					</mib-button>
-					<mib-button class="flex_grow" size="m" type="filled-secondary">
-						Отмена
-					</mib-button>
-				</ng-container>
-			</mib-modal-footer>
-		</mib-modal> -->
-		<mib-spacing type="m"></mib-spacing>
-		<h5>banner-modal: fail</h5>
-		<!-- <mib-modal>
-			<mib-modal-header title="banner title"> </mib-modal-header>
-			<mib-banner-modal type="fail"></mib-banner-modal>
-			<mib-modal-footer>
-				<ng-container>
-					<mib-button class="flex_grow" size="m" type="filled-primary">
-						Подтвердить
-					</mib-button>
-					<mib-button class="flex_grow" size="m" type="filled-secondary">
-						Отмена
-					</mib-button>
-				</ng-container>
-			</mib-modal-footer>
-		</mib-modal> -->
-		<mib-spacing type="m"></mib-spacing>
-		<h5>banner-modal: info</h5>
-		<!-- <mib-modal>
-			<mib-modal-header title="banner title"> </mib-modal-header>
-			<mib-banner-modal type="info"></mib-banner-modal>
-			<mib-modal-footer>
-				<ng-container>
-					<mib-button class="flex_grow" size="m" type="filled-primary">
-						Подтвердить
-					</mib-button>
-					<mib-button class="flex_grow" size="m" type="filled-secondary">
-						Отмена
-					</mib-button>
-				</ng-container>
-			</mib-modal-footer>
-		</mib-modal> -->
+		<!-- <mib-pin-modal></mib-pin-modal> -->
+		<mib-button (click)="openPinModal()" type="filled-primary">
+			модал pin
+		</mib-button>
 	</div>
 	<mib-spacing type="xl2"></mib-spacing>
 	<mib-spacing type="xl2"></mib-spacing>

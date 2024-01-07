@@ -1,1 +1,34 @@
-<p>pin-modal works!</p>
+<mib-modal>
+	<mib-modal-header title="Введите PIN-код"> </mib-modal-header>
+	<mib-spacing type="xs"></mib-spacing>
+	<div class="pin-modal flex gap-8">
+		<!-- <mib-input>
+			<input class="pin" mibInput type="text" styleType="filled-secondary" />
+			<ng-container input-label>0</ng-container>
+		</mib-input> -->
+		<!-- value="0" -->
+		<input mibInput type="text" styleType="filled-secondary" placeholder="0" />
+		<input mibInput type="text" styleType="filled-secondary" placeholder="0" />
+		<input mibInput type="text" styleType="filled-secondary" placeholder="0" />
+		<input mibInput type="text" styleType="filled-secondary" placeholder="0" />
+		<input mibInput type="text" styleType="filled-secondary" placeholder="0" />
+		<input
+			class="pin"
+			mibInput
+			type="text"
+			styleType="filled-secondary"
+			placeholder="0"
+		/>
+	</div>
+	<mib-spacing type="m"></mib-spacing>
+	<mib-modal-footer>
+		<ng-container>
+			<mib-button class="flex_grow" size="m" type="filled-primary">
+				Подтвердить
+			</mib-button>
+			<mib-button class="flex_grow" size="m" type="filled-secondary">
+				Отмена
+			</mib-button>
+		</ng-container>
+	</mib-modal-footer>
+</mib-modal>

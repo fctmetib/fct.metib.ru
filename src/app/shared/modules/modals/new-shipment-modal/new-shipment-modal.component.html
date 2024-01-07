@@ -1,1 +1,75 @@
-<p>new-shipment-modal works!</p>
+<mib-modal>
+	<mib-modal-header title="Новая поставка"> </mib-modal-header>
+	<mib-spacing type="xs"></mib-spacing>
+	<div class="flex flex_column gap-12">
+		<mib-input>
+			<input
+				mibInput
+				type="text"
+				styleType="filled-secondary"
+				placeholder="Накладная"
+			/>
+			<ng-container input-label>Накладная</ng-container>
+		</mib-input>
+		<mib-input>
+			<input
+				mibInput
+				type="date"
+				styleType="filled-secondary"
+				placeholder="Дата накладной"
+			/>
+			<ng-container input-label>Дата накладной</ng-container>
+			<mib-icon class="stroke path" mibRightIcon name="fi_calendar"></mib-icon>
+		</mib-input>
+		<mib-input>
+			<input
+				mibInput
+				type="text"
+				styleType="filled-secondary"
+				placeholder="Счет-фактура"
+			/>
+			<ng-container input-label>Счет-фактура</ng-container>
+		</mib-input>
+		<mib-input>
+			<input
+				mibInput
+				type="date"
+				styleType="filled-secondary"
+				placeholder="Дата фактуры"
+			/>
+			<ng-container input-label>Дата фактуры</ng-container>
+			<mib-icon class="stroke path" mibRightIcon name="fi_calendar"></mib-icon>
+		</mib-input>
+		<mib-input>
+			<input
+				mibInput
+				type="date"
+				styleType="filled-secondary"
+				placeholder="Дата поставки"
+			/>
+			<ng-container input-label>Дата поставки</ng-container>
+			<mib-icon class="stroke path" mibRightIcon name="fi_calendar"></mib-icon>
+		</mib-input>
+		<mib-input>
+			<input
+				mibInput
+				type="text"
+				styleType="filled-secondary"
+				placeholder="Сумма поставки"
+			/>
+			<ng-container input-label>Сумма поставки</ng-container>
+			<mib-icon class="stroke path" mibRightIcon name="fi_calendar"></mib-icon>
+		</mib-input>
+	</div>
+	<mib-spacing type="m"></mib-spacing>
+	<mib-modal-footer modal-footer>
+		<ng-container>
+			<mib-button class="flex_grow" size="m" type="filled-primary">
+				Сохранить заявку
+			</mib-button>
+			<mib-button class="flex_grow" size="m" type="filled-secondary">
+				Отмена
+			</mib-button>
+		</ng-container>
+	</mib-modal-footer>
+</mib-modal>
