@@ -36,6 +36,7 @@ import {SmsConfirmationModule} from './modules/sms-confirmation/sms-confirmation
 import {SelectModule} from '../shared/ui-kit/select/select.module'
 import {RadioModule} from '../shared/ui-kit/radio/radio.module'
 import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module';
+import {LabelModule} from '../shared/directives/label/label.module';
 
 @NgModule({
     imports: [
@@ -67,7 +68,8 @@ import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module';
         LeftIconModule,
         SmsConfirmationModule,
         RadioModule,
-        SkeletonModule
+        SkeletonModule,
+        LabelModule
     ],
 	declarations: [
 		AuthComponent,

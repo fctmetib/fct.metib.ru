@@ -10,6 +10,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ShipmentDrawerService} from './services/shipment-drawer.service';
 import {NgxMaskModule} from 'ngx-mask';
 import {RightIconModule} from '../../../../../shared/directives/right-icon/right-icon.module';
+import {LabelModule} from '../../../../../shared/directives/label/label.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {RightIconModule} from '../../../../../shared/directives/right-icon/right
         InputModule,
         ReactiveFormsModule,
         NgxMaskModule,
-        RightIconModule
+        RightIconModule,
+        LabelModule
     ],
   providers: [
     ShipmentDrawerService

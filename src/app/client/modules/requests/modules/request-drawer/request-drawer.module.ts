@@ -25,6 +25,8 @@ import {
   RequestCorrectionModalService
 } from '../../../../../shared/modules/modals/request-correction-modal/request-correction-modal.service';
 import {RequestCorrectionModalModule} from '../../../../../shared/modules/modals/request-correction-modal/request-correction-modal.module';
+import {LabelModule} from '../../../../../shared/directives/label/label.module';
+import {NgxMaskModule} from 'ngx-mask';
 
 @NgModule({
   declarations: [RequestDrawerComponent],
@@ -48,7 +50,9 @@ import {RequestCorrectionModalModule} from '../../../../../shared/modules/modals
     RubModule,
     DropdownModule,
     RightIconModule,
-    RequestCorrectionModalModule
+    RequestCorrectionModalModule,
+    LabelModule,
+    NgxMaskModule
   ],
   providers: [
     RequestDrawerService,

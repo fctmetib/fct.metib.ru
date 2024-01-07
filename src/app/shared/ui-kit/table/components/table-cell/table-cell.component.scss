@@ -8,12 +8,16 @@ $text-selectors: 'label';
 }
 
 .table-cell {
-	padding: 12px 8px 12px 0;
+  height: 100%;
 	#{$text-selectors} {
 		@include body-text;
-		@include text-m;
 		@include text-overflow(1);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 	}
+
 	&_type {
 		&-main {
 			#{$text-selectors} {
@@ -23,8 +27,28 @@ $text-selectors: 'label';
 				user-select: none;
 			}
 		}
+    &-editable {
+      padding: 0;
+      ::ng-deep {
+        .input {
+          padding-left: 0;
+        }
+      }
+    }
 	}
 	.description {
 		padding: 2px 0;
 	}
+  &_size {
+    &-s {
+      #{$text-selectors} {
+        @include text-s;
+      }
+    }
+    &-m {
+      #{$text-selectors} {
+        @include text-m;
+      }
+    }
+  }
 }

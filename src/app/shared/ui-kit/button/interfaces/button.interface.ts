@@ -8,3 +8,4 @@ export type ButtonType =
 	| 'outline-accent'
 	| 'ghost-primary'
 	| 'ghost-secondary'
+  | 'ghost-alert'

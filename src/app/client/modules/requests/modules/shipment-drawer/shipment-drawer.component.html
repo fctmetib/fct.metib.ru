@@ -4,29 +4,29 @@
   <mib-spacing type="xs"></mib-spacing>
   <div class="flex flex_column gap-12">
     <mib-input>
-      <ng-container input-label>Накладная</ng-container>
+      <ng-container mibLabel>Накладная</ng-container>
       <input formControlName="WaybillNumber" mibInput>
     </mib-input>
     <mib-input>
-      <ng-container input-label>Дата накладной</ng-container>
+      <ng-container mibLabel>Дата накладной</ng-container>
       <input type="date" formControlName="WaybillDate" mibInput>
     </mib-input>
     <div class="flex gap-12">
       <mib-input class="flex_grow">
-        <ng-container input-label>Счет-фактура</ng-container>
+        <ng-container mibLabel>Счет-фактура</ng-container>
         <input formControlName="InvoiceNumber" mibInput>
       </mib-input>
       <mib-input class="flex_grow">
-        <ng-container input-label>Дата фактуры</ng-container>
+        <ng-container mibLabel>Дата фактуры</ng-container>
         <input type="date" formControlName="InvoiceDate" mibInput>
       </mib-input>
     </div>
     <mib-input>
-      <ng-container input-label>Дата поставки</ng-container>
+      <ng-container mibLabel>Дата поставки</ng-container>
       <input type="date" formControlName="DateShipment" mibInput>
     </mib-input>
     <mib-input>
-      <ng-container input-label>Сумма поставки</ng-container>
+      <ng-container mibLabel>Сумма поставки</ng-container>
       <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
       <input mask="separator" formControlName="Summ" mibInput>
     </mib-input>

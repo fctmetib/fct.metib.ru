@@ -1,5 +1,5 @@
 <div
-  (click)="selectRow()" [@slideAnimation]="animationState | async" class="table-row flex"
+  (click)="selectRow()" [@slideAnimation]="animationState | async" class="table-row flex flex_align-stretch"
   [class.table-row_underlined]="underlined" [class.table-row_has-button]="wrapper.children.length">
   <ng-content></ng-content>
   <div class="table-row_button-wrapper flex flex_align-center" #wrapper>

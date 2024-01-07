@@ -4,6 +4,7 @@ import {TableCellComponent} from '../table-cell/table-cell.component';
 import {TableRowAnimationService} from '../../services/table-row-animation.service';
 import {TableComponent} from '../../table.component';
 import {AnimationService} from '../../../../animations/animations.service';
+import {ToolsService} from '../../../../services/tools.service';
 
 export const TABLE_ROW_ANIMATION_CONFIG = {
   translateDistance: '-3%',
@@ -25,9 +26,12 @@ export class TableRowComponent {
   @Input() device: DeviceType = 'desktop';
   @Input() underlined: boolean = false;
 
+  id: string = this.toolsService.generateId();
+
   constructor(
     private tableComponent: TableComponent,
-    private tableRowAnimationService: TableRowAnimationService
+    private tableRowAnimationService: TableRowAnimationService,
+    private toolsService: ToolsService
   ) {
   }
 

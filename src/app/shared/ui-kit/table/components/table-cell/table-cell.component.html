@@ -1,4 +1,4 @@
-<div class="table-cell flex flex_align-center gap-8">
+<div class="table-cell flex flex_align-center gap-8" [ngClass]="classes">
   <ng-template #content>
     <ng-content></ng-content>
   </ng-template>
@@ -8,7 +8,7 @@
   <ng-template #description>
     <ng-content select="[table-cell-description]"></ng-content>
   </ng-template>
-  <ng-template #pers>
+  <ng-template #person>
     <ng-content select="[table-cell-person]"></ng-content>
   </ng-template>
 
@@ -22,7 +22,7 @@
         *ngIf="showCheckbox"
       ></mib-checkbox>
       <div class="flex flex_column">
-        <label>
+        <label (click)="showCheckbox && toggle(); $event.stopPropagation()">
           <ng-container *ngTemplateOutlet="title"></ng-container>
         </label>
         <p *ngIf="contracted" class="text text_s c-bti-tertiary">
@@ -37,13 +37,17 @@
       </label>
     </ng-container>
 
+    <ng-container *ngSwitchCase="'editable'">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </ng-container>
+
     <ng-container *ngSwitchCase="'blank'">
       <ng-container *ngTemplateOutlet="content"></ng-container>
     </ng-container>
 
     <ng-container *ngSwitchCase="'person'">
       <div class="flex gap-8 flex_align-center">
-        <ng-container *ngTemplateOutlet="pers"></ng-container>
+        <ng-container *ngTemplateOutlet="person"></ng-container>
         <div class="flex flex_column">
           <label [for]="checkboxId"
           >
@@ -56,5 +60,6 @@
         </div>
       </div>
     </ng-container>
+
   </ng-container>
 </div>

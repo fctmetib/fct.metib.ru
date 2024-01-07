@@ -73,3 +73,14 @@ export interface RequestStateEvent {
   Manager: string;
   Date: string;
 }
+
+export interface RequestCorrection {
+  Date: string
+  ID: number
+  ShipmentsCorrections: RequestShipmentCorrection[]
+}
+
+export interface RequestShipmentCorrection {
+  Amount: number
+  ShipmentId: number
+}

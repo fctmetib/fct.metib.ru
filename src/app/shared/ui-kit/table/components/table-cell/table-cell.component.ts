@@ -32,7 +32,7 @@ export class TableCellComponent implements OnInit, OnChanges {
   @Output() press = new EventEmitter<any>();
   @HostBinding('title') @Input() title: string = ''
 
-  public _size: TableCellSize = 'm'
+  public _size: TableCellSize = 's'
   public checkboxId: string;
 
   control: FormControl = new FormControl<boolean>(false)
@@ -51,7 +51,7 @@ export class TableCellComponent implements OnInit, OnChanges {
   get classes() {
     return {
       [`table-cell_type-${this.type}`]: true,
-      [`table-cell_${this._size}`]: true,
+      [`table-cell_size-${this._size}`]: true,
     }
   }
 

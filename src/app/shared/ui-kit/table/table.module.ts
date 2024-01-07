@@ -10,6 +10,9 @@ import {CheckboxModule} from '../checkbox/checkbox.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {IconModule} from '../ref-icon/icon.module';
 import {ClickOnElementModule} from '../../directives/click-on-element/click-on-element.module';
+import { TableQuickActionIslandComponent } from './components/table-quick-action-island/table-quick-action-island.component';
+import {ButtonModule} from '../button/button.module';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,7 @@ import {ClickOnElementModule} from '../../directives/click-on-element/click-on-e
     TableCellComponent,
     TableComponent,
     TableFooterComponent,
+    TableQuickActionIslandComponent,
   ],
   exports: [
     TableHeadComponent,
@@ -28,13 +32,15 @@ import {ClickOnElementModule} from '../../directives/click-on-element/click-on-e
     TableCellComponent,
     TableFooterComponent
   ],
-  imports: [
-    CommonModule,
-    CheckboxModule,
-    ReactiveFormsModule,
-    IconModule,
-    ClickOnElementModule
-  ]
+    imports: [
+        CommonModule,
+        CheckboxModule,
+        ReactiveFormsModule,
+        IconModule,
+        ClickOnElementModule,
+        ButtonModule,
+        MatTooltipModule
+    ]
 })
 export class TableModule {
 }

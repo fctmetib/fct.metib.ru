@@ -7,6 +7,7 @@ import {LinkModule} from '../../../shared/ui-kit/link/link.module';
 import {SpacingModule} from '../../../shared/ui-kit/spacing/spacing.module';
 import {NgxMaskModule} from 'ngx-mask';
 import {ReactiveFormsModule} from '@angular/forms';
+import {LabelModule} from '../../../shared/directives/label/label.module';
 
 
 @NgModule({
@@ -16,15 +17,16 @@ import {ReactiveFormsModule} from '@angular/forms';
   exports: [
     SmsConfirmationComponent
   ],
-  imports: [
-    CommonModule,
-    ButtonModule,
-    InputModule,
-    LinkModule,
-    SpacingModule,
-    NgxMaskModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        ButtonModule,
+        InputModule,
+        LinkModule,
+        SpacingModule,
+        NgxMaskModule,
+        ReactiveFormsModule,
+        LabelModule
+    ]
 })
 export class SmsConfirmationModule {
 }

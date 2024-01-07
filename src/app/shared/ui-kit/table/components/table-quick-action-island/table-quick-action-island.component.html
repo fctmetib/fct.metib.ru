@@ -1,0 +1,17 @@
+<div class="table-quick-action-island flex flex_justify-between">
+  <mib-button (press)="footer.onAction.emit()" size="s" type="ghost-primary">
+    <ng-content select="[table-quick-action-island-left]"></ng-content>
+  </mib-button>
+  <div class="flex flex_align-center gap-2">
+    <div class="flex">
+      <p class="text text_s c-bti-secondary">Выделено {{table.selectedRows.length}}</p>
+      <p class="text text_s c-bti-quaternary">/{{table.rows.length}}</p>
+    </div>
+    <mib-button (press)="table.deselect()" size="s" type="ghost-secondary">
+      <mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
+    </mib-button>
+  </div>
+  <mib-button matTooltip="Удаление визуально" (press)="footer.onDeleteHandler()" size="s" type="ghost-alert">
+    Удалить
+  </mib-button>
+</div>

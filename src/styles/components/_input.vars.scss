@@ -3,6 +3,7 @@
 
 @mixin input {
 	border-radius: var(--main-border-radius);
+  height: 100%;
 	width: 100%;
 	@include body-text;
 	transition: color var(--transition), background-color var(--transition),
@@ -46,25 +47,27 @@
 	}
 
   // STATUSES
-  @each $element in ('input', 'textarea') {
-    &:has(#{$element}:not([readonly]):focus), &:has(#{$element}:not(:placeholder-shown)) {
-      @include input-color(var(--bti-secondary));
+  &:not(&_without-label) {
+    @each $element in ('input', 'textarea') {
+      &:has(#{$element}:not([readonly]):focus), &:has(#{$element}:not(:placeholder-shown)) {
+        @include input-color(var(--bti-secondary));
 
-			input,
-			.left-wrapper {
-				padding-top: 12px;
-			}
+        input,
+        .left-wrapper {
+          padding-top: 12px;
+        }
 
-			textarea {
-				margin-top: 12px;
-			}
+        textarea {
+          margin-top: 12px;
+        }
 
-      .box-label {
-        @include text-xs;
-        font-weight: var(--fw-medium);
-        color: var(--mc-default);
-        transform: unset;
-        //padding-left: 16px !important;
+        .box-label {
+          @include text-xs;
+          font-weight: var(--fw-medium);
+          color: var(--mc-default);
+          transform: unset;
+          //padding-left: 16px !important;
+        }
       }
     }
   }
@@ -200,10 +203,10 @@
 		outline: 0;
 		border-bottom-right-radius: unset;
 		border-bottom-left-radius: unset;
-		border-bottom: 1px solid var(--wgr-tertiary);
+		border-bottom: 1px solid var(--wgr-secondary);
 
 		&:focus {
-			border-bottom: 1px solid var(--wgr-tertiary);
+			border-bottom: 1px solid var(--wgr-secondary);
 		}
 
 		&:disabled {
