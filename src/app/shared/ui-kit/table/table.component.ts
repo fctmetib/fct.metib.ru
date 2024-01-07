@@ -58,7 +58,7 @@ export class TableComponent implements AfterContentInit, OnDestroy {
   }
 
   get selectedRows() {
-    return this.rows.toArray().filter(row => row.state)
+    return this.rows.toArray().filter(row => row.state && row?.cell?.showCheckbox && row?.cell?.type === 'main')
   }
 
   ngAfterContentInit() {

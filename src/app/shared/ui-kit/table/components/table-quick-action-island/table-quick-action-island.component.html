@@ -1,5 +1,5 @@
 <div class="table-quick-action-island flex flex_justify-between">
-  <mib-button (press)="onAction.emit()" size="s" type="ghost-primary">
+  <mib-button (press)="footer.onAction.emit()" size="s" type="ghost-primary">
     <ng-content select="[table-quick-action-island-left]"></ng-content>
   </mib-button>
   <div class="flex flex_align-center gap-2">
@@ -11,7 +11,7 @@
       <mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
     </mib-button>
   </div>
-  <mib-button (press)="onDelete.emit()" size="s" type="ghost-alert">
+  <mib-button matTooltip="Удаление визуально" (press)="footer.onDeleteHandler()" size="s" type="ghost-alert">
     Удалить
   </mib-button>
 </div>

@@ -21,11 +21,11 @@
 	<mib-spacing type="xs"></mib-spacing>
 	<div class="flex flex_column gap-12">
 		<div class="flex gap-12">
-			<mib-input>
-				<ng-container input-label>Номер заявки</ng-container>
+			<mib-input class="flex_grow">
+				<ng-container mibLabel>Номер заявки</ng-container>
 				<input formControlName="Number" [size]="size" mibInput />
 			</mib-input>
-			<mib-select formControlName="Type" [size]="size" placeholder="Тип заявки">
+			<mib-select formControlName="Type" [size]="size" placeholder="Тип заявки"  class="flex_grow">
 				<mib-dropdown-point
 					[value]="RequestTypeEnum.NON_FINANCING"
 					[text]="requestsService.getRequestTypeTranslation(RequestTypeEnum.NON_FINANCING)"
@@ -37,13 +37,13 @@
 			</mib-select>
 		</div>
 		<mib-input>
-			<ng-container input-label>Дата заявки</ng-container>
+			<ng-container mibLabel>Дата заявки</ng-container>
 			<input formControlName="Date" [size]="size" type="date" mibInput />
 		</mib-input>
     <mib-input>
-      <ng-container input-label>Свободный лимит</ng-container>
+      <ng-container mibLabel>Свободный лимит</ng-container>
       <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
-      <input readonly [formControl]="freeLimitControl" [size]="size" mibInput />
+      <input mask="separator" readonly [formControl]="freeLimitControl" [size]="size" mibInput />
     </mib-input>
 	</div>
 	<mib-spacing type="s"></mib-spacing>

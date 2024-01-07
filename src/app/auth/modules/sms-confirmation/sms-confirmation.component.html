@@ -6,7 +6,7 @@
 <mib-spacing type="xs"></mib-spacing>
 <mib-input>
   <input [size]="size" mibInput [formControl]="control">
-  <ng-container input-label>Введите код подтверждения</ng-container>
+  <ng-container mibLabel>Введите код подтверждения</ng-container>
 </mib-input>
 <mib-spacing type="xs"></mib-spacing>
 <mib-link [disabled]="delay>0" (press)="onResend()" disabled="true" type="ghost-primary">Отправить код повторно {{delay>0?'('+delay+'с)' : ''}}</mib-link>

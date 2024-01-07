@@ -12,6 +12,7 @@ import {IconModule} from '../ref-icon/icon.module';
 import {ClickOnElementModule} from '../../directives/click-on-element/click-on-element.module';
 import { TableQuickActionIslandComponent } from './components/table-quick-action-island/table-quick-action-island.component';
 import {ButtonModule} from '../button/button.module';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {ButtonModule} from '../button/button.module';
         ReactiveFormsModule,
         IconModule,
         ClickOnElementModule,
-        ButtonModule
+        ButtonModule,
+        MatTooltipModule
     ]
 })
 export class TableModule {

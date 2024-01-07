@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {TableFooterComponent} from '../table-footer/table-footer.component';
 
 @Component({
@@ -7,11 +7,9 @@ import {TableFooterComponent} from '../table-footer/table-footer.component';
   styleUrls: ['./table-quick-action-island.component.scss']
 })
 export class TableQuickActionIslandComponent {
-  @Output() onAction = new EventEmitter<void>()
-  @Output() onDelete = new EventEmitter<void>()
 
   constructor(
-    private footer: TableFooterComponent
+    public footer: TableFooterComponent
   ) {
   }
 

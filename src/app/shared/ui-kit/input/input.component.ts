@@ -7,6 +7,7 @@ import {MibInputDirective} from './directives/mib-input.directive';
 import {MibTextareaDirective} from '../textarea/directives/mib-textarea.directive';
 import {LeftIconDirective} from '../../directives/left-icon/left-icon.directive';
 import {RightIconDirective} from '../../directives/right-icon/right-icon.directive';
+import {LabelDirective} from '../../directives/label.directive';
 
 @Component({
   selector: 'mib-input',
@@ -15,6 +16,8 @@ import {RightIconDirective} from '../../directives/right-icon/right-icon.directi
 })
 export class InputComponent {
   @ContentChild(MibInputDirective, {descendants: true}) inputDirective: MibInputDirective
+
+  @ContentChild(LabelDirective, {descendants: true}) labelDirective: LabelDirective
 
   @ContentChildren(LeftIconDirective, {descendants: true}) leftIcons: QueryList<LeftIconDirective>
   @ContentChildren(RightIconDirective, {descendants: true}) rightIcons: QueryList<RightIconDirective>

@@ -18,6 +18,7 @@ import {InputBaseWrapperComponent} from '../input/components/input-base-wrapper/
 import {ToolsService} from '../../services/tools.service';
 import {LeftIconDirective} from '../../directives/left-icon/left-icon.directive';
 import {RightIconDirective} from '../../directives/right-icon/right-icon.directive';
+import {LabelDirective} from '../../directives/label.directive';
 
 @Component({
   selector: 'mib-textarea',
@@ -27,6 +28,8 @@ import {RightIconDirective} from '../../directives/right-icon/right-icon.directi
 })
 export class TextareaComponent implements AfterViewInit {
   @ContentChild(MibTextareaDirective, {descendants: true}) textareaDirective: MibTextareaDirective
+
+  @ContentChild(LabelDirective, {descendants: true}) labelDirective: LabelDirective
 
   @ContentChildren(LeftIconDirective, {descendants: true}) leftIcons: QueryList<LeftIconDirective>
   @ContentChildren(RightIconDirective, {descendants: true}) rightIcons: QueryList<RightIconDirective>

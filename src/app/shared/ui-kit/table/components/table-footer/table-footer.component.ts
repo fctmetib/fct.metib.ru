@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TableComponent} from '../../table.component';
 
 @Component({
@@ -12,8 +12,15 @@ import {TableComponent} from '../../table.component';
 export class TableFooterComponent {
   @Input() lined: boolean = true;
 
+  @Output() onAction = new EventEmitter<void>()
+  @Output() onDelete = new EventEmitter<any[]>()
+
   constructor(
     public table: TableComponent
   ) {
+  }
+
+  onDeleteHandler() {
+    this.onDelete.emit(this.table.selectedRows.map(row => row.rowId))
   }
 }

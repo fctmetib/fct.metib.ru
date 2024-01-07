@@ -109,7 +109,7 @@ export class InputBaseWrapperComponent implements AfterViewInit {
     return {
       [`box-wrapper_${this.selector}`]: true,
       'box-wrapper-transition': this.viewMounted,
-      'box-wrapper_without-label': !this.labelEl?.nativeElement?.children?.length
+      'box-wrapper_without-label': !this.component.labelDirective
     }
   }
 

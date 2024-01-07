@@ -168,4 +168,18 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   selectionChange(event: TableSelectionEvent) {
     this.requestsSelection = event;
   }
+
+  deleteRequests($event: any[]) {
+    forkJoin(
+      $event.map(id => this.tableRowAnimationService.animateRowAndAwaitCompletion(id).pipe(
+        tap(() => this.removeRequestById(id))
+      ))
+    ).pipe(
+      finalize(() => this.onPageChange(this.currentPage$.value))
+    ).subscribe()
+  }
+
+  requestSign() {
+
+  }
 }

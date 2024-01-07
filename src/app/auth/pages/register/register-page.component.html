@@ -12,7 +12,7 @@
 							[size]="inputSize"
 							styleType="filled-secondary"
 						/>
-						<ng-container input-label>Имя</ng-container>
+						<ng-container mibLabel>Имя</ng-container>
 					</mib-input>
 					<mib-input>
 						<input
@@ -21,7 +21,7 @@
 							[size]="inputSize"
 							styleType="filled-secondary"
 						/>
-						<ng-container input-label>Фамилия</ng-container>
+						<ng-container mibLabel>Фамилия</ng-container>
 					</mib-input>
 				</div>
         <mib-radio-group formControlName="IsMale">
@@ -41,7 +41,7 @@
 						[size]="inputSize"
 						styleType="filled-secondary"
 					/>
-					<ng-container input-label>Телефон</ng-container>
+					<ng-container mibLabel>Телефон</ng-container>
 				</mib-input>
 				<mib-input>
 					<input
@@ -51,7 +51,7 @@
 						[size]="inputSize"
 						styleType="filled-secondary"
 					/>
-					<ng-container input-label>E-mail</ng-container>
+					<ng-container mibLabel>E-mail</ng-container>
 				</mib-input>
 				<mib-input>
 					<input
@@ -62,7 +62,7 @@
 						styleType="separated"
             readonly
 					/>
-					<ng-container input-label>Ваш логин</ng-container>
+					<ng-container mibLabel>Ваш логин</ng-container>
 					<mib-icon
 						class="stroke path"
 						mibRightIcon
@@ -89,7 +89,7 @@
 					styleType="filled-secondary"
 					formControlName="Password"
 				/>
-				<ng-container input-label>Введите пароль</ng-container>
+				<ng-container mibLabel>Введите пароль</ng-container>
 				<mib-icon
 					[passwordHider]="[password]"
 					class="stroke path"
@@ -106,7 +106,7 @@
 					styleType="filled-secondary"
 					formControlName="ConfirmPassword"
 				/>
-				<ng-container input-label>Подтвердите пароль</ng-container>
+				<ng-container mibLabel>Подтвердите пароль</ng-container>
 				<mib-icon
 					[passwordHider]="[confirmPassword]"
 					class="stroke path"
@@ -130,7 +130,7 @@
 							[size]="inputSize"
 							styleType="filled-secondary"
 						/>
-						<ng-container input-label>Текст с картинки</ng-container>
+						<ng-container mibLabel>Текст с картинки</ng-container>
 					</mib-input>
 					<mib-link (press)="updateCaptcha()">
 						<mib-icon
@@ -153,7 +153,7 @@
 				[size]="inputSize"
 				styleType="filled-secondary"
 			/>
-			<ng-container input-label>Смс код</ng-container>
+			<ng-container mibLabel>Смс код</ng-container>
 		</mib-input>
 	</ng-container>
 	<mib-spacing type="m"></mib-spacing>
