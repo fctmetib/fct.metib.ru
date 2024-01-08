@@ -39,6 +39,13 @@ src\app\shared\modules\header\header.component.html
 ng g m shared/modules/header/header --flat --dry-run
  //---
 
+ //--- add request-create-success-modal
+src\app\client\modules\requests\modules
+ng g m client/modules/requests/modules/request-create-success-modal --dry-run
+ng g c client/modules/requests/modules/request-create-success-modal/request-create-success-modal --flat --skip-tests --dry-run
+ng g s client/modules/requests/modules/request-create-success-modal/request-create-success-modal --skip-tests --dry-run
+ //---
+
  //--- new-demand
 src\app\shared\modules\new-demand
 ng g m shared/modules/new-demand/new-demand --flat --dry-run
