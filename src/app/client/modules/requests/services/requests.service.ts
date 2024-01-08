@@ -27,7 +27,7 @@ export class RequestsService {
       case RequestTypeEnum.FINANCING:
         return 'С финансированием';
       case RequestTypeEnum.NON_FINANCING:
-        return 'Без финансирование';
+        return 'Без финансирования';
     }
   }
 

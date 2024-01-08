@@ -1,5 +1,5 @@
 <mib-drawer>
-  <mib-drawer-header [showEdits]="!request.ReadOnly" (onEdit)="onEdit()" (onClose)="dialogRef.close()"
+  <mib-drawer-header [showEdits]="!request?.ReadOnly" (onEdit)="onEdit()" (onClose)="dialogRef.close()"
                      drawer-header></mib-drawer-header>
   <mib-drawer-container>
     <ng-container *ngIf="loading$ | async; else title">
