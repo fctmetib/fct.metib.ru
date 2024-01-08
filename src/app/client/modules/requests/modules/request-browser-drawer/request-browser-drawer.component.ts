@@ -12,13 +12,15 @@ import {
   RequestCorrectionModalService
 } from '../../../../../shared/modules/modals/request-correction-modal/request-correction-modal.service';
 import {RequestBrowserDrawerService} from './request-browser-drawer.service';
+import {Drawer} from '../../../../../shared/ui-kit/drawer/drawer.class';
+import {RequestDrawerService} from '../request-drawer/request-drawer.service';
 
 @Component({
   selector: 'mib-request-browser-drawer',
   templateUrl: './request-browser-drawer.component.html',
   styleUrls: ['./request-browser-drawer.component.scss']
 })
-export class RequestBrowserDrawerComponent implements OnInit {
+export class RequestBrowserDrawerComponent extends Drawer implements OnInit {
   public loading$ = new BehaviorSubject<boolean>(false)
 
   public skeletonWithoutUnderline: Properties = {
@@ -74,13 +76,16 @@ export class RequestBrowserDrawerComponent implements OnInit {
     public dialogRef: MatDialogRef<RequestBrowserDrawerComponent>,
     public requestsService: RequestsService,
     private requestBrowserDrawerService: RequestBrowserDrawerService,
+    private requestDrawerService: RequestDrawerService,
     private correctionModalService: RequestCorrectionModalService
   ) {
+    super()
   }
 
   ngOnInit(): void {
     this.currentRequestId = this.data?.data?.requestId
     this.getCurrentRequest()
+    this.state = this.data.state
   }
 
   get request() {
@@ -133,5 +138,12 @@ export class RequestBrowserDrawerComponent implements OnInit {
         this.dialogRef.close(boolean)
       })
     ).subscribe()
+  }
+
+  onEdit() {
+    this.requestDrawerService.open({
+      state: 'edit',
+      data: this.request
+    })
   }
 }

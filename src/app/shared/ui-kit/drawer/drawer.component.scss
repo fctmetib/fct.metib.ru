@@ -2,6 +2,7 @@
 :host {
   height: 100%;
   width: 100%;
+  --drawer-container-paddings: 0 32px;
 }
 
 @mixin drawer {
@@ -16,7 +17,6 @@
 }
 
 @mixin drawer-content {
-  padding: 0 32px;
   overflow-y: scroll;
 }
 

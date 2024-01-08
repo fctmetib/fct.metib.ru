@@ -92,6 +92,13 @@ export class RequestsService {
     return this.http.post(`${environment.apiUrl}/v1/requests/correction`, data)
   }
 
+
+  public deleteRequests(requestIds: number[]): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/v1/requests`, {
+      body: requestIds
+    })
+  }
+
 	// МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ
 	// МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ
 	// МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ
@@ -118,11 +125,6 @@ export class RequestsService {
 	// 	const url = `${environment.apiUrl}/v1/requests/${requestID}`
 	// 	return this.http.post<RequestRes>(url, data)
 	// }
-
-	public delete(requestID: number): Observable<{}> {
-		const url = `${environment.apiUrl}/v1/requests/${requestID}`
-		return this.http.delete<{}>(url)
-	}
 
 	//#endregion
 

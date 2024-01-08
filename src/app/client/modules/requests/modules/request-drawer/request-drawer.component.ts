@@ -17,6 +17,7 @@ import {FileDnd} from '../../../../../shared/ui-kit/drag-and-drop/interfaces/dro
 import {RequestsService} from '../../services/requests.service';
 import {FormsPresetsService} from '../../../../../shared/services/forms-presets.service';
 import {extractBase64, ToolsService} from '../../../../../shared/services/tools.service';
+import {Drawer} from '../../../../../shared/ui-kit/drawer/drawer.class';
 
 @Component({
   selector: 'mib-request-drawer',
@@ -24,7 +25,7 @@ import {extractBase64, ToolsService} from '../../../../../shared/services/tools.
   styleUrls: ['./request-drawer.component.scss'],
   providers: [AutoUnsubscribeService]
 })
-export class RequestDrawerComponent implements OnInit {
+export class RequestDrawerComponent extends Drawer implements OnInit {
   public isSubmitting$ = new BehaviorSubject<boolean>(false)
 
   public form: FormGroup
@@ -48,6 +49,7 @@ export class RequestDrawerComponent implements OnInit {
     private formsPresetsService: FormsPresetsService,
     private toolsService: ToolsService
   ) {
+    super()
   }
 
   public deliveryIdControl = new FormControl(null, [Validators.required])
@@ -81,8 +83,14 @@ export class RequestDrawerComponent implements OnInit {
     this.initForms()
     this.watchForms()
 
+    this.state = this.data.state
+
     this.existingRequest = this.data.data
-    if (this.existingRequest) this.form.patchValue(this.existingRequest)
+    if (this.existingRequest) {
+      this.form.patchValue(this.existingRequest)
+      this.existingRequest?.Shipments?.forEach(shipment => this.addShipment(shipment))
+      this.existingRequest?.Documents?.forEach(document => this.addDocument(document))
+    }
 
     this.deliveryService.getRefs(this.factoring.DebtorID).pipe(
       tap(data => {

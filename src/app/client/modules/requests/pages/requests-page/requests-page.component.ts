@@ -1,5 +1,6 @@
 import {
   BehaviorSubject,
+  zip,
   finalize,
   filter,
   tap, switchMap, merge, forkJoin
@@ -109,8 +110,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   openDrawer() {
     this.requestDrawerService.open({
-      state: DrawerStateEnum.CREATE,
-      data: this.selectedRequests
+      state: DrawerStateEnum.CREATE
     })
       .afterClosed()
       .pipe(
@@ -131,7 +131,15 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   removeRequestById(id: number) {
-    this.requests = this.requests.filter(request => request.ID !== id);
+    const splice = array => {
+      const index = array.findIndex(req => req.ID === id);
+      if (index > -1) {
+        array.splice(index, 1);
+      }
+    };
+
+    splice(this.requests)
+    splice(this.requestsVisible)
   }
 
   openBrowserDrawer(requestId: number) {
@@ -174,11 +182,14 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
     this.requestsSelection = event;
   }
 
-  deleteRequests($event: any[]) {
-    forkJoin(
-      $event.map(id => this.tableRowAnimationService.animateRowAndAwaitCompletion(id).pipe(
-        tap(() => this.removeRequestById(id))
-      ))
+  deleteRequests(ids: number[]) {
+    zip(
+      this.requestsService.deleteRequests(ids),
+      forkJoin(
+        ids.map(id => this.tableRowAnimationService.animateRowAndAwaitCompletion(id).pipe(
+          tap(() => this.removeRequestById(id))
+        ))
+      )
     ).pipe(
       finalize(() => this.onPageChange(this.currentPage$.value))
     ).subscribe()
@@ -195,7 +206,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
           return this.signService.getPin().pipe(
             switchMap(() => {
               this.isSigningPreparing$.next(false)
-              return this.signPinModalService.open(requestIDs).afterClosed()
+              return this.signPinModalService.open(requestIDs).afterClosed().pipe(filter(Boolean))
             })
           )
         }

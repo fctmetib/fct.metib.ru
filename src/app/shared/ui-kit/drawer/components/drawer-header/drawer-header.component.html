@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	<div class="right flex_grow flex flex_justify-end">
-		<mib-button *ngIf="showEdits" type="ghost-primary">
+		<mib-button (press)="onEdit.emit()" *ngIf="showEdits" type="ghost-primary">
 			Редактировать
 			<mib-icon
 				btn-left-icon

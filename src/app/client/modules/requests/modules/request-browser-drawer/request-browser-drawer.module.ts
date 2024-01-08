@@ -7,7 +7,6 @@ import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
-import {RequestBrowserDrawerService} from './request-browser-drawer.service'
 import {TagModule} from 'src/app/shared/ui-kit/tag/tag.module'
 import {CashPanelModule} from 'src/app/shared/modules/cash-panel/cash-panel.module'
 import {TabModule} from 'src/app/shared/ui-kit/tab/tab.module'
@@ -19,29 +18,32 @@ import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 import {DropdownModule} from '../../../../../shared/ui-kit/dropdown/dropdown.module';
 import {RubModule} from '../../../../../shared/pipes/rub/rub.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {RequestDrawerModule} from '../request-drawer/request-drawer.module';
 
 @NgModule({
-	declarations: [RequestBrowserDrawerComponent],
-    imports: [
-        CommonModule,
-        DrawerModule,
-        MatDialogModule,
-        SpacingModule,
-        TableModule,
-        ButtonModule,
-        IconModule,
-        TagModule,
-        CashPanelModule,
-        TabModule,
-        NavbarModule,
-        SelectModule,
-        DropdownPointModule,
-        SkeletonModule,
-        PaginatorModule,
-        DropdownModule,
-        RubModule,
-        MatTooltipModule
-    ],
-	providers: [RequestBrowserDrawerService]
+  declarations: [RequestBrowserDrawerComponent],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    MatDialogModule,
+    SpacingModule,
+    TableModule,
+    ButtonModule,
+    IconModule,
+    TagModule,
+    CashPanelModule,
+    TabModule,
+    NavbarModule,
+    SelectModule,
+    DropdownPointModule,
+    SkeletonModule,
+    PaginatorModule,
+    DropdownModule,
+    RubModule,
+    MatTooltipModule,
+    RequestDrawerModule
+  ],
+  providers: []
 })
-export class RequestBrowserDrawerModule {}
+export class RequestBrowserDrawerModule {
+}

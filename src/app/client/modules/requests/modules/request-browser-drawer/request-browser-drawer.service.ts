@@ -8,7 +8,9 @@ import {RequestsService} from '../../services/requests.service'
 import {BehaviorSubject, filter, map} from 'rxjs';
 import {RequestRes} from '../../interfaces/request.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class RequestBrowserDrawerService {
 
   public request$ = new BehaviorSubject<RequestRes | null>(null)

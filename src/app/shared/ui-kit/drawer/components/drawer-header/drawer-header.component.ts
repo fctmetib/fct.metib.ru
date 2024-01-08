@@ -13,7 +13,8 @@ export class DrawerHeaderComponent {
 	@Input() showProgressBar: boolean = false
 	@Input() maxPage: number = 3
 	@Input() progress: number = 2
-	@Output() onClose = new EventEmitter()
+  @Output() onEdit = new EventEmitter()
+  @Output() onClose = new EventEmitter()
 
 	get classes() {
 		return {

@@ -30,7 +30,7 @@ export class SignPinModalComponent {
     this.signService.createSession(this.codeControl.value).pipe(
       switchMap(() => this.requestsService.send(this.requestIds)),
       tap(() => {
-        this.dialogRef.close()
+        this.dialogRef.close(true)
       }),
       finalize(() => {
         this.isSigning$.next(false)

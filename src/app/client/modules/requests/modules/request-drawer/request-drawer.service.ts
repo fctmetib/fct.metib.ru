@@ -5,11 +5,13 @@ import { RequestDrawerComponent } from './request-drawer.component'
 import { drawerConfig } from '../../../../../shared/ui-kit/drawer/drawer.tools'
 import {RequestRes} from '../../interfaces/request.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class RequestDrawerService {
 	constructor(private dialog: MatDialog) {}
 
-	open(data?: DrawerData<RequestRes[]>): MatDialogRef<RequestDrawerComponent, number[]> {
+	open(data?: DrawerData<RequestRes>): MatDialogRef<RequestDrawerComponent, number[]> {
 		const config: DrawerData = {
 			state: 'view'
 		}
