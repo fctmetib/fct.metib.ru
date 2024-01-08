@@ -1,30 +1,31 @@
 <mib-drawer>
-	<mib-drawer-header
-		showEdits="true"
-		(onClose)="dialogRef.close()"
-		drawer-header
-	>
-	</mib-drawer-header>
-	<h4>Запрос на свободную тему</h4>
-	<mib-spacing type="xs"></mib-spacing>
-	<mib-input>
-		<ng-container mibLabel>Тема обращения</ng-container>
-		<input mibInput />
-	</mib-input>
-	<mib-spacing type="xs"></mib-spacing>
-  <mib-textarea [controls]="false">
-    <ng-container textarea-label>Текст обращения</ng-container>
-    <textarea [maxLength]="300" autosize mibTextarea></textarea>
-  </mib-textarea>
+  <mib-drawer-header
+    showEdits="true"
+    (onClose)="dialogRef.close()"
+    drawer-header
+  >
+  </mib-drawer-header>
+  <mib-drawer-container>
+    <h4>Запрос на свободную тему</h4>
+    <mib-spacing type="xs"></mib-spacing>
+    <mib-input>
+      <ng-container mibLabel>Тема обращения</ng-container>
+      <input mibInput/>
+    </mib-input>
+    <mib-spacing type="xs"></mib-spacing>
+    <mib-textarea [controls]="false">
+      <ng-container mibLabel>Текст обращения</ng-container>
+      <textarea [maxLength]="300" autosize mibTextarea></textarea>
+    </mib-textarea>
 
-	<mib-spacing type="s"></mib-spacing>
-	<p class="text text_m text_medium">
-		При необходимости прикрепите документы в поле ниже
-	</p>
-	<mib-spacing type="xs2"></mib-spacing>
-	<div class="flex flex_column gap-12">
-		<mib-dnd
-			[accept]="[
+    <mib-spacing type="s"></mib-spacing>
+    <p class="text text_m text_medium">
+      При необходимости прикрепите документы в поле ниже
+    </p>
+    <mib-spacing type="xs2"></mib-spacing>
+    <div class="flex flex_column gap-12">
+      <mib-dnd
+        [accept]="[
 				'application/pdf',
 				'application/msword',
 				'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -33,21 +34,23 @@
 				'image/jpeg',
 				'image/png'
 			]"
-			headline="Прикрепите скан-копию документа"
-		></mib-dnd>
-		<div class="flex flex_column gap-4">
-			<p class="text text_xs c-bti-tertiary">
-				Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
-			</p>
-			<p class="text text_xs c-bti-tertiary">
-				Размер каждого документа не должен превышать 10 МБ
-			</p>
-		</div>
-	</div>
-	<mib-spacing type="m"></mib-spacing>
-	<mib-drawer-footer drawer-footer>
-		<mib-button [disabled]="true" [size]="size" type="filled-primary"
-			>Создать заявку</mib-button
-		>
-	</mib-drawer-footer>
+        headline="Прикрепите скан-копию документа"
+      ></mib-dnd>
+      <div class="flex flex_column gap-4">
+        <p class="text text_xs c-bti-tertiary">
+          Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
+        </p>
+        <p class="text text_xs c-bti-tertiary">
+          Размер каждого документа не должен превышать 10 МБ
+        </p>
+      </div>
+    </div>
+    <mib-spacing type="m"></mib-spacing>
+  </mib-drawer-container>
+  <mib-drawer-footer drawer-footer>
+    <mib-button [disabled]="true" [size]="size" type="filled-primary"
+    >Создать заявку
+    </mib-button
+    >
+  </mib-drawer-footer>
 </mib-drawer>
