@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core'
 import {InputSize} from '../../ui-kit/input/interfaces/input.interface'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
-import {MatDialogRef} from '@angular/material/dialog'
-import {NewShipmentModalComponent} from '../modals/new-shipment-modal/new-shipment-modal.component'
 import {NewShipmentModalService} from '../modals/new-shipment-modal/new-shipment-modal.service'
+import {RequestCreateSuccessModalService} from 'src/app/client/modules/requests/modules/request-create-success-modal/request-create-success-modal.service'
 
 @Component({
 	selector: 'app-mib-ui',
@@ -66,6 +65,7 @@ export class MibUiComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
 		private newShipmentModalService: NewShipmentModalService,
+		private requestCreateSuccessModalService: RequestCreateSuccessModalService
 	) {}
 
 	ngOnInit(): void {
@@ -102,6 +102,7 @@ export class MibUiComponent implements OnInit {
 		this.newShipmentModalService.open()
 	}
 
-	openPinModal() {
+	openRequestCreateSuccessModal() {
+		this.requestCreateSuccessModalService.open()
 	}
 }

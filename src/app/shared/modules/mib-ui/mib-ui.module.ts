@@ -18,6 +18,7 @@ import {FileCellModule} from '../../ui-kit/file-cell/file-cell.module'
 import {ContractedFormsModule} from '../../ui-kit/contracted-forms/contracted-forms.module'
 import {ModalModule} from '../../ui-kit/modal/modal.module'
 import {NewShipmentModalModule} from '../modals/new-shipment-modal/new-shipment-modal.module'
+import {RequestCreateSuccessModalModule} from 'src/app/client/modules/requests/modules/request-create-success-modal/request-create-success-modal.module'
 
 @NgModule({
 	imports: [
@@ -39,7 +40,8 @@ import {NewShipmentModalModule} from '../modals/new-shipment-modal/new-shipment-
 		FileCellModule,
 		ContractedFormsModule,
 		ModalModule,
-		NewShipmentModalModule
+		NewShipmentModalModule,
+		RequestCreateSuccessModalModule
 	],
 	declarations: [MibUiComponent]
 })
