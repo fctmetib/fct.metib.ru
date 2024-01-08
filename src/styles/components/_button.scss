@@ -95,13 +95,13 @@ $text-selectors: '&, span';
 .btn {
 	@include btn;
 
-  &:disabled {
-    background-color: transparent;
-    cursor: not-allowed;
-    border: none;
+	&:disabled {
+		background-color: transparent;
+		cursor: not-allowed;
+		border: none;
 
-    @include btn-color(var(--bti-quaternary));
-  }
+		@include btn-color(var(--bti-quaternary));
+	}
 	--btn-xl-icon-size: 20px;
 	--btn-l-icon-size: 20px;
 	--btn-m-icon-size: 20px;
@@ -110,17 +110,17 @@ $text-selectors: '&, span';
 	&_filled-primary {
 		background: var(--mc-default);
 		font-weight: var(--fw-medium);
-    @include btn-color(var(--wti-primary));
+		@include btn-color(var(--wti-primary));
 
 		&:not(:disabled) {
-      &:hover {
-        background: var(--mc-hover);
-      }
+			&:hover {
+				background: var(--mc-hover);
+			}
 
-      &:active {
-        background: var(--mc-active);
-      }
-    }
+			&:active {
+				background: var(--mc-active);
+			}
+		}
 
 		&:disabled {
 			background: var(--wgr-tertiary);
@@ -130,17 +130,17 @@ $text-selectors: '&, span';
 	&_filled-accent {
 		background: var(--ac-default);
 		font-weight: var(--fw-medium);
-    @include btn-color(var(--wti-primary));
+		@include btn-color(var(--wti-primary));
 
 		&:not(:disabled) {
-      &:hover {
-        background: var(--ac-hover);
-      }
+			&:hover {
+				background: var(--ac-hover);
+			}
 
-      &:active {
-        background: var(--ac-active);
-      }
-    }
+			&:active {
+				background: var(--ac-active);
+			}
+		}
 
 		&:disabled {
 			background: var(--wgr-tertiary);
@@ -149,17 +149,17 @@ $text-selectors: '&, span';
 
 	&_filled-secondary {
 		background: var(--wgr-secondary);
-    @include btn-color(var(--bti-secondary));
+		@include btn-color(var(--bti-secondary));
 
 		&:not(:disabled) {
-      &:hover {
-        border: 1px solid var(--wgr-tertiary);
-        background: var(--wgr-secondary);
-      }
+			&:hover {
+				border: 1px solid var(--wgr-tertiary);
+				background: var(--wgr-secondary);
+			}
 
-      &:active {
-        background: var(--wgr-tertiary);
-      }
+			&:active {
+				background: var(--wgr-tertiary);
+			}
 		}
 
 		&:disabled {
@@ -169,17 +169,17 @@ $text-selectors: '&, span';
 
 	&_floating {
 		background: var(--wgr-primary);
-    @include btn-color(var(--bti-secondary));
+		@include btn-color(var(--bti-secondary));
 
 		&:not(:disabled) {
-      &:hover {
-        box-shadow: var(--custom-floating-shadow);
-      }
+			&:hover {
+				box-shadow: var(--custom-floating-shadow);
+			}
 
-      &:active {
-        background: var(--wgr-secondary);
-        box-shadow: var(--custom-floating-shadow);
-      }
+			&:active {
+				background: var(--wgr-secondary);
+				box-shadow: var(--custom-floating-shadow);
+			}
 		}
 
 		&:disabled {
@@ -191,17 +191,17 @@ $text-selectors: '&, span';
 	&_outline-primary {
 		background: var(--wgr-primary);
 		border: 1px solid var(--mc-default);
-    @include btn-color(var(--mc-default));
+		@include btn-color(var(--mc-default));
 
 		&:not(:disabled) {
-      &:hover {
-        background-color: var(--mc-quinary);
-      }
+			&:hover {
+				background-color: var(--mc-quinary);
+			}
 
-      &:active {
-        background: var(--mc-quaternary);
-      }
-    }
+			&:active {
+				background: var(--mc-quaternary);
+			}
+		}
 
 		&:disabled {
 			background: var(--wgr-tertiary);
@@ -212,17 +212,17 @@ $text-selectors: '&, span';
 		border: 1px solid var(--ac-default);
 		font-weight: var(--fw-medium);
 
-    @include btn-color(var(--ac-default));
+		@include btn-color(var(--ac-default));
 
 		&:not(:disabled) {
-      &:hover {
-        background-color: var(--ac-hover);
-      }
+			&:hover {
+				background-color: var(--ac-hover);
+			}
 
-      &:active {
-        background: var(--ac-active);
-      }
-    }
+			&:active {
+				background: var(--ac-active);
+			}
+		}
 
 		&:disabled {
 			background: var(--wgr-secondary);
@@ -235,43 +235,43 @@ $text-selectors: '&, span';
 		@include btn-color(var(--mc-default));
 
 		&:not(:disabled) {
-      &:hover {
-        @include btn-color(var(--mc-hover));
-      }
+			&:hover {
+				@include btn-color(var(--mc-hover));
+			}
 
-      &:active {
-        @include btn-color(var(--mc-active));
-      }
-    }
+			&:active {
+				@include btn-color(var(--mc-active));
+			}
+		}
 	}
 
 	&_ghost-secondary {
 		@include btn-color(var(--bti-secondary));
 
 		&:not(:disabled) {
-      &:hover {
-        @include btn-color(var(--bti-tertiary));
-      }
+			&:hover {
+				@include btn-color(var(--bti-tertiary));
+			}
 
-      &:active {
-        @include btn-color(var(--bti-primary));
-      }
-    }
+			&:active {
+				@include btn-color(var(--bti-primary));
+			}
+		}
 	}
 
-  &_ghost-alert {
-    @include btn-color(var(--alc-default));
+	&_ghost-alert {
+		@include btn-color(var(--alc-default));
 
-    &:not(:disabled) {
-      &:hover {
-        @include btn-color(var(--alc-hover));
-      }
+		&:not(:disabled) {
+			&:hover {
+				@include btn-color(var(--alc-hover));
+			}
 
-      &:active {
-        @include btn-color(var(--alc-active));
-      }
-    }
-  }
+			&:active {
+				@include btn-color(var(--alc-active));
+			}
+		}
+	}
 
 	&_xl {
 		@include text-l;
@@ -295,5 +295,9 @@ $text-selectors: '&, span';
 		@include text-s;
 		padding: 8px 12px;
 		@include btn-s;
+	}
+
+	&.btn_paddingOff {
+		padding: 0;
 	}
 }

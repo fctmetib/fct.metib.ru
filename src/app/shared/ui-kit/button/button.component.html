@@ -3,6 +3,7 @@
 	(click)="press.emit($event)"
 	class="btn flex flex_center flex_grow"
 	[class.btn_loading]="loading"
+	[class.btn_paddingOff]="paddingOff"
 	[ngClass]="'btn_' + size + ' btn_' + type"
 	[class.btn_left-iconly]="iconLeft.children.length > 0"
 	[class.btn_right-iconly]="iconRight.children.length > 0"
