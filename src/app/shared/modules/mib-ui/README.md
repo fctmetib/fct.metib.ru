@@ -82,6 +82,13 @@ src\app\client\modules\demand-new\modules\demand-drawer
 ng g c client/modules/demand-new/modules/demand-drawer --skip-tests --dry-run
  //---
 
+ //--- comment-panel
+src\app\shared\ui-kit
+ng g i shared/ui-kit/comment-panel/interfaces/comment-panel.interface  --dry-run
+ng g m shared/ui-kit/comment-panel/comment-panel --flat  --dry-run
+ng g c shared/ui-kit/comment-panel/comment-panel --flat  --skip-tests --dry-run
+ //---
+
  //--- invoice
 src\app\client\modules\invoices
 ng g c client/modules/invoices/pages/invoice-page --skip-tests --dry-run

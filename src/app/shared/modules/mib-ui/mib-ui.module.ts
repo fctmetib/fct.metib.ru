@@ -19,6 +19,7 @@ import {ContractedFormsModule} from '../../ui-kit/contracted-forms/contracted-fo
 import {ModalModule} from '../../ui-kit/modal/modal.module'
 import {NewShipmentModalModule} from '../modals/new-shipment-modal/new-shipment-modal.module'
 import {RequestCreateSuccessModalModule} from 'src/app/client/modules/requests/modules/request-create-success-modal/request-create-success-modal.module'
+import {CommentPanelModule} from '../../ui-kit/comment-panel/comment-panel.module'
 
 @NgModule({
 	imports: [
@@ -41,7 +42,8 @@ import {RequestCreateSuccessModalModule} from 'src/app/client/modules/requests/m
 		ContractedFormsModule,
 		ModalModule,
 		NewShipmentModalModule,
-		RequestCreateSuccessModalModule
+		RequestCreateSuccessModalModule,
+		CommentPanelModule
 	],
 	declarations: [MibUiComponent]
 })

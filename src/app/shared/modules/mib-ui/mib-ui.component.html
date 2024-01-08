@@ -1366,3 +1366,28 @@
 	<mib-spacing type="xl2"></mib-spacing>
 	<mib-spacing type="xl2"></mib-spacing>
 </div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'comment-panel' | titlecase }}
+	<button (click)="isCommentPanel = !isCommentPanel">
+		{{ isCommentPanel ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isCommentPanel" style="margin-bottom: 10rem" class="wrapper">
+	<div>
+		<h5>Comment-panel:</h5>
+		<mib-comment-panel></mib-comment-panel>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>
