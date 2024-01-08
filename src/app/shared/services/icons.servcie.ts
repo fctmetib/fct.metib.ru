@@ -43,7 +43,8 @@ export class IconsService {
 		'fi_download',
 		'fi_lock',
 		'logo_round',
-		'fi_calendar'
+		'fi_calendar',
+		'fi_corner-down-left'
 	]
 
 	public async initIcons(): Promise<void> {
