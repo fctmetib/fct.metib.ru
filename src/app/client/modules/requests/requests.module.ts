@@ -3,8 +3,7 @@ import {DeliveryService} from 'src/app/shared/services/share/delivery.service'
 // import {RequestCreateDialogComponent} from './components/request-create-dialog/request-create-dialog.component'
 import {RequestsService} from './services/requests.service'
 import {RequestsRoutingModule} from './requests-routing.module'
-import {CommonModule} from '@angular/common'
-import {DropdownModule} from 'primeng/dropdown'
+import {CommonModule, DatePipe} from '@angular/common'
 import {CardModule} from 'primeng/card'
 import {MultiSelectModule} from 'primeng/multiselect'
 import {ProgressBarModule} from 'primeng/progressbar'
@@ -47,6 +46,9 @@ import {ShipmentsViewComponent} from './pages/requests-page/no-touch-this/shipme
 import {RequestsPageComponent} from './pages/requests-page/requests-page.component'
 import {RequestBrowserDrawerModule} from './modules/request-browser-drawer/request-browser-drawer.module'
 import {SignPinModalModule} from '../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.module';
+import {DropdownModule} from '../../../shared/ui-kit/dropdown/dropdown.module';
+import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdown-point.module';
+import {DatesService} from '../../../shared/services/dates.service';
 
 @NgModule({
   declarations: [
@@ -77,7 +79,6 @@ import {SignPinModalModule} from '../../../shared/modules/modals/sign-pin-modal/
     SliderModule,
     AccordionModule,
     TableModule,
-    DropdownModule,
     TooltipModule,
     FormsModule,
     ProgressBarModule,
@@ -95,7 +96,9 @@ import {SignPinModalModule} from '../../../shared/modules/modals/sign-pin-modal/
     PaginatorModule,
     RequestDrawerModule,
     RequestBrowserDrawerModule,
-    SignPinModalModule
+    SignPinModalModule,
+    DropdownModule,
+    DropdownPointModule
   ],
   providers: [
     DialogService,
@@ -103,7 +106,9 @@ import {SignPinModalModule} from '../../../shared/modules/modals/sign-pin-modal/
     RequestsService,
     FileService,
     MessageService,
-    CommonService
+    CommonService,
+    DatesService,
+    DatePipe
   ]
 })
 export class RequestsModule {

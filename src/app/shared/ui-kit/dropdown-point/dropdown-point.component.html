@@ -1,4 +1,4 @@
-<div class="dropdown-point flex flex_align-center" (click)="!disabled && select()" [ngClass]="classes">
+<div class="dropdown-point flex flex_align-center" (click)="!disabled && select($event)" [ngClass]="classes">
   <div class="flex gap-8 flex_align-center flex_grow">
     <mib-checkbox [formControl]="control" *ngIf="_showCheckbox"></mib-checkbox>
     <div class="dropdown-point_icon-wrapper dropdown-point_left-icon-wrapper" #leftIcon>

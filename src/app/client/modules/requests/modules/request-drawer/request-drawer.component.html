@@ -1,7 +1,7 @@
 <mib-drawer [formGroup]="form">
   <mib-drawer-header (onClose)="dialogRef.close()" drawer-header></mib-drawer-header>
   <mib-drawer-container>
-    <h4>Создание новой заявки</h4>
+    <h4>{{isEditing ? 'Редактирование заявки' : 'Создание новой заявки'}}</h4>
     <mib-spacing type="xs"></mib-spacing>
     <mib-select
       [formControl]="deliveryIdControl"
@@ -189,14 +189,9 @@
     </div>
   </mib-drawer-container>
   <mib-drawer-footer drawer-footer>
-    <mib-button
-      [disabled]="form.invalid"
-      [loading]="!!(isSubmitting$ | async)"
-      (press)="onSubmit()"
-      [size]="size"
-      type="filled-primary"
-    >Создать заявку
-    </mib-button
-    >
+    <mib-button [disabled]="form.invalid" [loading]="!!(isSubmitting$ | async)" (press)="onSubmit()" [size]="size"
+                type="filled-primary">
+      {{isEditing ? 'Сохранить заявку' : 'Создать заявку'}}
+    </mib-button>
   </mib-drawer-footer>
 </mib-drawer>

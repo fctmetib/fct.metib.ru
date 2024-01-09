@@ -66,7 +66,10 @@ export class RequestsService {
 	}
 
 	public update(requestID: number, data: Partial<RequestReq>): Observable<number[]> {
-		return this.http.post<number[]>(`${environment.apiUrl}/v1/requests/${requestID}`, data)
+		return this.http.put<number[]>(`${environment.apiUrl}/v1/requests`, {
+      ...data,
+      ID: requestID
+    })
 	}
 
 	public uploadDocument(

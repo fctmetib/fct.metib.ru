@@ -41,7 +41,9 @@ export class DropdownPointComponent implements AfterViewInit {
     return this.selectComponent?.matchOption(this.value)
   }
 
-  select(): void {
+  select($event: Event): void {
+    $event.stopPropagation()
+    $event.preventDefault()
     this.press.emit()
     if (this._showCheckbox) this.control.setValue(!this.control.value)
     this.selectComponent?.selectOption(this);

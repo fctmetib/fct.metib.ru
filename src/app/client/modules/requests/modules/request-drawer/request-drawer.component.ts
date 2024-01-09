@@ -18,6 +18,7 @@ import {RequestsService} from '../../services/requests.service';
 import {FormsPresetsService} from '../../../../../shared/services/forms-presets.service';
 import {extractBase64, ToolsService} from '../../../../../shared/services/tools.service';
 import {Drawer} from '../../../../../shared/ui-kit/drawer/drawer.class';
+import {DatesService} from '../../../../../shared/services/dates.service';
 
 @Component({
   selector: 'mib-request-drawer',
@@ -47,9 +48,10 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
     private authService: AuthService,
     private au: AutoUnsubscribeService,
     private formsPresetsService: FormsPresetsService,
-    private toolsService: ToolsService
+    private datesService: DatesService,
+    private toolsService: ToolsService,
   ) {
-    super()
+    super(data)
   }
 
   public deliveryIdControl = new FormControl(null, [Validators.required])
@@ -75,19 +77,14 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
     return this.form.get('Delivery') as FormControl
   }
 
-  get isEditing() {
-    return this.data.state === 'edit'
-  }
-
   ngOnInit() {
     this.initForms()
     this.watchForms()
 
-    this.state = this.data.state
-
     this.existingRequest = this.data.data
     if (this.existingRequest) {
-      this.form.patchValue(this.existingRequest)
+      this.deliveryIdControl.setValue(this.existingRequest?.Delivery?.ID)
+      this.form.patchValue(this.datesService.convertDatesInObjectToInput(this.existingRequest))
       this.existingRequest?.Shipments?.forEach(shipment => this.addShipment(shipment))
       this.existingRequest?.Documents?.forEach(document => this.addDocument(document))
     }
@@ -167,25 +164,27 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
     if (shipments.length > 0) {
       defer(() => {
         if (this.isEditing && this.existingRequest) {
-          return this.requestsService.update(this.existingRequest.ID, request)
+          const {Documents, ...data} = request
+          return this.requestsService.update(this.existingRequest.ID, data)
         } else {
-          return this.requestsService.create(request)
+          return this.requestsService.create(request).pipe(
+            switchMap(result => {
+              if (documents.length > 0) {
+                const uploadObservables = documents.map(document => {
+                  const requestId = result[0]
+                  const modifiedDocument: Document = {
+                    ...document,
+                    OwnerID: requestId
+                  }
+                  return this.requestsService.uploadDocument(modifiedDocument, requestId, DocumentType.CUSTOMER_REQUEST_SCAN);
+                });
+                return forkJoin(uploadObservables);
+              }
+              return of(result);
+            }),
+          )
         }
       }).pipe(
-        switchMap(result => {
-          if (documents.length > 0) {
-            const uploadObservables = documents.map(document => {
-              const requestId = result[0]
-              const modifiedDocument: Document = {
-                ...document,
-                OwnerID: requestId
-              }
-              return this.requestsService.uploadDocument(modifiedDocument, requestId, DocumentType.CUSTOMER_REQUEST_SCAN);
-            });
-            return forkJoin(uploadObservables);
-          }
-          return of(result);
-        }),
         finalize(() => {
           this.dialogRef.close()
           this.isSubmitting$.next(false)

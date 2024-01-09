@@ -190,31 +190,6 @@ export class ToolsService {
     return megabytes.toFixed(1) + ' MB';
   }
 
-  convertDatesInObjectToInput(obj: any): any {
-    if (typeof obj === 'object' && obj !== null) {
-      if (Array.isArray(obj)) {
-        return obj.map((item) => this.convertDatesInObjectToInput(item));
-      } else {
-        const convertedObj: any = {};
-        for (const key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            convertedObj[key] = this.convertDatesInObjectToInput(obj[key]);
-          }
-        }
-        return convertedObj;
-      }
-    } else if (typeof obj === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(obj)) {
-      const date = new Date(obj);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    } else {
-      return obj;
-    }
-  }
-
-
   formatNumber(num: number): string {
     return num.toString().padStart(2, '0');
   }

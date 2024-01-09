@@ -81,17 +81,15 @@ export class RequestBrowserDrawerComponent extends Drawer implements OnInit {
 		private requestBrowserDrawerService: RequestBrowserDrawerService,
 		private requestDrawerService: RequestDrawerService,
 		private correctionModalService: RequestCorrectionModalService
-	) {
-		super()
-	}
-
-	ngOnInit(): void {
+	  ) {
+		super(data)
+	  }
+	
+	  ngOnInit(): void {
 		this.currentRequestId = this.data?.data?.requestId
 		this.getCurrentRequest()
-		this.state = this.data.state
-		this.getCurrentStates()
-	}
-
+	  }
+	  
 	get request() {
 		return this.requestBrowserDrawerService.request
 	}

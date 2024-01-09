@@ -21,6 +21,7 @@ import {TableComponent} from '../../../../../shared/ui-kit/table/table.component
 import {RequestRes} from '../../interfaces/request.interface';
 import {SignService} from '../../../../../shared/services/share/sign.service';
 import {SignPinModalService} from '../../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service';
+import {DatesService} from '../../../../../shared/services/dates.service';
 
 @Component({
   selector: 'app-requests-page',
@@ -60,6 +61,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
   constructor(
     public toolsService: ToolsService,
+    private datesService: DatesService,
     private requestsService: RequestsService,
     private requestDrawerService: RequestDrawerService,
     private requestBrowserDrawerService: RequestBrowserDrawerService,
@@ -75,10 +77,11 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const {dateFrom, dateTo} = this.toolsService.convertDatesInObjectToInput({
+    const {dateFrom, dateTo} = this.datesService.convertDatesInObjectToInput({
       dateFrom: this.toolsService.subtractFromDate(new Date(), {days: 14}).toISOString(),
       dateTo: new Date().toISOString()
     })
+    console.log(dateTo, dateFrom)
     this.dateFrom.setValue(dateFrom)
     this.dateTo.setValue(dateTo)
 
@@ -109,25 +112,10 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   }
 
   openDrawer() {
-    this.requestDrawerService.open({
-      state: DrawerStateEnum.CREATE
-    })
-      .afterClosed()
-      .pipe(
-        filter(Boolean),
-        tap(() => {
-          forkJoin(
-            this.selectedRequests.map(request => this.tableRowAnimationService.animateRowAndAwaitCompletion(request.ID).pipe(
-              tap(() => {
-                this.removeRequestById(request.ID);
-              })
-            ))
-          ).pipe(
-            finalize(() => this.onPageChange(this.currentPage$.value))
-          ).subscribe()
-        })
-      )
-      .subscribe()
+    this.requestDrawerService.open({state: DrawerStateEnum.CREATE}).afterClosed().pipe(
+      filter(Boolean),
+      switchMap(() => this.loadRequestsData())
+    ).subscribe()
   }
 
   removeRequestById(id: number) {
