@@ -16,13 +16,12 @@ export class CommentPanelComponent {
 	@Input() showTitle: boolean = true
 	@Input() showAvatar: boolean = true
 	@Input() showHead: boolean = true
+	@Input() data: {}
 
-	Avatar = './assets/images/user-avatar.jpg'
-	user = {Name: 'Назаров Егор Михайлович', Date: '2024-01-08T09:03:06.693Z'}
+	// Avatar = './assets/images/user-avatar.jpg'
+	// user = {Name: 'Назаров Егор Михайлович', Date: '2024-01-08T09:03:06.693Z'}
 
-	get getUserAvatar() {
-		console.log('Avatar :>> ', this.Avatar)
-		console.log('user.Name :>> ', this.user.Name)
-		return this.Avatar
-	}
+	// get getUserAvatar() {
+	// 	return this.Avatar
+	// }
 }

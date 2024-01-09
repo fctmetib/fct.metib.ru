@@ -1,154 +1,223 @@
 <mib-drawer>
-  <mib-drawer-header [showEdits]="!request?.ReadOnly" (onEdit)="onEdit()" (onClose)="dialogRef.close()"
-                     drawer-header></mib-drawer-header>
-  <mib-drawer-container>
-    <ng-container *ngIf="loading$ | async; else title">
-      <mib-skeleton [styles]="skeletonTitle" *ngFor="let i of [1]"></mib-skeleton>
-    </ng-container>
-    <ng-template #title>
-      <h4>Номер заявки: {{ request?.Number }}</h4>
-      <mib-spacing type="xs2"></mib-spacing>
-      <div class="flex gap-4">
-        <span class="text text_m c-bti-secondary">Создана {{ request?.Date | date }}</span>
-        <span class="text text_m c-bti-quaternary">откорректирована {{ request?.Date | date }}</span>
-      </div>
-    </ng-template>
-    <mib-spacing type="xs"></mib-spacing>
-    <ng-container *ngIf="loading$ | async; else tags">
-      <mib-skeleton [styles]="skeletonTags" *ngFor="let i of [1]"></mib-skeleton>
-    </ng-container>
-    <ng-template #tags>
-      <div class="flex gap-8">
-        <mib-tag size="m">{{ request?.Status }}</mib-tag>
-        <mib-tag type="filled-secondary" class="text_regular"
-                 size="m">{{requestsService.getRequestTypeTranslation(request?.Type)}}</mib-tag>
-      </div>
-    </ng-template>
-    <mib-spacing type="xs"></mib-spacing>
-    <!--  <mib-skeleton *ngIf="loading$ | async; else cashPanel" [styles]="skeletonCashPanel"></mib-skeleton>-->
-    <!--  <ng-template #cashPanel>-->
-    <!--    <mib-cash-panel extracted="true" panelTitle="Ваш лимит:" [panelData]="0"></mib-cash-panel>-->
-    <!--    <mib-spacing type="xs"></mib-spacing>-->
-    <!--    <mib-cash-panel extracted="true" panelTitle="Уступлено:" [panelData]="concededSum"></mib-cash-panel>-->
-    <!--    <mib-spacing type="xs"></mib-spacing>-->
-    <!--    <mib-cash-panel extracted="true" panelTitle="Просрочка:">-->
-    <!--      <ng-container alert>{{ overdueSum | rub }}</ng-container>-->
-    <!--    </mib-cash-panel>-->
-    <!--  </ng-template>-->
-    <!--  <mib-spacing type="m"></mib-spacing>-->
-    <mib-skeleton *ngIf="loading$ | async" [styles]="skeletonTabGroup"></mib-skeleton>
-  </mib-drawer-container>
+	<mib-drawer-header
+		[showEdits]="!request?.ReadOnly"
+		(onEdit)="onEdit()"
+		(onClose)="dialogRef.close()"
+		drawer-header
+	></mib-drawer-header>
+	<mib-drawer-container>
+		<ng-container *ngIf="loading$ | async; else title">
+			<mib-skeleton
+				[styles]="skeletonTitle"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #title>
+			<h4>Номер заявки: {{ request?.Number }}</h4>
+			<mib-spacing type="xs2"></mib-spacing>
+			<div class="flex gap-4">
+				<span class="text text_m c-bti-secondary"
+					>Создана {{ request?.Date | date }}</span
+				>
+				<span class="text text_m c-bti-quaternary"
+					>откорректирована {{ request?.Date | date }}</span
+				>
+			</div>
+		</ng-template>
+		<mib-spacing type="xs"></mib-spacing>
+		<ng-container *ngIf="loading$ | async; else tags">
+			<mib-skeleton
+				[styles]="skeletonTags"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #tags>
+			<div class="flex gap-8">
+				<mib-tag size="m">{{ request?.Status }}</mib-tag>
+				<mib-tag type="filled-secondary" class="text_regular" size="m">{{
+					requestsService.getRequestTypeTranslation(request?.Type)
+				}}</mib-tag>
+			</div>
+		</ng-template>
+		<mib-spacing type="xs"></mib-spacing>
+		<!--  <mib-skeleton *ngIf="loading$ | async; else cashPanel" [styles]="skeletonCashPanel"></mib-skeleton>-->
+		<!--  <ng-template #cashPanel>-->
+		<!--    <mib-cash-panel extracted="true" panelTitle="Ваш лимит:" [panelData]="0"></mib-cash-panel>-->
+		<!--    <mib-spacing type="xs"></mib-spacing>-->
+		<!--    <mib-cash-panel extracted="true" panelTitle="Уступлено:" [panelData]="concededSum"></mib-cash-panel>-->
+		<!--    <mib-spacing type="xs"></mib-spacing>-->
+		<!--    <mib-cash-panel extracted="true" panelTitle="Просрочка:">-->
+		<!--      <ng-container alert>{{ overdueSum | rub }}</ng-container>-->
+		<!--    </mib-cash-panel>-->
+		<!--  </ng-template>-->
+		<!--  <mib-spacing type="m"></mib-spacing>-->
+		<mib-skeleton
+			*ngIf="loading$ | async"
+			[styles]="skeletonTabGroup"
+		></mib-skeleton>
+	</mib-drawer-container>
 
-  <mib-tab-group *ngIf="!(loading$ | async)">
-    <mib-navbar>
-      <mib-navbar-point value="1">События</mib-navbar-point>
-      <mib-navbar-point value="2">Поставки</mib-navbar-point>
-      <mib-navbar-point value="3">Копии накладных</mib-navbar-point>
-    </mib-navbar>
-    <mib-drawer-container>
-      <div>
-        <ng-container *ngIf="loading$ | async; else tabItems">
-          <mib-skeleton
-            *ngFor="let i of [1,1,1,1,1,1]; let last = last"
-            [styles]="last ? skeletonWithoutUnderline : skeleton"
-          ></mib-skeleton>
-        </ng-container>
-        <ng-template #tabItems>
-          <mib-tab-item value="1">
-            <mib-spacing type="m"></mib-spacing>
-            <h2>События</h2>
-            <mib-spacing type="m"></mib-spacing>
-          </mib-tab-item>
-          <mib-tab-item value="2">
-            <mib-spacing type="m"></mib-spacing>
-            <div class="flex flex_justify-between">
-              <mib-button [disabled]="request.IsCorrected"
-                          [matTooltip]="request.IsCorrected ? 'Заявка не доступна для коррекции' : ''"
-                          (press)="openCorrectionModal()" type="filled-primary">
-                <mib-icon btn-left-icon class="stroke" name="fi_edit"></mib-icon>
-                Создать коррекцию
-              </mib-button>
-            </div>
-            <mib-spacing type="xs"></mib-spacing>
-            <mib-table>
-              <mib-table-head>
-                <mib-table-head-cell>ИД</mib-table-head-cell>
-                <mib-table-head-cell>Дата поставки</mib-table-head-cell>
-                <mib-table-head-cell>Дата платежа</mib-table-head-cell>
-                <mib-table-head-cell>Сумма уступки</mib-table-head-cell>
-              </mib-table-head>
-              <mib-table-row *ngFor="let shipment of shipmentsDisplay">
-                <mib-table-cell>
-                  <ng-container table-cell-title>{{shipment?.ID}}</ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title>{{shipment?.AccountDate}}</ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title>{{shipment?.DatePayment}}</ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container
-                    table-cell-title>{{shipment?.Summ | currency : 'RUB' : 'symbol-narrow'}}</ng-container>
-                </mib-table-cell>
-                <mib-button table-row-button size="s" type="ghost-secondary">
-                  <mib-icon
-                    class="stroke"
-                    btn-icon
-                    name="fi_more-vertical"
-                  ></mib-icon>
-                </mib-button>
-              </mib-table-row>
-              <mib-table-footer [lined]="!(loading$ | async)">
-                <mib-paginator
-                  (pageChange)="onShipmentsPageChange($event)"
-                  [totalCount]="shipments?.length"
-                  [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-                  [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
-                ></mib-paginator>
-              </mib-table-footer>
-            </mib-table>
-          </mib-tab-item>
-          <mib-tab-item value="3">
-            <mib-spacing type="m"></mib-spacing>
-            <mib-table>
-              <mib-table-head>
-                <mib-table-head-cell [showCheckbox]="true">№</mib-table-head-cell>
-                <mib-table-head-cell>Имя файла</mib-table-head-cell>
-                <mib-table-head-cell>Описание</mib-table-head-cell>
-                <mib-table-head-cell>Тип документа</mib-table-head-cell>
-              </mib-table-head>
-              <mib-table-row *ngFor="let document of documentsDisplay; let idx = index">
-                <mib-table-cell type="main">
-                  <ng-container table-cell-title>{{ idx + 1 }}</ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title>{{document.Title}}</ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title>{{document.Description}}</ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title>{{document.DocumentTypeID}}</ng-container>
-                </mib-table-cell>
-                <mib-button table-row-button size="s" type="ghost-secondary">
-                  <mib-icon class="stroke" btn-icon name="fi_more-vertical"></mib-icon>
-                </mib-button>
-
-              </mib-table-row>
-              <mib-table-footer [lined]="!(loading$ | async)">
-                <mib-paginator
-                  (pageChange)="onDocumentsPageChange($event)"
-                  [totalCount]="documents?.length"
-                  [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-                  [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
-                ></mib-paginator>
-              </mib-table-footer>
-            </mib-table>
-          </mib-tab-item>
-        </ng-template>
-      </div>
-    </mib-drawer-container>
-  </mib-tab-group>
-
+	<mib-tab-group *ngIf="!(loading$ | async)">
+		<mib-navbar>
+			<mib-navbar-point value="1">События</mib-navbar-point>
+			<mib-navbar-point value="2">Поставки</mib-navbar-point>
+			<mib-navbar-point value="3">Копии накладных</mib-navbar-point>
+		</mib-navbar>
+		<mib-drawer-container>
+			<div>
+				<ng-container *ngIf="loading$ | async; else tabItems">
+					<mib-skeleton
+						*ngFor="let i of [1, 1, 1, 1, 1, 1]; let last = last"
+						[styles]="last ? skeletonWithoutUnderline : skeleton"
+					></mib-skeleton>
+				</ng-container>
+				<ng-template #tabItems>
+					<mib-tab-item value="1">
+						<mib-spacing type="xs"></mib-spacing>
+						<mib-comment-panel *ngFor="let comment of comments">
+							<ng-container comment-panel-avatar>
+								<!-- TODO-TADAM -->
+								<mib-avatar
+									[showImage]="true"
+									[showArrow]="false"
+									type="round"
+									[src]="comment?.Author === '  Robot' ? Robot : Avatar"
+								>
+								</mib-avatar>
+							</ng-container>
+							<ng-container comment-panel-author>{{
+								comment?.Author === 'Robot' ? Robot : comment?.Author
+							}}</ng-container>
+							<ng-container comment-panel-date>
+								{{ comment?.Date | date : 'dd.MM.YYYY' }} </ng-container
+							>
+							<ng-container comment-panel-content>
+								<mib-spacing type="xs"></mib-spacing>
+								<span class="text name text_m c-bti-primary">
+									{{ comment?.PublicTitle }}
+								</span>
+							</ng-container>
+						</mib-comment-panel>
+						<mib-spacing type="m"></mib-spacing>
+					</mib-tab-item>
+					<mib-tab-item value="2">
+						<mib-spacing type="m"></mib-spacing>
+						<div class="flex flex_justify-between">
+							<mib-button
+								[disabled]="request.IsCorrected"
+								[matTooltip]="
+									request.IsCorrected ? 'Заявка не доступна для коррекции' : ''
+								"
+								(press)="openCorrectionModal()"
+								type="filled-primary"
+							>
+								<mib-icon
+									btn-left-icon
+									class="stroke"
+									name="fi_edit"
+								></mib-icon>
+								Создать коррекцию
+							</mib-button>
+						</div>
+						<mib-spacing type="xs"></mib-spacing>
+						<mib-table>
+							<mib-table-head>
+								<mib-table-head-cell>ИД</mib-table-head-cell>
+								<mib-table-head-cell>Дата поставки</mib-table-head-cell>
+								<mib-table-head-cell>Дата платежа</mib-table-head-cell>
+								<mib-table-head-cell>Сумма уступки</mib-table-head-cell>
+							</mib-table-head>
+							<mib-table-row *ngFor="let shipment of shipmentsDisplay">
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										shipment?.ID
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										shipment?.AccountDate
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										shipment?.DatePayment
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										shipment?.Summ | currency : 'RUB' : 'symbol-narrow'
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-button table-row-button size="s" type="ghost-secondary">
+									<mib-icon
+										class="stroke"
+										btn-icon
+										name="fi_more-vertical"
+									></mib-icon>
+								</mib-button>
+							</mib-table-row>
+							<mib-table-footer [lined]="!(loading$ | async)">
+								<mib-paginator
+									(pageChange)="onShipmentsPageChange($event)"
+									[totalCount]="shipments?.length"
+									[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+									[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+								></mib-paginator>
+							</mib-table-footer>
+						</mib-table>
+					</mib-tab-item>
+					<mib-tab-item value="3">
+						<mib-spacing type="m"></mib-spacing>
+						<mib-table>
+							<mib-table-head>
+								<mib-table-head-cell [showCheckbox]="true"
+									>№</mib-table-head-cell
+								>
+								<mib-table-head-cell>Имя файла</mib-table-head-cell>
+								<mib-table-head-cell>Описание</mib-table-head-cell>
+								<mib-table-head-cell>Тип документа</mib-table-head-cell>
+							</mib-table-head>
+							<mib-table-row
+								*ngFor="let document of documentsDisplay; let idx = index"
+							>
+								<mib-table-cell type="main">
+									<ng-container table-cell-title>{{ idx + 1 }}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										document.Title
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										document.Description
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										document.DocumentTypeID
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-button table-row-button size="s" type="ghost-secondary">
+									<mib-icon
+										class="stroke"
+										btn-icon
+										name="fi_more-vertical"
+									></mib-icon>
+								</mib-button>
+							</mib-table-row>
+							<mib-table-footer [lined]="!(loading$ | async)">
+								<mib-paginator
+									(pageChange)="onDocumentsPageChange($event)"
+									[totalCount]="documents?.length"
+									[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+									[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+								></mib-paginator>
+							</mib-table-footer>
+						</mib-table>
+					</mib-tab-item>
+				</ng-template>
+			</div>
+		</mib-drawer-container>
+	</mib-tab-group>
 </mib-drawer>

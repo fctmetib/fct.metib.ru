@@ -2,19 +2,21 @@
 	<div *ngIf="showHead" class="header flex flex_column">
 		<div class="flex flex_align-center">
 			<div class="flex gap-4 flex_grow">
-				<ng-container *ngIf="showAvatar">
-					<mib-avatar
-						type="round"
-						[showArrow]="false"
-						[src]="getUserAvatar"
-						[showImage]="true"
-					></mib-avatar>
-				</ng-container>
+				<ng-content select="[comment-panel-avatar]" *ngIf="showAvatar">
+					<!-- TODA-TADAM -->
+					<!-- type="round"
+					[showArrow]="false"
+					[src]="getUserAvatar"
+					[showImage]="true" -->
+					<!-- <mib-avatar></mib-avatar> -->
+				</ng-content>
+				<!-- {{ user?.Name ?? 'Отсутствует' }}  -->
 				<span class="text name text_m text_medium c-bti-primary">
-					{{ user?.Name ?? 'Отсутствует' }} 
+					<ng-content select="[comment-panel-author]"> </ng-content>
 				</span>
+				<!-- {{ user?.Date | date : 'dd.MM.YYYY' }}  -->
 				<span class="text name text_m c-bti-primary">
-					{{ user?.Date | date : 'dd.MM.YYYY' }} 
+					<ng-content select="[comment-panel-date]"> </ng-content>
 				</span>
 			</div>
 			<div *ngIf="showActions" class="flex gap-4">
@@ -32,5 +34,11 @@
 		</div>
 		<mib-spacing type="xs2"></mib-spacing>
 	</div>
-	<div class="body flex flex_column">content</div>
+	<div class="body flex flex_column">
+		<ng-content select="[comment-panel-content]"></ng-content>
+	</div>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="flex">
+		<ng-content select="[comment-panel-link]"></ng-content>
+	</div>
 </div>
