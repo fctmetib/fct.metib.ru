@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core'
+import {RequestState} from '../../../client/modules/requests/interfaces/request.interface';
 
 @Component({
 	selector: 'mib-comment-panel',
@@ -6,22 +7,25 @@ import {Component, Input} from '@angular/core'
 	styleUrls: ['./comment-panel.component.scss']
 })
 export class CommentPanelComponent {
-	@Input() textExtention: boolean = false
 	@Input() extracted: boolean = false
 	@Input() showActions: boolean = true
-	@Input() showText: boolean = true
 	@Input() showLink: boolean = true
 	@Input() showAttached: boolean = true
 	@Input() file: boolean = true
 	@Input() showTitle: boolean = true
 	@Input() showAvatar: boolean = true
 	@Input() showHead: boolean = true
-	@Input() data: {}
+	@Input() data: RequestState
 
-	// Avatar = './assets/images/user-avatar.jpg'
-	// user = {Name: 'Назаров Егор Михайлович', Date: '2024-01-08T09:03:06.693Z'}
+  public robotAvatar = './assets/images/robot.svg'
 
-	// get getUserAvatar() {
-	// 	return this.Avatar
-	// }
+  public isTextExtended: boolean = false;
+
+  get isRobot() {
+    return this.data?.Author === '  Robot'
+  }
+
+  toggleTextExtension() {
+    this.isTextExtended = !this.isTextExtended;
+  }
 }

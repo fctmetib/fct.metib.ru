@@ -14,156 +14,146 @@ import {Drawer} from '../../../../../shared/ui-kit/drawer/drawer.class'
 import {RequestDrawerService} from '../request-drawer/request-drawer.service'
 
 @Component({
-	selector: 'mib-request-browser-drawer',
-	templateUrl: './request-browser-drawer.component.html',
-	styleUrls: ['./request-browser-drawer.component.scss']
+  selector: 'mib-request-browser-drawer',
+  templateUrl: './request-browser-drawer.component.html',
+  styleUrls: ['./request-browser-drawer.component.scss']
 })
 export class RequestBrowserDrawerComponent extends Drawer implements OnInit {
-	public loading$ = new BehaviorSubject<boolean>(false)
+  public loading$ = new BehaviorSubject<boolean>(false)
 
-	public skeletonWithoutUnderline: Properties = {
-		borderRadius: '8px',
-		width: '100%'
-	}
+  public skeletonWithoutUnderline: Properties = {
+    borderRadius: '8px',
+    width: '100%'
+  }
 
-	public skeletonTitle: Properties = {
-		...this.skeletonWithoutUnderline,
-		height: '60px'
-	}
+  public skeletonTitle: Properties = {
+    ...this.skeletonWithoutUnderline,
+    height: '60px'
+  }
 
-	public skeletonTags: Properties = {
-		...this.skeletonWithoutUnderline,
-		height: '34px'
-	}
+  public skeletonTags: Properties = {
+    ...this.skeletonWithoutUnderline,
+    height: '34px'
+  }
 
-	public skeletonCashPanel: Properties = {
-		...this.skeletonWithoutUnderline,
-		height: '170px'
-	}
+  public skeletonCashPanel: Properties = {
+    ...this.skeletonWithoutUnderline,
+    height: '170px'
+  }
 
-	public skeletonTabGroup: Properties = {
-		...this.skeletonWithoutUnderline,
-		height: '271px'
-	}
+  public skeletonTabGroup: Properties = {
+    ...this.skeletonWithoutUnderline,
+    height: '271px'
+  }
 
-	public skeleton: Properties = {
-		...this.skeletonWithoutUnderline,
-		borderBottom: '1px solid var(--wgr-tertiary)'
-	}
+  public skeleton: Properties = {
+    ...this.skeletonWithoutUnderline,
+    borderBottom: '1px solid var(--wgr-tertiary)'
+  }
 
-	public PAGINATOR_ITEMS_PER_PAGE = 5
-	public PAGINATOR_PAGE_TO_SHOW = 5
-	public currentPage$ = new BehaviorSubject<number>(1)
+  public PAGINATOR_ITEMS_PER_PAGE = 5
+  public PAGINATOR_PAGE_TO_SHOW = 5
+  public currentPage$ = new BehaviorSubject<number>(1)
 
-	public currentRequestId?: number
+  public concededSum: number = 0
+  public overdueSum: number = 0
 
-	public concededSum: number = 0
-	public overdueSum: number = 0
+  public shipments: Shipment[] = []
+  public shipmentsDisplay: Shipment[] = []
 
-	public shipments: Shipment[] = []
-	public shipmentsDisplay: Shipment[] = []
+  public documents: Document[] = []
+  public documentsDisplay: Document[] = []
 
-	public documents: Document[] = []
-	public documentsDisplay: Document[] = []
+  public freeLimit: number = 0
 
-	public freeLimit: number = 0
+  public requestStates: RequestState[] = []
 
-	comments: RequestState[] = []
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DrawerData<RequestBrowserDrawer>,
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<RequestBrowserDrawerComponent>,
+    public requestsService: RequestsService,
+    private requestBrowserDrawerService: RequestBrowserDrawerService,
+    private requestDrawerService: RequestDrawerService,
+    private correctionModalService: RequestCorrectionModalService
+  ) {
+    super(data)
+  }
 
-	Avatar = './assets/images/user-avatar.jpg'
-	Robot = './assets/images/robot.svg'
+  ngOnInit(): void {
+    this.getCurrentRequest()
+  }
 
-	constructor(
-		@Inject(MAT_DIALOG_DATA) public data: DrawerData<RequestBrowserDrawer>,
-		private fb: FormBuilder,
-		public dialogRef: MatDialogRef<RequestBrowserDrawerComponent>,
-		public requestsService: RequestsService,
-		private requestBrowserDrawerService: RequestBrowserDrawerService,
-		private requestDrawerService: RequestDrawerService,
-		private correctionModalService: RequestCorrectionModalService
-	  ) {
-		super(data)
-	  }
-	
-	  ngOnInit(): void {
-		this.currentRequestId = this.data?.data?.requestId
-		this.getCurrentRequest()
-	  }
-	  
-	get request() {
-		return this.requestBrowserDrawerService.request
-	}
+  get requestId() {
+    return this.data.data.requestId
+  }
 
-	getCurrentRequest() {
-		this.loading$.next(true)
-		this.requestsService
-			.getRequest(this.currentRequestId)
-			.pipe(
-				tap(data => {
-					this.requestBrowserDrawerService.request$.next(data)
-					this.shipments = data.Shipments
-					this.documents = data.Documents
-					this.onShipmentsPageChange(1)
-					this.onDocumentsPageChange(1)
+  get request() {
+    return this.requestBrowserDrawerService.request
+  }
 
-					// this.concededSumm = data.Shipments.filter(x => x.).reduce(())
-				}),
-				switchMap(response =>
-					this.requestsService.getFreeLimit(response.Delivery.ID)
-				),
-				tap(limit => {
-					this.freeLimit = limit
-				}),
-				finalize(() => {
-					this.loading$.next(false)
-				})
-			)
-			.subscribe()
-	}
+  getCurrentRequest() {
+    this.loading$.next(true)
+    this.requestsService.getRequest(this.requestId).pipe(
+      tap(data => {
+        this.requestBrowserDrawerService.request$.next(data)
+        this.shipments = data.Shipments
+        this.documents = data.Documents
+        this.onShipmentsPageChange(1)
+        this.onDocumentsPageChange(1)
 
-	onPageChange<T>(page: number, sourceArray: T[] = []) {
-		this.currentPage$.next(page)
+        // this.concededSumm = data.Shipments.filter(x => x.).reduce(())
+      }),
+      switchMap(response => this.requestsService.getFreeLimit(response.Delivery.ID).pipe(tap(limit => this.freeLimit = limit),)),
+      switchMap(() => this.getCurrentStates()),
+      finalize(() => {
+        this.loading$.next(false)
+      })
+    ).subscribe()
+  }
 
-		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
-		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+  onPageChange<T>(page: number, sourceArray: T[] = []) {
+    this.currentPage$.next(page)
 
-		return (sourceArray || []).slice(startIndex, endIndex)
-	}
+    const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+    const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
 
-	onShipmentsPageChange($event) {
-		this.shipmentsDisplay = this.onPageChange($event, this.shipments)
-	}
+    return (sourceArray || []).slice(startIndex, endIndex)
+  }
 
-	onDocumentsPageChange($event: number) {
-		this.documentsDisplay = this.onPageChange($event, this.documents)
-	}
+  onShipmentsPageChange($event) {
+    this.shipmentsDisplay = this.onPageChange($event, this.shipments)
+  }
 
-	getCurrentStates() {
-		this.requestsService.getStates(this.currentRequestId).subscribe({
-			next: state => {
-				this.comments = state
-				console.log('this.comments :>> ', this.comments)
-			}
-		})
-	}
+  onDocumentsPageChange($event: number) {
+    this.documentsDisplay = this.onPageChange($event, this.documents)
+  }
 
-	openCorrectionModal() {
-		this.correctionModalService
-			.open(this.shipmentsDisplay)
-			.afterClosed()
-			.pipe(
-				filter(Boolean),
-				tap(boolean => {
-					this.dialogRef.close(boolean)
-				})
-			)
-			.subscribe()
-	}
+  getCurrentStates() {
+    return this.requestsService.getStates(this.requestId).pipe(
+      tap(states => {
+        this.requestStates = states
+        console.log('this.comments :>> ', this.requestStates)
+      })
+    )
+  }
 
-	onEdit() {
-		this.requestDrawerService.open({
-			state: 'edit',
-			data: this.request
-		})
-	}
+  openCorrectionModal() {
+    this.correctionModalService
+      .open(this.shipmentsDisplay)
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        tap(boolean => {
+          this.dialogRef.close(boolean)
+        })
+      ).subscribe()
+  }
+
+  onEdit() {
+    this.requestDrawerService.open({
+      state: 'edit',
+      data: this.request
+    })
+  }
 }
