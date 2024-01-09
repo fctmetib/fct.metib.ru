@@ -3,7 +3,7 @@
     <div class="flex flex_align-center">
       <div class="flex gap-8">
         <mib-avatar *ngIf="showAvatar" [showImage]="true" [showArrow]="false" type="round"
-                    [src]="isRobot ? robotAvatar : robotAvatar"></mib-avatar>
+                    [src]="isRobot ? robotAvatar : userAvatar"></mib-avatar>
         <div class="flex gap-4">
           <p class="text name text_m text_medium c-bti-primary">{{isRobot ? 'Robot' : data.Author}}</p>
           <p class="text name text_m c-bti-primary">{{ data.Date | date : 'dd.MM.YYYY' }}</p>

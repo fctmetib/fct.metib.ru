@@ -18,6 +18,7 @@ export class CommentPanelComponent {
 	@Input() data: RequestState
 
   public robotAvatar = './assets/images/robot.svg'
+  public userAvatar = './assets/images/user-avatar.jpg'
 
   public isTextExtended: boolean = false;
 
