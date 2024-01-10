@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core'
 import {InputSize} from '../../ui-kit/input/interfaces/input.interface'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {NewShipmentModalService} from '../modals/new-shipment-modal/new-shipment-modal.service'
-import {RequestCreateSuccessModalService} from 'src/app/client/modules/requests/modules/request-create-success-modal/request-create-success-modal.service'
+import {RequestCreateSuccessModalService} from '../modals/request-create-success-modal/request-create-success-modal.service'
 import {RequestInfoModalService} from '../modals/request-info-modal/request-info-modal.service'
 import {RequestFailureModalService} from '../modals/request-failure-modal/request-failure-modal.service'
 
