@@ -20,6 +20,8 @@ import {ModalModule} from '../../ui-kit/modal/modal.module'
 import {NewShipmentModalModule} from '../modals/new-shipment-modal/new-shipment-modal.module'
 import {RequestCreateSuccessModalModule} from 'src/app/client/modules/requests/modules/request-create-success-modal/request-create-success-modal.module'
 import {CommentPanelModule} from '../../ui-kit/comment-panel/comment-panel.module'
+import {RequestFailureModalModule} from '../modals/request-failure-modal/request-failure-modal.module'
+import {RequestInfoModalModule} from '../modals/request-info-modal/request-info-modal.module'
 
 @NgModule({
 	imports: [
@@ -43,7 +45,9 @@ import {CommentPanelModule} from '../../ui-kit/comment-panel/comment-panel.modul
 		ModalModule,
 		NewShipmentModalModule,
 		RequestCreateSuccessModalModule,
-		CommentPanelModule
+		CommentPanelModule,
+		RequestFailureModalModule,
+		RequestInfoModalModule
 	],
 	declarations: [MibUiComponent]
 })

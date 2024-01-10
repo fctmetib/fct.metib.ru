@@ -156,6 +156,20 @@ ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
  ng g s shared/modules/modals/pin-modal/pin-modal --flat --skip-tests --dry-run
  //---
 
+ //--- request-failure-modal
+ src\app\shared\modules\modals\request-failure-modal
+ ng g m shared/modules/modals/request-failure-modal/request-failure-modal --flat --dry-run
+ ng g s shared/modules/modals/request-failure-modal/request-failure-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/request-failure-modal/request-failure-modal --flat --skip-tests --dry-run
+ //---
+
+ //--- request-info-modal
+ src\app\shared\modules\modals\request-info-modal
+ ng g m shared/modules/modals/request-info-modal/request-info-modal --flat --dry-run
+ ng g s shared/modules/modals/request-info-modal/request-info-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/request-info-modal/request-info-modal --flat --skip-tests --dry-run
+ //---
+
 // add m
 ng g m shared/ui-kit/input --dry-run
 ng g m shared/ui-kit/badge --dry-run

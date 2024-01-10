@@ -1276,7 +1276,7 @@
 <div *ngIf="isModal" style="margin-bottom: 10rem" class="wrapper">
 	<div class="">
 		<h5>modal: success</h5>
-		<mib-modal>
+		<!-- <mib-modal>
 			<mib-modal-header title="Запрос отправлен"> </mib-modal-header>
 			<mib-spacing type="xs"></mib-spacing>
 			<mib-banner-modal type="success"></mib-banner-modal>
@@ -1296,10 +1296,13 @@
 					</mib-button>
 				</ng-container>
 			</mib-modal-footer>
-		</mib-modal>
+		</mib-modal> -->
 		<mib-spacing type="m"></mib-spacing>
 		<h5>modal: fail</h5>
-		<mib-modal>
+		<mib-button (click)="openRequestFailureModal()" type="filled-primary">
+			req-fail-modal
+		</mib-button>
+		<!-- <mib-modal>
 			<mib-modal-header title="Что-то пошло не так..."> </mib-modal-header>
 			<mib-spacing type="xs"></mib-spacing>
 			<mib-banner-modal type="fail"></mib-banner-modal>
@@ -1319,10 +1322,13 @@
 					</mib-button>
 				</ng-container>
 			</mib-modal-footer>
-		</mib-modal>
+		</mib-modal> -->
 		<mib-spacing type="m"></mib-spacing>
 		<h5>modal: info</h5>
-		<mib-modal>
+		<mib-button (click)="openRequestInfoModal()" type="filled-primary">
+			req-info-modal
+		</mib-button>
+		<!-- <mib-modal>
 			<mib-modal-header title="Запрос на модерации"> </mib-modal-header>
 			<mib-spacing type="xs"></mib-spacing>
 			<mib-banner-modal type="info"></mib-banner-modal>
@@ -1342,7 +1348,7 @@
 					</mib-button>
 				</ng-container>
 			</mib-modal-footer>
-		</mib-modal>
+		</mib-modal> -->
 		<mib-spacing type="m"></mib-spacing>
 		<h5>banners</h5>
 		<mib-spacing type="m"></mib-spacing>
@@ -1386,6 +1392,7 @@
 <div *ngIf="isCommentPanel" style="margin-bottom: 10rem" class="wrapper">
 	<div>
 		<h5>Comment-panel:</h5>
+		no-data!
 		<!-- <mib-comment-panel></mib-comment-panel> -->
 	</div>
 	<mib-spacing type="xl2"></mib-spacing>

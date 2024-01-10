@@ -3,6 +3,8 @@ import {InputSize} from '../../ui-kit/input/interfaces/input.interface'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {NewShipmentModalService} from '../modals/new-shipment-modal/new-shipment-modal.service'
 import {RequestCreateSuccessModalService} from 'src/app/client/modules/requests/modules/request-create-success-modal/request-create-success-modal.service'
+import {RequestInfoModalService} from '../modals/request-info-modal/request-info-modal.service'
+import {RequestFailureModalService} from '../modals/request-failure-modal/request-failure-modal.service'
 
 @Component({
 	selector: 'app-mib-ui',
@@ -52,7 +54,7 @@ export class MibUiComponent implements OnInit {
 	isShownFileCell = false
 	isContracted = false
 	isModal = false
-	isCommentPanel = true
+	isCommentPanel = false
 
 	public inputSizeXL: InputSize = 'xl'
 	public inputSizeL: InputSize = 'l'
@@ -66,7 +68,9 @@ export class MibUiComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
 		private newShipmentModalService: NewShipmentModalService,
-		private requestCreateSuccessModalService: RequestCreateSuccessModalService
+		private requestCreateSuccessModalService: RequestCreateSuccessModalService,
+		private requestInfoModalService: RequestInfoModalService,
+		private requestFailureModalService: RequestFailureModalService
 	) {}
 
 	ngOnInit(): void {
@@ -105,5 +109,13 @@ export class MibUiComponent implements OnInit {
 
 	openRequestCreateSuccessModal() {
 		this.requestCreateSuccessModalService.open()
+	}
+
+	openRequestInfoModal() {
+		this.requestInfoModalService.open()
+	}
+
+	openRequestFailureModal() {
+		this.requestFailureModalService.open()
 	}
 }
