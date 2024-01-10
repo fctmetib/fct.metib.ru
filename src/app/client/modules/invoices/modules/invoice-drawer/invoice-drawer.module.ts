@@ -18,32 +18,34 @@ import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
 import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/contracted-forms.module'
-import {TextareaModule} from '../../../../../shared/ui-kit/textarea/textarea.module';
-import {AutosizeModule} from 'ngx-autosize';
+import {TextareaModule} from '../../../../../shared/ui-kit/textarea/textarea.module'
+import {AutosizeModule} from 'ngx-autosize'
+import {CashPanelModule} from 'src/app/shared/modules/cash-panel/cash-panel.module'
 
 @NgModule({
 	declarations: [InvoiceDrawerComponent],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    MatDialogModule,
-    SpacingModule,
-    TableModule,
-    ButtonModule,
-    IconModule,
-    TabModule,
-    NavbarModule,
-    SelectModule,
-    DropdownPointModule,
-    SkeletonModule,
-    PaginatorModule,
-    DropdownModule,
-    RubModule,
-    InputModule,
-    ContractedFormsModule,
-    TextareaModule,
-    AutosizeModule
-  ],
+	imports: [
+		CommonModule,
+		DrawerModule,
+		MatDialogModule,
+		SpacingModule,
+		TableModule,
+		ButtonModule,
+		IconModule,
+		TabModule,
+		NavbarModule,
+		SelectModule,
+		DropdownPointModule,
+		SkeletonModule,
+		PaginatorModule,
+		DropdownModule,
+		RubModule,
+		InputModule,
+		ContractedFormsModule,
+		TextareaModule,
+		AutosizeModule,
+		CashPanelModule
+	],
 	providers: [InvoiceDrawerService]
 })
 export class InvoiceDrawerModule {}

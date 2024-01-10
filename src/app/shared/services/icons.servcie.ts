@@ -44,17 +44,18 @@ export class IconsService {
 		'fi_lock',
 		'logo_round',
 		'fi_calendar',
-		'fi_corner-down-left'
+		'fi_corner-down-left',
+		'fi_arrow-right'
 	]
 
-  public async initIcons(): Promise<void> {
-    const promises = this.icons.map(icon =>
-      this.iconService.registerIconFromAssets(
-        icon,
-        `assets/icons/ui-kit-icons/${icon}.svg`
-      )
-    );
+	public async initIcons(): Promise<void> {
+		const promises = this.icons.map(icon =>
+			this.iconService.registerIconFromAssets(
+				icon,
+				`assets/icons/ui-kit-icons/${icon}.svg`
+			)
+		)
 
-    await Promise.all(promises);
-  }
+		await Promise.all(promises)
+	}
 }

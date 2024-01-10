@@ -28,13 +28,13 @@ export class InvoiceDrawerComponent implements OnInit {
 
 	public skeletonDate: Properties = {
 		...this.skeletonWithoutUnderline,
-		height: '20px'
+		height: '40px'
 	}
 
-  public skeletonTextarea: Properties = {
-    ...this.skeletonWithoutUnderline,
-    height: '64px'
-  }
+	public skeletonTextarea: Properties = {
+		...this.skeletonWithoutUnderline,
+		height: '64px'
+	}
 
 	public skeletonTabGroup: Properties = {
 		...this.skeletonWithoutUnderline,

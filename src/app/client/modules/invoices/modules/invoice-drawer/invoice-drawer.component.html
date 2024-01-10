@@ -4,50 +4,93 @@
 		showMaximize="true"
 		drawer-header
 	></mib-drawer-header>
-  <mib-skeleton *ngIf="loading$ | async; else title" [styles]="skeletonTitle"></mib-skeleton>
-  <ng-template #title>
-		<h4>Платеж на: {{ currentInvoice?.Amount | rub }}</h4>
-	</ng-template>
-	<mib-spacing type="xs2"></mib-spacing>
-  <mib-skeleton *ngIf="loading$ | async; else date" [styles]="skeletonDate"></mib-skeleton>
-	<ng-template #date>
-		<div class="flex gap-4">
-			<span class="text text_m c-bti-secondary">Дата платежа</span>
-			<span class="text text_m c-bti-secondary">{{
-				currentInvoice?.Date | date : 'dd.MM.YYYY'
-			}}</span>
-		</div>
-	</ng-template>
-	<mib-spacing type="xs"></mib-spacing>
-  <mib-skeleton *ngIf="loading$ | async; else textareaTemplate" [styles]="skeletonTextarea"></mib-skeleton>
-  <ng-template #textareaTemplate>
-    <mib-textarea>
-      <ng-container textarea-label>Назначение платежа</ng-container>
-      <textarea readonly autosize [value]="currentInvoice?.Comment" mibTextarea></textarea>
-      <mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
-    </mib-textarea>
-  </ng-template>
-	<mib-spacing type="m"></mib-spacing>
-	<ng-container *ngIf="loading$ | async; else tabGroup">
+	<mib-drawer-container>
+		<ng-container *ngIf="loading$ | async; else title">
+			<mib-skeleton
+				[styles]="skeletonTitle"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #title>
+			<div class="flex gap-4 flex_align-center">
+				<h4>
+					{{ currentInvoice?.Beneficiary?.Title }}
+				</h4>
+				<mib-icon
+					class="invoice-arrow stroke"
+					btn-icon
+					name="fi_arrow-right"
+				></mib-icon>
+				<h4>
+					{{ currentInvoice?.Beneficiary?.Title }}
+				</h4>
+			</div>
+		</ng-template>
+		<mib-spacing type="xs2"></mib-spacing>
+		<ng-container *ngIf="loading$ | async; else date">
+			<mib-skeleton
+				[styles]="skeletonDate"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #date>
+			<div class="flex gap-4">
+				<span class="text text_m c-bti-secondary">Дата платежа</span>
+				<span class="text text_m c-bti-secondary">{{
+					currentInvoice?.Date | date : 'dd.MM.YYYY'
+				}}</span>
+			</div>
+
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-cash-panel
+				extracted="false"
+				showinfo="true"
+				panelTitle="Сумма платежа:"
+				[panelData]="currentInvoice?.Amount"
+			></mib-cash-panel>
+		</ng-template>
+		<mib-spacing type="xs"></mib-spacing>
+		<ng-container *ngIf="loading$ | async; else textareaTemplate">
+			<mib-skeleton
+				[styles]="skeletonTextarea"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<mib-spacing type="m"></mib-spacing>
+		<ng-template #textareaTemplate>
+			<mib-textarea>
+				<ng-container textarea-label>Назначение платежа</ng-container>
+				<textarea
+					readonly
+					autosize
+					[value]="currentInvoice?.Comment"
+					mibTextarea
+				></textarea>
+				<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
+			</mib-textarea>
+		</ng-template>
+		<!-- <ng-container > -->
 		<mib-skeleton
+			*ngIf="loading$ | async"
 			[styles]="skeletonTabGroup"
-			*ngFor="let i of [1]"
 		></mib-skeleton>
-	</ng-container>
-	<ng-template #tabGroup>
-		<mib-tab-group>
-			<mib-navbar>
-				<mib-navbar-point value="1">Накладные</mib-navbar-point>
-				<mib-navbar-point value="2">Реквизиты</mib-navbar-point>
-			</mib-navbar>
-			<div>
-				<ng-container *ngIf="loading$ | async; else tabItems">
-					<mib-skeleton
-						[styles]="last ? skeletonWithoutUnderline : skeletonTable"
-						*ngFor="let i of [1]; let last = last"
-					></mib-skeleton>
-				</ng-container>
-				<ng-template #tabItems>
+	</mib-drawer-container>
+	<!-- </ng-container> -->
+	<!-- <ng-template > -->
+	<mib-tab-group *ngIf="!(loading$ | async)">
+		<mib-navbar>
+			<mib-navbar-point value="1">Накладные</mib-navbar-point>
+			<mib-navbar-point value="2">Реквизиты</mib-navbar-point>
+		</mib-navbar>
+		<div>
+			<ng-container *ngIf="loading$ | async; else tabItems">
+				<mib-skeleton
+					[styles]="last ? skeletonWithoutUnderline : skeletonTable"
+					*ngFor="let i of [1]; let last = last"
+				></mib-skeleton>
+			</ng-container>
+			<ng-template #tabItems>
+				<mib-drawer-container>
 					<mib-tab-item value="1">
 						<mib-spacing type="m"></mib-spacing>
 						<div class="flex flex_justify-between">
@@ -80,7 +123,10 @@
 								<mib-table-head-cell>Номер заявки</mib-table-head-cell>
 								<mib-table-head-cell>Дата заявки</mib-table-head-cell>
 							</mib-table-head>
-							<mib-table-row *ngFor="let doc of [1, 2, 3]; let idx = index" [underlined]="true">
+							<mib-table-row
+								*ngFor="let doc of [1, 2, 3]; let idx = index"
+								[underlined]="true"
+							>
 								<mib-table-cell type="main">
 									<ng-container table-cell-title>
 										{{ idx + 1 }}
@@ -135,6 +181,8 @@
 							</mib-table-row>
 						</mib-table>
 					</mib-tab-item>
+				</mib-drawer-container>
+				<mib-drawer-container>
 					<mib-tab-item value="2">
 						<mib-spacing type="s"></mib-spacing>
 						<p class="headline">Реквизиты плательщика</p>
@@ -213,8 +261,9 @@
 							>
 						</mib-contracted-forms>
 					</mib-tab-item>
-				</ng-template>
-			</div>
-		</mib-tab-group>
-	</ng-template>
+				</mib-drawer-container>
+			</ng-template>
+		</div>
+	</mib-tab-group>
+	<!-- </ng-template> -->
 </mib-drawer>

@@ -1,3 +1,14 @@
+@import 'src/styles/helpers/_icon_tools';
+@import 'src/styles/_colors.vars';
+
 .table-select {
 	max-width: 110px;
+}
+
+mib-navbar {
+	padding: var(--drawer-container-paddings);
+}
+
+mib-icon[name='fi_arrow-right'] {
+	@include icon-color(var(--bti-tertiary));
 }
