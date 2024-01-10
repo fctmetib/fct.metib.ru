@@ -12,6 +12,7 @@ import {TableComponent} from '../../table.component';
 export class TableFooterComponent {
   @Input() lined: boolean = true;
   @Input() actionLoading: boolean = false;
+  @Input() showIsland: boolean = false;
 
   @Output() onAction = new EventEmitter<void>()
   @Output() onDelete = new EventEmitter<any[]>()
