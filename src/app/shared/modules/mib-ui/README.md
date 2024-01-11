@@ -46,6 +46,12 @@ ng g c client/modules/requests/modules/request-create-success-modal/request-crea
 ng g s client/modules/requests/modules/request-create-success-modal/request-create-success-modal --skip-tests --dry-run
  //---
 
+ //--- new-documents-page
+src\app\client\modules\documents\pages
+ng g m client/modules/documents/pages/new-documents-page/new-documents-page --flat --dry-run
+ng g c client/modules/documents/pages/new-documents-page/new-documents-page --flat --skip-tests  --dry-run
+ //---
+
  //--- new-demand
 src\app\shared\modules\new-demand
 ng g m shared/modules/new-demand/new-demand --flat --dry-run
