@@ -43,8 +43,7 @@
 
 			<mib-spacing type="xs"></mib-spacing>
 			<mib-cash-panel
-				extracted="false"
-				showinfo="true"
+				[extracted]="true"
 				panelTitle="Сумма платежа:"
 				[panelData]="currentInvoice?.Amount"
 			></mib-cash-panel>
@@ -69,14 +68,11 @@
 				<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
 			</mib-textarea>
 		</ng-template>
-		<!-- <ng-container > -->
 		<mib-skeleton
 			*ngIf="loading$ | async"
 			[styles]="skeletonTabGroup"
 		></mib-skeleton>
 	</mib-drawer-container>
-	<!-- </ng-container> -->
-	<!-- <ng-template > -->
 	<mib-tab-group *ngIf="!(loading$ | async)">
 		<mib-navbar>
 			<mib-navbar-point value="1">Накладные</mib-navbar-point>
@@ -265,5 +261,4 @@
 			</ng-template>
 		</div>
 	</mib-tab-group>
-	<!-- </ng-template> -->
 </mib-drawer>
