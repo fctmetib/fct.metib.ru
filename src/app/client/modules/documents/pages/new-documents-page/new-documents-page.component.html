@@ -83,7 +83,7 @@
 							<ng-container table-cell-title>6</ng-container>
 						</mib-table-cell>
 						<mib-button
-							[mibDropdownTrigger]="requestRowMenu"
+							[mibDropdownTrigger]="newDocumentRowMenu"
 							table-row-button
 							size="s"
 							type="ghost-secondary"
@@ -94,8 +94,11 @@
 								name="fi_more-vertical"
 							></mib-icon>
 						</mib-button>
-						<mib-dropdown #requestRowMenu>
-							<mib-dropdown-point text="Открыть"></mib-dropdown-point>
+						<mib-dropdown #newDocumentRowMenu>
+							<mib-dropdown-point
+								(press)="newDocumentPageDrawer()"
+								text="Открыть"
+							></mib-dropdown-point>
 						</mib-dropdown>
 					</mib-table-row>
 					<!-- <mib-table-row *ngFor="let req of requestsVisible; let last = last" [rowId]="req.ID" [underlined]="!last">

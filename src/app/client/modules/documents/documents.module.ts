@@ -43,6 +43,7 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {DatesService} from 'src/app/shared/services/dates.service'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
+import {NewDocumentsPageDrawerModule} from './modules/new-documents-page-drawer/new-documents-page-drawer.module'
 
 @NgModule({
 	imports: [
@@ -85,7 +86,8 @@ import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 		ButtonModule,
 		DropdownPointModule,
 		SelectModule,
-		DropdownModule
+		DropdownModule,
+		NewDocumentsPageDrawerModule
 	],
 	declarations: [DocumentsPageComponent, NewDocumentsPageComponent],
 	providers: [DocumentsService, DatesService, DatePipe]

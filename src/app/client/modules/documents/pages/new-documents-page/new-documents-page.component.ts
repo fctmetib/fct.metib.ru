@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core'
 import {FormControl} from '@angular/forms'
 import {Properties} from 'csstype'
-import {BehaviorSubject} from 'rxjs'
+import {BehaviorSubject, filter, switchMap} from 'rxjs'
 import {DatesService} from 'src/app/shared/services/dates.service'
 import {ToolsService} from 'src/app/shared/services/tools.service'
 import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.interface'
+import {NewDocumentsPageDrawerService} from '../../modules/new-documents-page-drawer/new-documents-page-drawer.service'
+import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 
 @Component({
 	selector: 'mib-new-documents-page',
@@ -37,7 +39,8 @@ export class NewDocumentsPageComponent implements OnInit {
 
 	constructor(
 		public toolsService: ToolsService,
-		public datesService: DatesService
+		public datesService: DatesService,
+		public newDocumentsPageDrawerService: NewDocumentsPageDrawerService
 	) {}
 
 	ngOnInit() {
@@ -50,6 +53,17 @@ export class NewDocumentsPageComponent implements OnInit {
 		console.log(dateTo, dateFrom)
 		this.dateFrom.setValue(dateFrom)
 		this.dateTo.setValue(dateTo)
+	}
+
+	newDocumentPageDrawer() {
+		this.newDocumentsPageDrawerService
+			.open({state: DrawerStateEnum.CREATE})
+			.afterClosed()
+			.pipe
+			// filter(Boolean),
+			// switchMap(() => this.loadRequestsData())
+			()
+			.subscribe()
 	}
 
 	selectionChange(event: TableSelectionEvent) {
