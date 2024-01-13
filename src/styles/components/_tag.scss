@@ -83,6 +83,7 @@
 
 	&_l {
 		@include text-l;
+		height: 40px;
 		padding: 8px 16px;
 		mib-icon {
 			@include icon-size(20px);
@@ -91,6 +92,7 @@
 
 	&_m {
 		@include text-m;
+		height: 32px;
 		padding: 6px 12px;
 		mib-icon {
 			@include icon-size(20px);
@@ -99,6 +101,7 @@
 
 	&_s {
 		@include text-s;
+		height: 24px;
 		padding: 4px 8px;
 		mib-icon {
 			@include icon-size(16px);

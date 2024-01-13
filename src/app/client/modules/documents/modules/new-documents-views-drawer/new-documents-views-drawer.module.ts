@@ -9,6 +9,9 @@ import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
+import {TagModule} from 'src/app/shared/ui-kit/tag/tag.module'
+import {AvatarModule} from 'src/app/shared/ui-kit/avatar/avatar.module'
+import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 
 @NgModule({
 	declarations: [NewDocumentsViewsDrawerComponent],
@@ -20,7 +23,10 @@ import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 		ButtonModule,
 		IconModule,
 		InputModule,
-		SkeletonModule
+		SkeletonModule,
+		TagModule,
+		AvatarModule,
+		FileCellModule
 	],
 	providers: [NewDocumentsViewsDrawerService]
 })

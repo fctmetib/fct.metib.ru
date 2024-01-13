@@ -1,0 +1,5 @@
+@import 'src/styles/helpers/icon_tools';
+
+mib-avatar[type='round'] {
+	@include icon-size(20px);
+}

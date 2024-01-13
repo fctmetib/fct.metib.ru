@@ -4,7 +4,47 @@
 		drawer-header
 	></mib-drawer-header>
 	<mib-drawer-container>
-		<h4>Просмотр документа</h4>
+		<ng-container *ngIf="loading$ | async; else title">
+			<mib-skeleton
+				[styles]="skeletonTitle"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #title>
+			<div class="header flex gap-6">
+				<h4>{{ testDate?.Name }}</h4>
+				<h4>{{ testDate?.Number }}</h4>
+			</div>
+			<mib-spacing type="xs2"></mib-spacing>
+			<div class="flex gap-4">
+				<span class="text text_m c-bti-secondary"
+					>Добавлен {{ testDate?.Date.create | date : 'dd.MM.yyyy' }}</span
+				>
+				<span class="text text_m c-bti-quaternary"
+					>подписан {{ testDate?.Date.sign | date : 'dd.MM.yyyy' }}</span
+				>
+			</div>
+		</ng-template>
 		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex flex_justify-between">
+			<mib-tag size="m" type="filled-secondary">
+				Тип документа: {{ testDate?.doctype?.name }}
+			</mib-tag>
+			<mib-tag size="m" type="outline">
+				<mib-avatar
+					[showImage]="true"
+					[showArrow]="false"
+					type="round"
+					[src]="testDate?.managerAvatar"
+				></mib-avatar>
+				{{ testDate?.manager }}
+			</mib-tag>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+		<p class="text text_s">
+			{{ testDate?.doctype?.description }}
+		</p>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-file-cell size="s"></mib-file-cell>
 	</mib-drawer-container>
 </mib-drawer>

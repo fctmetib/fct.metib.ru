@@ -4,12 +4,12 @@
 
 .file-cell {
 	display: block;
-	max-width: 360px;
+	// max-width: 360px;
 	& .file-input {
 		display: none;
 	}
 	& .file-upload {
-		border: 1px dotted gray;
+		// border: 1px dotted gray;
 		padding: 7px 12px;
 	}
 }

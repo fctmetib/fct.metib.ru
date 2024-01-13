@@ -5,7 +5,7 @@
 		(change)="onChange($event)"
 		#fileUpload
 	/>
-	<div class="flex flex_center gap-8 file-upload cursor-pointer">
+	<div class="flex flex_center gap-8 file-upload">
 		<ng-container [ngSwitch]="status">
 			<p *ngSwitchCase="'uploading'">⏳ {{ progress }}</p>
 			<p *ngSwitchCase="'success'">✅ Done!</p>
@@ -14,19 +14,23 @@
 				<mib-icon style="stroke: gray" name="fi_file"></mib-icon>
 			</p>
 		</ng-container>
-		<div class="flex_grow">
-			<span (click)="fileUpload.click()">
+		<div class="flex_grow text text_m c-bgr-primary">
+			<span class="cursor-pointer" (click)="fileUpload.click()">
 				{{ fileName || 'Загрузить файл' }}
 			</span>
-			<span *ngIf="status">{{ file.size / 1000 | number : '1.1-2' }} мб</span>
+			<span class="cursor-pointer" *ngIf="status"
+				>{{ file.size / 1000 | number : '1.1-2' }} мб</span
+			>
 		</div>
 		<mib-icon
+			class="cursor-pointer"
 			title="Загрузить"
 			(click)="onUpload()"
 			style="stroke: gray"
 			name="fi_download"
 		></mib-icon>
 		<mib-icon
+			class="cursor-pointer"
 			title="Сбросить"
 			(click)="cancelUpload()"
 			style="stroke: gray"
