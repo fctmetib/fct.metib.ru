@@ -21,7 +21,7 @@
 						[formControl]="dateTo"
 					/>
 				</div>
-				<mib-button type="filled-primary">
+				<mib-button type="filled-primary" (press)="newDocumentPageDrawer()">
 					<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon
 					>Добавить документ</mib-button
 				>
@@ -96,7 +96,7 @@
 						</mib-button>
 						<mib-dropdown #newDocumentRowMenu>
 							<mib-dropdown-point
-								(press)="newDocumentPageDrawer()"
+								(press)="newDocumentViewsDrawer()"
 								text="Открыть"
 							></mib-dropdown-point>
 						</mib-dropdown>

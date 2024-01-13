@@ -7,6 +7,7 @@ import {ToolsService} from 'src/app/shared/services/tools.service'
 import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.interface'
 import {NewDocumentsPageDrawerService} from '../../modules/new-documents-page-drawer/new-documents-page-drawer.service'
 import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
+import {NewDocumentsViewsDrawerService} from '../../modules/new-documents-views-drawer/new-documents-views-drawer.service'
 
 @Component({
 	selector: 'mib-new-documents-page',
@@ -40,7 +41,8 @@ export class NewDocumentsPageComponent implements OnInit {
 	constructor(
 		public toolsService: ToolsService,
 		public datesService: DatesService,
-		public newDocumentsPageDrawerService: NewDocumentsPageDrawerService
+		public newDocumentsPageDrawerService: NewDocumentsPageDrawerService,
+		public newDocumentsViewsDrawerService: NewDocumentsViewsDrawerService
 	) {}
 
 	ngOnInit() {
@@ -57,6 +59,17 @@ export class NewDocumentsPageComponent implements OnInit {
 
 	newDocumentPageDrawer() {
 		this.newDocumentsPageDrawerService
+			.open({state: DrawerStateEnum.CREATE})
+			.afterClosed()
+			.pipe
+			// filter(Boolean),
+			// switchMap(() => this.loadRequestsData())
+			()
+			.subscribe()
+	}
+
+	newDocumentViewsDrawer() {
+		this.newDocumentsViewsDrawerService
 			.open({state: DrawerStateEnum.CREATE})
 			.afterClosed()
 			.pipe
