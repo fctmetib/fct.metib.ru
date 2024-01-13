@@ -17,9 +17,9 @@
 .spinner {
 	width: 18px;
 	height: 18px;
-	border: 2px solid #f3f3f3;
+	border: 2px solid var(--wgr-secondary);
 	border-radius: 50%;
-	border-top: 2px solid #29a362;
+	border-top: 2px solid var(--bti-secondary);
 	animation: spin 2s linear infinite;
 }
 

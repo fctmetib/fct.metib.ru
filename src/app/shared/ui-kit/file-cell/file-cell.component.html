@@ -7,8 +7,23 @@
 	/>
 	<div class="flex flex_center gap-8 file-upload">
 		<ng-container [ngSwitch]="status">
-			<p *ngSwitchCase="'uploading'">⏳ {{ progress }}</p>
-			<p *ngSwitchCase="'success'">✅ Done!</p>
+			<div *ngSwitchCase="'uploading'">
+				<div class="spinner"></div>
+			</div>
+			<!-- <p *ngSwitchCase="'uploading'">⏳ {{ progress }}</p> -->
+			<div *ngSwitchCase="'success'">
+				<div *ngIf="content !== 'document'; else docBlock">
+					<mib-avatar
+						[showImage]="true"
+						[showArrow]="false"
+						[src]="imageUrl"
+					></mib-avatar>
+				</div>
+				<ng-template #docBlock>
+					<mib-icon style="stroke: gray" name="fi_file"></mib-icon>
+				</ng-template>
+			</div>
+			<!-- <p *ngSwitchCase="'success'">✅ Done!</p> -->
 			<p *ngSwitchCase="'fail'">❌ Error!</p>
 			<p *ngSwitchDefault>
 				<mib-icon style="stroke: gray" name="fi_file"></mib-icon>
@@ -19,7 +34,7 @@
 				{{ fileName || 'Загрузить файл' }}
 			</span>
 			<span class="cursor-pointer" *ngIf="status"
-				>{{ file.size / 1000 | number : '1.1-2' }} мб</span
+				>{{ file.size / 1024 / 1000 | number : '1.2-2' }} мб</span
 			>
 		</div>
 		<mib-icon
