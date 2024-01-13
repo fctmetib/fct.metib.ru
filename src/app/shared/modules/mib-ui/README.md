@@ -60,6 +60,14 @@ ng g s client/modules/documents/modules/new-documents-page-drawer/new-documents-
 ng g i client/modules/documents/modules/new-documents-page-drawer/interfaces/new-documents-page-drawer.interface --dry-run
  //---
 
+ //--- new-documents-views-drawer
+src\app\client\modules\documents\modules
+ng g m client/modules/documents/modules/new-documents-views-drawer/new-documents-views-drawer --flat --dry-run
+ng g c client/modules/documents/modules/new-documents-views-drawer/new-documents-views-drawer --flat --skip-tests  --dry-run
+ng g s client/modules/documents/modules/new-documents-views-drawer/new-documents-views-drawer --flat --skip-tests  --dry-run
+ng g i client/modules/documents/modules/new-documents-views-drawer/interfaces/new-documents-views-drawer.interface --dry-run
+ //---
+
  //--- new-demand
 src\app\shared\modules\new-demand
 ng g m shared/modules/new-demand/new-demand --flat --dry-run
