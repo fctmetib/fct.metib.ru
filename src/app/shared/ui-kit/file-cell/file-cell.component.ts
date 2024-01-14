@@ -21,7 +21,7 @@ export class FileCellComponent {
 	public content: FileCellContent
 	public uploadSub: Subscription
 	progress: number = 0
-	@Input() imageUrl = './assets/images/imageDoc.png'
+	@Input() imageUrl: string | ArrayBuffer = './assets/images/imageDoc.png'
 
 	constructor(private http: HttpClient, private filesService: FileService) {}
 
@@ -47,6 +47,14 @@ export class FileCellComponent {
 
 	onChange(event: any) {
 		const file: File = event.target.files[0]
+
+		if (event.target.files && file) {
+			const reader = new FileReader()
+			reader.readAsDataURL(file)
+			reader.onload = event => {
+				this.imageUrl = event.target.result
+			}
+		}
 
 		if (file) {
 			this.status = 'initial'
