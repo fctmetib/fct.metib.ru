@@ -5,51 +5,58 @@
 		(change)="onChange($event)"
 		#fileUpload
 	/>
-	<div class="flex flex_center gap-8 file-upload">
-		<ng-container [ngSwitch]="status">
-			<div *ngSwitchCase="'uploading'">
-				<div class="spinner"></div>
-			</div>
-			<!-- <p *ngSwitchCase="'uploading'">⏳ {{ progress }}</p> -->
-			<div *ngSwitchCase="'success'">
-				<div *ngIf="content !== 'document'; else docBlock">
-					<mib-avatar
-						[showImage]="true"
-						[showArrow]="false"
-						[src]="imageUrl"
-					></mib-avatar>
+	<div class="flex flex_align-center gap-8 flex_grow">
+		<div class="flex flex_align-center upload-icon">
+			<ng-container [ngSwitch]="status">
+				<div *ngSwitchCase="'uploading'">
+					<div class="spinner"></div>
 				</div>
-				<ng-template #docBlock>
-					<mib-icon style="stroke: gray" name="fi_file"></mib-icon>
-				</ng-template>
-			</div>
-			<!-- <p *ngSwitchCase="'success'">✅ Done!</p> -->
-			<p *ngSwitchCase="'fail'">❌ Error!</p>
-			<p *ngSwitchDefault>
-				<mib-icon style="stroke: gray" name="fi_file"></mib-icon>
-			</p>
-		</ng-container>
-		<div class="flex_grow text text_m c-bgr-primary">
-			<span class="cursor-pointer" (click)="fileUpload.click()">
+				<div *ngSwitchCase="'success'">
+					<div *ngIf="content !== 'document'; else docBlock">
+						<mib-avatar
+							[showImage]="true"
+							[showArrow]="false"
+							[src]="imageUrl"
+						></mib-avatar>
+					</div>
+					<ng-template #docBlock>
+						<mib-icon class="stroke" name="fi_file"></mib-icon>
+					</ng-template>
+				</div>
+				<p *ngSwitchCase="'fail'">❌ Error!</p>
+				<p *ngSwitchDefault>
+					<mib-icon class="stroke" name="fi_file"></mib-icon>
+				</p>
+			</ng-container>
+		</div>
+		<div>
+			<span
+				class="cursor-pointer text c-bti-primary"
+				(click)="fileUpload.click()"
+			>
 				{{ fileName || 'Загрузить файл' }}
 			</span>
-			<span class="cursor-pointer" *ngIf="status"
+			<span class="cursor-pointer text c-bti-tertiary" *ngIf="status"
 				>{{ file.size / 1024 / 1000 | number : '1.2-2' }} мб</span
 			>
 		</div>
-		<mib-icon
-			class="cursor-pointer"
-			title="Загрузить"
+	</div>
+	<div class="flex buttons-block">
+		<mib-button
 			(click)="onUpload()"
-			style="stroke: gray"
-			name="fi_download"
-		></mib-icon>
-		<mib-icon
-			class="cursor-pointer"
-			title="Сбросить"
+			title="Загрузить"
+			size="s"
+			type="ghost-secondary"
+		>
+			<mib-icon class="stroke" btn-icon name="fi_download"></mib-icon>
+		</mib-button>
+		<mib-button
 			(click)="cancelUpload()"
-			style="stroke: gray"
-			name="fi_x"
-		></mib-icon>
+			title="Удалить"
+			size="s"
+			type="ghost-secondary"
+		>
+			<mib-icon class="stroke" btn-icon name="fi_x"></mib-icon>
+		</mib-button>
 	</div>
 </div>

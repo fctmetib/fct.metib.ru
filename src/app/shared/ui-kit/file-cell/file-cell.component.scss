@@ -2,18 +2,6 @@
 	width: 100%;
 }
 
-.file-cell {
-	display: block;
-	// max-width: 360px;
-	& .file-input {
-		display: none;
-	}
-	& .file-upload {
-		// border: 1px dotted gray;
-		padding: 7px 12px;
-	}
-}
-
 .spinner {
 	width: 18px;
 	height: 18px;
