@@ -45,7 +45,8 @@ export class IconsService {
 		'logo_round',
 		'fi_calendar',
 		'fi_corner-down-left',
-		'fi_arrow-right'
+		'fi_arrow-right',
+		'fi_trash'
 	]
 
 	public async initIcons(): Promise<void> {

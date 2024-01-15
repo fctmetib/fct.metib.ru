@@ -3,3 +3,7 @@
 mib-avatar[type='round'] {
 	@include icon-size(20px);
 }
+
+mib-navbar {
+	padding: var(--drawer-container-paddings);
+}

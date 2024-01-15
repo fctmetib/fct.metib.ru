@@ -1,119 +1,131 @@
-@import "src/styles/helpers/icon_tools";
-@import "src/styles/typography.vars";
+@import 'src/styles/helpers/icon_tools';
+@import 'src/styles/typography.vars';
 
 $text-selectors: 'span';
 
 @mixin link-size($height, $icon-size) {
-  height: $height;
+	height: $height;
 
-  #{$text-selectors} {
-    @content
-  }
+	#{$text-selectors} {
+		@content;
+	}
 
-  .link_icon-wrapper, mib-icon {
-    @include icon-size($icon-size)
-  }
+	.link_icon-wrapper,
+	mib-icon {
+		@include icon-size($icon-size);
+	}
 }
 
 @mixin link {
-  gap: 4px;
-  cursor: pointer;
+	gap: 4px;
+	cursor: pointer;
 
-  #{$text-selectors} {
-    @include body-text;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-
+	#{$text-selectors} {
+		@include body-text;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
 }
 
 @mixin link-ghost-primary {
-  #{$text-selectors} {
-    font-weight: var(--fw-medium);
-  }
-  @include link-color(var(--mc-default));
-  &:hover {
-    @include link-color(var(--mc-hover));
-  }
-  &:active {
-    @include link-color(var(--mc-active));
-  }
+	#{$text-selectors} {
+		font-weight: var(--fw-medium);
+	}
+	@include link-color(var(--mc-default));
+	&:hover {
+		@include link-color(var(--mc-hover));
+	}
+	&:active {
+		@include link-color(var(--mc-active));
+	}
 }
 
 @mixin link-ghost-secondary {
-  @include link-color(var(--bti-tertiary));
-  &:hover {
-    @include link-color(var(--bti-secondary));
-  }
-  &:active {
-    @include link-color(var(--bti-primary));
-  }
+	@include link-color(var(--bti-tertiary));
+	&:hover {
+		@include link-color(var(--bti-secondary));
+	}
+	&:active {
+		@include link-color(var(--bti-primary));
+	}
+}
+
+@mixin link-ghost-accent {
+	@include link-color(var(--ac-default));
+	&:hover {
+		@include link-color(var(--alc-hover));
+	}
+	&:active {
+		@include link-color(var(--ac-active));
+	}
 }
 
 @mixin link-color($color) {
-  #{$text-selectors} {
-    color: $color
-  }
-  mib-icon {
-    @include icon-color($color)
-  }
+	#{$text-selectors} {
+		color: $color;
+	}
+	mib-icon {
+		@include icon-color($color);
+	}
 }
 
 .link {
+	@include link;
 
-  @include link;
+	&_l {
+		@include link-size(24px, 20px) {
+			@include text-l;
+		}
+	}
 
-  &_l {
-    @include link-size(24px, 20px) {
-      @include text-l;
-    };
-  }
+	&_m {
+		@include link-size(20px, 20px) {
+			@include text-m;
+		}
+	}
 
-  &_m {
-    @include link-size(20px, 20px) {
-      @include text-m;
-    };
-  }
+	&_s {
+		@include link-size(16px, 16px) {
+			@include text-s;
+		}
+	}
 
-  &_s {
-    @include link-size(16px, 16px) {
-      @include text-s;
-    };
-  }
+	&_type {
+		&-ghost {
+			&-primary {
+				@include link-ghost-primary;
+			}
 
-  &_type {
-    &-ghost {
-      &-primary {
-        @include link-ghost-primary;
-      }
+			&-secondary {
+				@include link-ghost-secondary;
+			}
 
-      &-secondary {
-        @include link-ghost-secondary;
-      }
-    }
-  }
+			&-accent {
+				@include link-ghost-accent;
+			}
+		}
+	}
 
+	&:disabled {
+		@include link-color(var(--wti-quaternary));
+		cursor: not-allowed;
+	}
 
-  &:disabled {
-    @include link-color(var(--wti-quaternary));
-    cursor: not-allowed;
-  }
+	&_icon-wrapper {
+		display: none;
+	}
 
-  &_icon-wrapper {
-    display: none;
-  }
+	&_left-iconly {
+		.link_left-icon-wrapper {
+			display: flex;
+		}
+	}
 
-  &_left-iconly {
-    .link_left-icon-wrapper {
-      display: flex;
-    }
-  }
-
-  &_right-iconly {
-    .link_right-icon-wrapper {
-      display: flex;
-    }
-  }
+	&_right-iconly {
+		.link_right-icon-wrapper {
+			display: flex;
+		}
+	}
 }

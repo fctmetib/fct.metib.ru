@@ -26,6 +26,11 @@ export class NewDocumentsViewsDrawerComponent {
 		height: '34px'
 	}
 
+	public skeletonTable: Properties = {
+		...this.skeletonWithoutUnderline,
+		borderBottom: '1px solid var(--wgr-tertiary)'
+	}
+
 	public PAGINATOR_ITEMS_PER_PAGE = 5
 	public PAGINATOR_PAGE_TO_SHOW = 5
 	public currentPage$ = new BehaviorSubject<number>(1)
