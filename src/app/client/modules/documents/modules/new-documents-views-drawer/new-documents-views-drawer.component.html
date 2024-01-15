@@ -1,6 +1,8 @@
 <mib-drawer>
 	<mib-drawer-header
 		(onClose)="dialogRef.close()"
+		[showMaximize]="true"
+		[showEdits]="true"
 		drawer-header
 	></mib-drawer-header>
 	<mib-drawer-container>
@@ -103,7 +105,7 @@
 								<mib-table-head-cell>Действительна до</mib-table-head-cell>
 							</mib-table-head>
 							<mib-table-row
-								*ngFor="let doc of [1, 2, 3]; let idx = index"
+								*ngFor="let doc of [1, 2, 3, 4, 5]; let idx = index"
 								[underlined]="true"
 							>
 								<mib-table-cell type="main">
@@ -128,6 +130,26 @@
 									></mib-icon>
 								</mib-button>
 							</mib-table-row>
+							<mib-table-footer [lined]="!(loading$ | async)">
+								<div class="flex flex_align-center flex_grow"></div>
+								<mib-paginator
+									[totalCount]="123"
+									[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+									[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+								></mib-paginator>
+								<div class="flex flex_align-center flex_grow flex_justify-end">
+									<mib-select type="floating" placeholder="5 рядов">
+										<mib-dropdown-point
+											[value]="5"
+											text="5 рядов"
+										></mib-dropdown-point>
+										<mib-dropdown-point
+											[value]="10"
+											text="10 рядов"
+										></mib-dropdown-point>
+									</mib-select>
+								</div>
+							</mib-table-footer>
 						</mib-table>
 					</mib-tab-item>
 				</mib-drawer-container>
