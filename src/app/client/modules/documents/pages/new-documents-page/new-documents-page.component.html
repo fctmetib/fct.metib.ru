@@ -63,24 +63,40 @@
 					></mib-skeleton>
 				</ng-container>
 				<ng-template #table>
-					<mib-table-row>
+					<mib-table-row
+						*ngFor="let document of clientDocuments; let last = last"
+						[underlined]="!last"
+					>
 						<mib-table-cell type="main">
-							<ng-container table-cell-title>tab-data 1</ng-container>
+							<ng-container table-cell-title>{{
+								document?.Number
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>2</ng-container>
+							<ng-container table-cell-title>{{
+								document?.Title
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>3</ng-container>
+							<ng-container table-cell-title>{{
+								document?.DocumentTypeTitle
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>4</ng-container>
+							<ng-container table-cell-title>{{
+								document?.Description
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>5</ng-container>
+							<ng-container table-cell-title>{{
+								document?.CreatedTime | date : 'dd.MM.YYYY'
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>6</ng-container>
+							<ng-container table-cell-title
+								>{{ document?.CreatorFirstName }}
+								{{ document?.CreatorLastName }}</ng-container
+							>
 						</mib-table-cell>
 						<mib-button
 							[mibDropdownTrigger]="newDocumentRowMenu"
@@ -101,75 +117,10 @@
 							></mib-dropdown-point>
 						</mib-dropdown>
 					</mib-table-row>
-					<!-- <mib-table-row *ngFor="let req of requestsVisible; let last = last" [rowId]="req.ID" [underlined]="!last">
-            <mib-table-cell type="main">
-              <ng-container table-cell-title>{{ req.ID }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{ req.Number }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.Date | date : 'dd.MM.YYYY'
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.Delivery.CustomerID
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.Delivery.Title
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{ req.Status }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.Shipments ? 'Есть' : 'Отсутствует'
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.IsCorrected ? 'Да' : 'Нет'
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.Summ | currency : 'RUR'
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-button [mibDropdownTrigger]="requestRowMenu" table-row-button size="s" type="ghost-secondary">
-              <mib-icon
-                class="stroke"
-                btn-icon
-                name="fi_more-vertical"
-              ></mib-icon>
-            </mib-button>
-            <mib-dropdown #requestRowMenu>
-              <mib-dropdown-point
-                (press)="openBrowserDrawer(req.ID)"
-                text="Открыть"
-              ></mib-dropdown-point>
-            </mib-dropdown>
-          </mib-table-row> -->
 				</ng-template>
-				<!-- {{ date | date : 'dd.MM.yyyy' }} -->
-				<!-- <mib-table-footer [showIsland]="true" [actionLoading]="isSigningPreparing$ | async" (onDelete)="deleteRequests($event)" (onAction)="requestSign()" [lined]="!(loading$ | async)">
-          <ng-container table-footer-action>Подписать</ng-container>
-          <mib-paginator
-            (pageChange)="onPageChange($event)"
-            [totalCount]="requests.length"
-            [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-            [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
-          ></mib-paginator>
-        </mib-table-footer> -->
 				<mib-table-footer [showIsland]="true" [lined]="!(loading$ | async)">
-					<!-- <ng-container table-footer-action>Подписать</ng-container> -->
 					<mib-paginator
-						[totalCount]="123"
+						[totalCount]="clientDocuments.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 					></mib-paginator>

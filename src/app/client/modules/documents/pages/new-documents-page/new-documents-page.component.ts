@@ -1,13 +1,15 @@
 import {Component, OnInit} from '@angular/core'
 import {FormControl} from '@angular/forms'
 import {Properties} from 'csstype'
-import {BehaviorSubject, filter, switchMap} from 'rxjs'
+import {BehaviorSubject, filter, finalize, switchMap, tap} from 'rxjs'
 import {DatesService} from 'src/app/shared/services/dates.service'
 import {ToolsService} from 'src/app/shared/services/tools.service'
 import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.interface'
 import {NewDocumentsPageDrawerService} from '../../modules/new-documents-page-drawer/new-documents-page-drawer.service'
 import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {NewDocumentsViewsDrawerService} from '../../modules/new-documents-views-drawer/new-documents-views-drawer.service'
+import {DocumentsService} from '../../services/documents.service'
+import {ClientDocumentsInterface} from '../../types/common/client-documents.interface'
 
 @Component({
 	selector: 'mib-new-documents-page',
@@ -38,11 +40,14 @@ export class NewDocumentsPageComponent implements OnInit {
 	public dateFrom: FormControl = new FormControl<string>('')
 	public dateTo: FormControl = new FormControl<string>('')
 
+	public clientDocuments: ClientDocumentsInterface[] = []
+
 	constructor(
 		public toolsService: ToolsService,
 		public datesService: DatesService,
 		public newDocumentsPageDrawerService: NewDocumentsPageDrawerService,
-		public newDocumentsViewsDrawerService: NewDocumentsViewsDrawerService
+		public newDocumentsViewsDrawerService: NewDocumentsViewsDrawerService,
+		private documentsService: DocumentsService
 	) {}
 
 	ngOnInit() {
@@ -55,6 +60,21 @@ export class NewDocumentsPageComponent implements OnInit {
 		console.log(dateTo, dateFrom)
 		this.dateFrom.setValue(dateFrom)
 		this.dateTo.setValue(dateTo)
+		this.getClientDocumentsList()
+	}
+
+	getClientDocumentsList() {
+		this.loading$.next(true)
+		this.documentsService
+			.fetchDocuments()
+			.pipe(
+				tap(data => {
+					this.clientDocuments = data
+					console.log('this.clientDocuments :>> ', this.clientDocuments)
+				}),
+				finalize(() => this.loading$.next(false))
+			)
+			.subscribe()
 	}
 
 	newDocumentPageDrawer() {
