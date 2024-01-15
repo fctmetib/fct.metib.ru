@@ -22,6 +22,7 @@ import {RequestCreateSuccessModalModule} from '../modals/request-create-success-
 import {CommentPanelModule} from '../../ui-kit/comment-panel/comment-panel.module'
 import {RequestFailureModalModule} from '../modals/request-failure-modal/request-failure-modal.module'
 import {RequestInfoModalModule} from '../modals/request-info-modal/request-info-modal.module'
+import {LoaderModule} from '../../ui-kit/loader/loader.module'
 
 @NgModule({
 	imports: [
@@ -47,7 +48,8 @@ import {RequestInfoModalModule} from '../modals/request-info-modal/request-info-
 		RequestCreateSuccessModalModule,
 		CommentPanelModule,
 		RequestFailureModalModule,
-		RequestInfoModalModule
+		RequestInfoModalModule,
+		LoaderModule
 	],
 	declarations: [MibUiComponent]
 })

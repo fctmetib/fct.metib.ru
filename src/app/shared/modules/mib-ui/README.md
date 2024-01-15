@@ -111,6 +111,13 @@ ng g m shared/ui-kit/comment-panel/comment-panel --flat  --dry-run
 ng g c shared/ui-kit/comment-panel/comment-panel --flat  --skip-tests --dry-run
  //---
 
+ //--- loader
+src\app\shared\ui-kit
+ng g i shared/ui-kit/loader/interfaces/loader.interface  --dry-run
+ng g m shared/ui-kit/loader/loader --flat  --dry-run
+ng g c shared/ui-kit/loader/loader --flat  --skip-tests --dry-run
+ //---
+
  //--- invoice
 src\app\client\modules\invoices
 ng g c client/modules/invoices/pages/invoice-page --skip-tests --dry-run

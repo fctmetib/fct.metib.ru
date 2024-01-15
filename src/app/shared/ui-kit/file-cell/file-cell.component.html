@@ -10,6 +10,7 @@
 			<ng-container [ngSwitch]="status">
 				<div *ngSwitchCase="'uploading'">
 					<div class="spinner"></div>
+					<!-- <mib-loader [prog]="progress"></mib-loader> -->
 				</div>
 				<div *ngSwitchCase="'success'">
 					<div *ngIf="content !== 'document'; else docBlock">

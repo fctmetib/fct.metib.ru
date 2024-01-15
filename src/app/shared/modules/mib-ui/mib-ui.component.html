@@ -1385,16 +1385,15 @@
 		gap: 1rem;
 	"
 >
-	{{ 'comment-panel' | titlecase }}
-	<button (click)="isCommentPanel = !isCommentPanel">
-		{{ isCommentPanel ? 'Hide' : 'Show' }}
+	{{ 'loader' | titlecase }}
+	<button (click)="isLoader = !isLoader">
+		{{ isLoader ? 'Hide' : 'Show' }}
 	</button>
 </h2>
-<div *ngIf="isCommentPanel" style="margin-bottom: 10rem" class="wrapper">
+<div *ngIf="isLoader" style="margin-bottom: 10rem" class="wrapper">
 	<div>
-		<h5>Comment-panel:</h5>
-		no-data!
-		<!-- <mib-comment-panel></mib-comment-panel> -->
+		<h5>loader:</h5>
+		<mib-loader></mib-loader>
 	</div>
 	<mib-spacing type="xl2"></mib-spacing>
 	<mib-spacing type="xl2"></mib-spacing>

@@ -54,7 +54,7 @@ export class MibUiComponent implements OnInit {
 	isShownFileCell = false
 	isContracted = false
 	isModal = false
-	isCommentPanel = false
+	isLoader = true
 
 	public inputSizeXL: InputSize = 'xl'
 	public inputSizeL: InputSize = 'l'
