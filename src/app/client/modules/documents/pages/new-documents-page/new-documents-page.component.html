@@ -56,46 +56,44 @@
 					<mib-table-head-cell>Прикрепил</mib-table-head-cell>
 				</mib-table-head>
 				<ng-container *ngIf="loading$ | async; else table">
-					<!-- let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE); -->
 					<mib-skeleton
 						[styles]="last ? skeletonWithoutUnderline : skeleton"
-						*ngFor="let i of [1]; let last = last"
+						*ngFor="
+							let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
+							let last = last
+						"
 					></mib-skeleton>
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
-						*ngFor="let document of clientDocuments; let last = last"
+						*ngFor="let doc of clientDocuments; let last = last"
 						[underlined]="!last"
 					>
 						<mib-table-cell type="main">
+							<ng-container table-cell-title>{{ doc?.Number }}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>{{ doc?.Title }}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
 							<ng-container table-cell-title>{{
-								document?.Number
+								doc?.DocumentTypeTitle
 							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title>{{
-								document?.Title
+								doc?.Description
 							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title>{{
-								document?.DocumentTypeTitle
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								document?.Description
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								document?.CreatedTime | date : 'dd.MM.YYYY'
+								doc?.CreatedTime | date : 'dd.MM.YYYY'
 							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title
-								>{{ document?.CreatorFirstName }}
-								{{ document?.CreatorLastName }}</ng-container
+								>{{ doc?.CreatorFirstName }}
+								{{ doc?.CreatorLastName }}</ng-container
 							>
 						</mib-table-cell>
 						<mib-button
@@ -112,7 +110,7 @@
 						</mib-button>
 						<mib-dropdown #newDocumentRowMenu>
 							<mib-dropdown-point
-								(press)="newDocumentViewsDrawer()"
+								(press)="newDocumentViewsDrawer(doc?.DocumentID)"
 								text="Открыть"
 							></mib-dropdown-point>
 						</mib-dropdown>

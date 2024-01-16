@@ -1,19 +1,30 @@
-import {Component} from '@angular/core'
-import {MatDialogRef} from '@angular/material/dialog'
+import {Component, Inject, OnInit} from '@angular/core'
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {Properties} from 'csstype'
-import {BehaviorSubject} from 'rxjs'
+import {BehaviorSubject, finalize, tap} from 'rxjs'
+import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
+import {NewDocumentsViewsDrawerInterface} from './interfaces/new-documents-views-drawer.interface'
+import {DocumentsService} from '../../services/documents.service'
+import {ClientDocumentsInterface} from '../../types/common/client-documents.interface'
+import {ToolsService} from 'src/app/shared/services/tools.service'
 
 @Component({
 	selector: 'mib-new-documents-views-drawer',
 	templateUrl: './new-documents-views-drawer.component.html',
 	styleUrls: ['./new-documents-views-drawer.component.scss']
 })
-export class NewDocumentsViewsDrawerComponent {
+export class NewDocumentsViewsDrawerComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
 
 	public skeletonWithoutUnderline: Properties = {
 		borderRadius: '8px',
+		height: '48px',
 		width: '100%'
+	}
+
+	public skeleton: Properties = {
+		...this.skeletonWithoutUnderline,
+		borderBottom: '1px solid var(--wgr-tertiary)'
 	}
 
 	public skeletonTitle: Properties = {
@@ -21,14 +32,14 @@ export class NewDocumentsViewsDrawerComponent {
 		height: '60px'
 	}
 
-	public skeletonTags: Properties = {
+	public skeletonDescription: Properties = {
 		...this.skeletonWithoutUnderline,
 		height: '34px'
 	}
 
-	public skeletonTable: Properties = {
+	public skeletonTabGroup: Properties = {
 		...this.skeletonWithoutUnderline,
-		borderBottom: '1px solid var(--wgr-tertiary)'
+		height: '271px'
 	}
 
 	public PAGINATOR_ITEMS_PER_PAGE = 5
@@ -49,7 +60,37 @@ export class NewDocumentsViewsDrawerComponent {
 		managerAvatar: './assets/images/woman-avatar.jpg'
 	}
 
+	public document: ClientDocumentsInterface
+
 	constructor(
-		public dialogRef: MatDialogRef<NewDocumentsViewsDrawerComponent>
+		@Inject(MAT_DIALOG_DATA)
+		public data: DrawerData<NewDocumentsViewsDrawerInterface>,
+		public toolsService: ToolsService,
+		public dialogRef: MatDialogRef<NewDocumentsViewsDrawerComponent>,
+		private documentsService: DocumentsService
 	) {}
+
+	ngOnInit(): void {
+		this.getCurrentDocument()
+	}
+
+	get documentId() {
+		return this.data.data.documentID
+	}
+
+	getCurrentDocument() {
+		this.loading$.next(true)
+		this.documentsService
+			.fetchDocuments()
+			.pipe(
+				tap(data => {
+					this.document = data.find(el => el.DocumentID === this.documentId)
+					console.log('this.document :>> ', this.document)
+				}),
+				finalize(() => {
+					this.loading$.next(false)
+				})
+			)
+			.subscribe()
+	}
 }

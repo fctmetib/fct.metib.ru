@@ -44,7 +44,6 @@ import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {DatesService} from 'src/app/shared/services/dates.service'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {NewDocumentsPageDrawerModule} from './modules/new-documents-page-drawer/new-documents-page-drawer.module'
-import {NewDocumentsViewsDrawerComponent} from './modules/new-documents-views-drawer/new-documents-views-drawer.component'
 import {NewDocumentsViewsDrawerModule} from './modules/new-documents-views-drawer/new-documents-views-drawer.module'
 
 @NgModule({

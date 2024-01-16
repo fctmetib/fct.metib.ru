@@ -46,7 +46,8 @@ export class IconsService {
 		'fi_calendar',
 		'fi_corner-down-left',
 		'fi_arrow-right',
-		'fi_trash'
+		'fi_trash',
+		'fi_user'
 	]
 
 	public async initIcons(): Promise<void> {

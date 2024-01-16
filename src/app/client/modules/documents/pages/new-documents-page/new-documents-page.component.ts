@@ -40,6 +40,7 @@ export class NewDocumentsPageComponent implements OnInit {
 	public dateFrom: FormControl = new FormControl<string>('')
 	public dateTo: FormControl = new FormControl<string>('')
 
+	// public clientDocuments: Document[] = []
 	public clientDocuments: ClientDocumentsInterface[] = []
 
 	constructor(
@@ -88,13 +89,17 @@ export class NewDocumentsPageComponent implements OnInit {
 			.subscribe()
 	}
 
-	newDocumentViewsDrawer() {
+	newDocumentViewsDrawer(documentID: number) {
 		this.newDocumentsViewsDrawerService
-			.open({state: DrawerStateEnum.CREATE})
+			.open({
+				data: {
+					documentID: documentID
+				}
+			})
 			.afterClosed()
 			.pipe
 			// filter(Boolean),
-			// switchMap(() => this.loadRequestsData())
+			// switchMap(async () => this.getClientDocumentsList())
 			()
 			.subscribe()
 	}

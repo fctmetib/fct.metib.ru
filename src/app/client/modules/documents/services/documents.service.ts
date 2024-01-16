@@ -13,12 +13,24 @@ import {ClientDocumentsInterface} from '../types/common/client-documents.interfa
 export class DocumentsService {
 	constructor(private http: HttpClient) {}
 
-	//#region REST
-
 	public fetchDocuments(): Observable<ClientDocumentsInterface[]> {
 		const url = `${environment.apiUrl}/v1/documents`
 		return this.http.get<ClientDocumentsInterface[]>(url)
 	}
+
+	fetchDocumentById(id: number): Observable<string> {
+		const url = `${environment.apiUrl}/v1/documents/${id}/content`
+		return this.http.get<string>(url)
+	}
+
+	createNewDocument(
+		data: ClientDocumentsInterface
+	): Observable<ClientDocumentsInterface[]> {
+		const url = `${environment.apiUrl}/v1/documents`
+		return this.http.post<ClientDocumentsInterface[]>(url, data)
+	}
+
+	//#region REST
 
 	fetch(): Observable<DocumentInterface[]> {
 		const url = `${environment.apiUrl}document`
