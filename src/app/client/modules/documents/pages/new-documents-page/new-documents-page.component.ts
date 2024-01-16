@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, OnInit, ViewChild} from '@angular/core'
 import {FormControl} from '@angular/forms'
 import {Properties} from 'csstype'
 import {BehaviorSubject, filter, finalize, switchMap, tap} from 'rxjs'
@@ -10,6 +10,7 @@ import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.in
 import {NewDocumentsViewsDrawerService} from '../../modules/new-documents-views-drawer/new-documents-views-drawer.service'
 import {DocumentsService} from '../../services/documents.service'
 import {ClientDocumentsInterface} from '../../types/common/client-documents.interface'
+import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
 
 @Component({
 	selector: 'mib-new-documents-page',
@@ -18,6 +19,8 @@ import {ClientDocumentsInterface} from '../../types/common/client-documents.inte
 })
 export class NewDocumentsPageComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
+
+	@ViewChild(TableComponent) table: TableComponent
 
 	public skeletonWithoutUnderline: Properties = {
 		height: '48px',
@@ -33,7 +36,7 @@ export class NewDocumentsPageComponent implements OnInit {
 		selectedIds: []
 	}
 
-	public PAGINATOR_ITEMS_PER_PAGE = 16
+	public PAGINATOR_ITEMS_PER_PAGE = 10
 	public PAGINATOR_PAGE_TO_SHOW = 5
 	public currentPage$ = new BehaviorSubject<number>(1)
 
@@ -42,6 +45,10 @@ export class NewDocumentsPageComponent implements OnInit {
 
 	// public clientDocuments: Document[] = []
 	public clientDocuments: ClientDocumentsInterface[] = []
+	public clientDocumentsVisible: ClientDocumentsInterface[] = []
+
+	requests: any
+	requestsVisible: any
 
 	constructor(
 		public toolsService: ToolsService,
@@ -71,10 +78,25 @@ export class NewDocumentsPageComponent implements OnInit {
 			.pipe(
 				tap(data => {
 					this.clientDocuments = data
+					this.onPageChange(this.currentPage$.value)
 				}),
 				finalize(() => this.loading$.next(false))
 			)
 			.subscribe()
+	}
+
+	onPageChange(page: number) {
+		this.currentPage$.next(page)
+
+		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+
+		this.table.deselect()
+
+		this.clientDocumentsVisible = this.clientDocuments.slice(
+			startIndex,
+			endIndex
+		)
 	}
 
 	newDocumentPageDrawer() {
