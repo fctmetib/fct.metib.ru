@@ -71,7 +71,6 @@ export class NewDocumentsPageComponent implements OnInit {
 			.pipe(
 				tap(data => {
 					this.clientDocuments = data
-					console.log('this.clientDocuments :>> ', this.clientDocuments)
 				}),
 				finalize(() => this.loading$.next(false))
 			)

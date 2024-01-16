@@ -1,4 +1,4 @@
-<mib-drawer>
+<mib-drawer [formGroup]="form">
 	<mib-drawer-header
 		(onClose)="dialogRef.close()"
 		drawer-header
@@ -8,6 +8,7 @@
 		<mib-spacing type="xs"></mib-spacing>
 		<div class="flex flex_column gap-12">
 			<mib-dnd
+				(onChange)="onDocumentLoad($event)"
 				[accept]="[
 					'application/pdf',
 					'application/msword',
@@ -41,7 +42,14 @@
 		</div>
 	</mib-drawer-container>
 	<mib-drawer-footer drawer-footer>
-		<mib-button [disabled]="true" [size]="size" type="filled-primary">
+		<!-- [disabled]="true" -->
+		<mib-button
+			[disabled]="form.invalid"
+			[loading]="!!(isSubmitting$ | async)"
+			(press)="onSubmit()"
+			[size]="size"
+			type="filled-primary"
+		>
 			Добавить документ
 		</mib-button>
 	</mib-drawer-footer>

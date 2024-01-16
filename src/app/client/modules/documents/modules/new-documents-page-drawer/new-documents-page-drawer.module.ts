@@ -13,6 +13,7 @@ import {TextareaModule} from 'src/app/shared/ui-kit/textarea/textarea.module'
 import {AutosizeModule} from 'ngx-autosize'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {MatDialogModule} from '@angular/material/dialog'
+import {ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
 	declarations: [NewDocumentsPageDrawerComponent],
@@ -28,7 +29,8 @@ import {MatDialogModule} from '@angular/material/dialog'
 		MibDragAndDropModule,
 		TextareaModule,
 		AutosizeModule,
-		SkeletonModule
+		SkeletonModule,
+		ReactiveFormsModule
 	],
 	providers: [NewDocumentsPageDrawerService]
 })
