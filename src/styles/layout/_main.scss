@@ -1,5 +1,6 @@
 @import 'src/styles/layout/_flex';
 @import 'src/styles/_colors.vars.scss';
+@import 'src/styles/typography.vars';
 
 .w-100 {
 	width: 100%;
@@ -33,4 +34,9 @@
 
 .overflow-hidden {
 	overflow: hidden;
+}
+
+.text-clamp {
+	@include text-overflow(1);
+	max-width: 90%;
 }

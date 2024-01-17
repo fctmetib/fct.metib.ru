@@ -32,13 +32,6 @@
 		}
 	}
 	& span {
-		display: -webkit-box;
-		-webkit-line-clamp: 1;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-		white-space: normal;
-		word-break: break-all;
-		max-width: 296px;
 		@include text-s;
 	}
 }

@@ -30,7 +30,12 @@
 				</p>
 			</ng-container>
 		</div>
-		<div class="flex gap-8">
+		<div
+			title="{{ fileName }} {{
+				file?.size / 1024 / 1000 | number : '1.2-2'
+			}} мб"
+			class="flex gap-8 text-clamp"
+		>
 			<span
 				class="cursor-pointer text c-bti-primary"
 				(click)="fileUpload.click()"
@@ -38,7 +43,7 @@
 				{{ fileName || 'Загрузить файл' }}
 			</span>
 			<span class="cursor-pointer text c-bti-tertiary" *ngIf="status"
-				>{{ file.size / 1024 / 1000 | number : '1.2-2' }} мб</span
+				>{{ file?.size / 1024 / 1000 | number : '1.2-2' }} мб</span
 			>
 		</div>
 	</div>

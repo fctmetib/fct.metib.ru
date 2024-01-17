@@ -14,8 +14,10 @@
 		</ng-container>
 		<ng-template #title>
 			<div class="header flex gap-6">
-				<h4>{{ document.Title }}</h4>
-				<h4 class="c-bti-tertiary">{{ document?.Number }}</h4>
+				<h4 title="{{ document.Title }}">{{ document.Title }}</h4>
+				<h4 title="{{ document?.Number }}" class="c-bti-tertiary">
+					{{ document?.Number }}
+				</h4>
 			</div>
 			<mib-spacing type="xs2"></mib-spacing>
 			<div class="flex gap-4">

@@ -22,7 +22,6 @@ export class FileCellComponent {
 	public uploadSub: Subscription
 	progress: number = 0
 	@Input() imageUrl: string | ArrayBuffer = './assets/images/imageDoc.png'
-
 	constructor(private http: HttpClient, private filesService: FileService) {}
 
 	get classes() {

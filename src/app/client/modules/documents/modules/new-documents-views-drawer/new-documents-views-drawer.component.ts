@@ -85,6 +85,7 @@ export class NewDocumentsViewsDrawerComponent implements OnInit {
 			.pipe(
 				tap(data => {
 					this.document = data.find(el => el.DocumentID === this.documentId)
+					console.log('this.document :>> ', this.document)
 				}),
 				finalize(() => {
 					this.loading$.next(false)
