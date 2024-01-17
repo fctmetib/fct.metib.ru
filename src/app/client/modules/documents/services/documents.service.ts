@@ -23,7 +23,7 @@ export class DocumentsService {
 		return this.http.get<string>(url)
 	}
 
-	createNewDocument(
+	uploadNewDocument(
 		data: ClientDocumentsInterface
 	): Observable<ClientDocumentsInterface[]> {
 		const url = `${environment.apiUrl}/v1/documents`

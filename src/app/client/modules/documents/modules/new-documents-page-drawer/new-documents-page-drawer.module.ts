@@ -14,6 +14,10 @@ import {AutosizeModule} from 'ngx-autosize'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {MatDialogModule} from '@angular/material/dialog'
 import {ReactiveFormsModule} from '@angular/forms'
+import {InformationModule} from 'src/app/shared/ui-kit/information/information.module'
+import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
+import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
+import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 
 @NgModule({
 	declarations: [NewDocumentsPageDrawerComponent],
@@ -30,7 +34,11 @@ import {ReactiveFormsModule} from '@angular/forms'
 		TextareaModule,
 		AutosizeModule,
 		SkeletonModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		InformationModule,
+		TableModule,
+		DropdownPointModule,
+		DropdownModule
 	],
 	providers: [NewDocumentsPageDrawerService]
 })

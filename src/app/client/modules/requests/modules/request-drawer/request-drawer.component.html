@@ -1,197 +1,241 @@
 <mib-drawer [formGroup]="form">
-  <mib-drawer-header (onClose)="dialogRef.close()" drawer-header></mib-drawer-header>
-  <mib-drawer-container>
-    <h4>{{isEditing ? 'Редактирование заявки' : 'Создание новой заявки'}}</h4>
-    <mib-spacing type="xs"></mib-spacing>
-    <mib-select
-      [formControl]="deliveryIdControl"
-      [size]="size"
-      placeholder="Выберите договор поставки"
-      type="outline"
-    >
-      <ng-container mibSelectLabel>Договор поставки</ng-container>
-      <mib-dropdown-point
-        *ngFor="let delivery of deliveries"
-        [text]="delivery.Title"
-        [value]="delivery.ID"
-      ></mib-dropdown-point>
-    </mib-select>
-    <mib-spacing type="xs"></mib-spacing>
-    <div class="flex flex_column gap-12">
-      <div class="flex gap-12">
-        <mib-input class="flex_grow">
-          <ng-container mibLabel>Номер заявки</ng-container>
-          <input formControlName="Number" [size]="size" mibInput/>
-        </mib-input>
-        <mib-select formControlName="Type" [size]="size" placeholder="Тип заявки" class="flex_grow">
-          <mib-dropdown-point
-            [value]="RequestTypeEnum.NON_FINANCING"
-            [text]="requestsService.getRequestTypeTranslation(RequestTypeEnum.NON_FINANCING)"
-          ></mib-dropdown-point>
-          <mib-dropdown-point
-            [value]="RequestTypeEnum.FINANCING"
-            [text]="requestsService.getRequestTypeTranslation(RequestTypeEnum.FINANCING)"
-          ></mib-dropdown-point>
-        </mib-select>
-      </div>
-      <mib-input>
-        <ng-container mibLabel>Дата заявки</ng-container>
-        <input formControlName="Date" [size]="size" type="date" mibInput/>
-      </mib-input>
-      <mib-input>
-        <ng-container mibLabel>Свободный лимит</ng-container>
-        <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
-        <input mask="separator" readonly [formControl]="freeLimitControl" [size]="size" mibInput/>
-      </mib-input>
-    </div>
-    <mib-spacing type="s"></mib-spacing>
-    <h5 class="headline">Поставки</h5>
-    <mib-spacing type="xs2"></mib-spacing>
-    <mib-information
-      *ngIf="!shipments.controls.length; else deliveryAgreementsTemplate"
-      type="alert"
-    >
-      <ng-container information-text
-      >Необходимо прикрепить документ договора поставки
-      </ng-container
-      >
-    </mib-information>
-    <ng-template #deliveryAgreementsTemplate>
-      <mib-table>
-        <mib-table-head>
-          <mib-table-head-cell>Накладная</mib-table-head-cell>
-          <mib-table-head-cell>Дата накладной</mib-table-head-cell>
-          <mib-table-head-cell>С/ф №</mib-table-head-cell>
-          <mib-table-head-cell>Дата с/ф</mib-table-head-cell>
-          <mib-table-head-cell>Дата поставки</mib-table-head-cell>
-          <mib-table-head-cell>Сумма</mib-table-head-cell>
-        </mib-table-head>
-        <mib-table-row
-          *ngFor="let shipment of shipments.controls; let idx = index"
-        >
-          <mib-table-cell>
-            <ng-container table-cell-title>{{
-              shipment.get('WaybillNumber').value
-              }}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{
-              shipment.get('WaybillDate').value | date : 'dd.MM.YYYY'
-              }}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{
-              shipment.get('InvoiceNumber').value
-              }}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{
-              shipment.get('InvoiceDate').value | date : 'dd.MM.YYYY'
-              }}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{
-              shipment.get('DateShipment').value | date : 'dd.MM.YYYY'
-              }}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{
-              shipment.get('Summ').value | rub
-              }}</ng-container>
-          </mib-table-cell>
-          <mib-button
-            table-row-button
-            [mibDropdownTrigger]="shipmentMenu"
-            size="s"
-            type="ghost-secondary"
-          >
-            <mib-icon
-              class="stroke"
-              btn-icon
-              name="fi_more-vertical"
-            ></mib-icon>
-          </mib-button>
-          <mib-dropdown #shipmentMenu>
-            <mib-dropdown-point
-              (press)="removeShipment(idx)"
-              text="Удалить"
-            ></mib-dropdown-point>
-          </mib-dropdown>
-        </mib-table-row>
-      </mib-table>
-    </ng-template>
-    <mib-spacing type="xs"></mib-spacing>
-    <mib-button (press)="openShipment()" [size]="size">
-      Добавить договор поставки
-      <mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
-    </mib-button>
-    <mib-spacing type="s"></mib-spacing>
-    <h5 class="headline">Копии накладных</h5>
-    <mib-spacing type="xs2"></mib-spacing>
-    <mib-information
-      *ngIf="!documents.controls.length; else copiesTemplate"
-      type="alert"
-    >
-      <ng-container information-text
-      >Необходимо прикрепить скан-копии накладных для отправки на
-        модерацию
-      </ng-container
-      >
-    </mib-information>
-    <ng-template #copiesTemplate>
-      <mib-table>
-        <mib-table-head>
-          <mib-table-head-cell>№</mib-table-head-cell>
-          <mib-table-head-cell>Имя файла</mib-table-head-cell>
-          <mib-table-head-cell>Описание</mib-table-head-cell>
-          <mib-table-head-cell>Тип документа</mib-table-head-cell>
-        </mib-table-head>
-        <mib-table-row *ngFor="let document of documents.controls; let idx = index">
-          <mib-table-cell>
-            <ng-container table-cell-title>{{ idx + 1 }}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{document.get('Title').value}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{document.get('Description').value}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{document.get('DocumentTypeID').value}}</ng-container>
-          </mib-table-cell>
-          <mib-button table-row-button [mibDropdownTrigger]="documentMenu" size="s" type="ghost-secondary">
-            <mib-icon class="stroke" btn-icon name="fi_more-vertical"></mib-icon>
-          </mib-button>
-          <mib-dropdown #documentMenu>
-            <mib-dropdown-point (press)="removeDocument(idx)" text="Удалить"></mib-dropdown-point>
-          </mib-dropdown>
-        </mib-table-row>
-      </mib-table>
-    </ng-template>
-    <mib-spacing type="xs"></mib-spacing>
-    <div class="flex flex_column gap-12">
-      <mib-dnd
-        (onChange)="onDocumentLoad($event)"
-        [accept]="[
-				'application/pdf',
-				'application/msword',
-				'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-				'application/vnd.ms-excel',
-				'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-				'image/jpeg',
-				'image/png'
-			]"
-        headline="Прикрепите скан-копию документа"
-      ></mib-dnd>
-      <p class="text text_xs c-bti-tertiary">
-        Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
-      </p>
-    </div>
-  </mib-drawer-container>
-  <mib-drawer-footer drawer-footer>
-    <mib-button [disabled]="form.invalid" [loading]="!!(isSubmitting$ | async)" (press)="onSubmit()" [size]="size"
-                type="filled-primary">
-      {{isEditing ? 'Сохранить заявку' : 'Создать заявку'}}
-    </mib-button>
-  </mib-drawer-footer>
+	<mib-drawer-header
+		(onClose)="dialogRef.close()"
+		drawer-header
+	></mib-drawer-header>
+	<mib-drawer-container>
+		<h4>{{ isEditing ? 'Редактирование заявки' : 'Создание новой заявки' }}</h4>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-select
+			[formControl]="deliveryIdControl"
+			[size]="size"
+			placeholder="Выберите договор поставки"
+			type="outline"
+		>
+			<ng-container mibSelectLabel>Договор поставки</ng-container>
+			<mib-dropdown-point
+				*ngFor="let delivery of deliveries"
+				[text]="delivery.Title"
+				[value]="delivery.ID"
+			></mib-dropdown-point>
+		</mib-select>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex flex_column gap-12">
+			<div class="flex gap-12">
+				<mib-input class="flex_grow">
+					<ng-container mibLabel>Номер заявки</ng-container>
+					<input formControlName="Number" [size]="size" mibInput />
+				</mib-input>
+				<mib-select
+					formControlName="Type"
+					[size]="size"
+					placeholder="Тип заявки"
+					class="flex_grow"
+				>
+					<mib-dropdown-point
+						[value]="RequestTypeEnum.NON_FINANCING"
+						[text]="
+							requestsService.getRequestTypeTranslation(
+								RequestTypeEnum.NON_FINANCING
+							)
+						"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="RequestTypeEnum.FINANCING"
+						[text]="
+							requestsService.getRequestTypeTranslation(
+								RequestTypeEnum.FINANCING
+							)
+						"
+					></mib-dropdown-point>
+				</mib-select>
+			</div>
+			<mib-input>
+				<ng-container mibLabel>Дата заявки</ng-container>
+				<input formControlName="Date" [size]="size" type="date" mibInput />
+			</mib-input>
+			<mib-input>
+				<ng-container mibLabel>Свободный лимит</ng-container>
+				<p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+				<input
+					mask="separator"
+					readonly
+					[formControl]="freeLimitControl"
+					[size]="size"
+					mibInput
+				/>
+			</mib-input>
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<h5 class="headline">Поставки</h5>
+		<mib-spacing type="xs2"></mib-spacing>
+		<mib-information
+			*ngIf="!shipments.controls.length; else deliveryAgreementsTemplate"
+			type="alert"
+		>
+			<ng-container information-text
+				>Необходимо прикрепить документ договора поставки
+			</ng-container>
+		</mib-information>
+		<ng-template #deliveryAgreementsTemplate>
+			<mib-table>
+				<mib-table-head>
+					<mib-table-head-cell>Накладная</mib-table-head-cell>
+					<mib-table-head-cell>Дата накладной</mib-table-head-cell>
+					<mib-table-head-cell>С/ф №</mib-table-head-cell>
+					<mib-table-head-cell>Дата с/ф</mib-table-head-cell>
+					<mib-table-head-cell>Дата поставки</mib-table-head-cell>
+					<mib-table-head-cell>Сумма</mib-table-head-cell>
+				</mib-table-head>
+				<mib-table-row
+					*ngFor="let shipment of shipments.controls; let idx = index"
+				>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							shipment.get('WaybillNumber').value
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							shipment.get('WaybillDate').value | date : 'dd.MM.YYYY'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							shipment.get('InvoiceNumber').value
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							shipment.get('InvoiceDate').value | date : 'dd.MM.YYYY'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							shipment.get('DateShipment').value | date : 'dd.MM.YYYY'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							shipment.get('Summ').value | rub
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-button
+						table-row-button
+						[mibDropdownTrigger]="shipmentMenu"
+						size="s"
+						type="ghost-secondary"
+					>
+						<mib-icon
+							class="stroke"
+							btn-icon
+							name="fi_more-vertical"
+						></mib-icon>
+					</mib-button>
+					<mib-dropdown #shipmentMenu>
+						<mib-dropdown-point
+							(press)="removeShipment(idx)"
+							text="Удалить"
+						></mib-dropdown-point>
+					</mib-dropdown>
+				</mib-table-row>
+			</mib-table>
+		</ng-template>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-button (press)="openShipment()" [size]="size">
+			Добавить договор поставки
+			<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
+		</mib-button>
+		<mib-spacing type="s"></mib-spacing>
+		<h5 class="headline">Копии накладных</h5>
+		<mib-spacing type="xs2"></mib-spacing>
+		<mib-information
+			*ngIf="!documents.controls.length; else copiesTemplate"
+			type="alert"
+		>
+			<ng-container information-text
+				>Необходимо прикрепить скан-копии накладных для отправки на модерацию
+			</ng-container>
+		</mib-information>
+		<ng-template #copiesTemplate>
+			<mib-table>
+				<mib-table-head>
+					<mib-table-head-cell>№</mib-table-head-cell>
+					<mib-table-head-cell>Имя файла</mib-table-head-cell>
+					<mib-table-head-cell>Описание</mib-table-head-cell>
+					<mib-table-head-cell>Тип документа</mib-table-head-cell>
+				</mib-table-head>
+				<mib-table-row
+					*ngFor="let document of documents.controls; let idx = index"
+				>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ idx + 1 }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							document.get('Title').value
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							document.get('Description').value
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							document.get('DocumentTypeID').value
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-button
+						table-row-button
+						[mibDropdownTrigger]="documentMenu"
+						size="s"
+						type="ghost-secondary"
+					>
+						<mib-icon
+							class="stroke"
+							btn-icon
+							name="fi_more-vertical"
+						></mib-icon>
+					</mib-button>
+					<mib-dropdown #documentMenu>
+						<mib-dropdown-point
+							(press)="removeDocument(idx)"
+							text="Удалить"
+						></mib-dropdown-point>
+					</mib-dropdown>
+				</mib-table-row>
+			</mib-table>
+		</ng-template>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex flex_column gap-12">
+			<mib-dnd
+				(onChange)="onDocumentLoad($event)"
+				[accept]="[
+					'application/pdf',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-excel',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'image/jpeg',
+					'image/png'
+				]"
+				headline="Прикрепите скан-копию документа"
+			></mib-dnd>
+			<p class="text text_xs c-bti-tertiary">
+				Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
+			</p>
+		</div>
+	</mib-drawer-container>
+	<mib-drawer-footer drawer-footer>
+		<mib-button
+			[disabled]="form.invalid"
+			[loading]="!!(isSubmitting$ | async)"
+			(press)="onSubmit()"
+			[size]="size"
+			type="filled-primary"
+		>
+			{{ isEditing ? 'Сохранить заявку' : 'Создать заявку' }}
+		</mib-button>
+	</mib-drawer-footer>
 </mib-drawer>
