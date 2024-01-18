@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core'
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {MatDialogRef} from '@angular/material/dialog'
-import {BehaviorSubject, of} from 'rxjs'
+import {BehaviorSubject, finalize, of, tap} from 'rxjs'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {ClientDocumentsInterface} from '../../types/common/client-documents.interface'
 import {extractBase64} from 'src/app/shared/services/tools.service'
 import {DocumentsService} from '../../services/documents.service'
+import {AuthService} from 'src/app/auth/services/auth.service'
 
 @Component({
 	selector: 'mib-new-documents-page-drawer',
@@ -18,68 +19,94 @@ export class NewDocumentsPageDrawerComponent implements OnInit {
 
 	size = 'm'
 
+	public userID: number
+
 	public form: FormGroup
 	public doc: Partial<ClientDocumentsInterface>
 
 	constructor(
 		public dialogRef: MatDialogRef<NewDocumentsPageDrawerComponent>,
 		private fb: FormBuilder,
-		private documentService: DocumentsService
+		private documentService: DocumentsService,
+		private authService: AuthService
 	) {}
 
 	get documents() {
 		return this.form.get('Documents') as FormArray
 	}
 
+	// this.authService.currentUser.userFactroing.OrganizationID
+
+	// get userID() {
+	// 	return this.authService.currentUser$.subscribe({
+	// 		next: data => {
+	// 			console.log('datasss :>> ', data)
+	// 			this.userID$ = +data.userFactoring.OrganizationID
+	// 			console.log('this.userID$ :>> ', this.userID$)
+	// 		}
+	// 	})
+	// }
+
+	getCurrentUserId() {
+		this.authService.currentUser$.subscribe({
+			next: data => {
+				// this.userID = +data.userGeneral.ID
+				// this.userID = +data.userFactoring.StaffID
+				this.userID = +data.userFactoring.OrganizationID
+				console.log('userAuthData :>> ', data)
+			}
+		})
+	}
+
 	ngOnInit(): void {
-		this.initForm()
+		this.initForm(), this.getCurrentUserData()
+		this.getCurrentUserId()
+	}
+
+	getCurrentUserData() {
+		this.loading$.next(true)
+		this.documentService
+			.fetchDocuments()
+			.pipe(
+				tap(data => {
+					console.log('documentsList :>> ', data)
+				}),
+				finalize(() => {
+					this.loading$.next(false)
+				})
+			)
+			.subscribe()
 	}
 
 	initForm() {
 		this.form = this.fb.group({
 			documentDescription: [null],
 			isDocumentSign: [null],
-			Number: [null],
-			Date: [null],
-			Type: [null, [Validators.required]],
-			Status: [null],
-			Summ: [0, [Validators.required]],
-			ReadOnly: [false, [Validators.required]],
-			IsCorrected: [false, [Validators.required]],
-			Delivery: this.fb.group({
-				CurrencyCode: [null, [Validators.required]],
-				Title: [null, [Validators.required]],
-				CustomerID: [null, [Validators.required]],
-				Customer: [null, [Validators.required]],
-				DebtorID: [null, [Validators.required]],
-				Debtor: [null, [Validators.required]],
-				ID: [null, [Validators.required]]
-			}),
 			Documents: this.fb.array([], [Validators.required])
 		})
 	}
 
 	addDocument(data: Partial<ClientDocumentsInterface>) {
 		const control: FormGroup = this.fb.group({
-			// Number: [null],
+			Number: [null],
 			Title: [null], //
-			// Location: [null],
+			Location: [null],
 			Description: [null], //
-			// DocumentStatusID: [null],
-			// DocumentStatus: [null],
+			DocumentStatusID: [null],
+			DocumentStatus: [null],
 			DocumentTypeID: [null], //
-			// DocumentType: [null],
-			// DocumentTypeTitle: [null],
-			// Available: [null],
-			// Removed: [null],
-			// ActiveOrganizationID: [null],
-			// ActiveOrganization: [null],
-			// CreatedTime: [null],
-			// AuthorOrganizationID: [null],
-			// AuthorOrganization: [null],
-			// CreatorLastName: [null],
-			// CreatorFirstName: [null],
-			// DocumentID: [null],
+			DocumentType: [null],
+			DocumentTypeTitle: [null],
+			Available: [null],
+			Removed: [null],
+			ActiveOrganizationID: [null],
+			ActiveOrganization: [null],
+			CreatedTime: [null],
+			AuthorOrganizationID: [null],
+			AuthorOrganization: [null],
+			CreatorLastName: [null],
+			CreatorFirstName: [null],
+			DocumentID: [null],
 			OwnerTypeID: [null], //
 			OwnerID: [null], //
 			Data: [null] //
@@ -91,8 +118,13 @@ export class NewDocumentsPageDrawerComponent implements OnInit {
 	onSubmit(): void {
 		const data: ClientDocumentsInterface = this.form.getRawValue()
 		console.log('SUBMIT>>.getRawValue :>> ', data)
-		this.documentService.uploadNewDocument(data)
-		this.dialogRef.close()
+		console.log('this.form[0] :>> ', this.form.value.Documents[0])
+		const datas = this.form.value.Documents[0]
+		// this.documentService.uploadNewDocument(data)
+		// this.dialogRef.close()
+		this.documentService.uploadNewDocument(datas).subscribe()
+		console.log('SUBMIT>>>>!!')
+		// this.dialogRef.close()
 	}
 
 	removeDocument(idx: number) {
@@ -105,6 +137,7 @@ export class NewDocumentsPageDrawerComponent implements OnInit {
 			DocumentTypeID: 40,
 			Title: file.name,
 			OwnerTypeID: 20,
+			OwnerID: this.userID,
 			Data: extractBase64(url)
 		}
 		this.addDocument(document)

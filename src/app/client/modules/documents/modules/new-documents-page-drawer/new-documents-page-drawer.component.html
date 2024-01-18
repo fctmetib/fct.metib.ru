@@ -109,8 +109,9 @@
 		class="flex"
 	></div>
 	<mib-drawer-footer drawer-footer>
+		<!-- [disabled]="!documents.controls.length || !form.value.isDocumentSign" -->
 		<mib-button
-			[disabled]="!documents.controls.length || !form.value.isDocumentSign"
+			[disabled]="!documents.controls.length"
 			[loading]="!!(isSubmitting$ | async)"
 			(press)="onSubmit()"
 			[size]="size"
