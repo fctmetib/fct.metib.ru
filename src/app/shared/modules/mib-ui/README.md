@@ -52,6 +52,11 @@ ng g m client/modules/documents/pages/new-documents-page/new-documents-page --fl
 ng g c client/modules/documents/pages/new-documents-page/new-documents-page --flat --skip-tests  --dry-run
  //---
 
+ //--- new-contracts-page
+src\app\client\modules\contracts\pages
+ng g c client/modules/contracts/pages/new-contracts-page/new-contracts-page --flat --skip-tests  --dry-run
+ //---
+
  //--- new-documents-page-drawer
 src\app\client\modules\documents\modules
 ng g m client/modules/documents/modules/new-documents-page-drawer/new-documents-page-drawer --flat --dry-run
