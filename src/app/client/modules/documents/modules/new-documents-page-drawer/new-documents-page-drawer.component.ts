@@ -20,6 +20,7 @@ export class NewDocumentsPageDrawerComponent implements OnInit {
 	size = 'm'
 
 	public userID: number
+	public isSign = false
 
 	public form: FormGroup
 	public doc: Partial<ClientDocumentsInterface>
@@ -122,7 +123,8 @@ export class NewDocumentsPageDrawerComponent implements OnInit {
 		const datas = this.form.value.Documents[0]
 		// this.documentService.uploadNewDocument(data)
 		// this.dialogRef.close()
-		this.documentService.uploadNewDocument(datas).subscribe()
+		this.isSign = this.form.value.isDocumentSign
+		this.documentService.uploadNewDocument(datas, this.isSign).subscribe()
 		console.log('SUBMIT>>>>!!')
 		// this.dialogRef.close()
 	}

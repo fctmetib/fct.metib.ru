@@ -24,10 +24,13 @@ export class DocumentsService {
 	}
 
 	uploadNewDocument(
-		data: ClientDocumentsInterface
+		data: ClientDocumentsInterface,
+		withSign: boolean
 	): Observable<ClientDocumentsInterface[]> {
-		const url = `${environment.apiUrl}/v1/documents?withSign=true`
-		return this.http.post<ClientDocumentsInterface[]>(url, data)
+		const url = `${environment.apiUrl}/v1/documents`
+		return this.http.post<ClientDocumentsInterface[]>(url, data, {
+			params: {withSign: withSign}
+		})
 	}
 
 	//#region REST
