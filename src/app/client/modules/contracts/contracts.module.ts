@@ -2,8 +2,8 @@ import {DeliveryService} from '../../../shared/services/share/delivery.service'
 import {CommonModule} from '@angular/common'
 import {DropdownModule as DropdownModule22} from 'primeng/dropdown'
 import {CardModule} from 'primeng/card'
-import {ButtonModule} from 'primeng/button'
-import {TableModule} from 'primeng/table'
+import {ButtonModule as ButtonModule22} from 'primeng/button'
+import {TableModule as TableModule22} from 'primeng/table'
 import {MultiSelectModule} from 'primeng/multiselect'
 import {ProgressBarModule} from 'primeng/progressbar'
 import {SliderModule} from 'primeng/slider'
@@ -21,8 +21,8 @@ import {ContractsPageComponent} from './components/contracts-page/contracts-page
 import {ToolbarModule} from 'primeng/toolbar'
 import {TieredMenuModule} from 'primeng/tieredmenu'
 import {TooltipModule} from 'primeng/tooltip'
-import {PaginatorModule} from 'primeng/paginator'
-import {SkeletonModule} from 'primeng/skeleton'
+import {PaginatorModule as PaginatorModule22} from 'primeng/paginator'
+import {SkeletonModule as SkeletonModule22} from 'primeng/skeleton'
 import {DialogModule} from 'primeng/dialog'
 import {RequestsService} from '../requests/services/requests.service'
 import {ClipboardModule} from 'ngx-clipboard'
@@ -33,21 +33,27 @@ import {TabModule} from 'src/app/shared/ui-kit/tab/tab.module'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
+import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
+import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
+import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
+import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
+import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
+import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 
 @NgModule({
 	imports: [
 		CommonModule,
 		InputTextModule,
 		CheckboxModule,
-		ButtonModule,
+		ButtonModule22,
 		RadioButtonModule,
 		InputTextareaModule,
 		SliderModule,
 		DialogModule,
-		TableModule,
-		SkeletonModule,
+		TableModule22,
+		SkeletonModule22,
 		DropdownModule22,
-		PaginatorModule,
+		PaginatorModule22,
 		ToolbarModule,
 		TooltipModule,
 		TieredMenuModule,
@@ -64,7 +70,13 @@ import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
 		TabModule,
 		DropdownModule,
 		DropdownPointModule,
-		NavbarModule
+		NavbarModule,
+		SelectModule,
+		IconModule,
+		PaginatorModule,
+		SkeletonModule,
+		TableModule,
+		ButtonModule
 	],
 	declarations: [ContractsPageComponent, NewContractsPageComponent],
 	providers: [DeliveryService, RequestsService, AccountsService]

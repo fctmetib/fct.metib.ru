@@ -26,7 +26,7 @@ export class DocumentsService {
 	uploadNewDocument(
 		data: ClientDocumentsInterface
 	): Observable<ClientDocumentsInterface[]> {
-		const url = `${environment.apiUrl}/v1/documents`
+		const url = `${environment.apiUrl}/v1/documents?withSign=true`
 		return this.http.post<ClientDocumentsInterface[]>(url, data)
 	}
 
