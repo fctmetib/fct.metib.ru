@@ -39,6 +39,7 @@ import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
+import {NewContractsPageDrawerModule} from './modules/new-contracts-page-drawer/new-contracts-page-drawer.module'
 
 @NgModule({
 	imports: [
@@ -76,7 +77,8 @@ import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 		PaginatorModule,
 		SkeletonModule,
 		TableModule,
-		ButtonModule
+		ButtonModule,
+		NewContractsPageDrawerModule
 	],
 	declarations: [ContractsPageComponent, NewContractsPageComponent],
 	providers: [DeliveryService, RequestsService, AccountsService]
