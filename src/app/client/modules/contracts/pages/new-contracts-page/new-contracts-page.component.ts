@@ -4,7 +4,9 @@ import {BehaviorSubject, finalize, tap} from 'rxjs'
 import {DeliveryService} from 'src/app/shared/services/share/delivery.service'
 import {ToolsService} from 'src/app/shared/services/tools.service'
 import {DeliveryContractsInterface} from 'src/app/shared/types/delivery/delivery-contracts.interface'
+import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.interface'
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
+import {NewContractsPageDrawerService} from '../../modules/new-contracts-page-drawer/new-contracts-page-drawer.service'
 
 @Component({
 	selector: 'mib-new-contracts-page',
@@ -37,9 +39,15 @@ export class NewContractsPageComponent implements OnInit {
 	public listOfContracts: DeliveryContractsInterface[] = []
 	public listOfContractsVisible: DeliveryContractsInterface[] = []
 
+	public requestsSelection: TableSelectionEvent = {
+		selectedCount: 0,
+		selectedIds: []
+	}
+
 	constructor(
 		public toolsService: ToolsService,
-		private deliveryService: DeliveryService
+		private deliveryService: DeliveryService,
+		private newContractsPageDrawerService: NewContractsPageDrawerService
 	) {}
 
 	ngOnInit(): void {
@@ -61,8 +69,8 @@ export class NewContractsPageComponent implements OnInit {
 			.subscribe()
 	}
 
-	selectionChange($event) {
-		// console.log('selectionChange :>> ')
+	selectionChange(event: TableSelectionEvent) {
+		this.requestsSelection = event
 	}
 
 	onPageChange(page: number) {
@@ -79,7 +87,19 @@ export class NewContractsPageComponent implements OnInit {
 		)
 	}
 
-	newContractPageDrawer() {
-		console.log('contract drawer>>>')
+	newContractPageDrawer(contractID: number) {
+		console.log('contractID :>> ', contractID)
+		this.newContractsPageDrawerService
+			.open({
+				data: {
+					contractID: contractID
+				}
+			})
+			.afterClosed()
+			.pipe
+			// filter(Boolean),
+			// switchMap(async () => this.getClientDocumentsList())
+			()
+			.subscribe()
 	}
 }

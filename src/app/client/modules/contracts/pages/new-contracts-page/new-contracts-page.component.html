@@ -125,7 +125,7 @@
 						</mib-button>
 						<mib-dropdown #newDocumentRowMenu>
 							<mib-dropdown-point
-								(press)="newContractPageDrawer()"
+								(press)="newContractPageDrawer(contract?.ID)"
 								text="Открыть"
 							></mib-dropdown-point>
 						</mib-dropdown>
