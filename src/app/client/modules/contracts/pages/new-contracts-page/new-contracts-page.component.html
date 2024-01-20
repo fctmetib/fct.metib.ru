@@ -54,13 +54,14 @@
 			<mib-table (selectionChange)="selectionChange($event)">
 				<mib-table-head>
 					<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
-						>№</mib-table-head-cell
+						>Договор</mib-table-head-cell
 					>
-					<mib-table-head-cell>Имя файла</mib-table-head-cell>
-					<mib-table-head-cell>Описание</mib-table-head-cell>
-					<mib-table-head-cell>Тип документа</mib-table-head-cell>
-					<mib-table-head-cell>Дата создания</mib-table-head-cell>
-					<mib-table-head-cell>Прикрепил</mib-table-head-cell>
+					<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					<mib-table-head-cell>Вступил в силу</mib-table-head-cell>
+					<mib-table-head-cell>Действует до</mib-table-head-cell>
+					<mib-table-head-cell>Отсрочка</mib-table-head-cell>
+					<mib-table-head-cell>Лимит</mib-table-head-cell>
+					<mib-table-head-cell>Просрочка</mib-table-head-cell>
 				</mib-table-head>
 				<ng-container *ngIf="loading$ | async; else table">
 					<mib-skeleton
@@ -73,26 +74,42 @@
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
-						*ngFor="let doc of [1, 2, 3, 4, 5]; let last = last"
+						*ngFor="let contract of listOfContractsVisible; let last = last"
 						[underlined]="!last"
 					>
-						<mib-table-cell type="main">
-							<ng-container table-cell-title>savcxbd</ng-container>
+						<mib-table-cell contracted="true" type="main">
+							<ng-container table-cell-title>{{
+								contract?.Number
+							}}</ng-container>
+							<ng-container table-cell-description>
+								{{ contract?.Tariff.Title }}</ng-container
+							>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>asdfgd</ng-container>
+							<ng-container table-cell-title>{{
+								contract?.Debtor?.Title
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>sretad</ng-container>
+							<ng-container table-cell-title>{{
+								contract?.DateFrom | date : 'dd.MM.YYYY'
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>sadvcxbsa</ng-container>
+							<ng-container table-cell-title>{{
+								contract?.DateTo | date : 'dd.MM.YYYY'
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>acvxbsd</ng-container>
+							<ng-container table-cell-title
+								>{{ contract?.Delay.Count }} к.д.</ng-container
+							>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>7t87</ng-container>
+							<ng-container table-cell-title>static field!</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>static field!</ng-container>
 						</mib-table-cell>
 						<mib-button
 							[mibDropdownTrigger]="newDocumentRowMenu"
@@ -117,17 +134,16 @@
 				<mib-table-footer [showIsland]="true" [lined]="!(loading$ | async)">
 					<mib-paginator
 						(pageChange)="onPageChange($event)"
-						[totalCount]="123"
+						[totalCount]="listOfContracts.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 					></mib-paginator>
 				</mib-table-footer>
 			</mib-table>
 			<mib-spacing type="m"></mib-spacing>
-			<p class="headline">tab 1</p>
 		</mib-tab-item>
 		<mib-tab-item value="2">
-			<mib-spacing type="m"></mib-spacing>
+			<!-- <mib-spacing type="m"></mib-spacing>
 			<div class="flex flex_justify-between">
 				<mib-select
 					type="outline"
@@ -170,13 +186,14 @@
 			<mib-table (selectionChange)="selectionChange($event)">
 				<mib-table-head>
 					<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
-						>№</mib-table-head-cell
+						>Договор</mib-table-head-cell
 					>
-					<mib-table-head-cell>Имя файла</mib-table-head-cell>
-					<mib-table-head-cell>Описание</mib-table-head-cell>
-					<mib-table-head-cell>Тип документа</mib-table-head-cell>
-					<mib-table-head-cell>Дата создания</mib-table-head-cell>
-					<mib-table-head-cell>Прикрепил</mib-table-head-cell>
+					<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					<mib-table-head-cell>Вступил в силу</mib-table-head-cell>
+					<mib-table-head-cell>Действует до</mib-table-head-cell>
+					<mib-table-head-cell>Отсрочка</mib-table-head-cell>
+					<mib-table-head-cell>Лимит</mib-table-head-cell>
+					<mib-table-head-cell>Просрочка</mib-table-head-cell>
 				</mib-table-head>
 				<ng-container *ngIf="loading$ | async; else table">
 					<mib-skeleton
@@ -189,11 +206,13 @@
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
-						*ngFor="let doc of [1, 2, 3, 4, 5]; let last = last"
+						*ngFor="let contract of listOfContractsVisible; let last = last"
 						[underlined]="!last"
 					>
 						<mib-table-cell type="main">
-							<ng-container table-cell-title>savcxbd</ng-container>
+							<ng-container table-cell-title>{{
+								contract?.Number
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title>asdfgd</ng-container>
@@ -209,6 +228,9 @@
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title>7t87</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>7jhgjhu7</ng-container>
 						</mib-table-cell>
 						<mib-button
 							[mibDropdownTrigger]="newDocumentRowMenu"
@@ -233,17 +255,17 @@
 				<mib-table-footer [showIsland]="true" [lined]="!(loading$ | async)">
 					<mib-paginator
 						(pageChange)="onPageChange($event)"
-						[totalCount]="123"
+						[totalCount]="listOfContracts.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 					></mib-paginator>
 				</mib-table-footer>
-			</mib-table>
+			</mib-table> -->
 			<mib-spacing type="m"></mib-spacing>
 			<p class="headline">tab 2</p>
 		</mib-tab-item>
 		<mib-tab-item value="3">
-			<mib-spacing type="m"></mib-spacing>
+			<!-- <mib-spacing type="m"></mib-spacing>
 			<div class="flex flex_justify-between">
 				<mib-select
 					type="outline"
@@ -286,13 +308,14 @@
 			<mib-table (selectionChange)="selectionChange($event)">
 				<mib-table-head>
 					<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
-						>№</mib-table-head-cell
+						>Договор</mib-table-head-cell
 					>
-					<mib-table-head-cell>Имя файла</mib-table-head-cell>
-					<mib-table-head-cell>Описание</mib-table-head-cell>
-					<mib-table-head-cell>Тип документа</mib-table-head-cell>
-					<mib-table-head-cell>Дата создания</mib-table-head-cell>
-					<mib-table-head-cell>Прикрепил</mib-table-head-cell>
+					<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					<mib-table-head-cell>Вступил в силу</mib-table-head-cell>
+					<mib-table-head-cell>Действует до</mib-table-head-cell>
+					<mib-table-head-cell>Отсрочка</mib-table-head-cell>
+					<mib-table-head-cell>Лимит</mib-table-head-cell>
+					<mib-table-head-cell>Просрочка</mib-table-head-cell>
 				</mib-table-head>
 				<ng-container *ngIf="loading$ | async; else table">
 					<mib-skeleton
@@ -305,11 +328,13 @@
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
-						*ngFor="let doc of [1, 2, 3, 4, 5]; let last = last"
+						*ngFor="let contract of listOfContractsVisible; let last = last"
 						[underlined]="!last"
 					>
 						<mib-table-cell type="main">
-							<ng-container table-cell-title>savcxbd</ng-container>
+							<ng-container table-cell-title>{{
+								contract?.Number
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title>asdfgd</ng-container>
@@ -325,6 +350,9 @@
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title>7t87</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>7jhgjhu7</ng-container>
 						</mib-table-cell>
 						<mib-button
 							[mibDropdownTrigger]="newDocumentRowMenu"
@@ -349,12 +377,12 @@
 				<mib-table-footer [showIsland]="true" [lined]="!(loading$ | async)">
 					<mib-paginator
 						(pageChange)="onPageChange($event)"
-						[totalCount]="123"
+						[totalCount]="listOfContracts.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 					></mib-paginator>
 				</mib-table-footer>
-			</mib-table>
+			</mib-table> -->
 			<mib-spacing type="m"></mib-spacing>
 			<p class="headline">tab 3</p>
 		</mib-tab-item>
