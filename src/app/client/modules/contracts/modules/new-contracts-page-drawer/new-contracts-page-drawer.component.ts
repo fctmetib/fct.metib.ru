@@ -3,9 +3,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {NewContractsPageDrawerInterface} from './interfaces/new-contracts-page-drawer.interface'
 import {ToolsService} from 'src/app/shared/services/tools.service'
-import {BehaviorSubject} from 'rxjs'
+import {BehaviorSubject, finalize, tap} from 'rxjs'
 import {Properties} from 'csstype'
 import {DeliveryService} from 'src/app/shared/services/share/delivery.service'
+import {DeliveryContractsInterface} from 'src/app/shared/types/delivery/delivery-contracts.interface'
 
 @Component({
 	selector: 'mib-new-contracts-page-drawer',
@@ -37,11 +38,16 @@ export class NewContractsPageDrawerComponent implements OnInit {
 
 	size = 'm'
 
-	contract = {
-		Title: 'test title',
-		Number: 8213,
-		CreatedTime: '2022-07-30T00:00:00'
-	}
+	// contract = {
+	// 	Title: 'test title',
+	// 	Number: 8213,
+	// 	CreatedTime: '2022-07-30T00:00:00'
+	// }
+
+	public isClosedContracts = false
+	public addStatistics = true
+
+	public contract: DeliveryContractsInterface
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA)
@@ -60,7 +66,16 @@ export class NewContractsPageDrawerComponent implements OnInit {
 	}
 
 	getCurrentContract() {
-		// this.loading$.next(true)
-		// this
+		this.loading$.next(true)
+		this.deliveryService
+			.getAllDeliveriesContracts(this.isClosedContracts, this.addStatistics)
+			.pipe(
+				tap(data => {
+					this.contract = data.find(d => d.ID === this.documentId)
+					console.log('this.contract :>> ', this.contract)
+				}),
+				finalize(() => this.loading$.next(false))
+			)
+			.subscribe()
 	}
 }

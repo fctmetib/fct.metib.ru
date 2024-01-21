@@ -14,18 +14,25 @@
 		</ng-container>
 		<ng-template #title>
 			<div class="header flex gap-6">
-				<h4 title="{{ contract.Title }}">{{ contract.Title }}</h4>
-				<h4 title="{{ contract?.Number }}" class="c-bti-tertiary">
-					{{ contract?.Number }}
+				<h4 title="{{ contract?.Customer?.Title }}">
+					{{ contract?.Customer?.Title }}
+				</h4>
+				<h4 title="{{ contract?.Debtor?.Title }}">
+					&mdash; {{ contract?.Debtor?.Title }}
 				</h4>
 			</div>
 			<mib-spacing type="xs2"></mib-spacing>
-			<div class="flex gap-4">
+			<div class="flex flex_align-center gap-4">
 				<span class="text text_m c-bti-secondary"
-					>Добавлен {{ contract?.CreatedTime | date : 'dd.MM.yyyy' }}</span
+					>Оформлен {{ contract?.DateFrom | date : 'dd.MM.yyyy' }}</span
 				>
-				<span class="text text_m c-bti-quaternary"
-					>подписан {{ contract?.CreatedTime | date : 'dd.MM.yyyy' }}</span
+				<mib-icon
+					class="invoice-arrow stroke"
+					btn-icon
+					name="fi_arrow-right"
+				></mib-icon>
+				<span class="text text_m c-bti-secondary"
+					>Действует до {{ contract?.DateTo | date : 'dd.MM.yyyy' }}</span
 				>
 			</div>
 		</ng-template>
