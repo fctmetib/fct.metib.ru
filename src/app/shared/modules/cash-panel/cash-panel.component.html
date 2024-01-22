@@ -40,18 +40,18 @@
 <ng-template #unextracted>
 	<div
 		[class.extracted]="extracted"
-		class="flex flex_justify-center flex_justify-between"
+		class="flex flex_justify-center gap-4 flex_justify-between"
 	>
-		<div class="flex flex_align-center gap-4 w-100">
+		<div class="flex flex_align-center w-100">
 			<span class="text text_m text_regular flex_grow">
 				{{ panelTitle }}
 			</span>
 			<span class="paneldata text text_m text_medium c-bti-secondary">
 				{{ panelData | currency : 'RUB' : 'symbol-narrow' }}
 			</span>
-			<p class="alert text text_m text_medium">
+			<span class="alert text text_m text_medium">
 				<ng-content select="[alert]"></ng-content>
-			</p>
+			</span>
 		</div>
 		<mib-icon class="stroke" name="fi_info"></mib-icon>
 	</div>

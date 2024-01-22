@@ -29,7 +29,17 @@ export class NewContractsPageDrawerComponent implements OnInit {
 
 	public skeletonTitle: Properties = {
 		...this.skeletonWithoutUnderline,
-		height: '60px'
+		height: '42px'
+	}
+
+	public skeletonDescription: Properties = {
+		...this.skeletonWithoutUnderline,
+		height: '54px'
+	}
+
+	public skeletonDate: Properties = {
+		...this.skeletonWithoutUnderline,
+		height: '138px'
 	}
 
 	public PAGINATOR_ITEMS_PER_PAGE = 5
@@ -37,12 +47,6 @@ export class NewContractsPageDrawerComponent implements OnInit {
 	public currentPage$ = new BehaviorSubject<number>(1)
 
 	size = 'm'
-
-	// contract = {
-	// 	Title: 'test title',
-	// 	Number: 8213,
-	// 	CreatedTime: '2022-07-30T00:00:00'
-	// }
 
 	public isClosedContracts = false
 	public addStatistics = true
@@ -72,7 +76,7 @@ export class NewContractsPageDrawerComponent implements OnInit {
 			.pipe(
 				tap(data => {
 					this.contract = data.find(d => d.ID === this.documentId)
-					console.log('this.contract :>> ', this.contract)
+					console.log('this.contract w stats :>> ', this.contract)
 				}),
 				finalize(() => this.loading$.next(false))
 			)
