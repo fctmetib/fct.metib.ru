@@ -84,6 +84,10 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 	public deliveryIdControl = new FormControl(null, [Validators.required])
 	public freeLimitControl = new FormControl(0)
 
+	get currentDate() {
+		return new Date().toISOString().split('T')[0]
+	}
+
 	get shipments() {
 		return this.form.get('Shipments') as FormArray
 	}
@@ -107,6 +111,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 	ngOnInit() {
 		this.initForms()
 		this.watchForms()
+		this.getNextFreeRequestNumber()
 
 		this.existingRequest = this.data.data
 		if (this.existingRequest) {
@@ -127,6 +132,17 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 			.pipe(
 				tap(data => {
 					this.deliveries = data
+				})
+			)
+			.subscribe()
+	}
+
+	getNextFreeRequestNumber() {
+		this.requestsService
+			.getNextFreeRequestNumber()
+			.pipe(
+				tap(data => {
+					console.log('dataFreeRequestNumber :>> ', data)
 				})
 			)
 			.subscribe()
@@ -246,7 +262,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 	private initForms() {
 		this.form = this.fb.group({
 			Number: [null],
-			Date: [null],
+			Date: [this.currentDate],
 			Type: [RequestTypeEnum.FINANCING, [Validators.required]],
 			Status: [null],
 			Summ: [0, [Validators.required]],

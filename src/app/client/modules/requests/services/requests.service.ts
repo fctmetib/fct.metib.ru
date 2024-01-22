@@ -5,55 +5,64 @@ import {HttpClient} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
 import {FileMode} from 'src/app/shared/types/file/file-model.interface'
 import {ClientShipmentInterface} from 'src/app/shared/types/client/client-shipment.interface'
-import {Document, RequestCorrection, RequestReq, RequestRes, RequestState, RequestTypeEnum} from '../interfaces/request.interface'
+import {
+	Document,
+	RequestCorrection,
+	RequestReq,
+	RequestRes,
+	RequestState,
+	RequestTypeEnum
+} from '../interfaces/request.interface'
 
 export interface GetRequestsReq {
-  dateFrom?: string
-  dateTo?: string
-  includeShipments?: boolean
-  includeDocuments?: boolean
+	dateFrom?: string
+	dateTo?: string
+	includeShipments?: boolean
+	includeDocuments?: boolean
 }
 
 @Injectable()
 export class RequestsService {
-	constructor(
-    private http: HttpClient
-  ) {}
+	constructor(private http: HttpClient) {}
 
-  getRequestTypeTranslation(type: RequestTypeEnum) {
-    switch (type) {
-      case RequestTypeEnum.CORRECTION:
-        return 'Откорректированная'
-      case RequestTypeEnum.FINANCING:
-        return 'С финансированием';
-      case RequestTypeEnum.NON_FINANCING:
-        return 'Без финансирования';
-    }
-  }
-
-  public getRequestsConfig(data?: GetRequestsReq) {
-    const defaultConfig = {};
-    return {...defaultConfig, ...data};
-  }
-
-  /**
-   * Получить список свободной задолженности за период.
-   *
-   * @param data Параметры запроса для получения списка задолженностей.
-   * @returns Observable, который эмитит массив заявок.
-   */
-	public getRequests(data?: GetRequestsReq): Observable<RequestRes[]> {
-    const params = this.getRequestsConfig(data);
-		return this.http.get<RequestRes[]>(`${environment.apiUrl}/v1/requests`, {params})
+	getRequestTypeTranslation(type: RequestTypeEnum) {
+		switch (type) {
+			case RequestTypeEnum.CORRECTION:
+				return 'Откорректированная'
+			case RequestTypeEnum.FINANCING:
+				return 'С финансированием'
+			case RequestTypeEnum.NON_FINANCING:
+				return 'Без финансирования'
+		}
 	}
 
-  public getStates(requestID: number): Observable<RequestState[]> {
-    return this.http.get<RequestState[]>(`${environment.apiUrl}/v1/requests/${requestID}/states`)
-  }
+	public getRequestsConfig(data?: GetRequestsReq) {
+		const defaultConfig = {}
+		return {...defaultConfig, ...data}
+	}
 
-  public create(data: RequestReq): Observable<number[]> {
-    return this.http.post<number[]>(`${environment.apiUrl}/v1/requests`, data)
-  }
+	/**
+	 * Получить список свободной задолженности за период.
+	 *
+	 * @param data Параметры запроса для получения списка задолженностей.
+	 * @returns Observable, который эмитит массив заявок.
+	 */
+	public getRequests(data?: GetRequestsReq): Observable<RequestRes[]> {
+		const params = this.getRequestsConfig(data)
+		return this.http.get<RequestRes[]>(`${environment.apiUrl}/v1/requests`, {
+			params
+		})
+	}
+
+	public getStates(requestID: number): Observable<RequestState[]> {
+		return this.http.get<RequestState[]>(
+			`${environment.apiUrl}/v1/requests/${requestID}/states`
+		)
+	}
+
+	public create(data: RequestReq): Observable<number[]> {
+		return this.http.post<number[]>(`${environment.apiUrl}/v1/requests`, data)
+	}
 
 	public getFreeLimit(deliveryID: number): Observable<number> {
 		return this.http.get<number>(
@@ -62,14 +71,19 @@ export class RequestsService {
 	}
 
 	public getRequest(requestID: number): Observable<RequestRes> {
-		return this.http.get<RequestRes>(`${environment.apiUrl}/v1/requests/${requestID}`)
+		return this.http.get<RequestRes>(
+			`${environment.apiUrl}/v1/requests/${requestID}`
+		)
 	}
 
-	public update(requestID: number, data: Partial<RequestReq>): Observable<number[]> {
+	public update(
+		requestID: number,
+		data: Partial<RequestReq>
+	): Observable<number[]> {
 		return this.http.put<number[]>(`${environment.apiUrl}/v1/requests`, {
-      ...data,
-      ID: requestID
-    })
+			...data,
+			ID: requestID
+		})
 	}
 
 	public uploadDocument(
@@ -90,17 +104,22 @@ export class RequestsService {
 		)
 	}
 
-  correction(data: RequestCorrection): Observable<any> {
-    console.log(data)
-    return this.http.post(`${environment.apiUrl}/v1/requests/correction`, data)
-  }
+	correction(data: RequestCorrection): Observable<any> {
+		console.log(data)
+		return this.http.post(`${environment.apiUrl}/v1/requests/correction`, data)
+	}
 
+	public deleteRequests(requestIds: number[]): Observable<void> {
+		return this.http.delete<void>(`${environment.apiUrl}/v1/requests`, {
+			body: requestIds
+		})
+	}
 
-  public deleteRequests(requestIds: number[]): Observable<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/v1/requests`, {
-      body: requestIds
-    })
-  }
+	getNextFreeRequestNumber(): Observable<any> {
+		return this.http.get<string>(
+			`${environment.apiUrl}/v1/requests/nextnumber?typeOfRequest=MRQ`
+		)
+	}
 
 	// МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ
 	// МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ

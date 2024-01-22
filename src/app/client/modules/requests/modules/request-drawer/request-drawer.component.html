@@ -50,9 +50,16 @@
 					></mib-dropdown-point>
 				</mib-select>
 			</div>
+			{{ currentDate }}
 			<mib-input>
 				<ng-container mibLabel>Дата заявки</ng-container>
-				<input formControlName="Date" [size]="size" type="date" mibInput />
+				<input
+					formControlName="Date"
+					[size]="size"
+					type="date"
+					mibInput
+					readonly
+				/>
 			</mib-input>
 			<mib-input>
 				<ng-container mibLabel>Свободный лимит</ng-container>
