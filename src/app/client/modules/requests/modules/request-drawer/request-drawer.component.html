@@ -74,7 +74,7 @@
 			type="alert"
 		>
 			<ng-container information-text
-				>Необходимо прикрепить документ договора поставки
+				>Необходимо добавить поставки
 			</ng-container>
 		</mib-information>
 		<ng-template #deliveryAgreementsTemplate>
@@ -143,19 +143,17 @@
 		</ng-template>
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-button (press)="openShipment()" [size]="size">
-			Добавить договор поставки
+			Добавить
 			<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
 		</mib-button>
 		<mib-spacing type="s"></mib-spacing>
-		<h5 class="headline">Копии накладных</h5>
+		<h5 class="headline">Документы</h5>
 		<mib-spacing type="xs2"></mib-spacing>
 		<mib-information
 			*ngIf="!documents.controls.length; else copiesTemplate"
 			type="alert"
 		>
-			<ng-container information-text
-				>Необходимо прикрепить скан-копии накладных для отправки на модерацию
-			</ng-container>
+			<ng-container information-text>Документы </ng-container>
 		</mib-information>
 		<ng-template #copiesTemplate>
 			<mib-table>
@@ -220,7 +218,7 @@
 					'image/jpeg',
 					'image/png'
 				]"
-				headline="Прикрепите скан-копию документа"
+				headline="Прикрепите документ"
 			></mib-dnd>
 			<p class="text text_xs c-bti-tertiary">
 				Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG

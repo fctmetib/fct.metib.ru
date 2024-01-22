@@ -1,40 +1,45 @@
 <mib-drawer [formGroup]="form">
-  <mib-drawer-header (onClose)="dialogRef.close()" drawer-header></mib-drawer-header>
-  <mib-drawer-container>
-    <h4>Новый договор поставки</h4>
-    <mib-spacing type="xs"></mib-spacing>
-    <div class="flex flex_column gap-12">
-      <mib-input>
-        <ng-container mibLabel>Накладная</ng-container>
-        <input formControlName="WaybillNumber" mibInput>
-      </mib-input>
-      <mib-input>
-        <ng-container mibLabel>Дата накладной</ng-container>
-        <input type="date" formControlName="WaybillDate" mibInput>
-      </mib-input>
-      <div class="flex gap-12">
-        <mib-input class="flex_grow">
-          <ng-container mibLabel>Счет-фактура</ng-container>
-          <input formControlName="InvoiceNumber" mibInput>
-        </mib-input>
-        <mib-input class="flex_grow">
-          <ng-container mibLabel>Дата фактуры</ng-container>
-          <input type="date" formControlName="InvoiceDate" mibInput>
-        </mib-input>
-      </div>
-      <mib-input>
-        <ng-container mibLabel>Дата поставки</ng-container>
-        <input type="date" formControlName="DateShipment" mibInput>
-      </mib-input>
-      <mib-input>
-        <ng-container mibLabel>Сумма поставки</ng-container>
-        <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
-        <input mask="separator" formControlName="Summ" mibInput>
-      </mib-input>
-    </div>
-    <mib-spacing type="m"></mib-spacing>
-  </mib-drawer-container>
-  <mib-drawer-footer drawer-footer>
-    <mib-button [disabled]="form.invalid" (click)="onSubmit()">Создать поставку</mib-button>
-  </mib-drawer-footer>
+	<mib-drawer-header
+		(onClose)="dialogRef.close()"
+		drawer-header
+	></mib-drawer-header>
+	<mib-drawer-container>
+		<h4>Новый договор</h4>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex flex_column gap-12">
+			<mib-input>
+				<ng-container mibLabel>Накладная, УПД, Акт</ng-container>
+				<input formControlName="WaybillNumber" mibInput />
+			</mib-input>
+			<mib-input>
+				<ng-container mibLabel>Дата накладной</ng-container>
+				<input type="date" formControlName="WaybillDate" mibInput />
+			</mib-input>
+			<div class="flex gap-12">
+				<mib-input class="flex_grow">
+					<ng-container mibLabel>Счет-фактура</ng-container>
+					<input formControlName="InvoiceNumber" mibInput />
+				</mib-input>
+				<mib-input class="flex_grow">
+					<ng-container mibLabel>Дата фактуры</ng-container>
+					<input type="date" formControlName="InvoiceDate" mibInput />
+				</mib-input>
+			</div>
+			<mib-input>
+				<ng-container mibLabel>Дата поставки</ng-container>
+				<input type="date" formControlName="DateShipment" mibInput />
+			</mib-input>
+			<mib-input>
+				<ng-container mibLabel>Сумма поставки</ng-container>
+				<p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+				<input mask="separator" formControlName="Summ" mibInput />
+			</mib-input>
+		</div>
+		<mib-spacing type="m"></mib-spacing>
+	</mib-drawer-container>
+	<mib-drawer-footer drawer-footer>
+		<mib-button [disabled]="form.invalid" (click)="onSubmit()"
+			>Создать поставку</mib-button
+		>
+	</mib-drawer-footer>
 </mib-drawer>
