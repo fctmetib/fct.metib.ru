@@ -19,7 +19,7 @@ import {TabModule} from '../../../shared/ui-kit/tab/tab.module'
 import {NavbarModule} from '../../../shared/ui-kit/navbar/navbar.module'
 import {InputModule} from '../../../shared/ui-kit/input/input.module'
 import {ButtonModule} from '../../../shared/ui-kit/button/button.module'
-import {CommonModule} from '@angular/common'
+import {CommonModule, DatePipe} from '@angular/common'
 import {FreeDutyRoutingModule} from './free-duty-routing.module'
 import {DeliveryService} from '../../../shared/services/share/delivery.service'
 import {TableModule} from '../../../shared/ui-kit/table/table.module'
@@ -32,6 +32,7 @@ import {SkeletonModule} from '../../../shared/ui-kit/skeleton/skeleton.module'
 import {SelectModule} from '../../../shared/ui-kit/select/select.module'
 import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdown-point.module'
 import {AutoCompleteModule} from '../../../shared/ui-kit/auto-complete/auto-complete.module'
+import {DatesService} from 'src/app/shared/services/dates.service'
 
 @NgModule({
 	declarations: [FreeDutyPageComponent],
@@ -68,6 +69,13 @@ import {AutoCompleteModule} from '../../../shared/ui-kit/auto-complete/auto-comp
 		DropdownPointModule,
 		AutoCompleteModule
 	],
-	providers: [DialogService, DeliveryService, DutyService, FreeDutyService]
+	providers: [
+		DialogService,
+		DeliveryService,
+		DutyService,
+		FreeDutyService,
+		DatesService,
+		DatePipe
+	]
 })
 export class FreeDutyModule {}

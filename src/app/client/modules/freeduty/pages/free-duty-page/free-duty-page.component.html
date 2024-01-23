@@ -1,14 +1,18 @@
 <div class="container container_large">
-  <mib-spacing type="m"></mib-spacing>
-  <h3>Свободная задолженность</h3>
-  <mib-spacing type="m"></mib-spacing>
+	<mib-spacing type="m"></mib-spacing>
+	<h3>Свободная задолженность</h3>
+	<mib-spacing type="m"></mib-spacing>
 </div>
 <mib-tab-group>
-  <mib-navbar class="container container_large">
-    <mib-navbar-point (press)="selectTab(true)" value="1">Свободные</mib-navbar-point>
-    <mib-navbar-point (press)="selectTab(false)" value="2">Все задолженности</mib-navbar-point>
-  </mib-navbar>
-  <!-- <div class="container container_large">
+	<mib-navbar class="container container_large">
+		<mib-navbar-point (press)="selectTab(true)" value="1"
+			>Свободные</mib-navbar-point
+		>
+		<mib-navbar-point (press)="selectTab(false)" value="2"
+			>Все задолженности</mib-navbar-point
+		>
+	</mib-navbar>
+	<!-- <div class="container container_large">
     <mib-spacing type="m"></mib-spacing>
     <mib-auto-complete [style.max-width]="360+'px'">
       <mib-input autocomplete-input>
@@ -18,89 +22,172 @@
       <mib-dropdown-point *ngFor="let i of filtered | async" [value]="i.value" [text]="i.text"></mib-dropdown-point>
     </mib-auto-complete>
   </div> -->
-  <div class="container container_large">
-    <mib-spacing type="m"></mib-spacing>
-    <div class="flex flex_justify-between">
-      <div class="flex gap-16">
-        <div class="flex flex_align-center gap-4">
-          <input [formControl]="dateFrom" styleType="outline" type="date" mibInput/>
-          <p class="text text_m c-bti-tertiary">-</p>
-          <input [formControl]="dateTo" styleType="outline" type="date" mibInput/>
-        </div>
-        <mib-button [disabled]="!dutiesSelection.selectedCount" (press)="openDrawer()" type="filled-primary">Создать заявку
-          ({{dutiesSelection.selectedCount}})
-        </mib-button>
-      </div>
-    </div>
-    <mib-spacing type="xs"></mib-spacing>
-    <mib-table [isLoading]="loading$ | async"  (selectionChange)="onSelectionChanged($event)">
-      <mib-table-head>
-        <mib-table-head-cell [sortable]="true" [showCheckbox]="true" (onSort)="onSort($event, 'ID')">ИД
-        </mib-table-head-cell>
-        <mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Contract.Id')">Контракт</mib-table-head-cell>
-        <mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Number')">№ поставки</mib-table-head-cell>
-        <mib-table-head-cell [sortable]="true" (onSort)="onSortByDates($event, 'Date')">Дата поставки</mib-table-head-cell>
-        <mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'NumberInvoice')">С/ф №</mib-table-head-cell>
-        <mib-table-head-cell [sortable]="true" (onSort)="onSortByDates($event, 'DateInvoice')">С/ф дата</mib-table-head-cell>
-        <mib-table-head-cell>Задолженность</mib-table-head-cell>
-        <mib-table-head-cell [sortable]="true" (onSort)="onSortByDates($event, 'DatePayment')">Дата Платежа</mib-table-head-cell>
-        <mib-table-head-cell>Внешняя ссылка</mib-table-head-cell>
-        <mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Rest')">Остаток задолженности</mib-table-head-cell>
-        <mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Summ')">Сумма поставки</mib-table-head-cell>
-      </mib-table-head>
-      <ng-container *ngIf="loading$ | async; else table">
-        <mib-skeleton [styles]="last ? skeletonWithoutUnderline : skeleton"
-                      *ngFor="let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE); let last = last"></mib-skeleton>
-      </ng-container>
-      <ng-template #table>
-        <mib-table-row [rowId]="duty.ID" *ngFor="let duty of duties$ | async; let last = last" [underlined]="!last">
-          <mib-table-cell type="main">
-            <ng-container table-cell-title>{{duty.ID}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Contract.ID}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Number}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Date | date: 'dd.MM.YYYY'}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.NumberInvoice}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.DateInvoice | date: 'dd.MM.YYYY' }}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Statistics.PaymentExpire ? 'Есть' : 'Отсутствует'}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.DatePayment | date: 'dd.MM.YYYY'}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.RefNum}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Rest | rub}}</ng-container>
-          </mib-table-cell>
-          <mib-table-cell>
-            <ng-container table-cell-title>{{duty.Summ | rub}}</ng-container>
-          </mib-table-cell>
-          <mib-button table-row-button size="s" type="ghost-secondary">
-            <mib-icon class="stroke" btn-icon name="fi_more-vertical"></mib-icon>
-          </mib-button>
-        </mib-table-row>
-      </ng-template>
-      <mib-table-footer [lined]="!(loading$ | async)">
-        <mib-paginator (pageChange)="onPageChange($event)" [totalCount]="dutiesCount?.TotalItems ?? 0"
-                       [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-                       [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"></mib-paginator>
-      </mib-table-footer>
-    </mib-table>
-  </div>
+	<div class="container container_large">
+		<mib-spacing type="m"></mib-spacing>
+		<div class="flex flex_justify-between">
+			<div class="flex gap-16">
+				<div class="flex flex_align-center gap-4">
+					<input
+						[formControl]="dateFrom"
+						styleType="outline"
+						type="date"
+						mibInput
+					/>
+					<p class="text text_m c-bti-tertiary">-</p>
+					<input
+						[formControl]="dateTo"
+						styleType="outline"
+						type="date"
+						mibInput
+					/>
+				</div>
+				<mib-button
+					[disabled]="!dutiesSelection.selectedCount"
+					(press)="openDrawer()"
+					type="filled-primary"
+					>Создать заявку ({{ dutiesSelection.selectedCount }})
+				</mib-button>
+			</div>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-table
+			[isLoading]="loading$ | async"
+			(selectionChange)="onSelectionChanged($event)"
+		>
+			<mib-table-head>
+				<mib-table-head-cell
+					[sortable]="true"
+					[showCheckbox]="true"
+					(onSort)="onSort($event, 'ID')"
+					>ИД
+				</mib-table-head-cell>
+				<mib-table-head-cell
+					[sortable]="true"
+					(onSort)="onSort($event, 'Contract.Id')"
+					>Контракт</mib-table-head-cell
+				>
+				<mib-table-head-cell
+					[sortable]="true"
+					(onSort)="onSort($event, 'Number')"
+					>№ поставки</mib-table-head-cell
+				>
+				<mib-table-head-cell
+					[sortable]="true"
+					(onSort)="onSortByDates($event, 'Date')"
+					>Дата отгрузки</mib-table-head-cell
+				>
+				<mib-table-head-cell
+					[sortable]="true"
+					(onSort)="onSortByDates($event, 'DateContract')"
+					>Дата поставки</mib-table-head-cell
+				>
+				<mib-table-head-cell
+					[sortable]="true"
+					(onSort)="onSort($event, 'NumberInvoice')"
+					>С/ф №</mib-table-head-cell
+				>
+				<mib-table-head-cell
+					[sortable]="true"
+					(onSort)="onSortByDates($event, 'DateInvoice')"
+					>С/ф дата</mib-table-head-cell
+				>
+				<mib-table-head-cell>Задолженность</mib-table-head-cell>
+				<mib-table-head-cell
+					[sortable]="true"
+					(onSort)="onSortByDates($event, 'DatePayment')"
+					>Дата Платежа</mib-table-head-cell
+				>
+				<mib-table-head-cell>Внешняя ссылка</mib-table-head-cell>
+				<mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Rest')"
+					>Остаток задолженности</mib-table-head-cell
+				>
+				<mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Summ')"
+					>Сумма поставки</mib-table-head-cell
+				>
+			</mib-table-head>
+			<ng-container *ngIf="loading$ | async; else table">
+				<mib-skeleton
+					[styles]="last ? skeletonWithoutUnderline : skeleton"
+					*ngFor="
+						let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
+						let last = last
+					"
+				></mib-skeleton>
+			</ng-container>
+			<ng-template #table>
+				<mib-table-row
+					[rowId]="duty.ID"
+					*ngFor="let duty of duties$ | async; let last = last"
+					[underlined]="!last"
+				>
+					<mib-table-cell type="main">
+						<ng-container table-cell-title>{{ duty.ID }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ duty.Contract.ID }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ duty.Number }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							duty.Date | date : 'dd.MM.YYYY'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							duty.DateContract | date : 'dd.MM.YYYY'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							duty.NumberInvoice
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							duty.DateInvoice | date : 'dd.MM.YYYY'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							duty.Statistics.Comment
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							duty.DatePayment | date : 'dd.MM.YYYY'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ duty.RefNum }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ duty.Rest | rub }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ duty.Summ | rub }}</ng-container>
+					</mib-table-cell>
+					<mib-button table-row-button size="s" type="ghost-secondary">
+						<mib-icon
+							class="stroke"
+							btn-icon
+							name="fi_more-vertical"
+						></mib-icon>
+					</mib-button>
+				</mib-table-row>
+			</ng-template>
+			<mib-table-footer [lined]="!(loading$ | async)">
+				<mib-paginator
+					(pageChange)="onPageChange($event)"
+					[totalCount]="dutiesCount?.TotalItems ?? 0"
+					[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+					[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+				></mib-paginator>
+			</mib-table-footer>
+		</mib-table>
+	</div>
 </mib-tab-group>
-
 
 <!--<div class="card-content" id="step1">-->
 <!--  <p-toolbar styleClass="p-mb-4">-->
