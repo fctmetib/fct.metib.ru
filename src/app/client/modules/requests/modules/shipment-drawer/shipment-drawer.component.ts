@@ -81,4 +81,8 @@ export class ShipmentDrawerComponent implements OnInit {
 		)
 		this.dialogRef.close(form)
 	}
+
+	onSubmitAndClose() {
+		console.log('submit and close')
+	}
 }

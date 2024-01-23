@@ -9,12 +9,13 @@ import {DrawerHeaderType} from './interfaces/drawer-header.inteface'
 export class DrawerHeaderComponent {
 	@Input() type: DrawerHeaderType = 'view'
 	@Input() showEdits: boolean = false
+	@Input() showClose: boolean = false
 	@Input() showMaximize: boolean = false
 	@Input() showProgressBar: boolean = false
 	@Input() maxPage: number = 3
 	@Input() progress: number = 2
-  @Output() onEdit = new EventEmitter()
-  @Output() onClose = new EventEmitter()
+	@Output() onEdit = new EventEmitter()
+	@Output() onClose = new EventEmitter()
 
 	get classes() {
 		return {

@@ -1,109 +1,146 @@
 <div class="container container_large">
-  <mib-spacing type="m"></mib-spacing>
-  <h3>Заявки</h3>
-  <mib-spacing type="m"></mib-spacing>
+	<mib-spacing type="m"></mib-spacing>
+	<h3>Заявки</h3>
+	<mib-spacing type="m"></mib-spacing>
 </div>
 <mib-tab-group>
-  <div class="container container_large">
-    <div class="flex flex_justify-between">
-      <div class="flex gap-16">
-        <div class="flex flex_align-center gap-12">
-          <input styleType="outline" type="date" mibInput [formControl]="dateFrom"/>
-          <input styleType="outline" type="date" mibInput [formControl]="dateTo"/>
-          <mib-button (press)="refresh()" type="outline-primary">
-            <mib-icon btn-icon class="stroke" name="fi_refresh-ccw"></mib-icon>
-          </mib-button>
-        </div>
-        <mib-button (press)="openDrawer()" type="filled-primary">Создать заявку</mib-button>
-      </div>
-    </div>
-    <mib-spacing type="xs"></mib-spacing>
-    <mib-tab-item>
-      <mib-table (selectionChange)="selectionChange($event)">
-        <mib-table-head>
-          <mib-table-head-cell [sortable]="true" [showCheckbox]="true">ИД</mib-table-head-cell>
-          <mib-table-head-cell>№ заявки</mib-table-head-cell>
-          <mib-table-head-cell>Дата заявки</mib-table-head-cell>
-          <mib-table-head-cell>Договор поставки</mib-table-head-cell>
-          <mib-table-head-cell>Тип заявки</mib-table-head-cell>
-          <mib-table-head-cell>Статус</mib-table-head-cell>
-          <mib-table-head-cell>Доступ</mib-table-head-cell>
-          <mib-table-head-cell>Корректировка</mib-table-head-cell>
-          <mib-table-head-cell>Сумма</mib-table-head-cell>
-        </mib-table-head>
-        <ng-container *ngIf="loading$ | async; else table">
-          <mib-skeleton [styles]="last ? skeletonWithoutUnderline : skeleton"
-                        *ngFor="let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE); let last = last"></mib-skeleton>
-        </ng-container>
-        <ng-template #table>
-          <mib-table-row *ngFor="let req of requestsVisible; let last = last" [rowId]="req.ID" [underlined]="!last">
-            <mib-table-cell type="main">
-              <ng-container table-cell-title>{{ req.ID }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{ req.Number }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.Date | date : 'dd.MM.YYYY'
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.Delivery.CustomerID
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.Delivery.Title
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{ req.Status }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.Shipments ? 'Есть' : 'Отсутствует'
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.IsCorrected ? 'Да' : 'Нет'
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                req.Summ | currency : 'RUR'
-                }}</ng-container>
-            </mib-table-cell>
-            <mib-button [mibDropdownTrigger]="requestRowMenu" table-row-button size="s" type="ghost-secondary">
-              <mib-icon
-                class="stroke"
-                btn-icon
-                name="fi_more-vertical"
-              ></mib-icon>
-            </mib-button>
-            <mib-dropdown #requestRowMenu>
-              <mib-dropdown-point
-                (press)="openBrowserDrawer(req.ID)"
-                text="Открыть"
-              ></mib-dropdown-point>
-            </mib-dropdown>
-          </mib-table-row>
-        </ng-template>
-        <mib-table-footer [showIsland]="true" [actionLoading]="isSigningPreparing$ | async" (onDelete)="deleteRequests($event)" (onAction)="requestSign()" [lined]="!(loading$ | async)">
-          <ng-container table-footer-action>Подписать</ng-container>
-          <mib-paginator
-            (pageChange)="onPageChange($event)"
-            [totalCount]="requests.length"
-            [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-            [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
-          ></mib-paginator>
-        </mib-table-footer>
-      </mib-table>
-    </mib-tab-item>
-    <mib-tab-item></mib-tab-item>
-  </div>
+	<div class="container container_large">
+		<div class="flex flex_justify-between">
+			<div class="flex gap-16">
+				<div class="flex flex_align-center gap-12">
+					<input
+						styleType="outline"
+						type="date"
+						mibInput
+						[formControl]="dateFrom"
+					/>
+					<input
+						styleType="outline"
+						type="date"
+						mibInput
+						[formControl]="dateTo"
+					/>
+					<mib-button (press)="refresh()" type="outline-primary">
+						<mib-icon btn-icon class="stroke" name="fi_refresh-ccw"></mib-icon>
+					</mib-button>
+				</div>
+				<mib-button
+					[disabled]="loading$ | async"
+					(press)="openDrawer()"
+					type="filled-primary"
+					>Создать заявку</mib-button
+				>
+			</div>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-tab-item>
+			<mib-table (selectionChange)="selectionChange($event)">
+				<mib-table-head>
+					<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
+						>ИД</mib-table-head-cell
+					>
+					<mib-table-head-cell>№ заявки</mib-table-head-cell>
+					<mib-table-head-cell>Дата заявки</mib-table-head-cell>
+					<mib-table-head-cell>Договор поставки</mib-table-head-cell>
+					<mib-table-head-cell>Тип заявки</mib-table-head-cell>
+					<mib-table-head-cell>Статус</mib-table-head-cell>
+					<mib-table-head-cell>Доступ</mib-table-head-cell>
+					<mib-table-head-cell>Корректировка</mib-table-head-cell>
+					<mib-table-head-cell>Сумма</mib-table-head-cell>
+				</mib-table-head>
+				<ng-container *ngIf="loading$ | async; else table">
+					<mib-skeleton
+						[styles]="last ? skeletonWithoutUnderline : skeleton"
+						*ngFor="
+							let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
+							let last = last
+						"
+					></mib-skeleton>
+				</ng-container>
+				<ng-template #table>
+					<mib-table-row
+						*ngFor="let req of requestsVisible; let last = last"
+						[rowId]="req.ID"
+						[underlined]="!last"
+					>
+						<mib-table-cell type="main">
+							<ng-container table-cell-title>{{ req.ID }}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>{{ req.Number }}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>{{
+								req.Date | date : 'dd.MM.YYYY'
+							}}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>{{
+								req.Delivery.CustomerID
+							}}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>{{
+								req.Delivery.Title
+							}}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>{{ req.Status }}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>{{
+								req.Shipments ? 'Есть' : 'Отсутствует'
+							}}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>{{
+								req.IsCorrected ? 'Да' : 'Нет'
+							}}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>{{
+								req.Summ | currency : 'RUR'
+							}}</ng-container>
+						</mib-table-cell>
+						<mib-button
+							[mibDropdownTrigger]="requestRowMenu"
+							table-row-button
+							size="s"
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-icon>
+						</mib-button>
+						<mib-dropdown #requestRowMenu>
+							<mib-dropdown-point
+								(press)="openBrowserDrawer(req.ID)"
+								text="Открыть"
+							></mib-dropdown-point>
+						</mib-dropdown>
+					</mib-table-row>
+				</ng-template>
+				<mib-table-footer
+					[showIsland]="true"
+					[actionLoading]="isSigningPreparing$ | async"
+					(onDelete)="deleteRequests($event)"
+					(onAction)="requestSign()"
+					[lined]="!(loading$ | async)"
+				>
+					<ng-container table-footer-action>Подписать</ng-container>
+					<mib-paginator
+						(pageChange)="onPageChange($event)"
+						[totalCount]="requests.length"
+						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+					></mib-paginator>
+				</mib-table-footer>
+			</mib-table>
+		</mib-tab-item>
+		<mib-tab-item></mib-tab-item>
+	</div>
 </mib-tab-group>
 
 <!--<p-toast></p-toast>-->
