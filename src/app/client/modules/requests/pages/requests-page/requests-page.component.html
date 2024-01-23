@@ -59,6 +59,7 @@
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
+            (dblclick)="openBrowserDrawer(req.ID)"
 						*ngFor="let req of requestsVisible; let last = last"
 						[rowId]="req.ID"
 						[underlined]="!last"

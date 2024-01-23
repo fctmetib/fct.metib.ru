@@ -46,6 +46,7 @@ import {
 } from '../../../../../shared/services/tools.service'
 import {Drawer} from '../../../../../shared/ui-kit/drawer/drawer.class'
 import {DatesService} from '../../../../../shared/services/dates.service'
+import {PasteModalService} from '../../../../../shared/modules/modals/paste-modal/paste-modal.service';
 
 @Component({
 	selector: 'mib-request-drawer',
@@ -76,7 +77,8 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 		private au: AutoUnsubscribeService,
 		private formsPresetsService: FormsPresetsService,
 		private datesService: DatesService,
-		private toolsService: ToolsService
+		private toolsService: ToolsService,
+    private pasteModalService: PasteModalService
 	) {
 		super(data)
 	}
@@ -162,7 +164,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 			.subscribe()
 	}
 
-	addShipment(shipment: ShipmentReq) {
+	addShipment = (shipment: ShipmentReq) => {
 		const control: FormGroup = this.formsPresetsService.shipment(
 			Validators.required,
 			shipment
@@ -306,4 +308,13 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 		}
 		this.addDocument(document)
 	}
+
+  openClipboard() {
+    this.pasteModalService.open().afterClosed().pipe(
+      filter(Boolean),
+      tap(shipments => {
+        shipments.forEach(this.addShipment)
+      })
+    ).subscribe()
+  }
 }

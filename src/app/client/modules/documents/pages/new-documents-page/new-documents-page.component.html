@@ -65,6 +65,7 @@
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
+                        (dblclick)="newDocumentViewsDrawer(doc?.DocumentID)"
 						*ngFor="let doc of clientDocumentsVisible; let last = last"
 						[underlined]="!last"
 					>

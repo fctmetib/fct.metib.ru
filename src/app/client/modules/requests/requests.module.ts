@@ -49,6 +49,7 @@ import {SignPinModalModule} from '../../../shared/modules/modals/sign-pin-modal/
 import {DropdownModule} from '../../../shared/ui-kit/dropdown/dropdown.module';
 import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdown-point.module';
 import {DatesService} from '../../../shared/services/dates.service';
+import {PasteModalModule} from '../../../shared/modules/modals/paste-modal/paste-modal.module';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import {DatesService} from '../../../shared/services/dates.service';
     RequestBrowserDrawerModule,
     SignPinModalModule,
     DropdownModule,
-    DropdownPointModule
+    DropdownPointModule,
+    PasteModalModule
   ],
   providers: [
     DialogService,

@@ -1,17 +1,17 @@
-<div mibDrop (fileDropped)="onDrop($event)" [class.disabled]="loading"
+<div mibDrop (fileDropped)="onDrop($event)" [class.disabled]="loading || disabled" [class.loading]="loading"
      class="drag-and-drop flex flex_center text-center flex_column gap-4" (click)="openFileManager()">
   <ng-container *ngIf="!dropDirective?.fileOver; else fileOver">
     <div class="flex flex_align-center gap-4">
-      <mib-icon class="stroke" name="fi_file-text"></mib-icon>
+      <mib-icon *ngIf="showIcon" class="stroke" name="fi_file-text"></mib-icon>
       <p class="text text_m text_medium">{{headline}}</p>
     </div>
     <div class="flex flex_align-center gap-4">
-      <p class="text text_s c-bti-secondary">Перетащите файл сюда или</p>
-      <mib-link size="s">выберите файл на диске</mib-link>
+      <p class="text text_s c-bti-secondary">{{text}}</p>
+      <mib-link *ngIf="showPicker" size="s">{{actionText}}</mib-link>
     </div>
   </ng-container>
   <ng-template #fileOver>
-    <p class="text text_s c-bti-tertiary">Перетащите файл сюда</p>
+    <p class="text text_s c-bti-tertiary">{{fileOverText}}</p>
   </ng-template>
 </div>
 <input

@@ -148,10 +148,16 @@
 			</mib-table>
 		</ng-template>
 		<mib-spacing type="xs"></mib-spacing>
-		<mib-button (press)="openShipment()" [size]="size">
-			Добавить
-			<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
-		</mib-button>
+    <div class="flex gap-8">
+      <mib-button (press)="openShipment()" [size]="size">
+        Добавить
+        <mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
+      </mib-button>
+      <mib-button type="ghost-primary" (press)="openClipboard()" [size]="size">
+        <mib-icon btn-left-icon class="stroke" name="fi_copy"></mib-icon>
+        Вставить из буфера обмена
+      </mib-button>
+    </div>
 		<mib-spacing type="s"></mib-spacing>
 		<h5 class="headline">Документы</h5>
 		<mib-spacing type="xs2"></mib-spacing>
@@ -159,7 +165,7 @@
 			*ngIf="!documents.controls.length; else copiesTemplate"
 			type="alert"
 		>
-			<ng-container information-text>Документы </ng-container>
+			<ng-container information-text>Необходимо прикрепить накладные для отправки на модерацию</ng-container>
 		</mib-information>
 		<ng-template #copiesTemplate>
 			<mib-table>

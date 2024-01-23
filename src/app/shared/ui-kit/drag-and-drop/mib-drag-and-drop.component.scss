@@ -11,6 +11,10 @@
   background-color: var(--wgr-primary);
   outline: 1px dashed var(--wgr-tertiary);
   &.disabled {
+    cursor: unset;
+  }
+  &.loading {
+    cursor: wait;
   }
   &:not(.disabled).dragging {
     background-color: var(--wgr-secondary);

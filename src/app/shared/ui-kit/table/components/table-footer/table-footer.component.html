@@ -1,6 +1,6 @@
 <div class="flex flex_column">
-  <div class="flex flex_justify-center">
-    <mib-table-quick-action-island *ngIf="table.selectedRows.length">
+  <div class="flex flex_justify-center island" mibElementInView (onEntry)="islandIsIntersecting = $event">
+    <mib-table-quick-action-island *ngIf="table.selectedRows.length" [class.fixed]="!islandIsIntersecting">
       <ng-container table-quick-action-island-left>
         <ng-content select="[table-footer-action]"></ng-content>
       </ng-container>

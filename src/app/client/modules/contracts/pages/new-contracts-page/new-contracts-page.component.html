@@ -74,6 +74,7 @@
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
+                        (dblclick)="newContractPageDrawer(contract?.ID)"
 						*ngFor="let contract of listOfContractsVisible; let last = last"
 						[underlined]="!last"
 					>

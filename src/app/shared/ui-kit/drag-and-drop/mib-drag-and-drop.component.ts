@@ -10,7 +10,13 @@ import {DropDirective} from './directives/drop.directive';
 export class MibDragAndDropComponent {
   @ViewChild(DropDirective) dropDirective: DropDirective
   @ViewChild('loader') loader!: ElementRef;
+  @Input() disabled: boolean = false;
+  @Input() text: string = 'Перетащите файл сюда или'
+  @Input() actionText: string = 'выберите файл на диске'
+  @Input() fileOverText: string = 'Перетащите файл сюда'
   @Input() headline: string = 'Прикрепите документ'
+  @Input() showPicker: boolean = true
+  @Input() showIcon: boolean = true;
   @Input() loading: boolean = false;
   @Input() accept: string[] = [];
   @Input() multiple: boolean = false;
@@ -23,7 +29,7 @@ export class MibDragAndDropComponent {
   }
 
   public openFileManager() {
-    if (!this.loading) {
+    if (!this.loading && !this.disabled) {
       this.loader.nativeElement.click();
       this.loader.nativeElement.value = '';
     }

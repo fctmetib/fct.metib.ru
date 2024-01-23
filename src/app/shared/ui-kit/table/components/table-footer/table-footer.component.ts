@@ -17,6 +17,8 @@ export class TableFooterComponent {
   @Output() onAction = new EventEmitter<void>()
   @Output() onDelete = new EventEmitter<any[]>()
 
+  public islandIsIntersecting: boolean = false;
+
   constructor(
     public table: TableComponent
   ) {
@@ -25,4 +27,5 @@ export class TableFooterComponent {
   onDeleteHandler() {
     this.onDelete.emit(this.table.selectedRows.map(row => row.rowId))
   }
+
 }

@@ -11,8 +11,14 @@
       box-shadow: inset 0 1px 0 0 var(--wgr-secondary);
     }
   }
+
+  position: relative;
 }
 
 mib-table-quick-action-island {
   margin: 16px 0;
+  &.fixed {
+    position: fixed;
+    bottom: 24px;
+  }
 }
