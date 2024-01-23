@@ -4,13 +4,21 @@ import {DrawerData} from '../../../../../../shared/ui-kit/drawer/interfaces/draw
 import {ShipmentDrawerComponent} from '../shipment-drawer.component';
 import {Shipment, ShipmentReq} from '../interfaces/shipment.interface';
 import {drawerConfig} from '../../../../../../shared/ui-kit/drawer/drawer.tools';
+import {Subject} from 'rxjs';
 
 @Injectable()
 export class ShipmentDrawerService {
+
+  public shipment$ = new Subject<ShipmentReq>()
+
   constructor(private dialog: MatDialog) {
   }
 
-  open<T>(data?: DrawerData<T>): MatDialogRef<ShipmentDrawerComponent, ShipmentReq> {
+  emitShipment(data: ShipmentReq) {
+    this.shipment$.next(data)
+  }
+
+  open<T>(data?: DrawerData<T>): MatDialogRef<ShipmentDrawerComponent> {
     const config: DrawerData = {
       state: 'view',
     }

@@ -153,15 +153,10 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 	openShipment() {
 		const drawer = this.shipmentDrawerService.open({maxWidth: 492})
 
-		drawer
-			.afterClosed()
-			.pipe(
-				filter(Boolean),
-				tap(shipment => {
-					this.addShipment(shipment)
-				})
-			)
-			.subscribe()
+    this.shipmentDrawerService.shipment$.pipe(
+      tap(this.addShipment),
+      takeUntil(drawer.afterClosed())
+    ).subscribe()
 	}
 
 	addShipment = (shipment: ShipmentReq) => {

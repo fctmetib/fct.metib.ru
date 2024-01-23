@@ -41,12 +41,12 @@
 	</mib-drawer-container>
 	<mib-drawer-footer drawer-footer>
 		<div class="flex gap-12">
-			<mib-button [disabled]="form.invalid" (click)="onSubmitAndClose()"
+			<mib-button [disabled]="form.invalid" (click)="onSubmit()"
 				>Добавить</mib-button
 			>
 			<mib-button
 				[disabled]="form.invalid"
-				(click)="onSubmit()"
+				(click)="onSubmitAndClose()"
 				size="m"
 				type="filled-secondary"
 			>
