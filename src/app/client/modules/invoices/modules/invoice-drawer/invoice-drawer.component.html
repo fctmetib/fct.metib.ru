@@ -88,26 +88,6 @@
 			<ng-template #tabItems>
 				<mib-drawer-container>
 					<mib-tab-item value="1">
-						<mib-spacing type="m"></mib-spacing>
-						<div class="flex flex_justify-between">
-							<mib-select
-								class="supply-select-width"
-								placeholder="5 из 8 колонн в таблице"
-							>
-								<mib-dropdown-point
-									[value]="true"
-									text="3 из 8 колонн в таблице"
-								></mib-dropdown-point>
-								<mib-dropdown-point
-									[value]="true"
-									text="5 из 8 колонн в таблице"
-								></mib-dropdown-point>
-								<mib-dropdown-point
-									[value]="false"
-									text="8 из 8 колонн в таблице"
-								></mib-dropdown-point>
-							</mib-select>
-						</div>
 						<mib-spacing type="xs"></mib-spacing>
 						<mib-table>
 							<mib-table-head>
@@ -129,11 +109,13 @@
 									</ng-container>
 								</mib-table-cell>
 								<mib-table-cell>
-									<ng-container table-cell-title>{{ datas }}</ng-container>
+									<ng-container table-cell-title>{{
+										datas | rub
+									}}</ng-container>
 								</mib-table-cell>
 								<mib-table-cell>
 									<ng-container table-cell-title>{{
-										currentInvoice?.ID
+										currentInvoice?.ID | rub
 									}}</ng-container>
 								</mib-table-cell>
 								<mib-table-cell>
@@ -146,13 +128,6 @@
 										currentInvoice?.ID
 									}}</ng-container>
 								</mib-table-cell>
-								<mib-button table-row-button size="s" type="ghost-secondary">
-									<mib-icon
-										class="stroke"
-										btn-icon
-										name="fi_more-vertical"
-									></mib-icon>
-								</mib-button>
 							</mib-table-row>
 							<mib-table-row>
 								<mib-table-cell>
@@ -160,12 +135,12 @@
 								</mib-table-cell>
 								<mib-table-cell>
 									<ng-container table-cell-title>
-										{{ datas * 3 }}
+										{{ datas * 3 | rub }}
 									</ng-container>
 								</mib-table-cell>
 								<mib-table-cell>
 									<ng-container table-cell-title>
-										{{ datas * 2.5 }}
+										{{ datas * 2.5 | rub }}
 									</ng-container>
 								</mib-table-cell>
 								<mib-table-cell>
