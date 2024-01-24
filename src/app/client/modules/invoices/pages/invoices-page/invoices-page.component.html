@@ -30,9 +30,9 @@
 			<mib-table-head-cell>Договор поставки</mib-table-head-cell>
 			<mib-table-head-cell>Назначение</mib-table-head-cell>
 			<mib-table-head-cell>Плательщик</mib-table-head-cell>
-			<mib-table-head-cell>Номер счета</mib-table-head-cell>
 			<mib-table-head-cell>Дебитор</mib-table-head-cell>
-			<mib-table-head-cell>Номер счета</mib-table-head-cell>
+			<mib-table-head-cell>Счет плательщика</mib-table-head-cell>
+			<mib-table-head-cell>Счет получателя</mib-table-head-cell>
 		</mib-table-head>
 		<ng-container *ngIf="loading$ | async; else table">
 			<mib-skeleton
@@ -73,14 +73,15 @@
 				</mib-table-cell>
 				<mib-table-cell>
 					<ng-container table-cell-title>{{
-						invoice.Payer.Account
+						invoice.Beneficiary.Title
 					}}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
 					<ng-container table-cell-title>{{
-						invoice.Beneficiary.Title
+						invoice.Payer.Account
 					}}</ng-container>
 				</mib-table-cell>
+
 				<mib-table-cell>
 					<ng-container table-cell-title>{{
 						invoice.Beneficiary.Account
