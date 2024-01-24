@@ -4,26 +4,17 @@
 	<mib-spacing type="m"></mib-spacing>
 </div>
 <div class="container container_large">
-	<div class="flex flex_justify-between">
+	<div class="flex">
 		<div class="flex flex_align-center gap-4">
-			<input styleType="outline" type="date" mibInput />
+			<input
+				[formControl]="dateFrom"
+				styleType="outline"
+				type="date"
+				mibInput
+			/>
 			<p class="text text_m c-bti-tertiary">-</p>
-			<input styleType="outline" type="date" mibInput />
+			<input [formControl]="dateTo" styleType="outline" type="date" mibInput />
 		</div>
-		<mib-select placeholder="8 из 8 колонн в таблице">
-			<mib-dropdown-point
-				[value]="true"
-				text="8 из 8 колонн в таблице"
-			></mib-dropdown-point>
-			<mib-dropdown-point
-				[value]="false"
-				text="6 из 8 колонн в таблице"
-			></mib-dropdown-point>
-			<mib-dropdown-point
-				[value]="false"
-				text="2 из 8 колонн в таблице"
-			></mib-dropdown-point>
-		</mib-select>
 	</div>
 	<mib-spacing type="xs"></mib-spacing>
 	<mib-table>
@@ -54,11 +45,12 @@
 		</ng-container>
 		<ng-template #table>
 			<mib-table-row
+				(dblclick)="openDrawer(invoice.ID)"
 				[@slideAnimation]="invoicesAnimationStates[invoice.ID]"
 				*ngFor="let invoice of invoceRequests; let last = last"
 				[underlined]="!last"
 			>
-				<mib-table-cell (click)="openDrawer(invoice.ID)" type="main">
+				<mib-table-cell type="main">
 					<ng-container table-cell-title>{{
 						invoice.Date | date : 'dd.MM.YYYY'
 					}}</ng-container>
@@ -94,13 +86,20 @@
 						invoice.Beneficiary.Account
 					}}</ng-container>
 				</mib-table-cell>
-				<mib-button table-row-button size="s" type="ghost-secondary">
-					<mib-icon
-						class="stroke"
-						btn-icon
-						name="fi_more-vertical"
-					></mib-icon>
+				<mib-button
+					[mibDropdownTrigger]="newDocumentRowMenu"
+					table-row-button
+					size="s"
+					type="ghost-secondary"
+				>
+					<mib-icon class="stroke" btn-icon name="fi_more-vertical"></mib-icon>
 				</mib-button>
+				<mib-dropdown #newDocumentRowMenu>
+					<mib-dropdown-point
+						(press)="openDrawer(invoice.ID)"
+						text="Открыть"
+					></mib-dropdown-point>
+				</mib-dropdown>
 			</mib-table-row>
 		</ng-template>
 		<mib-table-footer [lined]="!(loading$ | async)">
