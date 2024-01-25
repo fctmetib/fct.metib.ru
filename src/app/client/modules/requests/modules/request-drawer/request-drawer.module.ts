@@ -27,33 +27,35 @@ import {
 import {RequestCorrectionModalModule} from '../../../../../shared/modules/modals/request-correction-modal/request-correction-modal.module';
 import {LabelModule} from '../../../../../shared/directives/label/label.module';
 import {NgxMaskModule} from 'ngx-mask';
+import {AutoCompleteModule} from '../../../../../shared/ui-kit/auto-complete/auto-complete.module';
 
 @NgModule({
   declarations: [RequestDrawerComponent],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    MatDialogModule,
-    SpacingModule,
-    TableModule,
-    ButtonModule,
-    IconModule,
-    SelectModule,
-    DropdownPointModule,
-    ReactiveFormsModule,
-    CheckboxModule,
-    PaginatorModule,
-    InputModule,
-    MibDragAndDropModule,
-    InformationModule,
-    ShipmentDrawerModule,
-    RubModule,
-    DropdownModule,
-    RightIconModule,
-    RequestCorrectionModalModule,
-    LabelModule,
-    NgxMaskModule
-  ],
+    imports: [
+        CommonModule,
+        DrawerModule,
+        MatDialogModule,
+        SpacingModule,
+        TableModule,
+        ButtonModule,
+        IconModule,
+        SelectModule,
+        DropdownPointModule,
+        ReactiveFormsModule,
+        CheckboxModule,
+        PaginatorModule,
+        InputModule,
+        MibDragAndDropModule,
+        InformationModule,
+        ShipmentDrawerModule,
+        RubModule,
+        DropdownModule,
+        RightIconModule,
+        RequestCorrectionModalModule,
+        LabelModule,
+        NgxMaskModule,
+        AutoCompleteModule
+    ],
   providers: [
     RequestDrawerService,
     DeliveryService,

@@ -37,8 +37,15 @@ export class DropdownPointComponent implements AfterViewInit {
   ) {
   }
 
+  get isVisible() {
+    if (this.autoCompleteComponent) {
+      return this.autoCompleteComponent.getVisibleState(this.value)
+    }
+    return true
+  }
+
   get selected() {
-    return this.selectComponent?.matchOption(this.value)
+    return (this.selectComponent || this.autoCompleteComponent)?.matchOption(this.value)
   }
 
   select($event: Event): void {

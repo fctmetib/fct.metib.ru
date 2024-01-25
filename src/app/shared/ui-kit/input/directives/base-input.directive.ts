@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Directive, ElementRef, HostBinding, HostListener, Input, Optional, Renderer2} from '@angular/core';
-import {NgControl, Validators} from '@angular/forms';
+import {AbstractControl, NgControl, Validators} from '@angular/forms';
 import {AutoUnsubscribeService} from '../../../services/auto-unsubscribe.service';
 import {InputStatus} from '../interfaces/input.interface';
 import {tap} from 'rxjs';
@@ -63,31 +63,34 @@ export class BaseInputDirective {
   public onBlurEv() {
     this.touchesCount += 1
     this.touched = true
-    this.updateStatus()
+    this.updateStatus(this.control)
   }
 
   ngAfterViewInit() {
     this.touchesCount += this.control?.touched ? 1 : 0
-    this.updateStatus()
+    this.updateStatus(this.control)
     if (this.control) {
       this.control.statusChanges.pipe(
-        tap(() => this.updateStatus),
+        tap(() => this.updateStatus(this.control)),
         takeUntil(this.au.destroyer)
       ).subscribe()
     }
   }
 
-  public updateStatus(): void {
+  public updateStatus(control?: AbstractControl, isAutocompleteLogs = false): void {
     if (this.disabled) {
       this.status = 'disabled'
-    } else if (this.control?.invalid && this.touchesCount > 0) {
+    } else if (control?.invalid && this.touchesCount > 0) {
       this.status = 'error'
-    } else if (this.control?.valid && this.touchesCount > 0) {
+    } else if (control?.valid && this.touchesCount > 0) {
       this.status = 'active'
-    } else if (this.control?.value?.length > 0) {
+    } else if (control?.value?.length > 0) {
       this.status = 'filled'
     } else {
       this.status = 'default'
+    }
+    if (isAutocompleteLogs) {
+      console.log('status',this.status)
     }
     this.cdr.detectChanges()
   }

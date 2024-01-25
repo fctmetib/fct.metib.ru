@@ -19,7 +19,7 @@ export class DeliveryService {
     })
   }
 
-  getFreeLimit(deliveryID: string): Observable<number> {
+  getFreeLimit(deliveryID: number): Observable<number> {
     return this.http.get<number>(`${environment.apiUrl}/v1/deliveries/FreeLimit`, {
       params: {
         deliveryID

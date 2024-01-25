@@ -115,10 +115,13 @@ export class RequestsService {
 		})
 	}
 
-	getNextFreeRequestNumber(): Observable<any> {
-		return this.http.get<string>(
-			`${environment.apiUrl}/v1/requests/nextnumber?typeOfRequest=MRQ`
-		)
+	getNextFreeRequestNumber(): Observable<string> {
+		return this.http.get<string>(`${environment.apiUrl}/v1/requests/nextnumber`, {
+      responseType: 'text' as 'json',
+      params: {
+        typeOfRequest: 'MRQ'
+      }
+    })
 	}
 
 	// МОЖНО СМОТРЕТЬ МЕТОДЫ, НО НЕ ПОЛЬЗОВАТЬСЯ ТЕМ, ЧТО НИЖЕ

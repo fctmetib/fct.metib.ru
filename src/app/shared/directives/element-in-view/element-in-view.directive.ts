@@ -1,4 +1,5 @@
-import {Directive, ElementRef, EventEmitter, Output} from '@angular/core';
+import {Directive, ElementRef, EventEmitter, Inject, Output, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
 
 @Directive({
   selector: '[mibElementInView]'
@@ -9,7 +10,8 @@ export class ElementInViewDirective {
   private observer!: IntersectionObserver;
 
   constructor(
-    private element: ElementRef
+    private element: ElementRef,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
   }
 
@@ -19,8 +21,10 @@ export class ElementInViewDirective {
       threshold: [0]
     };
 
-    this.observer = new IntersectionObserver(([entry]) => this.onEntry.emit(entry.isIntersecting), config);
-    this.observer.observe(this.element.nativeElement);
+    if (isPlatformBrowser(this.platformId)) {
+      this.observer = new IntersectionObserver(([entry]) => this.onEntry.emit(entry.isIntersecting), config);
+      this.observer.observe(this.element.nativeElement);
+    }
   }
 
   ngOnDestroy() {

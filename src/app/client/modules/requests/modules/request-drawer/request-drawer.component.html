@@ -6,19 +6,18 @@
 	<mib-drawer-container>
 		<h4>{{ isEditing ? 'Редактирование заявки' : 'Создание новой заявки' }}</h4>
 		<mib-spacing type="xs"></mib-spacing>
-		<mib-select
-			[formControl]="deliveryIdControl"
-			[size]="size"
-			placeholder="Выберите договор поставки"
-			type="outline"
-		>
-			<ng-container mibSelectLabel>Договор поставки</ng-container>
-			<mib-dropdown-point
-				*ngFor="let delivery of deliveries"
-				[text]="delivery.Title"
-				[value]="delivery.ID"
-			></mib-dropdown-point>
-		</mib-select>
+
+    <mib-auto-complete [formControl]="deliveryIdControl">
+      <mib-input autocomplete-input>
+        <ng-container mibLabel>Договор поставки</ng-container>
+        <input mibInput styleType="outline" [size]="size" placeholder="Выберите договор поставки">
+      </mib-input>
+      <mib-dropdown-point
+        *ngFor="let delivery of deliveries"
+        [text]="delivery.Title"
+        [value]="delivery.ID"
+      ></mib-dropdown-point>
+    </mib-auto-complete>
 		<mib-spacing type="xs"></mib-spacing>
 		<div class="flex flex_column gap-12">
 			<div class="flex gap-12">
