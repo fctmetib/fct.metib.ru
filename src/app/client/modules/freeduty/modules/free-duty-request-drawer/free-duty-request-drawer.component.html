@@ -89,8 +89,7 @@
 					type="filled-primary"
 					>Создать заявку</mib-button
 				>
-				<mib-button size="m" type="ghost-primary"
-					>Сохранить и подписать</mib-button
+				<mib-button [loading]="!!(sendingAndSigning$ | async)" (press)="requestSign()" size="m" type="ghost-primary">Создать и подписать</mib-button
 				>
 			</div>
 			<mib-button (click)="dialogRef.close()" size="m" type="ghost-alert"

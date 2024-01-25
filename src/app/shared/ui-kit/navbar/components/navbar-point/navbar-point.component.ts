@@ -3,14 +3,15 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
+  EventEmitter, Inject,
   Input,
   NgZone,
   OnDestroy,
-  Output,
+  Output, PLATFORM_ID,
   ViewChild
 } from '@angular/core';
 import {NavbarPointSize, NavbarPointType} from '../../interfaces/navbar-point.interface';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   selector: 'mib-navbar-point',
@@ -22,7 +23,6 @@ export class NavbarPointComponent implements AfterViewInit, OnDestroy {
   private mutationObserver: MutationObserver;
 
   @ViewChild('leftIcon', {static: false}) leftIcon: ElementRef<HTMLDivElement>
-
   @Input() value: string = ''
 
   @Input() set size(value: NavbarPointSize) {
@@ -49,6 +49,7 @@ export class NavbarPointComponent implements AfterViewInit, OnDestroy {
   public classes: { [key: string]: boolean } = {}
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
     private zone: NgZone,
     private cdr: ChangeDetectorRef
   ) {
@@ -59,8 +60,10 @@ export class NavbarPointComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.initMutationObserver();
-    this.cdr.detectChanges()
+    if (isPlatformBrowser(this.platformId)) {
+      this.initMutationObserver();
+      this.cdr.detectChanges()
+    }
   }
 
   private initMutationObserver() {

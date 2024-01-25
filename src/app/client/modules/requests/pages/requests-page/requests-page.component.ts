@@ -186,19 +186,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   requestSign(): void {
     const requestIDs = this.table.selectedRows.map(req => req.rowId);
     this.isSigningPreparing$.next(true)
-    this.signService.getActiveSession().pipe(
-      switchMap(result => {
-        if (result) {
-          return this.requestsService.send(requestIDs)
-        } else {
-          return this.signService.getPin().pipe(
-            switchMap(() => {
-              this.isSigningPreparing$.next(false)
-              return this.signPinModalService.open(requestIDs).afterClosed().pipe(filter(Boolean))
-            })
-          )
-        }
-      }),
+    this.requestsService.requestSign(requestIDs, this.isSigningPreparing$).pipe(
       switchMap(() => this.loadRequestsData()),
       finalize(() => this.isSigningPreparing$.next(false))
     ).subscribe()

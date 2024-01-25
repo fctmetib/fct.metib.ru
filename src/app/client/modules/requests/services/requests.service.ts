@@ -1,6 +1,6 @@
 import {ClientRequestSendingInitRequestInterface} from 'src/app/shared/types/client/client-request-sending-init-request.interface'
 import {Injectable} from '@angular/core'
-import {Observable} from 'rxjs'
+import {BehaviorSubject, filter, finalize, Observable, switchMap} from 'rxjs'
 import {HttpClient} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
 import {FileMode} from 'src/app/shared/types/file/file-model.interface'
@@ -13,6 +13,8 @@ import {
 	RequestState,
 	RequestTypeEnum
 } from '../interfaces/request.interface'
+import {SignService} from '../../../../shared/services/share/sign.service';
+import {SignPinModalService} from '../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service';
 
 export interface GetRequestsReq {
 	dateFrom?: string
@@ -23,7 +25,11 @@ export interface GetRequestsReq {
 
 @Injectable()
 export class RequestsService {
-	constructor(private http: HttpClient) {}
+	constructor(
+    private signService: SignService,
+    private signPinModalService: SignPinModalService,
+    private http: HttpClient
+  ) {}
 
 	getRequestTypeTranslation(type: RequestTypeEnum) {
 		switch (type) {
@@ -198,4 +204,21 @@ export class RequestsService {
 			data
 		)
 	}
+
+  requestSign(requestIDs: number[], loading$: BehaviorSubject<boolean>) {
+    return this.signService.getActiveSession().pipe(
+      switchMap(result => {
+        if (result) {
+          return this.send(requestIDs)
+        } else {
+          return this.signService.getPin().pipe(
+            switchMap(() => {
+              loading$.next(false)
+              return this.signPinModalService.open(requestIDs).afterClosed().pipe(filter(Boolean))
+            })
+          )
+        }
+      }),
+    )
+  }
 }
