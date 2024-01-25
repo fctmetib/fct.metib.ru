@@ -9,9 +9,9 @@
 				<ng-content select="[contacted-label]"></ng-content>
 			</span>
 			<ng-container *ngIf="showBadge">
-				<mib-badge [extended]="true" size="m" type="filled-secondary"
-					>Дополнительный</mib-badge
-				>
+				<mib-badge [extended]="true" size="m" type="filled-secondary">{{
+					additionalOffice
+				}}</mib-badge>
 			</ng-container>
 		</div>
 		<mib-button size="m" type="ghost-secondary">

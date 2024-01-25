@@ -16,7 +16,8 @@ export class ContractedFormsComponent {
 	@Input() device: ContractedFormsDevice = 'Desktop'
 	@Input() type: ContractedFormsType = 'Банковские реквизиты'
 	@Input() mainBank: boolean = false
-	@Input() showBadge: boolean = true
+	@Input() showBadge: boolean = false
+	@Input() additionalOffice: string = ''
 
 	@Output() onClick: EventEmitter<Event>
 }
