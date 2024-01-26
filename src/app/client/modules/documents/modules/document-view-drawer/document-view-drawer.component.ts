@@ -80,7 +80,7 @@ export class DocumentViewDrawerComponent implements OnInit {
   }
 
   sign() {
-    this.documentsService.sign(of(null), this.isSigning$).subscribe()
+    this.documentsService.signModal(of(null), this.isSigning$).subscribe()
   }
 
   downloadFile() {

@@ -19,8 +19,12 @@ export class DocumentsService {
     private http: HttpClient
   ) {}
 
-  sign<T>(req$: Observable<T>, loading$: BehaviorSubject<boolean>) {
+  public signModal<T>(req$: Observable<T>, loading$: BehaviorSubject<boolean>) {
     return this.signPinModalService.sign(req$, loading$)
+  }
+
+  public sign(id: number): Observable<DocumentSign[]> {
+    return this.http.post<DocumentSign[]>(`${environment.apiUrl}/v1/documents/${id}/sign`, null)
   }
 
 	public fetchDocuments(): Observable<DocumentRes[]> {
