@@ -1,4 +1,9 @@
+:host {
+  display: block;
+}
+
 .skeleton {
+  height: 100%;
   &.dark {
     background: linear-gradient(-45deg, var(--bti-secondary), var(--bti-tertiary), var(--bti-secondary));
     background-size: 400% 400%;

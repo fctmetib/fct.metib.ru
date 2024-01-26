@@ -5,12 +5,12 @@ import {BehaviorSubject, filter, finalize, switchMap, tap} from 'rxjs'
 import {DatesService} from 'src/app/shared/services/dates.service'
 import {ToolsService} from 'src/app/shared/services/tools.service'
 import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.interface'
-import {NewDocumentsPageDrawerService} from '../../modules/new-documents-page-drawer/new-documents-page-drawer.service'
+import {DocumentDrawerService} from '../../modules/new-documents-page-drawer/document-drawer.service'
 import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {NewDocumentsViewsDrawerService} from '../../modules/new-documents-views-drawer/new-documents-views-drawer.service'
+import {DocumentViewDrawerService} from '../../modules/new-documents-views-drawer/document-view-drawer.service'
 import {DocumentsService} from '../../services/documents.service'
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
-import {Document} from '../../../requests/interfaces/request.interface';
+import {DocumentRes} from '../../../requests/interfaces/request.interface';
 
 @Component({
 	selector: 'mib-new-documents-page',
@@ -44,8 +44,8 @@ export class NewDocumentsPageComponent implements OnInit {
 	public dateTo: FormControl = new FormControl<string>('')
 
 	// public clientDocuments: Document[] = []
-	public clientDocuments: Document[] = []
-	public clientDocumentsVisible: Document[] = []
+	public clientDocuments: DocumentRes[] = []
+	public clientDocumentsVisible: DocumentRes[] = []
 
 	requests: any
 	requestsVisible: any
@@ -53,8 +53,8 @@ export class NewDocumentsPageComponent implements OnInit {
 	constructor(
 		public toolsService: ToolsService,
 		public datesService: DatesService,
-		public newDocumentsPageDrawerService: NewDocumentsPageDrawerService,
-		public newDocumentsViewsDrawerService: NewDocumentsViewsDrawerService,
+		public documentDrawerService: DocumentDrawerService,
+		public documentViewDrawerService: DocumentViewDrawerService,
 		private documentsService: DocumentsService
 	) {}
 
@@ -99,8 +99,8 @@ export class NewDocumentsPageComponent implements OnInit {
 		)
 	}
 
-	newDocumentPageDrawer() {
-		this.newDocumentsPageDrawerService
+	newDocumentDrawer() {
+		this.documentDrawerService
 			.open({state: DrawerStateEnum.CREATE})
 			.afterClosed()
 			.pipe
@@ -111,7 +111,7 @@ export class NewDocumentsPageComponent implements OnInit {
 	}
 
 	newDocumentViewsDrawer(documentID: number) {
-		this.newDocumentsViewsDrawerService
+		this.documentViewDrawerService
 			.open({
 				data: {
 					documentID: documentID

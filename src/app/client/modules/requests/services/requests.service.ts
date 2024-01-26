@@ -6,7 +6,7 @@ import {environment} from 'src/environments/environment'
 import {FileMode} from 'src/app/shared/types/file/file-model.interface'
 import {ClientShipmentInterface} from 'src/app/shared/types/client/client-shipment.interface'
 import {
-	Document,
+	DocumentRes,
 	RequestCorrection,
 	RequestReq,
 	RequestRes,
@@ -93,7 +93,7 @@ export class RequestsService {
 	}
 
 	public uploadDocument(
-		document: Document,
+		document: DocumentRes,
 		requestID: number,
 		documentType: string
 	) {

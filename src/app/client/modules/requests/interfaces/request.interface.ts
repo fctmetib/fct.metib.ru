@@ -27,7 +27,7 @@ export interface RequestReq {
   ReadOnly: boolean
   IsCorrected: boolean
   Shipments: Shipment[]
-  Documents: Document[]
+  Documents: DocumentRes[]
   Files: FileMode[]
 }
 
@@ -35,14 +35,20 @@ export interface RequestRes extends RequestReq {
   ID: number
 }
 
-export interface Document {
+export interface DocumentReq {
   Number?: string
-  Title?: string
-  Location?: string
+  Title: string
   Description?: string
+  DocumentTypeID: number
+  OwnerTypeID: number
+  OwnerID?: number
+  Data?: string
+}
+
+export interface DocumentRes extends Omit<DocumentReq, 'OwnerID'> {
+  Location?: string
   DocumentStatusID?: number
   DocumentStatus?: string
-  DocumentTypeID: number
   DocumentType?: string
   DocumentTypeTitle?: string
   Available?: boolean
@@ -54,10 +60,8 @@ export interface Document {
   AuthorOrganization?: string
   CreatorLastName?: string
   CreatorFirstName?: string
-  DocumentID?: number
-  OwnerTypeID: number
+  DocumentID: number
   OwnerID: number
-  Data?: string
 }
 
 export interface RequestState {

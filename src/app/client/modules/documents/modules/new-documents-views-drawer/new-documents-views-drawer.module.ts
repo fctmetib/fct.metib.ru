@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
-import {NewDocumentsViewsDrawerComponent} from './new-documents-views-drawer.component'
-import {NewDocumentsViewsDrawerService} from './new-documents-views-drawer.service'
+import {DocumentViewDrawerComponent} from './document-view-drawer.component'
+import {DocumentViewDrawerService} from './document-view-drawer.service'
 import {DrawerModule} from 'src/app/shared/ui-kit/drawer/drawer.module'
 import {MatDialogModule} from '@angular/material/dialog'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
@@ -23,7 +23,7 @@ import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
 
 @NgModule({
-	declarations: [NewDocumentsViewsDrawerComponent],
+	declarations: [DocumentViewDrawerComponent],
 	imports: [
 		CommonModule,
 		DrawerModule,
@@ -46,6 +46,6 @@ import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
 		SelectModule,
 		NavbarModule
 	],
-	providers: [NewDocumentsViewsDrawerService]
+	providers: [DocumentViewDrawerService]
 })
 export class NewDocumentsViewsDrawerModule {}

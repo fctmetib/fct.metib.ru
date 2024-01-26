@@ -3,7 +3,7 @@ import {FormBuilder} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {RequestBrowserDrawer} from './interfaces/request-browser.drawer'
-import {Document, RequestState} from '../../interfaces/request.interface'
+import {DocumentRes, RequestState} from '../../interfaces/request.interface'
 import {RequestsService} from '../../services/requests.service'
 import {BehaviorSubject, filter, finalize, switchMap, tap} from 'rxjs'
 import {Properties} from 'csstype'
@@ -61,8 +61,8 @@ export class RequestBrowserDrawerComponent extends Drawer implements OnInit {
 	public shipments: Shipment[] = []
 	public shipmentsDisplay: Shipment[] = []
 
-	public documents: Document[] = []
-	public documentsDisplay: Document[] = []
+	public documents: DocumentRes[] = []
+	public documentsDisplay: DocumentRes[] = []
 
 	public freeLimit: number = 0
 

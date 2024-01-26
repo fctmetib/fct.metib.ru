@@ -7,21 +7,21 @@ import {extractBase64} from 'src/app/shared/services/tools.service'
 import {DocumentsService} from '../../services/documents.service'
 import {AuthService} from 'src/app/auth/services/auth.service'
 import {ButtonSize} from '../../../../../shared/ui-kit/button/interfaces/button.interface';
-import {Document} from '../../../requests/interfaces/request.interface';
+import {DocumentReq, DocumentRes} from '../../../requests/interfaces/request.interface';
 
 @Component({
 	selector: 'mib-new-documents-page-drawer',
-	templateUrl: './new-documents-page-drawer.component.html',
-	styleUrls: ['./new-documents-page-drawer.component.scss']
+	templateUrl: './documents-drawer.component.html',
+	styleUrls: ['./documents-drawer.component.scss']
 })
-export class NewDocumentsPageDrawerComponent implements OnInit {
+export class DocumentsDrawerComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
   public size: ButtonSize = 'm'
 	public form: FormGroup
 
 	constructor(
-		public dialogRef: MatDialogRef<NewDocumentsPageDrawerComponent>,
+		public dialogRef: MatDialogRef<DocumentsDrawerComponent>,
 		private fb: FormBuilder,
 		private documentService: DocumentsService,
 		private authService: AuthService
@@ -42,7 +42,7 @@ export class NewDocumentsPageDrawerComponent implements OnInit {
 			.fetchDocuments()
 			.pipe(
 				tap(data => {
-					console.log('documentsList :>> ', data)
+					console.log('documentsList: ', data)
 				}),
 				finalize(() => {
 					this.loading$.next(false)
@@ -59,37 +59,22 @@ export class NewDocumentsPageDrawerComponent implements OnInit {
 		})
 	}
 
-	addDocument(data: Partial<Document>) {
+	addDocument(data: DocumentReq) {
 		const control: FormGroup = this.fb.group({
 			Number: [null],
-			Title: [null], //
-			Location: [null],
-			Description: [null], //
-			DocumentStatusID: [null],
-			DocumentStatus: [null],
-			DocumentTypeID: [null], //
-			DocumentType: [null],
-			DocumentTypeTitle: [null],
-			Available: [null],
-			Removed: [null],
-			ActiveOrganizationID: [null],
-			ActiveOrganization: [null],
-			CreatedTime: [null],
-			AuthorOrganizationID: [null],
-			AuthorOrganization: [null],
-			CreatorLastName: [null],
-			CreatorFirstName: [null],
-			DocumentID: [null],
-			OwnerTypeID: [null], //
-			OwnerID: [null], //
-			Data: [null] //
+			Title: [null],
+			Description: [null],
+			DocumentTypeID: [null],
+			OwnerTypeID: [null],
+			OwnerID: [null],
+			Data: [null]
 		})
 		control.patchValue(data)
 		this.documents.push(control)
 	}
 
 	onSubmit(): void {
-		const documents: Document[] = this.form.getRawValue().Documents
+		const documents: DocumentRes[] = this.form.getRawValue().Documents
     const needSign: boolean = this.form.get('isDocumentSign').value;
 
     // TODO: СДЕЛАТЬ ПОДПИСЬ ПРИ needSign (TRUE)
@@ -107,14 +92,15 @@ export class NewDocumentsPageDrawerComponent implements OnInit {
 	}
 
 	removeDocument(idx: number) {
-		console.log('remove>>>', idx)
+		this.documents.removeAt(idx)
 	}
 
 	onDocumentLoad({file, url}: FileDnd) {
-		const document: Partial<Document> = {
+		const document: DocumentReq = {
+      Number: null,
+			Title: file.name,
 			Description: `description ${file.name}`,
 			DocumentTypeID: 40,
-			Title: file.name,
 			OwnerTypeID: 6,
 			OwnerID: this.authService.currentUser$.value.userFactoring.OrganizationID,
 			Data: extractBase64(url)

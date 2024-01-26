@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
-import {NewDocumentsPageDrawerComponent} from './new-documents-page-drawer.component'
-import {NewDocumentsPageDrawerService} from './new-documents-page-drawer.service'
+import {DocumentsDrawerComponent} from './documents-drawer.component'
+import {DocumentDrawerService} from './document-drawer.service'
 import {DrawerModule} from 'src/app/shared/ui-kit/drawer/drawer.module'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
@@ -21,7 +21,7 @@ import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {LabelModule} from '../../../../../shared/directives/label/label.module';
 
 @NgModule({
-	declarations: [NewDocumentsPageDrawerComponent],
+	declarations: [DocumentsDrawerComponent],
     imports: [
         CommonModule,
         DrawerModule,
@@ -42,6 +42,6 @@ import {LabelModule} from '../../../../../shared/directives/label/label.module';
         DropdownModule,
         LabelModule
     ],
-	providers: [NewDocumentsPageDrawerService]
+	providers: [DocumentDrawerService]
 })
 export class NewDocumentsPageDrawerModule {}

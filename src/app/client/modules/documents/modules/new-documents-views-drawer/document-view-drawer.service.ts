@@ -1,23 +1,24 @@
 import {Injectable} from '@angular/core'
 import {MatDialog, MatDialogRef} from '@angular/material/dialog'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {NewDocumentsPageDrawerComponent} from './new-documents-page-drawer.component'
+import {DocumentViewDrawerComponent} from './document-view-drawer.component'
 import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
+import {DocumentViewsDrawerData} from './interfaces/document-views-drawer.data'
 
 @Injectable({
 	providedIn: 'root'
 })
-export class NewDocumentsPageDrawerService {
+export class DocumentViewDrawerService {
 	constructor(private dialog: MatDialog) {}
 
 	open(
-		data?: DrawerData<any>
-	): MatDialogRef<NewDocumentsPageDrawerComponent, number[]> {
+		data?: DrawerData<DocumentViewsDrawerData>
+	): MatDialogRef<DocumentViewDrawerComponent, number[]> {
 		const config: DrawerData = {
 			state: 'view'
 		}
 		return this.dialog.open(
-			NewDocumentsPageDrawerComponent,
+			DocumentViewDrawerComponent,
 			drawerConfig(data?.maxWidth, Object.assign(config, data))
 		)
 	}

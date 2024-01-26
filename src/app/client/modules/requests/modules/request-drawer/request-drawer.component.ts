@@ -29,7 +29,7 @@ import {
   Validators
 } from '@angular/forms'
 import {
-  Document,
+  DocumentRes,
   DocumentType,
   RequestReq,
   RequestRes,
@@ -161,7 +161,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
     this.shipments.push(control)
   }
 
-  addDocument(data: Partial<Document>) {
+  addDocument(data: Partial<DocumentRes>) {
     const control: FormGroup = this.fb.group({
       // Number: [null],
       Title: [null], //
@@ -206,7 +206,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
       Documents: [],
       ...this.toolsService.transformDatesToISO(data)
     }
-    const documents: Document[] = this.documents.value
+    const documents: DocumentRes[] = this.documents.value
     const shipments: ShipmentReq[] = this.shipments.value
 
     if (shipments.length > 0) {
@@ -220,7 +220,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
               if (documents.length > 0) {
                 const uploadObservables = documents.map(document => {
                   const requestId = result[0]
-                  const modifiedDocument: Document = {
+                  const modifiedDocument: DocumentRes = {
                     ...document,
                     OwnerID: requestId
                   }
@@ -287,7 +287,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
   }
 
   onDocumentLoad({file, url}: FileDnd) {
-    const document: Partial<Document> = {
+    const document: Partial<DocumentRes> = {
       Description: `description ${file.name}`,
       DocumentTypeID: 40,
       Title: file.name,
