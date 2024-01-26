@@ -7,7 +7,7 @@ import {Injectable} from '@angular/core'
 import {BehaviorSubject, Observable} from 'rxjs'
 import {HttpClient} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
-import {DocumentReq, DocumentRes} from '../../requests/interfaces/request.interface';
+import {DocumentReq, DocumentRes, DocumentSign} from '../../requests/interfaces/request.interface';
 import {SignPinModalService} from '../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service';
 
 @Injectable()
@@ -25,6 +25,10 @@ export class DocumentsService {
 		const url = `${environment.apiUrl}/v1/documents`
 		return this.http.get<DocumentRes[]>(url)
 	}
+
+  public getSign(id: number): Observable<DocumentSign[]> {
+    return this.http.get<DocumentSign[]>(`${environment.apiUrl}/v1/documents/${id}/sign`)
+  }
 
 	fetchDocumentById(id: number): Observable<string> {
 		const url = `${environment.apiUrl}/v1/documents/${id}/content`

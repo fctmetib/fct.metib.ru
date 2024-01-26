@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {Properties} from 'csstype'
-import {BehaviorSubject, defer, finalize, of, tap} from 'rxjs'
+import {BehaviorSubject, defer, finalize, of, switchMap, tap} from 'rxjs'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {DocumentViewsDrawerData} from './interfaces/document-views-drawer.data'
 import {DocumentsService} from '../../services/documents.service'
 import {ToolsService} from 'src/app/shared/services/tools.service'
-import {DocumentRes} from '../../../requests/interfaces/request.interface';
+import {DocumentRes, DocumentSign} from '../../../requests/interfaces/request.interface';
 
 @Component({
   selector: 'mib-new-documents-views-drawer',
@@ -37,7 +37,9 @@ export class DocumentViewDrawerComponent implements OnInit {
   public PAGINATOR_PAGE_TO_SHOW = 5
   public currentPage$ = new BehaviorSubject<number>(1)
 
-  size = 'm'
+  public signs: DocumentSign[] = []
+
+  public size = 'm'
   public document: DocumentRes
 
   constructor(
@@ -65,6 +67,11 @@ export class DocumentViewDrawerComponent implements OnInit {
         tap(data => {
           this.document = data.find(el => el.DocumentID === this.documentId)
         }),
+        switchMap(() => this.documentsService.getSign(this.document.DocumentID).pipe(
+          tap(signs => {
+            this.signs = signs
+          })
+        )),
         finalize(() => {
           this.loading$.next(false)
         })

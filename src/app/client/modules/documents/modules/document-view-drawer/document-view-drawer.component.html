@@ -64,7 +64,7 @@
   <mib-tab-group>
     <mib-navbar>
       <mib-navbar-point value="1">Подписи</mib-navbar-point>
-      <mib-navbar-point value="2">Квитанции</mib-navbar-point>
+<!--      <mib-navbar-point value="2">Квитанции</mib-navbar-point>-->
     </mib-navbar>
     <div>
       <mib-drawer-container>
@@ -72,7 +72,7 @@
           <mib-spacing type="m"></mib-spacing>
           <mib-table [isLoading]="loading$ | async">
             <mib-table-head>
-              <mib-table-head-cell [showCheckbox]="true"
+              <mib-table-head-cell
               >Серийный №
               </mib-table-head-cell
               >
@@ -91,22 +91,22 @@
             </ng-container>
             <ng-template #table>
               <mib-table-row
-                *ngFor="let doc of [1, 2, 3, 4, 5]; let idx = index"
+                *ngFor="let sign of signs; let idx = index"
                 [underlined]="true"
               >
-                <mib-table-cell type="main">
+                <mib-table-cell>
                   <ng-container table-cell-title>
-                    {{ idx + 1 }}
+                    {{ sign.Serial }}
                   </ng-container>
                 </mib-table-cell>
                 <mib-table-cell>
-                  <ng-container table-cell-title>without data</ng-container>
+                  <ng-container table-cell-title>{{ sign.Organization }}</ng-container>
                 </mib-table-cell>
                 <mib-table-cell>
-                  <ng-container table-cell-title>without data</ng-container>
+                  <ng-container table-cell-title>{{ sign.Issuer }}</ng-container>
                 </mib-table-cell>
                 <mib-table-cell>
-                  <ng-container table-cell-title>without data</ng-container>
+                  <ng-container table-cell-title>{{ sign.Date | date: 'dd.MM.yyyy' }}</ng-container>
                 </mib-table-cell>
                 <!--              <mib-button table-row-button size="s" type="ghost-secondary">-->
                 <!--                <mib-icon-->
@@ -119,7 +119,7 @@
             </ng-template>
             <mib-table-footer [lined]="!(loading$ | async)">
               <mib-paginator
-                [totalCount]="5"
+                [totalCount]="signs.length"
                 [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
                 [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
               ></mib-paginator>
