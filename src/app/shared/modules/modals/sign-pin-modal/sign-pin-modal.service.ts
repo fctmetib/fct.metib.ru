@@ -3,7 +3,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog'
 import {modalConfig} from 'src/app/shared/ui-kit/modal/modal.tools'
 import {SignPinModalComponent} from './sign-pin-modal.component';
 import {SignPinModalData, SignPinModalOutput, SignPinModalRef} from './sign-pin-modal.interface';
-import {BehaviorSubject, filter, map, Observable, switchMap} from 'rxjs';
+import {BehaviorSubject, filter, finalize, map, Observable, switchMap} from 'rxjs';
 import {SignService} from '../../../services/share/sign.service';
 
 @Injectable({
@@ -42,6 +42,7 @@ export class SignPinModalService {
           )
         }
       }),
+      finalize(() => loading$.next(false))
     )
   }
 

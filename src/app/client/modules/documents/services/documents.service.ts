@@ -7,18 +7,24 @@ import {Injectable} from '@angular/core'
 import {BehaviorSubject, Observable} from 'rxjs'
 import {HttpClient} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
-import {DocumentReq, DocumentRes} from '../../requests/interfaces/request.interface';
+import {DocumentReq, DocumentRes, DocumentSign} from '../../requests/interfaces/request.interface';
 import {SignPinModalService} from '../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DocumentsService {
 	constructor(
     private signPinModalService: SignPinModalService,
     private http: HttpClient
   ) {}
 
-  sign<T>(req$: Observable<T>, loading$: BehaviorSubject<boolean>) {
+  public signModal<T>(req$: Observable<T>, loading$: BehaviorSubject<boolean>) {
     return this.signPinModalService.sign(req$, loading$)
+  }
+
+  public sign(id: number): Observable<DocumentSign> {
+    return this.http.post<DocumentSign>(`${environment.apiUrl}/v1/documents/${id}/sign`, null)
   }
 
 	public fetchDocuments(): Observable<DocumentRes[]> {
@@ -26,9 +32,12 @@ export class DocumentsService {
 		return this.http.get<DocumentRes[]>(url)
 	}
 
-	fetchDocumentById(id: number): Observable<string> {
-		const url = `${environment.apiUrl}/v1/documents/${id}/content`
-		return this.http.get<string>(url)
+  public getSign(id: number): Observable<DocumentSign[]> {
+    return this.http.get<DocumentSign[]>(`${environment.apiUrl}/v1/documents/${id}/sign`)
+  }
+
+	getDocumentContent(id: number): Observable<string> {
+		return this.http.get<string>(`${environment.apiUrl}/v1/documents/${id}/content`)
 	}
 
 	uploadNewDocument(data: DocumentReq, withSign: boolean = false): Observable<DocumentRes> {

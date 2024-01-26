@@ -11,9 +11,7 @@ import {DocumentViewsDrawerData} from './interfaces/document-views-drawer.data'
 export class DocumentViewDrawerService {
 	constructor(private dialog: MatDialog) {}
 
-	open(
-		data?: DrawerData<DocumentViewsDrawerData>
-	): MatDialogRef<DocumentViewDrawerComponent, number[]> {
+	open(data: DrawerData<DocumentViewsDrawerData>): MatDialogRef<DocumentViewDrawerComponent, number[]> {
 		const config: DrawerData = {
 			state: 'view'
 		}

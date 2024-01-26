@@ -12,6 +12,7 @@ import {RequestCorrectionModalService} from '../../../../../shared/modules/modal
 import {RequestBrowserDrawerService} from './request-browser-drawer.service'
 import {Drawer} from '../../../../../shared/ui-kit/drawer/drawer.class'
 import {RequestDrawerService} from '../request-drawer/request-drawer.service'
+import {DocumentViewDrawerService} from '../../../documents/modules/document-view-drawer/document-view-drawer.service';
 
 @Component({
 	selector: 'mib-request-browser-drawer',
@@ -74,6 +75,7 @@ export class RequestBrowserDrawerComponent extends Drawer implements OnInit {
 		public dialogRef: MatDialogRef<RequestBrowserDrawerComponent>,
 		public requestsService: RequestsService,
 		private requestBrowserDrawerService: RequestBrowserDrawerService,
+    private documentViewDrawerService: DocumentViewDrawerService,
 		private requestDrawerService: RequestDrawerService,
 		private correctionModalService: RequestCorrectionModalService
 	) {
@@ -164,4 +166,12 @@ export class RequestBrowserDrawerComponent extends Drawer implements OnInit {
 			data: this.request
 		})
 	}
+
+  openDocumentView(documentID: number) {
+    this.documentViewDrawerService.open({
+      data: {
+        documentID
+      }
+    })
+  }
 }

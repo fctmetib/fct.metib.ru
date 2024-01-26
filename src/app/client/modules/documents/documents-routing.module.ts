@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core'
 import {RouterModule} from '@angular/router'
-import {NewDocumentsPageComponent} from './pages/new-documents-page/new-documents-page.component'
+import {DocumentsPageComponent} from './pages/documents-page/documents-page.component'
 
 const routes = [
 	{
@@ -8,7 +8,7 @@ const routes = [
 		children: [
 			{
 				path: '',
-				component: NewDocumentsPageComponent
+				component: DocumentsPageComponent
 			}
 		]
 	}

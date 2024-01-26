@@ -17,7 +17,6 @@ import {RadioButtonModule} from 'primeng/radiobutton'
 import {InputTextareaModule} from 'primeng/inputtextarea'
 import {MenubarModule} from 'primeng/menubar'
 import {AvatarModule} from 'primeng/avatar'
-import {DocumentsPageComponent} from './components/documents-page/documents-page.component'
 import {ToastModule} from 'primeng/toast'
 import {TabViewModule} from 'primeng/tabview'
 import {TieredMenuModule} from 'primeng/tieredmenu'
@@ -30,7 +29,6 @@ import {SkeletonModule as SkeletonModule22} from 'primeng/skeleton'
 import {ToolbarModule} from 'primeng/toolbar'
 import {TooltipModule} from 'primeng/tooltip'
 import {RequestsRoutingModule} from '../requests/requests-routing.module'
-import {NewDocumentsPageComponent} from './pages/new-documents-page/new-documents-page.component'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {TabModule} from 'src/app/shared/ui-kit/tab/tab.module'
 import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
@@ -45,10 +43,11 @@ import {DatesService} from 'src/app/shared/services/dates.service'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {DocumentDrawerModule} from './modules/document-drawer/document-drawer.module'
 import {DocumentViewDrawerModule} from './modules/document-view-drawer/document-view-drawer.module'
-import {SignPinModalModule} from '../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.module';
+import {DocumentsPageComponent} from './pages/documents-page/documents-page.component';
 
 @NgModule({
-	imports: [
+  declarations: [DocumentsPageComponent],
+  imports: [
 		CommonModule,
 		InputTextModule,
 		CheckboxModule,
@@ -92,7 +91,6 @@ import {SignPinModalModule} from '../../../shared/modules/modals/sign-pin-modal/
 		DocumentDrawerModule,
 		DocumentViewDrawerModule
 	],
-	declarations: [DocumentsPageComponent, NewDocumentsPageComponent],
 	providers: [DocumentsService, DatesService, DatePipe]
 })
 export class DocumentsModule {}

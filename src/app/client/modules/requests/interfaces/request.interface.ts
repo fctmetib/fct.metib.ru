@@ -35,6 +35,23 @@ export interface RequestRes extends RequestReq {
   ID: number
 }
 
+export interface DocumentSign {
+  Serial: string;
+  Title: string;
+  Organization: string;
+  Date: string;
+  References: Reference[];
+  Issuer: string;
+  NotBefore: string;
+  NotAfter: string;
+}
+
+export interface Reference {
+  DocumentTypeID: number;
+  ReferenceTypeID: number;
+}
+
+
 export interface DocumentReq {
   Number?: string
   Title: string
@@ -44,7 +61,7 @@ export interface DocumentReq {
   Data: string
 }
 
-export interface DocumentRes extends Omit<DocumentReq, "Data"> {
+export interface DocumentRes extends Omit<DocumentReq, 'Data'> {
   Location: string
   DocumentStatusID: number
   DocumentStatus: string

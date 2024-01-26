@@ -49,22 +49,24 @@
                   *ngIf="loading$ | async; else fileTemplate"></mib-skeleton>
     <ng-template #fileTemplate>
 <!--      <mib-file-cell size="s"></mib-file-cell>-->
-      <mib-button (press)="downloadFile()">Скачать файл</mib-button>
+      <div class="flex flex_align-center gap-16">
+        <mib-button [loading]="isSigning$ | async" (press)="sign()" type="filled-primary">Подписать документ</mib-button>
+        <mib-button [loading]="isDownloading$ | async" type="ghost-primary" (press)="downloadFile()">
+          <mib-icon mibLeftIcon class="stroke" name="fi_download"></mib-icon>
+          <span>Скачать файл</span>
+        </mib-button>
+        <!--      <mib-link size="m" type="ghost-accent">-->
+        <!--        <mib-icon mibLeftIcon class="stroke" name="fi_trash"></mib-icon>-->
+        <!--        Удалить документ-->
+        <!--      </mib-link>-->
+      </div>
     </ng-template>
-<!--    <mib-spacing type="xs"></mib-spacing>-->
-<!--    <div class="flex flex_align-center gap-16">-->
-<!--      <mib-button [loading]="isSigning$ | async" (press)="sign()" type="filled-primary">Подписать документ</mib-button>-->
-<!--      <mib-link size="m" type="ghost-accent">-->
-<!--        <mib-icon mibLeftIcon class="stroke" name="fi_trash"></mib-icon>-->
-<!--        Удалить документ-->
-<!--      </mib-link>-->
-<!--    </div>-->
     <mib-spacing type="m"></mib-spacing>
   </mib-drawer-container>
   <mib-tab-group>
     <mib-navbar>
       <mib-navbar-point value="1">Подписи</mib-navbar-point>
-      <mib-navbar-point value="2">Квитанции</mib-navbar-point>
+<!--      <mib-navbar-point value="2">Квитанции</mib-navbar-point>-->
     </mib-navbar>
     <div>
       <mib-drawer-container>
@@ -72,7 +74,7 @@
           <mib-spacing type="m"></mib-spacing>
           <mib-table [isLoading]="loading$ | async">
             <mib-table-head>
-              <mib-table-head-cell [showCheckbox]="true"
+              <mib-table-head-cell
               >Серийный №
               </mib-table-head-cell
               >
@@ -91,22 +93,22 @@
             </ng-container>
             <ng-template #table>
               <mib-table-row
-                *ngFor="let doc of [1, 2, 3, 4, 5]; let idx = index"
+                *ngFor="let sign of signs; let idx = index"
                 [underlined]="true"
               >
-                <mib-table-cell type="main">
+                <mib-table-cell>
                   <ng-container table-cell-title>
-                    {{ idx + 1 }}
+                    {{ sign.Serial }}
                   </ng-container>
                 </mib-table-cell>
                 <mib-table-cell>
-                  <ng-container table-cell-title>without data</ng-container>
+                  <ng-container table-cell-title>{{ sign.Organization }}</ng-container>
                 </mib-table-cell>
                 <mib-table-cell>
-                  <ng-container table-cell-title>without data</ng-container>
+                  <ng-container table-cell-title>{{ sign.Issuer }}</ng-container>
                 </mib-table-cell>
                 <mib-table-cell>
-                  <ng-container table-cell-title>without data</ng-container>
+                  <ng-container table-cell-title>{{ sign.Date | date: 'dd.MM.yyyy' }}</ng-container>
                 </mib-table-cell>
                 <!--              <mib-button table-row-button size="s" type="ghost-secondary">-->
                 <!--                <mib-icon-->
@@ -119,7 +121,7 @@
             </ng-template>
             <mib-table-footer [lined]="!(loading$ | async)">
               <mib-paginator
-                [totalCount]="5"
+                [totalCount]="signs.length"
                 [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
                 [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
               ></mib-paginator>

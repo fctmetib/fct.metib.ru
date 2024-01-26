@@ -50,6 +50,8 @@ import {DropdownModule} from '../../../shared/ui-kit/dropdown/dropdown.module';
 import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdown-point.module';
 import {DatesService} from '../../../shared/services/dates.service';
 import {PasteModalModule} from '../../../shared/modules/modals/paste-modal/paste-modal.module';
+import {DocumentViewDrawerService} from '../documents/modules/document-view-drawer/document-view-drawer.service';
+import {DocumentsService} from '../documents/services/documents.service';
 
 @NgModule({
   declarations: [
@@ -110,7 +112,7 @@ import {PasteModalModule} from '../../../shared/modules/modals/paste-modal/paste
     MessageService,
     CommonService,
     DatesService,
-    DatePipe
+    DatePipe,
   ]
 })
 export class RequestsModule {

@@ -94,7 +94,7 @@ export class DocumentDrawerComponent implements OnInit {
         })
       )
       if (this.isDocumentSign) {
-        return this.documentService.sign(req$, this.isSubmitting$).pipe(map(output => output.data))
+        return this.documentService.signModal(req$, this.isSubmitting$).pipe(map(output => output.data))
       } else {
         return req$.pipe(
           finalize(() => {

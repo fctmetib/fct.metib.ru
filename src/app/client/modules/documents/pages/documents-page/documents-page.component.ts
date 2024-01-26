@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core'
 import {FormControl} from '@angular/forms'
 import {Properties} from 'csstype'
-import {BehaviorSubject, filter, finalize, switchMap, tap} from 'rxjs'
+import {BehaviorSubject, filter, finalize, zip, switchMap, tap} from 'rxjs'
 import {DatesService} from 'src/app/shared/services/dates.service'
 import {ToolsService} from 'src/app/shared/services/tools.service'
 import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.interface'
@@ -13,12 +13,14 @@ import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
 import {DocumentRes} from '../../../requests/interfaces/request.interface';
 
 @Component({
-	selector: 'mib-new-documents-page',
-	templateUrl: './new-documents-page.component.html',
-	styleUrls: ['./new-documents-page.component.scss']
+	selector: 'mib-documents-page',
+	templateUrl: './documents-page.component.html',
+	styleUrls: ['./documents-page.component.scss']
 })
-export class NewDocumentsPageComponent implements OnInit {
+export class DocumentsPageComponent implements OnInit {
+
 	public loading$ = new BehaviorSubject<boolean>(false)
+  public isSigning$  = new BehaviorSubject<boolean>(false)
 
 	@ViewChild(TableComponent) table: TableComponent
 
@@ -128,4 +130,13 @@ export class NewDocumentsPageComponent implements OnInit {
 	selectionChange(event: TableSelectionEvent) {
 		this.requestsSelection = event
 	}
+
+  onAction() {
+    this.isSigning$.next(true)
+    const requests$ = this.table.selectedRows.map(row => this.documentsService.sign(row.rowId))
+    this.documentsService.signModal(
+      zip(requests$),
+      this.isSigning$
+    ).subscribe()
+  }
 }
