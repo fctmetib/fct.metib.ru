@@ -7,7 +7,6 @@ import {DocumentViewsDrawerData} from './interfaces/document-views-drawer.data'
 import {DocumentsService} from '../../services/documents.service'
 import {downloadBase64File, ToolsService} from 'src/app/shared/services/tools.service'
 import {DocumentRes, DocumentSign} from '../../../requests/interfaces/request.interface';
-import {log10} from 'chart.js/helpers';
 
 @Component({
   selector: 'mib-new-documents-views-drawer',
@@ -18,6 +17,7 @@ export class DocumentViewDrawerComponent implements OnInit {
 
   public loading$ = new BehaviorSubject<boolean>(false)
   public isSigning$ = new BehaviorSubject<boolean>(false)
+  public isDownloading$ = new BehaviorSubject<boolean>(false)
 
   public skeletonWithoutUnderline: Properties = {
     height: '48px',
@@ -81,14 +81,21 @@ export class DocumentViewDrawerComponent implements OnInit {
   }
 
   sign() {
-    this.documentsService.signModal(of(null), this.isSigning$).subscribe()
+    this.isSigning$.next(true)
+    this.documentsService.signModal(
+      this.documentsService.sign(this.documentId),
+      this.isSigning$
+    ).subscribe()
   }
 
   downloadFile() {
-    console.log('download file')
+    this.isDownloading$.next(true)
     this.documentsService.getDocumentContent(this.documentId).pipe(
       tap(data => {
         downloadBase64File(data, this.document.Title)
+      }),
+      finalize(() => {
+        this.isDownloading$.next(false)
       })
     ).subscribe()
   }
