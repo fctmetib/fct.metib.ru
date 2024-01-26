@@ -10,7 +10,9 @@ import {environment} from 'src/environments/environment'
 import {DocumentReq, DocumentRes, DocumentSign} from '../../requests/interfaces/request.interface';
 import {SignPinModalService} from '../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DocumentsService {
 	constructor(
     private signPinModalService: SignPinModalService,
