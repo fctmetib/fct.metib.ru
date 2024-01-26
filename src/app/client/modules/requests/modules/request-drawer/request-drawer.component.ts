@@ -29,6 +29,7 @@ import {
   Validators
 } from '@angular/forms'
 import {
+  DocumentReq,
   DocumentRes,
   DocumentType,
   RequestReq,
@@ -287,7 +288,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
   }
 
   onDocumentLoad({file, url}: FileDnd) {
-    const document: Partial<DocumentRes> = {
+    const document: DocumentReq = {
       Description: `description ${file.name}`,
       DocumentTypeID: 40,
       Title: file.name,

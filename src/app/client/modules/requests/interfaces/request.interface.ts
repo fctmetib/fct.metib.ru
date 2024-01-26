@@ -41,25 +41,24 @@ export interface DocumentReq {
   Description?: string
   DocumentTypeID: number
   OwnerTypeID: number
-  OwnerID?: number
-  Data?: string
+  Data: string
 }
 
-export interface DocumentRes extends Omit<DocumentReq, 'OwnerID'> {
-  Location?: string
-  DocumentStatusID?: number
-  DocumentStatus?: string
-  DocumentType?: string
-  DocumentTypeTitle?: string
-  Available?: boolean
+export interface DocumentRes extends Omit<DocumentReq, "Data"> {
+  Location: string
+  DocumentStatusID: number
+  DocumentStatus: string
+  DocumentType: string
+  DocumentTypeTitle: string
+  Available: boolean
   Removed?: boolean
-  ActiveOrganizationID?: number
-  ActiveOrganization?: string
-  CreatedTime?: string
-  AuthorOrganizationID?: number
-  AuthorOrganization?: string
-  CreatorLastName?: string
-  CreatorFirstName?: string
+  ActiveOrganizationID: number
+  ActiveOrganization: string
+  CreatedTime: string
+  AuthorOrganizationID: number
+  AuthorOrganization: string
+  CreatorLastName: string
+  CreatorFirstName: string
   DocumentID: number
   OwnerID: number
 }

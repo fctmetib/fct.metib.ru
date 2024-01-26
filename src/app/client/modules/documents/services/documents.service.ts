@@ -7,7 +7,7 @@ import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
 import {HttpClient} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
-import {DocumentRes} from '../../requests/interfaces/request.interface';
+import {DocumentReq, DocumentRes} from '../../requests/interfaces/request.interface';
 
 @Injectable()
 export class DocumentsService {
@@ -24,7 +24,7 @@ export class DocumentsService {
 	}
 
 	uploadNewDocument(
-		data: DocumentRes,
+		data: DocumentReq,
 		withSign: boolean = false
 	): Observable<DocumentRes[]> {
 		return this.http.post<DocumentRes[]>(`${environment.apiUrl}/v1/documents`, data, {

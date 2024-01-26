@@ -4,7 +4,7 @@
     drawer-header
   ></mib-drawer-header>
   <mib-drawer-container>
-    <mib-skeleton [styles]="defaultSkeleton" [style.height]="'40px'"
+    <mib-skeleton [styles]="defaultSkeleton" [style.height]="'140px'"
                   *ngIf="loading$ | async; else first"></mib-skeleton>
     <ng-template #first>
       <div>

@@ -1,6 +1,6 @@
 <button
 	[disabled]="status === 'disabled'"
-	(click)="this.selected = !this.selected; press.emit($event)"
+	(click)="toggle($event)"
 	[class.selected]="selected"
 	[attr.status]="status"
 	class="tag flex"

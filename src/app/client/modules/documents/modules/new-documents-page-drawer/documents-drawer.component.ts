@@ -15,10 +15,23 @@ import {DocumentReq, DocumentRes} from '../../../requests/interfaces/request.int
 	styleUrls: ['./documents-drawer.component.scss']
 })
 export class DocumentsDrawerComponent implements OnInit {
+
 	public loading$ = new BehaviorSubject<boolean>(false)
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
   public size: ButtonSize = 'm'
 	public form: FormGroup
+
+  get documents() {
+    return this.form.get('Documents') as FormArray
+  }
+
+  get isDocumentSign(): boolean {
+    return this.form.get('isDocumentSign').value
+  }
+
+  get userFactoring() {
+    return this.authService.currentUser$.value.userFactoring
+  }
 
 	constructor(
 		public dialogRef: MatDialogRef<DocumentsDrawerComponent>,
@@ -26,10 +39,6 @@ export class DocumentsDrawerComponent implements OnInit {
 		private documentService: DocumentsService,
 		private authService: AuthService
 	) {}
-
-	get documents() {
-		return this.form.get('Documents') as FormArray
-	}
 
 	ngOnInit(): void {
 		this.initForm()
@@ -66,7 +75,6 @@ export class DocumentsDrawerComponent implements OnInit {
 			Description: [null],
 			DocumentTypeID: [null],
 			OwnerTypeID: [null],
-			OwnerID: [null],
 			Data: [null]
 		})
 		control.patchValue(data)
@@ -74,13 +82,11 @@ export class DocumentsDrawerComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		const documents: DocumentRes[] = this.form.getRawValue().Documents
-    const needSign: boolean = this.form.get('isDocumentSign').value;
-
+		const documents: DocumentReq[] = this.documents.value
     // TODO: СДЕЛАТЬ ПОДПИСЬ ПРИ needSign (TRUE)
 
     zip(
-      documents.map(document => this.documentService.uploadNewDocument(document, needSign))
+      documents.map(document => this.documentService.uploadNewDocument(document, this.isDocumentSign))
     ).pipe(
       tap(() => {
 
@@ -97,12 +103,14 @@ export class DocumentsDrawerComponent implements OnInit {
 
 	onDocumentLoad({file, url}: FileDnd) {
 		const document: DocumentReq = {
+      // TODO: ДОБАВИТЬ ИНПУТ С "type='number'" В ФОРМУ
       Number: null,
 			Title: file.name,
 			Description: `description ${file.name}`,
 			DocumentTypeID: 40,
 			OwnerTypeID: 6,
-			OwnerID: this.authService.currentUser$.value.userFactoring.OrganizationID,
+      // Бекенд сказал, что информация берётся из токена
+			// OwnerID: this.userFactoring.OrganizationID,
 			Data: extractBase64(url)
 		}
 		this.addDocument(document)
