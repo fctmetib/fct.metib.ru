@@ -65,6 +65,7 @@
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
+            [rowId]="doc.DocumentID"
 						(dblclick)="newDocumentViewsDrawer(doc?.DocumentID)"
 						*ngFor="let doc of clientDocumentsVisible; let last = last"
 						[underlined]="!last"
@@ -92,8 +93,8 @@
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title
-								>{{ doc?.CreatorFirstName }}
-								{{ doc?.CreatorLastName }}</ng-container
+								>{{ doc?.CreatorLastName }}
+								{{ doc?.CreatorFirstName }}</ng-container
 							>
 						</mib-table-cell>
 						<mib-button

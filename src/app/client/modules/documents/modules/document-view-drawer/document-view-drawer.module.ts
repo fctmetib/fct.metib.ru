@@ -21,31 +21,34 @@ import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
+import {SignPinModalModule} from '../../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.module';
 
 @NgModule({
-	declarations: [DocumentViewDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		MatDialogModule,
-		SpacingModule,
-		ButtonModule,
-		IconModule,
-		InputModule,
-		SkeletonModule,
-		TagModule,
-		AvatarModule,
-		FileCellModule,
-		LinkModule,
-		LeftIconModule,
-		TabModule,
-		TableModule,
-		DropdownPointModule,
-		DropdownModule,
-		PaginatorModule,
-		SelectModule,
-		NavbarModule
-	],
-	providers: [DocumentViewDrawerService]
+  declarations: [DocumentViewDrawerComponent],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    MatDialogModule,
+    SpacingModule,
+    ButtonModule,
+    IconModule,
+    InputModule,
+    SkeletonModule,
+    TagModule,
+    AvatarModule,
+    FileCellModule,
+    LinkModule,
+    LeftIconModule,
+    TabModule,
+    TableModule,
+    DropdownPointModule,
+    DropdownModule,
+    PaginatorModule,
+    SelectModule,
+    NavbarModule,
+    SignPinModalModule
+  ],
+  providers: [DocumentViewDrawerService]
 })
-export class NewDocumentsViewsDrawerModule {}
+export class DocumentViewDrawerModule {
+}

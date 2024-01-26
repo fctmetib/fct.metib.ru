@@ -18,14 +18,13 @@ export class NewContractsPageComponent implements OnInit {
 
 	@ViewChild(TableComponent) table: TableComponent
 
-	public skeletonWithoutUnderline: Properties = {
-		borderRadius: '8px',
+	public skeletonTableWithoutUnderline: Properties = {
 		height: '48px',
 		width: '100%'
 	}
 
-	public skeleton: Properties = {
-		...this.skeletonWithoutUnderline,
+	public skeletonTable: Properties = {
+		...this.skeletonTableWithoutUnderline,
 		borderBottom: '1px solid var(--wgr-tertiary)'
 	}
 

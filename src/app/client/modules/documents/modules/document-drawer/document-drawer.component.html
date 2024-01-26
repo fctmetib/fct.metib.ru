@@ -4,7 +4,7 @@
 		drawer-header
 	></mib-drawer-header>
 	<mib-drawer-container>
-		<h4>Добавить документ</h4>
+		<h4>Добавить документы</h4>
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-information
 			*ngIf="!documents.controls.length; else copiesTemplate"
@@ -67,6 +67,7 @@
 		<mib-spacing type="xs"></mib-spacing>
 		<div class="flex flex_column gap-12">
 			<mib-dnd
+        [multiple]="true"
 				(onChange)="onDocumentLoad($event)"
 				[accept]="[
 					'application/pdf',
@@ -116,7 +117,7 @@
 			[size]="size"
 			type="filled-primary"
 		>
-			Добавить документ
+			Добавить документы ({{documents.controls.length}})
 		</mib-button>
 	</mib-drawer-footer>
 </mib-drawer>

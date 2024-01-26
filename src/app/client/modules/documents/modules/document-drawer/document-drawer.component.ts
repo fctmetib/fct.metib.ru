@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core'
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {MatDialogRef} from '@angular/material/dialog'
-import {BehaviorSubject, finalize, zip, tap} from 'rxjs'
+import {BehaviorSubject, finalize, zip, tap, defer, map} from 'rxjs'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {extractBase64} from 'src/app/shared/services/tools.service'
 import {DocumentsService} from '../../services/documents.service'
@@ -11,10 +11,10 @@ import {DocumentReq, DocumentRes} from '../../../requests/interfaces/request.int
 
 @Component({
 	selector: 'mib-new-documents-page-drawer',
-	templateUrl: './documents-drawer.component.html',
-	styleUrls: ['./documents-drawer.component.scss']
+	templateUrl: './document-drawer.component.html',
+	styleUrls: ['./document-drawer.component.scss']
 })
-export class DocumentsDrawerComponent implements OnInit {
+export class DocumentDrawerComponent implements OnInit {
 
 	public loading$ = new BehaviorSubject<boolean>(false)
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
@@ -34,7 +34,7 @@ export class DocumentsDrawerComponent implements OnInit {
   }
 
 	constructor(
-		public dialogRef: MatDialogRef<DocumentsDrawerComponent>,
+		public dialogRef: MatDialogRef<DocumentDrawerComponent>,
 		private fb: FormBuilder,
 		private documentService: DocumentsService,
 		private authService: AuthService
@@ -85,14 +85,26 @@ export class DocumentsDrawerComponent implements OnInit {
 		const documents: DocumentReq[] = this.documents.value
     // TODO: СДЕЛАТЬ ПОДПИСЬ ПРИ needSign (TRUE)
 
-    zip(
-      documents.map(document => this.documentService.uploadNewDocument(document, this.isDocumentSign))
-    ).pipe(
-      tap(() => {
+    defer(() => {
+      this.isSubmitting$.next(true)
+      const reqs$ = documents.map(document => this.documentService.uploadNewDocument(document, this.isDocumentSign))
+      const req$ = zip(reqs$).pipe(
+        tap(() => {
 
-      }),
+        })
+      )
+      if (this.isDocumentSign) {
+        return this.documentService.sign(req$, this.isSubmitting$).pipe(map(output => output.data))
+      } else {
+        return req$.pipe(
+          finalize(() => {
+            this.isSubmitting$.next(false)
+          })
+        )
+      }
+    }).pipe(
       finalize(() => {
-
+        this.dialogRef.close()
       })
     ).subscribe()
 	}

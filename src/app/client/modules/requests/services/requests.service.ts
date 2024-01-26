@@ -1,4 +1,4 @@
-import {ClientRequestSendingInitRequestInterface} from 'src/app/shared/types/client/client-request-sending-init-request.interface'
+import {ClientRequestSendingInitReq} from 'src/app/shared/types/client/client-request-sending-init.req'
 import {Injectable} from '@angular/core'
 import {BehaviorSubject, filter, finalize, Observable, switchMap} from 'rxjs'
 import {HttpClient} from '@angular/common/http'
@@ -13,7 +13,6 @@ import {
 	RequestState,
 	RequestTypeEnum
 } from '../interfaces/request.interface'
-import {SignService} from '../../../../shared/services/share/sign.service';
 import {SignPinModalService} from '../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service';
 
 export interface GetRequestsReq {
@@ -26,7 +25,6 @@ export interface GetRequestsReq {
 @Injectable()
 export class RequestsService {
 	constructor(
-    private signService: SignService,
     private signPinModalService: SignPinModalService,
     private http: HttpClient
   ) {}
@@ -198,27 +196,14 @@ export class RequestsService {
 
 	public send(
 		data: number[]
-	): Observable<ClientRequestSendingInitRequestInterface> {
-		return this.http.post<ClientRequestSendingInitRequestInterface>(
+	): Observable<ClientRequestSendingInitReq> {
+		return this.http.post<ClientRequestSendingInitReq>(
 			`${environment.apiUrl}/v1/requests/send`,
 			data
 		)
 	}
 
-  requestSign(requestIDs: number[], loading$: BehaviorSubject<boolean>) {
-    return this.signService.getActiveSession().pipe(
-      switchMap(result => {
-        if (result) {
-          return this.send(requestIDs)
-        } else {
-          return this.signService.getPin().pipe(
-            switchMap(() => {
-              loading$.next(false)
-              return this.signPinModalService.open(requestIDs).afterClosed().pipe(filter(Boolean))
-            })
-          )
-        }
-      }),
-    )
+  sign(requestIDs: number[], loading$: BehaviorSubject<boolean>) {
+    return this.signPinModalService.sign(this.send(requestIDs), loading$)
   }
 }

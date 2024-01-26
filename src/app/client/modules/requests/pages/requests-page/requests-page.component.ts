@@ -186,7 +186,7 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
   requestSign(): void {
     const requestIDs = this.table.selectedRows.map(req => req.rowId);
     this.isSigningPreparing$.next(true)
-    this.requestsService.requestSign(requestIDs, this.isSigningPreparing$).pipe(
+    this.requestsService.sign(requestIDs, this.isSigningPreparing$).pipe(
       switchMap(() => this.loadRequestsData()),
       finalize(() => this.isSigningPreparing$.next(false))
     ).subscribe()

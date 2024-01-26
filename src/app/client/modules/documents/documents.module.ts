@@ -43,8 +43,9 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {DatesService} from 'src/app/shared/services/dates.service'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
-import {NewDocumentsPageDrawerModule} from './modules/new-documents-page-drawer/new-documents-page-drawer.module'
-import {NewDocumentsViewsDrawerModule} from './modules/new-documents-views-drawer/new-documents-views-drawer.module'
+import {DocumentDrawerModule} from './modules/document-drawer/document-drawer.module'
+import {DocumentViewDrawerModule} from './modules/document-view-drawer/document-view-drawer.module'
+import {SignPinModalModule} from '../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.module';
 
 @NgModule({
 	imports: [
@@ -88,8 +89,8 @@ import {NewDocumentsViewsDrawerModule} from './modules/new-documents-views-drawe
 		DropdownPointModule,
 		SelectModule,
 		DropdownModule,
-		NewDocumentsPageDrawerModule,
-		NewDocumentsViewsDrawerModule
+		DocumentDrawerModule,
+		DocumentViewDrawerModule
 	],
 	declarations: [DocumentsPageComponent, NewDocumentsPageComponent],
 	providers: [DocumentsService, DatesService, DatePipe]

@@ -70,7 +70,7 @@ export class FreeDutyRequestDrawerComponent implements OnInit {
     this.sendingAndSigning$.next(true)
     this.freeDuty().pipe(
       switchMap((requestIDs) => {
-        return this.requestsService.requestSign(requestIDs, this.sendingAndSigning$).pipe(
+        return this.requestsService.sign(requestIDs, this.sendingAndSigning$).pipe(
           tap((response) => {
             this.dialogRef.close(response)
           }),

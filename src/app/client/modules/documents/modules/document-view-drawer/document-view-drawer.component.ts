@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {Properties} from 'csstype'
-import {BehaviorSubject, finalize, tap} from 'rxjs'
+import {BehaviorSubject, defer, finalize, of, tap} from 'rxjs'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {DocumentViewsDrawerData} from './interfaces/document-views-drawer.data'
 import {DocumentsService} from '../../services/documents.service'
@@ -14,7 +14,9 @@ import {DocumentRes} from '../../../requests/interfaces/request.interface';
   styleUrls: ['./document-view-drawer.component.scss']
 })
 export class DocumentViewDrawerComponent implements OnInit {
+
   public loading$ = new BehaviorSubject<boolean>(false)
+  public isSigning$ = new BehaviorSubject<boolean>(false)
 
   public skeletonWithoutUnderline: Properties = {
     height: '48px',
@@ -68,5 +70,13 @@ export class DocumentViewDrawerComponent implements OnInit {
         })
       )
       .subscribe()
+  }
+
+  sign() {
+    this.documentsService.sign(of(null), this.isSigning$).subscribe()
+  }
+
+  downloadFile() {
+
   }
 }

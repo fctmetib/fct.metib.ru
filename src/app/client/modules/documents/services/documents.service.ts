@@ -4,14 +4,22 @@ import {DocumentSigninitModelInterface} from './../types/common/document-signini
 import {CreateDocumentRequestInterface} from './../types/create-document-request.interface'
 import {DocumentInterface} from './../types/document.interface'
 import {Injectable} from '@angular/core'
-import {Observable} from 'rxjs'
+import {BehaviorSubject, Observable} from 'rxjs'
 import {HttpClient} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
 import {DocumentReq, DocumentRes} from '../../requests/interfaces/request.interface';
+import {SignPinModalService} from '../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service';
 
 @Injectable()
 export class DocumentsService {
-	constructor(private http: HttpClient) {}
+	constructor(
+    private signPinModalService: SignPinModalService,
+    private http: HttpClient
+  ) {}
+
+  sign<T>(req$: Observable<T>, loading$: BehaviorSubject<boolean>) {
+    return this.signPinModalService.sign(req$, loading$)
+  }
 
 	public fetchDocuments(): Observable<DocumentRes[]> {
 		const url = `${environment.apiUrl}/v1/documents`
@@ -23,13 +31,8 @@ export class DocumentsService {
 		return this.http.get<string>(url)
 	}
 
-	uploadNewDocument(
-		data: DocumentReq,
-		withSign: boolean = false
-	): Observable<DocumentRes[]> {
-		return this.http.post<DocumentRes[]>(`${environment.apiUrl}/v1/documents`, data, {
-      params: {withSign}
-    })
+	uploadNewDocument(data: DocumentReq, withSign: boolean = false): Observable<DocumentRes> {
+		return this.http.post<DocumentRes>(`${environment.apiUrl}/v1/documents`, data, {params: {withSign}})
 	}
 
 	//#region REST

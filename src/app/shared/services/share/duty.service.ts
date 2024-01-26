@@ -7,7 +7,7 @@ import { Duty } from '../../types/duty/duty';
 import { DutyFilterRequestInterface } from '../../types/duty/duty-filter-request.interface';
 import { HeapDutyImportResultInterface } from '../../types/duty/heap-duty-import-result.interface';
 import { ConfirmRequestInterface } from '../../types/common/confirm-request.interface';
-import { ClientRequestSendingInitRequestInterface } from '../../types/client/client-request-sending-init-request.interface';
+import { ClientRequestSendingInitReq } from '../../types/client/client-request-sending-init.req';
 import { ClientRequestInterface } from '../../types/client/client-request.interface';
 
 @Injectable()
