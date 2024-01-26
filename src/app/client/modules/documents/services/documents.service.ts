@@ -23,8 +23,8 @@ export class DocumentsService {
     return this.signPinModalService.sign(req$, loading$)
   }
 
-  public sign(id: number): Observable<DocumentSign[]> {
-    return this.http.post<DocumentSign[]>(`${environment.apiUrl}/v1/documents/${id}/sign`, null)
+  public sign(id: number): Observable<DocumentSign> {
+    return this.http.post<DocumentSign>(`${environment.apiUrl}/v1/documents/${id}/sign`, null)
   }
 
 	public fetchDocuments(): Observable<DocumentRes[]> {
@@ -36,9 +36,8 @@ export class DocumentsService {
     return this.http.get<DocumentSign[]>(`${environment.apiUrl}/v1/documents/${id}/sign`)
   }
 
-	fetchDocumentById(id: number): Observable<string> {
-		const url = `${environment.apiUrl}/v1/documents/${id}/content`
-		return this.http.get<string>(url)
+	getDocumentContent(id: number): Observable<string> {
+		return this.http.get<string>(`${environment.apiUrl}/v1/documents/${id}/content`)
 	}
 
 	uploadNewDocument(data: DocumentReq, withSign: boolean = false): Observable<DocumentRes> {

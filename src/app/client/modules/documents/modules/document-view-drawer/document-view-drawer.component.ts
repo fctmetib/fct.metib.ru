@@ -5,8 +5,9 @@ import {BehaviorSubject, defer, finalize, of, switchMap, tap} from 'rxjs'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {DocumentViewsDrawerData} from './interfaces/document-views-drawer.data'
 import {DocumentsService} from '../../services/documents.service'
-import {ToolsService} from 'src/app/shared/services/tools.service'
+import {downloadBase64File, ToolsService} from 'src/app/shared/services/tools.service'
 import {DocumentRes, DocumentSign} from '../../../requests/interfaces/request.interface';
+import {log10} from 'chart.js/helpers';
 
 @Component({
   selector: 'mib-new-documents-views-drawer',
@@ -84,6 +85,11 @@ export class DocumentViewDrawerComponent implements OnInit {
   }
 
   downloadFile() {
-
+    console.log('download file')
+    this.documentsService.getDocumentContent(this.documentId).pipe(
+      tap(data => {
+        downloadBase64File(data, this.document.Title)
+      })
+    ).subscribe()
   }
 }
