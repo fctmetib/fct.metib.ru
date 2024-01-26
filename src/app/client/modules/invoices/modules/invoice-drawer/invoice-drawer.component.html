@@ -175,7 +175,7 @@
 								>Для основных транзакций</ng-container
 							>
 						</mib-contracted-forms>
-						<mib-spacing type="xs"></mib-spacing>
+						<!-- <mib-spacing type="xs"></mib-spacing>
 						<mib-contracted-forms>
 							<ng-container contacted-label>{{
 								currentInvoice?.Beneficiary?.BankName
@@ -192,11 +192,11 @@
 							<ng-container contracted-description
 								>Для основных транзакций</ng-container
 							>
-						</mib-contracted-forms>
+						</mib-contracted-forms> -->
 						<mib-spacing type="s"></mib-spacing>
 						<p class="headline">Реквизиты дебитора</p>
 						<mib-spacing type="xs2"></mib-spacing>
-						<mib-contracted-forms extended="true">
+						<mib-contracted-forms>
 							<ng-container contacted-label>{{
 								currentInvoice?.Beneficiary?.BankName
 							}}</ng-container>
@@ -214,7 +214,7 @@
 							>
 						</mib-contracted-forms>
 						<mib-spacing type="xs"></mib-spacing>
-						<mib-contracted-forms>
+						<!-- <mib-contracted-forms>
 							<ng-container contacted-label>{{
 								currentInvoice?.Payer?.BankName
 							}}</ng-container>
@@ -230,7 +230,7 @@
 							<ng-container contracted-description
 								>Для основных транзакций</ng-container
 							>
-						</mib-contracted-forms>
+						</mib-contracted-forms> -->
 					</mib-tab-item>
 				</mib-drawer-container>
 			</ng-template>
