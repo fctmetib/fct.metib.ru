@@ -1,5 +1,5 @@
 <mib-modal>
-  <mib-modal-header modal-header title="Введите PIN-код"></mib-modal-header>
+  <mib-modal-header (onClose)="dialogRef.close()" modal-header title="Введите PIN-код"></mib-modal-header>
   <mib-spacing type="xs"></mib-spacing>
   <mib-code-input [symbolsCount]="symbolsCount" [formControl]="codeControl"></mib-code-input>
   <mib-spacing type="m"></mib-spacing>

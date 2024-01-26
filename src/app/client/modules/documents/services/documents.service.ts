@@ -7,15 +7,15 @@ import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
 import {HttpClient} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
-import {ClientDocumentsInterface} from '../types/common/client-documents.interface'
+import {Document} from '../../requests/interfaces/request.interface';
 
 @Injectable()
 export class DocumentsService {
 	constructor(private http: HttpClient) {}
 
-	public fetchDocuments(): Observable<ClientDocumentsInterface[]> {
+	public fetchDocuments(): Observable<Document[]> {
 		const url = `${environment.apiUrl}/v1/documents`
-		return this.http.get<ClientDocumentsInterface[]>(url)
+		return this.http.get<Document[]>(url)
 	}
 
 	fetchDocumentById(id: number): Observable<string> {
@@ -24,12 +24,12 @@ export class DocumentsService {
 	}
 
 	uploadNewDocument(
-		data: ClientDocumentsInterface,
-		withSign: boolean
-	): Observable<ClientDocumentsInterface[]> {
-		const url = `${environment.apiUrl}/v1/documents`
-		return this.http.post<ClientDocumentsInterface[]>(url, data, {
-			params: {withSign: withSign}
+		data: Document,
+		withSign: boolean = false
+	): Observable<Document[]> {
+    console.log('withSign', withSign)
+		return this.http.post<Document[]>(`${environment.apiUrl}/v1/documents`, data, {
+			params: {withSign}
 		})
 	}
 

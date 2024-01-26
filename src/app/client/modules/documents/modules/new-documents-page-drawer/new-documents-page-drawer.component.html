@@ -88,7 +88,7 @@
 		</div>
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-textarea>
-			<ng-container textarea-label
+			<ng-container mibLabel
 				>Описание для файлов (не обязательно для заполнения)</ng-container
 			>
 			<textarea
@@ -99,10 +99,9 @@
 			<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
 		</mib-textarea>
 		<mib-spacing type="xs"></mib-spacing>
-		<div class="flex gap-8">
-			<mib-checkbox formControlName="isDocumentSign"></mib-checkbox>
-			<span class="text text_m"> Подписать </span>
-		</div>
+    <mib-checkbox class="gap-8" formControlName="isDocumentSign">
+      <span class="text text_m">Подписать</span>
+    </mib-checkbox>
 	</mib-drawer-container>
 	<div
 		*ngFor="let document of documents.controls; let idx = index"

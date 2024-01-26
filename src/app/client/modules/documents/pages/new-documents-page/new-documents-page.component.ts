@@ -9,8 +9,8 @@ import {NewDocumentsPageDrawerService} from '../../modules/new-documents-page-dr
 import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {NewDocumentsViewsDrawerService} from '../../modules/new-documents-views-drawer/new-documents-views-drawer.service'
 import {DocumentsService} from '../../services/documents.service'
-import {ClientDocumentsInterface} from '../../types/common/client-documents.interface'
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
+import {Document} from '../../../requests/interfaces/request.interface';
 
 @Component({
 	selector: 'mib-new-documents-page',
@@ -44,8 +44,8 @@ export class NewDocumentsPageComponent implements OnInit {
 	public dateTo: FormControl = new FormControl<string>('')
 
 	// public clientDocuments: Document[] = []
-	public clientDocuments: ClientDocumentsInterface[] = []
-	public clientDocumentsVisible: ClientDocumentsInterface[] = []
+	public clientDocuments: Document[] = []
+	public clientDocumentsVisible: Document[] = []
 
 	requests: any
 	requestsVisible: any

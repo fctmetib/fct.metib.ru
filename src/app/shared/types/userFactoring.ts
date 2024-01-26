@@ -8,7 +8,7 @@ export interface UserFactoring {
   Login: string;
   ManagerID: number;
   Name: string;
-  OrganizationID: string;
+  OrganizationID: number;
   Roles: string[];
   StaffID: number;
   UserID: number;

@@ -18,28 +18,30 @@ import {InformationModule} from 'src/app/shared/ui-kit/information/information.m
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
+import {LabelModule} from '../../../../../shared/directives/label/label.module';
 
 @NgModule({
 	declarations: [NewDocumentsPageDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		MatDialogModule,
-		SpacingModule,
-		ButtonModule,
-		IconModule,
-		CheckboxModule,
-		InputModule,
-		MibDragAndDropModule,
-		TextareaModule,
-		AutosizeModule,
-		SkeletonModule,
-		ReactiveFormsModule,
-		InformationModule,
-		TableModule,
-		DropdownPointModule,
-		DropdownModule
-	],
+    imports: [
+        CommonModule,
+        DrawerModule,
+        MatDialogModule,
+        SpacingModule,
+        ButtonModule,
+        IconModule,
+        CheckboxModule,
+        InputModule,
+        MibDragAndDropModule,
+        TextareaModule,
+        AutosizeModule,
+        SkeletonModule,
+        ReactiveFormsModule,
+        InformationModule,
+        TableModule,
+        DropdownPointModule,
+        DropdownModule,
+        LabelModule
+    ],
 	providers: [NewDocumentsPageDrawerService]
 })
 export class NewDocumentsPageDrawerModule {}

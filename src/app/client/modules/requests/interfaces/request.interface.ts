@@ -49,7 +49,7 @@ export interface Document {
   Removed?: boolean
   ActiveOrganizationID?: number
   ActiveOrganization?: string
-  CreatedTime?: Date
+  CreatedTime?: string
   AuthorOrganizationID?: number
   AuthorOrganization?: string
   CreatorLastName?: string

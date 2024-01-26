@@ -5,8 +5,8 @@ import {BehaviorSubject, finalize, tap} from 'rxjs'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {NewDocumentsViewsDrawerInterface} from './interfaces/new-documents-views-drawer.interface'
 import {DocumentsService} from '../../services/documents.service'
-import {ClientDocumentsInterface} from '../../types/common/client-documents.interface'
 import {ToolsService} from 'src/app/shared/services/tools.service'
+import {Document} from '../../../requests/interfaces/request.interface';
 
 @Component({
 	selector: 'mib-new-documents-views-drawer',
@@ -60,7 +60,7 @@ export class NewDocumentsViewsDrawerComponent implements OnInit {
 		managerAvatar: './assets/images/woman-avatar.jpg'
 	}
 
-	public document: ClientDocumentsInterface
+	public document: Document
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA)
