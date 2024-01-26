@@ -65,7 +65,7 @@
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
-            [rowId]="doc.DocumentID"
+						[rowId]="doc.DocumentID"
 						(dblclick)="newDocumentViewsDrawer(doc?.DocumentID)"
 						*ngFor="let doc of clientDocumentsVisible; let last = last"
 						[underlined]="!last"
@@ -118,6 +118,7 @@
 					</mib-table-row>
 				</ng-template>
 				<mib-table-footer [showIsland]="true" [lined]="!(loading$ | async)">
+					<ng-container table-footer-action>Подписать</ng-container>
 					<mib-paginator
 						(pageChange)="onPageChange($event)"
 						[totalCount]="clientDocuments.length"
