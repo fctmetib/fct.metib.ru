@@ -91,12 +91,12 @@
 					(onSort)="onSortByDates($event, 'DateInvoice')"
 					>С/ф дата</mib-table-head-cell
 				>
-				<mib-table-head-cell>Задолженность</mib-table-head-cell>
-				<mib-table-head-cell
+				<mib-table-head-cell>Статус</mib-table-head-cell>
+				<!-- <mib-table-head-cell
 					[sortable]="true"
 					(onSort)="onSortByDates($event, 'DatePayment')"
 					>Дата Платежа</mib-table-head-cell
-				>
+				> -->
 				<mib-table-head-cell>Внешняя ссылка</mib-table-head-cell>
 				<mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Rest')"
 					>Остаток задолженности</mib-table-head-cell
@@ -154,11 +154,11 @@
 							duty.Statistics.Comment
 						}}</ng-container>
 					</mib-table-cell>
-					<mib-table-cell>
+					<!-- <mib-table-cell>
 						<ng-container table-cell-title>{{
 							duty.DatePayment | date : 'dd.MM.YYYY'
 						}}</ng-container>
-					</mib-table-cell>
+					</mib-table-cell> -->
 					<mib-table-cell>
 						<ng-container table-cell-title>{{ duty.RefNum }}</ng-container>
 					</mib-table-cell>

@@ -20,8 +20,13 @@
 			<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
 		</mib-button>
 	</div>
-	<div *ngIf="showRemove" class="right flex_grow flex flex_justify-end">
-		<mib-button (press)="footer.onDeleteHandler()" size="s" type="ghost-alert">
+	<div class="right flex_grow flex flex_justify-end">
+		<mib-button
+			*ngIf="showRemove"
+			(press)="footer.onDeleteHandler()"
+			size="s"
+			type="ghost-alert"
+		>
 			Удалить
 		</mib-button>
 	</div>
