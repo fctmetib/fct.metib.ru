@@ -1,5 +1,6 @@
 <mib-drawer [formGroup]="form">
 	<mib-drawer-header
+		[showShared]="true"
 		(onClose)="dialogRef.close()"
 		drawer-header
 	></mib-drawer-header>
@@ -7,17 +8,22 @@
 		<h4>{{ isEditing ? 'Редактирование заявки' : 'Создание новой заявки' }}</h4>
 		<mib-spacing type="xs"></mib-spacing>
 
-    <mib-auto-complete [formControl]="deliveryIdControl">
-      <mib-input autocomplete-input>
-        <ng-container mibLabel>Договор поставки</ng-container>
-        <input mibInput styleType="outline" [size]="size" placeholder="Выберите договор поставки">
-      </mib-input>
-      <mib-dropdown-point
-        *ngFor="let delivery of deliveries"
-        [text]="delivery.Title"
-        [value]="delivery.ID"
-      ></mib-dropdown-point>
-    </mib-auto-complete>
+		<mib-auto-complete [formControl]="deliveryIdControl">
+			<mib-input autocomplete-input>
+				<ng-container mibLabel>Договор поставки</ng-container>
+				<input
+					mibInput
+					styleType="outline"
+					[size]="size"
+					placeholder="Выберите договор поставки"
+				/>
+			</mib-input>
+			<mib-dropdown-point
+				*ngFor="let delivery of deliveries"
+				[text]="delivery.Title"
+				[value]="delivery.ID"
+			></mib-dropdown-point>
+		</mib-auto-complete>
 		<mib-spacing type="xs"></mib-spacing>
 		<div class="flex flex_column gap-12">
 			<div class="flex gap-12">
@@ -147,16 +153,16 @@
 			</mib-table>
 		</ng-template>
 		<mib-spacing type="xs"></mib-spacing>
-    <div class="flex gap-8">
-      <mib-button (press)="openShipment()" [size]="size">
-        Добавить
-        <mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
-      </mib-button>
-      <mib-button type="ghost-primary" (press)="openClipboard()" [size]="size">
-        <mib-icon btn-left-icon class="stroke" name="fi_copy"></mib-icon>
-        Вставить из буфера обмена
-      </mib-button>
-    </div>
+		<div class="flex gap-8">
+			<mib-button (press)="openShipment()" [size]="size">
+				Добавить
+				<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
+			</mib-button>
+			<mib-button type="ghost-primary" (press)="openClipboard()" [size]="size">
+				<mib-icon btn-left-icon class="stroke" name="fi_copy"></mib-icon>
+				Вставить из буфера обмена
+			</mib-button>
+		</div>
 		<mib-spacing type="s"></mib-spacing>
 		<h5 class="headline">Документы</h5>
 		<mib-spacing type="xs2"></mib-spacing>
@@ -164,7 +170,9 @@
 			*ngIf="!documents.controls.length; else copiesTemplate"
 			type="alert"
 		>
-			<ng-container information-text>Необходимо прикрепить накладные для отправки на модерацию</ng-container>
+			<ng-container information-text
+				>Необходимо прикрепить накладные для отправки на модерацию</ng-container
+			>
 		</mib-information>
 		<ng-template #copiesTemplate>
 			<mib-table>

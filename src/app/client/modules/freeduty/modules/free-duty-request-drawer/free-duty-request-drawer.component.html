@@ -1,5 +1,6 @@
 <mib-drawer>
 	<mib-drawer-header
+		[showShared]="true"
 		(onClose)="dialogRef.close()"
 		drawer-header
 	></mib-drawer-header>
@@ -89,7 +90,12 @@
 					type="filled-primary"
 					>Создать заявку</mib-button
 				>
-				<mib-button [loading]="!!(sendingAndSigning$ | async)" (press)="requestSign()" size="m" type="ghost-primary">Создать и подписать</mib-button
+				<mib-button
+					[loading]="!!(sendingAndSigning$ | async)"
+					(press)="requestSign()"
+					size="m"
+					type="ghost-primary"
+					>Создать и подписать</mib-button
 				>
 			</div>
 			<mib-button (click)="dialogRef.close()" size="m" type="ghost-alert"
