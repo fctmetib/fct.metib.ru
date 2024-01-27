@@ -177,7 +177,11 @@
 					</mib-button>
 				</mib-table-row>
 			</ng-template>
-			<mib-table-footer (onAction)="openDrawer()" [lined]="!(loading$ | async)">
+			<mib-table-footer
+				[showRemove]="false"
+				(onAction)="openDrawer()"
+				[lined]="!(loading$ | async)"
+			>
 				<ng-container table-footer-action
 					>Создать заявку ({{ dutiesSelection.selectedCount }})</ng-container
 				>
