@@ -16,7 +16,7 @@
     <mib-spacing type="m"></mib-spacing>
     <mib-auto-complete [style.max-width]="360+'px'">
       <mib-input autocomplete-input>
-        <ng-container input-label>label</ng-container>
+        <ng-container mibLabel>label</ng-container>
         <input [formControl]="control" styleType="outline" mibInput>
       </mib-input>
       <mib-dropdown-point *ngFor="let i of filtered | async" [value]="i.value" [text]="i.text"></mib-dropdown-point>
