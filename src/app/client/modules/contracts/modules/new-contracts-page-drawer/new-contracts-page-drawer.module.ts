@@ -19,6 +19,8 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/contracted-forms.module'
+import {LeftIconModule} from 'src/app/shared/directives/left-icon/left-icon.module'
+import {LinkModule} from 'src/app/shared/ui-kit/link/link.module'
 
 @NgModule({
 	declarations: [NewContractsPageDrawerComponent],
@@ -40,7 +42,9 @@ import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/cont
 		DropdownPointModule,
 		NavbarModule,
 		SelectModule,
-		ContractedFormsModule
+		ContractedFormsModule,
+		LeftIconModule,
+		LinkModule
 	],
 	providers: [NewContractsPageDrawerService]
 })
