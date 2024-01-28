@@ -18,13 +18,14 @@ export class NewContractsPageComponent implements OnInit {
 
 	@ViewChild(TableComponent) table: TableComponent
 
-	public skeletonTableWithoutUnderline: Properties = {
+	public skeletonWithoutUnderline: Properties = {
+		borderRadius: '8px',
 		height: '48px',
 		width: '100%'
 	}
 
-	public skeletonTable: Properties = {
-		...this.skeletonTableWithoutUnderline,
+	public skeleton: Properties = {
+		...this.skeletonWithoutUnderline,
 		borderBottom: '1px solid var(--wgr-tertiary)'
 	}
 
@@ -33,7 +34,7 @@ export class NewContractsPageComponent implements OnInit {
 	public currentPage$ = new BehaviorSubject<number>(1)
 
 	public isClosedContracts = false
-	public addStatistics = false
+	public addStatistics = true
 
 	public listOfContracts: DeliveryContractsInterface[] = []
 	public listOfContractsVisible: DeliveryContractsInterface[] = []

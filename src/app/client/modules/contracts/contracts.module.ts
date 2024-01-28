@@ -40,6 +40,7 @@ import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {NewContractsPageDrawerModule} from './modules/new-contracts-page-drawer/new-contracts-page-drawer.module'
+import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 
 @NgModule({
 	imports: [
@@ -78,7 +79,8 @@ import {NewContractsPageDrawerModule} from './modules/new-contracts-page-drawer/
 		SkeletonModule,
 		TableModule,
 		ButtonModule,
-		NewContractsPageDrawerModule
+		NewContractsPageDrawerModule,
+		RubModule
 	],
 	declarations: [ContractsPageComponent, NewContractsPageComponent],
 	providers: [DeliveryService, RequestsService, AccountsService]
