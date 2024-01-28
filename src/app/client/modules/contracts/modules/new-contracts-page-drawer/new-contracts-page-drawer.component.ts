@@ -27,19 +27,9 @@ export class NewContractsPageDrawerComponent implements OnInit {
 		borderBottom: '1px solid var(--wgr-tertiary)'
 	}
 
-	public skeletonTitle: Properties = {
-		...this.skeletonWithoutUnderline,
-		height: '42px'
-	}
-
-	public skeletonDescription: Properties = {
-		...this.skeletonWithoutUnderline,
-		height: '54px'
-	}
-
-	public skeletonDate: Properties = {
-		...this.skeletonWithoutUnderline,
-		height: '138px'
+	public defaultSkeleton: Properties = {
+		borderRadius: '8px',
+		width: '100%'
 	}
 
 	public PAGINATOR_ITEMS_PER_PAGE = 5

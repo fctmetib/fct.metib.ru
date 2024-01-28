@@ -9,7 +9,8 @@
 	<mib-drawer-container>
 		<ng-container *ngIf="loading$ | async; else title">
 			<mib-skeleton
-				[styles]="skeletonTitle"
+				[styles]="defaultSkeleton"
+				[style.height]="'42px'"
 				*ngFor="let i of [1]"
 			></mib-skeleton>
 		</ng-container>
@@ -26,7 +27,8 @@
 		<mib-spacing type="xs2"></mib-spacing>
 		<ng-container *ngIf="loading$ | async; else docDescription">
 			<mib-skeleton
-				[styles]="skeletonDescription"
+				[styles]="defaultSkeleton"
+				[style.height]="'54px'"
 				*ngFor="let i of [1]"
 			></mib-skeleton>
 		</ng-container>
@@ -61,7 +63,8 @@
 		<mib-spacing type="xs"></mib-spacing>
 		<ng-container *ngIf="loading$ | async; else date">
 			<mib-skeleton
-				[styles]="skeletonDate"
+				[styles]="defaultSkeleton"
+				[style.height]="'138px'"
 				*ngFor="let i of [1]"
 			></mib-skeleton>
 		</ng-container>
