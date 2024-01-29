@@ -41,6 +41,7 @@ import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {NewContractsPageDrawerModule} from './modules/new-contracts-page-drawer/new-contracts-page-drawer.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
+import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
 
 @NgModule({
 	imports: [
@@ -80,7 +81,8 @@ import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 		TableModule,
 		ButtonModule,
 		NewContractsPageDrawerModule,
-		RubModule
+		RubModule,
+		BadgeModule
 	],
 	declarations: [ContractsPageComponent, NewContractsPageComponent],
 	providers: [DeliveryService, RequestsService, AccountsService]

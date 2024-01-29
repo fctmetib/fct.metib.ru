@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core'
-import { BehaviorSubject, finalize, tap } from 'rxjs'
+import {Component, OnInit} from '@angular/core'
+import {BehaviorSubject, finalize, tap} from 'rxjs'
 import {
 	IDraftList,
 	IHistoryList,
 	IQueryList
 } from '../mock-data-service/data.models'
-import { DataService } from '../mock-data-service/data.srrvice'
-import { AnimationService } from 'src/app/shared/animations/animations.service'
-import { Properties } from 'csstype'
-import { DemandDrawerService } from '../../modules/demand-drawer/demand-drawer.service'
-import { DrawerStateEnum } from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import { RequestRes } from '../../../requests/interfaces/request.interface'
+import {DataService} from '../mock-data-service/data.srrvice'
+import {AnimationService} from 'src/app/shared/animations/animations.service'
+import {Properties} from 'csstype'
+import {DemandDrawerService} from '../../modules/demand-drawer/demand-drawer.service'
+import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
+import {RequestRes} from '../../../requests/interfaces/request.interface'
 
 const ANIMATION_CONFIG = {
 	translateDistance: '-3%',
@@ -77,7 +77,7 @@ export class DemandNewHomeComponent implements OnInit {
 				.getDraftList()
 				.pipe(
 					tap(data => {
-						this.drafts = data.map(x => ({ ...x, checked: false }))
+						this.drafts = data.map(x => ({...x, checked: false}))
 						// Инициализация состояния анимации
 						this.drafts.forEach(draft => {
 							this.requestsAnimationStates[draft.id] = false
@@ -97,7 +97,7 @@ export class DemandNewHomeComponent implements OnInit {
 				.getHistoryList()
 				.pipe(
 					tap(data => {
-						this.historys = data.map(x => ({ ...x, checked: false }))
+						this.historys = data.map(x => ({...x, checked: false}))
 						// Инициализация состояния анимации
 						this.historys.forEach(history => {
 							this.historyAnimationStates[history.id] = false
@@ -124,6 +124,9 @@ export class DemandNewHomeComponent implements OnInit {
 	}
 
 	openDrawer() {
-		this.demandDrawerService.open({state: DrawerStateEnum.CREATE}).afterClosed().subscribe()
+		this.demandDrawerService
+			.open({state: DrawerStateEnum.CREATE})
+			.afterClosed()
+			.subscribe()
 	}
 }

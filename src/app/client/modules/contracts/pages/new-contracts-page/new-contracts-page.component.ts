@@ -39,6 +39,9 @@ export class NewContractsPageComponent implements OnInit {
 	public listOfContracts: DeliveryContractsInterface[] = []
 	public listOfContractsVisible: DeliveryContractsInterface[] = []
 
+	public listOfAllContracts: DeliveryContractsInterface[] = []
+	public listOfAllContractsVisible: DeliveryContractsInterface[] = []
+
 	public requestsSelection: TableSelectionEvent = {
 		selectedCount: 0,
 		selectedIds: []
@@ -51,10 +54,11 @@ export class NewContractsPageComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		this.getCurrentDeliveriesContracts()
 		this.getAllDeliveriesContracts()
 	}
 
-	getAllDeliveriesContracts() {
+	getCurrentDeliveriesContracts() {
 		this.loading$.next(true)
 		this.deliveryService
 			.getAllDeliveriesContracts(this.isClosedContracts, this.addStatistics)
@@ -69,19 +73,43 @@ export class NewContractsPageComponent implements OnInit {
 			.subscribe()
 	}
 
+	getAllDeliveriesContracts() {
+		this.loading$.next(true)
+		this.deliveryService
+			.getAllDeliveriesContracts(
+				(this.isClosedContracts = true),
+				this.addStatistics
+			)
+			.pipe(
+				tap(data => {
+					this.listOfAllContracts = data
+					this.onPageChange(this.currentPage$.value)
+					console.log('this.listOfAllContracts :>> ', this.listOfAllContracts)
+				}),
+				finalize(() => this.loading$.next(false))
+			)
+			.subscribe()
+	}
+
 	selectionChange(event: TableSelectionEvent) {
 		this.requestsSelection = event
 	}
 
 	onPageChange(page: number) {
+		console.log('		this.currentPage :>> ', this.currentPage$.value)
 		this.currentPage$.next(page)
 
 		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
 		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
 
-		this.table.deselect()
-
 		this.listOfContractsVisible = this.listOfContracts.slice(
+			startIndex,
+			endIndex
+		)
+
+		// this.table.deselect()
+
+		this.listOfAllContractsVisible = this.listOfAllContracts.slice(
 			startIndex,
 			endIndex
 		)
