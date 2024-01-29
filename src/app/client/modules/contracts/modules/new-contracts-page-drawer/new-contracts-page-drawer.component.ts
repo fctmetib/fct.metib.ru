@@ -38,7 +38,7 @@ export class NewContractsPageDrawerComponent implements OnInit {
 
 	size = 'm'
 
-	public isClosedContracts = false
+	public isClosedContracts = true
 	public addStatistics = true
 
 	public contract: DeliveryContractsInterface

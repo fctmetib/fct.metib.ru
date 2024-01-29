@@ -334,7 +334,8 @@
 				</ng-container>
 				<ng-template #table3>
 					<mib-table-row
-						*ngFor="let contract of listOfAllContractsVisible; let last = last"
+						(dblclick)="newContractPageDrawer(contract?.ID)"
+						*ngFor="let contract of advancedContractsVisible; let last = last"
 						[underlined]="!last"
 					>
 						<mib-table-cell contracted="true" type="main">
@@ -367,8 +368,17 @@
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title>
-								<mib-badge type="filled-success" [extended]="true" size="m"
-									>статус</mib-badge
+								<mib-badge
+									[type]="
+										contract?.AdvancedContract
+											? 'filled-accent'
+											: 'filled-success'
+									"
+									[extended]="true"
+									size="m"
+									>{{
+										contract?.AdvancedContract ? 'Исполнен' : 'Действует'
+									}}</mib-badge
 								></ng-container
 							>
 						</mib-table-cell>
@@ -405,7 +415,7 @@
 				<mib-table-footer [showIsland]="true" [lined]="!(loading$ | async)">
 					<mib-paginator
 						(pageChange)="onPageChange($event)"
-						[totalCount]="listOfAllContracts.length"
+						[totalCount]="advancedContracts.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 					></mib-paginator>

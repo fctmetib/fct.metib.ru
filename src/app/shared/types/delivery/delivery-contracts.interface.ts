@@ -35,3 +35,7 @@ export interface DeliveryContractsInterface {
 		FreeLimit: number
 	}
 }
+
+export interface AdvancedDeliveryContracts extends DeliveryContractsInterface {
+	AdvancedContract?: boolean
+}

@@ -3,7 +3,10 @@ import {Properties} from 'csstype'
 import {BehaviorSubject, finalize, tap} from 'rxjs'
 import {DeliveryService} from 'src/app/shared/services/share/delivery.service'
 import {ToolsService} from 'src/app/shared/services/tools.service'
-import {DeliveryContractsInterface} from 'src/app/shared/types/delivery/delivery-contracts.interface'
+import {
+	AdvancedDeliveryContracts,
+	DeliveryContractsInterface
+} from 'src/app/shared/types/delivery/delivery-contracts.interface'
 import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.interface'
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
 import {NewContractsPageDrawerService} from '../../modules/new-contracts-page-drawer/new-contracts-page-drawer.service'
@@ -36,11 +39,15 @@ export class NewContractsPageComponent implements OnInit {
 	public isClosedContracts = false
 	public addStatistics = true
 
+	public isCurrentContract = false
+	public advancedContracts: AdvancedDeliveryContracts[] = []
+	public advancedContractsVisible: AdvancedDeliveryContracts[] = []
+
 	public listOfContracts: DeliveryContractsInterface[] = []
 	public listOfContractsVisible: DeliveryContractsInterface[] = []
 
-	public listOfAllContracts: DeliveryContractsInterface[] = []
-	public listOfAllContractsVisible: DeliveryContractsInterface[] = []
+	// public listOfAllContracts: DeliveryContractsInterface[] = []
+	// public listOfAllContractsVisible: DeliveryContractsInterface[] = []
 
 	public requestsSelection: TableSelectionEvent = {
 		selectedCount: 0,
@@ -82,9 +89,13 @@ export class NewContractsPageComponent implements OnInit {
 			)
 			.pipe(
 				tap(data => {
-					this.listOfAllContracts = data
+					this.advancedContracts = data.map(c => {
+						let d = false
+						Date.parse(c.DateTo) > Date.now() ? (d = false) : (d = true)
+						return {...c, AdvancedContract: d}
+					})
+					console.log('this.advancedContracts :>> ', this.advancedContracts)
 					this.onPageChange(this.currentPage$.value)
-					console.log('this.listOfAllContracts :>> ', this.listOfAllContracts)
 				}),
 				finalize(() => this.loading$.next(false))
 			)
@@ -96,7 +107,6 @@ export class NewContractsPageComponent implements OnInit {
 	}
 
 	onPageChange(page: number) {
-		console.log('		this.currentPage :>> ', this.currentPage$.value)
 		this.currentPage$.next(page)
 
 		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
@@ -109,7 +119,7 @@ export class NewContractsPageComponent implements OnInit {
 
 		// this.table.deselect()
 
-		this.listOfAllContractsVisible = this.listOfAllContracts.slice(
+		this.advancedContractsVisible = this.advancedContracts.slice(
 			startIndex,
 			endIndex
 		)
