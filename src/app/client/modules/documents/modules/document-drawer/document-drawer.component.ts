@@ -6,8 +6,11 @@ import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.i
 import {extractBase64} from 'src/app/shared/services/tools.service'
 import {DocumentsService} from '../../services/documents.service'
 import {AuthService} from 'src/app/auth/services/auth.service'
-import {ButtonSize} from '../../../../../shared/ui-kit/button/interfaces/button.interface';
-import {DocumentReq, DocumentRes} from '../../../requests/interfaces/request.interface';
+import {ButtonSize} from '../../../../../shared/ui-kit/button/interfaces/button.interface'
+import {
+	DocumentReq,
+	DocumentRes
+} from '../../../requests/interfaces/request.interface'
 
 @Component({
 	selector: 'mib-new-documents-page-drawer',
@@ -15,23 +18,22 @@ import {DocumentReq, DocumentRes} from '../../../requests/interfaces/request.int
 	styleUrls: ['./document-drawer.component.scss']
 })
 export class DocumentDrawerComponent implements OnInit {
-
 	public loading$ = new BehaviorSubject<boolean>(false)
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
-  public size: ButtonSize = 'm'
+	public size: ButtonSize = 'm'
 	public form: FormGroup
 
-  get documents() {
-    return this.form.get('Documents') as FormArray
-  }
+	get documents() {
+		return this.form.get('Documents') as FormArray
+	}
 
-  get isDocumentSign(): boolean {
-    return this.form.get('isDocumentSign').value
-  }
+	get isDocumentSign(): boolean {
+		return this.form.get('isDocumentSign').value
+	}
 
-  get userFactoring() {
-    return this.authService.currentUser$.value.userFactoring
-  }
+	get userFactoring() {
+		return this.authService.currentUser$.value.userFactoring
+	}
 
 	constructor(
 		public dialogRef: MatDialogRef<DocumentDrawerComponent>,
@@ -42,7 +44,7 @@ export class DocumentDrawerComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.initForm()
-    this.getCurrentUserData()
+		this.getCurrentUserData()
 	}
 
 	getCurrentUserData() {
@@ -63,7 +65,7 @@ export class DocumentDrawerComponent implements OnInit {
 	initForm() {
 		this.form = this.fb.group({
 			documentDescription: [null],
-			isDocumentSign: [false],
+			isDocumentSign: [true],
 			Documents: this.fb.array([], [Validators.required])
 		})
 	}
@@ -83,30 +85,32 @@ export class DocumentDrawerComponent implements OnInit {
 
 	onSubmit(): void {
 		const documents: DocumentReq[] = this.documents.value
-    // TODO: СДЕЛАТЬ ПОДПИСЬ ПРИ needSign (TRUE)
+		// TODO: СДЕЛАТЬ ПОДПИСЬ ПРИ needSign (TRUE)
 
-    defer(() => {
-      this.isSubmitting$.next(true)
-      const reqs$ = documents.map(document => this.documentService.uploadNewDocument(document, this.isDocumentSign))
-      const req$ = zip(reqs$).pipe(
-        tap(() => {
-
-        })
-      )
-      if (this.isDocumentSign) {
-        return this.documentService.signModal(req$, this.isSubmitting$).pipe(map(output => output.data))
-      } else {
-        return req$.pipe(
-          finalize(() => {
-            this.isSubmitting$.next(false)
-          })
-        )
-      }
-    }).pipe(
-      finalize(() => {
-        this.dialogRef.close()
-      })
-    ).subscribe()
+		defer(() => {
+			this.isSubmitting$.next(true)
+			const reqs$ = documents.map(document =>
+				this.documentService.uploadNewDocument(document, this.isDocumentSign)
+			)
+			const req$ = zip(reqs$).pipe(tap(() => {}))
+			if (this.isDocumentSign) {
+				return this.documentService
+					.signModal(req$, this.isSubmitting$)
+					.pipe(map(output => output.data))
+			} else {
+				return req$.pipe(
+					finalize(() => {
+						this.isSubmitting$.next(false)
+					})
+				)
+			}
+		})
+			.pipe(
+				finalize(() => {
+					this.dialogRef.close()
+				})
+			)
+			.subscribe()
 	}
 
 	removeDocument(idx: number) {
@@ -115,17 +119,16 @@ export class DocumentDrawerComponent implements OnInit {
 
 	onDocumentLoad({file, url}: FileDnd) {
 		const document: DocumentReq = {
-      // TODO: ДОБАВИТЬ ИНПУТ С "type='number'" В ФОРМУ
-      Number: null,
+			// TODO: ДОБАВИТЬ ИНПУТ С "type='number'" В ФОРМУ
+			Number: null,
 			Title: file.name,
 			Description: `description ${file.name}`,
 			DocumentTypeID: 40,
 			OwnerTypeID: 6,
-      // Бекенд сказал, что информация берётся из токена
+			// Бекенд сказал, что информация берётся из токена
 			// OwnerID: this.userFactoring.OrganizationID,
 			Data: extractBase64(url)
 		}
 		this.addDocument(document)
 	}
 }
-

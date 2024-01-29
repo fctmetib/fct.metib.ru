@@ -21,6 +21,7 @@ import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/cont
 import {TextareaModule} from '../../../../../shared/ui-kit/textarea/textarea.module'
 import {AutosizeModule} from 'ngx-autosize'
 import {CashPanelModule} from 'src/app/shared/modules/cash-panel/cash-panel.module'
+import {LabelModule} from 'src/app/shared/directives/label/label.module'
 
 @NgModule({
 	declarations: [InvoiceDrawerComponent],
@@ -44,7 +45,8 @@ import {CashPanelModule} from 'src/app/shared/modules/cash-panel/cash-panel.modu
 		ContractedFormsModule,
 		TextareaModule,
 		AutosizeModule,
-		CashPanelModule
+		CashPanelModule,
+		LabelModule
 	],
 	providers: [InvoiceDrawerService]
 })

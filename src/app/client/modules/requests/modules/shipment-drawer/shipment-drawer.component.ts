@@ -7,7 +7,7 @@ import {Shipment} from './interfaces/shipment.interface'
 import {ToolsService} from '../../../../../shared/services/tools.service'
 import {RequestRes} from '../../interfaces/request.interface'
 import {tap} from 'rxjs'
-import {ShipmentDrawerService} from './services/shipment-drawer.service';
+import {ShipmentDrawerService} from './services/shipment-drawer.service'
 
 @Component({
 	selector: 'mib-delivery-agreement-drawer',
@@ -22,7 +22,7 @@ export class ShipmentDrawerComponent implements OnInit {
 		public dialogRef: MatDialogRef<ShipmentDrawerComponent>,
 		private fb: FormBuilder,
 		private formsPresetsService: FormsPresetsService,
-    private shipmentDrawerService: ShipmentDrawerService,
+		private shipmentDrawerService: ShipmentDrawerService,
 		private toolsService: ToolsService
 	) {}
 
@@ -78,14 +78,15 @@ export class ShipmentDrawerComponent implements OnInit {
 	}
 
 	onSubmit() {
-    const form: Shipment = this.toolsService.transformDatesToISO(
-      this.form.getRawValue()
-    )
-    this.shipmentDrawerService.emitShipment(form)
+		const form: Shipment = this.toolsService.transformDatesToISO(
+			this.form.getRawValue()
+		)
+		this.shipmentDrawerService.emitShipment(form)
+		this.form.reset()
 	}
 
 	onSubmitAndClose() {
-    this.onSubmit()
-    this.dialogRef.close()
+		this.onSubmit()
+		this.dialogRef.close()
 	}
 }

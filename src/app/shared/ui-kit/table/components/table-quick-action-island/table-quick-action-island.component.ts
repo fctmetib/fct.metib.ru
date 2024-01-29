@@ -1,19 +1,17 @@
-import {Component, Input} from '@angular/core';
-import {TableFooterComponent} from '../table-footer/table-footer.component';
+import {Component, Input} from '@angular/core'
+import {TableFooterComponent} from '../table-footer/table-footer.component'
 
 @Component({
-  selector: 'mib-table-quick-action-island',
-  templateUrl: './table-quick-action-island.component.html',
-  styleUrls: ['./table-quick-action-island.component.scss']
+	selector: 'mib-table-quick-action-island',
+	templateUrl: './table-quick-action-island.component.html',
+	styleUrls: ['./table-quick-action-island.component.scss']
 })
 export class TableQuickActionIslandComponent {
+	@Input() showRemove: boolean = true
 
-  constructor(
-    public footer: TableFooterComponent
-  ) {
-  }
+	constructor(public footer: TableFooterComponent) {}
 
-  get table() {
-    return this.footer.table
-  }
+	get table() {
+		return this.footer.table
+	}
 }

@@ -1,140 +1,161 @@
 <mib-drawer>
-  <mib-drawer-header
-    (onClose)="dialogRef.close()"
-    drawer-header
-  ></mib-drawer-header>
-  <mib-drawer-container>
-    <mib-skeleton [styles]="defaultSkeleton" [style.height]="'140px'"
-                  *ngIf="loading$ | async; else first"></mib-skeleton>
-    <ng-template #first>
-      <div>
-        <div class="header flex gap-6">
-          <h4 title="{{ document.Title }}">{{ document.Title }}</h4>
-          <h4 title="{{ document?.Number }}" class="c-bti-tertiary">
-            {{ document?.Number }}
-          </h4>
-        </div>
-        <mib-spacing type="xs2"></mib-spacing>
-        <div class="flex gap-4">
-				<span class="text text_m c-bti-secondary"
-        >Добавлен {{ document?.CreatedTime | date : 'dd.MM.yyyy' }}</span
-        >
-          <span class="text text_m c-bti-quaternary"
-          >подписан {{ document?.CreatedTime | date : 'dd.MM.yyyy' }}</span
-          >
-        </div>
-        <mib-spacing type="xs"></mib-spacing>
-        <div class="flex flex_justify-between">
-          <mib-tag size="m" type="filled-secondary">
-            Тип документа: {{ document?.DocumentTypeTitle }}
-          </mib-tag>
-          <mib-tag size="m" type="outline">
-            <mib-avatar
-              [showImage]="true"
-              [showArrow]="false"
-              type="round"
-              src="./assets/images/woman-avatar.jpg"
-            ></mib-avatar>
-            {{ document?.CreatorFirstName }} {{ document?.CreatorLastName }}
-          </mib-tag>
-        </div>
-        <mib-spacing type="xs"></mib-spacing>
-        <p class="text text_s">
-          {{ document?.Description }}
-        </p>
-      </div>
-    </ng-template>
-    <mib-spacing type="xs"></mib-spacing>
-    <mib-skeleton [styles]="defaultSkeleton" [style.height]="'40px'"
-                  *ngIf="loading$ | async; else fileTemplate"></mib-skeleton>
-    <ng-template #fileTemplate>
-<!--      <mib-file-cell size="s"></mib-file-cell>-->
-      <div class="flex flex_align-center gap-16">
-        <mib-button [loading]="isSigning$ | async" (press)="sign()" type="filled-primary">Подписать документ</mib-button>
-        <mib-button [loading]="isDownloading$ | async" type="ghost-primary" (press)="downloadFile()">
-          <mib-icon mibLeftIcon class="stroke" name="fi_download"></mib-icon>
-          <span>Скачать файл</span>
-        </mib-button>
-        <!--      <mib-link size="m" type="ghost-accent">-->
-        <!--        <mib-icon mibLeftIcon class="stroke" name="fi_trash"></mib-icon>-->
-        <!--        Удалить документ-->
-        <!--      </mib-link>-->
-      </div>
-    </ng-template>
-    <mib-spacing type="m"></mib-spacing>
-  </mib-drawer-container>
-  <mib-tab-group>
-    <mib-navbar>
-      <mib-navbar-point value="1">Подписи</mib-navbar-point>
-<!--      <mib-navbar-point value="2">Квитанции</mib-navbar-point>-->
-    </mib-navbar>
-    <div>
-      <mib-drawer-container>
-        <mib-tab-item value="1">
-          <mib-spacing type="m"></mib-spacing>
-          <mib-table [isLoading]="loading$ | async">
-            <mib-table-head>
-              <mib-table-head-cell
-              >Серийный №
-              </mib-table-head-cell
-              >
-              <mib-table-head-cell>Организация</mib-table-head-cell>
-              <mib-table-head-cell>Эмитент</mib-table-head-cell>
-              <mib-table-head-cell>Действительна до</mib-table-head-cell>
-            </mib-table-head>
-            <ng-container *ngIf="loading$ | async; else table">
-              <mib-skeleton
-                [styles]="last ? skeletonWithoutUnderline : skeleton"
-                *ngFor="
-							let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
-							let last = last
-						"
-              ></mib-skeleton>
-            </ng-container>
-            <ng-template #table>
-              <mib-table-row
-                *ngFor="let sign of signs; let idx = index"
-                [underlined]="true"
-              >
-                <mib-table-cell>
-                  <ng-container table-cell-title>
-                    {{ sign.Serial }}
-                  </ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title>{{ sign.Organization }}</ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title>{{ sign.Issuer }}</ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title>{{ sign.Date | date: 'dd.MM.yyyy' }}</ng-container>
-                </mib-table-cell>
-                <!--              <mib-button table-row-button size="s" type="ghost-secondary">-->
-                <!--                <mib-icon-->
-                <!--                  class="stroke"-->
-                <!--                  btn-icon-->
-                <!--                  name="fi_more-vertical"-->
-                <!--                ></mib-icon>-->
-                <!--              </mib-button>-->
-              </mib-table-row>
-            </ng-template>
-            <mib-table-footer [lined]="!(loading$ | async)">
-              <mib-paginator
-                [totalCount]="signs.length"
-                [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-                [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
-              ></mib-paginator>
-            </mib-table-footer>
-          </mib-table>
-        </mib-tab-item>
-      </mib-drawer-container>
-      <mib-drawer-container>
-        <mib-tab-item value="2">
-          <mib-spacing type="s"></mib-spacing>
-          <p class="text text_m">В данном разделе пока ничего нет.</p>
-        </mib-tab-item>
-      </mib-drawer-container>
-    </div>
-  </mib-tab-group>
+	<mib-drawer-header
+		[showShared]="true"
+		(onClose)="dialogRef.close()"
+		drawer-header
+	></mib-drawer-header>
+	<mib-drawer-container>
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'140px'"
+			*ngIf="loading$ | async; else first"
+		></mib-skeleton>
+		<ng-template #first>
+			<div>
+				<div class="header flex gap-6">
+					<h4 title="{{ document.Title }}">{{ document.Title }}</h4>
+					<h4 title="{{ document?.Number }}" class="c-bti-tertiary">
+						{{ document?.Number }}
+					</h4>
+				</div>
+				<mib-spacing type="xs2"></mib-spacing>
+				<div class="flex gap-4">
+					<span class="text text_m c-bti-secondary"
+						>Добавлен {{ document?.CreatedTime | date : 'dd.MM.yyyy' }}</span
+					>
+					<span class="text text_m c-bti-quaternary"
+						>подписан {{ document?.CreatedTime | date : 'dd.MM.yyyy' }}</span
+					>
+				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex flex_justify-between">
+					<mib-tag size="m" type="filled-secondary">
+						Тип документа: {{ document?.DocumentTypeTitle }}
+					</mib-tag>
+					<mib-tag size="m" type="outline">
+						<mib-avatar
+							[showImage]="true"
+							[showArrow]="false"
+							type="round"
+							src="./assets/images/woman-avatar.jpg"
+						></mib-avatar>
+						{{ document?.CreatorFirstName }} {{ document?.CreatorLastName }}
+					</mib-tag>
+				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<p class="text text_s">
+					{{ document?.Description }}
+				</p>
+			</div>
+		</ng-template>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'40px'"
+			*ngIf="loading$ | async; else fileTemplate"
+		></mib-skeleton>
+		<ng-template #fileTemplate>
+			<!--      <mib-file-cell size="s"></mib-file-cell>-->
+			<div class="flex flex_align-center gap-16">
+				<mib-button
+					[loading]="isSigning$ | async"
+					(press)="sign()"
+					type="filled-primary"
+					>Подписать документ</mib-button
+				>
+				<mib-button
+					[loading]="isDownloading$ | async"
+					type="ghost-primary"
+					(press)="downloadFile()"
+				>
+					<mib-icon mibLeftIcon class="stroke" name="fi_download"></mib-icon>
+					<span>Скачать файл</span>
+				</mib-button>
+				<!--      <mib-link size="m" type="ghost-accent">-->
+				<!--        <mib-icon mibLeftIcon class="stroke" name="fi_trash"></mib-icon>-->
+				<!--        Удалить документ-->
+				<!--      </mib-link>-->
+			</div>
+		</ng-template>
+		<mib-spacing type="m"></mib-spacing>
+	</mib-drawer-container>
+	<mib-tab-group>
+		<mib-navbar>
+			<mib-navbar-point value="1">Подписи</mib-navbar-point>
+			<!--      <mib-navbar-point value="2">Квитанции</mib-navbar-point>-->
+		</mib-navbar>
+		<div>
+			<mib-drawer-container>
+				<mib-tab-item value="1">
+					<mib-spacing type="m"></mib-spacing>
+					<mib-table [isLoading]="loading$ | async">
+						<mib-table-head>
+							<mib-table-head-cell>Серийный № </mib-table-head-cell>
+							<mib-table-head-cell>Организация</mib-table-head-cell>
+							<mib-table-head-cell>Эмитент</mib-table-head-cell>
+							<mib-table-head-cell>Действительна до</mib-table-head-cell>
+						</mib-table-head>
+						<ng-container *ngIf="loading$ | async; else table">
+							<mib-skeleton
+								[styles]="last ? skeletonWithoutUnderline : skeleton"
+								*ngFor="
+									let i of toolsService.createEmptyArray(
+										PAGINATOR_ITEMS_PER_PAGE
+									);
+									let last = last
+								"
+							></mib-skeleton>
+						</ng-container>
+						<ng-template #table>
+							<mib-table-row
+								*ngFor="let sign of signs; let idx = index"
+								[underlined]="true"
+							>
+								<mib-table-cell>
+									<ng-container table-cell-title>
+										{{ sign.Serial }}
+									</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										sign.Organization
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										sign.Issuer
+									}}</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										sign.Date | date : 'dd.MM.yyyy'
+									}}</ng-container>
+								</mib-table-cell>
+								<!--              <mib-button table-row-button size="s" type="ghost-secondary">-->
+								<!--                <mib-icon-->
+								<!--                  class="stroke"-->
+								<!--                  btn-icon-->
+								<!--                  name="fi_more-vertical"-->
+								<!--                ></mib-icon>-->
+								<!--              </mib-button>-->
+							</mib-table-row>
+						</ng-template>
+						<mib-table-footer [lined]="!(loading$ | async)">
+							<mib-paginator
+								[totalCount]="signs.length"
+								[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+								[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+							></mib-paginator>
+						</mib-table-footer>
+					</mib-table>
+				</mib-tab-item>
+			</mib-drawer-container>
+			<mib-drawer-container>
+				<mib-tab-item value="2">
+					<mib-spacing type="s"></mib-spacing>
+					<p class="text text_m">В данном разделе пока ничего нет.</p>
+				</mib-tab-item>
+			</mib-drawer-container>
+		</div>
+	</mib-tab-group>
 </mib-drawer>

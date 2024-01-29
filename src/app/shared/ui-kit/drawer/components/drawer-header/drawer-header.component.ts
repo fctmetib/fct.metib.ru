@@ -10,6 +10,7 @@ export class DrawerHeaderComponent {
 	@Input() type: DrawerHeaderType = 'view'
 	@Input() showEdits: boolean = false
 	@Input() showClose: boolean = false
+	@Input() showShared: boolean = false
 	@Input() showMaximize: boolean = false
 	@Input() showProgressBar: boolean = false
 	@Input() maxPage: number = 3

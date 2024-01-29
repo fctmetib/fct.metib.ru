@@ -1,22 +1,25 @@
 <mib-drawer [formGroup]="form">
 	<mib-drawer-header
+		[showShared]="true"
 		[showClose]="true"
 		(onClose)="dialogRef.close()"
 		drawer-header
 	>
 	</mib-drawer-header>
 	<mib-drawer-container>
-		<h4>Новый договор</h4>
+		<h4>Добавить поставку</h4>
 		<mib-spacing type="xs"></mib-spacing>
 		<div class="flex flex_column gap-12">
-			<mib-input>
-				<ng-container mibLabel>Накладная, УПД, Акт</ng-container>
-				<input formControlName="WaybillNumber" mibInput />
-			</mib-input>
-			<mib-input>
-				<ng-container mibLabel>Дата накладной</ng-container>
-				<input type="date" formControlName="WaybillDate" mibInput />
-			</mib-input>
+			<div class="flex gap-12">
+				<mib-input class="flex_grow">
+					<ng-container mibLabel>Накладная, УПД, Акт</ng-container>
+					<input formControlName="WaybillNumber" mibInput />
+				</mib-input>
+				<mib-input class="flex_grow">
+					<ng-container mibLabel>Дата накладной</ng-container>
+					<input type="date" formControlName="WaybillDate" mibInput />
+				</mib-input>
+			</div>
 			<div class="flex gap-12">
 				<mib-input class="flex_grow">
 					<ng-container mibLabel>Счет-фактура</ng-container>

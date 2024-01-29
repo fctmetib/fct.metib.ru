@@ -1,5 +1,6 @@
 <mib-drawer>
 	<mib-drawer-header
+		[showShared]="true"
 		(onClose)="dialogRef.close()"
 		[showMaximize]="true"
 		[showEdits]="true"
@@ -8,7 +9,8 @@
 	<mib-drawer-container>
 		<ng-container *ngIf="loading$ | async; else title">
 			<mib-skeleton
-				[styles]="skeletonTitle"
+				[styles]="defaultSkeleton"
+				[style.height]="'42px'"
 				*ngFor="let i of [1]"
 			></mib-skeleton>
 		</ng-container>
@@ -25,7 +27,8 @@
 		<mib-spacing type="xs2"></mib-spacing>
 		<ng-container *ngIf="loading$ | async; else docDescription">
 			<mib-skeleton
-				[styles]="skeletonDescription"
+				[styles]="defaultSkeleton"
+				[style.height]="'54px'"
 				*ngFor="let i of [1]"
 			></mib-skeleton>
 		</ng-container>
@@ -60,7 +63,8 @@
 		<mib-spacing type="xs"></mib-spacing>
 		<ng-container *ngIf="loading$ | async; else date">
 			<mib-skeleton
-				[styles]="skeletonDate"
+				[styles]="defaultSkeleton"
+				[style.height]="'138px'"
 				*ngFor="let i of [1]"
 			></mib-skeleton>
 		</ng-container>
@@ -84,6 +88,13 @@
 			</mib-cash-panel>
 		</ng-template>
 	</mib-drawer-container>
+	<mib-spacing type="xs"></mib-spacing>
+	<div class="flex container">
+		<mib-link size="m">
+			Скопировать реквизиты
+			<mib-icon mibLeftIcon class="stroke" name="fi_copy"></mib-icon>
+		</mib-link>
+	</div>
 	<mib-spacing type="m"></mib-spacing>
 	<mib-tab-group>
 		<mib-navbar class="container container_large">
