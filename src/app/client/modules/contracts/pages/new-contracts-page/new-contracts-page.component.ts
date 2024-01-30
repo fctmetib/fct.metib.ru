@@ -43,11 +43,11 @@ export class NewContractsPageComponent implements OnInit {
 	public advancedContracts: AdvancedDeliveryContracts[] = []
 	public advancedContractsVisible: AdvancedDeliveryContracts[] = []
 
-	public listOfContracts: DeliveryContractsInterface[] = []
-	public listOfContractsVisible: DeliveryContractsInterface[] = []
+	public currentContracts: DeliveryContractsInterface[] = []
+	public currentContractsVisible: DeliveryContractsInterface[] = []
 
-	// public listOfAllContracts: DeliveryContractsInterface[] = []
-	// public listOfAllContractsVisible: DeliveryContractsInterface[] = []
+	public completedContracts: DeliveryContractsInterface[] = []
+	public completedContractsVisible: DeliveryContractsInterface[] = []
 
 	public requestsSelection: TableSelectionEvent = {
 		selectedCount: 0,
@@ -61,23 +61,7 @@ export class NewContractsPageComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.getCurrentDeliveriesContracts()
 		this.getAllDeliveriesContracts()
-	}
-
-	getCurrentDeliveriesContracts() {
-		this.loading$.next(true)
-		this.deliveryService
-			.getAllDeliveriesContracts(this.isClosedContracts, this.addStatistics)
-			.pipe(
-				tap(data => {
-					this.listOfContracts = data
-					this.onPageChange(this.currentPage$.value)
-					console.log('this.listOfContracts :>> ', this.listOfContracts)
-				}),
-				finalize(() => this.loading$.next(false))
-			)
-			.subscribe()
 	}
 
 	getAllDeliveriesContracts() {
@@ -89,12 +73,19 @@ export class NewContractsPageComponent implements OnInit {
 			)
 			.pipe(
 				tap(data => {
-					this.advancedContracts = data.map(c => {
-						let d = false
-						Date.parse(c.DateTo) > Date.now() ? (d = false) : (d = true)
-						return {...c, AdvancedContract: d}
-					})
+					this.advancedContracts = data.map(c => ({
+						...c,
+						AdvancedContract: Date.parse(c.DateTo) > Date.now() ? false : true
+					}))
+					this.completedContracts = this.advancedContracts.filter(
+						c => c.AdvancedContract !== false
+					)
+					this.currentContracts = this.advancedContracts.filter(
+						c => c.AdvancedContract === false
+					)
 					console.log('this.advancedContracts :>> ', this.advancedContracts)
+					console.log('this.completedContracts :>> ', this.completedContracts)
+					console.log('this.currentContracts :>> ', this.currentContracts)
 					this.onPageChange(this.currentPage$.value)
 				}),
 				finalize(() => this.loading$.next(false))
@@ -112,14 +103,16 @@ export class NewContractsPageComponent implements OnInit {
 		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
 		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
 
-		this.listOfContractsVisible = this.listOfContracts.slice(
+		this.advancedContractsVisible = this.advancedContracts.slice(
 			startIndex,
 			endIndex
 		)
-
+		this.currentContractsVisible = this.currentContracts.slice(
+			startIndex,
+			endIndex
+		)
 		// this.table.deselect()
-
-		this.advancedContractsVisible = this.advancedContracts.slice(
+		this.completedContractsVisible = this.completedContracts.slice(
 			startIndex,
 			endIndex
 		)
