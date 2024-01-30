@@ -86,7 +86,9 @@ export class NewContractsPageComponent implements OnInit {
 					console.log('this.advancedContracts :>> ', this.advancedContracts)
 					console.log('this.completedContracts :>> ', this.completedContracts)
 					console.log('this.currentContracts :>> ', this.currentContracts)
-					this.onPageChange(this.currentPage$.value)
+					this.onAdvencesdPageChange(1)
+					this.onCurrentPageChange(1)
+					this.onCompleteddPageChange(1)
 				}),
 				finalize(() => this.loading$.next(false))
 			)
@@ -97,24 +99,31 @@ export class NewContractsPageComponent implements OnInit {
 		this.requestsSelection = event
 	}
 
-	onPageChange(page: number) {
+	onPageChange<T>(page: number, sourceArray: T[] = []) {
 		this.currentPage$.next(page)
 
 		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
 		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
 
-		this.advancedContractsVisible = this.advancedContracts.slice(
-			startIndex,
-			endIndex
+		return (sourceArray || []).slice(startIndex, endIndex)
+	}
+
+	onAdvencesdPageChange($event) {
+		this.advancedContractsVisible = this.onPageChange(
+			$event,
+			this.advancedContracts
 		)
-		this.currentContractsVisible = this.currentContracts.slice(
-			startIndex,
-			endIndex
+	}
+	onCurrentPageChange($event) {
+		this.currentContractsVisible = this.onPageChange(
+			$event,
+			this.currentContracts
 		)
-		// this.table.deselect()
-		this.completedContractsVisible = this.completedContracts.slice(
-			startIndex,
-			endIndex
+	}
+	onCompleteddPageChange($event) {
+		this.completedContractsVisible = this.onPageChange(
+			$event,
+			this.completedContracts
 		)
 	}
 

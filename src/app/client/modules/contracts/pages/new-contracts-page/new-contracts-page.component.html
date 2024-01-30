@@ -138,7 +138,7 @@
 				</ng-template>
 				<mib-table-footer [showIsland]="true" [lined]="!(loading$ | async)">
 					<mib-paginator
-						(pageChange)="onPageChange($event)"
+						(pageChange)="onCurrentPageChange($event)"
 						[totalCount]="currentContracts.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
@@ -235,7 +235,7 @@
 				</ng-template>
 				<mib-table-footer [showIsland]="true" [lined]="!(loading$ | async)">
 					<mib-paginator
-						(pageChange)="onPageChange($event)"
+						(pageChange)="onCompleteddPageChange($event)"
 						[totalCount]="completedContracts.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
@@ -388,7 +388,7 @@
 				</ng-template>
 				<mib-table-footer [showIsland]="true" [lined]="!(loading$ | async)">
 					<mib-paginator
-						(pageChange)="onPageChange($event)"
+						(pageChange)="onAdvencesdPageChange($event)"
 						[totalCount]="advancedContracts.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
