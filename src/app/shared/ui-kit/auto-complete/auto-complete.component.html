@@ -1,6 +1,13 @@
 <div [mibDropdownTrigger]="menu" class="autocomplete-wrapper">
-  <ng-content select="[autocomplete-input]"></ng-content>
+	<ng-content select="[autocomplete-input]"></ng-content>
 </div>
 <mib-dropdown #menu>
-  <ng-content></ng-content>
+	<mib-dropdown-point
+		*ngIf="!options.length; else viewOptions"
+		[value]="true"
+		text="Нет договоров"
+	></mib-dropdown-point>
+	<ng-template #viewOptions>
+		<ng-content></ng-content>
+	</ng-template>
 </mib-dropdown>
