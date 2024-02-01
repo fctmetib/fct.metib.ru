@@ -1147,28 +1147,32 @@
 <div *ngIf="isShownToaster" class="wrapper">
 	<h3>toaster</h3>
 	<mib-spacing type="xs2"></mib-spacing>
-	<mib-toaster>
+	<span>success</span>
+	<mib-toaster type="success">
 		<ng-container toaster-text>Description</ng-container>
 		<ng-container toaster-header>Headline</ng-container>
 	</mib-toaster>
-	<mib-spacing type="xs2"></mib-spacing>
-	<mib-toaster type="success" showDescription="false">
+	<!-- <mib-spacing type="xs2"></mib-spacing>
+	<span>failure/showDescription="false"</span>
+	<mib-toaster type="failure" [showDescription]="false">
 		<ng-container toaster-text>Description</ng-container>
 		<ng-container toaster-header>Headline</ng-container>
 	</mib-toaster>
 	<mib-spacing type="xs2"></mib-spacing>
 	<h4>mobile/[showDescription]="false"</h4>
 	<mib-spacing type="xs2"></mib-spacing>
-	<mib-toaster type="success" device="mobile" [showDescription]="false">
+	<span>failure</span>
+	<mib-toaster type="failure" device="mobile" [showDescription]="false">
 		<ng-container toaster-text>Description</ng-container>
 		<ng-container toaster-header>Headline</ng-container>
 	</mib-toaster>
 	<mib-spacing type="xs2"></mib-spacing>
+	<span>default</span>
 	<mib-toaster type="default" showDescription="false">
 		<ng-container toaster-text>Description</ng-container>
 		<ng-container toaster-header>Headline</ng-container>
 	</mib-toaster>
-	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="xl2"></mib-spacing> -->
 </div>
 
 <hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />

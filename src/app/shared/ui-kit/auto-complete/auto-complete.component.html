@@ -5,7 +5,7 @@
 	<mib-dropdown-point
 		*ngIf="!options.length; else viewOptions"
 		[value]="true"
-		text="Нет договоров"
+		text="Нет данных"
 	></mib-dropdown-point>
 	<ng-template #viewOptions>
 		<ng-content></ng-content>

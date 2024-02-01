@@ -143,6 +143,14 @@ src\app\shared\ui-kit\
 ng g i shared/ui-kit/toaster/interfaces/toaster.interface  --dry-run
 ng g m shared/ui-kit/toaster/toaster --flat  --dry-run
 ng g c shared/ui-kit/toaster/toaster --flat  --skip-tests --dry-run
+
+// service
+src\app\shared\services\common\accounts.service.ts
+ng g s shared/services/common/toaster --skip-tests --dry-run
+
+// interface
+src\app\shared\types\common
+ng g i shared/types/common/toaster  --dry-run
  //---
 
  //--- modal

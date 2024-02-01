@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core'
-import { ToasterDevice, ToasterType } from './interfaces/toaster.interface'
+import {Component, Input} from '@angular/core'
+import {ToasterDevice, ToasterType} from './interfaces/toaster.interface'
 
 @Component({
 	selector: 'mib-toaster',
@@ -7,8 +7,7 @@ import { ToasterDevice, ToasterType } from './interfaces/toaster.interface'
 	styleUrls: ['./toaster.component.scss']
 })
 export class ToasterComponent {
-	@Input() type: ToasterType = 'failure'
-	// @Input() type: ToasterType = 'default'
+	@Input() type: ToasterType = 'success'
 	@Input() device: ToasterDevice = 'desktop'
 	@Input() description: boolean = true
 	@Input() showDescription: boolean = true
