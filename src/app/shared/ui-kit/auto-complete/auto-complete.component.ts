@@ -169,6 +169,7 @@ export class AutoCompleteComponent
 				.pipe(
 					tap(value => {
 						this.inputDirective.updateStatus(this.control)
+						this.inputDirective.elementRef.nativeElement.value = ''
 					}),
 					takeUntil(this.au.destroyer)
 				)
