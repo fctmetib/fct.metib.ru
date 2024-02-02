@@ -151,6 +151,10 @@ ng g s shared/services/common/toaster --skip-tests --dry-run
 // interface
 src\app\shared\types\common
 ng g i shared/types/common/toaster  --dry-run
+
+// toaster-pointer
+src\app\shared\ui-kit\toaster\components
+ng g c shared/ui-kit/toaster/components/toaster-pointer --skip-tests
  //---
 
  //--- modal
