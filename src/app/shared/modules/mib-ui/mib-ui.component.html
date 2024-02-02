@@ -1148,10 +1148,13 @@
 	<h3>toaster</h3>
 	<mib-spacing type="xs2"></mib-spacing>
 	<span>success</span>
-	<!-- <mib-toaster type="success">
-		<ng-container toaster-text>Description</ng-container>
-		<ng-container toaster-header>Headline</ng-container>
-	</mib-toaster> -->
+	<mib-toaster type="failure">
+		<!-- <mib-toaster type="success"> -->
+		<mib-toaster-point [showDescription]="false">
+			<ng-container toaster-point-text>Description</ng-container>
+			<ng-container toaster-point-header>Headline</ng-container>
+		</mib-toaster-point>
+	</mib-toaster>
 	<!-- <mib-spacing type="xs2"></mib-spacing>
 	<span>failure/showDescription="false"</span>
 	<mib-toaster type="failure" [showDescription]="false">

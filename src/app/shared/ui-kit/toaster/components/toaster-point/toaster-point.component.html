@@ -1,16 +1,16 @@
 <div
-	class="toaster flex flex_justify-between flex_align-center"
+	class="toaster-point flex flex_justify-between flex_align-center"
 	[ngClass]="classes"
 >
 	<div class="flex flex_column gap-4">
 		<div class="flex gap-4">
 			<mib-icon class="stroke" [name]="IconName"></mib-icon>
 			<p class="text text_m text_medium">
-				<ng-content select="[toaster-header]"></ng-content>
+				<ng-content select="[toaster-point-header]"></ng-content>
 			</p>
 		</div>
 		<p *ngIf="showDescription" class="text text_m c-bti-secondary">
-			<ng-content select="[toaster-text]"></ng-content>
+			<ng-content select="[toaster-point-text]"></ng-content>
 		</p>
 	</div>
 	<div class="last-icon">

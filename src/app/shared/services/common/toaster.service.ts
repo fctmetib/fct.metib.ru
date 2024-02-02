@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core'
 import {BehaviorSubject} from 'rxjs'
-import {
-	Toaster,
-	ToasterType
-} from '../../ui-kit/toaster/interfaces/toaster.interface'
+import {Toaster} from '../../ui-kit/toaster/interfaces/toaster.interface'
+import {ToasterPointType} from '../../ui-kit/toaster/interfaces/toaster-point.interface'
 
 @Injectable({
 	providedIn: 'root'
@@ -14,7 +12,7 @@ export class ToasterService {
 	constructor() {}
 
 	show(
-		type: ToasterType,
+		type: ToasterPointType,
 		title?: string,
 		description?: string,
 		delay?: number
