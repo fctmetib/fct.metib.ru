@@ -5,6 +5,7 @@ import {NewShipmentModalService} from '../modals/new-shipment-modal/new-shipment
 import {RequestCreateSuccessModalService} from '../modals/request-create-success-modal/request-create-success-modal.service'
 import {RequestInfoModalService} from '../modals/request-info-modal/request-info-modal.service'
 import {RequestFailureModalService} from '../modals/request-failure-modal/request-failure-modal.service'
+import {ToasterService} from '../../services/common/toaster.service'
 
 @Component({
 	selector: 'app-mib-ui',
@@ -70,7 +71,8 @@ export class MibUiComponent implements OnInit {
 		private newShipmentModalService: NewShipmentModalService,
 		private requestCreateSuccessModalService: RequestCreateSuccessModalService,
 		private requestInfoModalService: RequestInfoModalService,
-		private requestFailureModalService: RequestFailureModalService
+		private requestFailureModalService: RequestFailureModalService,
+		private toaster: ToasterService
 	) {}
 
 	ngOnInit(): void {
@@ -92,15 +94,45 @@ export class MibUiComponent implements OnInit {
 		this.lookIt()
 	}
 
-	lookIt() {
-		console.log(
-			'ERR>>>',
-			this.form.errors,
-			'VALID>>>',
-			this.form.valid,
-			'VALUE>>>',
-			this.form.value
+	showSuccessToaster() {
+		console.log('halo toaster!!')
+		this.toaster.show(
+			'success',
+			'Halo success!',
+			'This is a success alert',
+			100000
 		)
+	}
+
+	showDefaultToaster() {
+		console.log('halo toaster!!')
+		this.toaster.show(
+			'default',
+			'Halo default!',
+			'This is a default alert',
+			100000
+		)
+	}
+
+	showFailureToaster() {
+		console.log('halo toaster!!')
+		this.toaster.show(
+			'failure',
+			'Halo failure!',
+			'This is a failure alert',
+			100000
+		)
+	}
+
+	lookIt() {
+		// console.log(
+		// 	'ERR>>>',
+		// 	this.form.errors,
+		// 	'VALID>>>',
+		// 	this.form.valid,
+		// 	'VALUE>>>',
+		// 	this.form.value
+		// )
 	}
 
 	openNewShipmentModal() {

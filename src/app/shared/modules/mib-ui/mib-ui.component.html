@@ -1148,34 +1148,16 @@
 	<h3>toaster</h3>
 	<mib-spacing type="xs2"></mib-spacing>
 	<span>success</span>
-	<mib-toaster type="failure">
-		<!-- <mib-toaster type="success"> -->
-		<mib-toaster-point [showDescription]="false">
-			<ng-container toaster-point-text>Description</ng-container>
-			<ng-container toaster-point-header>Headline</ng-container>
-		</mib-toaster-point>
-	</mib-toaster>
-	<!-- <mib-spacing type="xs2"></mib-spacing>
-	<span>failure/showDescription="false"</span>
-	<mib-toaster type="failure" [showDescription]="false">
-		<ng-container toaster-text>Description</ng-container>
-		<ng-container toaster-header>Headline</ng-container>
-	</mib-toaster>
-	<mib-spacing type="xs2"></mib-spacing>
-	<h4>mobile/[showDescription]="false"</h4>
-	<mib-spacing type="xs2"></mib-spacing>
-	<span>failure</span>
-	<mib-toaster type="failure" device="mobile" [showDescription]="false">
-		<ng-container toaster-text>Description</ng-container>
-		<ng-container toaster-header>Headline</ng-container>
-	</mib-toaster>
-	<mib-spacing type="xs2"></mib-spacing>
-	<span>default</span>
-	<mib-toaster type="default" showDescription="false">
-		<ng-container toaster-text>Description</ng-container>
-		<ng-container toaster-header>Headline</ng-container>
-	</mib-toaster>
-	<mib-spacing type="xl2"></mib-spacing> -->
+	<button style="border: 1px solid red" (click)="showSuccessToaster()">
+		Success
+	</button>
+	<button style="border: 1px solid green" (click)="showDefaultToaster()">
+		Default
+	</button>
+	<button style="border: 1px solid gray" (click)="showFailureToaster()">
+		Failure
+	</button>
+	<mib-toaster></mib-toaster>
 </div>
 
 <hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />

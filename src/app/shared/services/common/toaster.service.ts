@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core'
-import {BehaviorSubject} from 'rxjs'
+import {BehaviorSubject, Observable, filter} from 'rxjs'
 import {Toaster} from '../../ui-kit/toaster/interfaces/toaster.interface'
 import {ToasterPointType} from '../../ui-kit/toaster/interfaces/toaster-point.interface'
 
@@ -7,9 +7,17 @@ import {ToasterPointType} from '../../ui-kit/toaster/interfaces/toaster-point.in
 	providedIn: 'root'
 })
 export class ToasterService {
-	subject: BehaviorSubject<Toaster> = new BehaviorSubject<Toaster>(null)
-
-	constructor() {}
+	subject: BehaviorSubject<Toaster>
+	toast$: Observable<Toaster>
+	constructor() {
+		this.subject = new BehaviorSubject<Toaster>(null)
+		this.toast$ = this.subject.asObservable().pipe(
+			filter(toast => {
+				console.log('toast>>', toast)
+				return toast !== null
+			})
+		)
+	}
 
 	show(
 		type: ToasterPointType,

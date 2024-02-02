@@ -4,7 +4,7 @@
 // 	z-index: 9999;
 // }
 
-@mixin toaster-point-color($color, $background-color) {
+@mixin toaster-color($color, $background-color) {
 	background-color: $background-color;
 
 	mib-icon {
@@ -39,7 +39,7 @@
 	min-width: 260px;
 	min-height: 70px;
 	max-height: 70px;
-	box-shadow: 6px 6px 12px #00000040;
+	box-shadow: var(--normal-shadow);
 	color: var(--bti-primary);
 	border-radius: var(--main-border-radius);
 
@@ -47,20 +47,15 @@
 		@include icon-size(20px);
 	}
 
-	&_type {
-		&-default {
-			@include toaster-point-color(var(--bti-primary), var(--wti-primary));
-			box-shadow: var(--normal-shadow);
-		}
-		&-success {
-			@include toaster-point-color(
-				var(--success-active),
-				var(--success-quinary)
-			);
-		}
-		&-failure {
-			@include toaster-point-color(var(--alc-default), var(--alc-quinary));
-		}
+	&_default {
+		@include toaster-color(var(--bti-primary), var(--wti-primary));
+		box-shadow: var(--normal-shadow);
+	}
+	&_success {
+		@include toaster-color(var(--success-active), var(--success-quinary));
+	}
+	&_failure {
+		@include toaster-color(var(--alc-default), var(--alc-quinary));
 	}
 
 	&_device {

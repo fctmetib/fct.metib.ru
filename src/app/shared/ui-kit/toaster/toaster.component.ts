@@ -1,8 +1,6 @@
 import {Component, Input} from '@angular/core'
-import {
-	ToasterPointDevice,
-	ToasterPointType
-} from './interfaces/toaster-point.interface'
+import {Toaster} from './interfaces/toaster.interface'
+import {ToasterService} from '../../services/common/toaster.service'
 
 @Component({
 	selector: 'mib-toaster',
@@ -11,6 +9,19 @@ import {
 })
 export class ToasterComponent {
 	@Input() showDescription: boolean = true
-	@Input() type: ToasterPointType = 'success'
-	@Input() device: ToasterPointDevice = 'mobile'
+	toasts: Toaster[] = []
+
+	constructor(private toaster: ToasterService) {}
+
+	ngOnInit() {
+		this.toaster.toast$.subscribe(toast => {
+			this.toasts = [toast, ...this.toasts]
+			setTimeout(() => this.toasts.pop(), toast.delay || 6000)
+		})
+	}
+
+	remove(index: number) {
+		this.toasts = this.toasts.filter((_, i) => i !== index)
+		console.log('index :>> ', index)
+	}
 }

@@ -1,19 +1,22 @@
+<!-- [ngClass]="classes" -->
 <div
-	class="toaster-point flex flex_justify-between flex_align-center"
-	[ngClass]="classes"
+	[style.top.px]="i * 100"
+	class="toaster-point toaster-point_{{
+		toast.type
+	}} flex_justify-between flex_align-center"
 >
 	<div class="flex flex_column gap-4">
 		<div class="flex gap-4">
 			<mib-icon class="stroke" [name]="IconName"></mib-icon>
 			<p class="text text_m text_medium">
-				<ng-content select="[toaster-point-header]"></ng-content>
+				{{ toast.title }}
 			</p>
 		</div>
 		<p *ngIf="showDescription" class="text text_m c-bti-secondary">
-			<ng-content select="[toaster-point-text]"></ng-content>
+			{{ toast.description }}
 		</p>
 	</div>
 	<div class="last-icon">
-		<mib-icon class="stroke" name="fi_x"></mib-icon>
+		<mib-icon (click)="remove.emit(i)" class="stroke" name="fi_x"></mib-icon>
 	</div>
 </div>
