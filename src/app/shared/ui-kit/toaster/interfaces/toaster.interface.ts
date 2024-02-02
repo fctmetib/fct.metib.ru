@@ -1,5 +1,4 @@
-export type ToasterType = 'default' | 'success' | 'failure'
-export type ToasterDevice = 'desktop' | 'mobile'
+import {ToasterType} from './toaster-point.interface'
 
 export interface Toaster {
 	type: ToasterType

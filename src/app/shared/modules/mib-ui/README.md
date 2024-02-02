@@ -151,6 +151,7 @@ ng g s shared/services/common/toaster --skip-tests --dry-run
 // interface
 src\app\shared\types\common
 ng g i shared/types/common/toaster  --dry-run
+ng g i shared/ui-kit/toaster/interfaces/toaster-point.interface  --dry-run
 
 // toaster-pointer
 src\app\shared\ui-kit\toaster\components
