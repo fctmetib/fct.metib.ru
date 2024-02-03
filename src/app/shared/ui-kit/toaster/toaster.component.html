@@ -1,10 +1,10 @@
 <div class="toaster flex">
 	<mib-toaster-point
+		[showDescription]="showDescription"
 		*ngFor="let toast of toasts; let i = index"
 		[toast]="toast"
 		[i]="i"
 		(remove)="remove($event)"
 	>
-		<ng-content [showDescription]="showDescription"></ng-content>
 	</mib-toaster-point>
 </div>

@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core'
 import {Toaster} from './interfaces/toaster.interface'
 import {ToasterService} from '../../services/common/toaster.service'
+import {ToasterPointDevice} from './interfaces/toaster-point.interface'
 
 @Component({
 	selector: 'mib-toaster',

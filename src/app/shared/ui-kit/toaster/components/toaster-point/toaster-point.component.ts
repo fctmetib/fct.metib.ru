@@ -9,9 +9,9 @@ import {Toaster} from '../../interfaces/toaster.interface'
 	styleUrls: ['./toaster-point.component.scss']
 })
 export class ToasterPointComponent {
-	// @Input() type: ToasterPointType = 'success'
 	@Input() device: ToasterPointDevice = 'desktop'
 	@Input() showDescription: boolean = true
+	@Input() contrast: boolean = false
 	@Input() toast: Toaster
 	@Input() i: number
 
@@ -19,12 +19,11 @@ export class ToasterPointComponent {
 
 	constructor() {}
 
-	// get classes() {
-	// 	return {
-	// 		[`toaster-point_type-${this.type}`]: true,
-	// 		[`toaster-point_device-${this.device}`]: true
-	// 	}
-	// }
+	get classes() {
+		return {
+			[`toaster-point_device-${this.device}`]: true
+		}
+	}
 
 	get IconName() {
 		let icon = ''

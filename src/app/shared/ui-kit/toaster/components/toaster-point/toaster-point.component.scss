@@ -33,12 +33,8 @@
 .toaster-point {
 	position: absolute;
 	top: 0;
-	right: 0rem;
+	right: 0;
 	margin: 2rem;
-	display: inline-flex;
-	min-width: 260px;
-	min-height: 70px;
-	max-height: 70px;
 	box-shadow: var(--normal-shadow);
 	color: var(--bti-primary);
 	border-radius: var(--main-border-radius);
@@ -49,13 +45,21 @@
 
 	&_default {
 		@include toaster-color(var(--bti-primary), var(--wti-primary));
-		box-shadow: var(--normal-shadow);
+		& p {
+			color: var(--bti-primary);
+		}
 	}
 	&_success {
 		@include toaster-color(var(--success-active), var(--success-quinary));
+		& p {
+			color: var(--success-active);
+		}
 	}
 	&_failure {
 		@include toaster-color(var(--alc-default), var(--alc-quinary));
+		& p {
+			color: var(--alc-default);
+		}
 	}
 
 	&_device {

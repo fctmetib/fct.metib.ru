@@ -1147,16 +1147,25 @@
 <div *ngIf="isShownToaster" class="wrapper">
 	<h3>toaster</h3>
 	<mib-spacing type="xs2"></mib-spacing>
-	<span>success</span>
-	<button style="border: 1px solid red" (click)="showSuccessToaster()">
+	<button
+		style="border: 1px solid green; margin-right: 5px"
+		(click)="showSuccessToaster()"
+	>
 		Success
 	</button>
-	<button style="border: 1px solid green" (click)="showDefaultToaster()">
+	<button
+		style="border: 1px solid grey; margin-right: 5px"
+		(click)="showDefaultToaster()"
+	>
 		Default
 	</button>
-	<button style="border: 1px solid gray" (click)="showFailureToaster()">
+	<button
+		style="border: 1px solid red; margin-right: 5px"
+		(click)="showFailureToaster()"
+	>
 		Failure
 	</button>
+	<!-- <mib-toaster [showDescription]="false"></mib-toaster> -->
 	<mib-toaster></mib-toaster>
 </div>
 

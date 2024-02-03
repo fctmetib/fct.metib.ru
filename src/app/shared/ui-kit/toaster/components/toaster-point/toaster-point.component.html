@@ -1,9 +1,9 @@
-<!-- [ngClass]="classes" -->
 <div
 	[style.top.px]="i * 100"
 	class="toaster-point toaster-point_{{
 		toast.type
-	}} flex_justify-between flex_align-center"
+	}} w-100 flex_justify-between flex_align-center"
+	[ngClass]="classes"
 >
 	<div class="flex flex_column gap-4">
 		<div class="flex gap-4">

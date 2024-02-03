@@ -13,7 +13,6 @@ export class ToasterService {
 		this.subject = new BehaviorSubject<Toaster>(null)
 		this.toast$ = this.subject.asObservable().pipe(
 			filter(toast => {
-				console.log('toast>>', toast)
 				return toast !== null
 			})
 		)
