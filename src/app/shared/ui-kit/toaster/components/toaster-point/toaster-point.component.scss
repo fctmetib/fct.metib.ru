@@ -49,16 +49,42 @@
 			color: var(--bti-primary);
 		}
 	}
+
 	&_success {
 		@include toaster-color(var(--success-active), var(--success-quinary));
 		& p {
 			color: var(--success-active);
 		}
 	}
+
+	&_success.toaster-point_contrast {
+		@include toaster-color(var(--wgr-primary), var(--success-active));
+		& p {
+			color: var(--wgr-primary);
+		}
+		& .last-icon {
+			mib-icon {
+				@include icon-color(var(--wgr-primary));
+			}
+		}
+	}
+
 	&_failure {
 		@include toaster-color(var(--alc-default), var(--alc-quinary));
 		& p {
 			color: var(--alc-default);
+		}
+	}
+
+	&_failure.toaster-point_contrast {
+		@include toaster-color(var(--wgr-primary), var(--alc-default));
+		& p {
+			color: var(--wgr-primary);
+		}
+		& .last-icon {
+			mib-icon {
+				@include icon-color(var(--wgr-primary));
+			}
 		}
 	}
 

@@ -10,6 +10,7 @@ import {ToasterPointDevice} from './interfaces/toaster-point.interface'
 })
 export class ToasterComponent {
 	@Input() showDescription: boolean = true
+	@Input() contrast: boolean = true
 	toasts: Toaster[] = []
 
 	constructor(private toaster: ToasterService) {}

@@ -1,5 +1,6 @@
 <div class="toaster flex">
 	<mib-toaster-point
+		[contrast]="contrast"
 		[showDescription]="showDescription"
 		*ngFor="let toast of toasts; let i = index"
 		[toast]="toast"

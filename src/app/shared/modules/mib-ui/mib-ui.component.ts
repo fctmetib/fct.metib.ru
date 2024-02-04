@@ -100,7 +100,7 @@ export class MibUiComponent implements OnInit {
 			'success',
 			'Halo success!',
 			'This is a success alert',
-			100000
+			6000
 		)
 	}
 
@@ -110,7 +110,7 @@ export class MibUiComponent implements OnInit {
 			'default',
 			'Halo default!',
 			'This is a default alert',
-			100000
+			6000
 		)
 	}
 
@@ -120,7 +120,7 @@ export class MibUiComponent implements OnInit {
 			'failure',
 			'Halo failure!',
 			'This is a failure alert',
-			100000
+			6000
 		)
 	}
 

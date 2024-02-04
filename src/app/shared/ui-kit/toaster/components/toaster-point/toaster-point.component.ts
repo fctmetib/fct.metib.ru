@@ -11,7 +11,7 @@ import {Toaster} from '../../interfaces/toaster.interface'
 export class ToasterPointComponent {
 	@Input() device: ToasterPointDevice = 'desktop'
 	@Input() showDescription: boolean = true
-	@Input() contrast: boolean = false
+	@Input() contrast: boolean = true
 	@Input() toast: Toaster
 	@Input() i: number
 
@@ -21,7 +21,8 @@ export class ToasterPointComponent {
 
 	get classes() {
 		return {
-			[`toaster-point_device-${this.device}`]: true
+			[`toaster-point_device-${this.device}`]: true,
+			'toaster-point_contrast': this.contrast
 		}
 	}
 
