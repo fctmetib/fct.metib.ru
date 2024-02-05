@@ -71,6 +71,14 @@
 					<mib-icon mibLeftIcon class="stroke" name="fi_download"></mib-icon>
 					<span>Скачать файл</span>
 				</mib-button>
+				<mib-button
+					[loading]="isDownloadZip$ | async"
+					type="ghost-primary"
+					(press)="downloadZip()"
+				>
+					<mib-icon mibLeftIcon class="stroke" name="fi_download"></mib-icon>
+					<span>Скачать архив</span>
+				</mib-button>
 				<!--      <mib-link size="m" type="ghost-accent">-->
 				<!--        <mib-icon mibLeftIcon class="stroke" name="fi_trash"></mib-icon>-->
 				<!--        Удалить документ-->
