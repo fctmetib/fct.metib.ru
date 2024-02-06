@@ -22,7 +22,6 @@ export class NewContractsPageComponent implements OnInit {
 	@ViewChild(TableComponent) table: TableComponent
 
 	public skeletonWithoutUnderline: Properties = {
-		borderRadius: '8px',
 		height: '48px',
 		width: '100%'
 	}

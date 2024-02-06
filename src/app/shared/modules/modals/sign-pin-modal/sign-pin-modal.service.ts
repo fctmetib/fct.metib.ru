@@ -8,12 +8,12 @@ import {
 	SignPinModalRef
 } from './sign-pin-modal.interface'
 import {
-	BehaviorSubject,
-	filter,
-	finalize,
-	map,
-	Observable,
-	switchMap
+  BehaviorSubject, catchError,
+  filter,
+  finalize,
+  map,
+  Observable,
+  switchMap, throwError
 } from 'rxjs'
 import {SignService} from '../../../services/share/sign.service'
 
@@ -47,7 +47,11 @@ export class SignPinModalService {
 						switchMap(() => {
 							loading$.next(false)
 							return this.open({
-								action: () => req$
+								action: () => req$.pipe(
+                  catchError((err) => {
+                    return throwError(err)
+                  })
+                )
 							})
 								.afterClosed()
 								.pipe(filter(Boolean))

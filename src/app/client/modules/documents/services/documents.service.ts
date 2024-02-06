@@ -4,7 +4,7 @@ import {DocumentSigninitModelInterface} from './../types/common/document-signini
 import {CreateDocumentRequestInterface} from './../types/create-document-request.interface'
 import {DocumentInterface} from './../types/document.interface'
 import {Injectable} from '@angular/core'
-import {BehaviorSubject, Observable} from 'rxjs'
+import {BehaviorSubject, catchError, Observable, of, throwError} from 'rxjs'
 import {HttpClient, HttpHeaders} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
 import {
@@ -24,7 +24,11 @@ export class DocumentsService {
 	) {}
 
 	public signModal<T>(req$: Observable<T>, loading$: BehaviorSubject<boolean>) {
-		return this.signPinModalService.sign(req$, loading$)
+		return this.signPinModalService.sign(req$, loading$).pipe(
+      catchError(err => {
+        return throwError(err)
+      })
+    )
 	}
 
 	public sign(id: number): Observable<DocumentSign> {

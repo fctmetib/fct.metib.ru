@@ -98,32 +98,23 @@ export class DocumentViewDrawerComponent implements OnInit {
 	}
 
 	sign() {
-		console.log('подпись')
 		this.isSigning$.next(true)
-		this.documentsService
-			.signModal(this.documentsService.sign(this.documentId), this.isSigning$)
+		this.documentsService.signModal(
+        this.documentsService.sign(this.documentId).pipe(
+          tap(() => {
+            this.toaster.show('success', 'Документ подписан!')
+          }),
+        ),
+        this.isSigning$
+      )
 			.pipe(
-				tap(params => {
-					console.log('success22>>>>')
-				}),
 				catchError(err => {
-					console.log('err :>> ', err)
+          console.log('Что-то пошло не так!')
+          this.toaster.show('failure', 'Что-то пошло не так!')
 					return of(err)
 				})
 			)
-			.subscribe
-			// 	{
-			// 	next: el => {
-			// 		console.log('типа старт подписи', el)
-			// 	},
-			// 	// error: err => console.log('шляпа>>>>', err),
-			// 	error: () => this.toaster.show('failure', 'Что-то пошло не так!'),
-			// 	complete: () => {
-			// 		console.log('подпись усе!')
-			// 		this.toaster.show('success', 'Документ подписан!')
-			// 	}
-			// }
-			()
+			.subscribe()
 	}
 
 	downloadFile() {

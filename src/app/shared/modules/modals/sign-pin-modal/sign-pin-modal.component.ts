@@ -1,10 +1,11 @@
 import {Component, Inject, Input} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {SignService} from '../../../services/share/sign.service';
-import {BehaviorSubject, finalize, switchMap, tap} from 'rxjs';
+import {BehaviorSubject, catchError, finalize, of, switchMap, tap, throwError} from 'rxjs';
 import {RequestsService} from '../../../../client/modules/requests/services/requests.service';
 import {FormControl, Validators} from '@angular/forms';
 import {SignPinModalData, SignPinModalOutput} from './sign-pin-modal.interface';
+import {ToasterService} from '../../../services/common/toaster.service';
 
 @Component({
   selector: 'mib-sign-pin-modal',
@@ -22,6 +23,7 @@ export class SignPinModalComponent {
     public dialogRef: MatDialogRef<SignPinModalComponent, SignPinModalOutput>,
     private signService: SignService,
     private requestsService: RequestsService,
+    private toasterService: ToasterService,
     @Inject(MAT_DIALOG_DATA) private data: SignPinModalData
   ) {
   }
@@ -35,6 +37,10 @@ export class SignPinModalComponent {
           data,
           verified: true
         })
+      }),
+      catchError((err) => {
+        this.toasterService.show('failure', 'Что-то пошло не так!')
+        return throwError(err)
       }),
       finalize(() => {
         this.isSigning$.next(false)
