@@ -116,6 +116,7 @@ export class DocumentViewDrawerComponent implements OnInit {
 			.pipe(
 				tap(data => {
 					console.log('data :>> ', data)
+					downloadBase64File(data, 'halo')
 				}),
 				finalize(() => {
 					this.isDownloadZip$.next(false)

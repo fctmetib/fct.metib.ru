@@ -51,11 +51,34 @@ export class DocumentsService {
 		)
 	}
 
+	// message: "Unexpected token 'P'
+
+	// getDocumentZip(id: number): Observable<string> {
+	// 	const url = `${environment.apiUrl}/v1/documents/${id}`
+	// 	const headers = new HttpHeaders().set('content-type', 'application/zip')
+	// 	return this.http.get<string>(url, {headers})
+	// }
+
+	// getDocumentZip(id: number): Observable<string> {
+	// 	const url = `${environment.apiUrl}/v1/documents/${id}`
+	// 	const headers = new HttpHeaders().set(
+	// 		'Content-Type',
+	// 		'application/zip; charset=utf-8'
+	// 	)
+	// 	return this.http.get<string>(url, {headers})
+	// }
+
+	//ArrayBuffer(121516)byteLength: 121516detached: falsemaxByteLength: 121516resizable: false[[Prototype]]: ArrayBuffer[[Int8Array]]: Int8Array(121516)[[Uint8Array]]: Uint8Array(121516)[[Int16Array]]: Int16Array(60758)[[Int32Array]]: Int32Array(30379)[[ArrayBufferByteLength]]: 121516[[ArrayBufferData]]: 7
+
+	// Blob {size: 126016, type: 'application/zip'}
+
 	getDocumentZip(id: number): Observable<string> {
 		const url = `${environment.apiUrl}/v1/documents/${id}`
 		return this.http.get<string>(url, {responseType: 'arraybuffer' as 'json'})
 		// return this.http.get<string>(url, {responseType: 'blob' as 'json'})
 	}
+
+	// message: "Unexpected token 'P'
 
 	// getDocumentZip(id: number): Observable<string> {
 	// 	const url = `${environment.apiUrl}/v1/documents/${id}`
