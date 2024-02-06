@@ -1,7 +1,15 @@
 import {Component, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {Properties} from 'csstype'
-import {BehaviorSubject, defer, finalize, of, switchMap, tap} from 'rxjs'
+import {
+	BehaviorSubject,
+	catchError,
+	defer,
+	finalize,
+	of,
+	switchMap,
+	tap
+} from 'rxjs'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {DocumentViewsDrawerData} from './interfaces/document-views-drawer.data'
 import {DocumentsService} from '../../services/documents.service'
@@ -13,6 +21,7 @@ import {
 	DocumentRes,
 	DocumentSign
 } from '../../../requests/interfaces/request.interface'
+import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
 @Component({
 	selector: 'mib-new-documents-views-drawer',
@@ -54,7 +63,8 @@ export class DocumentViewDrawerComponent implements OnInit {
 		public data: DrawerData<DocumentViewsDrawerData>,
 		public toolsService: ToolsService,
 		public dialogRef: MatDialogRef<DocumentViewDrawerComponent>,
-		private documentsService: DocumentsService
+		private documentsService: DocumentsService,
+		private toaster: ToasterService
 	) {}
 
 	ngOnInit(): void {
@@ -88,10 +98,32 @@ export class DocumentViewDrawerComponent implements OnInit {
 	}
 
 	sign() {
+		console.log('подпись')
 		this.isSigning$.next(true)
 		this.documentsService
 			.signModal(this.documentsService.sign(this.documentId), this.isSigning$)
-			.subscribe()
+			.pipe(
+				tap(params => {
+					console.log('success22>>>>')
+				}),
+				catchError(err => {
+					console.log('err :>> ', err)
+					return of(err)
+				})
+			)
+			.subscribe
+			// 	{
+			// 	next: el => {
+			// 		console.log('типа старт подписи', el)
+			// 	},
+			// 	// error: err => console.log('шляпа>>>>', err),
+			// 	error: () => this.toaster.show('failure', 'Что-то пошло не так!'),
+			// 	complete: () => {
+			// 		console.log('подпись усе!')
+			// 		this.toaster.show('success', 'Документ подписан!')
+			// 	}
+			// }
+			()
 	}
 
 	downloadFile() {

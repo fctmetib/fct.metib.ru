@@ -10,7 +10,8 @@ import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.in
 import {DocumentViewDrawerService} from '../../modules/document-view-drawer/document-view-drawer.service'
 import {DocumentsService} from '../../services/documents.service'
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
-import {DocumentRes} from '../../../requests/interfaces/request.interface';
+import {DocumentRes} from '../../../requests/interfaces/request.interface'
+import {SignService} from 'src/app/shared/services/share/sign.service'
 
 @Component({
 	selector: 'mib-documents-page',
@@ -18,9 +19,8 @@ import {DocumentRes} from '../../../requests/interfaces/request.interface';
 	styleUrls: ['./documents-page.component.scss']
 })
 export class DocumentsPageComponent implements OnInit {
-
 	public loading$ = new BehaviorSubject<boolean>(false)
-  public isSigning$  = new BehaviorSubject<boolean>(false)
+	public isSigning$ = new BehaviorSubject<boolean>(false)
 
 	@ViewChild(TableComponent) table: TableComponent
 
@@ -57,7 +57,8 @@ export class DocumentsPageComponent implements OnInit {
 		public datesService: DatesService,
 		public documentDrawerService: DocumentDrawerService,
 		public documentViewDrawerService: DocumentViewDrawerService,
-		private documentsService: DocumentsService
+		private documentsService: DocumentsService,
+		private signService: SignService
 	) {}
 
 	ngOnInit() {
@@ -131,12 +132,11 @@ export class DocumentsPageComponent implements OnInit {
 		this.requestsSelection = event
 	}
 
-  onAction() {
-    this.isSigning$.next(true)
-    const requests$ = this.table.selectedRows.map(row => this.documentsService.sign(row.rowId))
-    this.documentsService.signModal(
-      zip(requests$),
-      this.isSigning$
-    ).subscribe()
-  }
+	onAction() {
+		this.isSigning$.next(true)
+		const requests$ = this.table.selectedRows.map(row =>
+			this.documentsService.sign(row.rowId)
+		)
+		this.documentsService.signModal(zip(requests$), this.isSigning$).subscribe()
+	}
 }

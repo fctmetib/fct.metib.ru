@@ -43,11 +43,11 @@ import {DatesService} from 'src/app/shared/services/dates.service'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {DocumentDrawerModule} from './modules/document-drawer/document-drawer.module'
 import {DocumentViewDrawerModule} from './modules/document-view-drawer/document-view-drawer.module'
-import {DocumentsPageComponent} from './pages/documents-page/documents-page.component';
+import {DocumentsPageComponent} from './pages/documents-page/documents-page.component'
 
 @NgModule({
-  declarations: [DocumentsPageComponent],
-  imports: [
+	declarations: [DocumentsPageComponent],
+	imports: [
 		CommonModule,
 		InputTextModule,
 		CheckboxModule,
