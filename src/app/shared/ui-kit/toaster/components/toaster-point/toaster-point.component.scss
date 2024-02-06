@@ -1,8 +1,10 @@
 @import 'src/styles/helpers/icon_tools';
 
-// :host {
-// 	z-index: 9999;
-// }
+:host {
+	z-index: 9999;
+	display: flex;
+	justify-content: flex-end;
+}
 
 @mixin toaster-color($color, $background-color) {
 	background-color: $background-color;
@@ -31,10 +33,6 @@
 }
 
 .toaster-point {
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 2rem;
 	box-shadow: var(--normal-shadow);
 	color: var(--bti-primary);
 	border-radius: var(--main-border-radius);
