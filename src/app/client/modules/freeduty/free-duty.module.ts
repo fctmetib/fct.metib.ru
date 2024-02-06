@@ -33,6 +33,7 @@ import {SelectModule} from '../../../shared/ui-kit/select/select.module'
 import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdown-point.module'
 import {AutoCompleteModule} from '../../../shared/ui-kit/auto-complete/auto-complete.module'
 import {DatesService} from 'src/app/shared/services/dates.service'
+import {ToasterModule} from 'src/app/shared/ui-kit/toaster/toaster.module'
 
 @NgModule({
 	declarations: [FreeDutyPageComponent],
@@ -67,7 +68,8 @@ import {DatesService} from 'src/app/shared/services/dates.service'
 		SkeletonModule,
 		SelectModule,
 		DropdownPointModule,
-		AutoCompleteModule
+		AutoCompleteModule,
+		ToasterModule
 	],
 	providers: [
 		DialogService,

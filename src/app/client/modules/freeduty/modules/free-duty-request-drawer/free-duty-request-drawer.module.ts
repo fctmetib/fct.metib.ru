@@ -13,6 +13,7 @@ import {ReactiveFormsModule} from '@angular/forms'
 import {CheckboxModule} from '../../../../../shared/ui-kit/checkbox/checkbox.module'
 import {PaginatorModule} from '../../../../../shared/ui-kit/paginator/paginator.module'
 import {FreeDutyRequestDrawerService} from './free-duty-request-drawer.service'
+import {ToasterModule} from 'src/app/shared/ui-kit/toaster/toaster.module'
 
 @NgModule({
 	declarations: [FreeDutyRequestDrawerComponent],
@@ -28,7 +29,8 @@ import {FreeDutyRequestDrawerService} from './free-duty-request-drawer.service'
 		DropdownPointModule,
 		ReactiveFormsModule,
 		CheckboxModule,
-		PaginatorModule
+		PaginatorModule,
+		ToasterModule
 	],
 	providers: [FreeDutyRequestDrawerService]
 })
