@@ -1,7 +1,16 @@
 import {Component, OnInit} from '@angular/core'
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {MatDialogRef} from '@angular/material/dialog'
-import {BehaviorSubject, finalize, zip, tap, defer, map} from 'rxjs'
+import {
+	BehaviorSubject,
+	finalize,
+	zip,
+	tap,
+	defer,
+	map,
+	catchError,
+	of
+} from 'rxjs'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {extractBase64} from 'src/app/shared/services/tools.service'
 import {DocumentsService} from '../../services/documents.service'
@@ -11,6 +20,7 @@ import {
 	DocumentReq,
 	DocumentRes
 } from '../../../requests/interfaces/request.interface'
+import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
 @Component({
 	selector: 'mib-new-documents-page-drawer',
@@ -39,7 +49,8 @@ export class DocumentDrawerComponent implements OnInit {
 		public dialogRef: MatDialogRef<DocumentDrawerComponent>,
 		private fb: FormBuilder,
 		private documentService: DocumentsService,
-		private authService: AuthService
+		private authService: AuthService,
+		private toaster: ToasterService
 	) {}
 
 	ngOnInit(): void {
@@ -90,12 +101,51 @@ export class DocumentDrawerComponent implements OnInit {
 		defer(() => {
 			this.isSubmitting$.next(true)
 			const reqs$ = documents.map(document =>
-				this.documentService.uploadNewDocument(document, this.isDocumentSign)
+				this.documentService
+					.uploadNewDocument(document, this.isDocumentSign)
+					.pipe(
+						tap(() => {
+							this.toaster.show(
+								'success',
+								'Документ добавлен',
+								'',
+								true,
+								false,
+								3000
+							)
+						})
+					)
+					.pipe(
+						catchError(err => {
+							console.log('Что-то пошло не так!')
+							this.toaster.show(
+								'failure',
+								'Что-то пошло не так!',
+								'',
+								true,
+								false,
+								3000
+							)
+							return of(err)
+						})
+					)
 			)
 			const req$ = zip(reqs$).pipe(tap(() => {}))
 			if (this.isDocumentSign) {
 				return this.documentService
 					.signModal(req$, this.isSubmitting$)
+					.pipe(
+						tap(() => {
+							this.toaster.show(
+								'success',
+								'Документ добавлен',
+								'',
+								true,
+								false,
+								3000
+							)
+						})
+					)
 					.pipe(map(output => output.data))
 			} else {
 				return req$.pipe(

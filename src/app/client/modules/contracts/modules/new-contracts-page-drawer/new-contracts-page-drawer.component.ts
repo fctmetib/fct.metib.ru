@@ -7,6 +7,7 @@ import {BehaviorSubject, finalize, tap} from 'rxjs'
 import {Properties} from 'csstype'
 import {DeliveryService} from 'src/app/shared/services/share/delivery.service'
 import {DeliveryContractsInterface} from 'src/app/shared/types/delivery/delivery-contracts.interface'
+import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
 @Component({
 	selector: 'mib-new-contracts-page-drawer',
@@ -48,7 +49,8 @@ export class NewContractsPageDrawerComponent implements OnInit {
 		public data: DrawerData<NewContractsPageDrawerInterface>,
 		public toolsService: ToolsService,
 		public dialogRef: MatDialogRef<NewContractsPageDrawerComponent>,
-		private deliveryService: DeliveryService
+		private deliveryService: DeliveryService,
+		private toaster: ToasterService
 	) {}
 
 	ngOnInit(): void {
@@ -71,5 +73,17 @@ export class NewContractsPageDrawerComponent implements OnInit {
 				finalize(() => this.loading$.next(false))
 			)
 			.subscribe()
+	}
+
+	copyDitails() {
+		this.toaster.show(
+			'success',
+			'Реквизиты скопированны!',
+			'',
+			true,
+			false,
+			2500
+		)
+		console.log('Реквизиты нужно сопировать')
 	}
 }

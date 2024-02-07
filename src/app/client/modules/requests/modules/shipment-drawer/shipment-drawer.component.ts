@@ -8,6 +8,7 @@ import {ToolsService} from '../../../../../shared/services/tools.service'
 import {RequestRes} from '../../interfaces/request.interface'
 import {tap} from 'rxjs'
 import {ShipmentDrawerService} from './services/shipment-drawer.service'
+import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
 @Component({
 	selector: 'mib-delivery-agreement-drawer',
@@ -23,7 +24,8 @@ export class ShipmentDrawerComponent implements OnInit {
 		private fb: FormBuilder,
 		private formsPresetsService: FormsPresetsService,
 		private shipmentDrawerService: ShipmentDrawerService,
-		private toolsService: ToolsService
+		private toolsService: ToolsService,
+		private toaster: ToasterService
 	) {}
 
 	get WaybillNumber() {
@@ -82,6 +84,7 @@ export class ShipmentDrawerComponent implements OnInit {
 			this.form.getRawValue()
 		)
 		this.shipmentDrawerService.emitShipment(form)
+		this.toaster.show('success', 'Поставка создана!', '', true, false, 2500)
 		this.form.reset()
 	}
 

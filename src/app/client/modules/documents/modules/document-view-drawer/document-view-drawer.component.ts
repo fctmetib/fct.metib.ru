@@ -99,18 +99,33 @@ export class DocumentViewDrawerComponent implements OnInit {
 
 	sign() {
 		this.isSigning$.next(true)
-		this.documentsService.signModal(
-        this.documentsService.sign(this.documentId).pipe(
-          tap(() => {
-            this.toaster.show('success', 'Документ подписан!')
-          }),
-        ),
-        this.isSigning$
-      )
+		this.documentsService
+			.signModal(
+				this.documentsService.sign(this.documentId).pipe(
+					tap(() => {
+						this.toaster.show(
+							'success',
+							'Документ подписан',
+							'',
+							true,
+							false,
+							3000
+						)
+					})
+				),
+				this.isSigning$
+			)
 			.pipe(
 				catchError(err => {
-          console.log('Что-то пошло не так!')
-          this.toaster.show('failure', 'Что-то пошло не так!')
+					console.log('Что-то пошло не так!')
+					this.toaster.show(
+						'failure',
+						'Что-то пошло не так!',
+						'',
+						true,
+						false,
+						3000
+					)
 					return of(err)
 				})
 			)

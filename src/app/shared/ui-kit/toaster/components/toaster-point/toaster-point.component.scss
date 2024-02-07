@@ -2,7 +2,7 @@
 
 :host {
 	z-index: 9999;
-  position: relative;
+	position: relative;
 	display: flex;
 	justify-content: flex-end;
 }
@@ -94,5 +94,18 @@
 		&-mobile {
 			@include toaster-point-mobile;
 		}
+	}
+
+	animation: fadeInFromNone 0.5s;
+}
+
+@keyframes fadeInFromNone {
+	0% {
+		opacity: 0;
+		transform: translateX(50%);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0);
 	}
 }
