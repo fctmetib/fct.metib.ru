@@ -26,3 +26,4 @@ export class ToasterComponent {
 		console.log('index :>> ', index)
 	}
 }
+1

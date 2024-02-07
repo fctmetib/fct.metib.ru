@@ -33,34 +33,36 @@ import {DropdownModule} from '../shared/ui-kit/dropdown/dropdown.module'
 import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-point.module'
 import {ClipboardModule} from '@angular/cdk/clipboard'
 import {HeaderModule} from '../shared/modules/header/header.module'
+import {ToasterModule} from '../shared/ui-kit/toaster/toaster.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    InputTextModule,
-    CheckboxModule,
-    HttpClientModule,
-    ButtonModule,
-    RadioButtonModule,
-    InputTextareaModule,
-    MenuModule,
-    ProgressSpinnerModule,
-    FormsModule,
-    ClientRoutingModule,
-    ReactiveFormsModule,
-    AccordionModule,
-    CardModule,
-    MenubarModule,
-    AvatarModule,
-    IconModule,
-    SidebarModule,
-    SpacingModule,
-    SkeletonModule,
-    DropdownModule,
-    DropdownPointModule,
-    ClipboardModule,
-    HeaderModule
-  ],
+    imports: [
+        CommonModule,
+        InputTextModule,
+        CheckboxModule,
+        HttpClientModule,
+        ButtonModule,
+        RadioButtonModule,
+        InputTextareaModule,
+        MenuModule,
+        ProgressSpinnerModule,
+        FormsModule,
+        ClientRoutingModule,
+        ReactiveFormsModule,
+        AccordionModule,
+        CardModule,
+        MenubarModule,
+        AvatarModule,
+        IconModule,
+        SidebarModule,
+        SpacingModule,
+        SkeletonModule,
+        DropdownModule,
+        DropdownPointModule,
+        ClipboardModule,
+        HeaderModule,
+        ToasterModule
+    ],
   declarations: [
     ClientComponent,
     NotifyDialogComponent,
