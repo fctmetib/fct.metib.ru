@@ -22,7 +22,6 @@ import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
 import {SignPinModalModule} from '../../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.module'
-import {ToasterModule} from 'src/app/shared/ui-kit/toaster/toaster.module'
 
 @NgModule({
 	declarations: [DocumentViewDrawerComponent],
@@ -47,8 +46,7 @@ import {ToasterModule} from 'src/app/shared/ui-kit/toaster/toaster.module'
 		PaginatorModule,
 		SelectModule,
 		NavbarModule,
-		SignPinModalModule,
-		ToasterModule
+		SignPinModalModule
 	],
 	providers: [DocumentViewDrawerService]
 })

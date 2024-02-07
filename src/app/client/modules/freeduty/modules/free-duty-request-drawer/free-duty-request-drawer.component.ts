@@ -59,7 +59,7 @@ export class FreeDutyRequestDrawerComponent implements OnInit {
 		return this.freeDuty()
 			.pipe(
 				tap(response => {
-					this.toaster.show('success', 'Заявка создана!')
+					this.toaster.show('success', 'Заявка создана!', 'dsfsdf')
 					this.dialogRef.close(response)
 				}),
 				finalize(() => {

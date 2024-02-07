@@ -19,11 +19,20 @@ export class ToasterService {
 	}
 
 	show(
-		type: ToasterPointType,
+		type: ToasterPointType = 'success',
 		title?: string,
 		description?: string,
+		contrast: boolean = true,
+		showDescription?: boolean,
 		delay?: number
 	) {
-		this.subject.next({type, title, description, delay})
+		this.subject.next({
+			type,
+			title,
+			description,
+			contrast,
+			showDescription,
+			delay
+		})
 	}
 }

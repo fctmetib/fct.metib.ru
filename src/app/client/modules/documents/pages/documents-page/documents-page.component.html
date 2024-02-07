@@ -117,7 +117,12 @@
 						</mib-dropdown>
 					</mib-table-row>
 				</ng-template>
-				<mib-table-footer [actionLoading]="isSigning$ | async" (onAction)="onAction()" [showIsland]="true" [lined]="!(loading$ | async)">
+				<mib-table-footer
+					[actionLoading]="isSigning$ | async"
+					(onAction)="onAction()"
+					[showIsland]="true"
+					[lined]="!(loading$ | async)"
+				>
 					<ng-container table-footer-action>Подписать</ng-container>
 					<mib-paginator
 						(pageChange)="onPageChange($event)"
@@ -131,3 +136,4 @@
 		<mib-tab-item></mib-tab-item>
 	</div>
 </mib-tab-group>
+<mib-toaster></mib-toaster>

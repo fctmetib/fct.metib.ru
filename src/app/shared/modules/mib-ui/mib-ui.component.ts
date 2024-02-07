@@ -99,8 +99,10 @@ export class MibUiComponent implements OnInit {
 		this.toaster.show(
 			'success',
 			'Halo success!',
-			'This is a success alert',
-			6000
+			'This is a success alert'
+			// true,
+			// true,
+			// 100000
 		)
 	}
 
@@ -108,9 +110,11 @@ export class MibUiComponent implements OnInit {
 		console.log('halo toaster!!')
 		this.toaster.show(
 			'default',
-			'Halo default!',
-			'This is a default alert',
-			6000
+			'defaulty',
+			'fdg fdg  fdg'
+			//  true,
+			//  true,
+			//  100000
 		)
 	}
 
@@ -119,8 +123,10 @@ export class MibUiComponent implements OnInit {
 		this.toaster.show(
 			'failure',
 			'Halo failure!',
-			'This is a failure alert',
-			6000
+			'This is a failure alert'
+			// true,
+			// true,
+			// 100000
 		)
 	}
 

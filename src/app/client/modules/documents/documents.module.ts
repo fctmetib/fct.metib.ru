@@ -44,6 +44,7 @@ import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {DocumentDrawerModule} from './modules/document-drawer/document-drawer.module'
 import {DocumentViewDrawerModule} from './modules/document-view-drawer/document-view-drawer.module'
 import {DocumentsPageComponent} from './pages/documents-page/documents-page.component'
+import {ToasterModule} from 'src/app/shared/ui-kit/toaster/toaster.module'
 
 @NgModule({
 	declarations: [DocumentsPageComponent],
@@ -89,7 +90,8 @@ import {DocumentsPageComponent} from './pages/documents-page/documents-page.comp
 		SelectModule,
 		DropdownModule,
 		DocumentDrawerModule,
-		DocumentViewDrawerModule
+		DocumentViewDrawerModule,
+		ToasterModule
 	],
 	providers: [DocumentsService, DatesService, DatePipe]
 })

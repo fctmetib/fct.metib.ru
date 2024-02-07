@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
-import {ToasterPointType} from '../../interfaces/toaster-point.interface'
 import {ToasterPointDevice} from '../../interfaces/toaster-point.interface'
 import {Toaster} from '../../interfaces/toaster.interface'
 
@@ -10,8 +9,8 @@ import {Toaster} from '../../interfaces/toaster.interface'
 })
 export class ToasterPointComponent {
 	@Input() device: ToasterPointDevice = 'desktop'
-	@Input() showDescription: boolean = true
-	@Input() contrast: boolean = true
+	@Input() showDescription: boolean = false
+	@Input() contrast: boolean
 	@Input() toast: Toaster
 	@Input() i: number
 
@@ -22,7 +21,7 @@ export class ToasterPointComponent {
 	get classes() {
 		return {
 			[`toaster-point_device-${this.device}`]: true,
-			'toaster-point_contrast': this.contrast
+			['toaster-point_contrast']: this.contrast
 		}
 	}
 

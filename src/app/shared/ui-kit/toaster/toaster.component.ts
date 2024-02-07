@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core'
 import {Toaster} from './interfaces/toaster.interface'
 import {ToasterService} from '../../services/common/toaster.service'
-import {ToasterPointDevice} from './interfaces/toaster-point.interface'
 
 @Component({
 	selector: 'mib-toaster',
@@ -9,8 +8,8 @@ import {ToasterPointDevice} from './interfaces/toaster-point.interface'
 	styleUrls: ['./toaster.component.scss']
 })
 export class ToasterComponent {
-	@Input() showDescription: boolean = true
-	@Input() contrast: boolean = true
+	@Input() showDescription: boolean
+	@Input() contrast: boolean
 	toasts: Toaster[] = []
 
 	constructor(private toaster: ToasterService) {}
