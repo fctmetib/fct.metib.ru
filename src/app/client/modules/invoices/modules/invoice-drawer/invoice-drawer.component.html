@@ -159,42 +159,19 @@
 						<mib-spacing type="s"></mib-spacing>
 						<p class="headline">Реквизиты плательщика</p>
 						<mib-spacing type="xs2"></mib-spacing>
-						<mib-contracted-forms>
-							<ng-container contacted-label>{{
-								currentInvoice?.Payer?.BankName
-							}}</ng-container>
-							<ng-container contracted-bill>{{
-								currentInvoice?.Payer?.Account
-							}}</ng-container>
-							<ng-container contracted-open>{{
-								currentInvoice?.Date | date : 'dd.MM.YYYY'
-							}}</ng-container>
-							<ng-container contracted-close>{{
-								currentInvoice?.Date | date : 'dd.MM.YYYY'
-							}}</ng-container>
-							<ng-container contracted-description
-								>Для основных транзакций</ng-container>
-						</mib-contracted-forms>
+            <mib-contracted-forms
+              [bankingDetails]="payerRequisites"
+              [label]="currentInvoice?.Beneficiary?.BankName"
+              description="Для основных транзакций"
+            ></mib-contracted-forms>
 						<mib-spacing type="s"></mib-spacing>
 						<p class="headline">Реквизиты дебитора</p>
 						<mib-spacing type="xs2"></mib-spacing>
-						<mib-contracted-forms>
-							<ng-container contacted-label>{{
-								currentInvoice?.Beneficiary?.BankName
-							}}</ng-container>
-							<ng-container contracted-bill>{{
-								currentInvoice?.Beneficiary?.Account
-							}}</ng-container>
-							<ng-container contracted-open>{{
-								currentInvoice?.Date | date : 'dd.MM.YYYY'
-							}}</ng-container>
-							<ng-container contracted-close>{{
-								currentInvoice?.Date | date : 'dd.MM.YYYY'
-							}}</ng-container>
-							<ng-container contracted-description
-								>Для основных транзакций</ng-container
-							>
-						</mib-contracted-forms>
+						<mib-contracted-forms
+              [bankingDetails]="beneficiaryRequisites"
+              [label]="currentInvoice?.Beneficiary?.BankName"
+              description="Для основных транзакций"
+            ></mib-contracted-forms>
 						<mib-spacing type="xs"></mib-spacing>
 					</mib-tab-item>
 				</mib-drawer-container>

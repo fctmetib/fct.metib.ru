@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
-import {NewContractsPageDrawerComponent} from './new-contracts-page-drawer.component'
-import {NewContractsPageDrawerService} from './new-contracts-page-drawer.service'
+import {ContractsDrawerComponent} from './contracts-drawer.component'
+import {ContractsDrawerService} from './contracts-drawer.service'
 import {DrawerModule} from 'src/app/shared/ui-kit/drawer/drawer.module'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {MatDialogModule} from '@angular/material/dialog'
@@ -21,31 +21,33 @@ import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/contracted-forms.module'
 import {LeftIconModule} from 'src/app/shared/directives/left-icon/left-icon.module'
 import {LinkModule} from 'src/app/shared/ui-kit/link/link.module'
+import {RubModule} from '../../../../../shared/pipes/rub/rub.module';
 
 @NgModule({
-	declarations: [NewContractsPageDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		MatDialogModule,
-		SpacingModule,
-		ButtonModule,
-		IconModule,
-		InputModule,
-		SkeletonModule,
-		TagModule,
-		CashPanelModule,
-		TableModule,
-		PaginatorModule,
-		TabModule,
-		DropdownModule,
-		DropdownPointModule,
-		NavbarModule,
-		SelectModule,
-		ContractedFormsModule,
-		LeftIconModule,
-		LinkModule
-	],
-	providers: [NewContractsPageDrawerService]
+	declarations: [ContractsDrawerComponent],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    MatDialogModule,
+    SpacingModule,
+    ButtonModule,
+    IconModule,
+    InputModule,
+    SkeletonModule,
+    TagModule,
+    CashPanelModule,
+    TableModule,
+    PaginatorModule,
+    TabModule,
+    DropdownModule,
+    DropdownPointModule,
+    NavbarModule,
+    SelectModule,
+    ContractedFormsModule,
+    LeftIconModule,
+    LinkModule,
+    RubModule
+  ],
+	providers: [ContractsDrawerService]
 })
 export class NewContractsPageDrawerModule {}

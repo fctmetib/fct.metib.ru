@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
-import {ClientInvoiceInterface} from '../interfaces/client-invoice.interface'
+import {ClientInvoice} from '../interfaces/client.invoice'
 import {environment} from 'src/environments/environment'
 
 @Injectable()
@@ -11,8 +11,8 @@ export class InvoicesService {
 
 	constructor(private http: HttpClient) {}
 
-	public getInvoices(): Observable<ClientInvoiceInterface[]> {
-		return this.http.get<ClientInvoiceInterface[]>(
+	public getInvoices(): Observable<ClientInvoice[]> {
+		return this.http.get<ClientInvoice[]>(
 			`${environment.apiUrl}/v1/payments?dateFrom=${this.dateFrom}&dateTo=${this.dateTo}`
 		)
 	}

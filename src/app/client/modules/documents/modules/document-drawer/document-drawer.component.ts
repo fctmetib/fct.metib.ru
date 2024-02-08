@@ -96,7 +96,6 @@ export class DocumentDrawerComponent implements OnInit {
 
 	onSubmit(): void {
 		const documents: DocumentReq[] = this.documents.value
-		// TODO: СДЕЛАТЬ ПОДПИСЬ ПРИ needSign (TRUE)
 
 		defer(() => {
 			this.isSubmitting$.next(true)

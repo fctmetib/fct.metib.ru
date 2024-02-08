@@ -1,15 +1,15 @@
 import {
 	DeliveryInterface,
 	DeliveryRef
-} from './../../types/delivery/delivery.interface'
+} from '../../types/delivery/delivery.interface'
 import {environment} from 'src/environments/environment'
 
 import {Observable, of} from 'rxjs'
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {ClientAccountInterface} from '../../types/client/client-account.interface'
-import {ShipmentInterface} from '../../types/common/shipment-interface'
-import {DeliveryContractsInterface} from '../../types/delivery/delivery-contracts.interface'
+import {Delivery} from '../../types/delivery/delivery'
+import {Shipment} from '../../../client/modules/requests/modules/shipment-drawer/interfaces/shipment.interface';
 
 @Injectable()
 export class DeliveryService {
@@ -30,9 +30,9 @@ export class DeliveryService {
 	getAllDeliveriesContracts(
 		getAll: boolean,
 		includeStatistics: boolean
-	): Observable<DeliveryContractsInterface[]> {
+	): Observable<Delivery[]> {
 		let url = `${environment.apiUrl}/v1/deliveries`
-		return this.http.get<DeliveryContractsInterface[]>(url, {
+		return this.http.get<Delivery[]>(url, {
 			params: {
 				getAll: getAll,
 				includeStatistics: includeStatistics
@@ -40,7 +40,24 @@ export class DeliveryService {
 		})
 	}
 
-	/**
+  /**
+   * Получает договор по ID
+   * @param ID
+   */
+  getDeliveryById(ID: number): Observable<Delivery> {
+    return this.http.get<Delivery>(`${environment.apiUrl}/v1/deliveries/${ID}`)
+  }
+
+  /**
+   * Получает договор по ID
+   * @param ID
+   */
+  getShipments(ID: number): Observable<Shipment[]> {
+    return this.http.get<Shipment[]>(`${environment.apiUrl}/v1/deliveries/${ID}/shipments`)
+  }
+
+
+  /**
 	 * Получает список договоров, по ID организации
 	 * @param ID организации
 	 * @returns Возвращает список договоров с статистикой
@@ -81,14 +98,7 @@ export class DeliveryService {
 	 * @param id delivery
 	 * @returns Возвращает реквизиты, по контракту
 	 */
-	getRequisitesByDeliveryId(id: string): Observable<string> {
-		return this.http.get<string>(
-			`${environment.apiUrl}/delivery/${id}/requisites`
-		)
-	}
-
-	getShipments(id: string): Observable<ShipmentInterface[]> {
-		let url = `${environment.apiUrl}/delivery/${id}/shipments`
-		return this.http.get<ShipmentInterface[]>(url)
+	getRequisitesById(id: number): Observable<string> {
+		return this.http.get<string>(`${environment.apiUrl}/delivery/${id}/requisites`)
 	}
 }

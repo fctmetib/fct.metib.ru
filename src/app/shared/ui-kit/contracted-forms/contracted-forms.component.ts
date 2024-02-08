@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
 import {
-	ContractedFormsDevice,
-	ContractedFormsState,
-	ContractedFormsType
+  ContractedFormsEnum,
+  ContractedFormsState,BankDetailsData
 } from './interfaces/contracted-forms.interface'
 
 @Component({
@@ -13,12 +12,18 @@ import {
 export class ContractedFormsComponent {
 	@Input() state: ContractedFormsState = 'view'
 	// @Input() device: ContractedFormsDevice = 'Desktop'
-	@Input() type: ContractedFormsType = 'Банковские реквизиты'
+	@Input() type: ContractedFormsEnum = ContractedFormsEnum.BankDetails
+  @Input() label?: string = ''
+  @Input() description?: string = ''
 	@Input() mainBank: boolean = false
 	@Input() showBadge: boolean = false
 	@Input() additionalOffice: string = ''
 
+  // Типы входных данных
+  @Input() bankingDetails?: BankDetailsData
+
 	@Output() onClick = new EventEmitter<Event>
 
+  public ContractedFormsEnum = ContractedFormsEnum
   public extended: boolean = false
 }

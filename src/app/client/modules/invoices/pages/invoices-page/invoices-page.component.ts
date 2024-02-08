@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core'
 import {Properties} from 'csstype'
 import {BehaviorSubject, finalize, tap} from 'rxjs'
 import {InvoicesService} from '../../services/invoices.service'
-import {ClientInvoiceInterface} from '../../interfaces/client-invoice.interface'
+import {ClientInvoice} from '../../interfaces/client.invoice'
 import {InvoiceDrawerService} from '../../modules/invoice-drawer/invoice-drawer.service'
 import {AnimationService} from '../../../../../shared/animations/animations.service'
 import {DatesService} from 'src/app/shared/services/dates.service'
@@ -41,7 +41,7 @@ export class InvoicesPageComponent implements OnInit {
 	public selectedRequestCount: number = 0
 	public severalRequestsChecked: boolean = false
 
-	invoceRequests: ClientInvoiceInterface[] = []
+	invoceRequests: ClientInvoice[] = []
 
 	public invoicesAnimationStates: Record<number, boolean> = {}
 

@@ -14,129 +14,136 @@ import {DocumentRes} from '../../../requests/interfaces/request.interface'
 import {SignService} from 'src/app/shared/services/share/sign.service'
 
 @Component({
-	selector: 'mib-documents-page',
-	templateUrl: './documents-page.component.html',
-	styleUrls: ['./documents-page.component.scss']
+  selector: 'mib-documents-page',
+  templateUrl: './documents-page.component.html',
+  styleUrls: ['./documents-page.component.scss']
 })
 export class DocumentsPageComponent implements OnInit {
-	public loading$ = new BehaviorSubject<boolean>(false)
-	public isSigning$ = new BehaviorSubject<boolean>(false)
+  public loading$ = new BehaviorSubject<boolean>(false)
+  public isSigning$ = new BehaviorSubject<boolean>(false)
 
-	@ViewChild(TableComponent) table: TableComponent
+  @ViewChild(TableComponent) table: TableComponent
 
-	public skeletonWithoutUnderline: Properties = {
-		height: '48px',
-		width: '100%'
-	}
-	public skeleton: Properties = {
-		...this.skeletonWithoutUnderline,
-		borderBottom: '1px solid var(--wgr-tertiary)'
-	}
+  public skeletonWithoutUnderline: Properties = {
+    height: '48px',
+    width: '100%'
+  }
+  public skeleton: Properties = {
+    ...this.skeletonWithoutUnderline,
+    borderBottom: '1px solid var(--wgr-tertiary)'
+  }
 
-	public requestsSelection: TableSelectionEvent = {
-		selectedCount: 0,
-		selectedIds: []
-	}
+  public requestsSelection: TableSelectionEvent = {
+    selectedCount: 0,
+    selectedIds: []
+  }
 
-	public PAGINATOR_ITEMS_PER_PAGE = 10
-	public PAGINATOR_PAGE_TO_SHOW = 5
-	public currentPage$ = new BehaviorSubject<number>(1)
+  public PAGINATOR_ITEMS_PER_PAGE = 10
+  public PAGINATOR_PAGE_TO_SHOW = 5
+  public currentPage$ = new BehaviorSubject<number>(1)
 
-	public dateFrom: FormControl = new FormControl<string>('')
-	public dateTo: FormControl = new FormControl<string>('')
+  public dateFrom: FormControl = new FormControl<string>('')
+  public dateTo: FormControl = new FormControl<string>('')
 
-	// public clientDocuments: Document[] = []
-	public clientDocuments: DocumentRes[] = []
-	public clientDocumentsVisible: DocumentRes[] = []
+  // public clientDocuments: Document[] = []
+  public clientDocuments: DocumentRes[] = []
+  public clientDocumentsVisible: DocumentRes[] = []
 
-	requests: any
-	requestsVisible: any
+  requests: any
+  requestsVisible: any
 
-	constructor(
-		public toolsService: ToolsService,
-		public datesService: DatesService,
-		public documentDrawerService: DocumentDrawerService,
-		public documentViewDrawerService: DocumentViewDrawerService,
-		private documentsService: DocumentsService,
-		private signService: SignService
-	) {}
+  constructor(
+    public toolsService: ToolsService,
+    public datesService: DatesService,
+    public documentDrawerService: DocumentDrawerService,
+    public documentViewDrawerService: DocumentViewDrawerService,
+    private documentsService: DocumentsService,
+    private signService: SignService
+  ) {
+  }
 
-	ngOnInit() {
-		const {dateFrom, dateTo} = this.datesService.convertDatesInObjectToInput({
-			dateFrom: this.toolsService
-				.subtractFromDate(new Date(), {days: 14})
-				.toISOString(),
-			dateTo: new Date().toISOString()
-		})
-		console.log(dateTo, dateFrom)
-		this.dateFrom.setValue(dateFrom)
-		this.dateTo.setValue(dateTo)
-		this.getClientDocumentsList()
-	}
+  ngOnInit() {
+    const {dateFrom, dateTo} = this.datesService.convertDatesInObjectToInput({
+      dateFrom: this.toolsService
+        .subtractFromDate(new Date(), {days: 14})
+        .toISOString(),
+      dateTo: new Date().toISOString()
+    })
+    this.dateFrom.setValue(dateFrom)
+    this.dateTo.setValue(dateTo)
+    this.getClientDocumentsList().subscribe()
+  }
 
-	getClientDocumentsList() {
-		this.loading$.next(true)
-		this.documentsService
-			.fetchDocuments()
-			.pipe(
-				tap(data => {
-					this.clientDocuments = data
-					this.onPageChange(this.currentPage$.value)
-				}),
-				finalize(() => this.loading$.next(false))
-			)
-			.subscribe()
-	}
+  getClientDocumentsList() {
+    this.loading$.next(true)
+    return this.documentsService
+      .fetchDocuments()
+      .pipe(
+        tap(data => {
+          this.clientDocuments = data.sort((a, b) => {
+            // Преобразование строковых дат в объекты Date для сравнения
+            const dateA = new Date(a.CreatedTime);
+            const dateB = new Date(b.CreatedTime);
 
-	onPageChange(page: number) {
-		this.currentPage$.next(page)
+            // Сравнение дат и возврат результата сортировки
+            return dateB.getTime() - dateA.getTime();
+          });
 
-		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
-		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+          this.onPageChange(this.currentPage$.value)
+        }),
+        finalize(() => this.loading$.next(false))
+      )
+  }
 
-		this.table.deselect()
+  onPageChange(page: number) {
+    this.currentPage$.next(page)
 
-		this.clientDocumentsVisible = this.clientDocuments.slice(
-			startIndex,
-			endIndex
-		)
-	}
+    const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+    const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
 
-	newDocumentDrawer() {
-		this.documentDrawerService
-			.open({state: DrawerStateEnum.CREATE})
-			.afterClosed()
-			.pipe
-			// filter(Boolean),
-			// switchMap(() => this.loadRequestsData())
-			()
-			.subscribe()
-	}
+    this.table.deselect()
 
-	newDocumentViewsDrawer(documentID: number) {
-		this.documentViewDrawerService
-			.open({
-				data: {
-					documentID: documentID
-				}
-			})
-			.afterClosed()
-			.pipe
-			// filter(Boolean),
-			// switchMap(async () => this.getClientDocumentsList())
-			()
-			.subscribe()
-	}
+    this.clientDocumentsVisible = this.clientDocuments.slice(
+      startIndex,
+      endIndex
+    )
+  }
 
-	selectionChange(event: TableSelectionEvent) {
-		this.requestsSelection = event
-	}
+  newDocumentDrawer() {
+    this.documentDrawerService
+      .open({state: DrawerStateEnum.CREATE})
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this.getClientDocumentsList())
+      )
+      .subscribe()
+  }
 
-	onAction() {
-		this.isSigning$.next(true)
-		const requests$ = this.table.selectedRows.map(row =>
-			this.documentsService.sign(row.rowId)
-		)
-		this.documentsService.signModal(zip(requests$), this.isSigning$).subscribe()
-	}
+  newDocumentViewsDrawer(documentID: number) {
+    this.documentViewDrawerService
+      .open({
+        data: {
+          documentID: documentID
+        }
+      })
+      .afterClosed()
+      .pipe
+      // filter(Boolean),
+      // switchMap(async () => this.getClientDocumentsList())
+      ()
+      .subscribe()
+  }
+
+  selectionChange(event: TableSelectionEvent) {
+    this.requestsSelection = event
+  }
+
+  onAction() {
+    this.isSigning$.next(true)
+    const requests$ = this.table.selectedRows.map(row =>
+      this.documentsService.sign(row.rowId)
+    )
+    this.documentsService.signModal(zip(requests$), this.isSigning$).subscribe()
+  }
 }

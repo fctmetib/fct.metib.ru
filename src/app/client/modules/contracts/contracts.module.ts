@@ -17,7 +17,6 @@ import {InputTextareaModule} from 'primeng/inputtextarea'
 import {MenubarModule} from 'primeng/menubar'
 import {AvatarModule} from 'primeng/avatar'
 import {ContractsRoutingModule} from './contracts-routing.module'
-import {ContractsPageComponent} from './components/contracts-page/contracts-page.component'
 import {ToolbarModule} from 'primeng/toolbar'
 import {TieredMenuModule} from 'primeng/tieredmenu'
 import {TooltipModule} from 'primeng/tooltip'
@@ -27,7 +26,7 @@ import {DialogModule} from 'primeng/dialog'
 import {RequestsService} from '../requests/services/requests.service'
 import {ClipboardModule} from 'ngx-clipboard'
 import {AccountsService} from 'src/app/shared/services/common/accounts.service'
-import {NewContractsPageComponent} from './pages/new-contracts-page/new-contracts-page.component'
+import {ContractsPageComponent} from './pages/contracts-page/contracts-page.component'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {TabModule} from 'src/app/shared/ui-kit/tab/tab.module'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
@@ -44,7 +43,8 @@ import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
 
 @NgModule({
-	imports: [
+  declarations: [ContractsPageComponent, ContractsPageComponent],
+  imports: [
 		CommonModule,
 		InputTextModule,
 		CheckboxModule,
@@ -84,7 +84,6 @@ import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
 		RubModule,
 		BadgeModule
 	],
-	declarations: [ContractsPageComponent, NewContractsPageComponent],
 	providers: [DeliveryService, RequestsService, AccountsService]
 })
 export class ContractsModule {}

@@ -1,0 +1,185 @@
+<mib-drawer>
+	<mib-drawer-header
+		[showShared]="true"
+		(onClose)="dialogRef.close()"
+		[showMaximize]="true"
+		[showEdits]="true"
+		drawer-header
+	></mib-drawer-header>
+	<mib-drawer-container>
+		<ng-container *ngIf="loading$ | async; else title">
+			<mib-skeleton
+				[styles]="defaultSkeleton"
+				[style.height]="'42px'"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #title>
+			<div class="header flex gap-6">
+				<h4 title="{{ delivery?.Customer?.Title }}">
+					{{ delivery?.Customer?.Title }}
+				</h4>
+				<h4 title="{{ delivery?.Debtor?.Title }}">
+					&mdash; {{ delivery?.Debtor?.Title }}
+				</h4>
+			</div>
+		</ng-template>
+		<mib-spacing type="xs2"></mib-spacing>
+		<ng-container *ngIf="loading$ | async; else docDescription">
+			<mib-skeleton
+				[styles]="defaultSkeleton"
+				[style.height]="'54px'"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #docDescription>
+			<div class="flex flex_align-center gap-4">
+				<span class="text text_m c-bti-secondary"
+					>Оформлен {{ delivery?.DateFrom | date : 'dd.MM.yyyy' }}</span
+				>
+				<mib-icon
+					class="invoice-arrow stroke"
+					btn-icon
+					name="fi_arrow-right"
+				></mib-icon>
+				<span class="text text_m c-bti-secondary"
+					>Действует до {{ delivery?.DateTo | date : 'dd.MM.yyyy' }}</span
+				>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex gap-8">
+				<mib-tag size="m" type="filled-secondary">
+					{{ delivery?.Number }}
+				</mib-tag>
+				<mib-tag size="m" type="filled-primary">
+					{{ delivery?.Tariff?.Title }}
+				</mib-tag>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+			<p class="text text_m c-bti-secondary">
+				Отсрочка: {{ delivery?.Delay.Count }} календарных дней
+			</p>
+		</ng-template>
+		<mib-spacing type="xs"></mib-spacing>
+		<ng-container *ngIf="loading$ | async; else date">
+			<mib-skeleton
+				[styles]="defaultSkeleton"
+				[style.height]="'138px'"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #date>
+			<mib-cash-panel
+				[extracted]="true"
+				panelTitle="Ваш лимит:"
+				[panelData]="delivery?.Statistics?.DutyCustomer"
+			></mib-cash-panel>
+			<mib-cash-panel
+				[extracted]="true"
+				panelTitle="Уступлено:"
+				[panelData]="delivery?.Statistics?.DutyDebtor"
+			></mib-cash-panel>
+			<mib-cash-panel [extracted]="true" panelTitle="Просрочка:">
+				<ng-container alert
+					>{{
+						delivery?.Statistics?.DelayDuty | currency : 'RUB' : 'symbol-narrow'
+					}}
+				</ng-container>
+			</mib-cash-panel>
+		</ng-template>
+	</mib-drawer-container>
+	<mib-spacing type="xs"></mib-spacing>
+	<div class="flex container">
+		<mib-link [disabled]="loading$ | async" (click)="copyDetails()" size="m">
+			Скопировать реквизиты
+			<mib-icon mibLeftIcon class="stroke" name="fi_copy"></mib-icon>
+		</mib-link>
+	</div>
+	<mib-spacing type="m"></mib-spacing>
+	<mib-tab-group>
+		<mib-navbar class="container container_large">
+			<mib-navbar-point value="1">Реквизиты</mib-navbar-point>
+			<mib-navbar-point value="2"> Накладные </mib-navbar-point>
+		</mib-navbar>
+		<div class="container container_large">
+			<mib-tab-item value="1">
+				<mib-spacing type="m"></mib-spacing>
+				<p class="headline">Банковские реквизиты</p>
+				<mib-spacing type="xs2"></mib-spacing>
+				<mib-contracted-forms label="Реквизиты" [type]="ContractedFormsEnum.ATemplateForAllOccasions">
+          <span class="text text_m" [innerHTML]="requisites"></span>
+				</mib-contracted-forms>
+				<mib-spacing type="xs"></mib-spacing>
+			</mib-tab-item>
+			<mib-tab-item value="2">
+				<mib-spacing type="m"></mib-spacing>
+				<ng-container *ngIf="loading$ | async; else table">
+					<mib-skeleton
+						[styles]="last ? skeletonWithoutUnderline : skeleton"
+						*ngFor="
+							let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
+							let last = last
+						"
+					></mib-skeleton>
+				</ng-container>
+				<ng-template #table>
+					<mib-table>
+						<mib-table-head>
+							<mib-table-head-cell>№ поставки</mib-table-head-cell>
+							<mib-table-head-cell>Дата поставки</mib-table-head-cell>
+							<mib-table-head-cell>Сумма поставки</mib-table-head-cell>
+<!--							<mib-table-head-cell>Долг дебитора</mib-table-head-cell>-->
+<!--							<mib-table-head-cell>Долг поставщика</mib-table-head-cell>-->
+						</mib-table-head>
+						<mib-table-row
+							*ngFor="let shipment of shipments; let idx = index"
+							[underlined]="true"
+						>
+							<mib-table-cell type="main">
+								<ng-container table-cell-title>
+									{{ shipment.WaybillNumber }}
+								</ng-container>
+							</mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+                  {{shipment.DateShipment | date: 'dd.MM.yyyy'}}
+                </ng-container>
+							</mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+                  {{shipment.Summ | rub}}
+                </ng-container>
+							</mib-table-cell>
+							<mib-button table-row-button size="s" type="ghost-secondary">
+								<mib-icon
+									class="stroke"
+									btn-icon
+									name="fi_more-vertical"
+								></mib-icon>
+							</mib-button>
+						</mib-table-row>
+						<mib-table-row>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+                  {{shipments.length}}
+                </ng-container>
+							</mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+                  {{shipmentsReducedAmount | rub}}
+                </ng-container>
+							</mib-table-cell>
+						</mib-table-row>
+						<mib-table-footer [lined]="!(loading$ | async)">
+							<mib-paginator
+								[totalCount]="shipments.length"
+								[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+								[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+							></mib-paginator>
+						</mib-table-footer>
+					</mib-table>
+				</ng-template>
+			</mib-tab-item>
+		</div>
+	</mib-tab-group>
+</mib-drawer>

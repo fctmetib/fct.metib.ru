@@ -4,9 +4,10 @@ import {Properties} from 'csstype'
 import {BehaviorSubject, finalize, map, tap} from 'rxjs'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {InvoiceDrawer} from './interfaces/invoice-drawer.interface'
-import {ClientInvoiceInterface} from '../../interfaces/client-invoice.interface'
+import {ClientInvoice} from '../../interfaces/client.invoice'
 import {InvoicesService} from '../../services/invoices.service'
 import {InputSize} from 'src/app/shared/ui-kit/input/interfaces/input.interface'
+import {BankDetailsData} from '../../../../../shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface';
 
 @Component({
 	selector: 'mib-invoice-drawer',
@@ -50,14 +51,25 @@ export class InvoiceDrawerComponent implements OnInit {
 	public PAGINATOR_PAGE_TO_SHOW = 5
 	public currentPage$ = new BehaviorSubject<number>(1)
 
-	public selectedShipmentsCount: number = 0
-	public severalShipmentsChecked: boolean = false
-
-	public invoiceAnimationStates: Record<number, boolean> = {}
-
 	public inputSize: InputSize = 'l'
-	invoiceID: number
-	currentInvoice: ClientInvoiceInterface
+  public invoiceID: number
+  public currentInvoice: ClientInvoice
+
+  get beneficiaryRequisites(): BankDetailsData {
+    return {
+      paymentParticipant: this.currentInvoice.Beneficiary,
+      closeDate: this.currentInvoice.Date,
+      openDate: this.currentInvoice.Date,
+    }
+  }
+
+  get payerRequisites(): BankDetailsData {
+    return {
+      paymentParticipant: this.currentInvoice.Payer,
+      closeDate: this.currentInvoice.Date,
+      openDate: this.currentInvoice.Date,
+    }
+  }
 
 	datas = 1000000
 

@@ -29,7 +29,7 @@
 			<div class="flex gap-12">
 				<mib-input class="flex_grow">
 					<ng-container mibLabel>Номер заявки</ng-container>
-					<input formControlName="Number" [size]="size" mibInput />
+					<input formControlName="Number" [readonly]="true" [size]="size" mibInput />
 				</mib-input>
 				<mib-select
 					formControlName="Type"
@@ -158,7 +158,7 @@
 				Добавить
 				<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
 			</mib-button>
-			<mib-button type="ghost-primary" (press)="openClipboard()" [size]="size">
+			<mib-button type="ghost-primary" (press)="parseShipmentClipboard()" [size]="size">
 				<mib-icon btn-left-icon class="stroke" name="fi_copy"></mib-icon>
 				Вставить из буфера обмена
 			</mib-button>
@@ -171,7 +171,7 @@
 			type="alert"
 		>
 			<ng-container information-text
-				>Необходимо прикрепить накладные для отправки на модерацию</ng-container
+				>Прикрепите документы</ng-container
 			>
 		</mib-information>
 		<ng-template #copiesTemplate>

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core'
+import {Component, HostListener, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface'
 import {RequestDrawerService} from './request-drawer.service'
@@ -48,6 +48,7 @@ import {
 import {Drawer} from '../../../../../shared/ui-kit/drawer/drawer.class'
 import {DatesService} from '../../../../../shared/services/dates.service'
 import {PasteModalService} from '../../../../../shared/modules/modals/paste-modal/paste-modal.service';
+import {ClipboardParserHeaders, ClipboardParserService} from '../../../../../shared/services/clipboard-parser.service';
 
 @Component({
   selector: 'mib-request-drawer',
@@ -66,6 +67,15 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
   public size: InputSize | ButtonSize = 'm'
   public deliveries: DeliveryAgreement[] = []
 
+  public headersMap: ClipboardParserHeaders<ShipmentReq> = [
+    ['Накладная', 'WaybillNumber', String],
+    ['Дата накладной', 'WaybillDate', Date],
+    ['С/ф №', 'InvoiceNumber', Number],
+    ['Дата с/ф', 'InvoiceDate', Date],
+    ['Дата поставки', 'DateShipment', Date],
+    ['Сумма', 'Summ', Number]
+  ];
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DrawerData<RequestRes>,
     private fb: FormBuilder,
@@ -79,7 +89,8 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
     private formsPresetsService: FormsPresetsService,
     private datesService: DatesService,
     private toolsService: ToolsService,
-    private pasteModalService: PasteModalService
+    private pasteModalService: PasteModalService,
+    private clipboardParserService: ClipboardParserService
   ) {
     super(data)
   }
@@ -299,11 +310,23 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
   }
 
   openClipboard() {
-    this.pasteModalService.open().afterClosed().pipe(
+    this.pasteModalService.open({
+      headersMap: this.headersMap
+    }).afterClosed().pipe(
       filter(Boolean),
       tap(shipments => {
         shipments.forEach(this.addShipment)
       })
     ).subscribe()
+  }
+
+  parseShipmentClipboard() {
+    const clipboardData = navigator.clipboard.readText();
+    clipboardData.then(data => {
+      const parsedData: ShipmentReq[] = this.clipboardParserService.parseClipboardData<ShipmentReq>(data, this.headersMap);
+      parsedData.forEach(this.addShipment)
+    }).catch(error => {
+      console.error('Произошла ошибка при чтении данных из буфера обмена:', error);
+    });
   }
 }
