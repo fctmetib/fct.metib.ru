@@ -6,6 +6,12 @@ span.c,
 		&-default {
 			color: var(--mc-default);
 		}
+    &-hover {
+      color: var(--mc-hover);
+    }
+    &-active {
+      color: var(--mc-active);
+    }
 	}
 
 	// white gradation

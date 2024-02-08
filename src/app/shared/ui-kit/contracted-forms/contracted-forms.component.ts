@@ -12,12 +12,13 @@ import {
 })
 export class ContractedFormsComponent {
 	@Input() state: ContractedFormsState = 'view'
-	@Input() extended: boolean = false
-	@Input() device: ContractedFormsDevice = 'Desktop'
+	// @Input() device: ContractedFormsDevice = 'Desktop'
 	@Input() type: ContractedFormsType = 'Банковские реквизиты'
 	@Input() mainBank: boolean = false
 	@Input() showBadge: boolean = false
 	@Input() additionalOffice: string = ''
 
-	@Output() onClick: EventEmitter<Event>
+	@Output() onClick = new EventEmitter<Event>
+
+  public extended: boolean = false
 }

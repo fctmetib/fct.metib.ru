@@ -159,7 +159,7 @@
 						<mib-spacing type="s"></mib-spacing>
 						<p class="headline">Реквизиты плательщика</p>
 						<mib-spacing type="xs2"></mib-spacing>
-						<mib-contracted-forms extended="true">
+						<mib-contracted-forms>
 							<ng-container contacted-label>{{
 								currentInvoice?.Payer?.BankName
 							}}</ng-container>
@@ -173,8 +173,7 @@
 								currentInvoice?.Date | date : 'dd.MM.YYYY'
 							}}</ng-container>
 							<ng-container contracted-description
-								>Для основных транзакций</ng-container
-							>
+								>Для основных транзакций</ng-container>
 						</mib-contracted-forms>
 						<mib-spacing type="s"></mib-spacing>
 						<p class="headline">Реквизиты дебитора</p>

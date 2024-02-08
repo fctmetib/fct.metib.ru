@@ -1,4 +1,4 @@
-<div class="table-cell flex flex_align-center gap-8" [ngClass]="classes">
+<div #cell [title]="cell.innerText" class="table-cell flex flex_align-center gap-8" [ngClass]="classes">
   <ng-template #content>
     <ng-content></ng-content>
   </ng-template>

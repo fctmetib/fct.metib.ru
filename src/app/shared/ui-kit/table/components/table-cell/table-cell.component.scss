@@ -12,10 +12,6 @@ $text-selectors: 'label';
 	#{$text-selectors} {
 		@include body-text;
 		@include text-overflow(1);
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 	}
 
 	&_type {
