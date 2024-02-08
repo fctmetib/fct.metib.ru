@@ -90,7 +90,7 @@
 	</mib-drawer-container>
 	<mib-spacing type="xs"></mib-spacing>
 	<div class="flex container">
-		<mib-link (click)="copyDitails()" size="m">
+		<mib-link [disabled]="loading$ | async" (click)="copyDitails()" size="m">
 			Скопировать реквизиты
 			<mib-icon mibLeftIcon class="stroke" name="fi_copy"></mib-icon>
 		</mib-link>

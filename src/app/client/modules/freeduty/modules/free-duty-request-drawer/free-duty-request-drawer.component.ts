@@ -89,12 +89,31 @@ export class FreeDutyRequestDrawerComponent implements OnInit {
 						.sign(requestIDs, this.sendingAndSigning$)
 						.pipe(
 							tap(response => {
+								this.toaster.show(
+									'success',
+									'Заявка создана!',
+									'',
+									true,
+									false,
+									3000
+								)
 								this.dialogRef.close(response)
 							}),
 							finalize(() => {
 								this.sendingAndSigning$.next(false)
 							})
 						)
+				}),
+				catchError(err => {
+					this.toaster.show(
+						'failure',
+						'Что-то пошло не так!',
+						'',
+						true,
+						false,
+						3000
+					)
+					return of(err)
 				})
 			)
 			.subscribe()

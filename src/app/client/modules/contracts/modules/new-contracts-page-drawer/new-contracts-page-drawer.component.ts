@@ -76,14 +76,7 @@ export class NewContractsPageDrawerComponent implements OnInit {
 	}
 
 	copyDitails() {
-		this.toaster.show(
-			'success',
-			'Реквизиты скопированны!',
-			'',
-			true,
-			false,
-			2500
-		)
+		this.toaster.show('failure', 'В разработке!', '', true, false, 2500)
 		console.log('Реквизиты нужно сопировать')
 	}
 }
