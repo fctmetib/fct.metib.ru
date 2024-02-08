@@ -101,51 +101,23 @@ export class DocumentDrawerComponent implements OnInit {
 		defer(() => {
 			this.isSubmitting$.next(true)
 			const reqs$ = documents.map(document =>
-				this.documentService
-					.uploadNewDocument(document, this.isDocumentSign)
-					.pipe(
-						tap(() => {
-							this.toaster.show(
-								'success',
-								'Документ добавлен',
-								'',
-								true,
-								false,
-								3000
-							)
-						})
-					)
-					.pipe(
-						catchError(err => {
-							console.log('Что-то пошло не так!')
-							this.toaster.show(
-								'failure',
-								'Что-то пошло не так!',
-								'',
-								true,
-								false,
-								3000
-							)
-							return of(err)
-						})
-					)
+				this.documentService.uploadNewDocument(document, this.isDocumentSign)
 			)
-			const req$ = zip(reqs$).pipe(tap(() => {}))
+			const req$ = zip(reqs$).pipe(
+				tap(() => {
+					this.toaster.show(
+						'success',
+						'Документ добавлен',
+						'',
+						true,
+						false,
+						3000
+					)
+				})
+			)
 			if (this.isDocumentSign) {
 				return this.documentService
 					.signModal(req$, this.isSubmitting$)
-					.pipe(
-						tap(() => {
-							this.toaster.show(
-								'success',
-								'Документ добавлен',
-								'',
-								true,
-								false,
-								3000
-							)
-						})
-					)
 					.pipe(map(output => output.data))
 			} else {
 				return req$.pipe(
