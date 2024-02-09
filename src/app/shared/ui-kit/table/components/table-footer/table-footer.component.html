@@ -5,7 +5,7 @@
 		(onEntry)="islandIsIntersecting = $event"
 	>
 		<mib-table-quick-action-island
-			*ngIf="table.selectedRows.length"
+			*ngIf="table.selectedRows.length && showIsland"
 			[class.fixed]="!islandIsIntersecting"
 			[showRemove]="showRemove"
 		>

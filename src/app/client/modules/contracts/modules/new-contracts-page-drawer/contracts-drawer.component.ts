@@ -10,6 +10,7 @@ import {Delivery} from 'src/app/shared/types/delivery/delivery'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {Shipment} from '../../../requests/modules/shipment-drawer/interfaces/shipment.interface';
 import {ContractedFormsEnum} from '../../../../../shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface';
+import {WordDownloadService} from '../../../../../shared/services/word-download.service';
 
 @Component({
   selector: 'mib-new-contracts-page-drawer',
@@ -43,7 +44,9 @@ export class ContractsDrawerComponent implements OnInit {
   public currentPage$ = new BehaviorSubject<number>(1)
 
   public shipments: Shipment[] = []
+  public shipmentsDisplay: Shipment[] = []
   public shipmentsReducedAmount: number = 0;
+  public freeLimit: number = 0;
   public requisites: string = ''
   public size = 'm'
 
@@ -56,7 +59,8 @@ export class ContractsDrawerComponent implements OnInit {
     public toolsService: ToolsService,
     public dialogRef: MatDialogRef<ContractsDrawerComponent>,
     private deliveryService: DeliveryService,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    private wordDownloadService: WordDownloadService
   ) {
   }
 
@@ -73,12 +77,13 @@ export class ContractsDrawerComponent implements OnInit {
     zip(
       this.deliveryService.getRequisitesById(this.deliveryId).pipe(
         tap(requisites => {
-          this.requisites = requisites.replace('\n', '<br/>')
+          this.requisites = requisites
         })
       ),
       this.deliveryService.getShipments(this.deliveryId).pipe(
         tap(shipments => {
           this.shipments = shipments
+          this.onPageChange(1)
           this.shipmentsReducedAmount = shipments.reduce((acc, n) => acc + n.Summ,0)
         })
       ),
@@ -92,7 +97,15 @@ export class ContractsDrawerComponent implements OnInit {
     ).subscribe()
   }
 
+  onPageChange(page: number) {
+    const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+    const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+
+    this.shipmentsDisplay = this.shipments.slice(startIndex, endIndex)
+  }
+
   copyDetails() {
-    this.toaster.show('failure', 'В разработке!', '', true, false, 2500)
+    // this.toaster.show('failure', 'В разработке!', '', true, false, 2500)
+    this.wordDownloadService.downloadDocWithText(this.requisites, `${this.toolsService.concatArray([this.delivery.Debtor.Title,' - ', this.delivery.Customer.Title, 'реквизиты'])}`);
   }
 }

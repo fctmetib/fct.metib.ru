@@ -226,10 +226,10 @@ export class ToolsService {
   declineWord(value: number, words: [string, string, string]): string {
     value = Math.abs(value) % 100;
     const num = value % 10;
-    if (value > 10 && value < 20) return words[2]; // Род. п. мн. ч
-    if (num > 1 && num < 5) return words[1]; // Род. п. ед. ч
-    if (num == 1) return words[0]; // Им. п. ед.ч
-    return words[2];
+    if (value > 10 && value < 20) return words[2]; // Род. п. мн. ч для чисел от 11 до 19
+    if (num > 1 && num < 5) return words[1]; // Род. п. ед. ч для 2-4
+    if (num == 1) return words[0]; // Им. п. ед. ч для 1
+    return words[2]; // Род. п. мн. ч для 0, 5-9, 10, а также 11-19
   }
 
   convertBytesToMegabytes(bytes: number): string {

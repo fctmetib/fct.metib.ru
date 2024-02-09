@@ -2,11 +2,14 @@ export interface ShipmentReq {
   AccountNumber: string;
   AccountDate: string;
   InvoiceNumber: string;
-  InvoiceDate: Date;
+  InvoiceDate: string;
+  // Вот вроде было это поле в интерфейсе
   WaybillNumber: string;
-  WaybillDate: Date;
-  DateShipment: Date;
-  DatePayment: Date;
+  // Но возвращается вот это поле
+  Waybill: string;
+  WaybillDate: string;
+  DateShipment: string;
+  DatePayment: string;
   Summ: number;
   SummToFactor: number;
 }

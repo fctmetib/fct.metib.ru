@@ -13,7 +13,7 @@ export class CashPanelComponent implements AfterViewInit {
 	@Input() panelTitle: string
 	@Input() panelData: number
 	@Input() link?: string
-	@Input() extracted: false
+	@Input() extracted: boolean = false
 
 	public isHover: boolean = false
 	public viewMounted: boolean = false
