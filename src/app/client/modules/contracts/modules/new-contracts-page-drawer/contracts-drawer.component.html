@@ -1,9 +1,9 @@
+<!--		[showShared]="true"-->
+<!--		[showMaximize]="true"-->
+<!--		[showEdits]="true"-->
 <mib-drawer>
 	<mib-drawer-header
-		[showShared]="true"
 		(onClose)="dialogRef.close()"
-		[showMaximize]="true"
-		[showEdits]="true"
 		drawer-header
 	></mib-drawer-header>
 	<mib-drawer-container>
@@ -69,23 +69,25 @@
 			></mib-skeleton>
 		</ng-container>
 		<ng-template #date>
-			<mib-cash-panel
-				[extracted]="true"
-				panelTitle="Ваш лимит:"
-				[panelData]="(delivery?.Statistics?.DutyCustomer?.toString() || '') | rub"
-			></mib-cash-panel>
-			<mib-cash-panel
-				[extracted]="true"
-				panelTitle="Уступлено:"
-				[panelData]="(delivery?.Statistics?.DutyDebtor?.toString() || '') | rub"
-			></mib-cash-panel>
-			<mib-cash-panel [extracted]="true" panelTitle="Просрочка:">
-				<ng-container alert
-					>{{
-						delivery?.Statistics?.DelayDuty | rub
-					}}
-				</ng-container>
-			</mib-cash-panel>
+      <div class="flex flex_column flex_justify-start gap-8">
+        <mib-cash-panel
+          [extracted]="true"
+          panelTitle="Ваш лимит:"
+          [panelData]="(delivery?.Statistics?.DutyCustomer?.toString() || '') | rub"
+        ></mib-cash-panel>
+        <mib-cash-panel
+          [extracted]="true"
+          panelTitle="Уступлено:"
+          [panelData]="(delivery?.Statistics?.DutyDebtor?.toString() || '') | rub"
+        ></mib-cash-panel>
+        <mib-cash-panel [extracted]="true" panelTitle="Просрочка:">
+          <ng-container alert
+          >{{
+            delivery?.Statistics?.DelayDuty | rub
+            }}
+          </ng-container>
+        </mib-cash-panel>
+      </div>
 		</ng-template>
 	</mib-drawer-container>
 	<mib-spacing type="xs"></mib-spacing>

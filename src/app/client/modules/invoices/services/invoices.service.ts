@@ -1,19 +1,35 @@
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
-import {ClientInvoice} from '../interfaces/client.invoice'
+import {ClientInvoice, ExtendedClientInvoice} from '../interfaces/client.invoice'
 import {environment} from 'src/environments/environment'
+
+export interface InvoicesReq {
+  dateFrom?: string,
+  dateTo?: string,
+  includeLinks?: boolean
+}
+
+
+export type GenericInvoice<T extends InvoicesReq> = T['includeLinks'] extends true ? ExtendedClientInvoice : ClientInvoice
+
 
 @Injectable()
 export class InvoicesService {
-	public dateFrom: string = '2023-07-25'
-	public dateTo: string = '2023-07-25'
 
-	constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-	public getInvoices(): Observable<ClientInvoice[]> {
-		return this.http.get<ClientInvoice[]>(
-			`${environment.apiUrl}/v1/payments?dateFrom=${this.dateFrom}&dateTo=${this.dateTo}`
-		)
-	}
+  public getInvoices = <T extends InvoicesReq>(data: T): Observable<GenericInvoice<T>[]> => {
+    return this.http.get<any>(`${environment.apiUrl}/v1/payments`, {
+      params: { ...data as any }
+    });
+  }
+
+  public getInvoice(ID: number, includeLinks: boolean = true): Observable<ExtendedClientInvoice> {
+    return this.http.get<ExtendedClientInvoice>(`${environment.apiUrl}/v1/payments/${ID}`, {
+      params: {
+        includeLinks
+      }
+    })
+  }
 }

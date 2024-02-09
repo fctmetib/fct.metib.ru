@@ -32,7 +32,7 @@
         </p>
       </ng-container>
       <mib-spacing type="xs"></mib-spacing>
-      <p class="cursor-pointer text text_l c-mc-default">Поделиться реквизитами</p>
+      <p (click)="downloadRequisites()" class="cursor-pointer text text_l c-mc-default">Скачать реквизиты</p>
     </ng-container>
     <ng-container *ngSwitchCase="ContractedFormsEnum.ATemplateForAllOccasions">
       <ng-content></ng-content>
