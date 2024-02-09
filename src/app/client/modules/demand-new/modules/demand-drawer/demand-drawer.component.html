@@ -1,56 +1,108 @@
 <mib-drawer>
-  <mib-drawer-header
-    showEdits="true"
-    (onClose)="dialogRef.close()"
-    drawer-header
-  >
-  </mib-drawer-header>
-  <mib-drawer-container>
-    <h4>Запрос на свободную тему</h4>
-    <mib-spacing type="xs"></mib-spacing>
-    <mib-input>
-      <ng-container mibLabel>Тема обращения</ng-container>
-      <input mibInput/>
-    </mib-input>
-    <mib-spacing type="xs"></mib-spacing>
-    <mib-textarea [controls]="false">
-      <ng-container mibLabel>Текст обращения</ng-container>
-      <textarea [maxLength]="300" autosize mibTextarea></textarea>
-    </mib-textarea>
+	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
+	</mib-drawer-header>
+	<mib-drawer-container>
+		<h4>Запрос на свободную тему</h4>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-input>
+			<ng-container mibLabel>Тема обращения</ng-container>
+			<input mibInput />
+		</mib-input>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-textarea [controls]="false">
+			<ng-container mibLabel>Текст обращения</ng-container>
+			<textarea [maxLength]="300" autosize mibTextarea></textarea>
+		</mib-textarea>
 
-    <mib-spacing type="s"></mib-spacing>
-    <p class="text text_m text_medium">
-      При необходимости прикрепите документы в поле ниже
-    </p>
-    <mib-spacing type="xs2"></mib-spacing>
-    <div class="flex flex_column gap-12">
-      <mib-dnd
-        [accept]="[
-				'application/pdf',
-				'application/msword',
-				'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-				'application/vnd.ms-excel',
-				'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-				'image/jpeg',
-				'image/png'
-			]"
-        headline="Прикрепите скан-копию документа"
-      ></mib-dnd>
-      <div class="flex flex_column gap-4">
-        <p class="text text_xs c-bti-tertiary">
-          Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
-        </p>
-        <p class="text text_xs c-bti-tertiary">
-          Размер каждого документа не должен превышать 10 МБ
-        </p>
-      </div>
-    </div>
-    <mib-spacing type="m"></mib-spacing>
-  </mib-drawer-container>
-  <mib-drawer-footer drawer-footer>
-    <mib-button [disabled]="true" [size]="size" type="filled-primary"
-    >Создать заявку
-    </mib-button
-    >
-  </mib-drawer-footer>
+		<mib-spacing type="s"></mib-spacing>
+		<p class="text text_m text_medium">Прикрепленные документы</p>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-file-cell size="s"></mib-file-cell>
+		<mib-spacing type="s"></mib-spacing>
+		<p
+			class="text text_m text_medium"
+			*ngIf="!documents.controls.length; else copiesTemplate"
+		>
+			При необходимости прикрепите документы в поле ниже
+		</p>
+		<mib-spacing type="xs2"></mib-spacing>
+		<ng-template #copiesTemplate>
+			<mib-table>
+				<mib-table-head>
+					<mib-table-head-cell>№</mib-table-head-cell>
+					<mib-table-head-cell>Имя файла</mib-table-head-cell>
+					<mib-table-head-cell>Описание</mib-table-head-cell>
+					<mib-table-head-cell>Тип документа</mib-table-head-cell>
+				</mib-table-head>
+				<mib-table-row
+					*ngFor="let document of documents.controls; let idx = index"
+				>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ idx + 1 }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							document.get('Title').value
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							document.get('Description').value
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							document.get('DocumentTypeID').value
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-button
+						table-row-button
+						[mibDropdownTrigger]="documentMenu"
+						size="s"
+						type="ghost-secondary"
+					>
+						<mib-icon
+							class="stroke"
+							btn-icon
+							name="fi_more-vertical"
+						></mib-icon>
+					</mib-button>
+					<mib-dropdown #documentMenu>
+						<mib-dropdown-point
+							(press)="removeDocument(idx)"
+							text="Удалить"
+						></mib-dropdown-point>
+					</mib-dropdown>
+				</mib-table-row>
+			</mib-table>
+		</ng-template>
+		<div class="flex flex_column gap-12">
+			<mib-dnd
+				[multiple]="true"
+				(onChange)="onDocumentLoad($event)"
+				[accept]="[
+					'application/pdf',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-excel',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'image/jpeg',
+					'image/png'
+				]"
+				headline="Прикрепите документ"
+			></mib-dnd>
+			<p class="text text_xs c-bti-tertiary">
+				Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
+			</p>
+			<p class="text text_xs c-bti-tertiary">
+				Размер каждого документа не должен превышать 10 МБ
+			</p>
+		</div>
+		<mib-spacing type="m"></mib-spacing>
+	</mib-drawer-container>
+	<mib-drawer-footer drawer-footer>
+		<mib-button [disabled]="true" [size]="size" type="filled-primary"
+			>Отправить запрос
+		</mib-button>
+	</mib-drawer-footer>
 </mib-drawer>

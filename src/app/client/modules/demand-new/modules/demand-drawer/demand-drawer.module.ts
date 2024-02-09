@@ -9,26 +9,39 @@ import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
 import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
 import {DemandDrawerService} from './demand-drawer.service'
-import {TextareaModule} from '../../../../../shared/ui-kit/textarea/textarea.module';
-import {AutosizeModule} from 'ngx-autosize';
-import {LabelModule} from '../../../../../shared/directives/label/label.module';
+import {TextareaModule} from '../../../../../shared/ui-kit/textarea/textarea.module'
+import {AutosizeModule} from 'ngx-autosize'
+import {LabelModule} from '../../../../../shared/directives/label/label.module'
+import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
+import {ReactiveFormsModule} from '@angular/forms'
+import {InformationModule} from 'src/app/shared/ui-kit/information/information.module'
+import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
+import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
+import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
+import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 
 @NgModule({
-  declarations: [DemandDrawerComponent],
-    imports: [
-        CommonModule,
-        DrawerModule,
-        MatDialogModule,
-        SpacingModule,
-        ButtonModule,
-        IconModule,
-        MibDragAndDropModule,
-        InputModule,
-        TextareaModule,
-        AutosizeModule,
-        LabelModule,
-    ],
-  providers: [DemandDrawerService]
+	declarations: [DemandDrawerComponent],
+	imports: [
+		CommonModule,
+		DrawerModule,
+		MatDialogModule,
+		SpacingModule,
+		ButtonModule,
+		IconModule,
+		MibDragAndDropModule,
+		InputModule,
+		TextareaModule,
+		AutosizeModule,
+		LabelModule,
+		SkeletonModule,
+		ReactiveFormsModule,
+		InformationModule,
+		TableModule,
+		DropdownPointModule,
+		DropdownModule,
+		FileCellModule
+	],
+	providers: [DemandDrawerService]
 })
-export class DemandDrawerModule {
-}
+export class DemandDrawerModule {}

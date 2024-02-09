@@ -18,33 +18,32 @@ import {InformationModule} from 'src/app/shared/ui-kit/information/information.m
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
-import {LabelModule} from '../../../../../shared/directives/label/label.module';
-import {SignPinModalModule} from '../../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.module';
+import {LabelModule} from '../../../../../shared/directives/label/label.module'
+import {SignPinModalModule} from '../../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.module'
 
 @NgModule({
-  declarations: [DocumentDrawerComponent],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    MatDialogModule,
-    SpacingModule,
-    ButtonModule,
-    IconModule,
-    CheckboxModule,
-    InputModule,
-    MibDragAndDropModule,
-    TextareaModule,
-    AutosizeModule,
-    SkeletonModule,
-    ReactiveFormsModule,
-    InformationModule,
-    TableModule,
-    DropdownPointModule,
-    DropdownModule,
-    LabelModule,
-    SignPinModalModule
-  ],
-  providers: [DocumentDrawerService]
+	declarations: [DocumentDrawerComponent],
+	imports: [
+		CommonModule,
+		DrawerModule,
+		MatDialogModule,
+		SpacingModule,
+		ButtonModule,
+		IconModule,
+		CheckboxModule,
+		InputModule,
+		MibDragAndDropModule,
+		TextareaModule,
+		AutosizeModule,
+		SkeletonModule,
+		ReactiveFormsModule,
+		InformationModule,
+		TableModule,
+		DropdownPointModule,
+		DropdownModule,
+		LabelModule,
+		SignPinModalModule
+	],
+	providers: [DocumentDrawerService]
 })
-export class DocumentDrawerModule {
-}
+export class DocumentDrawerModule {}

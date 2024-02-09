@@ -40,7 +40,7 @@
 				class="cursor-pointer text c-bti-primary"
 				(click)="fileUpload.click()"
 			>
-				{{ fileName || 'Загрузить файл' }}
+				{{ fileName || 'Название документа' }}
 			</span>
 			<span class="cursor-pointer text c-bti-tertiary" *ngIf="status"
 				>{{ file?.size / 1024 / 1000 | number : '1.2-2' }} мб</span
