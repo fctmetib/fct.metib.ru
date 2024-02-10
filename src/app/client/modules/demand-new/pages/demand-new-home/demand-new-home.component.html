@@ -14,6 +14,7 @@
 			<mib-spacing type="s"></mib-spacing>
 			<div class="flex flex_wrap gap-16">
 				<mib-request-card
+					(click)="openDrawers(request.id)"
 					*ngFor="let request of requestLists"
 					[requestTitle]="request.title"
 					[requestText]="request.description"

@@ -11,6 +11,7 @@ import {Properties} from 'csstype'
 import {DemandDrawerService} from '../../modules/demand-drawer/demand-drawer.service'
 import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {RequestRes} from '../../../requests/interfaces/request.interface'
+import {DemandSignatureDrawerService} from '../../modules/demand-signature-drawer/demand-signature-drawer.service'
 
 const ANIMATION_CONFIG = {
 	translateDistance: '-3%',
@@ -55,7 +56,8 @@ export class DemandNewHomeComponent implements OnInit {
 
 	constructor(
 		private requestList: DataService,
-		private demandDrawerService: DemandDrawerService
+		private demandDrawerService: DemandDrawerService,
+		private demandSignatureDrawerService: DemandSignatureDrawerService
 	) {}
 
 	ngOnInit(): void {
@@ -65,10 +67,22 @@ export class DemandNewHomeComponent implements OnInit {
 	}
 
 	getRequestList() {
-		return this.requestList
+		this.requestList
 			.getRequestList()
-			.subscribe(list => (this.requestLists = list))
+			.pipe(
+				tap(data => {
+					this.requestLists = data
+					console.log('data :>> ', data)
+				})
+			)
+			.subscribe()
 	}
+
+	// getRequestList() {
+	// 	return this.requestList
+	// 		.getRequestList()
+	// 		.subscribe(list => (this.requestLists = list))
+	// }
 
 	getDraftList() {
 		this.loading$.next(true)
@@ -128,5 +142,20 @@ export class DemandNewHomeComponent implements OnInit {
 			.open({state: DrawerStateEnum.CREATE})
 			.afterClosed()
 			.subscribe()
+	}
+
+	openDrawers(id: number) {
+		console.log('OpenDrawer>id :>> ', id)
+		switch (id) {
+			case 1:
+				this.demandSignatureDrawerService
+					.open({data: {id}})
+					// .open({state: DrawerStateEnum.CREATE})
+					.afterClosed()
+					.subscribe()
+				break
+			default:
+				break
+		}
 	}
 }
