@@ -645,78 +645,18 @@
 	<h3>filled-secondary</h3>
 	<mib-spacing type="l"></mib-spacing>
 	<div class="input-wrapper">
-		<div class="test-input">
-			<span>basic input</span>
-			<mib-input>
-				<input
-					mibInput
-					type="text"
-					required
-					[size]="inputSizeXL"
-					styleType="filled-secondary"
-					placeholder="Label"
-				/>
-				<ng-container mibLabel>Label</ng-container>
-				<mib-icon
-					class="stroke path"
-					input-left-icon
-					name="fi_search"
-				></mib-icon>
-				<mib-icon
-					input-right-icon
-					c-bgr-secondary
-					class="stroke"
-					name="fi_chevron-left"
-				></mib-icon>
-				<mib-icon
-					input-right-icon
-					c-bgr-secondary
-					class="stroke"
-					name="fi_x"
-				></mib-icon>
-			</mib-input>
-			<mib-spacing type="l"></mib-spacing>
-			<span>textarea</span>
-			<mib-input>
-				<mib-icon
-					class="stroke path"
-					input-left-icon
-					name="fi_search"
-				></mib-icon>
-				<mib-icon
-					input-right-icon
-					c-bgr-secondary
-					class="stroke"
-					name="fi_chevron-left"
-				></mib-icon>
-				<mib-icon
-					input-right-icon
-					c-bgr-secondary
-					class="stroke"
-					name="fi_x"
-				></mib-icon>
-				<ng-container mibLabel>Label</ng-container>
-				<textarea
-					[maxLength]="250"
-					mibInput
-					[size]="inputSizeXL"
-					styleType="filled-secondary"
-					placeholder="Дополнительные сведения операции"
-				></textarea>
-			</mib-input>
-			<mib-spacing type="l"></mib-spacing>
-			<span>textarea w/o icons</span>
-			<mib-input>
-				<ng-container mibLabel>Label</ng-container>
-				<textarea
-					[maxLength]="250"
-					mibInput
-					[size]="inputSizeXL"
-					styleType="filled-secondary"
-					placeholder="Дополнительные сведения операции"
-				></textarea>
-			</mib-input>
-		</div>
+		<p>control false</p>
+		<mib-textarea [controls]="false">
+			<ng-container mibLabel>Текст обращения</ng-container>
+			<textarea [maxLength]="300" autosize mibTextarea></textarea>
+		</mib-textarea>
+		<mib-spacing type="xs"></mib-spacing>
+		<p>control false</p>
+		<mib-textarea>
+			<ng-container mibLabel>Текст обращения</ng-container>
+			<textarea [maxLength]="300" autosize mibTextarea></textarea>
+		</mib-textarea>
+		<mib-spacing type="xs"></mib-spacing>
 	</div>
 	<mib-spacing type="l"></mib-spacing>
 </div>

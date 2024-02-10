@@ -1,5 +1,9 @@
 <mib-drawer>
-	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
+	<mib-drawer-header
+		showEdits="true"
+		(onClose)="dialogRef.close()"
+		drawer-header
+	>
 	</mib-drawer-header>
 	<mib-drawer-container>
 		<h4>Запрос на свободную тему</h4>
@@ -9,15 +13,10 @@
 			<input mibInput />
 		</mib-input>
 		<mib-spacing type="xs"></mib-spacing>
-		<mib-textarea [controls]="false">
+		<mib-textarea>
 			<ng-container mibLabel>Текст обращения</ng-container>
-			<textarea [maxLength]="300" autosize mibTextarea></textarea>
+			<textarea [maxLength]="100" autosize mibTextarea></textarea>
 		</mib-textarea>
-
-		<mib-spacing type="s"></mib-spacing>
-		<p class="text text_m text_medium">Прикрепленные документы</p>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-file-cell size="s"></mib-file-cell>
 		<mib-spacing type="s"></mib-spacing>
 		<p
 			class="text text_m text_medium"

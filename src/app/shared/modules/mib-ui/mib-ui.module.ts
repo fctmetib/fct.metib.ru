@@ -23,6 +23,9 @@ import {CommentPanelModule} from '../../ui-kit/comment-panel/comment-panel.modul
 import {RequestFailureModalModule} from '../modals/request-failure-modal/request-failure-modal.module'
 import {RequestInfoModalModule} from '../modals/request-info-modal/request-info-modal.module'
 import {LoaderModule} from '../../ui-kit/loader/loader.module'
+import {TextareaModule} from '../../ui-kit/textarea/textarea.module'
+import {AutosizeModule} from 'ngx-autosize'
+import {LabelModule} from '../../directives/label/label.module'
 
 @NgModule({
 	imports: [
@@ -49,7 +52,10 @@ import {LoaderModule} from '../../ui-kit/loader/loader.module'
 		CommentPanelModule,
 		RequestFailureModalModule,
 		RequestInfoModalModule,
-		LoaderModule
+		LoaderModule,
+		TextareaModule,
+		AutosizeModule,
+		LabelModule
 	],
 	declarations: [MibUiComponent]
 })

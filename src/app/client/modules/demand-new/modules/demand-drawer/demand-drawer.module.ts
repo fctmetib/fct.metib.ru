@@ -18,7 +18,6 @@ import {InformationModule} from 'src/app/shared/ui-kit/information/information.m
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
-import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 
 @NgModule({
 	declarations: [DemandDrawerComponent],
@@ -39,8 +38,7 @@ import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 		InformationModule,
 		TableModule,
 		DropdownPointModule,
-		DropdownModule,
-		FileCellModule
+		DropdownModule
 	],
 	providers: [DemandDrawerService]
 })

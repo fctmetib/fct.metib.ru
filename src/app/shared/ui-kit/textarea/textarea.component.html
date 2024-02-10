@@ -1,29 +1,31 @@
 <mib-input-base-wrapper>
+	<ng-container input-base-label>
+		<ng-content select="[mibLabel]"></ng-content>
+	</ng-container>
 
-  <ng-container input-base-label>
-    <ng-content select="[mibLabel]"></ng-content>
-  </ng-container>
+	<ng-container mibRightIcon>
+		<ng-content select="[mibRightIcon]"></ng-content>
+	</ng-container>
 
-  <ng-container mibRightIcon>
-    <ng-content select="[mibRightIcon]"></ng-content>
-  </ng-container>
+	<ng-container mibLeftIcon>
+		<ng-content select="[mibLeftIcon]"></ng-content>
+	</ng-container>
 
-  <ng-container mibLeftIcon>
-    <ng-content select="[mibLeftIcon]"></ng-content>
-  </ng-container>
-
-  <ng-content></ng-content>
-  <div *ngIf="controls && maxLength > -1" class="textarea-panel flex flex_align-center flex_justify-between">
-    <p id="textarea-panel-counter" class="text text_tiny c-ti-dark-quaternary">
-      {{ textLength }}/{{ maxLength }}
-    </p>
-    <mib-icon
-      *ngIf="false"
-      class="stroke"
-      name="fi_maximize-2"
-      (mousedown)="startResize($event)"
-      (mouseup)="stopResize($event)"
-      (mousemove)="onMouseMove($event)"
-    ></mib-icon>
-  </div>
+	<ng-content></ng-content>
+	<div
+		*ngIf="controls && maxLength > -1"
+		class="textarea-panel flex flex_align-center flex_justify-between"
+	>
+		<p id="textarea-panel-counter" class="text text_tiny c-ti-dark-quaternary">
+			{{ textLength }}/{{ maxLength }}
+		</p>
+		<mib-icon
+			*ngIf="false"
+			class="stroke"
+			name="fi_maximize-2"
+			(mousedown)="startResize($event)"
+			(mouseup)="stopResize($event)"
+			(mousemove)="onMouseMove($event)"
+		></mib-icon>
+	</div>
 </mib-input-base-wrapper>
