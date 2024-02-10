@@ -18,6 +18,10 @@
 			<textarea [maxLength]="100" autosize mibTextarea></textarea>
 		</mib-textarea>
 		<mib-spacing type="s"></mib-spacing>
+		<p class="text text_m text_medium">Прикрепленные документы</p>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-file-cell size="s"></mib-file-cell>
+		<mib-spacing type="s"></mib-spacing>
 		<p
 			class="text text_m text_medium"
 			*ngIf="!documents.controls.length; else copiesTemplate"

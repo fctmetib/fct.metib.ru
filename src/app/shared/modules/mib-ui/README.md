@@ -97,6 +97,14 @@ ng g s client/modules/demand-new/modules/demand-drawer/demand-drawer --skip-test
 ng g c client/modules/demand-new/modules/demand-drawer --skip-tests --dry-run
  //---
 
+ //--- demand-signature-drawer
+src\app\client\modules\demand-new\modules\demand-signature-drawer
+ng g i client/modules/demand-new/modules/demand-signature-drawer/interfaces/demand-signature-drawer.interface  --dry-run
+ng g m client/modules/demand-new/modules/demand-signature-drawer/demand-signature-drawer --flat --dry-run
+ng g s client/modules/demand-new/modules/demand-signature-drawer/demand-signature-drawer --skip-tests --dry-run
+ng g c client/modules/demand-new/modules/demand-signature-drawer --skip-tests --dry-run
+ //---
+
  //--- invoice-drawer
 src\app\client\modules\invoices\modules
 ng g i client/modules/invoices/modules/invoice-drawer/interfaces/invoice-drawer.interface  --dry-run
