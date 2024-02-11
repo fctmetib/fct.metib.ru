@@ -103,7 +103,7 @@
 				</ng-template>
 				<mib-table-footer [lined]="!(loading$ | async)">
 					<mib-paginator
-						(pageChange)="onPageChange($event)"
+						(pageChange)="onDraftListChange($event)"
 						[totalCount]="drafts.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
@@ -210,7 +210,7 @@
 				</ng-template>
 				<mib-table-footer [lined]="!(loading$ | async)">
 					<mib-paginator
-						(pageChange)="onPageChange($event)"
+						(pageChange)="onHistoryListChange($event)"
 						[totalCount]="historys.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"

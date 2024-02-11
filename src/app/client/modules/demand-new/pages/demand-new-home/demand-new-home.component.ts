@@ -46,7 +46,8 @@ export class DemandNewHomeComponent implements OnInit {
 
 	public PAGINATOR_ITEMS_PER_PAGE = 7
 	public PAGINATOR_PAGE_TO_SHOW = 5
-	public currentPage: number = 1
+
+	public currentPage$ = new BehaviorSubject<number>(1)
 
 	selectedRequestsCount: number
 	severalRequestsChecked: boolean = false
@@ -61,6 +62,10 @@ export class DemandNewHomeComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		this.getAllRequestesList()
+	}
+
+	getAllRequestesList() {
 		this.getRequestList()
 		this.getDraftList()
 		this.getHistoryList()
@@ -78,12 +83,6 @@ export class DemandNewHomeComponent implements OnInit {
 			.subscribe()
 	}
 
-	// getRequestList() {
-	// 	return this.requestList
-	// 		.getRequestList()
-	// 		.subscribe(list => (this.requestLists = list))
-	// }
-
 	getDraftList() {
 		this.loading$.next(true)
 		setTimeout(() => {
@@ -91,12 +90,8 @@ export class DemandNewHomeComponent implements OnInit {
 				.getDraftList()
 				.pipe(
 					tap(data => {
-						this.drafts = data.map(x => ({...x, checked: false}))
-						// Инициализация состояния анимации
-						this.drafts.forEach(draft => {
-							this.requestsAnimationStates[draft.id] = false
-						})
-						this.onPageChange(this.currentPage)
+						this.drafts = data
+						this.onDraftListChange(1)
 					}),
 					finalize(() => this.loading$.next(false))
 				)
@@ -111,12 +106,8 @@ export class DemandNewHomeComponent implements OnInit {
 				.getHistoryList()
 				.pipe(
 					tap(data => {
-						this.historys = data.map(x => ({...x, checked: false}))
-						// Инициализация состояния анимации
-						this.historys.forEach(history => {
-							this.historyAnimationStates[history.id] = false
-						})
-						this.onPageChange(this.currentPage)
+						this.historys = data
+						this.onHistoryListChange(1)
 					}),
 					finalize(() => this.loading$.next(false))
 				)
@@ -124,17 +115,21 @@ export class DemandNewHomeComponent implements OnInit {
 		}, 5000)
 	}
 
-	onPageChange(page: number) {
-		this.currentPage = page
+	onPageChange<T>(page: number, sourceArray: T[] = []) {
+		this.currentPage$.next(page)
 
 		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
 		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
 
-		this.selectedRequestsCount = 0
-		this.severalRequestsChecked = false
+		return (sourceArray || []).slice(startIndex, endIndex)
+	}
 
-		this.historyLists = this.historys.slice(startIndex, endIndex)
-		this.draftLists = this.drafts.slice(startIndex, endIndex)
+	onDraftListChange($event) {
+		this.draftLists = this.onPageChange($event, this.drafts)
+	}
+
+	onHistoryListChange($event) {
+		this.historyLists = this.onPageChange($event, this.historys)
 	}
 
 	openDrawer() {
