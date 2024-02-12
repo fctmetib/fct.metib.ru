@@ -104,7 +104,58 @@
 					</mib-input>
 				</div>
 			</mib-tab-item>
-			<mib-tab-item value="2"> test2 </mib-tab-item>
+			<mib-tab-item value="2">
+				<mib-spacing type="xs"></mib-spacing>
+				<h4>Данные о владельце сертификата</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex flex_column gap-12">
+					<div class="flex gap-12">
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>Фамилия</ng-container>
+						</mib-input>
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>Имя</ng-container>
+						</mib-input>
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>Отчество</ng-container>
+						</mib-input>
+					</div>
+					<div class="flex flex_column">
+						<p class="text text_s c-bti-tertiary">Пол</p>
+						<div class="flex">
+							<mib-checkbox class="gap-8 flex_grow">
+								<span class="text text_m">Мужской</span>
+							</mib-checkbox>
+							<mib-checkbox class="gap-8 flex_grow">
+								<span class="text text_m">Женский</span>
+							</mib-checkbox>
+						</div>
+					</div>
+					<mib-input>
+						<input mibInput />
+						<ng-container mibLabel>ИНН</ng-container>
+					</mib-input>
+					<mib-input>
+						<input mibInput />
+						<ng-container mibLabel>СНИЛС</ng-container>
+					</mib-input>
+					<mib-input>
+						<input type="date" mibInput />
+						<ng-container mibLabel>Дата рождения</ng-container>
+					</mib-input>
+					<mib-input>
+						<input mibInput />
+						<ng-container mibLabel>Место рождения</ng-container>
+					</mib-input>
+					<mib-input>
+						<input mibInput />
+						<ng-container mibLabel>Должность в компании</ng-container>
+					</mib-input>
+				</div>
+			</mib-tab-item>
 		</mib-tab-group>
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-information type="information">
