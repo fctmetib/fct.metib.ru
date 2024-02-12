@@ -1,6 +1,5 @@
 <mib-drawer>
 	<mib-drawer-header
-		[showEdits]="true"
 		showProgressBar="true"
 		(onClose)="dialogRef.close()"
 		drawer-header
@@ -12,18 +11,101 @@
 		<h4>Основная информация</h4>
 		<mib-spacing type="xs"></mib-spacing>
 		<p class="text text_m c-bti-secondary">Тип организации</p>
-    <mib-tab-group>
-      <mib-navbar>
-        <mib-navbar-point value="1" type="filled" class="flex_grow">От юридического лиц</mib-navbar-point>
-        <mib-navbar-point value="2" type="filled" class="flex_grow">От ИП</mib-navbar-point>
-      </mib-navbar>
-      <mib-tab-item value="1">
-        test1
-      </mib-tab-item>
-      <mib-tab-item value="2">
-        test2
-      </mib-tab-item>
-    </mib-tab-group>
+		<mib-tab-group>
+			<mib-navbar>
+				<mib-navbar-point value="1" type="filled" class="flex_grow"
+					>От юридического лиц</mib-navbar-point
+				>
+				<mib-navbar-point value="2" type="filled" class="flex_grow"
+					>От ИП</mib-navbar-point
+				>
+			</mib-navbar>
+			<mib-tab-item value="1">
+				<mib-spacing type="xs"></mib-spacing>
+				<mib-input class="flex_grow">
+					<input mibInput />
+					<ng-container mibLabel>ИНН организации</ng-container>
+					<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
+				</mib-input>
+				<mib-spacing type="s"></mib-spacing>
+				<div class="flex flex_column gap-12">
+					<div class="flex gap-12 w-100">
+						<mib-select placeholder="Организация">
+							<mib-dropdown-point
+								[value]="true"
+								text="ООО"
+							></mib-dropdown-point>
+							<mib-dropdown-point
+								[value]="false"
+								text="ЗАО"
+							></mib-dropdown-point>
+							<mib-dropdown-point
+								[value]="false"
+								text="ОАО"
+							></mib-dropdown-point>
+							<mib-dropdown-point
+								[value]="false"
+								text="ПАО"
+							></mib-dropdown-point>
+						</mib-select>
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel
+								>Краткое наименование организации</ng-container
+							>
+						</mib-input>
+					</div>
+					<mib-input class="flex_grow">
+						<input mibInput />
+						<ng-container mibLabel
+							>Полное наименование организации</ng-container
+						>
+					</mib-input>
+					<div class="flex gap-12">
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>ИНН</ng-container>
+						</mib-input>
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>КПП</ng-container>
+						</mib-input>
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>ОГРН</ng-container>
+						</mib-input>
+					</div>
+					<mib-input class="flex_grow">
+						<input mibInput />
+						<ng-container mibLabel>ОКПО</ng-container>
+					</mib-input>
+					<div class="flex gap-12">
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>Номер телефона</ng-container>
+						</mib-input>
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>Электронная почта</ng-container>
+						</mib-input>
+					</div>
+					<mib-input class="flex_grow">
+						<input mibInput />
+						<ng-container mibLabel>Юридический адрес</ng-container>
+					</mib-input>
+					<mib-checkbox class="gap-8">
+						<span class="text text_m"
+							>Фактический адрес совпадает с юридическим</span
+						>
+					</mib-checkbox>
+					<mib-input class="flex_grow">
+						<input mibInput />
+						<ng-container mibLabel>Фактический адрес</ng-container>
+					</mib-input>
+				</div>
+			</mib-tab-item>
+			<mib-tab-item value="2"> test2 </mib-tab-item>
+		</mib-tab-group>
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-information type="information">
 			<ng-container information-text

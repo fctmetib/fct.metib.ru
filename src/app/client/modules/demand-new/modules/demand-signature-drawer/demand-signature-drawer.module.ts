@@ -9,21 +9,31 @@ import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
 import {LabelModule} from 'src/app/shared/directives/label/label.module'
-import {TabModule} from '../../../../../shared/ui-kit/tab/tab.module';
+import {TabModule} from '../../../../../shared/ui-kit/tab/tab.module'
+import {RightIconModule} from 'src/app/shared/directives/right-icon/right-icon.module'
+import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
+import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
+import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
+import {CheckboxModule} from 'src/app/shared/ui-kit/checkbox/checkbox.module'
 
 @NgModule({
 	declarations: [DemandSignatureDrawerComponent],
-    imports: [
-        CommonModule,
-        DrawerModule,
-        SpacingModule,
-        InformationModule,
-        NavbarModule,
-        ButtonModule,
-        InputModule,
-        LabelModule,
-        TabModule
-    ],
+	imports: [
+		CommonModule,
+		DrawerModule,
+		SpacingModule,
+		InformationModule,
+		NavbarModule,
+		ButtonModule,
+		InputModule,
+		LabelModule,
+		TabModule,
+		RightIconModule,
+		IconModule,
+		SelectModule,
+		DropdownPointModule,
+		CheckboxModule
+	],
 	providers: [DemandSignatureDrawerService]
 })
 export class DemandSignatureDrawerModule {}
