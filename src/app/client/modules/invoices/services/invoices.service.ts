@@ -10,6 +10,10 @@ export interface InvoicesReq {
   includeLinks?: boolean
 }
 
+export interface InvoiceReq {
+  ID: number
+  includeLinks?: boolean
+}
 
 export type GenericInvoice<T extends InvoicesReq> = T['includeLinks'] extends true ? ExtendedClientInvoice : ClientInvoice
 
@@ -25,11 +29,9 @@ export class InvoicesService {
     });
   }
 
-  public getInvoice(ID: number, includeLinks: boolean = true): Observable<ExtendedClientInvoice> {
-    return this.http.get<ExtendedClientInvoice>(`${environment.apiUrl}/v1/payments/${ID}`, {
-      params: {
-        includeLinks
-      }
+  public getInvoice = <T extends InvoiceReq>(data: T): Observable<GenericInvoice<T>> => {
+    return this.http.get<any>(`${environment.apiUrl}/v1/payments/${data.ID}`, {
+      params: { ...data as any}
     })
   }
 }
