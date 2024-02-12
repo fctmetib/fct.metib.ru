@@ -10,6 +10,10 @@
 		justify-content: space-between;
 	}
 
+	&_justify-around {
+		justify-content: space-around;
+	}
+
 	&_justify-end {
 		justify-content: flex-end;
 	}
@@ -163,13 +167,12 @@
 	}
 }
 
-
 .gap {
-  &-xs2 {
-    gap: var(--spacing-desktop-xs2);
-  }
+	&-xs2 {
+		gap: var(--spacing-desktop-xs2);
+	}
 
-  &-xs {
-    gap: var(--spacing-desktop-xs);
-  }
+	&-xs {
+		gap: var(--spacing-desktop-xs);
+	}
 }
