@@ -9,19 +9,21 @@ import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
 import {LabelModule} from 'src/app/shared/directives/label/label.module'
+import {TabModule} from '../../../../../shared/ui-kit/tab/tab.module';
 
 @NgModule({
 	declarations: [DemandSignatureDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		SpacingModule,
-		InformationModule,
-		NavbarModule,
-		ButtonModule,
-		InputModule,
-		LabelModule
-	],
+    imports: [
+        CommonModule,
+        DrawerModule,
+        SpacingModule,
+        InformationModule,
+        NavbarModule,
+        ButtonModule,
+        InputModule,
+        LabelModule,
+        TabModule
+    ],
 	providers: [DemandSignatureDrawerService]
 })
 export class DemandSignatureDrawerModule {}

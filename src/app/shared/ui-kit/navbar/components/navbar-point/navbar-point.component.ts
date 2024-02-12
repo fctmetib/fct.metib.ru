@@ -35,6 +35,7 @@ export class NavbarPointComponent implements AfterViewInit, OnDestroy {
 
 	@Input() set type(value: NavbarPointType) {
 		this._type = value
+    console.log('type', value)
 	}
 
 	@Input() set selected(value: boolean) {

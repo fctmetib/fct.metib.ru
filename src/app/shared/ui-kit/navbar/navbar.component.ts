@@ -35,6 +35,7 @@ export class NavbarComponent implements OnInit, AfterContentInit {
   }
 
   public setNavbarPointsSize = () => {
+    console.log(this.navbarPoints)
     this.navbarPoints.forEach(point => {
       point.size = this.size;
       point.type = this.type

@@ -12,26 +12,18 @@
 		<h4>Основная информация</h4>
 		<mib-spacing type="xs"></mib-spacing>
 		<p class="text text_m c-bti-secondary">Тип организации</p>
-		<!-- <mib-navbar type="filled">
-			<mib-navbar-point class="flex_grow">От юридического лиц</mib-navbar-point>
-			<mib-navbar-point class="flex_grow">От ИП</mib-navbar-point>
-		</mib-navbar> -->
-		<div
-			style="
-				height: 40px;
-				background-color: var(--wgr-secondary);
-				border-radius: var(--main-border-radius);
-			"
-			class="flex flex_align-center"
-		>
-			<span class="flex flex_justify-center flex_grow text text_m c-bti-primary"
-				>segmented controls component</span
-			>
-			<span
-				class="flex flex_justify-center flex_grow text text_m c-bti-tertiary"
-				>segmented controls</span
-			>
-		</div>
+    <mib-tab-group>
+      <mib-navbar>
+        <mib-navbar-point value="1" type="filled" class="flex_grow">От юридического лиц</mib-navbar-point>
+        <mib-navbar-point value="2" type="filled" class="flex_grow">От ИП</mib-navbar-point>
+      </mib-navbar>
+      <mib-tab-item value="1">
+        test1
+      </mib-tab-item>
+      <mib-tab-item value="2">
+        test2
+      </mib-tab-item>
+    </mib-tab-group>
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-information type="information">
 			<ng-container information-text
