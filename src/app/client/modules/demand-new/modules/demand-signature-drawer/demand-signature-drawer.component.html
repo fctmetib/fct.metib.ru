@@ -155,6 +155,59 @@
 						<ng-container mibLabel>Должность в компании</ng-container>
 					</mib-input>
 				</div>
+				<mib-spacing type="s"></mib-spacing>
+				<div class="flex flex_column gap-8">
+					<p class="headline">Контактные данные</p>
+					<div class="flex gap-12">
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>Мобильный телефон</ng-container>
+						</mib-input>
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>Электронная почта</ng-container>
+						</mib-input>
+					</div>
+				</div>
+				<mib-spacing type="s"></mib-spacing>
+				<div class="flex flex_column gap-12">
+					<p class="headline">Паспортные данные</p>
+					<div class="flex">
+						<mib-select
+							class="pass"
+							type="outline"
+							placeholder="Гражданство РФ"
+						>
+							<mib-dropdown-point
+								[value]="true"
+								text="Гражданство РБ"
+							></mib-dropdown-point>
+						</mib-select>
+					</div>
+					<div class="flex gap-12">
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>Серия</ng-container>
+						</mib-input>
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>Номер</ng-container>
+						</mib-input>
+						<mib-input class="flex_grow">
+							<input type="date" mibInput />
+							<ng-container mibLabel>Дата выдачи</ng-container>
+						</mib-input>
+					</div>
+					<mib-input>
+						<input mibInput />
+						<ng-container mibLabel>Код подразделения</ng-container>
+					</mib-input>
+					<mib-input>
+						<input mibInput />
+						<ng-container mibLabel>Кем выдан паспорт</ng-container>
+					</mib-input>
+				</div>
+				<mib-spacing type="s"></mib-spacing>
 			</mib-tab-item>
 		</mib-tab-group>
 		<mib-spacing type="xs"></mib-spacing>
