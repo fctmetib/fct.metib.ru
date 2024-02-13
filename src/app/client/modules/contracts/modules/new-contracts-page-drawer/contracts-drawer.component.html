@@ -69,25 +69,44 @@
 			></mib-skeleton>
 		</ng-container>
 		<ng-template #date>
-      <div class="flex flex_column flex_justify-start gap-8">
-        <mib-cash-panel
-          [extracted]="true"
-          panelTitle="Ваш лимит:"
-          [panelData]="(delivery?.Statistics?.DutyCustomer?.toString() || '') | rub"
-        ></mib-cash-panel>
-        <mib-cash-panel
-          [extracted]="true"
-          panelTitle="Уступлено:"
-          [panelData]="(delivery?.Statistics?.DutyDebtor?.toString() || '') | rub"
-        ></mib-cash-panel>
-        <mib-cash-panel [extracted]="true" panelTitle="Просрочка:">
-          <ng-container alert
-          >{{
-            delivery?.Statistics?.DelayDuty | rub
-            }}
-          </ng-container>
-        </mib-cash-panel>
-      </div>
+			<div class="flex flex_column flex_justify-start gap-8">
+				{{ delivery?.Statistics?.DutyCustomer?.toString() || '' | rub }}
+				<br />
+				{{ delivery?.Statistics?.DutyDebtor?.toString() || '' | rub }}
+				<br />
+				{{ delivery?.Statistics?.DelayDuty?.toString() || '' | rub }}
+				<!-- <mib-cash-panel
+					[extracted]="true"
+					panelTitle="Ваш лимит:"
+					[panelData]="
+						delivery?.Statistics?.DutyCustomer?.toString() || '' | rub
+					"
+				></mib-cash-panel> -->
+				<!-- <mib-cash-panel
+					[extracted]="true"
+					panelTitle="Ваш лимит:"
+					[panelData]="delivery?.Statistics?.DutyCustomer | rub"
+				></mib-cash-panel> -->
+				<!-- <mib-cash-panel
+					[extracted]="true"
+					panelTitle="Уступлено:"
+					panelData="СТАТИКА DutyDebtor"
+				></mib-cash-panel> -->
+				<!-- <mib-cash-panel
+					[extracted]="true"
+					panelTitle="Уступлено:"
+					[panelData]="delivery?.Statistics?.DutyDebtor | rub"
+				></mib-cash-panel> -->
+				<!-- [panelData]="delivery?.Statistics?.DutyDebtor?.toString() || '' | rub" -->
+				<!-- <mib-cash-panel [extracted]="true" panelTitle="Просрочка:">
+					<ng-container alert>СТАТИКА DelayDuty </ng-container>
+				</mib-cash-panel> -->
+				<!-- <mib-cash-panel [extracted]="true" panelTitle="Просрочка:">
+					<ng-container alert
+						>{{ delivery?.Statistics?.DelayDuty | rub }}
+					</ng-container>
+				</mib-cash-panel> -->
+			</div>
 		</ng-template>
 	</mib-drawer-container>
 	<mib-spacing type="xs"></mib-spacing>
@@ -108,83 +127,97 @@
 				<mib-spacing type="m"></mib-spacing>
 				<p class="headline">Банковские реквизиты</p>
 				<mib-spacing type="xs2"></mib-spacing>
-				<mib-contracted-forms label="Реквизиты" [type]="ContractedFormsEnum.ATemplateForAllOccasions">
-          <span class="text text_m" style="white-space: pre-wrap;" [innerHTML]="requisites"></span>
+				<mib-contracted-forms
+					label="Реквизиты"
+					[type]="ContractedFormsEnum.ATemplateForAllOccasions"
+				>
+					<span
+						class="text text_m"
+						style="white-space: pre-wrap"
+						[innerHTML]="requisites"
+					></span>
 				</mib-contracted-forms>
 				<mib-spacing type="xs"></mib-spacing>
 			</mib-tab-item>
 			<mib-tab-item value="2">
 				<mib-spacing type="m"></mib-spacing>
-        <mib-table>
-          <mib-table-head>
-            <mib-table-head-cell>№ поставки</mib-table-head-cell>
-            <mib-table-head-cell>Дата поставки</mib-table-head-cell>
-            <mib-table-head-cell>Сумма поставки</mib-table-head-cell>
-            <!--							<mib-table-head-cell>Долг дебитора</mib-table-head-cell>-->
-            <!--							<mib-table-head-cell>Долг поставщика</mib-table-head-cell>-->
-          </mib-table-head>
-          <ng-container *ngIf="loading$ | async; else table">
-            <mib-skeleton
-              [styles]="last ? skeletonWithoutUnderline : skeleton"
-              *ngFor="
-							let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
-							let last = last
-						"
-            ></mib-skeleton>
-          </ng-container>
-          <ng-template #table>
-            <mib-table-row
-              *ngFor="let shipment of shipmentsDisplay; let idx = index"
-              [underlined]="true"
-            >
-              <mib-table-cell>
-                <ng-container table-cell-title>
-                  {{ shipment.Waybill }}
-                </ng-container>
-              </mib-table-cell>
-              <mib-table-cell>
-                <ng-container table-cell-title>
-                  {{shipment.DateShipment | date: 'dd.MM.yyyy'}}
-                </ng-container>
-              </mib-table-cell>
-              <mib-table-cell>
-                <ng-container table-cell-title>
-                  {{shipment.Summ | rub}}
-                </ng-container>
-              </mib-table-cell>
-<!--              <mib-button table-row-button size="s" type="ghost-secondary">-->
-<!--                <mib-icon-->
-<!--                  class="stroke"-->
-<!--                  btn-icon-->
-<!--                  name="fi_more-vertical"-->
-<!--                ></mib-icon>-->
-<!--              </mib-button>-->
-            </mib-table-row>
-            <mib-table-row>
-              <mib-table-cell>
-                <ng-container table-cell-title>
-                  {{shipments.length}} {{toolsService.declineWord(shipments.length, ['накладная', 'накладные', 'накладных'])}}
-                </ng-container>
-              </mib-table-cell>
-              <mib-table-cell>
-
-              </mib-table-cell>
-              <mib-table-cell>
-                <ng-container table-cell-title>
-                  {{shipmentsReducedAmount | rub}}
-                </ng-container>
-              </mib-table-cell>
-            </mib-table-row>
-          </ng-template>
-          <mib-table-footer [showIsland]="false" [lined]="!(loading$ | async)">
-            <mib-paginator
-              (pageChange)="onPageChange($event)"
-              [totalCount]="shipments.length"
-              [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-              [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
-            ></mib-paginator>
-          </mib-table-footer>
-        </mib-table>
+				<mib-table>
+					<mib-table-head>
+						<mib-table-head-cell>№ поставки</mib-table-head-cell>
+						<mib-table-head-cell>Дата поставки</mib-table-head-cell>
+						<mib-table-head-cell>Сумма поставки</mib-table-head-cell>
+						<!--							<mib-table-head-cell>Долг дебитора</mib-table-head-cell>-->
+						<!--							<mib-table-head-cell>Долг поставщика</mib-table-head-cell>-->
+					</mib-table-head>
+					<ng-container *ngIf="loading$ | async; else table">
+						<mib-skeleton
+							[styles]="last ? skeletonWithoutUnderline : skeleton"
+							*ngFor="
+								let i of toolsService.createEmptyArray(
+									PAGINATOR_ITEMS_PER_PAGE
+								);
+								let last = last
+							"
+						></mib-skeleton>
+					</ng-container>
+					<ng-template #table>
+						<mib-table-row
+							*ngFor="let shipment of shipmentsDisplay; let idx = index"
+							[underlined]="true"
+						>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+									{{ shipment.Waybill }}
+								</ng-container>
+							</mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+									{{ shipment.DateShipment | date : 'dd.MM.yyyy' }}
+								</ng-container>
+							</mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+									{{ shipment.Summ | rub }}
+								</ng-container>
+							</mib-table-cell>
+							<!--              <mib-button table-row-button size="s" type="ghost-secondary">-->
+							<!--                <mib-icon-->
+							<!--                  class="stroke"-->
+							<!--                  btn-icon-->
+							<!--                  name="fi_more-vertical"-->
+							<!--                ></mib-icon>-->
+							<!--              </mib-button>-->
+						</mib-table-row>
+						<mib-table-row>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+									{{ shipments.length }}
+									{{
+										toolsService.declineWord(shipments.length, [
+											'накладная',
+											'накладные',
+											'накладных'
+										])
+									}}
+								</ng-container>
+							</mib-table-cell>
+							<mib-table-cell> </mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+									{{ shipmentsReducedAmount | rub }}
+								</ng-container>
+							</mib-table-cell>
+						</mib-table-row>
+					</ng-template>
+					<mib-table-footer [showIsland]="false" [lined]="!(loading$ | async)">
+						<mib-paginator
+							(pageChange)="onPageChange($event)"
+							[totalCount]="shipments.length"
+							[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+							[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+						></mib-paginator>
+					</mib-table-footer>
+				</mib-table>
 			</mib-tab-item>
 		</div>
 	</mib-tab-group>
