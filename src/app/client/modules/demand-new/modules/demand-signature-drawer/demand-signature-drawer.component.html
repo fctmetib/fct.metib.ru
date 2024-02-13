@@ -207,10 +207,30 @@
 						<ng-container mibLabel>Кем выдан паспорт</ng-container>
 					</mib-input>
 				</div>
-				<mib-spacing type="s"></mib-spacing>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex flex_column gap-12">
+					<p class="headline">Прикрепите скан-копию паспорта в поле ниже</p>
+					<mib-dnd
+						(onChange)="onDocumentLoad($event)"
+						[accept]="[
+							'application/pdf',
+							'application/msword',
+							'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+							'application/vnd.ms-excel',
+							'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+							'image/jpeg',
+							'image/png'
+						]"
+						headline="Прикрепите документ"
+					></mib-dnd>
+					<p class="text text_xs c-bti-tertiary">
+						Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG,
+						PNG
+					</p>
+				</div>
 			</mib-tab-item>
 		</mib-tab-group>
-		<mib-spacing type="xs"></mib-spacing>
+		<mib-spacing type="m"></mib-spacing>
 		<mib-information type="information">
 			<ng-container information-text
 				>Инфо: Введите ИНН организации и остальные данные заполнятся
