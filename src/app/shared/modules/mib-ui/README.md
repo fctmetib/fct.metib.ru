@@ -105,6 +105,14 @@ ng g s client/modules/demand-new/modules/demand-signature-drawer/demand-signatur
 ng g c client/modules/demand-new/modules/demand-signature-drawer --skip-tests --dry-run
  //---
 
+ //--- demand-surety-drawer
+src\app\client\modules\demand-new\modules\demand-surety-drawer
+ng g i client/modules/demand-new/modules/demand-surety-drawer/interfaces/demand-surety-drawer.interface  --dry-run
+ng g m client/modules/demand-new/modules/demand-surety-drawer/demand-surety-drawer --flat --dry-run
+ng g s client/modules/demand-new/modules/demand-surety-drawer/demand-surety-drawer --skip-tests --dry-run
+ng g c client/modules/demand-new/modules/demand-surety-drawer --skip-tests --dry-run
+ //---
+
  //--- invoice-drawer
 src\app\client\modules\invoices\modules
 ng g i client/modules/invoices/modules/invoice-drawer/interfaces/invoice-drawer.interface  --dry-run
