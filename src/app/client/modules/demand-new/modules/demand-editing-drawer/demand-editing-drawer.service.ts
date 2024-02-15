@@ -4,9 +4,7 @@ import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {DemandEditingDrawerComponent} from './demand-editing-drawer.component'
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class DemandEditingDrawerService {
 	constructor(private dialog: MatDialog) {}
 

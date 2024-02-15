@@ -4,9 +4,7 @@ import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interfa
 import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
 import {DemandSignatureDrawerComponent} from './demand-signature-drawer.component'
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class DemandSignatureDrawerService {
 	constructor(private dialog: MatDialog) {}
 

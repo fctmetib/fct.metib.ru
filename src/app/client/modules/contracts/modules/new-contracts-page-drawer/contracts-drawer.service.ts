@@ -5,13 +5,13 @@ import {ContractsDrawerData} from './interfaces/contracts-drawer.data'
 import {ContractsDrawerComponent} from './contracts-drawer.component'
 import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class ContractsDrawerService {
 	constructor(private dialog: MatDialog) {}
 
-	open(data?: DrawerData<ContractsDrawerData>): MatDialogRef<ContractsDrawerComponent, number[]> {
+	open(
+		data?: DrawerData<ContractsDrawerData>
+	): MatDialogRef<ContractsDrawerComponent, number[]> {
 		const config: DrawerData = {
 			state: 'view'
 		}

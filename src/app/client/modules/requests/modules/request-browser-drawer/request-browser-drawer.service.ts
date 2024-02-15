@@ -8,9 +8,7 @@ import {RequestsService} from '../../services/requests.service'
 import {BehaviorSubject, filter, map} from 'rxjs'
 import {RequestRes} from '../../interfaces/request.interface'
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class RequestBrowserDrawerService {
 	public request$ = new BehaviorSubject<RequestRes | null>(null)
 	private ref?: MatDialogRef<RequestBrowserDrawerComponent>

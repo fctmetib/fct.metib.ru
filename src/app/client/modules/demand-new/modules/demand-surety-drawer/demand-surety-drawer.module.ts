@@ -13,13 +13,7 @@ import {RightIconModule} from 'src/app/shared/directives/right-icon/right-icon.m
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
-
-/* TO-DO
-
---------------
-CHECK PROVIDERS!!!!!
---------------
-*/
+import {DemandSuretyDrawerService} from './demand-surety-drawer.service'
 
 @NgModule({
 	declarations: [DemandSuretyDrawerComponent],
@@ -37,6 +31,7 @@ CHECK PROVIDERS!!!!!
 		IconModule,
 		SelectModule,
 		DropdownPointModule
-	]
+	],
+	providers: [DemandSuretyDrawerService]
 })
 export class DemandSuretyDrawerModule {}

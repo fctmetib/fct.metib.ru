@@ -4,9 +4,7 @@ import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interfa
 import {DocumentDrawerComponent} from './document-drawer.component'
 import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class DocumentDrawerService {
 	constructor(private dialog: MatDialog) {}
 

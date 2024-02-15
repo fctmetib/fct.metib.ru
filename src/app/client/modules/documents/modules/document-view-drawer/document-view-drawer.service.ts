@@ -5,13 +5,13 @@ import {DocumentViewDrawerComponent} from './document-view-drawer.component'
 import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
 import {DocumentViewsDrawerData} from './interfaces/document-views-drawer.data'
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class DocumentViewDrawerService {
 	constructor(private dialog: MatDialog) {}
 
-	open(data: DrawerData<DocumentViewsDrawerData>): MatDialogRef<DocumentViewDrawerComponent, number[]> {
+	open(
+		data: DrawerData<DocumentViewsDrawerData>
+	): MatDialogRef<DocumentViewDrawerComponent, number[]> {
 		const config: DrawerData = {
 			state: 'view'
 		}

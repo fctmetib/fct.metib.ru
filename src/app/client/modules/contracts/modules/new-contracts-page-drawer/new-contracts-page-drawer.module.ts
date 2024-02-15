@@ -21,33 +21,33 @@ import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/contracted-forms.module'
 import {LeftIconModule} from 'src/app/shared/directives/left-icon/left-icon.module'
 import {LinkModule} from 'src/app/shared/ui-kit/link/link.module'
-import {RubModule} from '../../../../../shared/pipes/rub/rub.module';
+import {RubModule} from '../../../../../shared/pipes/rub/rub.module'
 
 @NgModule({
 	declarations: [ContractsDrawerComponent],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    MatDialogModule,
-    SpacingModule,
-    ButtonModule,
-    IconModule,
-    InputModule,
-    SkeletonModule,
-    TagModule,
-    CashPanelModule,
-    TableModule,
-    PaginatorModule,
-    TabModule,
-    DropdownModule,
-    DropdownPointModule,
-    NavbarModule,
-    SelectModule,
-    ContractedFormsModule,
-    LeftIconModule,
-    LinkModule,
-    RubModule
-  ],
+	imports: [
+		CommonModule,
+		DrawerModule,
+		MatDialogModule,
+		SpacingModule,
+		ButtonModule,
+		IconModule,
+		InputModule,
+		SkeletonModule,
+		TagModule,
+		CashPanelModule,
+		TableModule,
+		PaginatorModule,
+		TabModule,
+		DropdownModule,
+		DropdownPointModule,
+		NavbarModule,
+		SelectModule,
+		ContractedFormsModule,
+		LeftIconModule,
+		LinkModule,
+		RubModule
+	],
 	providers: [ContractsDrawerService]
 })
 export class NewContractsPageDrawerModule {}

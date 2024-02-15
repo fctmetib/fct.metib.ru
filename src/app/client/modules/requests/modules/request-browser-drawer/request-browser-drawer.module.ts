@@ -21,8 +21,9 @@ import {MatTooltipModule} from '@angular/material/tooltip'
 import {RequestDrawerModule} from '../request-drawer/request-drawer.module'
 import {CommentPanelModule} from 'src/app/shared/ui-kit/comment-panel/comment-panel.module'
 import {AvatarModule} from 'src/app/shared/ui-kit/avatar/avatar.module'
-import {DocumentViewDrawerModule} from '../../../documents/modules/document-view-drawer/document-view-drawer.module';
-import {DocumentViewDrawerService} from '../../../documents/modules/document-view-drawer/document-view-drawer.service';
+import {DocumentViewDrawerModule} from '../../../documents/modules/document-view-drawer/document-view-drawer.module'
+import {DocumentViewDrawerService} from '../../../documents/modules/document-view-drawer/document-view-drawer.service'
+import {RequestBrowserDrawerService} from './request-browser-drawer.service'
 
 @NgModule({
 	declarations: [RequestBrowserDrawerComponent],
@@ -48,7 +49,8 @@ import {DocumentViewDrawerService} from '../../../documents/modules/document-vie
 		RequestDrawerModule,
 		CommentPanelModule,
 		AvatarModule,
-    DocumentViewDrawerModule
-	]
+		DocumentViewDrawerModule
+	],
+	providers: [RequestBrowserDrawerService]
 })
 export class RequestBrowserDrawerModule {}
