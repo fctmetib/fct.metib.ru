@@ -1,4 +1,4 @@
-import { IDraftList, IHistoryList, IQueryList } from './data.models'
+import {IDraftList, IHistoryList, IQueryList} from './data.models'
 
 export const querylist: IQueryList[] = [
 	{
@@ -17,9 +17,9 @@ export const querylist: IQueryList[] = [
 	},
 	{
 		id: 3,
-		title: 'Запрос на обновление лимита',
-		description: 'Просьба о пересмотре или увеличении предоставленного лимита',
-		quantity: 1
+		title: 'Запрос на изменение профиля',
+		description: 'Запрос для внесения изменений в профиль на платформе',
+		quantity: 2
 	},
 	{
 		id: 4,
@@ -36,9 +36,9 @@ export const querylist: IQueryList[] = [
 	},
 	{
 		id: 6,
-		title: 'Запрос на изменение профиля',
-		description: 'Запрос для внесения изменений в профиль на платформе',
-		quantity: 2
+		title: 'Запрос на обновление лимита',
+		description: 'Просьба о пересмотре или увеличении предоставленного лимита',
+		quantity: 1
 	}
 ]
 

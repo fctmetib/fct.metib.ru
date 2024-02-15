@@ -6,6 +6,107 @@
 	>
 	</mib-drawer-header>
 	<mib-drawer-container>
-		<h4>halo editing drawer</h4>
+		<h4>Запрос на редактирования профиля</h4>
+		<mib-spacing type="xs"></mib-spacing>
+		<p class="headline">Персональные данные</p>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex flex_column gap-12">
+			<div class="flex gap-12">
+				<mib-input class="flex_grow">
+					<input mibInput />
+					<ng-container mibLabel>Фамилия</ng-container>
+				</mib-input>
+				<mib-input class="flex_grow">
+					<input mibInput />
+					<ng-container mibLabel>Имя</ng-container>
+				</mib-input>
+			</div>
+			<div class="flex flex_column">
+				<p class="text text_s c-bti-tertiary">Пол</p>
+				<div class="flex">
+					<mib-checkbox class="gap-8 flex_grow">
+						<span class="text text_m">Мужской</span>
+					</mib-checkbox>
+					<mib-checkbox class="gap-8 flex_grow">
+						<span class="text text_m">Женский</span>
+					</mib-checkbox>
+				</div>
+			</div>
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<p class="headline">Контактные данные</p>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex gap-12">
+			<mib-input class="flex_grow">
+				<input mibInput />
+				<ng-container mibLabel>Мобильный телефон</ng-container>
+			</mib-input>
+			<mib-input class="flex_grow">
+				<input mibInput />
+				<ng-container mibLabel>Электронная почта</ng-container>
+			</mib-input>
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<div class="flex flex_column gap-12">
+			<p class="headline">Персональные данные</p>
+			<div class="flex">
+				<mib-select class="w-100" type="outline" placeholder="Гражданство РФ">
+					<mib-dropdown-point
+						[value]="true"
+						text="Гражданство РБ"
+					></mib-dropdown-point>
+				</mib-select>
+			</div>
+			<div class="flex gap-12">
+				<mib-input class="flex_grow">
+					<input mibInput />
+					<ng-container mibLabel>Серия</ng-container>
+				</mib-input>
+				<mib-input class="flex_grow">
+					<input mibInput />
+					<ng-container mibLabel>Номер</ng-container>
+				</mib-input>
+				<mib-input class="flex_grow">
+					<input type="date" mibInput />
+					<ng-container mibLabel>Дата выдачи</ng-container>
+				</mib-input>
+			</div>
+			<mib-input>
+				<input mibInput />
+				<ng-container mibLabel>Код подразделения</ng-container>
+			</mib-input>
+			<mib-input>
+				<input mibInput />
+				<ng-container mibLabel>Кем выдан паспорт</ng-container>
+			</mib-input>
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<p class="headline">Прикрепленные документы</p>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-file-cell size="s"></mib-file-cell>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex flex_column gap-12">
+			<mib-dnd
+				(onChange)="onDocumentLoad($event)"
+				[accept]="[
+					'application/pdf',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-excel',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'image/jpeg',
+					'image/png'
+				]"
+				headline="Прикрепите еще один скан документа"
+			></mib-dnd>
+			<p class="text text_xs c-bti-tertiary">
+				Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
+			</p>
+		</div>
 	</mib-drawer-container>
+	<mib-drawer-footer drawer-footer>
+		<div class="flex w-100">
+			<mib-button size="m" type="filled-primary">Отправить запрос</mib-button>
+		</div>
+	</mib-drawer-footer>
 </mib-drawer>
