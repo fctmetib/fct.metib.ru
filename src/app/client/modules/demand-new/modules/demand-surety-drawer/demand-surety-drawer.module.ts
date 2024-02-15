@@ -14,6 +14,13 @@ import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 
+/* TO-DO
+
+--------------
+CHECK PROVIDERS!!!!!
+--------------
+*/
+
 @NgModule({
 	declarations: [DemandSuretyDrawerComponent],
 	imports: [

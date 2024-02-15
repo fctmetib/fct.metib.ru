@@ -87,6 +87,7 @@ import {DemandDrawerModule} from './modules/demand-drawer/demand-drawer.module'
 import {LabelModule} from '../../../shared/directives/label/label.module'
 import {DemandSignatureDrawerModule} from './modules/demand-signature-drawer/demand-signature-drawer.module'
 import {DemandSuretyDrawerModule} from './modules/demand-surety-drawer/demand-surety-drawer.module'
+import {DemandEditingDrawerModule} from './modules/demand-editing-drawer/demand-editing-drawer.module'
 
 @NgModule({
 	imports: [
@@ -138,7 +139,8 @@ import {DemandSuretyDrawerModule} from './modules/demand-surety-drawer/demand-su
 		DemandDrawerModule,
 		LabelModule,
 		DemandSignatureDrawerModule,
-		DemandSuretyDrawerModule
+		DemandSuretyDrawerModule,
+		DemandEditingDrawerModule
 	],
 	declarations: [
 		// Containers
