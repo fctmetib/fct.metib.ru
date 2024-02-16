@@ -16,6 +16,7 @@ import {DemandSuretyDrawerService} from '../../modules/demand-surety-drawer/dema
 import {DemandEditingDrawerService} from '../../modules/demand-editing-drawer/demand-editing-drawer.service'
 import {DemandLimitDrawerService} from '../../modules/demand-limit-drawer/demand-limit-drawer.service'
 import {DemandDebtorDrawerService} from '../../modules/demand-debtor-drawer/demand-debtor-drawer.service'
+import {DemandVerificationDrawerService} from '../../modules/demand-verification-drawer/demand-verification-drawer.service'
 
 const ANIMATION_CONFIG = {
 	translateDistance: '-3%',
@@ -66,7 +67,8 @@ export class DemandNewHomeComponent implements OnInit {
 		private demandSuretyDrawerService: DemandSuretyDrawerService,
 		private demandEditingDrawerService: DemandEditingDrawerService,
 		private demandLimitDrawerService: DemandLimitDrawerService,
-		private demandDebtorDrawerService: DemandDebtorDrawerService
+		private demandDebtorDrawerService: DemandDebtorDrawerService,
+		private demandVerificationDrawerService: DemandVerificationDrawerService
 	) {}
 
 	ngOnInit(): void {
@@ -180,6 +182,13 @@ export class DemandNewHomeComponent implements OnInit {
 				break
 			case 5:
 				this.demandDebtorDrawerService
+					.open({data: {id}})
+					// .open({state: DrawerStateEnum.CREATE})
+					.afterClosed()
+					.subscribe()
+				break
+			case 6:
+				this.demandVerificationDrawerService
 					.open({data: {id}})
 					// .open({state: DrawerStateEnum.CREATE})
 					.afterClosed()

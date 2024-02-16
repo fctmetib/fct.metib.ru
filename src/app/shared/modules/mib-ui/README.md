@@ -137,6 +137,14 @@ ng g s client/modules/demand-new/modules/demand-debtor-drawer/demand-debtor-draw
 ng g c client/modules/demand-new/modules/demand-debtor-drawer --skip-tests --dry-run
  //---
 
+ //--- demand-verification-drawer
+src\app\client\modules\demand-new\modules\demand-verification-drawer
+ng g i client/modules/demand-new/modules/demand-verification-drawer/interfaces/demand-verification-drawer.interface  --dry-run
+ng g m client/modules/demand-new/modules/demand-verification-drawer/demand-verification-drawer --flat --dry-run
+ng g s client/modules/demand-new/modules/demand-verification-drawer/demand-verification-drawer --skip-tests --dry-run
+ng g c client/modules/demand-new/modules/demand-verification-drawer --skip-tests --dry-run
+ //---
+
  //--- invoice-drawer
 src\app\client\modules\invoices\modules
 ng g i client/modules/invoices/modules/invoice-drawer/interfaces/invoice-drawer.interface  --dry-run

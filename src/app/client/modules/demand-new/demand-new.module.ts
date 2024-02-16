@@ -90,6 +90,7 @@ import {DemandSuretyDrawerModule} from './modules/demand-surety-drawer/demand-su
 import {DemandEditingDrawerModule} from './modules/demand-editing-drawer/demand-editing-drawer.module'
 import {DemandLimitDrawerModule} from './modules/demand-limit-drawer/demand-limit-drawer.module'
 import {DemandDebtorDrawerModule} from './modules/demand-debtor-drawer/demand-debtor-drawer.module'
+import {DemandVerificationDrawerModule} from './modules/demand-verification-drawer/demand-verification-drawer.module'
 
 @NgModule({
 	imports: [
@@ -144,7 +145,8 @@ import {DemandDebtorDrawerModule} from './modules/demand-debtor-drawer/demand-de
 		DemandSuretyDrawerModule,
 		DemandEditingDrawerModule,
 		DemandLimitDrawerModule,
-		DemandDebtorDrawerModule
+		DemandDebtorDrawerModule,
+		DemandVerificationDrawerModule
 	],
 	declarations: [
 		// Containers
