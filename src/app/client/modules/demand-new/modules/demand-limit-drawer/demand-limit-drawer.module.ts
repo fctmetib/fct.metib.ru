@@ -12,6 +12,7 @@ import {AutosizeModule} from 'ngx-autosize'
 import {InformationModule} from 'src/app/shared/ui-kit/information/information.module'
 import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
+import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 
 @NgModule({
 	declarations: [DemandLimitDrawerComponent],
@@ -26,7 +27,8 @@ import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 		AutosizeModule,
 		InformationModule,
 		MibDragAndDropModule,
-		ButtonModule
+		ButtonModule,
+		RubModule
 	],
 	providers: [DemandLimitDrawerService]
 })

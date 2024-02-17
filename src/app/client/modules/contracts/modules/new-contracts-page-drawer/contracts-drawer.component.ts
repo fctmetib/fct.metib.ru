@@ -24,6 +24,8 @@ export class ContractsDrawerComponent implements OnInit {
 	// 	borderRadius: '8px'
 	// }
 
+	datas = 123000
+
 	public skeletonWithoutUnderline: Properties = {
 		height: '48px',
 		width: '100%'
@@ -94,17 +96,9 @@ export class ContractsDrawerComponent implements OnInit {
 					includeStatistics: true,
 					ID: this.deliveryId
 				})
-				// .getDeliveriesByIdWithStats(this.deliveryId) // work!!!
-				// .getDeliveryById({
-				// 	getAll: true,
-				// 	includeStatistics: true,
-				// 	ID: this.deliveryId
-				// })
-				// .getDeliveryById({includeStatistics: true, id: this.deliveryId})
 				.pipe(
 					tap(data => {
 						this.delivery = data
-						console.log('this.delivery :>> ', this.delivery)
 					})
 				)
 		)

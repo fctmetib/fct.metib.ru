@@ -14,7 +14,8 @@
 			<mib-icon class="stroke" name="fi_info"></mib-icon>
 		</div>
 		<h3>
-			{{ panelData | currency : 'RUB' : 'symbol-narrow' }}
+			{{ panelData }}
+			<!-- {{ panelData | currency : 'RUB' : 'symbol-narrow' }} -->
 		</h3>
 	</div>
 	<mib-spacing type="xs2"></mib-spacing>
@@ -47,7 +48,8 @@
 				{{ panelTitle }}
 			</span>
 			<span class="paneldata text text_m text_medium c-bti-secondary">
-				{{ panelData | currency : 'RUB' : 'symbol-narrow' }}
+				{{ panelData }}
+				<!-- {{ panelData | currency : 'RUB' : 'symbol-narrow' }} -->
 			</span>
 			<span class="alert text text_m text_medium">
 				<ng-content select="[alert]"></ng-content>

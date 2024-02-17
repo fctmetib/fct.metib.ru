@@ -87,7 +87,6 @@ export class DemandNewHomeComponent implements OnInit {
 			.pipe(
 				tap(data => {
 					this.requestLists = data
-					console.log('data :>> ', data)
 				})
 			)
 			.subscribe()
@@ -150,7 +149,6 @@ export class DemandNewHomeComponent implements OnInit {
 	}
 
 	openDrawers(id: number) {
-		console.log('OpenDrawer>id :>> ', id)
 		switch (id) {
 			case 1:
 				this.demandSignatureDrawerService

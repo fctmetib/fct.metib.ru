@@ -41,9 +41,9 @@
 		<mib-spacing type="xs"></mib-spacing>
 		<!--  <mib-skeleton *ngIf="loading$ | async; else cashPanel" [styles]="skeletonCashPanel"></mib-skeleton>-->
 		<!--  <ng-template #cashPanel>-->
-		<!--    <mib-cash-panel extracted="true" panelTitle="Ваш лимит:" [panelData]="0"></mib-cash-panel>-->
+		<!--    <mib-cash-panel extracted="true" panelTitle="Ваш лимит:" [panelData]="0 | rub"></mib-cash-panel>-->
 		<!--    <mib-spacing type="xs"></mib-spacing>-->
-		<!--    <mib-cash-panel extracted="true" panelTitle="Уступлено:" [panelData]="concededSum"></mib-cash-panel>-->
+		<!--    <mib-cash-panel extracted="true" panelTitle="Уступлено:" [panelData]="concededSum | rub"></mib-cash-panel>-->
 		<!--    <mib-spacing type="xs"></mib-spacing>-->
 		<!--    <mib-cash-panel extracted="true" panelTitle="Просрочка:">-->
 		<!--      <ng-container alert>{{ overdueSum | rub }}</ng-container>-->

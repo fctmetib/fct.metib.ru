@@ -79,9 +79,6 @@ export class ContractsPageComponent implements OnInit {
 					this.onAdvancedPageChange(1)
 					this.onCurrentPageChange(1)
 					this.onCompletedPageChange(1)
-					console.log('advancedContracts :>> ', this.advancedContracts)
-					console.log('completedContracts :>> ', this.completedContracts)
-					console.log('currentContracts :>> ', this.currentContracts)
 				}),
 				finalize(() => this.loading$.next(false))
 			)

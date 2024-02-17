@@ -115,15 +115,12 @@ export class InvoiceDrawerComponent implements OnInit {
 			.pipe(
 				map(invoices => {
 					this.invoice = invoices.find(x => x.ID === this.invoiceID)
-					console.log('this.invoice :>> ', this.invoice)
 					this.invoicesLinks = this.invoice.PaymentLinks
-					console.log('this.invoicesLinks :>> ', this.invoicesLinks)
 
 					this.totalSumDutyDebtor = this.invoicesLinks.reduce(
 						(acc, link) => acc + link.Shipment.DutyDebtor,
 						0
 					)
-					console.log('this.totalSumDutyDebtor :>> ', this.totalSumDutyDebtor)
 					this.onPageChange(1)
 				}),
 				finalize(() => {

@@ -31,6 +31,7 @@ import {CabinetNewsService} from './services/news.service'
 import {SpacingModule} from '../../../shared/ui-kit/spacing/spacing.module'
 import {CashPanelModule} from '../../../shared/modules/cash-panel/cash-panel.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
+import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 
 @NgModule({
 	imports: [
@@ -56,7 +57,8 @@ import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 		ChartModule,
 		SpacingModule,
 		CashPanelModule,
-		SkeletonModule
+		SkeletonModule,
+		RubModule
 	],
 	declarations: [
 		CabinetPageComponent,

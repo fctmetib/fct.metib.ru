@@ -70,42 +70,23 @@
 		</ng-container>
 		<ng-template #date>
 			<div class="flex flex_column flex_justify-start gap-8">
-				{{ delivery?.Statistics?.DutyCustomer?.toString() || '' | rub }}
-				<br />
-				{{ delivery?.Statistics?.DutyDebtor?.toString() || '' | rub }}
-				<br />
-				{{ delivery?.Statistics?.DelayDuty?.toString() || '' | rub }}
-				<!-- <mib-cash-panel
+				<mib-cash-panel
 					[extracted]="true"
 					panelTitle="Ваш лимит:"
 					[panelData]="
 						delivery?.Statistics?.DutyCustomer?.toString() || '' | rub
 					"
-				></mib-cash-panel> -->
-				<!-- <mib-cash-panel
-					[extracted]="true"
-					panelTitle="Ваш лимит:"
-					[panelData]="delivery?.Statistics?.DutyCustomer | rub"
-				></mib-cash-panel> -->
-				<!-- <mib-cash-panel
+				></mib-cash-panel>
+				<mib-cash-panel
 					[extracted]="true"
 					panelTitle="Уступлено:"
-					panelData="СТАТИКА DutyDebtor"
-				></mib-cash-panel> -->
-				<!-- <mib-cash-panel
-					[extracted]="true"
-					panelTitle="Уступлено:"
-					[panelData]="delivery?.Statistics?.DutyDebtor | rub"
-				></mib-cash-panel> -->
-				<!-- [panelData]="delivery?.Statistics?.DutyDebtor?.toString() || '' | rub" -->
-				<!-- <mib-cash-panel [extracted]="true" panelTitle="Просрочка:">
-					<ng-container alert>СТАТИКА DelayDuty </ng-container>
-				</mib-cash-panel> -->
-				<!-- <mib-cash-panel [extracted]="true" panelTitle="Просрочка:">
-					<ng-container alert
-						>{{ delivery?.Statistics?.DelayDuty | rub }}
+					[panelData]="delivery?.Statistics?.DutyDebtor?.toString() || '' | rub"
+				></mib-cash-panel>
+				<mib-cash-panel [extracted]="true" panelTitle="Просрочка:">
+					<ng-container alert>
+						{{ delivery?.Statistics?.DelayDuty?.toString() || '' | rub }}
 					</ng-container>
-				</mib-cash-panel> -->
+				</mib-cash-panel>
 			</div>
 		</ng-template>
 	</mib-drawer-container>

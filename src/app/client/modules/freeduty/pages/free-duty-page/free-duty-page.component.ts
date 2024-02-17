@@ -91,7 +91,6 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 				.toISOString(),
 			dateTo: new Date().toISOString()
 		})
-		console.log(dateTo, dateFrom)
 		this.dateFrom.setValue(dateFrom)
 		this.dateTo.setValue(dateTo)
 		this.currentPage$
@@ -126,7 +125,6 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 			.subscribe()
 
 		this.watchForms()
-		console.log('this.duties$ :>> ', this.duties$)
 	}
 
 	ngOnDestroy() {}

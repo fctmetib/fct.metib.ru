@@ -1,175 +1,196 @@
 <mib-drawer>
-  <mib-drawer-header
-    (onClose)="dialogRef.close()"
-    drawer-header
-  ></mib-drawer-header>
-  <mib-drawer-container>
-    <ng-container *ngIf="loading$ | async; else title">
-      <mib-skeleton
-        [styles]="skeletonTitle"
-        *ngFor="let i of [1]"
-      ></mib-skeleton>
-    </ng-container>
-    <ng-template #title>
-      <div class="flex gap-4 flex_align-center">
-        <h4>
-          {{ invoice?.Beneficiary?.Title }}
-        </h4>
-        <mib-icon
-          class="invoice-arrow stroke"
-          name="fi_arrow-right"
-        ></mib-icon>
-        <h4>
-          {{ invoice?.Beneficiary?.Title }}
-        </h4>
-      </div>
-    </ng-template>
-    <mib-spacing type="xs2"></mib-spacing>
-    <ng-container *ngIf="loading$ | async; else date">
-      <mib-skeleton
-        [styles]="skeletonDate"
-        *ngFor="let i of [1]"
-      ></mib-skeleton>
-    </ng-container>
-    <ng-template #date>
-      <div class="flex gap-4">
-        <span class="text text_m c-bti-secondary">Дата платежа</span>
-        <span class="text text_m c-bti-secondary">{{
-          invoice?.Date | date : 'dd.MM.YYYY'
-          }}</span>
-      </div>
+	<mib-drawer-header
+		(onClose)="dialogRef.close()"
+		drawer-header
+	></mib-drawer-header>
+	<mib-drawer-container>
+		<ng-container *ngIf="loading$ | async; else title">
+			<mib-skeleton
+				[styles]="skeletonTitle"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #title>
+			<div class="flex gap-4 flex_align-center">
+				<h4>
+					{{ invoice?.Beneficiary?.Title }}
+				</h4>
+				<mib-icon class="invoice-arrow stroke" name="fi_arrow-right"></mib-icon>
+				<h4>
+					{{ invoice?.Beneficiary?.Title }}
+				</h4>
+			</div>
+		</ng-template>
+		<mib-spacing type="xs2"></mib-spacing>
+		<ng-container *ngIf="loading$ | async; else date">
+			<mib-skeleton
+				[styles]="skeletonDate"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #date>
+			<div class="flex gap-4">
+				<span class="text text_m c-bti-secondary">Дата платежа</span>
+				<span class="text text_m c-bti-secondary">{{
+					invoice?.Date | date : 'dd.MM.YYYY'
+				}}</span>
+			</div>
 
-      <mib-spacing type="xs"></mib-spacing>
-      <mib-cash-panel
-        [extracted]="true"
-        panelTitle="Сумма платежа:"
-        [panelData]="invoice?.Amount"
-      ></mib-cash-panel>
-    </ng-template>
-    <mib-spacing type="xs"></mib-spacing>
-    <ng-container *ngIf="loading$ | async; else textareaTemplate">
-      <mib-skeleton
-        [styles]="skeletonTextarea"
-        *ngFor="let i of [1]"
-      ></mib-skeleton>
-    </ng-container>
-    <mib-spacing type="m"></mib-spacing>
-    <ng-template #textareaTemplate>
-      <mib-textarea>
-        <ng-container mibLabel>Назначение платежа</ng-container>
-        <textarea
-          readonly
-          autosize
-          [value]="invoice?.Comment"
-          mibTextarea
-        ></textarea>
-        <mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
-      </mib-textarea>
-    </ng-template>
-    <mib-skeleton
-      *ngIf="loading$ | async"
-      [styles]="skeletonTabGroup"
-    ></mib-skeleton>
-  </mib-drawer-container>
-  <mib-tab-group *ngIf="!(loading$ | async)">
-    <mib-navbar>
-      <mib-navbar-point value="1">Накладные</mib-navbar-point>
-      <mib-navbar-point value="2">Реквизиты</mib-navbar-point>
-    </mib-navbar>
-    <div>
-      <ng-container *ngIf="loading$ | async; else tabItems">
-        <mib-skeleton
-          [styles]="last ? skeletonWithoutUnderline : skeletonTable"
-          *ngFor="let i of [1]; let last = last"
-        ></mib-skeleton>
-      </ng-container>
-      <ng-template #tabItems>
-        <mib-drawer-container>
-          <mib-tab-item value="1">
-            <mib-spacing type="xs"></mib-spacing>
-            <mib-table>
-              <mib-table-head>
-                <mib-table-head-cell>Дата оплаты</mib-table-head-cell>
-                <mib-table-head-cell>Сумма поставки</mib-table-head-cell>
-                <mib-table-head-cell>Долг дебитора</mib-table-head-cell>
-                <mib-table-head-cell>Номер заявки</mib-table-head-cell>
-                <mib-table-head-cell>Дата заявки</mib-table-head-cell>
-              </mib-table-head>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-cash-panel
+				[extracted]="true"
+				panelTitle="Сумма платежа:"
+				[panelData]="invoice?.Amount | rub"
+			></mib-cash-panel>
+		</ng-template>
+		<mib-spacing type="xs"></mib-spacing>
+		<ng-container *ngIf="loading$ | async; else textareaTemplate">
+			<mib-skeleton
+				[styles]="skeletonTextarea"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+		<mib-spacing type="m"></mib-spacing>
+		<ng-template #textareaTemplate>
+			<mib-textarea>
+				<ng-container mibLabel>Назначение платежа</ng-container>
+				<textarea
+					readonly
+					autosize
+					[value]="invoice?.Comment"
+					mibTextarea
+				></textarea>
+				<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
+			</mib-textarea>
+		</ng-template>
+		<mib-skeleton
+			*ngIf="loading$ | async"
+			[styles]="skeletonTabGroup"
+		></mib-skeleton>
+	</mib-drawer-container>
+	<mib-tab-group *ngIf="!(loading$ | async)">
+		<mib-navbar>
+			<mib-navbar-point value="1">Накладные</mib-navbar-point>
+			<mib-navbar-point value="2">Реквизиты</mib-navbar-point>
+		</mib-navbar>
+		<div>
+			<ng-container *ngIf="loading$ | async; else tabItems">
+				<mib-skeleton
+					[styles]="last ? skeletonWithoutUnderline : skeletonTable"
+					*ngFor="let i of [1]; let last = last"
+				></mib-skeleton>
+			</ng-container>
+			<ng-template #tabItems>
+				<mib-drawer-container>
+					<mib-tab-item value="1">
+						<mib-spacing type="xs"></mib-spacing>
+						<mib-table>
+							<mib-table-head>
+								<mib-table-head-cell>Дата оплаты</mib-table-head-cell>
+								<mib-table-head-cell>Сумма поставки</mib-table-head-cell>
+								<mib-table-head-cell>Долг дебитора</mib-table-head-cell>
+								<mib-table-head-cell>Номер заявки</mib-table-head-cell>
+								<mib-table-head-cell>Дата заявки</mib-table-head-cell>
+							</mib-table-head>
 
-              <ng-container *ngFor="let link of invoicesLinksVisible; let idx = index">
-                <mib-table-row [underlined]="true">
-                  <mib-table-cell>
-                    <ng-container table-cell-title> {{ link.Shipment.DatePayment | date: 'dd.MM.yyyy' }} </ng-container>
-                  </mib-table-cell>
-                  <mib-table-cell>
-                    <ng-container table-cell-title> {{ link.Shipment.Summ | rub }} </ng-container>
-                  </mib-table-cell>
-                  <mib-table-cell>
-                    <ng-container table-cell-title> {{ link.Shipment.DutyDebtor | rub }} </ng-container>
-                  </mib-table-cell>
-                  <mib-table-cell>
-                    <ng-container table-cell-title> {{ link.Shipment.Request.Number }} </ng-container>
-                  </mib-table-cell>
-                  <mib-table-cell>
-                    <ng-container table-cell-title> {{ link.Shipment.Request.Date | date: 'dd.MM.yyyy' }} </ng-container>
-                  </mib-table-cell>
-                </mib-table-row>
-              </ng-container>
+							<ng-container
+								*ngFor="let link of invoicesLinksVisible; let idx = index"
+							>
+								<mib-table-row [underlined]="true">
+									<mib-table-cell>
+										<ng-container table-cell-title>
+											{{ link.Shipment.DatePayment | date : 'dd.MM.yyyy' }}
+										</ng-container>
+									</mib-table-cell>
+									<mib-table-cell>
+										<ng-container table-cell-title>
+											{{ link.Shipment.Summ | rub }}
+										</ng-container>
+									</mib-table-cell>
+									<mib-table-cell>
+										<ng-container table-cell-title>
+											{{ link.Shipment.DutyDebtor | rub }}
+										</ng-container>
+									</mib-table-cell>
+									<mib-table-cell>
+										<ng-container table-cell-title>
+											{{ link.Shipment.Request.Number }}
+										</ng-container>
+									</mib-table-cell>
+									<mib-table-cell>
+										<ng-container table-cell-title>
+											{{ link.Shipment.Request.Date | date : 'dd.MM.yyyy' }}
+										</ng-container>
+									</mib-table-cell>
+								</mib-table-row>
+							</ng-container>
 
-              <mib-table-row>
-                <mib-table-cell>
-                  <ng-container table-cell-title>{{invoice.ShipmentsCount}} {{toolsService.declineWord(invoice.ShipmentsCount, ['позиция', 'позиции', 'позиций'])}}</ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title>
-                    {{invoice?.Amount | rub}}
-                  </ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title>
-                    {{totalSumDutyDebtor | rub}}
-                  </ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title></ng-container>
-                </mib-table-cell>
-                <mib-table-cell>
-                  <ng-container table-cell-title></ng-container>
-                </mib-table-cell>
-              </mib-table-row>
-              <mib-table-footer [showIsland]="false" [lined]="!(loading$ | async)">
-                <mib-paginator
-                  (pageChange)="onPageChange($event)"
-                  [totalCount]="invoice.ShipmentsCount"
-                  [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-                  [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
-                ></mib-paginator>
-              </mib-table-footer>
-            </mib-table>
-          </mib-tab-item>
-        </mib-drawer-container>
-        <mib-drawer-container>
-          <mib-tab-item value="2">
-            <mib-spacing type="s"></mib-spacing>
-            <p class="headline">Реквизиты плательщика</p>
-            <mib-spacing type="xs2"></mib-spacing>
-            <mib-contracted-forms
-              [bankingDetails]="payerRequisites"
-              [label]="invoice?.Beneficiary?.BankName"
-              description="Для основных транзакций"
-            ></mib-contracted-forms>
-            <mib-spacing type="s"></mib-spacing>
-            <p class="headline">Реквизиты дебитора</p>
-            <mib-spacing type="xs2"></mib-spacing>
-            <mib-contracted-forms
-              [bankingDetails]="beneficiaryRequisites"
-              [label]="invoice?.Beneficiary?.BankName"
-              description="Для основных транзакций"
-            ></mib-contracted-forms>
-            <mib-spacing type="xs"></mib-spacing>
-          </mib-tab-item>
-        </mib-drawer-container>
-      </ng-template>
-    </div>
-  </mib-tab-group>
+							<mib-table-row>
+								<mib-table-cell>
+									<ng-container table-cell-title
+										>{{ invoice.ShipmentsCount }}
+										{{
+											toolsService.declineWord(invoice.ShipmentsCount, [
+												'позиция',
+												'позиции',
+												'позиций'
+											])
+										}}</ng-container
+									>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>
+										{{ invoice?.Amount | rub }}
+									</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title>
+										{{ totalSumDutyDebtor | rub }}
+									</ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title></ng-container>
+								</mib-table-cell>
+								<mib-table-cell>
+									<ng-container table-cell-title></ng-container>
+								</mib-table-cell>
+							</mib-table-row>
+							<mib-table-footer
+								[showIsland]="false"
+								[lined]="!(loading$ | async)"
+							>
+								<mib-paginator
+									(pageChange)="onPageChange($event)"
+									[totalCount]="invoice.ShipmentsCount"
+									[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+									[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+								></mib-paginator>
+							</mib-table-footer>
+						</mib-table>
+					</mib-tab-item>
+				</mib-drawer-container>
+				<mib-drawer-container>
+					<mib-tab-item value="2">
+						<mib-spacing type="s"></mib-spacing>
+						<p class="headline">Реквизиты плательщика</p>
+						<mib-spacing type="xs2"></mib-spacing>
+						<mib-contracted-forms
+							[bankingDetails]="payerRequisites"
+							[label]="invoice?.Beneficiary?.BankName"
+							description="Для основных транзакций"
+						></mib-contracted-forms>
+						<mib-spacing type="s"></mib-spacing>
+						<p class="headline">Реквизиты дебитора</p>
+						<mib-spacing type="xs2"></mib-spacing>
+						<mib-contracted-forms
+							[bankingDetails]="beneficiaryRequisites"
+							[label]="invoice?.Beneficiary?.BankName"
+							description="Для основных транзакций"
+						></mib-contracted-forms>
+						<mib-spacing type="xs"></mib-spacing>
+					</mib-tab-item>
+				</mib-drawer-container>
+			</ng-template>
+		</div>
+	</mib-tab-group>
 </mib-drawer>
