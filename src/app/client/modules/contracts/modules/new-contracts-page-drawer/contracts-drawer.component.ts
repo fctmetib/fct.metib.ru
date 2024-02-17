@@ -20,9 +20,9 @@ import {WordDownloadService} from '../../../../../shared/services/word-download.
 export class ContractsDrawerComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
 
-	public skeletonDefault: Properties = {
-		borderRadius: '8px'
-	}
+	// public skeletonDefault: Properties = {
+	// 	borderRadius: '8px'
+	// }
 
 	public skeletonWithoutUnderline: Properties = {
 		height: '48px',

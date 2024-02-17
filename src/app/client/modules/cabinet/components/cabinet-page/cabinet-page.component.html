@@ -15,21 +15,30 @@
 	<mib-spacing type="m"></mib-spacing>
 	<app-factoring></app-factoring>
 	<mib-spacing type="s"></mib-spacing>
-	<div class="flex flex_wrap gap-16">
-		<mib-cash-panel
-			[panelData]="statistics?.Limit"
-			panelTitle="Лимит финансирования"
-			[link]="['/contacts']"
-		></mib-cash-panel>
-		<mib-cash-panel
-			[panelData]="statistics?.UsedLimit"
-			panelTitle="Уступлено"
-			[link]="['/tariffs']"
-		></mib-cash-panel>
-		<mib-cash-panel
-			[panelData]="statistics?.DelayAmount"
-			panelTitle="Просрочка покупателя"
-			[link]="['/clients']"
-		></mib-cash-panel>
-	</div>
+	<ng-container *ngIf="loading$ | async; else body">
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'130px'"
+			*ngFor="let i of [1]"
+		></mib-skeleton>
+	</ng-container>
+	<ng-template #body>
+		<div class="flex flex_wrap gap-16">
+			<mib-cash-panel
+				[panelData]="statistics?.Limit"
+				panelTitle="Лимит финансирования"
+				[link]="['/contacts']"
+			></mib-cash-panel>
+			<mib-cash-panel
+				[panelData]="statistics?.UsedLimit"
+				panelTitle="Уступлено"
+				[link]="['/tariffs']"
+			></mib-cash-panel>
+			<mib-cash-panel
+				[panelData]="statistics?.DelayAmount"
+				panelTitle="Просрочка покупателя"
+				[link]="['/clients']"
+			></mib-cash-panel>
+		</div>
+	</ng-template>
 </div>
