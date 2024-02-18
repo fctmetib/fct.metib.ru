@@ -6,12 +6,15 @@ import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interfa
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {BehaviorSubject} from 'rxjs'
 
+// export type ProgStatus = 1 | 2 | 3 | 4
+
 @Component({
 	selector: 'mib-demand-signature-drawer',
 	templateUrl: './demand-signature-drawer.component.html',
 	styleUrls: ['./demand-signature-drawer.component.scss']
 })
 export class DemandSignatureDrawerComponent {
+	// public prog: ProgStatus
 	public progres$ = new BehaviorSubject<number>(1)
 	public progress: number = 1
 	public maxPage: number = 4
