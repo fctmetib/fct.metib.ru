@@ -154,10 +154,10 @@ export class DocumentViewDrawerComponent implements OnInit {
 			.pipe(
 				tap(data => {
 					const title = this.document.Title.split('.')[0] || 'not_named'
-          const a = document.createElement("a");
-          a.download = `${title}.zip`
-          a.href = URL.createObjectURL(data)
-          a.click()
+					const a = document.createElement('a')
+					a.download = `${title}.zip`
+					a.href = URL.createObjectURL(data)
+					a.click()
 				}),
 				finalize(() => {
 					this.isDownloadZip$.next(false)

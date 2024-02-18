@@ -3,6 +3,8 @@
 		showProgressBar="true"
 		(onClose)="dialogRef.close()"
 		drawer-header
+		[maxPage]="maxPage"
+		[progress]="progress"
 	>
 	</mib-drawer-header>
 	<mib-drawer-container>
@@ -248,6 +250,13 @@
 		<mib-spacing type="m"></mib-spacing>
 	</mib-drawer-container>
 	<mib-drawer-footer drawer-footer>
+		<button
+			[ngStyle]="{display: progress <= 1 ? 'none' : 'block'}"
+			(click)="prevPage()"
+		>
+			prev
+		</button>
+		<button (click)="nextPage()">next</button>
 		<div class="flex w-100 flex_justify-end">
 			<mib-button size="m" type="filled-primary">Продолжить</mib-button>
 		</div>
