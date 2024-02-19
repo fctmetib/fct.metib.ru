@@ -5,8 +5,7 @@ import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.i
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {BehaviorSubject} from 'rxjs'
-
-// export type ProgStatus = 1 | 2 | 3 | 4
+import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
 @Component({
 	selector: 'mib-demand-signature-drawer',
@@ -14,7 +13,6 @@ import {BehaviorSubject} from 'rxjs'
 	styleUrls: ['./demand-signature-drawer.component.scss']
 })
 export class DemandSignatureDrawerComponent {
-	// public prog: ProgStatus
 	public progres$ = new BehaviorSubject<number>(1)
 	public progress: number = 1
 	public maxPage: number = 4
@@ -22,6 +20,7 @@ export class DemandSignatureDrawerComponent {
 
 	constructor(
 		public dialogRef: MatDialogRef<DemandSignatureDrawerComponent>,
+		private toaster: ToasterService,
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData
 	) {}
 
@@ -47,7 +46,7 @@ export class DemandSignatureDrawerComponent {
 		}
 	}
 
-	onDocumentLoad({file, url}: FileDnd) {
+	public onDocumentLoad({file, url}: FileDnd) {
 		const document: DocumentReq = {
 			Description: `description ${file.name}`,
 			DocumentTypeID: 40,
@@ -56,5 +55,39 @@ export class DemandSignatureDrawerComponent {
 			Data: extractBase64(url)
 		}
 		// this.addDocument(document)
+	}
+
+	public submitData() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+		// this.dialogRef.close()
+	}
+
+	public confirmIds() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
+
+	public downloadFile() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
 	}
 }

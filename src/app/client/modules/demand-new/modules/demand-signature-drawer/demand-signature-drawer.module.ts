@@ -16,6 +16,7 @@ import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 import {CheckboxModule} from 'src/app/shared/ui-kit/checkbox/checkbox.module'
 import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
+import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 
 @NgModule({
 	declarations: [DemandSignatureDrawerComponent],
@@ -34,7 +35,8 @@ import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag
 		SelectModule,
 		DropdownPointModule,
 		CheckboxModule,
-		MibDragAndDropModule
+		MibDragAndDropModule,
+		FileCellModule
 	],
 	providers: [DemandSignatureDrawerService]
 })
