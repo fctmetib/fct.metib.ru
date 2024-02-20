@@ -14,6 +14,12 @@ import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 import {DemandSuretyDrawerService} from './demand-surety-drawer.service'
+import {LeftIconModule} from 'src/app/shared/directives/left-icon/left-icon.module'
+import {TextareaModule} from 'src/app/shared/ui-kit/textarea/textarea.module'
+import {AutosizeModule} from 'ngx-autosize'
+import {LinkModule} from 'src/app/shared/ui-kit/link/link.module'
+import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
+import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/contracted-forms.module'
 
 @NgModule({
 	declarations: [DemandSuretyDrawerComponent],
@@ -30,7 +36,13 @@ import {DemandSuretyDrawerService} from './demand-surety-drawer.service'
 		RightIconModule,
 		IconModule,
 		SelectModule,
-		DropdownPointModule
+		DropdownPointModule,
+		LeftIconModule,
+		TextareaModule,
+		AutosizeModule,
+		LinkModule,
+		BadgeModule,
+		ContractedFormsModule
 	],
 	providers: [DemandSuretyDrawerService]
 })

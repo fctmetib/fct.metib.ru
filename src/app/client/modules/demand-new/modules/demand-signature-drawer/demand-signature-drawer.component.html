@@ -10,6 +10,7 @@
 	<mib-drawer-container>
 		<p class="text text_m c-bti-secondary">Запрос на ЭПЦ</p>
 		<div [ngSwitch]="progress">
+			<!-- первый скрин -->
 			<div *ngSwitchCase="progress === 1">
 				<mib-spacing type="xs2"></mib-spacing>
 				<h4>Основная информация</h4>
@@ -24,6 +25,7 @@
 							>От ИП</mib-navbar-point
 						>
 					</mib-navbar>
+					<!-- первый таб -->
 					<mib-tab-item value="1">
 						<mib-spacing type="xs"></mib-spacing>
 						<mib-information type="information">
@@ -44,6 +46,7 @@
 						</div>
 						<mib-spacing type="m"></mib-spacing>
 					</mib-tab-item>
+					<!-- второй таб -->
 					<mib-tab-item value="2">
 						<mib-spacing type="xs"></mib-spacing>
 						<mib-information type="information">
@@ -66,6 +69,7 @@
 					</mib-tab-item>
 				</mib-tab-group>
 			</div>
+			<!-- второй скрин -->
 			<div *ngSwitchCase="2">
 				<mib-spacing type="xs2"></mib-spacing>
 				<h4>Основная информация</h4>
@@ -80,6 +84,7 @@
 							>От ИП</mib-navbar-point
 						>
 					</mib-navbar>
+					<!-- первый таб второго скрина -->
 					<mib-tab-item value="1">
 						<mib-spacing type="xs"></mib-spacing>
 						<mib-input class="flex_grow">
@@ -90,7 +95,7 @@
 						<mib-spacing type="s"></mib-spacing>
 						<div class="flex flex_column gap-12">
 							<div class="flex gap-12 w-100">
-								<mib-select placeholder="Организация">
+								<mib-select class="w-27" placeholder="Организация">
 									<mib-dropdown-point
 										[value]="true"
 										text="ООО"
@@ -164,6 +169,7 @@
 							</mib-input>
 						</div>
 					</mib-tab-item>
+					<!-- второй таб второго скрина -->
 					<mib-tab-item value="2">
 						<mib-spacing type="xs"></mib-spacing>
 						<mib-information type="information">
@@ -187,6 +193,7 @@
 				</mib-tab-group>
 				<mib-spacing type="m"></mib-spacing>
 			</div>
+			<!-- третий скрин -->
 			<div *ngSwitchCase="3">
 				<mib-spacing type="xs2"></mib-spacing>
 				<h4>Данные о владельце сертификата</h4>
@@ -257,7 +264,7 @@
 					<p class="headline">Паспортные данные</p>
 					<div class="flex">
 						<mib-select
-							class="pass"
+							class="w-100"
 							type="outline"
 							placeholder="Гражданство РФ"
 						>
@@ -312,6 +319,7 @@
 					</p>
 				</div>
 			</div>
+			<!-- четвертый скрин -->
 			<div *ngSwitchCase="4">
 				<mib-spacing type="xs2"></mib-spacing>
 				<h4>Распечатайте заявку</h4>
@@ -325,7 +333,6 @@
 				</mib-information>
 				<mib-spacing type="xs"></mib-spacing>
 				<div class="flex flex_align-center document">
-					<!-- скачать документ компонент, ранее известный как mib-file-cell -->
 					<div class="flex flex_grow gap-4">
 						<span class="text text_m c-bti-primary"> Название документа </span>
 						<span class="text text_m c-bti-tertiary"> 2,37мб </span>
@@ -382,6 +389,7 @@
 			</div>
 		</div>
 	</mib-drawer-container>
+	<!-- дровер футер -->
 	<mib-drawer-footer drawer-footer>
 		<div class="flex w-100 flex_justify-between">
 			<div class="flex">

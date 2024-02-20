@@ -3,149 +3,366 @@
 		showProgressBar="true"
 		(onClose)="dialogRef.close()"
 		drawer-header
+		[maxPage]="maxPage"
+		[progress]="progress"
 	>
 	</mib-drawer-header>
 	<mib-drawer-container>
 		<p class="text text_m c-bti-secondary">Запрос на поручительство</p>
-		<mib-spacing type="xs2"></mib-spacing>
-		<h4>Основная информация</h4>
-		<mib-spacing type="xs"></mib-spacing>
-		<p class="text text_m c-bti-secondary">Тип организации</p>
-		<mib-tab-group>
-			<mib-navbar>
-				<mib-navbar-point value="1" type="filled" class="flex_grow"
-					>От юридического лиц</mib-navbar-point
-				>
-				<mib-navbar-point value="2" type="filled" class="flex_grow"
-					>От ИП</mib-navbar-point
-				>
-			</mib-navbar>
-			<mib-tab-item value="1">
+		<div [ngSwitch]="progress">
+			<!-- первый скрин -->
+			<div *ngSwitchCase="progress === 1">
+				<mib-spacing type="xs2"></mib-spacing>
+				<h4>Основная информация</h4>
 				<mib-spacing type="xs"></mib-spacing>
-				<mib-input class="flex_grow">
-					<input mibInput />
-					<ng-container mibLabel>ИНН организации</ng-container>
-					<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
-				</mib-input>
-				<mib-spacing type="s"></mib-spacing>
-				<div class="flex flex_column gap-12">
-					<div class="flex gap-12 w-100">
-						<mib-select placeholder="Организация">
-							<mib-dropdown-point
-								[value]="true"
-								text="ООО"
-							></mib-dropdown-point>
-							<mib-dropdown-point
-								[value]="false"
-								text="ЗАО"
-							></mib-dropdown-point>
-							<mib-dropdown-point
-								[value]="false"
-								text="ОАО"
-							></mib-dropdown-point>
-							<mib-dropdown-point
-								[value]="false"
-								text="ПАО"
-							></mib-dropdown-point>
-						</mib-select>
+				<p class="text text_m c-bti-secondary">Тип организации</p>
+				<mib-tab-group>
+					<mib-navbar>
+						<mib-navbar-point value="1" type="filled" class="flex_grow"
+							>От юридического лиц</mib-navbar-point
+						>
+						<mib-navbar-point value="2" type="filled" class="flex_grow"
+							>От ИП</mib-navbar-point
+						>
+					</mib-navbar>
+					<!-- первый таб -->
+					<mib-tab-item value="1">
+						<mib-spacing type="xs"></mib-spacing>
+						<mib-information type="information">
+							<ng-container information-text
+								>Инфо: Введите ИНН организации и остальные данные заполнятся
+								автоматически
+							</ng-container>
+						</mib-information>
+						<mib-spacing type="xs"></mib-spacing>
+						<div class="flex flex_align-center gap-12">
+							<mib-input class="flex_grow">
+								<input mibInput />
+								<ng-container mibLabel>Введите ИНН организации</ng-container>
+							</mib-input>
+							<mib-button (click)="confirmIds()" type="filled-primary"
+								>Подтвердить</mib-button
+							>
+						</div>
+						<mib-spacing type="m"></mib-spacing>
+					</mib-tab-item>
+					<!-- второй таб -->
+					<mib-tab-item value="2">
+						<mib-spacing type="xs"></mib-spacing>
+						<mib-information type="information">
+							<ng-container information-text
+								>Инфо: Введите ИНН организации и остальные данные заполнятся
+								автоматически
+							</ng-container>
+						</mib-information>
+						<mib-spacing type="xs"></mib-spacing>
+						<div class="flex flex_align-center gap-12">
+							<mib-input class="flex_grow">
+								<input mibInput />
+								<ng-container mibLabel>Введите ИНН организации</ng-container>
+							</mib-input>
+							<mib-button (click)="confirmIds()" type="filled-primary"
+								>Подтвердить</mib-button
+							>
+						</div>
+						<mib-spacing type="m"></mib-spacing>
+					</mib-tab-item>
+				</mib-tab-group>
+			</div>
+			<!-- второй скрин -->
+			<div *ngSwitchCase="2">
+				<mib-spacing type="xs2"></mib-spacing>
+				<h4>Основная информация</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<p class="text text_m c-bti-secondary">Тип организации</p>
+				<mib-tab-group>
+					<mib-navbar>
+						<mib-navbar-point value="1" type="filled" class="flex_grow"
+							>От юридического лиц</mib-navbar-point
+						>
+						<mib-navbar-point value="2" type="filled" class="flex_grow"
+							>От ИП</mib-navbar-point
+						>
+					</mib-navbar>
+					<!-- первый таб второго скрина -->
+					<mib-tab-item value="1">
+						<mib-spacing type="xs"></mib-spacing>
 						<mib-input class="flex_grow">
 							<input mibInput />
-							<ng-container mibLabel
-								>Краткое наименование организации</ng-container
-							>
+							<ng-container mibLabel>ИНН организации</ng-container>
+							<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
+						</mib-input>
+						<mib-spacing type="s"></mib-spacing>
+						<div class="flex flex_column gap-12">
+							<div class="flex gap-12 w-100">
+								<mib-select class="w-27" placeholder="Организация">
+									<mib-dropdown-point
+										[value]="true"
+										text="ООО"
+									></mib-dropdown-point>
+									<mib-dropdown-point
+										[value]="false"
+										text="ЗАО"
+									></mib-dropdown-point>
+									<mib-dropdown-point
+										[value]="false"
+										text="ОАО"
+									></mib-dropdown-point>
+									<mib-dropdown-point
+										[value]="false"
+										text="ПАО"
+									></mib-dropdown-point>
+								</mib-select>
+								<mib-input class="flex_grow">
+									<input mibInput />
+									<ng-container mibLabel
+										>Краткое наименование организации</ng-container
+									>
+								</mib-input>
+							</div>
+							<div class="flex gap-12">
+								<mib-input class="flex_grow">
+									<input mibInput />
+									<ng-container mibLabel>Номер телефона</ng-container>
+								</mib-input>
+								<mib-input class="flex_grow">
+									<input mibInput />
+									<ng-container mibLabel>Электронная почта</ng-container>
+								</mib-input>
+							</div>
+							<mib-input>
+								<input mibInput />
+								<ng-container mibLabel>Адрес сайта</ng-container>
+							</mib-input>
+						</div>
+					</mib-tab-item>
+					<!-- второй таб второго скрина -->
+					<mib-tab-item value="2">
+						<mib-spacing type="xs"></mib-spacing>
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>ИНН лица</ng-container>
+							<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
+						</mib-input>
+						<mib-spacing type="s"></mib-spacing>
+						<div class="flex flex_column gap-12">
+							<mib-input>
+								<input mibInput />
+								<ng-container mibLabel
+									>Краткое наименование организации</ng-container
+								>
+							</mib-input>
+							<div class="flex gap-12">
+								<mib-input class="flex_grow">
+									<input mibInput />
+									<ng-container mibLabel>Номер телефона</ng-container>
+								</mib-input>
+								<mib-input class="flex_grow">
+									<input mibInput />
+									<ng-container mibLabel>Электронная почта</ng-container>
+								</mib-input>
+							</div>
+							<mib-input>
+								<input mibInput />
+								<ng-container mibLabel>Адрес сайта</ng-container>
+							</mib-input>
+						</div>
+					</mib-tab-item>
+				</mib-tab-group>
+				<mib-spacing type="m"></mib-spacing>
+			</div>
+			<!-- третий скрин -->
+			<div *ngSwitchCase="3">
+				<mib-spacing type="xs2"></mib-spacing>
+				<h4>Банковские реквизиты</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<p class="headline">Основной счёт</p>
+				<mib-spacing type="xs2"></mib-spacing>
+				<div class="flex flex_column gap-12">
+					<mib-input>
+						<input mibInput />
+						<ng-container mibLabel>Банк</ng-container>
+						<mib-icon mibLeftIcon class="stroke" name="fi_search"></mib-icon>
+					</mib-input>
+					<div class="flex gap-12 w-100">
+						<mib-input class="w-27">
+							<input mibInput />
+							<ng-container mibLabel>БИК банка</ng-container>
+						</mib-input>
+						<mib-input class="flex_grow">
+							<input mibInput />
+							<ng-container mibLabel>Корр. счёт банка</ng-container>
 						</mib-input>
 					</div>
+				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex flex_column gap-12">
 					<div class="flex gap-12">
 						<mib-input class="flex_grow">
 							<input mibInput />
-							<ng-container mibLabel>Номер телефона</ng-container>
+							<ng-container mibLabel>Номер счёта</ng-container>
 						</mib-input>
 						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel>Электронная почта</ng-container>
+							<input type="date" mibInput />
+							<ng-container mibLabel>Дата открытия</ng-container>
 						</mib-input>
 					</div>
-					<mib-input>
-						<input mibInput />
-						<ng-container mibLabel>Адрес сайта</ng-container>
-					</mib-input>
+					<mib-textarea>
+						<ng-container mibLabel>Комментарий к запросу</ng-container>
+						<textarea [maxLength]="100" autosize mibTextarea></textarea>
+					</mib-textarea>
 				</div>
-			</mib-tab-item>
-			<mib-tab-item value="2">
-				<mib-spacing type="xs"></mib-spacing>
-				<mib-input class="flex_grow">
-					<input mibInput />
-					<ng-container mibLabel>ИНН организации</ng-container>
-					<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
-				</mib-input>
 				<mib-spacing type="s"></mib-spacing>
-				<div class="flex flex_column gap-12">
-					<div class="flex gap-12 w-100">
-						<mib-select placeholder="Тип">
-							<mib-dropdown-point
-								[value]="true"
-								text="УСН"
-							></mib-dropdown-point>
-							<mib-dropdown-point
-								[value]="false"
-								text="АУСН"
-							></mib-dropdown-point>
-							<mib-dropdown-point
-								[value]="false"
-								text="ПСН"
-							></mib-dropdown-point>
-							<mib-dropdown-point
-								[value]="false"
-								text="НДП"
-							></mib-dropdown-point>
-							<mib-dropdown-point
-								[value]="false"
-								text="ОСН"
-							></mib-dropdown-point>
-						</mib-select>
-						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel
-								>Краткое наименование организации</ng-container
-							>
-						</mib-input>
-					</div>
-					<div class="flex gap-12">
-						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel>Номер телефона</ng-container>
-						</mib-input>
-						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel>Электронная почта</ng-container>
-						</mib-input>
-					</div>
-					<mib-input>
-						<input mibInput />
-						<ng-container mibLabel>Адрес сайта</ng-container>
-					</mib-input>
+				<div class="flex flex_column">
+					<p class="headline">Дополнительный счёт</p>
+					<mib-spacing type="xs2"></mib-spacing>
+					<p class="text text_s c-bti-secondary">
+						Вы также можете указать дополнительные счета для отслеживания
+						расходов по проектам, счета для онлайн-продаж, счета для
+						определенных клиентов и т. д.
+					</p>
+					<mib-spacing type="xs"></mib-spacing>
 				</div>
-			</mib-tab-item>
-		</mib-tab-group>
-		<mib-spacing type="m"></mib-spacing>
-		<mib-information type="information">
-			<ng-container information-text
-				>Инфо: Введите ИНН организации и остальные данные заполнятся
-				автоматически
-			</ng-container>
-		</mib-information>
-		<mib-spacing type="xs"></mib-spacing>
-		<div class="flex flex_align-center gap-12">
-			<mib-input class="flex_grow">
-				<input mibInput />
-				<ng-container mibLabel>Введите ИНН организации</ng-container>
-			</mib-input>
-			<mib-button type="filled-primary">Подтвердить</mib-button>
+				<div class="form">
+					<div class="flex flex_column">
+						<div class="flex">
+							<div class="flex w-100 flex_align-center">
+								<div class="flex gap-6 flex_grow">
+									<span class="text text_m c-bti-primary"
+										>ПАО АКБ "МЕТАЛЛИНВЕСТБАНК"</span
+									>
+									<mib-badge type="filled-secondary" [extended]="true" size="m"
+										>Дополнительный</mib-badge
+									>
+								</div>
+								<div class="flex">
+									<mib-button
+										size="s"
+										(press)="accountEdit()"
+										type="ghost-secondary"
+									>
+										<mib-icon
+											btn-icon
+											class="stroke"
+											name="fi_edit-3"
+										></mib-icon>
+									</mib-button>
+									<mib-button
+										size="s"
+										(press)="accountEdit()"
+										type="ghost-secondary"
+									>
+										<mib-icon
+											btn-icon
+											class="stroke"
+											name="fi_trash"
+										></mib-icon>
+									</mib-button>
+								</div>
+							</div>
+						</div>
+						<mib-spacing type="xs2"></mib-spacing>
+						<div class="flex flex_column">
+							<div class="flex gap-12 flex_column">
+								<div class="flex gap-12">
+									<mib-input class="flex_grow">
+										<input mibInput />
+										<ng-container mibLabel>Банк</ng-container>
+										<mib-icon
+											mibLeftIcon
+											class="stroke"
+											name="fi_search"
+										></mib-icon>
+									</mib-input>
+									<mib-input class="flex_grow">
+										<input mibInput />
+										<ng-container mibLabel>Номер счёта</ng-container>
+									</mib-input>
+								</div>
+								<div class="flex gap-12">
+									<mib-input class="flex_grow">
+										<input type="date" mibInput />
+										<ng-container mibLabel>Дата открытия</ng-container>
+									</mib-input>
+									<mib-input class="flex_grow">
+										<input type="date" mibInput />
+										<ng-container mibLabel>Дата закрытия</ng-container>
+									</mib-input>
+								</div>
+								<mib-input>
+									<input mibInput />
+									<ng-container mibLabel>Цель открытия</ng-container>
+								</mib-input>
+							</div>
+							<mib-spacing type="s"></mib-spacing>
+							<div class="flex gap-12">
+								<mib-button
+									(click)="saveAccountDate()"
+									size="m"
+									type="filled-primary"
+									>Сохранить
+								</mib-button>
+								<mib-button
+									(click)="canselAccountData()"
+									size="m"
+									type="filled-secondary"
+									>Отмена</mib-button
+								>
+							</div>
+						</div>
+					</div>
+					<mib-spacing type="xs2"></mib-spacing>
+				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<mib-link (click)="addAccount()" size="s" type="ghost-primary"
+					>Добавить счёт
+					<mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>
+				</mib-link>
+				<mib-spacing type="m"></mib-spacing>
+			</div>
+			<!-- четвертый скрин -->
+			<div *ngSwitchCase="4">
+				4
+				<mib-spacing type="m"></mib-spacing>
+			</div>
+			<!-- пятый скрин -->
+			<div *ngSwitchCase="5">
+				5
+				<mib-spacing type="m"></mib-spacing>
+			</div>
+			<div *ngSwitchDefault>
+				<h4>default switch</h4>
+			</div>
 		</div>
 	</mib-drawer-container>
+	<!-- дровер футер -->
 	<mib-drawer-footer drawer-footer>
-		<div class="flex w-100 flex_justify-end">
-			<mib-button size="m" type="filled-primary">Продолжить</mib-button>
+		<div class="flex w-100 flex_justify-between">
+			<div class="flex">
+				<mib-button
+					[ngStyle]="{display: progress <= 1 ? 'none' : 'block'}"
+					(click)="prevPage()"
+					size="m"
+					type="filled-secondary"
+					>Назад</mib-button
+				>
+			</div>
+			<div class="flex">
+				<mib-button
+					[ngStyle]="{display: progress === maxPage ? 'none' : 'block'}"
+					(click)="nextPage()"
+					size="m"
+					type="filled-primary"
+					>Продолжить
+				</mib-button>
+				<mib-button
+					[ngStyle]="{display: progress === maxPage ? 'block' : 'none'}"
+					(click)="submitData()"
+					size="m"
+					type="filled-primary"
+					>Отправить</mib-button
+				>
+			</div>
 		</div>
 	</mib-drawer-footer>
 </mib-drawer>
