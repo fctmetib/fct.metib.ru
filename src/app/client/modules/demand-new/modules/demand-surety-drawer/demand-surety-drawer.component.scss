@@ -1,5 +1,16 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+@import 'src/styles/_colors.vars.scss';
+
 .form {
 	padding: 8px 16px;
 	border-radius: var(--main-border-radius);
 	box-shadow: var(--normal-shadow);
+}
+
+.description {
+	padding-top: 4px;
+	mib-icon {
+		@include icon-width(16px);
+		@include icon-color(var(--bti-tertiary));
+	}
 }
