@@ -20,6 +20,7 @@ import {AutosizeModule} from 'ngx-autosize'
 import {LinkModule} from 'src/app/shared/ui-kit/link/link.module'
 import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
 import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/contracted-forms.module'
+import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
 
 @NgModule({
 	declarations: [DemandSuretyDrawerComponent],
@@ -42,7 +43,8 @@ import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/cont
 		AutosizeModule,
 		LinkModule,
 		BadgeModule,
-		ContractedFormsModule
+		ContractedFormsModule,
+		MibDragAndDropModule
 	],
 	providers: [DemandSuretyDrawerService]
 })

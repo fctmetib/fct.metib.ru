@@ -3,6 +3,9 @@ import {MatDialogRef} from '@angular/material/dialog'
 import {BehaviorSubject} from 'rxjs'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {ContractedFormsEnum} from 'src/app/shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface'
+import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
+import {DocumentReq} from '../../../requests/interfaces/request.interface'
+import {extractBase64} from 'src/app/shared/services/tools.service'
 
 @Component({
 	selector: 'mib-demand-surety-drawer',
@@ -12,7 +15,7 @@ import {ContractedFormsEnum} from 'src/app/shared/ui-kit/contracted-forms/interf
 export class DemandSuretyDrawerComponent {
 	public progres$ = new BehaviorSubject<number>(1)
 	public progress: number = 1
-	public maxPage: number = 6
+	public maxPage: number = 5
 	public pageCount: number = 1
 
 	public ContractedFormsEnum = ContractedFormsEnum
@@ -22,6 +25,17 @@ export class DemandSuretyDrawerComponent {
 		private toaster: ToasterService,
 		public dialogRef: MatDialogRef<DemandSuretyDrawerComponent>
 	) {}
+
+	onDocumentLoad({file, url}: FileDnd) {
+		const document: DocumentReq = {
+			Description: `description ${file.name}`,
+			DocumentTypeID: 40,
+			Title: file.name,
+			OwnerTypeID: 20,
+			Data: extractBase64(url)
+		}
+		// this.addDocument(document)
+	}
 
 	public nextPage() {
 		if (this.pageCount >= 1 && this.pageCount <= this.maxPage - 1) {
