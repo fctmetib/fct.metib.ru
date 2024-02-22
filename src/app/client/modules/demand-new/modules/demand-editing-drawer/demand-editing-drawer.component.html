@@ -1,9 +1,5 @@
 <mib-drawer>
-	<mib-drawer-header
-		showProgressBar="true"
-		(onClose)="dialogRef.close()"
-		drawer-header
-	>
+	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
 	</mib-drawer-header>
 	<mib-drawer-container>
 		<h4>Запрос на редактирования профиля</h4>
@@ -80,11 +76,9 @@
 				<ng-container mibLabel>Кем выдан паспорт</ng-container>
 			</mib-input>
 		</div>
-		<mib-spacing type="s"></mib-spacing>
-		<p class="headline">Прикрепленные документы</p>
 		<mib-spacing type="xs"></mib-spacing>
-		<mib-file-cell size="s"></mib-file-cell>
-		<mib-spacing type="xs"></mib-spacing>
+		<p class="headline">Прикрепите скан-копию паспорта в поле ниже</p>
+		<mib-spacing type="xs2"></mib-spacing>
 		<div class="flex flex_column gap-12">
 			<mib-dnd
 				(onChange)="onDocumentLoad($event)"
@@ -97,17 +91,25 @@
 					'image/jpeg',
 					'image/png'
 				]"
-				headline="Прикрепите еще один скан документа"
+				headline="Прикрепите скан документа"
 			></mib-dnd>
-			<p class="text text_xs c-bti-tertiary">
-				Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
-			</p>
+			<div>
+				<p class="text text_xs c-bti-tertiary">
+					Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG,
+					PNG
+				</p>
+				<p class="text text_xs c-bti-tertiary">
+					Размер каждого документа не должен превышать 10 МБ
+				</p>
+			</div>
 		</div>
 		<mib-spacing type="m"></mib-spacing>
 	</mib-drawer-container>
 	<mib-drawer-footer drawer-footer>
 		<div class="flex w-100">
-			<mib-button size="m" type="filled-primary">Отправить запрос</mib-button>
+			<mib-button (press)="submitData()" size="m" type="filled-primary"
+				>Отправить запрос</mib-button
+			>
 		</div>
 	</mib-drawer-footer>
 </mib-drawer>

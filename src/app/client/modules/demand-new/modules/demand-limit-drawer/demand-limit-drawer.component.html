@@ -1,9 +1,5 @@
 <mib-drawer>
-	<mib-drawer-header
-		showProgressBar="true"
-		(onClose)="dialogRef.close()"
-		drawer-header
-	>
+	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
 	</mib-drawer-header>
 	<mib-drawer-container>
 		<h4>Запрос на обновление лимита</h4>
@@ -92,7 +88,9 @@
 	</mib-drawer-container>
 	<mib-drawer-footer drawer-footer>
 		<div class="flex w-100">
-			<mib-button size="m" type="filled-primary">Отправить запрос</mib-button>
+			<mib-button (press)="submitData()" size="m" type="filled-primary"
+				>Отправить запрос</mib-button
+			>
 		</div>
 	</mib-drawer-footer>
 </mib-drawer>

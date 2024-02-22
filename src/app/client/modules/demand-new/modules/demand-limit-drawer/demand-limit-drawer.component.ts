@@ -3,6 +3,7 @@ import {MatDialogRef} from '@angular/material/dialog'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {extractBase64} from 'src/app/shared/services/tools.service'
+import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
 @Component({
 	selector: 'mib-demand-limit-drawer',
@@ -10,7 +11,10 @@ import {extractBase64} from 'src/app/shared/services/tools.service'
 	styleUrls: ['./demand-limit-drawer.component.scss']
 })
 export class DemandLimitDrawerComponent {
-	constructor(public dialogRef: MatDialogRef<DemandLimitDrawerComponent>) {}
+	constructor(
+		private toaster: ToasterService,
+		public dialogRef: MatDialogRef<DemandLimitDrawerComponent>
+	) {}
 
 	data = 20000
 
@@ -23,5 +27,17 @@ export class DemandLimitDrawerComponent {
 			Data: extractBase64(url)
 		}
 		// this.addDocument(document)
+	}
+
+	public submitData() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+		// this.dialogRef.close()
 	}
 }

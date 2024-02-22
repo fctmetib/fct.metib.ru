@@ -3,6 +3,7 @@ import {MatDialogRef} from '@angular/material/dialog'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {extractBase64} from 'src/app/shared/services/tools.service'
+import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
 @Component({
 	selector: 'mib-demand-editing-drawer',
@@ -10,7 +11,10 @@ import {extractBase64} from 'src/app/shared/services/tools.service'
 	styleUrls: ['./demand-editing-drawer.component.scss']
 })
 export class DemandEditingDrawerComponent {
-	constructor(public dialogRef: MatDialogRef<DemandEditingDrawerComponent>) {}
+	constructor(
+		private toaster: ToasterService,
+		public dialogRef: MatDialogRef<DemandEditingDrawerComponent>
+	) {}
 
 	onDocumentLoad({file, url}: FileDnd) {
 		const document: DocumentReq = {
@@ -21,5 +25,17 @@ export class DemandEditingDrawerComponent {
 			Data: extractBase64(url)
 		}
 		// this.addDocument(document)
+	}
+
+	public submitData() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+		// this.dialogRef.close()
 	}
 }

@@ -7,6 +7,7 @@ import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {extractBase64} from 'src/app/shared/services/tools.service'
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
+import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
 @Component({
 	selector: 'mib-demand-drawer',
@@ -20,6 +21,7 @@ export class DemandDrawerComponent implements OnInit {
 
 	constructor(
 		private fb: FormBuilder,
+		private toaster: ToasterService,
 		public dialogRef: MatDialogRef<DemandDrawerComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData
 	) {}
@@ -68,5 +70,16 @@ export class DemandDrawerComponent implements OnInit {
 			Data: extractBase64(url)
 		}
 		this.addDocument(document)
+	}
+
+	public editDocument() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
 	}
 }
