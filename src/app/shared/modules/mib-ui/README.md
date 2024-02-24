@@ -145,6 +145,22 @@ ng g s client/modules/demand-new/modules/demand-verification-drawer/demand-verif
 ng g c client/modules/demand-new/modules/demand-verification-drawer --skip-tests --dry-run
  //---
 
+ //--- demand-factoring-drawer
+src\app\client\modules\demand-new\modules\demand-factoring-drawer
+ng g i client/modules/demand-new/modules/demand-factoring-drawer/interfaces/demand-factoring-drawer.interface  --dry-run
+ng g m client/modules/demand-new/modules/demand-factoring-drawer/demand-factoring-drawer --flat --dry-run
+ng g s client/modules/demand-new/modules/demand-factoring-drawer/demand-factoring-drawer --skip-tests --dry-run
+ng g c client/modules/demand-new/modules/demand-factoring-drawer --skip-tests --dry-run
+ //---
+
+ //--- demand-agent-drawer
+src\app\client\modules\demand-new\modules\demand-agent-drawer
+ng g i client/modules/demand-new/modules/demand-agent-drawer/interfaces/demand-agent-drawer.interface  --dry-run
+ng g m client/modules/demand-new/modules/demand-agent-drawer/demand-agent-drawer --flat --dry-run
+ng g s client/modules/demand-new/modules/demand-agent-drawer/demand-agent-drawer --skip-tests --dry-run
+ng g c client/modules/demand-new/modules/demand-agent-drawer --skip-tests --dry-run
+ //---
+
  //--- invoice-drawer
 src\app\client\modules\invoices\modules
 ng g i client/modules/invoices/modules/invoice-drawer/interfaces/invoice-drawer.interface  --dry-run

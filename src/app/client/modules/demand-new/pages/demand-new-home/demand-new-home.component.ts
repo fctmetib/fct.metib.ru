@@ -17,6 +17,8 @@ import {DemandEditingDrawerService} from '../../modules/demand-editing-drawer/de
 import {DemandLimitDrawerService} from '../../modules/demand-limit-drawer/demand-limit-drawer.service'
 import {DemandDebtorDrawerService} from '../../modules/demand-debtor-drawer/demand-debtor-drawer.service'
 import {DemandVerificationDrawerService} from '../../modules/demand-verification-drawer/demand-verification-drawer.service'
+import {DemandFactoringDrawerService} from '../../modules/demand-factoring-drawer/demand-factoring-drawer.service'
+import {DemandAgentDrawerService} from '../../modules/demand-agent-drawer/demand-agent-drawer.service'
 
 const ANIMATION_CONFIG = {
 	translateDistance: '-3%',
@@ -37,6 +39,8 @@ export class DemandNewHomeComponent implements OnInit {
 	draftLists: IDraftList[] = []
 	historys: IHistoryList[] = []
 	historyLists: IHistoryList[] = []
+
+	public isNewClient: boolean = true
 
 	public loading$ = new BehaviorSubject<boolean>(false)
 
@@ -68,7 +72,9 @@ export class DemandNewHomeComponent implements OnInit {
 		private demandEditingDrawerService: DemandEditingDrawerService,
 		private demandLimitDrawerService: DemandLimitDrawerService,
 		private demandDebtorDrawerService: DemandDebtorDrawerService,
-		private demandVerificationDrawerService: DemandVerificationDrawerService
+		private demandVerificationDrawerService: DemandVerificationDrawerService,
+		private demandFactoringDrawerService: DemandFactoringDrawerService,
+		private demandAgentDrawerService: DemandAgentDrawerService
 	) {}
 
 	ngOnInit(): void {
@@ -187,6 +193,20 @@ export class DemandNewHomeComponent implements OnInit {
 				break
 			case 6:
 				this.demandVerificationDrawerService
+					.open({data: {id}})
+					// .open({state: DrawerStateEnum.CREATE})
+					.afterClosed()
+					.subscribe()
+				break
+			case 7:
+				this.demandFactoringDrawerService
+					.open({data: {id}})
+					// .open({state: DrawerStateEnum.CREATE})
+					.afterClosed()
+					.subscribe()
+				break
+			case 8:
+				this.demandAgentDrawerService
 					.open({data: {id}})
 					// .open({state: DrawerStateEnum.CREATE})
 					.afterClosed()

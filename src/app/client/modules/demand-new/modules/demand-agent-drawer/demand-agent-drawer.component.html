@@ -1,0 +1,58 @@
+<mib-drawer>
+	<mib-drawer-header
+		showProgressBar="true"
+		(onClose)="dialogRef.close()"
+		drawer-header
+		[maxPage]="maxPage"
+		[progress]="progress"
+	>
+	</mib-drawer-header>
+	<mib-drawer-container>
+		<p class="text text_m c-bti-secondary">Запрос на агентский факторинг</p>
+		<div [ngSwitch]="progress">
+			<!-- первый скрин -->
+			<div *ngSwitchCase="progress === 1">info-1</div>
+			<!-- второй скрин -->
+			<div *ngSwitchCase="2">info-2</div>
+			<!-- третий скрин -->
+			<div *ngSwitchCase="3">info-3</div>
+			<!-- четвертый скрин -->
+			<div *ngSwitchCase="4">info-4</div>
+			<!-- пятый скрин -->
+			<div *ngSwitchCase="5">info-5</div>
+			<div *ngSwitchDefault>
+				<h4>default switch</h4>
+			</div>
+		</div>
+	</mib-drawer-container>
+	<!-- дровер футер -->
+	<mib-drawer-footer drawer-footer>
+		<div class="flex w-100 flex_justify-between">
+			<div class="flex">
+				<mib-button
+					[ngStyle]="{display: progress <= 1 ? 'none' : 'block'}"
+					(click)="prevPage()"
+					size="m"
+					type="filled-secondary"
+					>Назад</mib-button
+				>
+			</div>
+			<div class="flex">
+				<mib-button
+					[ngStyle]="{display: progress === maxPage ? 'none' : 'block'}"
+					(click)="nextPage()"
+					size="m"
+					type="filled-primary"
+					>Продолжить
+				</mib-button>
+				<mib-button
+					[ngStyle]="{display: progress === maxPage ? 'block' : 'none'}"
+					(click)="submitData()"
+					size="m"
+					type="filled-primary"
+					>Отправить</mib-button
+				>
+			</div>
+		</div>
+	</mib-drawer-footer>
+</mib-drawer>
