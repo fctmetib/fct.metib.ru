@@ -104,7 +104,7 @@ export class DemandSuretyDrawerComponent {
 		)
 	}
 
-	public saveAccountDate() {
+	public saveAccountData() {
 		this.toaster.show(
 			'failure',
 			'Функционал в разработке!',

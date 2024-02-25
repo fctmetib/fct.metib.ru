@@ -40,7 +40,7 @@
 								<input mibInput />
 								<ng-container mibLabel>Введите ИНН организации</ng-container>
 							</mib-input>
-							<mib-button (click)="confirmIds()" type="filled-primary"
+							<mib-button (press)="confirmIds()" type="filled-primary"
 								>Подтвердить</mib-button
 							>
 						</div>
@@ -61,7 +61,7 @@
 								<input mibInput />
 								<ng-container mibLabel>Введите ИНН организации</ng-container>
 							</mib-input>
-							<mib-button (click)="confirmIds()" type="filled-primary"
+							<mib-button (press)="confirmIds()" type="filled-primary"
 								>Подтвердить</mib-button
 							>
 						</div>
@@ -298,13 +298,13 @@
 							<mib-spacing type="s"></mib-spacing>
 							<div class="flex gap-12">
 								<mib-button
-									(click)="saveAccountDate()"
+									(press)="saveAccountData()"
 									size="m"
 									type="filled-primary"
 									>Сохранить
 								</mib-button>
 								<mib-button
-									(click)="canselAccountData()"
+									(press)="canselAccountData()"
 									size="m"
 									type="filled-secondary"
 									>Отмена</mib-button
@@ -430,13 +430,13 @@
 								<mib-spacing type="s"></mib-spacing>
 								<div class="flex gap-12">
 									<mib-button
-										(click)="saveRealtyData()"
+										(press)="saveRealtyData()"
 										size="m"
 										type="filled-primary"
 										>Сохранить
 									</mib-button>
 									<mib-button
-										(click)="canselRealtyData()"
+										(press)="canselRealtyData()"
 										size="m"
 										type="filled-secondary"
 										>Отмена</mib-button
@@ -537,13 +537,13 @@
 							<mib-spacing type="s"></mib-spacing>
 							<div class="flex gap-12">
 								<mib-button
-									(click)="saveDebentures()"
+									(press)="saveDebentures()"
 									size="m"
 									type="filled-primary"
 									>Сохранить
 								</mib-button>
 								<mib-button
-									(click)="cancelDebentures()"
+									(press)="cancelDebentures()"
 									size="m"
 									type="filled-secondary"
 									>Отмена</mib-button
@@ -618,11 +618,11 @@
 							</div>
 							<mib-spacing type="s"></mib-spacing>
 							<div class="flex gap-12">
-								<mib-button (click)="saveEdms()" size="m" type="filled-primary"
+								<mib-button (press)="saveEdms()" size="m" type="filled-primary"
 									>Сохранить
 								</mib-button>
 								<mib-button
-									(click)="cancelEdms()"
+									(press)="cancelEdms()"
 									size="m"
 									type="filled-secondary"
 									>Отмена</mib-button
@@ -807,7 +807,7 @@
 			<div class="flex">
 				<mib-button
 					[ngStyle]="{display: progress <= 1 ? 'none' : 'block'}"
-					(click)="prevPage()"
+					(press)="prevPage()"
 					size="m"
 					type="filled-secondary"
 					>Назад</mib-button
@@ -816,14 +816,14 @@
 			<div class="flex">
 				<mib-button
 					[ngStyle]="{display: progress === maxPage ? 'none' : 'block'}"
-					(click)="nextPage()"
+					(press)="nextPage()"
 					size="m"
 					type="filled-primary"
 					>Продолжить
 				</mib-button>
 				<mib-button
 					[ngStyle]="{display: progress === maxPage ? 'block' : 'none'}"
-					(click)="submitData()"
+					(press)="submitData()"
 					size="m"
 					type="filled-primary"
 					>Отправить</mib-button
