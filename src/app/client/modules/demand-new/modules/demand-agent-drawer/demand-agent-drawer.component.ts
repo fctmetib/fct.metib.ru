@@ -52,4 +52,125 @@ export class DemandAgentDrawerComponent {
 		)
 		// this.dialogRef.close()
 	}
+
+	public confirmIds() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
+
+	public addAccount() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
+
+	public accountEdit() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
+
+	public saveAccountData() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
+
+	public canselAccountData() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
+
+	public saveRealtyData() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
+
+	public canselRealtyData() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
+
+	public addRealty() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
+
+	public saveDebentures() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
+
+	public cancelDebentures() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
+
+	public addDebentures() {
+		this.toaster.show(
+			'failure',
+			'Функционал в разработке!',
+			'',
+			true,
+			false,
+			3000
+		)
+	}
 }
