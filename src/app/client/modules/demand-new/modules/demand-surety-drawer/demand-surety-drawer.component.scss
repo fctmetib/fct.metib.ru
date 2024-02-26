@@ -7,10 +7,6 @@
 	box-shadow: var(--normal-shadow);
 }
 
-.pt-4 {
-	padding-top: 4px;
-}
-
 .description {
 	mib-icon {
 		@include icon-width(16px);

@@ -1,8 +1,13 @@
+@import 'src/styles/_typography.vars.scss';
 @import 'src/styles/helpers/icon_tools';
 
 :host {
+	// display: block;
+	// flex: 1 0 428px;
 	display: block;
-	flex: 1 0 428px;
+	max-width: calc(20% - 12.8px);
+	flex: 1 0;
+	min-width: 428px;
 }
 
 @mixin request-card {
@@ -29,6 +34,10 @@
 }
 
 .request-card {
+	& .request-text {
+		@include text-overflow(2);
+	}
+
 	@include request-card;
 
 	&:hover {

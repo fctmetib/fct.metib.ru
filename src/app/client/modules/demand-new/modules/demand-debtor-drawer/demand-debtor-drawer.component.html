@@ -4,8 +4,8 @@
 	<mib-drawer-container>
 		<h4>Добавить дебитора</h4>
 		<mib-spacing type="xs"></mib-spacing>
-		<mib-tab-group>
-			<mib-navbar>
+		<mib-tab-group type="filled">
+			<mib-navbar size="m">
 				<mib-navbar-point value="1" type="filled" class="flex_grow"
 					>Выбрать из списка</mib-navbar-point
 				>
@@ -32,7 +32,7 @@
 				<mib-spacing type="xs"></mib-spacing>
 				<div class="flex flex_column gap-12">
 					<div class="flex gap-12 w-100">
-						<mib-select placeholder="Организация">
+						<mib-select class="w-27" placeholder="Организация">
 							<mib-dropdown-point
 								[value]="true"
 								text="ООО"
