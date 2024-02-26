@@ -329,8 +329,8 @@
 								</div>
 							</div>
 						</div>
-						<mib-spacing type="xs2"></mib-spacing>
 						<div class="flex flex_column">
+							<mib-spacing type="xs2"></mib-spacing>
 							<div class="flex gap-12 flex_column">
 								<div class="flex gap-12">
 									<mib-input class="flex_grow">
@@ -377,6 +377,7 @@
 									>Отмена</mib-button
 								>
 							</div>
+							<mib-spacing type="xs2"></mib-spacing>
 						</div>
 					</div>
 				</div>
@@ -421,6 +422,22 @@
 						<input mibInput />
 						<ng-container mibLabel>Основные покупатели</ng-container>
 					</mib-input>
+					<!--  -->
+					<div class="flex gap-8">
+						<mib-tag type="filled-secondary" size="s">
+							<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+							Магнит
+						</mib-tag>
+						<mib-tag type="filled-secondary" size="s">
+							<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+							Fixprice
+						</mib-tag>
+						<mib-tag type="filled-secondary" size="s">
+							<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+							Metro
+						</mib-tag>
+					</div>
+					<!--  -->
 					<mib-input>
 						<input mibInput />
 						<ng-container mibLabel
@@ -484,6 +501,12 @@
 									<div class="flex gap-6 flex_grow">
 										<span class="text text_m c-bti-primary"
 											>г. Раменское, ул. Будапештсткая, 51</span
+										>
+										<mib-badge
+											type="filled-secondary"
+											[extended]="true"
+											size="m"
+											>Аренда</mib-badge
 										>
 									</div>
 									<div class="flex">
@@ -567,58 +590,7 @@
 									</div>
 								</div>
 							</div>
-							<!-- <mib-spacing type="xs2"></mib-spacing> -->
-							<!-- <div class="flex flex_column gap-12">
-								<mib-input>
-									<input mibInput />
-									<ng-container mibLabel>Кредитор</ng-container>
-								</mib-input>
-								<div class="flex gap-12">
-									<mib-input class="flex_grow">
-										<input mibInput />
-										<ng-container mibLabel>Сумма договора</ng-container>
-									</mib-input>
-									<mib-input class="flex_grow">
-										<input mibInput />
-										<ng-container mibLabel>Тип обязательства</ng-container>
-									</mib-input>
-								</div>
-								<mib-input>
-									<input type="date" mibInput />
-									<ng-container mibLabel>Дата погашения</ng-container>
-								</mib-input>
-								<div class="flex gap-12">
-									<mib-input class="flex_grow">
-										<input mibInput />
-										<ng-container mibLabel
-											>Остаток на дату отчётности</ng-container
-										>
-									</mib-input>
-									<mib-input class="flex_grow">
-										<input mibInput />
-										<ng-container mibLabel
-											>Остаток на текущую дату</ng-container
-										>
-									</mib-input>
-								</div>
-							</div> -->
-							<!-- <mib-spacing type="s"></mib-spacing>
-							<div class="flex gap-12">
-								<mib-button
-									(press)="saveDebentures()"
-									size="m"
-									type="filled-primary"
-									>Сохранить
-								</mib-button>
-								<mib-button
-									(press)="cancelDebentures()"
-									size="m"
-									type="filled-secondary"
-									>Отмена</mib-button
-								>
-							</div> -->
 						</div>
-						<!-- <mib-spacing type="xs2"></mib-spacing> -->
 					</div>
 				</div>
 				<mib-spacing type="xs"></mib-spacing>
