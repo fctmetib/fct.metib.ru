@@ -15,6 +15,10 @@
   }
 
   &_filled {
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    background-color: var(--wgr-secondary);
     padding: 2px;
   }
 }

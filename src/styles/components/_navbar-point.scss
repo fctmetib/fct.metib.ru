@@ -54,6 +54,22 @@ $text-selectors: 'span';
 }
 
 @mixin navbar-point-filled {
+
+  &::before {
+    display: none;
+  }
+
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+
+  &.navbar-point {
+    &_selected {
+      @include navbar-point-color(var(--bti-primary));
+      background-color: var(--wgr-primary);
+    }
+  }
+
   @include navbar-point-color(var(--bti-tertiary));
   &:hover {
     @include navbar-point-color(var(--bti-secondary));
@@ -102,11 +118,7 @@ $text-selectors: 'span';
     }
 
     &-filled {
-      &.navbar-point_l {
-      }
-
-      &.navbar-point_m {
-      }
+      @include navbar-point-filled;
     }
   }
 

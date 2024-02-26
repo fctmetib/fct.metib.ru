@@ -1,6 +1,6 @@
 import {
   AfterContentInit, ChangeDetectorRef,
-  Component,
+  Component, ContentChild,
   ContentChildren, EventEmitter, Input,
   OnDestroy,
   OnInit, Output,
@@ -10,6 +10,7 @@ import {BehaviorSubject, Subscription, tap, merge} from "rxjs";
 import {TabItemComponent} from "../tab-item/tab-item.component";
 import {NavbarPointType} from '../../../navbar/interfaces/navbar-point.interface';
 import {NavbarPointComponent} from '../../../navbar/components/navbar-point/navbar-point.component';
+import {NavbarComponent} from '../../../navbar/navbar.component';
 
 @Component({
   selector: 'mib-tab-group',
@@ -21,6 +22,7 @@ export class TabGroupComponent implements OnInit, OnDestroy, AfterContentInit {
   @Input() type: NavbarPointType = 'separator'
   @Output() selectionChange = new EventEmitter<string>()
 
+  @ContentChild(NavbarComponent, {descendants: true}) navbar: NavbarComponent
   @ContentChildren(NavbarPointComponent, {descendants: true}) buttons!: QueryList<NavbarPointComponent>;
   @ContentChildren(TabItemComponent, {descendants: true}) tabs!: QueryList<TabItemComponent>;
 
@@ -64,6 +66,9 @@ export class TabGroupComponent implements OnInit, OnDestroy, AfterContentInit {
   }
 
   updateTabsAndButtons = () => {
+    // Инициализация navbar
+    this.navbar.type = this.type;
+
     // Инициализация tabs
     this.tabs.forEach(tab => {
       tab.setSelected(tab.value === this.tabValue)
@@ -72,7 +77,6 @@ export class TabGroupComponent implements OnInit, OnDestroy, AfterContentInit {
 
     // Инициализация buttons
     this.buttons.forEach(button => {
-      button.type = this.type
       button.selected = button.value === this.tabValue
       this.cdr.detectChanges()
     });

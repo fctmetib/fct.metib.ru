@@ -2,6 +2,7 @@ import {AfterContentInit, Component, ContentChildren, Input, OnInit, QueryList} 
 import {tap} from "rxjs";
 import {NavbarPointSize, NavbarPointType} from './interfaces/navbar-point.interface';
 import {NavbarPointComponent} from './components/navbar-point/navbar-point.component';
+import {startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'mib-navbar',
@@ -10,8 +11,13 @@ import {NavbarPointComponent} from './components/navbar-point/navbar-point.compo
 })
 export class NavbarComponent implements OnInit, AfterContentInit {
 
-  @Input() type: NavbarPointType = 'separator'
+  @Input() set type(type: NavbarPointType) {
+    this._type = type
+    this.setNavbarPointsParams()
+  }
   @Input() size: NavbarPointSize = 'l'
+
+  public _type: NavbarPointType = 'separator'
 
   @ContentChildren(NavbarPointComponent, {descendants: true}) navbarPoints!: QueryList<NavbarPointComponent>
 
@@ -20,7 +26,7 @@ export class NavbarComponent implements OnInit, AfterContentInit {
 
   get classes() {
     return {
-      [`navbar_${this.type}`]: true
+      [`navbar_${this._type}`]: true
     }
   }
 
@@ -28,17 +34,16 @@ export class NavbarComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit() {
-    this.setNavbarPointsSize()
     this.navbarPoints.changes.pipe(
-      tap(this.setNavbarPointsSize)
+      startWith(null),
+      tap(this.setNavbarPointsParams)
     ).subscribe()
   }
 
-  public setNavbarPointsSize = () => {
-    console.log(this.navbarPoints)
+  public setNavbarPointsParams = () => {
     this.navbarPoints.forEach(point => {
       point.size = this.size;
-      point.type = this.type
+      point.type = this._type
     })
   }
 }
