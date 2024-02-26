@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, Input } from '@angular/core'
-import { DeviceType } from '../../interfaces/shared.interface'
-import { OpacityViewAnimation } from '../../animations/animations'
+import {AfterViewInit, Component, Input} from '@angular/core'
+import {DeviceType} from '../../interfaces/shared.interface'
+import {OpacityViewAnimation} from '../../animations/animations'
 
 @Component({
 	selector: 'mib-request-card',
@@ -12,7 +12,7 @@ export class RequestCardComponent implements AfterViewInit {
 	@Input() device: DeviceType = 'desktop'
 	@Input() requestTitle: string
 	@Input() requestText: string
-	@Input() requestQuantity: number
+	// @Input() requestQuantity: number
 	@Input() link?: string
 
 	public isHover: boolean = false

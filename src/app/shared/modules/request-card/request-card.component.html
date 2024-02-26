@@ -18,11 +18,11 @@
 	<mib-spacing type="xs2"></mib-spacing>
 	<div class="flex flex_justify-between">
 		<mib-link>
-			Новый запрос
+			Создать запрос
 			<mib-icon
 				[@opacityViewAnimation]="{
 					value: '',
-					params: { enterTime: 200, leaveTime: 0 }
+					params: {enterTime: 200, leaveTime: 0}
 				}"
 				*ngIf="isHover"
 				mibRightIcon
@@ -30,8 +30,8 @@
 				name="fi_plus"
 			></mib-icon>
 		</mib-link>
-		<mib-link [routerLink]="link" type="ghost-secondary">
+		<!-- <mib-link [routerLink]="link" type="ghost-secondary">
 			{{ requestQuantity ? requestQuantity : 'нет' }} в истории
-		</mib-link>
+		</mib-link> -->
 	</div>
 </div>

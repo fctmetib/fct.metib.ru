@@ -13,13 +13,13 @@
 		<mib-tab-item value="1">
 			<mib-spacing type="s"></mib-spacing>
 			<div class="flex flex_wrap gap-16">
+				<!-- [requestQuantity]="request.quantity" -->
+				<!-- [link]="['history']" -->
 				<mib-request-card
 					(click)="openDrawers(request.id)"
 					*ngFor="let request of requestLists"
 					[requestTitle]="request.title"
 					[requestText]="request.description"
-					[requestQuantity]="request.quantity"
-					[link]="['history']"
 				></mib-request-card>
 			</div>
 			<mib-spacing type="s"></mib-spacing>
