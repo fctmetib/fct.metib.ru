@@ -308,4 +308,11 @@ ng g d shared/ui-kit/input/directives/metib-pass-time --skip-tests --dry-run
 src\app\public\pages
 ng g c public/pages/landing --skip-tests --dry-run
 
+// public components advantages-icon
+src\app\public\components
+ng g i public/components/advantages-icon/interfaces/advantages-icon.interface  --dry-run
+ng g m public/components/advantages-icon/advantages-icon --flat  --dry-run
+ng g c public/components/advantages-icon/advantages-icon --flat  --skip-tests --dry-run
+ //---
+
 ```

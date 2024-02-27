@@ -36,6 +36,7 @@ import {HeaderModule} from '../shared/modules/header/header.module'
 import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module'
 import {LandingComponent} from './pages/landing/landing.component'
 import {IconModule} from '../shared/ui-kit/ref-icon/icon.module'
+import {AdvantagesIconModule} from './components/advantages-icon/advantages-icon.module'
 
 const routes = [
 	{
@@ -101,7 +102,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		ButtonModule,
 		HeaderModule,
 		SpacingModule,
-		IconModule
+		IconModule,
+		AdvantagesIconModule
 	],
 	exports: [RouterModule],
 	declarations: [
