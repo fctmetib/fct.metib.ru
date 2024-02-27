@@ -49,7 +49,8 @@ export class IconsService {
 		'fi_trash',
 		'fi_user',
 		'fi_share-2',
-		'fi_paperclip'
+		'fi_paperclip',
+		'fi_log-in'
 	]
 
 	public async initIcons(): Promise<void> {

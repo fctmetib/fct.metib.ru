@@ -297,8 +297,15 @@ ng g m shared/ui-kit/checkbox --dry-run
 ng g m shared/ui-kit/radio --dry-run
 ng g m shared/ui-kit/tag --dry-run
 ng g m shared/ui-kit/switch --dry-run
+
 // add d
 ng g d shared/ui-kit/input/directives/metib-input --skip-tests --dry-run
 ng g d shared/ui-kit/input/directives/metib-pass-date --skip-tests --dry-run
 ng g d shared/ui-kit/input/directives/metib-pass-time --skip-tests --dry-run
+
+
+// public landing
+src\app\public\pages
+ng g c public/pages/landing --skip-tests --dry-run
+
 ```

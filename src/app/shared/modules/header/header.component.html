@@ -178,21 +178,24 @@
 						>
 					</div>
 				</div>
-				<ng-container *ngIf="showProfileButton || showProfileButton && !authService?.isUserLoggedIn; else loggedInUser">
+				<ng-container
+					*ngIf="
+						showProfileButton ||
+							(showProfileButton && !authService?.isUserLoggedIn);
+						else loggedInUser
+					"
+				>
 					<mib-button
 						[routerLink]="['/auth/login']"
 						type="filled-primary"
 						size="m"
 						>Личный кабинет
+						<mib-icon btn-right-icon class="stroke" name="fi_log-in"></mib-icon>
 					</mib-button>
 				</ng-container>
 				<ng-template #loggedInUser>
 					<mib-button [routerLink]="['/']" type="filled-secondary" size="m">
-						<mib-icon
-							btn-icon
-							class="stroke"
-							name="fi_chevron-left"
-						></mib-icon>
+						<mib-icon btn-icon class="stroke" name="fi_chevron-left"></mib-icon>
 					</mib-button>
 				</ng-template>
 			</ng-template>

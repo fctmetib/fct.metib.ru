@@ -1,0 +1,21 @@
+img {
+	height: 596px;
+	object-fit: cover;
+}
+
+.lineal {
+	border-top: 1px solid var(--wgr-tertiary);
+	border-bottom: 1px solid var(--wgr-tertiary);
+
+	& .line {
+		border-left: 1px solid var(--wgr-tertiary);
+	}
+
+	&-item {
+		padding: 16px 0;
+	}
+}
+
+.advantages {
+	height: 2000px;
+}

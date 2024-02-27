@@ -34,99 +34,107 @@ import {MibSliderNewsComponent} from './shared/mib-slider-news/mib-slider-news.c
 import {ButtonModule} from '../shared/ui-kit/button/button.module'
 import {HeaderModule} from '../shared/modules/header/header.module'
 import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module'
+import {LandingComponent} from './pages/landing/landing.component'
+import {IconModule} from '../shared/ui-kit/ref-icon/icon.module'
 
 const routes = [
-  {
-    path: '',
-    component: PublicComponent,
-    children: [
-      {
-        path: '',
-        component: HomeComponent,
-        title: 'Факторинг | Металлинвест Банк'
-      },
-      {
-        path: 'tariffs',
-        component: TariffsComponent,
-        title: 'Тарифы'
-      },
-      {
-        path: 'clients',
-        component: ClientsComponent,
-        title: 'Клиентам'
-      },
-      {
-        path: 'contacts',
-        component: ContactsComponent,
-        title: 'Контакты'
-      },
-      {
-        path: 'news/:id',
-        component: NewsComponent
-      },
-      {
-        path: 'ui-kit-test',
-        component: UIKitTestComponent
-      }
-    ]
-  }
+	{
+		path: '',
+		component: PublicComponent,
+		children: [
+			{
+				path: '',
+				component: LandingComponent,
+				title: 'Факторинг | Металлинвест Банк'
+			},
+			// {
+			//   path: '',
+			//   component: HomeComponent,
+			//   title: 'Факторинг | Металлинвест Банк'
+			// },
+			{
+				path: 'tariffs',
+				component: TariffsComponent,
+				title: 'Тарифы'
+			},
+			{
+				path: 'clients',
+				component: ClientsComponent,
+				title: 'Клиентам'
+			},
+			{
+				path: 'contacts',
+				component: ContactsComponent,
+				title: 'Контакты'
+			},
+			{
+				path: 'news/:id',
+				component: NewsComponent
+			},
+			{
+				path: 'ui-kit-test',
+				component: UIKitTestComponent
+			}
+		]
+	}
 ]
 
 const maskConfigFunction: () => Partial<IConfig> = () => {
-  return {
-    validation: false
-  }
+	return {
+		validation: false
+	}
 }
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-    InputMaskModule,
-    NgxMaskModule.forRoot(maskConfigFunction),
-    MibModalModule,
-    DialogModule,
-    MibTabModule,
-    CarouselModule,
-    CheckboxModule,
-    ButtonModule,
-    HeaderModule,
-    SpacingModule
-  ],
-  exports: [RouterModule],
-  declarations: [
-    PublicComponent,
-    HomeComponent,
-    TariffsComponent,
-    ClientsComponent,
-    ContactsComponent,
-    NewsComponent,
-    // TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
-    // DIRECTIVES
-    MibScrollDirective,
-    // SECTIONS
-    MibSectionHeaderComponent,
-    MibSectionHeaderNewsComponent,
-    MibSectionBodyComponent,
-    // COMPONENTS
-    MibSliderComponent,
-    UIKitTestComponent,
-    MibMenuComponent,
-    MibFooterComponent,
-    MibSliderPartnersComponent,
-    MibSliderNewsComponent,
-    // CARDS
-    MibCardTariffComponent,
-    MibCardPersonComponent,
-    MibCardNewsComponent,
-    MibCardInfoComponent,
-    TariffsComponent,
-    ClientsComponent,
-    ContactsComponent
-  ],
-  providers: [OrganizationService, NewsService]
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		RouterModule.forChild(routes),
+		InputMaskModule,
+		NgxMaskModule.forRoot(maskConfigFunction),
+		MibModalModule,
+		DialogModule,
+		MibTabModule,
+		CarouselModule,
+		CheckboxModule,
+		ButtonModule,
+		HeaderModule,
+		SpacingModule,
+		IconModule
+	],
+	exports: [RouterModule],
+	declarations: [
+		PublicComponent,
+		HomeComponent,
+		TariffsComponent,
+		ClientsComponent,
+		ContactsComponent,
+		NewsComponent,
+		// TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
+		// DIRECTIVES
+		MibScrollDirective,
+		// SECTIONS
+		MibSectionHeaderComponent,
+		MibSectionHeaderNewsComponent,
+		MibSectionBodyComponent,
+		// COMPONENTS
+		MibSliderComponent,
+		UIKitTestComponent,
+		MibMenuComponent,
+		MibFooterComponent,
+		MibSliderPartnersComponent,
+		MibSliderNewsComponent,
+		// CARDS
+		MibCardTariffComponent,
+		MibCardPersonComponent,
+		MibCardNewsComponent,
+		MibCardInfoComponent,
+		TariffsComponent,
+		ClientsComponent,
+		ContactsComponent,
+		LandingComponent
+	],
+	providers: [OrganizationService, NewsService]
 })
-export class PublicModule {
-}
+export class PublicModule {}
