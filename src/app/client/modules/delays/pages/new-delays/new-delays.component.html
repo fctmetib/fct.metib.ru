@@ -1,1 +1,146 @@
-<p>new-delays works!</p>
+<div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<h3>Просрочки покупателя</h3>
+	<mib-spacing type="m"></mib-spacing>
+</div>
+<div class="container container_large">
+	<div class="flex">
+		<div class="flex flex_grow">
+			<mib-input>
+				<input mibInput />
+				<ng-container mibLabel>Поиск по покупателям</ng-container>
+				<mib-icon mibLeftIcon class="stroke" name="fi_search"></mib-icon>
+			</mib-input>
+		</div>
+		<mib-select type="outline" placeholder="8 из 8 колонн в таблице">
+			<mib-dropdown-point
+				[value]="true"
+				text="8 из 8 колонн в таблице"
+			></mib-dropdown-point>
+			<mib-dropdown-point
+				[value]="false"
+				text="4 из 8 колонн в таблице"
+			></mib-dropdown-point>
+			<mib-dropdown-point
+				[value]="false"
+				text="2 из 8 колонн в таблице"
+			></mib-dropdown-point>
+		</mib-select>
+	</div>
+	<mib-spacing type="xs"></mib-spacing>
+	<!-- table -->
+	<!-- (selectionChange)="onSelectionChanged($event)" -->
+	<mib-table [isLoading]="loading$ | async">
+		<mib-table-head>
+			<mib-table-head-cell>Покупатель </mib-table-head-cell>
+			<mib-table-head-cell>Накладная</mib-table-head-cell>
+			<mib-table-head-cell>Дата накладной</mib-table-head-cell>
+			<mib-table-head-cell>Договор поставки</mib-table-head-cell>
+			<mib-table-head-cell>Сумма поставки</mib-table-head-cell>
+			<mib-table-head-cell>Дата платежа</mib-table-head-cell>
+			<mib-table-head-cell>Сумма просрочки</mib-table-head-cell>
+			<mib-table-head-cell>Дата доп</mib-table-head-cell>
+		</mib-table-head>
+		<ng-container *ngIf="loading$ | async; else table">
+			<mib-skeleton
+				[styles]="last ? skeletonWithoutUnderline : skeleton"
+				*ngFor="
+					let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
+					let last = last
+				"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #table>
+			<mib-table-row *ngFor="let i of [1]; let last = last" [underlined]="last">
+				<mib-table-cell>
+					<ng-container table-cell-title>Buyer</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>{{ ids }}</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>{{
+						todayIs | date : 'dd.MM.YYYY'
+					}}</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>{{
+						todayIs | date : 'dd.MM.YYYY'
+					}}</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>{{ datas * 2 | rub }}</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>{{
+						todayIs | date : 'dd.MM.YYYY'
+					}}</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<span class="c-mc-active" table-cell-title>{{ datas | rub }}</span>
+				</mib-table-cell>
+				<mib-table-cell>
+					<span class="c-mc-active" table-cell-title>{{
+						todayIs | date : 'dd.MM.YYYY'
+					}}</span>
+				</mib-table-cell>
+			</mib-table-row>
+			<mib-table-row>
+				<mib-table-cell></mib-table-cell>
+				<mib-table-cell></mib-table-cell>
+				<mib-table-cell></mib-table-cell>
+				<mib-table-cell></mib-table-cell>
+				<mib-table-cell></mib-table-cell>
+				<mib-table-cell></mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>
+						{{ datas * 3 | rub }}
+					</ng-container>
+				</mib-table-cell>
+				<mib-table-cell></mib-table-cell>
+			</mib-table-row>
+		</ng-template>
+		<mib-table-footer
+			[showRemove]="false"
+			(onAction)="openDrawer()"
+			[lined]="!(loading$ | async)"
+		>
+			<div class="flex flex_align-center flex_grow">
+				<mib-button size="m" type="ghost-primary">
+					Экспорт в exel
+					<mib-icon btn-left-icon class="stroke" name="fi_download"></mib-icon>
+				</mib-button>
+			</div>
+			<!-- <ng-container table-footer-action>Создать заявку (123)</ng-container> -->
+			<!-- (pageChange)="onPageChange($event)"
+      [totalCount]="dutiesCount?.TotalItems ?? 0"-->
+			<mib-paginator
+				[totalCount]="12"
+				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+				[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+			></mib-paginator>
+			<div class="flex flex_align-center flex_justify-end flex_grow">
+				<mib-select type="outline" placeholder="10 позиций">
+					<mib-dropdown-point
+						[value]="true"
+						text="10 позиций"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="true"
+						text="7 позиций"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="false"
+						text="4 позиции"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="false"
+						text="2 позиции"
+					></mib-dropdown-point>
+				</mib-select>
+			</div>
+		</mib-table-footer>
+	</mib-table>
+	<!-- table end -->
+	<mib-spacing type="xl2"></mib-spacing>
+</div>

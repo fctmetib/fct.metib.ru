@@ -2,8 +2,8 @@ import {DelaysRoutingModule} from './delays-routing.module'
 import {CommonModule} from '@angular/common'
 import {DropdownModule} from 'primeng/dropdown'
 import {CardModule} from 'primeng/card'
-import {ButtonModule} from 'primeng/button'
-import {TableModule} from 'primeng/table'
+import {ButtonModule as ButtonModule22} from 'primeng/button'
+import {TableModule as TableModule22} from 'primeng/table'
 import {MultiSelectModule} from 'primeng/multiselect'
 import {ProgressBarModule} from 'primeng/progressbar'
 import {SliderModule} from 'primeng/slider'
@@ -23,17 +23,29 @@ import {ReportService} from 'src/app/shared/services/common/report.service'
 import {DialogService} from 'primeng/dynamicdialog'
 import {DialogModule} from 'primeng/dialog'
 import {NewDelaysComponent} from './pages/new-delays/new-delays.component'
+import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
+import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
+import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
+import {LabelModule} from 'src/app/shared/directives/label/label.module'
+import {LeftIconModule} from 'src/app/shared/directives/left-icon/left-icon.module'
+import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
+import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
+import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
+import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
+import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
+import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
+import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 
 @NgModule({
 	imports: [
 		CommonModule,
 		InputTextModule,
 		CheckboxModule,
-		ButtonModule,
+		ButtonModule22,
 		RadioButtonModule,
 		InputTextareaModule,
 		SliderModule,
-		TableModule,
+		TableModule22,
 		DropdownModule,
 		DialogModule,
 		FormsModule,
@@ -44,7 +56,19 @@ import {NewDelaysComponent} from './pages/new-delays/new-delays.component'
 		MenubarModule,
 		AvatarModule,
 		DelaysRoutingModule,
-		SharedModule
+		SharedModule,
+		SpacingModule,
+		ButtonModule,
+		InputModule,
+		LabelModule,
+		LeftIconModule,
+		IconModule,
+		SelectModule,
+		DropdownPointModule,
+		TableModule,
+		PaginatorModule,
+		RubModule,
+		SkeletonModule
 	],
 	declarations: [DelaysPageComponent, NewDelaysComponent],
 	providers: [DialogService, DelaysService, ReportService]
