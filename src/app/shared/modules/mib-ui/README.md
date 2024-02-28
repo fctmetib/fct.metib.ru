@@ -89,6 +89,13 @@ ng g i shared/modules/new-demand/interfaces/new-demand.interface --dry-run
 ng g c shared/modules/new-demand/new-demand --flat --skip-tests  --dry-run
  //---
 
+ //--- new-delays
+ src\app\client\modules\delays\pages\new-delays
+ng g m client/modules/delays/pages/new-delays/new-delays --flat --dry-run
+ng g i client/modules/delays/pages/new-delays/interfaces/new-delays.interface --dry-run
+ng g c client/modules/delays/pages/new-delays/new-delays --flat --skip-tests  --dry-run
+ //---
+
  //--- demand-drawer
 src\app\client\modules\demand-new\modules\demand-drawer
 ng g i client/modules/demand-new/modules/demand-drawer/interfaces/demand-drawer.interface  --dry-run

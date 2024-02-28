@@ -71,6 +71,11 @@ const routes = [
 				loadChildren: () =>
 					import('./modules/delays/delays.module').then(m => m.DelaysModule)
 			}
+			// {
+			// 	path: 'delays',
+			// 	loadChildren: () =>
+			// 		import('./modules/delays/delays.module').then(m => m.DelaysModule)
+			// }
 		]
 	}
 ]
