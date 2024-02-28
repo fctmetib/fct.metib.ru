@@ -1,2 +1,1 @@
-export interface AdvantagesIconInterface {
-}
+export type AdvantagesIconDevice = 'desktop' | 'mobile'

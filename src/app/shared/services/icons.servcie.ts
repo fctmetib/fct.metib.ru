@@ -50,7 +50,10 @@ export class IconsService {
 		'fi_user',
 		'fi_share-2',
 		'fi_paperclip',
-		'fi_log-in'
+		'fi_log-in',
+		'fi_twitter',
+		'fi_shield',
+		'fi_clipboard'
 	]
 
 	public async initIcons(): Promise<void> {

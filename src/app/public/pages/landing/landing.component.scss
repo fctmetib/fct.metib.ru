@@ -1,3 +1,6 @@
+@import 'src/styles/helpers/_icon_tools';
+@import 'src/styles/_colors.vars';
+
 img {
 	height: 596px;
 	object-fit: cover;
@@ -18,4 +21,9 @@ img {
 
 .advantages {
 	height: 2000px;
+}
+
+mib-icon {
+	@include icon-size(40px);
+	@include icon-color(var(--mc-default));
 }

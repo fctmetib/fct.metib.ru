@@ -46,12 +46,20 @@
 		</h3>
 		<mib-spacing type="l"></mib-spacing>
 		<div class="flex gap-16">
-			<div class="flex flex_column flex_grow">
-				<mib-advantages-icon></mib-advantages-icon>
+			<div *ngFor="let item of iconsDatas" class="flex flex_column">
+				<div class="flex flex_align-center flex_column flex_grow">
+					<mib-advantages-icon>
+						<ng-container advantagesIcon>
+							<mib-icon class="stroke" [name]="item.icon"></mib-icon>
+						</ng-container>
+					</mib-advantages-icon>
+				</div>
+				<mib-spacing type="s"></mib-spacing>
+				<div class="text-center flex_column gap-4">
+					<h4>{{ item.title }}</h4>
+					<p class="text text_l c-bti-secondary">{{ item.text }}</p>
+				</div>
 			</div>
-			<div class="flex flex_column flex_grow">2</div>
-			<div class="flex flex_column flex_grow">3</div>
-			<div class="flex flex_column flex_grow">4</div>
 		</div>
 	</div>
 </section>
