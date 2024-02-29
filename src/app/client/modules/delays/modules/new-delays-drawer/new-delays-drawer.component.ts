@@ -27,8 +27,27 @@ export class NewDelaysDrawerComponent {
 		width: '100%'
 	}
 
+	public PAGINATOR_ITEMS_PER_PAGE = 5
+	public PAGINATOR_PAGE_TO_SHOW = 5
+	public currentPage$ = new BehaviorSubject<number>(1)
+
+	public datas = {
+		summ: 12345000,
+		name: 'Магнит',
+		ids: '213/324a-23',
+		number: 3
+	}
+	public todayIs: Date = new Date()
+
 	constructor(
 		private toaster: ToasterService,
 		public dialogRef: MatDialogRef<NewDelaysDrawerComponent>
 	) {}
+
+	onPageChange(page: number) {
+		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+
+		console.log('page :>> ', page)
+	}
 }

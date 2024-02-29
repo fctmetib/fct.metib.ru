@@ -1,7 +1,127 @@
 <mib-drawer>
+	<!--		[showMaximize]="true"-->
 	<mib-drawer-header
 		(onClose)="dialogRef.close()"
 		drawer-header
 	></mib-drawer-header>
-	<mib-drawer-container> container </mib-drawer-container>
+	<mib-drawer-container>
+		<div class="flex flex_align-center gap-4">
+			<span class="text text_m c-bti-tertiary"
+				>Дата платежа: {{ todayIs | date : 'dd.MM.yyyy' }}</span
+			>
+			<mib-icon
+				class="invoice-arrow stroke"
+				btn-icon
+				name="fi_arrow-right"
+			></mib-icon>
+			<span class="text text_m c-bti-tertiary"
+				>Дата доп: {{ todayIs | date : 'dd.MM.yyyy' }}</span
+			>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex gap-4">
+			<h4>Просрочка -</h4>
+			<h4>{{ datas.name }}</h4>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex">
+			<mib-tag size="m" type="filled-secondary">
+				Договор поставки: {{ datas.ids }}
+			</mib-tag>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex flex_column flex_justify-start gap-8">
+			<mib-cash-panel
+				[extracted]="true"
+				panelTitle="Сумма поставки"
+				[panelData]="datas?.summ.toString() || '' | rub"
+			></mib-cash-panel>
+			<mib-cash-panel
+				[extracted]="true"
+				panelTitle="Сумма просрочки (до {{ todayIs | date : 'dd.MM.yyyy' }})"
+			>
+				<ng-container alert>
+					{{ datas?.summ.toString() || '' | rub }}
+				</ng-container>
+			</mib-cash-panel>
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<p class="headline">История платежей</p>
+		<mib-spacing type="xs"></mib-spacing>
+		<!-- table -->
+		<ng-container *ngIf="loading$ | async; else tabItems">
+			<mib-skeleton
+				[styles]="last ? skeletonWithoutUnderline : skeleton"
+				*ngFor="let i of [1]; let last = last"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #tabItems>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-table>
+				<mib-table-head>
+					<mib-table-head-cell>Дата платежа</mib-table-head-cell>
+					<mib-table-head-cell>Сумма</mib-table-head-cell>
+					<mib-table-head-cell>Назначение</mib-table-head-cell>
+				</mib-table-head>
+
+				<ng-container *ngFor="let link of [1, 1, 1]; let idx = index">
+					<mib-table-row [underlined]="true">
+						<mib-table-cell>
+							<ng-container table-cell-title>
+								{{ todayIs | date : 'dd.MM.yyyy' }}
+							</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>
+								{{ datas.summ | rub }}
+							</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title> фыва олдж </ng-container>
+						</mib-table-cell>
+					</mib-table-row>
+				</ng-container>
+				<mib-table-row>
+					<mib-table-cell>
+						<ng-container table-cell-title
+							>{{ datas.number }} позиции</ng-container
+						>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>
+							{{ datas.summ * datas.number | rub }}
+						</ng-container>
+					</mib-table-cell>
+					<mib-table-cell> </mib-table-cell>
+				</mib-table-row>
+				<mib-table-footer [showIsland]="false" [lined]="!(loading$ | async)">
+					<div class="flex flex_grow"></div>
+					<mib-paginator
+						(pageChange)="onPageChange($event)"
+						[totalCount]="12"
+						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+					></mib-paginator>
+					<div class="flex flex_align-center flex_justify-end flex_grow">
+						<mib-select type="outline" placeholder="5 позиций">
+							<mib-dropdown-point
+								[value]="true"
+								text=" 5 позиций"
+							></mib-dropdown-point>
+							<mib-dropdown-point
+								[value]="false"
+								text="3 позиции"
+							></mib-dropdown-point>
+							<mib-dropdown-point
+								[value]="false"
+								text="1 позиция"
+							></mib-dropdown-point>
+						</mib-select>
+					</div>
+				</mib-table-footer>
+			</mib-table>
+			<mib-spacing type="m"></mib-spacing>
+		</ng-template>
+		<!-- table end -->
+	</mib-drawer-container>
 </mib-drawer>
