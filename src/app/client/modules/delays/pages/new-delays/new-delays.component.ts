@@ -3,6 +3,7 @@ import {Properties} from 'csstype'
 import {BehaviorSubject} from 'rxjs'
 import {ToolsService} from 'src/app/shared/services/tools.service'
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
+import {NewDelaysDrawerService} from '../../modules/new-delays-drawer/new-delays-drawer.service'
 
 @Component({
 	selector: 'mib-new-delays',
@@ -32,7 +33,22 @@ export class NewDelaysComponent {
 	public ids: string = '213/324a-22'
 	public todayIs: Date = new Date()
 
-	constructor(public toolsService: ToolsService) {}
+	constructor(
+		public toolsService: ToolsService,
+		private newDelaysDrawerService: NewDelaysDrawerService
+	) {}
+
+	contractDrawer(deliveryID: number) {
+		this.newDelaysDrawerService
+			.open({
+				data: {deliveryID}
+			})
+			.afterClosed()
+			.pipe
+			// filter(Boolean),
+			()
+			.subscribe()
+	}
 
 	public openDrawer() {
 		console.log('open darwer>>>')

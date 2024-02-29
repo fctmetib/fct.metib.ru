@@ -51,7 +51,11 @@
 			></mib-skeleton>
 		</ng-container>
 		<ng-template #table>
-			<mib-table-row *ngFor="let i of [1]; let last = last" [underlined]="last">
+			<mib-table-row
+				(dblclick)="contractDrawer(i)"
+				*ngFor="let i of [1]; let last = last"
+				[underlined]="last"
+			>
 				<mib-table-cell>
 					<ng-container table-cell-title>Buyer</ng-container>
 				</mib-table-cell>
@@ -100,11 +104,7 @@
 				<mib-table-cell></mib-table-cell>
 			</mib-table-row>
 		</ng-template>
-		<mib-table-footer
-			[showRemove]="false"
-			(onAction)="openDrawer()"
-			[lined]="!(loading$ | async)"
-		>
+		<mib-table-footer [showRemove]="true" [lined]="!(loading$ | async)">
 			<div class="flex flex_align-center flex_grow">
 				<mib-button size="m" type="ghost-primary">
 					Экспорт в exel
