@@ -1,2 +1,1 @@
-export interface ContactPanelInterface {
-}
+export type ContactPanelDevice = 'desktop' | 'mobile'

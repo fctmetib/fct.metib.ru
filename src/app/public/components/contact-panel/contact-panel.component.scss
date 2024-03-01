@@ -1,0 +1,11 @@
+:host {
+	display: flex;
+}
+
+.contact {
+	max-width: 176px;
+	border-bottom: 1px solid var(--wgr-secondary);
+	& img {
+		border-radius: var(--main-border-radius);
+	}
+}
