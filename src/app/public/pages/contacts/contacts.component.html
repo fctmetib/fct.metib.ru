@@ -1,223 +1,337 @@
-<mib-section-header [backgroundImageUrl]="'/assets/public/image_contacts.png'">
-  <h1>Контакты</h1>
-  <p class="desc">
-    Познакомьтесь с нашими сотрудниками :)
-  </p>
+<div class="flex flex_column contacts">
+	<mib-spacing type="l"></mib-spacing>
+	<h3>Познакомьтесь с нашей командой</h3>
+	<mib-spacing type="xs2"></mib-spacing>
+	<p class="text text_l c-bti-secondary">
+		На данной странице Вы сможете найти адрес офиса и контакты сотрудников,
+		работающих в департаменте факторинга
+	</p>
+	<mib-spacing type="xs"></mib-spacing>
+	<mib-tab-group>
+		<mib-navbar>
+			<mib-navbar-point value="1">Москва</mib-navbar-point>
+			<mib-navbar-point value="2">Санкт-Петербург</mib-navbar-point>
+		</mib-navbar>
+		<div>
+			<mib-tab-item value="1">
+				<mib-spacing type="m"></mib-spacing>
+				<h4>Наш офис на карте</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<div
+					class="map flex flex_center"
+					style="
+						height: 150px;
+						border: 1px solid var(--wgr-tertiary);
+						border-radius: var(--main-border-radius);
+					"
+				>
+					map moscow office
+				</div>
+				<!-- <iframe
+            src="https://yandex.ru/map-widget/v1/?um=constructor%3A2f67fcd615265574608b925be005814b15ab5d32dce3bc8135f16ba7a27f1d32&amp;source=constructor"
+            width="100%"
+            height="100%"
+            frameborder="0"
+          ></iframe> -->
+				<mib-spacing type="m"></mib-spacing>
+				<h4>Руководители</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex">
+					<mib-contact-panel></mib-contact-panel>
+				</div>
+			</mib-tab-item>
+			<mib-tab-item value="2">
+				<mib-spacing type="m"></mib-spacing>
+				<h4>Наш офис на карте</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<div
+					class="map flex flex_center"
+					style="
+						height: 150px;
+						border: 1px solid var(--wgr-tertiary);
+						border-radius: var(--main-border-radius);
+					"
+				>
+					map st.petersburg office
+				</div>
+				<mib-spacing type="m"></mib-spacing>
+				<h4>Руководители</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex">contact-panel</div>
+			</mib-tab-item>
+		</div>
+	</mib-tab-group>
+</div>
+
+<!-- <mib-section-header [backgroundImageUrl]="'/assets/public/image_contacts.png'">
+	<h1>Контакты</h1>
+	<p class="desc">Познакомьтесь с нашими сотрудниками :)</p>
 </mib-section-header>
 <mib-section-body>
-  <mib-tab [flexDisable]="'true'">
-    <mib-tab-item>
-      <mib-tab-label>Московский филиал</mib-tab-label>
-      <mib-tab-body>
-        <div class="row contacts section-information">
-          <div class="col address">
-            <span>Адрес</span>
-            <p>119180, г. Москва, ул. Большая Полянка, д. 47, стр. 2
-            </p>
-            <div class="phones">
-              <div class="phone">
-                <img src="/assets/icons/svg/icon-phone.svg" alt="">
-                <a href="tel:+74957279797">+7 (495) 727-9797</a>
-              </div>
-              <div class="phone">
-                <img src="/assets/icons/svg/icon-phone.svg" alt="">
-                <a href="tel:+78002509797">+7 (800) 250-9797</a>
-              </div>
-            </div>
-          </div>
-          <div class="col map">
-            <iframe
-              src="https://yandex.ru/map-widget/v1/?um=constructor%3A2f67fcd615265574608b925be005814b15ab5d32dce3bc8135f16ba7a27f1d32&amp;source=constructor"
-              width="100%"
-              height="100%"
-              frameborder="0"></iframe>
-          </div>
-        </div>
+	<mib-tab [flexDisable]="'true'">
+		<mib-tab-item>
+			<mib-tab-label>Московский филиал</mib-tab-label>
+			<mib-tab-body>
+				<div class="row contacts section-information">
+					<div class="col address">
+						<span>Адрес</span>
+						<p>119180, г. Москва, ул. Большая Полянка, д. 47, стр. 2</p>
+						<div class="phones">
+							<div class="phone">
+								<img src="/assets/icons/svg/icon-phone.svg" alt="" />
+								<a href="tel:+74957279797">+7 (495) 727-9797</a>
+							</div>
+							<div class="phone">
+								<img src="/assets/icons/svg/icon-phone.svg" alt="" />
+								<a href="tel:+78002509797">+7 (800) 250-9797</a>
+							</div>
+						</div>
+					</div>
+					<div class="col map">
+						<iframe
+							src="https://yandex.ru/map-widget/v1/?um=constructor%3A2f67fcd615265574608b925be005814b15ab5d32dce3bc8135f16ba7a27f1d32&amp;source=constructor"
+							width="100%"
+							height="100%"
+							frameborder="0"
+						></iframe>
+					</div>
+				</div>
 
-        <div class="section-information">
-          <h2>Наши сотрудники</h2>
-          <h3>Директор Департамента факторинга</h3>
-          <div class="persons">
-            <mib-card-person
-              [avatar]="'/assets/public/personal/прохоров.jpg'"
-              [name]="'Прохоров Александр'"
-              [position]="''"
-              [email]="'prav@metib.ru'">
-            </mib-card-person>
-          </div>
-        </div>
+				<div class="section-information">
+					<h2>Наши сотрудники</h2>
+					<h3>Директор Департамента факторинга</h3>
+					<div class="persons">
+						<mib-card-person
+							[avatar]="'/assets/public/personal/прохоров.jpg'"
+							[name]="'Прохоров Александр'"
+							[position]="''"
+							[email]="'prav@metib.ru'"
+						>
+						</mib-card-person>
+					</div>
+				</div>
 
-        <div class="section-information">
-          <h3>Управление по работе с клиентами</h3>
-          <div class="persons">
-            <mib-card-person
-              [avatar]="'/assets/public/personal/isaeva.jpg'"
-              [name]="'Исаева Анастасия'"
-              [position]="'Начальник Управления по работе с клиентами Департамента факторинга'"
-              [email]="'osam@metib.ru'">
-            </mib-card-person>
-          </div>
-        </div>
+				<div class="section-information">
+					<h3>Управление по работе с клиентами</h3>
+					<div class="persons">
+						<mib-card-person
+							[avatar]="'/assets/public/personal/isaeva.jpg'"
+							[name]="'Исаева Анастасия'"
+							[position]="
+								'Начальник Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'osam@metib.ru'"
+						>
+						</mib-card-person>
+					</div>
+				</div>
 
-        <div class="section-information">
-          <h3>Отдел продаж</h3>
-          <div class="persons">
-            <mib-card-person
-              [avatar]="'/assets/public/personal/sadykova.jpg'"
-              [name]="'Садыкова Юлия'"
-              [position]="'Заместитель начальника Отдела продаж Управления по работе с клиентами Департамента факторинга'"
-              [email]="'ysadykova@metib.ru'">
-            </mib-card-person>
-            <mib-card-person
-              [avatar]="'/assets/public/personal/no_avatar_male.jpg'"
-              [name]="'Андрианов Дмитрий'"
-              [position]="'Специалист Отдела продаж Управления по работе с клиентами Департамента факторинга'"
-              [email]="'dandrianov@metib.ru'">
-            </mib-card-person>
-          </div>
-        </div>
+				<div class="section-information">
+					<h3>Отдел продаж</h3>
+					<div class="persons">
+						<mib-card-person
+							[avatar]="'/assets/public/personal/sadykova.jpg'"
+							[name]="'Садыкова Юлия'"
+							[position]="
+								'Заместитель начальника Отдела продаж Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'ysadykova@metib.ru'"
+						>
+						</mib-card-person>
+						<mib-card-person
+							[avatar]="'/assets/public/personal/no_avatar_male.jpg'"
+							[name]="'Андрианов Дмитрий'"
+							[position]="
+								'Специалист Отдела продаж Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'dandrianov@metib.ru'"
+						>
+						</mib-card-person>
+					</div>
+				</div>
 
-        <div class="section-information">
-          <h3>Отдел организации продаж</h3>
-          <div class="persons">
-            <mib-card-person
-              [avatar]="'/assets/public/personal/ровенских.jpg'"
-              [name]="'Ровенских Юлия'"
-              [position]="'Начальник Отдела организации продаж Управления по работе с клиентами Департамента факторинга'"
-              [email]="'yrovenskikh@metib.ru'">
-            </mib-card-person>
-            <mib-card-person
-              [avatar]="'/assets/public/personal/грибова.jpg'"
-              [name]="'Грибова Елена'"
-              [position]="'Главный специалист Отдела организации продаж Управления по работе с клиентами Департамента факторинга'"
-              [email]="'egribova@metib.ru'">
-            </mib-card-person>
-          </div>
-        </div>
+				<div class="section-information">
+					<h3>Отдел организации продаж</h3>
+					<div class="persons">
+						<mib-card-person
+							[avatar]="'/assets/public/personal/ровенских.jpg'"
+							[name]="'Ровенских Юлия'"
+							[position]="
+								'Начальник Отдела организации продаж Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'yrovenskikh@metib.ru'"
+						>
+						</mib-card-person>
+						<mib-card-person
+							[avatar]="'/assets/public/personal/грибова.jpg'"
+							[name]="'Грибова Елена'"
+							[position]="
+								'Главный специалист Отдела организации продаж Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'egribova@metib.ru'"
+						>
+						</mib-card-person>
+					</div>
+				</div>
 
-        <div class="section-information">
-          <h3>Отдел сопровождения факторинга</h3>
-          <div class="persons">
-            <mib-card-person
-              [avatar]="'/assets/public/personal/ermolova.jpg'"
-              [name]="'Ермолова Юлия'"
-              [position]="'Начальник Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'"
-              [email]="'eyv@metib.ru'">
-            </mib-card-person>
-            <mib-card-person
-              [avatar]="'/assets/public/personal/no_avatar_female.jpg'"
-              [name]="'Куприянова Наталья'"
-              [position]="'Заместитель начальника Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'"
-              [email]="'knvl@metib.ru'">
-            </mib-card-person>
-            <mib-card-person
-              [avatar]="'/assets/public/personal/ladnaya.jpg'"
-              [name]="'Ладная Дарья'"
-              [position]="'Главный экономист Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'"
-              [email]="'dladnaya@metib.ru'">
-            </mib-card-person>
-            <mib-card-person
-              [avatar]="'/assets/public/personal/makushkina.jpg'"
-              [name]="'Макушкина Антонина'"
-              [position]="'Ведущий экономист Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'"
-              [email]="'chai@metib.ru'">
-            </mib-card-person>
-            <mib-card-person
-              [avatar]="'/assets/public/personal/evtushenko.jpg'"
-              [name]="'Евтушенко Ирина'"
-              [position]="'Старший экономист Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'"
-              [email]="'ievtushenko@metib.ru'">
-            </mib-card-person>
-            <mib-card-person
-              [avatar]="'/assets/public/personal/manelyuk.jpg'"
-              [name]="'Манелюк Юлия'"
-              [position]="'Старший экономист Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'"
-              [email]="'ymanelyuk@metib.ru'">
-            </mib-card-person>
-            <mib-card-person
-              [avatar]="'/assets/public/personal/no_avatar_female.jpg'"
-              [name]="'Мельникова Екатерина'"
-              [position]="'Экономист Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'"
-              [email]="'emelnikova@metib.ru'">
-            </mib-card-person>
-          </div>
-        </div>
+				<div class="section-information">
+					<h3>Отдел сопровождения факторинга</h3>
+					<div class="persons">
+						<mib-card-person
+							[avatar]="'/assets/public/personal/ermolova.jpg'"
+							[name]="'Ермолова Юлия'"
+							[position]="
+								'Начальник Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'eyv@metib.ru'"
+						>
+						</mib-card-person>
+						<mib-card-person
+							[avatar]="'/assets/public/personal/no_avatar_female.jpg'"
+							[name]="'Куприянова Наталья'"
+							[position]="
+								'Заместитель начальника Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'knvl@metib.ru'"
+						>
+						</mib-card-person>
+						<mib-card-person
+							[avatar]="'/assets/public/personal/ladnaya.jpg'"
+							[name]="'Ладная Дарья'"
+							[position]="
+								'Главный экономист Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'dladnaya@metib.ru'"
+						>
+						</mib-card-person>
+						<mib-card-person
+							[avatar]="'/assets/public/personal/makushkina.jpg'"
+							[name]="'Макушкина Антонина'"
+							[position]="
+								'Ведущий экономист Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'chai@metib.ru'"
+						>
+						</mib-card-person>
+						<mib-card-person
+							[avatar]="'/assets/public/personal/evtushenko.jpg'"
+							[name]="'Евтушенко Ирина'"
+							[position]="
+								'Старший экономист Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'ievtushenko@metib.ru'"
+						>
+						</mib-card-person>
+						<mib-card-person
+							[avatar]="'/assets/public/personal/manelyuk.jpg'"
+							[name]="'Манелюк Юлия'"
+							[position]="
+								'Старший экономист Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'ymanelyuk@metib.ru'"
+						>
+						</mib-card-person>
+						<mib-card-person
+							[avatar]="'/assets/public/personal/no_avatar_female.jpg'"
+							[name]="'Мельникова Екатерина'"
+							[position]="
+								'Экономист Отдела сопровождения факторинговых операций Управления по работе с клиентами Департамента факторинга'
+							"
+							[email]="'emelnikova@metib.ru'"
+						>
+						</mib-card-person>
+					</div>
+				</div>
 
-        <!-- <div class="section-information-double"> -->
-        <div class="section-information">
-          <h3>Управление развития факторинговых продуктов</h3>
-          <div class="persons">
-            <mib-card-person
-              [avatar]="'/assets/public/personal/motyleva.jpg'"
-              [name]="'Мотылёва Екатерина'"
-              [position]="'Начальник Управления развития факторинговых продуктов Департамента факторинга'"
-              [email]="'belek@metib.ru'">
-            </mib-card-person>
-          </div>
-        </div>
+				<div class="section-information-double">
+					<div class="section-information">
+						<h3>Управление развития факторинговых продуктов</h3>
+						<div class="persons">
+							<mib-card-person
+								[avatar]="'/assets/public/personal/motyleva.jpg'"
+								[name]="'Мотылёва Екатерина'"
+								[position]="
+									'Начальник Управления развития факторинговых продуктов Департамента факторинга'
+								"
+								[email]="'belek@metib.ru'"
+							>
+							</mib-card-person>
+						</div>
+					</div>
+				</div>
+				<div class="section-information">
+					<h3>Управление по работе с дебиторами</h3>
+					<div class="persons">
+						<mib-card-person
+							[avatar]="'/assets/public/personal/bakunina.jpg'"
+							[name]="'Бакунина Юлия'"
+							[position]="
+								'Начальник Управления по работе с дебиторами Департамента факторинга'
+							"
+							[email]="'bji@metib.ru'"
+						>
+						</mib-card-person>
+					</div>
+				</div>
+			</mib-tab-body>
+		</mib-tab-item>
+		<mib-tab-item>
+			<mib-tab-label>Санкт-Петербургский филиал</mib-tab-label>
+			<mib-tab-body>
+				<div class="row contacts section-information">
+					<div class="col address">
+						<span>Адрес</span>
+						<p>
+							199178, Россия, г.Санкт-Петербург, 7-я линия В.О., д. 76, Б/Ц
+							'Сенатор', офис 108
+						</p>
+						<div class="phones">
+							<div class="phone">
+								<img src="/assets/icons/svg/icon-phone.svg" alt="" />
+								<a href="tel:+78123321702">+7 (812) 332-1702</a>
+							</div>
+							<div class="phone">
+								<img src="/assets/icons/svg/icon-phone.svg" alt="" />
+								<a href="tel:+78123321703">+7 (812) 332-1703</a>
+							</div>
+						</div>
+					</div>
+					<div class="col map">
+						<iframe
+							src="https://yandex.ru/map-widget/v1/?um=constructor%3A668e048cde5370e42d9239d2a08a2ae5dd26a6aa79afb0abd872ce4276d34d8a&amp;source=constructor"
+							width="100%"
+							height="100%"
+							frameborder="0"
+						></iframe>
+					</div>
+				</div>
 
-        <!-- </div> -->
-        <div class="section-information">
-          <h3>Управление по работе с дебиторами</h3>
-          <div class="persons">
-            <mib-card-person
-              [avatar]="'/assets/public/personal/bakunina.jpg'"
-              [name]="'Бакунина Юлия'"
-              [position]="'Начальник Управления по работе с дебиторами Департамента факторинга'"
-              [email]="'bji@metib.ru'">
-            </mib-card-person>
-          </div>
-        </div>
-      </mib-tab-body>
-    </mib-tab-item>
-    <mib-tab-item>
-      <mib-tab-label>Санкт-Петербургский филиал</mib-tab-label>
-      <mib-tab-body>
-        <div class="row contacts section-information">
-          <div class="col address">
-            <span>Адрес</span>
-            <p>199178, Россия, г.Санкт-Петербург, 7-я линия В.О., д. 76, Б/Ц 'Сенатор', офис 108
-            </p>
-            <div class="phones">
-              <div class="phone">
-                <img src="/assets/icons/svg/icon-phone.svg" alt="">
-                <a href="tel:+78123321702">+7 (812) 332-1702</a>
-              </div>
-              <div class="phone">
-                <img src="/assets/icons/svg/icon-phone.svg" alt="">
-                <a href="tel:+78123321703">+7 (812) 332-1703</a>
-              </div>
-            </div>
-          </div>
-          <div class="col map">
-            <iframe
-              src="https://yandex.ru/map-widget/v1/?um=constructor%3A668e048cde5370e42d9239d2a08a2ae5dd26a6aa79afb0abd872ce4276d34d8a&amp;source=constructor"
-              width="100%" height="100%" frameborder="0"></iframe>
-          </div>
-        </div>
+				<div class="section-information">
+					<h2>Наши сотрудники</h2>
+				</div>
 
-        <div class="section-information">
-          <h2>Наши сотрудники</h2>
-        </div>
-
-        <div class="section-information">
-          <h3>Отдел развития факторинга</h3>
-          <div class="persons">
-            <mib-card-person
-              [avatar]="'/assets/public/personal/no_avatar_female.jpg'"
-              [name]="'Андреева Марина'"
-              [position]="'Директор ККО «Санкт-Петербургский»'"
-              [email]="'anma@metib.ru'">
-            </mib-card-person>
-            <mib-card-person
-              [avatar]="'/assets/public/personal/no_avatar_female.jpg'"
-              [name]="'Ковязина Екатерина'"
-              [position]="'Специалист Отдела развития факторинга ДО Санкт-Петербург'"
-              [email]="'ekovyazina@metib.ru'">
-            </mib-card-person>
-          </div>
-        </div>
-      </mib-tab-body>
-    </mib-tab-item>
-  </mib-tab>
-</mib-section-body>
+				<div class="section-information">
+					<h3>Отдел развития факторинга</h3>
+					<div class="persons">
+						<mib-card-person
+							[avatar]="'/assets/public/personal/no_avatar_female.jpg'"
+							[name]="'Андреева Марина'"
+							[position]="'Директор ККО «Санкт-Петербургский»'"
+							[email]="'anma@metib.ru'"
+						>
+						</mib-card-person>
+						<mib-card-person
+							[avatar]="'/assets/public/personal/no_avatar_female.jpg'"
+							[name]="'Ковязина Екатерина'"
+							[position]="
+								'Специалист Отдела развития факторинга ДО Санкт-Петербург'
+							"
+							[email]="'ekovyazina@metib.ru'"
+						>
+						</mib-card-person>
+					</div>
+				</div>
+			</mib-tab-body>
+		</mib-tab-item>
+	</mib-tab>
+</mib-section-body> -->

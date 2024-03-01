@@ -330,4 +330,11 @@ ng g m public/components/advantages-icon/advantages-icon --flat  --dry-run
 ng g c public/components/advantages-icon/advantages-icon --flat  --skip-tests --dry-run
  //---
 
+// public components contact-panel
+src\app\public\components
+ng g i public/components/contact-panel/interfaces/contact-panel.interface  --dry-run
+ng g m public/components/contact-panel/contact-panel --flat  --dry-run
+ng g c public/components/contact-panel/contact-panel --flat  --skip-tests --dry-run
+ //---
+
 ```

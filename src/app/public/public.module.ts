@@ -37,6 +37,9 @@ import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module'
 import {LandingComponent} from './pages/landing/landing.component'
 import {IconModule} from '../shared/ui-kit/ref-icon/icon.module'
 import {AdvantagesIconModule} from './components/advantages-icon/advantages-icon.module'
+import {NavbarModule} from '../shared/ui-kit/navbar/navbar.module'
+import {TabModule} from '../shared/ui-kit/tab/tab.module'
+import {ContactPanelModule} from './components/contact-panel/contact-panel.module'
 
 const routes = [
 	{
@@ -103,7 +106,10 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		HeaderModule,
 		SpacingModule,
 		IconModule,
-		AdvantagesIconModule
+		AdvantagesIconModule,
+		TabModule,
+		NavbarModule,
+		ContactPanelModule
 	],
 	exports: [RouterModule],
 	declarations: [
