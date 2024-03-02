@@ -37,7 +37,7 @@
 				<h4>Руководители</h4>
 				<mib-spacing type="xs"></mib-spacing>
 				<div class="flex flex_wrap gap-16">
-					<div class="flex" *ngFor="let item of datas">
+					<div class="flex" *ngFor="let item of datas[0].managers">
 						<mib-contact-panel
 							[contactImage]="item.img"
 							[contactPosition]="item.position"
@@ -50,7 +50,45 @@
 				<mib-spacing type="m"></mib-spacing>
 				<h4>Отдел сопровождения факторинга</h4>
 				<mib-spacing type="xs"></mib-spacing>
-				support department
+				<div class="flex flex_wrap gap-16">
+					<div class="flex" *ngFor="let item of datas[1].supportDep">
+						<mib-contact-panel
+							[contactImage]="item.img"
+							[contactPosition]="item.position"
+							[contactName]="item.name"
+							[contactMail]="item.email"
+							[contactTel]="item.tel"
+						></mib-contact-panel>
+					</div>
+				</div>
+				<mib-spacing type="m"></mib-spacing>
+				<h4>Отдел продаж</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex flex_wrap gap-16">
+					<div class="flex" *ngFor="let item of datas[2].salesDep">
+						<mib-contact-panel
+							[contactImage]="item.img"
+							[contactPosition]="item.position"
+							[contactName]="item.name"
+							[contactMail]="item.email"
+							[contactTel]="item.tel"
+						></mib-contact-panel>
+					</div>
+				</div>
+				<mib-spacing type="m"></mib-spacing>
+				<h4>Отдел организации продаж</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex flex_wrap gap-16">
+					<div class="flex" *ngFor="let item of datas[3].salesOrgDep">
+						<mib-contact-panel
+							[contactImage]="item.img"
+							[contactPosition]="item.position"
+							[contactName]="item.name"
+							[contactMail]="item.email"
+							[contactTel]="item.tel"
+						></mib-contact-panel>
+					</div>
+				</div>
 				<mib-spacing type="xl2"></mib-spacing>
 			</mib-tab-item>
 			<mib-tab-item value="2">
