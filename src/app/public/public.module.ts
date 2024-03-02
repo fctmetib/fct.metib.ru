@@ -40,6 +40,7 @@ import {AdvantagesIconModule} from './components/advantages-icon/advantages-icon
 import {NavbarModule} from '../shared/ui-kit/navbar/navbar.module'
 import {TabModule} from '../shared/ui-kit/tab/tab.module'
 import {ContactPanelModule} from './components/contact-panel/contact-panel.module'
+import {NewFooterModule} from '../shared/modules/new-footer/new-footer.module'
 
 const routes = [
 	{
@@ -109,7 +110,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		AdvantagesIconModule,
 		TabModule,
 		NavbarModule,
-		ContactPanelModule
+		ContactPanelModule,
+		NewFooterModule
 	],
 	exports: [RouterModule],
 	declarations: [

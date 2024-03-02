@@ -318,10 +318,14 @@ ng g d shared/ui-kit/input/directives/metib-input --skip-tests --dry-run
 ng g d shared/ui-kit/input/directives/metib-pass-date --skip-tests --dry-run
 ng g d shared/ui-kit/input/directives/metib-pass-time --skip-tests --dry-run
 
-
 // public landing
 src\app\public\pages
 ng g c public/pages/landing --skip-tests --dry-run
+
+// public landing
+src\app\shared\modules
+ng g m shared/modules/new-footer/new-footer --flat --dry-run
+ng g c shared/modules/new-footer --skip-tests --dry-run
 
 // public components advantages-icon
 src\app\public\components
