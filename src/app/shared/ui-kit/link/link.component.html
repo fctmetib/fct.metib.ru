@@ -1,9 +1,16 @@
-<button [disabled]="disabled" (click)="press.emit($event)" class="link flex flex_align-center" [ngClass]="classes">
-  <div class="link_icon-wrapper link_left-icon-wrapper" #leftIcon>
-    <ng-content select="[mibLeftIcon]"></ng-content>
-  </div>
-  <span class="link-text"><ng-content></ng-content></span>
-  <div class="link_icon-wrapper link_right-icon-wrapper" #rightIcon>
-    <ng-content select="[mibRightIcon]"></ng-content>
-  </div>
+<button
+	[disabled]="disabled"
+	(click)="press.emit($event)"
+	class="link flex flex_align-center"
+	[ngClass]="classes"
+>
+	<div class="link_icon-wrapper link_left-icon-wrapper" #leftIcon>
+		<ng-content select="[mibLeftIcon]"></ng-content>
+	</div>
+	<span [ngClass]="{'show-underline': showUnderline}" class="link-text"
+		><ng-content></ng-content
+	></span>
+	<div class="link_icon-wrapper link_right-icon-wrapper" #rightIcon>
+		<ng-content select="[mibRightIcon]"></ng-content>
+	</div>
 </button>

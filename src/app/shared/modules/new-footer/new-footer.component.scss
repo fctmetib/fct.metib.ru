@@ -1,0 +1,10 @@
+.footer {
+	border-top: 1px solid var(--wgr-tertiary);
+	& .item {
+		min-width: 272px;
+	}
+
+	& mib-header {
+		position: relative;
+	}
+}

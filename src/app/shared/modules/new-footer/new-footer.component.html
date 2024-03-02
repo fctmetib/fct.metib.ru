@@ -1,3 +1,62 @@
-<div class="container">
-	<p>new-footer works great!</p>
-</div>
+<footer class="footer">
+	<div class="container">
+		<mib-spacing type="l"></mib-spacing>
+		<div class="flex flex_justify-between">
+			<div class="flex gap-16">
+				<div class="flex flex_column item">
+					<mib-link [showUnderline]="true" size="l" type="ghost-secondary"
+						>+7 (495) 727-9797
+					</mib-link>
+					<mib-spacing type="xs2"></mib-spacing>
+					<span class="text text_m c-bti-secondary"
+						>Номер горячей линии <br />
+						для звонков по Москве</span
+					>
+				</div>
+				<div class="flex flex_column item">
+					<mib-link [showUnderline]="true" size="l" type="ghost-secondary"
+						>+7 (800) 250-9797
+					</mib-link>
+					<mib-spacing type="xs2"></mib-spacing>
+					<span class="text text_m c-bti-secondary"
+						>Номер горячей линии <br />
+						для звонков по всей России</span
+					>
+				</div>
+				<div class="flex flex_column gap-4 item">
+					<div class="flex flex_column gap-4">
+						<p class="text text_l c-bti-secondary">
+							119180, г. Москва, ул. Большая <br />
+							Полянка, д. 47, стр. 2
+						</p>
+					</div>
+					<!-- <div class="flex flex_column gap-4">
+						<mib-link size="l" type="ghost-secondary"
+							>119180, г. Москва, ул. Большая
+						</mib-link>
+						<mib-link size="l" type="ghost-secondary"
+							>Полянка, д. 47, стр. 2
+						</mib-link>
+					</div> -->
+					<!-- <mib-link size="l" type="ghost-secondary"
+						>119180, г. Москва, ул. Большая <br />
+						Полянка, д. 47, стр. 2
+					</mib-link> -->
+					<mib-link size="m" type="ghost-primary">Показать на карте </mib-link>
+				</div>
+			</div>
+			<div class="flex flex_column">
+				<p class="text text_m c-bti-secondary">Пишите нам в соц. сетях</p>
+				<mib-spacing type="xs2"></mib-spacing>
+				<div class="flex gap-12">
+					<mib-media></mib-media>
+					<mib-media type="whatsapp"></mib-media>
+					<mib-media type="vk"></mib-media>
+				</div>
+			</div>
+		</div>
+		<mib-spacing type="l"></mib-spacing>
+		<mib-header></mib-header>
+	</div>
+</footer>
+<mib-spacing type="xl2"></mib-spacing>

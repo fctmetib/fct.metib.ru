@@ -128,4 +128,8 @@ $text-selectors: 'span';
 			display: flex;
 		}
 	}
+
+	& .show-underline {
+		border-bottom: 1px solid var(--bti-secondary);
+	}
 }
