@@ -4,7 +4,7 @@
 $text-selectors: 'span';
 
 @mixin link-size($height, $icon-size) {
-	height: $height;
+	min-height: $height;
 
 	#{$text-selectors} {
 		@content;
@@ -131,5 +131,9 @@ $text-selectors: 'span';
 
 	& .show-underline {
 		border-bottom: 1px solid var(--bti-secondary);
+	}
+
+	& .link-text {
+		text-align: start;
 	}
 }
