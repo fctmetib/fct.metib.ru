@@ -46,7 +46,28 @@
 	</div>
 	<div class="flex separator"></div>
 	<mib-spacing type="s"></mib-spacing>
-	<mib-header showProfileButton="true"></mib-header>
+	<div class="container flex flex_justify-between">
+		<div class="flex gap-16 flex_align-center">
+			<div class="flex">
+				<mib-icon
+					class="cursor-pointer"
+					[routerLink]="['/']"
+					name="logotype"
+				></mib-icon>
+			</div>
+			<div class="flex gap-16">
+				<mib-link size="m" type="ghost-secondary"
+					>Условия использования
+				</mib-link>
+				<mib-link size="m" type="ghost-secondary"
+					>Обработка персональных данных
+				</mib-link>
+			</div>
+		</div>
+		<mib-button [routerLink]="['/auth/login']" type="filled-primary" size="m"
+			>Регистрация и вход
+		</mib-button>
+	</div>
 	<mib-spacing type="s"></mib-spacing>
 	<div class="bottom">
 		<mib-spacing type="s"></mib-spacing>

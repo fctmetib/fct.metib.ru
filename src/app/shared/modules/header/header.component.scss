@@ -11,15 +11,15 @@
 }
 
 .header {
-  &-inner {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--wgr-secondary);
-  }
+	&-inner {
+		padding: 12px 0;
+		border-bottom: 1px solid var(--wgr-secondary);
+	}
 }
 
 .extension {
 	background-color: var(--wgr-secondary);
-  padding: 16px 0;
+	padding: 16px 0;
 }
 
 .container {
@@ -32,13 +32,13 @@
 }
 
 .manager {
-  cursor: pointer;
-  * {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+	cursor: pointer;
+	* {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
 }
 
 .user {
@@ -51,7 +51,7 @@
 	padding: 2px 0;
 }
 
-mib-icon[name="logotype"] {
-  @include icon-size(unset);
-  padding-right: 62px;
+mib-icon[name='logotype'] {
+	@include icon-size(unset);
+	padding-right: 62px;
 }

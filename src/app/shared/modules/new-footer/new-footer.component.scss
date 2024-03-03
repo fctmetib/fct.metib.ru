@@ -1,3 +1,5 @@
+@import 'src/styles/helpers/icon_tools';
+
 .footer {
 	border-top: 1px solid var(--wgr-tertiary);
 	& .item {
@@ -8,11 +10,12 @@
 		border-top: 1px solid var(--wgr-tertiary);
 	}
 
-	& mib-header {
-		position: relative;
-	}
-
 	& .bottom {
 		background-color: var(--wgr-secondary);
+	}
+
+	mib-icon[name='logotype'] {
+		@include icon-size(unset);
+		padding-right: 62px;
 	}
 }
