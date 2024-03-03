@@ -1,6 +1,9 @@
 .contacts {
 	width: 560px;
 	margin: 0 auto;
+	& .map {
+		height: 150px;
+	}
 }
 
 // h3 {
