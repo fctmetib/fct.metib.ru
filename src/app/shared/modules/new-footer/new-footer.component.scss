@@ -4,7 +4,15 @@
 		min-width: 272px;
 	}
 
+	& .separator {
+		border-top: 1px solid var(--wgr-tertiary);
+	}
+
 	& mib-header {
 		position: relative;
+	}
+
+	& .bottom {
+		background-color: var(--wgr-secondary);
 	}
 }
