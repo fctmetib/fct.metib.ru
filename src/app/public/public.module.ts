@@ -41,6 +41,8 @@ import {NavbarModule} from '../shared/ui-kit/navbar/navbar.module'
 import {TabModule} from '../shared/ui-kit/tab/tab.module'
 import {ContactPanelModule} from './components/contact-panel/contact-panel.module'
 import {NewFooterModule} from '../shared/modules/new-footer/new-footer.module'
+import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-point.module'
+import {NewsPanelModule} from './components/news-panel/news-panel.module'
 
 const routes = [
 	{
@@ -73,7 +75,7 @@ const routes = [
 				title: 'Контакты'
 			},
 			{
-				path: 'news/:id',
+				path: 'news',
 				component: NewsComponent
 			},
 			{
@@ -111,7 +113,9 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		TabModule,
 		NavbarModule,
 		ContactPanelModule,
-		NewFooterModule
+		NewFooterModule,
+		DropdownPointModule,
+		NewsPanelModule
 	],
 	exports: [RouterModule],
 	declarations: [

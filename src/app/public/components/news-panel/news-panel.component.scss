@@ -1,0 +1,11 @@
+:host {
+	border-radius: var(--main-border-radius);
+	border: 1px solid var(--wgr-tertiary);
+	overflow: hidden;
+}
+
+.news {
+	& .p-24 {
+		padding: 24px;
+	}
+}

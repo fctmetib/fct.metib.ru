@@ -341,4 +341,11 @@ ng g m public/components/contact-panel/contact-panel --flat  --dry-run
 ng g c public/components/contact-panel/contact-panel --flat  --skip-tests --dry-run
  //---
 
+// public components news-panel
+src\app\public\components
+ng g i public/components/news-panel/interfaces/news-panel.interface  --dry-run
+ng g m public/components/news-panel/news-panel --flat  --dry-run
+ng g c public/components/news-panel/news-panel --flat  --skip-tests --dry-run
+ //---
+
 ```

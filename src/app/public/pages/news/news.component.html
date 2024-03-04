@@ -1,19 +1,42 @@
-<mib-section-header-news>
-  <div class="news">
-    <div class="news__header">
-      <span class="date">{{ currentNews?.Date | date:"dd.MM.yyyy"}}</span>
-      <h1 class="news-title">{{currentNews?.Title}}</h1>
-    </div>
-    <div class="news__image">
-      <img [src]="imageSrc" alt="image">
-    </div>
-  </div>
+<div class="flex flex_column news">
+	<mib-spacing type="l"></mib-spacing>
+	<div class="flex flex_justify-between">
+		<h3>Новости банка</h3>
+		<div class="flex">
+			<mib-tab-group type="filled">
+				<mib-navbar size="m">
+					<mib-navbar-point value="1" type="filled" class="flex_grow">
+						<mib-icon class="stroke" btn-icon name="fi_grid"></mib-icon>
+					</mib-navbar-point>
+					<mib-navbar-point value="2" type="filled" class="flex_grow">
+						<mib-icon class="stroke" btn-icon name="fi_list"></mib-icon>
+					</mib-navbar-point>
+				</mib-navbar>
+				<mib-tab-item value="1"> tab-1 </mib-tab-item>
+				<mib-tab-item value="2"> tab-2 </mib-tab-item>
+			</mib-tab-group>
+		</div>
+	</div>
+	<mib-spacing type="m"></mib-spacing>
+	<mib-news-panel [showPreview]="datas.img"></mib-news-panel>
+	<mib-spacing type="m"></mib-spacing>
+</div>
 
-  <!-- <p class="desc">
-    За последние пол года все больше и больше людей стали заботиться о
-    своем здоровье и физической форме. В связи с этим в адрес
-    Металлинвестбанк Факторинг участились запросы на финансирование
-    поставок в сеть Спортмастер.
-  </p> -->
+<!-- <mib-section-header-news>
+	<div class="news">
+		<div class="news__header">
+			<span class="date">{{ currentNews?.Date | date : 'dd.MM.yyyy' }}</span>
+			<h1 class="news-title">{{ currentNews?.Title }}</h1>
+		</div>
+		<div class="news__image">
+			<img [src]="imageSrc" alt="image" />
+		</div>
+	</div>
+
+	<p class="desc">
+		За последние пол года все больше и больше людей стали заботиться о своем
+		здоровье и физической форме. В связи с этим в адрес Металлинвестбанк
+		Факторинг участились запросы на финансирование поставок в сеть Спортмастер.
+	</p>
 </mib-section-header-news>
-<mib-section-body [contentHTML]="currentNews?.Text"></mib-section-body>
+<mib-section-body [contentHTML]="currentNews?.Text"></mib-section-body> -->
