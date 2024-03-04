@@ -3,7 +3,6 @@
 	<h3>Заявки</h3>
 	<mib-spacing type="m"></mib-spacing>
 </div>
-<mib-tab-group>
 	<div class="container container_large">
 		<div class="flex flex_justify-between">
 			<div class="flex gap-16">
@@ -33,399 +32,109 @@
 			</div>
 		</div>
 		<mib-spacing type="xs"></mib-spacing>
-		<mib-tab-item>
-			<mib-table (selectionChange)="selectionChange($event)">
-				<mib-table-head>
-					<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
-						>ИД</mib-table-head-cell
-					>
-					<mib-table-head-cell>№ заявки</mib-table-head-cell>
-					<mib-table-head-cell>Дата заявки</mib-table-head-cell>
-					<mib-table-head-cell>Договор поставки</mib-table-head-cell>
-					<mib-table-head-cell>Тип заявки</mib-table-head-cell>
-					<mib-table-head-cell>Статус</mib-table-head-cell>
-					<mib-table-head-cell>Доступ</mib-table-head-cell>
-					<mib-table-head-cell>Корректировка</mib-table-head-cell>
-					<mib-table-head-cell>Сумма</mib-table-head-cell>
-				</mib-table-head>
-				<ng-container *ngIf="loading$ | async; else table">
-					<mib-skeleton
-						[styles]="last ? skeletonWithoutUnderline : skeleton"
-						*ngFor="
+    <mib-table (selectionChange)="selectionChange($event)">
+      <mib-table-head>
+        <mib-table-head-cell [sortable]="true" [showCheckbox]="true"
+        >ИД</mib-table-head-cell
+        >
+        <mib-table-head-cell>№ заявки</mib-table-head-cell>
+        <mib-table-head-cell>Дата заявки</mib-table-head-cell>
+        <mib-table-head-cell>Договор поставки</mib-table-head-cell>
+        <mib-table-head-cell>Тип заявки</mib-table-head-cell>
+        <mib-table-head-cell>Статус</mib-table-head-cell>
+        <mib-table-head-cell>Доступ</mib-table-head-cell>
+        <mib-table-head-cell>Корректировка</mib-table-head-cell>
+        <mib-table-head-cell>Сумма</mib-table-head-cell>
+      </mib-table-head>
+      <ng-container *ngIf="loading$ | async; else table">
+        <mib-skeleton
+          [styles]="last ? skeletonWithoutUnderline : skeleton"
+          *ngFor="
 							let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
 							let last = last
 						"
-					></mib-skeleton>
-				</ng-container>
-				<ng-template #table>
-					<mib-table-row
-            (dblclick)="openBrowserDrawer(req.ID)"
-						*ngFor="let req of requestsVisible; let last = last"
-						[rowId]="req.ID"
-						[underlined]="!last"
-					>
-						<mib-table-cell type="main">
-							<ng-container table-cell-title>{{ req.ID }}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{ req.Number }}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.Date | date : 'dd.MM.YYYY'
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.Delivery.CustomerID
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.Delivery.Title
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{ req.Status }}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.Shipments ? 'Есть' : 'Отсутствует'
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.IsCorrected ? 'Да' : 'Нет'
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								req.Summ | currency : 'RUR'
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-button
-							[mibDropdownTrigger]="requestRowMenu"
-							table-row-button
-							size="s"
-							type="ghost-secondary"
-						>
-							<mib-icon
-								class="stroke"
-								btn-icon
-								name="fi_more-vertical"
-							></mib-icon>
-						</mib-button>
-						<mib-dropdown #requestRowMenu>
-							<mib-dropdown-point
-								(press)="openBrowserDrawer(req.ID)"
-								text="Открыть"
-							></mib-dropdown-point>
-						</mib-dropdown>
-					</mib-table-row>
-				</ng-template>
-				<mib-table-footer
-					[showIsland]="true"
-					[actionLoading]="isSigningPreparing$ | async"
-					(onDelete)="deleteRequests($event)"
-					(onAction)="requestSign()"
-					[lined]="!(loading$ | async)"
-				>
-					<ng-container table-footer-action>Подписать</ng-container>
-					<mib-paginator
-						(pageChange)="onPageChange($event)"
-						[totalCount]="requests.length"
-						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
-					></mib-paginator>
-				</mib-table-footer>
-			</mib-table>
-		</mib-tab-item>
-		<mib-tab-item></mib-tab-item>
+        ></mib-skeleton>
+      </ng-container>
+      <ng-template #table>
+        <mib-table-row
+          (dblclick)="openBrowserDrawer(req.ID)"
+          *ngFor="let req of requestsVisible; let last = last"
+          [rowId]="req.ID"
+          [underlined]="!last"
+        >
+          <mib-table-cell type="main">
+            <ng-container table-cell-title>{{ req.ID }}</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{ req.Number }}</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+              req.Date | date : 'dd.MM.YYYY'
+              }}</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+              req.Delivery.CustomerID
+              }}</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+              req.Delivery.Title
+              }}</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{ req.Status }}</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+              req.Shipments ? 'Есть' : 'Отсутствует'
+              }}</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+              req.IsCorrected ? 'Да' : 'Нет'
+              }}</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+              req.Summ | currency : 'RUR'
+              }}</ng-container>
+          </mib-table-cell>
+          <mib-button
+            [mibDropdownTrigger]="requestRowMenu"
+            table-row-button
+            size="s"
+            type="ghost-secondary"
+          >
+            <mib-icon
+              class="stroke"
+              btn-icon
+              name="fi_more-vertical"
+            ></mib-icon>
+          </mib-button>
+          <mib-dropdown #requestRowMenu>
+            <mib-dropdown-point
+              (press)="openBrowserDrawer(req.ID)"
+              text="Открыть"
+            ></mib-dropdown-point>
+          </mib-dropdown>
+        </mib-table-row>
+      </ng-template>
+      <mib-table-footer
+        [showIsland]="true"
+        [actionLoading]="isSigningPreparing$ | async"
+        (onDelete)="deleteRequests($event)"
+        (onAction)="requestSign()"
+        [lined]="!(loading$ | async)"
+      >
+        <ng-container table-footer-action>Подписать</ng-container>
+        <mib-paginator
+          (pageChange)="onPageChange($event)"
+          [totalCount]="requests.length"
+          [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+          [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+        ></mib-paginator>
+      </mib-table-footer>
+    </mib-table>
 	</div>
-</mib-tab-group>
-
-<!--<p-toast></p-toast>-->
-<!--<div class="card-content" id="step1">-->
-<!--  <p-toolbar styleClass="p-mb-4">-->
-<!--    <ng-template pTemplate="left">-->
-<!--      <button #btn-->
-<!--              type="button"-->
-<!--              pButton label="Действие"-->
-<!--              iconPos="right"-->
-<!--              icon="pi pi-angle-down"-->
-<!--              (click)="menu.toggle($event)"-->
-<!--              class="basic"-->
-<!--              id="step2"></button>-->
-<!--      <p-tieredMenu #menu-->
-<!--                    [model]="items"-->
-<!--                    [popup]="true"></p-tieredMenu>-->
-<!--      <button type="button"-->
-<!--              pButton-->
-<!--              label="Обновить данные"-->
-<!--              class="basic p-mr-2"-->
-<!--              (click)="refresh()"></button>-->
-<!--    </ng-template>-->
-<!--  </p-toolbar>-->
-<!--  <div class="responsive-table">-->
-<!--    <div *ngFor="let request of (requests$ | async)"></div>-->
-<!--    <p-table [value]="(requests$ | async)"-->
-<!--             [rows]="10"-->
-<!--             [showCurrentPageReport]="true"-->
-<!--             selectionMode="multiple"-->
-<!--             [rowsPerPageOptions]="[10,25,50]"-->
-<!--             [(selection)]="selectedItems"-->
-<!--             dataKey="ID"-->
-<!--             (onRowSelect)="checkSelecteditems()"-->
-<!--             styleClass="p-datatable-customers mib-table"-->
-<!--             [paginator]="true"-->
-<!--             [metaKeySelection]="true"-->
-<!--             (sortFunction)="customSort($event)"-->
-<!--             [customSort]="true"-->
-<!--             tableHighlight-->
-<!--             currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">-->
-<!--      &lt;!&ndash; &ndash;&gt;-->
-<!--      <ng-template pTemplate="header">-->
-<!--        <tr>-->
-<!--          <th style="width: 3rem">-->
-<!--            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>-->
-<!--          </th>-->
-<!--          <th pSortableColumn="ID">-->
-<!--            <div class="m-th">-->
-<!--              <div>-->
-<!--                ID-->
-<!--                <p-sortIcon field="ID"></p-sortIcon>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th>-->
-<!--            <div class="m-th">-->
-<!--              <div>Договор</div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th pSortableColumn="Number">-->
-<!--            <div class="m-th">-->
-<!--              <div>-->
-<!--                Номер-->
-<!--                <p-sortIcon field="Number"></p-sortIcon>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th pSortableColumn="Date">-->
-<!--            <div class="m-th">-->
-<!--              <div>-->
-<!--                Дата-->
-<!--                <p-sortIcon field="Date"></p-sortIcon>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th pSortableColumn="Type">-->
-<!--            <div class="m-th">-->
-<!--              <div>-->
-<!--                Тип-->
-<!--                <p-sortIcon field="Type"></p-sortIcon>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th pSortableColumn="Status">-->
-<!--            <div class="m-th">-->
-<!--              <div>-->
-<!--                Состояние-->
-<!--                <p-sortIcon field="Status"></p-sortIcon>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th>-->
-<!--            <div class="m-th">-->
-<!--              <div>Покупатель</div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th>-->
-<!--            <div class="m-th">-->
-<!--              <div>Сумма заявки</div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--      <ng-template pTemplate="body" let-request>-->
-<!--        <tr [pRowToggler]="request" class="can-click" (click)="selectRow(request)">-->
-<!--          <td>-->
-<!--            <p-tableCheckbox [value]="request"></p-tableCheckbox>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>{{request.ID}}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td" tooltipPosition="bottom" pTooltip="{{request.Delivery.Title}}">-->
-<!--              <div>{{request.Delivery.Title}}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div> {{request.Number}}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>{{request.Date | date: 'dd.MM.yyyy'}}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              &lt;!&ndash; TODO:: rework it on PIPE &ndash;&gt;-->
-<!--              <div [ngSwitch]="request.Type">-->
-<!--                <div *ngSwitchCase="'Financing'">-->
-<!--                  С финансированием-->
-<!--                </div>-->
-<!--                <div *ngSwitchCase="'NonFinancing'">-->
-<!--                  Без финансирования-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>{{request.Status}}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td" tooltipPosition="bottom" pTooltip="{{request.Delivery.Debtor}}">-->
-<!--              <div>{{request.Delivery.Debtor}}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td currency" tooltipPosition="bottom" pTooltip="{{request.Summ | currency:'RUB':'symbol-narrow'}}">-->
-<!--              <div>{{ request.Summ | currency:'RUB':'symbol-narrow' }}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--      <ng-template pTemplate="emptymessage">-->
-<!--        <ng-container *ngIf="!(loading$ | async); else skeletonRequestsTemplate">-->
-<!--          <tr>-->
-<!--            <td colspan="9">Нет данных.</td>-->
-<!--          </tr>-->
-<!--        </ng-container>-->
-<!--        <ng-template #skeletonRequestsTemplate>-->
-<!--          <tr *ngFor="let i of [{}, {}, {}, {}, {}]">-->
-<!--            <td>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <div class="m-td">-->
-<!--                <div>-->
-<!--                  <p-skeleton width="10rem"></p-skeleton>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <div class="m-td">-->
-<!--                <div>-->
-<!--                  <p-skeleton width="10rem"></p-skeleton>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <div class="m-td">-->
-<!--                <div>-->
-<!--                  <p-skeleton width="10rem"></p-skeleton>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <div class="m-td">-->
-<!--                <div>-->
-<!--                  <p-skeleton width="10rem"></p-skeleton>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <div class="m-td">-->
-<!--                <div>-->
-<!--                  <p-skeleton width="10rem"></p-skeleton>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <div class="m-td">-->
-<!--                <div>-->
-<!--                  <p-skeleton width="10rem"></p-skeleton>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <div class="m-td">-->
-<!--                <div>-->
-<!--                  <p-skeleton width="10rem"></p-skeleton>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <div class="m-td">-->
-<!--                <div>-->
-<!--                  <p-skeleton width="10rem"></p-skeleton>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--      </ng-template>-->
-<!--    </p-table>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<div class="card-content card-content__tabs">-->
-<!--  <ng-container *ngIf="!selectedRequest; else selectedRequestTemplate">-->
-<!--    <div class="card-content__text-center">-->
-<!--      Для просмотра Накладных и Документов - нажмите, на любую заявку.-->
-<!--    </div>-->
-<!--  </ng-container>-->
-<!--  <ng-template #selectedRequestTemplate>-->
-<!--    <p>ID Заявки: <strong> {{selectedRequest.ID}}</strong></p>-->
-<!--    <p-tabView>-->
-<!--      <p-tabPanel header="Накладные">-->
-<!--        <shipments-view [shipments]="selectedRequest.Shipments"></shipments-view>-->
-<!--      </p-tabPanel>-->
-<!--      <p-tabPanel header="Документы">-->
-<!--        <documents-view [documents]="selectedRequest.Documents"-->
-<!--                        (documentView)="documentViewHandler($event)"></documents-view>-->
-<!--      </p-tabPanel>-->
-<!--    </p-tabView>-->
-<!--  </ng-template>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Confirm Form &ndash;&gt;-->
-<!--<form [formGroup]="confirmForm"-->
-<!--      (ngSubmit)="confirmSend()">-->
-<!--  <p-dialog [style]="{width: '450px'}"-->
-<!--            [(visible)]="confirmDialog"-->
-<!--            header="Подтверждение"-->
-<!--            [modal]="true"-->
-<!--            [draggable]="false"-->
-<!--            [resizable]="false"-->
-<!--            styleClass="p-fluid">-->
-<!--    <ng-template pTemplate="content">-->
-<!--      <div class="p-field">-->
-<!--        <label for="pin">Пин-код: </label>-->
-<!--        <input id="pin"-->
-<!--               type="text"-->
-<!--               pInputText-->
-<!--               placeholder="Пин-код"-->
-<!--               formControlName="pin">-->
-<!--      </div>-->
-<!--    </ng-template>-->
-<!--    <ng-template pTemplate="footer">-->
-<!--      <button pButton-->
-<!--              pRipple-->
-<!--              label="Отменить"-->
-<!--              icon="pi pi-times"-->
-<!--              class="p-button-text"></button>-->
-<!--      <button pButton-->
-<!--              pRipple-->
-<!--              label="Подтвердить"-->
-<!--              icon="pi pi-check"-->
-<!--              class="p-button-text"-->
-<!--              type="submit"></button>-->
-<!--    </ng-template>-->
-<!--  </p-dialog>-->
-<!--</form>-->
