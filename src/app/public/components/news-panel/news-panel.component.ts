@@ -12,6 +12,7 @@ export class NewsPanelComponent {
 	@Input() showLink: boolean = false
 	@Input() showCategories: boolean = false
 	@Input() showPreview: boolean = true
+	@Input() newsTitle: string = ''
 	@Input() newsDate: string = ''
 
 	get classes() {

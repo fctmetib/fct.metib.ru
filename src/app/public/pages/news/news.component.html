@@ -1,9 +1,9 @@
 <div class="flex flex_column news">
 	<mib-spacing type="l"></mib-spacing>
-	<div class="flex flex_justify-between">
-		<h3>Новости банка</h3>
-		<div class="flex">
-			<mib-tab-group type="filled">
+	<mib-tab-group type="filled">
+		<div class="flex flex_justify-between">
+			<h3>Новости банка</h3>
+			<div class="flex">
 				<mib-navbar size="m">
 					<mib-navbar-point value="1" type="filled" class="flex_grow">
 						<mib-icon class="stroke" btn-icon name="fi_grid"></mib-icon>
@@ -12,14 +12,31 @@
 						<mib-icon class="stroke" btn-icon name="fi_list"></mib-icon>
 					</mib-navbar-point>
 				</mib-navbar>
-				<mib-tab-item value="1"> tab-1 </mib-tab-item>
-				<mib-tab-item value="2"> tab-2 </mib-tab-item>
-			</mib-tab-group>
+			</div>
 		</div>
-	</div>
-	<mib-spacing type="m"></mib-spacing>
-	<mib-news-panel [showPreview]="datas.img"></mib-news-panel>
-	<mib-spacing type="m"></mib-spacing>
+		<mib-spacing type="m"></mib-spacing>
+		<mib-tab-item value="1">
+			<div *ngFor="let news of datas">
+				<mib-news-panel
+					[newsTitle]="news.title"
+					[newsDate]="news.date"
+					[showPreview]="news.img"
+				></mib-news-panel>
+				<mib-spacing type="s"></mib-spacing>
+			</div>
+			<mib-spacing type="xl"></mib-spacing>
+		</mib-tab-item>
+		<mib-tab-item value="2">
+			<div *ngFor="let news of datas">
+				<mib-news-panel
+					[newsTitle]="news.title"
+					[newsDate]="news.date"
+				></mib-news-panel>
+				<mib-spacing type="s"></mib-spacing>
+			</div>
+			<mib-spacing type="xl"></mib-spacing>
+		</mib-tab-item>
+	</mib-tab-group>
 </div>
 
 <!-- <mib-section-header-news>

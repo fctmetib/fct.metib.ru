@@ -3,13 +3,26 @@
 		<img src="{{ showPreview }}" alt="" />
 	</div>
 	<div class="flex flex_column">
-		<div class="flex">
-			<h4>С Наступающим Новым 2024 годом!</h4>
-			<div class="flex">
+		<div class="flex flex_column p-24">
+			<h4>{{ newsTitle }}</h4>
+			<div>
 				<mib-spacing type="xs2"></mib-spacing>
-				{{ newsDate }}
+				<span class="text text_l c-bti-secondary">
+					{{ newsDate }}
+				</span>
 			</div>
-			<div *ngIf="showCategories" class="flex">categories</div>
+			<div *ngIf="showCategories" class="flex">
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex gap-8">
+					<mib-tag size="l" type="filled-secondary"> tags </mib-tag>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="showLink" class="ph-24">
+			<div class="flex">
+				<mib-link size="l" type="ghost-primary">Подробнее </mib-link>
+			</div>
+			<mib-spacing type="s"></mib-spacing>
 		</div>
 	</div>
 </div>
