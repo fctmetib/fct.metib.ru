@@ -43,6 +43,8 @@ import {ContactPanelModule} from './components/contact-panel/contact-panel.modul
 import {NewFooterModule} from '../shared/modules/new-footer/new-footer.module'
 import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-point.module'
 import {NewsPanelModule} from './components/news-panel/news-panel.module'
+import {SingleNewsComponent} from './pages/single-news/single-news.component'
+import {TagModule} from '../shared/ui-kit/tag/tag.module'
 
 const routes = [
 	{
@@ -77,6 +79,10 @@ const routes = [
 			{
 				path: 'news',
 				component: NewsComponent
+			},
+			{
+				path: 'news/:id',
+				component: SingleNewsComponent
 			},
 			{
 				path: 'ui-kit-test',
@@ -115,7 +121,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		ContactPanelModule,
 		NewFooterModule,
 		DropdownPointModule,
-		NewsPanelModule
+		NewsPanelModule,
+		TagModule
 	],
 	exports: [RouterModule],
 	declarations: [
@@ -147,7 +154,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		TariffsComponent,
 		ClientsComponent,
 		ContactsComponent,
-		LandingComponent
+		LandingComponent,
+		SingleNewsComponent
 	],
 	providers: [OrganizationService, NewsService]
 })

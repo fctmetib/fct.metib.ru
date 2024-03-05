@@ -1,0 +1,21 @@
+@import 'src/styles/helpers/_icon_tools';
+@import 'src/styles/_colors.vars';
+
+.single {
+	width: 560px;
+	margin: 0 auto;
+
+	& .pr-4 {
+		padding-right: 4px;
+	}
+
+	& mib-icon[name='fi_chevron-right'] {
+		@include icon-size(16px);
+		@include icon-color(var(--bti-tertiary));
+	}
+
+	& .preview {
+		border-radius: var(--main-border-radius);
+		overflow: hidden;
+	}
+}

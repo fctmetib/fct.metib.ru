@@ -323,6 +323,10 @@ src\app\public\pages
 ng g c public/pages/landing --skip-tests --dry-run
 
 // public landing
+src\app\public\pages
+ng g c public/pages/single-news --skip-tests --dry-run
+
+// public landing
 src\app\shared\modules
 ng g m shared/modules/new-footer/new-footer --flat --dry-run
 ng g c shared/modules/new-footer --skip-tests --dry-run
