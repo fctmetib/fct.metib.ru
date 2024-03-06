@@ -2,25 +2,39 @@
 	<div *ngIf="showExtension" class="extension">
 		<div class="container flex flex_justify-between flex_align-center">
 			<div class="flex gap-16">
-				<a class="text text_m c-bti-tertiary" [routerLink]="['/']"
+				<a
+					class="text text_s c-bti-quaternary"
+					routerLinkActive="active"
+					[routerLink]="['/individual']"
 					>Частным клиентам</a
 				>
-				<a class="text text_m c-bti-tertiary" [routerLink]="['/']"
+				<a
+					class="text text_s c-bti-quaternary"
+					routerLinkActive="active"
+					[routerLink]="['/corporate']"
 					>Корпоративным клиентам</a
 				>
-				<a class="text text_m c-bti-tertiary" [routerLink]="['/']">Лизинг</a>
 				<a
-					class="text text_m c-bti-tertiary"
+					class="text text_s c-bti-quaternary"
+					routerLinkActive="active"
+					[routerLink]="['/leasing']"
+					>Лизинг</a
+				>
+				<a
+					class="text text_s c-bti-quaternary"
 					routerLinkActive="active"
 					[routerLink]="['/factoring']"
 					>Факторинг</a
 				>
-				<a class="text text_m c-bti-tertiary" [routerLink]="['/']"
+				<a
+					class="text text_s c-bti-quaternary"
+					routerLinkActive="active"
+					[routerLink]="['/finance']"
 					>Финансовым институтам</a
 				>
 			</div>
 			<div class="flex gap-24">
-				<mib-link size="m" type="ghost-secondary" [routerLink]="['/']"
+				<mib-link size="s" type="ghost-secondary" [routerLink]="['/']"
 					>Москва
 					<mib-icon
 						mibRightIcon
@@ -28,7 +42,7 @@
 						name="fi_chevron-down"
 					></mib-icon>
 				</mib-link>
-				<mib-link size="m" type="ghost-secondary" [routerLink]="['/']"
+				<mib-link size="s" type="ghost-secondary" [routerLink]="['/']"
 					>+7 (495) 727-9797
 					<mib-icon
 						mibRightIcon

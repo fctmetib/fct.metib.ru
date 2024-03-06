@@ -330,6 +330,22 @@ ng g c public/pages/single-news --skip-tests --dry-run
 src\app\public\pages
 ng g c public/pages/factoring --skip-tests --dry-run
 
+// public finance
+src\app\public\pages
+ng g c public/pages/finance --skip-tests --dry-run
+
+// public leasing
+src\app\public\pages
+ng g c public/pages/leasing --skip-tests --dry-run
+
+// public corporate
+src\app\public\pages
+ng g c public/pages/corporate --skip-tests --dry-run
+
+// public individual
+src\app\public\pages
+ng g c public/pages/individual --skip-tests --dry-run
+
 // public landing
 src\app\shared\modules
 ng g m shared/modules/new-footer/new-footer --flat --dry-run

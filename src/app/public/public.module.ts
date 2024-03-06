@@ -46,6 +46,10 @@ import {NewsPanelModule} from './components/news-panel/news-panel.module'
 import {SingleNewsComponent} from './pages/single-news/single-news.component'
 import {TagModule} from '../shared/ui-kit/tag/tag.module'
 import {FactoringComponent} from './pages/factoring/factoring.component'
+import {FinanceComponent} from './pages/finance/finance.component'
+import {LeasingComponent} from './pages/leasing/leasing.component'
+import {IndividualComponent} from './pages/individual/individual.component'
+import {CorporateComponent} from './pages/corporate/corporate.component'
 
 const routes = [
 	{
@@ -57,11 +61,6 @@ const routes = [
 				component: LandingComponent,
 				title: 'Факторинг | Металлинвест Банк'
 			},
-			// {
-			//   path: '',
-			//   component: HomeComponent,
-			//   title: 'Факторинг | Металлинвест Банк'
-			// },
 			{
 				path: 'tariffs',
 				component: TariffsComponent,
@@ -79,7 +78,8 @@ const routes = [
 			},
 			{
 				path: 'news',
-				component: NewsComponent
+				component: NewsComponent,
+				title: 'Новости'
 			},
 			{
 				path: 'news/:id',
@@ -87,7 +87,28 @@ const routes = [
 			},
 			{
 				path: 'factoring',
-				component: FactoringComponent
+				component: FactoringComponent,
+				title: 'Факторинг'
+			},
+			{
+				path: 'finance',
+				component: FinanceComponent,
+				title: 'Факторинг'
+			},
+			{
+				path: 'leasing',
+				component: LeasingComponent,
+				title: 'Факторинг'
+			},
+			{
+				path: 'corporate',
+				component: CorporateComponent,
+				title: 'Факторинг'
+			},
+			{
+				path: 'individual',
+				component: IndividualComponent,
+				title: 'Факторинг'
 			},
 			{
 				path: 'ui-kit-test',
@@ -161,7 +182,11 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		ContactsComponent,
 		LandingComponent,
 		SingleNewsComponent,
-		FactoringComponent
+		FactoringComponent,
+		CorporateComponent,
+		IndividualComponent,
+		LeasingComponent,
+		FinanceComponent
 	],
 	providers: [OrganizationService, NewsService]
 })
