@@ -372,4 +372,11 @@ ng g m public/components/news-panel/news-panel --flat  --dry-run
 ng g c public/components/news-panel/news-panel --flat  --skip-tests --dry-run
  //---
 
+// public components counter
+src\app\public\components
+ng g i public/components/counter/interfaces/counter.interface  --dry-run
+ng g m public/components/counter/counter --flat  --dry-run
+ng g c public/components/counter/counter --flat  --skip-tests --dry-run
+ //---
+
 ```

@@ -2,34 +2,17 @@
 	<div *ngIf="showExtension" class="extension">
 		<div class="container flex flex_justify-between flex_align-center">
 			<div class="flex gap-16">
-				<a
-					class="text text_s c-bti-quaternary"
-					routerLinkActive="active"
-					[routerLink]="['/individual']"
+				<a class="text text_s c-bti-quaternary" [routerLink]="['/']"
 					>Частным клиентам</a
 				>
-				<a
-					class="text text_s c-bti-quaternary"
-					routerLinkActive="active"
-					[routerLink]="['/corporate']"
+				<a class="text text_s c-bti-quaternary" [routerLink]="['/']"
 					>Корпоративным клиентам</a
 				>
-				<a
-					class="text text_s c-bti-quaternary"
-					routerLinkActive="active"
-					[routerLink]="['/leasing']"
-					>Лизинг</a
-				>
-				<a
-					class="text text_s c-bti-quaternary"
-					routerLinkActive="active"
-					[routerLink]="['/factoring']"
+				<a class="text text_s c-bti-quaternary" [routerLink]="['/']">Лизинг</a>
+				<a class="text text_s c-bti-quaternary" [routerLink]="['/']"
 					>Факторинг</a
 				>
-				<a
-					class="text text_s c-bti-quaternary"
-					routerLinkActive="active"
-					[routerLink]="['/finance']"
+				<a class="text text_s c-bti-quaternary" [routerLink]="['/']"
 					>Финансовым институтам</a
 				>
 			</div>
@@ -186,18 +169,18 @@
 							>Главная</a
 						>
 						<a
-							title="Перейти на страницу: Клиентам"
-							class="text text_m c-wgr-quaternary"
-							[routerLink]="['/clients']"
-							routerLinkActive="active"
-							>Клиентам</a
-						>
-						<a
 							title="Перейти на страницу: Тарифы"
 							class="text text_m c-wgr-quaternary"
 							[routerLink]="['/tariffs']"
 							routerLinkActive="active"
 							>Тарифы</a
+						>
+						<a
+							title="Перейти на страницу: Клиентам"
+							class="text text_m c-wgr-quaternary"
+							[routerLink]="['/clients']"
+							routerLinkActive="active"
+							>Клиентам</a
 						>
 						<a
 							title="Перейти на страницу: Контакты"

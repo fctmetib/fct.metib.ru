@@ -45,11 +45,7 @@ import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-poin
 import {NewsPanelModule} from './components/news-panel/news-panel.module'
 import {SingleNewsComponent} from './pages/single-news/single-news.component'
 import {TagModule} from '../shared/ui-kit/tag/tag.module'
-import {FactoringComponent} from './pages/factoring/factoring.component'
-import {FinanceComponent} from './pages/finance/finance.component'
-import {LeasingComponent} from './pages/leasing/leasing.component'
-import {IndividualComponent} from './pages/individual/individual.component'
-import {CorporateComponent} from './pages/corporate/corporate.component'
+import {CounterModule} from './components/counter/counter.module'
 
 const routes = [
 	{
@@ -84,31 +80,6 @@ const routes = [
 			{
 				path: 'news/:id',
 				component: SingleNewsComponent
-			},
-			{
-				path: 'factoring',
-				component: FactoringComponent,
-				title: 'Факторинг'
-			},
-			{
-				path: 'finance',
-				component: FinanceComponent,
-				title: 'Факторинг'
-			},
-			{
-				path: 'leasing',
-				component: LeasingComponent,
-				title: 'Факторинг'
-			},
-			{
-				path: 'corporate',
-				component: CorporateComponent,
-				title: 'Факторинг'
-			},
-			{
-				path: 'individual',
-				component: IndividualComponent,
-				title: 'Факторинг'
 			},
 			{
 				path: 'ui-kit-test',
@@ -148,7 +119,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		NewFooterModule,
 		DropdownPointModule,
 		NewsPanelModule,
-		TagModule
+		TagModule,
+		CounterModule
 	],
 	exports: [RouterModule],
 	declarations: [
@@ -181,12 +153,7 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		ClientsComponent,
 		ContactsComponent,
 		LandingComponent,
-		SingleNewsComponent,
-		FactoringComponent,
-		CorporateComponent,
-		IndividualComponent,
-		LeasingComponent,
-		FinanceComponent
+		SingleNewsComponent
 	],
 	providers: [OrganizationService, NewsService]
 })

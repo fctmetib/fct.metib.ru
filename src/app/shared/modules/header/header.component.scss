@@ -24,10 +24,6 @@
 .extension {
 	background-color: var(--wgr-secondary);
 	padding: 16px 0;
-	& a.active {
-		color: var(--bti-primary);
-		border-bottom: 1px solid var(--bti-primary);
-	}
 }
 
 .container {

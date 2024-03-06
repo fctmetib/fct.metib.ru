@@ -1,0 +1,12 @@
+.counter {
+	width: 32px;
+	height: 32px;
+	border-radius: 16px;
+	padding: 4px;
+	background-color: var(--wgr-primary);
+	border: 1px solid var(--wgr-tertiary);
+	color: var(--bti-secondary);
+	&.counter-filled {
+		color: red;
+	}
+}
