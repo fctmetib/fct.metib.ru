@@ -322,9 +322,13 @@ ng g d shared/ui-kit/input/directives/metib-pass-time --skip-tests --dry-run
 src\app\public\pages
 ng g c public/pages/landing --skip-tests --dry-run
 
-// public landing
+// public single-news
 src\app\public\pages
 ng g c public/pages/single-news --skip-tests --dry-run
+
+// public factoring
+src\app\public\pages
+ng g c public/pages/factoring --skip-tests --dry-run
 
 // public landing
 src\app\shared\modules

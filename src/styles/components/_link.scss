@@ -43,9 +43,9 @@ $text-selectors: 'span';
 }
 
 @mixin link-ghost-secondary {
-	@include link-color(var(--bti-tertiary));
+	@include link-color(var(--bti-secondary));
 	&:hover {
-		@include link-color(var(--bti-secondary));
+		@include link-color(var(--bti-tertiary));
 	}
 	&:active {
 		@include link-color(var(--bti-primary));

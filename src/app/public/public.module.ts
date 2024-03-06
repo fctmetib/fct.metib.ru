@@ -45,6 +45,7 @@ import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-poin
 import {NewsPanelModule} from './components/news-panel/news-panel.module'
 import {SingleNewsComponent} from './pages/single-news/single-news.component'
 import {TagModule} from '../shared/ui-kit/tag/tag.module'
+import {FactoringComponent} from './pages/factoring/factoring.component'
 
 const routes = [
 	{
@@ -83,6 +84,10 @@ const routes = [
 			{
 				path: 'news/:id',
 				component: SingleNewsComponent
+			},
+			{
+				path: 'factoring',
+				component: FactoringComponent
 			},
 			{
 				path: 'ui-kit-test',
@@ -155,7 +160,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		ClientsComponent,
 		ContactsComponent,
 		LandingComponent,
-		SingleNewsComponent
+		SingleNewsComponent,
+		FactoringComponent
 	],
 	providers: [OrganizationService, NewsService]
 })
