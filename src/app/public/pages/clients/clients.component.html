@@ -8,16 +8,208 @@
 	<mib-spacing type="s"></mib-spacing>
 	<div class="flex gap-8">
 		<div class="flex flex_column">
-			<mib-counter>
-				<ng-container>1</ng-container>
-			</mib-counter>
+			<div class="flex flex_center">
+				<mib-counter [filled]="false"> 1 </mib-counter>
+			</div>
+			<div class="flex flex_grow flex_center">
+				<div class="flex line"></div>
+			</div>
 		</div>
-		<div class="flex flex_column flex_grow">
-			<mib-counter [filled]="false">
-				<ng-container>2</ng-container>
-			</mib-counter>
+		<div class="flex flex_column">
+			<div style="height: 32px" class="flex flex_align-center">
+				<p class="headline">Создайте заявку</p>
+			</div>
+			<div class="flex flex_grow">
+				<div class="flex flex_column">
+					<p class="text text_l c-bti-secondary">
+						Заполните нужную информацию на сайте
+					</p>
+					<mib-link [routerLink]="['/']">
+						factoring.metallinvestbank.ru
+					</mib-link>
+				</div>
+			</div>
+			<mib-spacing type="xs2"></mib-spacing>
+			<div class="flex">
+				<img src="./assets/images/staff/holder/holder.jpg" alt="holder" />
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
 		</div>
 	</div>
+	<div class="flex gap-8">
+		<div class="flex flex_column">
+			<div class="flex flex_center">
+				<mib-counter> 2 </mib-counter>
+			</div>
+			<div class="flex flex_grow flex_center">
+				<div class="flex line"></div>
+			</div>
+		</div>
+		<div class="flex flex_column">
+			<div style="height: 32px" class="flex flex_align-center">
+				<p class="headline">Ознакомьтесь с инструкцией</p>
+			</div>
+			<div class="flex flex_grow">
+				<div class="flex flex_column">
+					<p class="text text_l c-bti-secondary">
+						Через день вы получите электронное письмо с инструкцией
+					</p>
+				</div>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+		</div>
+	</div>
+	<div class="flex gap-8">
+		<div class="flex flex_column">
+			<div class="flex flex_center">
+				<mib-counter> 3 </mib-counter>
+			</div>
+			<div class="flex flex_grow flex_center">
+				<div class="flex line"></div>
+			</div>
+		</div>
+		<div class="flex flex_column">
+			<div style="height: 32px" class="flex flex_align-center">
+				<p class="headline">Установите электронную подпись</p>
+			</div>
+			<div class="flex flex_grow">
+				<div class="flex flex_column">
+					<p class="text text_l c-bti-secondary">
+						Установите электронную подпись, как написано в инструкции
+					</p>
+				</div>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+		</div>
+	</div>
+	<div class="flex gap-8">
+		<div class="flex flex_column">
+			<div class="flex flex_center">
+				<mib-counter> 4 </mib-counter>
+			</div>
+			<div class="flex flex_grow flex_center">
+				<div class="flex line"></div>
+			</div>
+		</div>
+		<div class="flex flex_column">
+			<div style="height: 32px" class="flex flex_align-center">
+				<p class="headline">Подпишите акт в банке</p>
+			</div>
+			<div class="flex flex_grow">
+				<div class="flex flex_column">
+					<p class="text text_l c-bti-secondary">
+						После установки подписи, необходимо прийти в банк и подписывать
+						документы
+					</p>
+				</div>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+		</div>
+	</div>
+	<div class="flex gap-8">
+		<div class="flex flex_column">
+			<div class="flex flex_center">
+				<mib-counter> 5 </mib-counter>
+			</div>
+			<div class="flex flex_grow flex_center">
+				<div class="flex line"></div>
+			</div>
+		</div>
+		<div class="flex flex_column">
+			<div style="height: 32px" class="flex flex_align-center">
+				<p class="headline">Установите и ознакомьтесь с договором</p>
+			</div>
+			<div class="flex flex_grow">
+				<div class="flex flex_column">
+					<p class="text text_l c-bti-secondary">
+						Для продолжения работы, необходимо скачать договор о предоставлении
+						факторинговых услуг
+					</p>
+				</div>
+			</div>
+			<mib-spacing type="xs2"></mib-spacing>
+			<div class="flex">
+				<img src="./assets/images/staff/holder/holder.jpg" alt="holder" />
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex">
+				<mib-button (press)="addAgreement()" type="filled-primary">
+					Установить договор
+				</mib-button>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+		</div>
+	</div>
+	<div class="flex gap-8">
+		<div class="flex flex_column">
+			<div class="flex flex_center">
+				<mib-counter> 6 </mib-counter>
+			</div>
+			<div class="flex flex_grow flex_center"></div>
+		</div>
+		<div class="flex flex_column">
+			<div style="height: 32px" class="flex flex_align-center">
+				<p class="headline">Установите программу “Фактор - Клиент“</p>
+			</div>
+			<div class="flex flex_grow">
+				<div class="flex flex_column">
+					<p class="text text_l c-bti-secondary">
+						"Фактор-Клиент" - программа для факторинга между банком и клиентом.
+					</p>
+					<p class="text text_l c-bti-secondary">
+						Она использует электронные подписи для обмена документами, которые
+						имеют такую же силу, как бумажные.
+					</p>
+				</div>
+			</div>
+			<mib-spacing type="xs2"></mib-spacing>
+			<div class="flex">
+				<img src="./assets/images/staff/holder/holder.jpg" alt="holder" />
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex gap-12">
+				<mib-button (press)="addAgreement()" type="filled-primary">
+					Установить регламент
+				</mib-button>
+				<mib-button (press)="addAgreement()" type="filled-secondary">
+					Установить инструкцию
+				</mib-button>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+		</div>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+
+	<!-- <div class="flex gap-8">
+		<div class="flex flex_column">
+			<div class="flex flex_center">
+				<mib-counter [filled]="false"> 1 </mib-counter>
+			</div>
+			<div class="flex flex_grow flex_center">
+				<div class="flex line"></div>
+			</div>
+		</div>
+		<div class="flex flex_column">
+			<div style="height: 32px" class="flex flex_align-center">
+				<p class="headline">Создайте заявку</p>
+			</div>
+			<div class="flex flex_grow">
+				<div class="flex flex_column">
+					<p class="text text_l c-bti-secondary">
+						Заполните нужную информацию на сайте
+					</p>
+					<mib-link [routerLink]="['/']">
+						factoring.metallinvestbank.ru
+					</mib-link>
+				</div>
+			</div>
+			<mib-spacing type="xs2"></mib-spacing>
+			<div class="flex">
+				<img src="./assets/images/staff/holder/holder.jpg" alt="holder" />
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+		</div>
+	</div> -->
 </div>
 
 <!-- <mib-section-header [backgroundImageUrl]="'../../../../assets/public/image_factoring.png'">

@@ -46,6 +46,7 @@ import {NewsPanelModule} from './components/news-panel/news-panel.module'
 import {SingleNewsComponent} from './pages/single-news/single-news.component'
 import {TagModule} from '../shared/ui-kit/tag/tag.module'
 import {CounterModule} from './components/counter/counter.module'
+import {LinkModule} from '../shared/ui-kit/link/link.module'
 
 const routes = [
 	{
@@ -120,7 +121,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		DropdownPointModule,
 		NewsPanelModule,
 		TagModule,
-		CounterModule
+		CounterModule,
+		LinkModule
 	],
 	exports: [RouterModule],
 	declarations: [

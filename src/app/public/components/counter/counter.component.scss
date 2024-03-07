@@ -7,6 +7,7 @@
 	border: 1px solid var(--wgr-tertiary);
 	color: var(--bti-secondary);
 	&.counter-filled {
-		color: red;
+		border: none;
+		background-color: var(--wgr-secondary);
 	}
 }
