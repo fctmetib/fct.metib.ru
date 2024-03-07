@@ -10,7 +10,8 @@ export class LandingComponent {
 	public iconsDatas = [
 		{
 			id: 1,
-			icon: 'fi_clipboard',
+			icon: 'fi_shield',
+			// icon: 'fi_clipboard',
 			title: 'Надежно',
 			text: 'Отсутствие риска неоплаты со стороны дебитора'
 		},
@@ -22,7 +23,8 @@ export class LandingComponent {
 		},
 		{
 			id: 3,
-			icon: 'fi_shield',
+			icon: 'fi_clipboard',
+			// icon: 'fi_shield',
 			title: 'Без залога',
 			text: 'Для оформления не требуется залог, нужна только поставка'
 		},

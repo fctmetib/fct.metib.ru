@@ -1,29 +1,66 @@
 @import 'src/styles/helpers/_icon_tools';
 @import 'src/styles/_colors.vars';
 
-img {
-	height: 596px;
-	object-fit: cover;
-}
-
-.lineal {
-	border-top: 1px solid var(--wgr-tertiary);
-	border-bottom: 1px solid var(--wgr-tertiary);
-
-	& .line {
-		border-left: 1px solid var(--wgr-tertiary);
+.hero {
+	& img {
+		height: 596px;
+		object-fit: cover;
 	}
 
-	&-item {
-		padding: 16px 0;
+	& .lineal {
+		border-top: 1px solid var(--wgr-tertiary);
+		border-bottom: 1px solid var(--wgr-tertiary);
+
+		& .line {
+			border-left: 1px solid var(--wgr-tertiary);
+		}
+
+		&-item {
+			padding: 16px 0;
+		}
 	}
 }
 
 .advantages {
-	height: 500px;
+	& mib-icon {
+		@include icon-size(40px);
+		@include icon-color(var(--mc-default));
+	}
 }
 
-mib-icon {
-	@include icon-size(40px);
-	@include icon-color(var(--mc-default));
+.products {
+	& .container {
+		background-color: var(--mc-quinary);
+		border-top-left-radius: 32px;
+		border-bottom-left-radius: 32px;
+	}
+}
+
+.how {
+	& h3 {
+		text-align: center;
+	}
+
+	& .stapper {
+		padding: 0 86px;
+	}
+
+	& .stap {
+		padding: 0 16px;
+	}
+
+	& .stap > div {
+		padding: 24px;
+		background-color: var(--wgr-secondary);
+		border-radius: var(--main-border-radius);
+	}
+
+	& .stap h4 {
+		width: 32px;
+		height: 32px;
+	}
+
+	& .line {
+		border-bottom: 1px solid var(--wgr-tertiary);
+	}
 }

@@ -1,6 +1,6 @@
 <section class="hero">
 	<div class="container flex gap-16">
-		<div class="flex flex_grow flex_justify-center flex_column hero">
+		<div class="flex flex_grow flex_justify-center flex_column">
 			<h1>Факторинг для поставщиков</h1>
 			<mib-spacing type="xs"></mib-spacing>
 			<p class="text text_xl c-bti-secondary">
@@ -38,8 +38,8 @@
 	</div>
 </section>
 <section class="advantages">
+	<mib-spacing type="xl2"></mib-spacing>
 	<div class="container flex flex_column">
-		<mib-spacing type="xl"></mib-spacing>
 		<h3 class="text-center">
 			Преимущества факторинга
 			<span class="c-mc-default">металлинвестбанка</span>
@@ -63,6 +63,111 @@
 		</div>
 	</div>
 	<mib-spacing type="xl2"></mib-spacing>
-	<div class="container">секция в разработке</div>
+</section>
+<section class="products">
+	<div class="container flex gap-16">
+		<div class="flex flex_grow flex_column">
+			<mib-spacing type="xl"></mib-spacing>
+			<h3>Наши продукты - факторинг</h3>
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex gap-12">
+				<mib-tag type="floating"> Внутренний </mib-tag>
+				<mib-tag type="floating"> Международный </mib-tag>
+				<mib-tag type="floating"> Комплексный </mib-tag>
+			</div>
+			<mib-spacing type="s"></mib-spacing>
+			<p class="text text_l c-mc-default">Продукты металлинвестбанка:</p>
+			<mib-spacing type="xs2"></mib-spacing>
+			<p class="text text_l c-bti-secondary">
+				Факторинг с регрессом – выгодный способ получения оборотных средств без
+				увеличения кредитной нагрузки.
+			</p>
+			<mib-spacing type="xs2"></mib-spacing>
+			<p class="text text_l c-bti-secondary">
+				Факторинг без регресса – получение оборотных средств с защитой от риска
+				неплатежа.
+			</p>
+			<mib-spacing type="xs2"></mib-spacing>
+			<p class="text text_l c-bti-secondary">
+				Скрытый факторинг – пополнение оборотных средств без уведомления
+				поставщика.
+			</p>
+		</div>
+		<div class="flex flex_grow">
+			<img src="./assets/images/staff/holder/product.jpg" alt="product" />
+		</div>
+	</div>
+</section>
+<section class="how">
+	<mib-spacing type="xl2"></mib-spacing>
+	<h3>Как это работает?</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div class="container flex flex_column">
+		<div class="flex stapper">
+			<div class="flex stap gap-8">
+				<div class="flex">
+					<h4 class="c-bti-quaternary text-center">1</h4>
+				</div>
+			</div>
+			<div class="flex flex_grow flex_align-center">
+				<div class="flex line flex_grow"></div>
+			</div>
+			<div class="flex stap gap-8">
+				<div class="flex">
+					<h4 class="c-bti-quaternary text-center">2</h4>
+				</div>
+			</div>
+			<div class="flex flex_grow flex_align-center">
+				<div class="flex line flex_grow"></div>
+			</div>
+			<div class="flex stap gap-8">
+				<div class="flex">
+					<h4 class="c-bti-quaternary text-center">3</h4>
+				</div>
+			</div>
+			<div class="flex flex_grow flex_align-center">
+				<div class="flex line flex_grow"></div>
+			</div>
+			<div class="flex stap gap-8">
+				<div class="flex">
+					<h4 class="c-bti-quaternary text-center">4</h4>
+				</div>
+			</div>
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<div class="flex gap-16">
+			<div class="flex flex_column flex_align-center">
+				<h4>Отгрузка товара</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<p class="text text_l c-bti-secondary text-center">
+					Поставщик отгружает товары на условиях отсрочки платежа
+				</p>
+			</div>
+			<div class="flex flex_column flex_align-center">
+				<h4>Заявка клиента</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<p class="text text_l c-bti-secondary text-center">
+					Клиент отправляет заявку в личном кабинете на сайте
+				</p>
+				<mib-link [routerLink]="['/']">
+					factoring.metallinvestbank.ru
+				</mib-link>
+			</div>
+			<div class="flex flex_column flex_align-center">
+				<h4>Оплата банком</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<p class="text text_l c-bti-secondary text-center">
+					Банк финансирует поставщика после подписания договора
+				</p>
+			</div>
+			<div class="flex flex_column flex_align-center">
+				<h4>Оплата дебитором</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<p class="text text_l c-bti-secondary text-center">
+					Дебитор оплачивает задолженность по истечению срока факторинга
+				</p>
+			</div>
+		</div>
+	</div>
 	<mib-spacing type="xl2"></mib-spacing>
 </section>
