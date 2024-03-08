@@ -1,2 +1,12 @@
-export interface PartnerPanelInterface {
-}
+export type PartnerPanelBrand =
+	| 'x5group'
+	| 'metro'
+	| 'mvideo'
+	| 'ozon'
+	| 'leroymerlin'
+	| 'obi'
+	| 'megafon'
+	| 'lamoda'
+	| 'lenta'
+	| 'mts'
+	| 'more'

@@ -35,6 +35,28 @@ export class LandingComponent {
 			text: 'Полученные деньги можно тратить на любые цели'
 		}
 	]
+
+	public partnersLogo = [
+		{name: 'X5Group', img: './assets/images/staff/partners/X5Group 2.svg'},
+		{name: 'Ozon', img: './assets/images/staff/partners/OZON_2019 2.svg'},
+		{name: 'Obi', img: './assets/images/staff/partners/Obi.svg'},
+		{name: 'Mvideo', img: './assets/images/staff/partners/Mvideo 2.svg'},
+		{name: 'Metro', img: './assets/images/staff/partners/Logo_METRO 2.svg'},
+		{
+			name: 'Megafone',
+			img: './assets/images/staff/partners/MegaFon_logo 2.svg'
+		},
+		{name: 'MTS', img: './assets/images/staff/partners/MTC_Logo_RGB 2.svg'},
+		{
+			name: 'LeroyMerlin',
+			img: './assets/images/staff/partners/Leroy_Merlin 2.svg'
+		},
+		{name: 'Lenta', img: './assets/images/staff/partners/Lenta.svg'},
+		{name: 'Lamoda', img: './assets/images/staff/partners/Lamoda_logo 2.svg'},
+		{name: 'Familia', img: './assets/images/staff/partners/Familia.svg'},
+		{name: 'more', img: './assets/images/staff/partners/more.svg'}
+	]
+
 	constructor(private toaster: ToasterService) {}
 
 	public getFunding() {

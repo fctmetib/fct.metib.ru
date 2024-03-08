@@ -1,0 +1,9 @@
+.partner-panel {
+	width: 176px;
+	height: 96px;
+	border-radius: var(--main-border-radius);
+	background-color: var(--wgr-primary);
+	&:hover {
+		box-shadow: var(--shadow-normal);
+	}
+}

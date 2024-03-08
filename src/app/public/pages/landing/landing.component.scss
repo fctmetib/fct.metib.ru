@@ -68,7 +68,7 @@
 .partners {
 	background-color: var(--wgr-secondary);
 
-	& > div {
+	& .fixWidth {
 		padding: 0 288px;
 	}
 }
