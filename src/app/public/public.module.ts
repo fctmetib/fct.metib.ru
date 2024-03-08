@@ -48,6 +48,8 @@ import {TagModule} from '../shared/ui-kit/tag/tag.module'
 import {CounterModule} from './components/counter/counter.module'
 import {LinkModule} from '../shared/ui-kit/link/link.module'
 import {PartnerPanelModule} from './components/partner-panel/partner-panel.module'
+import {LabelModule} from '../shared/directives/label/label.module'
+import {InputModule} from '../shared/ui-kit/input/input.module'
 
 const routes = [
 	{
@@ -124,7 +126,9 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		TagModule,
 		CounterModule,
 		LinkModule,
-		PartnerPanelModule
+		PartnerPanelModule,
+		InputModule,
+		LabelModule
 	],
 	exports: [RouterModule],
 	declarations: [

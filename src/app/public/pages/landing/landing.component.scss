@@ -30,9 +30,15 @@
 
 .products {
 	& .container {
+		max-width: 1280px;
+		padding: 0 72px;
 		background-color: var(--mc-quinary);
 		border-top-left-radius: 32px;
 		border-bottom-left-radius: 32px;
+	}
+
+	& img {
+		height: 468px;
 	}
 }
 
@@ -70,5 +76,22 @@
 
 	& .fixWidth {
 		padding: 0 288px;
+	}
+}
+
+.requests {
+	& .container {
+		max-width: 1280px;
+		padding: 0 72px;
+		background-color: var(--mc-quinary);
+		border-radius: 32px;
+	}
+
+	& .fixWidth {
+		padding-right: 192px;
+	}
+
+	& img {
+		height: 468px;
 	}
 }
