@@ -64,3 +64,11 @@
 		border-bottom: 1px solid var(--wgr-tertiary);
 	}
 }
+
+.partners {
+	background-color: var(--wgr-secondary);
+
+	& > div {
+		padding: 0 288px;
+	}
+}

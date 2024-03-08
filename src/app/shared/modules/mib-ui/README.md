@@ -379,4 +379,11 @@ ng g m public/components/counter/counter --flat  --dry-run
 ng g c public/components/counter/counter --flat  --skip-tests --dry-run
  //---
 
+// public components partner-panel
+src\app\public\components
+ng g i public/components/partner-panel/interfaces/partner-panel.interface  --dry-run
+ng g m public/components/partner-panel/partner-panel --flat  --dry-run
+ng g c public/components/partner-panel/partner-panel --flat  --skip-tests --dry-run
+ //---
+
 ```
