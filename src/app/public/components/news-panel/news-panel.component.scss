@@ -1,11 +1,31 @@
+@import 'src/styles/_typography.vars.scss';
+
+.h-100 {
+	height: 100%;
+}
+
 .news {
 	border-radius: var(--main-border-radius);
 	border: 1px solid var(--wgr-tertiary);
 	overflow: hidden;
+
+	&_vertical {
+		flex-direction: row;
+	}
+
+	& img {
+		object-fit: none;
+	}
+
 	& .p-24 {
 		padding: 24px;
 	}
-	& .ph-24 {
-		padding: 0 24px;
+
+	& h4 {
+		@include text-overflow(3);
+	}
+
+	& :not(.news_vertical) .ph-24 {
+		padding: 10px 24px 0;
 	}
 }

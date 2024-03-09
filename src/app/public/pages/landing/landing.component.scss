@@ -4,7 +4,7 @@
 .hero {
 	& img {
 		height: 596px;
-		object-fit: cover;
+		object-fit: none;
 	}
 
 	& .lineal {
@@ -39,6 +39,7 @@
 
 	& img {
 		height: 468px;
+		object-fit: none;
 	}
 }
 
@@ -93,5 +94,6 @@
 
 	& img {
 		height: 468px;
+		object-fit: none;
 	}
 }

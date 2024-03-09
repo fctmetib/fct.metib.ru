@@ -57,6 +57,30 @@ export class LandingComponent {
 		{name: 'more', img: './assets/images/staff/partners/more.svg'}
 	]
 
+	newsDatas = [
+		{
+			id: 1,
+			img: './assets/images/news/news-1.jpg',
+			title: 'С Наступающим Новым 2024 годом!',
+			date: '10 декабря 2023',
+			link: '/news'
+		},
+		{
+			id: 2,
+			img: './assets/images/news/news-2.jpg',
+			title: 'ПАО АКБ "Металлинвестбанк" посетил выставки',
+			date: '12 декабря 2023',
+			link: '/news/2'
+		},
+		{
+			id: 3,
+			img: './assets/images/news/news-3.jpg',
+			title: 'Прямое финансирование Китайского Экспорта',
+			date: '14 декабря 2023',
+			link: '/news'
+		}
+	]
+
 	constructor(private toaster: ToasterService) {}
 
 	public getFunding() {

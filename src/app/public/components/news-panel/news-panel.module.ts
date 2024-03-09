@@ -4,10 +4,11 @@ import {NewsPanelComponent} from './news-panel.component'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {LinkModule} from 'src/app/shared/ui-kit/link/link.module'
 import {TagModule} from 'src/app/shared/ui-kit/tag/tag.module'
+import {RouterLink} from '@angular/router'
 
 @NgModule({
 	declarations: [NewsPanelComponent],
-	imports: [CommonModule, SpacingModule, LinkModule, TagModule],
+	imports: [CommonModule, SpacingModule, LinkModule, TagModule, RouterLink],
 	exports: [NewsPanelComponent]
 })
 export class NewsPanelModule {}

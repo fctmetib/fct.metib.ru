@@ -7,9 +7,9 @@ import {NewsPanelDevice} from './interfaces/news-panel.interface'
 	styleUrls: ['./news-panel.component.scss']
 })
 export class NewsPanelComponent {
-	@Input() device: NewsPanelDevice = 'desktop'
 	@Input() vertical: boolean = true
-	@Input() showLink: boolean = false
+	@Input() linkText: string = ''
+	@Input() link: string = ''
 	@Input() showCategories: boolean = false
 	@Input() showPreview: boolean = true
 	@Input() newsTitle: string = ''
@@ -17,7 +17,7 @@ export class NewsPanelComponent {
 
 	get classes() {
 		return {
-			[`news_${this.device}`]: true
+			[`news_vertical`]: !this.vertical
 		}
 	}
 }

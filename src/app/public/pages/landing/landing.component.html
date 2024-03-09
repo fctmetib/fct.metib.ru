@@ -232,4 +232,44 @@
 		</div>
 	</div>
 </section>
-<mib-spacing type="xl2"></mib-spacing>
+<section class="press">
+	<mib-spacing type="xl"></mib-spacing>
+	<h3 class="text-center">Новости банка</h3>
+	<mib-spacing type="m"></mib-spacing>
+	<div class="container flex gap-16">
+		<mib-news-panel
+			class="flex flex_grow"
+			[newsTitle]="newsDatas[0].title"
+			[newsDate]="newsDatas[0].date"
+			[showPreview]="newsDatas[0].img"
+			linkText="Открыть новость"
+			[link]="newsDatas[0].link"
+		></mib-news-panel>
+		<div class="flex flex_grow flex_column gap-16">
+			<mib-news-panel
+				class="flex flex_grow"
+				[vertical]="false"
+				[newsTitle]="newsDatas[1].title"
+				[newsDate]="newsDatas[1].date"
+				[showPreview]="newsDatas[1].img"
+				linkText="Подробнее"
+				[link]="newsDatas[1].link"
+			></mib-news-panel>
+			<mib-news-panel
+				[vertical]="false"
+				[newsTitle]="newsDatas[2].title"
+				[newsDate]="newsDatas[2].date"
+				[showPreview]="newsDatas[2].img"
+				linkText="Подробнее"
+				[link]="newsDatas[2].link"
+			></mib-news-panel>
+		</div>
+	</div>
+	<mib-spacing type="m"></mib-spacing>
+	<div class="flex flex_justify-center">
+		<mib-button size="l" (press)="getFunding()" type="filled-secondary">
+			Показать больше
+		</mib-button>
+	</div>
+</section>
+<mib-spacing type="xl"></mib-spacing>
