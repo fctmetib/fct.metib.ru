@@ -20,18 +20,17 @@ export class TagComponent implements AfterViewInit {
 	@Input() flex: string = 'flex_center'
 	@Input() type: TagType = 'filled-primary'
 	@Input() disabled: boolean = false
-	// @Output() onClick: EventEmitter<any> = new EventEmitter<any>()
-	// @Output() press: EventEmitter<any> = new EventEmitter<any>()
-	// TODO: ДОБАВИТЬ ПОЛЕ VALUE
+	@Input() default?: boolean = false
 	@Input() value?: string = ''
-
-	selected: boolean = false
 
 	constructor(@Optional() public group?: TagsGroupComponent) {}
 
 	ngAfterViewInit() {
 		if (this.disabled) this.status = 'disabled'
-		this.group.value = this.value
+		// if (this.default) {
+		// 	this.toggle()
+		// }
+		// this.group.value = this.value
 	}
 
 	toggle() {

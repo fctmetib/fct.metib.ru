@@ -71,11 +71,22 @@
 			<h3>Наши продукты - факторинг</h3>
 			<mib-spacing type="xs"></mib-spacing>
 			<mib-tags-group (onChange)="onChange($event)">
-				<mib-tag type="floating" value="Внутренний"> Внутренний </mib-tag>
-				<mib-tag type="floating" value="Международный"> Международный </mib-tag>
-				<mib-tag type="floating" value="Комплексный"> Комплексный </mib-tag>
+				<mib-tag type="floating" [value]="ProductTabsEnum.INNER">
+					Внутренний
+				</mib-tag>
+				<mib-tag type="floating" [value]="ProductTabsEnum.INTERNATIONAL">
+					Международный
+				</mib-tag>
+				<mib-tag type="floating" [value]="ProductTabsEnum.COMPLEX">
+					Комплексный
+				</mib-tag>
 			</mib-tags-group>
 			<mib-spacing type="s"></mib-spacing>
+			<ng-container [ngSwitch]="currentProductsTab">
+				<div *ngSwitchCase="ProductTabsEnum.INNER">INNER</div>
+				<div *ngSwitchCase="ProductTabsEnum.INTERNATIONAL">INTERNATIONAL</div>
+				<div *ngSwitchCase="ProductTabsEnum.COMPLEX">COMPLEX</div>
+			</ng-container>
 			<p class="text text_l c-mc-default">Продукты металлинвестбанка:</p>
 			<mib-spacing type="xs2"></mib-spacing>
 			<p class="text text_l c-bti-secondary">

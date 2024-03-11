@@ -1,5 +1,6 @@
 import {Component} from '@angular/core'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
+import {ProductTabsEnum} from './enums/landing.enum'
 
 @Component({
 	selector: 'mib-landing',
@@ -7,6 +8,8 @@ import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 	styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent {
+	public ProductTabsEnum = ProductTabsEnum
+
 	public iconsDatas = [
 		{
 			id: 1,
@@ -81,13 +84,15 @@ export class LandingComponent {
 		}
 	]
 
+	public currentProductsTab?: ProductTabsEnum
+
 	constructor(private toaster: ToasterService) {}
 
 	public getFunding() {
 		console.log('get funding')
 	}
 
-	public onChange(val) {
-		console.log('$eventtuss :>> ', val)
+	public onChange($event) {
+		this.currentProductsTab = $event
 	}
 }
