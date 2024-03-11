@@ -86,4 +86,8 @@ export class LandingComponent {
 	public getFunding() {
 		console.log('get funding')
 	}
+
+	public onChange(val) {
+		console.log('$eventtuss :>> ', val)
+	}
 }

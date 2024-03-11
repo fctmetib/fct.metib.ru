@@ -41,6 +41,10 @@
 		height: 468px;
 		object-fit: none;
 	}
+
+	& .tag.active {
+		color: red;
+	}
 }
 
 .how {

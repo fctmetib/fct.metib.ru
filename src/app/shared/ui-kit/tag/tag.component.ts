@@ -7,6 +7,7 @@ import {
 	Output
 } from '@angular/core'
 import {TagSize, TagStatus, TagType} from './interfaces/tag.interface'
+import {TagsGroupComponent} from '../tags-group/tags-group.component'
 
 @Component({
 	selector: 'mib-tag',
@@ -19,23 +20,26 @@ export class TagComponent implements AfterViewInit {
 	@Input() flex: string = 'flex_center'
 	@Input() type: TagType = 'filled-primary'
 	@Input() disabled: boolean = false
-	@Output() onClick: EventEmitter<any> = new EventEmitter<any>()
-	@Output() press: EventEmitter<any> = new EventEmitter<any>()
+	// @Output() onClick: EventEmitter<any> = new EventEmitter<any>()
+	// @Output() press: EventEmitter<any> = new EventEmitter<any>()
 	// TODO: ДОБАВИТЬ ПОЛЕ VALUE
+	@Input() value?: string = ''
 
 	selected: boolean = false
 
-	constructor() // @Optional() private TagsGroupComponent: TagsGroupComponent // TODO: ИНТЕГРИРОВАТЬ КОМПОНЕНТ ГРУППЫ, КАК ТОЛЬКО ОН БУДЕТ СДЕЛАН
-	{}
+	constructor(@Optional() public group?: TagsGroupComponent) {}
 
 	ngAfterViewInit() {
 		if (this.disabled) this.status = 'disabled'
+		this.group.value = this.value
 	}
 
-	toggle($event: MouseEvent) {
+	toggle() {
 		// TODO: СДЕЛАТЬ TagsGroup КОМПОНЕНТ, КОТОРЫЙ БУДЕТ РЕГУЛИРОВАТЬ ОТМЕЧЕННЫЕ ТЕГИ
 		// TODO: МЕНЯТЬ СОСТОЯНИЕ ТЕГОВ ТОЛЬКО ПРИ НАЛИЧИИ this.tagsGroupComponent, В КРАЙНЕМ СЛУЧАЕ В ПО НАДОБНОСТИ ИНОЙ ЛОГИКИ
-		// this.selected = !this.selected
-		this.press.emit($event)
+		if (this.group) {
+			this.group?.select(this.value)
+		}
+		return
 	}
 }

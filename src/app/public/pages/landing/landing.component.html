@@ -70,11 +70,11 @@
 			<mib-spacing type="xl"></mib-spacing>
 			<h3>Наши продукты - факторинг</h3>
 			<mib-spacing type="xs"></mib-spacing>
-			<div class="flex gap-12">
-				<mib-tag type="floating"> Внутренний </mib-tag>
-				<mib-tag type="floating"> Международный </mib-tag>
-				<mib-tag type="floating"> Комплексный </mib-tag>
-			</div>
+			<mib-tags-group (onChange)="onChange($event)">
+				<mib-tag type="floating" value="Внутренний"> Внутренний </mib-tag>
+				<mib-tag type="floating" value="Международный"> Международный </mib-tag>
+				<mib-tag type="floating" value="Комплексный"> Комплексный </mib-tag>
+			</mib-tags-group>
 			<mib-spacing type="s"></mib-spacing>
 			<p class="text text_l c-mc-default">Продукты металлинвестбанка:</p>
 			<mib-spacing type="xs2"></mib-spacing>

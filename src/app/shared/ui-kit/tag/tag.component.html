@@ -1,12 +1,12 @@
 <button
 	[disabled]="status === 'disabled'"
-	(click)="toggle($event)"
-	[class.selected]="selected"
+	(click)="toggle()"
 	[attr.status]="status"
 	class="tag flex"
 	[ngClass]="'tag_' + size + ' tag_' + type + ' ' + flex"
 	[class.tag_left-iconly]="iconLeft.innerHTML"
 	[class.tag_right-iconly]="iconRight.innerHTML"
+	[class.selected]="group?.match(value)"
 >
 	<div class="tag_icon-wrapper tag_left-wrapper" #iconLeft>
 		<ng-content select="[tag-left-icon]"></ng-content>

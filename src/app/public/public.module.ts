@@ -50,6 +50,7 @@ import {LinkModule} from '../shared/ui-kit/link/link.module'
 import {PartnerPanelModule} from './components/partner-panel/partner-panel.module'
 import {LabelModule} from '../shared/directives/label/label.module'
 import {InputModule} from '../shared/ui-kit/input/input.module'
+import {TagsGroupModule} from '../shared/ui-kit/tags-group/tags-group.module'
 
 const routes = [
 	{
@@ -128,7 +129,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		LinkModule,
 		PartnerPanelModule,
 		InputModule,
-		LabelModule
+		LabelModule,
+		TagsGroupModule
 	],
 	exports: [RouterModule],
 	declarations: [

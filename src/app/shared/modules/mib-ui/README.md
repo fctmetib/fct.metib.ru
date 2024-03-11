@@ -15,6 +15,8 @@ P
 
 ![Alt text](readmeAccets/test_input.png)
 
+src\app\shared\ui-kit\tag
+
 // input
 
 ```js
@@ -209,6 +211,13 @@ src\app\shared\ui-kit
 ng g i shared/ui-kit/loader/interfaces/loader.interface  --dry-run
 ng g m shared/ui-kit/loader/loader --flat  --dry-run
 ng g c shared/ui-kit/loader/loader --flat  --skip-tests --dry-run
+ //---
+
+ //--- tags-group
+src\app\shared\ui-kit
+ng g i shared/ui-kit/tags-group/interfaces/tags-group.interface  --dry-run
+ng g m shared/ui-kit/tags-group/tags-group --flat  --dry-run
+ng g c shared/ui-kit/tags-group/tags-group --flat  --skip-tests --dry-run
  //---
 
  //--- invoice
