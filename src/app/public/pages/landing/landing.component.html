@@ -82,27 +82,49 @@
 				</mib-tag>
 			</mib-tags-group>
 			<mib-spacing type="s"></mib-spacing>
-			<ng-container [ngSwitch]="currentProductsTab">
-				<div *ngSwitchCase="ProductTabsEnum.INNER">INNER</div>
-				<div *ngSwitchCase="ProductTabsEnum.INTERNATIONAL">INTERNATIONAL</div>
-				<div *ngSwitchCase="ProductTabsEnum.COMPLEX">COMPLEX</div>
-			</ng-container>
 			<p class="text text_l c-mc-default">Продукты металлинвестбанка:</p>
-			<mib-spacing type="xs2"></mib-spacing>
-			<p class="text text_l c-bti-secondary">
-				Факторинг с регрессом – выгодный способ получения оборотных средств без
-				увеличения кредитной нагрузки.
-			</p>
-			<mib-spacing type="xs2"></mib-spacing>
-			<p class="text text_l c-bti-secondary">
-				Факторинг без регресса – получение оборотных средств с защитой от риска
-				неплатежа.
-			</p>
-			<mib-spacing type="xs2"></mib-spacing>
-			<p class="text text_l c-bti-secondary">
-				Скрытый факторинг – пополнение оборотных средств без уведомления
-				поставщика.
-			</p>
+			<ng-container [ngSwitch]="currentProductsTab">
+				<div *ngSwitchCase="ProductTabsEnum.INNER">
+					<mib-spacing type="xs2"></mib-spacing>
+					<p class="text text_l c-bti-secondary">
+						Факторинг с регрессом – выгодный способ получения оборотных средств
+						без увеличения кредитной нагрузки.
+					</p>
+					<mib-spacing type="xs2"></mib-spacing>
+					<p class="text text_l c-bti-secondary">
+						Факторинг без регресса – получение оборотных средств с защитой от
+						риска неплатежа.
+					</p>
+					<mib-spacing type="xs2"></mib-spacing>
+					<p class="text text_l c-bti-secondary">
+						Скрытый факторинг – пополнение оборотных средств без уведомления
+						поставщика.
+					</p>
+				</div>
+				<div *ngSwitchCase="ProductTabsEnum.INTERNATIONAL">
+					<mib-spacing type="xs2"></mib-spacing>
+					<p class="text text_l c-bti-secondary">
+						Экспортный факторинг – выгодное финансирование поставок за рубеж.
+					</p>
+					<mib-spacing type="xs2"></mib-spacing>
+					<p class="text text_l c-bti-secondary">
+						Импортный факторинг – поддержка импортных операций с иностранными
+						поставщиками.
+					</p>
+				</div>
+				<div *ngSwitchCase="ProductTabsEnum.COMPLEX">
+					<mib-spacing type="xs2"></mib-spacing>
+					<p class="text text_l c-bti-secondary">
+						Агентский факторинг – финансирование кредиторской задолженности
+						и/или поддержка вашей закупочной деятельности.
+					</p>
+					<mib-spacing type="xs2"></mib-spacing>
+					<p class="text text_l c-bti-secondary">
+						Предостаточный факторинг – финансирование под уступку будущих
+						требований.
+					</p>
+				</div>
+			</ng-container>
 		</div>
 		<div class="flex flex_grow">
 			<img src="./assets/images/staff/holder/product.jpg" alt="product" />
