@@ -14,6 +14,7 @@ export class NewsPanelComponent {
 	@Input() showPreview: boolean = true
 	@Input() newsTitle: string = ''
 	@Input() newsDate: string = ''
+	@Input() altText: string = ''
 
 	get classes() {
 		return {

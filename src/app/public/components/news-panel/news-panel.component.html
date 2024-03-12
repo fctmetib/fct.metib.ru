@@ -1,6 +1,6 @@
 <div [ngClass]="classes" class="flex flex_column news">
 	<div *ngIf="showPreview" class="flex flex_grow">
-		<img src="{{ showPreview }}" alt="" />
+		<img src="{{ showPreview }}" alt="{{ altText }}" />
 	</div>
 	<div class="flex flex_column h-100 flex_grow">
 		<div class="flex flex_grow flex_column p-24">

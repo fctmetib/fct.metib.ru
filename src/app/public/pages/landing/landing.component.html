@@ -269,35 +269,47 @@
 	<mib-spacing type="xl"></mib-spacing>
 	<h3 class="text-center">Новости банка</h3>
 	<mib-spacing type="m"></mib-spacing>
-	<div class="container flex gap-16">
-		<mib-news-panel
-			class="flex flex_grow"
-			[newsTitle]="newsDatas[0].title"
-			[newsDate]="newsDatas[0].date"
-			[showPreview]="newsDatas[0].img"
-			linkText="Открыть новость"
-			[link]="newsDatas[0].link"
-		></mib-news-panel>
-		<div class="flex flex_grow flex_column gap-16">
+	<ng-container *ngIf="loading$ | async; else newsPanel">
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'420px'"
+			*ngFor="let i of [1]"
+		></mib-skeleton>
+	</ng-container>
+	<ng-template #newsPanel>
+		<div class="container flex gap-16">
 			<mib-news-panel
 				class="flex flex_grow"
-				[vertical]="false"
-				[newsTitle]="newsDatas[1].title"
-				[newsDate]="newsDatas[1].date"
-				[showPreview]="newsDatas[1].img"
-				linkText="Подробнее"
-				[link]="newsDatas[1].link"
+				[newsTitle]="getLastNews[0]?.Title"
+				[newsDate]="getLastNews[0]?.Date | date : 'dd.MM.yyyy'"
+				linkText="Открыть новость"
+				[showPreview]="newsDatas[0].img"
+				[link]="newsDatas[0]?.link"
+				[altText]="getLastNews[0]?.Title"
 			></mib-news-panel>
-			<mib-news-panel
-				[vertical]="false"
-				[newsTitle]="newsDatas[2].title"
-				[newsDate]="newsDatas[2].date"
-				[showPreview]="newsDatas[2].img"
-				linkText="Подробнее"
-				[link]="newsDatas[2].link"
-			></mib-news-panel>
+			<div class="flex flex_grow flex_column gap-16">
+				<mib-news-panel
+					class="flex flex_grow"
+					[vertical]="false"
+					[newsTitle]="getLastNews[1]?.Title"
+					[newsDate]="getLastNews[1]?.Date | date : 'dd.MM.yyyy'"
+					linkText="Подробнее"
+					[showPreview]="newsDatas[1].img"
+					[link]="newsDatas[1]?.link"
+					[altText]="getLastNews[0]?.Title"
+				></mib-news-panel>
+				<mib-news-panel
+					[vertical]="false"
+					[newsTitle]="getLastNews[2]?.Title"
+					[newsDate]="getLastNews[2]?.Date | date : 'dd.MM.yyyy'"
+					linkText="Подробнее"
+					[showPreview]="newsDatas[2].img"
+					[link]="newsDatas[2]?.link"
+					[altText]="getLastNews[0]?.Title"
+				></mib-news-panel>
+			</div>
 		</div>
-	</div>
+	</ng-template>
 	<mib-spacing type="m"></mib-spacing>
 	<div class="flex flex_justify-center">
 		<mib-button size="l" (press)="getFunding()" type="filled-secondary">
