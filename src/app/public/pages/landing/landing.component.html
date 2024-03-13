@@ -269,13 +269,15 @@
 	<mib-spacing type="xl"></mib-spacing>
 	<h3 class="text-center">Новости банка</h3>
 	<mib-spacing type="m"></mib-spacing>
-	<ng-container *ngIf="loading$ | async; else newsPanel">
-		<mib-skeleton
-			[styles]="defaultSkeleton"
-			[style.height]="'485px'"
-			*ngFor="let i of [1]"
-		></mib-skeleton>
-	</ng-container>
+	<div class="container">
+		<ng-container *ngIf="loading$ | async; else newsPanel">
+			<mib-skeleton
+				[styles]="defaultSkeleton"
+				[style.height]="'485px'"
+				*ngFor="let i of [1]"
+			></mib-skeleton>
+		</ng-container>
+	</div>
 	<ng-template #newsPanel>
 		<div class="container flex gap-16">
 			<mib-news-panel

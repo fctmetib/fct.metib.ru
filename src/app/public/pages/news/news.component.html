@@ -16,13 +16,25 @@
 		</div>
 		<mib-spacing type="m"></mib-spacing>
 		<mib-tab-item value="1">
+			<!-- <div class="flex"> -->
 			<ng-container *ngIf="loading$ | async; else newsPanel">
+				<mib-skeleton
+					[styles]="last ? defaultSkeleton : skeleton"
+					*ngFor="
+						let i of toolsService.createEmptyArray(newsNumberCount);
+						let last = last
+					"
+				></mib-skeleton>
+				<mib-spacing type="xs"></mib-spacing>
+			</ng-container>
+			<!-- </div> -->
+			<!-- <ng-container *ngIf="loading$ | async; else newsPanel">
 				<mib-skeleton
 					[styles]="defaultSkeleton"
 					[style.height]="'427px'"
 					*ngFor="let i of [1]"
 				></mib-skeleton>
-			</ng-container>
+			</ng-container> -->
 			<ng-template #newsPanel>
 				<div *ngFor="let news of getAdvancedNews">
 					<mib-news-panel
@@ -38,9 +50,8 @@
 		<mib-tab-item value="2">
 			<ng-container *ngIf="loading$ | async; else cutNewsPanel">
 				<mib-skeleton
-					[styles]="defaultSkeleton"
-					[style.height]="'138px'"
-					*ngFor="let i of [1]"
+					[styles]="defaultMinSkeleton"
+					*ngFor="let i of toolsService.createEmptyArray(newsNumberCount)"
 				></mib-skeleton>
 			</ng-container>
 			<ng-template #cutNewsPanel>

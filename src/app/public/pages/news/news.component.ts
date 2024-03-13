@@ -50,8 +50,21 @@ export class NewsComponent implements OnInit {
 	]
 
 	public defaultSkeleton: Properties = {
+		width: '100%',
 		borderRadius: '8px',
-		width: '100%'
+		marginBottom: '16px',
+		height: '313px'
+	}
+
+	public defaultMinSkeleton: Properties = {
+		width: '100%',
+		borderRadius: '8px',
+		marginBottom: '16px',
+		height: '134px'
+	}
+
+	public skeleton: Properties = {
+		...this.defaultSkeleton
 	}
 
 	public loading$ = new BehaviorSubject<boolean>(false)
