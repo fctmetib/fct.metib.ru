@@ -280,39 +280,44 @@
 		<div class="container flex gap-16">
 			<mib-news-panel
 				class="flex flex_grow"
-				[newsTitle]="getAdvancedLastNews[0]?.Title"
-				[newsDate]="getAdvancedLastNews[0]?.Date | date : 'dd.MM.yyyy'"
+				[newsTitle]="getAdvancedNews[0]?.Title"
+				[newsDate]="getAdvancedNews[0]?.Date | date : 'dd.MM.yyyy'"
 				linkText="Открыть новость"
-				[showPreview]="getAdvancedLastNews[0].Image"
+				[showPreview]="getAdvancedNews[0].Image"
 				[link]="newsDatas[0]?.link"
-				[altText]="getAdvancedLastNews[0]?.Title"
+				[altText]="getAdvancedNews[0]?.Title"
 			></mib-news-panel>
 			<div class="flex flex_grow flex_column gap-16">
 				<mib-news-panel
 					class="flex flex_grow"
 					[vertical]="false"
-					[newsTitle]="getAdvancedLastNews[1]?.Title"
-					[newsDate]="getAdvancedLastNews[1]?.Date | date : 'dd.MM.yyyy'"
+					[newsTitle]="getAdvancedNews[1]?.Title"
+					[newsDate]="getAdvancedNews[1]?.Date | date : 'dd.MM.yyyy'"
 					linkText="Подробнее"
-					[showPreview]="getAdvancedLastNews[1].Image"
+					[showPreview]="getAdvancedNews[1].Image"
 					[link]="newsDatas[1]?.link"
-					[altText]="getAdvancedLastNews[0]?.Title"
+					[altText]="getAdvancedNews[0]?.Title"
 				></mib-news-panel>
 				<mib-news-panel
 					[vertical]="false"
-					[newsTitle]="getAdvancedLastNews[2]?.Title"
-					[newsDate]="getAdvancedLastNews[2]?.Date | date : 'dd.MM.yyyy'"
+					[newsTitle]="getAdvancedNews[2]?.Title"
+					[newsDate]="getAdvancedNews[2]?.Date | date : 'dd.MM.yyyy'"
 					linkText="Подробнее"
-					[showPreview]="getAdvancedLastNews[2].Image"
+					[showPreview]="getAdvancedNews[2].Image"
 					[link]="newsDatas[2]?.link"
-					[altText]="getAdvancedLastNews[0]?.Title"
+					[altText]="getAdvancedNews[0]?.Title"
 				></mib-news-panel>
 			</div>
 		</div>
 	</ng-template>
 	<mib-spacing type="m"></mib-spacing>
 	<div class="flex flex_justify-center">
-		<mib-button size="l" (press)="getFunding()" type="filled-secondary">
+		<mib-button
+			size="l"
+			[routerLink]="'/news'"
+			(press)="getFunding()"
+			type="filled-secondary"
+		>
 			Показать больше
 		</mib-button>
 	</div>

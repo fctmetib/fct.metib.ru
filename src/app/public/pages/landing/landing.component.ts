@@ -87,9 +87,10 @@ export class LandingComponent implements OnInit {
 			link: '/news'
 		}
 	]
+
 	public loading$ = new BehaviorSubject<boolean>(false)
 	public newsNumberCount: number = 3
-	public getAdvancedLastNews: AdvancedNewsInterface[]
+	public getAdvancedNews: AdvancedNewsInterface[]
 
 	public currentProductsTab?: ProductTabsEnum
 
@@ -114,13 +115,12 @@ export class LandingComponent implements OnInit {
 						news.map(item =>
 							this.newsService
 								.getNewsImage(item.ID)
-
 								.pipe(map(image => ({...item, Image: image})))
 						)
 					).pipe(
 						tap(data => {
-							this.getAdvancedLastNews = data
-							console.log('data :>> ', data)
+							this.getAdvancedNews = data
+							// console.log('data :>> ', data)
 						})
 					)
 				),

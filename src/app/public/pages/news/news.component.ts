@@ -1,13 +1,16 @@
-import {Component} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
+import {NewsService} from '../../service/news.service'
+import {BehaviorSubject, finalize, map, switchMap, tap, zip} from 'rxjs'
+import {AdvancedNewsInterface} from '../../type/news.interface'
+import {Properties} from 'csstype'
+import {ToolsService} from 'src/app/shared/services/tools.service'
 
 @Component({
 	selector: 'news',
 	styleUrls: ['./news.component.scss'],
 	templateUrl: 'news.component.html'
 })
-export class NewsComponent {
-	constructor() {}
-
+export class NewsComponent implements OnInit {
 	datas = [
 		{
 			id: 1,
@@ -45,6 +48,48 @@ export class NewsComponent {
 			link: '/news'
 		}
 	]
+
+	public defaultSkeleton: Properties = {
+		borderRadius: '8px',
+		width: '100%'
+	}
+
+	public loading$ = new BehaviorSubject<boolean>(false)
+	public newsNumberCount: number = 5
+	public getAdvancedNews: AdvancedNewsInterface[]
+
+	constructor(
+		private newsService: NewsService,
+		public toolsService: ToolsService
+	) {}
+
+	ngOnInit(): void {
+		this.getCurrentNews()
+	}
+
+	public getCurrentNews() {
+		this.loading$.next(true)
+		this.newsService
+			.getNews(this.newsNumberCount)
+			.pipe(
+				switchMap(news =>
+					zip(
+						news.map(item =>
+							this.newsService
+								.getNewsImage(item.ID)
+								.pipe(map(image => ({...item, Image: image})))
+						)
+					).pipe(
+						tap(data => {
+							this.getAdvancedNews = data
+							// console.log('data :>> ', data)
+						})
+					)
+				),
+				finalize(() => this.loading$.next(false))
+			)
+			.subscribe()
+	}
 }
 
 // import { environment } from 'src/environments/environment';

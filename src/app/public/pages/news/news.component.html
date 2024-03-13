@@ -16,24 +16,42 @@
 		</div>
 		<mib-spacing type="m"></mib-spacing>
 		<mib-tab-item value="1">
-			<div *ngFor="let news of datas">
-				<mib-news-panel
-					[newsTitle]="news.title"
-					[newsDate]="news.date"
-					[showPreview]="news.img"
-				></mib-news-panel>
-				<mib-spacing type="s"></mib-spacing>
-			</div>
+			<ng-container *ngIf="loading$ | async; else newsPanel">
+				<mib-skeleton
+					[styles]="defaultSkeleton"
+					[style.height]="'427px'"
+					*ngFor="let i of [1]"
+				></mib-skeleton>
+			</ng-container>
+			<ng-template #newsPanel>
+				<div *ngFor="let news of getAdvancedNews">
+					<mib-news-panel
+						[newsTitle]="news.Title"
+						[newsDate]="news.Date | date : 'dd.MM.yyyy'"
+						[showPreview]="news.Image"
+					></mib-news-panel>
+					<mib-spacing type="s"></mib-spacing>
+				</div>
+			</ng-template>
 			<mib-spacing type="xl"></mib-spacing>
 		</mib-tab-item>
 		<mib-tab-item value="2">
-			<div *ngFor="let news of datas">
-				<mib-news-panel
-					[newsTitle]="news.title"
-					[newsDate]="news.date"
-				></mib-news-panel>
-				<mib-spacing type="s"></mib-spacing>
-			</div>
+			<ng-container *ngIf="loading$ | async; else cutNewsPanel">
+				<mib-skeleton
+					[styles]="defaultSkeleton"
+					[style.height]="'138px'"
+					*ngFor="let i of [1]"
+				></mib-skeleton>
+			</ng-container>
+			<ng-template #cutNewsPanel>
+				<div *ngFor="let news of getAdvancedNews">
+					<mib-news-panel
+						[newsTitle]="news.Title"
+						[newsDate]="news.Date"
+					></mib-news-panel>
+					<mib-spacing type="s"></mib-spacing>
+				</div>
+			</ng-template>
 			<mib-spacing type="xl"></mib-spacing>
 		</mib-tab-item>
 	</mib-tab-group>
