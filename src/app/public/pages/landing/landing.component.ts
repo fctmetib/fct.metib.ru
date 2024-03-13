@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {ProductTabsEnum} from './enums/landing.enum'
 import {NewsService} from '../../service/news.service'
-import {BehaviorSubject, catchError, finalize, map, tap} from 'rxjs'
+import {BehaviorSubject, finalize, map, switchMap, tap, zip} from 'rxjs'
 import {AdvancedNewsInterface, NewsInterface} from '../../type/news.interface'
 import {Properties} from 'csstype'
 
@@ -89,10 +89,7 @@ export class LandingComponent implements OnInit {
 	]
 	public loading$ = new BehaviorSubject<boolean>(false)
 	public newsNumberCount: number = 3
-	public getAdvancedLastNews: AdvancedNewsInterface
-	public getLastNews: NewsInterface
-
-	// public imgUrl = 'https://placehold.co/560x316/EBECEF/EBECEF'
+	public getAdvancedLastNews: AdvancedNewsInterface[]
 
 	public currentProductsTab?: ProductTabsEnum
 
@@ -108,53 +105,28 @@ export class LandingComponent implements OnInit {
 	}
 
 	public getCurrentNews() {
-		// 	this.loading$.next(true)
-		// 	this.newsService
-		// 		.getNews(this.newsNumberCount)
-		// 		.pipe(
-		// 			tap(data => {
-		// 				this.getAdvancedLastNews = {
-		// 					...data,
-		// 					Image: this.newsService.getNewsImage(data.ID)
-		// 				}
-		// 				console.log('data+img :>> ', data)
-		// 				// this.getLastNews = data
-		// 				// console.log('this.getLastNews :>> ', this.getLastNews)
-		// 			}),
-		// 			// map(data => ({...data, Image: this.newsService.getNewsImage(data.ID)})),
-		// 			// map(data => ({...data, Image: this.newsService.getNewsImage(data.ID)})),
-		// 			finalize(() => this.loading$.next(false))
-		// 		)
-		// 		.subscribe()
-		// }
 		this.loading$.next(true)
 		this.newsService
 			.getNews(this.newsNumberCount)
 			.pipe(
-				tap(data => {
-					this.getLastNews = data
-					console.log('this.getLastNews :>> ', this.getLastNews)
-				}),
-				// tap(
-				// 	(d) => {({...d, Image: this.newsService.getNewsImage(d.ID)})}
-				// ),
+				switchMap(news =>
+					zip(
+						news.map(item =>
+							this.newsService
+								.getNewsImage(item.ID)
+
+								.pipe(map(image => ({...item, Image: image})))
+						)
+					).pipe(
+						tap(data => {
+							this.getAdvancedLastNews = data
+							console.log('data :>> ', data)
+						})
+					)
+				),
 				finalize(() => this.loading$.next(false))
 			)
 			.subscribe()
-	}
-
-	public getNewsImage(id: number) {
-		this.loading$.next(true)
-		// this.newsService.getNewsImage()
-		// .getNews(this.newsNumberCount)
-		// .pipe(
-		// 	tap(data => {
-		// 		this.getLastNews = data
-		// 		console.log('this.getLastNews :>> ', this.getLastNews)
-		// 	}),
-		// 	finalize(() => this.loading$.next(false))
-		// )
-		// .subscribe()
 	}
 
 	public getFunding() {

@@ -7,7 +7,7 @@ export interface NewsInterface {
 }
 
 export interface AdvancedNewsInterface extends NewsInterface {
-	Image: any
+	Image: string
 }
 
 // export interface NewsInterface {

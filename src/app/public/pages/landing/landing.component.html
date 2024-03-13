@@ -272,7 +272,7 @@
 	<ng-container *ngIf="loading$ | async; else newsPanel">
 		<mib-skeleton
 			[styles]="defaultSkeleton"
-			[style.height]="'420px'"
+			[style.height]="'485px'"
 			*ngFor="let i of [1]"
 		></mib-skeleton>
 	</ng-container>
@@ -280,32 +280,32 @@
 		<div class="container flex gap-16">
 			<mib-news-panel
 				class="flex flex_grow"
-				[newsTitle]="getLastNews[0]?.Title"
-				[newsDate]="getLastNews[0]?.Date | date : 'dd.MM.yyyy'"
+				[newsTitle]="getAdvancedLastNews[0]?.Title"
+				[newsDate]="getAdvancedLastNews[0]?.Date | date : 'dd.MM.yyyy'"
 				linkText="Открыть новость"
-				[showPreview]="newsDatas[0].img"
+				[showPreview]="getAdvancedLastNews[0].Image"
 				[link]="newsDatas[0]?.link"
-				[altText]="getLastNews[0]?.Title"
+				[altText]="getAdvancedLastNews[0]?.Title"
 			></mib-news-panel>
 			<div class="flex flex_grow flex_column gap-16">
 				<mib-news-panel
 					class="flex flex_grow"
 					[vertical]="false"
-					[newsTitle]="getLastNews[1]?.Title"
-					[newsDate]="getLastNews[1]?.Date | date : 'dd.MM.yyyy'"
+					[newsTitle]="getAdvancedLastNews[1]?.Title"
+					[newsDate]="getAdvancedLastNews[1]?.Date | date : 'dd.MM.yyyy'"
 					linkText="Подробнее"
-					[showPreview]="newsDatas[1].img"
+					[showPreview]="getAdvancedLastNews[1].Image"
 					[link]="newsDatas[1]?.link"
-					[altText]="getLastNews[0]?.Title"
+					[altText]="getAdvancedLastNews[0]?.Title"
 				></mib-news-panel>
 				<mib-news-panel
 					[vertical]="false"
-					[newsTitle]="getLastNews[2]?.Title"
-					[newsDate]="getLastNews[2]?.Date | date : 'dd.MM.yyyy'"
+					[newsTitle]="getAdvancedLastNews[2]?.Title"
+					[newsDate]="getAdvancedLastNews[2]?.Date | date : 'dd.MM.yyyy'"
 					linkText="Подробнее"
-					[showPreview]="newsDatas[2].img"
+					[showPreview]="getAdvancedLastNews[2].Image"
 					[link]="newsDatas[2]?.link"
-					[altText]="getLastNews[0]?.Title"
+					[altText]="getAdvancedLastNews[0]?.Title"
 				></mib-news-panel>
 			</div>
 		</div>
