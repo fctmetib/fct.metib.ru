@@ -58,7 +58,7 @@
 				<div *ngFor="let news of getAdvancedNews">
 					<mib-news-panel
 						[newsTitle]="news.Title"
-						[newsDate]="news.Date"
+						[newsDate]="news.Date | date : 'dd.MM.yyyy'"
 					></mib-news-panel>
 					<mib-spacing type="s"></mib-spacing>
 				</div>

@@ -1,4 +1,32 @@
 <div [ngClass]="classes" class="flex flex_column news">
+	<div *ngIf="showPreview" class="flex">
+		<img src="{{ showPreview }}" alt="{{ altText }}" />
+	</div>
+	<div class="flex flex_column h-100 flex_grow">
+		<div class="flex flex_grow flex_column p-24">
+			<h4>{{ newsTitle }}</h4>
+			<div>
+				<span class="text text_l c-bti-secondary pt-4">
+					{{ newsDate }}
+				</span>
+			</div>
+			<div *ngIf="showCategories" class="flex">
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex gap-8">
+					<mib-tag size="l" type="filled-secondary"> tags </mib-tag>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="linkText" class="ph-24">
+			<div class="flex">
+				<mib-link size="l" [routerLink]="link" type="ghost-primary"
+					>{{ linkText }}
+				</mib-link>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <div [ngClass]="classes" class="flex flex_column news">
 	<div *ngIf="showPreview" class="flex flex_grow">
 		<img src="{{ showPreview }}" alt="{{ altText }}" />
 	</div>
@@ -27,4 +55,4 @@
 			<mib-spacing type="s"></mib-spacing>
 		</div>
 	</div>
-</div>
+</div> -->

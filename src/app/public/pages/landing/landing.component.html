@@ -269,15 +269,12 @@
 	<mib-spacing type="xl"></mib-spacing>
 	<h3 class="text-center">Новости банка</h3>
 	<mib-spacing type="m"></mib-spacing>
-	<div class="container">
-		<ng-container *ngIf="loading$ | async; else newsPanel">
-			<mib-skeleton
-				[styles]="defaultSkeleton"
-				[style.height]="'485px'"
-				*ngFor="let i of [1]"
-			></mib-skeleton>
-		</ng-container>
-	</div>
+	<ng-container *ngIf="loading$ | async; else newsPanel">
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			*ngFor="let i of [1]"
+		></mib-skeleton>
+	</ng-container>
 	<ng-template #newsPanel>
 		<div class="container flex gap-16">
 			<mib-news-panel
@@ -291,14 +288,13 @@
 			></mib-news-panel>
 			<div class="flex flex_grow flex_column gap-16">
 				<mib-news-panel
-					class="flex flex_grow"
 					[vertical]="false"
 					[newsTitle]="getAdvancedNews[1]?.Title"
 					[newsDate]="getAdvancedNews[1]?.Date | date : 'dd.MM.yyyy'"
 					linkText="Подробнее"
 					[showPreview]="getAdvancedNews[1].Image"
 					[link]="newsDatas[1]?.link"
-					[altText]="getAdvancedNews[0]?.Title"
+					[altText]="getAdvancedNews[1]?.Title"
 				></mib-news-panel>
 				<mib-news-panel
 					[vertical]="false"
@@ -307,7 +303,16 @@
 					linkText="Подробнее"
 					[showPreview]="getAdvancedNews[2].Image"
 					[link]="newsDatas[2]?.link"
-					[altText]="getAdvancedNews[0]?.Title"
+					[altText]="getAdvancedNews[2]?.Title"
+				></mib-news-panel>
+				<mib-news-panel
+					[vertical]="false"
+					[newsTitle]="getAdvancedNews[3]?.Title"
+					[newsDate]="getAdvancedNews[3]?.Date | date : 'dd.MM.yyyy'"
+					linkText="Подробнее"
+					[showPreview]="getAdvancedNews[3].Image"
+					[link]="newsDatas[3]?.link"
+					[altText]="getAdvancedNews[3]?.Title"
 				></mib-news-panel>
 			</div>
 		</div>

@@ -89,14 +89,16 @@ export class LandingComponent implements OnInit {
 	]
 
 	public loading$ = new BehaviorSubject<boolean>(false)
-	public newsNumberCount: number = 3
+	public newsNumberCount: number = 4
 	public getAdvancedNews: AdvancedNewsInterface[]
 
 	public currentProductsTab?: ProductTabsEnum
 
 	public defaultSkeleton: Properties = {
 		borderRadius: '8px',
-		width: '100%'
+		width: '1136px',
+		height: '509px',
+		margin: '0 auto'
 	}
 
 	constructor(private newsService: NewsService) {}

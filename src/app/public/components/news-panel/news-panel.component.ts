@@ -11,14 +11,15 @@ export class NewsPanelComponent {
 	@Input() linkText: string = ''
 	@Input() link: string = ''
 	@Input() showCategories: boolean = false
-	@Input() showPreview: boolean = true
+	@Input() showPreview: string = ''
 	@Input() newsTitle: string = ''
 	@Input() newsDate: string = ''
 	@Input() altText: string = ''
 
 	get classes() {
 		return {
-			[`news_vertical`]: !this.vertical
+			[`news_vertical`]: !this.vertical,
+			[`news_showPreview`]: this.showPreview
 		}
 	}
 }
