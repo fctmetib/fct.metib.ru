@@ -150,14 +150,16 @@ export class AutoCompleteComponent
 			fromEvent(this.inputDirective.elementRef.nativeElement, 'input')
 				.pipe(
 					map((event: Event) => (event.target as HTMLInputElement).value),
-					startWith(''),
-					tap(value => {
-						if (this.multi) {
+					map(value => {
+						if (this.selectedOption) {
+							this.selectOption(null)
+							return ''
 						} else {
 							if (!value) {
-								this.onChange(null)
+								this.selectOption(null)
 							}
 						}
+						return value
 					}),
 					map(value => this._filter(value)),
 					takeUntil(this.au.destroyer)
@@ -169,7 +171,9 @@ export class AutoCompleteComponent
 				.pipe(
 					tap(value => {
 						this.inputDirective.updateStatus(this.control)
-						this.inputDirective.elementRef.nativeElement.value = ''
+						;(
+							this.inputDirective.elementRef.nativeElement as HTMLInputElement
+						).value = this.selectedOption?.text ?? ''
 					}),
 					takeUntil(this.au.destroyer)
 				)
