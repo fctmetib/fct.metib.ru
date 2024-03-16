@@ -50,7 +50,7 @@ export class NewDelaysComponent {
 			.subscribe()
 	}
 
-	public openDrawer() {
-		console.log('open darwer>>>')
-	}
+	// public openDrawer() {
+	// 	console.log('open darwer>>>')
+	// }
 }
