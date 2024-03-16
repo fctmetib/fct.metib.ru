@@ -13,47 +13,54 @@ const routes = [
 			{
 				path: 'cabinet',
 				loadChildren: () =>
-					import('./modules/cabinet/cabinet.module').then(m => m.CabinetModule)
+					import('./modules/cabinet/cabinet.module').then(m => m.CabinetModule),
+				title: 'Факторинг | Кабинет'
 			},
 			{
 				path: 'requests',
 				loadChildren: () =>
 					import('./modules/requests/requests.module').then(
 						m => m.RequestsModule
-					)
+					),
+				title: 'Факторинг | Заявки'
 			},
 			{
 				path: 'freeduty',
 				loadChildren: () =>
 					import('./modules/freeduty/free-duty.module').then(
 						m => m.FreeDutyModule
-					)
+					),
+				title: 'Факторинг | Задолженность'
 			},
 			{
 				path: 'invoices',
 				loadChildren: () =>
 					import('./modules/invoices/invoices.module').then(
 						m => m.InvoicesModule
-					)
+					),
+				title: 'Факторинг | Платежи'
 			},
 			{
 				path: 'contracts',
 				loadChildren: () =>
 					import('./modules/contracts/contracts.module').then(
 						m => m.ContractsModule
-					)
+					),
+				title: 'Факторинг | Договоры'
 			},
 			{
 				path: 'documents',
 				loadChildren: () =>
 					import('./modules/documents/documents.module').then(
 						m => m.DocumentsModule
-					)
+					),
+				title: 'Факторинг | Документы'
 			},
 			{
 				path: 'reports',
 				loadChildren: () =>
-					import('./modules/reports/reports.module').then(m => m.ReportsModule)
+					import('./modules/reports/reports.module').then(m => m.ReportsModule),
+				title: 'Факторинг | Отчеты'
 			},
 			// {
 			//   path: 'demand',
@@ -64,12 +71,14 @@ const routes = [
 				loadChildren: () =>
 					import('../client/modules/demand-new/demand-new.module').then(
 						m => m.DemandNewModule
-					)
+					),
+				title: 'Факторинг | Запросы'
 			},
 			{
 				path: 'delays',
 				loadChildren: () =>
-					import('./modules/delays/delays.module').then(m => m.DelaysModule)
+					import('./modules/delays/delays.module').then(m => m.DelaysModule),
+				title: 'Факторинг | Просрочки'
 			}
 			// {
 			// 	path: 'delays',
