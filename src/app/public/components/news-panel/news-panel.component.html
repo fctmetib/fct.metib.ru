@@ -1,4 +1,8 @@
-<div [ngClass]="classes" class="flex flex_column news">
+<div
+	[routerLink]="link"
+	[ngClass]="classes"
+	class="flex flex_column news cursor-pointer"
+>
 	<div *ngIf="showPreview" class="flex">
 		<img src="{{ showPreview }}" alt="{{ altText }}" />
 	</div>
@@ -19,9 +23,7 @@
 		</div>
 		<div *ngIf="linkText" class="ph-24">
 			<div class="flex">
-				<mib-link size="l" [routerLink]="link" type="ghost-primary"
-					>{{ linkText }}
-				</mib-link>
+				<mib-link size="l" type="ghost-primary">{{ linkText }} </mib-link>
 			</div>
 		</div>
 	</div>

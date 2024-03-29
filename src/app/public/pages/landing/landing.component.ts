@@ -70,7 +70,7 @@ export class LandingComponent implements OnInit {
 			img: './assets/images/news/news-1.jpg',
 			title: 'С Наступающим Новым 2024 годом!',
 			date: '10 декабря 2023',
-			link: '/news'
+			link: '/news/1'
 		},
 		{
 			id: 2,
@@ -84,7 +84,7 @@ export class LandingComponent implements OnInit {
 			img: './assets/images/news/news-3.jpg',
 			title: 'Прямое финансирование Китайского Экспорта',
 			date: '14 декабря 2023',
-			link: '/news'
+			link: '/news/3'
 		}
 	]
 
@@ -122,7 +122,7 @@ export class LandingComponent implements OnInit {
 					).pipe(
 						tap(data => {
 							this.getAdvancedNews = data
-							// console.log('data :>> ', data)
+							console.log('data :>> ', data)
 						})
 					)
 				),

@@ -41,6 +41,7 @@
 						[newsTitle]="news.Title"
 						[newsDate]="news.Date | date : 'dd.MM.yyyy'"
 						[showPreview]="news.Image"
+						[link]="news.ID"
 					></mib-news-panel>
 					<mib-spacing type="s"></mib-spacing>
 				</div>
@@ -59,6 +60,7 @@
 					<mib-news-panel
 						[newsTitle]="news.Title"
 						[newsDate]="news.Date | date : 'dd.MM.yyyy'"
+						[link]="news.ID"
 					></mib-news-panel>
 					<mib-spacing type="s"></mib-spacing>
 				</div>
