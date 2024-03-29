@@ -213,6 +213,13 @@ ng g m shared/ui-kit/loader/loader --flat  --dry-run
 ng g c shared/ui-kit/loader/loader --flat  --skip-tests --dry-run
  //---
 
+ //--- mark
+src\app\shared\ui-kit
+ng g i shared/ui-kit/mark/interfaces/mark.interface  --dry-run
+ng g m shared/ui-kit/mark/mark --flat  --dry-run
+ng g c shared/ui-kit/mark/mark --flat  --skip-tests --dry-run
+ //---
+
  //--- tags-group
 src\app\shared\ui-kit
 ng g i shared/ui-kit/tags-group/interfaces/tags-group.interface  --dry-run

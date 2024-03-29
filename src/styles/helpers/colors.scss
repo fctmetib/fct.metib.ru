@@ -6,12 +6,12 @@ span.c,
 		&-default {
 			color: var(--mc-default);
 		}
-    &-hover {
-      color: var(--mc-hover);
-    }
-    &-active {
-      color: var(--mc-active);
-    }
+		&-hover {
+			color: var(--mc-hover);
+		}
+		&-active {
+			color: var(--mc-active);
+		}
 	}
 
 	// white gradation
@@ -85,5 +85,10 @@ span.c,
 	// alert color
 	&-alc-active {
 		color: var(--alc-active);
+	}
+
+	// warning color
+	&-wc-active {
+		color: var(--wc-active);
 	}
 }

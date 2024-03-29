@@ -52,6 +52,7 @@ import {LabelModule} from '../shared/directives/label/label.module'
 import {InputModule} from '../shared/ui-kit/input/input.module'
 import {TagsGroupModule} from '../shared/ui-kit/tags-group/tags-group.module'
 import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module'
+import {MarkModule} from '../shared/ui-kit/mark/mark.module'
 
 const routes = [
 	{
@@ -132,7 +133,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		InputModule,
 		LabelModule,
 		TagsGroupModule,
-		SkeletonModule
+		SkeletonModule,
+		MarkModule
 	],
 	exports: [RouterModule],
 	declarations: [

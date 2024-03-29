@@ -1,7 +1,47 @@
-.tarrifs {
-	width: 560px;
-	height: calc(100vh - 444px);
-	margin: 0 auto;
+@import 'src/styles/_colors.vars';
+
+.tariffs {
+	// height: calc(100vh - 444px);
+	// margin: 0 auto;
+	& .banner {
+		max-width: 1132px;
+		height: 128px;
+		// padding: 16px 286px;
+		border-radius: 16px;
+		background-color: var(--mc-quinary);
+	}
+	& img {
+		position: relative;
+		bottom: 24px;
+	}
+	& .tab {
+		max-width: 560px;
+		margin: 0 auto;
+		width: 100%;
+		border: 1px solid var(--wgr-secondary);
+		border-radius: 8px;
+		& .header {
+			width: 100%;
+			background-color: var(--wgr-secondary);
+			& .full {
+				flex-basis: 176px;
+				max-width: 176px;
+			}
+		}
+		& .header div,
+		& .body div div {
+			padding: 14px 12px;
+		}
+		& .bb {
+			border-bottom: 1px solid var(--wgr-secondary);
+		}
+		& .br {
+			border-right: 1px solid var(--wgr-secondary);
+		}
+		& .bl {
+			border-left: 1px solid var(--wgr-secondary);
+		}
+	}
 }
 
 // // Mobile
