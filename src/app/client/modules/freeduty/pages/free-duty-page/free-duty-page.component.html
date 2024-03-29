@@ -97,13 +97,13 @@
 					(onSort)="onSortByDates($event, 'DatePayment')"
 					>Дата Платежа</mib-table-head-cell
 				> -->
-        <mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Summ')"
-        >Сумма поставки</mib-table-head-cell
-        >
+				<mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Summ')"
+					>Сумма поставки</mib-table-head-cell
+				>
 				<mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Rest')"
 					>Остаток задолженности</mib-table-head-cell
 				>
-        <mib-table-head-cell>Внешняя ссылка</mib-table-head-cell>
+				<mib-table-head-cell>Внешняя ссылка</mib-table-head-cell>
 			</mib-table-head>
 			<ng-container *ngIf="loading$ | async; else table">
 				<mib-skeleton
@@ -159,14 +159,18 @@
 							duty.DatePayment | date : 'dd.MM.YYYY'
 						}}</ng-container>
 					</mib-table-cell> -->
-          <mib-table-cell>
-            <span class="c-mc-active" table-cell-title>{{ duty.Summ | rub }}</span>
-          </mib-table-cell>
-          <mib-table-cell>
-            <span class="c-mc-active" table-cell-title>{{ duty.Rest | rub }}</span>
-          </mib-table-cell>
 					<mib-table-cell>
-            <ng-container table-cell-title>{{ duty.RefNum }}</ng-container>
+						<span [ngClass]="{'c-mc-active': !duty.Statistics.PaymentExpire, 'c-ac-active': duty.Statistics.PaymentExpire}" table-cell-title>
+							{{ duty.Summ | rub }}</span
+						>
+					</mib-table-cell>
+					<mib-table-cell>
+						<span [ngClass]="{'c-mc-active': !duty.Statistics.PaymentExpire, 'c-ac-active': duty.Statistics.PaymentExpire}" table-cell-title>
+							{{ duty.Rest | rub }}</span
+						>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ duty.RefNum }}</ng-container>
 					</mib-table-cell>
 					<mib-button table-row-button size="s" type="ghost-secondary">
 						<mib-icon
@@ -195,7 +199,6 @@
 		</mib-table>
 	</div>
 </mib-tab-group>
-
 
 <!--<div class="card-content" id="step1">-->
 <!--  <p-toolbar styleClass="p-mb-4">-->

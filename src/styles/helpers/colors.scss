@@ -14,6 +14,19 @@ span.c,
 		}
 	}
 
+	// accent
+	&-ac {
+		&-default {
+			color: var(--ac-default);
+		}
+    &-hover {
+      color: var(--ac-hover);
+    }
+    &-active {
+      color: var(--ac-active);
+    }
+	}
+
 	// white gradation
 	&-wgr-primary {
 		color: var(--wgr-primary);
