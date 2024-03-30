@@ -279,12 +279,12 @@
 		<div class="container flex gap-16">
 			<mib-news-panel
 				class="flex flex_grow"
-				[newsTitle]="getAdvancedNews[0]?.Title"
-				[newsDate]="getAdvancedNews[0]?.Date | date : 'dd.MM.yyyy'"
+				[newsTitle]="getAdvancedNews[0].Title"
+				[newsDate]="getAdvancedNews[0].Date | date : 'dd.MM.yyyy'"
 				linkText="Открыть новость"
 				[showPreview]="getAdvancedNews[0].Image"
-				[link]="newsDatas[2]?.link"
-				[altText]="getAdvancedNews[0]?.Title"
+				[link]="'/news/' + getAdvancedNews[0].ID"
+				[altText]="getAdvancedNews[0].Title"
 			></mib-news-panel>
 			<div class="flex flex_grow flex_column gap-16">
 				<mib-news-panel
@@ -293,7 +293,7 @@
 					[newsDate]="getAdvancedNews[1]?.Date | date : 'dd.MM.yyyy'"
 					linkText="Подробнее"
 					[showPreview]="getAdvancedNews[1].Image"
-					[link]="newsDatas[1]?.link"
+					[link]="'/news/' + getAdvancedNews[1].ID"
 					[altText]="getAdvancedNews[1]?.Title"
 				></mib-news-panel>
 				<mib-news-panel
@@ -302,7 +302,7 @@
 					[newsDate]="getAdvancedNews[2]?.Date | date : 'dd.MM.yyyy'"
 					linkText="Подробнее"
 					[showPreview]="getAdvancedNews[2].Image"
-					[link]="newsDatas[2]?.link"
+					[link]="'/news/' + getAdvancedNews[2].ID"
 					[altText]="getAdvancedNews[2]?.Title"
 				></mib-news-panel>
 				<mib-news-panel
@@ -311,7 +311,7 @@
 					[newsDate]="getAdvancedNews[3]?.Date | date : 'dd.MM.yyyy'"
 					linkText="Подробнее"
 					[showPreview]="getAdvancedNews[3].Image"
-					[link]="newsDatas[2]?.link"
+					[link]="'/news/' + getAdvancedNews[3].ID"
 					[altText]="getAdvancedNews[3]?.Title"
 				></mib-news-panel>
 			</div>
