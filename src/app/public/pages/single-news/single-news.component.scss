@@ -3,6 +3,7 @@
 
 .single {
 	width: 560px;
+	min-height: calc(100vh - 444px);
 	margin: 0 auto;
 
 	& .pr-4 {
