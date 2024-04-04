@@ -122,7 +122,7 @@ export class LandingComponent implements OnInit {
 					).pipe(
 						tap(data => {
 							this.getAdvancedNews = data
-							console.log('data :>> ', data)
+							// console.log('data :>> ', data)
 						})
 					)
 				),

@@ -68,6 +68,11 @@
 				>
 				<mib-table-head-cell
 					[sortable]="true"
+					(onSort)="onSort($event, 'Contract.Counterparty')"
+					>Дебитор</mib-table-head-cell
+				>
+				<mib-table-head-cell
+					[sortable]="true"
 					(onSort)="onSort($event, 'Number')"
 					>№ поставки</mib-table-head-cell
 				>
@@ -127,6 +132,11 @@
 						<ng-container table-cell-title>{{ duty.Contract.ID }}</ng-container>
 					</mib-table-cell>
 					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							duty.Contract.Counterparty
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
 						<ng-container table-cell-title>{{ duty.Number }}</ng-container>
 					</mib-table-cell>
 					<mib-table-cell>
@@ -160,12 +170,24 @@
 						}}</ng-container>
 					</mib-table-cell> -->
 					<mib-table-cell>
-						<span [ngClass]="{'c-mc-active': !duty.Statistics.PaymentExpire, 'c-ac-active': duty.Statistics.PaymentExpire}" table-cell-title>
+						<span
+							[ngClass]="{
+								'c-mc-active': !duty.Statistics.PaymentExpire,
+								'c-ac-active': duty.Statistics.PaymentExpire
+							}"
+							table-cell-title
+						>
 							{{ duty.Summ | rub }}</span
 						>
 					</mib-table-cell>
 					<mib-table-cell>
-						<span [ngClass]="{'c-mc-active': !duty.Statistics.PaymentExpire, 'c-ac-active': duty.Statistics.PaymentExpire}" table-cell-title>
+						<span
+							[ngClass]="{
+								'c-mc-active': !duty.Statistics.PaymentExpire,
+								'c-ac-active': duty.Statistics.PaymentExpire
+							}"
+							table-cell-title
+						>
 							{{ duty.Rest | rub }}</span
 						>
 					</mib-table-cell>
