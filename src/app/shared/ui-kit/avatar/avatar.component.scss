@@ -11,7 +11,7 @@
 }
 
 @mixin avatar-host {
-	@include icon-size(40px);
+	@include icon-size(46px);
 	background-color: var(--mc-quinary);
 	transition: 0.2s ease;
 	overflow: hidden;
