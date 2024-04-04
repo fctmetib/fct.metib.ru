@@ -26,16 +26,16 @@ export class SidebarComponent {
 		},
 		{
 			links: [
-				{name: 'Запросы', link: '/client/demand'},
 				{name: 'Платежи', link: '/client/invoices'},
-				{name: 'Просрочки покупателя', link: '/client/delays'}
+				{name: 'Просрочка платежа', link: '/client/delays'},
+				{name: 'Договоры', link: '/client/contracts'}
 			]
 		},
 		{
 			links: [
-				{name: 'Договоры', link: '/client/contracts'},
 				{name: 'Отчеты', link: '/client/reports'},
-				{name: 'Электронные документы', link: '/client/documents'}
+				{name: 'Электронные документы', link: '/client/documents'},
+				{name: 'Запросы', link: '/client/demand'}
 			]
 		}
 	]
