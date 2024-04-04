@@ -1,6 +1,7 @@
 :host {
-  height: 48px;
-  padding: var(--table-paddings);
-  display: flex;
-  background-color: var(--wgr-secondary);
+	height: 48px;
+	padding: var(--table-paddings);
+	display: flex;
+	background-color: var(--wgr-secondary);
+	border-bottom: var(--collapse);
 }

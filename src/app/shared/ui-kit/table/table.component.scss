@@ -1,10 +1,11 @@
 :host {
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  display: block;
-  border: 1px solid var(--wgr-secondary);
-  --table-paddings:  0 48px 0 16px;
-  --table-flex: 1 0;
-  overflow: hidden;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	display: block;
+	border: 1px solid var(--wgr-secondary);
+	// border: var(--collapse);
+	--table-paddings: 0 48px 0 16px;
+	--table-flex: 1 0;
+	overflow: hidden;
 }

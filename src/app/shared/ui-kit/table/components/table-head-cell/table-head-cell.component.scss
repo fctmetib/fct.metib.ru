@@ -1,6 +1,9 @@
 :host {
-  flex: var(--table-flex);
+	flex: var(--table-flex);
+	&:first-child > div {
+		justify-content: start;
+	}
 }
 label {
-  padding: 2px 0;
+	padding: 2px 0;
 }

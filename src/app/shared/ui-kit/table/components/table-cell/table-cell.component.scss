@@ -4,11 +4,16 @@
 $text-selectors: 'label';
 
 :host {
-  flex: var(--table-flex);
+	flex: var(--table-flex);
+	&:first-child > div {
+		justify-content: start;
+	}
 }
 
 .table-cell {
-  height: 100%;
+	height: 100%;
+	justify-content: center;
+	border-right: var(--collapse);
 	#{$text-selectors} {
 		@include body-text;
 		@include text-overflow(1);
@@ -23,28 +28,28 @@ $text-selectors: 'label';
 				user-select: none;
 			}
 		}
-    &-editable {
-      padding: 0;
-      ::ng-deep {
-        .input {
-          padding-left: 0 !important;
-        }
-      }
-    }
+		&-editable {
+			padding: 0;
+			::ng-deep {
+				.input {
+					padding-left: 0 !important;
+				}
+			}
+		}
 	}
 	.description {
 		padding: 2px 0;
 	}
-  &_size {
-    &-s {
-      #{$text-selectors} {
-        @include text-s;
-      }
-    }
-    &-m {
-      #{$text-selectors} {
-        @include text-m;
-      }
-    }
-  }
+	&_size {
+		&-s {
+			#{$text-selectors} {
+				@include text-s;
+			}
+		}
+		&-m {
+			#{$text-selectors} {
+				@include text-m;
+			}
+		}
+	}
 }

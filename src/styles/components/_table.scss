@@ -7,17 +7,19 @@ $text-selectors: 'label';
 	height: 100%;
 	width: 100%;
 	padding: 10px 8px 10px 0;
+	border-right: var(--collapse);
+	justify-content: center;
 
 	#{$text-selectors} {
 		@include body-text;
 		@include text-s;
 		@include text-overflow(1);
 		&.user-select-none {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
 	}
 
 	mib-icon {
