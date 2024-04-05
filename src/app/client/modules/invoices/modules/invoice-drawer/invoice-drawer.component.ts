@@ -116,7 +116,7 @@ export class InvoiceDrawerComponent implements OnInit {
 				map(invoices => {
 					this.invoice = invoices.find(x => x.ID === this.invoiceID)
 					this.invoicesLinks = this.invoice.PaymentLinks
-
+					console.log('this.invoice :>> ', this.invoice)
 					this.totalSumDutyDebtor = this.invoicesLinks.reduce(
 						(acc, link) => acc + link.Shipment.DutyDebtor,
 						0
@@ -135,4 +135,15 @@ export class InvoiceDrawerComponent implements OnInit {
 
 		this.invoicesLinksVisible = this.invoicesLinks.slice(startIndex, endIndex)
 	}
+
+	// downloadDataAsHTML() {
+	// 	const data = this.invoice // Получаем данные, которые необходимо преобразовать в HTML
+	// 	const htmlContent = this.convertDataToHTML(data) // Преобразуем данные в HTML
+
+	// 	// Создаем Blob из HTML-контента
+	// 	const blob = new Blob([htmlContent], {type: 'text/html'})
+
+	// 	// Используем saveAs из file-saver для скачивания файла
+	// 	saveAs(blob, 'data.html')
+	// }
 }

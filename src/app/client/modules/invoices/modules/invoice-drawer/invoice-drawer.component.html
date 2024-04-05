@@ -12,11 +12,11 @@
 		</ng-container>
 		<ng-template #title>
 			<div class="flex gap-4 flex_align-center">
-				<h4>
-					{{ invoice?.Beneficiary?.Title }}
+				<h4 title="{{ invoice?.Payer?.Title }}">
+					{{ invoice?.Payer?.Title }}
 				</h4>
 				<mib-icon class="invoice-arrow stroke" name="fi_arrow-right"></mib-icon>
-				<h4>
+				<h4 title="{{ invoice?.Beneficiary?.Title }}">
 					{{ invoice?.Beneficiary?.Title }}
 				</h4>
 			</div>
