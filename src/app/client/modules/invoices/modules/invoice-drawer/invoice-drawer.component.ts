@@ -78,19 +78,19 @@ export class InvoiceDrawerComponent implements OnInit {
 		return this.data.data.invoiceId
 	}
 
-	get beneficiaryRequisites(): BankDetailsData {
+	get beneficiaryRequisites(): any {
 		return {
-			paymentParticipant: this.invoice.Beneficiary,
-			closeDate: this.invoice.Date,
-			openDate: this.invoice.Date
+			paymentParticipant: this.invoice.Beneficiary
+			// closeDate: this.invoice.Date,
+			// openDate: this.invoice.Date
 		}
 	}
 
-	get payerRequisites(): BankDetailsData {
+	get payerRequisites(): any {
 		return {
-			paymentParticipant: this.invoice.Payer,
-			closeDate: this.invoice.Date,
-			openDate: this.invoice.Date
+			paymentParticipant: this.invoice.Payer
+			// closeDate: this.invoice.Date,
+			// openDate: this.invoice.Date
 		}
 	}
 
@@ -117,6 +117,7 @@ export class InvoiceDrawerComponent implements OnInit {
 					this.invoice = invoices.find(x => x.ID === this.invoiceID)
 					this.invoicesLinks = this.invoice.PaymentLinks
 					console.log('this.invoice :>> ', this.invoice)
+					console.log('this.invoice :>> ', this.invoice.Comment)
 					this.totalSumDutyDebtor = this.invoicesLinks.reduce(
 						(acc, link) => acc + link.Shipment.DutyDebtor,
 						0

@@ -175,7 +175,7 @@
 						<p class="headline">Реквизиты плательщика</p>
 						<mib-spacing type="xs2"></mib-spacing>
 						<mib-contracted-forms
-							[bankingDetails]="payerRequisites"
+							[datass]="payerRequisites"
 							[label]="invoice?.Beneficiary?.BankName"
 							description="Для основных транзакций"
 						></mib-contracted-forms>
@@ -183,7 +183,7 @@
 						<p class="headline">Реквизиты дебитора</p>
 						<mib-spacing type="xs2"></mib-spacing>
 						<mib-contracted-forms
-							[bankingDetails]="beneficiaryRequisites"
+							[datass]="beneficiaryRequisites"
 							[label]="invoice?.Beneficiary?.BankName"
 							description="Для основных транзакций"
 						></mib-contracted-forms>

@@ -1,42 +1,59 @@
 <div class="contracted-form" [class.extended]="extended">
 	<mib-spacing type="xs2"></mib-spacing>
-	<div (click)="extended = !extended" class="cursor-pointer flex flex_align-center flex_justify-between">
+	<div
+		(click)="extended = !extended"
+		class="cursor-pointer flex flex_align-center flex_justify-between"
+	>
 		<div class="flex gap-6">
 			<span class="text text_m text_medium c-bti-primary user-select-none">
-				{{label}}
+				{{ label }}
 			</span>
 			<ng-container *ngIf="showBadge">
-				<mib-badge [extended]="true" size="m" type="filled-secondary">{{additionalOffice}}</mib-badge>
+				<mib-badge [extended]="true" size="m" type="filled-secondary">{{
+					additionalOffice
+				}}</mib-badge>
 			</ng-container>
 		</div>
 		<mib-button size="m" type="ghost-secondary">
-			<mib-icon btn-icon class="stroke" [name]="extended ? 'fi_chevron-up' : 'fi_chevron-down'"></mib-icon>
+			<mib-icon
+				btn-icon
+				class="stroke"
+				[name]="extended ? 'fi_chevron-up' : 'fi_chevron-down'"
+			></mib-icon>
 		</mib-button>
 	</div>
 	<mib-spacing type="xs2"></mib-spacing>
 	<div class="dropdown flex flex_column" *ngIf="extended" [ngSwitch]="type">
-    <ng-container *ngSwitchCase="ContractedFormsEnum.BankDetails">
-      <p class="text text_m c-bti-secondary">
-        Номер счёта: {{bankingDetails.paymentParticipant?.Account}}
-      </p>
-      <p class="text text_m c-bti-secondary">
-        Дата открытия: {{bankingDetails.openDate | date : 'dd.MM.YYYY'}}
-      </p>
-      <p class="text text_m c-bti-secondary">
-        Дата закрытия: {{bankingDetails.closeDate | date : 'dd.MM.YYYY'}}
-      </p>
-      <ng-container *ngIf="description">
-        <mib-spacing type="xs2"></mib-spacing>
-        <p class="text text_m c-bti-secondary">
-          {{description}}
-        </p>
-      </ng-container>
-      <mib-spacing type="xs"></mib-spacing>
-      <p (click)="downloadRequisites()" class="cursor-pointer text text_l c-mc-default">Скачать реквизиты</p>
-    </ng-container>
-    <ng-container *ngSwitchCase="ContractedFormsEnum.ATemplateForAllOccasions">
-      <ng-content></ng-content>
-    </ng-container>
+		<ng-container *ngSwitchCase="ContractedFormsEnum.BankDetails">
+			<p class="text text_m c-bti-secondary">
+				Организация: {{ datass.paymentParticipant?.Title }}
+				<!-- Дата закрытия: {{bankingDetails.closeDate | date : 'dd.MM.YYYY'}} -->
+			</p>
+			<p class="text text_m c-bti-secondary">
+				<!-- {{ datass | json }} -->
+				Номер счёта: {{ datass.paymentParticipant?.Account }}
+			</p>
+			<p class="text text_m c-bti-secondary">
+				<!-- Дата открытия: {{bankingDetails.openDate | date : 'dd.MM.YYYY'}} -->
+				Банк: {{ datass.paymentParticipant?.BankName }}
+			</p>
+			<ng-container *ngIf="description">
+				<mib-spacing type="xs2"></mib-spacing>
+				<p class="text text_m c-bti-secondary">
+					{{ description }}
+				</p>
+			</ng-container>
+			<mib-spacing type="xs"></mib-spacing>
+			<p
+				(click)="downloadRequisites(datass.paymentParticipant?.Title)"
+				class="cursor-pointer text text_l c-mc-default"
+			>
+				Скачать реквизиты
+			</p>
+		</ng-container>
+		<ng-container *ngSwitchCase="ContractedFormsEnum.ATemplateForAllOccasions">
+			<ng-content></ng-content>
+		</ng-container>
 		<mib-spacing type="xs"></mib-spacing>
 	</div>
 </div>
