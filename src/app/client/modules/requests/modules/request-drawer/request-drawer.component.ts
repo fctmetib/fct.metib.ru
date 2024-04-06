@@ -155,35 +155,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 			.getRefs(this.factoring.DebtorID)
 			.pipe(
 				tap(data => {
-					this.deliveries = [
-						{
-							CurrencyCode: 'RU',
-							Title: 'MRQ.403 111',
-							CustomerID: 543,
-							Customer: 'DSF DSF',
-							DebtorID: 34,
-							Debtor: 'DFS',
-							ID: 1
-						},
-						{
-							CurrencyCode: 'RU',
-							Title: 'MRQ.403 122',
-							CustomerID: 543,
-							Customer: 'DSF DSF ER',
-							DebtorID: 34,
-							Debtor: 'DFS',
-							ID: 2
-						},
-						{
-							CurrencyCode: 'RU',
-							Title: 'MRQ.403 123',
-							CustomerID: 543,
-							Customer: 'DSF DSF',
-							DebtorID: 34,
-							Debtor: 'DFS',
-							ID: 3
-						}
-					]
+					this.deliveries = data
 				})
 			)
 			.subscribe()
