@@ -151,14 +151,14 @@ export class AutoCompleteComponent
 				.pipe(
 					map((event: Event) => (event.target as HTMLInputElement).value),
 					map(value => {
-						if (this.selectedOption) {
+						// if (this.selectedOption) {
+						// 	this.selectOption(null)
+						// 	return
+						// } else {
+						if (!value) {
 							this.selectOption(null)
-							return ''
-						} else {
-							if (!value) {
-								this.selectOption(null)
-							}
 						}
+						// }
 						return value
 					}),
 					map(value => this._filter(value)),

@@ -62,6 +62,8 @@ import {
 export class RequestDrawerComponent extends Drawer implements OnInit {
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
 
+	public loading$ = new BehaviorSubject<boolean>(false)
+
 	public form: FormGroup
 
 	public existingRequest?: RequestRes
@@ -126,7 +128,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 	}
 
 	ngOnInit() {
-		this.initForms()
+		this.loading$.next(true), this.initForms()
 		this.watchForms()
 		this.requestsService
 			.getNextFreeRequestNumber()
@@ -154,8 +156,9 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 		this.deliveryService
 			.getRefs(this.factoring.DebtorID)
 			.pipe(
-				tap(data => {
-					this.deliveries = data
+				tap(data => (this.deliveries = data)),
+				finalize(() => {
+					this.loading$.next(false)
 				})
 			)
 			.subscribe()
