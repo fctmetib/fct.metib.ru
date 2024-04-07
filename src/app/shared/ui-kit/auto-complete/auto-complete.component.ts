@@ -210,34 +210,68 @@ export class AutoCompleteComponent
 		this.filteredOptions = this._filter(this.selectedOption?.text ?? '')
 	}
 
-	selectOption(option: DropdownPointComponent): void {
-		if (this.multi) {
-			const index = this.selectedOptions.findIndex(
-				opt => opt.value === option.value
-			)
+	selectOption(option: DropdownPointComponent | null): void {
+		if (option) {
+			if (this.multi) {
+				const index = this.selectedOptions.findIndex(
+					opt => opt.value === option.value
+				)
 
-			if (index === -1 && option.control.value) {
-				// Если опция не выбрана и чекбокс активен, добавляем её в массив
-				this.selectedOptions.push(option)
-			} else if (index > -1 && !option.control.value) {
-				// Если опция уже выбрана и чекбокс неактивен, удаляем её из массива
-				this.selectedOptions.splice(index, 1)
+				if (index === -1 && option.control.value) {
+					// Если опция не выбрана и чекбокс активен, добавляем её в массив
+					this.selectedOptions.push(option)
+				} else if (index > -1 && !option.control.value) {
+					// Если опция уже выбрана и чекбокс неактивен, удаляем её из массива
+					this.selectedOptions.splice(index, 1)
+				}
+
+				this.innerValue$.next(this.selectedOptions.map(opt => opt.value))
+				this.onChange(this.innerValue$.value)
+			} else {
+				this.selectedOption = option
+				this.innerValue$.next(option.value)
+				this.onChange(this.innerValue$.value)
+				this.close()
 			}
-
-			this.innerValue$.next(this.selectedOptions.map(opt => opt.value))
-			this.onChange(this.innerValue$.value)
 		} else {
-			this.selectedOption = option
-			this.innerValue$.next(option.value)
-			this.onChange(this.innerValue$.value)
+			this.selectedOption = null
+			this.innerValue$.next(null)
+			// this.onChange(null)
 			this.close()
 		}
 		if (this.inputDirective) {
-			this.inputDirective.elementRef.nativeElement.value = option.text
+			this.inputDirective.elementRef.nativeElement.value = option?.text ?? ''
 			this.cdr.detectChanges()
 		}
 		this.onTouched()
 	}
+	// 	if (this.multi) {
+	// 		const index = this.selectedOptions.findIndex(
+	// 			opt => opt.value === option.value
+	// 		)
+
+	// 		if (index === -1 && option.control.value) {
+	// 			// Если опция не выбрана и чекбокс активен, добавляем её в массив
+	// 			this.selectedOptions.push(option)
+	// 		} else if (index > -1 && !option.control.value) {
+	// 			// Если опция уже выбрана и чекбокс неактивен, удаляем её из массива
+	// 			this.selectedOptions.splice(index, 1)
+	// 		}
+
+	// 		this.innerValue$.next(this.selectedOptions.map(opt => opt.value))
+	// 		this.onChange(this.innerValue$.value)
+	// 	} else {
+	// 		this.selectedOption = option
+	// 		this.innerValue$.next(option.value)
+	// 		this.onChange(this.innerValue$.value)
+	// 		this.close()
+	// 	}
+	// 	if (this.inputDirective) {
+	// 		this.inputDirective.elementRef.nativeElement.value = option.text
+	// 		this.cdr.detectChanges()
+	// 	}
+	// 	this.onTouched()
+	// }
 
 	close(): void {
 		this.dropdownService.closeMenu()
