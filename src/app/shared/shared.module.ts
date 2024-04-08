@@ -7,7 +7,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {MibFileErrorDialogComponent} from './components/mib-file-error-dialog/mib-file-error-dialog.component'
 import {AuthService} from '../auth/services/auth.service'
 import {MibUiModule} from './modules/mib-ui/mib-ui.module'
-import {NewFooterComponent} from './modules/new-footer/new-footer.component'
 
 @NgModule({
 	imports: [

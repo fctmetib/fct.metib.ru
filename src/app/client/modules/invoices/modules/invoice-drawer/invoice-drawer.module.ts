@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core'
-import {CommonModule} from '@angular/common'
+import {CommonModule, DatePipe} from '@angular/common'
 import {InvoiceDrawerComponent} from './invoice-drawer.component'
 import {InvoiceDrawerService} from './invoice-drawer.service'
 import {DrawerModule} from 'src/app/shared/ui-kit/drawer/drawer.module'
@@ -48,6 +48,6 @@ import {LabelModule} from 'src/app/shared/directives/label/label.module'
 		CashPanelModule,
 		LabelModule
 	],
-	providers: [InvoiceDrawerService]
+	providers: [InvoiceDrawerService, DatePipe]
 })
 export class InvoiceDrawerModule {}

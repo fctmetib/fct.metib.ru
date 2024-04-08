@@ -26,16 +26,18 @@
 	<div class="dropdown flex flex_column" *ngIf="extended" [ngSwitch]="type">
 		<ng-container *ngSwitchCase="ContractedFormsEnum.BankDetails">
 			<p class="text text_m c-bti-secondary">
-				Организация: {{ datass.paymentParticipant?.Title }}
-				<!-- Дата закрытия: {{bankingDetails.closeDate | date : 'dd.MM.YYYY'}} -->
-			</p>
-			<p class="text text_m c-bti-secondary">
+				Организация: {{ data.paymentParticipant?.Title }}
 				<!-- {{ datass | json }} -->
-				Номер счёта: {{ datass.paymentParticipant?.Account }}
 			</p>
 			<p class="text text_m c-bti-secondary">
-				<!-- Дата открытия: {{bankingDetails.openDate | date : 'dd.MM.YYYY'}} -->
-				Банк: {{ datass.paymentParticipant?.BankName }}
+				Номер счёта: {{ data.paymentParticipant?.Account }}
+			</p>
+			<!-- Дата открытия: {{bankingDetails.openDate | date : 'dd.MM.YYYY'}} -->
+			<p class="text text_m c-bti-secondary">
+				Инн: {{ data.paymentParticipant?.INN }}
+			</p>
+			<p class="text text_m c-bti-secondary">
+				Бик: {{ data.paymentParticipant?.BIC }}
 			</p>
 			<ng-container *ngIf="description">
 				<mib-spacing type="xs2"></mib-spacing>
@@ -44,8 +46,9 @@
 				</p>
 			</ng-container>
 			<mib-spacing type="xs"></mib-spacing>
+			<!-- (click)="downloadRequisites(datass.paymentParticipant?.Title)" -->
 			<p
-				(click)="downloadRequisites(datass.paymentParticipant?.Title)"
+				(click)="downloadRequisites()"
 				class="cursor-pointer text text_l c-mc-default"
 			>
 				Скачать реквизиты

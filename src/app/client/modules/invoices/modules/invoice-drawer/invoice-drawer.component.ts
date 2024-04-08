@@ -78,6 +78,10 @@ export class InvoiceDrawerComponent implements OnInit {
 		return this.data.data.invoiceId
 	}
 
+	get getParticipantData(): any {
+		return this.invoice
+	}
+
 	get beneficiaryRequisites(): any {
 		return {
 			paymentParticipant: this.invoice.Beneficiary

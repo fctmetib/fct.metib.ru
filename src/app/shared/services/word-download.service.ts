@@ -1,12 +1,16 @@
 import {Injectable} from '@angular/core'
 import {Packer, Document, Paragraph, TextRun} from 'docx'
 import {saveAs} from 'file-saver'
+import {ExtendedClientInvoice} from 'src/app/client/modules/invoices/interfaces/client.invoice'
+import {DatePipe} from '@angular/common'
+import {RubPipe} from '../pipes/rub/rub.pipe'
 
 @Injectable({
 	providedIn: 'root'
 })
 export class WordDownloadService {
-	constructor() {}
+	// constructor() {}
+	constructor(private datePipe: DatePipe, private rubPipe: RubPipe) {}
 
 	public downloadDocWithText(text: string, name: string = 'requisites'): void {
 		const doc = new Document({
@@ -30,24 +34,43 @@ export class WordDownloadService {
 			.catch(err => console.error(err))
 	}
 
-	downloadDataAsHTML(datas: any, name: string) {
-		const data = datas // Получаем данные, которые необходимо преобразовать в HTML
-		const htmlContent = this.convertDataToHTML(data, name) // Преобразуем данные в HTML
+	downloadDataAsHTML(data: ExtendedClientInvoice) {
+		const {payerName, beneficiaryName} = {
+			payerName: data.Payer.Title,
+			beneficiaryName: data.Beneficiary.Title
+		}
+		const htmlContent = this.convertDataToHTML(data) // Преобразуем данные в HTML
 		// Создаем Blob из HTML-контента
 		const blob = new Blob([htmlContent], {type: 'text/html'})
 
 		// Используем saveAs из file-saver для скачивания файла
-		saveAs(blob, `${name}.html`)
+		saveAs(blob, `${beneficiaryName} - ${payerName}.html`)
 	}
 
-	convertDataToHTML(data: any, name) {
-		// Здесь вы можете реализовать логику преобразования данных в HTML
-		// Например, если data - это массив объектов, вы можете создать HTML-таблицу из этих данных
-		console.log('data :>> ', data)
-		let html = '<html><head><title>'
-		html += name
-		html += ' </title></head><body>'
-		//     <html><body><div align='center'>Платежное поручение № <b>31439545886</b> от <b>27.03.2024</b>.</div><br><br><div><table width='600' align='center' border='1' cellspacing='0' cellpadding='0'><tr><td align='center' valign='center' width='40%'>301 02 810 1 0000 0000176 (Д)</td><td align='center' valign='center' width='40%'>612 12 810 2 0000 0013537 (К)<td><td align='center' valign='center' width='20%' bgcolor='#DDDDDD'>С: <b>{63194,40}</b></td></tr></table></div><br><br><div align='center'><table width='600' aling='center' border='0' cellspacing='0' cellpadding='0'><tr><td align='justify'>Оплата по договору № ДП-020215-1 от 02.02.2015 за бытовую технику , по УПД от 14.03.2024( факторинг). RN24565062048070 В т.ч. НДС (20 %) 10532-40</td></tr></table></div><br><br><div align='center'><table align='center' width='600' cellspacing='0' cellpadding='0' border='1'><tr>
+	convertDataToHTML(data: ExtendedClientInvoice) {
+		const {
+			payerName,
+			beneficiaryName,
+			paymentOrder,
+			paymentDate,
+			accountDebet,
+			accountCredit,
+			dataAmount
+		} = {
+			payerName: data.Payer.Title,
+			beneficiaryName: data.Beneficiary.Title,
+			paymentOrder: data.PaymentLinks[0].Shipment.Delivery.Title,
+			paymentDate: data.Date,
+			accountDebet: data.AccountDebet,
+			accountCredit: data.AccountCredit,
+			dataAmount: data.Amount
+		}
+
+		const formattedDate = this.datePipe.transform(paymentDate, 'dd.MM.yyyy')
+		const formattedAmount = this.rubPipe.transform(dataAmount)
+
+		let html = `<html><head><title>${beneficiaryName} - ${payerName}</title></head><body>`
+		html += `<html><body><div align="center">Платежное поручение № <b>${paymentOrder}</b> от <b>${formattedDate} </b>.</div><br><br><div><table width="700" align="center" border="1" cellspacing="0" cellpadding="0"><tr><td align="center" valign="center" width="40%">${accountDebet} (Д)</td><td align="center" valign="center" width="40%">${accountCredit} (К)<td><td align="center" valign="center" width="20%" bgcolor="#DDDDDD">С: <b>{${formattedAmount}}</b></td></tr></table></div><br><br><div align="center"><table width="600" aling="center" border="0" cellspacing="0" cellpadding="0"><tr><td align="justify">Оплата по договору № ДП-020215-1 от 02.02.2015 за бытовую технику , по УПД от 14.03.2024( факторинг). RN24565062048070 В т.ч. НДС (20 %) 10532-40</td></tr></table></div><br><br><div align="center"><table align="center" width="600" cellspacing="0" cellpadding="0" border="1"><tr>`
 		// <td align='left' width='150'><b>Получатель:</b></td>
 		// <td align='left' bgcolor='#DDDDDD'>&nbsp;<b>ДРИВИКС ООО</b></td>
 		// </tr>

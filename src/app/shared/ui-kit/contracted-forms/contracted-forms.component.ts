@@ -5,6 +5,7 @@ import {
 	BankDetailsData
 } from './interfaces/contracted-forms.interface'
 import {WordDownloadService} from '../../services/word-download.service'
+import {ExtendedClientInvoice} from 'src/app/client/modules/invoices/interfaces/client.invoice'
 
 @Component({
 	selector: 'mib-contracted-forms',
@@ -22,7 +23,8 @@ export class ContractedFormsComponent {
 	@Input() additionalOffice: string = ''
 
 	// Типы входных данных
-	@Input() datass?: any
+	@Input() data?: BankDetailsData
+	@Input() downloadableData?: ExtendedClientInvoice
 	// @Input() bankingDetails?: BankDetailsData
 
 	@Output() onClick = new EventEmitter<Event>()
@@ -32,10 +34,10 @@ export class ContractedFormsComponent {
 
 	constructor(private downloadService: WordDownloadService) {}
 
-	getRequisitesAsString(datass) {
-		console.log('halo datass>>>', datass)
-		return datass
-	}
+	// getRequisitesAsString(datass) {
+	// 	console.log('halo datass>>>', datass)
+	// 	return datass
+	// }
 	// getRequisitesAsString(): string {
 	// 	if (!this.bankingDetails || !this.bankingDetails.paymentParticipant) {
 	// 		return 'Реквизиты не указаны'
@@ -73,10 +75,10 @@ export class ContractedFormsComponent {
 	//   return requisitesStr;
 	// }
 
-	downloadRequisites(name: string) {
-		const requisitesStr = this.getRequisitesAsString(this.datass)
-		console.log('requisitesStr :>> ', requisitesStr.paymentParticipant)
-		this.downloadService.downloadDataAsHTML(requisitesStr, name)
+	downloadRequisites() {
+		// const requisitesStr = this.getRequisitesAsString(this.datass)
+		// console.log('requisitesStr :>> ', requisitesStr.paymentParticipant)
+		this.downloadService.downloadDataAsHTML(this.downloadableData)
 		// this.downloadService.downloadDocWithText(requisitesStr, `${this.bankingDetails.paymentParticipant.Title} реквизиты`)
 	}
 }
