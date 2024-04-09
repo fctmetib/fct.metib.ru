@@ -236,7 +236,7 @@ export class AutoCompleteComponent
 		} else {
 			this.selectedOption = null
 			this.innerValue$.next(null)
-			// this.onChange(null)
+			this.onChange(null)
 			this.close()
 		}
 		if (this.inputDirective) {

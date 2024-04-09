@@ -297,8 +297,14 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 			.pipe(
 				tap(deliveryId => {
 					const delivery = this.deliveries.find(x => x.ID === deliveryId)
-					this.delivery.setValue(delivery)
+					if (delivery) {
+						this.delivery.setValue(delivery)
+					} else {
+						this.delivery.reset()
+						this.freeLimitControl.setValue(0)
+					}
 				}),
+				filter(Boolean),
 				switchMap(deliveryId => this.deliveryService.getFreeLimit(deliveryId)),
 				tap(limit => this.freeLimitControl.setValue(limit)),
 				takeUntil(this.au.destroyer)
