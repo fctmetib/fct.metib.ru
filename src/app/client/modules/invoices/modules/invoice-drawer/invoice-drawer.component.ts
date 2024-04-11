@@ -85,32 +85,16 @@ export class InvoiceDrawerComponent implements OnInit {
 	get beneficiaryRequisites(): any {
 		return {
 			paymentParticipant: this.invoice.Beneficiary
-			// closeDate: this.invoice.Date,
-			// openDate: this.invoice.Date
 		}
 	}
 
 	get payerRequisites(): any {
 		return {
 			paymentParticipant: this.invoice.Payer
-			// closeDate: this.invoice.Date,
-			// openDate: this.invoice.Date
 		}
 	}
 
 	getCurrentInvoice() {
-		// 	this.loading$.next(true)
-		// 	this.invoicesService
-		// 		.getInvoice({ID: this.invoiceID, includeLinks: true})
-		// 		.pipe(
-		// 			tap(data => {
-		// 				console.log('data :>> ', data)
-		// 			}),
-		// 			finalize(() => {
-		// 				this.loading$.next(false)
-		// 			})
-		// 		)
-		// 		.subscribe()
 		this.loading$.next(true)
 		return this.invoicesService
 			.getInvoices({
@@ -119,10 +103,8 @@ export class InvoiceDrawerComponent implements OnInit {
 			.pipe(
 				map(invoices => {
 					this.invoice = invoices.find(x => x.ID === this.invoiceID)
+					// console.log('this.invoice :>> ', this.invoice)
 					this.invoicesLinks = this.invoice.PaymentLinks ?? []
-					console.log('this.invoice :>> ', this.invoice)
-					// console.log('this.invoice :>> ', this.invoice.Comment)
-					// console.log('this.invoice. :>> ', this.invoice.);
 					this.totalSumDutyDebtor = this.invoicesLinks.reduce(
 						(acc, link) => acc + link.Shipment.DutyDebtor,
 						0

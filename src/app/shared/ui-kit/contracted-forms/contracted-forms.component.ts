@@ -25,7 +25,6 @@ export class ContractedFormsComponent {
 	// Типы входных данных
 	@Input() data?: BankDetailsData
 	@Input() downloadableData?: ExtendedClientInvoice
-	// @Input() bankingDetails?: BankDetailsData
 
 	@Output() onClick = new EventEmitter<Event>()
 
@@ -34,51 +33,7 @@ export class ContractedFormsComponent {
 
 	constructor(private downloadService: WordDownloadService) {}
 
-	// getRequisitesAsString(datass) {
-	// 	console.log('halo datass>>>', datass)
-	// 	return datass
-	// }
-	// getRequisitesAsString(): string {
-	// 	if (!this.bankingDetails || !this.bankingDetails.paymentParticipant) {
-	// 		return 'Реквизиты не указаны'
-	// 	}
-
-	// 	const {paymentParticipant, openDate, closeDate} = this.bankingDetails
-	// 	const requisitesStr =
-	// 		`Реквизиты:\n` +
-	// 		`Номер счета: ${paymentParticipant.Account}\n` +
-	// 		`ИНН: ${paymentParticipant.INN}\n` +
-	// 		`БИК: ${paymentParticipant.BIC}\n` +
-	// 		`Название банка: ${paymentParticipant.BankName || 'Не указано'}\n` +
-	// 		`Корр. счет: ${paymentParticipant.BankAccount}\n` +
-	// 		`Дата открытия: ${openDate}\n` +
-	// 		`Дата закрытия: ${closeDate}`
-
-	// 	return requisitesStr
-	// }
-
-	// getRequisitesAsString(): string {
-	//   if (!this.bankingDetails || !this.bankingDetails.paymentParticipant) {
-	//     return 'Реквизиты не указаны';
-	//   }
-
-	//   const { paymentParticipant, openDate, closeDate } = this.bankingDetails;
-	//   const requisitesStr = `Реквизиты:\n` +
-	//     `Номер счета: ${paymentParticipant.Account}\n` +
-	//     `ИНН: ${paymentParticipant.INN}\n` +
-	//     `БИК: ${paymentParticipant.BIC}\n` +
-	//     `Название банка: ${paymentParticipant.BankName || 'Не указано'}\n` +
-	//     `Корр. счет: ${paymentParticipant.BankAccount}\n` +
-	//     `Дата открытия: ${openDate}\n` +
-	//     `Дата закрытия: ${closeDate}`;
-
-	//   return requisitesStr;
-	// }
-
 	downloadRequisites() {
-		// const requisitesStr = this.getRequisitesAsString(this.datass)
-		// console.log('requisitesStr :>> ', requisitesStr.paymentParticipant)
 		this.downloadService.downloadDataAsHTML(this.downloadableData)
-		// this.downloadService.downloadDocWithText(requisitesStr, `${this.bankingDetails.paymentParticipant.Title} реквизиты`)
 	}
 }

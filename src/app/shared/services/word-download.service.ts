@@ -39,7 +39,7 @@ export class WordDownloadService {
 			payerName: data.Payer.Title,
 			beneficiaryName: data.Beneficiary.Title
 		}
-		const htmlContent = this.convertDataToHTML(data) // Преобразуем данные в HTML
+		const htmlContent = this.convertDataToHTML(data)
 		// Создаем Blob из HTML-контента
 		const blob = new Blob([htmlContent], {type: 'text/html'})
 
@@ -50,64 +50,63 @@ export class WordDownloadService {
 	convertDataToHTML(data: ExtendedClientInvoice) {
 		const {
 			payerName,
+			payerINN,
+			payerAccount,
+			payerBankName,
+			payerBankAccount,
 			beneficiaryName,
-			paymentOrder,
+			payerBic,
+			paymentNumber,
 			paymentDate,
 			accountDebet,
 			accountCredit,
-			dataAmount
+			dataAmount,
+			paymentComment
 		} = {
-			payerName: data.Payer.Title,
-			beneficiaryName: data.Beneficiary.Title,
-			paymentOrder: data.PaymentLinks[0].Shipment.Delivery.Title,
-			paymentDate: data.Date,
-			accountDebet: data.AccountDebet,
-			accountCredit: data.AccountCredit,
-			dataAmount: data.Amount
+			payerName: data?.Payer?.Title,
+			payerINN: data?.Payer?.INN,
+			payerAccount: data?.Payer?.Account,
+			payerBankName: data?.Payer?.BankName,
+			payerBic: data.Payer?.BIC,
+			payerBankAccount: data?.Payer?.BankAccount,
+			beneficiaryName: data?.Beneficiary?.Title,
+			paymentNumber: data?.PaymentLinks?.[0]?.Shipment?.Delivery?.Title, // check this value !!!
+			paymentDate: data?.Date,
+			accountDebet: data?.AccountDebet,
+			accountCredit: data?.AccountCredit,
+			dataAmount: data?.Amount,
+			paymentComment: data?.Comment
 		}
 
 		const formattedDate = this.datePipe.transform(paymentDate, 'dd.MM.yyyy')
 		const formattedAmount = this.rubPipe.transform(dataAmount)
 
 		let html = `<html><head><title>${beneficiaryName} - ${payerName}</title></head><body>`
-		html += `<html><body><div align="center">Платежное поручение № <b>${paymentOrder}</b> от <b>${formattedDate} </b>.</div><br><br><div><table width="700" align="center" border="1" cellspacing="0" cellpadding="0"><tr><td align="center" valign="center" width="40%">${accountDebet} (Д)</td><td align="center" valign="center" width="40%">${accountCredit} (К)<td><td align="center" valign="center" width="20%" bgcolor="#DDDDDD">С: <b>{${formattedAmount}}</b></td></tr></table></div><br><br><div align="center"><table width="600" aling="center" border="0" cellspacing="0" cellpadding="0"><tr><td align="justify">Оплата по договору № ДП-020215-1 от 02.02.2015 за бытовую технику , по УПД от 14.03.2024( факторинг). RN24565062048070 В т.ч. НДС (20 %) 10532-40</td></tr></table></div><br><br><div align="center"><table align="center" width="600" cellspacing="0" cellpadding="0" border="1"><tr>`
-		// <td align='left' width='150'><b>Получатель:</b></td>
-		// <td align='left' bgcolor='#DDDDDD'>&nbsp;<b>ДРИВИКС ООО</b></td>
-		// </tr>
-		// <tr><td width='100'>Город:</td><td>&nbsp;</td></tr>
-		// <tr><td width='100'>ИНН:</td><td>&nbsp;</td></tr>
-		// <tr><td width='100'>КПП:</td><td>&nbsp;</td></tr>
-		// <tr><td width='100'>Счет:</td><td>&nbsp;612 12 810 2 0000 0013537</td></tr>
-		// <tr><td width='100'>Банк:</td><td>&nbsp;</td></tr>
-		// <tr><td width='100'>БИК:</td><td>&nbsp;</td></tr>
-		// <tr><td width='100'>Кор.счет:</td><td>&nbsp;</td></tr>
-		// </table></div><br>
-		// <br><div align='center'><table align='center' width='600' cellspacing='0' cellpadding='0' border='1'><tr>
-		// <td align='left' width='150'><b>Плательщик:</b></td>
-		// <td align='left' bgcolor='#DDDDDD'>&nbsp;<b>ООО "ДНС Ритейл"</b></td>
-		// </tr>
-		// <tr><td width='100'>Город:</td><td>&nbsp;</td></tr>
-		// <tr><td width='100'>ИНН:</td><td>&nbsp;2540167061</td></tr>
-		// <tr><td width='100'>КПП:</td><td>&nbsp;</td></tr>
-		// <tr><td width='100'>Счет:</td><td>&nbsp;40702810600100003410</td></tr>
-		// <tr><td width='100'>Банк:</td><td>&nbsp;ПАО СКБ Приморья "Примсоцбанк"</td></tr>
-		// <tr><td width='100'>БИК:</td><td>&nbsp;040507803</td></tr>
+		html += `<html><body><div align="center">Платежное поручение № <b>УТОЧНИТЬ НОМЕР</b> от <b>${formattedDate} </b>.</div><br><br><div><table width="600" align="center" border="1" cellspacing="0" cellpadding="0"><tr><td align="center" valign="center" width="40%">${accountDebet} (Д)</td><td align="center" valign="center" width="40%">${accountCredit} (К)<td><td align="center" valign="center" width="20%" bgcolor="#DDDDDD">С: <b>{${formattedAmount}}</b></td></tr></table></div><br><br><div align="center"><table width="600" aling="center" border="0" cellspacing="0" cellpadding="0"><tr><td align="justify">${paymentComment}</td></tr></table></div><br><br><div align="center"><table align="center" width="600" cellspacing="0" cellpadding="0" border="1"><tr>`
+		html += '<td align="left" width="150"><b>Получатель:</b></td>'
+		html += `<td align="left" bgcolor="#DDDDDD">&nbsp;<b>${beneficiaryName}</b></td></tr>`
+		html += ' <tr><td width="100">Город:</td><td>&nbsp;</td></tr>'
+		html += ' <tr><td width="100">ИНН:</td><td>&nbsp;</td></tr>'
+		html += ' <tr><td width="100">КПП:</td><td>&nbsp;</td></tr>'
+		html += ` <tr><td width="100">Счет:</td><td>&nbsp;${accountCredit}</td></tr>`
+		html += ' <tr><td width="100">Банк:</td><td>&nbsp;</td></tr>'
+		html += ' <tr><td width="100">БИК:</td><td>&nbsp;</td></tr>'
+		html += ' <tr><td width="100">Кор.счет:</td><td>&nbsp;</td></tr>'
+		html += '</table></div><br>'
 		html +=
-			'<tr><td width="100">Кор.счет:</td><td>&nbsp;30101810200000000803</td></tr>'
+			'<br><div align="center"><table align="center" width="600" cellspacing="0" cellpadding="0" border="1"><tr>'
+		html += '<td align="left" width="150"><b>Плательщик:</b></td>'
+		html += `<td align="left" bgcolor="#DDDDDD">&nbsp;<b>${payerName}</b></td>`
+		html += '</tr>'
+		html += '<tr><td width="100">Город:</td><td>&nbsp;</td></tr>'
+		html += `<tr><td width="100">ИНН:</td><td>&nbsp;${payerINN}</td></tr>`
+		html += '<tr><td width="100">КПП:</td><td>&nbsp;</td></tr>'
+		html += `<tr><td width="100">Счет:</td><td>&nbsp;${payerAccount}</td></tr>`
+		html += `<tr><td width="100">Банк:</td><td>&nbsp;${payerBankName}</td></tr>`
+		html += `<tr><td width="100">БИК:</td><td>&nbsp;${payerBic}</td></tr>`
+		html += `<tr><td width="100">Кор.счет:</td><td>&nbsp;${payerBankAccount}</td></tr>`
 		html += '</table></div><br>'
 		html += '</body></html>'
 		return html
-		/* 		
-    рабочий тест
-    let html = '<html><head><title>Data</title></head><body>'
-		html += '<table><thead><tr><th>Заголовок 1</th></tr></thead><tbody>'
-		// data.paymentParticipant.INN
-		// data.paymentParticipant.BankName
-		Object.entries(data.paymentParticipant).forEach(([_, value]) => {
-			console.log(`${value}`)
-			html += `<tr><td>${value}</td></tr>`
-		})
-		html += '</tbody></table></body></html>'
-		return html */
 	}
 }

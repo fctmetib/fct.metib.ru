@@ -27,12 +27,10 @@
 		<ng-container *ngSwitchCase="ContractedFormsEnum.BankDetails">
 			<p class="text text_m c-bti-secondary">
 				Организация: {{ data.paymentParticipant?.Title }}
-				<!-- {{ datass | json }} -->
 			</p>
 			<p class="text text_m c-bti-secondary">
 				Номер счёта: {{ data.paymentParticipant?.Account }}
 			</p>
-			<!-- Дата открытия: {{bankingDetails.openDate | date : 'dd.MM.YYYY'}} -->
 			<p class="text text_m c-bti-secondary">
 				Инн: {{ data.paymentParticipant?.INN }}
 			</p>
@@ -46,7 +44,6 @@
 				</p>
 			</ng-container>
 			<mib-spacing type="xs"></mib-spacing>
-			<!-- (click)="downloadRequisites(datass.paymentParticipant?.Title)" -->
 			<p
 				(click)="downloadRequisites()"
 				class="cursor-pointer text text_l c-mc-default"
