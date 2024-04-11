@@ -52,6 +52,7 @@ import {
 	ClipboardParserHeaders,
 	ClipboardParserService
 } from '../../../../../shared/services/clipboard-parser.service'
+import {Properties} from 'csstype'
 
 @Component({
 	selector: 'mib-request-drawer',
@@ -80,6 +81,11 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 		['Дата поставки', 'DateShipment', Date],
 		['Сумма', 'Summ', Number]
 	]
+
+	public defaultSkeleton: Properties = {
+		borderRadius: '8px',
+		width: '100%'
+	}
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData<RequestRes>,

@@ -1,88 +1,94 @@
 <mib-drawer [formGroup]="form">
 	<mib-drawer-header
-		[showShared]="true"
 		(onClose)="dialogRef.close()"
 		drawer-header
 	></mib-drawer-header>
 	<mib-drawer-container>
-		<h4>{{ isEditing ? 'Редактирование заявки' : 'Создание новой заявки' }}</h4>
+		<h4>
+			{{ isEditing ? 'Редактирование заявки' : 'Создание новой заявки' }}
+		</h4>
 		<mib-spacing type="xs"></mib-spacing>
-
-		<mib-auto-complete [formControl]="deliveryIdControl">
-			<mib-input autocomplete-input>
-				<ng-container mibLabel>Договор поставки</ng-container>
-				<input
-					mibInput
-					styleType="outline"
-					[size]="size"
-					placeholder="Выберите договор поставки"
-					[disabled]="loading$ | async"
-				/>
-			</mib-input>
-			<mib-dropdown-point
-				*ngFor="let delivery of deliveries"
-				[text]="delivery.Title"
-				[value]="delivery.ID"
-			></mib-dropdown-point>
-		</mib-auto-complete>
-		<mib-spacing type="xs"></mib-spacing>
-		<div class="flex flex_column gap-12">
-			<div class="flex gap-12">
-				<mib-input class="flex_grow">
-					<ng-container mibLabel>Номер заявки</ng-container>
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'200px'"
+			*ngIf="loading$ | async; else formTemplate"
+		></mib-skeleton>
+		<ng-template #formTemplate>
+			<mib-auto-complete [formControl]="deliveryIdControl">
+				<mib-input autocomplete-input>
+					<ng-container mibLabel>Договор поставки</ng-container>
 					<input
-						formControlName="Number"
-						[readonly]="true"
+						mibInput
+						styleType="outline"
+						[size]="size"
+						placeholder="Выберите договор поставки"
+					/>
+				</mib-input>
+				<mib-dropdown-point
+					*ngFor="let delivery of deliveries"
+					[text]="delivery.Title"
+					[value]="delivery.ID"
+				></mib-dropdown-point>
+			</mib-auto-complete>
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex flex_column gap-12">
+				<div class="flex gap-12">
+					<mib-input class="flex_grow">
+						<ng-container mibLabel>Номер заявки</ng-container>
+						<input
+							formControlName="Number"
+							[readonly]="true"
+							[size]="size"
+							mibInput
+						/>
+					</mib-input>
+					<mib-select
+						formControlName="Type"
+						[size]="size"
+						placeholder="Тип заявки"
+						class="flex_grow"
+					>
+						<mib-dropdown-point
+							[value]="RequestTypeEnum.NON_FINANCING"
+							[text]="
+								requestsService.getRequestTypeTranslation(
+									RequestTypeEnum.NON_FINANCING
+								)
+							"
+						></mib-dropdown-point>
+						<mib-dropdown-point
+							[value]="RequestTypeEnum.FINANCING"
+							[text]="
+								requestsService.getRequestTypeTranslation(
+									RequestTypeEnum.FINANCING
+								)
+							"
+						></mib-dropdown-point>
+					</mib-select>
+				</div>
+				<mib-input>
+					<ng-container mibLabel>Дата заявки</ng-container>
+					<input
+						formControlName="Date"
+						[size]="size"
+						type="date"
+						mibInput
+						readonly
+					/>
+				</mib-input>
+				<mib-input>
+					<ng-container mibLabel>Свободный лимит</ng-container>
+					<p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+					<input
+						mask="separator"
+						readonly
+						[formControl]="freeLimitControl"
 						[size]="size"
 						mibInput
 					/>
 				</mib-input>
-				<mib-select
-					formControlName="Type"
-					[size]="size"
-					placeholder="Тип заявки"
-					class="flex_grow"
-				>
-					<mib-dropdown-point
-						[value]="RequestTypeEnum.NON_FINANCING"
-						[text]="
-							requestsService.getRequestTypeTranslation(
-								RequestTypeEnum.NON_FINANCING
-							)
-						"
-					></mib-dropdown-point>
-					<mib-dropdown-point
-						[value]="RequestTypeEnum.FINANCING"
-						[text]="
-							requestsService.getRequestTypeTranslation(
-								RequestTypeEnum.FINANCING
-							)
-						"
-					></mib-dropdown-point>
-				</mib-select>
 			</div>
-			<mib-input>
-				<ng-container mibLabel>Дата заявки</ng-container>
-				<input
-					formControlName="Date"
-					[size]="size"
-					type="date"
-					mibInput
-					readonly
-				/>
-			</mib-input>
-			<mib-input>
-				<ng-container mibLabel>Свободный лимит</ng-container>
-				<p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
-				<input
-					mask="separator"
-					readonly
-					[formControl]="freeLimitControl"
-					[size]="size"
-					mibInput
-				/>
-			</mib-input>
-		</div>
+		</ng-template>
 		<mib-spacing type="s"></mib-spacing>
 		<h5 class="headline">Поставки</h5>
 		<mib-spacing type="xs2"></mib-spacing>
@@ -255,6 +261,8 @@
 				Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
 			</p>
 		</div>
+		<!-- </div> -->
+		<!-- </ng-template> -->
 	</mib-drawer-container>
 	<mib-drawer-footer drawer-footer>
 		<mib-button

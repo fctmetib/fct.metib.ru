@@ -26,27 +26,12 @@ export class InvoiceDrawerComponent implements OnInit {
 		width: '100%'
 	}
 
-	public skeletonTitle: Properties = {
-		...this.skeletonWithoutUnderline,
-		height: '28px'
+	public defaultSkeleton: Properties = {
+		borderRadius: '8px',
+		width: '100%'
 	}
 
-	public skeletonDate: Properties = {
-		...this.skeletonWithoutUnderline,
-		height: '40px'
-	}
-
-	public skeletonTextarea: Properties = {
-		...this.skeletonWithoutUnderline,
-		height: '64px'
-	}
-
-	public skeletonTabGroup: Properties = {
-		...this.skeletonWithoutUnderline,
-		height: '271px'
-	}
-
-	public skeletonTable: Properties = {
+	public skeleton: Properties = {
 		...this.skeletonWithoutUnderline,
 		borderBottom: '1px solid var(--wgr-tertiary)'
 	}
@@ -103,7 +88,6 @@ export class InvoiceDrawerComponent implements OnInit {
 			.pipe(
 				map(invoices => {
 					this.invoice = invoices.find(x => x.ID === this.invoiceID)
-					// console.log('this.invoice :>> ', this.invoice)
 					this.invoicesLinks = this.invoice.PaymentLinks ?? []
 					this.totalSumDutyDebtor = this.invoicesLinks.reduce(
 						(acc, link) => acc + link.Shipment.DutyDebtor,
@@ -123,15 +107,4 @@ export class InvoiceDrawerComponent implements OnInit {
 
 		this.invoicesLinksVisible = this.invoicesLinks.slice(startIndex, endIndex)
 	}
-
-	// downloadDataAsHTML() {
-	// 	const data = this.invoice // Получаем данные, которые необходимо преобразовать в HTML
-	// 	const htmlContent = this.convertDataToHTML(data) // Преобразуем данные в HTML
-
-	// 	// Создаем Blob из HTML-контента
-	// 	const blob = new Blob([htmlContent], {type: 'text/html'})
-
-	// 	// Используем saveAs из file-saver для скачивания файла
-	// 	saveAs(blob, 'data.html')
-	// }
 }

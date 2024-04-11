@@ -56,7 +56,7 @@ export class WordDownloadService {
 			payerBankAccount,
 			beneficiaryName,
 			payerBic,
-			paymentNumber,
+			paymentAbsid,
 			paymentDate,
 			accountDebet,
 			accountCredit,
@@ -70,7 +70,7 @@ export class WordDownloadService {
 			payerBic: data.Payer?.BIC,
 			payerBankAccount: data?.Payer?.BankAccount,
 			beneficiaryName: data?.Beneficiary?.Title,
-			paymentNumber: data?.PaymentLinks?.[0]?.Shipment?.Delivery?.Title, // check this value !!!
+			paymentAbsid: data?.ABSID,
 			paymentDate: data?.Date,
 			accountDebet: data?.AccountDebet,
 			accountCredit: data?.AccountCredit,
@@ -82,7 +82,7 @@ export class WordDownloadService {
 		const formattedAmount = this.rubPipe.transform(dataAmount)
 
 		let html = `<html><head><title>${beneficiaryName} - ${payerName}</title></head><body>`
-		html += `<html><body><div align="center">Платежное поручение № <b>УТОЧНИТЬ НОМЕР</b> от <b>${formattedDate} </b>.</div><br><br><div><table width="600" align="center" border="1" cellspacing="0" cellpadding="0"><tr><td align="center" valign="center" width="40%">${accountDebet} (Д)</td><td align="center" valign="center" width="40%">${accountCredit} (К)<td><td align="center" valign="center" width="20%" bgcolor="#DDDDDD">С: <b>{${formattedAmount}}</b></td></tr></table></div><br><br><div align="center"><table width="600" aling="center" border="0" cellspacing="0" cellpadding="0"><tr><td align="justify">${paymentComment}</td></tr></table></div><br><br><div align="center"><table align="center" width="600" cellspacing="0" cellpadding="0" border="1"><tr>`
+		html += `<html><body><div align="center">Платежное поручение № <b>${paymentAbsid}</b> от <b>${formattedDate} </b>.</div><br><br><div><table width="600" align="center" border="1" cellspacing="0" cellpadding="0"><tr><td align="center" valign="center" width="40%">${accountDebet} (Д)</td><td align="center" valign="center" width="40%">${accountCredit} (К)<td><td align="center" valign="center" width="20%" bgcolor="#DDDDDD">С: <b>{${formattedAmount}}</b></td></tr></table></div><br><br><div align="center"><table width="600" aling="center" border="0" cellspacing="0" cellpadding="0"><tr><td align="justify">${paymentComment}</td></tr></table></div><br><br><div align="center"><table align="center" width="600" cellspacing="0" cellpadding="0" border="1"><tr>`
 		html += '<td align="left" width="150"><b>Получатель:</b></td>'
 		html += `<td align="left" bgcolor="#DDDDDD">&nbsp;<b>${beneficiaryName}</b></td></tr>`
 		html += ' <tr><td width="100">Город:</td><td>&nbsp;</td></tr>'

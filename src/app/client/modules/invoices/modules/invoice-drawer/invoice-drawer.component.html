@@ -6,7 +6,8 @@
 	<mib-drawer-container>
 		<ng-container *ngIf="loading$ | async; else title">
 			<mib-skeleton
-				[styles]="skeletonTitle"
+				[styles]="defaultSkeleton"
+				[style.height]="'28px'"
 				*ngFor="let i of [1]"
 			></mib-skeleton>
 		</ng-container>
@@ -24,7 +25,8 @@
 		<mib-spacing type="xs2"></mib-spacing>
 		<ng-container *ngIf="loading$ | async; else date">
 			<mib-skeleton
-				[styles]="skeletonDate"
+				[styles]="defaultSkeleton"
+				[style.height]="'40px'"
 				*ngFor="let i of [1]"
 			></mib-skeleton>
 		</ng-container>
@@ -46,7 +48,8 @@
 		<mib-spacing type="xs"></mib-spacing>
 		<ng-container *ngIf="loading$ | async; else textareaTemplate">
 			<mib-skeleton
-				[styles]="skeletonTextarea"
+				[styles]="defaultSkeleton"
+				[style.height]="'64px'"
 				*ngFor="let i of [1]"
 			></mib-skeleton>
 		</ng-container>
@@ -64,8 +67,9 @@
 			</mib-textarea>
 		</ng-template>
 		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'271px'"
 			*ngIf="loading$ | async"
-			[styles]="skeletonTabGroup"
 		></mib-skeleton>
 	</mib-drawer-container>
 	<mib-tab-group *ngIf="!(loading$ | async)">
@@ -76,7 +80,7 @@
 		<div>
 			<ng-container *ngIf="loading$ | async; else tabItems">
 				<mib-skeleton
-					[styles]="last ? skeletonWithoutUnderline : skeletonTable"
+					[styles]="last ? skeletonWithoutUnderline : skeleton"
 					*ngFor="let i of [1]; let last = last"
 				></mib-skeleton>
 			</ng-container>

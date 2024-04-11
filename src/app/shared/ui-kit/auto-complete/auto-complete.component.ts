@@ -100,7 +100,7 @@ export class AutoCompleteComponent
 	}
 
 	getVisibleState(value: any) {
-		if (!this.options.length) {
+		if (!this.options?.length) {
 			return true
 		} else {
 			return this.filteredOptions.some(option => option.value === value)
@@ -125,6 +125,7 @@ export class AutoCompleteComponent
 	ngAfterContentInit() {}
 
 	ngAfterViewInit() {
+		this.filteredOptions = this._filter('')
 		this.options.changes
 			.pipe(
 				tap(() => {
