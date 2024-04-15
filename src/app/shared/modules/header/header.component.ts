@@ -1,11 +1,11 @@
 import {
-  AfterContentInit,
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild
+	AfterContentInit,
+	AfterViewInit,
+	Component,
+	ElementRef,
+	Input,
+	OnInit,
+	ViewChild
 } from '@angular/core'
 import {AuthService} from 'src/app/auth/services/auth.service'
 import {ToolsService} from '../../services/tools.service'
@@ -20,116 +20,121 @@ import {Properties} from 'csstype'
 import {DropdownService} from '../../ui-kit/dropdown/services/dropdown.service'
 
 @Component({
-  selector: 'mib-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+	selector: 'mib-header',
+	templateUrl: './header.component.html',
+	styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Input() signedIn: boolean = false
-  @Input() showExtension: boolean = false
-  @Input() showProfileButton: boolean = false;
+	@Input() signedIn: boolean = false
+	@Input() showExtension: boolean = false
+	@Input() showProfileButton: boolean = false
 
-  @ViewChild('header') el: ElementRef<HTMLDivElement>
+	@ViewChild('header') el: ElementRef<HTMLDivElement>
 
-  items: MenuItem[]
-  baseAvatarUrl = 'https://api-factoring.metib.ru/api/avatar/'
-  baseAvatarProfileUrl = `${environment.apiUrl}/avatar/`
+	items: MenuItem[]
+	baseAvatarUrl = 'https://api-factoring.metib.ru/api/avatar/'
+	baseAvatarProfileUrl = `${environment.apiUrl}/avatar/`
 
-  public userLoading$ = new BehaviorSubject<boolean>(false)
-  public factoringLoading$ = new BehaviorSubject<boolean>(false)
+	public userLoading$ = new BehaviorSubject<boolean>(false)
+	public factoringLoading$ = new BehaviorSubject<boolean>(false)
 
-  public currentUserFactoring$ = new BehaviorSubject<UserFactoring>(null)
-  public currentUser$ = new BehaviorSubject<UserGeneral>(null)
-  public factoring$ = new BehaviorSubject<Customer>(null)
+	public currentUserFactoring$ = new BehaviorSubject<UserFactoring>(null)
+	public currentUser$ = new BehaviorSubject<UserGeneral>(null)
+	public factoring$ = new BehaviorSubject<Customer>(null)
 
-  public isAdmin: boolean = false
-  public skeleton: Properties = {
-    borderRadius: '8px',
-    height: '40px',
-    width: '265px'
-  }
+	// public isAdmino: boolean = true
+	// public isAdmino: boolean = false
 
-  constructor(
-    public authService: AuthService,
-    private toolsService: ToolsService,
-    private clientService: ClientService,
-    public dropdownService: DropdownService
-  ) {
-  }
+	public isAdmin: boolean = false
+	public skeleton: Properties = {
+		borderRadius: '8px',
+		height: '46px',
+		width: '265px'
+	}
 
-  get classes() {
-    return {
-      'header_show-extension': this.showExtension,
-      [`header_${this.signedIn ? 'signed' : 'unsigned'}`]: true
-    }
-  }
+	constructor(
+		public authService: AuthService,
+		private toolsService: ToolsService,
+		private clientService: ClientService,
+		public dropdownService: DropdownService
+	) {}
 
-  get profile() {
-    return this.currentUser$?.value?.Profile
-  }
+	get classes() {
+		return {
+			'header_show-extension': this.showExtension,
+			[`header_${this.signedIn ? 'signed' : 'unsigned'}`]: true
+		}
+	}
 
-  get currentUserAvatar() {
-    return this.currentUser$?.value?.Avatar
-  }
+	get profile() {
+		return this.currentUser$?.value?.Profile
+	}
 
-  get manager() {
-    return this.factoring$.value?.Manager
-  }
+	get currentUserAvatar() {
+		return this.currentUser$?.value?.Avatar
+	}
 
-  get managerAvatar() {
-    return this.baseAvatarUrl + this.factoring$.value?.Manager?.Avatar
-  }
+	get manager() {
+		return this.factoring$.value?.Manager
+	}
 
-  get managerInitials() {
-    return this.getInitials(this.manager?.Name ?? 'О')
-  }
+	get managerAvatar() {
+		return this.baseAvatarUrl + this.factoring$.value?.Manager?.Avatar
+	}
 
-  get name() {
-    return this.toolsService.concatArray([
-      this.profile?.Name?.Last,
-      this.profile?.Name?.First
-    ])
-  }
+	get managerInitials() {
+		return this.getInitials(this.manager?.Name ?? 'О')
+	}
 
-  get nameInitials() {
-    return this.getInitials(this.name)
-  }
+	get name() {
+		return this.toolsService.concatArray([
+			this.profile?.Name?.Last,
+			this.profile?.Name?.First
+		])
+	}
 
-  get height() {
-    return this.el?.nativeElement?.offsetHeight ?? 0
-  }
+	get nameInitials() {
+		return this.getInitials(this.name)
+	}
 
-  private getInitials(name: string) {
-    return name
-      .split(' ')
-      .map(x => x.slice(0, 1))
-      .join('')
-  }
+	get height() {
+		return this.el?.nativeElement?.offsetHeight ?? 0
+	}
 
-  ngOnInit() {
-    this.userLoading$.next(true)
-    this.factoringLoading$.next(true)
-    this.authService.currentUser$.pipe(
-      filter(Boolean),
-      tap(currentUser => {
-        this.currentUser$.next(currentUser.userGeneral)
-        this.currentUserFactoring$.next(currentUser.userFactoring)
-        this.userLoading$.next(false)
-      }),
-      switchMap(currentUser =>
-        this.clientService
-          .getClientFactoringById(+currentUser.userFactoring.OrganizationID)
-          .pipe(finalize(() => this.factoringLoading$.next(false)))
-      ),
-      tap(clientFactoring => {
-        this.factoring$.next(clientFactoring)
-      })
-    ).subscribe()
+	private getInitials(name: string) {
+		return name
+			.split(' ')
+			.map(x => x.slice(0, 1))
+			.join('')
+	}
 
-    this.isAdmin = this.authService.isUserAdmin()
-  }
+	ngOnInit() {
+		this.userLoading$.next(true)
+		this.factoringLoading$.next(true)
+		this.authService.currentUser$
+			.pipe(
+				filter(Boolean),
+				tap(currentUser => {
+					this.currentUser$.next(currentUser.userGeneral)
+					this.currentUserFactoring$.next(currentUser.userFactoring)
+					this.userLoading$.next(false)
+				}),
+				switchMap(currentUser =>
+					this.clientService
+						.getClientFactoringById(+currentUser.userFactoring.OrganizationID)
+						.pipe(finalize(() => this.factoringLoading$.next(false)))
+				),
+				tap(clientFactoring => {
+					this.factoring$.next(clientFactoring)
+				})
+			)
+			.subscribe()
 
-  logout() {
-    this.authService.logout()
-  }
+		this.isAdmin = this.authService.isUserAdmin()
+		console.log('this.isAdminHEADER :>> ', this.isAdmin)
+	}
+
+	logout() {
+		this.authService.logout()
+	}
 }

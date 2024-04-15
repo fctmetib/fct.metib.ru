@@ -1,69 +1,85 @@
-import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
-import { PageStoreService } from 'src/app/admin/shared/services/page-store.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { UserInterface } from 'src/app/admin/shared/types/user.interface';
-import { UsersService } from '../../services/users.service';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
-import { ReauthRequestInterface } from 'src/app/auth/types/login/reauthRequest.interface';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import {Observable} from 'rxjs'
+import {Component, OnInit} from '@angular/core'
+import {PageStoreService} from 'src/app/admin/shared/services/page-store.service'
+import {FormBuilder, FormGroup} from '@angular/forms'
+import {UserInterface} from 'src/app/admin/shared/types/user.interface'
+import {UsersService} from '../../services/users.service'
+import {debounceTime, distinctUntilChanged, tap} from 'rxjs/operators'
+import {Subscription} from 'rxjs'
+import {ReauthRequestInterface} from 'src/app/auth/types/login/reauthRequest.interface'
+import {AuthService} from 'src/app/auth/services/auth.service'
 
 @Component({
-  selector: 'users',
-  templateUrl: './users.component.html',
+	selector: 'users',
+	templateUrl: './users.component.html'
 })
-export class UsersComponent implements OnInit {
-  public userList$: Observable<UserInterface[]>;
-  public filterForm: FormGroup;
-  public isLoading: boolean = false;
+export class UsersComponent {}
+// import { Observable } from 'rxjs';
+// import { Component, OnInit } from '@angular/core';
+// import { PageStoreService } from 'src/app/admin/shared/services/page-store.service';
+// import { FormBuilder, FormGroup } from '@angular/forms';
+// import { UserInterface } from 'src/app/admin/shared/types/user.interface';
+// import { UsersService } from '../../services/users.service';
+// import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+// import { Subscription } from 'rxjs';
+// import { ReauthRequestInterface } from 'src/app/auth/types/login/reauthRequest.interface';
+// import { AuthService } from 'src/app/auth/services/auth.service';
 
-  private subscription$: Subscription = new Subscription();
+// @Component({
+//   selector: 'users',
+//   templateUrl: './users.component.html',
+// })
+// export class UsersComponent implements OnInit {
+//   public userList$: Observable<UserInterface[]>;
+//   public filterForm: FormGroup;
+//   public isLoading: boolean = false;
 
-  constructor(
-    private pageStoreService: PageStoreService,
-    private formBuilder: FormBuilder,
-    private userService: UsersService,
-    private authService: AuthService,
-  ) {}
+//   private subscription$: Subscription = new Subscription();
 
-  ngOnInit() {
-    this.pageStoreService.setPage({
-      header: 'Пользователи',
-      description: 'Найдите и войдите от имени интересующего Вас пользователя',
-    });
+//   constructor(
+//     private pageStoreService: PageStoreService,
+//     private formBuilder: FormBuilder,
+//     private userService: UsersService,
+//     private authService: AuthService,
+//   ) {}
 
-    this.filterForm = this.formBuilder.group({
-      search: '',
-    });
+//   ngOnInit() {
+//     this.pageStoreService.setPage({
+//       header: 'Пользователи',
+//       description: 'Найдите и войдите от имени интересующего Вас пользователя',
+//     });
 
-    this.onChanges();
-  }
+//     this.filterForm = this.formBuilder.group({
+//       search: '',
+//     });
 
-  onChanges(): void {
-    this.subscription$.add(
-      this.filterForm.valueChanges
-        .pipe(
-          tap(() => (this.isLoading = true)),
-          debounceTime(2000),
-          distinctUntilChanged()
-        )
-        .subscribe((value) => {
-          this.userList$ = this.userService.getUsersList(value.search);
-          this.isLoading = false;
-        })
-    );
-  }
+//     this.onChanges();
+//   }
 
-  ngOnDestroy() {
-    this.subscription$.unsubscribe();
-  }
+//   onChanges(): void {
+//     this.subscription$.add(
+//       this.filterForm.valueChanges
+//         .pipe(
+//           tap(() => (this.isLoading = true)),
+//           debounceTime(2000),
+//           distinctUntilChanged()
+//         )
+//         .subscribe((value) => {
+//           this.userList$ = this.userService.getUsersList(value.search);
+//           this.isLoading = false;
+//         })
+//     );
+//   }
 
-  public reauthHandler(userId: string): void {
-    const request: ReauthRequestInterface = {
-      userId: userId
-    };
+//   ngOnDestroy() {
+//     this.subscription$.unsubscribe();
+//   }
 
-    this.authService.reauth(request).pipe().subscribe();
-  }
-}
+//   public reauthHandler(userId: string): void {
+//     const request: ReauthRequestInterface = {
+//       userId: userId
+//     };
+
+//     this.authService.reauth(request).pipe().subscribe();
+//   }
+// }

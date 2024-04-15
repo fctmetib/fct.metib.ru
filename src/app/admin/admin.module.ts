@@ -1,27 +1,29 @@
-import { CommonModule } from '@angular/common'
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
-import { NgModule } from '@angular/core'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { RouterModule } from '@angular/router'
-import { AvatarModule } from 'primeng/avatar'
-import { ButtonModule } from 'primeng/button'
-import { CardModule } from 'primeng/card'
-import { CheckboxModule } from 'primeng/checkbox'
-import { DropdownModule } from 'primeng/dropdown'
-import { DialogService } from 'primeng/dynamicdialog'
-import { InputTextModule } from 'primeng/inputtext'
-import { InputTextareaModule } from 'primeng/inputtextarea'
-import { MenuModule } from 'primeng/menu'
-import { MenubarModule } from 'primeng/menubar'
-import { RadioButtonModule } from 'primeng/radiobutton'
-import { SkeletonModule } from 'primeng/skeleton'
-import { AdminGuard } from '../shared/services/admin.guard'
-import { ProgressSpinnerModule } from 'primeng/progressspinner'
-import { AdminComponent } from './admin.component'
-import { MobileHeaderComponent } from './shared/mobile-header/mobile-header.component'
-import { AdminAuthInterceptor } from './shared/services/admin-auth.interceptor'
-import { PageStoreService } from './shared/services/page-store.service'
-import { HeaderModule } from '../shared/modules/header/header.module'
+import {CommonModule} from '@angular/common'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
+import {NgModule} from '@angular/core'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import {RouterModule} from '@angular/router'
+import {AvatarModule} from 'primeng/avatar'
+import {ButtonModule} from 'primeng/button'
+import {CardModule} from 'primeng/card'
+import {CheckboxModule} from 'primeng/checkbox'
+import {DropdownModule} from 'primeng/dropdown'
+import {DialogService} from 'primeng/dynamicdialog'
+import {InputTextModule} from 'primeng/inputtext'
+import {InputTextareaModule} from 'primeng/inputtextarea'
+import {MenuModule} from 'primeng/menu'
+import {MenubarModule} from 'primeng/menubar'
+import {RadioButtonModule} from 'primeng/radiobutton'
+import {SkeletonModule} from 'primeng/skeleton'
+import {AdminGuard} from '../shared/services/admin.guard'
+import {ProgressSpinnerModule} from 'primeng/progressspinner'
+import {AdminComponent} from './admin.component'
+import {MobileHeaderComponent} from './shared/mobile-header/mobile-header.component'
+import {AdminAuthInterceptor} from './shared/services/admin-auth.interceptor'
+import {PageStoreService} from './shared/services/page-store.service'
+import {HeaderModule} from '../shared/modules/header/header.module'
+import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module'
+import {SidebarModule} from '../shared/ui-kit/sidebar/sidebar.module'
 
 const routes = [
 	{
@@ -76,6 +78,8 @@ const routes = [
 		FormsModule,
 		ReactiveFormsModule,
 		HeaderModule,
+		SpacingModule,
+		SidebarModule,
 		RouterModule.forChild(routes)
 	],
 	exports: [RouterModule],

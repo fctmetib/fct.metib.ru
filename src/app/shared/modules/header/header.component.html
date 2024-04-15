@@ -42,59 +42,69 @@
 			[class.container_large]="signedIn"
 		>
 			<ng-container *ngIf="signedIn; else unsignedTemplate">
-				<mib-skeleton
-					*ngIf="factoringLoading$ | async; else managerTemplate"
-					[styles]="skeleton"
-				></mib-skeleton>
-				<ng-template #managerTemplate>
-					<div [mibDropdownTrigger]="managerPanel" class="manager flex gap-12">
-						<ng-container *ngIf="manager?.Avatar; else showInitials">
-							<mib-avatar
-								[showArrow]="false"
-								[src]="managerAvatar"
-								[showImage]="true"
-							></mib-avatar>
-						</ng-container>
-						<ng-template #showInitials>
-							<mib-avatar [showImage]="false">{{ managerInitials }}</mib-avatar>
-						</ng-template>
-						<div class="flex flex_column">
-							<div class="flex">
-								<p class="text name text_m text_medium c-bti-primary">
-									{{ manager?.Name ?? 'Отсутствует' }} 
-								</p>
-								<p
-									class="text text_m text_medium c-bti-tertiary"
-									*ngIf="manager?.Extension as value"
-								>
-									({{ value }})
-								</p>
-							</div>
-							<p class="text text_s label c-bti-tertiary">Ваш менеджер</p>
-						</div>
-						<mib-button size="m" type="ghost-secondary">
-							<mib-icon
-								btn-icon
-								class="stroke"
-								[name]="
-									managerPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'
-								"
-							></mib-icon>
-						</mib-button>
-					</div>
-					<mib-dropdown #managerPanel>
-						<mib-spacing dropdown-spacing type="s"></mib-spacing>
-						<mib-dropdown-point
-							[text]="manager?.Email ?? 'Почта отсутствует'"
-							[cdkCopyToClipboard]="manager?.Email"
+				<div *ngIf="!isAdmin; else admin">
+					<mib-skeleton
+						*ngIf="factoringLoading$ | async; else managerTemplate"
+						[styles]="skeleton"
+					></mib-skeleton>
+					<ng-template #managerTemplate>
+						<div
+							[mibDropdownTrigger]="managerPanel"
+							class="manager flex gap-12"
 						>
-							<mib-icon
-								dropdown-point-right-icon
-								class="stroke"
-								name="fi_copy"
-							></mib-icon>
-						</mib-dropdown-point>
-					</mib-dropdown>
+							<ng-container *ngIf="manager?.Avatar; else showInitials">
+								<mib-avatar
+									[showArrow]="false"
+									[src]="managerAvatar"
+									[showImage]="true"
+								></mib-avatar>
+							</ng-container>
+							<ng-template #showInitials>
+								<mib-avatar [showImage]="false">{{
+									managerInitials
+								}}</mib-avatar>
+							</ng-template>
+							<div class="flex flex_column">
+								<div class="flex">
+									<p class="text name text_m text_medium c-bti-primary">
+										{{ manager?.Name ?? 'Отсутствует' }} 
+									</p>
+									<p
+										class="text text_m text_medium c-bti-tertiary"
+										*ngIf="manager?.Extension as value"
+									>
+										({{ value }})
+									</p>
+								</div>
+								<p class="text text_s label c-bti-tertiary">Ваш менеджер</p>
+							</div>
+							<mib-button size="m" type="ghost-secondary">
+								<mib-icon
+									btn-icon
+									class="stroke"
+									[name]="
+										managerPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'
+									"
+								></mib-icon>
+							</mib-button>
+						</div>
+						<mib-dropdown #managerPanel>
+							<mib-spacing dropdown-spacing type="s"></mib-spacing>
+							<mib-dropdown-point
+								[text]="manager?.Email ?? 'Почта отсутствует'"
+								[cdkCopyToClipboard]="manager?.Email"
+							>
+								<mib-icon
+									dropdown-point-right-icon
+									class="stroke"
+									name="fi_copy"
+								></mib-icon>
+							</mib-dropdown-point>
+						</mib-dropdown>
+					</ng-template>
+				</div>
+				<ng-template #admin>
+					<div class="flex"></div>
 				</ng-template>
 				<mib-skeleton
 					*ngIf="userLoading$ | async; else userTemplate"

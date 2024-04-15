@@ -1,4 +1,4 @@
-import {Component} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import {AuthService} from 'src/app/auth/services/auth.service'
 
 export interface ISidebarGroup {
@@ -15,8 +15,8 @@ export interface ISidebarLink {
 	templateUrl: './sidebar.component.html',
 	styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
-	menu = [
+export class SidebarComponent implements OnInit {
+	menuUser = [
 		{
 			links: [
 				{name: 'Кабинет', link: '/client/cabinet'},
@@ -39,8 +39,26 @@ export class SidebarComponent {
 			]
 		}
 	]
+	menuAdmin = [
+		{
+			links: [
+				{name: 'Новости', link: '/admin/cabinet'},
+				{name: 'Организации', link: '/admin/organizations'},
+				{name: 'Пользователи', link: '/admin/users'},
+				{name: 'Бизнес-тесты', link: '/admin/tests'}
+			]
+		}
+	]
+
+	isAdmin: boolean = true
+	// isAdmino:boolean = false
 
 	constructor(public authService: AuthService) {}
+
+	ngOnInit(): void {
+		this.isAdmin = this.authService.isUserAdmin()
+		console.log('this.isAdminSIDEBAR :>> ', this.isAdmin)
+	}
 
 	logout() {
 		this.authService.logout()
