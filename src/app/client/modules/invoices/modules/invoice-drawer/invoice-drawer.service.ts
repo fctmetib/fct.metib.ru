@@ -17,7 +17,9 @@ export class InvoiceDrawerService {
 		}
 		return this.dialog.open(
 			InvoiceDrawerComponent,
-			drawerConfig(data?.maxWidth, Object.assign(config, data))
+			drawerConfig(data?.maxWidth, Object.assign(config, data), {
+				disableClose: false
+			})
 		)
 	}
 }
