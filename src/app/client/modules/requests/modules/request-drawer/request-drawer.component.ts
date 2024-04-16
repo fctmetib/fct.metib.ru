@@ -20,6 +20,7 @@ import {
 } from '../shipment-drawer/interfaces/shipment.interface'
 import {ShipmentDrawerService} from '../shipment-drawer/services/shipment-drawer.service'
 import {DeliveryService} from '../shipment-drawer/services/delivery.service'
+import {DeliveryService as DeliveryServiceDocs} from 'src/app/shared/services/share/delivery.service'
 import {AuthService} from '../../../../../auth/services/auth.service'
 import {
 	FormArray,
@@ -53,6 +54,7 @@ import {
 	ClipboardParserService
 } from '../../../../../shared/services/clipboard-parser.service'
 import {Properties} from 'csstype'
+import {Delivery} from 'src/app/shared/types/delivery/delivery'
 
 @Component({
 	selector: 'mib-request-drawer',
@@ -71,6 +73,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 	public RequestTypeEnum = RequestTypeEnum
 
 	public size: InputSize | ButtonSize = 'm'
+	public deliveryDocs = []
 	public deliveries: DeliveryAgreement[] = []
 
 	public headersMap: ClipboardParserHeaders<ShipmentReq> = [
@@ -93,6 +96,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 		public dialogRef: MatDialogRef<RequestDrawerComponent>,
 		public requestsService: RequestsService,
 		private requestDrawerService: RequestDrawerService,
+		private deliveryServiceDocs: DeliveryServiceDocs,
 		private deliveryService: DeliveryService,
 		private shipmentDrawerService: ShipmentDrawerService,
 		private authService: AuthService,
@@ -159,10 +163,14 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 			)
 		}
 
-		this.deliveryService
-			.getRefs(this.factoring.DebtorID)
+		this.deliveryServiceDocs
+			.getAllDeliveriesContracts({getAll: true, includeStatistics: false})
 			.pipe(
-				tap(data => (this.deliveries = data)),
+				tap(data => {
+					this.deliveryDocs = data.map(el => {
+						return {ID: el.ID, Title: el.Number}
+					})
+				}),
 				finalize(() => {
 					this.loading$.next(false)
 				})
