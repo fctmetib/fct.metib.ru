@@ -121,6 +121,7 @@
 			</ng-container>
 			<ng-template #table>
 				<mib-table-row
+					[rowStatus]="duty.Statistics.Comment"
 					[rowId]="duty.ID"
 					*ngFor="let duty of duties$ | async; let last = last"
 					[underlined]="!last"
