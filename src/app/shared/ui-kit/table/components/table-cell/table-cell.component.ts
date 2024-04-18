@@ -16,6 +16,7 @@ import {tap} from 'rxjs'
 import {TableComponent} from '../../table.component'
 import {distinctUntilChanged} from 'rxjs/operators'
 import {TableRowComponent} from '../table-row/table-row.component'
+import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
 @Component({
 	selector: 'mib-table-cell',
@@ -39,7 +40,11 @@ export class TableCellComponent implements OnInit, OnChanges {
 
 	control: FormControl = new FormControl<boolean>(false)
 
-	constructor(private table: TableComponent, private row: TableRowComponent) {}
+	constructor(
+		private table: TableComponent,
+		private row: TableRowComponent,
+		private toaster: ToasterService
+	) {}
 
 	get state() {
 		return Boolean(this.control?.value)
@@ -96,6 +101,14 @@ export class TableCellComponent implements OnInit, OnChanges {
 				this.type === 'main' &&
 				this.row.rowStatus === 'Добавлена в заявку'
 			) {
+				this.toaster.show(
+					'failure',
+					'Заявка уже добавлена!',
+					'',
+					true,
+					false,
+					2000
+				)
 				this.checked = false
 				this.control.setValue(this.checked, {emitEvent: false})
 				return
