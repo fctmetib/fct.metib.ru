@@ -119,7 +119,6 @@ export class TableComponent implements AfterContentInit, OnDestroy {
 	}
 
 	onCheckboxClick(rowId, value: boolean, rowStatus: string) {
-		console.log('rowStatus :>> ', rowStatus)
 		const index = this.getIndexById(rowId)
 		if (this.shiftKeyHeldDown && this.lastCheckedIndex !== null) {
 			const start = Math.min(this.lastCheckedIndex, index)

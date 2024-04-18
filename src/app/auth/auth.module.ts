@@ -35,42 +35,44 @@ import {ConfirmPasswordPageComponent} from './pages/confirm-password/confirm-pas
 import {SmsConfirmationModule} from './modules/sms-confirmation/sms-confirmation.module'
 import {SelectModule} from '../shared/ui-kit/select/select.module'
 import {RadioModule} from '../shared/ui-kit/radio/radio.module'
-import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module';
-import {LabelModule} from '../shared/directives/label/label.module';
+import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module'
+import {LabelModule} from '../shared/directives/label/label.module'
+import {ToasterModule} from '../shared/ui-kit/toaster/toaster.module'
 
 @NgModule({
-    imports: [
-        CommonModule,
-        AuthRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        InputTextModule,
-        DropdownModule,
-        ProgressSpinnerModule,
-        ButtonModule22,
-        CardModule,
-        MessageModule,
-        MessagesModule,
-        ButtonModule,
-        InputMaskModule,
-        TooltipModule,
-        HeaderModule,
-        SpacingModule,
-        InputModule,
-        IconModule,
-        LinkModule,
-        NgxMaskModule.forRoot(),
-        RightIconModule,
-        PasswordHiderModule,
-        SelectModule,
-        DropdownPointModule,
-        LeftIconModule,
-        SmsConfirmationModule,
-        RadioModule,
-        SkeletonModule,
-        LabelModule
-    ],
+	imports: [
+		CommonModule,
+		AuthRoutingModule,
+		FormsModule,
+		HttpClientModule,
+		ReactiveFormsModule,
+		InputTextModule,
+		DropdownModule,
+		ProgressSpinnerModule,
+		ButtonModule22,
+		CardModule,
+		MessageModule,
+		MessagesModule,
+		ButtonModule,
+		InputMaskModule,
+		TooltipModule,
+		HeaderModule,
+		SpacingModule,
+		InputModule,
+		IconModule,
+		LinkModule,
+		NgxMaskModule.forRoot(),
+		RightIconModule,
+		PasswordHiderModule,
+		SelectModule,
+		DropdownPointModule,
+		LeftIconModule,
+		SmsConfirmationModule,
+		RadioModule,
+		SkeletonModule,
+		LabelModule,
+		ToasterModule
+	],
 	declarations: [
 		AuthComponent,
 		LoginPageComponent,
