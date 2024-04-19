@@ -2,4 +2,9 @@
 	& mib-sidebar {
 		z-index: 101;
 	}
+
+	& main {
+		position: relative;
+		height: 100%;
+	}
 }

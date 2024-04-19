@@ -37,12 +37,12 @@
 		</div>
 	</div>
 	<div class="header-inner">
-		<div
-			class="container flex flex_justify-between flex_align-center"
-			[class.container_large]="signedIn"
-		>
-			<ng-container *ngIf="signedIn; else unsignedTemplate">
-				<div *ngIf="!isAdmin; else admin">
+		<div *ngIf="!isAdmin; else admin">
+			<div
+				class="container flex flex_justify-between flex_align-center"
+				[class.container_large]="signedIn"
+			>
+				<ng-container *ngIf="signedIn; else unsignedTemplate">
 					<mib-skeleton
 						*ngIf="factoringLoading$ | async; else managerTemplate"
 						[styles]="skeleton"
@@ -102,20 +102,16 @@
 							</mib-dropdown-point>
 						</mib-dropdown>
 					</ng-template>
-				</div>
-				<ng-template #admin>
-					<div class="flex"></div>
-				</ng-template>
-				<mib-skeleton
-					*ngIf="userLoading$ | async; else userTemplate"
-					[styles]="skeleton"
-				></mib-skeleton>
-				<ng-template #userTemplate>
-					<div
-						[mibDropdownTrigger]="userPanel"
-						class="manager user flex gap-12"
-					>
-						<!-- <ng-container *ngIf="currentUserAvatar; else nameInitials">
+					<mib-skeleton
+						*ngIf="userLoading$ | async; else userTemplate"
+						[styles]="skeleton"
+					></mib-skeleton>
+					<ng-template #userTemplate>
+						<div
+							[mibDropdownTrigger]="userPanel"
+							class="manager user flex gap-12"
+						>
+							<!-- <ng-container *ngIf="currentUserAvatar; else nameInitials">
 							<mib-avatar
 								[src]="currentUserAvatar"
 								[showImage]="true"
@@ -124,104 +120,145 @@
 						<ng-template #nameInitials>
 							<mib-avatar [showImage]="false">{{ nameInitials }}</mib-avatar>
 						</ng-template> -->
-						<mib-avatar [showArrow]="false" [showImage]="false">{{
-							nameInitials
-						}}</mib-avatar>
-						<div class="flex flex_column">
-							<p class="text name text_m text_medium c-bti-primary">
-								{{ name }}
-							</p>
-							<p class="text text_s label c-bti-tertiary">Пользователь</p>
+							<mib-avatar [showArrow]="false" [showImage]="false">{{
+								nameInitials
+							}}</mib-avatar>
+							<div class="flex flex_column">
+								<p class="text name text_m text_medium c-bti-primary">
+									{{ name }}
+								</p>
+								<p class="text text_s label c-bti-tertiary">Пользователь</p>
+							</div>
+							<mib-button size="m" type="ghost-secondary">
+								<mib-icon
+									btn-icon
+									class="stroke"
+									[name]="
+										userPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'
+									"
+								></mib-icon>
+							</mib-button>
 						</div>
-						<mib-button size="m" type="ghost-secondary">
+						<mib-dropdown #userPanel>
+							<mib-spacing dropdown-spacing type="s"></mib-spacing>
+							<mib-dropdown-point (press)="logout()" text="Сменить аккаунт">
+								<mib-icon
+									dropdown-point-left-icon
+									class="stroke"
+									name="fi_refresh-ccw"
+								></mib-icon>
+							</mib-dropdown-point>
+							<mib-dropdown-point (press)="logout()" text="Выйти">
+								<mib-icon
+									dropdown-point-left-icon
+									class="stroke"
+									name="fi_log-out"
+								></mib-icon>
+							</mib-dropdown-point>
+						</mib-dropdown>
+					</ng-template>
+				</ng-container>
+				<ng-template #unsignedTemplate>
+					<div class="flex flex_grow gap-16">
+						<mib-icon
+							class="cursor-pointer"
+							[routerLink]="['/']"
+							name="logotype"
+						></mib-icon>
+						<div class="menu flex flex_center gap-32">
+							<a
+								title="Перейти на страницу: Главная"
+								class="text text_m c-wgr-quaternary"
+								[routerLink]="['/']"
+								routerLinkActive="active"
+								[routerLinkActiveOptions]="{exact: true}"
+								>Главная</a
+							>
+							<a
+								title="Перейти на страницу: Тарифы"
+								class="text text_m c-wgr-quaternary"
+								[routerLink]="['/tariffs']"
+								routerLinkActive="active"
+								>Тарифы</a
+							>
+							<a
+								title="Перейти на страницу: Клиентам"
+								class="text text_m c-wgr-quaternary"
+								[routerLink]="['/clients']"
+								routerLinkActive="active"
+								>Клиентам</a
+							>
+							<a
+								title="Перейти на страницу: Контакты"
+								class="text text_m c-wgr-quaternary"
+								[routerLink]="['/contacts']"
+								routerLinkActive="active"
+								>Контакты</a
+							>
+						</div>
+					</div>
+					<ng-container
+						*ngIf="
+							showProfileButton ||
+								(showProfileButton && !authService?.isUserLoggedIn);
+							else loggedInUser
+						"
+					>
+						<mib-button
+							[routerLink]="['/auth/login']"
+							type="filled-primary"
+							size="m"
+							>Личный кабинет
+							<mib-icon
+								btn-right-icon
+								class="stroke"
+								name="fi_log-in"
+							></mib-icon>
+						</mib-button>
+					</ng-container>
+					<ng-template #loggedInUser>
+						<mib-button [routerLink]="['/']" type="filled-secondary" size="m">
 							<mib-icon
 								btn-icon
 								class="stroke"
-								[name]="
-									userPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'
-								"
+								name="fi_chevron-left"
 							></mib-icon>
 						</mib-button>
-					</div>
-					<mib-dropdown #userPanel>
-						<mib-spacing dropdown-spacing type="s"></mib-spacing>
-						<mib-dropdown-point (press)="logout()" text="Сменить аккаунт">
-							<mib-icon
-								dropdown-point-left-icon
-								class="stroke"
-								name="fi_refresh-ccw"
-							></mib-icon>
-						</mib-dropdown-point>
-						<mib-dropdown-point (press)="logout()" text="Выйти">
-							<mib-icon
-								dropdown-point-left-icon
-								class="stroke"
-								name="fi_log-out"
-							></mib-icon>
-						</mib-dropdown-point>
-					</mib-dropdown>
+					</ng-template>
 				</ng-template>
-			</ng-container>
-			<ng-template #unsignedTemplate>
-				<div class="flex flex_grow gap-16">
-					<mib-icon
-						class="cursor-pointer"
-						[routerLink]="['/']"
-						name="logotype"
-					></mib-icon>
-					<div class="menu flex flex_center gap-32">
-						<a
-							title="Перейти на страницу: Главная"
-							class="text text_m c-wgr-quaternary"
-							[routerLink]="['/']"
-							routerLinkActive="active"
-							[routerLinkActiveOptions]="{exact: true}"
-							>Главная</a
-						>
-						<a
-							title="Перейти на страницу: Тарифы"
-							class="text text_m c-wgr-quaternary"
-							[routerLink]="['/tariffs']"
-							routerLinkActive="active"
-							>Тарифы</a
-						>
-						<a
-							title="Перейти на страницу: Клиентам"
-							class="text text_m c-wgr-quaternary"
-							[routerLink]="['/clients']"
-							routerLinkActive="active"
-							>Клиентам</a
-						>
-						<a
-							title="Перейти на страницу: Контакты"
-							class="text text_m c-wgr-quaternary"
-							[routerLink]="['/contacts']"
-							routerLinkActive="active"
-							>Контакты</a
-						>
-					</div>
-				</div>
-				<ng-container
-					*ngIf="
-						showProfileButton ||
-							(showProfileButton && !authService?.isUserLoggedIn);
-						else loggedInUser
-					"
-				>
-					<mib-button
-						[routerLink]="['/auth/login']"
-						type="filled-primary"
-						size="m"
-						>Личный кабинет
-						<mib-icon btn-right-icon class="stroke" name="fi_log-in"></mib-icon>
-					</mib-button>
-				</ng-container>
-				<ng-template #loggedInUser>
-					<mib-button [routerLink]="['/']" type="filled-secondary" size="m">
-						<mib-icon btn-icon class="stroke" name="fi_chevron-left"></mib-icon>
-					</mib-button>
-				</ng-template>
-			</ng-template>
+			</div>
 		</div>
+		<ng-template #admin>
+			<div class="flex flex_justify-end">
+				<div [mibDropdownTrigger]="userPanel" class="manager user flex gap-12">
+					<mib-avatar [showArrow]="false" [showImage]="false">{{
+						nameInitials
+					}}</mib-avatar>
+					<div class="flex flex_column">
+						<p class="text name text_m text_medium c-bti-primary">
+							{{ name }}
+						</p>
+						<p class="text text_s label c-bti-tertiary">Администратор</p>
+					</div>
+					<mib-button size="m" type="ghost-secondary">
+						<mib-icon
+							btn-icon
+							class="stroke"
+							[name]="userPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'"
+						></mib-icon>
+					</mib-button>
+				</div>
+				<mib-dropdown #userPanel>
+					<mib-spacing dropdown-spacing type="s"></mib-spacing>
+					<mib-dropdown-point (press)="logout()" text="Выйти">
+						<mib-icon
+							dropdown-point-left-icon
+							class="stroke"
+							name="fi_log-out"
+						></mib-icon>
+					</mib-dropdown-point>
+				</mib-dropdown>
+			</div>
+		</ng-template>
 	</div>
 </div>

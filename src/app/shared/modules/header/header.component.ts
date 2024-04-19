@@ -125,6 +125,7 @@ export class HeaderComponent implements OnInit {
 						.pipe(finalize(() => this.factoringLoading$.next(false)))
 				),
 				tap(clientFactoring => {
+					// console.log('clientFactoring :>> ', clientFactoring)
 					this.factoring$.next(clientFactoring)
 				})
 			)
