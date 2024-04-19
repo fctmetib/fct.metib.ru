@@ -230,7 +230,7 @@
 		</div>
 		<ng-template #admin>
 			<div class="flex flex_justify-end">
-				<div [mibDropdownTrigger]="userPanel" class="manager user flex gap-12">
+				<div [mibDropdownTrigger]="adminPanel" class="manager user flex gap-12">
 					<mib-avatar [showArrow]="false" [showImage]="false">{{
 						nameInitials
 					}}</mib-avatar>
@@ -244,11 +244,13 @@
 						<mib-icon
 							btn-icon
 							class="stroke"
-							[name]="userPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'"
+							[name]="
+								adminPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'
+							"
 						></mib-icon>
 					</mib-button>
 				</div>
-				<mib-dropdown #userPanel>
+				<mib-dropdown #adminPanel>
 					<mib-spacing dropdown-spacing type="s"></mib-spacing>
 					<mib-dropdown-point (press)="logout()" text="Выйти">
 						<mib-icon

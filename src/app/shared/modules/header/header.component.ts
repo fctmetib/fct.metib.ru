@@ -42,6 +42,8 @@ export class HeaderComponent implements OnInit {
 	public currentUser$ = new BehaviorSubject<UserGeneral>(null)
 	public factoring$ = new BehaviorSubject<Customer>(null)
 
+	currentUserAdmin$ = new BehaviorSubject<UserGeneral>(null)
+
 	// public isAdmino: boolean = true
 	// public isAdmino: boolean = false
 
@@ -125,14 +127,22 @@ export class HeaderComponent implements OnInit {
 						.pipe(finalize(() => this.factoringLoading$.next(false)))
 				),
 				tap(clientFactoring => {
-					// console.log('clientFactoring :>> ', clientFactoring)
 					this.factoring$.next(clientFactoring)
 				})
 			)
 			.subscribe()
 
 		this.isAdmin = this.authService.isUserAdmin()
-		console.log('this.isAdminHEADER :>> ', this.isAdmin)
+		this.authService.currentUserAdmin$
+			.pipe(
+				filter(Boolean),
+				tap(currentAdmin => {
+					this.currentUser$.next(currentAdmin.userGeneral)
+					this.currentUserFactoring$.next(currentAdmin.userFactoring)
+					this.userLoading$.next(false)
+				})
+			)
+			.subscribe()
 	}
 
 	logout() {
