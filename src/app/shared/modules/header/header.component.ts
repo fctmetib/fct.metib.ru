@@ -72,6 +72,10 @@ export class HeaderComponent implements OnInit {
 		return this.currentUser$?.value?.Profile
 	}
 
+	get login() {
+		return this.currentUser$?.value?.Profile.Login
+	}
+
 	get currentUserAvatar() {
 		return this.currentUser$?.value?.Avatar
 	}
@@ -117,6 +121,7 @@ export class HeaderComponent implements OnInit {
 			.pipe(
 				filter(Boolean),
 				tap(currentUser => {
+					// console.log('currentUser :>> ', currentUser)
 					this.currentUser$.next(currentUser.userGeneral)
 					this.currentUserFactoring$.next(currentUser.userFactoring)
 					this.userLoading$.next(false)
@@ -137,6 +142,7 @@ export class HeaderComponent implements OnInit {
 			.pipe(
 				filter(Boolean),
 				tap(currentAdmin => {
+					// console.log('currentAdmin :>> ', currentAdmin)
 					this.currentUser$.next(currentAdmin.userGeneral)
 					this.currentUserFactoring$.next(currentAdmin.userFactoring)
 					this.userLoading$.next(false)
