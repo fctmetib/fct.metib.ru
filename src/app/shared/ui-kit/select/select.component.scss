@@ -1,4 +1,13 @@
 :host {
-  display: block;
-  min-width: 72px;
+	display: block;
+	min-width: 72px;
+
+	& .text {
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		white-space: normal;
+		word-break: break-all;
+	}
 }

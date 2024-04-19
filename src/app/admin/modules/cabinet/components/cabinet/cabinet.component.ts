@@ -1,6 +1,6 @@
 import {Paginator} from 'primeng/paginator'
 import {NewsService} from './../../../../shared/services/news.service'
-import {Subscription} from 'rxjs'
+import {BehaviorSubject, Subscription} from 'rxjs'
 import {Component, OnInit, ViewChild} from '@angular/core'
 import {PageStoreService} from 'src/app/admin/shared/services/page-store.service'
 import {NewsInterface} from 'src/app/admin/shared/types/news.interface'
@@ -10,9 +10,17 @@ import {CreateNewsDialogComponent} from '../create-news-dialog/create-news-dialo
 
 @Component({
 	selector: 'cabinet',
+	styleUrls: ['./cabinet.component.scss'],
 	templateUrl: './cabinet.component.html'
 })
-export class CabinetComponent {}
+export class CabinetComponent {
+	public loading$ = new BehaviorSubject<boolean>(false)
+
+	addNews() {
+		console.log('add news')
+	}
+}
+
 //   public filterForm: FormGroup;
 //   public newsListOriginal: NewsInterface[] = [];
 //   public newsListFiltered: NewsInterface[] = [];

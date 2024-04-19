@@ -1,4 +1,55 @@
-<h1>news</h1>
+<div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<h3>Новости банка</h3>
+	<mib-spacing type="m"></mib-spacing>
+</div>
+<mib-tab-group>
+	<mib-navbar class="container container_large">
+		<mib-navbar-point value="1">Опубликованные</mib-navbar-point>
+		<mib-navbar-point value="2">В очереди</mib-navbar-point>
+		<mib-navbar-point value="3">Все новости</mib-navbar-point>
+	</mib-navbar>
+	<div class="container container_large">
+		<mib-spacing type="m"></mib-spacing>
+		<div class="flex">
+			<div class="flex gap-16 w-100">
+				<mib-input>
+					<input mibInput />
+					<ng-container mibLabel>Поиск по новостям</ng-container>
+					<mib-icon mibLeftIcon class="stroke" name="fi_search"></mib-icon>
+				</mib-input>
+				<mib-button [disabled]="loading$ | async" (press)="addNews()">
+					Создать новость
+					<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
+				</mib-button>
+				<div class="flex flex_grow"></div>
+			</div>
+			<div class="flex gap-8 flex_align-center">
+				<span class="text text_m c-bti-tertiary">Сортировака:</span>
+				<mib-select placeholder="По дате публикации">
+					<mib-dropdown-point
+						[value]="true"
+						text="По дате публикации"
+					></mib-dropdown-point>
+				</mib-select>
+			</div>
+		</div>
+		<mib-tab-item value="1">
+			<mib-spacing type="m"></mib-spacing>
+
+			<h3>tab-1</h3>
+		</mib-tab-item>
+		<mib-tab-item value="2">
+			<mib-spacing type="m"></mib-spacing>
+			<h3>tab-2</h3>
+		</mib-tab-item>
+		<mib-tab-item value="3">
+			<mib-spacing type="m"></mib-spacing>
+			<h3>tab-3</h3>
+		</mib-tab-item>
+	</div>
+</mib-tab-group>
+
 <!-- <div class="sub-header">
   <div class="sub-header__title">
     <h2>Новости</h2>
