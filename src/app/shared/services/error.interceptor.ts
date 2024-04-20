@@ -54,12 +54,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 							false,
 							3000
 						)
-						this.auth.logout()
-						this.router.navigate(['/auth/login'], {
-							queryParams: {
-								sessionFailed: true
-							}
-						})
+						// this.auth.logout()
+						// this.router.navigate(['/auth/login'], {
+						// 	queryParams: {
+						// 		sessionFailed: true
+						// 	}
+						// })
 					}
 					this.showError(errorMessage)
 					return throwError(() => new Error(errorMessage))
