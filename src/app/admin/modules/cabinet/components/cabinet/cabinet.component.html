@@ -36,7 +36,17 @@
 		</div>
 		<mib-tab-item value="1">
 			<mib-spacing type="m"></mib-spacing>
-
+			<!-- [newsDate]="newsDatas.date | date : 'dd.MM.yyyy'" -->
+			<mib-news-panel
+				(onClick)="clickBtn()"
+				class="flex flex_grow"
+				[isAdmin]="isAdmin"
+				[newsTitle]="newsDatas.title"
+				[newsDate]="newsDatas.date"
+				[showPreview]="newsDatas.img"
+				[altText]="newsDatas.title"
+				[link]="null"
+			></mib-news-panel>
 			<h3>tab-1</h3>
 		</mib-tab-item>
 		<mib-tab-item value="2">

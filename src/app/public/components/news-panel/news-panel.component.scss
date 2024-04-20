@@ -5,10 +5,44 @@
 }
 
 .news {
+	position: relative;
 	width: 100%;
 	border-radius: var(--main-border-radius);
 	border: 1px solid var(--wgr-tertiary);
 	overflow: hidden;
+
+	&.isAdmin {
+		max-width: 280px;
+		& > div {
+			height: auto;
+		}
+		& .p-24,
+		.ph-24 {
+			padding: 16px;
+		}
+		& h4 {
+			@include headline-desktop;
+		}
+		& h4 ~ div {
+			padding-top: 4px;
+		}
+		& span {
+			@include text-m;
+			color: var(--bti-tertiary);
+		}
+		& .btn {
+			display: none;
+			position: absolute;
+			top: 8px;
+			right: 8px;
+		}
+		transition: var(--transition);
+	}
+	&.isAdmin:hover {
+		& .btn {
+			display: block;
+		}
+	}
 
 	& :not(.news_showPreview) > div {
 		// display: none;

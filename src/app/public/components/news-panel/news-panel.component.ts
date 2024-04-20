@@ -1,5 +1,4 @@
-import {Component, Input} from '@angular/core'
-import {NewsPanelDevice} from './interfaces/news-panel.interface'
+import {Component, EventEmitter, Input, Output} from '@angular/core'
 
 @Component({
 	selector: 'mib-news-panel',
@@ -11,10 +10,12 @@ export class NewsPanelComponent {
 	@Input() linkText: string = ''
 	@Input() link: string = ''
 	@Input() showCategories: boolean = false
+	@Input() isAdmin: boolean = false
 	@Input() showPreview: string = ''
 	@Input() newsTitle: string = ''
 	@Input() newsDate: string = ''
 	@Input() altText: string = ''
+	@Output() onClick = new EventEmitter()
 
 	get classes() {
 		return {

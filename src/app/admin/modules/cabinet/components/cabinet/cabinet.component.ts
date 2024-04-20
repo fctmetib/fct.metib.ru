@@ -15,9 +15,22 @@ import {CreateNewsDialogComponent} from '../create-news-dialog/create-news-dialo
 })
 export class CabinetComponent {
 	public loading$ = new BehaviorSubject<boolean>(false)
+	isAdmin: boolean = true
+
+	newsDatas = {
+		id: 1,
+		img: './assets/images/news/news-1.jpg',
+		title: 'С Наступающим Новым 2024 годом!',
+		date: '10 декабря 2023',
+		link: '/news/1'
+	}
 
 	addNews() {
 		console.log('add news')
+	}
+
+	clickBtn() {
+		console.log('clickBtn')
 	}
 }
 

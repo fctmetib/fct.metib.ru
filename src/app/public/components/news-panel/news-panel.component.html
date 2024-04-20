@@ -1,7 +1,9 @@
 <div
 	[routerLink]="link"
 	[ngClass]="classes"
-	class="flex flex_column news cursor-pointer"
+	class="flex flex_column news"
+	[class.isAdmin]="isAdmin"
+	[class.cursor-pointer]="!isAdmin"
 >
 	<div *ngIf="showPreview" class="flex">
 		<img src="{{ showPreview }}" alt="{{ altText }}" />
@@ -26,6 +28,11 @@
 				<mib-link size="l" type="ghost-primary">{{ linkText }} </mib-link>
 			</div>
 		</div>
+	</div>
+	<div *ngIf="isAdmin" class="btn flex">
+		<mib-button (press)="onClick.emit()" size="m" type="floating">
+			<mib-icon btn-icon class="stroke" name="fi_more-horizontal"></mib-icon>
+		</mib-button>
 	</div>
 </div>
 <!-- <div [ngClass]="classes" class="flex flex_column news">
