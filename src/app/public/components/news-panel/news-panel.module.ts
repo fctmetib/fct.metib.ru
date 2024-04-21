@@ -7,6 +7,8 @@ import {TagModule} from 'src/app/shared/ui-kit/tag/tag.module'
 import {RouterLink} from '@angular/router'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
+import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
+import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 
 @NgModule({
 	declarations: [NewsPanelComponent],
@@ -17,7 +19,9 @@ import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 		TagModule,
 		RouterLink,
 		ButtonModule,
-		IconModule
+		IconModule,
+		DropdownModule,
+		DropdownPointModule
 	],
 	exports: [NewsPanelComponent]
 })

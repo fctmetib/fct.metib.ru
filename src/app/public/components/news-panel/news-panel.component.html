@@ -29,10 +29,38 @@
 			</div>
 		</div>
 	</div>
-	<div *ngIf="isAdmin" class="btn flex">
-		<mib-button (press)="onClick.emit()" size="m" type="floating">
-			<mib-icon btn-icon class="stroke" name="fi_more-horizontal"></mib-icon>
-		</mib-button>
+	<div *ngIf="isAdmin" class="edit-btn flex">
+		<div [mibDropdownTrigger]="adminPanel" class="flex gap-12">
+			<div class="flex flex_grow"></div>
+			<mib-button size="m" type="ghost-secondary">
+				<mib-icon btn-icon class="stroke" name="fi_more-horizontal"></mib-icon>
+			</mib-button>
+		</div>
+		<mib-dropdown #adminPanel>
+			<mib-spacing dropdown-spacing type="s"></mib-spacing>
+			<mib-dropdown-point
+				[underlined]="true"
+				(press)="edit.emit()"
+				text="Редактировать"
+			>
+				<mib-icon
+					dropdown-point-left-icon
+					class="stroke"
+					name="fi_edit-3"
+				></mib-icon>
+			</mib-dropdown-point>
+			<mib-dropdown-point
+				[danger]="true"
+				(press)="delete.emit()"
+				text="Удалить"
+			>
+				<mib-icon
+					dropdown-point-left-icon
+					class="stroke"
+					name="fi_trash"
+				></mib-icon>
+			</mib-dropdown-point>
+		</mib-dropdown>
 	</div>
 </div>
 <!-- <div [ngClass]="classes" class="flex flex_column news">

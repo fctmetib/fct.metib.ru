@@ -30,17 +30,26 @@
 			@include text-m;
 			color: var(--bti-tertiary);
 		}
-		& .btn {
-			display: none;
+		& .edit-btn {
 			position: absolute;
-			top: 8px;
+			width: 60%;
 			right: 8px;
+			top: 8px;
+			background: transparent;
+			& > div {
+				justify-content: flex-end;
+				width: 100%;
+			}
+			& mib-button {
+				border-radius: var(--main-border-radius);
+				background: var(--wgr-primary);
+			}
 		}
 		transition: var(--transition);
 	}
 	&.isAdmin:hover {
 		& .btn {
-			display: block;
+			display: flex;
 		}
 	}
 

@@ -29,8 +29,12 @@ export class CabinetComponent {
 		console.log('add news')
 	}
 
-	clickBtn() {
-		console.log('clickBtn')
+	editNews() {
+		console.log('editNews')
+	}
+
+	deleteNews() {
+		console.log('deleteNews')
 	}
 }
 

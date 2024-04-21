@@ -15,7 +15,8 @@ export class NewsPanelComponent {
 	@Input() newsTitle: string = ''
 	@Input() newsDate: string = ''
 	@Input() altText: string = ''
-	@Output() onClick = new EventEmitter()
+	@Output() edit = new EventEmitter()
+	@Output() delete = new EventEmitter()
 
 	get classes() {
 		return {

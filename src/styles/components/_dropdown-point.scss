@@ -1,143 +1,152 @@
-@import "src/styles/helpers/icon_tools";
-@import "src/styles/typography.vars";
+@import 'src/styles/helpers/icon_tools';
+@import 'src/styles/typography.vars';
 
 $text-selectors: '&, span';
 
 @mixin dropdown-point-size($height, $icon-size) {
-  height: $height;
+	height: $height;
 
-  .dropdown-point {
-    &_icon-wrapper, &_icon-wrapper mib-icon {
-      @include icon-size($icon-size);
-    }
-  }
-
+	.dropdown-point {
+		&_icon-wrapper,
+		&_icon-wrapper mib-icon {
+			@include icon-size($icon-size);
+		}
+	}
 }
 
 @mixin dropdown-point-outline {
-  &:hover {
-    border-bottom-color: var(--wgr-tertiary);
-  }
-  &:active {
-    border-bottom-color: var(--wgr-tertiary);
-    background: var(--wgr-secondary);
-  }
+	&:hover {
+		border-bottom-color: var(--wgr-tertiary);
+	}
+	&:active {
+		border-bottom-color: var(--wgr-tertiary);
+		background: var(--wgr-secondary);
+	}
 
-  &.dropdown-point {
-    &_underlined {
-      border-bottom: 1px solid var(--wgr-secondary);
-    }
-    &_selected {
-      border-bottom-color: transparent;
-      background: var(--wgr-secondary);
-    }
-  }
+	&.dropdown-point {
+		&_underlined {
+			border-bottom: 1px solid var(--wgr-secondary);
+		}
+		&_selected {
+			border-bottom-color: transparent;
+			background: var(--wgr-secondary);
+		}
+	}
 }
 
 @mixin dropdown-point-ghost {
-  &:active {
-    background: var(--wgr-secondary);
-  }
+	&:active {
+		background: var(--wgr-secondary);
+	}
 
-  &.dropdown-point {
-    &_selected  {
-      #{$text-selectors} {
-        @include dropdown-point-color(var(--mc-default));
-      }
-      &:hover {
-        #{$text-selectors} {
-          @include dropdown-point-color(var(--mc-hover));
-        }
-      }
-      &:active {
-        #{$text-selectors} {
-          @include dropdown-point-color(var(--mc-active));
-        }
-      }
-    }
-  }
+	&.dropdown-point {
+		&_selected {
+			#{$text-selectors} {
+				@include dropdown-point-color(var(--mc-default));
+			}
+			&:hover {
+				#{$text-selectors} {
+					@include dropdown-point-color(var(--mc-hover));
+				}
+			}
+			&:active {
+				#{$text-selectors} {
+					@include dropdown-point-color(var(--mc-active));
+				}
+			}
+		}
+	}
 }
 
 @mixin dropdown-point {
-  padding: 0 16px;
-  cursor: pointer;
+	padding: 0 16px;
+	cursor: pointer;
 
-  #{$text-selectors} {
-    @include body-text;
-    @include text-s;
-    @include dropdown-point-color(var(--bti-secondary));
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+	#{$text-selectors} {
+		@include body-text;
+		@include text-s;
+		@include dropdown-point-color(var(--bti-secondary));
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
 
-  & {
-    transition: none
-  };
+	& {
+		transition: none;
+	}
+
+	&_danger {
+		#{$text-selectors} {
+			@include dropdown-point-color(var(--alc-active));
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+	}
 }
 
 @mixin dropdown-point-select {
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 }
 
 @mixin dropdown-point-color($color) {
-  #{$text-selectors} {
-    color: $color;
-  }
+	#{$text-selectors} {
+		color: $color;
+	}
 
-  .dropdown-point_icon-wrapper mib-icon {
-    @include icon-color($color);
-  }
+	.dropdown-point_icon-wrapper mib-icon {
+		@include icon-color($color);
+	}
 }
 
-
 .dropdown-point {
-  @include dropdown-point;
+	@include dropdown-point;
 
-  &-transition {
-    transition: var(--transition);
-  }
+	&-transition {
+		transition: var(--transition);
+	}
 
-  &_type {
-    &-outline {
-      @include dropdown-point-outline;
-    }
+	&_type {
+		&-outline {
+			@include dropdown-point-outline;
+		}
 
-    &-ghost {
-      @include dropdown-point-ghost;
-    }
-  }
+		&-ghost {
+			@include dropdown-point-ghost;
+		}
+	}
 
-  &_select {
-    @include dropdown-point-select;
-  }
+	&_select {
+		@include dropdown-point-select;
+	}
 
-  &_l {
-    @include dropdown-point-size(48px, 20px);
-  }
+	&_l {
+		@include dropdown-point-size(48px, 20px);
+	}
 
-  &_m {
-    @include dropdown-point-size(40px, 20px);
-  }
+	&_m {
+		@include dropdown-point-size(40px, 20px);
+	}
 
-  &_s {
-    @include dropdown-point-size(32px, 16px);
-  }
+	&_s {
+		@include dropdown-point-size(32px, 16px);
+	}
 
-  &_icon-wrapper {
-    display: none;
-  }
-  &_left-iconly {
-    .dropdown-point_left-icon-wrapper {
-      display: flex;
-    }
-  }
-  &_right-iconly {
-    .dropdown-point_right-icon-wrapper {
-      display: flex;
-    }
-  }
+	&_icon-wrapper {
+		display: none;
+	}
+	&_left-iconly {
+		.dropdown-point_left-icon-wrapper {
+			display: flex;
+		}
+	}
+	&_right-iconly {
+		.dropdown-point_right-icon-wrapper {
+			display: flex;
+		}
+	}
 }
