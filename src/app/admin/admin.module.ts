@@ -34,24 +34,28 @@ const routes = [
 			{
 				path: 'cabinet',
 				loadChildren: () =>
-					import('./modules/cabinet/cabinet.module').then(m => m.CabinetModule)
+					import('./modules/cabinet/cabinet.module').then(m => m.CabinetModule),
+				title: 'Новости | Металлинвест Банк'
 			},
 			{
 				path: 'organizations',
 				loadChildren: () =>
 					import('./modules/organizations/organizations.module').then(
 						m => m.OrganizationsModule
-					)
+					),
+				title: 'Организации | Металлинвест Банк'
 			},
 			{
 				path: 'tests',
 				loadChildren: () =>
-					import('./modules/tests/tests.module').then(m => m.TestsModule)
+					import('./modules/tests/tests.module').then(m => m.TestsModule),
+				title: 'Бизнес-тесты | Металлинвест Банк'
 			},
 			{
 				path: 'users',
 				loadChildren: () =>
-					import('./modules/users/users.module').then(m => m.UsersModule)
+					import('./modules/users/users.module').then(m => m.UsersModule),
+				title: 'Пользователи | Металлинвест Банк'
 			}
 		]
 	}
