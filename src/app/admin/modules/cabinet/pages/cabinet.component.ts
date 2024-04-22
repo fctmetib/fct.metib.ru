@@ -1,12 +1,12 @@
 import {Paginator} from 'primeng/paginator'
-import {NewsService} from './../../../../shared/services/news.service'
+import {NewsService} from '../../../shared/services/news.service'
 import {BehaviorSubject, Subscription} from 'rxjs'
 import {Component, OnInit, ViewChild} from '@angular/core'
 import {PageStoreService} from 'src/app/admin/shared/services/page-store.service'
 import {NewsInterface} from 'src/app/admin/shared/types/news.interface'
 import {FormBuilder, FormGroup} from '@angular/forms'
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog'
-import {CreateNewsDialogComponent} from '../create-news-dialog/create-news-dialog.component'
+import {CreateNewsDialogComponent} from '../components/create-news-dialog/create-news-dialog.component'
 
 @Component({
 	selector: 'cabinet',

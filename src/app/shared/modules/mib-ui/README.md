@@ -68,6 +68,14 @@ ng g s client/modules/documents/modules/new-documents-page-drawer/new-documents-
 ng g i client/modules/documents/modules/new-documents-page-drawer/interfaces/new-documents-page-drawer.interface --dry-run
  //---
 
+ //--- cabinet-news-drawer
+src\app\admin\modules\cabinet\modules
+ng g m admin/modules/cabinet/modules/cabinet-news-drawer/cabinet-news-drawer --flat --dry-run
+ng g c admin/modules/cabinet/modules/cabinet-news-drawer/cabinet-news-drawer --flat --skip-tests  --dry-run
+ng g s admin/modules/cabinet/modules/cabinet-news-drawer/cabinet-news-drawer --flat --skip-tests  --dry-run
+ng g i admin/modules/cabinet/modules/cabinet-news-drawer/interfaces/cabinet-news-drawer.interface --dry-run
+ //---
+
  //--- new-contracts-page-drawer
 src\app\client\modules\contracts\modules
 ng g m client/modules/contracts/modules/new-contracts-page-drawer/new-contracts-page-drawer --flat --dry-run
