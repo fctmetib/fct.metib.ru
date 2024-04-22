@@ -24,6 +24,7 @@ import {PageStoreService} from './shared/services/page-store.service'
 import {HeaderModule} from '../shared/modules/header/header.module'
 import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module'
 import {SidebarModule} from '../shared/ui-kit/sidebar/sidebar.module'
+import {CabinetModule} from './modules/cabinet/cabinet.module'
 
 const routes = [
 	{
@@ -84,6 +85,7 @@ const routes = [
 		HeaderModule,
 		SpacingModule,
 		SidebarModule,
+		CabinetModule,
 		RouterModule.forChild(routes)
 	],
 	exports: [RouterModule],

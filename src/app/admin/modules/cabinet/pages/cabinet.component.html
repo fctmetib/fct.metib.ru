@@ -18,7 +18,11 @@
 					<ng-container mibLabel>Поиск по новостям</ng-container>
 					<mib-icon mibLeftIcon class="stroke" name="fi_search"></mib-icon>
 				</mib-input>
-				<mib-button [disabled]="loading$ | async" (press)="addNews()">
+				<mib-button
+					(press)="openNewsDrawer()"
+					[disabled]="loading$ | async"
+					(press)="addNews()"
+				>
 					Создать новость
 					<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
 				</mib-button>

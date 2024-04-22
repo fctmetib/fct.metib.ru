@@ -7,6 +7,10 @@ import {NewsInterface} from 'src/app/admin/shared/types/news.interface'
 import {FormBuilder, FormGroup} from '@angular/forms'
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog'
 import {CreateNewsDialogComponent} from '../components/create-news-dialog/create-news-dialog.component'
+import {CabinetNewsDrawerComponent} from '../modules/cabinet-news-drawer/cabinet-news-drawer.component'
+import {MatDialogRef} from '@angular/material/dialog'
+import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
+import {CabinetNewsDrawerService} from '../modules/cabinet-news-drawer/cabinet-news-drawer.service'
 
 @Component({
 	selector: 'cabinet',
@@ -25,6 +29,8 @@ export class CabinetComponent {
 		link: '/news/1'
 	}
 
+	constructor(private cabinetNewsDrawerService: CabinetNewsDrawerService) {}
+
 	addNews() {
 		console.log('add news')
 	}
@@ -35,6 +41,13 @@ export class CabinetComponent {
 
 	deleteNews() {
 		console.log('deleteNews')
+	}
+
+	openNewsDrawer() {
+		this.cabinetNewsDrawerService
+			.open({state: DrawerStateEnum.CREATE})
+			.afterClosed()
+			.subscribe()
 	}
 }
 

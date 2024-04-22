@@ -31,6 +31,7 @@ import {LabelModule} from 'src/app/shared/directives/label/label.module'
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 import {NewsPanelModule} from 'src/app/public/components/news-panel/news-panel.module'
+import {CabinetNewsDrawerModule} from './modules/cabinet-news-drawer/cabinet-news-drawer.module'
 
 const routes = [
 	{
@@ -76,6 +77,7 @@ const routes = [
 		SelectModule,
 		DropdownPointModule,
 		NewsPanelModule,
+		CabinetNewsDrawerModule,
 		RouterModule.forChild(routes)
 	],
 	exports: [RouterModule],
