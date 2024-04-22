@@ -74,6 +74,23 @@ ng g m admin/modules/cabinet/modules/cabinet-news-drawer/cabinet-news-drawer --f
 ng g c admin/modules/cabinet/modules/cabinet-news-drawer/cabinet-news-drawer --flat --skip-tests  --dry-run
 ng g s admin/modules/cabinet/modules/cabinet-news-drawer/cabinet-news-drawer --flat --skip-tests  --dry-run
 ng g i admin/modules/cabinet/modules/cabinet-news-drawer/interfaces/cabinet-news-drawer.interface --dry-run
+
+ //--- cabinet-create-news
+ -drawer
+src\app\admin\modules\cabinet\modules
+ng g m admin/modules/cabinet/modules/cabinet-create-news-drawer/cabinet-create-news-drawer --flat --dry-run
+ng g c admin/modules/cabinet/modules/cabinet-create-news-drawer/cabinet-create-news-drawer --flat --skip-tests  --dry-run
+ng g s admin/modules/cabinet/modules/cabinet-create-news-drawer/cabinet-create-news-drawer --flat --skip-tests  --dry-run
+ng g i admin/modules/cabinet/modules/cabinet-create-news-drawer/interfaces/cabinet-create-news-drawer.interface --dry-run
+ //---
+
+ //--- cabinet-edit-news
+ -drawer
+src\app\admin\modules\cabinet\modules
+ng g m admin/modules/cabinet/modules/cabinet-edit-news-drawer/cabinet-edit-news-drawer --flat --dry-run
+ng g c admin/modules/cabinet/modules/cabinet-edit-news-drawer/cabinet-edit-news-drawer --flat --skip-tests  --dry-run
+ng g s admin/modules/cabinet/modules/cabinet-edit-news-drawer/cabinet-edit-news-drawer --flat --skip-tests  --dry-run
+ng g i admin/modules/cabinet/modules/cabinet-edit-news-drawer/interfaces/cabinet-edit-news-drawer.interface --dry-run
  //---
 
  //--- new-contracts-page-drawer

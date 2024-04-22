@@ -11,6 +11,8 @@ import {CabinetNewsDrawerComponent} from '../modules/cabinet-news-drawer/cabinet
 import {MatDialogRef} from '@angular/material/dialog'
 import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {CabinetNewsDrawerService} from '../modules/cabinet-news-drawer/cabinet-news-drawer.service'
+import {CabinetCreateNewsDrawerService} from '../modules/cabinet-create-news-drawer/cabinet-create-news-drawer.service'
+import {CabinetEditNewsDrawerService} from '../modules/cabinet-edit-news-drawer/cabinet-edit-news-drawer.service'
 
 @Component({
 	selector: 'cabinet',
@@ -29,7 +31,11 @@ export class CabinetComponent {
 		link: '/news/1'
 	}
 
-	constructor(private cabinetNewsDrawerService: CabinetNewsDrawerService) {}
+	constructor(
+		private cabinetNewsDrawerService: CabinetNewsDrawerService,
+		private сabinetCreateNewsDrawerService: CabinetCreateNewsDrawerService,
+		private cabinetEditNewsDrawerService: CabinetEditNewsDrawerService
+	) {}
 
 	addNews() {
 		console.log('add news')
@@ -50,8 +56,18 @@ export class CabinetComponent {
 			.subscribe()
 	}
 
-	test() {
-		console.log('open drawer>>>')
+	openCreateNewsDrawer() {
+		this.сabinetCreateNewsDrawerService
+			.open({state: DrawerStateEnum.CREATE})
+			.afterClosed()
+			.subscribe()
+	}
+
+	openEditNewsDrawer() {
+		this.cabinetEditNewsDrawerService
+			.open({state: DrawerStateEnum.CREATE})
+			.afterClosed()
+			.subscribe()
 	}
 }
 

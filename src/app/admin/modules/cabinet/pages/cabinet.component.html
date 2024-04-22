@@ -19,9 +19,8 @@
 					<mib-icon mibLeftIcon class="stroke" name="fi_search"></mib-icon>
 				</mib-input>
 				<mib-button
-					(press)="openNewsDrawer()"
+					(press)="openCreateNewsDrawer()"
 					[disabled]="loading$ | async"
-					(press)="addNews()"
 				>
 					Создать новость
 					<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
@@ -42,8 +41,8 @@
 			<mib-spacing type="m"></mib-spacing>
 			<!-- [newsDate]="newsDatas.date | date : 'dd.MM.yyyy'" -->
 			<mib-news-panel
-				(onclick)="test()"
-				(edit)="editNews()"
+				(onclick)="openNewsDrawer()"
+				(edit)="openEditNewsDrawer()"
 				(delete)="deleteNews()"
 				class="flex flex_grow"
 				[isAdmin]="isAdmin"
