@@ -1,27 +1,32 @@
-@import "src/styles/helpers/icon_tools";
+@import 'src/styles/helpers/icon_tools';
 
 .drag-and-drop {
-  cursor: pointer;
+	cursor: pointer;
 
-  min-height: 64px;
+	min-height: 64px;
 
-  border-radius: 8px;
-  padding: 12px;
+	border-radius: 8px;
+	padding: 12px;
 
-  background-color: var(--wgr-primary);
-  outline: 1px dashed var(--wgr-tertiary);
-  &.disabled {
-    cursor: unset;
-  }
-  &.loading {
-    cursor: wait;
-  }
-  &:not(.disabled).dragging {
-    background-color: var(--wgr-secondary);
-  }
+	background-color: var(--wgr-primary);
+	outline: 1px dashed var(--wgr-tertiary);
+	&.disabled {
+		cursor: unset;
+	}
+	&.loading {
+		cursor: wait;
+	}
+	&:not(.disabled).dragging {
+		background-color: var(--wgr-secondary);
+	}
 }
 
-mib-icon[name="fi_file-text"] {
-  @include icon-size(16px);
-  @include icon-color(var(--bti-primary))
+mib-icon {
+	@include icon-size(16px);
+	@include icon-color(var(--bti-primary));
 }
+
+// mib-icon[name="fi_file-text"] {
+//   @include icon-size(16px);
+//   @include icon-color(var(--bti-primary))
+// }

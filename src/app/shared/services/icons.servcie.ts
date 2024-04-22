@@ -56,7 +56,8 @@ export class IconsService {
 		'fi_clipboard',
 		'fi_grid',
 		'fi_list',
-		'fi_more-horizontal'
+		'fi_more-horizontal',
+		'fi_image'
 	]
 
 	public async initIcons(): Promise<void> {

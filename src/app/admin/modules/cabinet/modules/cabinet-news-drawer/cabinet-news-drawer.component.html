@@ -4,5 +4,20 @@
 	<mib-drawer-container>
 		<h4>Новости банка</h4>
 		<mib-spacing type="xs"></mib-spacing>
+		<mib-input class="flex_grow">
+			<input type="date" mibInput />
+			<ng-container mibLabel>Укажите дату публикации</ng-container>
+		</mib-input>
+		<div class="flex flex_column">
+			<mib-spacing type="s"></mib-spacing>
+			<p class="text text_m c-bti-primary">Загрузите изображение</p>
+			<mib-spacing type="xs2"></mib-spacing>
+			<mib-dnd
+				[IconName]="'fi_image'"
+				[multiple]="true"
+				[accept]="['image/jpg', 'image/jpeg', 'image/png']"
+				headline="Загрузите изображение"
+			></mib-dnd>
+		</div>
 	</mib-drawer-container>
 </mib-drawer>
