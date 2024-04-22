@@ -1,5 +1,6 @@
 <div
 	[routerLink]="link"
+	(click)="onclick.emit()"
 	[ngClass]="classes"
 	class="flex flex_column news"
 	[class.isAdmin]="isAdmin"

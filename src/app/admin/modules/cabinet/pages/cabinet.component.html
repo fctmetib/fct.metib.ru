@@ -42,6 +42,7 @@
 			<mib-spacing type="m"></mib-spacing>
 			<!-- [newsDate]="newsDatas.date | date : 'dd.MM.yyyy'" -->
 			<mib-news-panel
+				(onclick)="test()"
 				(edit)="editNews()"
 				(delete)="deleteNews()"
 				class="flex flex_grow"

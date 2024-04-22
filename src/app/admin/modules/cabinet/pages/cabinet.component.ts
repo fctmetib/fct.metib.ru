@@ -49,6 +49,10 @@ export class CabinetComponent {
 			.afterClosed()
 			.subscribe()
 	}
+
+	test() {
+		console.log('open drawer>>>')
+	}
 }
 
 //   public filterForm: FormGroup;
