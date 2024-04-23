@@ -8,4 +8,12 @@ import {MatDialogRef} from '@angular/material/dialog'
 })
 export class CabinetNewsDrawerComponent {
 	constructor(public dialogRef: MatDialogRef<CabinetNewsDrawerComponent>) {}
+
+	editNews() {
+		console.log('edit news >>>')
+	}
+
+	removeNews() {
+		console.log('remove news >>>')
+	}
 }

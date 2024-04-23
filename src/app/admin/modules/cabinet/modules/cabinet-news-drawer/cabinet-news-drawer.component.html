@@ -2,8 +2,45 @@
 	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
 	</mib-drawer-header>
 	<mib-drawer-container>
-		<h4>Новости банка</h4>
+		<h4>ПАО АКБ "Металлинвестбанк" посетил выставки</h4>
 		<mib-spacing type="xs"></mib-spacing>
-		<h3>halo view</h3>
+		<div class="flex">
+			<mib-tag size="m" type="filled-secondary">
+				Опубликовано 12 декабря 2023
+			</mib-tag>
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<p class="text text_m c-bti-primary">Прикрепленное изображение</p>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex picture-block">
+			<img src="./assets/images/news/news-1.jpg" alt="" />
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<p class="text text_m c-bti-primary">Содержание новости</p>
+		<mib-spacing type="xs2"></mib-spacing>
+		<p class="text text_m c-bti-secondary">3 квартал выдался плодотворным.</p>
+		<p class="text text_m c-bti-secondary">
+			Посетили сразу три выставки: HouseHold Expo, WorldFood, Мир Детства.
+		</p>
+		<p class="text text_m c-bti-secondary">
+			Сотрудники банка с удовольствием посетили данные выставки, консультировали
+			всех потенциальных клиентов по вопросам факторинга, рассказывали о
+			продуктах банка.
+		</p>
+		<p class="text text_m c-bti-secondary">
+			Живое общение делает работу более комфортной и эффективной.
+		</p>
 	</mib-drawer-container>
+	<mib-drawer-footer drawer-footer>
+		<div class="flex gap-12">
+			<mib-button (press)="editNews()" size="m" type="filled-secondary"
+				>Редактировать
+				<mib-icon btn-left-icon class="stroke" name="fi_edit-3"></mib-icon>
+			</mib-button>
+			<mib-button (press)="removeNews()" size="m" type="ghost-alert"
+				>Удалить
+				<mib-icon btn-left-icon class="stroke" name="fi_trash"></mib-icon>
+			</mib-button>
+		</div>
+	</mib-drawer-footer>
 </mib-drawer>
