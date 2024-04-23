@@ -4,5 +4,48 @@
 	<mib-drawer-container>
 		<h4>Создание новости</h4>
 		<mib-spacing type="xs"></mib-spacing>
+		<mib-input class="flex_grow">
+			<input type="date" mibInput />
+			<ng-container mibLabel>Укажите дату публикации</ng-container>
+		</mib-input>
+		<div class="flex flex_column">
+			<mib-spacing type="s"></mib-spacing>
+			<p class="text text_m c-bti-primary">Загрузите изображение</p>
+			<mib-spacing type="xs2"></mib-spacing>
+			<mib-dnd
+				[IconName]="'fi_image'"
+				[multiple]="true"
+				[accept]="['image/jpg', 'image/jpeg', 'image/png']"
+				headline="Загрузите изображение"
+			></mib-dnd>
+		</div>
+		<div class="flex flex_column">
+			<div class="flex flex_column">
+				<mib-spacing type="s"></mib-spacing>
+				<p class="text text_m c-bti-primary">Содержание</p>
+				<mib-spacing type="xs2"></mib-spacing>
+				<div class="flex gap-12 flex_column">
+					<mib-input class="flex_grow">
+						<input mibInput />
+						<ng-container mibLabel>Заголовок новости</ng-container>
+					</mib-input>
+					<mib-textarea>
+						<ng-container mibLabel>Содержание новости</ng-container>
+						<textarea [maxLength]="500" autosize mibTextarea></textarea>
+					</mib-textarea>
+				</div>
+			</div>
+			<mib-spacing type="m"></mib-spacing>
+		</div>
 	</mib-drawer-container>
+	<mib-drawer-footer drawer-footer>
+		<div class="flex gap-12">
+			<mib-button (press)="createNews()" size="m" type="filled-primary"
+				>Создать новость</mib-button
+			>
+			<mib-button (press)="closeDrawer()" size="m" type="filled-secondary"
+				>Отмена
+			</mib-button>
+		</div>
+	</mib-drawer-footer>
 </mib-drawer>

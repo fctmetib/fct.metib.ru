@@ -16,11 +16,11 @@ import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag
 		CommonModule,
 		DrawerModule,
 		MatDialogModule,
-		SpacingModule,
-		InputModule,
-		LabelModule,
-		IconModule,
-		MibDragAndDropModule
+		SpacingModule
+		// InputModule,
+		// LabelModule,
+		// IconModule,
+		// MibDragAndDropModule
 	],
 	providers: [CabinetNewsDrawerService]
 })

@@ -10,4 +10,12 @@ export class CabinetCreateNewsDrawerComponent {
 	constructor(
 		public dialogRef: MatDialogRef<CabinetCreateNewsDrawerComponent>
 	) {}
+
+	createNews() {
+		console.log('create news >>>')
+	}
+
+	closeDrawer() {
+		this.dialogRef.close()
+	}
 }
