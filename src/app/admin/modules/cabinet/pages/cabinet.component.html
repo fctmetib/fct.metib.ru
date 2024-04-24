@@ -3,67 +3,129 @@
 	<h3>Новости банка</h3>
 	<mib-spacing type="m"></mib-spacing>
 </div>
+<div class="container container_large">
+	<div class="flex">
+		<div class="flex gap-16 w-100">
+			<mib-input>
+				<input mibInput />
+				<ng-container mibLabel>Поиск по новостям</ng-container>
+				<mib-icon mibLeftIcon class="stroke" name="fi_search"></mib-icon>
+			</mib-input>
+			<mib-button
+				(press)="openCreateNewsDrawer()"
+				[disabled]="loading$ | async"
+			>
+				Создать новость
+				<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
+			</mib-button>
+			<div class="flex flex_grow"></div>
+		</div>
+		<div class="flex gap-8 flex_align-center">
+			<span class="text text_m c-bti-tertiary">Сортировака:</span>
+			<mib-select placeholder="По дате публикации">
+				<mib-dropdown-point
+					[value]="true"
+					text="По дате публикации"
+				></mib-dropdown-point>
+			</mib-select>
+		</div>
+	</div>
+	<mib-spacing type="s"></mib-spacing>
+	<mib-skeleton
+		*ngIf="loading$ | async; else newsTemplate"
+		[styles]="skeleton"
+	></mib-skeleton>
+	<ng-template #newsTemplate>
+		<div class="flex flex_wrap gap-16">
+			<mib-news-panel
+				*ngFor="let news of getAdvancedNews"
+				(onclick)="openNewsDrawer()"
+				(edit)="openCreateNewsDrawer()"
+				(delete)="deleteNews()"
+				[isAdmin]="isAdmin"
+				[newsTitle]="news.Title"
+				[newsDate]="news.Date | date : 'dd.MM.yyyy'"
+				[showPreview]="news.Image"
+				[altText]="news.Title"
+				[link]="null"
+			></mib-news-panel>
+			<mib-spacing type="xl2"></mib-spacing>
+		</div>
+	</ng-template>
+	<mib-spacing type="m"></mib-spacing>
+</div>
+
+<!-- full -->
+
+<!-- [newsDate]="newsDatas.date | date : 'dd.MM.yyyy'" -->
+
+<!-- <div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<h3>Новости банка</h3>
+	<mib-spacing type="m"></mib-spacing>
+</div>
 <mib-tab-group>
-	<mib-navbar class="container container_large">
+<mib-navbar class="container container_large">
 		<mib-navbar-point value="1">Опубликованные</mib-navbar-point>
 		<mib-navbar-point value="2">В очереди</mib-navbar-point>
 		<mib-navbar-point value="3">Все новости</mib-navbar-point>
 	</mib-navbar>
-	<div class="container container_large">
-		<mib-spacing type="m"></mib-spacing>
-		<div class="flex">
-			<div class="flex gap-16 w-100">
-				<mib-input>
-					<input mibInput />
-					<ng-container mibLabel>Поиск по новостям</ng-container>
-					<mib-icon mibLeftIcon class="stroke" name="fi_search"></mib-icon>
-				</mib-input>
-				<mib-button
-					(press)="openCreateNewsDrawer()"
-					[disabled]="loading$ | async"
-				>
-					Создать новость
-					<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
-				</mib-button>
-				<div class="flex flex_grow"></div>
-			</div>
-			<div class="flex gap-8 flex_align-center">
-				<span class="text text_m c-bti-tertiary">Сортировака:</span>
-				<mib-select placeholder="По дате публикации">
-					<mib-dropdown-point
-						[value]="true"
-						text="По дате публикации"
-					></mib-dropdown-point>
-				</mib-select>
-			</div>
+<div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<div class="flex">
+		<div class="flex gap-16 w-100">
+			<mib-input>
+				<input mibInput />
+				<ng-container mibLabel>Поиск по новостям</ng-container>
+				<mib-icon mibLeftIcon class="stroke" name="fi_search"></mib-icon>
+			</mib-input>
+			<mib-button
+				(press)="openCreateNewsDrawer()"
+				[disabled]="loading$ | async"
+			>
+				Создать новость
+				<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
+			</mib-button>
+			<div class="flex flex_grow"></div>
 		</div>
-		<mib-tab-item value="1">
-			<mib-spacing type="m"></mib-spacing>
-			<!-- [newsDate]="newsDatas.date | date : 'dd.MM.yyyy'" -->
-			<mib-news-panel
-				(onclick)="openNewsDrawer()"
-				(edit)="openCreateNewsDrawer()"
-				(delete)="deleteNews()"
-				class="flex flex_grow"
-				[isAdmin]="isAdmin"
-				[newsTitle]="newsDatas.title"
-				[newsDate]="newsDatas.date"
-				[showPreview]="newsDatas.img"
-				[altText]="newsDatas.title"
-				[link]="null"
-			></mib-news-panel>
-			<h3>tab-1</h3>
+		<div class="flex gap-8 flex_align-center">
+			<span class="text text_m c-bti-tertiary">Сортировака:</span>
+			<mib-select placeholder="По дате публикации">
+				<mib-dropdown-point
+					[value]="true"
+					text="По дате публикации"
+				></mib-dropdown-point>
+			</mib-select>
+		</div>
+	</div>
+	<mib-tab-item value="1">
+	<mib-spacing type="m"></mib-spacing>
+	<mib-
+		(onclick)="openNewsDrawer()"
+		(edit)="openCreateNewsDrawer()"
+		(delete)="deleteNews()"
+		class="flex flex_grow"
+		[isAdmin]="isAdmin"
+		[newsTitle]="newsDatas.title"
+		[newsDate]="newsDatas.date"
+		[showPreview]="newsDatas.img"
+		[altText]="newsDatas.title"
+		[link]="null"
+	></mib-news-panel>
+	<h3>tab-1</h3>
 		</mib-tab-item>
-		<mib-tab-item value="2">
+	<mib-tab-item value="2">
 			<mib-spacing type="m"></mib-spacing>
 			<h3>tab-2</h3>
 		</mib-tab-item>
-		<mib-tab-item value="3">
+	<mib-tab-item value="3">
 			<mib-spacing type="m"></mib-spacing>
 			<h3>tab-3</h3>
 		</mib-tab-item>
-	</div>
-</mib-tab-group>
+</div>
+</mib-tab-group> -->
+
+<!-- full end -->
 
 <!-- <div class="sub-header">
   <div class="sub-header__title">

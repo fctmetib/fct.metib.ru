@@ -142,7 +142,6 @@ export class HeaderComponent implements OnInit {
 			.pipe(
 				filter(Boolean),
 				tap(currentAdmin => {
-					// console.log('currentAdmin :>> ', currentAdmin)
 					this.currentUser$.next(currentAdmin.userGeneral)
 					this.currentUserFactoring$.next(currentAdmin.userFactoring)
 					this.userLoading$.next(false)

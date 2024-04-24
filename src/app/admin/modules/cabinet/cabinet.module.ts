@@ -1,4 +1,5 @@
-import {NewsService} from '../../shared/services/news.service'
+// import {NewsService} from '../../shared/services/news.service'
+import {NewsService} from 'src/app/public/service/news.service'
 import {CommonModule, DatePipe} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
@@ -13,7 +14,7 @@ import {InputTextareaModule} from 'primeng/inputtextarea'
 import {MenuModule} from 'primeng/menu'
 import {MenubarModule} from 'primeng/menubar'
 import {RadioButtonModule} from 'primeng/radiobutton'
-import {SkeletonModule} from 'primeng/skeleton'
+import {SkeletonModule as SkeletonModule22} from 'primeng/skeleton'
 import {CalendarModule} from 'primeng/calendar'
 import {CardNewsComponent} from '../../shared/components/cards/card-news/card-news.component'
 import {CabinetComponent} from './pages/cabinet.component'
@@ -34,6 +35,7 @@ import {NewsPanelModule} from 'src/app/public/components/news-panel/news-panel.m
 import {CabinetNewsDrawerModule} from './modules/cabinet-news-drawer/cabinet-news-drawer.module'
 import {CabinetCreateNewsDrawerModule} from './modules/cabinet-create-news-drawer/cabinet-create-news-drawer.module'
 import {CabinetEditNewsDrawerModule} from './modules/cabinet-edit-news-drawer/cabinet-edit-news-drawer.module'
+import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 
 const routes = [
 	{
@@ -59,7 +61,7 @@ const routes = [
 		CalendarModule,
 		DropdownModule,
 		MenuModule,
-		SkeletonModule,
+		SkeletonModule22,
 		FormsModule,
 		ReactiveFormsModule,
 		CardModule,
@@ -82,6 +84,7 @@ const routes = [
 		CabinetNewsDrawerModule,
 		CabinetCreateNewsDrawerModule,
 		CabinetEditNewsDrawerModule,
+		SkeletonModule,
 		RouterModule.forChild(routes)
 	],
 	exports: [RouterModule],

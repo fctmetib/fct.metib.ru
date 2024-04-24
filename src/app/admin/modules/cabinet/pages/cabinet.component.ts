@@ -1,6 +1,13 @@
 import {Paginator} from 'primeng/paginator'
-import {NewsService} from '../../../shared/services/news.service'
-import {BehaviorSubject, Subscription} from 'rxjs'
+import {
+	BehaviorSubject,
+	Subscription,
+	finalize,
+	map,
+	switchMap,
+	tap,
+	zip
+} from 'rxjs'
 import {Component, OnInit, ViewChild} from '@angular/core'
 import {PageStoreService} from 'src/app/admin/shared/services/page-store.service'
 import {NewsInterface} from 'src/app/admin/shared/types/news.interface'
@@ -13,13 +20,16 @@ import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.in
 import {CabinetNewsDrawerService} from '../modules/cabinet-news-drawer/cabinet-news-drawer.service'
 import {CabinetCreateNewsDrawerService} from '../modules/cabinet-create-news-drawer/cabinet-create-news-drawer.service'
 import {CabinetEditNewsDrawerService} from '../modules/cabinet-edit-news-drawer/cabinet-edit-news-drawer.service'
+import {AdvancedNewsInterface} from 'src/app/public/type/news.interface'
+import {NewsService} from 'src/app/public/service/news.service'
+import {Properties} from 'csstype'
 
 @Component({
 	selector: 'cabinet',
 	styleUrls: ['./cabinet.component.scss'],
 	templateUrl: './cabinet.component.html'
 })
-export class CabinetComponent {
+export class CabinetComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
 	isAdmin: boolean = true
 
@@ -31,11 +41,49 @@ export class CabinetComponent {
 		link: '/news/1'
 	}
 
+	public newsNumberCount: number = 4
+	public getAdvancedNews: AdvancedNewsInterface[]
+
+	public skeleton: Properties = {
+		borderRadius: '8px',
+		height: '240px',
+		width: '100%'
+	}
+
 	constructor(
 		private cabinetNewsDrawerService: CabinetNewsDrawerService,
 		private сabinetCreateNewsDrawerService: CabinetCreateNewsDrawerService,
-		private cabinetEditNewsDrawerService: CabinetEditNewsDrawerService
+		private cabinetEditNewsDrawerService: CabinetEditNewsDrawerService,
+		private newsService: NewsService
 	) {}
+
+	ngOnInit(): void {
+		this.getCurrentNews()
+	}
+
+	public getCurrentNews() {
+		this.loading$.next(true)
+		this.newsService
+			.getNews(this.newsNumberCount)
+			.pipe(
+				switchMap(news =>
+					zip(
+						news.map(item =>
+							this.newsService
+								.getNewsImage(item.ID)
+								.pipe(map(image => ({...item, Image: image})))
+						)
+					).pipe(
+						tap(data => {
+							this.getAdvancedNews = data
+							console.log('data :>> ', data)
+						})
+					)
+				),
+				finalize(() => this.loading$.next(false))
+			)
+			.subscribe()
+	}
 
 	addNews() {
 		console.log('add news')
