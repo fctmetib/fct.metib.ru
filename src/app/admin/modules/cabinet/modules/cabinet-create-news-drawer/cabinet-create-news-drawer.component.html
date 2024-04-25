@@ -1,11 +1,19 @@
-<mib-drawer>
+<mib-drawer [formGroup]="form">
 	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
 	</mib-drawer-header>
 	<mib-drawer-container>
 		<h4>{{ newsID ? 'Редактирование новости' : 'Создание новости' }}</h4>
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'40px'"
+			*ngIf="loading$ | async; else news"
+		></mib-skeleton>
+		<ng-template #news>
+			<h1>data was loaded</h1>
+		</ng-template>
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-input class="flex_grow">
-			<input type="date" mibInput />
+			<input [formControl]="formNewsDate" type="date" mibInput />
 			<ng-container mibLabel>Укажите дату публикации</ng-container>
 		</mib-input>
 		<div class="flex flex_column">
@@ -26,20 +34,27 @@
 				<mib-spacing type="xs2"></mib-spacing>
 				<div class="flex gap-12 flex_column">
 					<mib-input class="flex_grow">
-						<input mibInput />
+						<input formControlName="formNewsTitle" mibInput />
 						<ng-container mibLabel>Заголовок новости</ng-container>
 					</mib-input>
 					<mib-textarea>
 						<ng-container mibLabel>Содержание новости</ng-container>
-						<textarea [maxLength]="500" autosize mibTextarea></textarea>
+						<textarea
+							formControlName="formNewsText"
+							[maxLength]="500"
+							autosize
+							mibTextarea
+						></textarea>
 					</mib-textarea>
 				</div>
 			</div>
 			<mib-spacing type="m"></mib-spacing>
 		</div>
 	</mib-drawer-container>
+	{{ formNewsDate.value }}<br />
 	<mib-drawer-footer drawer-footer>
 		<div class="flex gap-12">
+			<!-- [disabled]="form.invalid" -->
 			<mib-button (press)="createNews()" size="m" type="filled-primary"
 				>Создать новость</mib-button
 			>

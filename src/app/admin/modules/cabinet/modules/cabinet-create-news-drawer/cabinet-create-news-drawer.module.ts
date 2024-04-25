@@ -12,6 +12,8 @@ import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag
 import {TextareaModule} from 'src/app/shared/ui-kit/textarea/textarea.module'
 import {AutosizeModule} from 'ngx-autosize'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
+import {ReactiveFormsModule} from '@angular/forms'
+import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 
 @NgModule({
 	declarations: [CabinetCreateNewsDrawerComponent],
@@ -26,7 +28,9 @@ import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 		MibDragAndDropModule,
 		TextareaModule,
 		AutosizeModule,
-		ButtonModule
+		ButtonModule,
+		ReactiveFormsModule,
+		SkeletonModule
 	],
 	providers: [CabinetCreateNewsDrawerService]
 })
