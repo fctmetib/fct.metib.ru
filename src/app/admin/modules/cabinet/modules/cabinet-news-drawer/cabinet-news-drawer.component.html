@@ -2,34 +2,30 @@
 	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
 	</mib-drawer-header>
 	<mib-drawer-container>
-		<h4>ПАО АКБ "Металлинвестбанк" посетил выставки</h4>
-		<mib-spacing type="xs"></mib-spacing>
-		<div class="flex">
-			<mib-tag size="m" type="filled-secondary">
-				Опубликовано 12 декабря 2023
-			</mib-tag>
-		</div>
-		<mib-spacing type="s"></mib-spacing>
-		<p class="text text_m c-bti-primary">Прикрепленное изображение</p>
-		<mib-spacing type="xs2"></mib-spacing>
-		<div class="flex picture-block">
-			<img src="./assets/images/news/news-1.jpg" alt="" />
-		</div>
-		<mib-spacing type="s"></mib-spacing>
-		<p class="text text_m c-bti-primary">Содержание новости</p>
-		<mib-spacing type="xs2"></mib-spacing>
-		<p class="text text_m c-bti-secondary">3 квартал выдался плодотворным.</p>
-		<p class="text text_m c-bti-secondary">
-			Посетили сразу три выставки: HouseHold Expo, WorldFood, Мир Детства.
-		</p>
-		<p class="text text_m c-bti-secondary">
-			Сотрудники банка с удовольствием посетили данные выставки, консультировали
-			всех потенциальных клиентов по вопросам факторинга, рассказывали о
-			продуктах банка.
-		</p>
-		<p class="text text_m c-bti-secondary">
-			Живое общение делает работу более комфортной и эффективной.
-		</p>
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'480px'"
+			*ngIf="loading$ | async; else news"
+		></mib-skeleton>
+		<ng-template #news>
+			<h4>{{ singleNews.Title }}</h4>
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex">
+				<mib-tag size="m" type="filled-secondary">
+					Опубликовано {{ singleNews.Date | date }}
+				</mib-tag>
+			</div>
+			<mib-spacing type="s"></mib-spacing>
+			<p class="text text_m c-bti-primary">Прикрепленное изображение</p>
+			<mib-spacing type="xs2"></mib-spacing>
+			<div class="flex picture-block">
+				<img src="{{ singleNews.Image }}" alt="{{ singleNews.Title }}" />
+			</div>
+			<mib-spacing type="s"></mib-spacing>
+			<p class="text text_m c-bti-primary">Содержание новости</p>
+			<mib-spacing type="xs2"></mib-spacing>
+			<p class="text text_m c-bti-secondary">{{ singleNews.Text }}</p>
+		</ng-template>
 	</mib-drawer-container>
 	<mib-drawer-footer drawer-footer>
 		<div class="flex gap-12">

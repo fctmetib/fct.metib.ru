@@ -37,8 +37,10 @@ export class NewsService {
 		)
 	}
 
-	public getNewsById(id: string): Observable<NewsInterface> {
-		const url = `${environment.apiUrl}/news/${id}`
+	// https://api-factoring-test02.metib.ru/api/v{version}/news/33
+
+	public getNewsById(newsId: string): Observable<NewsInterface> {
+		const url = `${environment.apiUrl}/v1/news/${newsId}`
 		return this.http.get<NewsInterface>(url)
 	}
 
@@ -47,6 +49,70 @@ export class NewsService {
 	public getNewsList(): Observable<NewsInterface[]> {
 		const url = `${environment.apiUrl}/v1/news`
 		return this.http.get<NewsInterface[]>(url)
+	}
+
+	// https://api-factoring-test02.metib.ru/api/v{version}/news
+
+	/* 
+	{
+		"Title": "string title",
+		"Date": "2024-04-25T03:10:54.025Z",
+		"Text": "string post"
+	}
+
+	---
+
+	curl -X 'POST' \
+  'https://api-factoring-test02.metib.ru/api/v{version}/news' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "Title": "string title",
+  "Date": "2024-04-25T03:10:54.025Z",
+  "Text": "string post"
+}'
+	*/
+
+	addNewsItem(data: NewsInterface): Observable<NewsInterface> {
+		let url = `${environment.apiUrl}/v1/news`
+		return this.http.post<NewsInterface>(url, data)
+	}
+
+	addNewsImage(file, newsId): Observable<any> {
+		var formdata = new FormData()
+		formdata.append('', file)
+
+		let url = `${environment.apiFileUploadUrl}v1/news/${newsId}/image`
+		return this.http.post<string>(url, formdata)
+	}
+
+	// https://api-factoring-test02.metib.ru/api/v{version}/news/22
+
+	/* 
+	curl -X 'PUT' \
+  'https://api-factoring-test02.metib.ru/api/v{version}/news/22' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "Title": "string update",
+  "Date": "2024-04-25T03:04:06.777Z",
+  "Text": "string update 222"
+}'
+	*/
+
+	updateNewsItem(
+		data: NewsInterface,
+		newsId: string
+	): Observable<NewsInterface> {
+		let url = `${environment.apiUrl}/v1/news/${newsId}`
+		return this.http.put<NewsInterface>(url, data)
+	}
+
+	// https://api-factoring-test02.metib.ru/api/v{version}/news/22
+
+	removeNewsItem(newsId: string): Observable<any> {
+		let url = `${environment.apiUrl}/news/${newsId}`
+		return this.http.delete<any>(url)
 	}
 
 	// public getNews(newsCount: number): Observable<NewsInterface[]> {

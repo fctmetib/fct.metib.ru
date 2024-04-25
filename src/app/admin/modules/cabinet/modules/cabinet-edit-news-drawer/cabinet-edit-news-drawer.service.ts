@@ -10,7 +10,7 @@ export class CabinetEditNewsDrawerService {
 
 	open<T>(
 		data?: DrawerData<any>
-	): MatDialogRef<CabinetEditNewsDrawerComponent> {
+	): MatDialogRef<CabinetEditNewsDrawerComponent, number[]> {
 		const config: DrawerData = {
 			state: 'view'
 		}

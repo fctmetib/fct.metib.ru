@@ -39,9 +39,9 @@
 		<div class="flex flex_wrap gap-16">
 			<mib-news-panel
 				*ngFor="let news of getAdvancedNews"
-				(onclick)="openNewsDrawer()"
-				(edit)="openCreateNewsDrawer()"
-				(delete)="deleteNews()"
+				(onclick)="openNewsDrawer(news.ID)"
+				(edit)="openEditNewsDrawer(news.ID)"
+				(delete)="deleteNews(news.ID)"
 				[isAdmin]="isAdmin"
 				[newsTitle]="news.Title"
 				[newsDate]="news.Date | date : 'dd.MM.yyyy'"

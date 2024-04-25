@@ -89,31 +89,26 @@ export class CabinetComponent implements OnInit {
 		console.log('add news')
 	}
 
-	editNews() {
-		console.log('editNews')
+	editNews(id: number) {
+		console.log('editNews - ', id)
 	}
 
-	deleteNews() {
-		console.log('deleteNews')
+	deleteNews(id: number) {
+		console.log('deleteNews - ', id)
 	}
 
-	openNewsDrawer() {
-		this.cabinetNewsDrawerService
-			.open({state: DrawerStateEnum.CREATE})
-			.afterClosed()
-			.subscribe()
+	openNewsDrawer(id: number) {
+		console.log('openNewsDrawer -  :>> ', id)
+		this.cabinetNewsDrawerService.open({data: {id}}).afterClosed().subscribe()
 	}
 
 	openCreateNewsDrawer() {
-		this.сabinetCreateNewsDrawerService
-			.open({state: DrawerStateEnum.CREATE})
-			.afterClosed()
-			.subscribe()
+		this.сabinetCreateNewsDrawerService.open().afterClosed().subscribe()
 	}
 
-	openEditNewsDrawer() {
+	openEditNewsDrawer(id: number) {
 		this.cabinetEditNewsDrawerService
-			.open({state: DrawerStateEnum.CREATE})
+			.open({data: {id}})
 			.afterClosed()
 			.subscribe()
 	}

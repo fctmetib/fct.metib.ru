@@ -8,7 +8,9 @@ import {CabinetNewsDrawerComponent} from './cabinet-news-drawer.component'
 export class CabinetNewsDrawerService {
 	constructor(private dialog: MatDialog) {}
 
-	open<T>(data?: DrawerData<any>): MatDialogRef<CabinetNewsDrawerComponent> {
+	open<T>(
+		data?: DrawerData<any>
+	): MatDialogRef<CabinetNewsDrawerComponent, number[]> {
 		const config: DrawerData = {
 			state: 'view'
 		}
