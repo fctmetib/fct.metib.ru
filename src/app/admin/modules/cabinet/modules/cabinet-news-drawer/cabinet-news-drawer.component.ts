@@ -58,19 +58,19 @@ export class CabinetNewsDrawerComponent implements OnInit {
 			})
 	}
 
-	editNews() {
-		console.log('edit news >>>')
+	editNews(id: number) {
+		console.log('edit news >>>', id)
 		this.dialogRef.close()
-		this.openEditNewsDrawer()
+		this.openEditNewsDrawer(id)
 	}
 
-	removeNews() {
-		console.log('remove news >>>')
+	removeNews(id: number) {
+		console.log('remove news >>>', id)
 	}
 
-	openEditNewsDrawer() {
+	openEditNewsDrawer(id) {
 		this.сabinetEditNewsDrawerService
-			.open({state: DrawerStateEnum.CREATE})
+			.open({data: {id}})
 			.afterClosed()
 			.subscribe()
 	}

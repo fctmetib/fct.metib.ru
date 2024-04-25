@@ -40,7 +40,7 @@
 			<mib-news-panel
 				*ngFor="let news of getAdvancedNews"
 				(onclick)="openNewsDrawer(news.ID)"
-				(edit)="openEditNewsDrawer(news.ID)"
+				(edit)="openCreateNewsDrawer(news.ID)"
 				(delete)="deleteNews(news.ID)"
 				[isAdmin]="isAdmin"
 				[newsTitle]="news.Title"

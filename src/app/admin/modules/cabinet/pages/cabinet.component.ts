@@ -102,16 +102,19 @@ export class CabinetComponent implements OnInit {
 		this.cabinetNewsDrawerService.open({data: {id}}).afterClosed().subscribe()
 	}
 
-	openCreateNewsDrawer() {
-		this.сabinetCreateNewsDrawerService.open().afterClosed().subscribe()
-	}
-
-	openEditNewsDrawer(id: number) {
-		this.cabinetEditNewsDrawerService
+	openCreateNewsDrawer(id?: number) {
+		this.сabinetCreateNewsDrawerService
 			.open({data: {id}})
 			.afterClosed()
 			.subscribe()
 	}
+
+	// openEditNewsDrawer(id: number) {
+	// 	this.cabinetEditNewsDrawerService
+	// 		.open({data: {id}})
+	// 		.afterClosed()
+	// 		.subscribe()
+	// }
 }
 
 //   public filterForm: FormGroup;

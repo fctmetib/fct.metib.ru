@@ -29,11 +29,19 @@
 	</mib-drawer-container>
 	<mib-drawer-footer drawer-footer>
 		<div class="flex gap-12">
-			<mib-button (press)="editNews()" size="m" type="filled-secondary"
+			<mib-button
+				[disabled]="loading$ | async"
+				(press)="editNews(singleNews.ID)"
+				size="m"
+				type="filled-secondary"
 				>Редактировать
 				<mib-icon btn-left-icon class="stroke" name="fi_edit-3"></mib-icon>
 			</mib-button>
-			<mib-button (press)="removeNews()" size="m" type="ghost-alert"
+			<mib-button
+				[disabled]="loading$ | async"
+				(press)="removeNews(singleNews.ID)"
+				size="m"
+				type="ghost-alert"
 				>Удалить
 				<mib-icon btn-left-icon class="stroke" name="fi_trash"></mib-icon>
 			</mib-button>
