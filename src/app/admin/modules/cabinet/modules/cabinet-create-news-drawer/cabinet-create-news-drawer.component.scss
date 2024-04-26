@@ -1,0 +1,18 @@
+.picture-block {
+	position: relative;
+	height: 158px;
+	justify-content: center;
+	border-radius: var(--main-border-radius);
+	background-color: var(--wgr-secondary);
+	& > div {
+		position: absolute;
+		right: 8px;
+		top: 8px;
+		background-color: var(--wgr-primary);
+		border-radius: var(--badge-border-radius);
+		& > div {
+			width: 1px;
+			background-color: var(--wgr-tertiary);
+		}
+	}
+}

@@ -3,59 +3,86 @@
 	</mib-drawer-header>
 	<mib-drawer-container>
 		<h4>{{ newsID ? 'Редактирование новости' : 'Создание новости' }}</h4>
+		<mib-spacing type="xs"></mib-spacing>
 		<mib-skeleton
 			[styles]="defaultSkeleton"
-			[style.height]="'40px'"
+			[style.height]="'480px'"
 			*ngIf="loading$ | async; else news"
 		></mib-skeleton>
 		<ng-template #news>
-			<h1>data was loaded</h1>
-		</ng-template>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-input class="flex_grow">
-			<input [formControl]="formNewsDate" type="date" mibInput />
-			<ng-container mibLabel>Укажите дату публикации</ng-container>
-		</mib-input>
-		<div class="flex flex_column">
-			<mib-spacing type="s"></mib-spacing>
-			<p class="text text_m c-bti-primary">Загрузите изображение</p>
-			<mib-spacing type="xs2"></mib-spacing>
-			<mib-dnd
-				[IconName]="'fi_image'"
-				[multiple]="true"
-				[accept]="['image/jpg', 'image/jpeg', 'image/png']"
-				headline="Загрузите изображение"
-			></mib-dnd>
-		</div>
-		<div class="flex flex_column">
-			<div class="flex flex_column">
+			<mib-input class="flex_grow">
+				<input [formControl]="formNewsDate" type="date" mibInput />
+				<ng-container mibLabel>Укажите дату публикации</ng-container>
+			</mib-input>
+			<div *ngIf="!isNewImage; else editImageTemplate" class="flex flex_column">
+				<!-- <div *ngIf="!newsID; else editImageTemplate" class="flex flex_column"> -->
 				<mib-spacing type="s"></mib-spacing>
-				<p class="text text_m c-bti-primary">Содержание</p>
+				<p class="text text_m c-bti-primary">Загрузите изображение</p>
 				<mib-spacing type="xs2"></mib-spacing>
-				<div class="flex gap-12 flex_column">
-					<mib-input class="flex_grow">
-						<input formControlName="formNewsTitle" mibInput />
-						<ng-container mibLabel>Заголовок новости</ng-container>
-					</mib-input>
-					<mib-textarea>
-						<ng-container mibLabel>Содержание новости</ng-container>
-						<textarea
-							formControlName="formNewsText"
-							[maxLength]="500"
-							autosize
-							mibTextarea
-						></textarea>
-					</mib-textarea>
-				</div>
+				<mib-dnd
+					[IconName]="'fi_image'"
+					[multiple]="true"
+					[accept]="['image/jpg', 'image/jpeg', 'image/png']"
+					headline="Загрузите изображение"
+				></mib-dnd>
 			</div>
-			<mib-spacing type="m"></mib-spacing>
-		</div>
+			<ng-template #editImageTemplate>
+				<mib-spacing type="s"></mib-spacing>
+				<p class="text text_m c-bti-primary">Загрузите изображение</p>
+				<mib-spacing type="xs2"></mib-spacing>
+				<div class="flex picture-block">
+					<img src="{{ singleNews?.Image }}" alt="{{ singleNews?.Title }}" />
+					<div class="flex">
+						<mib-button
+							size="s"
+							(press)="addNewsImage()"
+							type="ghost-secondary"
+						>
+							<mib-icon btn-icon class="stroke" name="fi_repeat"></mib-icon>
+						</mib-button>
+						<div class="flex"></div>
+						<mib-button
+							size="s"
+							(press)="deleteNews(singleNews?.ID)"
+							type="ghost-secondary"
+						>
+							<mib-icon btn-icon class="stroke" name="fi_trash"></mib-icon>
+						</mib-button>
+					</div>
+				</div>
+			</ng-template>
+			<div class="flex flex_column">
+				<div class="flex flex_column">
+					<mib-spacing type="s"></mib-spacing>
+					<p class="text text_m c-bti-primary">Содержание</p>
+					<mib-spacing type="xs2"></mib-spacing>
+					<div class="flex gap-12 flex_column">
+						<mib-input class="flex_grow">
+							<input formControlName="formNewsTitle" mibInput />
+							<ng-container mibLabel>Заголовок новости</ng-container>
+						</mib-input>
+						<mib-textarea>
+							<ng-container mibLabel>Содержание новости</ng-container>
+							<textarea
+								formControlName="formNewsText"
+								[maxLength]="500"
+								autosize
+								mibTextarea
+							></textarea>
+						</mib-textarea>
+					</div>
+				</div>
+				<mib-spacing type="m"></mib-spacing>
+			</div>
+		</ng-template>
 	</mib-drawer-container>
-	{{ formNewsDate.value }}<br />
 	<mib-drawer-footer drawer-footer>
 		<div class="flex gap-12">
-			<!-- [disabled]="form.invalid" -->
-			<mib-button (press)="createNews()" size="m" type="filled-primary"
+			<mib-button
+				[disabled]="form.invalid"
+				(press)="createNews()"
+				size="m"
+				type="filled-primary"
 				>Создать новость</mib-button
 			>
 			<mib-button (press)="closeDrawer()" size="m" type="filled-secondary"

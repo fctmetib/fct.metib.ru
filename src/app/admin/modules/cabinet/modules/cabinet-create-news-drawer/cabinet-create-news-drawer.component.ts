@@ -26,6 +26,7 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
 
 	public singleNews: AdvancedNewsInterface
+	public isNewImage: boolean
 
 	public form: FormGroup
 
@@ -50,7 +51,12 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		if (this.newsID) this.getSingleNews()
+		if (this.newsID) {
+			this.getSingleNews()
+			this.isNewImage = true
+		} else {
+			this.isNewImage = false
+		}
 		this.initForms()
 		this.watchForms()
 	}
@@ -108,5 +114,15 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 				takeUntil(this.au.destroyer)
 			)
 			.subscribe()
+	}
+
+	deleteNews(id) {
+		console.log('delete news', id)
+		this.isNewImage = false
+	}
+
+	addNewsImage() {
+		console.log('add news image')
+		this.isNewImage = false
 	}
 }
