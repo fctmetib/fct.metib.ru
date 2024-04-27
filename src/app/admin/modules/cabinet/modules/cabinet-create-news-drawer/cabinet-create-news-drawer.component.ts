@@ -27,6 +27,8 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 
 	public singleNews: AdvancedNewsInterface
 	public isNewImage: boolean
+	public newImage: string = ''
+	public newImageTest = new BehaviorSubject<string>('')
 
 	public form: FormGroup
 
@@ -124,5 +126,15 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	addNewsImage() {
 		console.log('add news image')
 		this.isNewImage = false
+	}
+
+	onDocumentLoad(file) {
+		if (file) {
+			this.newImageTest.next(file.url)
+			this.newImageTest.subscribe(() => {
+				this.newImage = this.newImageTest.value
+			})
+			console.log('this.newImage :>> ', this.newImage)
+		}
 	}
 }

@@ -22,9 +22,13 @@
 				<mib-dnd
 					[IconName]="'fi_image'"
 					[multiple]="true"
+					(onChange)="onDocumentLoad($event)"
 					[accept]="['image/jpg', 'image/jpeg', 'image/png']"
 					headline="Загрузите изображение"
 				></mib-dnd>
+				<!-- <div *ngIf="newImageTest | async" class="flex">
+					<img src="{{ newImage }}" alt="" />
+				</div> -->
 			</div>
 			<ng-template #editImageTemplate>
 				<mib-spacing type="s"></mib-spacing>
