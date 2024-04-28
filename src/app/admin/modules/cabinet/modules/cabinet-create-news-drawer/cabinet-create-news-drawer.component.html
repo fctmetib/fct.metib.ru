@@ -14,28 +14,38 @@
 				<input [formControl]="formNewsDate" type="date" mibInput />
 				<ng-container mibLabel>Укажите дату публикации</ng-container>
 			</mib-input>
+			{{ isNewImage }}
+			<mib-spacing type="s"></mib-spacing>
+			<p class="text text_m c-bti-primary">Загрузите изображение</p>
+			<mib-spacing type="xs2"></mib-spacing>
 			<div *ngIf="!isNewImage; else editImageTemplate" class="flex flex_column">
-				<!-- <div *ngIf="!newsID; else editImageTemplate" class="flex flex_column"> -->
-				<mib-spacing type="s"></mib-spacing>
+				<!-- <mib-spacing type="s"></mib-spacing>
 				<p class="text text_m c-bti-primary">Загрузите изображение</p>
-				<mib-spacing type="xs2"></mib-spacing>
+				<mib-spacing type="xs2"></mib-spacing> -->
+
+				<!-- *ngIf="!(uploadNewImage | async); else showImageTemplate" -->
 				<mib-dnd
+					*ngIf="!(uploadNewImage | async); else editImageTemplate"
 					[IconName]="'fi_image'"
 					[multiple]="true"
 					(onChange)="onDocumentLoad($event)"
 					[accept]="['image/jpg', 'image/jpeg', 'image/png']"
 					headline="Загрузите изображение"
 				></mib-dnd>
-				<!-- <div *ngIf="newImageTest | async" class="flex">
-					<img src="{{ newImage }}" alt="" />
-				</div> -->
+				<!-- <ng-template #showImageTemplate>
+					<div class="flex">
+						<img src="{{ newImage }}" alt="" />
+					</div>
+				</ng-template> -->
 			</div>
 			<ng-template #editImageTemplate>
-				<mib-spacing type="s"></mib-spacing>
-				<p class="text text_m c-bti-primary">Загрузите изображение</p>
-				<mib-spacing type="xs2"></mib-spacing>
 				<div class="flex picture-block">
-					<img src="{{ singleNews?.Image }}" alt="{{ singleNews?.Title }}" />
+					<img
+						src="{{ isNewImage ? singleNews?.Image : newImage }}"
+						alt="{{
+							isNewImage ? singleNews?.Title' : ''
+						}}"
+					/>
 					<div class="flex">
 						<mib-button
 							size="s"

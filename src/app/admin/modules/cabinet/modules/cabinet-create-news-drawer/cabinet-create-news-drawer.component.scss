@@ -4,6 +4,9 @@
 	justify-content: center;
 	border-radius: var(--main-border-radius);
 	background-color: var(--wgr-secondary);
+	& img {
+		object-fit: contain;
+	}
 	& > div {
 		position: absolute;
 		right: 8px;

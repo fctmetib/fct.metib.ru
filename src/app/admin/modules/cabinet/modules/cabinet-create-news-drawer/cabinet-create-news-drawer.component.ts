@@ -11,9 +11,11 @@ import {
 	takeUntil,
 	tap
 } from 'rxjs'
+import {DocumentReq} from 'src/app/client/modules/requests/interfaces/request.interface'
 import {NewsService} from 'src/app/public/service/news.service'
 import {AdvancedNewsInterface} from 'src/app/public/type/news.interface'
 import {AutoUnsubscribeService} from 'src/app/shared/services/auto-unsubscribe.service'
+import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 
 @Component({
@@ -26,9 +28,10 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
 
 	public singleNews: AdvancedNewsInterface
+	// public isNewImage = new BehaviorSubject<boolean>(false)
 	public isNewImage: boolean
 	public newImage: string = ''
-	public newImageTest = new BehaviorSubject<string>('')
+	public uploadNewImage = new BehaviorSubject<string>('')
 
 	public form: FormGroup
 
@@ -53,6 +56,7 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		console.log('INIT>')
 		if (this.newsID) {
 			this.getSingleNews()
 			this.isNewImage = true
@@ -128,13 +132,26 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 		this.isNewImage = false
 	}
 
-	onDocumentLoad(file) {
-		if (file) {
-			this.newImageTest.next(file.url)
-			this.newImageTest.subscribe(() => {
-				this.newImage = this.newImageTest.value
+	onDocumentLoad({file, url}: FileDnd) {
+		const document: DocumentReq = {
+			Description: `description ${file.name}`,
+			DocumentTypeID: 40,
+			Title: file.name,
+			OwnerTypeID: 20,
+			Data: url
+		}
+		this.addDocument(document)
+	}
+
+	addDocument(document: DocumentReq) {
+		console.log('document :>> ', document)
+		if (document) {
+			this.uploadNewImage.next(document.Data)
+			this.uploadNewImage.subscribe(() => {
+				this.newImage = this.uploadNewImage.value
+				console.log('this.newImage :>> ', this.newImage)
+				// this.isNewImage = true
 			})
-			console.log('this.newImage :>> ', this.newImage)
 		}
 	}
 }
