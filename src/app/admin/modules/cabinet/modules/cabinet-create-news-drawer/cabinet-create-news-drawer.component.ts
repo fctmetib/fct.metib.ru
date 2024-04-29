@@ -28,7 +28,6 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
 
 	public singleNews: AdvancedNewsInterface
-	// public isNewImage = new BehaviorSubject<boolean>(false)
 	public isNewImage: boolean
 	public newImage: string = ''
 	public uploadNewImage = new BehaviorSubject<string>('')
@@ -123,13 +122,17 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	}
 
 	deleteNews(id) {
-		console.log('delete news', id)
-		this.isNewImage = false
+		if (this.uploadNewImage) {
+			this.isNewImage = false
+		} else this.isNewImage = true
+		this.uploadNewImage.next('')
 	}
 
 	addNewsImage() {
-		console.log('add news image')
-		this.isNewImage = false
+		if (this.uploadNewImage) {
+			this.isNewImage = false
+		} else this.isNewImage = true
+		this.uploadNewImage.next('')
 	}
 
 	onDocumentLoad({file, url}: FileDnd) {
@@ -149,8 +152,6 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			this.uploadNewImage.next(document.Data)
 			this.uploadNewImage.subscribe(() => {
 				this.newImage = this.uploadNewImage.value
-				console.log('this.newImage :>> ', this.newImage)
-				// this.isNewImage = true
 			})
 		}
 	}

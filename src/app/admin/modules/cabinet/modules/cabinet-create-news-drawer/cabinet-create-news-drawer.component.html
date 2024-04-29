@@ -14,16 +14,10 @@
 				<input [formControl]="formNewsDate" type="date" mibInput />
 				<ng-container mibLabel>Укажите дату публикации</ng-container>
 			</mib-input>
-			{{ isNewImage }}
 			<mib-spacing type="s"></mib-spacing>
 			<p class="text text_m c-bti-primary">Загрузите изображение</p>
 			<mib-spacing type="xs2"></mib-spacing>
 			<div *ngIf="!isNewImage; else editImageTemplate" class="flex flex_column">
-				<!-- <mib-spacing type="s"></mib-spacing>
-				<p class="text text_m c-bti-primary">Загрузите изображение</p>
-				<mib-spacing type="xs2"></mib-spacing> -->
-
-				<!-- *ngIf="!(uploadNewImage | async); else showImageTemplate" -->
 				<mib-dnd
 					*ngIf="!(uploadNewImage | async); else editImageTemplate"
 					[IconName]="'fi_image'"
@@ -32,11 +26,6 @@
 					[accept]="['image/jpg', 'image/jpeg', 'image/png']"
 					headline="Загрузите изображение"
 				></mib-dnd>
-				<!-- <ng-template #showImageTemplate>
-					<div class="flex">
-						<img src="{{ newImage }}" alt="" />
-					</div>
-				</ng-template> -->
 			</div>
 			<ng-template #editImageTemplate>
 				<div class="flex picture-block">
