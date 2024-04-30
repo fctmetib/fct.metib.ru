@@ -3,18 +3,10 @@ import {Component, Inject, OnInit} from '@angular/core'
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {Properties} from 'csstype'
-import {
-	BehaviorSubject,
-	concatMap,
-	filter,
-	finalize,
-	takeUntil,
-	tap
-} from 'rxjs'
+import {BehaviorSubject, concatMap, finalize, tap} from 'rxjs'
 import {DocumentReq} from 'src/app/client/modules/requests/interfaces/request.interface'
 import {NewsService} from 'src/app/public/service/news.service'
 import {AdvancedNewsInterface} from 'src/app/public/type/news.interface'
-import {AutoUnsubscribeService} from 'src/app/shared/services/auto-unsubscribe.service'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 
@@ -34,7 +26,7 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 
 	public form: FormGroup
 
-	public formNewsDate = new FormControl(null, [Validators.required])
+	// public formNewsDate = new FormControl(null, [Validators.required])
 
 	public defaultSkeleton: Properties = {
 		borderRadius: '8px',
@@ -46,7 +38,6 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 		public dialogRef: MatDialogRef<CabinetCreateNewsDrawerComponent>,
 		private newsService: NewsService,
 		private fb: FormBuilder,
-		private au: AutoUnsubscribeService,
 		public datepipe: DatePipe
 	) {}
 
@@ -63,7 +54,7 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			this.isNewImage = false
 		}
 		this.initForms()
-		this.watchForms()
+		// this.watchForms()
 	}
 
 	getSingleNews() {
@@ -82,11 +73,16 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			)
 			.pipe(
 				tap(data => {
+					console.log('getSingleData :>> ', data)
 					this.form.get('formNewsTitle').setValue(data.Title),
 						this.form.get('formNewsText').setValue(data.Text),
-						this.formNewsDate.setValue(
-							this.datepipe.transform(data.Date, 'yyyy-MM-dd')
-						)
+						this.form
+							.get('formNewsDate')
+							.setValue(this.datepipe.transform(data.Date, 'yyyy-MM-dd'))
+					// this.form.get('formNewsImage').setValue(data.Image)
+					// this.formNewsDate.setValue(data
+					// 	this.datepipe.transform(data.Date, 'yyyy-MM-dd')
+					// )
 				})
 			)
 			.subscribe(news => {
@@ -96,6 +92,21 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 
 	createNews() {
 		console.log('create news >>>')
+		const res = this.form.getRawValue()
+		let newsData = {
+			ID: 1,
+			Title: res.formNewsTitle,
+			Date: new Date(res.formNewsDate).toISOString(),
+			FileReference: res.formNewsTitle,
+			Text: res.formNewsText
+		}
+		this.newsService.addNewsItem(newsData).subscribe()
+		this.dialogRef.close()
+	}
+
+	updateNews(id) {
+		const res = this.form.getRawValue()
+		console.log('update this news - ', id, res)
 	}
 
 	closeDrawer() {
@@ -105,21 +116,28 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	private initForms() {
 		this.form = this.fb.group({
 			formNewsTitle: [null, [Validators.required]],
-			formNewsText: [null, [Validators.required]]
+			formNewsText: [null, [Validators.required]],
+			formNewsDate: [null, [Validators.required]]
 		})
 	}
 
-	private watchForms() {
-		this.formNewsDate.valueChanges
-			.pipe(
-				tap(data => {
-					console.log('formNewsDate.valueChanges-data :>> ', data)
-				}),
-				filter(Boolean),
-				takeUntil(this.au.destroyer)
-			)
-			.subscribe()
-	}
+	// private watchForms() {
+	// 	this.formNewsDate.valueChanges
+	// 		.pipe(
+	// 			tap(data => {
+	// 				// if (data) {
+	// 				this.formNewsDate.setValue(data)
+	// 				console.log('formNewsDate.valueChanges-data :>> ', data)
+	// 				// } else {
+	// 				// 	console.log('data formnewsData reset :>> ', data)
+	// 				// 	this.formNewsDate.reset()
+	// 				// }
+	// 			}),
+	// 			filter(Boolean),
+	// 			takeUntil(this.au.destroyer)
+	// 		)
+	// 		.subscribe()
+	// }
 
 	deleteNews(id) {
 		if (this.uploadNewImage) {

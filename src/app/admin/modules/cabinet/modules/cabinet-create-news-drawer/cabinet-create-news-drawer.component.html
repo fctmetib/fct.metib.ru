@@ -11,7 +11,7 @@
 		></mib-skeleton>
 		<ng-template #news>
 			<mib-input class="flex_grow">
-				<input [formControl]="formNewsDate" type="date" mibInput />
+				<input formControlName="formNewsDate" type="date" mibInput />
 				<ng-container mibLabel>Укажите дату публикации</ng-container>
 			</mib-input>
 			<mib-spacing type="s"></mib-spacing>
@@ -83,7 +83,7 @@
 		<div class="flex gap-12">
 			<mib-button
 				[disabled]="form.invalid"
-				(press)="createNews()"
+				(press)="!newsID ? createNews() : updateNews(newsID)"
 				size="m"
 				type="filled-primary"
 				>Создать новость</mib-button

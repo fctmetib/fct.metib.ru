@@ -12,9 +12,19 @@
 	overflow: hidden;
 
 	&.isAdmin {
+		height: 100%;
 		max-width: 280px;
+		& > div:first-child {
+			flex-grow: 1;
+		}
 		& > div {
 			height: auto;
+		}
+		& .news-text {
+			flex-grow: 0;
+		}
+		& img {
+			min-height: 156px;
 		}
 		& .p-24,
 		.ph-24 {

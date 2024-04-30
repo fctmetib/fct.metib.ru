@@ -53,26 +53,6 @@ export class NewsService {
 
 	// https://api-factoring-test02.metib.ru/api/v{version}/news
 
-	/* 
-	{
-		"Title": "string title",
-		"Date": "2024-04-25T03:10:54.025Z",
-		"Text": "string post"
-	}
-
-	---
-
-	curl -X 'POST' \
-  'https://api-factoring-test02.metib.ru/api/v{version}/news' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "Title": "string title",
-  "Date": "2024-04-25T03:10:54.025Z",
-  "Text": "string post"
-}'
-	*/
-
 	addNewsItem(data: NewsInterface): Observable<NewsInterface> {
 		let url = `${environment.apiUrl}/v1/news`
 		return this.http.post<NewsInterface>(url, data)
@@ -88,18 +68,6 @@ export class NewsService {
 
 	// https://api-factoring-test02.metib.ru/api/v{version}/news/22
 
-	/* 
-	curl -X 'PUT' \
-  'https://api-factoring-test02.metib.ru/api/v{version}/news/22' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "Title": "string update",
-  "Date": "2024-04-25T03:04:06.777Z",
-  "Text": "string update 222"
-}'
-	*/
-
 	updateNewsItem(
 		data: NewsInterface,
 		newsId: string
@@ -110,8 +78,8 @@ export class NewsService {
 
 	// https://api-factoring-test02.metib.ru/api/v{version}/news/22
 
-	removeNewsItem(newsId: string): Observable<any> {
-		let url = `${environment.apiUrl}/news/${newsId}`
+	removeNewsItem(newsId: number): Observable<any> {
+		let url = `${environment.apiUrl}/v1/news/${newsId}`
 		return this.http.delete<any>(url)
 	}
 
