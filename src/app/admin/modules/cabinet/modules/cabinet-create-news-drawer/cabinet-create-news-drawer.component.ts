@@ -122,7 +122,7 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 				// })
 			)
 			.subscribe(error => console.log('send image error :>> ', error))
-		this.dialogRef.close()
+		this.dialogRef.close(this.lastID)
 	}
 
 	// createNews() {
@@ -168,7 +168,7 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 				})
 			)
 			.subscribe(error => console.log('send image error :>> ', error))
-		this.dialogRef.close()
+		this.dialogRef.close(id)
 	}
 
 	closeDrawer() {

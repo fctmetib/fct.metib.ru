@@ -100,8 +100,8 @@ export class CabinetComponent implements OnInit {
 	subscribeToDialogClose(dialogRef: MatDialogRef<any>) {
 		dialogRef
 			.afterClosed()
-			.pipe(takeUntil(this.au.destroyer))
-			// .pipe(filter(Boolean), takeUntil(this.au.destroyer))
+			// .pipe(takeUntil(this.au.destroyer))
+			.pipe(filter(Boolean), takeUntil(this.au.destroyer))
 			.subscribe(() => {
 				this.getCurrentNews()
 			})
