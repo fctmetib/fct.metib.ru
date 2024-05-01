@@ -65,7 +65,8 @@ export class CabinetNewsDrawerComponent implements OnInit {
 	}
 
 	removeNews(id: number) {
-		console.log('remove news >>>', id)
+		this.newsService.removeNewsItem(id).subscribe()
+		console.log('deleteNews - ', id)
 	}
 
 	openEditNewsDrawer(id) {

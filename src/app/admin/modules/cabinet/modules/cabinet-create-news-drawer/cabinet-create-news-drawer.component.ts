@@ -2,6 +2,7 @@ import {DatePipe} from '@angular/common'
 import {Component, Inject, OnInit} from '@angular/core'
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
+import {error} from 'console'
 import {Properties} from 'csstype'
 import {BehaviorSubject, concatMap, finalize, tap} from 'rxjs'
 import {DocumentReq} from 'src/app/client/modules/requests/interfaces/request.interface'
@@ -23,6 +24,7 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	public isNewImage: boolean
 	public newImage: string = ''
 	public uploadNewImage = new BehaviorSubject<string>('')
+	public lastID: number = 0
 
 	public form: FormGroup
 
@@ -54,7 +56,15 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			this.isNewImage = false
 		}
 		this.initForms()
+		this.getLastID()
 		// this.watchForms()
+	}
+
+	getLastID() {
+		this.newsService.getNews(1).subscribe(data => {
+			this.lastID = data[0].ID + 1
+			console.log('this.lastID :>> ', this.lastID)
+		})
 	}
 
 	getSingleNews() {
@@ -79,10 +89,6 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 						this.form
 							.get('formNewsDate')
 							.setValue(this.datepipe.transform(data.Date, 'yyyy-MM-dd'))
-					// this.form.get('formNewsImage').setValue(data.Image)
-					// this.formNewsDate.setValue(data
-					// 	this.datepipe.transform(data.Date, 'yyyy-MM-dd')
-					// )
 				})
 			)
 			.subscribe(news => {
@@ -94,19 +100,75 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 		console.log('create news >>>')
 		const res = this.form.getRawValue()
 		let newsData = {
-			ID: 1,
+			ID: this.lastID,
 			Title: res.formNewsTitle,
 			Date: new Date(res.formNewsDate).toISOString(),
 			FileReference: res.formNewsTitle,
 			Text: res.formNewsText
 		}
-		this.newsService.addNewsItem(newsData).subscribe()
+		this.newsService
+			.addNewsItem(newsData)
+			.pipe(
+				tap(data => {
+					this.newsService.addNewsImage(this.newImage, data.ID)
+				})
+				// tap(() => {
+				// 	console.log(
+				// 		'this.newsID + 1, this.newImage :>> ',
+				// 		this.lastID,
+				// 		this.newImage
+				// 	)
+				// 	this.newsService.addNewsImage(this.newImage, this.lastID).subscribe()
+				// })
+			)
+			.subscribe(error => console.log('send image error :>> ', error))
 		this.dialogRef.close()
 	}
 
+	// createNews() {
+	// 	console.log('create news >>>')
+	// 	const res = this.form.getRawValue()
+	// 	let newsData = {
+	// 		ID: this.newsID + 1,
+	// 		Title: res.formNewsTitle,
+	// 		Date: new Date(res.formNewsDate).toISOString(),
+	// 		FileReference: res.formNewsTitle,
+	// 		Text: res.formNewsText
+	// 	}
+	// 	this.newsService
+	// 		.addNewsItem(newsData)
+	// 		.pipe(
+	// 			tap(() => {
+	// 				console.log(
+	// 					'this.newsID + 1, this.newImage :>> ',
+	// 					this.lastID,
+	// 					this.newImage
+	// 				)
+	// 				this.newsService.addNewsImage(this.newImage, this.lastID).subscribe()
+	// 			})
+	// 		)
+	// 		.subscribe(error => console.log('send image error :>> ', error))
+	// 	this.dialogRef.close()
+	// }
+
 	updateNews(id) {
 		const res = this.form.getRawValue()
-		console.log('update this news - ', id, res)
+		let newsData = {
+			ID: id,
+			Title: res.formNewsTitle,
+			Date: new Date(res.formNewsDate).toISOString(),
+			FileReference: res.formNewsTitle,
+			Text: res.formNewsText
+		}
+		this.newsService
+			.updateNewsItem(newsData, id)
+			.pipe(
+				tap(data => {
+					this.newsService.addNewsImage(this.newImage, id).subscribe()
+				})
+			)
+			.subscribe(error => console.log('send image error :>> ', error))
+		this.dialogRef.close()
 	}
 
 	closeDrawer() {
@@ -146,7 +208,7 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 		this.uploadNewImage.next('')
 	}
 
-	addNewsImage() {
+	addImage() {
 		if (this.uploadNewImage) {
 			this.isNewImage = false
 		} else this.isNewImage = true

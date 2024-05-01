@@ -2,9 +2,11 @@ import {Paginator} from 'primeng/paginator'
 import {
 	BehaviorSubject,
 	Subscription,
+	filter,
 	finalize,
 	map,
 	switchMap,
+	takeUntil,
 	tap,
 	zip
 } from 'rxjs'
@@ -15,7 +17,7 @@ import {FormBuilder, FormGroup} from '@angular/forms'
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog'
 import {CreateNewsDialogComponent} from '../components/create-news-dialog/create-news-dialog.component'
 import {CabinetNewsDrawerComponent} from '../modules/cabinet-news-drawer/cabinet-news-drawer.component'
-import {MatDialogRef} from '@angular/material/dialog'
+import {MatDialog, MatDialogRef} from '@angular/material/dialog'
 import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {CabinetNewsDrawerService} from '../modules/cabinet-news-drawer/cabinet-news-drawer.service'
 import {CabinetCreateNewsDrawerService} from '../modules/cabinet-create-news-drawer/cabinet-create-news-drawer.service'
@@ -23,6 +25,7 @@ import {CabinetEditNewsDrawerService} from '../modules/cabinet-edit-news-drawer/
 import {AdvancedNewsInterface} from 'src/app/public/type/news.interface'
 import {NewsService} from 'src/app/public/service/news.service'
 import {Properties} from 'csstype'
+import {AutoUnsubscribeService} from 'src/app/shared/services/auto-unsubscribe.service'
 
 @Component({
 	selector: 'cabinet',
@@ -53,12 +56,21 @@ export class CabinetComponent implements OnInit {
 	constructor(
 		private cabinetNewsDrawerService: CabinetNewsDrawerService,
 		private сabinetCreateNewsDrawerService: CabinetCreateNewsDrawerService,
-		private cabinetEditNewsDrawerService: CabinetEditNewsDrawerService,
+		private au: AutoUnsubscribeService,
+		private dialog: MatDialog,
 		private newsService: NewsService
 	) {}
 
 	ngOnInit(): void {
 		this.getCurrentNews()
+		this.dialog.afterOpened
+			.pipe(
+				tap(dialogRef => {
+					this.subscribeToDialogClose(dialogRef)
+				}),
+				takeUntil(this.au.destroyer)
+			)
+			.subscribe()
 	}
 
 	public getCurrentNews() {
@@ -85,6 +97,16 @@ export class CabinetComponent implements OnInit {
 			.subscribe()
 	}
 
+	subscribeToDialogClose(dialogRef: MatDialogRef<any>) {
+		dialogRef
+			.afterClosed()
+			.pipe(takeUntil(this.au.destroyer))
+			// .pipe(filter(Boolean), takeUntil(this.au.destroyer))
+			.subscribe(() => {
+				this.getCurrentNews()
+			})
+	}
+
 	addNews() {
 		console.log('add news')
 	}
@@ -109,13 +131,6 @@ export class CabinetComponent implements OnInit {
 			.afterClosed()
 			.subscribe()
 	}
-
-	// openEditNewsDrawer(id: number) {
-	// 	this.cabinetEditNewsDrawerService
-	// 		.open({data: {id}})
-	// 		.afterClosed()
-	// 		.subscribe()
-	// }
 }
 
 //   public filterForm: FormGroup;

@@ -62,7 +62,7 @@ export class NewsService {
 		var formdata = new FormData()
 		formdata.append('', file)
 
-		let url = `${environment.apiFileUploadUrl}v1/news/${newsId}/image`
+		let url = `${environment.apiUrl}/v1/news/${newsId}/image`
 		return this.http.post<string>(url, formdata)
 	}
 
