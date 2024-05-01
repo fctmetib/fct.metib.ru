@@ -108,7 +108,11 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			.addNewsItem(newsData)
 			.pipe(
 				switchMap(() => {
-					return this.newsService.addNewsImage(this.newImage, this.lastID)
+					return this.newsService.addNewsImage(
+						this.newImage.split(',')[1],
+						this.lastID
+					)
+					// return this.newsService.addNewsImage(this.newImage, this.lastID)
 				})
 			)
 			.subscribe(error => console.log('create error :>> ', error))
@@ -128,7 +132,9 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			.updateNewsItem(newsData, id)
 			.pipe(
 				switchMap(() => {
-					return this.newsService.addNewsImage(this.newImage.split(',')[1], id)
+					console.log('this.newImage :>> ', this.newImage)
+					return this.newsService.addNewsImage(this.newImage, id)
+					// return this.newsService.addNewsImage(this.newImage.split(',')[1], id)
 				})
 			)
 			.subscribe(error => console.log('update error :>> ', error))
