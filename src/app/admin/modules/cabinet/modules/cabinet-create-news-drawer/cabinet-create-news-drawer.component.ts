@@ -4,7 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {error} from 'console'
 import {Properties} from 'csstype'
-import {BehaviorSubject, concatMap, finalize, tap} from 'rxjs'
+import {BehaviorSubject, concatMap, finalize, switchMap, tap} from 'rxjs'
 import {DocumentReq} from 'src/app/client/modules/requests/interfaces/request.interface'
 import {NewsService} from 'src/app/public/service/news.service'
 import {AdvancedNewsInterface} from 'src/app/public/type/news.interface'
@@ -83,7 +83,6 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			)
 			.pipe(
 				tap(data => {
-					console.log('getSingleData :>> ', data)
 					this.form.get('formNewsTitle').setValue(data.Title),
 						this.form.get('formNewsText').setValue(data.Text),
 						this.form
@@ -97,7 +96,6 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	}
 
 	createNews() {
-		console.log('create news >>>')
 		const res = this.form.getRawValue()
 		let newsData = {
 			ID: this.lastID,
@@ -109,47 +107,13 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 		this.newsService
 			.addNewsItem(newsData)
 			.pipe(
-				tap(data => {
-					this.newsService.addNewsImage(this.newImage, data.ID)
+				tap(() => {
+					this.newsService.addNewsImage(this.newImage, this.lastID)
 				})
-				// tap(() => {
-				// 	console.log(
-				// 		'this.newsID + 1, this.newImage :>> ',
-				// 		this.lastID,
-				// 		this.newImage
-				// 	)
-				// 	this.newsService.addNewsImage(this.newImage, this.lastID).subscribe()
-				// })
 			)
-			.subscribe(error => console.log('send image error :>> ', error))
+			.subscribe()
 		this.dialogRef.close(this.lastID)
 	}
-
-	// createNews() {
-	// 	console.log('create news >>>')
-	// 	const res = this.form.getRawValue()
-	// 	let newsData = {
-	// 		ID: this.newsID + 1,
-	// 		Title: res.formNewsTitle,
-	// 		Date: new Date(res.formNewsDate).toISOString(),
-	// 		FileReference: res.formNewsTitle,
-	// 		Text: res.formNewsText
-	// 	}
-	// 	this.newsService
-	// 		.addNewsItem(newsData)
-	// 		.pipe(
-	// 			tap(() => {
-	// 				console.log(
-	// 					'this.newsID + 1, this.newImage :>> ',
-	// 					this.lastID,
-	// 					this.newImage
-	// 				)
-	// 				this.newsService.addNewsImage(this.newImage, this.lastID).subscribe()
-	// 			})
-	// 		)
-	// 		.subscribe(error => console.log('send image error :>> ', error))
-	// 	this.dialogRef.close()
-	// }
 
 	updateNews(id) {
 		const res = this.form.getRawValue()
@@ -163,11 +127,12 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 		this.newsService
 			.updateNewsItem(newsData, id)
 			.pipe(
-				tap(data => {
-					this.newsService.addNewsImage(this.newImage, id).subscribe()
+				tap(() => {
+					this.newsService.addNewsImage(this.newImage, id)
+					// .addNewsImage(this.newImage.split(',')[1], id)
 				})
 			)
-			.subscribe(error => console.log('send image error :>> ', error))
+			.subscribe()
 		this.dialogRef.close(id)
 	}
 
