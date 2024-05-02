@@ -24,7 +24,8 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	public isNewImage: boolean
 	public newImage: string = ''
 	public uploadNewImage = new BehaviorSubject<string>('')
-	public lastID: number = 0
+	public nextID: number = 0
+	public imageFile: File
 
 	public form: FormGroup
 
@@ -48,7 +49,6 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		console.log('INIT>')
 		if (this.newsID) {
 			this.getSingleNews()
 			this.isNewImage = true
@@ -62,8 +62,8 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 
 	getLastID() {
 		this.newsService.getNews(1).subscribe(data => {
-			this.lastID = data[0].ID + 1
-			console.log('this.lastID :>> ', this.lastID)
+			this.nextID = data[0].ID + 1
+			console.log('this.nextID :>> ', this.nextID)
 		})
 	}
 
@@ -98,7 +98,7 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	createNews() {
 		const res = this.form.getRawValue()
 		let newsData = {
-			ID: this.lastID,
+			ID: this.nextID,
 			Title: res.formNewsTitle,
 			Date: new Date(res.formNewsDate).toISOString(),
 			FileReference: res.formNewsTitle,
@@ -108,20 +108,16 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			.addNewsItem(newsData)
 			.pipe(
 				switchMap(() => {
-					return this.newsService.addNewsImage(
-						this.newImage.split(',')[1],
-						this.lastID
-					)
-					// return this.newsService.addNewsImage(this.newImage, this.lastID)
+					return this.newsService.addNewsImage(this.imageFile, this.nextID)
 				})
 			)
-			.subscribe(error => console.log('create error :>> ', error))
-		this.dialogRef.close(this.lastID)
+			.subscribe(error => console.log('create news error :>> ', error))
+		this.dialogRef.close(this.nextID)
 	}
 
 	updateNews(id) {
 		const res = this.form.getRawValue()
-		let newsData = {
+		const newsData = {
 			ID: id,
 			Title: res.formNewsTitle,
 			Date: new Date(res.formNewsDate).toISOString(),
@@ -132,12 +128,10 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			.updateNewsItem(newsData, id)
 			.pipe(
 				switchMap(() => {
-					console.log('this.newImage :>> ', this.newImage)
-					return this.newsService.addNewsImage(this.newImage, id)
-					// return this.newsService.addNewsImage(this.newImage.split(',')[1], id)
+					return this.newsService.addNewsImage(this.imageFile, id)
 				})
 			)
-			.subscribe(error => console.log('update error :>> ', error))
+			.subscribe(error => console.log('update news error :>> ', error))
 		this.dialogRef.close(id)
 	}
 
@@ -186,23 +180,12 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	}
 
 	onDocumentLoad({file, url}: FileDnd) {
-		const document: DocumentReq = {
-			Description: `description ${file.name}`,
-			DocumentTypeID: 40,
-			Title: file.name,
-			OwnerTypeID: 20,
-			Data: url
+		if (file) {
+			this.imageFile = file
 		}
-		this.addDocument(document)
-	}
-
-	addDocument(document: DocumentReq) {
-		console.log('document :>> ', document)
-		if (document) {
-			this.uploadNewImage.next(document.Data)
-			this.uploadNewImage.subscribe(() => {
-				this.newImage = this.uploadNewImage.value
-			})
-		}
+		this.uploadNewImage.next(url)
+		this.uploadNewImage.subscribe(() => {
+			this.newImage = this.uploadNewImage.value
+		})
 	}
 }
