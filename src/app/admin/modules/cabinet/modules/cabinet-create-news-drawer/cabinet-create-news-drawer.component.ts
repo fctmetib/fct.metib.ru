@@ -17,7 +17,7 @@ import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interfa
 	styleUrls: ['./cabinet-create-news-drawer.component.scss']
 })
 export class CabinetCreateNewsDrawerComponent implements OnInit {
-	public isSubmitting$ = new BehaviorSubject<boolean>(false)
+	// public isSubmitting$ = new BehaviorSubject<boolean>(false)
 	public loading$ = new BehaviorSubject<boolean>(false)
 
 	public singleNews: AdvancedNewsInterface
@@ -96,6 +96,7 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	}
 
 	createNews() {
+		this.loading$.next(true)
 		const res = this.form.getRawValue()
 		let newsData = {
 			ID: this.nextID,
@@ -109,13 +110,16 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			.pipe(
 				switchMap(() => {
 					return this.newsService.addNewsImage(this.imageFile, this.nextID)
-				})
+				}),
+				finalize(() => this.loading$.next(false))
 			)
-			.subscribe(error => console.log('create news error :>> ', error))
-		this.dialogRef.close(this.nextID)
+			.subscribe(() => {
+				this.dialogRef.close(this.nextID)
+			})
 	}
 
 	updateNews(id) {
+		this.loading$.next(true)
 		const res = this.form.getRawValue()
 		const newsData = {
 			ID: id,
@@ -129,10 +133,12 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			.pipe(
 				switchMap(() => {
 					return this.newsService.addNewsImage(this.imageFile, id)
-				})
+				}),
+				finalize(() => this.loading$.next(false))
 			)
-			.subscribe(error => console.log('update news error :>> ', error))
-		this.dialogRef.close(id)
+			.subscribe(() => {
+				this.dialogRef.close(id)
+			})
 	}
 
 	closeDrawer() {

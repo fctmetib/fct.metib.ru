@@ -79,12 +79,17 @@
 		<div class="flex gap-12">
 			<mib-button
 				[disabled]="form.invalid"
+				[disabled]="loading$ | async"
 				(press)="!newsID ? createNews() : updateNews(newsID)"
 				size="m"
 				type="filled-primary"
 				>Создать новость</mib-button
 			>
-			<mib-button (press)="closeDrawer()" size="m" type="filled-secondary"
+			<mib-button
+				[disabled]="loading$ | async"
+				(press)="closeDrawer()"
+				size="m"
+				type="filled-secondary"
 				>Отмена
 			</mib-button>
 		</div>
