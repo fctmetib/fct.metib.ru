@@ -80,6 +80,7 @@
 			<mib-button
 				[disabled]="form.invalid"
 				[disabled]="loading$ | async"
+				[disabled]="isSubmitting$ | async"
 				(press)="!newsID ? createNews() : updateNews(newsID)"
 				size="m"
 				type="filled-primary"
@@ -87,6 +88,7 @@
 			>
 			<mib-button
 				[disabled]="loading$ | async"
+				[disabled]="isSubmitting$ | async"
 				(press)="closeDrawer()"
 				size="m"
 				type="filled-secondary"
