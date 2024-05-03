@@ -27,6 +27,16 @@
 					[value]="true"
 					text="По дате публикации"
 				></mib-dropdown-point>
+				<mib-dropdown-point
+					[value]="false"
+					(press)="sortNewsByDate('new')"
+					text="Сначала новые"
+				></mib-dropdown-point>
+				<mib-dropdown-point
+					[value]="false"
+					(press)="sortNewsByDate('old')"
+					text="Сначала старые"
+				></mib-dropdown-point>
 			</mib-select>
 		</div>
 	</div>

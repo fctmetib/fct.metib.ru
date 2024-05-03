@@ -46,6 +46,7 @@ export class CabinetComponent implements OnInit {
 
 	public newsNumberCount: number = 4
 	public getAdvancedNews: AdvancedNewsInterface[]
+	public getSortedNews: AdvancedNewsInterface[]
 
 	public skeleton: Properties = {
 		borderRadius: '8px',
@@ -97,10 +98,46 @@ export class CabinetComponent implements OnInit {
 			.subscribe()
 	}
 
+	sortNewsByDate(order: 'new' | 'old') {
+		if (this.getAdvancedNews) {
+			const temp = [...this.getAdvancedNews]
+			if (order === 'new') {
+				this.getSortedNews = temp.sort(
+					(a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime()
+				)
+				console.log('HALO SORTED NEW DATE>>>', this.getSortedNews)
+			} else if (order === 'old') {
+				this.getSortedNews = temp.sort(
+					(a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime()
+				)
+				console.log('HALO SORTED OLD DATE>>>', this.getSortedNews)
+			}
+		}
+	}
+
+	// sortNewsByNew() {
+	// 	if (this.getAdvancedNews) {
+	// 		const temp = [...this.getAdvancedNews]
+	// 		this.getSortededNews = temp.sort(
+	// 			(a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime()
+	// 		)
+	// 		console.log('HALO SORTED NEW DATE>>>', this.getSortededNews)
+	// 	}
+	// }
+
+	// sortNewsByOld() {
+	// 	if (this.getAdvancedNews) {
+	// 		const temp = [...this.getAdvancedNews]
+	// 		this.getSortededNews = temp.sort(
+	// 			(a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime()
+	// 		)
+	// 		console.log('HALO SORTED OLD DATE>>>', this.getSortededNews)
+	// 	}
+	// }
+
 	subscribeToDialogClose(dialogRef: MatDialogRef<any>) {
 		dialogRef
 			.afterClosed()
-			// .pipe(takeUntil(this.au.destroyer))
 			.pipe(filter(Boolean), takeUntil(this.au.destroyer))
 			.subscribe(() => {
 				this.getCurrentNews()
