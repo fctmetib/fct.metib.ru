@@ -1,11 +1,9 @@
 import {DatePipe} from '@angular/common'
 import {Component, Inject, OnInit} from '@angular/core'
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
+import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
-import {error} from 'console'
 import {Properties} from 'csstype'
-import {BehaviorSubject, concatMap, finalize, switchMap, tap} from 'rxjs'
-import {DocumentReq} from 'src/app/client/modules/requests/interfaces/request.interface'
+import {BehaviorSubject, concatMap, finalize, of, switchMap, tap} from 'rxjs'
 import {NewsService} from 'src/app/public/service/news.service'
 import {AdvancedNewsInterface} from 'src/app/public/type/news.interface'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
@@ -132,7 +130,11 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			.updateNewsItem(newsData, id)
 			.pipe(
 				switchMap(() => {
-					return this.newsService.addNewsImage(this.imageFile, id)
+					if (this.imageFile) {
+						return this.newsService.addNewsImage(this.imageFile, id)
+					}
+					this.dialogRef.close(id)
+					return of()
 				}),
 				finalize(() => this.isSubmitting$.next(false))
 			)
