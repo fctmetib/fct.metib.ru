@@ -44,7 +44,7 @@ export class CabinetComponent implements OnInit {
 		link: '/news/1'
 	}
 
-	public newsNumberCount: number = 4
+	public newsNumberCount: number = 6
 	public getAdvancedNews: AdvancedNewsInterface[]
 	public getSortedNews: AdvancedNewsInterface[]
 
@@ -53,6 +53,10 @@ export class CabinetComponent implements OnInit {
 		height: '240px',
 		width: '100%'
 	}
+
+	public PAGINATOR_ITEMS_PER_PAGE = 5
+	public PAGINATOR_PAGE_TO_SHOW = 5
+	public currentPage$ = new BehaviorSubject<number>(1)
 
 	constructor(
 		private cabinetNewsDrawerService: CabinetNewsDrawerService,
@@ -72,6 +76,12 @@ export class CabinetComponent implements OnInit {
 				takeUntil(this.au.destroyer)
 			)
 			.subscribe()
+
+		// get news start
+		this.newsService.getAllNews().subscribe(data => {
+			console.log('data News all:>> ', data)
+		})
+		// get news end
 	}
 
 	public getCurrentNews() {
@@ -89,6 +99,7 @@ export class CabinetComponent implements OnInit {
 					).pipe(
 						tap(data => {
 							this.getAdvancedNews = data
+							this.onPageChange(this.currentPage$.value)
 							console.log('data :>> ', data)
 						})
 					)
@@ -148,6 +159,15 @@ export class CabinetComponent implements OnInit {
 			.open({data: {id}})
 			.afterClosed()
 			.subscribe()
+	}
+
+	onPageChange(page: number) {
+		console.log('page HALO:>> ', page)
+		this.currentPage$.next(page)
+		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+
+		console.log('this.currentPage$:>> ', this.currentPage$.value)
 	}
 }
 

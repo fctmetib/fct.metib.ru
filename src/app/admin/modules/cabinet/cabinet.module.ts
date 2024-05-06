@@ -20,7 +20,7 @@ import {CardNewsComponent} from '../../shared/components/cards/card-news/card-ne
 import {CabinetComponent} from './pages/cabinet.component'
 import {CreateNewsDialogComponent} from './components/create-news-dialog/create-news-dialog.component'
 import {DialogService} from 'primeng/dynamicdialog'
-import {PaginatorModule} from 'primeng/paginator'
+import {PaginatorModule as PaginatorModule22} from 'primeng/paginator'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {TabModule} from 'src/app/shared/ui-kit/tab/tab.module'
 import {NavbarModule} from 'src/app/shared/ui-kit/navbar/navbar.module'
@@ -36,6 +36,7 @@ import {CabinetNewsDrawerModule} from './modules/cabinet-news-drawer/cabinet-new
 import {CabinetCreateNewsDrawerModule} from './modules/cabinet-create-news-drawer/cabinet-create-news-drawer.module'
 import {CabinetEditNewsDrawerModule} from './modules/cabinet-edit-news-drawer/cabinet-edit-news-drawer.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
+import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 
 const routes = [
 	{
@@ -69,7 +70,7 @@ const routes = [
 		AvatarModule,
 		FormsModule,
 		ReactiveFormsModule,
-		PaginatorModule,
+		PaginatorModule22,
 		SpacingModule,
 		TabModule,
 		NavbarModule,
@@ -85,6 +86,7 @@ const routes = [
 		CabinetCreateNewsDrawerModule,
 		CabinetEditNewsDrawerModule,
 		SkeletonModule,
+		PaginatorModule,
 		RouterModule.forChild(routes)
 	],
 	exports: [RouterModule],

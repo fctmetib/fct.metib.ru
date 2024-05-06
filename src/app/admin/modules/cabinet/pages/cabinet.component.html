@@ -3,7 +3,7 @@
 	<h3>Новости банка</h3>
 	<mib-spacing type="m"></mib-spacing>
 </div>
-<div class="container container_large">
+<div class="news container container_large">
 	<div class="flex">
 		<div class="flex gap-16 w-100">
 			<mib-input>
@@ -64,6 +64,16 @@
 	</ng-template>
 	<mib-spacing type="m"></mib-spacing>
 </div>
+<footer class="flex flex_justify-center">
+	<div class="flex">
+		<mib-paginator
+			(pageChange)="onPageChange($event)"
+			[totalCount]="90"
+			[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+			[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+		></mib-paginator>
+	</div>
+</footer>
 
 <!-- full -->
 

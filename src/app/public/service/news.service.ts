@@ -9,6 +9,11 @@ import {blob} from 'stream/consumers'
 export class NewsService {
 	constructor(private http: HttpClient) {}
 
+	public getAllNews() {
+		const url = `${environment.apiUrl}/v1/news/`
+		return this.http.get<NewsInterface[]>(url)
+	}
+
 	// https://api-factoring-test02.metib.ru/api/v{version}/news/top/3
 
 	public getNews(newsCount: number): Observable<NewsInterface[]> {

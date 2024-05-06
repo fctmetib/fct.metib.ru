@@ -1,3 +1,11 @@
+:host {
+	height: 100%;
+}
+
+.news {
+	height: calc(100% - 65px);
+}
+
 mib-select {
 	width: 185px;
 }
