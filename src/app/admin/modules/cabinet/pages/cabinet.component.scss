@@ -3,7 +3,11 @@
 }
 
 .news {
-	height: calc(100% - 65px);
+	min-height: calc(100% - 65px);
+}
+
+mib-news-panel {
+	cursor: pointer;
 }
 
 mib-select {
