@@ -1,10 +1,13 @@
 import {Paginator} from 'primeng/paginator'
 import {
 	BehaviorSubject,
+	Observable,
 	Subscription,
 	filter,
 	finalize,
+	from,
 	map,
+	of,
 	switchMap,
 	takeUntil,
 	tap,
@@ -34,6 +37,7 @@ import {AutoUnsubscribeService} from 'src/app/shared/services/auto-unsubscribe.s
 })
 export class CabinetComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
+	public dispalyNews$ = new BehaviorSubject<AdvancedNewsInterface[]>([])
 	isAdmin: boolean = true
 
 	newsDatas = {
@@ -101,6 +105,7 @@ export class CabinetComponent implements OnInit {
 							this.getAdvancedNews = data
 							this.onPageChange(this.currentPage$.value)
 							console.log('data :>> ', data)
+							this.dispalyNews$.next(this.getAdvancedNews)
 						})
 					)
 				),
@@ -116,12 +121,12 @@ export class CabinetComponent implements OnInit {
 				this.getSortedNews = temp.sort(
 					(a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime()
 				)
-				console.log('HALO SORTED NEW DATE>>>', this.getSortedNews)
+				this.dispalyNews$.next(this.getSortedNews)
 			} else if (order === 'old') {
 				this.getSortedNews = temp.sort(
 					(a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime()
 				)
-				console.log('HALO SORTED OLD DATE>>>', this.getSortedNews)
+				this.dispalyNews$.next(this.getSortedNews)
 			}
 		}
 	}

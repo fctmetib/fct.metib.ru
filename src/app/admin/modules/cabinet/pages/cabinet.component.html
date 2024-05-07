@@ -24,18 +24,14 @@
 			<span class="text text_m c-bti-tertiary">Сортировака:</span>
 			<mib-select placeholder="По дате публикации">
 				<mib-dropdown-point
-					[value]="true"
-					text="По дате публикации"
-				></mib-dropdown-point>
-				<mib-dropdown-point
-					[value]="false"
-					(press)="sortNewsByDate('new')"
-					text="Сначала новые"
-				></mib-dropdown-point>
-				<mib-dropdown-point
 					[value]="false"
 					(press)="sortNewsByDate('old')"
 					text="Сначала старые"
+				></mib-dropdown-point>
+				<mib-dropdown-point
+					[value]="true"
+					(press)="sortNewsByDate('new')"
+					text="Сначала новые"
 				></mib-dropdown-point>
 			</mib-select>
 		</div>
@@ -48,7 +44,7 @@
 	<ng-template #newsTemplate>
 		<div class="flex flex_wrap gap-16">
 			<mib-news-panel
-				*ngFor="let news of getAdvancedNews"
+				*ngFor="let news of dispalyNews$ | async"
 				(onclick)="openNewsDrawer(news.ID)"
 				(edit)="openCreateNewsDrawer(news.ID)"
 				(delete)="deleteNews(news.ID)"
