@@ -35,7 +35,7 @@ export class CabinetComponent implements OnInit {
 		width: '100%'
 	}
 
-	public PAGINATOR_ITEMS_PER_PAGE = 5
+	public PAGINATOR_ITEMS_PER_PAGE = 10
 	public PAGINATOR_PAGE_TO_SHOW = 5
 	public currentPage$ = new BehaviorSubject<number>(1)
 

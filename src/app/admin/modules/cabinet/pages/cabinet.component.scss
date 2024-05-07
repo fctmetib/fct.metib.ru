@@ -1,6 +1,5 @@
 :host {
 	height: 100%;
-	min-height: 238px;
 }
 
 .news {
@@ -9,6 +8,7 @@
 
 mib-news-panel {
 	cursor: pointer;
+	min-height: 238px;
 }
 
 mib-select {
