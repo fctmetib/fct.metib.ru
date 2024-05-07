@@ -27,15 +27,6 @@ export class CabinetComponent implements OnInit {
 	public dispalyNews$ = new BehaviorSubject<AdvancedNewsInterface[]>([])
 	isAdmin: boolean = true
 
-	newsDatas = {
-		id: 1,
-		img: './assets/images/news/news-1.jpg',
-		title: 'С Наступающим Новым 2024 годом!',
-		date: '10 декабря 2023',
-		link: '/news/1'
-	}
-
-	public newsNumberCount: number = 12
 	public getSortedNews: AdvancedNewsInterface[]
 
 	public skeleton: Properties = {
@@ -66,21 +57,12 @@ export class CabinetComponent implements OnInit {
 				takeUntil(this.au.destroyer)
 			)
 			.subscribe()
-
-		// get news start
-		this.newsService.getAllNews().subscribe(data => {
-			console.log('data News all:>> ', data)
-		})
-		// get news end
 	}
 
 	onPageChange(page: number) {
-		console.log('page HALO:>> ', page)
 		this.currentPage$.next(page)
 		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
 		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
-
-		console.log('this.currentPage$:>> ', this.currentPage$.value)
 		console.log('startIndex :>> ', startIndex)
 		console.log('endIndex :>> ', endIndex)
 		this.dispalyNews$.next(this.getSortedNews.slice(startIndex, endIndex))
@@ -89,7 +71,7 @@ export class CabinetComponent implements OnInit {
 	public getCurrentNews() {
 		this.loading$.next(true)
 		this.newsService
-			.getNews(this.newsNumberCount)
+			.getAllNews()
 			.pipe(
 				switchMap(news =>
 					zip(
@@ -102,7 +84,6 @@ export class CabinetComponent implements OnInit {
 						tap(data => {
 							this.getSortedNews = data
 							this.onPageChange(this.currentPage$.value)
-							console.log('data :>> ', data)
 						})
 					)
 				),

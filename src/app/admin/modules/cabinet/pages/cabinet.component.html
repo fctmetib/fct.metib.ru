@@ -61,11 +61,11 @@
 	</ng-template>
 	<mib-spacing type="m"></mib-spacing>
 </div>
-<footer class="flex flex_justify-center">
+<footer *ngIf="!(loading$ | async)" class="flex flex_justify-center">
 	<div class="flex">
 		<mib-paginator
 			(pageChange)="onPageChange($event)"
-			[totalCount]="90"
+			[totalCount]="getSortedNews?.length"
 			[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 			[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 		></mib-paginator>
