@@ -60,35 +60,34 @@ export class CabinetComponent implements OnInit {
 			.subscribe()
 	}
 
+	public getCurrentNews() {
+		this.loading$.next(true)
+
+		this.newsService
+			.getAllNews()
+			.pipe(
+				switchMap(news => {
+					const requests = news.map(item =>
+						this.newsService
+							.getNewsImage(item.ID)
+							.pipe(map(image => ({...item, Image: image})))
+					)
+					return zip(...requests)
+				}),
+				tap(data => {
+					this.getSortedNews = data
+					this.onPageChange(this.currentPage$.value)
+				}),
+				finalize(() => this.loading$.next(false))
+			)
+			.subscribe()
+	}
+
 	onPageChange(page: number) {
 		this.currentPage$.next(page)
 		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
 		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
 		this.dispalyNews$.next(this.getSortedNews?.slice(startIndex, endIndex))
-	}
-
-	public getCurrentNews() {
-		this.loading$.next(true)
-		this.newsService
-			.getAllNews()
-			.pipe(
-				switchMap(news =>
-					zip(
-						news.map(item =>
-							this.newsService
-								.getNewsImage(item.ID)
-								.pipe(map(image => ({...item, Image: image})))
-						)
-					).pipe(
-						tap(data => {
-							this.getSortedNews = data
-							this.onPageChange(this.currentPage$.value)
-						})
-					)
-				),
-				finalize(() => this.loading$.next(false))
-			)
-			.subscribe()
 	}
 
 	sortNewsByDate(order: 'new' | 'old') {

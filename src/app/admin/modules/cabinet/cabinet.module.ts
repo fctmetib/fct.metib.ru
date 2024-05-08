@@ -34,7 +34,6 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {NewsPanelModule} from 'src/app/public/components/news-panel/news-panel.module'
 import {CabinetNewsDrawerModule} from './modules/cabinet-news-drawer/cabinet-news-drawer.module'
 import {CabinetCreateNewsDrawerModule} from './modules/cabinet-create-news-drawer/cabinet-create-news-drawer.module'
-import {CabinetEditNewsDrawerModule} from './modules/cabinet-edit-news-drawer/cabinet-edit-news-drawer.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 
@@ -84,7 +83,6 @@ const routes = [
 		NewsPanelModule,
 		CabinetNewsDrawerModule,
 		CabinetCreateNewsDrawerModule,
-		CabinetEditNewsDrawerModule,
 		SkeletonModule,
 		PaginatorModule,
 		RouterModule.forChild(routes)

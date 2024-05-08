@@ -1,12 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
-import {
-	DrawerData,
-	DrawerStateEnum
-} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
+import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {CabinetCreateNewsDrawerService} from '../cabinet-create-news-drawer/cabinet-create-news-drawer.service'
 import {NewsService} from 'src/app/public/service/news.service'
-import {BehaviorSubject, concatMap, finalize} from 'rxjs'
+import {BehaviorSubject, finalize, map, switchMap} from 'rxjs'
 import {AdvancedNewsInterface} from 'src/app/public/type/news.interface'
 import {Properties} from 'csstype'
 
@@ -41,20 +38,19 @@ export class CabinetNewsDrawerComponent implements OnInit {
 
 	getSingleNews() {
 		this.loading$.next(true)
-		let img = ''
+
 		this.newsService
 			.getNewsImage(this.newsID)
 			.pipe(
-				concatMap(image => {
-					img = image
-					return this.newsService.getNewsById(this.newsID)
-				}),
-				finalize(() => {
-					this.loading$.next(false)
-				})
+				switchMap(image =>
+					this.newsService.getNewsById(this.newsID).pipe(
+						finalize(() => this.loading$.next(false)),
+						map(news => ({...news, Image: image}))
+					)
+				)
 			)
-			.subscribe(news => {
-				this.singleNews = {...news, Image: img}
+			.subscribe(singleNews => {
+				this.singleNews = singleNews
 			})
 	}
 

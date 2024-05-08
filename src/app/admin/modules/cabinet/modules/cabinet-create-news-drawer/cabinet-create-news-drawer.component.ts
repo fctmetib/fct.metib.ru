@@ -3,7 +3,15 @@ import {Component, Inject, OnInit} from '@angular/core'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {Properties} from 'csstype'
-import {BehaviorSubject, concatMap, finalize, of, switchMap, tap} from 'rxjs'
+import {
+	BehaviorSubject,
+	concatMap,
+	finalize,
+	map,
+	of,
+	switchMap,
+	tap
+} from 'rxjs'
 import {NewsService} from 'src/app/public/service/news.service'
 import {AdvancedNewsInterface} from 'src/app/public/type/news.interface'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
@@ -26,8 +34,6 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	public imageFile: File
 
 	public form: FormGroup
-
-	// public formNewsDate = new FormControl(null, [Validators.required])
 
 	public defaultSkeleton: Properties = {
 		borderRadius: '8px',
@@ -55,41 +61,36 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 		}
 		this.initForms()
 		this.getLastID()
-		// this.watchForms()
 	}
 
 	getLastID() {
 		this.newsService.getNews(1).subscribe(data => {
 			this.nextID = data[0].ID + 1
-			console.log('this.nextID :>> ', this.nextID)
 		})
 	}
 
 	getSingleNews() {
 		this.loading$.next(true)
-		let img = ''
+
 		this.newsService
 			.getNewsImage(this.newsID)
 			.pipe(
-				concatMap(image => {
-					img = image
-					return this.newsService.getNewsById(this.newsID)
-				}),
-				finalize(() => {
-					this.loading$.next(false)
-				})
+				switchMap(image =>
+					this.newsService.getNewsById(this.newsID).pipe(
+						finalize(() => this.loading$.next(false)),
+						tap(data => {
+							this.form.get('formNewsTitle').setValue(data.Title)
+							this.form.get('formNewsText').setValue(data.Text)
+							this.form
+								.get('formNewsDate')
+								.setValue(this.datepipe.transform(data.Date, 'yyyy-MM-dd'))
+						}),
+						map(news => ({...news, Image: image}))
+					)
+				)
 			)
-			.pipe(
-				tap(data => {
-					this.form.get('formNewsTitle').setValue(data.Title),
-						this.form.get('formNewsText').setValue(data.Text),
-						this.form
-							.get('formNewsDate')
-							.setValue(this.datepipe.transform(data.Date, 'yyyy-MM-dd'))
-				})
-			)
-			.subscribe(news => {
-				this.singleNews = {...news, Image: img}
+			.subscribe(singleNews => {
+				this.singleNews = singleNews
 			})
 	}
 
@@ -154,24 +155,6 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 			formNewsDate: [null, [Validators.required]]
 		})
 	}
-
-	// private watchForms() {
-	// 	this.formNewsDate.valueChanges
-	// 		.pipe(
-	// 			tap(data => {
-	// 				// if (data) {
-	// 				this.formNewsDate.setValue(data)
-	// 				console.log('formNewsDate.valueChanges-data :>> ', data)
-	// 				// } else {
-	// 				// 	console.log('data formnewsData reset :>> ', data)
-	// 				// 	this.formNewsDate.reset()
-	// 				// }
-	// 			}),
-	// 			filter(Boolean),
-	// 			takeUntil(this.au.destroyer)
-	// 		)
-	// 		.subscribe()
-	// }
 
 	deleteNews(id) {
 		if (this.uploadNewImage) {
