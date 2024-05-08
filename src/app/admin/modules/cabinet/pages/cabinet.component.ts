@@ -49,6 +49,7 @@ export class CabinetComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getCurrentNews()
+		this.onPageChange(this.currentPage$.value)
 		this.dialog.afterOpened
 			.pipe(
 				tap(dialogRef => {
@@ -63,9 +64,7 @@ export class CabinetComponent implements OnInit {
 		this.currentPage$.next(page)
 		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
 		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
-		console.log('startIndex :>> ', startIndex)
-		console.log('endIndex :>> ', endIndex)
-		this.dispalyNews$.next(this.getSortedNews.slice(startIndex, endIndex))
+		this.dispalyNews$.next(this.getSortedNews?.slice(startIndex, endIndex))
 	}
 
 	public getCurrentNews() {
@@ -120,14 +119,6 @@ export class CabinetComponent implements OnInit {
 			})
 	}
 
-	addNews() {
-		console.log('add news')
-	}
-
-	editNews(id: number) {
-		console.log('editNews - ', id)
-	}
-
 	deleteNews(id: number) {
 		this.newsService.removeNewsItem(id).subscribe(() => {
 			this.getCurrentNews()
@@ -135,7 +126,6 @@ export class CabinetComponent implements OnInit {
 	}
 
 	openNewsDrawer(id: number) {
-		console.log('openNewsDrawer -  :>> ', id)
 		this.cabinetNewsDrawerService.open({data: {id}}).afterClosed().subscribe()
 	}
 
