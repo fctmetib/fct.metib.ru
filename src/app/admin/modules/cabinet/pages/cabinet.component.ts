@@ -24,6 +24,7 @@ import {AutoUnsubscribeService} from 'src/app/shared/services/auto-unsubscribe.s
 })
 export class CabinetComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
+	public getAllNews$ = new BehaviorSubject<AdvancedNewsInterface[]>([])
 	public dispalyNews$ = new BehaviorSubject<AdvancedNewsInterface[]>([])
 	isAdmin: boolean = true
 
@@ -60,6 +61,17 @@ export class CabinetComponent implements OnInit {
 			.subscribe()
 	}
 
+	search(term: string) {
+		if (term.trim() && term !== '') {
+			let res = this.getAllNews$.value.filter(data =>
+				data.Title.toLowerCase().includes(term.toLowerCase())
+			)
+			this.dispalyNews$.next(res)
+		} else {
+			this.onPageChange(this.currentPage$.value)
+		}
+	}
+
 	public getCurrentNews() {
 		this.loading$.next(true)
 
@@ -75,6 +87,7 @@ export class CabinetComponent implements OnInit {
 					return zip(...requests)
 				}),
 				tap(data => {
+					this.getAllNews$.next(data)
 					this.getSortedNews = data
 					this.onPageChange(this.currentPage$.value)
 				}),
