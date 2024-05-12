@@ -56,19 +56,33 @@
 		padding: 0 86px;
 	}
 
-	& .stap {
+	& .step {
 		padding: 0 16px;
 	}
 
-	& .stap > div {
+	& .step > div {
+		position: relative;
 		padding: 24px;
 		background-color: var(--wgr-secondary);
 		border-radius: var(--main-border-radius);
+		&::after {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			display: block;
+			top: 0;
+			left: 0;
+			background: var(--overlay-tertiary);
+			border-radius: var(--main-border-radius);
+		}
 	}
 
-	& .stap h4 {
+	& .step h4 {
 		width: 32px;
 		height: 32px;
+		color: var(--wgr-primary);
+		z-index: 1;
 	}
 
 	& .line {

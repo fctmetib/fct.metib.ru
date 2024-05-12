@@ -91,6 +91,7 @@ export class LandingComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
 	public newsNumberCount: number = 4
 	public getAdvancedNews: AdvancedNewsInterface[]
+	public imgNumber: number = 0
 
 	public currentProductsTab?: ProductTabsEnum
 
@@ -135,7 +136,8 @@ export class LandingComponent implements OnInit {
 		console.log('get funding')
 	}
 
-	public onChange($event) {
-		this.currentProductsTab = $event
+	public onChange($num) {
+		this.imgNumber = $num
+		this.currentProductsTab = $num
 	}
 }

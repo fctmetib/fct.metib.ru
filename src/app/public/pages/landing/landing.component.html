@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div class="flex flex_grow">
-			<img src="./assets/images/staff/mib-staff.png" alt="staff" />
+			<img src="./assets/images/staff/mib-staff-1.png" alt="staff" />
 		</div>
 	</div>
 	<div class="flex lineal">
@@ -127,7 +127,10 @@
 			</ng-container>
 		</div>
 		<div class="flex flex_grow">
-			<img src="./assets/images/staff/holder/product.jpg" alt="product" />
+			<img
+				src="./assets/images/staff/holder/product-{{ imgNumber }}.png"
+				alt="product"
+			/>
 		</div>
 	</div>
 </section>
@@ -137,32 +140,52 @@
 	<mib-spacing type="l"></mib-spacing>
 	<div class="container flex flex_column">
 		<div class="flex stapper">
-			<div class="flex stap gap-8">
-				<div class="flex">
+			<div class="flex step gap-8">
+				<div
+					[style.background-image]="
+						'url(./assets/images/staff/how-bg/how-shipment.jpg)'
+					"
+					class="how-bg flex"
+				>
 					<h4 class="c-bti-quaternary text-center">1</h4>
 				</div>
 			</div>
 			<div class="flex flex_grow flex_align-center">
 				<div class="flex line flex_grow"></div>
 			</div>
-			<div class="flex stap gap-8">
-				<div class="flex">
+			<div class="flex step gap-8">
+				<div
+					[style.background-image]="
+						'url(./assets/images/staff/how-bg/how-request.jpg)'
+					"
+					class="flex"
+				>
 					<h4 class="c-bti-quaternary text-center">2</h4>
 				</div>
 			</div>
 			<div class="flex flex_grow flex_align-center">
 				<div class="flex line flex_grow"></div>
 			</div>
-			<div class="flex stap gap-8">
-				<div class="flex">
+			<div class="flex step gap-8">
+				<div
+					[style.background-image]="
+						'url(./assets/images/staff/how-bg/how-payment.jpg)'
+					"
+					class="flex"
+				>
 					<h4 class="c-bti-quaternary text-center">3</h4>
 				</div>
 			</div>
 			<div class="flex flex_grow flex_align-center">
 				<div class="flex line flex_grow"></div>
 			</div>
-			<div class="flex stap gap-8">
-				<div class="flex">
+			<div class="flex step gap-8">
+				<div
+					[style.background-image]="
+						'url(./assets/images/staff/how-bg/how-debtor.jpg)'
+					"
+					class="flex"
+				>
 					<h4 class="c-bti-quaternary text-center">4</h4>
 				</div>
 			</div>
