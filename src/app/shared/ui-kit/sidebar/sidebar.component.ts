@@ -49,14 +49,20 @@ export class SidebarComponent implements OnInit {
 			]
 		}
 	]
+	menuVerify = [
+		{
+			links: [{name: 'Запросы', link: '/client/not-verify'}]
+		}
+	]
 
 	isAdmin: boolean = true
-	// isAdmino:boolean = false
+	isVerify: boolean = true
 
 	constructor(public authService: AuthService) {}
 
 	ngOnInit(): void {
 		this.isAdmin = this.authService.isUserAdmin()
+		this.isVerify = this.authService.isUserVerified()
 	}
 
 	logout() {

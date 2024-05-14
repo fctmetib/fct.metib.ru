@@ -427,4 +427,15 @@ ng g m public/components/partner-panel/partner-panel --flat  --dry-run
 ng g c public/components/partner-panel/partner-panel --flat  --skip-tests --dry-run
  //---
 
+ //--- not-verify
+src\app\client\modules\not-verify
+ng g m client/modules/not-verify/not-verify --flat
+ng g m client/modules/not-verify/not-verify --flat --routing --module=app
+ //---
+
+ //--- g
+ src\app\shared\services\user-verify.guard.ts
+ ng g g shared/services/not-verify
+ //---
+
 ```

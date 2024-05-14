@@ -5,7 +5,11 @@
 	<div class="body flex_grow flex flex_column full-height">
 		<mib-spacing type="xs"></mib-spacing>
 		<div class="flex flex_column">
-			<ng-container *ngFor="let items of isAdmin ? menuAdmin : menuUser">
+			<ng-container
+				*ngFor="
+					let items of isAdmin ? menuAdmin : isVerify ? menuUser : menuVerify
+				"
+			>
 				<mib-menu-point *ngFor="let item of items.links" [link]="item.link"
 					><span>{{ item.name }}</span></mib-menu-point
 				>
