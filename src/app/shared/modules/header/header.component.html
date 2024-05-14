@@ -229,7 +229,7 @@
 			</div>
 		</div>
 		<ng-template #admin>
-			<div class="flex flex_justify-end">
+			<div *ngIf="signedIn" class="flex flex_justify-end">
 				<mib-skeleton
 					*ngIf="userLoading$ | async; else adminTemplate"
 					[styles]="skeleton"
@@ -268,6 +268,69 @@
 							></mib-icon>
 						</mib-dropdown-point>
 					</mib-dropdown>
+				</ng-template>
+			</div>
+			<div
+				*ngIf="!signedIn"
+				class="container flex flex_justify-between flex_align-center"
+			>
+				<div class="flex flex_grow gap-16">
+					<mib-icon
+						class="cursor-pointer"
+						[routerLink]="['/']"
+						name="logotype"
+					></mib-icon>
+					<div class="menu flex flex_center gap-32">
+						<a
+							title="Перейти на страницу: Главная"
+							class="text text_m c-wgr-quaternary"
+							[routerLink]="['/']"
+							routerLinkActive="active"
+							[routerLinkActiveOptions]="{exact: true}"
+							>Главная</a
+						>
+						<a
+							title="Перейти на страницу: Тарифы"
+							class="text text_m c-wgr-quaternary"
+							[routerLink]="['/tariffs']"
+							routerLinkActive="active"
+							>Тарифы</a
+						>
+						<a
+							title="Перейти на страницу: Клиентам"
+							class="text text_m c-wgr-quaternary"
+							[routerLink]="['/clients']"
+							routerLinkActive="active"
+							>Клиентам</a
+						>
+						<a
+							title="Перейти на страницу: Контакты"
+							class="text text_m c-wgr-quaternary"
+							[routerLink]="['/contacts']"
+							routerLinkActive="active"
+							>Контакты</a
+						>
+					</div>
+				</div>
+				<ng-container
+					*ngIf="
+						showProfileButton ||
+							(showProfileButton && !authService?.isUserLoggedIn);
+						else loggedInUser
+					"
+				>
+					<mib-button
+						[routerLink]="['/auth/login']"
+						type="filled-primary"
+						size="m"
+						>Личный кабинет
+						<mib-icon btn-right-icon class="stroke" name="fi_log-in"></mib-icon>
+					</mib-button>
+				</ng-container>
+				<ng-template #loggedInUser>
+					<mib-button [routerLink]="['/']" type="filled-secondary" size="m">
+						<mib-icon btn-icon class="stroke" name="fi_chevron-left"></mib-icon>
+					</mib-button>
 				</ng-template>
 			</div>
 		</ng-template>

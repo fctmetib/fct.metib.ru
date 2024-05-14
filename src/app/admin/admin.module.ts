@@ -28,7 +28,7 @@ import {CabinetModule} from './modules/cabinet/cabinet.module'
 
 const routes = [
 	{
-		path: 'admin',
+		path: '',
 		component: AdminComponent,
 		canActivate: [AdminGuard],
 		children: [

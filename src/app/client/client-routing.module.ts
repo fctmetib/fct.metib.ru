@@ -6,7 +6,7 @@ import {ClientComponent} from './client.component'
 
 const routes = [
 	{
-		path: 'client',
+		path: '',
 		component: ClientComponent,
 		canActivate: [AuthGuard, UserVerifyGuard],
 		children: [
