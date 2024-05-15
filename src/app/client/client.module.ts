@@ -33,55 +33,56 @@ import {DropdownModule} from '../shared/ui-kit/dropdown/dropdown.module'
 import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-point.module'
 import {ClipboardModule} from '@angular/cdk/clipboard'
 import {HeaderModule} from '../shared/modules/header/header.module'
-import {ToasterModule} from '../shared/ui-kit/toaster/toaster.module';
+import {ToasterModule} from '../shared/ui-kit/toaster/toaster.module'
+import {NotVerifyModule} from './modules/not-verify/not-verify.module'
 
 @NgModule({
-    imports: [
-        CommonModule,
-        InputTextModule,
-        CheckboxModule,
-        HttpClientModule,
-        ButtonModule,
-        RadioButtonModule,
-        InputTextareaModule,
-        MenuModule,
-        ProgressSpinnerModule,
-        FormsModule,
-        ClientRoutingModule,
-        ReactiveFormsModule,
-        AccordionModule,
-        CardModule,
-        MenubarModule,
-        AvatarModule,
-        IconModule,
-        SidebarModule,
-        SpacingModule,
-        SkeletonModule,
-        DropdownModule,
-        DropdownPointModule,
-        ClipboardModule,
-        HeaderModule,
-        ToasterModule
-    ],
-  declarations: [
-    ClientComponent,
-    NotifyDialogComponent,
-    MIBNotifyAccordionGroupComponent,
-    MIBNotifyAccordionComponent
-  ],
-  providers: [
-    ClientService,
-    DeliveryService,
-    NotificationService,
-    DialogService,
-    NotificationService,
-    OrganizationService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
-  ]
+	imports: [
+		CommonModule,
+		InputTextModule,
+		CheckboxModule,
+		HttpClientModule,
+		ButtonModule,
+		RadioButtonModule,
+		InputTextareaModule,
+		MenuModule,
+		ProgressSpinnerModule,
+		FormsModule,
+		ClientRoutingModule,
+		ReactiveFormsModule,
+		AccordionModule,
+		CardModule,
+		MenubarModule,
+		AvatarModule,
+		IconModule,
+		SidebarModule,
+		SpacingModule,
+		SkeletonModule,
+		DropdownModule,
+		DropdownPointModule,
+		ClipboardModule,
+		HeaderModule,
+		ToasterModule,
+		NotVerifyModule
+	],
+	declarations: [
+		ClientComponent,
+		NotifyDialogComponent,
+		MIBNotifyAccordionGroupComponent,
+		MIBNotifyAccordionComponent
+	],
+	providers: [
+		ClientService,
+		DeliveryService,
+		NotificationService,
+		DialogService,
+		NotificationService,
+		OrganizationService,
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: AuthInterceptor,
+			multi: true
+		}
+	]
 })
-export class ClientModule {
-}
+export class ClientModule {}

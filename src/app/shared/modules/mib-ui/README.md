@@ -438,4 +438,20 @@ ng g m client/modules/not-verify/not-verify --flat --routing --module=app
  ng g g shared/services/not-verify
  //---
 
+ //--- verify-drawer
+src\app\client\modules\not-verify\modules\verify-drawer
+ng g i client/modules/not-verify/modules/verify-drawer/interfaces/verify-drawer.interface  --dry-run
+ng g m client/modules/not-verify/modules/verify-drawer/verify-drawer --flat --dry-run
+ng g s client/modules/not-verify/modules/verify-drawer/verify-drawer --skip-tests --dry-run
+ng g c client/modules/not-verify/modules/verify-drawer --skip-tests --dry-run
+ //---
+
+ //--- request-drawer
+src\app\client\modules\not-verify\modules\request-drawer
+ng g i client/modules/not-verify/modules/request-drawer/interfaces/request-drawer.interface  --dry-run
+ng g m client/modules/not-verify/modules/request-drawer/request-drawer --flat --dry-run
+ng g s client/modules/not-verify/modules/request-drawer/request-drawer --skip-tests --dry-run
+ng g c client/modules/not-verify/modules/request-drawer --skip-tests --dry-run
+ //---
+
 ```
