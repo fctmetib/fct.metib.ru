@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core'
 import {MatDialog} from '@angular/material/dialog'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {RequestDrawerComponent} from './request-drawer.component'
+import {VerifyRequestDrawerComponent} from './verify-request-drawer.component'
 import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
 import {DemandDrawerRef} from './interfaces/request-drawer.interface'
 
@@ -16,7 +16,7 @@ export class RequestDrawerService {
 			state: 'view'
 		}
 		this.ref = this.dialog.open(
-			RequestDrawerComponent,
+			VerifyRequestDrawerComponent,
 			drawerConfig(data?.maxWidth, Object.assign(config, data))
 		)
 

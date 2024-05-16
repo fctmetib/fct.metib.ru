@@ -1,7 +1,7 @@
 import {Component} from '@angular/core'
-import {RequestDrawerService} from '../../modules/request-drawer/request-drawer.service'
+import {RequestDrawerService} from '../../modules/verify-request-drawer/request-drawer.service'
 import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {VerifyDrawerService} from '../../modules/verify-drawer/verify-drawer.service'
+import {VerifyDrawerService} from '../../modules/verify-query-drawer/verify-drawer.service'
 
 @Component({
 	selector: 'mib-not-verify',
@@ -21,7 +21,6 @@ export class NotVerifyComponent {
 	) {}
 
 	openVerifyDrawer() {
-		console.log('open openQueryDrawer>>>')
 		this.verifyDrawerService
 			.open({state: DrawerStateEnum.CREATE})
 			.afterClosed()
@@ -29,7 +28,6 @@ export class NotVerifyComponent {
 	}
 
 	openRequestDrawer() {
-		console.log('open openRequestDrawers>>>')
 		this.requestDrawerService
 			.open({state: DrawerStateEnum.CREATE})
 			.afterClosed()

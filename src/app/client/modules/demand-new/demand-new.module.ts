@@ -93,6 +93,7 @@ import {DemandDebtorDrawerModule} from './modules/demand-debtor-drawer/demand-de
 import {DemandVerificationDrawerModule} from './modules/demand-verification-drawer/demand-verification-drawer.module'
 import {DemandFactoringDrawerModule} from './modules/demand-factoring-drawer/demand-factoring-drawer.module'
 import {DemandAgentDrawerModule} from './modules/demand-agent-drawer/demand-agent-drawer.module'
+import {RequestDrawerModule} from '../not-verify/modules/verify-request-drawer/request-drawer.module'
 
 @NgModule({
 	imports: [
@@ -150,7 +151,8 @@ import {DemandAgentDrawerModule} from './modules/demand-agent-drawer/demand-agen
 		DemandDebtorDrawerModule,
 		DemandVerificationDrawerModule,
 		DemandFactoringDrawerModule,
-		DemandAgentDrawerModule
+		DemandAgentDrawerModule,
+		RequestDrawerModule
 	],
 	declarations: [
 		// Containers

@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
-import {VerifyDrawerComponent} from './verify-drawer.component'
+import {VerifyQueryDrawerComponent} from './verify-query-drawer.component'
 import {VerifyDrawerService} from './verify-drawer.service'
 
 @NgModule({
-	declarations: [VerifyDrawerComponent],
+	declarations: [VerifyQueryDrawerComponent],
 	imports: [CommonModule],
 	providers: [VerifyDrawerService]
 })

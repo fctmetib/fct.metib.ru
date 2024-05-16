@@ -57,7 +57,7 @@ import {Properties} from 'csstype'
 import {Delivery} from 'src/app/shared/types/delivery/delivery'
 
 @Component({
-	selector: 'mib-request-drawer',
+	selector: 'mib-verify-request-drawer',
 	templateUrl: './request-drawer.component.html',
 	styleUrls: ['./request-drawer.component.scss'],
 	providers: [AutoUnsubscribeService]
