@@ -1,15 +1,14 @@
-import {
-	AfterContentInit,
-	AfterViewInit,
-	Component,
-	ElementRef,
-	Input,
-	OnInit,
-	ViewChild
-} from '@angular/core'
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core'
 import {AuthService} from 'src/app/auth/services/auth.service'
 import {ToolsService} from '../../services/tools.service'
-import {BehaviorSubject, filter, finalize, switchMap, tap} from 'rxjs'
+import {
+	BehaviorSubject,
+	filter,
+	finalize,
+	switchMap,
+	takeUntil,
+	tap
+} from 'rxjs'
 import {environment} from 'src/environments/environment'
 import {UserFactoring} from '../../types/userFactoring'
 import {UserGeneral} from '../../types/userGeneral'
@@ -44,8 +43,7 @@ export class HeaderComponent implements OnInit {
 
 	currentUserAdmin$ = new BehaviorSubject<UserGeneral>(null)
 
-	// public isAdmino: boolean = true
-	// public isAdmino: boolean = false
+	public isVerified$ = new BehaviorSubject<boolean>(false)
 
 	public isAdmin: boolean = false
 	public skeleton: Properties = {
@@ -115,13 +113,13 @@ export class HeaderComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.isVerified$.next(this.authService.isUserVerified())
 		this.userLoading$.next(true)
 		this.factoringLoading$.next(true)
 		this.authService.currentUser$
 			.pipe(
 				filter(Boolean),
 				tap(currentUser => {
-					// console.log('currentUser :>> ', currentUser)
 					this.currentUser$.next(currentUser.userGeneral)
 					this.currentUserFactoring$.next(currentUser.userFactoring)
 					this.userLoading$.next(false)
@@ -129,6 +127,7 @@ export class HeaderComponent implements OnInit {
 				switchMap(currentUser =>
 					this.clientService
 						.getClientFactoringById(+currentUser.userFactoring.OrganizationID)
+						.pipe(takeUntil(this.isVerified$))
 						.pipe(finalize(() => this.factoringLoading$.next(false)))
 				),
 				tap(clientFactoring => {
