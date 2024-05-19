@@ -159,9 +159,19 @@
 					</ng-template>
 				</ng-container>
 				<ng-template #unsignedTemplate>
-					<div class="flex flex_grow gap-16">
+					<div class="flex burger-btn">
+						<mib-button size="m" type="filled-secondary">
+							<mib-icon btn-icon class="stroke" name="fi_menu"></mib-icon>
+						</mib-button>
+					</div>
+					<div class="logo-container flex flex_grow gap-16">
 						<mib-icon
-							class="cursor-pointer"
+							class="main-logo-round cursor-pointer"
+							[routerLink]="['/']"
+							name="fi_logo_round_main"
+						></mib-icon>
+						<mib-icon
+							class="main-logo-retangle cursor-pointer"
 							[routerLink]="['/']"
 							name="logotype"
 						></mib-icon>
@@ -205,6 +215,7 @@
 						"
 					>
 						<mib-button
+							class="btn-login-desktop"
 							[routerLink]="['/auth/login']"
 							type="filled-primary"
 							size="m"
@@ -214,6 +225,14 @@
 								class="stroke"
 								name="fi_log-in"
 							></mib-icon>
+						</mib-button>
+						<mib-button
+							class="btn-login-mobile"
+							[routerLink]="['/auth/login']"
+							type="filled-primary"
+							size="m"
+						>
+							<mib-icon btn-icon class="stroke" name="fi_log-in"></mib-icon>
 						</mib-button>
 					</ng-container>
 					<ng-template #loggedInUser>
@@ -274,9 +293,14 @@
 				*ngIf="!signedIn"
 				class="container flex flex_justify-between flex_align-center"
 			>
-				<div class="flex flex_grow gap-16">
+				<div class="logo-container flex flex_grow gap-16">
 					<mib-icon
-						class="cursor-pointer"
+						class="main-logo-round cursor-pointer"
+						[routerLink]="['/']"
+						name="fi_logo_round_main"
+					></mib-icon>
+					<mib-icon
+						class="main-logo-retangle cursor-pointer"
 						[routerLink]="['/']"
 						name="logotype"
 					></mib-icon>
