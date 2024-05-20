@@ -1,3 +1,20 @@
+:host {
+	transition: 1s;
+}
+
+.mobile-menu {
+	z-index: 999;
+	display: block;
+	position: absolute;
+	inset: 0;
+	background-color: var(--wgr-primary);
+	&-header {
+		padding: 12px 16px;
+		border-bottom: 1px solid var(--wgr-tertiary);
+		justify-content: flex-end;
+	}
+}
+
 mib-header {
 	position: fixed;
 	top: 0;

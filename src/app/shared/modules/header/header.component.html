@@ -160,7 +160,11 @@
 				</ng-container>
 				<ng-template #unsignedTemplate>
 					<div class="flex burger-btn">
-						<mib-button size="m" type="filled-secondary">
+						<mib-button
+							(press)="onBurger.emit()"
+							size="m"
+							type="filled-secondary"
+						>
 							<mib-icon btn-icon class="stroke" name="fi_menu"></mib-icon>
 						</mib-button>
 					</div>

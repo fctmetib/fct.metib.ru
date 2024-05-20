@@ -1,4 +1,12 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core'
+import {
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+	ViewChild
+} from '@angular/core'
 import {AuthService} from 'src/app/auth/services/auth.service'
 import {ToolsService} from '../../services/tools.service'
 import {
@@ -27,6 +35,8 @@ export class HeaderComponent implements OnInit {
 	@Input() signedIn: boolean = false
 	@Input() showExtension: boolean = false
 	@Input() showProfileButton: boolean = false
+
+	@Output() onBurger = new EventEmitter()
 
 	@ViewChild('header') el: ElementRef<HTMLDivElement>
 
