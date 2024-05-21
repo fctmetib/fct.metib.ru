@@ -1,3 +1,5 @@
+@import 'src/styles/components/_file-cell.scss';
+
 .mobile-menu {
 	position: absolute;
 	width: 100%;
@@ -18,6 +20,14 @@
 		padding: 0 16px;
 		& a.active h2 {
 			color: var(--mc-default);
+		}
+	}
+	&-footer {
+		padding: 0 16px;
+		border-top: 1px solid var(--wgr-tertiary);
+		& mib-media {
+			// FIX-MEDIA - ADD XXL SIZE!!!
+			@include upload-icon(90px, 40px);
 		}
 	}
 }
