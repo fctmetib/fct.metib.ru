@@ -9,7 +9,7 @@
 }
 
 .media {
-  cursor: pointer;
+	cursor: pointer;
 	display: flex;
 	width: 32px;
 	height: 32px;
@@ -23,6 +23,13 @@
 	mib-icon {
 		@include icon-color(var(--bti-secondary));
 		@include icon-size(24px);
+	}
+
+	&_size {
+		&-l {
+			width: 90px;
+			height: 40px;
+		}
 	}
 
 	&_type {

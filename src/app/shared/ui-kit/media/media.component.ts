@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core'
-import { MediaType } from './interfaces/media.interface'
+import {Component, Input} from '@angular/core'
+import {MediaSize, MediaType} from './interfaces/media.interface'
 
 @Component({
 	selector: 'mib-media',
@@ -8,10 +8,12 @@ import { MediaType } from './interfaces/media.interface'
 })
 export class MediaComponent {
 	@Input() type: MediaType = 'telegram'
+	@Input() size: MediaSize = 'm'
 
 	get classes() {
 		return {
-			[`media_type-${this.type}`]: true
+			[`media_type-${this.type}`]: true,
+			[`media_size-${this.size}`]: true
 		}
 	}
 
