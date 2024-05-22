@@ -40,6 +40,10 @@ $text-selectors: 'span';
 	&:active {
 		@include link-color(var(--mc-active));
 	}
+
+	& .show-underline {
+		border-bottom: 1px solid var(--mc-default);
+	}
 }
 
 @mixin link-ghost-secondary {
@@ -50,6 +54,10 @@ $text-selectors: 'span';
 	&:active {
 		@include link-color(var(--bti-primary));
 	}
+
+	& .show-underline {
+		border-bottom: 1px solid var(--bti-secondary);
+	}
 }
 
 @mixin link-ghost-accent {
@@ -59,6 +67,10 @@ $text-selectors: 'span';
 	}
 	&:active {
 		@include link-color(var(--ac-active));
+	}
+
+	& .show-underline {
+		border-bottom: 1px solid var(--ac-default);
 	}
 }
 
@@ -129,9 +141,9 @@ $text-selectors: 'span';
 		}
 	}
 
-	& .show-underline {
-		border-bottom: 1px solid var(--bti-secondary);
-	}
+	// & .show-underline {
+	// 	border-bottom: 1px solid var(--bti-secondary);
+	// }
 
 	& .link-text {
 		text-align: start;
