@@ -12,9 +12,11 @@ import {ClipboardModule} from '@angular/cdk/clipboard'
 import {RouterLink, RouterLinkActive} from '@angular/router'
 import {LinkModule} from '../../ui-kit/link/link.module'
 import {RightIconModule} from '../../directives/right-icon/right-icon.module'
+import {MobileMenuComponent} from './components/mobile-menu/mobile-menu/mobile-menu.component'
+import {MediaModule} from '../../ui-kit/media/media.module'
 
 @NgModule({
-	declarations: [HeaderComponent],
+	declarations: [HeaderComponent, MobileMenuComponent],
 	imports: [
 		CommonModule,
 		SkeletonModule,
@@ -28,8 +30,9 @@ import {RightIconModule} from '../../directives/right-icon/right-icon.module'
 		RouterLink,
 		LinkModule,
 		RightIconModule,
-		RouterLinkActive
+		RouterLinkActive,
+		MediaModule
 	],
-	exports: [HeaderComponent]
+	exports: [HeaderComponent, MobileMenuComponent]
 })
 export class HeaderModule {}

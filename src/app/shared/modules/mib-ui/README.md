@@ -454,4 +454,9 @@ ng g s client/modules/not-verify/modules/request-drawer/request-drawer --skip-te
 ng g c client/modules/not-verify/modules/request-drawer --skip-tests --dry-run
  //---
 
+ //--- request-drawer
+ src\app\shared\modules\header\components\mobile-menu
+ ng g c shared/modules/header/components/mobile-menu/mobile-menu --skip-tests
+ //---
+
 ```
