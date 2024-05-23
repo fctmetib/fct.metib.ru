@@ -140,4 +140,12 @@ export class LandingComponent implements OnInit {
 		this.imgNumber = $num
 		this.currentProductsTab = $num
 	}
+
+	public prev() {
+		console.log('halo prev')
+	}
+
+	public next() {
+		console.log('halo next')
+	}
 }

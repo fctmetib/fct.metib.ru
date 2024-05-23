@@ -1,14 +1,6 @@
 @import 'src/styles/typography.vars';
 @import 'src/styles/helpers/icon_tools';
 
-/* 
-  ['xl', '(min-width: 1200px)'],
-  ['lg', '(min-width: 992px)'],
-  ['md', '(min-width: 768px)'],
-  ['sm', '(min-width: 576px)'],
-  ['xs', '(min-width: 0px)'],
-*/
-
 :host {
 	background-color: var(--wgr-primary);
 	position: absolute;

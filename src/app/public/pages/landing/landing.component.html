@@ -1,21 +1,46 @@
 <section class="hero">
 	<div class="container flex gap-16">
 		<div class="flex flex_grow flex_justify-center flex_column">
-			<h1>Факторинг для поставщиков</h1>
+			<h1 class="desktop-h1">Факторинг для поставщиков</h1>
+			<h1 class="mobile-h1">
+				Факторинг <br />
+				для поставщиков
+			</h1>
 			<mib-spacing type="xs"></mib-spacing>
 			<p class="text text_xl c-bti-secondary">
 				Факторинг - самый быстрый и безопасный способ превратить дебиторскую
 				задолженность в деньги!
 			</p>
 			<mib-spacing type="l"></mib-spacing>
-			<div class="flex">
+			<div class="flex desktop-btn">
 				<mib-button size="xl" (press)="getFunding()" type="filled-primary">
 					Получить финансирование
 				</mib-button>
 			</div>
 		</div>
-		<div class="flex flex_grow">
+		<div class="img-wrap flex flex_grow">
 			<img src="./assets/images/staff/mib-staff-1.png" alt="staff" />
+		</div>
+		<div class="flex flex_column mobile-btn">
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex">
+				<mib-button (press)="prev()" size="m" type="ghost-secondary">
+					<mib-icon btn-icon class="stroke" name="fi_chevron-left"></mib-icon>
+				</mib-button>
+				<div class="flex flex_grow text-center flex_column">
+					<span class="headline-m c-mc-default">Менее 15 минут</span>
+					<span class="text text_s c-bti-secondary">на решение по сделке</span>
+				</div>
+				<mib-button (press)="next()" size="m" type="ghost-secondary">
+					<mib-icon btn-icon class="stroke" name="fi_chevron-right"></mib-icon>
+				</mib-button>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex flex_justify-center">
+				<mib-button size="l" (press)="getFunding()" type="filled-primary">
+					Получить финансирование
+				</mib-button>
+			</div>
 		</div>
 	</div>
 	<div class="flex lineal">

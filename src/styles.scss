@@ -1,9 +1,17 @@
- html,
- body {
- 	 height: 100%;
- 	 background: var(--wgr-primary);
- 	 overflow: hidden;
- }
+html,
+body {
+	height: 100%;
+	background: var(--wgr-primary);
+	overflow: hidden;
+}
+
+/* 
+  ['xl', '(min-width: 1200px)'],
+  ['lg', '(min-width: 992px)'],
+  ['md', '(min-width: 768px)'],
+  ['sm', '(min-width: 576px)'],
+  ['xs', '(min-width: 0px)'],
+*/
 
 @import 'src/styles/layout/reset.scss';
 @import 'src/styles/layout/_global';

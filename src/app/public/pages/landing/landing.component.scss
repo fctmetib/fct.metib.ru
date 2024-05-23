@@ -3,8 +3,75 @@
 
 .hero {
 	& img {
-		height: 596px;
+		height: 595px;
 		object-fit: none;
+	}
+
+	& .mobile-btn,
+	.mobile-h1 {
+		display: none;
+	}
+
+	@media (max-width: 768px) {
+		& .container {
+			padding: 0 16px;
+		}
+
+		& > div {
+			flex-direction: column;
+			gap: 0;
+		}
+
+		& .desktop-btn,
+		.desktop-h1 {
+			display: none;
+		}
+
+		& .mobile-h1 {
+			display: block;
+		}
+
+		& .mobile-btn {
+			display: flex;
+			& mib-button[size='l'] {
+				width: 100%;
+				max-width: 328px;
+			}
+		}
+
+		& h1 {
+			padding-top: 32px;
+			font-size: 32px;
+			line-height: 40px;
+			text-align: center;
+		}
+
+		& mib-spacing[type='xs'] {
+			height: 12px;
+		}
+
+		& mib-spacing[type='l'] {
+			height: 20px;
+		}
+
+		& p {
+			font-size: 16px;
+			line-height: 24px;
+			text-align: center;
+		}
+
+		& .img-wrap {
+			justify-content: center;
+		}
+
+		& img {
+			object-fit: cover;
+			height: 384px;
+		}
+
+		& .lineal {
+			display: none;
+		}
 	}
 
 	& .lineal {

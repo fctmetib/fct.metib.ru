@@ -117,3 +117,9 @@
 	line-height: 24px;
 	letter-spacing: -0.08px;
 }
+
+@mixin headline-mobile {
+	font-size: 14px;
+	line-height: 24px;
+	letter-spacing: -0.5%;
+}

@@ -24,6 +24,11 @@ h5,
 	@include headline-desktop;
 }
 
+.headline-m {
+	@include headline-mobile;
+	font-weight: var(--fw-semi-bold);
+}
+
 h1 {
 	@include h1-desktop;
 	@media (max-width: map-get($md, 't-h')) {
