@@ -459,4 +459,10 @@ ng g c client/modules/not-verify/modules/request-drawer --skip-tests --dry-run
  ng g c shared/modules/header/components/mobile-menu/mobile-menu --skip-tests
  //---
 
+// public components swipe-text-slider
+src\app\public\components
+ng g i public/components/swipe-text-slider/interfaces/swipe-text-slider.interface  --dry-run
+ng g m public/components/swipe-text-slider/swipe-text-slider --flat  --dry-run
+ng g c public/components/swipe-text-slider/swipe-text-slider --flat  --skip-tests --dry-run
+ //---
 ```

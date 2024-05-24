@@ -23,18 +23,7 @@
 		</div>
 		<div class="flex flex_column mobile-btn">
 			<mib-spacing type="xs"></mib-spacing>
-			<div class="flex">
-				<mib-button (press)="prev()" size="m" type="ghost-secondary">
-					<mib-icon btn-icon class="stroke" name="fi_chevron-left"></mib-icon>
-				</mib-button>
-				<div class="flex flex_grow text-center flex_column">
-					<span class="headline-m c-mc-default">Менее 15 минут</span>
-					<span class="text text_s c-bti-secondary">на решение по сделке</span>
-				</div>
-				<mib-button (press)="next()" size="m" type="ghost-secondary">
-					<mib-icon btn-icon class="stroke" name="fi_chevron-right"></mib-icon>
-				</mib-button>
-			</div>
+			<!-- <mib-swipe-text-slider></mib-swipe-text-slider> -->
 			<mib-spacing type="xs"></mib-spacing>
 			<div class="flex flex_justify-center">
 				<mib-button size="l" (press)="getFunding()" type="filled-primary">
