@@ -98,6 +98,28 @@
 		@include icon-size(40px);
 		@include icon-color(var(--mc-default));
 	}
+
+	@media (max-width: 768px) {
+		display: flex;
+		flex-direction: column;
+
+		& mib-spacing[type='xl2'] {
+			height: 64px;
+		}
+
+		&-mobile {
+			flex-direction: column;
+			gap: 24px;
+		}
+
+		& mib-spacing[type='l'] {
+			height: 24px;
+		}
+
+		& mib-spacing[type='s'] {
+			height: 12px;
+		}
+	}
 }
 
 .products {
