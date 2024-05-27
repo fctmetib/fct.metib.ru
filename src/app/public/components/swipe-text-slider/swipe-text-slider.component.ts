@@ -34,4 +34,8 @@ export class SwipeTextSliderComponent implements AfterViewInit {
 		hammer.on('swipeleft', () => this.prev())
 		hammer.on('swiperight', () => this.next())
 	}
+
+	getProgressWidth(): string {
+		return ((this.currentIdx + 1) / this.sliderTextData.length) * 100 + '%'
+	}
 }

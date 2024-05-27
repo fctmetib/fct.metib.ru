@@ -1,4 +1,7 @@
-<div #textSlider class="flex">
+<div #textSlider class="flex text-slider">
+	<div class="flex slider-progress">
+		<div class="progress-bar" [style.width]="getProgressWidth()"></div>
+	</div>
 	<mib-button
 		[disabled]="currentIdx === 0"
 		(press)="prev()"

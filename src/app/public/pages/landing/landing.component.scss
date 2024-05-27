@@ -32,10 +32,15 @@
 		}
 
 		& .mobile-btn {
+			padding: 16px 0;
 			display: flex;
+			border-bottom: 1px solid var(--wgr-tertiary);
 			& mib-button[size='l'] {
 				width: 100%;
 				max-width: 328px;
+			}
+			& > div {
+				padding: 0 16px;
 			}
 		}
 
@@ -46,7 +51,7 @@
 			text-align: center;
 		}
 
-		& mib-spacing[type='xs'] {
+		& mib-spacing[type='x'] {
 			height: 12px;
 		}
 
