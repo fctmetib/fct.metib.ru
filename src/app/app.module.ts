@@ -22,8 +22,6 @@ import {MatDialogModule} from '@angular/material/dialog'
 import {AuthService} from './auth/services/auth.service'
 import {RequestsService} from './client/modules/requests/services/requests.service'
 
-import 'hammerjs'
-
 registerLocaleData(localeRu, 'ru')
 
 @NgModule({

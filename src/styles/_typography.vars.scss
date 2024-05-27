@@ -113,13 +113,15 @@
 }
 
 @mixin headline-desktop {
+	font-family: var(--ff-primary);
 	font-size: 16px;
 	line-height: 24px;
 	letter-spacing: -0.08px;
 }
 
 @mixin headline-mobile {
+	font-family: var(--ff-primary);
 	font-size: 14px;
 	line-height: 24px;
-	letter-spacing: -0.5%;
+	letter-spacing: -0.05px;
 }

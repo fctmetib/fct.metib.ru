@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core'
+import * as Hammer from 'hammerjs'
 
 @Component({
 	selector: 'mib-swipe-text-slider',
@@ -19,18 +20,18 @@ export class SwipeTextSliderComponent implements AfterViewInit {
 	public prev() {
 		if (this.currentIdx > 0) {
 			this.currentIdx--
-			console.log('halo prev', this.currentIdx)
 		}
 	}
 
 	public next() {
 		if (this.currentIdx < this.sliderTextData.length - 1) {
 			this.currentIdx++
-			console.log('halo next', this.currentIdx)
 		}
 	}
 
 	ngAfterViewInit(): void {
-		console.log('halo')
+		const hammer = new Hammer(this.textSlider.nativeElement)
+		hammer.on('swipeleft', () => this.prev())
+		hammer.on('swiperight', () => this.next())
 	}
 }
