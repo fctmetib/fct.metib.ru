@@ -50,7 +50,7 @@
 		<div class="flex flex_wrap gap-16">
 			<mib-news-panel
 				title="{{ news.Title }}"
-				*ngFor="let news of dispalyNews$ | async"
+				*ngFor="let news of displayNews$ | async"
 				(onclick)="openNewsDrawer(news.ID)"
 				(edit)="openCreateNewsDrawer(news.ID)"
 				(delete)="deleteNews(news.ID)"
