@@ -25,7 +25,7 @@ import {AutoUnsubscribeService} from 'src/app/shared/services/auto-unsubscribe.s
 export class CabinetComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
 	public getAllNews$ = new BehaviorSubject<AdvancedNewsInterface[]>([])
-	public dispalyNews$ = new BehaviorSubject<AdvancedNewsInterface[]>([])
+	public displayNews$ = new BehaviorSubject<AdvancedNewsInterface[]>([])
 	isAdmin: boolean = true
 
 	public getSortedNews: AdvancedNewsInterface[]
@@ -42,7 +42,7 @@ export class CabinetComponent implements OnInit {
 
 	constructor(
 		private cabinetNewsDrawerService: CabinetNewsDrawerService,
-		private сabinetCreateNewsDrawerService: CabinetCreateNewsDrawerService,
+		private cabinetCreateNewsDrawerService: CabinetCreateNewsDrawerService,
 		private au: AutoUnsubscribeService,
 		private dialog: MatDialog,
 		private newsService: NewsService
@@ -66,7 +66,7 @@ export class CabinetComponent implements OnInit {
 			let res = this.getAllNews$.value.filter(data =>
 				data.Title.toLowerCase().includes(term.toLowerCase())
 			)
-			this.dispalyNews$.next(res)
+			this.displayNews$.next(res)
 		} else {
 			this.onPageChange(this.currentPage$.value)
 		}
@@ -100,7 +100,7 @@ export class CabinetComponent implements OnInit {
 		this.currentPage$.next(page)
 		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
 		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
-		this.dispalyNews$.next(this.getSortedNews?.slice(startIndex, endIndex))
+		this.displayNews$.next(this.getSortedNews?.slice(startIndex, endIndex))
 	}
 
 	sortNewsByDate(order: 'new' | 'old') {
@@ -110,13 +110,13 @@ export class CabinetComponent implements OnInit {
 				this.getSortedNews = temp.sort(
 					(a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime()
 				)
-				this.dispalyNews$.next(this.getSortedNews)
+				this.displayNews$.next(this.getSortedNews)
 				this.onPageChange(this.currentPage$.value)
 			} else if (order === 'old') {
 				this.getSortedNews = temp.sort(
 					(a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime()
 				)
-				this.dispalyNews$.next(this.getSortedNews)
+				this.displayNews$.next(this.getSortedNews)
 				this.onPageChange(this.currentPage$.value)
 			}
 		}
@@ -142,7 +142,7 @@ export class CabinetComponent implements OnInit {
 	}
 
 	openCreateNewsDrawer(id?: number) {
-		this.сabinetCreateNewsDrawerService
+		this.cabinetCreateNewsDrawerService
 			.open({data: {id}})
 			.afterClosed()
 			.subscribe()
