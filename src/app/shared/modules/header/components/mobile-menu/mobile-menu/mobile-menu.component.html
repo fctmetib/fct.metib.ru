@@ -13,7 +13,10 @@
 			</mib-button>
 		</div>
 		<mib-spacing type="m"></mib-spacing>
-		<div class="mobile-menu-body flex flex_column gap-16">
+		<div
+			*ngIf="!isClient; else clientMunu"
+			class="mobile-menu-body flex flex_column gap-16"
+		>
 			<a
 				(click)="closeBurgerMenu()"
 				[routerLink]="['/']"
@@ -44,6 +47,26 @@
 				<h2>Контакты</h2>
 			</a>
 		</div>
+		<ng-template #clientMunu>
+			<div class="mobile-menu-body flex flex_column gap-16">
+				<a
+					(click)="closeBurgerMenu()"
+					[routerLink]="['/client/cabinet']"
+					routerLinkActive="active"
+					[routerLinkActiveOptions]="{exact: true}"
+				>
+					<h2>Halo</h2>
+				</a>
+				<a
+					(click)="closeBurgerMenu()"
+					[routerLink]="['/client/requests']"
+					routerLinkActive="active"
+					[routerLinkActiveOptions]="{exact: true}"
+				>
+					<h2>Halo 22</h2>
+				</a>
+			</div>
+		</ng-template>
 		<mib-spacing type="m"></mib-spacing>
 		<div class="flex flex_grow"></div>
 		<div class="mobile-menu-footer flex flex_column">

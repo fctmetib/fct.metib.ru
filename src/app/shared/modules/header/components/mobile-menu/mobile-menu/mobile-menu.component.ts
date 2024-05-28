@@ -1,4 +1,4 @@
-import {Component} from '@angular/core'
+import {Component, Input} from '@angular/core'
 
 @Component({
 	selector: 'mib-mobile-menu',
@@ -6,6 +6,7 @@ import {Component} from '@angular/core'
 	styleUrls: ['./mobile-menu.component.scss']
 })
 export class MobileMenuComponent {
+	@Input() isClient: boolean = false
 	public isOpen: Boolean = false
 
 	public onBurger() {

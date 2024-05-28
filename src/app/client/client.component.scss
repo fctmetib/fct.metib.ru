@@ -1,14 +1,21 @@
 :host {
-  display: block;
-  height: 100%;
+	display: block;
+	height: 100%;
 }
+
+@media (max-width: 992px) {
+	mib-sidebar {
+		display: none;
+	}
+}
+
 main {
-  height: 100vh;
-  position: relative;
+	height: 100vh;
+	position: relative;
 }
 
 .scrollable {
-  &.without-scroll {
-    padding-right: 12px;
-  }
+	&.without-scroll {
+		padding-right: 12px;
+	}
 }

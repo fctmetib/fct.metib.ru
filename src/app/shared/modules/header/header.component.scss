@@ -73,6 +73,19 @@
 			& .btn-login-mobile {
 				display: flex;
 			}
+
+			& .manager {
+				& .user-desktop {
+					display: none;
+				}
+				& mib-button[size='m'] {
+					display: none;
+				}
+			}
+
+			& .manager-desktop {
+				display: none;
+			}
 		}
 	}
 }
