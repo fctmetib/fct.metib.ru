@@ -15,61 +15,43 @@
 		<mib-spacing type="m"></mib-spacing>
 		<div
 			*ngIf="!isClient; else clientMunu"
-			class="mobile-menu-body flex flex_column gap-16"
+			class="mobile-menu-body flex flex_column"
 		>
 			<a
-				(click)="closeBurgerMenu()"
-				[routerLink]="['/']"
-				routerLinkActive="active"
+				*ngFor="let item of menuMain"
 				[routerLinkActiveOptions]="{exact: true}"
-			>
-				<h2>Главная</h2>
-			</a>
-			<a
 				(click)="closeBurgerMenu()"
-				[routerLink]="['/tariffs']"
+				[routerLink]="[item.link]"
 				routerLinkActive="active"
 			>
-				<h2>Тарифы</h2>
-			</a>
-			<a
-				(click)="closeBurgerMenu()"
-				[routerLink]="['/clients']"
-				routerLinkActive="active"
-			>
-				<h2>Клиентам</h2>
-			</a>
-			<a
-				(click)="closeBurgerMenu()"
-				[routerLink]="['/contacts']"
-				routerLinkActive="active"
-			>
-				<h2>Контакты</h2>
+				<h2>
+					{{ item.name }}
+				</h2>
 			</a>
 		</div>
 		<ng-template #clientMunu>
-			<div class="mobile-menu-body flex flex_column gap-16">
+			<div
+				*ngFor="let items of menuClient"
+				class="mobile-menu-body flex flex_column"
+			>
 				<a
 					(click)="closeBurgerMenu()"
-					[routerLink]="['/client/cabinet']"
+					[routerLink]="[item.link]"
 					routerLinkActive="active"
 					[routerLinkActiveOptions]="{exact: true}"
+					*ngFor="let item of items.links"
 				>
-					<h2>Halo</h2>
+					<h2>{{ item.name }}</h2>
 				</a>
-				<a
-					(click)="closeBurgerMenu()"
-					[routerLink]="['/client/requests']"
-					routerLinkActive="active"
-					[routerLinkActiveOptions]="{exact: true}"
-				>
-					<h2>Halo 22</h2>
-				</a>
+				<mib-spacing type="m"></mib-spacing>
 			</div>
 		</ng-template>
 		<mib-spacing type="m"></mib-spacing>
 		<div class="flex flex_grow"></div>
-		<div class="mobile-menu-footer flex flex_column">
+		<div
+			*ngIf="!isClient; else clientMenuFooter"
+			class="mobile-menu-footer flex flex_column"
+		>
 			<mib-spacing type="xs"></mib-spacing>
 			<div class="fle flex_column">
 				<p class="text text_s c-wrg-secondary">Номер для звонков по РФ</p>
@@ -90,8 +72,18 @@
 				<mib-spacing type="s"></mib-spacing>
 			</div>
 		</div>
+		<ng-template #clientMenuFooter>
+			<div class="mobile-menu-client flex_column">
+				<div class="flex cursor-pointer">
+					<a (click)="logout()">
+						<div class="flex flex_align-center gap-8">
+							<mib-icon class="stroke" name="fi_log-out"></mib-icon>
+							<span class="text">Выйти</span>
+						</div>
+					</a>
+				</div>
+				<mib-spacing type="m"></mib-spacing>
+			</div>
+		</ng-template>
 	</div>
 </div>
-
-<!-- 
- -->

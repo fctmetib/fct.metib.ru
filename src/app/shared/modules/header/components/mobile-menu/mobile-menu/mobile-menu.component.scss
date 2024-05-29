@@ -1,3 +1,5 @@
+@import 'src/styles/helpers/icon_tools';
+
 .mobile-menu {
 	position: absolute;
 	width: 100%;
@@ -7,22 +9,46 @@
 	background-color: var(--wgr-primary);
 	transition: 0.3s ease-in-out;
 	z-index: 999;
+
 	&.closed {
 		left: 0;
 	}
+
 	&-header {
 		padding: 12px 16px;
 		border-bottom: 1px solid var(--wgr-tertiary);
 		justify-content: flex-end;
 	}
+
 	&-body {
 		padding: 0 16px;
+
 		& a.active h2 {
 			color: var(--mc-default);
 		}
+
+		& a:not(:first-child) {
+			padding-top: 16px;
+		}
 	}
+
 	&-footer {
 		padding: 0 16px;
 		border-top: 1px solid var(--wgr-tertiary);
+	}
+
+	&-client {
+		padding: 0 16px;
+
+		& span {
+			font-size: 24px;
+			font-weight: var(--fw-medium);
+			color: var(--bti-secondary);
+		}
+
+		& mib-icon {
+			@include icon-size(30px);
+			@include icon-color(var(--bti-secondary));
+		}
 	}
 }
