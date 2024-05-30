@@ -308,6 +308,9 @@
 				*ngIf="!signedIn"
 				class="container flex flex_justify-between flex_align-center"
 			>
+				<div class="flex burger-btn">
+					<mib-mobile-menu [isAdmin]="true"></mib-mobile-menu>
+				</div>
 				<div class="logo-container flex flex_grow gap-16">
 					<mib-icon
 						class="main-logo-round cursor-pointer"
@@ -359,11 +362,20 @@
 					"
 				>
 					<mib-button
+						class="btn-login-desktop"
 						[routerLink]="['/auth/login']"
 						type="filled-primary"
 						size="m"
 						>Личный кабинет
 						<mib-icon btn-right-icon class="stroke" name="fi_log-in"></mib-icon>
+					</mib-button>
+					<mib-button
+						class="btn-login-mobile"
+						[routerLink]="['/auth/login']"
+						type="filled-primary"
+						size="m"
+					>
+						<mib-icon btn-icon class="stroke" name="fi_log-in"></mib-icon>
 					</mib-button>
 				</ng-container>
 				<ng-template #loggedInUser>
