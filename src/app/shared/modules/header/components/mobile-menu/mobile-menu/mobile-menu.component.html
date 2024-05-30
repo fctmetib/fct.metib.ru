@@ -1,4 +1,4 @@
-<div class="flex">
+<div class="flex burger">
 	<mib-button (press)="onBurger()" size="m" type="filled-secondary">
 		<mib-icon btn-icon class="stroke" name="fi_menu"></mib-icon>
 	</mib-button>
@@ -13,39 +13,33 @@
 			</mib-button>
 		</div>
 		<mib-spacing type="m"></mib-spacing>
-		<div
-			*ngIf="!isClient; else clientMunu"
-			class="mobile-menu-body flex flex_column"
-		>
-			<a
-				*ngFor="let item of menuMain"
-				[routerLinkActiveOptions]="{exact: true}"
-				(click)="closeBurgerMenu()"
-				[routerLink]="[item.link]"
-				routerLinkActive="active"
+		<div class="flex flex_column gap-32">
+			<ng-container
+				*ngFor="
+					let items of !isLogged && !isAdmin
+						? menuMain
+						: isAdmin
+						? menuAdmin
+						: !isVerify
+						? menuVerify
+						: menuUser
+				"
 			>
-				<h2>
-					{{ item.name }}
-				</h2>
-			</a>
+				<div class="mobile-menu-body flex flex_column">
+					<a
+						*ngFor="let item of items.links"
+						[routerLinkActiveOptions]="{exact: true}"
+						(click)="closeBurgerMenu()"
+						[routerLink]="[item.link]"
+						routerLinkActive="active"
+					>
+						<h2>
+							{{ item.name }}
+						</h2>
+					</a>
+				</div>
+			</ng-container>
 		</div>
-		<ng-template #clientMunu>
-			<div
-				*ngFor="let items of menuClient"
-				class="mobile-menu-body flex flex_column"
-			>
-				<a
-					(click)="closeBurgerMenu()"
-					[routerLink]="[item.link]"
-					routerLinkActive="active"
-					[routerLinkActiveOptions]="{exact: true}"
-					*ngFor="let item of items.links"
-				>
-					<h2>{{ item.name }}</h2>
-				</a>
-				<mib-spacing type="m"></mib-spacing>
-			</div>
-		</ng-template>
 		<mib-spacing type="m"></mib-spacing>
 		<div class="flex flex_grow"></div>
 		<div

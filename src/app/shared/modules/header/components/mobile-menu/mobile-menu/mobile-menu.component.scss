@@ -1,5 +1,11 @@
 @import 'src/styles/helpers/icon_tools';
 
+.burger {
+	& mib-button {
+		@include icon-size(40px);
+	}
+}
+
 .mobile-menu {
 	position: absolute;
 	width: 100%;
@@ -9,7 +15,6 @@
 	background-color: var(--wgr-primary);
 	transition: 0.3s ease-in-out;
 	z-index: 999;
-
 	&.closed {
 		left: 0;
 	}

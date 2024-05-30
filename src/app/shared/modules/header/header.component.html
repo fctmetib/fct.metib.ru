@@ -257,28 +257,40 @@
 					[styles]="skeleton"
 				></mib-skeleton>
 				<ng-template #adminTemplate>
-					<div
-						[mibDropdownTrigger]="adminPanel"
-						class="manager user flex gap-12"
-					>
-						<mib-avatar [showArrow]="false" [showImage]="false">{{
-							nameInitials
-						}}</mib-avatar>
-						<div class="flex flex_column">
-							<p class="text name text_m text_medium c-bti-primary">
-								{{ name }}
-							</p>
-							<p class="text text_s label c-bti-tertiary">{{ login }}</p>
+					<div class="container flex flex_justify-between">
+						<div class="flex burger-btn">
+							<mib-mobile-menu [isAdmin]="true"></mib-mobile-menu>
 						</div>
-						<mib-button size="m" type="ghost-secondary">
+						<div class="flex">
 							<mib-icon
-								btn-icon
-								class="stroke"
-								[name]="
-									adminPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'
-								"
+								class="main-logo-round cursor-pointer"
+								[routerLink]="['/client/cabinet']"
+								name="fi_logo_round_main"
 							></mib-icon>
-						</mib-button>
+						</div>
+						<div
+							[mibDropdownTrigger]="adminPanel"
+							class="manager user flex gap-12"
+						>
+							<mib-avatar [showArrow]="false" [showImage]="false">{{
+								nameInitials
+							}}</mib-avatar>
+							<div class="user-desktop flex flex_column">
+								<p class="text name text_m text_medium c-bti-primary">
+									{{ name }}
+								</p>
+								<p class="text text_s label c-bti-tertiary">{{ login }}</p>
+							</div>
+							<mib-button size="m" type="ghost-secondary">
+								<mib-icon
+									btn-icon
+									class="stroke"
+									[name]="
+										adminPanel.isVisible ? 'fi_chevron-up' : 'fi_chevron-down'
+									"
+								></mib-icon>
+							</mib-button>
+						</div>
 					</div>
 					<mib-dropdown #adminPanel>
 						<mib-spacing dropdown-spacing type="s"></mib-spacing>

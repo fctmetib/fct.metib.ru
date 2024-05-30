@@ -8,7 +8,8 @@ const routes = [
 		children: [
 			{
 				path: '',
-				component: NotVerifyComponent
+				component: NotVerifyComponent,
+				title: 'Верификация | Запросы'
 			}
 		]
 	}
