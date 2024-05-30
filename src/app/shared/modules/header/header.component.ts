@@ -11,6 +11,7 @@ import {AuthService} from 'src/app/auth/services/auth.service'
 import {ToolsService} from '../../services/tools.service'
 import {
 	BehaviorSubject,
+	Observable,
 	filter,
 	finalize,
 	switchMap,
@@ -25,6 +26,7 @@ import {MenuItem} from 'primeng/api'
 import {ClientService} from '../../services/common/client.service'
 import {Properties} from 'csstype'
 import {DropdownService} from '../../ui-kit/dropdown/services/dropdown.service'
+import {BreakpointObserverService} from '../../services/common/breakpoint-observer.service'
 
 @Component({
 	selector: 'mib-header',
@@ -57,16 +59,17 @@ export class HeaderComponent implements OnInit {
 
 	public isAdmin: boolean = false
 	public skeleton: Properties = {
-		borderRadius: '8px',
-		height: '46px',
-		width: '265px'
+		borderRadius: '8px'
 	}
+
+	public isDesktop$: Observable<boolean>
 
 	constructor(
 		public authService: AuthService,
 		private toolsService: ToolsService,
 		private clientService: ClientService,
-		public dropdownService: DropdownService
+		public dropdownService: DropdownService,
+		public breakpointService: BreakpointObserverService
 	) {}
 
 	get classes() {
@@ -124,6 +127,7 @@ export class HeaderComponent implements OnInit {
 
 	ngOnInit() {
 		this.isVerified$.next(this.authService.isUserVerified())
+		this.isDesktop$ = this.breakpointService.isDesktop()
 		this.userLoading$.next(true)
 		this.factoringLoading$.next(true)
 		this.authService.currentUser$

@@ -43,7 +43,7 @@
 		<mib-spacing type="m"></mib-spacing>
 		<div class="flex flex_grow"></div>
 		<div
-			*ngIf="!isClient; else clientMenuFooter"
+			*ngIf="!isClient && !isAdmin; else clientMenuFooter"
 			class="mobile-menu-footer flex flex_column"
 		>
 			<mib-spacing type="xs"></mib-spacing>

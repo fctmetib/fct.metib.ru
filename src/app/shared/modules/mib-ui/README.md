@@ -465,4 +465,9 @@ ng g i public/components/swipe-text-slider/interfaces/swipe-text-slider.interfac
 ng g m public/components/swipe-text-slider/swipe-text-slider --flat  --dry-run
 ng g c public/components/swipe-text-slider/swipe-text-slider --flat  --skip-tests --dry-run
  //---
+
+ // breakpoint-observer service
+ src\app\shared\services\common
+ ng g s shared/services/common/breakpoint-observer --skip-tests
+
 ```

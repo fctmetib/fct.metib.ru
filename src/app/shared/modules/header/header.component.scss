@@ -27,6 +27,11 @@
 			display: none;
 		}
 
+		& mib-skeleton {
+			height: 46px;
+			width: 265px;
+		}
+
 		mib-icon[name='logotype'] {
 			@include icon-size(unset);
 			padding-right: 62px;
@@ -49,6 +54,11 @@
 			}
 
 			& .main-logo-round {
+				width: 40px;
+				height: 40px;
+			}
+
+			& mib-skeleton {
 				width: 40px;
 				height: 40px;
 			}
