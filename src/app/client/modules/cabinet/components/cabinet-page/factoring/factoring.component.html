@@ -17,15 +17,15 @@
 	></mib-skeleton>
 </ng-container>
 <ng-template #body>
-	<div class="flex gap-12">
+	<div class="organization flex gap-12">
 		<p class="text text_m">
 			ИНН: {{ (factoring$ | async)?.Organization?.Inn }}
 		</p>
-		<div class="separator vertical"></div>
+		<div class="separator-vertical"></div>
 		<p class="text text_m">
 			КПП: {{ (factoring$ | async)?.Organization?.Kpp }}
 		</p>
-		<div class="separator vertical"></div>
+		<div class="separator-vertical"></div>
 		<p class="text text_m">
 			Договор Факторинга: {{ (factoring$ | async)?.Contract.Number }} от
 			{{ (factoring$ | async)?.Contract.Date | date : 'dd/MM/yyyy' }}

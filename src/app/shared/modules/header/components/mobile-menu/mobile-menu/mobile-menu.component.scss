@@ -15,6 +15,7 @@
 	background-color: var(--wgr-primary);
 	transition: 0.3s ease-in-out;
 	z-index: 999;
+	overflow: hidden;
 	&.closed {
 		left: 0;
 	}

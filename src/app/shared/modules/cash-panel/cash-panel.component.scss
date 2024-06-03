@@ -7,6 +7,7 @@
 
 @mixin cash-panel {
 	width: 100%;
+	min-width: 300px;
 	padding: 16px;
 	background-color: var(--wgr-primary);
 }
@@ -20,6 +21,7 @@
 
 @mixin cash-panel-mobile {
 	border-bottom: 1px solid var(--wgr-tertiary);
+	padding: 0px 0px 16px;
 }
 
 @mixin cash-panel-hover {
@@ -38,7 +40,7 @@
 	}
 
 	&_mobile {
-		@include cash-panel-desktop;
+		@include cash-panel-mobile;
 	}
 
 	mib-icon[name='fi_info'] {

@@ -10,7 +10,7 @@ export class BreakpointObserverService {
 
 	isDesktop(): Observable<boolean> {
 		return this.breakpointObserver
-			.observe([`(min-width: 992px)`])
+			.observe([`(min-width: 576px)`])
 			.pipe(map(result => result.matches))
 	}
 }

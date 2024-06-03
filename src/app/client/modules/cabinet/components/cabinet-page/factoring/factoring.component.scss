@@ -1,3 +1,19 @@
+@media (max-width: 768px) {
+	mib-spacing[type='xs'] {
+		height: 8px;
+		display: block;
+	}
+
+	.organization {
+		flex-direction: column;
+		gap: 4px;
+
+		& .separator-vertical {
+			display: none;
+		}
+	}
+}
+
 //@import '/src/styles/colors.scss';
 //
 //

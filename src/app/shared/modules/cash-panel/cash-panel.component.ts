@@ -1,6 +1,15 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core'
+import {
+	AfterViewInit,
+	ChangeDetectorRef,
+	Component,
+	Input,
+	OnDestroy,
+	OnInit
+} from '@angular/core'
 import {DeviceType} from '../../interfaces/shared.interface'
 import {OpacityViewAnimation} from '../../animations/animations'
+import {BreakpointObserverService} from '../../services/common/breakpoint-observer.service'
+import {Subscription} from 'rxjs'
 
 @Component({
 	selector: 'mib-cash-panel',
@@ -8,7 +17,7 @@ import {OpacityViewAnimation} from '../../animations/animations'
 	styleUrls: ['./cash-panel.component.scss'],
 	animations: [OpacityViewAnimation]
 })
-export class CashPanelComponent implements AfterViewInit {
+export class CashPanelComponent implements OnInit, AfterViewInit, OnDestroy {
 	@Input() device: DeviceType = 'desktop'
 	@Input() panelTitle: string
 	@Input() panelData: number
@@ -17,14 +26,29 @@ export class CashPanelComponent implements AfterViewInit {
 
 	public isHover: boolean = false
 	public viewMounted: boolean = false
+	public isDesktop: boolean = false
 
-	get classes() {
-		return {
-			[`cash-panel_${this.device}`]: true
-		}
+	private subscriptions = new Subscription()
+
+	constructor(public breakpointService: BreakpointObserverService) {}
+
+	ngOnInit(): void {
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
 	}
 
 	ngAfterViewInit() {
 		this.viewMounted = true
+	}
+
+	get classes() {
+		return {
+			[`cash-panel_${this.isDesktop ? 'desktop' : 'mobile'}`]: true
+		}
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }
