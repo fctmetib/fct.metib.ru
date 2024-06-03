@@ -1,0 +1,13 @@
+@media (max-width: 576px) {
+	.container {
+		padding: 0 16px;
+	}
+
+	.mobile-picker {
+		flex-direction: column;
+		& input {
+			width: 120px;
+			padding: 7px;
+		}
+	}
+}
