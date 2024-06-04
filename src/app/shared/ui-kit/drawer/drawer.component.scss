@@ -27,7 +27,7 @@
 
 	&-content {
 		@media (max-width: 576px) {
-			& > mib-spacing[type='m'] {
+			.desktop-sp {
 				display: none;
 			}
 		}

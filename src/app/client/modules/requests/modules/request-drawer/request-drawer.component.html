@@ -18,7 +18,7 @@
 		<h4>
 			{{ isEditing ? 'Редактирование заявки' : 'Создание новой заявки' }}
 		</h4>
-		<mib-spacing type="xs"></mib-spacing>
+		<mib-spacing class="spacing-m" type="xs"></mib-spacing>
 		<mib-skeleton
 			[styles]="defaultSkeleton"
 			[style.height]="'200px'"
@@ -43,7 +43,7 @@
 			</mib-auto-complete>
 			<mib-spacing type="xs"></mib-spacing>
 			<div class="flex flex_column gap-12">
-				<div class="flex gap-12">
+				<div class="double-input flex gap-12">
 					<mib-input class="flex_grow">
 						<ng-container mibLabel>Номер заявки</ng-container>
 						<input
@@ -176,7 +176,7 @@
 			</mib-table>
 		</ng-template>
 		<mib-spacing type="xs"></mib-spacing>
-		<div class="flex gap-8">
+		<div class="column-m flex gap-8">
 			<mib-button
 				[disabled]="loading$ | async"
 				(press)="openShipment()"
@@ -186,6 +186,7 @@
 				<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
 			</mib-button>
 			<mib-button
+				class="hide-m"
 				type="ghost-primary"
 				(press)="parseShipmentClipboard()"
 				[size]="size"
@@ -254,7 +255,7 @@
 			</mib-table>
 		</ng-template>
 		<mib-spacing type="xs"></mib-spacing>
-		<div class="flex flex_column gap-12">
+		<div class="mobile-dnd flex flex_column gap-12">
 			<mib-dnd
 				(onChange)="onDocumentLoad($event)"
 				[accept]="[

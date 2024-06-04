@@ -3,18 +3,26 @@ import {
 	ElementRef,
 	EventEmitter,
 	Input,
+	OnDestroy,
+	OnInit,
 	Output,
 	ViewChild
 } from '@angular/core'
 import {FileDnd} from './interfaces/drop-box.interface'
 import {DropDirective} from './directives/drop.directive'
+import {Subscription} from 'rxjs'
+import {BreakpointObserverService} from '../../services/common/breakpoint-observer.service'
 
 @Component({
 	selector: 'mib-dnd',
 	templateUrl: './mib-drag-and-drop.component.html',
 	styleUrls: ['./mib-drag-and-drop.component.scss']
 })
-export class MibDragAndDropComponent {
+export class MibDragAndDropComponent implements OnInit, OnDestroy {
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+
 	@ViewChild(DropDirective) dropDirective: DropDirective
 	@ViewChild('loader') loader!: ElementRef
 	@Input() disabled: boolean = false
@@ -30,6 +38,20 @@ export class MibDragAndDropComponent {
 	@Input() multiple: boolean = false
 	@Output() onLoad = new EventEmitter<void>()
 	@Output() onChange = new EventEmitter<FileDnd>()
+
+	constructor(public breakpointService: BreakpointObserverService) {}
+
+	ngOnInit(): void {
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
+	}
+
+	get classes() {
+		return {
+			[`drag-and-drop_${this.isDesktop ? 'desktop' : 'mobile'}`]: true
+		}
+	}
 
 	public onChangeFile() {
 		const files: File[] = Array.from(this.loader.nativeElement.files)
@@ -89,5 +111,9 @@ export class MibDragAndDropComponent {
 		if (!this.loading) {
 			this.formatFiles(data.files)
 		}
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }
