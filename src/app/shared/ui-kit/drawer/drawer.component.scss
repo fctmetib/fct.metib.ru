@@ -1,36 +1,43 @@
-
 :host {
-  height: 100%;
-  width: 100%;
-  --drawer-container-paddings: 0 32px;
+	height: 100%;
+	width: 100%;
+	--drawer-container-paddings: 0 32px;
+	@media (max-width: 576px) {
+		--drawer-container-paddings: 0 16px;
+	}
 }
 
 @mixin drawer {
-  height: 100%;
-  width: 100%;
+	height: 100%;
+	width: 100%;
 
-  position: absolute;
-  top: 0;
-  right: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
 
-  background-color: var(--wgr-primary);
+	background-color: var(--wgr-primary);
 }
 
 @mixin drawer-content {
-  overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 .drawer {
-  @include drawer;
+	@include drawer;
 
-  &-content {
-    @include drawer-content;
-  }
+	&-content {
+		@media (max-width: 576px) {
+			& > mib-spacing[type='m'] {
+				display: none;
+			}
+		}
+		@include drawer-content;
+	}
 
-  .footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-  }
+	.footer {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+	}
 }

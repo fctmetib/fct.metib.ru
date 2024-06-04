@@ -27,6 +27,7 @@ import {LabelModule} from '../../../../../shared/directives/label/label.module'
 import {NgxMaskModule} from 'ngx-mask'
 import {AutoCompleteModule} from '../../../../../shared/ui-kit/auto-complete/auto-complete.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
+import {BreadcrumbModule} from 'src/app/shared/ui-kit/breadcrumb/breadcrumb.module'
 
 @NgModule({
 	declarations: [RequestDrawerComponent],
@@ -54,7 +55,8 @@ import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 		LabelModule,
 		NgxMaskModule,
 		AutoCompleteModule,
-		SkeletonModule
+		SkeletonModule,
+		BreadcrumbModule
 	],
 	providers: [
 		RequestDrawerService,

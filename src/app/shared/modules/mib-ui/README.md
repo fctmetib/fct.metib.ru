@@ -245,6 +245,13 @@ ng g m shared/ui-kit/mark/mark --flat  --dry-run
 ng g c shared/ui-kit/mark/mark --flat  --skip-tests --dry-run
  //---
 
+ //--- breadcrumb
+src\app\shared\ui-kit\breadcrumb
+ng g i shared/ui-kit/breadcrumb/interfaces/breadcrumb.interface  --dry-run
+ng g m shared/ui-kit/breadcrumb/breadcrumb --flat  --dry-run
+ng g c shared/ui-kit/breadcrumb/breadcrumb --flat  --skip-tests --dry-run
+ //---
+
  //--- tags-group
 src\app\shared\ui-kit
 ng g i shared/ui-kit/tags-group/interfaces/tags-group.interface  --dry-run

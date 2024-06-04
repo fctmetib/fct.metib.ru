@@ -1,12 +1,23 @@
 @media (max-width: 576px) {
 	.container {
 		padding: 0 16px;
+
+		& mib-spacing[type='m'] {
+			height: 24px;
+			display: block;
+		}
+
+		& > div {
+			width: 100%;
+			display: block;
+		}
 	}
 
 	.mobile-picker {
 		flex-direction: column;
+		gap: 12px;
 		& input {
-			width: 120px;
+			width: 125px;
 			padding: 7px;
 		}
 	}
