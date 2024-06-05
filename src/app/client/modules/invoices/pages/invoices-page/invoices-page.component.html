@@ -5,8 +5,13 @@
 </div>
 <div class="container container_large">
 	<div class="flex">
-		<div class="flex flex_align-center gap-4">
-			<input [formControl]="dateFrom" styleType="outline" type="date" mibInput/>
+		<div class="mobile-col flex flex_align-center gap-4">
+			<input
+				[formControl]="dateFrom"
+				styleType="outline"
+				type="date"
+				mibInput
+			/>
 			<p class="text text_m c-bti-tertiary">-</p>
 			<input [formControl]="dateTo" styleType="outline" type="date" mibInput />
 		</div>
@@ -99,7 +104,7 @@
 		</ng-template>
 		<mib-table-footer [lined]="!(loading$ | async)">
 			<mib-paginator
-        [totalCount]="invoices.length"
+				[totalCount]="invoices.length"
 				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 				[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 			></mib-paginator>
