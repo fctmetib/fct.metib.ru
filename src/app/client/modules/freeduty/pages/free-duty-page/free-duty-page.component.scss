@@ -1,0 +1,22 @@
+@media (max-width: 576px) {
+	.container {
+		padding: 0 16px;
+
+		& mib-spacing[type='m'] {
+			height: 24px;
+			display: block;
+		}
+
+		& > div {
+			width: 100%;
+			display: block;
+		}
+	}
+
+	.mobile-col {
+		flex-direction: column;
+		& input {
+			padding: 7px;
+		}
+	}
+}

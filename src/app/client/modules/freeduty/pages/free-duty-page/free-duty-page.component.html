@@ -5,7 +5,7 @@
 </div>
 <mib-tab-group>
 	<mib-navbar class="container container_large">
-		<mib-navbar-point (press)="selectTab(true)" value="1"
+		<mib-navbar-point size="m" (press)="selectTab(true)" value="1"
 			>Свободные</mib-navbar-point
 		>
 		<mib-navbar-point (press)="selectTab(false)" value="2"
@@ -25,7 +25,7 @@
 	<div class="container container_large">
 		<mib-spacing type="m"></mib-spacing>
 		<div class="flex flex_justify-between">
-			<div class="flex gap-16">
+			<div class="mobile-col flex gap-16">
 				<div class="flex flex_align-center gap-4">
 					<input
 						[formControl]="dateFrom"
