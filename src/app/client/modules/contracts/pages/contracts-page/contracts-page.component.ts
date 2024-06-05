@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core'
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core'
 import {Properties} from 'csstype'
-import {BehaviorSubject, finalize, tap} from 'rxjs'
+import {BehaviorSubject, Subscription, finalize, tap} from 'rxjs'
 import {DeliveryService} from 'src/app/shared/services/share/delivery.service'
 import {ToolsService} from 'src/app/shared/services/tools.service'
 import {
@@ -10,13 +10,14 @@ import {
 import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.interface'
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
 import {ContractsDrawerService} from '../../modules/new-contracts-page-drawer/contracts-drawer.service'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
 @Component({
 	selector: 'mib-contracts-page',
 	templateUrl: './contracts-page.component.html',
 	styleUrls: ['./contracts-page.component.scss']
 })
-export class ContractsPageComponent implements OnInit {
+export class ContractsPageComponent implements OnInit, OnDestroy {
 	public loading$ = new BehaviorSubject<boolean>(false)
 
 	@ViewChild(TableComponent) table: TableComponent
@@ -50,14 +51,22 @@ export class ContractsPageComponent implements OnInit {
 		selectedIds: []
 	}
 
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+
 	constructor(
 		public toolsService: ToolsService,
 		private deliveryService: DeliveryService,
-		private contractsDrawerService: ContractsDrawerService
+		private contractsDrawerService: ContractsDrawerService,
+		public breakpointService: BreakpointObserverService
 	) {}
 
 	ngOnInit(): void {
 		this.getAllDeliveriesContracts()
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
 	}
 
 	getAllDeliveriesContracts() {
@@ -130,5 +139,9 @@ export class ContractsPageComponent implements OnInit {
 			// switchMap(async () => this.getClientDocumentsList())
 			()
 			.subscribe()
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }

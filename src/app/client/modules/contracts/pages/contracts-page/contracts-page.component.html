@@ -7,7 +7,9 @@
 	<mib-navbar class="container container_large">
 		<mib-navbar-point value="1">Действующие</mib-navbar-point>
 		<mib-navbar-point value="2">Прошедшие</mib-navbar-point>
-		<mib-navbar-point value="3">Все договоры</mib-navbar-point>
+		<mib-navbar-point value="3">{{
+			isDesktop ? 'Все договоры' : 'Все'
+		}}</mib-navbar-point>
 	</mib-navbar>
 	<div class="container container_large">
 		<mib-tab-item value="1">
@@ -35,7 +37,7 @@
 				</ng-container>
 				<ng-template #table>
 					<mib-table-row
-					 	(dblclick)="contractDrawer(contract?.ID)"
+						(dblclick)="contractDrawer(contract?.ID)"
 						*ngFor="let contract of currentContractsVisible; let last = last"
 						[underlined]="!last"
 					>
