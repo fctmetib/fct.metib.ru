@@ -1,6 +1,20 @@
 <mib-drawer [formGroup]="form">
+	<div class="breadcrumb flex flex_column">
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex">
+			<mib-breadcrumb
+				(click)="dialogRef.close()"
+				text="Заявка"
+			></mib-breadcrumb>
+			<mib-breadcrumb
+				(click)="dialogRef.close()"
+				text="Новая заявка"
+			></mib-breadcrumb>
+			<mib-breadcrumb text="Добавить" selected="true"></mib-breadcrumb>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+	</div>
 	<mib-drawer-header
-		[showShared]="true"
 		[showClose]="true"
 		(onClose)="dialogRef.close()"
 		drawer-header
@@ -10,7 +24,7 @@
 		<h4>Добавить поставку</h4>
 		<mib-spacing type="xs"></mib-spacing>
 		<div class="flex flex_column gap-12">
-			<div class="flex gap-12">
+			<div class="mobile-col flex gap-12">
 				<mib-input class="flex_grow">
 					<ng-container mibLabel>Накладная, УПД, Акт</ng-container>
 					<input formControlName="WaybillNumber" mibInput />
@@ -20,7 +34,7 @@
 					<input type="date" formControlName="WaybillDate" mibInput />
 				</mib-input>
 			</div>
-			<div class="flex gap-12">
+			<div class="mobile-col flex gap-12">
 				<mib-input class="flex_grow">
 					<ng-container mibLabel>Счет-фактура</ng-container>
 					<input formControlName="InvoiceNumber" mibInput />

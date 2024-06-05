@@ -12,6 +12,7 @@ import {NgxMaskModule} from 'ngx-mask'
 import {RightIconModule} from '../../../../../shared/directives/right-icon/right-icon.module'
 import {LabelModule} from '../../../../../shared/directives/label/label.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
+import {BreadcrumbModule} from 'src/app/shared/ui-kit/breadcrumb/breadcrumb.module'
 
 @NgModule({
 	declarations: [ShipmentDrawerComponent],
@@ -25,7 +26,8 @@ import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 		ReactiveFormsModule,
 		NgxMaskModule,
 		RightIconModule,
-		LabelModule
+		LabelModule,
+		BreadcrumbModule
 	],
 	providers: [ShipmentDrawerService]
 })
