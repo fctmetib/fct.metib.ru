@@ -5,14 +5,18 @@
 </div>
 <mib-tab-group>
 	<mib-navbar class="container container_large">
-		<mib-navbar-point value="1">Список запросов</mib-navbar-point>
+		<mib-navbar-point value="1">{{
+			isDesktop ? 'Список запросов' : 'Список'
+		}}</mib-navbar-point>
 		<mib-navbar-point value="2">Черновики</mib-navbar-point>
-		<mib-navbar-point value="3">История запросов</mib-navbar-point>
+		<mib-navbar-point value="3">{{
+			isDesktop ? 'История запросов' : 'История'
+		}}</mib-navbar-point>
 	</mib-navbar>
 	<div class="container container_large">
 		<mib-tab-item value="1">
 			<mib-spacing type="s"></mib-spacing>
-			<div class="flex flex_wrap gap-16">
+			<div class="mobile-col flex flex_wrap gap-16">
 				<!-- [requestQuantity]="request.quantity" -->
 				<!-- [link]="['history']" -->
 				<mib-request-card
@@ -23,10 +27,12 @@
 				></mib-request-card>
 			</div>
 			<mib-spacing type="s"></mib-spacing>
-			<mib-button (press)="openDrawer()" type="filled-primary"
-				>Запрос на свободную тему</mib-button
-			>
-			<mib-spacing type="xl2"></mib-spacing>
+			<div class="mobile-btn flex">
+				<mib-button (press)="openDrawer()" type="filled-primary"
+					>Запрос на свободную тему</mib-button
+				>
+			</div>
+			<mib-spacing class="mobile-sp" type="xl2"></mib-spacing>
 		</mib-tab-item>
 		<mib-tab-item value="2">
 			<mib-spacing type="m"></mib-spacing>

@@ -16,7 +16,7 @@
 		}}
 	</p>
 	<mib-spacing type="xs2"></mib-spacing>
-	<div class="flex flex_justify-between">
+	<div *ngIf="isDesktop; else mobile" class="flex flex_justify-between">
 		<mib-link>
 			Создать запрос
 			<mib-icon
@@ -34,4 +34,9 @@
 			{{ requestQuantity ? requestQuantity : 'нет' }} в истории
 		</mib-link> -->
 	</div>
+	<ng-template #mobile>
+		<div class="flex">
+			<mib-button size="m" type="filled-secondary">Создать запрос </mib-button>
+		</div>
+	</ng-template>
 </div>

@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core'
-import {BehaviorSubject, finalize, tap} from 'rxjs'
+import {Component, OnDestroy, OnInit} from '@angular/core'
+import {BehaviorSubject, Subscription, finalize, tap} from 'rxjs'
 import {
 	IDraftList,
 	IHistoryList,
@@ -19,6 +19,7 @@ import {DemandDebtorDrawerService} from '../../modules/demand-debtor-drawer/dema
 import {DemandVerificationDrawerService} from '../../modules/demand-verification-drawer/demand-verification-drawer.service'
 import {DemandFactoringDrawerService} from '../../modules/demand-factoring-drawer/demand-factoring-drawer.service'
 import {DemandAgentDrawerService} from '../../modules/demand-agent-drawer/demand-agent-drawer.service'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
 const ANIMATION_CONFIG = {
 	translateDistance: '-3%',
@@ -33,12 +34,16 @@ const ANIMATION_CONFIG = {
 	styleUrls: ['./demand-new-home.component.scss'],
 	animations: [new AnimationService().generateAnimation(ANIMATION_CONFIG)]
 })
-export class DemandNewHomeComponent implements OnInit {
+export class DemandNewHomeComponent implements OnInit, OnDestroy {
 	requestLists: IQueryList[] = []
 	drafts: IDraftList[] = []
 	draftLists: IDraftList[] = []
 	historys: IHistoryList[] = []
 	historyLists: IHistoryList[] = []
+
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
 
 	public isNewClient: boolean = true
 
@@ -74,11 +79,15 @@ export class DemandNewHomeComponent implements OnInit {
 		private demandDebtorDrawerService: DemandDebtorDrawerService,
 		private demandVerificationDrawerService: DemandVerificationDrawerService,
 		private demandFactoringDrawerService: DemandFactoringDrawerService,
-		private demandAgentDrawerService: DemandAgentDrawerService
+		private demandAgentDrawerService: DemandAgentDrawerService,
+		public breakpointService: BreakpointObserverService
 	) {}
 
 	ngOnInit(): void {
 		this.getAllRequestesList()
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
 	}
 
 	getAllRequestesList() {
@@ -215,5 +224,9 @@ export class DemandNewHomeComponent implements OnInit {
 			default:
 				break
 		}
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }

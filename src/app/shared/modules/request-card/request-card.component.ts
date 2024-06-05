@@ -1,6 +1,8 @@
-import {AfterViewInit, Component, Input} from '@angular/core'
+import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core'
 import {DeviceType} from '../../interfaces/shared.interface'
 import {OpacityViewAnimation} from '../../animations/animations'
+import {BreakpointObserverService} from '../../services/common/breakpoint-observer.service'
+import {Subscription} from 'rxjs'
 
 @Component({
 	selector: 'mib-request-card',
@@ -8,7 +10,7 @@ import {OpacityViewAnimation} from '../../animations/animations'
 	styleUrls: ['./request-card.component.scss'],
 	animations: [OpacityViewAnimation]
 })
-export class RequestCardComponent implements AfterViewInit {
+export class RequestCardComponent implements OnInit, AfterViewInit, OnDestroy {
 	@Input() device: DeviceType = 'desktop'
 	@Input() requestTitle: string
 	@Input() requestText: string
@@ -17,14 +19,29 @@ export class RequestCardComponent implements AfterViewInit {
 
 	public isHover: boolean = false
 	public viewMounted: boolean = false
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+
+	constructor(public breakpointService: BreakpointObserverService) {}
+
+	ngOnInit(): void {
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
+	}
 
 	get classes() {
 		return {
-			[`request-card_${this.device}`]: true
+			[`request-card_${this.isDesktop ? 'desktop' : 'mobile'}`]: true
 		}
 	}
 
 	ngAfterViewInit() {
 		this.viewMounted = true
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }

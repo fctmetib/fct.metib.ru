@@ -8,6 +8,9 @@
 	max-width: calc(20% - 12.8px);
 	flex: 1 0;
 	min-width: 428px;
+	@media (max-width: 576px) {
+		min-width: 100%;
+	}
 }
 
 @mixin request-card {
@@ -24,7 +27,7 @@
 
 @mixin request-card-mobile {
 	display: flex;
-	width: 360px;
+	width: 100%;
 	padding: 12px 16px 16px 16px;
 	border-bottom: 1px solid var(--wgr-tertiary);
 }
@@ -50,6 +53,9 @@
 
 	&_mobile {
 		@include request-card-mobile;
+		& mib-button[size='m'] {
+			width: 100%;
+		}
 	}
 
 	mib-icon[name='fi_plus'] {
