@@ -259,6 +259,13 @@ ng g m shared/ui-kit/tags-group/tags-group --flat  --dry-run
 ng g c shared/ui-kit/tags-group/tags-group --flat  --skip-tests --dry-run
  //---
 
+ //--- test-tab
+src\app\shared\ui-kit
+ng g i shared/ui-kit/test-tab/interfaces/test-tab.interface  --dry-run
+ng g m shared/ui-kit/test-tab/test-tab --flat  --dry-run
+ng g c shared/ui-kit/test-tab/test-tab --flat  --skip-tests --dry-run
+ //---
+
  //--- invoice
 src\app\client\modules\invoices
 ng g c client/modules/invoices/pages/invoice-page --skip-tests --dry-run

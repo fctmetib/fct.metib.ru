@@ -1,0 +1,31 @@
+<div class="table-container">
+	<table>
+		<thead>
+			<tr>
+				<th>{{ headers[0] }}</th>
+				<th>{{ getVisibleHeader() }}</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let row of data">
+				<td>{{ row[headers[0]] }}</td>
+				<td>{{ getVisibleCell(row) }}</td>
+				<td>
+					<mib-button
+						(press)="openModal(row)"
+						table-row-button
+						size="s"
+						type="ghost-secondary"
+					>
+						<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+					</mib-button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="slider-controls">
+		<button (click)="previous()">←</button>
+		<button (click)="next()">→</button>
+	</div>
+</div>
