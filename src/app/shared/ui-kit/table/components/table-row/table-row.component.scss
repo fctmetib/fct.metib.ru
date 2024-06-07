@@ -17,6 +17,9 @@
 		right: 0;
 		height: 100%;
 		padding: 8px 8px 8px 0;
+		@media (max-width: 576px) {
+			padding: 0;
+		}
 	}
 
 	&_has-button {

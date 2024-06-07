@@ -16,9 +16,11 @@
 }
 
 mib-table-quick-action-island {
-	margin: 16px 0;
+	margin: 10px 0;
+	z-index: 10;
 	&.fixed {
 		position: fixed;
+		width: 90%;
 		bottom: 24px;
 	}
 }

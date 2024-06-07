@@ -12,7 +12,7 @@
 	<div class="flex flex_align-center gap-2">
 		<div class="flex">
 			<p class="text text_s c-bti-secondary">
-				Выделено {{ table.selectedRows.length }}
+				{{ isDesktop ? 'Выделено' : '' }} {{ table.selectedRows.length }}
 			</p>
 			<p class="text text_s c-bti-quaternary">/{{ table.rows.length }}</p>
 		</div>

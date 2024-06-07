@@ -3,6 +3,16 @@
 	&:first-child > div {
 		justify-content: start;
 	}
+
+	@media (max-width: 576px) {
+		&:not(:first-child):not(:nth-child(2)) {
+			display: none;
+		}
+
+		.table-head-cell {
+			border-right: none;
+		}
+	}
 }
 label {
 	padding: 2px 0;

@@ -8,4 +8,7 @@
 	--table-paddings: 0 48px 0 16px;
 	--table-flex: 1 0;
 	overflow: hidden;
+	@media (max-width: 576px) {
+		--table-paddings: 0 calc(100% / 4) 0 16px;
+	}
 }
