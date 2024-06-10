@@ -2,45 +2,50 @@
 	<mib-button (press)="onBurger()" size="m" type="filled-secondary">
 		<mib-icon btn-icon class="stroke" name="fi_menu"></mib-icon>
 	</mib-button>
-
 	<div
-		[ngClass]="{open: !isOpen, closed: isOpen}"
+		#mobileMenu
+		[ngClass]="{open: isOpen, closed: !isOpen}"
 		class="flex flex_column mobile-menu"
 	>
 		<div class="mobile-menu-header flex">
-			<mib-button (press)="closeBurgerMenu()" size="m" type="filled-secondary">
+			<mib-button (press)="onBurger()" size="m" type="filled-secondary">
 				<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
 			</mib-button>
 		</div>
-		<mib-spacing type="m"></mib-spacing>
-		<div class="flex flex_column gap-32">
-			<ng-container
-				*ngFor="
-					let items of !isLogged && !isAdmin
-						? menuMain
-						: isAdmin
-						? menuAdmin
-						: !isVerify
-						? menuVerify
-						: menuUser
-				"
-			>
-				<div class="mobile-menu-body flex flex_column">
-					<a
-						*ngFor="let item of items.links"
-						[routerLinkActiveOptions]="{exact: true}"
-						(click)="closeBurgerMenu()"
-						[routerLink]="[item.link]"
-						routerLinkActive="active"
-					>
-						<h2>
-							{{ item.name }}
-						</h2>
-					</a>
-				</div>
-			</ng-container>
+		<div
+			[class.show-scroll]="isScrollable"
+			class="mobile-menu-wrap flex flex_column"
+		>
+			<mib-spacing type="m"></mib-spacing>
+			<div class="flex flex_column gap-32">
+				<ng-container
+					*ngFor="
+						let items of !isLogged && !isAdmin
+							? menuMain
+							: isAdmin
+							? menuAdmin
+							: !isVerify
+							? menuVerify
+							: menuUser
+					"
+				>
+					<div class="mobile-menu-body flex flex_column">
+						<a
+							*ngFor="let item of items.links"
+							[routerLinkActiveOptions]="{exact: true}"
+							(click)="onBurger()"
+							[routerLink]="[item.link]"
+							routerLinkActive="active"
+						>
+							<h2>
+								{{ item.name }}
+							</h2>
+						</a>
+					</div>
+				</ng-container>
+			</div>
+			<mib-spacing type="m"></mib-spacing>
 		</div>
-		<mib-spacing type="m"></mib-spacing>
 		<div class="flex flex_grow"></div>
 		<div
 			*ngIf="!isClient && !isAdmin; else clientMenuFooter"
@@ -76,7 +81,6 @@
 						</div>
 					</a>
 				</div>
-				<mib-spacing type="m"></mib-spacing>
 			</div>
 		</ng-template>
 	</div>

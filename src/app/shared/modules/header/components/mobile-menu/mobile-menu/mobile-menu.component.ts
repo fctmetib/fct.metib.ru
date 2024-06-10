@@ -1,4 +1,13 @@
-import {Component, Input} from '@angular/core'
+import {
+	AfterContentInit,
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	HostListener,
+	Input,
+	OnInit,
+	ViewChild
+} from '@angular/core'
 import {AuthService} from 'src/app/auth/services/auth.service'
 
 @Component({
@@ -6,7 +15,9 @@ import {AuthService} from 'src/app/auth/services/auth.service'
 	templateUrl: './mobile-menu.component.html',
 	styleUrls: ['./mobile-menu.component.scss']
 })
-export class MobileMenuComponent {
+export class MobileMenuComponent implements OnInit, AfterContentInit {
+	@ViewChild('mobileMenu') mobileMenu: ElementRef
+
 	menuUser = [
 		{
 			links: [
@@ -63,7 +74,23 @@ export class MobileMenuComponent {
 	isLogged: boolean = false
 	isAuthenticated: boolean = false
 
-	constructor(public authService: AuthService) {}
+	isScrollable: boolean = false
+
+	constructor(
+		public authService: AuthService,
+		private cdr: ChangeDetectorRef
+	) {}
+
+	ngAfterContentInit(): void {
+		this.checkIfScrollable()
+	}
+
+	@HostListener('window:resize')
+	onWindowResize() {
+		if (this.isOpen) {
+			this.checkIfScrollable()
+		}
+	}
 
 	ngOnInit(): void {
 		this.isVerify = this.authService.isUserVerified()
@@ -72,13 +99,22 @@ export class MobileMenuComponent {
 
 	public onBurger() {
 		this.isOpen = !this.isOpen
-	}
+		this.cdr.detectChanges()
 
-	public closeBurgerMenu() {
-		this.isOpen = !this.isOpen
+		setTimeout(() => {
+			this.checkIfScrollable()
+		}, 0)
 	}
 
 	logout() {
 		this.authService.logout()
+	}
+
+	checkIfScrollable() {
+		if (this.mobileMenu) {
+			const menuHeight = this.mobileMenu.nativeElement.scrollHeight
+			const viewHeight = window.innerHeight
+			this.isScrollable = menuHeight > viewHeight
+		}
 	}
 }
