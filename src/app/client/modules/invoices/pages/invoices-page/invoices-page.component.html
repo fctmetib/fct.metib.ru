@@ -17,9 +17,6 @@
 		</div>
 	</div>
 	<mib-spacing type="xs"></mib-spacing>
-	<!-- test start!!!-->
-	<mib-test-tab></mib-test-tab>
-	<!-- test end !!! -->
 	<mib-table>
 		<mib-table-head>
 			<mib-table-head-cell
@@ -29,16 +26,21 @@
 				[showCheckbox]="true"
 				>Дата</mib-table-head-cell
 			>
-			<mib-table-head-cell>Сумма</mib-table-head-cell>
+			<ng-container *ngIf="isDesktop; else mobile">
+				<mib-table-head-cell>Сумма</mib-table-head-cell>
+			</ng-container>
 			<mib-table-head-cell>Договор поставки</mib-table-head-cell>
 			<mib-table-head-cell>Назначение</mib-table-head-cell>
 			<mib-table-head-cell>Плательщик</mib-table-head-cell>
 			<mib-table-head-cell>Дебитор</mib-table-head-cell>
 			<mib-table-head-cell>Счет плательщика</mib-table-head-cell>
 			<mib-table-head-cell>Счет получателя</mib-table-head-cell>
+			<ng-template #mobile>
+				<mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
+			</ng-template>
 			<ng-container table-head-button *ngIf="!isDesktop">
 				<mib-button
-					(press)="next()"
+					(press)="prev()"
 					size="s"
 					table-row-button
 					type="ghost-secondary"
@@ -46,7 +48,7 @@
 					<mib-icon class="stroke" btn-icon name="fi_chevron-left"></mib-icon>
 				</mib-button>
 				<mib-button
-					(press)="prev()"
+					(press)="next()"
 					size="s"
 					table-row-button
 					type="ghost-secondary"
@@ -75,11 +77,13 @@
 						invoice.Date | date : 'dd.MM.YYYY'
 					}}</ng-container>
 				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						invoice.Amount | rub
-					}}</ng-container>
-				</mib-table-cell>
+				<ng-container *ngIf="isDesktop; else mobileCell">
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							invoice.Amount | rub
+						}}</ng-container>
+					</mib-table-cell>
+				</ng-container>
 				<mib-table-cell>
 					<ng-container table-cell-title>{{ invoice.ID }}</ng-container>
 				</mib-table-cell>
@@ -107,6 +111,11 @@
 						invoice.Beneficiary.Account
 					}}</ng-container>
 				</mib-table-cell>
+				<ng-template #mobileCell>
+					<mib-table-head-cell>{{
+						getVisibleCell(invoice)
+					}}</mib-table-head-cell>
+				</ng-template>
 				<ng-container table-row-button *ngIf="isDesktop; else mobile">
 					<mib-button
 						[mibDropdownTrigger]="newDocumentRowMenu"

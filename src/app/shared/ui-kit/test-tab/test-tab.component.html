@@ -9,8 +9,8 @@
 		</thead>
 		<tbody>
 			<tr *ngFor="let row of data">
-				<td>{{ row[headers[0]] }}</td>
-				<td>{{ getVisibleCell(row) }}</td>
+				<td>{{ row[headers[0]] }}: row-h</td>
+				<td>{{ getVisibleCell(row) }}: get-cell</td>
 				<td>
 					<mib-button
 						(press)="openModal(row)"

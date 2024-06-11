@@ -50,6 +50,26 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 
 	public isDesktop: boolean = false
 	private subscriptions = new Subscription()
+	public currentIndex: number = 0
+	headers = [
+		'Сумма',
+		'Договор поставки',
+		'Назначение',
+		'Плательщик',
+		'Дебитор',
+		'Счет плательщика',
+		'Счет получателя'
+	]
+
+	public invoiceMap = {
+		0: 'Amount',
+		1: 'ID',
+		2: 'Comment',
+		3: {Payer: 'Title'},
+		4: {Beneficiary: 'Title'},
+		5: {Payer: 'Account'},
+		6: {Beneficiary: 'Account'}
+	}
 
 	constructor(
 		public invoicesService: InvoicesService,
@@ -109,11 +129,32 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 	}
 
 	prev() {
-		console.log('prev')
+		if (this.currentIndex > 0) {
+			this.currentIndex--
+		}
 	}
 
 	next() {
-		console.log('next')
+		if (this.currentIndex < this.headers.length - 1) {
+			this.currentIndex++
+		}
+	}
+
+	getVisibleHeader() {
+		return this.headers[this.currentIndex]
+	}
+
+	getVisibleCell(row: ClientInvoice[]) {
+		const result = {}
+		for (const [newKey, path] of Object.entries(this.invoiceMap)) {
+			if (typeof path === 'string') {
+				result[newKey] = row[path]
+			} else if (typeof path === 'object') {
+				const [parentKey, childKey] = Object.entries(path)[0]
+				result[newKey] = row[parentKey] ? row[parentKey][childKey] : undefined
+			}
+		}
+		return result[this.currentIndex]
 	}
 
 	onPageChange(page: number) {
