@@ -7,7 +7,7 @@
 	(click)="openFileManager()"
 	[ngClass]="classes"
 >
-	<div *ngIf="isDesktop; else mobile" class="flex">
+	<div *ngIf="isDesktop; else mobile">
 		<ng-container *ngIf="!dropDirective?.fileOver; else fileOver">
 			<div class="flex flex_align-center gap-4">
 				<mib-icon
