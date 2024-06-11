@@ -7,19 +7,6 @@
 >
 	<ng-content></ng-content>
 	<div class="table-row_button-wrapper flex flex_align-center" #wrapper>
-		<ng-content
-			*ngIf="isDesktop; else mobile"
-			select="[table-row-button]"
-		></ng-content>
-		<ng-template #mobile>
-			<mib-button
-				(click)="openModal()"
-				size="s"
-				table-row-button
-				type="ghost-secondary"
-			>
-				<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
-			</mib-button>
-		</ng-template>
+		<ng-content select="[table-row-button]"></ng-content>
 	</div>
 </div>

@@ -1,7 +1,15 @@
 :host {
+	position: relative;
 	height: 48px;
 	padding: var(--table-paddings);
 	display: flex;
 	background-color: var(--wgr-secondary);
 	border-bottom: var(--collapse);
+
+	& .table-head_button-wrapper {
+		position: absolute;
+		right: 0;
+		height: 100%;
+		padding: 8px 8px 8px 0;
+	}
 }

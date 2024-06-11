@@ -36,6 +36,24 @@
 			<mib-table-head-cell>Дебитор</mib-table-head-cell>
 			<mib-table-head-cell>Счет плательщика</mib-table-head-cell>
 			<mib-table-head-cell>Счет получателя</mib-table-head-cell>
+			<ng-container table-head-button *ngIf="!isDesktop">
+				<mib-button
+					(press)="next()"
+					size="s"
+					table-row-button
+					type="ghost-secondary"
+				>
+					<mib-icon class="stroke" btn-icon name="fi_chevron-left"></mib-icon>
+				</mib-button>
+				<mib-button
+					(press)="prev()"
+					size="s"
+					table-row-button
+					type="ghost-secondary"
+				>
+					<mib-icon class="stroke" btn-icon name="fi_chevron-right"></mib-icon>
+				</mib-button>
+			</ng-container>
 		</mib-table-head>
 		<ng-container *ngIf="loading$ | async; else table">
 			<mib-skeleton
@@ -89,20 +107,35 @@
 						invoice.Beneficiary.Account
 					}}</ng-container>
 				</mib-table-cell>
-				<mib-button
-					[mibDropdownTrigger]="newDocumentRowMenu"
-					table-row-button
-					size="s"
-					type="ghost-secondary"
-				>
-					<mib-icon class="stroke" btn-icon name="fi_more-vertical"></mib-icon>
-				</mib-button>
-				<mib-dropdown #newDocumentRowMenu>
-					<mib-dropdown-point
-						(press)="openDrawer(invoice.ID)"
-						text="Открыть"
-					></mib-dropdown-point>
-				</mib-dropdown>
+				<ng-container table-row-button *ngIf="isDesktop; else mobile">
+					<mib-button
+						[mibDropdownTrigger]="newDocumentRowMenu"
+						size="s"
+						type="ghost-secondary"
+					>
+						<mib-icon
+							class="stroke"
+							btn-icon
+							name="fi_more-vertical"
+						></mib-icon>
+					</mib-button>
+					<mib-dropdown #newDocumentRowMenu>
+						<mib-dropdown-point
+							(press)="openDrawer(invoice.ID)"
+							text="Открыть"
+						></mib-dropdown-point>
+					</mib-dropdown>
+				</ng-container>
+				<ng-template #mobile>
+					<mib-button
+						(click)="openModal(invoice); $event.stopPropagation()"
+						size="s"
+						table-row-button
+						type="ghost-secondary"
+					>
+						<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+					</mib-button>
+				</ng-template>
 			</mib-table-row>
 		</ng-template>
 		<mib-table-footer [lined]="!(loading$ | async)">
