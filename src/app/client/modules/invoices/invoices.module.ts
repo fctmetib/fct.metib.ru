@@ -33,6 +33,7 @@ import {InvoiceDrawerModule} from './modules/invoice-drawer/invoice-drawer.modul
 import {DatesService} from 'src/app/shared/services/dates.service'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
+import {InvoicePageModalModule} from 'src/app/shared/modules/modals/invoice-page-modal/invoice-page-modal.module'
 
 @NgModule({
 	imports: [
@@ -64,7 +65,8 @@ import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 		PaginatorModule,
 		InvoiceDrawerModule,
 		DropdownModule,
-		RubModule
+		RubModule,
+		InvoicePageModalModule
 	],
 	declarations: [InvoicePageComponent, InvoicesPageComponent],
 	providers: [InvoicesService, DatesService, DatePipe]

@@ -19,6 +19,8 @@ import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubs
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {RubPipe} from 'src/app/shared/pipes/rub/rub.pipe'
 import {DatePipe} from '@angular/common'
+import {MatDialog} from '@angular/material/dialog'
+import {InvoicePageModalComponent} from 'src/app/shared/modules/modals/invoice-page-modal/invoice-page-modal.component'
 
 @Component({
 	selector: 'mib-invoices-page',
@@ -81,7 +83,8 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 		private au: AutoUnsubscribeService,
 		public breakpointService: BreakpointObserverService,
 		private rubPipe: RubPipe,
-		private datePipe: DatePipe
+		private datePipe: DatePipe,
+		private dialog: MatDialog
 	) {}
 
 	ngOnInit(): void {
@@ -193,6 +196,16 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 				takeUntil(this.au.destroyer)
 			)
 			.subscribe()
+	}
+
+	openInvoicePageModal(invoice) {
+		const dialogConfig = {
+			width: '100%', // Optional
+			maxWidth: '600px', // Optional
+			data: {message: 'halo there'} // Optional
+		}
+
+		this.dialog.open(InvoicePageModalComponent, dialogConfig)
 	}
 
 	ngOnDestroy(): void {

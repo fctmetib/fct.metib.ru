@@ -353,6 +353,13 @@ ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
  ng g c shared/modules/modals/request-failure-modal/request-failure-modal --flat --skip-tests --dry-run
  //---
 
+ //--- invoice-page-modal
+ src\app\shared\modules\modals\invoice-page-modal
+ ng g m shared/modules/modals/invoice-page-modal/invoice-page-modal --flat --dry-run
+ ng g s shared/modules/modals/invoice-page-modal/invoice-page-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/invoice-page-modal/invoice-page-modal --flat --skip-tests --dry-run
+ //---
+
  //--- request-info-modal
  src\app\shared\modules\modals\request-info-modal
  ng g m shared/modules/modals/request-info-modal/request-info-modal --flat --dry-run

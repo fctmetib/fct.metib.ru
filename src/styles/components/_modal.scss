@@ -1,16 +1,16 @@
 @mixin modal-cdk {
-	background-color: red($color: #000000);
+	// background-color: red($color: #000000);
 	// height: 100%;
 	// width: 100%;
 	// position: absolute !important;
 	// top: 0;
 	// right: 0;
 
-  .mat-mdc-dialog-container .mdc-dialog__surface {
-    box-shadow: none !important;
-    --mdc-dialog-container-color: transparent;
-    --mdc-dialog-container-shape: 0;
-  }
+	.mat-mdc-dialog-container .mdc-dialog__surface {
+		box-shadow: none !important;
+		--mdc-dialog-container-color: transparent;
+		--mdc-dialog-container-shape: 0;
+	}
 }
 
 .modal-cdk {
