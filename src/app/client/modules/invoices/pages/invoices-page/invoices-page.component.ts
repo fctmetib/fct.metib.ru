@@ -17,6 +17,8 @@ import {FormControl} from '@angular/forms'
 import {takeUntil} from 'rxjs/operators'
 import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import {RubPipe} from 'src/app/shared/pipes/rub/rub.pipe'
+import {DatePipe} from '@angular/common'
 
 @Component({
 	selector: 'mib-invoices-page',
@@ -77,7 +79,9 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 		public datesService: DatesService,
 		public toolsService: ToolsService,
 		private au: AutoUnsubscribeService,
-		public breakpointService: BreakpointObserverService
+		public breakpointService: BreakpointObserverService,
+		private rubPipe: RubPipe,
+		private datePipe: DatePipe
 	) {}
 
 	ngOnInit(): void {
@@ -147,13 +151,26 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 	getVisibleCell(row: ClientInvoice[]) {
 		const result = {}
 		for (const [newKey, path] of Object.entries(this.invoiceMap)) {
+			let value
+
 			if (typeof path === 'string') {
-				result[newKey] = row[path]
+				// Если путь - строка, извлекаем значение напрямую
+				value = row[path]
 			} else if (typeof path === 'object') {
+				// Если путь - объект, извлекаем вложенное значение
 				const [parentKey, childKey] = Object.entries(path)[0]
-				result[newKey] = row[parentKey] ? row[parentKey][childKey] : undefined
+				value = row[parentKey] ? row[parentKey][childKey] : undefined
 			}
+			// Проверка и добавление префиксов
+			if (path === 'Amount' && value !== undefined) {
+				value = this.rubPipe.transform(value)
+			} else if (path === 'Date' && value !== undefined) {
+				value = this.datePipe.transform(value, 'dd.MM.yyyy')
+			}
+
+			result[newKey] = value
 		}
+		console.log('result :>> ', result)
 		return result[this.currentIndex]
 	}
 
