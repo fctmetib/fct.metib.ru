@@ -12,13 +12,17 @@
 	<div class="flex gap-12">
 		<div class="cell-m flex flex_column flex_grow">
 			<span class="text text_s c-bti-tertiary"> Дата </span>
-			<span class="text text_m pt-4 c-bti-secondary"> 24.04.2022 </span>
+			<span class="text text_m pt-4 c-bti-secondary">
+				{{ data.invoice.Date | date : 'dd.MM.yyyy' }}
+			</span>
 			<mib-spacing type="xs2"></mib-spacing>
 		</div>
 		<div class="cell-m flex flex_column flex_grow">
-			<span class="text text_s c-bti-tertiary"> Дата </span>
+			<span class="text text_s c-bti-tertiary"> Сумма </span>
 			<div class="flex gap-8 flex_align-center flex_justify-between">
-				<span class="text text_m pt-4 c-bti-secondary"> 1 000 000,00 </span>
+				<span class="text text_m pt-4 c-bti-secondaryrub">{{
+					data.invoice.Amount | rub
+				}}</span>
 				<!-- [cdkCopyToClipboard]="copyData" -->
 				<div class="flex pt-4">
 					<mib-icon

@@ -6,6 +6,7 @@ import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {ClipboardModule} from 'ngx-clipboard'
+import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 
 @NgModule({
 	declarations: [InvoicePageModalComponent],
@@ -15,7 +16,8 @@ import {ClipboardModule} from 'ngx-clipboard'
 		SpacingModule,
 		IconModule,
 		ButtonModule,
-		ClipboardModule
+		ClipboardModule,
+		RubModule
 	]
 })
 export class InvoicePageModalModule {}
