@@ -4,7 +4,11 @@ mib-select {
 
 @media (max-width: 576px) {
 	.container {
-		padding: 0 16px;
+		padding: 0;
+
+		& h3 {
+			padding: 0 16px;
+		}
 
 		& mib-spacing[type='m'] {
 			height: 24px;
@@ -12,8 +16,9 @@ mib-select {
 		}
 
 		& > div {
-			width: 100%;
 			display: block;
+			width: 100%;
+			padding: 0 16px;
 		}
 	}
 

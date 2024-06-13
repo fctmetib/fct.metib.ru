@@ -173,7 +173,7 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 
 			result[newKey] = value
 		}
-		console.log('result :>> ', result)
+		// console.log('result :>> ', result)
 		return result[this.currentIndex]
 	}
 
@@ -200,10 +200,23 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 
 	openInvoicePageModal(invoice) {
 		const dialogConfig = {
-			width: '100%', // Optional
-			maxWidth: '600px', // Optional
-			data: {message: 'halo there'} // Optional
+			width: '100%',
+			maxWidth: '600px',
+			height: '100%',
+			panelClass: 'modal-cdk',
+			data: {invoice}
 		}
+		// const dialogConfig = {
+		// 	width: '100%',
+		// 	maxWidth: '600px',
+		// 	height: 'calc(100% - 48px)',
+		// 	position: {
+		// 		top: '48px',
+		// 		left: '0px'
+		// 	},
+		// 	panelClass: 'modal-cdk',
+		// 	data: {invoice}
+		// }
 
 		this.dialog.open(InvoicePageModalComponent, dialogConfig)
 	}

@@ -1,10 +1,35 @@
 <mib-modal>
-	<mib-modal-header (onClose)="dialogRef.close()" title="invoice modal">
-	</mib-modal-header>
-	<mib-spacing type="xs"></mib-spacing>
-	content: {{ data.message }}
+	<div class="close-btn flex">
+		<mib-button size="s" (press)="dialogRef.close()" type="ghost-secondary">
+			<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
+		</mib-button>
+	</div>
+	<div class="flex flex_column gap-12">
+		<h4>Платежи</h4>
+		<span class="text_tv c-bti-quaternary">Основные</span>
+	</div>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="flex gap-12">
+		<div class="cell-m flex flex_column flex_grow">
+			<span class="text text_s c-bti-tertiary"> Дата </span>
+			<span class="text text_m pt-4 c-bti-secondary"> 24.04.2022 </span>
+			<mib-spacing type="xs2"></mib-spacing>
+		</div>
+		<div class="cell-m flex flex_column flex_grow">
+			<span class="text text_s c-bti-tertiary"> Дата </span>
+			<div class="flex gap-8 flex_align-center flex_justify-between">
+				<span class="text text_m pt-4 c-bti-secondary"> 1 000 000,00 </span>
+				<!-- [cdkCopyToClipboard]="copyData" -->
+				<div class="flex pt-4">
+					<mib-icon
+						dropdown-point-right-icon
+						class="stroke"
+						name="fi_copy"
+					></mib-icon>
+				</div>
+			</div>
+			<mib-spacing type="xs2"></mib-spacing>
+		</div>
+	</div>
 	<mib-spacing type="m"></mib-spacing>
-	<mib-modal-footer modal-footer>
-		<ng-container> footer </ng-container>
-	</mib-modal-footer>
 </mib-modal>

@@ -10,5 +10,7 @@
 	overflow: hidden;
 	@media (max-width: 576px) {
 		--table-paddings: 0 calc(100% / 4) 0 16px;
+
+		border-radius: unset;
 	}
 }

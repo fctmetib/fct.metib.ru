@@ -24,4 +24,8 @@
 			display: flex;
 		}
 	}
+
+	@media (max-width: 576px) {
+		border-bottom: 1px solid var(--wgr-secondary);
+	}
 }

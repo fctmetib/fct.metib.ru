@@ -97,6 +97,11 @@
 	font-size: 10px;
 	line-height: 12px;
 }
+@mixin table_view-title {
+	text-transform: uppercase;
+	font-size: 13px;
+	line-height: 16px;
+}
 
 @mixin text-overflow($line_count) {
 	display: -webkit-box;
