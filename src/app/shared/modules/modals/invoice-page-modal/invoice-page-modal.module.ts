@@ -5,8 +5,10 @@ import {ModalModule} from 'src/app/shared/ui-kit/modal/modal.module'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
-import {ClipboardModule} from 'ngx-clipboard'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
+import {LinkModule} from 'src/app/shared/ui-kit/link/link.module'
+import {RouterModule} from '@angular/router'
+import {RightIconModule} from 'src/app/shared/directives/right-icon/right-icon.module'
 
 @NgModule({
 	declarations: [InvoicePageModalComponent],
@@ -16,8 +18,10 @@ import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 		SpacingModule,
 		IconModule,
 		ButtonModule,
-		ClipboardModule,
-		RubModule
+		RubModule,
+		LinkModule,
+		RightIconModule,
+		RouterModule
 	]
 })
 export class InvoicePageModalModule {}

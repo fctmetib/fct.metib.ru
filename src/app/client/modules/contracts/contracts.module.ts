@@ -24,7 +24,8 @@ import {PaginatorModule as PaginatorModule22} from 'primeng/paginator'
 import {SkeletonModule as SkeletonModule22} from 'primeng/skeleton'
 import {DialogModule} from 'primeng/dialog'
 import {RequestsService} from '../requests/services/requests.service'
-import {ClipboardModule} from 'ngx-clipboard'
+import {ClipboardModule} from '@angular/cdk/clipboard'
+// import {ClipboardModule} from 'ngx-clipboard'
 import {AccountsService} from 'src/app/shared/services/common/accounts.service'
 import {ContractsPageComponent} from './pages/contracts-page/contracts-page.component'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
@@ -43,8 +44,8 @@ import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
 
 @NgModule({
-  declarations: [ContractsPageComponent, ContractsPageComponent],
-  imports: [
+	declarations: [ContractsPageComponent, ContractsPageComponent],
+	imports: [
 		CommonModule,
 		InputTextModule,
 		CheckboxModule,

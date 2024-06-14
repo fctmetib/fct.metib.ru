@@ -4,8 +4,11 @@
 			<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
 		</mib-button>
 	</div>
-	<div class="flex flex_column gap-12">
+	<div class="flex flex_column">
 		<h4>Платежи</h4>
+	</div>
+	<mib-spacing type="xm"></mib-spacing>
+	<div class="flex">
 		<span class="text_tv c-bti-quaternary">Основные</span>
 	</div>
 	<mib-spacing type="xs2"></mib-spacing>
@@ -19,21 +22,155 @@
 		</div>
 		<div class="cell-m flex flex_column flex_grow">
 			<span class="text text_s c-bti-tertiary"> Сумма </span>
-			<div class="flex gap-8 flex_align-center flex_justify-between">
-				<span class="text text_m pt-4 c-bti-secondaryrub">{{
+			<div
+				(click)="copyData(data.invoice.Amount)"
+				class="flex gap-8 flex_align-center flex_justify-between"
+			>
+				<span class="text text_m pt-4 c-bti-secondary">{{
 					data.invoice.Amount | rub
 				}}</span>
-				<!-- [cdkCopyToClipboard]="copyData" -->
 				<div class="flex pt-4">
-					<mib-icon
-						dropdown-point-right-icon
-						class="stroke"
-						name="fi_copy"
-					></mib-icon>
+					<mib-icon class="stroke" name="fi_copy"></mib-icon>
 				</div>
 			</div>
 			<mib-spacing type="xs2"></mib-spacing>
 		</div>
 	</div>
-	<mib-spacing type="m"></mib-spacing>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="flex">
+		<div class="cell-m flex flex_column flex_grow">
+			<span class="text text_s c-bti-tertiary"> Назначение </span>
+			<div
+				(click)="copyData(data.invoice.Comment)"
+				class="flex gap-8 flex_align-center flex_justify-between"
+			>
+				<span class="text-clamp text text_m pt-4 c-bti-secondary">{{
+					data.invoice.Comment
+				}}</span>
+				<div class="flex pt-4">
+					<mib-icon class="stroke" name="fi_copy"></mib-icon>
+				</div>
+			</div>
+			<mib-spacing type="xs2"></mib-spacing>
+		</div>
+	</div>
+	<mib-spacing type="xm"></mib-spacing>
+	<div class="flex">
+		<span class="text_tv c-bti-quaternary">Данные плательщика</span>
+	</div>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="flex">
+		<div class="cell-m flex flex_column flex_grow">
+			<span class="text text_s c-bti-tertiary"> Плательщик </span>
+			<div
+				(click)="copyData(data.invoice.Payer.Title)"
+				class="flex gap-8 flex_align-center flex_justify-between"
+			>
+				<span class="text-clamp text text_m pt-4 c-bti-secondary">{{
+					data.invoice.Payer.Title
+				}}</span>
+				<div class="flex pt-4">
+					<mib-icon class="stroke" name="fi_copy"></mib-icon>
+				</div>
+			</div>
+			<mib-spacing type="xs2"></mib-spacing>
+		</div>
+	</div>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="flex">
+		<div class="cell-m flex flex_column flex_grow">
+			<span class="text text_s c-bti-tertiary"> Номер счёта </span>
+			<div
+				(click)="copyData(data.invoice.Payer.Account)"
+				class="flex gap-8 flex_align-center flex_justify-between"
+			>
+				<span class="text-clamp text text_m pt-4 c-bti-secondary">{{
+					data.invoice.Payer.Account
+				}}</span>
+				<div class="flex pt-4">
+					<mib-icon class="stroke" name="fi_copy"></mib-icon>
+				</div>
+			</div>
+			<mib-spacing type="xs2"></mib-spacing>
+		</div>
+	</div>
+	<mib-spacing type="xm"></mib-spacing>
+	<div class="flex">
+		<span class="text_tv c-bti-quaternary">Счёт-фактура</span>
+	</div>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="flex gap-12">
+		<div class="cell-m flex flex_column flex_grow">
+			<span class="text text_s c-bti-tertiary"> № с/ф </span>
+			<div
+				(click)="copyData('???')"
+				class="flex gap-8 flex_align-center flex_justify-between"
+			>
+				<span class="text text_m pt-4 c-bti-secondary">???</span>
+				<div class="flex pt-4">
+					<mib-icon class="stroke" name="fi_copy"></mib-icon>
+				</div>
+			</div>
+			<mib-spacing type="xs2"></mib-spacing>
+		</div>
+		<div class="cell-m flex flex_column flex_grow">
+			<span class="text text_s c-bti-tertiary"> Дата с/ф </span>
+			<span class="text text_m pt-4 c-bti-secondary"> ??? </span>
+			<mib-spacing type="xs2"></mib-spacing>
+		</div>
+	</div>
+	<mib-spacing type="xm"></mib-spacing>
+	<div class="flex">
+		<span class="text_tv c-bti-quaternary">Дополнительные</span>
+	</div>
+	<div class="cell-m flex flex_column flex_grow">
+		<span class="text text_s c-bti-tertiary"> Дата задолженности </span>
+		<span class="text text_m pt-4 c-bti-secondary"> ??? </span>
+		<mib-spacing type="xs2"></mib-spacing>
+	</div>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="cell-m flex flex_column flex_grow">
+		<span class="text text_s c-bti-tertiary"> Дата платежа </span>
+		<span class="text text_m pt-4 c-bti-secondary"> ??? </span>
+		<mib-spacing type="xs2"></mib-spacing>
+	</div>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="cell-m flex flex_column flex_grow">
+		<span class="text text_s c-bti-tertiary"> Сумма уступка </span>
+		<div
+			(click)="copyData('???')"
+			class="flex gap-8 flex_align-center flex_justify-between"
+		>
+			<span class="text text_m pt-4 c-bti-secondary">???</span>
+			<div class="flex pt-4">
+				<mib-icon class="stroke" name="fi_copy"></mib-icon>
+			</div>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+	</div>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="cell-m flex flex_column flex_grow">
+		<span class="text text_s c-bti-tertiary"> Внешняя ссылка </span>
+		<div class="flex flex_align-center">
+			<mib-link size="m" type="ghost-primary">
+				<!-- <mib-link [routerLink]="['/']" size="m" type="ghost-primary"> -->
+				???
+				<mib-icon
+					mibRightIcon
+					class="stroke"
+					name="fi_chevron-right"
+				></mib-icon>
+			</mib-link>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+	</div>
+	<mib-spacing type="s"></mib-spacing>
+	<div class="flex">
+		<mib-button class="w-100" size="m" type="filled-secondary">
+			Перейти к заполнению
+		</mib-button>
+	</div>
+	<mib-spacing type="s"></mib-spacing>
+	<mib-spacing type="s"></mib-spacing>
+	<span class="success-copied text_tv" *ngIf="copied">Скопированно!</span>
 </mib-modal>
