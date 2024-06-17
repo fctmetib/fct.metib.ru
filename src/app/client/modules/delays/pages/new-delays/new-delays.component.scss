@@ -1,6 +1,10 @@
 @media (max-width: 576px) {
 	.container {
-		padding: 0 16px;
+		padding: 0;
+
+		& h3 {
+			padding: 0 16px;
+		}
 
 		& mib-spacing[type='m'] {
 			height: 24px;
@@ -14,6 +18,7 @@
 	}
 
 	.mobile-input {
+		padding: 0 16px;
 		& mib-input {
 			width: 100%;
 		}

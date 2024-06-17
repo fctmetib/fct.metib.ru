@@ -1,24 +1,26 @@
-@import "src/styles/colors.vars";
+@import 'src/styles/colors.vars';
 
 :host {
-  border-bottom: 1px solid transparent;
+	border-bottom: 1px solid transparent;
 
-  &:has(.navbar_separator) {
-    border-color: var(--wgr-tertiary);
-  }
+	&:has(.navbar_separator) {
+		border-color: var(--wgr-tertiary);
+	}
 }
 
 .navbar {
+	&_separator {
+		gap: 32px;
+		@media (max-width: 576px) {
+			padding: 0 16px;
+		}
+	}
 
-  &_separator {
-    gap: 32px;
-  }
-
-  &_filled {
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    background-color: var(--wgr-secondary);
-    padding: 2px;
-  }
+	&_filled {
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+		border-radius: 8px;
+		background-color: var(--wgr-secondary);
+		padding: 2px;
+	}
 }
