@@ -22,6 +22,7 @@
 	padding: 24px;
 	border-radius: 16px;
 	background: var(--wgr-primary);
+	overflow-y: auto;
 	// box-shadow: var(--shadow-normal);
 	@media (max-width: 576px) {
 		padding: 20px;

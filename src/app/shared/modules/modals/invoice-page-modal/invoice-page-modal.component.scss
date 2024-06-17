@@ -29,14 +29,6 @@
 		}
 	}
 
-	.cell-m {
-		border-bottom: 1px solid var(--wgr-tertiary);
-		mib-icon[name='fi_copy'] {
-			@include icon-color(var(--bti-quaternary));
-			@include icon-size(16px);
-		}
-	}
-
 	mib-modal-header {
 		& mib-button {
 			display: none;

@@ -6,9 +6,7 @@ import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
-import {LinkModule} from 'src/app/shared/ui-kit/link/link.module'
-import {RouterModule} from '@angular/router'
-import {RightIconModule} from 'src/app/shared/directives/right-icon/right-icon.module'
+import {MobileTablePopupModule} from 'src/app/shared/ui-kit/mobile-table-popup/mobile-table-popup.module'
 
 @NgModule({
 	declarations: [InvoicePageModalComponent],
@@ -19,9 +17,7 @@ import {RightIconModule} from 'src/app/shared/directives/right-icon/right-icon.m
 		IconModule,
 		ButtonModule,
 		RubModule,
-		LinkModule,
-		RightIconModule,
-		RouterModule
+		MobileTablePopupModule
 	]
 })
 export class InvoicePageModalModule {}

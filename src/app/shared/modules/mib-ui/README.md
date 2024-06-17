@@ -266,6 +266,19 @@ ng g m shared/ui-kit/test-tab/test-tab --flat  --dry-run
 ng g c shared/ui-kit/test-tab/test-tab --flat  --skip-tests --dry-run
  //---
 
+ //--- mobile-table
+src\app\shared\ui-kit
+ng g i shared/ui-kit/mobile-table/interfaces/mobile-table.interface  --dry-run
+ng g m shared/ui-kit/mobile-table/mobile-table --flat  --dry-run
+ng g c shared/ui-kit/mobile-table/mobile-table --flat  --skip-tests --dry-run
+ //---
+
+ //--- mobile-table-cell
+src\app\shared\ui-kit
+ng g i shared/ui-kit/mobile-table/components/mobile-table-cell/interfaces/mobile-table-cell.interface  --dry-run
+ng g c shared/ui-kit/mobile-table/components/mobile-table-cell --flat  --skip-tests --dry-run
+ //---
+
  //--- invoice
 src\app\client\modules\invoices
 ng g c client/modules/invoices/pages/invoice-page --skip-tests --dry-run
