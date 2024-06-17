@@ -1,9 +1,13 @@
 import {
-  BehaviorSubject,
-  zip,
-  finalize,
-  filter,
-  tap, switchMap, merge, forkJoin
+	BehaviorSubject,
+	zip,
+	finalize,
+	filter,
+	tap,
+	switchMap,
+	merge,
+	forkJoin,
+	Subscription
 } from 'rxjs'
 import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core'
 import {RequestsService} from '../../services/requests.service'
@@ -11,185 +15,296 @@ import {Properties} from 'csstype'
 import {RequestDrawerService} from '../../modules/request-drawer/request-drawer.service'
 import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {RequestBrowserDrawerService} from '../../modules/request-browser-drawer/request-browser-drawer.service'
-import {FormControl} from '@angular/forms';
-import {ToolsService} from '../../../../../shared/services/tools.service';
-import {takeUntil} from 'rxjs/operators';
-import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service';
-import {TableRowAnimationService} from '../../../../../shared/ui-kit/table/services/table-row-animation.service';
-import {TableSelectionEvent} from '../../../../../shared/ui-kit/table/interfaces/table.interface';
-import {TableComponent} from '../../../../../shared/ui-kit/table/table.component';
-import {RequestRes} from '../../interfaces/request.interface';
-import {SignService} from '../../../../../shared/services/share/sign.service';
-import {SignPinModalService} from '../../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service';
-import {DatesService} from '../../../../../shared/services/dates.service';
+import {FormControl} from '@angular/forms'
+import {ToolsService} from '../../../../../shared/services/tools.service'
+import {takeUntil} from 'rxjs/operators'
+import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service'
+import {TableRowAnimationService} from '../../../../../shared/ui-kit/table/services/table-row-animation.service'
+import {TableSelectionEvent} from '../../../../../shared/ui-kit/table/interfaces/table.interface'
+import {TableComponent} from '../../../../../shared/ui-kit/table/table.component'
+import {RequestRes} from '../../interfaces/request.interface'
+import {SignService} from '../../../../../shared/services/share/sign.service'
+import {SignPinModalService} from '../../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service'
+import {DatesService} from '../../../../../shared/services/dates.service'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import {RubPipe} from 'src/app/shared/pipes/rub/rub.pipe'
+import {DatePipe} from '@angular/common'
+import {MatDialog} from '@angular/material/dialog'
+import {RequestsPageModalModule} from 'src/app/shared/modules/modals/requests-page-modal/requests-page-modal.module'
 
 @Component({
-  selector: 'app-requests-page',
-  templateUrl: './requests-page.component.html',
-  styleUrls: ['./requests-page.component.scss'],
-  providers: [AutoUnsubscribeService]
+	selector: 'app-requests-page',
+	templateUrl: './requests-page.component.html',
+	styleUrls: ['./requests-page.component.scss'],
+	providers: [AutoUnsubscribeService]
 })
 export class RequestsPageComponent implements OnInit, OnDestroy {
+	@ViewChild(TableComponent) table: TableComponent
 
-  @ViewChild(TableComponent) table: TableComponent
+	public isSigningPreparing$ = new BehaviorSubject<boolean>(false)
+	public loading$ = new BehaviorSubject<boolean>(false)
 
-  public isSigningPreparing$ = new BehaviorSubject<boolean>(false)
-  public loading$ = new BehaviorSubject<boolean>(false)
+	public skeletonWithoutUnderline: Properties = {
+		height: '48px',
+		width: '100%'
+	}
+	public skeleton: Properties = {
+		...this.skeletonWithoutUnderline,
+		borderBottom: '1px solid var(--wgr-tertiary)'
+	}
 
-  public skeletonWithoutUnderline: Properties = {
-    height: '48px',
-    width: '100%'
-  }
-  public skeleton: Properties = {
-    ...this.skeletonWithoutUnderline,
-    borderBottom: '1px solid var(--wgr-tertiary)'
-  }
+	public PAGINATOR_ITEMS_PER_PAGE = 16
+	public PAGINATOR_PAGE_TO_SHOW = 5
+	public currentPage$ = new BehaviorSubject<number>(1)
 
-  public PAGINATOR_ITEMS_PER_PAGE = 16
-  public PAGINATOR_PAGE_TO_SHOW = 5
-  public currentPage$ = new BehaviorSubject<number>(1)
+	public requests: RequestRes[] = []
+	public requestsVisible: RequestRes[] = []
+	public requestsSelection: TableSelectionEvent = {
+		selectedCount: 0,
+		selectedIds: []
+	}
 
-  public requests: RequestRes[] = []
-  public requestsVisible: RequestRes[] = []
-  public requestsSelection: TableSelectionEvent = {
-    selectedCount: 0,
-    selectedIds: []
-  }
+	public dateFrom: FormControl = new FormControl<string>('')
+	public dateTo: FormControl = new FormControl<string>('')
 
-  public dateFrom: FormControl = new FormControl<string>('')
-  public dateTo: FormControl = new FormControl<string>('')
+	public isDesktop: boolean = false
+	private subscriptions = new Subscription()
+	public currentIndex: number = 0
+	headers = [
+		'Сумма',
+		'Договор поставки',
+		'Назначение',
+		'Плательщик',
+		'Дебитор',
+		'Счет плательщика',
+		'Счет получателя'
+	]
 
-  constructor(
-    public toolsService: ToolsService,
-    private datesService: DatesService,
-    private requestsService: RequestsService,
-    private requestDrawerService: RequestDrawerService,
-    private requestBrowserDrawerService: RequestBrowserDrawerService,
-    private au: AutoUnsubscribeService,
-    private tableRowAnimationService: TableRowAnimationService,
-    private signService: SignService,
-    private signPinModalService: SignPinModalService
-  ) {
-  }
+	public invoiceMap = {
+		0: 'Amount',
+		1: 'ID',
+		2: 'Comment',
+		3: {Payer: 'Title'},
+		4: {Beneficiary: 'Title'},
+		5: {Payer: 'Account'},
+		6: {Beneficiary: 'Account'}
+	}
 
-  get selectedRequests() {
-    return this.requests.filter(request => this.requestsSelection.selectedIds.includes(request.ID))
-  }
+	constructor(
+		public toolsService: ToolsService,
+		private datesService: DatesService,
+		private requestsService: RequestsService,
+		private requestDrawerService: RequestDrawerService,
+		private requestBrowserDrawerService: RequestBrowserDrawerService,
+		private au: AutoUnsubscribeService,
+		private tableRowAnimationService: TableRowAnimationService,
+		private signService: SignService,
+		private signPinModalService: SignPinModalService,
+		public breakpointService: BreakpointObserverService,
+		private rubPipe: RubPipe,
+		private datePipe: DatePipe,
+		private dialog: MatDialog
+	) {}
 
-  ngOnInit() {
-    const {dateFrom, dateTo} = this.datesService.convertDatesInObjectToInput({
-      dateFrom: this.toolsService.subtractFromDate(new Date(), {days: 14}).toISOString(),
-      dateTo: new Date().toISOString()
-    })
-    console.log(dateTo, dateFrom)
-    this.dateFrom.setValue(dateFrom)
-    this.dateTo.setValue(dateTo)
+	get selectedRequests() {
+		return this.requests.filter(request =>
+			this.requestsSelection.selectedIds.includes(request.ID)
+		)
+	}
 
-    this.loadRequestsData().subscribe()
-    this.watchForms()
-  }
+	ngOnInit() {
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
 
-  ngOnDestroy() {
-  }
+		const {dateFrom, dateTo} = this.datesService.convertDatesInObjectToInput({
+			dateFrom: this.toolsService
+				.subtractFromDate(new Date(), {days: 14})
+				.toISOString(),
+			dateTo: new Date().toISOString()
+		})
+		// console.log(dateTo, dateFrom)
+		this.dateFrom.setValue(dateFrom)
+		this.dateTo.setValue(dateTo)
 
-  loadRequestsData() {
-    this.loading$.next(true)
+		this.loadRequestsData().subscribe()
+		this.watchForms()
+	}
 
-    const req = {}
-    const setOptionalDate = (date: string, key: string) => {
-      if (date) req[key] = new Date(date).toISOString()
-    }
-    setOptionalDate(this.dateFrom.value, 'dateFrom')
-    setOptionalDate(this.dateTo.value, 'dateTo')
+	loadRequestsData() {
+		this.loading$.next(true)
 
-    return this.requestsService.getRequests(req).pipe(
-      tap(data => {
-        this.requests = data
-        this.onPageChange(this.currentPage$.value)
-      }),
-      finalize(() => this.loading$.next(false))
-    )
-  }
+		const req = {}
+		const setOptionalDate = (date: string, key: string) => {
+			if (date) req[key] = new Date(date).toISOString()
+		}
+		setOptionalDate(this.dateFrom.value, 'dateFrom')
+		setOptionalDate(this.dateTo.value, 'dateTo')
 
-  openDrawer() {
-    this.requestDrawerService.open({state: DrawerStateEnum.CREATE}).afterClosed().pipe(
-      filter(Boolean),
-      switchMap(() => this.loadRequestsData())
-    ).subscribe()
-  }
+		return this.requestsService.getRequests(req).pipe(
+			tap(data => {
+				this.requests = data
+				this.onPageChange(this.currentPage$.value)
+			}),
+			finalize(() => this.loading$.next(false))
+		)
+	}
 
-  removeRequestById(id: number) {
-    const splice = array => {
-      const index = array.findIndex(req => req.ID === id);
-      if (index > -1) {
-        array.splice(index, 1);
-      }
-    };
+	openDrawer() {
+		this.requestDrawerService
+			.open({state: DrawerStateEnum.CREATE})
+			.afterClosed()
+			.pipe(
+				filter(Boolean),
+				switchMap(() => this.loadRequestsData())
+			)
+			.subscribe()
+	}
 
-    splice(this.requests)
-    splice(this.requestsVisible)
-  }
+	removeRequestById(id: number) {
+		const splice = array => {
+			const index = array.findIndex(req => req.ID === id)
+			if (index > -1) {
+				array.splice(index, 1)
+			}
+		}
 
-  openBrowserDrawer(requestId: number) {
-    this.requestBrowserDrawerService.open({
-      data: {
-        requestId: requestId
-      }
-    }).afterClosed().pipe(
-      filter(Boolean),
-      switchMap(() => this.loadRequestsData())
-    ).subscribe()
-  }
+		splice(this.requests)
+		splice(this.requestsVisible)
+	}
 
-  onPageChange(page: number) {
-    this.currentPage$.next(page)
+	openBrowserDrawer(requestId: number) {
+		this.requestBrowserDrawerService
+			.open({
+				data: {
+					requestId: requestId
+				}
+			})
+			.afterClosed()
+			.pipe(
+				filter(Boolean),
+				switchMap(() => this.loadRequestsData())
+			)
+			.subscribe()
+	}
 
-    const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
-    const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+	onPageChange(page: number) {
+		this.currentPage$.next(page)
 
-    this.table.deselect()
+		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
 
-    this.requestsVisible = this.requests.slice(startIndex, endIndex)
-  }
+		this.table.deselect()
 
-  private watchForms() {
-    merge(this.dateFrom.valueChanges, this.dateTo.valueChanges).pipe(
-      switchMap(() => this.loadRequestsData()),
-      tap(() => {
-        this.onPageChange(1);
-      }),
-      takeUntil(this.au.destroyer)
-    ).subscribe();
-  }
+		this.requestsVisible = this.requests.slice(startIndex, endIndex)
+	}
 
-  refresh() {
-    this.loadRequestsData().subscribe()
-  }
+	private watchForms() {
+		merge(this.dateFrom.valueChanges, this.dateTo.valueChanges)
+			.pipe(
+				switchMap(() => this.loadRequestsData()),
+				tap(() => {
+					this.onPageChange(1)
+				}),
+				takeUntil(this.au.destroyer)
+			)
+			.subscribe()
+	}
 
-  selectionChange(event: TableSelectionEvent) {
-    this.requestsSelection = event;
-  }
+	refresh() {
+		this.loadRequestsData().subscribe()
+	}
 
-  deleteRequests(ids: number[]) {
-    zip(
-      this.requestsService.deleteRequests(ids),
-      forkJoin(
-        ids.map(id => this.tableRowAnimationService.animateRowAndAwaitCompletion(id).pipe(
-          tap(() => this.removeRequestById(id))
-        ))
-      )
-    ).pipe(
-      finalize(() => this.onPageChange(this.currentPage$.value))
-    ).subscribe()
-  }
+	selectionChange(event: TableSelectionEvent) {
+		this.requestsSelection = event
+	}
 
-  requestSign(): void {
-    const requestIDs = this.table.selectedRows.map(req => req.rowId);
-    this.isSigningPreparing$.next(true)
-    this.requestsService.sign(requestIDs, this.isSigningPreparing$).pipe(
-      switchMap(() => this.loadRequestsData()),
-      finalize(() => this.isSigningPreparing$.next(false))
-    ).subscribe()
-  }
+	deleteRequests(ids: number[]) {
+		zip(
+			this.requestsService.deleteRequests(ids),
+			forkJoin(
+				ids.map(id =>
+					this.tableRowAnimationService
+						.animateRowAndAwaitCompletion(id)
+						.pipe(tap(() => this.removeRequestById(id)))
+				)
+			)
+		)
+			.pipe(finalize(() => this.onPageChange(this.currentPage$.value)))
+			.subscribe()
+	}
 
+	requestSign(): void {
+		const requestIDs = this.table.selectedRows.map(req => req.rowId)
+		this.isSigningPreparing$.next(true)
+		this.requestsService
+			.sign(requestIDs, this.isSigningPreparing$)
+			.pipe(
+				switchMap(() => this.loadRequestsData()),
+				finalize(() => this.isSigningPreparing$.next(false))
+			)
+			.subscribe()
+	}
+
+	openModal(data) {
+		console.log('OPEN MODAL .. YEAH', data)
+	}
+
+	prev() {
+		if (this.currentIndex > 0) {
+			this.currentIndex--
+		}
+	}
+
+	next() {
+		if (this.currentIndex < this.headers.length - 1) {
+			this.currentIndex++
+		}
+	}
+
+	getVisibleHeader() {
+		return this.headers[this.currentIndex]
+	}
+
+	getVisibleCell(row: any) {
+		const result = {}
+		for (const [newKey, path] of Object.entries(this.invoiceMap)) {
+			let value
+
+			if (typeof path === 'string') {
+				// Если путь - строка, извлекаем значение напрямую
+				value = row[path]
+			} else if (typeof path === 'object') {
+				// Если путь - объект, извлекаем вложенное значение
+				const [parentKey, childKey] = Object.entries(path)[0]
+				value = row[parentKey] ? row[parentKey][childKey] : undefined
+			}
+			// Проверка и добавление префиксов
+			if (path === 'Amount' && value !== undefined) {
+				value = this.rubPipe.transform(value)
+			} else if (path === 'Date' && value !== undefined) {
+				value = this.datePipe.transform(value, 'dd.MM.yyyy')
+			}
+
+			result[newKey] = value
+		}
+		// console.log('result :>> ', result)
+		return result[this.currentIndex]
+	}
+
+	openRequestPageModal(req) {
+		const dialogConfig = {
+			width: '100%',
+			maxWidth: '600px',
+			height: '100%',
+			panelClass: 'modal-cdk',
+			data: {req}
+		}
+
+		this.dialog.open(RequestsPageModalModule, dialogConfig)
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
+	}
 }
