@@ -22,6 +22,9 @@
 @mixin cash-panel-mobile {
 	border-bottom: 1px solid var(--wgr-tertiary);
 	padding: 0px 0px 16px;
+	@media (max-width: 576px) {
+		padding: 0 16px;
+	}
 }
 
 @mixin cash-panel-hover {
