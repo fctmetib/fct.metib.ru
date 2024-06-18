@@ -7,7 +7,8 @@ import {
 	finalize,
 	forkJoin,
 	merge,
-	zip
+	zip,
+	Subscription
 } from 'rxjs'
 import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core'
 import {Duty} from 'src/app/shared/types/duty/duty'
@@ -24,6 +25,11 @@ import {TableRowAnimationService} from '../../../../../shared/ui-kit/table/servi
 import {TableSelectionEvent} from '../../../../../shared/ui-kit/table/interfaces/table.interface'
 import {TableComponent} from '../../../../../shared/ui-kit/table/table.component'
 import {DatesService} from 'src/app/shared/services/dates.service'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import {RubPipe} from 'src/app/shared/pipes/rub/rub.pipe'
+import {DatePipe} from '@angular/common'
+import {MatDialog} from '@angular/material/dialog'
+import {FreeDutyPageModalComponent} from 'src/app/shared/modules/modals/free-duty-page-modal/free-duty-page-modal.component'
 
 @Component({
 	selector: 'app-free-duty-page',
@@ -63,6 +69,37 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 	public dateFrom = new FormControl<string>('')
 	public dateTo = new FormControl<string>('')
 
+	public isDesktop: boolean = false
+	private subscriptions = new Subscription()
+	public currentIndex: number = 0
+	headers = [
+		'Контракт',
+		'Дебитор',
+		'№ поставки',
+		'Дата отгрузки',
+		'Дата поставки',
+		'С/ф №',
+		'С/ф дата',
+		'Статус',
+		'Сумма поставки',
+		'Остаток задолженности',
+		'Внешняя ссылка'
+	]
+
+	public dataMap = {
+		0: {Contract: 'ID'},
+		1: {Contract: 'Counterparty'},
+		2: 'Number',
+		3: 'Date',
+		4: 'DateContract',
+		5: 'NumberInvoice',
+		6: 'DateInvoice',
+		7: {Statistics: 'Comment'},
+		8: 'Summ',
+		9: 'Rest',
+		10: 'RefNum'
+	}
+
 	constructor(
 		private au: AutoUnsubscribeService,
 		private freeDutyService: FreeDutyService,
@@ -70,7 +107,11 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 		private tableDataService: TableDataService,
 		private freeDutyRequestDrawerService: FreeDutyRequestDrawerService,
 		private tableRowAnimationService: TableRowAnimationService,
-		public datesService: DatesService
+		public datesService: DatesService,
+		public breakpointService: BreakpointObserverService,
+		private rubPipe: RubPipe,
+		private datePipe: DatePipe,
+		private dialog: MatDialog
 	) {}
 
 	get selectedDuties() {
@@ -85,6 +126,10 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
+
 		const {dateFrom, dateTo} = this.datesService.convertDatesInObjectToInput({
 			dateFrom: this.toolsService
 				.subtractFromDate(new Date(), {months: 1})
@@ -126,8 +171,6 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 
 		this.watchForms()
 	}
-
-	ngOnDestroy() {}
 
 	openDrawer() {
 		this.freeDutyRequestDrawerService
@@ -191,5 +234,77 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 
 	onSelectionChanged(event: TableSelectionEvent) {
 		this.dutiesSelection = event
+	}
+
+	getVisibleHeader() {
+		return this.headers[this.currentIndex]
+	}
+
+	getVisibleCell(row: any) {
+		const result = {}
+		for (const [newKey, path] of Object.entries(this.dataMap)) {
+			let value
+
+			if (typeof path === 'string') {
+				// Если путь - строка, извлекаем значение напрямую
+				value = row[path]
+			} else if (typeof path === 'object') {
+				// Если путь - объект, извлекаем вложенное значение
+				const [parentKey, childKey] = Object.entries(path)[0]
+				value = row[parentKey] ? row[parentKey][childKey] : undefined
+			}
+			// Проверка и добавление префиксов
+			if (path === 'Summ' || (path === 'Rest' && value !== undefined)) {
+				value = this.rubPipe.transform(value)
+			} else if (
+				path === 'Date' ||
+				path === 'DateContract' ||
+				(path === 'DateInvoice' && value !== undefined)
+			) {
+				value = this.datePipe.transform(value, 'dd.MM.yyyy')
+			}
+
+			result[newKey] = value
+		}
+		return result[this.currentIndex]
+	}
+
+	prev() {
+		if (this.currentIndex > 0) {
+			this.currentIndex--
+		}
+	}
+
+	next() {
+		if (this.currentIndex < this.headers.length - 1) {
+			this.currentIndex++
+		}
+	}
+
+	openInvoicePageModal(duty) {
+		// const dialogConfig = {
+		// 	width: '100%',
+		// 	maxWidth: '600px',
+		// 	height: '100%',
+		// 	panelClass: 'modal-cdk',
+		// 	data: {duty}
+		// }
+		const dialogConfig = {
+			width: '100%',
+			maxWidth: '600px',
+			height: 'calc(100% - 48px)',
+			position: {
+				top: '48px',
+				left: '0px'
+			},
+			panelClass: 'modal-cdk',
+			data: {duty}
+		}
+
+		this.dialog.open(FreeDutyPageModalComponent, dialogConfig)
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }

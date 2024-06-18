@@ -30,7 +30,6 @@ import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoi
 import {RubPipe} from 'src/app/shared/pipes/rub/rub.pipe'
 import {DatePipe} from '@angular/common'
 import {MatDialog} from '@angular/material/dialog'
-import {RequestsPageModalModule} from 'src/app/shared/modules/modals/requests-page-modal/requests-page-modal.module'
 
 @Component({
 	selector: 'app-requests-page',
@@ -71,23 +70,25 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 	private subscriptions = new Subscription()
 	public currentIndex: number = 0
 	headers = [
-		'Сумма',
+		'№ заявки',
+		'Дата заявки',
 		'Договор поставки',
-		'Назначение',
-		'Плательщик',
-		'Дебитор',
-		'Счет плательщика',
-		'Счет получателя'
+		'Тип заявки',
+		'Статус',
+		'Доступ',
+		'Корректировка',
+		'Сумма'
 	]
 
-	public invoiceMap = {
-		0: 'Amount',
-		1: 'ID',
-		2: 'Comment',
-		3: {Payer: 'Title'},
-		4: {Beneficiary: 'Title'},
-		5: {Payer: 'Account'},
-		6: {Beneficiary: 'Account'}
+	public dataMap = {
+		0: 'Number',
+		1: 'Date',
+		2: {Delivery: 'CustomerID'},
+		3: {Delivery: 'Title'},
+		4: 'Status',
+		5: 'Shipments',
+		6: 'IsCorrected',
+		7: 'Summ'
 	}
 
 	constructor(
@@ -267,8 +268,9 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 	}
 
 	getVisibleCell(row: any) {
+		console.log('row :>> ', row)
 		const result = {}
-		for (const [newKey, path] of Object.entries(this.invoiceMap)) {
+		for (const [newKey, path] of Object.entries(this.dataMap)) {
 			let value
 
 			if (typeof path === 'string') {
@@ -288,20 +290,21 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
 			result[newKey] = value
 		}
-		// console.log('result :>> ', result)
+		console.log('result :>> ', result)
 		return result[this.currentIndex]
 	}
 
-	openRequestPageModal(req) {
-		const dialogConfig = {
-			width: '100%',
-			maxWidth: '600px',
-			height: '100%',
-			panelClass: 'modal-cdk',
-			data: {req}
-		}
-
-		this.dialog.open(RequestsPageModalModule, dialogConfig)
+	openRequestsPageModal(req) {
+		// const dialogConfig = {
+		// 	width: '100%',
+		// 	maxWidth: '600px',
+		// 	height: '100%',
+		// 	panelClass: 'modal-cdk',
+		// 	data: {req}
+		// }
+		console.log('req :>> ', req)
+		// this.dialog.open(RequestsPageModalModule)
+		// this.dialog.open(RequestsPageModalModule, dialogConfig)
 	}
 
 	ngOnDestroy(): void {

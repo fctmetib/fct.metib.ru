@@ -34,6 +34,7 @@ import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdow
 import {AutoCompleteModule} from '../../../shared/ui-kit/auto-complete/auto-complete.module'
 import {DatesService} from 'src/app/shared/services/dates.service'
 import {ToasterModule} from 'src/app/shared/ui-kit/toaster/toaster.module'
+import {FreeDutyPageModalModule} from 'src/app/shared/modules/modals/free-duty-page-modal/free-duty-page-modal.module'
 
 @NgModule({
 	declarations: [FreeDutyPageComponent],
@@ -69,7 +70,8 @@ import {ToasterModule} from 'src/app/shared/ui-kit/toaster/toaster.module'
 		SelectModule,
 		DropdownPointModule,
 		AutoCompleteModule,
-		ToasterModule
+		ToasterModule,
+		FreeDutyPageModalModule
 	],
 	providers: [
 		DialogService,

@@ -40,6 +40,7 @@
 			</ng-template>
 			<ng-container table-head-button *ngIf="!isDesktop">
 				<mib-button
+					[disabled]="loading$ | async"
 					(press)="prev()"
 					size="s"
 					table-row-button
@@ -48,6 +49,7 @@
 					<mib-icon class="stroke" btn-icon name="fi_chevron-left"></mib-icon>
 				</mib-button>
 				<mib-button
+					[disabled]="loading$ | async"
 					(press)="next()"
 					size="s"
 					table-row-button

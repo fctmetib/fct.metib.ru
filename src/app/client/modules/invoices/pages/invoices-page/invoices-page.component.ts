@@ -152,6 +152,7 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 	}
 
 	getVisibleCell(row: ClientInvoice[]) {
+		console.log('halo')
 		const result = {}
 		for (const [newKey, path] of Object.entries(this.invoiceMap)) {
 			let value

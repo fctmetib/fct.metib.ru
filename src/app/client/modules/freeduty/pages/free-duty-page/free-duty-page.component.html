@@ -61,11 +61,13 @@
 					(onSort)="onSort($event, 'ID')"
 					>ИД
 				</mib-table-head-cell>
-				<mib-table-head-cell
-					[sortable]="true"
-					(onSort)="onSort($event, 'Contract.Id')"
-					>Контракт</mib-table-head-cell
-				>
+				<ng-container *ngIf="isDesktop; else mobile">
+					<mib-table-head-cell
+						[sortable]="true"
+						(onSort)="onSort($event, 'Contract.Id')"
+						>Контракт</mib-table-head-cell
+					>
+				</ng-container>
 				<mib-table-head-cell
 					[sortable]="true"
 					(onSort)="onSort($event, 'Contract.Counterparty')"
@@ -109,6 +111,33 @@
 					>Остаток задолженности</mib-table-head-cell
 				>
 				<mib-table-head-cell>Внешняя ссылка</mib-table-head-cell>
+				<ng-template #mobile>
+					<mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
+				</ng-template>
+				<ng-container table-head-button *ngIf="!isDesktop">
+					<mib-button
+						[disabled]="loading$ | async"
+						(press)="prev()"
+						size="s"
+						table-row-button
+						type="ghost-secondary"
+					>
+						<mib-icon class="stroke" btn-icon name="fi_chevron-left"></mib-icon>
+					</mib-button>
+					<mib-button
+						[disabled]="loading$ | async"
+						(press)="next()"
+						size="s"
+						table-row-button
+						type="ghost-secondary"
+					>
+						<mib-icon
+							class="stroke"
+							btn-icon
+							name="fi_chevron-right"
+						></mib-icon>
+					</mib-button>
+				</ng-container>
 			</mib-table-head>
 			<ng-container *ngIf="loading$ | async; else table">
 				<mib-skeleton
@@ -129,9 +158,13 @@
 					<mib-table-cell type="main">
 						<ng-container table-cell-title>{{ duty.ID }}</ng-container>
 					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title>{{ duty.Contract.ID }}</ng-container>
-					</mib-table-cell>
+					<ng-container *ngIf="isDesktop; else mobileCell">
+						<mib-table-cell>
+							<ng-container table-cell-title>{{
+								duty.Contract.ID
+							}}</ng-container>
+						</mib-table-cell>
+					</ng-container>
 					<mib-table-cell>
 						<ng-container table-cell-title>{{
 							duty.Contract.Counterparty
@@ -195,13 +228,30 @@
 					<mib-table-cell>
 						<ng-container table-cell-title>{{ duty.RefNum }}</ng-container>
 					</mib-table-cell>
-					<mib-button table-row-button size="s" type="ghost-secondary">
-						<mib-icon
-							class="stroke"
-							btn-icon
-							name="fi_more-vertical"
-						></mib-icon>
-					</mib-button>
+					<ng-template #mobileCell>
+						<mib-table-head-cell>{{
+							getVisibleCell(duty)
+						}}</mib-table-head-cell>
+					</ng-template>
+					<ng-container table-row-button *ngIf="isDesktop; else mobile">
+						<mib-button table-row-button size="s" type="ghost-secondary">
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-icon>
+						</mib-button>
+					</ng-container>
+					<ng-template #mobile>
+						<mib-button
+							(click)="openInvoicePageModal(duty); $event.stopPropagation()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+						</mib-button>
+					</ng-template>
 				</mib-table-row>
 			</ng-template>
 			<mib-table-footer

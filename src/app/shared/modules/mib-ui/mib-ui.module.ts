@@ -26,6 +26,7 @@ import {LoaderModule} from '../../ui-kit/loader/loader.module'
 import {TextareaModule} from '../../ui-kit/textarea/textarea.module'
 import {AutosizeModule} from 'ngx-autosize'
 import {LabelModule} from '../../directives/label/label.module'
+import {TestTabModule} from '../../ui-kit/test-tab/test-tab.module'
 
 @NgModule({
 	imports: [
@@ -55,7 +56,8 @@ import {LabelModule} from '../../directives/label/label.module'
 		LoaderModule,
 		TextareaModule,
 		AutosizeModule,
-		LabelModule
+		LabelModule,
+		TestTabModule
 	],
 	declarations: [MibUiComponent]
 })
