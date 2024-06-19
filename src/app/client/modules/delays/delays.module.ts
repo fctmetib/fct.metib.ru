@@ -36,6 +36,7 @@ import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {NewDelaysDrawerModule} from './modules/new-delays-drawer/new-delays-drawer.module'
+import {NewDelaysPageModalModule} from 'src/app/shared/modules/modals/new-delays-page-modal/new-delays-page-modal.module'
 
 @NgModule({
 	imports: [
@@ -70,7 +71,8 @@ import {NewDelaysDrawerModule} from './modules/new-delays-drawer/new-delays-draw
 		PaginatorModule,
 		RubModule,
 		SkeletonModule,
-		NewDelaysDrawerModule
+		NewDelaysDrawerModule,
+		NewDelaysPageModalModule
 	],
 	declarations: [DelaysPageComponent, NewDelaysComponent],
 	providers: [DialogService, DelaysService, ReportService]

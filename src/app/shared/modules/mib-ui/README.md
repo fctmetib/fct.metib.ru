@@ -380,6 +380,13 @@ ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
  ng g c shared/modules/modals/free-duty-page-modal/free-duty-page-modal --flat --skip-tests --dry-run
  //---
 
+ //--- new-delays-page-modal
+ src\app\shared\modules\modals\new-delays-page-modal
+ ng g m shared/modules/modals/new-delays-page-modal/new-delays-page-modal --flat --dry-run
+ ng g s shared/modules/modals/new-delays-page-modal/new-delays-page-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/new-delays-page-modal/new-delays-page-modal --flat --skip-tests --dry-run
+ //---
+
  //--- requests-page-modal
  src\app\shared\modules\modals\requests-page-modal
 //  ng g m shared/modules/modals/requests-page-modal/requests-page-modal --flat --dry-run
