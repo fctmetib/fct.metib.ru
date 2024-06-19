@@ -30,6 +30,7 @@ import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoi
 import {RubPipe} from 'src/app/shared/pipes/rub/rub.pipe'
 import {DatePipe} from '@angular/common'
 import {MatDialog} from '@angular/material/dialog'
+import {RequestsPageModalComponent} from 'src/app/shared/modules/modals/requests-page-modal/requests-page-modal.component'
 
 @Component({
 	selector: 'app-requests-page',
@@ -83,10 +84,10 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 	public dataMap = {
 		0: 'Number',
 		1: 'Date',
-		2: {Delivery: 'CustomerID'},
-		3: {Delivery: 'Title'},
+		2: {Delivery: 'ID'},
+		3: 'Type',
 		4: 'Status',
-		5: 'Shipments',
+		5: 'ReadOnly',
 		6: 'IsCorrected',
 		7: 'Summ'
 	}
@@ -247,10 +248,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 			.subscribe()
 	}
 
-	openModal(data) {
-		console.log('OPEN MODAL .. YEAH', data)
-	}
-
 	prev() {
 		if (this.currentIndex > 0) {
 			this.currentIndex--
@@ -268,7 +265,6 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 	}
 
 	getVisibleCell(row: any) {
-		console.log('row :>> ', row)
 		const result = {}
 		for (const [newKey, path] of Object.entries(this.dataMap)) {
 			let value
@@ -282,29 +278,32 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 				value = row[parentKey] ? row[parentKey][childKey] : undefined
 			}
 			// Проверка и добавление префиксов
-			if (path === 'Amount' && value !== undefined) {
+			if (path === 'Summ' && value !== undefined) {
 				value = this.rubPipe.transform(value)
 			} else if (path === 'Date' && value !== undefined) {
 				value = this.datePipe.transform(value, 'dd.MM.yyyy')
+			} else if (path === 'ReadOnly' && value !== undefined) {
+				value = value === false ? 'Есть' : 'Отсутствует'
+			} else if (path === 'IsCorrected' && value !== undefined) {
+				value = value === false ? 'Нет' : 'Да'
 			}
 
 			result[newKey] = value
 		}
-		console.log('result :>> ', result)
+		// console.log('result :>> ', result)
 		return result[this.currentIndex]
 	}
 
 	openRequestsPageModal(req) {
-		// const dialogConfig = {
-		// 	width: '100%',
-		// 	maxWidth: '600px',
-		// 	height: '100%',
-		// 	panelClass: 'modal-cdk',
-		// 	data: {req}
-		// }
-		console.log('req :>> ', req)
+		const dialogConfig = {
+			width: '100%',
+			maxWidth: '600px',
+			height: '100%',
+			panelClass: 'modal-cdk',
+			data: {req}
+		}
 		// this.dialog.open(RequestsPageModalModule)
-		// this.dialog.open(RequestsPageModalModule, dialogConfig)
+		this.dialog.open(RequestsPageModalComponent, dialogConfig)
 	}
 
 	ngOnDestroy(): void {

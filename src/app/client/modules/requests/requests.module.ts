@@ -45,75 +45,74 @@ import {DocumentsViewComponent} from './pages/requests-page/no-touch-this/docume
 import {ShipmentsViewComponent} from './pages/requests-page/no-touch-this/shipments-view/shipments-view.componet'
 import {RequestsPageComponent} from './pages/requests-page/requests-page.component'
 import {RequestBrowserDrawerModule} from './modules/request-browser-drawer/request-browser-drawer.module'
-import {SignPinModalModule} from '../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.module';
-import {DropdownModule} from '../../../shared/ui-kit/dropdown/dropdown.module';
-import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdown-point.module';
-import {DatesService} from '../../../shared/services/dates.service';
-import {PasteModalModule} from '../../../shared/modules/modals/paste-modal/paste-modal.module';
-import {DocumentViewDrawerService} from '../documents/modules/document-view-drawer/document-view-drawer.service';
-import {DocumentsService} from '../documents/services/documents.service';
+import {SignPinModalModule} from '../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.module'
+import {DropdownModule} from '../../../shared/ui-kit/dropdown/dropdown.module'
+import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdown-point.module'
+import {DatesService} from '../../../shared/services/dates.service'
+import {PasteModalModule} from '../../../shared/modules/modals/paste-modal/paste-modal.module'
+import {RequestsPageModalModule} from 'src/app/shared/modules/modals/requests-page-modal/requests-page-modal.module'
 
 @NgModule({
-  declarations: [
-    //Components
-    DocumentsViewComponent,
-    ShipmentsViewComponent,
-    DocumentViewDialogComponent,
-    // Containers
-    RequestsPageComponent
-    // RequestCreateDialogComponent,
-    // RequestCorrectDialogComponent
-  ],
-  imports: [
-    CommonModule,
-    InputTextModule,
-    ToastModule,
-    TabViewModule,
-    CheckboxModule,
-    ButtonModule,
-    RadioButtonModule,
-    TieredMenuModule,
-    DynamicDialogModule,
-    InputTextareaModule,
-    DialogModule,
-    CalendarModule,
-    FileUploadModule,
-    SkeletonModule,
-    SliderModule,
-    AccordionModule,
-    TableModule,
-    TooltipModule,
-    FormsModule,
-    ProgressBarModule,
-    ToolbarModule,
-    MultiSelectModule,
-    RequestsRoutingModule,
-    ReactiveFormsModule,
-    CardModule,
-    MenubarModule,
-    AvatarModule,
-    SpacingModule,
-    TabModule,
-    InputModule,
-    IconModule,
-    PaginatorModule,
-    RequestDrawerModule,
-    RequestBrowserDrawerModule,
-    SignPinModalModule,
-    DropdownModule,
-    DropdownPointModule,
-    PasteModalModule
-  ],
-  providers: [
-    DialogService,
-    DeliveryService,
-    RequestsService,
-    FileService,
-    MessageService,
-    CommonService,
-    DatesService,
-    DatePipe,
-  ]
+	declarations: [
+		//Components
+		DocumentsViewComponent,
+		ShipmentsViewComponent,
+		DocumentViewDialogComponent,
+		// Containers
+		RequestsPageComponent
+		// RequestCreateDialogComponent,
+		// RequestCorrectDialogComponent
+	],
+	imports: [
+		CommonModule,
+		InputTextModule,
+		ToastModule,
+		TabViewModule,
+		CheckboxModule,
+		ButtonModule,
+		RadioButtonModule,
+		TieredMenuModule,
+		DynamicDialogModule,
+		InputTextareaModule,
+		DialogModule,
+		CalendarModule,
+		FileUploadModule,
+		SkeletonModule,
+		SliderModule,
+		AccordionModule,
+		TableModule,
+		TooltipModule,
+		FormsModule,
+		ProgressBarModule,
+		ToolbarModule,
+		MultiSelectModule,
+		RequestsRoutingModule,
+		ReactiveFormsModule,
+		CardModule,
+		MenubarModule,
+		AvatarModule,
+		SpacingModule,
+		TabModule,
+		InputModule,
+		IconModule,
+		PaginatorModule,
+		RequestDrawerModule,
+		RequestBrowserDrawerModule,
+		SignPinModalModule,
+		DropdownModule,
+		DropdownPointModule,
+		PasteModalModule,
+		RequestsPageModalModule
+	],
+	providers: [
+		DialogService,
+		DeliveryService,
+		RequestsService,
+		FileService,
+		MessageService,
+		CommonService,
+		DatesService,
+		DatePipe
+	]
 })
-export class RequestsModule {
-}
+export class RequestsModule {}

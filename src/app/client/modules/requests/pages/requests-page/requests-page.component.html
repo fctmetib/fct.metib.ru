@@ -91,28 +91,28 @@
 				<mib-table-cell type="main">
 					<ng-container table-cell-title>{{ req.ID }}</ng-container>
 				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{ req.Number }}</ng-container>
-				</mib-table-cell>
+				<ng-container *ngIf="isDesktop; else mobileCell">
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ req.Number }}</ng-container>
+					</mib-table-cell>
+				</ng-container>
 				<mib-table-cell>
 					<ng-container table-cell-title>{{
 						req.Date | date : 'dd.MM.YYYY'
 					}}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						req.Delivery.CustomerID
-					}}</ng-container>
+					<ng-container table-cell-title>{{ req.Delivery.ID }}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
-					<ng-container table-cell-title>{{ req.Delivery.Title }}</ng-container>
+					<ng-container table-cell-title>{{ req.Type }}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
 					<ng-container table-cell-title>{{ req.Status }}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
 					<ng-container table-cell-title>{{
-						req.Shipments ? 'Есть' : 'Отсутствует'
+						req.ReadOnly ? 'Отсутствует' : 'Есть'
 					}}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>

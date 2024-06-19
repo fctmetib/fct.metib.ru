@@ -131,10 +131,6 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 		})
 	}
 
-	openModal(data) {
-		console.log('OPEN MODAL .. YEAH', data)
-	}
-
 	prev() {
 		if (this.currentIndex > 0) {
 			this.currentIndex--
@@ -152,7 +148,6 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 	}
 
 	getVisibleCell(row: ClientInvoice[]) {
-		console.log('halo')
 		const result = {}
 		for (const [newKey, path] of Object.entries(this.invoiceMap)) {
 			let value
