@@ -1,0 +1,10 @@
+@media (max-width: 576px) {
+	.tags-group {
+		padding: 12px 0 16px;
+		flex-wrap: wrap;
+		justify-content: center;
+		& .products-title {
+			text-align: center;
+		}
+	}
+}

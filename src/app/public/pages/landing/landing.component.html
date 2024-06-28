@@ -79,9 +79,11 @@
 </section>
 <section class="products">
 	<div class="container flex gap-16">
-		<div class="flex flex_grow flex_column">
+		<div class="mob-products flex flex_grow flex_column">
 			<mib-spacing type="xl"></mib-spacing>
-			<h3>Наши продукты - факторинг</h3>
+			<h3>
+				{{ isDesktop ? 'Наши продукты - факторинг' : 'Наши продукты' }}
+			</h3>
 			<mib-spacing type="xs"></mib-spacing>
 			<mib-tags-group (onChange)="onChange($event)">
 				<mib-tag type="floating" [value]="ProductTabsEnum.INNER">
@@ -95,8 +97,25 @@
 				</mib-tag>
 			</mib-tags-group>
 			<mib-spacing type="s"></mib-spacing>
-			<p class="text text_l c-mc-default">Продукты металлинвестбанка:</p>
 			<ng-container [ngSwitch]="currentProductsTab">
+				<p
+					*ngSwitchCase="ProductTabsEnum.INNER"
+					class="products-title text text_l c-mc-default"
+				>
+					Продукты внутреннего факторинга:
+				</p>
+				<p
+					*ngSwitchCase="ProductTabsEnum.INTERNATIONAL"
+					class="products-title text text_l c-mc-default"
+				>
+					Продукты международного факторинга:
+				</p>
+				<p
+					*ngSwitchCase="ProductTabsEnum.COMPLEX"
+					class="products-title text text_l c-mc-default"
+				>
+					Продукты комплексного факторинга:
+				</p>
 				<div *ngSwitchCase="ProductTabsEnum.INNER">
 					<mib-spacing type="xs2"></mib-spacing>
 					<p class="text text_l c-bti-secondary">
@@ -138,8 +157,15 @@
 					</p>
 				</div>
 			</ng-container>
+			<mib-spacing type="s"></mib-spacing>
+			<div class="products-btn flex">
+				<mib-button size="m" type="filled-primary">
+					Получить консультацию
+				</mib-button>
+			</div>
+			<mib-spacing type="xl"></mib-spacing>
 		</div>
-		<div class="flex flex_grow">
+		<div class="products-img flex flex_grow">
 			<img
 				src="./assets/images/staff/holder/product_v1-{{ imgNumber }}.png"
 				alt="product"

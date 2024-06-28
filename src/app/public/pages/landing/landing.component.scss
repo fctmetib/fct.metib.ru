@@ -129,6 +129,49 @@
 		background-color: var(--mc-quinary);
 		border-top-left-radius: 32px;
 		border-bottom-left-radius: 32px;
+		@media (max-width: 576px) {
+			flex-direction: column;
+			padding: 0 16px;
+			border-radius: 0;
+
+			mib-spacing[type='xl'] {
+				display: none;
+			}
+
+			h3 {
+				text-align: center;
+			}
+
+			.mob-products {
+				order: 1;
+			}
+
+			.products-img {
+				padding: 24px 0;
+				justify-content: center;
+			}
+
+			img {
+				height: 280px;
+				object-fit: contain;
+			}
+
+			mib-spacing[type='xs'] {
+				display: none;
+			}
+
+			mib-spacing[type='s'] {
+				display: none;
+			}
+
+			.products-btn {
+				justify-content: center;
+				padding: 24px 0;
+				mib-button[size='m'] {
+					width: 100%;
+				}
+			}
+		}
 	}
 
 	& img {

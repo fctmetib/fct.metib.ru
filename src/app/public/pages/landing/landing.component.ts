@@ -1,17 +1,26 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, OnDestroy, OnInit} from '@angular/core'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {ProductTabsEnum} from './enums/landing.enum'
 import {NewsService} from '../../service/news.service'
-import {BehaviorSubject, finalize, map, switchMap, tap, zip} from 'rxjs'
+import {
+	BehaviorSubject,
+	Subscription,
+	finalize,
+	map,
+	switchMap,
+	tap,
+	zip
+} from 'rxjs'
 import {AdvancedNewsInterface, NewsInterface} from '../../type/news.interface'
 import {Properties} from 'csstype'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
 @Component({
 	selector: 'mib-landing',
 	templateUrl: './landing.component.html',
 	styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit, OnDestroy {
 	public ProductTabsEnum = ProductTabsEnum
 
 	public iconsDatas = [
@@ -102,10 +111,20 @@ export class LandingComponent implements OnInit {
 		margin: '0 auto'
 	}
 
-	constructor(private newsService: NewsService) {}
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+
+	constructor(
+		private newsService: NewsService,
+		public breakpointService: BreakpointObserverService
+	) {}
 
 	ngOnInit(): void {
 		this.getCurrentNews()
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
 	}
 
 	public getCurrentNews() {
@@ -139,5 +158,9 @@ export class LandingComponent implements OnInit {
 	public onChange($num) {
 		this.imgNumber = $num
 		this.currentProductsTab = $num
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }
