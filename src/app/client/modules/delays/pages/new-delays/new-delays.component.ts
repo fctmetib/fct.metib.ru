@@ -96,6 +96,8 @@ export class NewDelaysComponent implements OnInit, OnDestroy {
 		6: {Payer: 'Title'}
 	}
 
+	public showTotal: boolean = false
+
 	constructor(
 		public toolsService: ToolsService,
 		private newDelaysDrawerService: NewDelaysDrawerService,
@@ -124,6 +126,11 @@ export class NewDelaysComponent implements OnInit, OnDestroy {
 	}
 
 	getVisibleHeader() {
+		this.showTotal = false
+		if (this.headers[this.currentIndex] === 'Сумма просрочки') {
+			this.showTotal = true
+			return this.headers[this.currentIndex]
+		}
 		return this.headers[this.currentIndex]
 	}
 

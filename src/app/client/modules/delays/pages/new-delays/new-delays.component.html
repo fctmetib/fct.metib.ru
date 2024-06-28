@@ -115,7 +115,9 @@
 					<span table-cell-title>{{ todayIs | date : 'dd.MM.YYYY' }}</span>
 				</mib-table-cell>
 				<ng-template #mobileCell>
-					<mib-table-head-cell>{{ getVisibleCell(item) }}</mib-table-head-cell>
+					<mib-table-cell>
+						<span table-cell-title>{{ getVisibleCell(item) }}</span>
+					</mib-table-cell>
 				</ng-template>
 				<ng-container table-row-button *ngIf="isDesktop; else mobile">
 				</ng-container>
@@ -137,20 +139,20 @@
 				<mib-table-cell></mib-table-cell>
 				<mib-table-cell></mib-table-cell>
 				<mib-table-cell></mib-table-cell>
-				<!-- <ng-container table-row-button *ngIf="isDesktop; else mSumm"> -->
-				<mib-table-cell>
-					<ng-container table-cell-title>
-						{{ datas * 3 | rub }}
-					</ng-container>
-				</mib-table-cell>
-				<!-- </ng-container>
-				<ng-template #mSumm> -->
-				<!-- <mib-table-cell>
-						<ng-container table-cell-title>
+				<ng-container *ngIf="isDesktop; else mSumm">
+					<mib-table-cell>
+						<span table-cell-title>
 							{{ datas * 3 | rub }}
-						</ng-container>
+						</span>
 					</mib-table-cell>
-				</ng-template> -->
+				</ng-container>
+				<ng-template #mSumm>
+					<mib-table-cell [ngClass]="{displaySumm: showTotal}">
+						<span table-cell-title>{{
+							showTotal ? (datas * 3 | rub) : ''
+						}}</span>
+					</mib-table-cell>
+				</ng-template>
 				<mib-table-cell></mib-table-cell>
 			</mib-table-row>
 		</ng-template>
