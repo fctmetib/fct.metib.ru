@@ -308,7 +308,7 @@
 		</p>
 	</div>
 	<mib-spacing type="m"></mib-spacing>
-	<div class="container flex flex_wrap gap-16">
+	<div class="container flex flex_justify-center flex_wrap gap-16">
 		<mib-partner-panel *ngFor="let partner of partnersLogo">
 			<img src="{{ partner.img }}" alt="logo-{{ partner.name }}" />
 		</mib-partner-panel>
@@ -318,29 +318,45 @@
 <section class="requests">
 	<mib-spacing type="xl2"></mib-spacing>
 	<div class="container flex gap-16">
-		<div class="flex flex_column flex_grow">
+		<div class="requests-form flex flex_column flex_grow">
 			<mib-spacing type="xl"></mib-spacing>
 			<h3>Заявка на факторинг</h3>
 			<mib-spacing type="s"></mib-spacing>
 			<div class="flex flex_column gap-12">
 				<mib-input>
-					<input size="xl" styleType="floating" mibInput />
+					<input
+						size="{{ isDesktop ? 'xl' : 'l' }}"
+						styleType="floating"
+						mibInput
+					/>
 					<ng-container mibLabel>Как к Вам обращаться?</ng-container>
 				</mib-input>
-				<div class="flex gap-12">
-					<mib-input size="xl" class="flex_grow">
-						<input styleType="floating" mibInput />
+				<div class="requests-form--wrap flex gap-12">
+					<mib-input class="flex_grow">
+						<input
+							size="{{ isDesktop ? 'xl' : 'l' }}"
+							styleType="floating"
+							mibInput
+						/>
 						<ng-container mibLabel>Мобильный телефон</ng-container>
 					</mib-input>
 					<mib-input class="flex_grow">
-						<input size="xl" styleType="floating" mibInput />
+						<input
+							size="{{ isDesktop ? 'xl' : 'l' }}"
+							styleType="floating"
+							mibInput
+						/>
 						<ng-container mibLabel>ИНН Вашей организации</ng-container>
 					</mib-input>
 				</div>
 			</div>
-			<mib-spacing type="s"></mib-spacing>
-			<div class="flex">
-				<mib-button size="xl" (press)="getFunding()" type="filled-primary">
+			<mib-spacing type="{{ isDesktop ? 's' : 'm' }}"></mib-spacing>
+			<div class="requests-btn flex">
+				<mib-button
+					size="{{ isDesktop ? 'xl' : 'l' }}"
+					(press)="getFunding()"
+					type="filled-primary"
+				>
 					Оставить заявку
 				</mib-button>
 			</div>
@@ -353,7 +369,7 @@
 			</div>
 			<mib-spacing type="xl"></mib-spacing>
 		</div>
-		<div class="flex flex_grow">
+		<div class="requests-img flex flex_grow">
 			<img src="./assets/images/staff/factoring-app.jpg" alt="factoring" />
 		</div>
 	</div>
