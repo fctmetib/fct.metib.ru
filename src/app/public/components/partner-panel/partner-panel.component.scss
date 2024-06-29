@@ -6,4 +6,9 @@
 	&:hover {
 		box-shadow: var(--shadow-normal);
 	}
+
+	@media (max-width: 576px) {
+		width: 152px;
+		height: 64px;
+	}
 }
