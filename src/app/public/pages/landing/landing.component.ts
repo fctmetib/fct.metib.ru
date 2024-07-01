@@ -111,6 +111,13 @@ export class LandingComponent implements OnInit, OnDestroy {
 		margin: '0 auto'
 	}
 
+	public mobileSkeleton: Properties = {
+		borderRadius: '8px',
+		width: 'calc(100% - 32px)',
+		height: '262px',
+		margin: '0 16px'
+	}
+
 	public isDesktop: boolean = false
 
 	private subscriptions = new Subscription()

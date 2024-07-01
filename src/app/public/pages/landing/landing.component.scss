@@ -409,3 +409,28 @@
 		object-fit: none;
 	}
 }
+
+.press {
+	.container {
+		@media (max-width: 762px) {
+			flex-direction: column;
+		}
+
+		@media (max-width: 576px) {
+			padding: 0 16px;
+
+			& .desktop-pannel {
+				display: none;
+			}
+		}
+	}
+
+	@media (max-width: 576px) {
+		& .press-btn {
+			padding: 0 16px;
+			& mib-button {
+				width: 100%;
+			}
+		}
+	}
+}

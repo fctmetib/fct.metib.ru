@@ -71,6 +71,17 @@
 	& > div {
 		height: 314px;
 		background-color: var(--wgr-primary);
+		@media (max-width: 576px) {
+			height: auto;
+		}
+
+		& .link-wrap {
+			display: none;
+		}
+
+		& .news-title {
+			padding: 16px;
+		}
 	}
 
 	& .p-24 {

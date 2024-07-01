@@ -375,19 +375,19 @@
 	</div>
 </section>
 <section class="press">
-	<mib-spacing type="xl"></mib-spacing>
+	<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
 	<h3 class="text-center">Новости банка</h3>
-	<mib-spacing type="m"></mib-spacing>
+	<mib-spacing type="{{ isDesktop ? 'm' : 'xs' }}"></mib-spacing>
 	<ng-container *ngIf="loading$ | async; else newsPanel">
 		<mib-skeleton
-			[styles]="defaultSkeleton"
+			[styles]="isDesktop ? defaultSkeleton : mobileSkeleton"
 			*ngFor="let i of [1]"
 		></mib-skeleton>
 	</ng-container>
 	<ng-template #newsPanel>
 		<div class="container flex gap-16">
 			<mib-news-panel
-				class="flex flex_grow"
+				class="desktop-pannel flex flex_grow"
 				[newsTitle]="getAdvancedNews[0].Title"
 				[newsDate]="getAdvancedNews[0].Date | date : 'dd.MM.yyyy'"
 				linkText="Открыть новость"
@@ -397,7 +397,7 @@
 			></mib-news-panel>
 			<div class="flex flex_grow flex_column gap-16">
 				<mib-news-panel
-					[vertical]="false"
+					[vertical]="isDesktop ? false : true"
 					[newsTitle]="getAdvancedNews[1]?.Title"
 					[newsDate]="getAdvancedNews[1]?.Date | date : 'dd.MM.yyyy'"
 					linkText="Подробнее"
@@ -406,7 +406,7 @@
 					[altText]="getAdvancedNews[1]?.Title"
 				></mib-news-panel>
 				<mib-news-panel
-					[vertical]="false"
+					[vertical]="isDesktop ? false : true"
 					[newsTitle]="getAdvancedNews[2]?.Title"
 					[newsDate]="getAdvancedNews[2]?.Date | date : 'dd.MM.yyyy'"
 					linkText="Подробнее"
@@ -415,7 +415,7 @@
 					[altText]="getAdvancedNews[2]?.Title"
 				></mib-news-panel>
 				<mib-news-panel
-					[vertical]="false"
+					[vertical]="isDesktop ? false : true"
 					[newsTitle]="getAdvancedNews[3]?.Title"
 					[newsDate]="getAdvancedNews[3]?.Date | date : 'dd.MM.yyyy'"
 					linkText="Подробнее"
@@ -426,8 +426,8 @@
 			</div>
 		</div>
 	</ng-template>
-	<mib-spacing type="m"></mib-spacing>
-	<div class="flex flex_justify-center">
+	<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
+	<div class="press-btn flex flex_justify-center">
 		<mib-button
 			size="l"
 			[routerLink]="'/news'"
@@ -438,4 +438,4 @@
 		</mib-button>
 	</div>
 </section>
-<mib-spacing type="xl"></mib-spacing>
+<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>

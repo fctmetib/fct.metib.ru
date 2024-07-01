@@ -6,11 +6,11 @@
 	[class.isAdmin]="isAdmin"
 	[class.cursor-pointer]="!isAdmin"
 >
-	<div *ngIf="showPreview" class="flex">
+	<div *ngIf="showPreview" class="flex flex_justify-center">
 		<img src="{{ showPreview }}" alt="{{ altText }}" />
 	</div>
 	<div class="news-text flex flex_column h-100 flex_grow">
-		<div class="flex flex_grow flex_column p-24">
+		<div class="news-title flex flex_grow flex_column p-24">
 			<h4>{{ newsTitle }}</h4>
 			<div>
 				<span class="text text_l c-bti-secondary pt-4">
@@ -24,7 +24,7 @@
 				</div>
 			</div>
 		</div>
-		<div *ngIf="linkText" class="ph-24">
+		<div *ngIf="linkText" class="link-wrap ph-24">
 			<div class="flex">
 				<mib-link size="l" type="ghost-primary">{{ linkText }} </mib-link>
 			</div>
