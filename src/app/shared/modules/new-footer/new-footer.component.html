@@ -1,39 +1,91 @@
 <footer class="footer">
 	<div class="container">
 		<mib-spacing type="l"></mib-spacing>
-		<div class="flex flex_justify-between">
-			<div class="flex gap-16">
-				<div class="flex flex_column item">
-					<mib-link [showUnderline]="true" size="l" type="ghost-secondary"
-						>+7 (495) 727-9797
-					</mib-link>
-					<mib-spacing type="xs2"></mib-spacing>
-					<span class="text text_m c-bti-secondary"
-						>Номер горячей линии <br />
-						для звонков по Москве</span
-					>
-				</div>
-				<div class="flex flex_column item">
-					<mib-link [showUnderline]="true" size="l" type="ghost-secondary"
-						>+7 (800) 250-9797
-					</mib-link>
-					<mib-spacing type="xs2"></mib-spacing>
-					<span class="text text_m c-bti-secondary"
-						>Номер горячей линии <br />
-						для звонков по всей России</span
-					>
+		<div class="footer-data flex flex_justify-between">
+			<div class="footer-data-contacts flex gap-16">
+				<div class="flex flex_grow phone-wrap">
+					<div class="flex flex_column item">
+						<mib-link
+							[showUnderline]="true"
+							size="{{ isDesktop ? 'l' : 'm' }}"
+							type="{{ isDesktop ? 'ghost-secondary' : 'ghost-primary' }}"
+							>+7 (495) 727-9797
+						</mib-link>
+						<mib-spacing type="xs2"></mib-spacing>
+						<span
+							*ngIf="isDesktop; else mobileMos"
+							class="text text_m c-bti-secondary"
+						>
+							Номер горячей линии <br />
+							для звонков по Москве
+						</span>
+						<ng-template #mobileMos>
+							<span class="text text_s c-bti-secondary">
+								Для звонков по Москве
+							</span>
+						</ng-template>
+					</div>
+					<div class="flex flex_column item">
+						<mib-link
+							[showUnderline]="true"
+							size="{{ isDesktop ? 'l' : 'm' }}"
+							type="{{ isDesktop ? 'ghost-secondary' : 'ghost-primary' }}"
+							>+7 (800) 250-9797
+						</mib-link>
+						<mib-spacing type="xs2"></mib-spacing>
+						<span
+							*ngIf="isDesktop; else mobileRus"
+							class="text text_m c-bti-secondary"
+						>
+							Номер горячей линии <br />
+							для звонков по всей России
+						</span>
+						<ng-template #mobileRus>
+							<span class="text text_s c-bti-secondary">
+								Для звонков по всей РФ
+							</span>
+						</ng-template>
+					</div>
 				</div>
 				<div class="flex flex_column gap-4 item">
-					<div class="flex flex_column gap-4">
+					<div
+						*ngIf="isDesktop; else mobAddress"
+						class="flex flex_column gap-4"
+					>
 						<mib-link size="l" type="ghost-secondary"
 							>119180, г. Москва, ул. Большая <br />Полянка, д. 47, стр. 2
 						</mib-link>
 					</div>
-					<mib-link size="m" type="ghost-primary">Показать на карте </mib-link>
+					<ng-template #mobAddress class="flex flex_column gap-4">
+						<mib-link size="m" type="ghost-secondary"
+							><span class="text text_m c-bti-secondary"
+								>Адрес офиса: 119180, г. Москва, ул. Большая Полянка, д. 47,
+								стр. 2</span
+							>
+						</mib-link>
+					</ng-template>
+					<mib-link
+						*ngIf="isDesktop; else mobileMap"
+						size="m"
+						type="ghost-primary"
+						>Показать на карте
+					</mib-link>
+					<ng-template #mobileMap>
+						<mib-spacing type="xm"></mib-spacing>
+						<mib-button size="m" (press)="getMap()" type="filled-secondary">
+							Показать на карте
+						</mib-button>
+					</ng-template>
 				</div>
 			</div>
 			<div class="flex flex_column">
-				<p class="text text_m c-bti-secondary">Пишите нам в соц. сетях</p>
+				<p class="text text_m c-bti-secondary">
+					{{
+						isDesktop
+							? 'Пишите нам в соц. сетях'
+							: 'Ищите нас в социальных сетях'
+					}}
+				</p>
 				<mib-spacing type="xs2"></mib-spacing>
 				<div class="flex gap-12">
 					<mib-media></mib-media>
@@ -46,16 +98,16 @@
 	</div>
 	<div class="flex separator"></div>
 	<mib-spacing type="s"></mib-spacing>
-	<div class="container flex flex_justify-between">
-		<div class="flex gap-16 flex_align-center">
-			<div class="flex">
+	<div class="footer-policy container flex flex_justify-between">
+		<div class="policy-wrap flex gap-16 flex_align-center">
+			<div class="policy-logo flex">
 				<mib-icon
 					class="cursor-pointer"
 					[routerLink]="['/']"
 					name="logotype"
 				></mib-icon>
 			</div>
-			<div class="flex gap-16">
+			<div class="policy-privacy flex gap-16">
 				<mib-link size="m" type="ghost-secondary"
 					>Условия использования
 				</mib-link>
@@ -64,8 +116,16 @@
 				</mib-link>
 			</div>
 		</div>
-		<mib-button [routerLink]="['/auth/login']" type="filled-primary" size="m"
-			>Регистрация и вход
+		<mib-button [routerLink]="['/auth/login']" type="filled-primary" size="m">
+			<ng-container *ngIf="isDesktop; else mobileEntry"
+				>Регистрация и вход</ng-container
+			>
+			<ng-template #mobileEntry class="flex w-100">
+				<div class="flex flex_grow"></div>
+				Регистрация и вход
+				<div class="flex flex_grow"></div>
+				<mib-icon class="stroke" name="fi_log-in"></mib-icon>
+			</ng-template>
 		</mib-button>
 	</div>
 	<mib-spacing type="s"></mib-spacing>
