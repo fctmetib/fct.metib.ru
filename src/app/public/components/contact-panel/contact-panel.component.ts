@@ -12,11 +12,10 @@ export class ContactPanelComponent {
 	@Input() contactName: string = ''
 	@Input() contactPosition: string = ''
 	@Input() contactMail: string = ''
-	@Input() contactTel: string = ''
 
 	get classes() {
 		return {
-			[`contract_${this.device}`]: true
+			[`contact_${this.device}`]: true
 		}
 	}
 }

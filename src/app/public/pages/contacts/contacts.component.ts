@@ -1,4 +1,6 @@
 import {Component} from '@angular/core'
+import {Subscription} from 'rxjs'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
 @Component({
 	selector: 'contacts',
@@ -6,7 +8,11 @@ import {Component} from '@angular/core'
 	templateUrl: './contacts.component.html'
 })
 export class ContactsComponent {
-	constructor() {}
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+
+	constructor(public breakpointService: BreakpointObserverService) {}
 
 	datas = [
 		{
@@ -130,4 +136,14 @@ export class ContactsComponent {
 			]
 		}
 	]
+
+	ngOnInit(): void {
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
+	}
 }

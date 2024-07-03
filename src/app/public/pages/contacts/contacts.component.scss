@@ -1,8 +1,23 @@
 .contacts {
-	width: 1136px;
-	margin: 0 auto;
 	& .map {
 		height: 150px;
+	}
+
+	@media (max-width: 576px) {
+		padding: 0;
+
+		& h3,
+		h4 {
+			padding: 0 16px;
+		}
+
+		& .address-wrap {
+			padding: 0 16px;
+		}
+
+		& .item:not(:last-child) {
+			border-bottom: 1px solid var(--wgr-secondary);
+		}
 	}
 }
 

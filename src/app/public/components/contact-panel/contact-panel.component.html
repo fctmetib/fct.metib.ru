@@ -1,7 +1,7 @@
 <div class="flex contact">
-	<div [ngClass]="classes" class="flex flex_column">
+	<div [ngClass]="classes" class="flex">
 		<img src="{{ contactImage }}" alt="{{ contactName }}" />
-		<div class="flex flex_column flex_grow">
+		<div class="description flex flex_column flex_grow">
 			<mib-spacing type="xs"></mib-spacing>
 			<p class="headline">{{ contactName }}</p>
 			<div class="flex gap-8 flex_grow">
@@ -10,9 +10,6 @@
 			<mib-spacing type="xs2"></mib-spacing>
 			<div class="flex flex_column">
 				<mib-link size="m" type="ghost-primary">{{ contactMail }} </mib-link>
-				<!-- <mib-link size="m" type="ghost-secondary"
-					>Доб: {{ contactTel }}
-				</mib-link> -->
 				<mib-spacing type="xs"></mib-spacing>
 			</div>
 		</div>

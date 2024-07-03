@@ -1,12 +1,7 @@
-<div class="flex flex_column contacts">
-	<mib-spacing type="l"></mib-spacing>
+<div class="flex flex_column contacts container">
+	<mib-spacing type="{{ isDesktop ? 'l' : 'm' }}"></mib-spacing>
 	<h3>Познакомьтесь с нашей командой</h3>
-	<mib-spacing type="xs2"></mib-spacing>
-	<!-- <p class="text text_l c-bti-secondary">
-		На данной странице Вы сможете найти адрес офиса и контакты сотрудников,
-		работающих в департаменте факторинга
-	</p>
-	<mib-spacing type="xs"></mib-spacing> -->
+	<mib-spacing type="{{ isDesktop ? 'xs2' : 'xm' }}"></mib-spacing>
 	<mib-tab-group>
 		<mib-navbar>
 			<mib-navbar-point value="1">Москва</mib-navbar-point>
@@ -14,44 +9,54 @@
 		</mib-navbar>
 		<div>
 			<mib-tab-item value="1">
-				<mib-spacing type="m"></mib-spacing>
-				<h4>Наш офис в Москве</h4>
-
-				<mib-spacing type="xs"></mib-spacing>
-				<p class="text text_medium text_m c-bti-primary">Контакты</p>
-				<mib-spacing type="xs2"></mib-spacing>
-				<div class="flex gap-6">
-					<span class="text text_s c-bti-secondary">Телефон в Москве:</span>
-					<mib-link size="s" type="ghost-primary">+7 (495) 727-9797 </mib-link>
-				</div>
-				<mib-spacing type="xs2"></mib-spacing>
-				<div class="flex gap-6">
+				<div class="address-wrap flex flex_column">
+					<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
+					<h4>Наш офис в Москве</h4>
+					<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
+					<p class="text text_medium text_m c-bti-primary">Контакты</p>
+					<mib-spacing type="xs2"></mib-spacing>
+					<div class="flex gap-6">
+						<span class="text text_s c-bti-secondary">Телефон в Москве:</span>
+						<mib-link size="s" type="ghost-primary"
+							>+7 (495) 727-9797
+						</mib-link>
+					</div>
+					<mib-spacing type="xs2"></mib-spacing>
+					<div class="flex gap-6">
+						<span class="text text_s c-bti-secondary"
+							>Горячая линия по России:</span
+						>
+						<mib-link size="s" type="ghost-primary"
+							>+7 (800) 250-97-97
+						</mib-link>
+					</div>
+					<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
+					<p class="text text_medium text_m c-bti-primary">Адрес</p>
+					<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
 					<span class="text text_s c-bti-secondary"
-						>Горячая линия по России:</span
+						>119180, г. Москва, ул. Большая Полянка, д. 47, стр. 2</span
 					>
-					<mib-link size="s" type="ghost-primary">+7 (800) 250-97-97 </mib-link>
+					<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
+					<div class="flex map">
+						<iframe
+							src="https://yandex.ru/map-widget/v1/?um=constructor%3A2f67fcd615265574608b925be005814b15ab5d32dce3bc8135f16ba7a27f1d32&source=constructor"
+							width="100%"
+							height="100%"
+							frameborder="0"
+						></iframe>
+					</div>
 				</div>
-				<mib-spacing type="xs"></mib-spacing>
-				<p class="text text_medium text_m c-bti-primary">Адрес</p>
-				<mib-spacing type="xs2"></mib-spacing>
-				<span class="text text_s c-bti-secondary"
-					>119180, г. Москва, ул. Большая Полянка, д. 47, стр. 2</span
-				>
-				<mib-spacing type="xs"></mib-spacing>
-				<div class="flex map">
-					<iframe
-						src="https://yandex.ru/map-widget/v1/?um=constructor%3A2f67fcd615265574608b925be005814b15ab5d32dce3bc8135f16ba7a27f1d32&source=constructor"
-						width="100%"
-						height="100%"
-						frameborder="0"
-					></iframe>
-				</div>
-				<mib-spacing type="m"></mib-spacing>
+				<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
 				<h4>Руководители</h4>
-				<mib-spacing type="xs"></mib-spacing>
+				<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
 				<div class="flex flex_wrap gap-16">
-					<div class="flex" *ngFor="let item of datas[0].managers">
+					<div
+						[class.w-100]="!isDesktop"
+						class="flex item"
+						*ngFor="let item of datas[0].managers"
+					>
 						<mib-contact-panel
+							[device]="isDesktop ? 'desktop' : 'mobile'"
 							[contactImage]="item.img"
 							[contactPosition]="item.position"
 							[contactName]="item.name"
@@ -59,12 +64,17 @@
 						></mib-contact-panel>
 					</div>
 				</div>
-				<mib-spacing type="m"></mib-spacing>
+				<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
 				<h4>Отдел сопровождения факторинга</h4>
 				<mib-spacing type="xs"></mib-spacing>
 				<div class="flex flex_wrap gap-16">
-					<div class="flex" *ngFor="let item of datas[1].supportDep">
+					<div
+						[class.w-100]="!isDesktop"
+						class="flex item"
+						*ngFor="let item of datas[1].supportDep"
+					>
 						<mib-contact-panel
+							[device]="isDesktop ? 'desktop' : 'mobile'"
 							[contactImage]="item.img"
 							[contactPosition]="item.position"
 							[contactName]="item.name"
@@ -72,12 +82,17 @@
 						></mib-contact-panel>
 					</div>
 				</div>
-				<mib-spacing type="m"></mib-spacing>
+				<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
 				<h4>Отдел продаж</h4>
 				<mib-spacing type="xs"></mib-spacing>
 				<div class="flex flex_wrap gap-16">
-					<div class="flex" *ngFor="let item of datas[2].salesDep">
+					<div
+						[class.w-100]="!isDesktop"
+						class="flex item"
+						*ngFor="let item of datas[2].salesDep"
+					>
 						<mib-contact-panel
+							[device]="isDesktop ? 'desktop' : 'mobile'"
 							[contactImage]="item.img"
 							[contactPosition]="item.position"
 							[contactName]="item.name"
@@ -85,12 +100,17 @@
 						></mib-contact-panel>
 					</div>
 				</div>
-				<mib-spacing type="m"></mib-spacing>
+				<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
 				<h4>Отдел организации продаж</h4>
 				<mib-spacing type="xs"></mib-spacing>
 				<div class="flex flex_wrap gap-16">
-					<div class="flex" *ngFor="let item of datas[3].salesOrgDep">
+					<div
+						[class.w-100]="!isDesktop"
+						class="flex item"
+						*ngFor="let item of datas[3].salesOrgDep"
+					>
 						<mib-contact-panel
+							[device]="isDesktop ? 'desktop' : 'mobile'"
 							[contactImage]="item.img"
 							[contactPosition]="item.position"
 							[contactName]="item.name"
@@ -98,49 +118,60 @@
 						></mib-contact-panel>
 					</div>
 				</div>
-				<mib-spacing type="xl2"></mib-spacing>
+				<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 			</mib-tab-item>
 			<mib-tab-item value="2">
-				<mib-spacing type="m"></mib-spacing>
-				<h4>Наш офис в Санкт-Петербурге</h4>
-				<mib-spacing type="xs"></mib-spacing>
-				<p class="text text_medium text_m c-bti-primary">Контакты</p>
-				<mib-spacing type="xs2"></mib-spacing>
-				<div class="flex gap-6">
+				<div class="address-wrap flex flex_column">
+					<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
+					<h4>Наш офис в Санкт-Петербурге</h4>
+					<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
+					<p class="text text_medium text_m c-bti-primary">Контакты</p>
+					<mib-spacing type="xs2"></mib-spacing>
+					<div class="flex gap-6">
+						<span class="text text_s c-bti-secondary"
+							>Телефон в Санкт-Петербурге:</span
+						>
+						<mib-link size="s" type="ghost-primary"
+							>+7 (812) 332-17-02
+						</mib-link>
+					</div>
+					<mib-spacing type="xs2"></mib-spacing>
+					<div class="flex gap-6">
+						<span class="text text_s c-bti-secondary"
+							>Дополнительный телефон:</span
+						>
+						<mib-link size="s" type="ghost-primary"
+							>+7 (812) 332-17-03
+						</mib-link>
+					</div>
+					<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
+					<p class="text text_medium text_m c-bti-primary">Адрес</p>
+					<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
 					<span class="text text_s c-bti-secondary"
-						>Телефон в Санкт-Петербурге:</span
+						>199178, Россия, г.Санкт-Петербург, 7-я линия В.О., д. 76, Б/Ц
+						'Сенатор', офис 108</span
 					>
-					<mib-link size="s" type="ghost-primary">+7 (812) 332-17-02 </mib-link>
+					<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
+					<div class="flex map">
+						<iframe
+							src="https://yandex.ru/map-widget/v1/?um=constructor%3A668e048cde5370e42d9239d2a08a2ae5dd26a6aa79afb0abd872ce4276d34d8a&source=constructor"
+							width="100%"
+							height="100%"
+							frameborder="0"
+						></iframe>
+					</div>
 				</div>
-				<mib-spacing type="xs2"></mib-spacing>
-				<div class="flex gap-6">
-					<span class="text text_s c-bti-secondary"
-						>Дополнительный телефон:</span
-					>
-					<mib-link size="s" type="ghost-primary">+7 (812) 332-17-03 </mib-link>
-				</div>
-				<mib-spacing type="xs"></mib-spacing>
-				<p class="text text_medium text_m c-bti-primary">Адрес</p>
-				<mib-spacing type="xs2"></mib-spacing>
-				<span class="text text_s c-bti-secondary"
-					>199178, Россия, г.Санкт-Петербург, 7-я линия В.О., д. 76, Б/Ц
-					'Сенатор', офис 108</span
-				>
-				<mib-spacing type="xs"></mib-spacing>
-				<div class="flex map">
-					<iframe
-						src="https://yandex.ru/map-widget/v1/?um=constructor%3A668e048cde5370e42d9239d2a08a2ae5dd26a6aa79afb0abd872ce4276d34d8a&source=constructor"
-						width="100%"
-						height="100%"
-						frameborder="0"
-					></iframe>
-				</div>
-				<mib-spacing type="m"></mib-spacing>
+				<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
 				<h4>Отдел развития факторинга</h4>
-				<mib-spacing type="xs"></mib-spacing>
+				<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
 				<div class="flex flex_wrap gap-16">
-					<div class="flex" *ngFor="let item of dataSpb[0].managers">
+					<div
+						[class.w-100]="!isDesktop"
+						class="flex"
+						*ngFor="let item of dataSpb[0].managers"
+					>
 						<mib-contact-panel
+							[device]="isDesktop ? 'desktop' : 'mobile'"
 							[contactImage]="item.img"
 							[contactPosition]="item.position"
 							[contactName]="item.name"
@@ -148,7 +179,7 @@
 						></mib-contact-panel>
 					</div>
 				</div>
-				<mib-spacing type="xl2"></mib-spacing>
+				<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 			</mib-tab-item>
 		</div>
 	</mib-tab-group>

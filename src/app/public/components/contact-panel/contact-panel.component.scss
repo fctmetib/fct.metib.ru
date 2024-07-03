@@ -1,10 +1,35 @@
+@import 'src/styles/_typography.vars.scss';
+
 :host {
 	display: flex;
+	width: 100%;
 }
 
 .contact {
-	max-width: 176px;
-	border-bottom: 1px solid var(--wgr-secondary);
+	width: 100%;
+	&_desktop {
+		max-width: 176px;
+		flex-direction: column;
+		border-bottom: 1px solid var(--wgr-secondary);
+	}
+
+	&_mobile {
+		width: 100%;
+		flex-direction: row;
+		padding: 0 16px 24px;
+		gap: 12px;
+
+		& img {
+			width: 72px;
+			height: 72px;
+		}
+
+		& .description {
+			mib-spacing[type='xs'] {
+				display: none;
+			}
+		}
+	}
 	& img {
 		border-radius: var(--main-border-radius);
 	}
