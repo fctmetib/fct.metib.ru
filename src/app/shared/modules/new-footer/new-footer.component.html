@@ -100,13 +100,22 @@
 	<mib-spacing type="s"></mib-spacing>
 	<div class="footer-policy container flex flex_justify-between">
 		<div class="policy-wrap flex gap-16 flex_align-center">
-			<div class="policy-logo flex">
+			<div *ngIf="isDesktop; else footerLogo" class="policy-logo flex">
 				<mib-icon
 					class="cursor-pointer"
 					[routerLink]="['/']"
 					name="logotype"
 				></mib-icon>
 			</div>
+			<ng-template #footerLogo>
+				<div class="policy-logo flex">
+					<mib-icon
+						class="cursor-pointer"
+						[routerLink]="['/']"
+						name="footerLogo"
+					></mib-icon>
+				</div>
+			</ng-template>
 			<div class="policy-privacy flex gap-16">
 				<mib-link size="m" type="ghost-secondary"
 					>Условия использования

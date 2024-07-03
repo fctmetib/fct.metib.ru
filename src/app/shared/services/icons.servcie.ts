@@ -19,6 +19,7 @@ export class IconsService {
 		'fi_menu',
 		'fi_chevron-down',
 		'logotype',
+		'footerLogo',
 		'fi_maximize-2',
 		'fi_info',
 		'fi_check',

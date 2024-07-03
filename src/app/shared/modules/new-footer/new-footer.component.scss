@@ -89,7 +89,9 @@
 					gap: 8px;
 				}
 			}
-			& mib-icon[name='logotype'] {
+			& mib-icon[name='footerLogo'] {
+				@include icon-size(unset);
+				width: 212px;
 				padding-right: 0;
 			}
 
