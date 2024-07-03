@@ -2,11 +2,11 @@
 	<mib-spacing type="l"></mib-spacing>
 	<h3>Познакомьтесь с нашей командой</h3>
 	<mib-spacing type="xs2"></mib-spacing>
-	<p class="text text_l c-bti-secondary">
+	<!-- <p class="text text_l c-bti-secondary">
 		На данной странице Вы сможете найти адрес офиса и контакты сотрудников,
 		работающих в департаменте факторинга
 	</p>
-	<mib-spacing type="xs"></mib-spacing>
+	<mib-spacing type="xs"></mib-spacing> -->
 	<mib-tab-group>
 		<mib-navbar>
 			<mib-navbar-point value="1">Москва</mib-navbar-point>
@@ -15,21 +15,32 @@
 		<div>
 			<mib-tab-item value="1">
 				<mib-spacing type="m"></mib-spacing>
-				<h4>Наш офис на карте</h4>
+				<h4>Наш офис в Москве</h4>
+
 				<mib-spacing type="xs"></mib-spacing>
-				<!-- <div
-					class="map flex flex_center"
-					style="
-						height: 150px;
-						border: 1px solid var(--wgr-tertiary);
-						border-radius: var(--main-border-radius);
-					"
+				<p class="text text_medium text_m c-bti-primary">Контакты</p>
+				<mib-spacing type="xs2"></mib-spacing>
+				<div class="flex gap-6">
+					<span class="text text_s c-bti-secondary">Телефон в Москве:</span>
+					<mib-link size="s" type="ghost-primary">+7 (495) 727-9797 </mib-link>
+				</div>
+				<mib-spacing type="xs2"></mib-spacing>
+				<div class="flex gap-6">
+					<span class="text text_s c-bti-secondary"
+						>Горячая линия по России:</span
+					>
+					<mib-link size="s" type="ghost-primary">+7 (800) 250-97-97 </mib-link>
+				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<p class="text text_medium text_m c-bti-primary">Адрес</p>
+				<mib-spacing type="xs2"></mib-spacing>
+				<span class="text text_s c-bti-secondary"
+					>119180, г. Москва, ул. Большая Полянка, д. 47, стр. 2</span
 				>
-					map moscow office
-				</div> -->
+				<mib-spacing type="xs"></mib-spacing>
 				<div class="flex map">
 					<iframe
-						src="https://yandex.ru/map-widget/v1/?um=constructor%3A2f67fcd615265574608b925be005814b15ab5d32dce3bc8135f16ba7a27f1d32&amp;source=constructor"
+						src="https://yandex.ru/map-widget/v1/?um=constructor%3A2f67fcd615265574608b925be005814b15ab5d32dce3bc8135f16ba7a27f1d32&source=constructor"
 						width="100%"
 						height="100%"
 						frameborder="0"
@@ -45,7 +56,6 @@
 							[contactPosition]="item.position"
 							[contactName]="item.name"
 							[contactMail]="item.email"
-							[contactTel]="item.tel"
 						></mib-contact-panel>
 					</div>
 				</div>
@@ -59,7 +69,6 @@
 							[contactPosition]="item.position"
 							[contactName]="item.name"
 							[contactMail]="item.email"
-							[contactTel]="item.tel"
 						></mib-contact-panel>
 					</div>
 				</div>
@@ -73,7 +82,6 @@
 							[contactPosition]="item.position"
 							[contactName]="item.name"
 							[contactMail]="item.email"
-							[contactTel]="item.tel"
 						></mib-contact-panel>
 					</div>
 				</div>
@@ -87,7 +95,6 @@
 							[contactPosition]="item.position"
 							[contactName]="item.name"
 							[contactMail]="item.email"
-							[contactTel]="item.tel"
 						></mib-contact-panel>
 					</div>
 				</div>
@@ -95,19 +102,53 @@
 			</mib-tab-item>
 			<mib-tab-item value="2">
 				<mib-spacing type="m"></mib-spacing>
-				<h4>Наш офис на карте</h4>
+				<h4>Наш офис в Санкт-Петербурге</h4>
 				<mib-spacing type="xs"></mib-spacing>
-				<div
-					class="map flex flex_center"
-					style="
-						height: 150px;
-						border: 1px solid var(--wgr-tertiary);
-						border-radius: var(--main-border-radius);
-					"
+				<p class="text text_medium text_m c-bti-primary">Контакты</p>
+				<mib-spacing type="xs2"></mib-spacing>
+				<div class="flex gap-6">
+					<span class="text text_s c-bti-secondary"
+						>Телефон в Санкт-Петербурге:</span
+					>
+					<mib-link size="s" type="ghost-primary">+7 (812) 332-17-02 </mib-link>
+				</div>
+				<mib-spacing type="xs2"></mib-spacing>
+				<div class="flex gap-6">
+					<span class="text text_s c-bti-secondary"
+						>Дополнительный телефон:</span
+					>
+					<mib-link size="s" type="ghost-primary">+7 (812) 332-17-03 </mib-link>
+				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<p class="text text_medium text_m c-bti-primary">Адрес</p>
+				<mib-spacing type="xs2"></mib-spacing>
+				<span class="text text_s c-bti-secondary"
+					>199178, Россия, г.Санкт-Петербург, 7-я линия В.О., д. 76, Б/Ц
+					'Сенатор', офис 108</span
 				>
-					map st.petersburg office
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex map">
+					<iframe
+						src="https://yandex.ru/map-widget/v1/?um=constructor%3A668e048cde5370e42d9239d2a08a2ae5dd26a6aa79afb0abd872ce4276d34d8a&source=constructor"
+						width="100%"
+						height="100%"
+						frameborder="0"
+					></iframe>
 				</div>
 				<mib-spacing type="m"></mib-spacing>
+				<h4>Отдел развития факторинга</h4>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex flex_wrap gap-16">
+					<div class="flex" *ngFor="let item of dataSpb[0].managers">
+						<mib-contact-panel
+							[contactImage]="item.img"
+							[contactPosition]="item.position"
+							[contactName]="item.name"
+							[contactMail]="item.email"
+						></mib-contact-panel>
+					</div>
+				</div>
+				<mib-spacing type="xl2"></mib-spacing>
 			</mib-tab-item>
 		</div>
 	</mib-tab-group>
