@@ -12,12 +12,16 @@ export class NewFooterComponent implements OnInit, OnDestroy {
 
 	private subscriptions = new Subscription()
 
+	public getNewYear: number = 2000
+
 	constructor(public breakpointService: BreakpointObserverService) {}
 
 	ngOnInit(): void {
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
+
+		this.getNewYear = new Date().getFullYear()
 	}
 
 	getMap() {
