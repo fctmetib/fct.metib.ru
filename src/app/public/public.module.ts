@@ -54,6 +54,7 @@ import {TagsGroupModule} from '../shared/ui-kit/tags-group/tags-group.module'
 import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module'
 import {MarkModule} from '../shared/ui-kit/mark/mark.module'
 import {SwipeTextSliderModule} from './components/swipe-text-slider/swipe-text-slider.module'
+import {LeftIconModule} from '../shared/directives/left-icon/left-icon.module'
 
 const routes = [
 	{
@@ -136,7 +137,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		TagsGroupModule,
 		SkeletonModule,
 		MarkModule,
-		SwipeTextSliderModule
+		SwipeTextSliderModule,
+		LeftIconModule
 	],
 	exports: [RouterModule],
 	declarations: [

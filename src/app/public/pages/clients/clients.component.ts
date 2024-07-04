@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core'
+import {Subscription} from 'rxjs'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
 @Component({
 	selector: 'clients',
@@ -6,10 +8,24 @@ import {Component, OnInit} from '@angular/core'
 	templateUrl: 'clients.component.html'
 })
 export class ClientsComponent {
-	constructor() {}
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+
+	constructor(public breakpointService: BreakpointObserverService) {}
+
+	ngOnInit(): void {
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
+	}
 
 	public addAgreement() {
 		console.log('agrement')
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 
 	// public openAstralList(): void {
