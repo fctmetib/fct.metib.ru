@@ -186,9 +186,6 @@
 			<div class="flex flex_center">
 				<mib-counter [filled]="false"> 5 </mib-counter>
 			</div>
-			<div class="flex flex_grow flex_center">
-				<div class="flex line"></div>
-			</div>
 		</div>
 		<ng-template #mobileStap5>
 			<div class="flex">
@@ -227,5 +224,16 @@
 			<mib-spacing type="s"></mib-spacing>
 		</div>
 	</div>
-	<mib-spacing type="xl2"></mib-spacing>
+	<div class="flex flex_column accordion">
+		<mib-spacing type="l"></mib-spacing>
+		<h4>Вопрос - ответ</h4>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-accordion-item
+			*ngFor="let item of questions"
+			[device]="isDesktop ? 'desktop' : 'mobile'"
+			[question]="item.title"
+			[answer]="item.content"
+		></mib-accordion-item>
+	</div>
+	<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 </div>

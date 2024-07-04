@@ -344,6 +344,13 @@ ng g m shared/ui-kit/contracted-forms/contracted-forms --flat  --dry-run
 ng g c shared/ui-kit/contracted-forms/contracted-forms --flat  --skip-tests --dry-run
  //---
 
+ //--- accordion-item
+src\app\shared\ui-kit\accordion-item
+ng g i shared/ui-kit/accordion-item/interfaces/accordion-item.interface  --dry-run
+ng g m shared/ui-kit/accordion-item/accordion-item --flat  --dry-run
+ng g c shared/ui-kit/accordion-item/accordion-item --flat  --skip-tests --dry-run
+ //---
+
  //--- file-cell
 src\app\shared\ui-kit\file-cell
 ng g i shared/ui-kit/file-cell/interfaces/file-cell.interface  --dry-run

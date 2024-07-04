@@ -55,6 +55,7 @@ import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module'
 import {MarkModule} from '../shared/ui-kit/mark/mark.module'
 import {SwipeTextSliderModule} from './components/swipe-text-slider/swipe-text-slider.module'
 import {LeftIconModule} from '../shared/directives/left-icon/left-icon.module'
+import {AccordionItemModule} from '../shared/ui-kit/accordion-item/accordion-item.module'
 
 const routes = [
 	{
@@ -138,7 +139,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		SkeletonModule,
 		MarkModule,
 		SwipeTextSliderModule,
-		LeftIconModule
+		LeftIconModule,
+		AccordionItemModule
 	],
 	exports: [RouterModule],
 	declarations: [

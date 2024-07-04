@@ -12,6 +12,34 @@ export class ClientsComponent {
 
 	private subscriptions = new Subscription()
 
+	questions = [
+		{
+			title: 'Сколько времени рассматривается запрос?',
+			content:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a est ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer maximus elementum ante et blandit. Aliquam erat volutpat. Cras eu tempor neque, vel porttitor libero. Suspendisse mi erat, pharetra in est sed, laoreet facilisis tellus. Aliquam egestas, quam id iaculis viverra, mauris nisl elementum dui, eget venenatis leo justo non magna. Mauris luctus nisl nec mollis tincidunt.'
+		},
+		{
+			title: 'Зачем требуется выпуск электронной подписи?',
+			content:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a est ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer maximus elementum ante et blandit. Aliquam erat volutpat.'
+		},
+		{
+			title: 'Что такое "Фактор - Клиент"?',
+			content:
+				' Cras eu tempor neque, vel porttitor libero. Suspendisse mi erat, pharetra in est sed, laoreet facilisis tellus. Aliquam egestas, quam id iaculis viverra, mauris nisl elementum dui, eget venenatis leo justo non magna. Mauris luctus nisl nec mollis tincidunt.'
+		},
+		{
+			title: 'Когда необходимо платить комиссию за услуги фактора?',
+			content:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a est ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer maximus elementum ante et blandit. Aliquam erat volutpat. Cras eu tempor neque, vel porttitor libero. Suspendisse mi erat, pharetra in est sed, laoreet facilisis tellus. Aliquam egestas, quam id iaculis viverra, mauris nisl elementum dui, eget venenatis leo justo non magna. Mauris luctus nisl nec mollis tincidunt.'
+		},
+		{
+			title: 'Требуется ли согласие покупателя на использование факторинга?',
+			content:
+				' Cras eu tempor neque, vel porttitor libero. Suspendisse mi erat, pharetra in est sed, laoreet facilisis tellus. Aliquam egestas, quam id iaculis viverra, mauris nisl elementum dui, eget venenatis leo justo non magna. Mauris luctus nisl nec mollis tincidunt.'
+		}
+	]
+
 	constructor(public breakpointService: BreakpointObserverService) {}
 
 	ngOnInit(): void {

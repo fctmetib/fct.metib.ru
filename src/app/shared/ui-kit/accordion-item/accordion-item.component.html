@@ -1,0 +1,27 @@
+<div
+	[class.extended]="extended"
+	[ngClass]="classes"
+	class="flex flex_column accordion"
+>
+	<div
+		(click)="extended = !extended"
+		class="flex w-100 flex_column header cursor-pointer"
+	>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex w-100 gap-8">
+			<div class="flex flex_grow">
+				<span class="text text_l text_medium c-bti-primary">
+					{{ question }}
+				</span>
+			</div>
+			<mib-icon btn-icon class="stroke" name="fi_chevron-down"></mib-icon>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+	</div>
+	<div *ngIf="extended" class="flex flex_column">
+		<span class="text text_s c-bti-secondary">
+			{{ answer }}
+		</span>
+		<mib-spacing type="s"></mib-spacing>
+	</div>
+</div>

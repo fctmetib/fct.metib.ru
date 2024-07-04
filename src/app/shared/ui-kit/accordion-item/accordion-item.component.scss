@@ -1,0 +1,31 @@
+@import 'src/styles/helpers/icon_tools';
+
+:host {
+	width: 100%;
+}
+
+.accordion {
+	border-bottom: 1px solid var(--wgr-tertiary);
+
+	&_mobile {
+		& mib-spacing[type='xs'] {
+			height: 12px;
+		}
+		& mib-spacing[type='s'] {
+			height: 16px;
+		}
+	}
+
+	& mib-icon[name='fi_chevron-down'] {
+		@include icon-color(var(--bti-secondary));
+		@include icon-size(26px);
+	}
+
+	&:hover {
+		border-bottom: 1px solid var(--wti-secondary);
+	}
+
+	&.extended {
+		border-bottom: 1px solid var(--bti-primary);
+	}
+}
