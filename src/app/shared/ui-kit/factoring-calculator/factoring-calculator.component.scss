@@ -1,0 +1,26 @@
+:host {
+	width: 100%;
+}
+
+.factoring-calculator {
+	padding: 0 80px;
+	& .banner {
+		padding: 0 72px;
+		background-color: var(--mc-quinary);
+		border-radius: var(--extra-border-radius);
+
+		& .inputs {
+			& mib-input {
+				max-width: 260px;
+			}
+		}
+
+		& .frame-l {
+			padding-left: 96px;
+
+			& span {
+				font-size: 62px;
+			}
+		}
+	}
+}

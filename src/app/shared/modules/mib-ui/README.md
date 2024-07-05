@@ -351,6 +351,13 @@ ng g m shared/ui-kit/accordion-item/accordion-item --flat  --dry-run
 ng g c shared/ui-kit/accordion-item/accordion-item --flat  --skip-tests --dry-run
  //---
 
+ //--- factoring-calculator
+src\app\shared\ui-kit\factoring-calculator
+ng g i shared/ui-kit/factoring-calculator/interfaces/factoring-calculator.interface  --dry-run
+ng g m shared/ui-kit/factoring-calculator/factoring-calculator --flat  --dry-run
+ng g c shared/ui-kit/factoring-calculator/factoring-calculator --flat  --skip-tests --dry-run
+ //---
+
  //--- file-cell
 src\app\shared\ui-kit\file-cell
 ng g i shared/ui-kit/file-cell/interfaces/file-cell.interface  --dry-run
