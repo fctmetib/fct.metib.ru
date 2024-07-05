@@ -18,7 +18,7 @@
 		</div>
 		<mib-spacing type="xs"></mib-spacing>
 	</div>
-	<div *ngIf="extended" class="flex flex_column">
+	<div [@slideInOut]="extended ? 'in' : 'out'" class="flex flex_column">
 		<span class="text text_s c-bti-secondary">
 			{{ answer }}
 		</span>

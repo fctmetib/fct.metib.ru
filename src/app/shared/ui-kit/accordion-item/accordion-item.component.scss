@@ -7,6 +7,11 @@
 .accordion {
 	border-bottom: 1px solid var(--wgr-tertiary);
 
+	& .header {
+		background-color: var(--wgr-primary);
+		z-index: 1;
+	}
+
 	&_mobile {
 		& mib-spacing[type='xs'] {
 			height: 12px;
