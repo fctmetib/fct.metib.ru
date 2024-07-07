@@ -113,6 +113,7 @@
 
 	&.expanded {
 		-webkit-line-clamp: initial;
+		line-clamp: initial;
 		overflow: auto;
 	}
 }
