@@ -1,0 +1,12 @@
+:host {
+	background-color: var(--wgr-secondary);
+	border-radius: 12px;
+}
+
+.rate {
+	padding: 0 38px;
+	& .rate-title {
+		font-size: 18px;
+		text-transform: uppercase;
+	}
+}

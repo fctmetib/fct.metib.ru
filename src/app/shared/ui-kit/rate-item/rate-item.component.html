@@ -1,0 +1,20 @@
+<div class="rate flex flex_column">
+	<mib-spacing type="m"></mib-spacing>
+	<span class="rate-title text text_semi c-bti-primary">{{ title }}</span>
+	<mib-spacing type="xs"></mib-spacing>
+	<span class="text text_m c-bti-secondary">{{ content }}</span>
+	<mib-spacing type="xs"></mib-spacing>
+	<mib-button (press)="onRate.emit()" type="filled-primary"
+		>Рассчитать</mib-button
+	>
+	<mib-spacing type="m"></mib-spacing>
+	<div class="flex flex_column gap-16">
+		<div class="flex flex_column gap-16 list">
+			<ng-content select="[rate-list]"></ng-content>
+		</div>
+		<div class="flex flex_column gap-16 cross">
+			<ng-content select="[extra-list]"></ng-content>
+		</div>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+</div>

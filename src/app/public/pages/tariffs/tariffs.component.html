@@ -13,116 +13,50 @@
 	<div class="flex container-xs">
 		<mib-factoring-calculator></mib-factoring-calculator>
 	</div>
-	<!-- <mib-spacing type="l"></mib-spacing>
-	<div class="tab flex flex_column">
-		<div class="header flex bb">
-			<div class="full flex flex_grow">
-				<p class="text text_medium text_m c-bti-tertiary">Тарифы</p>
-			</div>
-			<div class="flex flex_grow">
-				<p class="text text_medium text_m c-mc-active">Premium</p>
-			</div>
-			<div class="flex flex_grow">
-				<p class="text text_medium text_m c-mc-active">Business</p>
-			</div>
-			<div class="flex flex_grow">
-				<p class="text text_medium text_m c-wc-active">Compromise</p>
-			</div>
-		</div>
-		<div class="body flex flex_column">
-			<div class="flex bb">
-				<div class="flex flex_grow br">
-					<p class="text text_m c-bti-secondary">Отсрочка до 3-х лет</p>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span>
-						<mib-mark></mib-mark>
-					</span>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span>
-						<mib-mark></mib-mark>
-					</span>
-				</div>
-				<div class="flex flex_grow flex_center">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-			</div>
-			<div class="flex bb">
-				<div class="flex flex_grow br">
-					<p class="text text_m c-bti-secondary">Фиксированная комиссия</p>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-				<div class="flex flex_grow flex_center">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-			</div>
-			<div class="flex bb">
-				<div class="flex flex_grow br">
-					<p class="text text_m c-bti-secondary">Льготный период до 30 дней</p>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-				<div class="flex flex_grow flex_center">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-			</div>
-			<div class="flex bb">
-				<div class="flex flex_grow br">
-					<p class="text text_m c-bti-secondary">Страхование задолженности</p>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-				<div class="flex flex_grow flex_center">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-			</div>
-			<div class="flex bb">
-				<div class="flex flex_grow br">
-					<p class="text text_m c-bti-secondary">Финансирование до 100%</p>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-				<div class="flex flex_grow flex_center">
-					<span> <mib-mark [type]="false"></mib-mark> </span>
-				</div>
-			</div>
-			<div class="flex">
-				<div class="flex flex_grow br">
-					<p class="text text_m c-bti-secondary">
-						Финансирование в день отгрузки
-					</p>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span> <mib-mark></mib-mark> </span>
-				</div>
-				<div class="flex flex_grow flex_center br">
-					<span> <mib-mark [type]="false"></mib-mark> </span>
-				</div>
-				<div class="flex flex_grow flex_center">
-					<span> <mib-mark [type]="false"></mib-mark> </span>
-				</div>
+	<mib-spacing type="xl"></mib-spacing>
+	<div class="flex flex_column container">
+		<h3>Наши тарифы на услуги <br />банковского факторинга</h3>
+		<mib-spacing type="l"></mib-spacing>
+		<div class="flex gap-22">
+			<div *ngFor="let item of rates" class="flex flex_grow service-item">
+				<mib-spacing type="m"></mib-spacing>
+				<mib-rate-item
+					[title]="item.title"
+					[content]="item.content"
+					(onRate)="calculate()"
+				>
+					<ng-container rate-list>
+						<div class="flex gap-12" *ngFor="let rate of item.list">
+							<mib-mark></mib-mark>
+							<span class="text text_m c-bti-primary">
+								{{ rate }}
+							</span>
+						</div>
+					</ng-container>
+					<ng-container extra-list>
+						<div class="flex flex_column" *ngFor="let extra of item?.extras">
+							<div class="flex gap-12">
+								<mib-mark [type]="false"></mib-mark>
+								<div class="flex flex_column">
+									<span class="text text_m c-bti-quaternary">
+										{{ extra.title }}
+									</span>
+									<div class="flex gap-3">
+										<span class="text text_xs c-bti-primary">
+											Доступно с тарифа:
+										</span>
+										<span class="text text_xs c-mc-default">{{
+											extra.tariff
+										}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+				</mib-rate-item>
 			</div>
 		</div>
-	</div> -->
-	<!--  -->
+	</div>
 	<mib-spacing type="s"></mib-spacing>
 	<mib-spacing type="xl2"></mib-spacing>
 	<div class="container flex banner flex_justify-center">
@@ -144,91 +78,6 @@
 			alt="our staff"
 		/>
 	</div>
-	<!--  -->
 	<mib-spacing type="xs2"></mib-spacing>
 	<mib-spacing type="xl2"></mib-spacing>
 </div>
-
-<!-- <mib-section-header [backgroundImageUrl]="'../../../../assets/public/image_tarif_promo.png'">
-  <h1>Тарифы</h1>
-  <p class="desc">Выбери сам с чего начнётся наше сотрудничество
-  </p>
-</mib-section-header>
-<mib-section-body [addonHeader]="'Тарифы'">
-  <h2 class="addon-header">
-    Выберите удобный Вам тариф
-  </h2>
-  <div class="items">
-    <mib-card-tariff
-      [theme]="'purp'"
-      [title]="'Premium'"
-      (consultation)="onConsultationHandler()"
-      [items]="['Финансирование до 100%', 'Фиксированная процентная ставка', 'Финансирование в день отгрузки']">
-    </mib-card-tariff>
-    <mib-card-tariff
-      [theme]="'blue'"
-      (consultation)="onConsultationHandler()"
-      [title]="'Business'"
-      [items]="['Отсрочка до 3-х лет', 'Финансирование до 100%', 'Фиксированный комиссионный параметр за каждый день пользования деньгами']">
-    </mib-card-tariff>
-    <mib-card-tariff
-      [theme]="'green'"
-      [title]="'Compromise no risk'"
-      (consultation)="onConsultationHandler()"
-      [items]="['Финансирование до 100%', 'Фиксированная процентная ставка', 'Страхование дебиторской задолженности']">
-    </mib-card-tariff>
-    <mib-card-tariff
-      [theme]="'red'"
-      (consultation)="onConsultationHandler()"
-      [title]="'Compromise'"
-      [items]="['Комиссионный параметр за каждый день пользования деньгами', 'Бесплатный льготный период 30 дней', 'Возможность выбора комфортных условий финансирования за минимальную процентную ставку']">
-    </mib-card-tariff>
-  </div>
-</mib-section-body> -->
-
-<!-- Modals -->
-<!-- <mib-modal id="get-finance" [width]="'350px'" [title]="'Финансирование'">
-  <form class="one-column" [formGroup]="financeForm">
-    <input type="text" formControlName="organization" placeholder="Ваш контрагент">
-    <input type="text" formControlName="name" placeholder="Имя">
-    <input type="phone" prefix="+7" mask="(000) 000-00-00" [showMaskTyped]="true" formControlName="phone"
-      placeholder="Телефон">
-    <input type="email" formControlName="email" placeholder="Электронная почта">
-    <input type="text" formControlName="inn" placeholder="ИНН организации" minlength="10" maxlength="12">
-    <input type="text" formControlName="comment" placeholder="Ваш комментарий">
-    <div class="actions"> -->
-<!--      <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"-->
-<!--        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid() || isRequestLoading"></mib-button>-->
-<!-- </div>
-    <div class="checkbox">
-      <input type="checkbox" id="checkbox" formControlName="isAccept">
-      <label for="checkbox">Пожалуйста подтвердите Ваше согласие на обработку персональных данных</label>
-    </div>
-  </form>
-</mib-modal> -->
-
-<!-- <p-dialog styleClass="mib-modal" header="Получить финансирование" [(visible)]="display" [modal]="true" [style]="{width: '350px'}" [draggable]="false"
-  [resizable]="false">
-  <form class="one-column" [formGroup]="financeForm">
-    <input type="text" formControlName="organization" placeholder="Ваш контрагент"
-      [ngClass]="{'mib-invalid': financeForm.controls['organization'].invalid && financeForm.controls['organization'].touched}">
-    <input type="text" formControlName="name" placeholder="Имя"
-      [ngClass]="{'mib-invalid': financeForm.controls['name'].invalid && financeForm.controls['name'].touched}">
-    <input type="phone" prefix="+7" mask="(000) 000-00-00" [showMaskTyped]="true" formControlName="phone"
-      [ngClass]="{'mib-invalid': financeForm.controls['phone'].invalid && financeForm.controls['phone'].touched}"
-      placeholder="Телефон">
-    <input type="email" formControlName="email" placeholder="Электронная почта"
-      [ngClass]="{'mib-invalid': financeForm.controls['email'].invalid && financeForm.controls['email'].touched}">
-    <input type="text" formControlName="inn" placeholder="ИНН организации" minlength="10" maxlength="12"
-      [ngClass]="{'mib-invalid': financeForm.controls['inn'].invalid && financeForm.controls['inn'].touched}">
-    <input type="text" formControlName="comment" placeholder="Ваш комментарий">
-    <div class="actions"> -->
-<!--      <mib-button [title]="'Отправить заявку'" [theme]="'regular'" [width]="100"-->
-<!--        (click)="sendFinanceRequest('get-finance')" [disable]="!isFinanceFormValid() || isRequestLoading"></mib-button>-->
-<!-- </div>
-    <div class="checkbox">
-      <p-checkbox name="checkbox" binary="true" inputId="checkbox" formControlName="isAccept"></p-checkbox>
-      <label for="checkbox">Пожалуйста подтвердите Ваше согласие на обработку персональных данных</label>
-    </div>
-  </form>
-</p-dialog> -->
