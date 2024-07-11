@@ -1,4 +1,8 @@
-<div class="rate flex flex_column">
+<div
+	[class.extended]="extended"
+	[ngClass]="classes"
+	class="rate flex flex_column"
+>
 	<mib-spacing type="m"></mib-spacing>
 	<span class="rate-title text text_semi c-bti-primary">{{ title }}</span>
 	<mib-spacing type="xs"></mib-spacing>
@@ -8,13 +12,32 @@
 		>Рассчитать</mib-button
 	>
 	<mib-spacing type="m"></mib-spacing>
-	<div class="flex flex_column gap-16">
-		<div class="flex flex_column gap-16 list">
-			<ng-content select="[rate-list]"></ng-content>
+	<div class="rate-feature flex flex_column">
+		<div (click)="extended = !extended" class="flex flex_align-center gap-8">
+			<div class="flex w-100 flex_grow">
+				<span class="text text_xl c-bti-primary"> Парметры тарифа </span>
+			</div>
+			<div class="flex">
+				<mib-icon
+					[@rotate]="extended ? 'rotated' : 'default'"
+					btn-icon
+					class="stroke"
+					name="fi_chevron-down"
+				></mib-icon>
+			</div>
 		</div>
-		<div class="flex flex_column gap-16 cross">
-			<ng-content select="[extra-list]"></ng-content>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div [@slideInOut]="extended ? 'in' : 'out'" class="flex flex_column">
+			<div class="flex flex_column">
+				<div class="flex flex_column gap-16 list">
+					<ng-content select="[desktop-list]"></ng-content>
+				</div>
+			</div>
+			<mib-spacing type="s"></mib-spacing>
 		</div>
+	</div>
+	<div class="desktop-content flex flex_column gap-16">
+		<ng-content select="[mobile-list]"></ng-content>
 	</div>
 	<mib-spacing type="l"></mib-spacing>
 </div>

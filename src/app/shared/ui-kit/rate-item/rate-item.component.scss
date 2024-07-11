@@ -1,3 +1,5 @@
+@import 'src/styles/helpers/icon_tools';
+
 :host {
 	background-color: var(--wgr-secondary);
 	border-radius: 12px;
@@ -6,8 +8,46 @@
 .rate {
 	padding: 0 38px;
 	max-width: 364px;
+
 	& .rate-title {
 		font-size: 18px;
 		text-transform: uppercase;
+	}
+
+	& .rate-feature {
+		display: none;
+	}
+
+	& .desktop-content {
+		display: flex;
+	}
+
+	&_mobile {
+		& .rate-feature {
+			display: flex;
+		}
+
+		& .desktop-content {
+			display: none;
+		}
+	}
+
+	& mib-icon[name='fi_chevron-down'] {
+		@include icon-color(var(--bti-secondary));
+		@include icon-size(26px);
+	}
+
+	@media (max-width: 576px) {
+		& mib-spacing[type='m'] {
+			height: 24px;
+		}
+
+		& mib-spacing[type='xs'] {
+			height: 12px;
+		}
+
+		& mib-spacing[type='l'] {
+			height: 32px;
+		}
 	}
 }
