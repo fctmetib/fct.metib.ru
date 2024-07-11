@@ -7,20 +7,87 @@
 		margin: 0 auto;
 	}
 	& .banner {
-		max-width: 1132px;
-		height: 128px;
-		border-radius: 16px;
-		background-color: var(--mc-quinary);
-		padding: 16px 0;
+		max-width: 1196px;
 		position: relative;
 
 		& .banner-wrap {
-			padding: 0 286px;
+			height: 128px;
+			padding: 16px 286px;
+			background-color: var(--mc-quinary);
+			border-radius: 16px;
 		}
 	}
 	& img {
 		position: absolute;
 		right: 200px;
 		bottom: 0;
+	}
+
+	@media (max-width: 1100px) {
+		& img {
+			right: 7%;
+		}
+	}
+
+	@media (max-width: 992px) {
+		& .banner {
+			& .banner-wrap {
+				padding: 16px 143px;
+			}
+		}
+	}
+
+	@media (max-width: 768px) {
+		& .card-mobile {
+			flex-direction: column;
+		}
+
+		& mib-spacing[type='s'] {
+			display: none;
+		}
+
+		& .banner {
+			& .banner-wrap h4 {
+				text-align: center;
+			}
+
+			& .link-wrap {
+				justify-content: center;
+			}
+
+			& img {
+				display: none;
+			}
+		}
+	}
+
+	@media (max-width: 576px) {
+		width: 100%;
+		padding: 0;
+
+		& .container {
+			padding: 0;
+
+			& h3 {
+				padding: 0 16px;
+			}
+
+			& .card-mobile {
+				padding: 0 16px;
+			}
+		}
+
+		& .banner {
+			padding: 0 16px;
+			& .banner-wrap {
+				padding: 16px 0;
+				height: auto;
+			}
+		}
+
+		& h2,
+		.tariffs-sub {
+			padding: 0 16px;
+		}
 	}
 }

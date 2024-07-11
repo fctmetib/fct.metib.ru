@@ -1,11 +1,17 @@
-import {Component} from '@angular/core'
+import {Component, OnDestroy, OnInit} from '@angular/core'
+import {Subscription} from 'rxjs'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
 @Component({
 	selector: 'tariffs.html',
 	styleUrls: ['./tariffs.component.scss'],
 	templateUrl: './tariffs.component.html'
 })
-export class TariffsComponent {
+export class TariffsComponent implements OnInit, OnDestroy {
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+
 	public rates = [
 		{
 			title: 'Premium',
@@ -56,9 +62,19 @@ export class TariffsComponent {
 		}
 	]
 
-	constructor() {}
+	constructor(public breakpointService: BreakpointObserverService) {}
+
+	ngOnInit(): void {
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
+	}
 
 	public calculate() {
 		console.log('calculate>>')
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }

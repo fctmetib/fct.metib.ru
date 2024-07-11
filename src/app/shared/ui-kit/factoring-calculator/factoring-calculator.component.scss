@@ -23,4 +23,69 @@
 			}
 		}
 	}
+
+	@media (max-width: 992px) {
+		padding: 0 32px;
+	}
+
+	@media (max-width: 768px) {
+		padding: 0;
+
+		& .banner {
+			& .wrap {
+				flex-direction: column;
+
+				& mib-spacing[type='xl'] {
+					height: 48px;
+				}
+			}
+
+			& .frame-l {
+				padding: 0;
+
+				& mib-spacing[type='xs'] {
+					height: 12px;
+				}
+
+				& span {
+					font-size: 52px;
+				}
+
+				& mib-spacing[type='s'] {
+					height: 16px;
+				}
+
+				& mib-button[size='l'] {
+					width: 100%;
+				}
+			}
+
+			& mib-spacing[type='xl2'] {
+				height: 64px;
+			}
+		}
+	}
+
+	@media (max-width: 576px) {
+		padding: 0;
+
+		& .banner {
+			padding: 0 16px;
+			border-radius: 0;
+
+			& .wrap {
+				flex-direction: column;
+
+				& mib-spacing[type='xl'] {
+					height: 48px;
+				}
+			}
+
+			& .inputs {
+				& mib-input {
+					max-width: 100%;
+				}
+			}
+		}
+	}
 }

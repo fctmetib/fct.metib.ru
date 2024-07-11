@@ -1,24 +1,25 @@
 <div class="tariffs flex flex_column">
-	<mib-spacing type="xl"></mib-spacing>
+	<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
 	<div class="flex flex_column container">
-		<h3>Калькулятор факторинга</h3>
+		<h2>Калькулятор факторинга</h2>
 		<mib-spacing type="xs2"></mib-spacing>
-		<p class="text text_l c-bti-secondary">
+		<p class="tariffs-sub text text_l c-bti-secondary">
 			С помощью онлайн калькулятора вы можете рассчитать примерную стоимость
+			<br />
 			услуг факторинга, ставку и другие условия.<br />Отправьте заявку, чтобы
 			узнать подробнее.
 		</p>
-		<mib-spacing type="xl"></mib-spacing>
+		<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
 	</div>
 	<div class="flex container-xs">
 		<mib-factoring-calculator></mib-factoring-calculator>
 	</div>
-	<mib-spacing type="xl"></mib-spacing>
+	<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
 	<div class="flex flex_column container">
 		<h3>Наши тарифы на услуги <br />банковского факторинга</h3>
-		<mib-spacing type="l"></mib-spacing>
-		<div class="flex gap-22">
-			<div *ngFor="let item of rates" class="flex flex_grow service-item">
+		<mib-spacing type="{{ isDesktop ? 'l' : 'm' }}"></mib-spacing>
+		<div class="card-mobile flex gap-22">
+			<div *ngFor="let item of rates" class="flex">
 				<mib-spacing type="m"></mib-spacing>
 				<mib-rate-item
 					[title]="item.title"
@@ -67,9 +68,11 @@
 					Постараемся помочь
 				</h4>
 				<mib-spacing type="xs2"></mib-spacing>
-				<mib-link size="l" type="ghost-primary">
-					Получить консультацию
-				</mib-link>
+				<div class="link-wrap flex">
+					<mib-link size="l" type="ghost-primary">
+						Получить консультацию
+					</mib-link>
+				</div>
 			</div>
 		</div>
 		<img

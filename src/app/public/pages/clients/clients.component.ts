@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, OnDestroy, OnInit} from '@angular/core'
 import {Subscription} from 'rxjs'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
@@ -7,7 +7,7 @@ import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoi
 	styleUrls: ['./clients.component.scss'],
 	templateUrl: 'clients.component.html'
 })
-export class ClientsComponent {
+export class ClientsComponent implements OnInit, OnDestroy {
 	public isDesktop: boolean = false
 
 	private subscriptions = new Subscription()
