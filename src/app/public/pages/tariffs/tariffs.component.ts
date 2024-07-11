@@ -25,7 +25,7 @@ export class TariffsComponent implements OnInit, OnDestroy {
 				'Финансирование до 100%',
 				'Финансирование в день отгрузки'
 			],
-			extras: [
+			extra: [
 				{title: 'Комиссия за каждый день', tariff: 'Compromise'},
 				{title: 'Защита от риска неплатежа', tariff: 'Compromise No risk'}
 			]
@@ -42,7 +42,7 @@ export class TariffsComponent implements OnInit, OnDestroy {
 				'Финансирование в день отгрузки',
 				'Комиссия за каждый день'
 			],
-			extras: [
+			extra: [
 				{title: 'Защита от риска неплатежа', tariff: 'Compromise No risk'}
 			]
 		},

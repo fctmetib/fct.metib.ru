@@ -358,6 +358,13 @@ ng g m shared/ui-kit/rate-item/rate-item --flat  --dry-run
 ng g c shared/ui-kit/rate-item/rate-item --flat  --skip-tests --dry-run
  //---
 
+ //--- rate-card
+src\app\shared\ui-kit\rate-card
+ng g i shared/ui-kit/rate-card/interfaces/rate-card.interface  --dry-run
+ng g m shared/ui-kit/rate-card/rate-card --flat  --dry-run
+ng g c shared/ui-kit/rate-card/rate-card --flat  --skip-tests --dry-run
+ //---
+
  //--- factoring-calculator
 src\app\shared\ui-kit\factoring-calculator
 ng g i shared/ui-kit/factoring-calculator/interfaces/factoring-calculator.interface  --dry-run

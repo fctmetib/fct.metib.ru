@@ -18,73 +18,22 @@
 	<div class="flex flex_column container">
 		<h3>Наши тарифы на услуги <br />банковского факторинга</h3>
 		<mib-spacing type="{{ isDesktop ? 'l' : 'm' }}"></mib-spacing>
-		<div class="card-mobile flex gap-22">
-			<div *ngFor="let item of rates" class="flex">
-				<mib-spacing type="m"></mib-spacing>
-				<mib-rate-item
-					[title]="item.title"
-					[content]="item.content"
-					[device]="isDesktop ? 'desktop' : 'mobile'"
-					(onRate)="calculate()"
-				>
-					<ng-container desktop-list>
-						<div class="flex gap-12" *ngFor="let rate of item.list">
-							<mib-mark></mib-mark>
-							<span class="text text_m c-bti-primary">
-								{{ rate }}
-							</span>
-						</div>
-						<div class="flex flex_column" *ngFor="let extra of item?.extras">
-							<div class="flex gap-12">
-								<mib-mark [type]="false"></mib-mark>
-								<div class="flex flex_column">
-									<span class="text text_m c-bti-quaternary">
-										{{ extra.title }}
-									</span>
-									<div class="flex gap-3">
-										<span class="text text_xs c-bti-primary">
-											Доступно с тарифа:
-										</span>
-										<span class="text text_xs c-mc-default">{{
-											extra.tariff
-										}}</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</ng-container>
-					<ng-container mobile-list>
-						<div class="flex gap-12" *ngFor="let rate of item.list">
-							<mib-mark></mib-mark>
-							<span class="text text_m c-bti-primary">
-								{{ rate }}
-							</span>
-						</div>
-						<div class="flex flex_column" *ngFor="let extra of item?.extras">
-							<div class="flex gap-12">
-								<mib-mark [type]="false"></mib-mark>
-								<div class="flex flex_column">
-									<span class="text text_m c-bti-quaternary">
-										{{ extra.title }}
-									</span>
-									<div class="flex gap-3">
-										<span class="text text_xs c-bti-primary">
-											Доступно с тарифа:
-										</span>
-										<span class="text text_xs c-mc-default">{{
-											extra.tariff
-										}}</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</ng-container>
-				</mib-rate-item>
+		<div class="flex">
+			<div class="card flex gap-22">
+				<ng-container *ngFor="let item of rates" class="flex">
+					<mib-rate-card
+						[title]="item?.title"
+						[description]="item?.content"
+						[features]="item?.list"
+						[extras]="item?.extra"
+						(onRate)="calculate()"
+					></mib-rate-card>
+				</ng-container>
 			</div>
 		</div>
 	</div>
 	<mib-spacing type="s"></mib-spacing>
-	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="{{ isDesktop ? 'xl2' : 'm' }}"></mib-spacing>
 	<div class="container flex banner flex_justify-center">
 		<div class="banner-wrap flex w-100 flex_align-center">
 			<div class="flex flex_column flex_grow">
@@ -106,6 +55,6 @@
 			alt="our staff"
 		/>
 	</div>
-	<mib-spacing type="xs2"></mib-spacing>
-	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="{{ isDesktop ? 'xs2' : 'm' }}"></mib-spacing>
+	<mib-spacing type="{{ isDesktop ? 'xl2' : 'l' }}"></mib-spacing>
 </div>

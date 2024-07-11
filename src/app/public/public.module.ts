@@ -52,12 +52,11 @@ import {LabelModule} from '../shared/directives/label/label.module'
 import {InputModule} from '../shared/ui-kit/input/input.module'
 import {TagsGroupModule} from '../shared/ui-kit/tags-group/tags-group.module'
 import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module'
-import {MarkModule} from '../shared/ui-kit/mark/mark.module'
 import {SwipeTextSliderModule} from './components/swipe-text-slider/swipe-text-slider.module'
 import {LeftIconModule} from '../shared/directives/left-icon/left-icon.module'
 import {AccordionItemModule} from '../shared/ui-kit/accordion-item/accordion-item.module'
 import {FactoringCalculatorModule} from '../shared/ui-kit/factoring-calculator/factoring-calculator.module'
-import {RateItemModule} from '../shared/ui-kit/rate-item/rate-item.module'
+import {RateCardModule} from '../shared/ui-kit/rate-card/rate-card.module'
 
 const routes = [
 	{
@@ -139,12 +138,11 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		LabelModule,
 		TagsGroupModule,
 		SkeletonModule,
-		MarkModule,
 		SwipeTextSliderModule,
 		LeftIconModule,
 		AccordionItemModule,
 		FactoringCalculatorModule,
-		RateItemModule
+		RateCardModule
 	],
 	exports: [RouterModule],
 	declarations: [
