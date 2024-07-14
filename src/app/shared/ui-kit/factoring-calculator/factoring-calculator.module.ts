@@ -5,6 +5,7 @@ import {SpacingModule} from '../spacing/spacing.module'
 import {ButtonModule} from '../button/button.module'
 import {InputModule} from '../input/input.module'
 import {LabelModule} from '../../directives/label/label.module'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
 	declarations: [FactoringCalculatorComponent],
@@ -13,7 +14,9 @@ import {LabelModule} from '../../directives/label/label.module'
 		SpacingModule,
 		ButtonModule,
 		InputModule,
-		LabelModule
+		LabelModule,
+		// FormsModule,
+		ReactiveFormsModule
 	],
 	exports: [FactoringCalculatorComponent]
 })

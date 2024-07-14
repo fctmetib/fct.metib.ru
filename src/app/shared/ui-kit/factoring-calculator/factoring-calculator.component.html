@@ -3,54 +3,103 @@
 		<div class="flex w-100 wrap">
 			<div class="flex flex_grow flex_column">
 				<mib-spacing type="xl"></mib-spacing>
-				<div class="flex flex_column inputs">
-					<div class="flex label">
-						<span class="text text_m c-bti-tertiary">
-							Размер финансирования
-						</span>
+				<form [formGroup]="form">
+					<div class="flex flex_column inputs">
+						<div class="flex label">
+							<span class="text text_m c-bti-tertiary">
+								Размер финансирования
+							</span>
+						</div>
+						<mib-input class="flex_grow pt-4">
+							<input
+								type="number"
+								id="finAmountNumber"
+								formControlName="finAmountNumber"
+								size="l"
+								value="200 000 ₽"
+								styleType="floating"
+								mibInput
+							/>
+						</mib-input>
+						<mib-spacing type="xs"></mib-spacing>
+						<input
+							type="range"
+							id="finAmountRange"
+							min="0"
+							max="20000000"
+							step="1000000"
+							formControlName="finAmountRange"
+							class="styled-range"
+						/>
 					</div>
-					<mib-input class="flex_grow pt-4">
-						<input size="l" value="200 000 ₽" styleType="floating" mibInput />
-					</mib-input>
-					<mib-spacing type="xs"></mib-spacing>
-					<p style="height: 39px; background-color: #e9e9e9">calc-slider</p>
-				</div>
-				<mib-spacing type="m"></mib-spacing>
-				<!--  -->
-				<div class="flex flex_column inputs">
-					<div class="flex label">
-						<span class="text text_m c-bti-tertiary"> На сколько дней </span>
+					<mib-spacing type="m"></mib-spacing>
+					<div class="flex flex_column inputs">
+						<div class="flex label">
+							<span class="text text_m c-bti-tertiary"> На сколько дней </span>
+						</div>
+						<mib-input class="flex_grow pt-4">
+							<input
+								type="number"
+								id="defermentPeriodNumber"
+								min="1"
+								max="180"
+								formControlName="defermentPeriodNumber"
+								size="l"
+								value="35 дней"
+								styleType="floating"
+								mibInput
+							/>
+						</mib-input>
+						<mib-spacing type="xs"></mib-spacing>
+						<input
+							type="range"
+							id="defermentPeriodRange"
+							min="1"
+							max="180"
+							formControlName="defermentPeriodRange"
+							class="styled-range"
+						/>
 					</div>
-					<mib-input class="flex_grow pt-4">
-						<input size="l" value="35 дней" styleType="floating" mibInput />
-					</mib-input>
-					<mib-spacing type="xs"></mib-spacing>
-					<p style="height: 39px; background-color: #e9e9e9">calc-slider</p>
-				</div>
-				<mib-spacing type="m"></mib-spacing>
-				<!--  -->
-				<!--  -->
-				<div class="flex flex_column inputs">
-					<div class="flex label">
-						<span class="text text_m c-bti-tertiary">
-							Среднемесячный оборот компании
-						</span>
+					<mib-spacing type="m"></mib-spacing>
+					<div class="flex flex_column inputs">
+						<div class="flex label">
+							<span class="text text_m c-bti-tertiary">
+								Среднемесячный оборот компании
+							</span>
+						</div>
+						<mib-input class="flex_grow pt-4">
+							<input
+								type="number"
+								id="monthlyTurnoverNumber"
+								formControlName="monthlyTurnoverNumber"
+								size="l"
+								value="3 200 000 ₽"
+								styleType="floating"
+								mibInput
+							/>
+						</mib-input>
+						<mib-spacing type="xs"></mib-spacing>
+						<input
+							type="range"
+							id="monthlyTurnoverRange"
+							min="0"
+							max="50000000"
+							step="1000000"
+							formControlName="monthlyTurnoverRange"
+							class="styled-range"
+						/>
 					</div>
-					<mib-input class="flex_grow pt-4">
-						<input size="l" value="3 200 000 ₽" styleType="floating" mibInput />
-					</mib-input>
-					<mib-spacing type="xs"></mib-spacing>
-					<p style="height: 39px; background-color: #e9e9e9">calc-slider</p>
-				</div>
+				</form>
 			</div>
-			<!--  -->
 			<div class="flex flex_grow flex_column">
 				<mib-spacing type="xl"></mib-spacing>
 				<div class="flex frame-l flex_column">
 					<div class="flex flex_column">
 						<h3>Ваш процент</h3>
 						<mib-spacing type="xs"></mib-spacing>
-						<span class="text text_semi c-mc-default">38,04%</span>
+						<span class="text text_semi c-mc-default"
+							>{{ result | number : '1.2-2' }}%</span
+						>
 						<mib-spacing type="xs2"></mib-spacing>
 						<p class="text text_xl c-bti-secondary">
 							Комиссия за 12 календарных дней

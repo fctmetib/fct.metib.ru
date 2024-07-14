@@ -1,10 +1,81 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core'
+import {FormBuilder, FormGroup} from '@angular/forms'
 
 @Component({
-  selector: 'mib-factoring-calculator',
-  templateUrl: './factoring-calculator.component.html',
-  styleUrls: ['./factoring-calculator.component.scss']
+	selector: 'mib-factoring-calculator',
+	templateUrl: './factoring-calculator.component.html',
+	styleUrls: ['./factoring-calculator.component.scss']
 })
-export class FactoringCalculatorComponent {
+export class FactoringCalculatorComponent implements OnInit {
+	form: FormGroup
+	result: number = 0
 
+	constructor(private fb: FormBuilder) {}
+
+	ngOnInit() {
+		this.form = this.fb.group({
+			finAmountNumber: [0],
+			finAmountRange: [0],
+			monthlyTurnoverNumber: [1],
+			monthlyTurnoverRange: [1],
+			defermentPeriodNumber: [2],
+			defermentPeriodRange: [2]
+		})
+
+		this.form.valueChanges.subscribe(() => this.calculate())
+
+		this.syncInputs('finAmount')
+		this.syncInputs('monthlyTurnover')
+		this.syncInputs('defermentPeriod')
+	}
+
+	syncInputs(controlPrefix: string) {
+		const numberControl = this.form.get(`${controlPrefix}Number`)
+		const rangeControl = this.form.get(`${controlPrefix}Range`)
+
+		numberControl?.valueChanges.subscribe(value => {
+			if (rangeControl?.value !== value) {
+				rangeControl?.setValue(value, {emitEvent: false})
+			}
+			this.updateRangeBackground(controlPrefix)
+		})
+
+		rangeControl?.valueChanges.subscribe(value => {
+			if (numberControl?.value !== value) {
+				numberControl?.setValue(value, {emitEvent: false})
+			}
+			this.updateRangeBackground(controlPrefix)
+		})
+	}
+
+	calculate() {
+		const finAmount = this.form.get('finAmountNumber')?.value
+		const monthlyTurnover = this.form.get('monthlyTurnoverNumber')?.value
+		const defermentPeriod = this.form.get('defermentPeriodNumber')?.value
+
+		let effectiveRate: number
+
+		if (monthlyTurnover <= 10000000) {
+			effectiveRate = 19.4
+		} else if (monthlyTurnover >= 10000000 && monthlyTurnover <= 49999999) {
+			effectiveRate = 21
+		} else {
+			effectiveRate = 23.65
+		}
+
+		const dailyRate = effectiveRate / 365
+		this.result = +(dailyRate * 0.8 * defermentPeriod).toFixed(2)
+	}
+
+	updateRangeBackground(controlPrefix: string) {
+		const rangeControl = this.form.get(`${controlPrefix}Range`)
+		const rangeInput = document.getElementById(
+			`${controlPrefix}Range`
+		) as HTMLInputElement
+		if (rangeInput) {
+			const max = rangeInput.max ? +rangeInput.max : 100
+			const percentage = (rangeControl?.value / max) * 100
+			rangeInput.style.setProperty('--range-thumb-position', `${percentage}%`)
+		}
+	}
 }
