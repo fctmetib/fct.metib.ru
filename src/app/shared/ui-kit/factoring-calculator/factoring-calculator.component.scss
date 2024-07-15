@@ -12,6 +12,7 @@
 		& .inputs {
 			& .styled-range {
 				-webkit-appearance: none;
+				-moz-appearance: none;
 				appearance: none;
 				width: 100%;
 				height: 8px;
@@ -38,7 +39,7 @@
 				content: '';
 				height: 8px;
 				width: 100%;
-				background: var(--wgr-tertiary);
+				background-color: var(--wgr-tertiary);
 				position: absolute;
 				top: 0;
 				left: 0;
@@ -55,8 +56,9 @@
 				position: absolute;
 				top: 0;
 				left: 0;
-				border-radius: 10px;
 				z-index: -1;
+				border-top-left-radius: 10px;
+				border-bottom-left-radius: 10px;
 			}
 
 			& .styled-range::-webkit-slider-thumb {
@@ -70,17 +72,16 @@
 				border-radius: 50%;
 				position: relative;
 				top: -4px;
-				transition: background-color 0.3s;
 			}
 
 			& .styled-range::-moz-range-thumb {
 				width: 16px;
 				height: 16px;
-				background-color: var(--mc-quaternary);
+				background: var(--mc-quaternary);
+				border: 3px solid var(--mc-default);
 				cursor: pointer;
 				border-radius: 50%;
 				position: relative;
-				transition: background-color 0.3s;
 			}
 
 			& .styled-range::-webkit-slider-thumb:hover {
@@ -93,6 +94,20 @@
 				width: 16px;
 				height: 16px;
 				background-color: var(--wti-primary);
+			}
+
+			/* Firefox-specific styling */
+			.styled-range::-moz-range-progress {
+				background-color: var(--mc-default);
+				height: 8px;
+				border-top-left-radius: 10px;
+				border-bottom-left-radius: 10px;
+			}
+			.styled-range::-moz-range-track {
+				background-color: var(--wgr-tertiary);
+				height: 8px;
+				border-top-right-radius: 10px;
+				border-bottom-right-radius: 10px;
 			}
 
 			& mib-input {

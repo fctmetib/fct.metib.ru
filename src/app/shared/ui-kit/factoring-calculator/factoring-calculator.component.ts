@@ -14,12 +14,12 @@ export class FactoringCalculatorComponent implements OnInit {
 
 	ngOnInit() {
 		this.form = this.fb.group({
-			finAmountNumber: [0],
-			finAmountRange: [0],
-			monthlyTurnoverNumber: [1],
-			monthlyTurnoverRange: [1],
-			defermentPeriodNumber: [2],
-			defermentPeriodRange: [2]
+			finAmountNumber: [11800000],
+			finAmountRange: [11800000],
+			monthlyTurnoverNumber: [15000000],
+			monthlyTurnoverRange: [15000000],
+			defermentPeriodNumber: [49],
+			defermentPeriodRange: [49]
 		})
 
 		this.form.valueChanges.subscribe(() => this.calculate())
@@ -27,6 +27,12 @@ export class FactoringCalculatorComponent implements OnInit {
 		this.syncInputs('finAmount')
 		this.syncInputs('monthlyTurnover')
 		this.syncInputs('defermentPeriod')
+
+		this.updateRangeBackground('finAmount')
+		this.updateRangeBackground('monthlyTurnover')
+		this.updateRangeBackground('defermentPeriod')
+
+		this.calculate()
 	}
 
 	syncInputs(controlPrefix: string) {
@@ -64,7 +70,8 @@ export class FactoringCalculatorComponent implements OnInit {
 		}
 
 		const dailyRate = effectiveRate / 365
-		this.result = +(dailyRate * 0.8 * defermentPeriod).toFixed(2)
+		const calculatedResult = dailyRate * 0.8 * defermentPeriod
+		this.result = +Math.min(calculatedResult, 100).toFixed(2)
 	}
 
 	updateRangeBackground(controlPrefix: string) {
@@ -74,8 +81,12 @@ export class FactoringCalculatorComponent implements OnInit {
 		) as HTMLInputElement
 		if (rangeInput) {
 			const max = rangeInput.max ? +rangeInput.max : 100
-			const percentage = (rangeControl?.value / max) * 100
-			rangeInput.style.setProperty('--range-thumb-position', `${percentage}%`)
+			const value = Math.min(rangeControl?.value, max)
+			const percentage = (value / max) * 100
+			rangeInput.style.setProperty(
+				'--range-thumb-position',
+				`${Math.ceil(percentage)}%`
+			)
 		}
 	}
 }
