@@ -6,6 +6,8 @@ import {ButtonModule} from '../button/button.module'
 import {InputModule} from '../input/input.module'
 import {LabelModule} from '../../directives/label/label.module'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import {RightIconModule} from '../../directives/right-icon/right-icon.module'
+import {NgxMaskModule} from 'ngx-mask'
 
 @NgModule({
 	declarations: [FactoringCalculatorComponent],
@@ -15,7 +17,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 		ButtonModule,
 		InputModule,
 		LabelModule,
-		// FormsModule,
+		RightIconModule,
+		NgxMaskModule,
 		ReactiveFormsModule
 	],
 	exports: [FactoringCalculatorComponent]

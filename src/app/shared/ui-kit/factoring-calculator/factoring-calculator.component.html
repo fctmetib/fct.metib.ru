@@ -11,10 +11,12 @@
 							</span>
 						</div>
 						<mib-input class="flex_grow pt-4">
+							<p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
 							<input
-								type="number"
+								type="text"
 								id="finAmountNumber"
 								formControlName="finAmountNumber"
+								mask="separator"
 								size="l"
 								value="200 000 ₽"
 								styleType="floating"
@@ -27,10 +29,38 @@
 							id="finAmountRange"
 							min="0"
 							max="20000000"
-							step="1000000"
+							step="100000"
 							formControlName="finAmountRange"
 							class="styled-range"
 						/>
+						<div class="flex flex_column label-area">
+							<mib-spacing type="xs"></mib-spacing>
+							<div class="flex gap-10">
+								<div class="flex flex_grow left-label">
+									<span class="text text_s c-bti-tertiary text-clamp">0 ₽</span>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>5 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>10 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>15 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-end right-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>20 млн ₽</span
+									>
+								</div>
+							</div>
+						</div>
 					</div>
 					<mib-spacing type="m"></mib-spacing>
 					<div class="flex flex_column inputs">
@@ -39,7 +69,7 @@
 						</div>
 						<mib-input class="flex_grow pt-4">
 							<input
-								type="number"
+								type="text"
 								id="defermentPeriodNumber"
 								min="1"
 								max="180"
@@ -59,6 +89,17 @@
 							formControlName="defermentPeriodRange"
 							class="styled-range"
 						/>
+						<div class="flex flex_column label-area">
+							<mib-spacing type="xs"></mib-spacing>
+							<div class="flex gap-10">
+								<div class="flex flex_grow left-label">
+									<span class="text text_s c-bti-tertiary">1 день</span>
+								</div>
+								<div class="flex flex_grow flex_justify-end right-label">
+									<span class="text text_s c-bti-tertiary">180+ дней</span>
+								</div>
+							</div>
+						</div>
 					</div>
 					<mib-spacing type="m"></mib-spacing>
 					<div class="flex flex_column inputs">
@@ -68,11 +109,13 @@
 							</span>
 						</div>
 						<mib-input class="flex_grow pt-4">
+							<p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
 							<input
-								type="number"
+								type="text"
 								id="monthlyTurnoverNumber"
 								formControlName="monthlyTurnoverNumber"
 								size="l"
+								mask="separator"
 								value="3 200 000 ₽"
 								styleType="floating"
 								mibInput
@@ -88,6 +131,34 @@
 							formControlName="monthlyTurnoverRange"
 							class="styled-range"
 						/>
+						<div class="flex flex_column label-area">
+							<mib-spacing type="xs"></mib-spacing>
+							<div class="flex gap-10">
+								<div class="flex flex_grow left-label">
+									<span class="text text_s c-bti-tertiary text-clamp">0 ₽</span>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>15 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>25 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>35 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-end right-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>50+ млн ₽</span
+									>
+								</div>
+							</div>
+						</div>
 					</div>
 				</form>
 			</div>

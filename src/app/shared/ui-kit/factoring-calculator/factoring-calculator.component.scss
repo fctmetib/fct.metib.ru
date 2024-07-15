@@ -42,6 +42,8 @@
 				position: absolute;
 				top: 0;
 				left: 0;
+				border-top-right-radius: 10px;
+				border-bottom-right-radius: 10px;
 				z-index: -1;
 			}
 
@@ -53,8 +55,8 @@
 				position: absolute;
 				top: 0;
 				left: 0;
-				z-index: -1;
 				border-radius: 10px;
+				z-index: -1;
 			}
 
 			& .styled-range::-webkit-slider-thumb {
