@@ -163,6 +163,7 @@ export class LandingComponent implements OnInit, OnDestroy {
 	}
 
 	public onChange($num) {
+		console.log('$num :>> ', $num)
 		this.imgNumber = $num
 		this.currentProductsTab = $num
 	}

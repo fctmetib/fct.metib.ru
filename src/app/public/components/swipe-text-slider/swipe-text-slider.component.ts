@@ -9,8 +9,8 @@ import * as Hammer from 'hammerjs'
 export class SwipeTextSliderComponent implements AfterViewInit {
 	public sliderTextData: {title: string; description: string}[] = [
 		{title: 'Менее 15 минут', description: 'на решение по сделке'},
-		{title: 'От 12% в месяц', description: 'ставка по задолженности'},
-		{title: 'До 210 дней', description: 'отсрочка платежа'}
+		{title: 'От 0,05% в день', description: 'ставка за финансирование'},
+		{title: 'Более 180 дней', description: 'отсрочка платежа'}
 	]
 
 	public currentIdx: number = 0
