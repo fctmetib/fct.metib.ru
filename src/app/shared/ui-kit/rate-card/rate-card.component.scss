@@ -21,6 +21,10 @@
 
 	& .mobile-content {
 		display: none;
+
+		& mib-icon.rotate {
+			transform: rotate(180deg);
+		}
 	}
 
 	& .rate-mobile {

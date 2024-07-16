@@ -14,8 +14,8 @@ export class FactoringCalculatorComponent implements OnInit {
 
 	ngOnInit() {
 		this.form = this.fb.group({
-			finAmountNumber: [11800000],
-			finAmountRange: [11800000],
+			finAmountNumber: [1400000],
+			finAmountRange: [1400000],
 			monthlyTurnoverNumber: [15000000],
 			monthlyTurnoverRange: [15000000],
 			defermentPeriodNumber: [49],

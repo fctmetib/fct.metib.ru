@@ -48,53 +48,58 @@
 		</div>
 	</ng-container>
 	<div class="flex flex_column">
-		<div
-			(click)="extended = !extended"
-			class="mobile-content flex flex_align-center gap-8"
-		>
-			<div class="flex w-100 flex_grow">
-				<span class="text text_xl c-bti-primary"> Парметры тарифа </span>
-			</div>
-			<div class="flex gap-16">
+		<div (click)="extended = !extended" class="mobile-content flex_column flex">
+			<div class="flex flex_align-center gap-16">
+				<div class="flex w-100 flex_grow">
+					<span class="text text_xl c-bti-primary"> Парметры тарифа </span>
+				</div>
 				<mib-icon
-					[@rotate]="extended ? 'rotated' : 'default'"
+					style="transition: all 0.3s ease-out"
+					[ngClass]="{rotate: extended}"
 					btn-icon
 					class="stroke"
 					name="fi_chevron-down"
 				></mib-icon>
 			</div>
+			<mib-spacing class="mobile-s" type="xs2"></mib-spacing>
 		</div>
-		<mib-spacing class="mobile-s" type="xs2"></mib-spacing>
 	</div>
 	<div class="flex flex_column">
 		<div
 			[@slideInOut]="extended && !isDesktop ? 'in' : 'out'"
-			class="rate-mobile flex flex_column gap-16"
+			class="flex flex_column"
 		>
-			<div class="flex gap-12" *ngFor="let feature of features">
-				<mib-mark></mib-mark>
-				<span class="text text_m c-bti-primary">
-					{{ feature }}
-				</span>
-			</div>
-			<div *ngFor="let extra of extras" class="flex flex_column">
-				<div class="flex gap-12">
-					<mib-mark [type]="false"></mib-mark>
-					<div class="flex flex_column">
-						<span class="text text_m c-bti-quaternary">
-							{{ extra.title }}
+			<mib-spacing type="xs2"></mib-spacing>
+			<div class="flex flex_column">
+				<div class="flex flex_column gap-16 list">
+					<div class="flex gap-12" *ngFor="let feature of features">
+						<mib-mark></mib-mark>
+						<span class="text text_m c-bti-primary">
+							{{ feature }}
 						</span>
-						<div class="flex gap-3">
-							<span class="text text_xs c-bti-primary">
-								Доступно с тарифа:
-							</span>
-							<span class="text text_xs c-mc-default">{{ extra.tariff }}</span>
+					</div>
+					<div class="flex flex_column" *ngFor="let extra of extras">
+						<div class="flex gap-12">
+							<mib-mark [type]="false"></mib-mark>
+							<div class="flex flex_column">
+								<span class="text text_m c-bti-quaternary">
+									{{ extra.title }}
+								</span>
+								<div class="flex gap-3">
+									<span class="text text_xs c-bti-primary">
+										Доступно с тарифа:
+									</span>
+									<span class="text text_xs c-mc-default">{{
+										extra.tariff
+									}}</span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<mib-spacing type="s"></mib-spacing>
 		</div>
-		<mib-spacing *ngIf="extended" class="mobile-s" type="s"></mib-spacing>
 	</div>
 	<mib-spacing class="mobile-s" type="m"></mib-spacing>
 </div>

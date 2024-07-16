@@ -35,11 +35,6 @@ import {RateCardInterface} from './interfaces/rate-card.interface'
 			),
 			transition('in => out', animate('400ms ease-in-out')),
 			transition('out => in', animate('400ms ease-in-out'))
-		]),
-		trigger('rotate', [
-			state('default', style({transform: 'rotate(0deg)'})),
-			state('rotated', style({transform: 'rotate(180deg)'})),
-			transition('default <=> rotated', animate('300ms ease-in-out'))
 		])
 	]
 })
