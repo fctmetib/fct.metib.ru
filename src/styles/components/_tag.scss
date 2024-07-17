@@ -65,6 +65,22 @@
 		);
 	}
 
+	&_special {
+		@include special(
+			$color: (
+				main: var(--bti-secondary),
+				mainselect: var(--mc-default),
+				bg: var(--wgr-primary),
+				bgselect: var(--mc-quinary),
+				hovr: var(--shadow-normal),
+				hovrselect: var(--mc-hover),
+				actv: var(--wgr-secondary),
+				actvselect: var(--wgr-secondary),
+				selectext: var(--mc-default)
+			)
+		);
+	}
+
 	&_outline {
 		@include outline(
 			$color: (
@@ -79,6 +95,15 @@
 				selectext: var(--mc-default)
 			)
 		);
+	}
+
+	&_xl {
+		@include text-l;
+		height: 44px;
+		padding: 10px 14px;
+		mib-icon {
+			@include icon-size(20px);
+		}
 	}
 
 	&_l {

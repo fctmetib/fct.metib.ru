@@ -1,4 +1,4 @@
-export type TagSize = 'l' | 'm' | 's'
+export type TagSize = 'xl' | 'l' | 'm' | 's'
 export type TagStatus = 'default' | 'hover' | 'active' | 'disabled'
 export type TagType =
 	| 'filled-primary'

@@ -27,6 +27,7 @@ import {TextareaModule} from '../../ui-kit/textarea/textarea.module'
 import {AutosizeModule} from 'ngx-autosize'
 import {LabelModule} from '../../directives/label/label.module'
 import {TestTabModule} from '../../ui-kit/test-tab/test-tab.module'
+import {TestSwipeModule} from '../../ui-kit/test-swipe/test-swipe.module'
 
 @NgModule({
 	imports: [
@@ -57,7 +58,8 @@ import {TestTabModule} from '../../ui-kit/test-tab/test-tab.module'
 		TextareaModule,
 		AutosizeModule,
 		LabelModule,
-		TestTabModule
+		TestTabModule,
+		TestSwipeModule
 	],
 	declarations: [MibUiComponent]
 })

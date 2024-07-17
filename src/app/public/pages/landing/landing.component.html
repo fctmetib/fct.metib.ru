@@ -73,43 +73,59 @@
 	<mib-spacing type="xl2"></mib-spacing>
 </section>
 <section class="products">
-	<div class="container flex gap-16">
+	<div class="container flex">
 		<div class="mob-products flex flex_grow flex_column">
 			<mib-spacing type="xl"></mib-spacing>
 			<h3>
 				{{ isDesktop ? 'Наши продукты - факторинг' : 'Наши продукты' }}
 			</h3>
-			<mib-spacing type="xs"></mib-spacing>
+			<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 			<mib-tags-group (onChange)="onChange($event)">
-				<mib-tag type="floating" [value]="ProductTabsEnum.INNER">
+				<mib-tag size="xl" type="special" [value]="ProductTabsEnum.INNER">
 					Внутренний
 				</mib-tag>
-				<mib-tag type="floating" [value]="ProductTabsEnum.INTERNATIONAL">
+				<mib-tag
+					size="xl"
+					type="special"
+					[value]="ProductTabsEnum.INTERNATIONAL"
+				>
 					Международный
 				</mib-tag>
-				<mib-tag type="floating" [value]="ProductTabsEnum.COMPLEX">
+				<mib-tag size="xl" type="special" [value]="ProductTabsEnum.COMPLEX">
 					Комплексный
 				</mib-tag>
+				<mib-tag size="xl" type="special" [value]="ProductTabsEnum.INDIVIDUAL">
+					Подобрать продукт
+					<mib-badge type="filled-accent" [extended]="true" size="m"
+						>NEW</mib-badge
+					>
+				</mib-tag>
 			</mib-tags-group>
-			<mib-spacing type="s"></mib-spacing>
+			<mib-spacing type="{{ isDesktop ? 'm' : 's' }}" type="s"></mib-spacing>
 			<ng-container [ngSwitch]="currentProductsTab">
 				<p
 					*ngSwitchCase="ProductTabsEnum.INNER"
 					class="products-title text text_l c-mc-default"
 				>
-					Продукты внутреннего факторинга:
+					Продукты внутреннего факторинга
 				</p>
 				<p
 					*ngSwitchCase="ProductTabsEnum.INTERNATIONAL"
 					class="products-title text text_l c-mc-default"
 				>
-					Продукты международного факторинга:
+					Продукты международного факторинга
 				</p>
 				<p
 					*ngSwitchCase="ProductTabsEnum.COMPLEX"
 					class="products-title text text_l c-mc-default"
 				>
-					Продукты комплексного факторинга:
+					Продукты комплексного факторинга
+				</p>
+				<p
+					*ngSwitchCase="ProductTabsEnum.INDIVIDUAL"
+					class="products-title text text_l c-mc-default"
+				>
+					Индивидуальное предложение
 				</p>
 				<div *ngSwitchCase="ProductTabsEnum.INNER">
 					<mib-spacing type="xs2"></mib-spacing>
@@ -151,6 +167,13 @@
 						требований.
 					</p>
 				</div>
+				<div *ngSwitchCase="ProductTabsEnum.INDIVIDUAL">
+					<mib-spacing type="xs2"></mib-spacing>
+					<p class="text text_l c-bti-secondary">
+						Заполните форму, чтобы мы смогли предложить вам один или несколько
+						подходящих продуктов.
+					</p>
+				</div>
 			</ng-container>
 			<mib-spacing type="s"></mib-spacing>
 			<div class="products-btn flex">
@@ -160,11 +183,16 @@
 			</div>
 			<mib-spacing type="xl"></mib-spacing>
 		</div>
-		<div class="products-img flex flex_grow">
+		<div
+			[ngClass]="{hide: imgNumber === ProductTabsEnum.INDIVIDUAL}"
+			class="products-img flex_column flex flex_grow"
+		>
+			<mib-spacing type="s"></mib-spacing>
 			<img
 				src="./assets/images/staff/holder/product_v4-{{ imgNumber }}.png"
 				alt="product"
 			/>
+			<mib-spacing type="s"></mib-spacing>
 		</div>
 	</div>
 </section>

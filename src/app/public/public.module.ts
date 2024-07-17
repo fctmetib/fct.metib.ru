@@ -57,6 +57,7 @@ import {LeftIconModule} from '../shared/directives/left-icon/left-icon.module'
 import {AccordionItemModule} from '../shared/ui-kit/accordion-item/accordion-item.module'
 import {FactoringCalculatorModule} from '../shared/ui-kit/factoring-calculator/factoring-calculator.module'
 import {RateCardModule} from '../shared/ui-kit/rate-card/rate-card.module'
+import {BadgeModule} from '../shared/ui-kit/badge/badge.module'
 
 const routes = [
 	{
@@ -142,7 +143,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		LeftIconModule,
 		AccordionItemModule,
 		FactoringCalculatorModule,
-		RateCardModule
+		RateCardModule,
+		BadgeModule
 	],
 	exports: [RouterModule],
 	declarations: [

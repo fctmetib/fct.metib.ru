@@ -131,6 +131,40 @@
 	}
 }
 
+@mixin special($color) {
+	background-color: map-get($color, bg);
+	@include tag-iconly(map-get($color, main));
+
+	& {
+		font-weight: var(--fw-regular);
+		color: map-get($color, main);
+	}
+
+	&:hover {
+		// box-shadow: map-get($color, hovr);
+		box-shadow: none;
+	}
+
+	&:active {
+		background-color: map-get($color, actv);
+	}
+
+	&.selected {
+		color: map-get($color, mainselect);
+		background-color: map-get($color, bgselect);
+		@include tag-iconly(map-get($color, mainselect));
+	}
+
+	&.selected:hover {
+		color: map-get($color, hovrselect);
+		// box-shadow: map-get($color, hovr);
+	}
+
+	&.selected:active {
+		background-color: map-get($color, actvselect);
+	}
+}
+
 @mixin outline($color) {
 	border: 1px solid map-get($color, bg);
 	@include tag-iconly(map-get($color, main));

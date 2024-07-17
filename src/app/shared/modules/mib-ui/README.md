@@ -300,9 +300,14 @@ src\app\shared\types\common
 ng g i shared/types/common/toaster  --dry-run
 ng g i shared/ui-kit/toaster/interfaces/toaster-point.interface  --dry-run
 
-// toaster-pointer
+// test-swipe
 src\app\shared\ui-kit\toaster\components
 ng g c shared/ui-kit/toaster/components/toaster-pointer --skip-tests
+ //---
+
+// test-swipe
+ng g m shared/ui-kit/test-swipe/test-swipe --flat
+ng g c shared/ui-kit/test-swipe/test-swipe  --flat  --skip-tests
  //---
 
  //--- modal
