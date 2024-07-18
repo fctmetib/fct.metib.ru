@@ -80,54 +80,42 @@
 				{{ isDesktop ? 'Наши продукты - факторинг' : 'Наши продукты' }}
 			</h3>
 			<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-			<mib-tags-group (onChange)="onChange($event)">
-				<mib-tag size="xl" type="special" [value]="ProductTabsEnum.INNER">
-					Внутренний
-				</mib-tag>
-				<mib-tag
-					size="xl"
-					type="special"
-					[value]="ProductTabsEnum.INTERNATIONAL"
-				>
-					Международный
-				</mib-tag>
-				<mib-tag size="xl" type="special" [value]="ProductTabsEnum.COMPLEX">
-					Комплексный
-				</mib-tag>
-				<mib-tag size="xl" type="special" [value]="ProductTabsEnum.INDIVIDUAL">
-					Подобрать продукт
-					<mib-badge type="filled-accent" [extended]="true" size="m"
-						>NEW</mib-badge
+			<div class="flex tags-wrap">
+				<mib-tags-group (onChange)="onChange($event)">
+					<mib-tag size="xl" type="special" [value]="ProductTabsEnum.INNER">
+						Внутренний
+					</mib-tag>
+					<mib-tag
+						size="xl"
+						type="special"
+						[value]="ProductTabsEnum.INTERNATIONAL"
 					>
-				</mib-tag>
-			</mib-tags-group>
-			<mib-spacing type="{{ isDesktop ? 'm' : 's' }}" type="s"></mib-spacing>
+						Международный
+					</mib-tag>
+					<mib-tag size="xl" type="special" [value]="ProductTabsEnum.COMPLEX">
+						Комплексный
+					</mib-tag>
+					<mib-tag
+						size="xl"
+						type="special"
+						[value]="ProductTabsEnum.INDIVIDUAL"
+					>
+						Подобрать продукт
+						<mib-badge type="filled-accent" [extended]="true" size="m"
+							>NEW</mib-badge
+						>
+					</mib-tag>
+				</mib-tags-group>
+			</div>
 			<ng-container [ngSwitch]="currentProductsTab">
-				<p
-					*ngSwitchCase="ProductTabsEnum.INNER"
-					class="products-title text text_l c-mc-default"
-				>
-					Продукты внутреннего факторинга
-				</p>
-				<p
-					*ngSwitchCase="ProductTabsEnum.INTERNATIONAL"
-					class="products-title text text_l c-mc-default"
-				>
-					Продукты международного факторинга
-				</p>
-				<p
-					*ngSwitchCase="ProductTabsEnum.COMPLEX"
-					class="products-title text text_l c-mc-default"
-				>
-					Продукты комплексного факторинга
-				</p>
-				<p
-					*ngSwitchCase="ProductTabsEnum.INDIVIDUAL"
-					class="products-title text text_l c-mc-default"
-				>
-					Индивидуальное предложение
-				</p>
-				<div *ngSwitchCase="ProductTabsEnum.INNER">
+				<div class="flex_column" *ngSwitchCase="ProductTabsEnum.INNER">
+					<mib-spacing
+						type="{{ isDesktop ? 'm' : 's' }}"
+						type="s"
+					></mib-spacing>
+					<p class="products-title text text_l c-mc-default">
+						Продукты внутреннего факторинга
+					</p>
 					<mib-spacing type="xs2"></mib-spacing>
 					<p class="text text_l c-bti-secondary">
 						Факторинг с регрессом – выгодный способ получения оборотных средств
@@ -144,7 +132,14 @@
 						поставщика.
 					</p>
 				</div>
-				<div *ngSwitchCase="ProductTabsEnum.INTERNATIONAL">
+				<div class="flex_column" *ngSwitchCase="ProductTabsEnum.INTERNATIONAL">
+					<mib-spacing
+						type="{{ isDesktop ? 'm' : 's' }}"
+						type="s"
+					></mib-spacing>
+					<p class="products-title text text_l c-mc-default">
+						Продукты международного факторинга
+					</p>
 					<mib-spacing type="xs2"></mib-spacing>
 					<p class="text text_l c-bti-secondary">
 						Экспортный факторинг – выгодное финансирование поставок за рубеж.
@@ -155,7 +150,14 @@
 						поставщиками.
 					</p>
 				</div>
-				<div *ngSwitchCase="ProductTabsEnum.COMPLEX">
+				<div class="flex_column" *ngSwitchCase="ProductTabsEnum.COMPLEX">
+					<mib-spacing
+						type="{{ isDesktop ? 'm' : 's' }}"
+						type="s"
+					></mib-spacing>
+					<p class="products-title text text_l c-mc-default">
+						Продукты комплексного факторинга
+					</p>
 					<mib-spacing type="xs2"></mib-spacing>
 					<p class="text text_l c-bti-secondary">
 						Агентский факторинг – финансирование кредиторской задолженности
@@ -167,21 +169,99 @@
 						требований.
 					</p>
 				</div>
-				<div *ngSwitchCase="ProductTabsEnum.INDIVIDUAL">
-					<mib-spacing type="xs2"></mib-spacing>
-					<p class="text text_l c-bti-secondary">
-						Заполните форму, чтобы мы смогли предложить вам один или несколько
-						подходящих продуктов.
-					</p>
+				<div
+					class="flex tags-content"
+					*ngSwitchCase="ProductTabsEnum.INDIVIDUAL"
+				>
+					<div class="flex flex_grow flex_column frame">
+						<mib-spacing
+							type="{{ isDesktop ? 'm' : 's' }}"
+							type="s"
+						></mib-spacing>
+						<p class="products-title text text_l c-mc-default">
+							Индивидуальное предложение
+						</p>
+						<mib-spacing type="xs2"></mib-spacing>
+						<p class="text text_l c-bti-secondary">
+							Заполните форму, чтобы мы смогли предложить вам один или несколько
+							подходящих продуктов.
+						</p>
+						<div class="flex flex_column">
+							<mib-spacing type="s"></mib-spacing>
+							<mib-input>
+								<input
+									size="{{ isDesktop ? 'xl' : 'l' }}"
+									styleType="floating"
+									mibInput
+								/>
+								<ng-container mibLabel>ИНН Организации</ng-container>
+							</mib-input>
+							<mib-spacing type="s"></mib-spacing>
+							<div class="flex">
+								<mib-button size="m" type="filled-primary"
+									>Далее
+									<mib-icon
+										btn-right-icon
+										class="stroke"
+										name="fi_chevron-right"
+									></mib-icon>
+								</mib-button>
+							</div>
+							<mib-spacing type="s"></mib-spacing>
+						</div>
+					</div>
+					<div class="flex flex_grow flex_column frame-r">
+						<mib-spacing type="s"></mib-spacing>
+						<div class="flex flex_column progress-bar">
+							<div
+								class="wrap flex flex_justify-start text text_m c-bti-secondary"
+							>
+								<span>{{ progress }}</span>
+								<span> из {{ maxPage }}</span>
+							</div>
+							<div class="line">
+								<div
+									class="progress"
+									[ngStyle]="{width: (progress / maxPage) * 100 + '%'}"
+								></div>
+							</div>
+							<mib-spacing type="xs"></mib-spacing>
+						</div>
+						<div class="flex flex_column timeline">
+							<div class="flex point">
+								<span class="text text_l c-bti-quaternary">
+									Сумма финансирования
+								</span>
+							</div>
+							<div class="flex point active flex_align-center gap-8">
+								<span class="text text_l c-bti-quaternary"> ИНН </span>
+								<mib-icon
+									btn-icon
+									class="stroke"
+									name="fi_chevron-left"
+								></mib-icon>
+							</div>
+							<div class="flex point">
+								<span class="text text_l c-bti-quaternary">
+									Срок отсрочки
+								</span>
+							</div>
+						</div>
+					</div>
 				</div>
 			</ng-container>
-			<mib-spacing type="s"></mib-spacing>
-			<div class="products-btn flex">
-				<mib-button size="m" type="filled-primary">
-					Получить консультацию
-				</mib-button>
+			<div
+				[ngClass]="{hide: imgNumber === ProductTabsEnum.INDIVIDUAL}"
+				class="products-btn flex flex_column"
+			>
+				<mib-spacing type="s"></mib-spacing>
+				<div class="flex">
+					<mib-button size="m" type="filled-primary">
+						Получить консультацию
+					</mib-button>
+				</div>
+				<mib-spacing type="xl"></mib-spacing>
 			</div>
-			<mib-spacing type="xl"></mib-spacing>
 		</div>
 		<div
 			[ngClass]="{hide: imgNumber === ProductTabsEnum.INDIVIDUAL}"
@@ -189,7 +269,11 @@
 		>
 			<mib-spacing type="s"></mib-spacing>
 			<img
-				src="./assets/images/staff/holder/product_v4-{{ imgNumber }}.png"
+				src="./assets/images/staff/holder/product_v4-{{
+					imgNumber === ProductTabsEnum.INDIVIDUAL
+						? ProductTabsEnum.INNER
+						: imgNumber
+				}}.png"
 				alt="product"
 			/>
 			<mib-spacing type="s"></mib-spacing>
@@ -397,7 +481,7 @@
 		</div>
 	</div>
 </section>
-<section class="press">
+<!-- <section class="press">
 	<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
 	<h3 class="text-center">Новости банка</h3>
 	<mib-spacing type="{{ isDesktop ? 'm' : 'xs' }}"></mib-spacing>
@@ -460,5 +544,5 @@
 			Показать больше
 		</mib-button>
 	</div>
-</section>
+</section> -->
 <mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>

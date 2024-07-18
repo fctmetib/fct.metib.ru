@@ -23,6 +23,9 @@ import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoi
 export class LandingComponent implements OnInit, OnDestroy {
 	public ProductTabsEnum = ProductTabsEnum
 
+	maxPage: number = 3
+	progress: number = 2
+
 	public iconsDatas = [
 		{
 			id: 1,
@@ -128,7 +131,7 @@ export class LandingComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		this.getCurrentNews()
+		// this.getCurrentNews()
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
@@ -163,7 +166,6 @@ export class LandingComponent implements OnInit, OnDestroy {
 	}
 
 	public onChange($num) {
-		console.log('$num :>> ', $num)
 		this.imgNumber = $num
 		this.currentProductsTab = $num
 	}
