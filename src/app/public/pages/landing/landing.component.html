@@ -86,8 +86,15 @@
 			</h3>
 			<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 			<div class="flex extra-wrap">
-				<div class="flex tags-wrap">
-					<mib-tags-group id="tags-container" (onChange)="onChange($event)">
+				<div class="shadow-left hide-shadow"></div>
+				<div class="shadow-right"></div>
+				<div
+					#tagsContainer
+					id="tags-container"
+					(swipe)="onSwipe($event)"
+					class="flex tags-wrap"
+				>
+					<mib-tags-group (onChange)="onChange($event)">
 						<mib-tag size="xl" type="special" [value]="ProductTabsEnum.INNER">
 							Внутренний
 						</mib-tag>

@@ -1,4 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core'
+import {
+	AfterViewInit,
+	Component,
+	ElementRef,
+	OnDestroy,
+	OnInit,
+	ViewChild
+} from '@angular/core'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {ProductTabsEnum} from './enums/landing.enum'
 import {NewsService} from '../../service/news.service'
@@ -20,7 +27,7 @@ import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoi
 	templateUrl: './landing.component.html',
 	styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent implements OnInit, OnDestroy {
+export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	public ProductTabsEnum = ProductTabsEnum
 
 	maxPage: number = 3
@@ -137,16 +144,46 @@ export class LandingComponent implements OnInit, OnDestroy {
 			.subscribe(b => (this.isDesktop = b))
 	}
 
+	@ViewChild('tagsContainer', {static: true}) tagsContainer: ElementRef
+
+	ngAfterViewInit() {
+		this.updateShadows()
+		this.tagsContainer.nativeElement.addEventListener('scroll', () =>
+			this.updateShadows()
+		)
+	}
+
 	onSwipe(event: any) {
-		const container = document.getElementById('tags-container')
+		const container = this.tagsContainer.nativeElement
 		const direction = event.deltaX > 0 ? 'right' : 'left'
 		if (direction === 'left') {
 			container.scrollLeft += 100
 		} else if (direction === 'right') {
 			container.scrollLeft -= 100
 		}
+		this.updateShadows()
 	}
 
+	updateShadows() {
+		const container = this.tagsContainer.nativeElement
+		const shadowLeft = container.parentElement.querySelector('.shadow-left')
+		const shadowRight = container.parentElement.querySelector('.shadow-right')
+
+		if (container.scrollLeft === 0) {
+			shadowLeft.classList.add('hide-shadow')
+		} else {
+			shadowLeft.classList.remove('hide-shadow')
+		}
+
+		if (
+			container.scrollWidth - container.scrollLeft ===
+			container.clientWidth
+		) {
+			shadowRight.classList.add('hide-shadow')
+		} else {
+			shadowRight.classList.remove('hide-shadow')
+		}
+	}
 	public getCurrentNews() {
 		this.loading$.next(true)
 		this.newsService
