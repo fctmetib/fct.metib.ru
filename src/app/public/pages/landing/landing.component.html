@@ -85,32 +85,38 @@
 				{{ isDesktop ? 'Наши продукты - факторинг' : 'Наши продукты' }}
 			</h3>
 			<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-			<div class="flex tags-wrap">
-				<mib-tags-group (onChange)="onChange($event)">
-					<mib-tag size="xl" type="special" [value]="ProductTabsEnum.INNER">
-						Внутренний
-					</mib-tag>
-					<mib-tag
-						size="xl"
-						type="special"
-						[value]="ProductTabsEnum.INTERNATIONAL"
+			<div class="flex extra-wrap">
+				<div class="flex tags-wrap">
+					<mib-tags-group
+						id="menu-container"
+						class="menu-container"
+						(onChange)="onChange($event)"
 					>
-						Международный
-					</mib-tag>
-					<mib-tag size="xl" type="special" [value]="ProductTabsEnum.COMPLEX">
-						Комплексный
-					</mib-tag>
-					<mib-tag
-						size="xl"
-						type="special"
-						[value]="ProductTabsEnum.INDIVIDUAL"
-					>
-						Подобрать продукт
-						<mib-badge type="filled-accent" [extended]="true" size="m"
-							>NEW</mib-badge
+						<mib-tag size="xl" type="special" [value]="ProductTabsEnum.INNER">
+							Внутренний
+						</mib-tag>
+						<mib-tag
+							size="xl"
+							type="special"
+							[value]="ProductTabsEnum.INTERNATIONAL"
 						>
-					</mib-tag>
-				</mib-tags-group>
+							Международный
+						</mib-tag>
+						<mib-tag size="xl" type="special" [value]="ProductTabsEnum.COMPLEX">
+							Комплексный
+						</mib-tag>
+						<mib-tag
+							size="xl"
+							type="special"
+							[value]="ProductTabsEnum.INDIVIDUAL"
+						>
+							Подобрать продукт
+							<mib-badge type="filled-accent" [extended]="true" size="m"
+								>NEW</mib-badge
+							>
+						</mib-tag>
+					</mib-tags-group>
+				</div>
 			</div>
 			<ng-container [ngSwitch]="currentProductsTab">
 				<div class="flex_column" *ngSwitchCase="ProductTabsEnum.INNER">
@@ -122,17 +128,17 @@
 						Продукты внутреннего факторинга
 					</p>
 					<mib-spacing type="xs2"></mib-spacing>
-					<p class="text text_l c-bti-secondary">
+					<p class="products-description text text_l c-bti-secondary">
 						Факторинг с регрессом – выгодный способ получения оборотных средств
 						без увеличения кредитной нагрузки.
 					</p>
 					<mib-spacing type="xs2"></mib-spacing>
-					<p class="text text_l c-bti-secondary">
+					<p class="products-description text text_l c-bti-secondary">
 						Факторинг без регресса – получение оборотных средств с защитой от
 						риска неплатежа.
 					</p>
 					<mib-spacing type="xs2"></mib-spacing>
-					<p class="text text_l c-bti-secondary">
+					<p class="products-description text text_l c-bti-secondary">
 						Скрытый факторинг – пополнение оборотных средств без уведомления
 						поставщика.
 					</p>
@@ -146,11 +152,11 @@
 						Продукты международного факторинга
 					</p>
 					<mib-spacing type="xs2"></mib-spacing>
-					<p class="text text_l c-bti-secondary">
+					<p class="products-description text text_l c-bti-secondary">
 						Экспортный факторинг – выгодное финансирование поставок за рубеж.
 					</p>
 					<mib-spacing type="xs2"></mib-spacing>
-					<p class="text text_l c-bti-secondary">
+					<p class="products-description text text_l c-bti-secondary">
 						Импортный факторинг – поддержка импортных операций с иностранными
 						поставщиками.
 					</p>
@@ -164,12 +170,12 @@
 						Продукты комплексного факторинга
 					</p>
 					<mib-spacing type="xs2"></mib-spacing>
-					<p class="text text_l c-bti-secondary">
+					<p class="products-description text text_l c-bti-secondary">
 						Агентский факторинг – финансирование кредиторской задолженности
 						и/или поддержка вашей закупочной деятельности.
 					</p>
 					<mib-spacing type="xs2"></mib-spacing>
-					<p class="text text_l c-bti-secondary">
+					<p class="products-description text text_l c-bti-secondary">
 						Предпоставочный факторинг – финансирование под уступку будущих
 						требований.
 					</p>

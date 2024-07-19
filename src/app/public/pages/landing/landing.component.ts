@@ -137,6 +137,16 @@ export class LandingComponent implements OnInit, OnDestroy {
 			.subscribe(b => (this.isDesktop = b))
 	}
 
+	onSwipe(event: any) {
+		const container = document.getElementById('menu-container')
+		const direction = event.deltaX > 0 ? 'right' : 'left'
+		if (direction === 'left') {
+			container.scrollLeft += 100
+		} else if (direction === 'right') {
+			container.scrollLeft -= 100
+		}
+	}
+
 	public getCurrentNews() {
 		this.loading$.next(true)
 		this.newsService
