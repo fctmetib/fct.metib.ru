@@ -1,57 +1,57 @@
-:host {
-	position: relative;
-}
+// :host {
+// 	position: relative;
+// }
 
-.menu-container {
-	display: flex;
-	overflow-x: auto;
-	white-space: nowrap;
-	-webkit-overflow-scrolling: touch;
+// .menu-container {
+// 	display: flex;
+// 	overflow-x: auto;
+// 	white-space: nowrap;
+// 	-webkit-overflow-scrolling: touch;
 
-	&::after,
-	&::before {
-		content: '';
-		position: absolute;
-		z-index: 1;
-		pointer-events: none;
-		width: 15%;
-	}
+// 	&::after,
+// 	&::before {
+// 		content: '';
+// 		position: absolute;
+// 		z-index: 1;
+// 		pointer-events: none;
+// 		width: 15%;
+// 	}
 
-	&::after {
-		top: 0;
-		right: 0;
-		bottom: 0;
-		background-image: linear-gradient(
-			to right,
-			rgba(255, 255, 255, 0),
-			#333333 85%
-		);
-	}
+// 	&::after {
+// 		top: 0;
+// 		right: 0;
+// 		bottom: 0;
+// 		background-image: linear-gradient(
+// 			to right,
+// 			rgba(255, 255, 255, 0),
+// 			#333333 85%
+// 		);
+// 	}
 
-	&::before {
-		top: 0;
-		left: 0;
-		bottom: 0;
-		background-image: linear-gradient(
-			to left,
-			rgba(255, 255, 255, 0),
-			#333333 85%
-		);
+// 	&::before {
+// 		top: 0;
+// 		left: 0;
+// 		bottom: 0;
+// 		background-image: linear-gradient(
+// 			to left,
+// 			rgba(255, 255, 255, 0),
+// 			#333333 85%
+// 		);
 
-		// white
-		// background: linear-gradient(90deg, rgb(255 255 255 / 90%), rgb(255 255 255 / 10%))
-	}
-}
+// 		// white
+// 		// background: linear-gradient(90deg, rgb(255 255 255 / 90%), rgb(255 255 255 / 10%))
+// 	}
+// }
 
-.menu-item {
-	flex: 0 0 auto;
-	padding: 10px 20px;
-	cursor: pointer;
-	user-select: none;
-	text-align: center;
-	background-color: wheat;
-	margin: 0 5px;
-}
+// .menu-item {
+// 	flex: 0 0 auto;
+// 	padding: 10px 20px;
+// 	cursor: pointer;
+// 	user-select: none;
+// 	text-align: center;
+// 	background-color: wheat;
+// 	margin: 0 5px;
+// }
 
 /* Hide scrollbar */
 .menu-container::-webkit-scrollbar {
@@ -61,4 +61,45 @@
 .menu-container {
 	-ms-overflow-style: none; /* Internet Explorer 10+ */
 	scrollbar-width: none; /* Firefox */
+}
+
+.menu-container {
+	display: flex;
+	overflow-x: auto;
+	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
+	position: relative;
+}
+
+.menu-item {
+	flex: 0 0 auto;
+	padding: 10px 20px;
+	cursor: pointer;
+	user-select: none;
+	text-align: center;
+}
+
+.shadow-left,
+.shadow-right {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 20px;
+	pointer-events: none;
+	z-index: 1;
+	transition: opacity 0.3s;
+}
+
+.shadow-left {
+	left: 0;
+	background: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
+}
+
+.shadow-right {
+	right: 0;
+	background: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
+}
+
+.hide-shadow {
+	opacity: 0;
 }

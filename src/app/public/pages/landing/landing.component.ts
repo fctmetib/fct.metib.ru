@@ -138,7 +138,7 @@ export class LandingComponent implements OnInit, OnDestroy {
 	}
 
 	onSwipe(event: any) {
-		const container = document.getElementById('menu-container')
+		const container = document.getElementById('tags-container')
 		const direction = event.deltaX > 0 ? 'right' : 'left'
 		if (direction === 'left') {
 			container.scrollLeft += 100
