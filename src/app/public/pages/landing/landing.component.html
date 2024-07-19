@@ -75,6 +75,11 @@
 <section class="products">
 	<div class="container flex">
 		<div class="mob-products flex flex_grow flex_column">
+			<mib-spacing
+				[ngClass]="{individual: imgNumber === ProductTabsEnum.INDIVIDUAL}"
+				class="title-spacing"
+				type="s"
+			></mib-spacing>
 			<mib-spacing type="xl"></mib-spacing>
 			<h3>
 				{{ isDesktop ? 'Наши продукты - факторинг' : 'Наши продукты' }}
@@ -113,7 +118,7 @@
 						type="{{ isDesktop ? 'm' : 's' }}"
 						type="s"
 					></mib-spacing>
-					<p class="products-title text text_l c-mc-default">
+					<p class="products-title text_medium text text_l c-mc-default">
 						Продукты внутреннего факторинга
 					</p>
 					<mib-spacing type="xs2"></mib-spacing>
@@ -137,7 +142,7 @@
 						type="{{ isDesktop ? 'm' : 's' }}"
 						type="s"
 					></mib-spacing>
-					<p class="products-title text text_l c-mc-default">
+					<p class="products-title text_medium text text_l c-mc-default">
 						Продукты международного факторинга
 					</p>
 					<mib-spacing type="xs2"></mib-spacing>
@@ -155,7 +160,7 @@
 						type="{{ isDesktop ? 'm' : 's' }}"
 						type="s"
 					></mib-spacing>
-					<p class="products-title text text_l c-mc-default">
+					<p class="products-title text_medium text text_l c-mc-default">
 						Продукты комплексного факторинга
 					</p>
 					<mib-spacing type="xs2"></mib-spacing>
@@ -178,7 +183,7 @@
 							type="{{ isDesktop ? 'm' : 's' }}"
 							type="s"
 						></mib-spacing>
-						<p class="products-title text text_l c-mc-default">
+						<p class="products-title text_medium text text_l c-mc-default">
 							Индивидуальное предложение
 						</p>
 						<mib-spacing type="xs2"></mib-spacing>
@@ -187,7 +192,7 @@
 							подходящих продуктов.
 						</p>
 						<div class="flex flex_column">
-							<mib-spacing type="s"></mib-spacing>
+							<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 							<mib-input>
 								<input
 									size="{{ isDesktop ? 'xl' : 'l' }}"
@@ -196,9 +201,11 @@
 								/>
 								<ng-container mibLabel>ИНН Организации</ng-container>
 							</mib-input>
-							<mib-spacing type="s"></mib-spacing>
+							<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 							<div class="flex">
-								<mib-button size="m" type="filled-primary"
+								<mib-button
+									size="{{ isDesktop ? 'l' : 'm' }}"
+									type="filled-primary"
 									>Далее
 									<mib-icon
 										btn-right-icon
@@ -207,11 +214,11 @@
 									></mib-icon>
 								</mib-button>
 							</div>
-							<mib-spacing type="s"></mib-spacing>
+							<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 						</div>
 					</div>
 					<div class="flex flex_grow flex_column frame-r">
-						<mib-spacing type="s"></mib-spacing>
+						<mib-spacing class="frame-mobile" type="s"></mib-spacing>
 						<div class="flex flex_column progress-bar">
 							<div
 								class="wrap flex flex_justify-start text text_m c-bti-secondary"
@@ -225,7 +232,7 @@
 									[ngStyle]="{width: (progress / maxPage) * 100 + '%'}"
 								></div>
 							</div>
-							<mib-spacing type="xs"></mib-spacing>
+							<mib-spacing type="{{ isDesktop ? 'xs' : 's' }}"></mib-spacing>
 						</div>
 						<div class="flex flex_column timeline">
 							<div class="flex point">

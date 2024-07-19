@@ -137,6 +137,11 @@
 		min-height: 520px;
 		gap: 16px;
 
+		& .individual,
+		.title-spacing {
+			display: none;
+		}
+
 		& mib-tags-group {
 			height: 48px;
 			background-color: white;
@@ -144,6 +149,10 @@
 			display: flex;
 			border-radius: 8px;
 			padding: 2px;
+		}
+
+		& .hide {
+			display: none;
 		}
 
 		& .products-img.hide,
@@ -210,9 +219,14 @@
 		@media (max-width: 1100px) {
 			flex-direction: column;
 			gap: 0;
+			min-height: auto;
 
 			mib-spacing[type='xl'] {
 				display: none;
+			}
+
+			& .individual {
+				display: flex;
 			}
 
 			& .mob-products {
@@ -229,9 +243,39 @@
 				}
 			}
 
-			& .products-btn {
+			& .products-btn > div {
+				padding-bottom: 24px;
 				justify-content: center;
-				padding: 24px 0;
+			}
+		}
+
+		@media (max-width: 992px) {
+			padding: 0 36px;
+		}
+
+		@media (max-width: 768px) {
+			& .tags-content {
+				flex-direction: column;
+
+				& .frame {
+					padding: 0;
+				}
+
+				& .frame-r {
+					padding: 0;
+
+					& .frame-mobile {
+						display: none;
+					}
+
+					& .progress-bar {
+						width: 100%;
+					}
+
+					& .timeline {
+						display: none;
+					}
+				}
 			}
 		}
 
@@ -239,25 +283,27 @@
 			padding: 0 16px;
 			border-radius: 0;
 
-			.products-img {
+			& .products-img {
 				padding: 0;
 				justify-content: center;
 			}
 
-			img {
+			& img {
 				height: 280px;
 				object-fit: contain;
 			}
 
-			mib-spacing[type='xs'] {
+			& mib-spacing[type='xs'] {
 				display: none;
 			}
 
-			mib-spacing[type='s'] {
-				display: none;
+			& .frame {
+				& mib-button {
+					width: 100%;
+				}
 			}
 
-			.products-btn {
+			& .products-btn {
 				mib-button[size='m'] {
 					width: 100%;
 				}
