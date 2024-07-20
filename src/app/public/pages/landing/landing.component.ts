@@ -62,6 +62,33 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 	]
 
+	public howDatas = [
+		{
+			id: 1,
+			img: './assets/images/staff/how-bg/agreement.png',
+			title: 'Договор с контрагентом',
+			desc: 'Поставщик отгружает товары/оказывает услуги на условиях отсрочки платежа'
+		},
+		{
+			id: 2,
+			img: './assets/images/staff/how-bg/agent-agreement.png',
+			title: 'Договор с фактором',
+			desc: 'Клиент отправляет заявку в Личном кабинете и подписывает Договор факторинга'
+		},
+		{
+			id: 3,
+			img: './assets/images/staff/how-bg/financing.png',
+			title: 'Финансирование',
+			desc: 'Клиент получает Денежные средства за уступленные поставки на свой расчетный счет'
+		},
+		{
+			id: 4,
+			img: './assets/images/staff/how-bg/payment.png',
+			title: 'Оплата задолженности',
+			desc: 'Покупатель оплачивает поставки по истечении срока отсрочки'
+		}
+	]
+
 	public partnersLogo = [
 		{name: 'X5Group', img: './assets/images/staff/partners/X5Group 2.svg'},
 		{name: 'Ozon', img: './assets/images/staff/partners/OZON_2019 2.svg'},

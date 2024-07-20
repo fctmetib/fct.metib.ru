@@ -2,7 +2,11 @@
 @import 'src/styles/_colors.vars';
 
 .hero {
-	background-color: #f0f4f5;
+	background: linear-gradient(
+		135deg,
+		rgba(240, 245, 246, 1) 0%,
+		rgba(230, 243, 247, 1) 100%
+	);
 
 	& .lineal {
 		background-color: var(--wgr-primary);
@@ -367,88 +371,32 @@
 }
 
 .how {
-	h3 {
+	background-color: var(--mc-quinary);
+
+	& h3 {
 		text-align: center;
 	}
 
-	.how-mobile {
-		display: none;
-	}
+	& .how-wrap {
+		background-color: var(--wgr-primary);
+		border-radius: 20px;
+		box-shadow: var(--normal-shadow);
+		width: 269px;
 
-	.stapper {
-		padding: 0 86px;
-	}
-
-	.step {
-		padding: 0 16px;
-	}
-
-	.step > div {
-		position: relative;
-		padding: 24px;
-		background-color: var(--wgr-secondary);
-		border-radius: var(--main-border-radius);
-		&::after {
-			content: '';
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			display: block;
-			top: 0;
-			left: 0;
-			background: var(--overlay-tertiary);
-			border-radius: var(--main-border-radius);
+		& .how-card {
+			padding: 40px 30px;
 		}
 	}
 
-	.step h4 {
-		width: 32px;
-		height: 32px;
-		color: var(--wgr-primary);
-		z-index: 1;
-	}
-
-	.line {
-		border-bottom: 1px solid var(--wgr-tertiary);
-	}
-
-	@media (max-width: 992px) {
-		& .stapper {
-			flex-direction: column;
-			padding: 0;
-			gap: 16px;
-
-			& .step {
-				justify-content: center;
-			}
-
-			& .how-line {
-				display: none;
-			}
-		}
-		.how-mobile {
-			display: flex;
-			& mib-spacing[type='xs'] {
-				display: none;
-			}
-		}
-
-		.how-desktop {
-			display: none;
-		}
-
+	@media (max-width: 768px) {
 		& mib-spacing[type='xl2'] {
 			display: block;
-			height: 64px;
+			height: 48px;
 		}
 
 		& mib-spacing[type='l'] {
 			display: block;
 			height: 24px;
-		}
-
-		& mib-spacing[type='s'] {
-			display: none;
 		}
 	}
 }
