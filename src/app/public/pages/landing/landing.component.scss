@@ -404,34 +404,54 @@
 .partners {
 	background-color: var(--wgr-secondary);
 
-	& .fixWidth {
-		padding: 0 288px;
-	}
-
-	@media (max-width: 992px) {
-		& .fixWidth {
-			padding: 0 120px;
-		}
+	& .container {
+		max-width: 1280px;
+		padding: 0 72px;
 	}
 
 	@media (max-width: 576px) {
-		& mib-spacing[type='xl'] {
-			height: 48px;
-			display: block;
-		}
-
 		& .fixWidth {
-			padding: 8px 16px 0;
-		}
-
-		& mib-spacing[type='m'] {
-			height: 24px;
-			display: block;
-		}
-
-		& .container {
 			padding: 0 16px;
-			gap: 12px;
+			text-align: center;
+		}
+	}
+
+	.scroll-wrap {
+		position: relative;
+		display: flex;
+		overflow: hidden;
+		user-select: none;
+
+		& .item {
+			flex-shrink: 0;
+			display: flex;
+			counter-reset: item;
+			justify-content: space-around;
+			min-width: 100%;
+		}
+
+		& mib-partner-panel {
+			transition: all 0.1s ease-in-out;
+		}
+
+		.infinee {
+			animation: scroll 30s linear infinite;
+		}
+		.reverce {
+			animation-direction: reverse;
+		}
+
+		&:hover .infinee {
+			animation-play-state: paused;
+		}
+	}
+
+	@keyframes scroll {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(calc(-100% - 20px));
 		}
 	}
 }
@@ -449,11 +469,11 @@
 				position: absolute;
 				display: inline-block;
 				content: '';
-				width: 100%;
-				height: 100%;
-				top: 66.5%;
-				left: 48%;
-				background: url('/assets/images/staff/requests/elems.png') no-repeat;
+				width: 202px;
+				height: 245px;
+				top: 71%;
+				left: 57%;
+				background: url('/assets/images/staff/requests/elem.png') no-repeat;
 			}
 
 			& .img-shadow {
@@ -470,10 +490,10 @@
 			& .requests-img {
 				position: relative;
 				&::after {
-					width: 228px;
-					height: 147px;
-					top: 68.5%;
-					left: 44%;
+					width: 200px;
+					height: 122px;
+					top: 73.9%;
+					left: 50%;
 				}
 
 				& .img-shadow {
@@ -536,11 +556,12 @@
 
 			& .requests-img {
 				position: relative;
+
 				&::after {
-					width: 151px;
-					height: 147px;
-					top: 44.5%;
-					left: 38%;
+					width: 202px;
+					height: 69px;
+					top: 73.5%;
+					left: 28%;
 				}
 			}
 

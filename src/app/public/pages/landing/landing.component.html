@@ -296,7 +296,7 @@
 		</div>
 	</div>
 </section>
-<mib-spacing type="xl2"></mib-spacing>
+<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 <section class="how">
 	<mib-spacing type="xl2"></mib-spacing>
 	<h3>Как это работает?</h3>
@@ -325,7 +325,7 @@
 	<mib-spacing type="xl2"></mib-spacing>
 </section>
 <section class="requests">
-	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 	<div class="container flex gap-16">
 		<div class="requests-form flex flex_column flex_grow">
 			<mib-spacing type="xl"></mib-spacing>
@@ -396,24 +396,52 @@
 		</div>
 	</div>
 </section>
-<mib-spacing type="xl2"></mib-spacing>
+<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 <section class="partners">
-	<mib-spacing type="xl"></mib-spacing>
-
-	<h3 class="text-center">Наши партнеры</h3>
-	<div class="flex container fixWidth gap-8">
-		<p class="text text_l c-bti-secondary text-center">
-			По просьбам наших клиентов мы ежедневно расширяем список наших партнеров,
-			ниже представлены некоторые из них
+	<div class="flex container flex_column fixWidth">
+		<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
+		<h3>Наши партнеры</h3>
+		<mib-spacing type="xs2"></mib-spacing>
+		<p *ngIf="isDesktop; else mobile" class="text text_l c-bti-secondary">
+			По просьбам наших клиентов мы ежедневно расширяем список
+			<br />
+			наших партнеров, ниже представлены некоторые из них
 		</p>
+		<ng-template #mobile>
+			<p class="text text_l c-bti-secondary">
+				По просьбам наших клиентов мы ежедневно расширяем список наших
+				партнеров, ниже представлены некоторые из них
+			</p>
+		</ng-template>
+		<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
 	</div>
-	<mib-spacing type="m"></mib-spacing>
-	<div class="container flex flex_justify-center flex_wrap gap-16">
-		<mib-partner-panel *ngFor="let partner of partnersLogo">
-			<img src="{{ partner.img }}" alt="logo-{{ partner.name }}" />
-		</mib-partner-panel>
+	<div class="flex flex_column gap-12">
+		<div class="scroll-wrap gap-20 flex">
+			<div class="item gap-20 flex infinee">
+				<mib-partner-panel *ngFor="let partner of partnersLogo">
+					<img src="{{ partner.img }}" alt="logo-{{ partner.name }}" />
+				</mib-partner-panel>
+			</div>
+			<div aria-hidden="true" class="item gap-20 flex infinee">
+				<mib-partner-panel *ngFor="let partner of partnersLogo">
+					<img src="{{ partner.img }}" alt="logo-{{ partner.name }}" />
+				</mib-partner-panel>
+			</div>
+		</div>
+		<div class="scroll-wrap gap-20 flex">
+			<div class="item gap-20 flex infinee reverce">
+				<mib-partner-panel *ngFor="let partner of partnersLogo">
+					<img src="{{ partner.img }}" alt="logo-{{ partner.name }}" />
+				</mib-partner-panel>
+			</div>
+			<div aria-hidden="true" class="item gap-20 flex infinee reverce">
+				<mib-partner-panel *ngFor="let partner of partnersLogo">
+					<img src="{{ partner.img }}" alt="logo-{{ partner.name }}" />
+				</mib-partner-panel>
+			</div>
+		</div>
 	</div>
-	<mib-spacing type="xl"></mib-spacing>
+	<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
 </section>
 <!-- <section class="press">
 	<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>

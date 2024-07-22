@@ -106,8 +106,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		},
 		{name: 'Lenta', img: './assets/images/staff/partners/Lenta.svg'},
 		{name: 'Lamoda', img: './assets/images/staff/partners/Lamoda_logo 2.svg'},
-		{name: 'Familia', img: './assets/images/staff/partners/Familia.svg'},
-		{name: 'more', img: './assets/images/staff/partners/more.svg'}
+		{name: 'Familia', img: './assets/images/staff/partners/Familia.svg'}
 	]
 
 	newsDatas = [
