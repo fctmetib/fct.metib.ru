@@ -146,7 +146,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		FactoringCalculatorModule,
 		RateCardModule,
 		BadgeModule,
-		RightIconModule
+		RightIconModule,
+		LeftIconModule
 	],
 	exports: [RouterModule],
 	declarations: [
