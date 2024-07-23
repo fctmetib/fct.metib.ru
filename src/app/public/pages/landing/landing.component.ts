@@ -164,7 +164,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	) {}
 
 	ngOnInit(): void {
-		// this.getCurrentNews()
+		this.getCurrentNews()
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
