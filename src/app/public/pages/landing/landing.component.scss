@@ -385,18 +385,39 @@
 
 		& .how-card {
 			padding: 40px 30px;
+			gap: 32px;
 		}
 	}
 
 	@media (max-width: 768px) {
 		& mib-spacing[type='xl2'] {
 			display: block;
-			height: 48px;
+			height: 64px;
 		}
 
 		& mib-spacing[type='l'] {
 			display: block;
-			height: 24px;
+			height: 32px;
+		}
+	}
+
+	@media (max-width: 576px) {
+		& .container {
+			padding: 0 16px;
+
+			& .how-wrap {
+				width: auto;
+
+				& .how-card {
+					padding: 32px 23px;
+					gap: 24px;
+
+					& .how-icon {
+						width: 102px;
+						height: 102px;
+					}
+				}
+			}
 		}
 	}
 }
@@ -599,14 +620,6 @@
 		to {
 			transform: translateX(calc(-100% - 20px));
 		}
-	}
-}
-
-.calculator {
-	& .container-xs {
-		max-width: 1440px;
-		width: 100%;
-		margin: 0 auto;
 	}
 }
 
