@@ -11,6 +11,78 @@
 	border: 1px solid var(--wgr-tertiary);
 	overflow: hidden;
 
+	& .regular {
+		& .news-title {
+			padding: 16px;
+		}
+
+		& img {
+			object-fit: contain;
+			height: 100%;
+		}
+
+		& h4 {
+			@include text-overflow(1);
+		}
+
+		& .links {
+			padding: 16px;
+		}
+
+		@media (max-width: 576px) {
+			height: auto;
+		}
+
+		& .link-wrap {
+			display: none;
+		}
+	}
+
+	&_superhero {
+		flex-direction: row;
+		height: 340px;
+		transition: var(--transition);
+
+		&:hover {
+			box-shadow: var(--normal-shadow);
+		}
+
+		&:active {
+			& .content {
+				user-select: none;
+				background-color: var(--wgr-secondary);
+			}
+		}
+
+		& .image {
+			width: 50%;
+			align-items: center;
+			height: 100%;
+			justify-content: center;
+		}
+
+		& .content {
+			width: 50%;
+			height: 100%;
+
+			& .top {
+				padding: 48px 36px 0 48px;
+
+				& h3 {
+					@include text-overflow(2);
+				}
+
+				& .except {
+					@include text-overflow(3);
+				}
+			}
+
+			& .bottom {
+				padding: 24px 36px 48px 48px;
+			}
+		}
+	}
+
 	&.isAdmin {
 		height: 100%;
 		width: 280px;
@@ -57,73 +129,44 @@
 			}
 		}
 		transition: var(--transition);
-	}
-	&.isAdmin:hover {
-		& .btn {
-			display: flex;
+
+		&:hover {
+			& .btn {
+				display: flex;
+			}
 		}
 	}
 
-	& :not(.news_showPreview) > div {
-		// display: none;
-	}
-
-	& > div {
-		height: 314px;
-		background-color: var(--wgr-primary);
-		@media (max-width: 576px) {
-			height: auto;
-		}
-
-		& .link-wrap {
-			display: none;
-		}
-
-		& .news-title {
-			padding: 16px;
-		}
-	}
-
-	& .p-24 {
-		padding: 24px;
-	}
-
-	& img {
-		object-fit: contain;
-		height: 100%;
-	}
-
-	& h4 {
-		@include text-overflow(1);
-	}
-
-	& .ph-24 {
-		padding: 24px;
-	}
+	// & :not(.news_showPreview) > div {
+	// 	// display: none;
+	// }
 
 	&_vertical {
-		flex-direction: row;
-
-		& > div {
-			flex: 1;
-			height: 157px;
+		&:not(.news_superhero) {
+			max-width: 560px;
 		}
+		// flex-direction: row;
 
-		& .p-24 {
-			padding: 16px;
-		}
+		// & > div {
+		// 	flex: 1;
+		// 	height: 157px;
+		// }
+
+		// & .p-24 {
+		// 	padding: 16px;
+		// }
 
 		// & h4 {
 		// 	@include text-overflow(1);
 		// }
 
-		& h4 {
-			@include text-l;
-		}
+		// & h4 {
+		// 	@include text-l;
+		// }
 
-		& .ph-24 {
-			padding: 16px;
-		}
+		// & .ph-24 {
+		// 	padding: 16px;
+		// }
 	}
 }
 // .h-100 {

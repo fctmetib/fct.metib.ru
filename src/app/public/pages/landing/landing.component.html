@@ -454,7 +454,52 @@
 		></mib-skeleton>
 	</ng-container>
 	<ng-template #newsPanel>
-		<div class="container flex gap-16">
+		<div class="flex">
+			<mib-news-panel
+				[superHero]="true"
+				[newsTitle]="getAdvancedNews[0].Title"
+				[newsText]="getAdvancedNews[0].Text"
+				[newsDate]="getAdvancedNews[0].Date | date : 'dd.MM.yyyy'"
+				linkText="Открыть новость"
+				[showPreview]="getAdvancedNews[0].Image"
+				[link]="'/news/' + getAdvancedNews[0].ID"
+				[altText]="getAdvancedNews[0].Title"
+			></mib-news-panel>
+		</div>
+		<mib-spacing type="m"></mib-spacing>
+		<div class="flex gap-16">
+			<mib-news-panel
+				[vertical]="true"
+				[showLink]="true"
+				[newsTitle]="getAdvancedNews[1]?.Title"
+				[newsDate]="getAdvancedNews[1]?.Date | date : 'dd.MM.yyyy'"
+				linkText="Подробнее"
+				[showPreview]="getAdvancedNews[1].Image"
+				[link]="'/news/' + getAdvancedNews[1].ID"
+				[altText]="getAdvancedNews[1]?.Title"
+			></mib-news-panel>
+			<mib-news-panel
+				[vertical]="true"
+				[showLink]="true"
+				[newsTitle]="getAdvancedNews[2]?.Title"
+				[newsDate]="getAdvancedNews[2]?.Date | date : 'dd.MM.yyyy'"
+				linkText="Подробнее"
+				[showPreview]="getAdvancedNews[2].Image"
+				[link]="'/news/' + getAdvancedNews[2].ID"
+				[altText]="getAdvancedNews[2]?.Title"
+			></mib-news-panel>
+			<mib-news-panel
+				[vertical]="true"
+				[showLink]="true"
+				[newsTitle]="getAdvancedNews[3]?.Title"
+				[newsDate]="getAdvancedNews[3]?.Date | date : 'dd.MM.yyyy'"
+				linkText="Подробнее"
+				[showPreview]="getAdvancedNews[3].Image"
+				[link]="'/news/' + getAdvancedNews[3].ID"
+				[altText]="getAdvancedNews[3]?.Title"
+			></mib-news-panel>
+		</div>
+		<!-- <div class="container flex gap-16">
 			<mib-news-panel
 				class="desktop-pannel flex flex_grow"
 				[newsTitle]="getAdvancedNews[0].Title"
@@ -493,7 +538,7 @@
 					[altText]="getAdvancedNews[3]?.Title"
 				></mib-news-panel>
 			</div>
-		</div>
+		</div> -->
 	</ng-template>
 	<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
 	<div class="press-btn flex flex_justify-center">

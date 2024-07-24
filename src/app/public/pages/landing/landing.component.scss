@@ -624,21 +624,25 @@
 }
 
 .press {
-	.container {
-		@media (max-width: 762px) {
-			flex-direction: column;
-		}
+	max-width: 1440px;
+	margin: 0 auto;
+	padding: 0 152px;
+	// .container {
+	// 	@media (max-width: 762px) {
+	// 		flex-direction: column;
+	// 	}
 
-		@media (max-width: 576px) {
-			padding: 0 16px;
+	// 	@media (max-width: 576px) {
 
-			& .desktop-pannel {
-				display: none;
-			}
-		}
-	}
+	// 		& .desktop-pannel {
+	// 			display: none;
+	// 		}
+	// 	}
+	// }
 
 	@media (max-width: 576px) {
+		padding: 0 16px;
+
 		& .press-btn {
 			padding: 0 16px;
 			& mib-button {

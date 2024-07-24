@@ -142,7 +142,6 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	public defaultSkeleton: Properties = {
 		borderRadius: '8px',
-		width: '1136px',
 		height: '509px',
 		margin: '0 auto'
 	}
@@ -225,7 +224,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 					).pipe(
 						tap(data => {
 							this.getAdvancedNews = data
-							// console.log('data :>> ', data)
+							console.log('data :>> ', data)
 						})
 					)
 				),

@@ -7,12 +7,15 @@ import {Component, EventEmitter, Input, Output} from '@angular/core'
 })
 export class NewsPanelComponent {
 	@Input() vertical: boolean = true
+	@Input() superHero: boolean = false
+	@Input() showLink: boolean = false
 	@Input() linkText: string = ''
 	@Input() link: string = ''
 	@Input() showCategories: boolean = false
 	@Input() isAdmin: boolean = false
 	@Input() showPreview: string = ''
 	@Input() newsTitle: string = ''
+	@Input() newsText: string = ''
 	@Input() newsDate: string = ''
 	@Input() altText: string = ''
 	@Output() onclick = new EventEmitter()
@@ -21,7 +24,8 @@ export class NewsPanelComponent {
 
 	get classes() {
 		return {
-			[`news_vertical`]: !this.vertical,
+			[`news_vertical`]: this.vertical,
+			[`news_superhero`]: this.superHero,
 			[`news_showPreview`]: this.showPreview
 		}
 	}
