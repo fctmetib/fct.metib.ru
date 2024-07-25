@@ -1,16 +1,25 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, OnDestroy, OnInit} from '@angular/core'
 import {NewsService} from '../../service/news.service'
-import {BehaviorSubject, finalize, map, switchMap, tap, zip} from 'rxjs'
+import {
+	BehaviorSubject,
+	finalize,
+	map,
+	Subscription,
+	switchMap,
+	tap,
+	zip
+} from 'rxjs'
 import {AdvancedNewsInterface} from '../../type/news.interface'
 import {Properties} from 'csstype'
 import {ToolsService} from 'src/app/shared/services/tools.service'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
 @Component({
 	selector: 'news',
 	styleUrls: ['./news.component.scss'],
 	templateUrl: 'news.component.html'
 })
-export class NewsComponent implements OnInit {
+export class NewsComponent implements OnInit, OnDestroy {
 	datas = [
 		{
 			id: 1,
@@ -71,13 +80,21 @@ export class NewsComponent implements OnInit {
 	public newsNumberCount: number = 5
 	public getAdvancedNews: AdvancedNewsInterface[]
 
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+
 	constructor(
 		private newsService: NewsService,
-		public toolsService: ToolsService
+		public toolsService: ToolsService,
+		public breakpointService: BreakpointObserverService
 	) {}
 
 	ngOnInit(): void {
 		this.getCurrentNews()
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
 	}
 
 	public getCurrentNews() {
@@ -103,45 +120,8 @@ export class NewsComponent implements OnInit {
 			)
 			.subscribe()
 	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
+	}
 }
-
-// import { environment } from 'src/environments/environment';
-// import { Component, OnDestroy, OnInit } from '@angular/core';
-// import { ActivatedRoute } from '@angular/router';
-// import { Subscription } from 'rxjs';
-// import { NewsService } from '../../service/news.service';
-// import { NewsInterface } from '../../type/news.interface';
-// import { Title } from '@angular/platform-browser';
-
-// @Component({
-//   selector: 'news',
-//   styleUrls: ['./news.component.scss'],
-//   templateUrl: 'news.component.html',
-// })
-// export class NewsComponent implements OnInit, OnDestroy {
-//   private subscription$: Subscription = new Subscription();
-
-//   public imageSrc = '';
-//   public currentNews: NewsInterface;
-
-//   constructor(
-//     private readonly activatedRoute: ActivatedRoute,
-//     private readonly newsService: NewsService,
-//     private readonly titleService: Title
-//   ) { }
-
-//   public ngOnInit(): void {
-//     let id = this.activatedRoute.snapshot.params.id;
-//     this.subscription$.add(
-//       this.newsService.getNewsById(id).subscribe((newsResponse: NewsInterface): void => {
-//         this.titleService.setTitle(newsResponse.Title);
-//         this.currentNews = newsResponse;
-//         this.imageSrc = `${environment.apiUrl}/news/${this.currentNews.ID}/image`;
-//       })
-//     );
-//   }
-
-//   public ngOnDestroy(): void {
-//     this.subscription$.unsubscribe();
-//   }
-// }
