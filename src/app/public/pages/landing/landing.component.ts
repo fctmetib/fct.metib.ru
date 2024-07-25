@@ -224,7 +224,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 					).pipe(
 						tap(data => {
 							this.getAdvancedNews = data
-							console.log('data :>> ', data)
+							// console.log('data :>> ', data)
 						})
 					)
 				),

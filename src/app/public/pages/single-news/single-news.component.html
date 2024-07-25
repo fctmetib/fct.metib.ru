@@ -1,12 +1,15 @@
 <div class="flex flex_column single">
-	<mib-spacing type="m"></mib-spacing>
+	<mib-spacing type="{{ isDesktop ? 'm' : 'xs' }}"></mib-spacing>
 	<ng-container *ngIf="loading$ | async; else singleNews">
-		<mib-skeleton [styles]="defaultSkeleton" *ngFor="let i of [1]">
+		<mib-skeleton
+			[styles]="isDesktop ? defaultSkeleton : mobileSkeleton"
+			*ngFor="let i of [1]"
+		>
 		</mib-skeleton>
 	</ng-container>
 	<ng-template #singleNews>
 		<div class="breadcrumb flex flex_column">
-			<div class="flex">
+			<div class="flex flex_wrap">
 				<mib-breadcrumb
 					class="cursor-pointer"
 					[routerLink]="['/']"
@@ -28,7 +31,7 @@
 				Опубликовано {{ getSingleNews[0].Date | date }}
 			</mib-tag>
 		</div>
-		<mib-spacing type="s"></mib-spacing>
+		<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 		<div class="flex preview">
 			<img
 				src="{{ getSingleNews[0].Image }}"
@@ -36,7 +39,7 @@
 			"
 			/>
 		</div>
-		<mib-spacing type="s"></mib-spacing>
+		<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 		<p class="text text_l c-bti-secondary">
 			{{ getSingleNews[0].Text }}
 		</p>
@@ -47,51 +50,5 @@
 			>
 		</div>
 	</ng-template>
-	<!-- <div *ngIf="loading$ | async; else data" class="flex">...ho-ho-ho</div>
-	<ng-template #data>
-	</ng-template> -->
-	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 </div>
-<!-- <div class="flex flex_column single">
-	<mib-spacing type="m"></mib-spacing>
-	<div class="flex">
-		<div class="flex flex_align-center pr-4 gap-4">
-			<span class="text text_l c-bti-tertiary">Металлинвестбанк</span>
-			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
-		</div>
-		<div class="flex flex_align-center gap-4">
-			<span class="text text_l c-bti-tertiary">Новости</span>
-			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
-		</div>
-		<div class="flex flex_align-center gap-4">
-			<span class="text text_l c-mc-default">Новость банка</span>
-		</div>
-	</div>
-	<mib-spacing type="s"></mib-spacing>
-	<h3>ПАО АКБ "Металлинвестбанк" посетил выставки</h3>
-	<mib-spacing type="xs2"></mib-spacing>
-	<div class="flex">
-		<mib-tag type="filled-secondary" size="m">
-			Опубликовано 12 декабря 2023
-		</mib-tag>
-	</div>
-	<mib-spacing type="s"></mib-spacing>
-	<div class="flex preview">
-		<img src="{{ imageSrc }}" alt="exhibition event" />
-	</div>
-	<mib-spacing type="s"></mib-spacing>
-	<p class="text text_l c-bti-secondary">
-		3 квартал выдался плодотворным. Посетили сразу три выставки: HouseHold Expo,
-		WorldFood, Мир Детства. Сотрудники банка с удовольствием посетили данные
-		выставки, консультировали всех потенциальных клиентов по вопросам
-		факторинга, рассказывали о продуктах банка. Живое общение делает работу
-		более комфортной и эффективной.
-	</p>
-	<mib-spacing type="m"></mib-spacing>
-	<div class="flex">
-		<mib-button [routerLink]="['/news']" size="m" type="filled-secondary"
-			>Вернуться назад</mib-button
-		>
-	</div>
-	<mib-spacing type="xl2"></mib-spacing>
-</div> -->

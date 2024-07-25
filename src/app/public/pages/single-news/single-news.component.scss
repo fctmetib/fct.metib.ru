@@ -2,13 +2,10 @@
 @import 'src/styles/_colors.vars';
 
 .single {
-	width: 560px;
+	max-width: 560px;
+	width: 100%;
 	min-height: calc(100vh - 444px);
 	margin: 0 auto;
-
-	& .pr-4 {
-		padding-right: 4px;
-	}
 
 	& mib-icon[name='fi_chevron-right'] {
 		@include icon-size(16px);
@@ -18,5 +15,9 @@
 	& .preview {
 		border-radius: var(--main-border-radius);
 		overflow: hidden;
+	}
+
+	@media (max-width: 768px) {
+		padding: 0 16px;
 	}
 }
