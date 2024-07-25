@@ -5,17 +5,19 @@
 		</mib-skeleton>
 	</ng-container>
 	<ng-template #singleNews>
-		<div class="flex">
-			<div class="flex flex_align-center pr-4 gap-4">
-				<span class="text text_l c-bti-tertiary">Металлинвестбанк</span>
-				<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
-			</div>
-			<div class="flex flex_align-center gap-4">
-				<span class="text text_l c-bti-tertiary">Новости</span>
-				<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
-			</div>
-			<div class="flex flex_align-center gap-4">
-				<span class="text text_l c-mc-default">Новость банка</span>
+		<div class="breadcrumb flex flex_column">
+			<div class="flex">
+				<mib-breadcrumb
+					class="cursor-pointer"
+					[routerLink]="['/']"
+					text="Металлинвестбанк"
+				></mib-breadcrumb>
+				<mib-breadcrumb
+					class="cursor-pointer"
+					[routerLink]="['/news']"
+					text="Новости"
+				></mib-breadcrumb>
+				<mib-breadcrumb text="Новость банка" selected="true"></mib-breadcrumb>
 			</div>
 		</div>
 		<mib-spacing type="s"></mib-spacing>

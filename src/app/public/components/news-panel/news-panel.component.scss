@@ -142,6 +142,16 @@
 	// }
 
 	&_vertical {
+		&:hover {
+			box-shadow: var(--normal-shadow);
+		}
+
+		&:active {
+			& .regular {
+				user-select: none;
+				background-color: var(--wgr-secondary);
+			}
+		}
 		&:not(.news_superhero) {
 			max-width: 560px;
 		}

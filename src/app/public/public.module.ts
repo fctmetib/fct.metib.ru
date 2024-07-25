@@ -59,6 +59,7 @@ import {FactoringCalculatorModule} from '../shared/ui-kit/factoring-calculator/f
 import {RateCardModule} from '../shared/ui-kit/rate-card/rate-card.module'
 import {BadgeModule} from '../shared/ui-kit/badge/badge.module'
 import {RightIconModule} from '../shared/directives/right-icon/right-icon.module'
+import {BreadcrumbModule} from '../shared/ui-kit/breadcrumb/breadcrumb.module'
 
 const routes = [
 	{
@@ -147,7 +148,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		RateCardModule,
 		BadgeModule,
 		RightIconModule,
-		LeftIconModule
+		LeftIconModule,
+		BreadcrumbModule
 	],
 	exports: [RouterModule],
 	declarations: [
