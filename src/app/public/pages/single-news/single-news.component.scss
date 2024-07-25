@@ -19,5 +19,9 @@
 
 	@media (max-width: 768px) {
 		padding: 0 16px;
+
+		& mib-button {
+			max-width: 370px;
+		}
 	}
 }

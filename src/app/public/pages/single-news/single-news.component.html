@@ -44,8 +44,12 @@
 			{{ getSingleNews[0].Text }}
 		</p>
 		<mib-spacing type="m"></mib-spacing>
-		<div class="flex">
-			<mib-button [routerLink]="['/news']" size="m" type="filled-secondary"
+		<div [ngClass]="{'flex_justify-center': !isDesktop}" class="flex">
+			<mib-button
+				[ngClass]="{'w-100': !isDesktop}"
+				[routerLink]="['/news']"
+				size="m"
+				type="filled-secondary"
 				>Вернуться назад</mib-button
 			>
 		</div>
