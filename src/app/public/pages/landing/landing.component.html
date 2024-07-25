@@ -13,7 +13,7 @@
 			</p>
 			<mib-spacing type="l"></mib-spacing>
 			<div class="flex desktop-btn">
-				<mib-button size="xl" (press)="getFunding()" type="filled-primary">
+				<mib-button size="xl" (click)="scrollToElement()" type="filled-primary">
 					Получить финансирование
 				</mib-button>
 			</div>
@@ -26,7 +26,7 @@
 		<mib-swipe-text-slider></mib-swipe-text-slider>
 		<mib-spacing type="xs"></mib-spacing>
 		<div class="flex flex_justify-center">
-			<mib-button size="l" (press)="getFunding()" type="filled-primary">
+			<mib-button size="l" (click)="scrollToElement()" type="filled-primary">
 				Получить финансирование
 			</mib-button>
 		</div>
@@ -213,6 +213,7 @@
 							<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 							<div class="flex">
 								<mib-button
+									(click)="scrollToElement()"
 									size="{{ isDesktop ? 'l' : 'm' }}"
 									type="filled-primary"
 									>Далее
@@ -272,7 +273,11 @@
 			>
 				<mib-spacing type="s"></mib-spacing>
 				<div class="flex">
-					<mib-button size="m" type="filled-primary">
+					<mib-button
+						(click)="scrollToElement()"
+						size="m"
+						type="filled-primary"
+					>
 						Получить консультацию
 					</mib-button>
 				</div>
@@ -324,7 +329,7 @@
 	</div>
 	<mib-spacing type="xl2"></mib-spacing>
 </section>
-<section class="requests">
+<section #scrollTarget class="requests">
 	<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 	<div class="container flex gap-16">
 		<div class="requests-form flex flex_column flex_grow">
@@ -500,55 +505,10 @@
 				[altText]="getAdvancedNews[3]?.Title"
 			></mib-news-panel>
 		</div>
-		<!-- <div class="container flex gap-16">
-			<mib-news-panel
-				class="desktop-pannel flex flex_grow"
-				[newsTitle]="getAdvancedNews[0].Title"
-				[newsDate]="getAdvancedNews[0].Date | date : 'dd.MM.yyyy'"
-				linkText="Открыть новость"
-				[showPreview]="getAdvancedNews[0].Image"
-				[link]="'/news/' + getAdvancedNews[0].ID"
-				[altText]="getAdvancedNews[0].Title"
-			></mib-news-panel>
-			<div class="flex flex_grow flex_column gap-16">
-				<mib-news-panel
-					[vertical]="isDesktop ? false : true"
-					[newsTitle]="getAdvancedNews[1]?.Title"
-					[newsDate]="getAdvancedNews[1]?.Date | date : 'dd.MM.yyyy'"
-					linkText="Подробнее"
-					[showPreview]="getAdvancedNews[1].Image"
-					[link]="'/news/' + getAdvancedNews[1].ID"
-					[altText]="getAdvancedNews[1]?.Title"
-				></mib-news-panel>
-				<mib-news-panel
-					[vertical]="isDesktop ? false : true"
-					[newsTitle]="getAdvancedNews[2]?.Title"
-					[newsDate]="getAdvancedNews[2]?.Date | date : 'dd.MM.yyyy'"
-					linkText="Подробнее"
-					[showPreview]="getAdvancedNews[2].Image"
-					[link]="'/news/' + getAdvancedNews[2].ID"
-					[altText]="getAdvancedNews[2]?.Title"
-				></mib-news-panel>
-				<mib-news-panel
-					[vertical]="isDesktop ? false : true"
-					[newsTitle]="getAdvancedNews[3]?.Title"
-					[newsDate]="getAdvancedNews[3]?.Date | date : 'dd.MM.yyyy'"
-					linkText="Подробнее"
-					[showPreview]="getAdvancedNews[3].Image"
-					[link]="'/news/' + getAdvancedNews[3].ID"
-					[altText]="getAdvancedNews[3]?.Title"
-				></mib-news-panel>
-			</div>
-		</div> -->
 	</ng-template>
 	<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
 	<div class="press-btn flex flex_justify-center">
-		<mib-button
-			size="l"
-			[routerLink]="'/news'"
-			(press)="getFunding()"
-			type="filled-secondary"
-		>
+		<mib-button size="l" [routerLink]="'/news'" type="filled-secondary">
 			Показать больше
 		</mib-button>
 	</div>

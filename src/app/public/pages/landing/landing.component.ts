@@ -157,6 +157,9 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	private subscriptions = new Subscription()
 
+	@ViewChild('scrollTarget', {static: true}) scrollTarget!: ElementRef
+	@ViewChild('tagsContainer', {static: true}) tagsContainer: ElementRef
+
 	constructor(
 		private newsService: NewsService,
 		public breakpointService: BreakpointObserverService
@@ -169,13 +172,27 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			.subscribe(b => (this.isDesktop = b))
 	}
 
-	@ViewChild('tagsContainer', {static: true}) tagsContainer: ElementRef
-
 	ngAfterViewInit() {
 		this.updateShadows()
 		this.tagsContainer.nativeElement.addEventListener('scroll', () =>
 			this.updateShadows()
 		)
+	}
+
+	scrollToElement(): void {
+		this.scrollTarget.nativeElement.scrollIntoView({
+			behavior: 'smooth',
+			block: 'center'
+		})
+		// const elementPosition =
+		// 	this.scrollTarget.nativeElement.getBoundingClientRect().top +
+		// 	window.pageYOffset
+		// const offset = 65
+
+		// window.scrollTo({
+		// 	top: elementPosition - offset,
+		// 	behavior: 'smooth'
+		// })
 	}
 
 	onSwipe(event: any) {
