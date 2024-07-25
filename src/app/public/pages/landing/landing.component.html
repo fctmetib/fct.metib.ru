@@ -456,7 +456,7 @@
 	<ng-template #newsPanel>
 		<div class="flex">
 			<mib-news-panel
-				[superHero]="true"
+				[superHero]="isDesktop ? true : false"
 				[newsTitle]="getAdvancedNews[0].Title"
 				[newsText]="getAdvancedNews[0].Text"
 				[newsDate]="getAdvancedNews[0].Date | date : 'dd.MM.yyyy'"
@@ -467,10 +467,10 @@
 			></mib-news-panel>
 		</div>
 		<mib-spacing type="m"></mib-spacing>
-		<div class="flex gap-16">
+		<div [ngClass]="{flex_column: !isDesktop}" class="flex gap-16">
 			<mib-news-panel
-				[vertical]="true"
-				[showLink]="true"
+				[vertical]="isDesktop ? true : false"
+				[showLink]="isDesktop ? true : false"
 				[newsTitle]="getAdvancedNews[1]?.Title"
 				[newsDate]="getAdvancedNews[1]?.Date | date : 'dd.MM.yyyy'"
 				linkText="Подробнее"
@@ -479,8 +479,8 @@
 				[altText]="getAdvancedNews[1]?.Title"
 			></mib-news-panel>
 			<mib-news-panel
-				[vertical]="true"
-				[showLink]="true"
+				[vertical]="isDesktop ? true : false"
+				[showLink]="isDesktop ? true : false"
 				[newsTitle]="getAdvancedNews[2]?.Title"
 				[newsDate]="getAdvancedNews[2]?.Date | date : 'dd.MM.yyyy'"
 				linkText="Подробнее"
@@ -489,6 +489,7 @@
 				[altText]="getAdvancedNews[2]?.Title"
 			></mib-news-panel>
 			<mib-news-panel
+				[style.display]="isDesktop ? 'flex' : 'none'"
 				[vertical]="true"
 				[showLink]="true"
 				[newsTitle]="getAdvancedNews[3]?.Title"
