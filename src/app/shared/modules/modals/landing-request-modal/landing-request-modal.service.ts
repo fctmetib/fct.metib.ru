@@ -9,7 +9,10 @@ import {modalConfig} from 'src/app/shared/ui-kit/modal/modal.tools'
 export class LandingRequestModalService {
 	constructor(private dialog: MatDialog) {}
 
-	open(): MatDialogRef<LandingRequestModalComponent> {
-		return this.dialog.open(LandingRequestModalComponent, modalConfig(480))
+	open(data: string): MatDialogRef<LandingRequestModalComponent> {
+		return this.dialog.open(
+			LandingRequestModalComponent,
+			modalConfig(400, data)
+		)
 	}
 }

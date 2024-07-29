@@ -181,8 +181,9 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		)
 	}
 
-	openLandingRequestModal() {
-		this.landingRequestModalService.open()
+	openLandingRequestModal(data) {
+		console.log('data :>> ', data)
+		this.landingRequestModalService.open(data)
 	}
 
 	onSwipe(event: any) {

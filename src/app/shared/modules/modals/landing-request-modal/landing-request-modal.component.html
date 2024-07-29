@@ -1,29 +1,61 @@
-<mib-modal class="landing">
-	<mib-modal-header
-		(onClose)="dialogRef.close()"
-		title="Металлинвестбанк факторинг"
-	>
+<mib-modal [formGroup]="form" class="landing">
+	<mib-modal-header (onClose)="dialogRef.close()" title="{{ data }}">
 	</mib-modal-header>
 	<mib-spacing type="xs"></mib-spacing>
 	<div class="flex flex_column gap-12">
 		<mib-input>
-			<input size="l" styleType="filled-secondary" mibInput />
-			<ng-container mibLabel>имя</ng-container>
+			<input size="l" type="text" styleType="filled-secondary" mibInput />
+			<ng-container mibLabel>Ваш покупатель/заказчик</ng-container>
 		</mib-input>
 		<mib-input class="flex_grow">
-			<input size="l" styleType="filled-secondary" mibInput />
-			<ng-container mibLabel>телефон</ng-container>
+			<input size="l" type="text" styleType="filled-secondary" mibInput />
+			<ng-container mibLabel>Имя</ng-container>
 		</mib-input>
 		<mib-input class="flex_grow">
-			<input size="l" styleType="filled-secondary" mibInput />
-			<ng-container mibLabel>почта</ng-container>
+			<input
+				size="l"
+				type="tel"
+				mask="+7-999-999-99-99"
+				styleType="filled-secondary"
+				mibInput
+			/>
+			<ng-container mibLabel>Телефон</ng-container>
 		</mib-input>
+		<mib-input class="flex_grow">
+			<input size="l" type="email" styleType="filled-secondary" mibInput />
+			<ng-container mibLabel>Электронная почта</ng-container>
+		</mib-input>
+		<mib-input class="flex_grow">
+			<input
+				size="l"
+				type="text"
+				minlength="10"
+				maxlength="12"
+				styleType="filled-secondary"
+				mibInput
+			/>
+			<ng-container mibLabel>ИНН Вашей компании</ng-container>
+		</mib-input>
+		<mib-input class="flex_grow">
+			<input size="l" type="text" styleType="filled-secondary" mibInput />
+			<ng-container mibLabel>Ваш комментарий</ng-container>
+		</mib-input>
+	</div>
+	<mib-spacing type="s"></mib-spacing>
+	<div class="flex gap-12">
+		<mib-checkbox formControlName="agree" class="pt-4"> </mib-checkbox>
+		<span class="text text_m c-bti-tertiary">
+			Пожалуйста подтвердите Ваше согласие на обработку персональных данных
+		</span>
 	</div>
 	<mib-spacing type="m"></mib-spacing>
 	<mib-modal-footer>
-		<mib-button>Отправить заявку</mib-button>
-		<mib-button (press)="dialogRef.close()" type="filled-secondary"
-			>Закрыть</mib-button
+		<mib-button
+			[disabled]="!form.get('agree').value"
+			(press)="dialogRef.close()"
+			class="w-100"
+			size="l"
+			>Отправить</mib-button
 		>
 	</mib-modal-footer>
 </mib-modal>

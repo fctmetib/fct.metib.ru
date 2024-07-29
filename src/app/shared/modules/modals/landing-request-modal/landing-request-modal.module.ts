@@ -7,6 +7,8 @@ import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {LabelModule} from 'src/app/shared/directives/label/label.module'
+import {CheckboxModule} from 'src/app/shared/ui-kit/checkbox/checkbox.module'
+import {ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
 	declarations: [LandingRequestModalComponent],
@@ -17,7 +19,9 @@ import {LabelModule} from 'src/app/shared/directives/label/label.module'
 		SpacingModule,
 		InputModule,
 		IconModule,
-		LabelModule
+		LabelModule,
+		CheckboxModule,
+		ReactiveFormsModule
 	]
 })
 export class LandingRequestModalModule {}
