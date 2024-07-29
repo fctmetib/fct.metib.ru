@@ -60,6 +60,7 @@ import {RateCardModule} from '../shared/ui-kit/rate-card/rate-card.module'
 import {BadgeModule} from '../shared/ui-kit/badge/badge.module'
 import {RightIconModule} from '../shared/directives/right-icon/right-icon.module'
 import {BreadcrumbModule} from '../shared/ui-kit/breadcrumb/breadcrumb.module'
+import {LandingRequestModalModule} from '../shared/modules/modals/landing-request-modal/landing-request-modal.module'
 
 const routes = [
 	{
@@ -149,7 +150,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		BadgeModule,
 		RightIconModule,
 		LeftIconModule,
-		BreadcrumbModule
+		BreadcrumbModule,
+		LandingRequestModalModule
 	],
 	exports: [RouterModule],
 	declarations: [

@@ -1,0 +1,29 @@
+<mib-modal class="landing">
+	<mib-modal-header
+		(onClose)="dialogRef.close()"
+		title="Металлинвестбанк факторинг"
+	>
+	</mib-modal-header>
+	<mib-spacing type="xs"></mib-spacing>
+	<div class="flex flex_column gap-12">
+		<mib-input>
+			<input size="l" styleType="filled-secondary" mibInput />
+			<ng-container mibLabel>имя</ng-container>
+		</mib-input>
+		<mib-input class="flex_grow">
+			<input size="l" styleType="filled-secondary" mibInput />
+			<ng-container mibLabel>телефон</ng-container>
+		</mib-input>
+		<mib-input class="flex_grow">
+			<input size="l" styleType="filled-secondary" mibInput />
+			<ng-container mibLabel>почта</ng-container>
+		</mib-input>
+	</div>
+	<mib-spacing type="m"></mib-spacing>
+	<mib-modal-footer>
+		<mib-button>Отправить заявку</mib-button>
+		<mib-button (press)="dialogRef.close()" type="filled-secondary"
+			>Закрыть</mib-button
+		>
+	</mib-modal-footer>
+</mib-modal>

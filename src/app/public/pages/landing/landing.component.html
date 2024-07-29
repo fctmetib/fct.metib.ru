@@ -13,7 +13,11 @@
 			</p>
 			<mib-spacing type="l"></mib-spacing>
 			<div class="flex desktop-btn">
-				<mib-button size="xl" (click)="scrollToElement()" type="filled-primary">
+				<mib-button
+					size="xl"
+					(click)="openLandingRequestModal()"
+					type="filled-primary"
+				>
 					Получить финансирование
 				</mib-button>
 			</div>
@@ -26,7 +30,11 @@
 		<mib-swipe-text-slider></mib-swipe-text-slider>
 		<mib-spacing type="xs"></mib-spacing>
 		<div class="flex flex_justify-center">
-			<mib-button size="l" (click)="scrollToElement()" type="filled-primary">
+			<mib-button
+				size="l"
+				(click)="openLandingRequestModal()"
+				type="filled-primary"
+			>
 				Получить финансирование
 			</mib-button>
 		</div>
@@ -213,7 +221,7 @@
 							<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 							<div class="flex">
 								<mib-button
-									(click)="scrollToElement()"
+									(click)="openLandingRequestModal()"
 									size="{{ isDesktop ? 'l' : 'm' }}"
 									type="filled-primary"
 									>Далее
@@ -274,7 +282,7 @@
 				<mib-spacing type="s"></mib-spacing>
 				<div class="flex">
 					<mib-button
-						(click)="scrollToElement()"
+						(click)="openLandingRequestModal()"
 						size="m"
 						type="filled-primary"
 					>

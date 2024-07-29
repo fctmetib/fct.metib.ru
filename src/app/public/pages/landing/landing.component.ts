@@ -21,6 +21,7 @@ import {
 import {AdvancedNewsInterface, NewsInterface} from '../../type/news.interface'
 import {Properties} from 'csstype'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import {LandingRequestModalService} from 'src/app/shared/modules/modals/landing-request-modal/landing-request-modal.service'
 
 @Component({
 	selector: 'mib-landing',
@@ -162,7 +163,8 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	constructor(
 		private newsService: NewsService,
-		public breakpointService: BreakpointObserverService
+		public breakpointService: BreakpointObserverService,
+		public landingRequestModalService: LandingRequestModalService
 	) {}
 
 	ngOnInit(): void {
@@ -179,20 +181,8 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		)
 	}
 
-	scrollToElement(): void {
-		this.scrollTarget.nativeElement.scrollIntoView({
-			behavior: 'smooth',
-			block: 'center'
-		})
-		// const elementPosition =
-		// 	this.scrollTarget.nativeElement.getBoundingClientRect().top +
-		// 	window.pageYOffset
-		// const offset = 65
-
-		// window.scrollTo({
-		// 	top: elementPosition - offset,
-		// 	behavior: 'smooth'
-		// })
+	openLandingRequestModal() {
+		this.landingRequestModalService.open()
 	}
 
 	onSwipe(event: any) {
