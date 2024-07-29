@@ -4,40 +4,95 @@
 	<mib-spacing type="xs"></mib-spacing>
 	<div class="flex flex_column gap-12">
 		<mib-input>
-			<input size="l" type="text" styleType="filled-secondary" mibInput />
+			<input
+				size="l"
+				formControlName="agent"
+				type="text"
+				styleType="filled-secondary"
+				mibInput
+			/>
 			<ng-container mibLabel>Ваш покупатель/заказчик</ng-container>
 		</mib-input>
-		<mib-input class="flex_grow">
-			<input size="l" type="text" styleType="filled-secondary" mibInput />
-			<ng-container mibLabel>Имя</ng-container>
-		</mib-input>
+		<div
+			class="text text_m c-bti-tertiarty"
+			*ngIf="form.get('agent').invalid && form.get('agent').touched"
+		>
+			* Заполните поле.
+		</div>
 		<mib-input class="flex_grow">
 			<input
 				size="l"
+				formControlName="name"
+				type="text"
+				styleType="filled-secondary"
+				mibInput
+			/>
+			<ng-container mibLabel>Имя</ng-container>
+		</mib-input>
+		<div
+			class="text text_m c-bti-tertiarty"
+			*ngIf="form.get('name').invalid && form.get('name').touched"
+		>
+			* Заполните поле.
+		</div>
+		<mib-input class="flex_grow">
+			<input
+				formControlName="phone"
+				size="l"
+				prefix="+"
+				mask="0 (000) 000-00-00"
 				type="tel"
-				mask="+7-999-999-99-99"
 				styleType="filled-secondary"
 				mibInput
 			/>
 			<ng-container mibLabel>Телефон</ng-container>
 		</mib-input>
+		<div
+			class="text text_m c-bti-tertiarty"
+			*ngIf="form.get('phone').invalid && form.get('phone').touched"
+		>
+			* Заполните поле в указанном формате.
+		</div>
 		<mib-input class="flex_grow">
-			<input size="l" type="email" styleType="filled-secondary" mibInput />
+			<input
+				size="l"
+				formControlName="email"
+				type="email"
+				styleType="filled-secondary"
+				mibInput
+			/>
 			<ng-container mibLabel>Электронная почта</ng-container>
 		</mib-input>
+		<div
+			class="text text_m c-bti-tertiarty"
+			*ngIf="form.get('email').invalid && form.get('email').touched"
+		>
+			* Укажите корректную почту.
+		</div>
 		<mib-input class="flex_grow">
 			<input
 				size="l"
 				type="text"
-				minlength="10"
-				maxlength="12"
+				formControlName="inn"
 				styleType="filled-secondary"
 				mibInput
 			/>
 			<ng-container mibLabel>ИНН Вашей компании</ng-container>
 		</mib-input>
+		<div
+			class="text text_m c-bti-tertiarty"
+			*ngIf="form.get('inn').invalid && form.get('inn').touched"
+		>
+			* Укажите ИНН.
+		</div>
 		<mib-input class="flex_grow">
-			<input size="l" type="text" styleType="filled-secondary" mibInput />
+			<input
+				size="l"
+				formControlName="comment"
+				type="text"
+				styleType="filled-secondary"
+				mibInput
+			/>
 			<ng-container mibLabel>Ваш комментарий</ng-container>
 		</mib-input>
 	</div>
@@ -45,16 +100,22 @@
 	<div class="flex gap-12">
 		<mib-checkbox formControlName="agree" class="pt-4"> </mib-checkbox>
 		<span class="text text_m c-bti-tertiary">
-			Пожалуйста подтвердите Ваше согласие на обработку персональных данных
+			Пожалуйста подтвердите Ваше согласие на обработку персональных данных.
 		</span>
+	</div>
+	<div
+		class="text text_m c-bti-tertiarty"
+		*ngIf="form.get('agree').invalid && form.get('agree').touched"
+	>
+		* Подтвердите согласие на обработку данных
 	</div>
 	<mib-spacing type="m"></mib-spacing>
 	<mib-modal-footer>
 		<mib-button
-			[disabled]="!form.get('agree').value"
-			(press)="dialogRef.close()"
+			[disabled]="form.invalid"
 			class="w-100"
 			size="l"
+			(press)="onSubmit()"
 			>Отправить</mib-button
 		>
 	</mib-modal-footer>

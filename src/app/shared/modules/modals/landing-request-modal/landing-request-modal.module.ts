@@ -9,6 +9,7 @@ import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {LabelModule} from 'src/app/shared/directives/label/label.module'
 import {CheckboxModule} from 'src/app/shared/ui-kit/checkbox/checkbox.module'
 import {ReactiveFormsModule} from '@angular/forms'
+import {NgxMaskModule} from 'ngx-mask'
 
 @NgModule({
 	declarations: [LandingRequestModalComponent],
@@ -21,7 +22,8 @@ import {ReactiveFormsModule} from '@angular/forms'
 		IconModule,
 		LabelModule,
 		CheckboxModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		NgxMaskModule.forRoot()
 	]
 })
 export class LandingRequestModalModule {}
