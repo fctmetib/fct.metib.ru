@@ -1,12 +1,16 @@
 <mib-modal [formGroup]="form" class="landing">
-	<mib-modal-header (onClose)="dialogRef.close()" title="{{ data }}">
+	<mib-modal-header
+		[showClose]="false"
+		(onClose)="dialogRef.close()"
+		title="{{ data }}"
+	>
 	</mib-modal-header>
 	<mib-spacing type="xs"></mib-spacing>
 	<div class="flex flex_column gap-12">
 		<mib-input>
 			<input
 				size="l"
-				formControlName="agent"
+				formControlName="Agent"
 				type="text"
 				styleType="filled-secondary"
 				mibInput
@@ -15,14 +19,14 @@
 		</mib-input>
 		<div
 			class="text text_m c-bti-tertiarty"
-			*ngIf="form.get('agent').invalid && form.get('agent').touched"
+			*ngIf="form.get('Agent').invalid && form.get('Agent').touched"
 		>
 			* Заполните поле.
 		</div>
 		<mib-input class="flex_grow">
 			<input
 				size="l"
-				formControlName="name"
+				formControlName="Name"
 				type="text"
 				styleType="filled-secondary"
 				mibInput
@@ -31,13 +35,13 @@
 		</mib-input>
 		<div
 			class="text text_m c-bti-tertiarty"
-			*ngIf="form.get('name').invalid && form.get('name').touched"
+			*ngIf="form.get('Name').invalid && form.get('Name').touched"
 		>
 			* Заполните поле.
 		</div>
 		<mib-input class="flex_grow">
 			<input
-				formControlName="phone"
+				formControlName="Phone"
 				size="l"
 				prefix="+"
 				mask="0 (000) 000-00-00"
@@ -49,14 +53,14 @@
 		</mib-input>
 		<div
 			class="text text_m c-bti-tertiarty"
-			*ngIf="form.get('phone').invalid && form.get('phone').touched"
+			*ngIf="form.get('Phone').invalid && form.get('Phone').touched"
 		>
 			* Заполните поле в указанном формате.
 		</div>
 		<mib-input class="flex_grow">
 			<input
 				size="l"
-				formControlName="email"
+				formControlName="Email"
 				type="email"
 				styleType="filled-secondary"
 				mibInput
@@ -65,7 +69,7 @@
 		</mib-input>
 		<div
 			class="text text_m c-bti-tertiarty"
-			*ngIf="form.get('email').invalid && form.get('email').touched"
+			*ngIf="form.get('Email').invalid && form.get('Email').touched"
 		>
 			* Укажите корректную почту.
 		</div>
@@ -73,7 +77,7 @@
 			<input
 				size="l"
 				type="text"
-				formControlName="inn"
+				formControlName="INN"
 				styleType="filled-secondary"
 				mibInput
 			/>
@@ -81,14 +85,14 @@
 		</mib-input>
 		<div
 			class="text text_m c-bti-tertiarty"
-			*ngIf="form.get('inn').invalid && form.get('inn').touched"
+			*ngIf="form.get('INN').invalid && form.get('INN').touched"
 		>
 			* Укажите ИНН.
 		</div>
 		<mib-input class="flex_grow">
 			<input
 				size="l"
-				formControlName="comment"
+				formControlName="Comment"
 				type="text"
 				styleType="filled-secondary"
 				mibInput
@@ -98,14 +102,14 @@
 	</div>
 	<mib-spacing type="s"></mib-spacing>
 	<div class="flex gap-12">
-		<mib-checkbox formControlName="agree" class="pt-4"> </mib-checkbox>
+		<mib-checkbox formControlName="Agree" class="pt-4"> </mib-checkbox>
 		<span class="text text_m c-bti-tertiary">
 			Пожалуйста подтвердите Ваше согласие на обработку персональных данных.
 		</span>
 	</div>
 	<div
 		class="text text_m c-bti-tertiarty"
-		*ngIf="form.get('agree').invalid && form.get('agree').touched"
+		*ngIf="form.get('Agree').invalid && form.get('Agree').touched"
 	>
 		* Подтвердите согласие на обработку данных
 	</div>
@@ -113,6 +117,7 @@
 	<mib-modal-footer>
 		<mib-button
 			[disabled]="form.invalid"
+			[loading]="!!(isSubmitting$ | async)"
 			class="w-100"
 			size="l"
 			(press)="onSubmit()"

@@ -7,5 +7,6 @@ import {Component, EventEmitter, Input, Output} from '@angular/core'
 })
 export class ModalHeaderComponent {
 	@Input() title: string = ''
+	@Input() showClose: boolean = true
 	@Output() onClose = new EventEmitter()
 }

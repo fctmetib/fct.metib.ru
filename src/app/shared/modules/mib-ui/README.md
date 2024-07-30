@@ -295,6 +295,14 @@ ng g c shared/ui-kit/toaster/toaster --flat  --skip-tests --dry-run
 src\app\shared\services\common\accounts.service.ts
 ng g s shared/services/common/toaster --skip-tests --dry-run
 
+//  request-landing-service
+src\app\public\service
+ng g s public/service/request-landing-service --skip-tests --dry-run
+
+//  request-landing-interface
+src\app\public\type
+ng g i public/type/request-landing.interface  --dry-run
+
 // interface
 src\app\shared\types\common
 ng g i shared/types/common/toaster  --dry-run

@@ -1,6 +1,11 @@
 <div class="modal-header flex flex_align-center gap-8">
 	<h4 class="flex_grow">{{ title }}</h4>
-	<mib-button size="m" (press)="onClose.emit()" type="ghost-secondary">
+	<mib-button
+		*ngIf="showClose"
+		size="m"
+		(press)="onClose.emit()"
+		type="ghost-secondary"
+	>
 		<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
 	</mib-button>
 </div>
