@@ -31,7 +31,8 @@ export class LandingRequestModalComponent implements OnInit {
 
 	private initForms() {
 		this.form = this.fb.group({
-			Agent: ['', [Validators.required, Validators.minLength(2)]],
+			FormName: ['Сайт'],
+			Agent: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
 			Name: ['', [Validators.required, Validators.minLength(2)]],
 			Phone: [
 				'',
@@ -44,34 +45,83 @@ export class LandingRequestModalComponent implements OnInit {
 		})
 	}
 
-	onSubmit() {
-		this.isSubmitting$.next(true)
+	private formatPhoneNumber(phoneNumber: string): string {
+		phoneNumber = phoneNumber.replace(/\D/g, '')
 
-		if (this.form.invalid) return
-		const request: RequestLandingInterface = this.form.getRawValue()
-		this.requestLandingService
-			.sendRequestData(request)
-			.pipe(
-				tap(() => {
-					this.toaster.show(
-						'success',
-						'Запрос отправлен',
-						'',
-						true,
-						false,
-						2500
-					)
-				}),
-				catchError(error => {
-					this.backendErrors$.next(error)
-					this.toaster.show('failure', 'Ошибка сервера!', '', true, false, 2500)
-					return of(error)
-				}),
-				finalize(() => {
-					this.isSubmitting$.next(false)
-					this.dialogRef.close()
-				})
-			)
-			.subscribe()
+		if (phoneNumber.length !== 11) {
+			throw new Error('Phone number must be 11 digits long.')
+		}
+
+		const country = phoneNumber[0]
+		const area = phoneNumber.substring(1, 4)
+		const local = phoneNumber.substring(4, 7)
+		const middle = phoneNumber.substring(7, 9)
+		const last = phoneNumber.substring(9, 11)
+
+		return `+${country} (${area}) ${local}-${middle}-${last}`
+	}
+
+	onSubmit() {
+		// this.isSubmitting$.next(true)
+
+		// if (this.form.invalid) return
+		// const request: RequestLandingInterface = this.form.getRawValue()
+		const rawPhoneNumber = this.form.value.Phone
+		try {
+			const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber)
+			const formData = {
+				FormName: this.form.value.FormName,
+				Name: this.form.value.Name,
+				Phone: formattedPhoneNumber,
+				Email: this.form.value.Email,
+				INN: this.form.value.INN,
+				Agent: this.form.value.Agent,
+				Component: this.form.value.Comment,
+				Agree: this.form.value.Agree
+			}
+
+			console.log('formData :>> ', formData)
+		} catch (error) {}
+
+		/* 
+					FormName: ['Сайт'],
+			Agent: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+			Name: ['', [Validators.required, Validators.minLength(2)]],
+			Phone: [
+				'',
+				[Validators.required, Validators.pattern(/^\+?[0-9]{7,15}$/)]
+			],
+			Email: ['', [Validators.required, Validators.email]],
+			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
+			Comment: [''],
+			Agree: [false, Validators.requiredTrue]
+		*/
+
+		// 	this.requestLandingService
+		// 		.sendRequestData(request)
+		// 		.pipe(
+		// 			tap(() => {
+		// 				this.toaster.show(
+		// 					'success',
+		// 					'Запрос отправлен',
+		// 					'',
+		// 					true,
+		// 					false,
+		// 					2500
+		// 				)
+		// 			}),
+		// 			catchError(error => {
+		// 				this.backendErrors$.next(error)
+		// 				this.toaster.show('failure', 'Ошибка сервера!', '', true, false, 2500)
+		// 				return of(error)
+		// 			}),
+		// 			finalize(() => {
+		// 				this.isSubmitting$.next(false)
+		// 				this.dialogRef.close()
+		// 			})
+		// 		)
+		// 		.subscribe()
+
+		this.dialogRef.close()
 	}
 }

@@ -7,22 +7,7 @@
 	</mib-modal-header>
 	<mib-spacing type="xs"></mib-spacing>
 	<div class="flex flex_column gap-12">
-		<mib-input>
-			<input
-				size="l"
-				formControlName="Agent"
-				type="text"
-				styleType="filled-secondary"
-				mibInput
-			/>
-			<ng-container mibLabel>Ваш покупатель/заказчик</ng-container>
-		</mib-input>
-		<div
-			class="text text_m c-bti-tertiarty"
-			*ngIf="form.get('Agent').invalid && form.get('Agent').touched"
-		>
-			* Заполните поле.
-		</div>
+		<input name="name" type="hidden" formControlName="FormName" />
 		<mib-input class="flex_grow">
 			<input
 				size="l"
@@ -89,16 +74,31 @@
 		>
 			* Укажите ИНН.
 		</div>
-		<mib-input class="flex_grow">
+		<mib-input>
 			<input
 				size="l"
-				formControlName="Comment"
+				formControlName="Agent"
 				type="text"
 				styleType="filled-secondary"
 				mibInput
 			/>
-			<ng-container mibLabel>Ваш комментарий</ng-container>
+			<ng-container mibLabel>Ваш контрагент</ng-container>
 		</mib-input>
+		<div
+			class="text text_m c-bti-tertiarty"
+			*ngIf="form.get('Agent').invalid && form.get('Agent').touched"
+		>
+			* Заполните поле.
+		</div>
+		<mib-textarea>
+			<ng-container mibLabel>Комментарий к запросу</ng-container>
+			<textarea
+				formControlName="Comment"
+				[maxLength]="100"
+				autosize
+				mibTextarea
+			></textarea>
+		</mib-textarea>
 	</div>
 	<mib-spacing type="s"></mib-spacing>
 	<div class="flex gap-12">

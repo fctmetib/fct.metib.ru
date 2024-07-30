@@ -10,6 +10,8 @@ import {LabelModule} from 'src/app/shared/directives/label/label.module'
 import {CheckboxModule} from 'src/app/shared/ui-kit/checkbox/checkbox.module'
 import {ReactiveFormsModule} from '@angular/forms'
 import {NgxMaskModule} from 'ngx-mask'
+import {TextareaModule} from 'src/app/shared/ui-kit/textarea/textarea.module'
+import {AutosizeModule} from 'ngx-autosize'
 
 @NgModule({
 	declarations: [LandingRequestModalComponent],
@@ -23,7 +25,9 @@ import {NgxMaskModule} from 'ngx-mask'
 		LabelModule,
 		CheckboxModule,
 		ReactiveFormsModule,
-		NgxMaskModule.forRoot()
+		NgxMaskModule.forRoot(),
+		TextareaModule,
+		AutosizeModule
 	]
 })
 export class LandingRequestModalModule {}
