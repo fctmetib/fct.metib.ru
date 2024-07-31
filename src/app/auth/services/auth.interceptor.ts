@@ -29,6 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     let bt: string;
     let cookie: string;
+    const suggesctionUrl = 'https://suggestions.dadata.ru/';
 
     if (this.auth.isAdminAuthenticated()) {
       bt = this.cookieService.get('_bt_admin');
@@ -45,12 +46,19 @@ export class AuthInterceptor implements HttpInterceptor {
       token = user.Code;
     }
 
-    request = request.clone({
-      setHeaders: {
-        //  Authorization: token ? `Token ${token}` : '',
-        Authorization: bt ? `Basic ${bt}` : '',
-      },
-    });
+    if (request.url.includes(suggesctionUrl)) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: 'Token bb7a3abe7995f91132c083549aaae9fdf332b66e'
+        },
+      });
+    } else {
+      request = request.clone({
+        setHeaders: {
+          Authorization: bt ? `Basic ${bt}` : '',
+        },
+      });
+    }
 
     return next
       .handle(request)
