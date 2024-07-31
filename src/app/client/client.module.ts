@@ -33,7 +33,7 @@ import {DropdownModule} from '../shared/ui-kit/dropdown/dropdown.module'
 import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-point.module'
 import {ClipboardModule} from '@angular/cdk/clipboard'
 import {HeaderModule} from '../shared/modules/header/header.module'
-import {ToasterModule} from '../shared/ui-kit/toaster/toaster.module'
+// import {ToasterModule} from '../shared/ui-kit/toaster/toaster.module'
 import {NotVerifyModule} from './modules/not-verify/not-verify.module'
 
 @NgModule({
@@ -62,7 +62,7 @@ import {NotVerifyModule} from './modules/not-verify/not-verify.module'
 		DropdownPointModule,
 		ClipboardModule,
 		HeaderModule,
-		ToasterModule,
+		// ToasterModule,
 		NotVerifyModule
 	],
 	declarations: [

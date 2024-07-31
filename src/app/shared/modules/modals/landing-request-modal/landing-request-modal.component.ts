@@ -1,7 +1,9 @@
+import {HttpResponse} from '@angular/common/http'
 import {Component, Inject, OnInit} from '@angular/core'
-import {FormBuilder, FormGroup, Validators} from '@angular/forms'
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {BehaviorSubject, catchError, finalize, of, tap} from 'rxjs'
+import {GetAgentRequestService} from 'src/app/public/service/get-agent-request.service'
 import {RequestLandingService} from 'src/app/public/service/request-landing.service'
 import {RequestLandingInterface} from 'src/app/public/type/request-landing.interface'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
@@ -14,25 +16,77 @@ import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 export class LandingRequestModalComponent implements OnInit {
 	form: FormGroup
 
+	public getInnRequestControl = new FormControl(null, [Validators.required])
+	public existingRequest?: any
+
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
 	public backendErrors$ = new BehaviorSubject<string>(null)
+
+	Items = [
+		{ID: 'TEST', Title: 'First Title'},
+		{ID: 2, Title: 'Second Title'},
+		{ID: 3, Title: 'Third Title'},
+		{ID: 4, Title: 'Fourth Title'},
+		{ID: 5, Title: 'Fifth Title'},
+		{ID: 6, Title: 'Sixth Title'},
+		{ID: 7, Title: 'Seventh Title'},
+		{ID: 8, Title: 'Eighth Title'},
+		{ID: 9, Title: 'Ninth Title'},
+		{ID: 10, Title: 'Tenth Title'}
+	]
 
 	constructor(
 		private fb: FormBuilder,
 		private requestLandingService: RequestLandingService,
 		private toaster: ToasterService,
+		private getAgentRequestService: GetAgentRequestService,
 		public dialogRef: MatDialogRef<LandingRequestModalComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: string
 	) {}
 
 	ngOnInit(): void {
 		this.initForms()
+		this.getAgentRequestService.getAgentData('7707083893').subscribe(
+			(response: HttpResponse<any>) => {
+				console.log('Response Body:', response.body)
+				console.log('Response Headers:', response.headers.keys())
+				response.headers.keys().forEach(key => {
+					console.log(`${key}: ${response.headers.get(key)}`)
+				})
+			},
+			error => console.log('Error:', error)
+		)
+
+		// this.getAgentRequestService
+		// 	.getAgentData('7707083893')
+		// 	.pipe(
+		// 		tap(data => {
+		// 			console.log('data :>> ', data)
+		// 		})
+		// 	)
+		// 	.subscribe()
+		// this.existingRequest
+
+		/* 
+		.subscribe(
+      (response: HttpResponse<any>) => {
+        console.log('Response Body:', response.body);
+        console.log('Response Headers:', response.headers.keys());
+        response.headers.keys().forEach(key => {
+          console.log(`${key}: ${response.headers.get(key)}`);
+        });
+      },
+      error => console.log('Error:', error)
+    );
+  }
+		*/
 	}
 
 	private initForms() {
 		this.form = this.fb.group({
 			FormName: ['Сайт'],
-			Agent: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+			// Agent: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+			Agent: ['', [Validators.required]],
 			Name: ['', [Validators.required, Validators.minLength(2)]],
 			Phone: [
 				'',
@@ -66,6 +120,7 @@ export class LandingRequestModalComponent implements OnInit {
 
 		// if (this.form.invalid) return
 		// const request: RequestLandingInterface = this.form.getRawValue()
+
 		const rawPhoneNumber = this.form.value.Phone
 		try {
 			const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber)

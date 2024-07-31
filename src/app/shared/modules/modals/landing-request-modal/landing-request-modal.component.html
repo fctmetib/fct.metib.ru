@@ -74,7 +74,7 @@
 		>
 			* Укажите ИНН.
 		</div>
-		<mib-input>
+		<!-- <mib-input>
 			<input
 				size="l"
 				formControlName="Agent"
@@ -83,13 +83,30 @@
 				mibInput
 			/>
 			<ng-container mibLabel>Ваш контрагент</ng-container>
-		</mib-input>
-		<div
+		</mib-input> -->
+		<mib-auto-complete>
+			<!-- <mib-auto-complete [formControl]="getInnRequestControl"> -->
+			<mib-input autocomplete-input>
+				<ng-container mibLabel>Ваш контрагент</ng-container>
+				<input
+					mibInput
+					formControlName="Agent"
+					styleType="filled-secondary"
+					placeholder="Выберите контрагента"
+				/>
+			</mib-input>
+			<mib-dropdown-point
+				*ngFor="let item of Items"
+				[text]="item.Title"
+				[value]="item.ID"
+			></mib-dropdown-point>
+		</mib-auto-complete>
+		<!-- <div
 			class="text text_m c-bti-tertiarty"
 			*ngIf="form.get('Agent').invalid && form.get('Agent').touched"
 		>
 			* Заполните поле.
-		</div>
+		</div> -->
 		<mib-textarea>
 			<ng-container mibLabel>Комментарий к запросу</ng-container>
 			<textarea

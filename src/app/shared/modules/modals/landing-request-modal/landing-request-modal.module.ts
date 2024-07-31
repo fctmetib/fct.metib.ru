@@ -12,6 +12,8 @@ import {ReactiveFormsModule} from '@angular/forms'
 import {NgxMaskModule} from 'ngx-mask'
 import {TextareaModule} from 'src/app/shared/ui-kit/textarea/textarea.module'
 import {AutosizeModule} from 'ngx-autosize'
+import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
+import {AutoCompleteModule} from 'src/app/shared/ui-kit/auto-complete/auto-complete.module'
 
 @NgModule({
 	declarations: [LandingRequestModalComponent],
@@ -27,7 +29,9 @@ import {AutosizeModule} from 'ngx-autosize'
 		ReactiveFormsModule,
 		NgxMaskModule.forRoot(),
 		TextareaModule,
-		AutosizeModule
+		AutosizeModule,
+		DropdownPointModule,
+		AutoCompleteModule
 	]
 })
 export class LandingRequestModalModule {}

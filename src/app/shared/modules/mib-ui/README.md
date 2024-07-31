@@ -299,6 +299,10 @@ ng g s shared/services/common/toaster --skip-tests --dry-run
 src\app\public\service
 ng g s public/service/request-landing-service --skip-tests --dry-run
 
+//  get-agent-request
+src\app\public\service
+ng g s public/service/get-agent-request --skip-tests --dry-run
+
 //  request-landing-interface
 src\app\public\type
 ng g i public/type/request-landing.interface  --dry-run

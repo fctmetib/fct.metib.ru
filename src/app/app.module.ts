@@ -21,6 +21,7 @@ import {MibCoreModule} from './core/mib-core.module'
 import {MatDialogModule} from '@angular/material/dialog'
 import {AuthService} from './auth/services/auth.service'
 import {RequestsService} from './client/modules/requests/services/requests.service'
+import {ToasterModule} from './shared/ui-kit/toaster/toaster.module'
 
 registerLocaleData(localeRu, 'ru')
 
@@ -37,7 +38,8 @@ registerLocaleData(localeRu, 'ru')
 		CookieModule.forRoot(),
 		ClientModule,
 		AuthModule,
-		MatDialogModule
+		MatDialogModule,
+		ToasterModule
 	],
 	providers: [
 		MessageService,

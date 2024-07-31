@@ -37,7 +37,7 @@ import {SelectModule} from '../shared/ui-kit/select/select.module'
 import {RadioModule} from '../shared/ui-kit/radio/radio.module'
 import {SkeletonModule} from '../shared/ui-kit/skeleton/skeleton.module'
 import {LabelModule} from '../shared/directives/label/label.module'
-import {ToasterModule} from '../shared/ui-kit/toaster/toaster.module'
+// import {ToasterModule} from '../shared/ui-kit/toaster/toaster.module'
 
 @NgModule({
 	imports: [
@@ -70,8 +70,8 @@ import {ToasterModule} from '../shared/ui-kit/toaster/toaster.module'
 		SmsConfirmationModule,
 		RadioModule,
 		SkeletonModule,
-		LabelModule,
-		ToasterModule
+		LabelModule
+		// ToasterModule
 	],
 	declarations: [
 		AuthComponent,
