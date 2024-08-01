@@ -304,7 +304,7 @@
 		{{ isShownInputs ? 'Hide' : 'Show' }}
 	</button>
 </h2>
-<div [formGroup]="form" *ngIf="isShownInputs" class="wrapper">
+<!-- <div [formGroup]="form" *ngIf="isShownInputs" class="wrapper">
 	<h3>filled-secondary</h3>
 	<mib-spacing type="l"></mib-spacing>
 	<div class="input-wrapper">
@@ -340,8 +340,8 @@
 				></mib-icon>
 			</mib-input>
 		</div>
-		<!-- {{ form.get('testPlaceholder').errors | json }} -->
-		<!-- <button (click)="lookIt()">check it</button> -->
+		{{ form.get('testPlaceholder').errors | json }}
+		<button (click)="lookIt()">check it</button>
 		<mib-input>
 			<ng-container mibLabel>Label</ng-container>
 			<input
@@ -623,7 +623,7 @@
 		</mib-input>
 	</div>
 	<mib-spacing type="l"></mib-spacing>
-</div>
+</div> -->
 
 <hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
 
@@ -1348,5 +1348,45 @@
 <mib-spacing type="xl2"></mib-spacing>
 <h2>test swipe</h2>
 <mib-test-swipe></mib-test-swipe>
+<mib-spacing type="xl2"></mib-spacing>
+<mib-spacing type="xl2"></mib-spacing>
+<h2>test autocomplete</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+	<mib-input class="flex_grow">
+		<input
+			styleType="filled-secondary"
+			formControlName="name"
+			type="text"
+			mibInput
+		/>
+		<ng-container mibLabel>Name</ng-container>
+	</mib-input>
+	<mib-input class="flex_grow">
+		<input
+			styleType="filled-secondary"
+			formControlName="email"
+			type="email"
+			mibInput
+		/>
+		<ng-container mibLabel>Email</ng-container>
+	</mib-input>
+	<mib-test-autocomplete
+		[isMulti]="true"
+		formControlName="participantAutocomplete"
+		(onMultiplyChange)="onSelectPerson($event)"
+		[options]="personsOptions"
+	>
+		<mib-input>
+			<input
+				mibInput
+				[value]="form.get('participantAutocomplete')?.value.join(', ')"
+				styleType="filled-secondary"
+			/>
+			<mib-icon mibRightIcon class="stroke" name="fi_chevron-down"></mib-icon>
+		</mib-input>
+	</mib-test-autocomplete>
+	<button type="submit" [disabled]="form.invalid">Submit</button>
+</form>
+
 <mib-spacing type="xl2"></mib-spacing>
 <mib-spacing type="xl2"></mib-spacing>

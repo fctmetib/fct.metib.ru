@@ -322,6 +322,11 @@ ng g m shared/ui-kit/test-swipe/test-swipe --flat
 ng g c shared/ui-kit/test-swipe/test-swipe  --flat  --skip-tests
  //---
 
+// test-autocomplete
+ng g m shared/ui-kit/test-autocomplete/test-autocomplete --flat
+ng g c shared/ui-kit/test-autocomplete/test-autocomplete  --flat  --skip-tests
+ //---
+
  //--- modal
 src\app\shared\ui-kit
 ng g i shared/ui-kit/modal/interfaces/modal.interface  --dry-run

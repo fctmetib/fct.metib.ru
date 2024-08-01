@@ -65,6 +65,9 @@ export class MibUiComponent implements OnInit {
 	selected: boolean = true
 
 	form: FormGroup
+	// forms: FormGroup
+
+	personsOptions = ['Person 1', 'Person 2', 'Person 3']
 
 	constructor(
 		private fb: FormBuilder,
@@ -77,21 +80,29 @@ export class MibUiComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.form = this.fb.group({
-			testPlaceholder: [
-				'',
-				[Validators.required, Validators.minLength(3), Validators.maxLength(10)]
-			],
-			testPlaceholder2: [
-				'',
-				[Validators.required, Validators.minLength(3), Validators.maxLength(10)]
-			],
-			testPlaceholder3: [
-				'',
-				[Validators.required, Validators.minLength(3), Validators.maxLength(10)]
-			]
+			name: ['', Validators.required],
+			email: ['', [Validators.required, Validators.email]],
+			participantAutocomplete: [[], Validators.required]
 		})
 
+		// this.form = this.fb.group({
+		// 	testPlaceholder: [
+		// 		'',
+		// 		[Validators.required, Validators.minLength(3), Validators.maxLength(10)]
+		// 	],
+		// 	testPlaceholder2: [
+		// 		'',
+		// 		[Validators.required, Validators.minLength(3), Validators.maxLength(10)]
+		// 	],
+		// 	testPlaceholder3: [
+		// 		'',
+		// 		[Validators.required, Validators.minLength(3), Validators.maxLength(10)]
+		// 	]
+		// })
+
 		this.lookIt()
+
+		// ---------------------
 	}
 
 	showSuccessToaster() {
@@ -156,4 +167,21 @@ export class MibUiComponent implements OnInit {
 	openRequestFailureModal() {
 		this.requestFailureModalService.open()
 	}
+	// -----------------------
+	// -----------------------
+
+	onSelectPerson(event: any) {
+		console.log('Selected Persons:', event)
+	}
+
+	onSubmit() {
+		if (this.form.valid) {
+			console.log('this.form :>> ', this.form.value)
+		} else {
+			console.log('Form is invalid')
+		}
+	}
+
+	// -----------------------
+	// -----------------------
 }

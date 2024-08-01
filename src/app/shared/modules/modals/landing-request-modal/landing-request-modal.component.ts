@@ -16,8 +16,8 @@ import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 export class LandingRequestModalComponent implements OnInit {
 	form: FormGroup
 
-	public getInnRequestControl = new FormControl(null, [Validators.required])
-	public existingRequest?: any
+	// public getInnRequestControl = new FormControl(null, [Validators.required])
+	// public existingRequest?: any
 
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
 	public backendErrors$ = new BehaviorSubject<string>(null)
@@ -46,25 +46,15 @@ export class LandingRequestModalComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.initForms()
-		this.getAgentRequestService.getAgentData('7707083893').subscribe(
-			(response: HttpResponse<any>) => {
-				console.log('Response Body:', response.body)
-				console.log('Response Headers:', response.headers.keys())
-				response.headers.keys().forEach(key => {
-					console.log(`${key}: ${response.headers.get(key)}`)
-				})
-			},
-			error => console.log('Error:', error)
-		)
 
-		// this.getAgentRequestService
-		// 	.getAgentData('7707083893')
-		// 	.pipe(
-		// 		tap(data => {
-		// 			console.log('data :>> ', data)
-		// 		})
-		// 	)
-		// 	.subscribe()
+		this.getAgentRequestService
+			.getAgentData('7707083893')
+			.pipe(
+				tap(data => {
+					console.log('data :>> ', data)
+				})
+			)
+			.subscribe()
 		// this.existingRequest
 
 		/* 

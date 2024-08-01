@@ -28,6 +28,8 @@ import {AutosizeModule} from 'ngx-autosize'
 import {LabelModule} from '../../directives/label/label.module'
 import {TestTabModule} from '../../ui-kit/test-tab/test-tab.module'
 import {TestSwipeModule} from '../../ui-kit/test-swipe/test-swipe.module'
+import {TestAutocompleteModule} from '../../ui-kit/test-autocomplete/test-autocomplete.module'
+import {RightIconModule} from '../../directives/right-icon/right-icon.module'
 
 @NgModule({
 	imports: [
@@ -59,7 +61,9 @@ import {TestSwipeModule} from '../../ui-kit/test-swipe/test-swipe.module'
 		AutosizeModule,
 		LabelModule,
 		TestTabModule,
-		TestSwipeModule
+		TestSwipeModule,
+		TestAutocompleteModule,
+		RightIconModule
 	],
 	declarations: [MibUiComponent]
 })

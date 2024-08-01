@@ -1,0 +1,7 @@
+<ng-content></ng-content>
+<ul *ngIf="options.length">
+	<li *ngFor="let option of options" (click)="toggleSelection(option)">
+		{{ option }}
+		<span *ngIf="isMulti && selectedOptions.includes(option)">✔</span>
+	</li>
+</ul>
