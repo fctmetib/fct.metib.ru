@@ -1374,16 +1374,7 @@
 		[isMulti]="true"
 		formControlName="participantAutocomplete"
 		(onMultiplyChange)="onSelectPerson($event)"
-		[options]="personsOptions"
 	>
-		<mib-input>
-			<input
-				mibInput
-				[value]="form.get('participantAutocomplete')?.value.join(', ')"
-				styleType="filled-secondary"
-			/>
-			<mib-icon mibRightIcon class="stroke" name="fi_chevron-down"></mib-icon>
-		</mib-input>
 	</mib-test-autocomplete>
 	<button type="submit" [disabled]="form.invalid">Submit</button>
 </form>

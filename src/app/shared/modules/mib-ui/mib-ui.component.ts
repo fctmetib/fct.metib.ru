@@ -171,12 +171,12 @@ export class MibUiComponent implements OnInit {
 	// -----------------------
 
 	onSelectPerson(event: any) {
-		console.log('Selected Persons:', event)
+		console.log('Selected data:', event)
 	}
 
 	onSubmit() {
 		if (this.form.valid) {
-			console.log('this.form :>> ', this.form.value)
+			console.log('this.form values :>> ', this.form.value)
 		} else {
 			console.log('Form is invalid')
 		}

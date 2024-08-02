@@ -1,7 +1,18 @@
-<ng-content></ng-content>
-<ul *ngIf="options.length">
+<mib-input>
+	<input
+		#input
+		[formControl]="control"
+		(focus)="showOptions()"
+		(blur)="hideOptions()"
+		mibInput
+		styleType="filled-secondary"
+	/>
+</mib-input>
+<div *ngIf="loading">Loading...</div>
+<ul *ngIf="!loading && showDropdown && options.length">
 	<li *ngFor="let option of options" (click)="toggleSelection(option)">
-		{{ option }}
-		<span *ngIf="isMulti && selectedOptions.includes(option)">✔</span>
+		{{ option.value }}
+		<span *ngIf="isMulti && selectedOptions.includes(option.value)">✔</span>
 	</li>
 </ul>
+<div *ngIf="!loading && noData && showDropdown">No data available</div>

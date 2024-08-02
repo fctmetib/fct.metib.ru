@@ -1,5 +1,27 @@
-import {Component, EventEmitter, forwardRef, Input, Output} from '@angular/core'
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
+import {
+	AfterViewInit,
+	Component,
+	ElementRef,
+	EventEmitter,
+	forwardRef,
+	Input,
+	Output,
+	ViewChild
+} from '@angular/core'
+import {
+	ControlValueAccessor,
+	FormControl,
+	NG_VALUE_ACCESSOR
+} from '@angular/forms'
+import {
+	debounceTime,
+	distinctUntilChanged,
+	Observable,
+	of,
+	switchMap,
+	tap
+} from 'rxjs'
+import {GetAgentRequestService} from 'src/app/public/service/get-agent-request.service'
 
 @Component({
 	selector: 'mib-test-autocomplete',
@@ -13,17 +35,52 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
 		}
 	]
 })
-export class TestAutocompleteComponent implements ControlValueAccessor {
+export class TestAutocompleteComponent
+	implements ControlValueAccessor, AfterViewInit
+{
 	@Input() isMulti: boolean = false
-	@Input() options: any[] = []
 	@Output() onMultiplyChange = new EventEmitter<any>()
+	@ViewChild('input', {static: false}) input: ElementRef
 
+	control = new FormControl()
+	options: any[] = []
 	selectedOptions: any[] = []
+	loading = false
+	noData = false
+	showDropdown = false
 	onChange: any = () => {}
 	onTouched: any = () => {}
 
+	constructor(private getAgentRequestService: GetAgentRequestService) {}
+
+	ngAfterViewInit() {
+		this.control.valueChanges
+			.pipe(
+				debounceTime(300),
+				distinctUntilChanged(),
+				tap(() => (this.loading = true)),
+				switchMap(value => this.fetchOptions(value))
+			)
+			.subscribe()
+	}
+
+	fetchOptions(query: string): Observable<any> {
+		if (!query) {
+			return of([])
+		}
+		return this.getAgentRequestService.getAgentData(query).pipe(
+			tap(data => {
+				this.options = data.suggestions || []
+				this.noData = this.options.length === 0
+				this.loading = false
+				this.showDropdown = true
+			})
+		)
+	}
+
 	writeValue(value: any): void {
 		this.selectedOptions = value || []
+		this.control.setValue(this.getSelectedOptionsText(), {emitEvent: false})
 	}
 
 	registerOnChange(fn: any): void {
@@ -35,21 +92,37 @@ export class TestAutocompleteComponent implements ControlValueAccessor {
 	}
 
 	toggleSelection(option: any) {
+		const optionValue = option.value
 		if (this.isMulti) {
-			const index = this.selectedOptions.indexOf(option)
+			const index = this.selectedOptions.indexOf(optionValue)
 			if (index >= 0) {
 				this.selectedOptions.splice(index, 1)
 			} else {
-				this.selectedOptions.push(option)
+				this.selectedOptions.push(optionValue)
 			}
 		} else {
-			this.selectedOptions = [option]
+			this.selectedOptions = [optionValue]
 		}
 		this.onChange(this.selectedOptions)
 		this.onMultiplyChange.emit(this.selectedOptions)
+		this.control.setValue(this.getSelectedOptionsText(), {emitEvent: false})
+		this.showDropdown = false
 	}
 
 	getSelectedOptionsText(): string {
-		return this.selectedOptions.map(option => option).join(', ')
+		return this.selectedOptions.join(', ')
+	}
+
+	showOptions() {
+		if (this.options.length === 0) {
+			this.noData = true
+		}
+		this.showDropdown = true
+	}
+
+	hideOptions() {
+		setTimeout(() => {
+			this.showDropdown = false
+		}, 200)
 	}
 }
