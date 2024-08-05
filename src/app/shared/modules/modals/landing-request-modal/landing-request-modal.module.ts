@@ -13,7 +13,6 @@ import {NgxMaskModule} from 'ngx-mask'
 import {TextareaModule} from 'src/app/shared/ui-kit/textarea/textarea.module'
 import {AutosizeModule} from 'ngx-autosize'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
-import {AutoCompleteModule} from 'src/app/shared/ui-kit/auto-complete/auto-complete.module'
 
 @NgModule({
 	declarations: [LandingRequestModalComponent],
@@ -30,8 +29,7 @@ import {AutoCompleteModule} from 'src/app/shared/ui-kit/auto-complete/auto-compl
 		NgxMaskModule.forRoot(),
 		TextareaModule,
 		AutosizeModule,
-		DropdownPointModule,
-		AutoCompleteModule
+		DropdownPointModule
 	]
 })
 export class LandingRequestModalModule {}

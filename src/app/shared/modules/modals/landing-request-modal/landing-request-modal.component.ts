@@ -1,8 +1,17 @@
 import {HttpResponse} from '@angular/common/http'
-import {Component, Inject, OnInit} from '@angular/core'
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core'
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
-import {BehaviorSubject, catchError, finalize, of, tap} from 'rxjs'
+import {
+	BehaviorSubject,
+	catchError,
+	debounceTime,
+	distinctUntilChanged,
+	finalize,
+	of,
+	switchMap,
+	tap
+} from 'rxjs'
 import {GetAgentRequestService} from 'src/app/public/service/get-agent-request.service'
 import {RequestLandingService} from 'src/app/public/service/request-landing.service'
 import {RequestLandingInterface} from 'src/app/public/type/request-landing.interface'
@@ -16,24 +25,10 @@ import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 export class LandingRequestModalComponent implements OnInit {
 	form: FormGroup
 
-	// public getInnRequestControl = new FormControl(null, [Validators.required])
-	// public existingRequest?: any
-
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
 	public backendErrors$ = new BehaviorSubject<string>(null)
-
-	Items = [
-		{ID: 'TEST', Title: 'First Title'},
-		{ID: 2, Title: 'Second Title'},
-		{ID: 3, Title: 'Third Title'},
-		{ID: 4, Title: 'Fourth Title'},
-		{ID: 5, Title: 'Fifth Title'},
-		{ID: 6, Title: 'Sixth Title'},
-		{ID: 7, Title: 'Seventh Title'},
-		{ID: 8, Title: 'Eighth Title'},
-		{ID: 9, Title: 'Ninth Title'},
-		{ID: 10, Title: 'Tenth Title'}
-	]
+	public options = []
+	public loading = false
 
 	constructor(
 		private fb: FormBuilder,
@@ -47,35 +42,33 @@ export class LandingRequestModalComponent implements OnInit {
 	ngOnInit(): void {
 		this.initForms()
 
-		this.getAgentRequestService
-			.getAgentData('7707083893')
-			.pipe(
-				tap(data => {
-					console.log('data :>> ', data)
-				})
+		this.form
+			.get('Agent')
+			?.valueChanges.pipe(
+				debounceTime(300),
+				distinctUntilChanged(),
+				tap(() => {
+					this.options = []
+					this.loading = true
+				}),
+				switchMap(value => this.fetchOptions(value))
 			)
-			.subscribe()
-		// this.existingRequest
+			.subscribe(options => {
+				this.options = options.suggestions || []
+				this.loading = false
+			})
+	}
 
-		/* 
-		.subscribe(
-      (response: HttpResponse<any>) => {
-        console.log('Response Body:', response.body);
-        console.log('Response Headers:', response.headers.keys());
-        response.headers.keys().forEach(key => {
-          console.log(`${key}: ${response.headers.get(key)}`);
-        });
-      },
-      error => console.log('Error:', error)
-    );
-  }
-		*/
+	fetchOptions(query: string) {
+		if (!query) {
+			return of({suggestions: []})
+		}
+		return this.getAgentRequestService.getAgentData(query)
 	}
 
 	private initForms() {
 		this.form = this.fb.group({
 			FormName: ['Сайт'],
-			// Agent: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
 			Agent: ['', [Validators.required]],
 			Name: ['', [Validators.required, Validators.minLength(2)]],
 			Phone: [
@@ -106,10 +99,9 @@ export class LandingRequestModalComponent implements OnInit {
 	}
 
 	onSubmit() {
-		// this.isSubmitting$.next(true)
+		this.isSubmitting$.next(true)
 
-		// if (this.form.invalid) return
-		// const request: RequestLandingInterface = this.form.getRawValue()
+		if (this.form.invalid) return
 
 		const rawPhoneNumber = this.form.value.Phone
 		try {
@@ -127,20 +119,6 @@ export class LandingRequestModalComponent implements OnInit {
 
 			console.log('formData :>> ', formData)
 		} catch (error) {}
-
-		/* 
-					FormName: ['Сайт'],
-			Agent: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-			Name: ['', [Validators.required, Validators.minLength(2)]],
-			Phone: [
-				'',
-				[Validators.required, Validators.pattern(/^\+?[0-9]{7,15}$/)]
-			],
-			Email: ['', [Validators.required, Validators.email]],
-			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
-			Comment: [''],
-			Agree: [false, Validators.requiredTrue]
-		*/
 
 		// 	this.requestLandingService
 		// 		.sendRequestData(request)

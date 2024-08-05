@@ -1,1 +1,35 @@
-<p>autocomplete works!</p>
+<div class="autocomplete">
+	<mib-input>
+		<input
+			required
+			style="padding-right: 40px"
+			#input
+			size="l"
+			mibInput
+			[formControl]="control"
+			(focus)="showDropdown = true"
+			(blur)="onBlur()"
+		/>
+		<ng-container mibLabel>Ваш контрагент</ng-container>
+		<mib-icon
+			class="stroke cursor-pointer"
+			mibRightIcon
+			name="fi_x"
+			*ngIf="control.value"
+			(click)="clearInput()"
+		></mib-icon>
+	</mib-input>
+	<div *ngIf="loading">Loading...</div>
+	<div class="list">
+		<ul class="flex flex_column" *ngIf="showDropdown">
+			<li
+				class="text text_m c-bti-tertiarty cursor-pointer item"
+				*ngFor="let option of options"
+				(click)="toggleSelection(option)"
+			>
+				{{ option.value }}
+			</li>
+			<li *ngIf="noData">No data found</li>
+		</ul>
+	</div>
+</div>
