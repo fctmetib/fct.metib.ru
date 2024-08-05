@@ -12,7 +12,9 @@
 		<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
 	</div>
 	<div class="flex container-xs">
-		<mib-factoring-calculator></mib-factoring-calculator>
+		<mib-factoring-calculator
+			(onPress)="openLandingRequestModal('Оставить заявку')"
+		></mib-factoring-calculator>
 	</div>
 	<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
 	<div class="flex flex_column container">
@@ -26,7 +28,7 @@
 						[description]="item?.content"
 						[features]="item?.list"
 						[extras]="item?.extra"
-						(onRate)="calculate()"
+						(onRate)="openLandingRequestModal('Рассчитать')"
 					></mib-rate-card>
 				</ng-container>
 			</div>
@@ -42,7 +44,10 @@
 					Постараемся помочь
 				</h4>
 				<mib-spacing type="xs2"></mib-spacing>
-				<div class="link-wrap flex">
+				<div
+					(click)="openLandingRequestModal('Получить консультацию')"
+					class="link-wrap flex"
+				>
 					<mib-link size="l" type="ghost-primary">
 						Получить консультацию
 					</mib-link>

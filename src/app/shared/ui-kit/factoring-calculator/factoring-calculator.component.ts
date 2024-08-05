@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, EventEmitter, OnInit, Output} from '@angular/core'
 import {FormBuilder, FormGroup} from '@angular/forms'
 
 @Component({
@@ -9,6 +9,8 @@ import {FormBuilder, FormGroup} from '@angular/forms'
 export class FactoringCalculatorComponent implements OnInit {
 	form: FormGroup
 	result: number = 0
+
+	@Output() onPress = new EventEmitter()
 
 	constructor(private fb: FormBuilder) {}
 

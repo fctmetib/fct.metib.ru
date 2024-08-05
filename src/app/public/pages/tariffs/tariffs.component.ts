@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core'
 import {Subscription} from 'rxjs'
+import {LandingRequestModalService} from 'src/app/shared/modules/modals/landing-request-modal/landing-request-modal.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
 @Component({
@@ -62,12 +63,19 @@ export class TariffsComponent implements OnInit, OnDestroy {
 		}
 	]
 
-	constructor(public breakpointService: BreakpointObserverService) {}
+	constructor(
+		public breakpointService: BreakpointObserverService,
+		public landingRequestModalService: LandingRequestModalService
+	) {}
 
 	ngOnInit(): void {
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
+	}
+
+	openLandingRequestModal(data) {
+		this.landingRequestModalService.open(data)
 	}
 
 	public calculate() {

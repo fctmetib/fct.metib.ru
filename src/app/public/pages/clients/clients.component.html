@@ -37,13 +37,16 @@
 					>
 						Заполните информацию о своей компании в Личном кабинете
 					</p>
-					<mib-link *ngIf="isDesktop; else mobileLink" [routerLink]="['/']">
+					<mib-link
+						*ngIf="isDesktop; else mobileLink"
+						[routerLink]="['/auth/login']"
+					>
 						factoring.metallinvestbank.ru
 					</mib-link>
 					<ng-template #mobileLink>
 						<div class="flex flex_column">
 							<mib-spacing type="xs2"></mib-spacing>
-							<mib-button (press)="addAgreement()" type="ghost-primary">
+							<mib-button [routerLink]="['/auth/login']" type="ghost-primary">
 								factoring.metallinvestbank.ru
 								<mib-icon
 									btn-left-icon
@@ -124,11 +127,14 @@
 			</div>
 			<mib-spacing type="xs"></mib-spacing>
 			<div [class.flex_column]="!isDesktop" class="flex gap-12">
-				<mib-button (press)="addAgreement()" type="filled-primary">
+				<mib-button (press)="downloadFile('regulation')" type="filled-primary">
 					Скачать регламент
 					<mib-icon btn-left-icon class="stroke" name="fi_download"></mib-icon>
 				</mib-button>
-				<mib-button (press)="addAgreement()" type="filled-secondary">
+				<mib-button
+					(press)="downloadFile('instruction')"
+					type="filled-secondary"
+				>
 					Скачать инструкцию
 					<mib-icon btn-left-icon class="stroke" name="fi_download"></mib-icon>
 				</mib-button>
@@ -171,7 +177,7 @@
 			<div class="flex gap-12">
 				<mib-button
 					[class.w-100]="!isDesktop"
-					(press)="addAgreement()"
+					(press)="downloadFile('contract')"
 					type="filled-secondary"
 				>
 					Скачать Договор факторинга
@@ -214,7 +220,7 @@
 			<div class="flex">
 				<mib-button
 					[class.w-100]="!isDesktop"
-					(press)="addAgreement()"
+					(press)="downloadFile('factor')"
 					type="filled-primary"
 				>
 					Установить «Фактор – Клиент»

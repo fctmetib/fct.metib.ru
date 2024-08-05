@@ -182,7 +182,6 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	openLandingRequestModal(data) {
-		console.log('data :>> ', data)
 		this.landingRequestModalService.open(data)
 	}
 

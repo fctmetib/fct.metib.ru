@@ -48,27 +48,26 @@ export class ClientsComponent implements OnInit, OnDestroy {
 			.subscribe(b => (this.isDesktop = b))
 	}
 
-	public addAgreement() {
-		console.log('agrement')
+	public downloadFile(name) {
+		let link = document.createElement('a')
+		if (name === 'factor') {
+			link.download = 'FactorClientHelp'
+			link.href = 'assets/_files/FactorClientHelp.zip'
+		} else if (name === 'contract') {
+			link.download = 'contract'
+			link.href = 'assets/_files/contract.zip'
+		} else if (name === 'instruction') {
+			link.download = 'Договор о предоставлении факторинговых услуг'
+			link.href =
+				'assets/_files/Договор о предоставлении факторинговых услуг.pdf'
+		} else {
+			link.download = 'reglament'
+			link.href = 'assets/_files/reglament.pdf'
+		}
+		link.click()
 	}
 
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe()
 	}
-
-	// public openAstralList(): void {
-	//   window.open('https://astral.ru/', '_blank');
-	// }
-
-	// public getContract(): void {
-	//   window.open(`${window.location.origin}/assets/_files/contract.zip`);
-	// }
-
-	// public getInstruction(): void {
-	//   window.open(`${window.location.origin}/assets/_files/FactorClientHelp.zip`);
-	// }
-
-	// public getReglament(): void {
-	//   window.open(`${window.location.origin}/assets/_files/reglament.pdf`);
-	// }
 }

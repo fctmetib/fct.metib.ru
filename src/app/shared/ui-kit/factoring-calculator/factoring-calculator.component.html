@@ -177,7 +177,11 @@
 						</p>
 						<mib-spacing type="s"></mib-spacing>
 						<div class="flex">
-							<mib-button size="l" type="filled-primary">
+							<mib-button
+								(press)="onPress.emit()"
+								size="l"
+								type="filled-primary"
+							>
 								Оставить заявку
 							</mib-button>
 						</div>
