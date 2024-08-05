@@ -76,11 +76,13 @@
 		>
 			* Укажите ИНН.
 		</div>
-		<mib-autocomplete formControlName="Agent" [options]="options">
+		<mib-autocomplete formControlName="Organization" [options]="options">
 		</mib-autocomplete>
 		<div
 			class="text text_m c-bti-tertiarty"
-			*ngIf="form.get('Agent').invalid && form.get('Agent').touched"
+			*ngIf="
+				form.get('Organization').invalid && form.get('Organization').touched
+			"
 		>
 			* Заполните поле.
 		</div>

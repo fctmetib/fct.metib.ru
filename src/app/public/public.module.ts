@@ -61,7 +61,6 @@ import {BadgeModule} from '../shared/ui-kit/badge/badge.module'
 import {RightIconModule} from '../shared/directives/right-icon/right-icon.module'
 import {BreadcrumbModule} from '../shared/ui-kit/breadcrumb/breadcrumb.module'
 import {LandingRequestModalModule} from '../shared/modules/modals/landing-request-modal/landing-request-modal.module'
-// import {ToasterModule} from '../shared/ui-kit/toaster/toaster.module'
 
 const routes = [
 	{
@@ -153,7 +152,6 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		LeftIconModule,
 		BreadcrumbModule,
 		LandingRequestModalModule
-		// ToasterModule
 	],
 	exports: [RouterModule],
 	declarations: [

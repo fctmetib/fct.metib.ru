@@ -1,9 +1,10 @@
 export interface RequestLandingInterface {
-	Agent: string
+	Form: string
+	Organization: string
 	Name: string
 	Phone: string
-	Email: string
+	Email?: string
 	INN: string
-	Comment: string
-	Agree: string
+	Comment?: string
+	Agree: boolean
 }

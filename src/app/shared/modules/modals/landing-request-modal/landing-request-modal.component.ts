@@ -43,7 +43,7 @@ export class LandingRequestModalComponent implements OnInit {
 		this.initForms()
 
 		this.form
-			.get('Agent')
+			.get('Organization')
 			?.valueChanges.pipe(
 				debounceTime(300),
 				distinctUntilChanged(),
@@ -69,7 +69,7 @@ export class LandingRequestModalComponent implements OnInit {
 	private initForms() {
 		this.form = this.fb.group({
 			FormName: ['Сайт'],
-			Agent: ['', [Validators.required]],
+			Organization: ['', [Validators.required]],
 			Name: ['', [Validators.required, Validators.minLength(2)]],
 			Phone: [
 				'',
@@ -104,46 +104,42 @@ export class LandingRequestModalComponent implements OnInit {
 		if (this.form.invalid) return
 
 		const rawPhoneNumber = this.form.value.Phone
-		try {
-			const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber)
-			const formData = {
-				FormName: this.form.value.FormName,
-				Name: this.form.value.Name,
-				Phone: formattedPhoneNumber,
-				Email: this.form.value.Email,
-				INN: this.form.value.INN,
-				Agent: this.form.value.Agent,
-				Component: this.form.value.Comment,
-				Agree: this.form.value.Agree
-			}
+		const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber)
+		const formData = {
+			Form: this.form.value.FormName,
+			Name: this.form.value.Name,
+			Phone: formattedPhoneNumber,
+			Email: this.form.value.Email,
+			INN: this.form.value.INN,
+			Organization: this.form.value.Organization,
+			Comment: this.form.value.Comment,
+			Agree: this.form.value.Agree
+		}
 
-			console.log('formData :>> ', formData)
-		} catch (error) {}
-
-		// 	this.requestLandingService
-		// 		.sendRequestData(request)
-		// 		.pipe(
-		// 			tap(() => {
-		// 				this.toaster.show(
-		// 					'success',
-		// 					'Запрос отправлен',
-		// 					'',
-		// 					true,
-		// 					false,
-		// 					2500
-		// 				)
-		// 			}),
-		// 			catchError(error => {
-		// 				this.backendErrors$.next(error)
-		// 				this.toaster.show('failure', 'Ошибка сервера!', '', true, false, 2500)
-		// 				return of(error)
-		// 			}),
-		// 			finalize(() => {
-		// 				this.isSubmitting$.next(false)
-		// 				this.dialogRef.close()
-		// 			})
-		// 		)
-		// 		.subscribe()
+		this.requestLandingService
+			.sendRequestData(formData)
+			.pipe(
+				tap(() => {
+					this.toaster.show(
+						'success',
+						'Запрос отправлен',
+						'',
+						true,
+						false,
+						2500
+					)
+				}),
+				catchError(error => {
+					this.backendErrors$.next(error)
+					this.toaster.show('failure', 'Ошибка сервера!', '', true, false, 2500)
+					return of(error)
+				}),
+				finalize(() => {
+					this.isSubmitting$.next(false)
+					this.dialogRef.close()
+				})
+			)
+			.subscribe()
 
 		this.dialogRef.close()
 	}
