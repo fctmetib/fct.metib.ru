@@ -1,245 +1,285 @@
-<div class="flex flex_column clients">
-	<mib-spacing type="{{ isDesktop ? 'l' : 'm' }}"></mib-spacing>
-	<h3>Факторинг — это просто!</h3>
-	<mib-spacing type="xs2"></mib-spacing>
-	<p
-		[ngClass]="{text_l: isDesktop, text_m: !isDesktop}"
-		class="clients-sub text c-bti-secondary"
-	>
-		Оформите факторинг в Металлинвестбанке следуюя простым шагам
-	</p>
+<section class="hero flex">
+	<div class="container gap-16 flex">
+		<div class="flex frame flex_grow flex_justify-center flex_column">
+			<mib-spacing class="hero-mobile" type="m"></mib-spacing>
+			<h2>
+				Факторинг — <br />
+				это просто!
+			</h2>
+			<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
+			<p
+				[ngClass]="{text_xl: isDesktop, text_l: !isDesktop}"
+				class="clients-sub text c-bti-secondary"
+			>
+				Оформите факторинг в Металлинвестбанке следуюя простым шагам
+			</p>
+			<mib-spacing class="hero-mobile" type="xm"></mib-spacing>
+			<mib-spacing class="hero-mobile" type="xs2"></mib-spacing>
+		</div>
+		<div class="img-wrap flex flex_grow flex_center">
+			<img
+				src="./assets/images/clients/factoring_offer.png"
+				alt="Factoring offer"
+			/>
+		</div>
+	</div>
+</section>
+<section class="offer container flex flex_column">
+	<mib-spacing type="{{ isDesktop ? 'xl' : 'm' }}"></mib-spacing>
+	<h3>Как получить факторинг?</h3>
 	<mib-spacing type="{{ isDesktop ? 's' : 'xm' }}"></mib-spacing>
-	<div class="stap-item flex gap-8">
-		<div *ngIf="isDesktop; else mobileStap1" class="flex flex_column">
-			<div class="flex flex_center">
-				<mib-counter [filled]="false"> 1 </mib-counter>
-			</div>
-			<div class="flex flex_grow flex_center">
-				<div class="flex line"></div>
-			</div>
-		</div>
-		<ng-template #mobileStap1>
-			<div class="flex">
-				<span class="text text_tv c-bti-quaternary">1 шаг</span>
-			</div>
-		</ng-template>
-		<div class="flex flex_column">
-			<div class="stap-title flex flex_align-center">
-				<p class="{{ isDesktop ? 'headline' : 'headline-m' }}">
-					Отправьте запрос на факторинг
-				</p>
-			</div>
-			<div class="flex flex_grow">
-				<div class="flex flex_column">
-					<p
-						[ngClass]="{text_l: isDesktop, text_m: !isDesktop}"
-						class="text c-bti-secondary"
-					>
-						Заполните информацию о своей компании в Личном кабинете
-					</p>
-					<mib-link
-						*ngIf="isDesktop; else mobileLink"
-						[routerLink]="['/auth/login']"
-					>
-						factoring.metallinvestbank.ru
-					</mib-link>
-					<ng-template #mobileLink>
-						<div class="flex flex_column">
-							<mib-spacing type="xs2"></mib-spacing>
-							<mib-button [routerLink]="['/auth/login']" type="ghost-primary">
-								factoring.metallinvestbank.ru
-								<mib-icon
-									btn-left-icon
-									class="stroke"
-									name="fi_link"
-								></mib-icon>
-							</mib-button>
-						</div>
-					</ng-template>
+	<div class="flex flex_column clients">
+		<div class="stap-item flex gap-8">
+			<div *ngIf="isDesktop; else mobileStap1" class="flex flex_column">
+				<div class="flex flex_center">
+					<mib-counter [filled]="false"> 1 </mib-counter>
+				</div>
+				<div class="flex flex_grow flex_center">
+					<div class="flex line"></div>
 				</div>
 			</div>
-			<mib-spacing type="s"></mib-spacing>
-		</div>
-	</div>
-	<div class="stap-item flex gap-8">
-		<div *ngIf="isDesktop; else mobileStap2" class="flex flex_column">
-			<div class="flex flex_center">
-				<mib-counter [filled]="false"> 2 </mib-counter>
-			</div>
-			<div class="flex flex_grow flex_center">
-				<div class="flex line"></div>
-			</div>
-		</div>
-		<ng-template #mobileStap2>
-			<div class="flex">
-				<span class="text text_tv c-bti-quaternary">2 шаг</span>
-			</div>
-		</ng-template>
-		<div class="flex flex_column">
-			<div class="stap-title flex flex_align-center">
-				<p class="{{ isDesktop ? 'headline' : 'headline-m' }}">
-					Ознакомьтесь с официальным предложением от Банка
-				</p>
-			</div>
-			<div class="flex flex_grow">
-				<div class="flex flex_column">
-					<p
-						[ngClass]="{text_l: isDesktop, text_m: !isDesktop}"
-						class="text c-bti-secondary"
-					>
-						Банк отправит его Вам в электронном виде
+			<ng-template #mobileStap1>
+				<div class="flex">
+					<span class="text text_tv c-bti-quaternary">1 шаг</span>
+				</div>
+			</ng-template>
+			<div class="flex flex_column">
+				<div class="stap-title flex flex_align-center">
+					<p class="{{ isDesktop ? 'headline' : 'headline-m' }}">
+						Отправьте запрос на факторинг
 					</p>
 				</div>
+				<div class="flex flex_grow">
+					<div class="flex flex_column">
+						<p
+							[ngClass]="{text_l: isDesktop, text_m: !isDesktop}"
+							class="text c-bti-secondary"
+						>
+							Заполните информацию о своей компании в Личном кабинете
+						</p>
+						<mib-link
+							*ngIf="isDesktop; else mobileLink"
+							[routerLink]="['/auth/login']"
+						>
+							factoring.metallinvestbank.ru
+						</mib-link>
+						<ng-template #mobileLink>
+							<div class="flex flex_column">
+								<mib-spacing type="xs2"></mib-spacing>
+								<mib-button [routerLink]="['/auth/login']" type="ghost-primary">
+									factoring.metallinvestbank.ru
+									<mib-icon
+										btn-left-icon
+										class="stroke"
+										name="fi_link"
+									></mib-icon>
+								</mib-button>
+							</div>
+						</ng-template>
+					</div>
+				</div>
+				<mib-spacing type="s"></mib-spacing>
 			</div>
-			<mib-spacing type="s"></mib-spacing>
 		</div>
-	</div>
-	<div class="stap-item flex gap-8">
-		<div *ngIf="isDesktop; else mobileStap3" class="flex flex_column">
-			<div class="flex flex_center">
-				<mib-counter [filled]="false"> 3 </mib-counter>
-			</div>
-			<div class="flex flex_grow flex_center">
-				<div class="flex line"></div>
-			</div>
-		</div>
-		<ng-template #mobileStap3>
-			<div class="flex">
-				<span class="text text_tv c-bti-quaternary">3 шаг</span>
-			</div>
-		</ng-template>
-		<div class="flex flex_column">
-			<div class="stap-title flex flex_align-center">
-				<p class="{{ isDesktop ? 'headline' : 'headline-m' }}">
-					Установите сертификат электронной подписи
-				</p>
-			</div>
-			<div class="flex flex_grow">
-				<div class="flex flex_column">
-					<p
-						[ngClass]="{text_l: isDesktop, text_m: !isDesktop}"
-						class="text c-bti-secondary"
-					>
-						Отправьте запрос на ЭП в Личном кабинете. В течение 15 минут Банк
-						отправит сообщение о результате
-					</p>
+		<div class="stap-item flex gap-8">
+			<div *ngIf="isDesktop; else mobileStap2" class="flex flex_column">
+				<div class="flex flex_center">
+					<mib-counter [filled]="false"> 2 </mib-counter>
+				</div>
+				<div class="flex flex_grow flex_center">
+					<div class="flex line"></div>
 				</div>
 			</div>
+			<ng-template #mobileStap2>
+				<div class="flex">
+					<span class="text text_tv c-bti-quaternary">2 шаг</span>
+				</div>
+			</ng-template>
+			<div class="flex flex_column">
+				<div class="stap-title flex flex_align-center">
+					<p class="{{ isDesktop ? 'headline' : 'headline-m' }}">
+						Ознакомьтесь с официальным предложением от Банка
+					</p>
+				</div>
+				<div class="flex flex_grow">
+					<div class="flex flex_column">
+						<p
+							[ngClass]="{text_l: isDesktop, text_m: !isDesktop}"
+							class="text c-bti-secondary"
+						>
+							Банк отправит его Вам в электронном виде
+						</p>
+					</div>
+				</div>
+				<mib-spacing type="s"></mib-spacing>
+			</div>
+		</div>
+		<div class="stap-item flex gap-8">
+			<div *ngIf="isDesktop; else mobileStap3" class="flex flex_column">
+				<div class="flex flex_center">
+					<mib-counter [filled]="false"> 3 </mib-counter>
+				</div>
+				<div class="flex flex_grow flex_center">
+					<div class="flex line"></div>
+				</div>
+			</div>
+			<ng-template #mobileStap3>
+				<div class="flex">
+					<span class="text text_tv c-bti-quaternary">3 шаг</span>
+				</div>
+			</ng-template>
+			<div class="flex flex_column">
+				<div class="stap-title flex flex_align-center">
+					<p class="{{ isDesktop ? 'headline' : 'headline-m' }}">
+						Установите сертификат электронной подписи
+					</p>
+				</div>
+				<div class="flex flex_grow">
+					<div class="flex flex_column">
+						<p
+							[ngClass]="{text_l: isDesktop, text_m: !isDesktop}"
+							class="text c-bti-secondary"
+						>
+							Отправьте запрос на ЭП в Личном кабинете. В течение 15 минут Банк
+							отправит сообщение о результате
+						</p>
+					</div>
+				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<div [class.flex_column]="!isDesktop" class="flex gap-12">
+					<mib-button
+						(press)="downloadFile('regulation')"
+						type="filled-primary"
+					>
+						Скачать регламент
+						<mib-icon
+							btn-left-icon
+							class="stroke"
+							name="fi_download"
+						></mib-icon>
+					</mib-button>
+					<mib-button
+						(press)="downloadFile('instruction')"
+						type="filled-secondary"
+					>
+						Скачать инструкцию
+						<mib-icon
+							btn-left-icon
+							class="stroke"
+							name="fi_download"
+						></mib-icon>
+					</mib-button>
+				</div>
+				<mib-spacing type="s"></mib-spacing>
+			</div>
+		</div>
+		<div class="stap-item flex gap-8">
+			<div *ngIf="isDesktop; else mobileStap4" class="flex flex_column">
+				<div class="flex flex_center">
+					<mib-counter [filled]="false"> 4 </mib-counter>
+				</div>
+				<div class="flex flex_grow flex_center">
+					<div class="flex line"></div>
+				</div>
+			</div>
+			<ng-template #mobileStap4>
+				<div class="flex">
+					<span class="text text_tv c-bti-quaternary">4 шаг</span>
+				</div>
+			</ng-template>
+			<div class="flex flex_column">
+				<div class="stap-title flex flex_align-center">
+					<p class="{{ isDesktop ? 'headline' : 'headline-m' }}">
+						Подпишите Договор факторинга
+					</p>
+				</div>
+				<div class="flex flex_grow">
+					<div class="flex flex_column">
+						<p
+							[ngClass]="{text_l: isDesktop, text_m: !isDesktop}"
+							class="text c-bti-secondary"
+						>
+							Ознакомьтесь с Договором и подпишите необходимый комплект
+							документов. Возможно электронное подписание
+						</p>
+					</div>
+				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex gap-12">
+					<mib-button
+						[class.w-100]="!isDesktop"
+						(press)="downloadFile('contract')"
+						type="filled-secondary"
+					>
+						Скачать Договор факторинга
+						<mib-icon
+							btn-left-icon
+							class="stroke"
+							name="fi_download"
+						></mib-icon>
+					</mib-button>
+				</div>
+				<mib-spacing type="s"></mib-spacing>
+			</div>
+		</div>
+		<div class="stap-item flex gap-8">
+			<div *ngIf="isDesktop; else mobileStap5" class="flex flex_column">
+				<div class="flex flex_center">
+					<mib-counter [filled]="false"> 5 </mib-counter>
+				</div>
+			</div>
+			<ng-template #mobileStap5>
+				<div class="flex">
+					<span class="text text_tv c-bti-quaternary">5 шаг</span>
+				</div>
+			</ng-template>
+			<div class="flex flex_column">
+				<div class="stap-title flex flex_align-center">
+					<p class="{{ isDesktop ? 'headline' : 'headline-m' }}">
+						Установите программу «Фактор – Клиент»
+					</p>
+				</div>
+				<div class="flex flex_grow">
+					<div class="flex flex_column">
+						<p
+							[ngClass]="{text_l: isDesktop, text_m: !isDesktop}"
+							class="text c-bti-secondary"
+						>
+							«Фактор – Клиент» - приложение Банка для работы по факторингу. В
+							нем отправляются заявки на финансирвоание, отображаются приходы
+							платежей, выгружаются отчеты о работе
+						</p>
+					</div>
+				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex">
+					<mib-button
+						[class.w-100]="!isDesktop"
+						(press)="downloadFile('factor')"
+						type="filled-primary"
+					>
+						Установить «Фактор – Клиент»
+						<mib-icon
+							btn-left-icon
+							class="stroke"
+							name="fi_download"
+						></mib-icon>
+					</mib-button>
+				</div>
+				<mib-spacing type="s"></mib-spacing>
+			</div>
+		</div>
+		<div class="flex flex_column accordion">
+			<mib-spacing type="l"></mib-spacing>
+			<h4>Вопрос - ответ</h4>
 			<mib-spacing type="xs"></mib-spacing>
-			<div [class.flex_column]="!isDesktop" class="flex gap-12">
-				<mib-button (press)="downloadFile('regulation')" type="filled-primary">
-					Скачать регламент
-					<mib-icon btn-left-icon class="stroke" name="fi_download"></mib-icon>
-				</mib-button>
-				<mib-button
-					(press)="downloadFile('instruction')"
-					type="filled-secondary"
-				>
-					Скачать инструкцию
-					<mib-icon btn-left-icon class="stroke" name="fi_download"></mib-icon>
-				</mib-button>
-			</div>
-			<mib-spacing type="s"></mib-spacing>
+			<mib-accordion-item
+				*ngFor="let item of questions"
+				[device]="isDesktop ? 'desktop' : 'mobile'"
+				[question]="item.title"
+				[answer]="item.content"
+			></mib-accordion-item>
 		</div>
+		<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 	</div>
-	<div class="stap-item flex gap-8">
-		<div *ngIf="isDesktop; else mobileStap4" class="flex flex_column">
-			<div class="flex flex_center">
-				<mib-counter [filled]="false"> 4 </mib-counter>
-			</div>
-			<div class="flex flex_grow flex_center">
-				<div class="flex line"></div>
-			</div>
-		</div>
-		<ng-template #mobileStap4>
-			<div class="flex">
-				<span class="text text_tv c-bti-quaternary">4 шаг</span>
-			</div>
-		</ng-template>
-		<div class="flex flex_column">
-			<div class="stap-title flex flex_align-center">
-				<p class="{{ isDesktop ? 'headline' : 'headline-m' }}">
-					Подпишите Договор факторинга
-				</p>
-			</div>
-			<div class="flex flex_grow">
-				<div class="flex flex_column">
-					<p
-						[ngClass]="{text_l: isDesktop, text_m: !isDesktop}"
-						class="text c-bti-secondary"
-					>
-						Ознакомьтесь с Договором и подпишите необходимый комплект
-						документов. Возможно электронное подписание
-					</p>
-				</div>
-			</div>
-			<mib-spacing type="xs"></mib-spacing>
-			<div class="flex gap-12">
-				<mib-button
-					[class.w-100]="!isDesktop"
-					(press)="downloadFile('contract')"
-					type="filled-secondary"
-				>
-					Скачать Договор факторинга
-					<mib-icon btn-left-icon class="stroke" name="fi_download"></mib-icon>
-				</mib-button>
-			</div>
-			<mib-spacing type="s"></mib-spacing>
-		</div>
-	</div>
-	<div class="stap-item flex gap-8">
-		<div *ngIf="isDesktop; else mobileStap5" class="flex flex_column">
-			<div class="flex flex_center">
-				<mib-counter [filled]="false"> 5 </mib-counter>
-			</div>
-		</div>
-		<ng-template #mobileStap5>
-			<div class="flex">
-				<span class="text text_tv c-bti-quaternary">5 шаг</span>
-			</div>
-		</ng-template>
-		<div class="flex flex_column">
-			<div class="stap-title flex flex_align-center">
-				<p class="{{ isDesktop ? 'headline' : 'headline-m' }}">
-					Установите программу «Фактор – Клиент»
-				</p>
-			</div>
-			<div class="flex flex_grow">
-				<div class="flex flex_column">
-					<p
-						[ngClass]="{text_l: isDesktop, text_m: !isDesktop}"
-						class="text c-bti-secondary"
-					>
-						«Фактор – Клиент» - приложение Банка для работы по факторингу. В нем
-						отправляются заявки на финансирвоание, отображаются приходы
-						платежей, выгружаются отчеты о работе
-					</p>
-				</div>
-			</div>
-			<mib-spacing type="xs"></mib-spacing>
-			<div class="flex">
-				<mib-button
-					[class.w-100]="!isDesktop"
-					(press)="downloadFile('factor')"
-					type="filled-primary"
-				>
-					Установить «Фактор – Клиент»
-					<mib-icon btn-left-icon class="stroke" name="fi_download"></mib-icon>
-				</mib-button>
-			</div>
-			<mib-spacing type="s"></mib-spacing>
-		</div>
-	</div>
-	<div class="flex flex_column accordion">
-		<mib-spacing type="l"></mib-spacing>
-		<h4>Вопрос - ответ</h4>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-accordion-item
-			*ngFor="let item of questions"
-			[device]="isDesktop ? 'desktop' : 'mobile'"
-			[question]="item.title"
-			[answer]="item.content"
-		></mib-accordion-item>
-	</div>
-	<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
-</div>
+</section>

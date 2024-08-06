@@ -1,13 +1,60 @@
 @import 'src/styles/_typography.vars';
 @import 'src/styles/helpers/icon_tools';
 
-.clients {
-	width: 560px;
-	margin: 0 auto;
+.hero {
+	background: linear-gradient(
+		135deg,
+		rgb(240, 245, 246, 0.4) 0%,
+		rgb(240 244 249) 100%
+	);
 
-	.stap-title {
-		height: 32px;
+	& .container {
+		min-height: 440px;
+
+		& .frame {
+			& .hero-mobile {
+				display: none;
+			}
+
+			& .clients-sub {
+				max-width: 450px;
+			}
+
+			& img {
+				object-fit: none;
+			}
+		}
 	}
+
+	@media (max-width: 992px) {
+		& img {
+			width: 261px;
+			object-fit: contain;
+		}
+	}
+
+	@media (max-width: 800px) {
+		& .container {
+			flex-direction: column;
+
+			& .frame,
+			.clients-sub {
+				text-align: center;
+				align-items: center;
+			}
+
+			& .frame {
+				& .hero-mobile {
+					display: flex;
+				}
+			}
+		}
+	}
+}
+
+.offer {
+	max-width: 1200px;
+	padding: 0 32px;
 
 	@media (max-width: 576px) {
 		width: 100%;
@@ -17,34 +64,50 @@
 		.clients-sub {
 			padding: 0 16px;
 		}
+	}
+	& .clients {
+		width: 560px;
 
-		& .stap-item {
-			flex-direction: column;
-			gap: 4px;
-			padding: 12px 16px;
-			border-bottom: 1px solid var(--wgr-tertiary);
-
-			& mib-icon[name='fi_link'] {
-				@include icon-size(20px);
-				@include icon-color(var(--mc-default));
-			}
-
-			& mib-spacing[type='s'] {
-				display: none;
-			}
+		.stap-title {
+			height: 32px;
 		}
 
-		& .stap-title {
-			height: auto;
-		}
+		@media (max-width: 576px) {
+			width: auto;
 
-		& .accordion {
-			padding: 0 16px;
+			& .stap-item {
+				flex-direction: column;
+				gap: 4px;
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--wgr-tertiary);
+
+				& mib-button[type='ghost-primary'] {
+					background-color: var(--mc-quinary);
+					border-radius: 8px;
+				}
+
+				& mib-icon[name='fi_link'] {
+					@include icon-size(20px);
+					@include icon-color(var(--mc-default));
+				}
+
+				& mib-spacing[type='s'] {
+					display: none;
+				}
+			}
+
+			& .stap-title {
+				height: auto;
+			}
+
+			& .accordion {
+				padding: 0 16px;
+			}
 		}
 	}
-}
 
-.line {
-	border-right: 1px solid var(--wgr-tertiary);
-	height: calc(100% - 10px);
+	.line {
+		border-right: 1px solid var(--wgr-tertiary);
+		height: calc(100% - 10px);
+	}
 }
