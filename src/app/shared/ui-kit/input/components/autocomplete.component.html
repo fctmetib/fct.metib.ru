@@ -1,11 +1,24 @@
 <div class="autocomplete">
 	<mib-input>
 		<input
+			[style.display]="!extra ? 'block' : 'none'"
 			required
 			style="padding-right: 40px"
 			#input
 			size="l"
 			mibInput
+			[formControl]="control"
+			(focus)="showDropdown = true"
+			(blur)="onBlur()"
+		/>
+		<input
+			[style.display]="extra ? 'block' : 'none'"
+			required
+			style="padding-right: 40px"
+			#input
+			size="{{ isDesktop ? 'xl' : 'l' }}"
+			mibInput
+			styleType="floating"
 			[formControl]="control"
 			(focus)="showDropdown = true"
 			(blur)="onBlur()"

@@ -12,8 +12,12 @@ import {NewsService} from '../../service/news.service'
 import {
 	BehaviorSubject,
 	Subscription,
+	catchError,
+	debounceTime,
+	distinctUntilChanged,
 	finalize,
 	map,
+	of,
 	switchMap,
 	tap,
 	zip
@@ -22,6 +26,10 @@ import {AdvancedNewsInterface, NewsInterface} from '../../type/news.interface'
 import {Properties} from 'csstype'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {LandingRequestModalService} from 'src/app/shared/modules/modals/landing-request-modal/landing-request-modal.service'
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
+import {RequestLandingInterface} from '../../type/request-landing.interface'
+import {RequestLandingService} from '../../service/request-landing.service'
+import {GetAgentRequestService} from '../../service/get-agent-request.service'
 
 @Component({
 	selector: 'mib-landing',
@@ -30,6 +38,12 @@ import {LandingRequestModalService} from 'src/app/shared/modules/modals/landing-
 })
 export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	public ProductTabsEnum = ProductTabsEnum
+
+	form: FormGroup
+	public isSubmitting$ = new BehaviorSubject<boolean>(false)
+	public backendErrors$ = new BehaviorSubject<string>(null)
+	public options = []
+	public loading = false
 
 	maxPage: number = 3
 	progress: number = 2
@@ -164,7 +178,11 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	constructor(
 		private newsService: NewsService,
 		public breakpointService: BreakpointObserverService,
-		public landingRequestModalService: LandingRequestModalService
+		public landingRequestModalService: LandingRequestModalService,
+		private fb: FormBuilder,
+		private requestLandingService: RequestLandingService,
+		private toaster: ToasterService,
+		private getAgentRequestService: GetAgentRequestService
 	) {}
 
 	ngOnInit(): void {
@@ -172,6 +190,31 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
+
+		this.initForm()
+
+		this.form
+			.get('Organization')
+			?.valueChanges.pipe(
+				debounceTime(300),
+				distinctUntilChanged(),
+				tap(() => {
+					this.options = []
+					this.loading = true
+				}),
+				switchMap(value => this.fetchOptions(value))
+			)
+			.subscribe(options => {
+				this.options = options.suggestions || []
+				this.loading = false
+			})
+	}
+
+	fetchOptions(query: string) {
+		if (!query) {
+			return of({suggestions: []})
+		}
+		return this.getAgentRequestService.getAgentData(query)
 	}
 
 	ngAfterViewInit() {
@@ -240,13 +283,84 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			.subscribe()
 	}
 
-	public getFunding() {
-		console.log('get funding')
-	}
-
 	public onChange($num) {
 		this.imgNumber = $num
 		this.currentProductsTab = $num
+	}
+
+	initForm() {
+		this.form = this.fb.group({
+			FormName: 'Сайт',
+			Name: ['', [Validators.required, Validators.minLength(2)]],
+			Phone: [
+				'',
+				[Validators.required, Validators.pattern(/^\+?[0-9]{7,15}$/)]
+			],
+			Organization: ['', [Validators.required]],
+			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
+			Agree: true
+		})
+	}
+
+	private formatPhoneNumber(phoneNumber: string): string {
+		phoneNumber = phoneNumber.replace(/\D/g, '')
+
+		if (phoneNumber.length !== 11) {
+			throw new Error('Phone number must be 11 digits long.')
+		}
+
+		const country = phoneNumber[0]
+		const area = phoneNumber.substring(1, 4)
+		const local = phoneNumber.substring(4, 7)
+		const middle = phoneNumber.substring(7, 9)
+		const last = phoneNumber.substring(9, 11)
+
+		return `+${country} (${area}) ${local}-${middle}-${last}`
+	}
+
+	onSubmit() {
+		this.isSubmitting$.next(true)
+
+		if (this.form.invalid) return
+
+		const rawPhoneNumber = this.form.value.Phone
+		const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber)
+		const formData = {
+			Form: this.form.value.FormName,
+			Name: this.form.value.Name,
+			Phone: formattedPhoneNumber,
+			INN: this.form.value.INN,
+			Organization: this.form.value.Organization,
+			Agree: this.form.value.Agree
+		}
+
+		this.requestLandingService
+			.sendRequestData(formData)
+			.pipe(
+				tap(() => {
+					this.toaster.show(
+						'success',
+						'Запрос отправлен',
+						'',
+						true,
+						false,
+						2500
+					)
+				}),
+				catchError(error => {
+					this.backendErrors$.next(error)
+					this.toaster.show('failure', 'Ошибка сервера!', '', true, false, 2500)
+					return of(error)
+				}),
+				finalize(() => {
+					this.isSubmitting$.next(false)
+				})
+			)
+			.subscribe()
+	}
+
+	clearInput(inputElement: HTMLInputElement) {
+		inputElement.value = ''
 	}
 
 	ngOnDestroy(): void {

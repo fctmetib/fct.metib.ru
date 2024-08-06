@@ -7,7 +7,7 @@
 	</mib-modal-header>
 	<mib-spacing type="xs"></mib-spacing>
 	<div class="flex flex_column gap-12">
-		<input name="name" type="hidden" formControlName="FormName" />
+		<input type="hidden" formControlName="FormName" />
 		<mib-input class="flex_grow">
 			<input
 				size="l"
@@ -18,12 +18,12 @@
 			/>
 			<ng-container mibLabel>Имя</ng-container>
 		</mib-input>
-		<div
+		<!-- <div
 			class="text text_m c-bti-tertiarty"
 			*ngIf="form.get('Name').invalid && form.get('Name').touched"
 		>
 			* Заполните поле.
-		</div>
+		</div> -->
 		<mib-input class="flex_grow">
 			<input
 				formControlName="Phone"
@@ -36,12 +36,12 @@
 			/>
 			<ng-container mibLabel>Телефон</ng-container>
 		</mib-input>
-		<div
+		<!-- <div
 			class="text text_m c-bti-tertiarty"
 			*ngIf="form.get('Phone').invalid && form.get('Phone').touched"
 		>
 			* Заполните поле в указанном формате.
-		</div>
+		</div> -->
 		<mib-input class="flex_grow">
 			<input
 				size="l"
@@ -52,12 +52,12 @@
 			/>
 			<ng-container mibLabel>Электронная почта</ng-container>
 		</mib-input>
-		<div
+		<!-- <div
 			class="text text_m c-bti-tertiarty"
 			*ngIf="form.get('Email').invalid && form.get('Email').touched"
 		>
 			* Укажите корректную почту.
-		</div>
+		</div> -->
 		<mib-input class="flex_grow">
 			<input
 				size="l"
@@ -70,22 +70,22 @@
 			/>
 			<ng-container mibLabel>ИНН Вашей компании</ng-container>
 		</mib-input>
-		<div
+		<!-- <div
 			class="text text_m c-bti-tertiarty"
 			*ngIf="form.get('INN').invalid && form.get('INN').touched"
 		>
 			* Укажите ИНН.
-		</div>
+		</div> -->
 		<mib-autocomplete formControlName="Organization" [options]="options">
 		</mib-autocomplete>
-		<div
+		<!-- <div
 			class="text text_m c-bti-tertiarty"
 			*ngIf="
 				form.get('Organization').invalid && form.get('Organization').touched
 			"
 		>
 			* Заполните поле.
-		</div>
+		</div> -->
 		<mib-textarea>
 			<ng-container mibLabel>Комментарий к запросу</ng-container>
 			<textarea

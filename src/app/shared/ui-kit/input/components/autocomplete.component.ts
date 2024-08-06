@@ -4,6 +4,8 @@ import {
 	EventEmitter,
 	forwardRef,
 	Input,
+	OnDestroy,
+	OnInit,
 	Output,
 	ViewChild
 } from '@angular/core'
@@ -13,6 +15,8 @@ import {
 	NG_VALUE_ACCESSOR,
 	Validator
 } from '@angular/forms'
+import {Subscription} from 'rxjs'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
 @Component({
 	selector: 'mib-autocomplete',
@@ -26,15 +30,30 @@ import {
 		}
 	]
 })
-export class AutocompleteComponent implements ControlValueAccessor, Validator {
+export class AutocompleteComponent
+	implements OnInit, ControlValueAccessor, Validator, OnDestroy
+{
 	@Input() options: any[] = []
 	@Input() loading: boolean = false
+	@Input() extra: boolean = false
 	@Output() valueChanged = new EventEmitter<string>()
 	control = new FormControl()
 	showDropdown = false
 	noData = false
 
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+
 	@ViewChild('input', {static: true}) input: ElementRef
+
+	constructor(private breakpointService: BreakpointObserverService) {}
+
+	ngOnInit(): void {
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
+	}
 
 	writeValue(value: any): void {
 		this.control.setValue(value, {emitEvent: false})
@@ -84,5 +103,9 @@ export class AutocompleteComponent implements ControlValueAccessor, Validator {
 		this.showDropdown = false
 		this.control.setValue('')
 		this.input.nativeElement.focus()
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }

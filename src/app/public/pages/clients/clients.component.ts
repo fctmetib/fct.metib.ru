@@ -16,27 +16,27 @@ export class ClientsComponent implements OnInit, OnDestroy {
 		{
 			title: 'Сколько времени рассматривается запрос?',
 			content:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a est ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer maximus elementum ante et blandit. Aliquam erat volutpat. Cras eu tempor neque, vel porttitor libero. Suspendisse mi erat, pharetra in est sed, laoreet facilisis tellus. Aliquam egestas, quam id iaculis viverra, mauris nisl elementum dui, eget venenatis leo justo non magna. Mauris luctus nisl nec mollis tincidunt.'
+				'Запросы на факторинг рассматриваются оперативно. Первый ответ на Ваш запрос предоставляется в течение 15 минут с момента общения с менеджером. Мы стремимся обеспечить максимально быстрое и качественное обслуживание для удовлетворения Ваших потребностей.'
 		},
 		{
 			title: 'Зачем требуется выпуск электронной подписи?',
 			content:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a est ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer maximus elementum ante et blandit. Aliquam erat volutpat.'
+				'Электронная подпись требуется для работы в программе Фактор-Клиент и обеспечения электронного документооборота. Она используется для подписания заявок на финансирование и комплекта документов по Договору факторинга, что позволяет ускорить и упростить процесс взаимодействия между сторонами. Выпуск ЭЦП осуществляет УК «Калуга Астрал». Выпуск ЭЦП бесплатный для клиента факторинга и осуществляется без личного присутствия.'
 		},
 		{
 			title: 'Что такое "Фактор - Клиент"?',
 			content:
-				' Cras eu tempor neque, vel porttitor libero. Suspendisse mi erat, pharetra in est sed, laoreet facilisis tellus. Aliquam egestas, quam id iaculis viverra, mauris nisl elementum dui, eget venenatis leo justo non magna. Mauris luctus nisl nec mollis tincidunt.'
+				' "Фактор-Клиент" — это удобная система от Металлинвестбанка, которая позволяет вам эффективно управлять всеми процессами в рамках факторингового сотрудничества. В ней Вы можете подписывать документы, подавать заявки на финансирование и получать отчеты, обеспечивая быстрый и безопасный электронный документооборот.'
 		},
 		{
 			title: 'Когда необходимо платить комиссию за услуги фактора?',
 			content:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a est ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer maximus elementum ante et blandit. Aliquam erat volutpat. Cras eu tempor neque, vel porttitor libero. Suspendisse mi erat, pharetra in est sed, laoreet facilisis tellus. Aliquam egestas, quam id iaculis viverra, mauris nisl elementum dui, eget venenatis leo justo non magna. Mauris luctus nisl nec mollis tincidunt.'
+				'Комиссия за услуги фактора оплачивается либо в день финансирования, либо в день получения платежа от Покупателя, в зависимости от тарифного плана. Размер финансирования может достигать 100% суммы поставки, тогда взаиморасчеты с Банком происходят в день финансирования.'
 		},
 		{
 			title: 'Требуется ли согласие покупателя на использование факторинга?',
 			content:
-				' Cras eu tempor neque, vel porttitor libero. Suspendisse mi erat, pharetra in est sed, laoreet facilisis tellus. Aliquam egestas, quam id iaculis viverra, mauris nisl elementum dui, eget venenatis leo justo non magna. Mauris luctus nisl nec mollis tincidunt.'
+				' Для некоторых Покупателей требуется предварительное согласование, а для других — нет. Чтобы узнать детали и процесс работы с конкретным дебитором, пожалуйста, обратитесь к менеджеру банка за консультацией.'
 		}
 	]
 

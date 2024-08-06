@@ -68,7 +68,7 @@ export class LandingRequestModalComponent implements OnInit {
 
 	private initForms() {
 		this.form = this.fb.group({
-			FormName: ['Сайт'],
+			FormName: 'Сайт',
 			Organization: ['', [Validators.required]],
 			Name: ['', [Validators.required, Validators.minLength(2)]],
 			Phone: [
