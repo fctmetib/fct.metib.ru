@@ -1,6 +1,6 @@
 <section class="hero">
 	<div class="container flex gap-16">
-		<div class="flex flex_grow flex_justify-center flex_column">
+		<div class="wrap flex flex_grow flex_justify-center flex_column">
 			<h1 class="desktop-h1">Факторинг для поставщиков</h1>
 			<h1 class="mobile-h1">
 				Факторинг <br />
@@ -61,8 +61,8 @@
 <section class="advantages">
 	<div class="container flex flex_column">
 		<mib-spacing type="xl2"></mib-spacing>
-		<div class="advantages-mobile flex gap-16">
-			<div *ngFor="let item of iconsDatas" class="flex flex_column">
+		<div class="advantages-mobile flex flex_center flex_wrap gap-16">
+			<div *ngFor="let item of iconsDatas" class="item flex flex_column">
 				<div class="flex flex_align-center flex_column flex_grow">
 					<mib-advantages-icon>
 						<ng-container advantagesIcon>
@@ -82,237 +82,246 @@
 </section>
 <section class="products">
 	<div class="container flex">
-		<div class="mob-products flex flex_grow flex_column">
-			<mib-spacing
-				[ngClass]="{individual: imgNumber === ProductTabsEnum.INDIVIDUAL}"
-				class="title-spacing"
-				type="s"
-			></mib-spacing>
-			<mib-spacing type="xl"></mib-spacing>
-			<h3>
-				{{ isDesktop ? 'Наши продукты - факторинг' : 'Наши продукты' }}
-			</h3>
-			<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-			<div class="flex extra-wrap">
-				<div class="shadow-left hide-shadow"></div>
-				<div class="shadow-right"></div>
-				<div
-					#tagsContainer
-					id="tags-container"
-					(swipe)="onSwipe($event)"
-					class="flex tags-wrap"
-				>
-					<mib-tags-group (onChange)="onChange($event)">
-						<mib-tag size="xl" type="special" [value]="ProductTabsEnum.INNER">
-							Внутренний
-						</mib-tag>
-						<mib-tag
-							size="xl"
-							type="special"
-							[value]="ProductTabsEnum.INTERNATIONAL"
-						>
-							Международный
-						</mib-tag>
-						<mib-tag size="xl" type="special" [value]="ProductTabsEnum.COMPLEX">
-							Комплексный
-						</mib-tag>
-						<mib-tag
-							size="xl"
-							type="special"
-							[value]="ProductTabsEnum.INDIVIDUAL"
-						>
-							Подобрать продукт
-							<mib-badge type="filled-accent" [extended]="true" size="m"
-								>NEW</mib-badge
+		<div class="flex wrapper">
+			<div class="mob-products flex flex_grow flex_column">
+				<mib-spacing
+					[ngClass]="{individual: imgNumber === ProductTabsEnum.INDIVIDUAL}"
+					class="title-spacing"
+					type="s"
+				></mib-spacing>
+				<mib-spacing type="xl"></mib-spacing>
+				<h3>
+					{{ isDesktop ? 'Наши продукты - факторинг' : 'Наши продукты' }}
+				</h3>
+				<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
+				<div class="flex extra-wrap">
+					<div class="shadow-left hide-shadow"></div>
+					<div class="shadow-right"></div>
+					<div
+						#tagsContainer
+						id="tags-container"
+						(swipe)="onSwipe($event)"
+						class="flex tags-wrap"
+					>
+						<mib-tags-group (onChange)="onChange($event)">
+							<mib-tag size="xl" type="special" [value]="ProductTabsEnum.INNER">
+								Внутренний
+							</mib-tag>
+							<mib-tag
+								size="xl"
+								type="special"
+								[value]="ProductTabsEnum.INTERNATIONAL"
 							>
-						</mib-tag>
-					</mib-tags-group>
+								Международный
+							</mib-tag>
+							<mib-tag
+								size="xl"
+								type="special"
+								[value]="ProductTabsEnum.COMPLEX"
+							>
+								Комплексный
+							</mib-tag>
+							<mib-tag
+								size="xl"
+								type="special"
+								[value]="ProductTabsEnum.INDIVIDUAL"
+							>
+								Подобрать продукт
+								<mib-badge type="filled-accent" [extended]="true" size="m"
+									>NEW</mib-badge
+								>
+							</mib-tag>
+						</mib-tags-group>
+					</div>
 				</div>
-			</div>
-			<ng-container [ngSwitch]="currentProductsTab">
-				<div class="flex_column" *ngSwitchCase="ProductTabsEnum.INNER">
-					<mib-spacing
-						type="{{ isDesktop ? 'm' : 's' }}"
-						type="s"
-					></mib-spacing>
-					<p class="products-title text_medium text text_l c-mc-default">
-						Продукты внутреннего факторинга
-					</p>
-					<mib-spacing type="xs2"></mib-spacing>
-					<p class="products-description text text_l c-bti-secondary">
-						Факторинг с регрессом – выгодный способ получения оборотных средств
-						без увеличения кредитной нагрузки.
-					</p>
-					<mib-spacing type="xs2"></mib-spacing>
-					<p class="products-description text text_l c-bti-secondary">
-						Факторинг без регресса – получение оборотных средств с защитой от
-						риска неплатежа.
-					</p>
-					<mib-spacing type="xs2"></mib-spacing>
-					<p class="products-description text text_l c-bti-secondary">
-						Скрытый факторинг – пополнение оборотных средств без уведомления
-						поставщика.
-					</p>
-				</div>
-				<div class="flex_column" *ngSwitchCase="ProductTabsEnum.INTERNATIONAL">
-					<mib-spacing
-						type="{{ isDesktop ? 'm' : 's' }}"
-						type="s"
-					></mib-spacing>
-					<p class="products-title text_medium text text_l c-mc-default">
-						Продукты международного факторинга
-					</p>
-					<mib-spacing type="xs2"></mib-spacing>
-					<p class="products-description text text_l c-bti-secondary">
-						Экспортный факторинг – выгодное финансирование поставок за рубеж.
-					</p>
-					<mib-spacing type="xs2"></mib-spacing>
-					<p class="products-description text text_l c-bti-secondary">
-						Импортный факторинг – поддержка импортных операций с иностранными
-						поставщиками.
-					</p>
-				</div>
-				<div class="flex_column" *ngSwitchCase="ProductTabsEnum.COMPLEX">
-					<mib-spacing
-						type="{{ isDesktop ? 'm' : 's' }}"
-						type="s"
-					></mib-spacing>
-					<p class="products-title text_medium text text_l c-mc-default">
-						Продукты комплексного факторинга
-					</p>
-					<mib-spacing type="xs2"></mib-spacing>
-					<p class="products-description text text_l c-bti-secondary">
-						Агентский факторинг – финансирование кредиторской задолженности
-						и/или поддержка вашей закупочной деятельности.
-					</p>
-					<mib-spacing type="xs2"></mib-spacing>
-					<p class="products-description text text_l c-bti-secondary">
-						Предпоставочный факторинг – финансирование под уступку будущих
-						требований.
-					</p>
-				</div>
-				<div
-					class="flex tags-content"
-					*ngSwitchCase="ProductTabsEnum.INDIVIDUAL"
-				>
-					<div class="flex flex_grow flex_column frame">
+				<ng-container [ngSwitch]="currentProductsTab">
+					<div class="flex_column" *ngSwitchCase="ProductTabsEnum.INNER">
 						<mib-spacing
 							type="{{ isDesktop ? 'm' : 's' }}"
 							type="s"
 						></mib-spacing>
 						<p class="products-title text_medium text text_l c-mc-default">
-							Индивидуальное предложение
+							Продукты внутреннего факторинга
 						</p>
 						<mib-spacing type="xs2"></mib-spacing>
-						<p class="text text_l c-bti-secondary">
-							Заполните форму, чтобы мы смогли предложить вам один или несколько
-							подходящих продуктов.
+						<p class="products-description text text_l c-bti-secondary">
+							Факторинг с регрессом – выгодный способ получения оборотных
+							средств без увеличения кредитной нагрузки.
 						</p>
-						<div class="flex flex_column">
-							<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-							<mib-input>
-								<input
-									#innInput
-									type="number"
-									pattern="/^-?\d+\.?\d*$/"
-									onKeyPress="if(this.value.length==10) return false;"
-									size="{{ isDesktop ? 'xl' : 'l' }}"
-									styleType="floating"
-									mibInput
-								/>
-								<ng-container mibLabel>ИНН Организации</ng-container>
-							</mib-input>
-							<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-							<div class="flex">
-								<mib-button
-									(press)="
-										openLandingRequestModal('Подобрать продукт');
-										clearInput(innInput)
-									"
-									size="{{ isDesktop ? 'l' : 'm' }}"
-									type="filled-primary"
-									>Далее
-									<mib-icon
-										btn-right-icon
-										class="stroke"
-										name="fi_chevron-right"
-									></mib-icon>
-								</mib-button>
-							</div>
-							<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-						</div>
+						<mib-spacing type="xs2"></mib-spacing>
+						<p class="products-description text text_l c-bti-secondary">
+							Факторинг без регресса – получение оборотных средств с защитой от
+							риска неплатежа.
+						</p>
+						<mib-spacing type="xs2"></mib-spacing>
+						<p class="products-description text text_l c-bti-secondary">
+							Скрытый факторинг – пополнение оборотных средств без уведомления
+							поставщика.
+						</p>
 					</div>
-					<div class="flex flex_grow flex_column frame-r">
-						<mib-spacing class="frame-mobile" type="s"></mib-spacing>
-						<div class="flex flex_column progress-bar">
-							<div
-								class="wrap flex flex_justify-start text text_m c-bti-secondary"
-							>
-								<span>{{ progress }}</span>
-								<span> из {{ maxPage }}</span>
+					<div
+						class="flex_column"
+						*ngSwitchCase="ProductTabsEnum.INTERNATIONAL"
+					>
+						<mib-spacing
+							type="{{ isDesktop ? 'm' : 's' }}"
+							type="s"
+						></mib-spacing>
+						<p class="products-title text_medium text text_l c-mc-default">
+							Продукты международного факторинга
+						</p>
+						<mib-spacing type="xs2"></mib-spacing>
+						<p class="products-description text text_l c-bti-secondary">
+							Экспортный факторинг – выгодное финансирование поставок за рубеж.
+						</p>
+						<mib-spacing type="xs2"></mib-spacing>
+						<p class="products-description text text_l c-bti-secondary">
+							Импортный факторинг – поддержка импортных операций с иностранными
+							поставщиками.
+						</p>
+					</div>
+					<div class="flex_column" *ngSwitchCase="ProductTabsEnum.COMPLEX">
+						<mib-spacing
+							type="{{ isDesktop ? 'm' : 's' }}"
+							type="s"
+						></mib-spacing>
+						<p class="products-title text_medium text text_l c-mc-default">
+							Продукты комплексного факторинга
+						</p>
+						<mib-spacing type="xs2"></mib-spacing>
+						<p class="products-description text text_l c-bti-secondary">
+							Агентский факторинг – финансирование кредиторской задолженности
+							и/или поддержка вашей закупочной деятельности.
+						</p>
+						<mib-spacing type="xs2"></mib-spacing>
+						<p class="products-description text text_l c-bti-secondary">
+							Предпоставочный факторинг – финансирование под уступку будущих
+							требований.
+						</p>
+					</div>
+					<div
+						class="flex tags-content"
+						*ngSwitchCase="ProductTabsEnum.INDIVIDUAL"
+					>
+						<div class="flex flex_grow flex_column frame">
+							<mib-spacing
+								type="{{ isDesktop ? 'm' : 's' }}"
+								type="s"
+							></mib-spacing>
+							<p class="products-title text_medium text text_l c-mc-default">
+								Индивидуальное предложение
+							</p>
+							<mib-spacing type="xs2"></mib-spacing>
+							<p class="text text_l c-bti-secondary">
+								Заполните форму, чтобы мы смогли предложить вам один или
+								несколько подходящих продуктов.
+							</p>
+							<div class="flex flex_column">
+								<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
+								<mib-input>
+									<input
+										#innInput
+										type="number"
+										pattern="/^-?\d+\.?\d*$/"
+										onKeyPress="if(this.value.length==10) return false;"
+										size="{{ isDesktop ? 'xl' : 'l' }}"
+										styleType="floating"
+										mibInput
+									/>
+									<ng-container mibLabel>ИНН Организации</ng-container>
+								</mib-input>
+								<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
+								<div class="flex">
+									<mib-button
+										(press)="
+											openLandingRequestModal('Подобрать продукт');
+											clearInput(innInput)
+										"
+										size="{{ isDesktop ? 'l' : 'm' }}"
+										type="filled-primary"
+										>Далее
+										<mib-icon
+											btn-right-icon
+											class="stroke"
+											name="fi_chevron-right"
+										></mib-icon>
+									</mib-button>
+								</div>
+								<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 							</div>
-							<div class="line">
+						</div>
+						<div class="flex flex_grow flex_column frame-r">
+							<mib-spacing class="frame-mobile" type="s"></mib-spacing>
+							<div class="flex flex_column progress-bar">
 								<div
-									class="progress"
-									[ngStyle]="{width: (progress / maxPage) * 100 + '%'}"
-								></div>
+									class="wrap flex flex_justify-start text text_m c-bti-secondary"
+								>
+									<span>{{ progress }}</span>
+									<span> из {{ maxPage }}</span>
+								</div>
+								<div class="line">
+									<div
+										class="progress"
+										[ngStyle]="{width: (progress / maxPage) * 100 + '%'}"
+									></div>
+								</div>
+								<mib-spacing type="{{ isDesktop ? 'xs' : 's' }}"></mib-spacing>
 							</div>
-							<mib-spacing type="{{ isDesktop ? 'xs' : 's' }}"></mib-spacing>
-						</div>
-						<div class="flex flex_column timeline">
-							<div class="flex point">
-								<span class="text text_l c-bti-quaternary">
-									Сумма финансирования
-								</span>
-							</div>
-							<div class="flex point active flex_align-center gap-8">
-								<span class="text text_l c-bti-quaternary"> ИНН </span>
-								<mib-icon
-									btn-icon
-									class="stroke"
-									name="fi_chevron-left"
-								></mib-icon>
-							</div>
-							<div class="flex point">
-								<span class="text text_l c-bti-quaternary">
-									Срок отсрочки
-								</span>
+							<div class="flex flex_column timeline">
+								<div class="flex point">
+									<span class="text text_l c-bti-quaternary">
+										Сумма финансирования
+									</span>
+								</div>
+								<div class="flex point active flex_align-center gap-8">
+									<span class="text text_l c-bti-quaternary"> ИНН </span>
+									<mib-icon
+										btn-icon
+										class="stroke"
+										name="fi_chevron-left"
+									></mib-icon>
+								</div>
+								<div class="flex point">
+									<span class="text text_l c-bti-quaternary">
+										Срок отсрочки
+									</span>
+								</div>
 							</div>
 						</div>
 					</div>
+				</ng-container>
+				<div
+					[ngClass]="{hide: imgNumber === ProductTabsEnum.INDIVIDUAL}"
+					class="products-btn flex flex_column"
+				>
+					<mib-spacing type="s"></mib-spacing>
+					<div class="flex">
+						<mib-button
+							(click)="openLandingRequestModal('Получить консультацию')"
+							size="m"
+							type="filled-primary"
+						>
+							Получить консультацию
+						</mib-button>
+					</div>
+					<mib-spacing type="xl"></mib-spacing>
 				</div>
-			</ng-container>
+			</div>
 			<div
 				[ngClass]="{hide: imgNumber === ProductTabsEnum.INDIVIDUAL}"
-				class="products-btn flex flex_column"
+				class="products-img flex_column flex flex_grow flex_center"
 			>
 				<mib-spacing type="s"></mib-spacing>
-				<div class="flex">
-					<mib-button
-						(click)="openLandingRequestModal('Получить консультацию')"
-						size="m"
-						type="filled-primary"
-					>
-						Получить консультацию
-					</mib-button>
-				</div>
-				<mib-spacing type="xl"></mib-spacing>
+				<img
+					src="./assets/images/staff/holder/product_v4-{{
+						imgNumber === ProductTabsEnum.INDIVIDUAL
+							? ProductTabsEnum.INNER
+							: imgNumber
+					}}.png"
+					alt="product"
+				/>
+				<mib-spacing type="s"></mib-spacing>
 			</div>
-		</div>
-		<div
-			[ngClass]="{hide: imgNumber === ProductTabsEnum.INDIVIDUAL}"
-			class="products-img flex_column flex flex_grow"
-		>
-			<mib-spacing type="s"></mib-spacing>
-			<img
-				src="./assets/images/staff/holder/product_v4-{{
-					imgNumber === ProductTabsEnum.INDIVIDUAL
-						? ProductTabsEnum.INNER
-						: imgNumber
-				}}.png"
-				alt="product"
-			/>
-			<mib-spacing type="s"></mib-spacing>
 		</div>
 	</div>
 </section>
@@ -344,8 +353,8 @@
 	</div>
 	<mib-spacing type="xl2"></mib-spacing>
 </section>
+<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 <section class="requests">
-	<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 	<div class="container flex gap-16">
 		<div [formGroup]="form" class="requests-form flex flex_column flex_grow">
 			<mib-spacing type="xl"></mib-spacing>
@@ -430,8 +439,8 @@
 			<div class="flex img-shadow"></div>
 		</div>
 	</div>
+	<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 </section>
-<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 <section class="partners">
 	<div class="flex container flex_column fixWidth">
 		<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>

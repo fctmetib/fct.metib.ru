@@ -14,6 +14,11 @@
 	& img {
 		height: 595px;
 		object-fit: none;
+
+		@media (max-width: 992px) {
+			height: 500px;
+			object-fit: contain;
+		}
 	}
 
 	& .mobile-btn,
@@ -24,6 +29,15 @@
 	@media (max-width: 768px) {
 		& .container {
 			padding: 0 16px;
+
+			& .wrap {
+				text-align: center;
+				align-items: center;
+
+				& p {
+					max-width: 400px;
+				}
+			}
 		}
 
 		& > div {
@@ -109,6 +123,13 @@
 		@include icon-color(var(--mc-default));
 	}
 
+	&-mobile {
+		& .item {
+			max-width: 272px;
+			min-height: 168px;
+		}
+	}
+
 	@media (max-width: 768px) {
 		display: flex;
 		flex-direction: column;
@@ -134,236 +155,255 @@
 
 .products {
 	& .container {
-		max-width: 1280px;
-		padding: 0 72px;
-		background-color: var(--mc-quinary);
-		border-radius: 32px;
-		min-height: 520px;
-		gap: 16px;
+		max-width: 1440px;
+		padding: 0 80px;
 
-		& .individual,
-		.title-spacing {
-			display: none;
+		@media (max-width: 1200px) {
+			padding: 0;
 		}
 
-		& mib-tags-group {
-			height: 48px;
-			background-color: white;
-			align-items: center;
-			display: flex;
-			border-radius: 8px;
-			padding: 2px;
-		}
+		& .wrapper {
+			background-color: var(--mc-quinary);
+			border-radius: 32px;
+			min-height: 520px;
+			gap: 72px;
+			padding: 0 72px;
 
-		& .hide {
-			display: none;
-		}
-
-		& .products-img.hide,
-		.products-btn.hide {
-			display: none;
-		}
-
-		& .tags-content {
-			& .frame {
-				padding-right: 32px;
+			@media (max-width: 1280px) {
+				gap: 32px;
 			}
-			& .frame-r {
-				padding-left: 64px;
 
-				& .progress-bar {
-					width: 216px;
-					padding-top: 8px;
-					gap: 4px;
-					& .wrap {
-						padding-bottom: 4px;
-						gap: 2px;
-					}
-					& .line {
-						width: 100%;
-						height: 4px;
-						border-radius: 4px;
-						background-color: #cddff1;
+			@media (max-width: 1200px) {
+				border-radius: 0;
+				padding: 0 32px;
+			}
 
-						& .progress {
+			& .individual,
+			.title-spacing {
+				display: none;
+			}
+
+			& mib-tags-group {
+				height: 48px;
+				background-color: white;
+				align-items: center;
+				display: flex;
+				border-radius: 8px;
+				padding: 2px;
+			}
+
+			& .hide {
+				display: none;
+			}
+
+			& .products-img.hide,
+			.products-btn.hide {
+				display: none;
+			}
+
+			& .tags-content {
+				& .frame {
+					padding-right: 32px;
+				}
+				& .frame-r {
+					padding-left: 64px;
+
+					& .progress-bar {
+						width: 216px;
+						padding-top: 8px;
+						gap: 4px;
+						& .wrap {
+							padding-bottom: 4px;
+							gap: 2px;
+						}
+						& .line {
+							width: 100%;
 							height: 4px;
 							border-radius: 4px;
-							background-color: var(--mc-default);
+							background-color: #cddff1;
+
+							& .progress {
+								height: 4px;
+								border-radius: 4px;
+								background-color: var(--mc-default);
+							}
+						}
+					}
+
+					& .timeline {
+						& .point.active {
+							& span {
+								color: var(--mc-default);
+							}
+							& mib-icon {
+								@include icon-color(var(--mc-default));
+								@include icon-size(20px);
+							}
 						}
 					}
 				}
-
-				& .timeline {
-					& .point.active {
-						& span {
-							color: var(--mc-default);
-						}
-						& mib-icon {
-							@include icon-color(var(--mc-default));
-							@include icon-size(20px);
-						}
-					}
-				}
-			}
-		}
-
-		& .products-img {
-			justify-content: center;
-
-			& mib-spacing[type='s'] {
-				display: none;
-			}
-		}
-
-		& img {
-			height: auto;
-			object-fit: contain;
-		}
-
-		@media (max-width: 1100px) {
-			flex-direction: column;
-			gap: 0;
-			min-height: auto;
-
-			mib-spacing[type='xl'] {
-				display: none;
-			}
-
-			& .individual {
-				display: flex;
-			}
-
-			& .mob-products {
-				order: 1;
-				text-align: center;
 			}
 
 			& .products-img {
-				& img {
-					height: 280px;
-				}
-				& mib-spacing[type='s'] {
-					display: flex;
-				}
-			}
-
-			& .products-btn > div {
-				padding-bottom: 24px;
 				justify-content: center;
-			}
-		}
 
-		@media (max-width: 992px) {
-			padding: 0 36px;
-		}
-
-		@media (max-width: 768px) {
-			padding: 0;
-			border-radius: 0;
-			& .extra-wrap {
-				position: relative;
-
-				& .shadow-left,
-				& .shadow-right {
-					position: absolute;
-					top: 0;
-					bottom: 0;
-					width: 40px;
-					pointer-events: none;
-					z-index: 1;
-					transition: opacity 0.3s;
-				}
-
-				& .shadow-left {
-					left: 0;
-					background: linear-gradient(
-						90deg,
-						rgb(255 255 255 / 90%),
-						rgb(255 255 255 / 10%)
-					);
-				}
-
-				& .shadow-right {
-					right: 0;
-					background: linear-gradient(
-						90deg,
-						rgb(255 255 255 / 10%),
-						rgb(255 255 255 / 90%)
-					);
-				}
-
-				& .hide-shadow {
-					opacity: 0;
-				}
-			}
-
-			& .tags-wrap {
-				padding: 0 16px;
-				overflow-x: auto;
-				white-space: nowrap;
-				-webkit-overflow-scrolling: touch;
-				-ms-overflow-style: none;
-				scrollbar-width: none;
-				&::-webkit-scrollbar {
+				& mib-spacing[type='s'] {
 					display: none;
 				}
 			}
 
-			& .products-description {
-				padding: 0 16px;
-			}
-
-			& .tags-content {
-				padding: 0 16px;
-				flex-direction: column;
-
-				& .frame {
-					padding: 0;
-				}
-
-				& .frame-r {
-					padding: 0;
-
-					& .frame-mobile {
-						display: none;
-					}
-
-					& .progress-bar {
-						width: 100%;
-					}
-
-					& .timeline {
-						display: none;
-					}
-				}
-			}
-		}
-
-		@media (max-width: 576px) {
-			& .products-img {
-				padding: 0;
-				justify-content: center;
-			}
-
 			& img {
-				height: 280px;
+				height: auto;
 				object-fit: contain;
 			}
 
-			& mib-spacing[type='xs'] {
-				display: none;
-			}
+			@media (max-width: 1100px) {
+				flex-direction: column;
+				gap: 0;
+				min-height: auto;
+				width: 100%;
 
-			& .frame {
-				& mib-button {
-					width: 100%;
+				mib-spacing[type='xl'] {
+					display: none;
+				}
+
+				& .individual {
+					display: flex;
+				}
+
+				& .mob-products {
+					order: 1;
+					text-align: center;
+				}
+
+				& .products-img {
+					& img {
+						height: 280px;
+						object-fit: contain;
+					}
+					& mib-spacing[type='s'] {
+						display: flex;
+					}
+				}
+
+				& .products-btn > div {
+					padding-bottom: 24px;
+					justify-content: center;
 				}
 			}
 
-			& .products-btn {
-				padding: 0 16px;
-				mib-button[size='m'] {
-					width: 100%;
+			@media (max-width: 992px) {
+				padding: 0 36px;
+			}
+
+			@media (max-width: 768px) {
+				padding: 0;
+				border-radius: 0;
+				& .extra-wrap {
+					position: relative;
+
+					& .shadow-left,
+					& .shadow-right {
+						position: absolute;
+						top: 0;
+						bottom: 0;
+						width: 40px;
+						pointer-events: none;
+						z-index: 1;
+						transition: opacity 0.3s;
+					}
+
+					& .shadow-left {
+						left: 0;
+						background: linear-gradient(
+							90deg,
+							rgb(255 255 255 / 90%),
+							rgb(255 255 255 / 10%)
+						);
+					}
+
+					& .shadow-right {
+						right: 0;
+						background: linear-gradient(
+							90deg,
+							rgb(255 255 255 / 10%),
+							rgb(255 255 255 / 90%)
+						);
+					}
+
+					& .hide-shadow {
+						opacity: 0;
+					}
+				}
+
+				& .tags-wrap {
+					padding: 0 16px;
+					overflow-x: auto;
+					white-space: nowrap;
+					-webkit-overflow-scrolling: touch;
+					-ms-overflow-style: none;
+					scrollbar-width: none;
+					&::-webkit-scrollbar {
+						display: none;
+					}
+				}
+
+				& .products-description {
+					padding: 0 16px;
+				}
+
+				& .tags-content {
+					padding: 0 16px;
+					flex-direction: column;
+
+					& .frame {
+						padding: 0;
+					}
+
+					& .frame-r {
+						padding: 0;
+
+						& .frame-mobile {
+							display: none;
+						}
+
+						& .progress-bar {
+							width: 100%;
+						}
+
+						& .timeline {
+							display: none;
+						}
+					}
+				}
+			}
+
+			@media (max-width: 576px) {
+				& .products-img {
+					padding: 0;
+					justify-content: center;
+				}
+
+				& img {
+					height: 280px;
+					object-fit: contain;
+				}
+
+				& mib-spacing[type='xs'] {
+					display: none;
+				}
+
+				& .frame {
+					& mib-button {
+						width: 100%;
+					}
+				}
+
+				& .products-btn {
+					padding: 0 16px;
+					mib-button[size='m'] {
+						width: 100%;
+					}
 				}
 			}
 		}
