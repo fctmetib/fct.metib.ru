@@ -355,88 +355,90 @@
 </section>
 <mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 <section class="requests">
-	<div class="container flex gap-16">
-		<div [formGroup]="form" class="requests-form flex flex_column flex_grow">
-			<mib-spacing type="xl"></mib-spacing>
-			<h3>Заявка на факторинг</h3>
-			<mib-spacing type="s"></mib-spacing>
-			<div class="flex flex_column gap-12">
-				<input type="hidden" formControlName="FormName" />
-				<mib-autocomplete
-					[extra]="true"
-					formControlName="Organization"
-					[options]="options"
-				>
-				</mib-autocomplete>
-				<mib-input>
-					<input
-						formControlName="Name"
-						size="{{ isDesktop ? 'xl' : 'l' }}"
-						styleType="floating"
-						mibInput
-					/>
-					<ng-container mibLabel>Как к Вам обращаться?</ng-container>
-				</mib-input>
-				<div class="requests-form--wrap flex gap-12">
-					<mib-input class="flex_grow">
+	<div class="container flex">
+		<div class="flex wrap gap-16">
+			<div [formGroup]="form" class="requests-form flex flex_column flex_grow">
+				<mib-spacing type="xl"></mib-spacing>
+				<h3>Заявка на факторинг</h3>
+				<mib-spacing type="s"></mib-spacing>
+				<div class="flex flex_column gap-12">
+					<input type="hidden" formControlName="FormName" />
+					<mib-autocomplete
+						[extra]="true"
+						formControlName="Organization"
+						[options]="options"
+					>
+					</mib-autocomplete>
+					<mib-input>
 						<input
-							formControlName="Phone"
-							prefix="+"
-							mask="0 (000) 000-00-00"
-							type="tel"
+							formControlName="Name"
 							size="{{ isDesktop ? 'xl' : 'l' }}"
 							styleType="floating"
 							mibInput
 						/>
-						<ng-container mibLabel>Мобильный телефон</ng-container>
+						<ng-container mibLabel>Как к Вам обращаться?</ng-container>
 					</mib-input>
-					<mib-input class="flex_grow">
-						<input
-							type="text"
-							maxlength="12"
-							minlength="10"
-							formControlName="INN"
-							size="{{ isDesktop ? 'xl' : 'l' }}"
-							styleType="floating"
-							mibInput
-						/>
-						<ng-container mibLabel>ИНН Вашей организации</ng-container>
-					</mib-input>
+					<div class="requests-form--wrap flex gap-12">
+						<mib-input class="flex_grow">
+							<input
+								formControlName="Phone"
+								prefix="+"
+								mask="0 (000) 000-00-00"
+								type="tel"
+								size="{{ isDesktop ? 'xl' : 'l' }}"
+								styleType="floating"
+								mibInput
+							/>
+							<ng-container mibLabel>Мобильный телефон</ng-container>
+						</mib-input>
+						<mib-input class="flex_grow">
+							<input
+								type="text"
+								maxlength="12"
+								minlength="10"
+								formControlName="INN"
+								size="{{ isDesktop ? 'xl' : 'l' }}"
+								styleType="floating"
+								mibInput
+							/>
+							<ng-container mibLabel>ИНН Вашей организации</ng-container>
+						</mib-input>
+					</div>
 				</div>
+				<mib-spacing type="{{ isDesktop ? 's' : 'm' }}"></mib-spacing>
+				<div class="requests-btn flex">
+					<mib-button
+						size="{{ isDesktop ? 'xl' : 'l' }}"
+						(press)="onSubmit()"
+						[disabled]="form.invalid"
+						[loading]="!!(isSubmitting$ | async)"
+						type="filled-primary"
+					>
+						Оставить заявку
+					</mib-button>
+				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex fixWidth private">
+					<input
+						formControlName="Agree"
+						type="checkbox"
+						style="display: none"
+						checked="checked"
+					/>
+					<p class="text text_m c-bti-tertiary">
+						Нажимая на кнопку «Оставить заявку», Вы даете согласие на
+						<span class="c-mc-default"> обработку персональных данных </span>
+					</p>
+				</div>
+				<mib-spacing type="xl"></mib-spacing>
 			</div>
-			<mib-spacing type="{{ isDesktop ? 's' : 'm' }}"></mib-spacing>
-			<div class="requests-btn flex">
-				<mib-button
-					size="{{ isDesktop ? 'xl' : 'l' }}"
-					(press)="onSubmit()"
-					[disabled]="form.invalid"
-					[loading]="!!(isSubmitting$ | async)"
-					type="filled-primary"
-				>
-					Оставить заявку
-				</mib-button>
-			</div>
-			<mib-spacing type="xs"></mib-spacing>
-			<div class="flex fixWidth private">
-				<input
-					formControlName="Agree"
-					type="checkbox"
-					style="display: none"
-					checked="checked"
+			<div class="requests-img flex flex_align-center flex_grow">
+				<img
+					src="./assets/images/staff/requests/factoring-application.png"
+					alt="factoring"
 				/>
-				<p class="text text_m c-bti-tertiary">
-					Нажимая на кнопку «Оставить заявку», Вы даете согласие на
-					<span class="c-mc-default"> обработку персональных данных </span>
-				</p>
+				<div class="flex img-shadow"></div>
 			</div>
-			<mib-spacing type="xl"></mib-spacing>
-		</div>
-		<div class="requests-img flex flex_align-center flex_grow">
-			<img
-				src="./assets/images/staff/requests/factoring-application.png"
-				alt="factoring"
-			/>
-			<div class="flex img-shadow"></div>
 		</div>
 	</div>
 	<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
