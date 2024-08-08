@@ -266,6 +266,13 @@ ng g m shared/ui-kit/test-tab/test-tab --flat  --dry-run
 ng g c shared/ui-kit/test-tab/test-tab --flat  --skip-tests --dry-run
  //---
 
+ //--- test-modal-outside
+src\app\shared\ui-kit
+ng g i shared/ui-kit/test-modal-outside/interfaces/test-modal-outside.interface  --dry-run
+ng g m shared/ui-kit/test-modal-outside/test-modal-outside --flat  --dry-run
+ng g c shared/ui-kit/test-modal-outside/test-modal-outside --flat  --skip-tests --dry-run
+ //---
+
  //--- mobile-table
 src\app\shared\ui-kit
 ng g i shared/ui-kit/mobile-table/interfaces/mobile-table.interface  --dry-run

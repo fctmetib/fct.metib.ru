@@ -6,10 +6,13 @@ import {RequestCreateSuccessModalService} from '../modals/request-create-success
 import {RequestInfoModalService} from '../modals/request-info-modal/request-info-modal.service'
 import {RequestFailureModalService} from '../modals/request-failure-modal/request-failure-modal.service'
 import {ToasterService} from '../../services/common/toaster.service'
+import {MatDialog} from '@angular/material/dialog'
+import {TestModalOutsideComponent} from '../../ui-kit/test-modal-outside/test-modal-outside.component'
 
 @Component({
 	selector: 'app-mib-ui',
 	templateUrl: './mib-ui.component.html',
+	styleUrls: ['./mib-ui.component.scss'],
 	styles: [
 		`
 			:host:has(mib-header) {
@@ -75,7 +78,8 @@ export class MibUiComponent implements OnInit {
 		private requestCreateSuccessModalService: RequestCreateSuccessModalService,
 		private requestInfoModalService: RequestInfoModalService,
 		private requestFailureModalService: RequestFailureModalService,
-		private toaster: ToasterService
+		private toaster: ToasterService,
+		public dialog: MatDialog
 	) {}
 
 	ngOnInit(): void {
@@ -183,5 +187,34 @@ export class MibUiComponent implements OnInit {
 	}
 
 	// -----------------------
+
+	// openModal(): void {
+	// 	this.dialog.open(TestModalOutsideComponent, {
+	// 		width: '400px'
+	// 	})
+	// }
+
+	openModal(): void {
+		this.dialog.open(TestModalOutsideComponent, {
+			width: '100%', // Задает ширину окна
+			height: '100%', // Задает высоту окна
+			maxWidth: '100%', // Устанавливает максимальную ширину на 100%
+			// position: {
+			// 	top: '65px' // Смещение от верхней границы экрана
+			// },
+
+			// /*
+			// 			width: '100%',
+			// height: '100%',
+			// max-width: '100%',
+			// position: 'static',
+			// marginLeft: '0px',
+			// marginTop: '65px',
+			// marginRight: '0px',
+			// */
+			panelClass: 'custom-dialog-container' // Задает пользовательский CSS-класс
+		})
+	}
+
 	// -----------------------
 }

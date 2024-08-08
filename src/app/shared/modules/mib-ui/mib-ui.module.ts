@@ -30,6 +30,7 @@ import {TestTabModule} from '../../ui-kit/test-tab/test-tab.module'
 import {TestSwipeModule} from '../../ui-kit/test-swipe/test-swipe.module'
 import {TestAutocompleteModule} from '../../ui-kit/test-autocomplete/test-autocomplete.module'
 import {RightIconModule} from '../../directives/right-icon/right-icon.module'
+import {MatDialogModule} from '@angular/material/dialog'
 
 @NgModule({
 	imports: [
@@ -63,7 +64,8 @@ import {RightIconModule} from '../../directives/right-icon/right-icon.module'
 		TestTabModule,
 		TestSwipeModule,
 		TestAutocompleteModule,
-		RightIconModule
+		RightIconModule,
+		MatDialogModule
 	],
 	declarations: [MibUiComponent]
 })
