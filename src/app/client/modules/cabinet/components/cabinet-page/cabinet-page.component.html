@@ -1,16 +1,3 @@
-<!--<div class="card-content">-->
-<!--  <app-factoring [stats]="statistics"></app-factoring>-->
-<!--</div>-->
-<!--
-<div class="widgets">
-  <div class="widget__full-height">
-    <widget-stats></widget-stats>
-  </div>
-  <div class="widget__normal">
-    <widget-actions></widget-actions>
-    <widget-news></widget-news>
-  </div>
-</div> -->
 <div class="container container_large">
 	<mib-spacing type="m"></mib-spacing>
 	<app-factoring></app-factoring>
@@ -19,7 +6,7 @@
 		<mib-skeleton
 			[styles]="defaultSkeleton"
 			[style.height]="'130px'"
-			[style.padding]="'0 16px'"
+			[style.padding]="isDesktop ? '' : '0 16px'"
 			*ngFor="let i of [1]"
 		></mib-skeleton>
 	</ng-container>

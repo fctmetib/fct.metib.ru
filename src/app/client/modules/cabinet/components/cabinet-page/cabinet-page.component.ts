@@ -1,11 +1,12 @@
 import {StatisticsInterface} from '../../types/common/statistics.interface'
 import {ReportCardInterface} from '../../types/common/report-card.interface'
 import {AuthService} from '../../../../../auth/services/auth.service'
-import {Component, OnInit, ViewEncapsulation} from '@angular/core'
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core'
 import {MIBCommon} from 'src/app/shared/classes/common/mid-common.class'
 import {StatisticsService} from '../../services/statistics.service'
 import {Properties} from 'csstype'
-import {BehaviorSubject, finalize, tap} from 'rxjs'
+import {BehaviorSubject, finalize, Subscription, tap} from 'rxjs'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
 @Component({
 	selector: 'app-cabinet-page',
@@ -13,7 +14,7 @@ import {BehaviorSubject, finalize, tap} from 'rxjs'
 	styleUrls: ['./cabinet-page.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
-export class CabinetPageComponent implements OnInit {
+export class CabinetPageComponent implements OnInit, OnDestroy {
 	public statistics: StatisticsInterface
 	public reportCards: ReportCardInterface[] = []
 
@@ -24,13 +25,21 @@ export class CabinetPageComponent implements OnInit {
 		width: '100%'
 	}
 
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+
 	constructor(
 		private authSerice: AuthService,
-		private statisticsService: StatisticsService
+		private statisticsService: StatisticsService,
+		public breakpointService: BreakpointObserverService
 	) {}
 
 	ngOnInit() {
 		this.loading$.next(true)
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
 		this.reportCardsInit()
 		this.statisticsService
 			.getClientStatistics()
@@ -50,5 +59,9 @@ export class CabinetPageComponent implements OnInit {
 
 	public logout(): void {
 		this.authSerice.logout()
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }

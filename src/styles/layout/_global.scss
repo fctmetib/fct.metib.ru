@@ -44,6 +44,11 @@
 	margin: 0 auto;
 	&_large {
 		max-width: 100%;
+		padding: 0 32px;
+	}
+
+	&_m {
+		padding: 0 32px;
 	}
 
 	@media (max-width: 1200px) {
