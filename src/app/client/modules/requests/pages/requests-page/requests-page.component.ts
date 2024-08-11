@@ -295,25 +295,13 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 	}
 
 	openRequestsPageModal(req) {
-		// const dialogConfig = {
-		// 	width: '100%',
-		// 	maxWidth: '600px',
-		// 	height: '100%',
-		// 	panelClass: 'modal-cdk',
-		// 	data: {req}
-		// }
 		const dialogConfig = {
 			width: '100%',
 			maxWidth: '600px',
-			height: 'calc(100% - 48px)',
-			position: {
-				top: '48px',
-				left: '0px'
-			},
-			panelClass: 'modal-cdk',
+			// height: '100%',
+			panelClass: 'custom-dialog-request',
 			data: {req}
 		}
-		// this.dialog.open(RequestsPageModalModule)
 		this.dialog.open(RequestsPageModalComponent, dialogConfig)
 	}
 

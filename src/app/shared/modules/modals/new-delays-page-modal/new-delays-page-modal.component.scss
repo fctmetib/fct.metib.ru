@@ -1,0 +1,14 @@
+@import 'src/styles/helpers/icon_tools';
+@import 'src/styles/_colors.vars';
+
+.close-btn {
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	z-index: 1000;
+	padding: 12px 16px;
+	mib-icon[name='fi_x'] {
+		@include icon-color(var(--wti-primary));
+		@include icon-size(24px);
+	}
+}

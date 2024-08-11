@@ -282,22 +282,11 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 	}
 
 	openInvoicePageModal(duty) {
-		// const dialogConfig = {
-		// 	width: '100%',
-		// 	maxWidth: '600px',
-		// 	height: '100%',
-		// 	panelClass: 'modal-cdk',
-		// 	data: {duty}
-		// }
 		const dialogConfig = {
 			width: '100%',
 			maxWidth: '600px',
-			height: 'calc(100% - 48px)',
-			position: {
-				top: '48px',
-				left: '0px'
-			},
-			panelClass: 'modal-cdk',
+			// height: '100%',
+			panelClass: 'custom-dialog-freeduty',
 			data: {duty}
 		}
 

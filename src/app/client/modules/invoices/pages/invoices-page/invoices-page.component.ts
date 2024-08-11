@@ -199,20 +199,9 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 			width: '100%',
 			maxWidth: '600px',
 			height: '100%',
-			panelClass: 'modal-cdk',
+			panelClass: 'custom-dialog-invoice',
 			data: {invoice}
 		}
-		// const dialogConfig = {
-		// 	width: '100%',
-		// 	maxWidth: '600px',
-		// 	height: 'calc(100% - 48px)',
-		// 	position: {
-		// 		top: '48px',
-		// 		left: '0px'
-		// 	},
-		// 	panelClass: 'modal-cdk',
-		// 	data: {invoice}
-		// }
 
 		this.dialog.open(InvoicePageModalComponent, dialogConfig)
 	}

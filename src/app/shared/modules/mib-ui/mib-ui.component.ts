@@ -171,8 +171,6 @@ export class MibUiComponent implements OnInit {
 	openRequestFailureModal() {
 		this.requestFailureModalService.open()
 	}
-	// -----------------------
-	// -----------------------
 
 	onSelectPerson(event: any) {
 		console.log('Selected data:', event)
@@ -186,35 +184,12 @@ export class MibUiComponent implements OnInit {
 		}
 	}
 
-	// -----------------------
-
-	// openModal(): void {
-	// 	this.dialog.open(TestModalOutsideComponent, {
-	// 		width: '400px'
-	// 	})
-	// }
-
 	openModal(): void {
 		this.dialog.open(TestModalOutsideComponent, {
-			width: '100%', // Задает ширину окна
-			height: '100%', // Задает высоту окна
-			maxWidth: '100%', // Устанавливает максимальную ширину на 100%
-			// position: {
-			// 	top: '65px' // Смещение от верхней границы экрана
-			// },
-
-			// /*
-			// 			width: '100%',
-			// height: '100%',
-			// max-width: '100%',
-			// position: 'static',
-			// marginLeft: '0px',
-			// marginTop: '65px',
-			// marginRight: '0px',
-			// */
-			panelClass: 'custom-dialog-container' // Задает пользовательский CSS-класс
+			width: '100%',
+			height: '100%',
+			maxWidth: '100%',
+			panelClass: 'custom-dialog-mib-ui'
 		})
 	}
-
-	// -----------------------
 }
