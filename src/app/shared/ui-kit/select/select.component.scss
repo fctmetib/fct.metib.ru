@@ -1,13 +1,12 @@
+@import 'src/styles/_typography.vars.scss';
+
 :host {
 	display: block;
 	min-width: 72px;
 
-	& .text {
-		display: -webkit-box;
-		-webkit-line-clamp: 1;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-		white-space: normal;
-		word-break: break-all;
+	& .select {
+		& .text {
+			@include text-overflow(1);
+		}
 	}
 }

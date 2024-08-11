@@ -4,15 +4,31 @@
 
 .news {
 	min-height: calc(100% - 65px);
-}
 
-mib-news-panel {
-	cursor: pointer;
-	min-height: 238px;
-}
+	& mib-news-panel {
+		cursor: pointer;
+		min-height: 238px;
+	}
 
-mib-select {
-	width: 185px;
+	& mib-select {
+		width: 185px;
+	}
+
+	@media (max-width: 768px) {
+		.sorting {
+			display: none;
+		}
+	}
+
+	@media (max-width: 576px) {
+		& .frame {
+			flex-direction: column;
+		}
+
+		& .panel {
+			justify-content: center;
+		}
+	}
 }
 
 mib-paginator {

@@ -14,6 +14,7 @@
 		<ng-content select="[mibLeftIcon]"></ng-content>
 	</div>
 	<span class="text">{{ selectedOption?.text ?? placeholder }}</span>
+	<!-- <span class="text-clamp">{{ selectedOption?.text ?? placeholder }}</span> -->
 	<div class="select_icon-wrapper right-wrapper" #rightIcon>
 		<ng-content select="[mibRightIcon]"></ng-content>
 		<mib-icon
