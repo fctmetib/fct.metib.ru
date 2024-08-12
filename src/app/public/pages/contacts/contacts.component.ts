@@ -1,4 +1,4 @@
-import {Component} from '@angular/core'
+import {Component, OnDestroy, OnInit} from '@angular/core'
 import {Subscription} from 'rxjs'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
@@ -7,7 +7,7 @@ import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoi
 	styleUrls: ['./contacts.component.scss'],
 	templateUrl: './contacts.component.html'
 })
-export class ContactsComponent {
+export class ContactsComponent implements OnInit, OnDestroy {
 	public isDesktop: boolean = false
 
 	private subscriptions = new Subscription()
@@ -16,47 +16,77 @@ export class ContactsComponent {
 
 	datas = [
 		{
-			managers: [
+			head: [
 				{
 					img: './assets/images/staff/big/prav-b.jpg',
 					name: 'Прохоров Александр',
-					position: 'Директор департамента',
-					email: 'prav@metib.ru'
-				},
+					position: 'Директор департамента факторинга',
+					email: 'factoring@metib.ru'
+				}
+			]
+		},
+		{
+			headOfDep: [
 				{
 					img: './assets/images/staff/big/osam-b.jpg',
 					name: 'Исаева Анастасия',
-					position: 'Начальник по работе с клиентами',
+					position: 'Начальник управления',
 					email: 'osam@metib.ru'
+				}
+			]
+		},
+		{
+			salesDep: [
+				{
+					img: '',
+					name: 'Капитанский Павел',
+					position: 'Специалист',
+					email: 'pkapitanskiy@metib.ru'
 				},
 				{
-					img: './assets/images/staff/big/bji-b.jpg',
-					name: 'Бакунина Юлия',
-					position: 'Начальник по работе с дебиторами',
-					email: 'bji@metib.ru'
+					img: './assets/images/staff/big/dkobyakov-b.jpg',
+					name: 'Кобяков Даниил',
+					position: 'Специалист',
+					email: 'dkobyakov@metib.ru'
 				},
 				{
-					img: './assets/images/staff/big/belec-b.jpg',
-					name: 'Мотылёва Екатерина',
-					position: 'Начальник по развитию факторинговых продуктов',
-					email: 'belec@metib.ru'
-				},
+					img: './assets/images/staff/big/dnovikova-b.jpg',
+					name: 'Новикова Дарья',
+					position: 'Специалист',
+					email: 'dnovikova@metib.ru'
+				}
+			]
+		},
+		{
+			salesOrgDep: [
 				{
-					img: './assets/images/staff/big/eyv-b.jpg',
-					name: 'Ермолова Юлия',
-					position: 'Начальник по сопровождению  факторинговых операций',
-					email: 'eyv@metib.ru'
-				},
-				{
-					img: './assets/images/staff/big/knvl-b.jpg',
-					name: 'Куприянова Наталья',
-					position: 'Зам. Начальника по сопровождению  факторинговых операций',
-					email: 'knvl@metib.ru'
+					img: './assets/images/staff/big/emelocheva-b.jpg',
+					name: 'Удалых Елена',
+					position: 'Главный специалист',
+					email: 'emelocheva@metib.ru'
 				}
 			]
 		},
 		{
 			supportDep: [
+				{
+					img: './assets/images/staff/big/eyv-b.jpg',
+					name: 'Ермолова Юлия',
+					position: 'Начальник отдела',
+					email: 'eyv@metib.ru'
+				},
+				{
+					img: './assets/images/staff/big/knvl-b.jpg',
+					name: 'Куприянова Наталья',
+					position: 'Заместитель начальника',
+					email: 'knvl@metib.ru'
+				},
+				{
+					img: './assets/images/staff/big/ievtushenko-b.jpg',
+					name: 'Евтушенко Ирина',
+					position: 'Старший экономист',
+					email: 'ievtushenko@metib.ru'
+				},
 				{
 					img: './assets/images/staff/big/dladnaya-b.jpg',
 					name: 'Ладная Дарья',
@@ -70,54 +100,42 @@ export class ContactsComponent {
 					email: 'chai@metib.ru'
 				},
 				{
-					img: './assets/images/staff/big/ievtushenko-b.jpg',
-					name: 'Евтушенко Ирина',
-					position: 'Старший экономист',
-					email: 'ievtushenko@metib.ru'
-				},
-				{
 					img: './assets/images/staff/big/ymanelyuk-b.jpg',
 					name: 'Манелюк Юлия',
-					position: 'Главный экономист',
+					position: 'Старший экономист',
 					email: 'ymanelyuk@metib.ru'
 				},
 				{
 					img: './assets/images/staff/big/emelnikova-b.jpg',
 					name: 'Мельникова Екатерина',
-					position: 'Ведущий экономист',
+					position: 'Экономист',
 					email: 'emelnikova@metib.ru'
 				},
 				{
 					img: './assets/images/staff/big/smovsesyan-b.jpg',
 					name: 'Мовсесян Стелла',
-					position: 'Старший экономист',
+					position: 'Экономист',
 					email: 'smovsesyan@metib.ru'
 				}
 			]
 		},
 		{
-			salesDep: [
+			devDep: [
 				{
-					img: './assets/images/staff/big/ivanovaap-b.jpg',
-					name: 'Иванова Анастасия',
-					position: 'Специалист отдела продаж',
-					email: 'ivanovaap@metib.ru'
-				},
-				{
-					img: './assets/images/staff/big/dkobyakov-b.jpg',
-					name: 'Кобяков Даниил',
-					position: 'Специалист отдела продаж',
-					email: 'dkobyakov@metib.ru'
+					img: './assets/images/staff/big/belec-b.jpg',
+					name: 'Мотылёва Екатерина',
+					position: 'Начальник управления',
+					email: 'belec@metib.ru'
 				}
 			]
 		},
 		{
-			salesOrgDep: [
+			deptDep: [
 				{
-					img: './assets/images/staff/big/kkhrapova-b.jpg',
-					name: 'Храпова Ксения',
-					position: 'Специалист отдела организации продаж',
-					email: 'kkhrapova@metib.ru'
+					img: './assets/images/staff/big/bji-b.jpg',
+					name: 'Бакунина Юлия',
+					position: 'Начальник управления',
+					email: 'bji@metib.ru'
 				}
 			]
 		}

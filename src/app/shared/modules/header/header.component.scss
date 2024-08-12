@@ -127,6 +127,12 @@
 	}
 }
 
+@media (max-width: 576px) {
+	.container-fix {
+		padding: 0;
+	}
+}
+
 .menu > a {
 	display: flex;
 	align-items: center;

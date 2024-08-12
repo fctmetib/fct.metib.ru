@@ -1,4 +1,7 @@
 .spacing {
+	&.xm2 {
+		height: var(--spacing-desktop-xm2);
+	}
 	&.xs2 {
 		height: var(--spacing-desktop-xs2);
 	}

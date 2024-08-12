@@ -8,6 +8,10 @@
 		rgb(240 244 249) 100%
 	);
 
+	&.hide {
+		display: none;
+	}
+
 	& .container {
 		min-height: 440px;
 
@@ -53,9 +57,6 @@
 }
 
 .offer {
-	max-width: 1200px;
-	padding: 0 32px;
-
 	@media (max-width: 576px) {
 		width: 100%;
 		padding: 0;
@@ -66,7 +67,11 @@
 		}
 	}
 	& .clients {
-		width: 560px;
+		max-width: 560px;
+
+		& .hide {
+			display: none;
+		}
 
 		.stap-title {
 			height: 32px;

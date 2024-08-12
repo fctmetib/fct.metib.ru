@@ -7,6 +7,7 @@ import {Component, Input} from '@angular/core'
 })
 export class SpacingComponent {
 	@Input() type:
+		| 'xm2'
 		| 'xs2'
 		| 'xm'
 		| 'x'

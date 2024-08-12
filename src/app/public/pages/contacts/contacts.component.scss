@@ -3,8 +3,20 @@
 		height: 150px;
 	}
 
+	& .special > div:not(:first-child):not(:last-child) {
+		padding-right: 16px;
+	}
+
 	@media (max-width: 576px) {
 		padding: 0;
+
+		& .special > div:not(:first-child):not(:last-child) {
+			padding-right: unset;
+		}
+
+		& .special {
+			gap: 16px;
+		}
 
 		& h3,
 		h4 {

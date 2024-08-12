@@ -1,4 +1,4 @@
-<section class="hero flex">
+<section [ngClass]="{hide: isDesktop}" class="hero flex">
 	<div class="container gap-16 flex">
 		<div class="flex frame flex_grow flex_justify-center flex_column">
 			<mib-spacing class="hero-mobile" type="m"></mib-spacing>
@@ -269,7 +269,7 @@
 				<mib-spacing type="s"></mib-spacing>
 			</div>
 		</div>
-		<div class="flex flex_column accordion">
+		<div [ngClass]="{hide: !isDesktop}" class="flex flex_column accordion">
 			<mib-spacing type="l"></mib-spacing>
 			<h4>Вопрос - ответ</h4>
 			<mib-spacing type="xs"></mib-spacing>
