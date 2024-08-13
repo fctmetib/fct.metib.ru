@@ -39,7 +39,8 @@
 	<div class="header-inner">
 		<div *ngIf="!isAdmin; else admin">
 			<div
-				class="container container-fix flex flex_justify-between flex_align-center"
+				[ngClass]="signedIn ? 'container_m' : 'container'"
+				class="container-fix flex flex_justify-between flex_align-center"
 				[class.container_large]="signedIn"
 			>
 				<ng-container *ngIf="signedIn; else unsignedTemplate">
