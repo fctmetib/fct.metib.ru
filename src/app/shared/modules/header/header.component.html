@@ -252,24 +252,24 @@
 		</div>
 		<ng-template #admin>
 			<div *ngIf="signedIn" class="flex flex_justify-end">
-				<mib-skeleton
-					*ngIf="userLoading$ | async; else adminTemplate"
-					[styles]="skeleton"
-				></mib-skeleton>
-				<ng-template #adminTemplate>
-					<div
-						class="container_m w-100 container_large flex flex_justify-between"
-					>
-						<div class="flex burger-btn">
-							<mib-mobile-menu [isAdmin]="true"></mib-mobile-menu>
-						</div>
-						<div class="flex">
-							<mib-icon
-								class="main-logo-round cursor-pointer"
-								[routerLink]="['/client/cabinet']"
-								name="fi_logo_round_main"
-							></mib-icon>
-						</div>
+				<div
+					class="container_m w-100 container_large flex flex_justify-between"
+				>
+					<div class="flex burger-btn">
+						<mib-mobile-menu [isAdmin]="true"></mib-mobile-menu>
+					</div>
+					<div class="flex">
+						<mib-icon
+							class="main-logo-round cursor-pointer"
+							[routerLink]="['/client/cabinet']"
+							name="fi_logo_round_main"
+						></mib-icon>
+					</div>
+					<mib-skeleton
+						*ngIf="userLoading$ | async; else adminTemplate"
+						[styles]="skeleton"
+					></mib-skeleton>
+					<ng-template #adminTemplate>
 						<div
 							[mibDropdownTrigger]="adminPanel"
 							class="manager user flex gap-12"
@@ -293,18 +293,18 @@
 								></mib-icon>
 							</mib-button>
 						</div>
-					</div>
-					<mib-dropdown #adminPanel>
-						<mib-spacing dropdown-spacing type="s"></mib-spacing>
-						<mib-dropdown-point (press)="logout()" text="Выйти">
-							<mib-icon
-								dropdown-point-left-icon
-								class="stroke"
-								name="fi_log-out"
-							></mib-icon>
-						</mib-dropdown-point>
-					</mib-dropdown>
-				</ng-template>
+					</ng-template>
+				</div>
+				<mib-dropdown #adminPanel>
+					<mib-spacing dropdown-spacing type="s"></mib-spacing>
+					<mib-dropdown-point (press)="logout()" text="Выйти">
+						<mib-icon
+							dropdown-point-left-icon
+							class="stroke"
+							name="fi_log-out"
+						></mib-icon>
+					</mib-dropdown-point>
+				</mib-dropdown>
 			</div>
 			<div
 				*ngIf="!signedIn"
