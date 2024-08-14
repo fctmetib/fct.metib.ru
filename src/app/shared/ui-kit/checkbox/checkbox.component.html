@@ -1,6 +1,6 @@
 <label class="flex flex_align-center checkbox w-100" [ngClass]="class">
 	<input
-    [id]="id"
+		[id]="id"
 		type="checkbox"
 		[checked]="value"
 		(click)="onCheckboxChange($event)"
@@ -8,6 +8,7 @@
 	/>
 	<span
 		[class.checked]="value"
+		[class.floating]="styled"
 		class="checkbox-control flex flex_center"
 		[ngClass]="'checkbox-control_' + size"
 	>

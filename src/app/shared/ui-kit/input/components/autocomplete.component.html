@@ -5,7 +5,7 @@
 			required
 			style="padding-right: 40px"
 			#input
-			size="l"
+			size="{{ isDesktop ? 'xl' : 'l' }}"
 			mibInput
 			[formControl]="control"
 			(focus)="showDropdown = true"

@@ -32,6 +32,11 @@
 	border: 1px solid var(--wgr-tertiary);
 	background-color: var(--wgr-secondary);
 	position: relative;
+
+	&.floating {
+		background-color: var(--wgr-primary);
+	}
+
 	&:hover {
 		border: 1px solid var(--wgr-quaternary);
 	}

@@ -1,7 +1,7 @@
-import { Component, Input, ViewEncapsulation, forwardRef } from '@angular/core'
-import { MibCheckboxSize } from './interfaces/checkbox.interface'
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
-import { animate, style, transition, trigger } from '@angular/animations'
+import {Component, Input, ViewEncapsulation, forwardRef} from '@angular/core'
+import {MibCheckboxSize} from './interfaces/checkbox.interface'
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
+import {animate, style, transition, trigger} from '@angular/animations'
 
 @Component({
 	host: {
@@ -50,13 +50,13 @@ export class CheckboxComponent implements ControlValueAccessor {
 	@Input() class: string = ''
 	@Input() align: string = 'flex_align-self-start'
 	@Input() id: string = ''
+	@Input() styled: boolean = false
 
 	public value: boolean = false
 
 	ngAfterViewInit() {}
 
-	onChange: any = () => {
-  }
+	onChange: any = () => {}
 	onTouch: any = () => {}
 
 	writeValue(value: boolean): void {
@@ -64,20 +64,18 @@ export class CheckboxComponent implements ControlValueAccessor {
 		this.onChange(this.value)
 	}
 
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
+	registerOnChange(fn: any): void {
+		this.onChange = fn
+	}
 
 	registerOnTouched(fn: any): void {
 		this.onTouch = fn
 	}
 
-  onCheckboxChange(event: Event): void {
-    event.preventDefault()
-    event.stopPropagation()
-    this.value = !this.value;
-    this.writeValue(this.value);
-  }
-
+	onCheckboxChange(event: Event): void {
+		event.preventDefault()
+		event.stopPropagation()
+		this.value = !this.value
+		this.writeValue(this.value)
+	}
 }

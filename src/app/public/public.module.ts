@@ -28,7 +28,7 @@ import {MibSectionHeaderNewsComponent} from './shared/mib-sections/mib-section-h
 import {IConfig, NgxMaskModule} from 'ngx-mask'
 import {InputMaskModule} from 'primeng/inputmask'
 import {DialogModule} from 'primeng/dialog'
-import {CheckboxModule} from 'primeng/checkbox'
+import {CheckboxModule as CheckboxModule22} from 'primeng/checkbox'
 import {CarouselModule} from 'primeng/carousel'
 import {MibSliderNewsComponent} from './shared/mib-slider-news/mib-slider-news.component'
 import {ButtonModule} from '../shared/ui-kit/button/button.module'
@@ -61,6 +61,9 @@ import {BadgeModule} from '../shared/ui-kit/badge/badge.module'
 import {RightIconModule} from '../shared/directives/right-icon/right-icon.module'
 import {BreadcrumbModule} from '../shared/ui-kit/breadcrumb/breadcrumb.module'
 import {LandingRequestModalModule} from '../shared/modules/modals/landing-request-modal/landing-request-modal.module'
+import {TextareaModule} from '../shared/ui-kit/textarea/textarea.module'
+import {AutosizeModule} from 'ngx-autosize'
+import {CheckboxModule} from '../shared/ui-kit/checkbox/checkbox.module'
 
 const routes = [
 	{
@@ -122,7 +125,7 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		DialogModule,
 		MibTabModule,
 		CarouselModule,
-		CheckboxModule,
+		CheckboxModule22,
 		ButtonModule,
 		HeaderModule,
 		SpacingModule,
@@ -151,7 +154,10 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		RightIconModule,
 		LeftIconModule,
 		BreadcrumbModule,
-		LandingRequestModalModule
+		LandingRequestModalModule,
+		TextareaModule,
+		AutosizeModule,
+		CheckboxModule
 	],
 	exports: [RouterModule],
 	declarations: [

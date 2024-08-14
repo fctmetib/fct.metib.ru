@@ -298,7 +298,8 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			],
 			Organization: ['', [Validators.required]],
 			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
-			Agree: true
+			Comment: [''],
+			Agree: [false, Validators.requiredTrue]
 		})
 	}
 
@@ -331,6 +332,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			Phone: formattedPhoneNumber,
 			INN: this.form.value.INN,
 			Organization: this.form.value.Organization,
+			Comment: this.form.value.Comment,
 			Agree: this.form.value.Agree
 		}
 
