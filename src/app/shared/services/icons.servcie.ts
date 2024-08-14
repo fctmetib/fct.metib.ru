@@ -20,6 +20,7 @@ export class IconsService {
 		'fi_link',
 		'fi_chevron-down',
 		'logotype',
+		'logotype-l',
 		'footerLogo',
 		'fi_maximize-2',
 		'fi_info',

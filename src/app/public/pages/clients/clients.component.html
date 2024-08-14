@@ -148,8 +148,9 @@
 				<mib-spacing type="xs"></mib-spacing>
 				<div [class.flex_column]="!isDesktop" class="flex gap-12">
 					<mib-button
+						title="Скачать регламент"
 						(press)="downloadFile('regulation')"
-						type="filled-primary"
+						type="ghost-primary"
 					>
 						Скачать регламент
 						<mib-icon
@@ -159,8 +160,9 @@
 						></mib-icon>
 					</mib-button>
 					<mib-button
+						title="Скачать инструкцию"
 						(press)="downloadFile('instruction')"
-						type="filled-secondary"
+						type="ghost-primary"
 					>
 						Скачать инструкцию
 						<mib-icon
@@ -207,9 +209,10 @@
 				<mib-spacing type="xs"></mib-spacing>
 				<div class="flex gap-12">
 					<mib-button
+						title="Скачать Договор факторинга"
 						[class.w-100]="!isDesktop"
 						(press)="downloadFile('contract')"
-						type="filled-secondary"
+						type="ghost-primary"
 					>
 						Скачать Договор факторинга
 						<mib-icon
@@ -254,9 +257,10 @@
 				<mib-spacing type="xs"></mib-spacing>
 				<div class="flex">
 					<mib-button
+						title="Скачивание доступно только авторизованному пользователю "
 						[class.w-100]="!isDesktop"
-						(press)="downloadFile('factor')"
-						type="filled-primary"
+						[routerLink]="['/auth/login']"
+						type="ghost-primary"
 					>
 						Установить «Фактор – Клиент»
 						<mib-icon

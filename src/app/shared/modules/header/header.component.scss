@@ -32,7 +32,7 @@
 			width: 265px;
 		}
 
-		mib-icon[name='logotype'] {
+		mib-icon[name='logotype-l'] {
 			@include icon-size(unset);
 			padding-right: 62px;
 		}
@@ -63,7 +63,7 @@
 				height: 40px;
 			}
 
-			mib-icon[name='logotype'] {
+			mib-icon[name='logotype-l'] {
 				display: none;
 			}
 

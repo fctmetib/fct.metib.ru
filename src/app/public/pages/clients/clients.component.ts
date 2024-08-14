@@ -50,16 +50,13 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
 	public downloadFile(name) {
 		let link = document.createElement('a')
-		if (name === 'factor') {
-			link.download = 'FactorClientHelp'
-			link.href = 'assets/_files/FactorClientHelp.zip'
-		} else if (name === 'contract') {
-			link.download = 'contract'
-			link.href = 'assets/_files/contract.zip'
-		} else if (name === 'instruction') {
-			link.download = 'Договор о предоставлении факторинговых услуг'
+		if (name === 'contract') {
+			link.download = 'Договор_о_предоставлении_факторинговых_услуг'
 			link.href =
-				'assets/_files/Договор о предоставлении факторинговых услуг.pdf'
+				'assets/_files/Договор_о_предоставлении_факторинговых_услуг.pdf'
+		} else if (name === 'instruction') {
+			link.download = 'FactorClientHelp'
+			link.href = 'assets/_files/FactorClientHelp New.pdf'
 		} else {
 			link.download = 'reglament'
 			link.href = 'assets/_files/reglament.pdf'

@@ -4,15 +4,15 @@
 .hero {
 	background: linear-gradient(
 		135deg,
-		rgb(240, 245, 246, 0.4) 0%,
-		rgb(240 244 249) 100%
+		rgba(240, 245, 246, 0.4) 0%,
+		rgb(232 240 249) 100%
 	);
 
 	& .lineal {
 		background-color: var(--wgr-primary);
 	}
 	& img {
-		height: 595px;
+		height: 600px;
 		object-fit: none;
 
 		@media (max-width: 992px) {

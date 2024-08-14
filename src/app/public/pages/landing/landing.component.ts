@@ -363,6 +363,14 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		inputElement.value = ''
 	}
 
+	public downloadFile() {
+		let link = document.createElement('a')
+		link.download = 'Типовой договор обработки персональных данных'
+		link.href =
+			'assets/_files/tipovaya-forma-dogovora-porucheniya-na-obrabotku-personalnykh-dannykh.pdf'
+		link.click()
+	}
+
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe()
 	}
