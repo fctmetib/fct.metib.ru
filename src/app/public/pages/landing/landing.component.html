@@ -224,7 +224,7 @@
 										type="number"
 										pattern="/^-?\d+\.?\d*$/"
 										onKeyPress="if(this.value.length==10) return false;"
-										size="{{ isDesktop ? 'xl' : 'l' }}"
+										size="l"
 										styleType="floating"
 										mibInput
 									/>
@@ -237,7 +237,7 @@
 											openLandingRequestModal('Подобрать продукт');
 											clearInput(innInput)
 										"
-										size="{{ isDesktop ? 'l' : 'm' }}"
+										size="m"
 										type="filled-primary"
 										>Далее
 										<mib-icon
@@ -427,7 +427,10 @@
 						formControlName="Agree"
 					>
 					</mib-checkbox>
-					<p class="text-left text text_m c-bti-tertiary">
+					<p
+						[ngClass]="isDesktop ? 'text_m' : 'text_s'"
+						class="text-left text c-bti-tertiary"
+					>
 						Пожалуйста подтвердите Ваше согласие на
 						<span (click)="downloadFile()" class="c-mc-default cursor-pointer">
 							обработку персональных данных.
