@@ -64,11 +64,11 @@ export class FactoringCalculatorComponent implements OnInit {
 		let effectiveRate: number
 
 		if (monthlyTurnover <= 10000000) {
-			effectiveRate = 19.4
+			effectiveRate = 25.15
 		} else if (monthlyTurnover >= 10000000 && monthlyTurnover <= 49999999) {
-			effectiveRate = 21
+			effectiveRate = 22.5
 		} else {
-			effectiveRate = 23.65
+			effectiveRate = 21
 		}
 
 		const dailyRate = effectiveRate / 365
@@ -90,5 +90,16 @@ export class FactoringCalculatorComponent implements OnInit {
 				`${Math.ceil(percentage)}%`
 			)
 		}
+	}
+
+	getLabel(number, label) {
+		const cases = [2, 0, 1, 1, 1, 2]
+		return `${
+			label[
+				number % 100 > 4 && number % 100 < 20
+					? 2
+					: cases[number % 10 < 5 ? number % 10 : 5]
+			]
+		}`
 	}
 }

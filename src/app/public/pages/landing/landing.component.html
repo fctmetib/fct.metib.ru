@@ -336,7 +336,7 @@
 			class="flex flex_column w-100 flex-grow how-wrap"
 		>
 			<div class="flex flex_column how-card">
-				<div class="flex how-icon">
+				<div class="flex flex_justify-center how-icon">
 					<img src="{{ item.img }}" alt="{{ item.title }}" />
 				</div>
 				<div class="flex flex_column how-content">
@@ -408,7 +408,7 @@
 						size="{{ isDesktop ? 'xl' : 'l' }}"
 						styleType="floating"
 					>
-						<ng-container mibLabel>Комментарий к запросу</ng-container>
+						<ng-container mibLabel>Использовали факторинг ранее?</ng-container>
 						<textarea
 							styleType="floating"
 							[maxLength]="100"
@@ -424,7 +424,6 @@
 						style="padding-top: 3px"
 						[styled]="true"
 						size="{{ isDesktop ? 'l' : 'm' }}"
-						size="l"
 						formControlName="Agree"
 					>
 					</mib-checkbox>

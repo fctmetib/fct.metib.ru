@@ -173,7 +173,16 @@
 						>
 						<mib-spacing type="xs2"></mib-spacing>
 						<p class="text text_xl c-bti-secondary">
-							Комиссия за 12 календарных дней
+							Комиссия за {{
+								form.get('defermentPeriodNumber')?.value
+							}} календарных
+							{{
+								getLabel(form.get('defermentPeriodNumber')?.value, [
+									'день',
+									'дня',
+									'дней'
+								])
+							}}
 						</p>
 						<mib-spacing type="s"></mib-spacing>
 						<div class="flex">

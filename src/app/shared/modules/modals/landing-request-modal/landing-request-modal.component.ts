@@ -1,5 +1,11 @@
 import {HttpResponse} from '@angular/common/http'
-import {AfterViewInit, Component, Inject, OnInit} from '@angular/core'
+import {
+	AfterViewInit,
+	Component,
+	Inject,
+	OnDestroy,
+	OnInit
+} from '@angular/core'
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {
@@ -9,12 +15,14 @@ import {
 	distinctUntilChanged,
 	finalize,
 	of,
+	Subscription,
 	switchMap,
 	tap
 } from 'rxjs'
 import {GetAgentRequestService} from 'src/app/public/service/get-agent-request.service'
 import {RequestLandingService} from 'src/app/public/service/request-landing.service'
 import {RequestLandingInterface} from 'src/app/public/type/request-landing.interface'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
 @Component({
@@ -22,7 +30,7 @@ import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 	templateUrl: './landing-request-modal.component.html',
 	styleUrls: ['./landing-request-modal.component.scss']
 })
-export class LandingRequestModalComponent implements OnInit {
+export class LandingRequestModalComponent implements OnInit, OnDestroy {
 	form: FormGroup
 
 	public isSubmitting$ = new BehaviorSubject<boolean>(false)
@@ -30,10 +38,15 @@ export class LandingRequestModalComponent implements OnInit {
 	public options = []
 	public loading = false
 
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+
 	constructor(
 		private fb: FormBuilder,
 		private requestLandingService: RequestLandingService,
 		private toaster: ToasterService,
+		public breakpointService: BreakpointObserverService,
 		private getAgentRequestService: GetAgentRequestService,
 		public dialogRef: MatDialogRef<LandingRequestModalComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: string
@@ -41,6 +54,10 @@ export class LandingRequestModalComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.initForms()
+
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
 
 		this.form
 			.get('Organization')
@@ -142,5 +159,9 @@ export class LandingRequestModalComponent implements OnInit {
 			.subscribe()
 
 		this.dialogRef.close()
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }

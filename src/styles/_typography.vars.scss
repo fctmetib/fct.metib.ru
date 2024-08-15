@@ -118,6 +118,15 @@
 	}
 }
 
+@mixin text-news-overflow($line_count) {
+	display: -webkit-box;
+	-webkit-line-clamp: $line_count;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	white-space: normal;
+	word-break: normal;
+}
+
 @mixin headline-desktop {
 	font-family: var(--ff-primary);
 	font-size: 16px;

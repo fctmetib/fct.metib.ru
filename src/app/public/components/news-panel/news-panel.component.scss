@@ -22,7 +22,7 @@
 		}
 
 		& h4 {
-			@include text-overflow(1);
+			@include text-news-overflow(1);
 		}
 
 		& .links {
@@ -69,11 +69,11 @@
 				padding: 48px 36px 0 48px;
 
 				& h3 {
-					@include text-overflow(2);
+					@include text-news-overflow(2);
 				}
 
 				& .except {
-					@include text-overflow(3);
+					@include text-news-overflow(3);
 				}
 			}
 
