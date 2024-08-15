@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core'
 import {Subscription} from 'rxjs'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
 @Component({
 	selector: 'clients',
@@ -40,7 +41,10 @@ export class ClientsComponent implements OnInit, OnDestroy {
 		}
 	]
 
-	constructor(public breakpointService: BreakpointObserverService) {}
+	constructor(
+		public breakpointService: BreakpointObserverService,
+		private toaster: ToasterService
+	) {}
 
 	ngOnInit(): void {
 		this.subscriptions = this.breakpointService
@@ -62,6 +66,17 @@ export class ClientsComponent implements OnInit, OnDestroy {
 			link.href = 'assets/_files/reglament.pdf'
 		}
 		link.click()
+	}
+
+	getToast() {
+		this.toaster.show(
+			'failure',
+			'Скачивание доступно только авторизованному пользователю!',
+			'',
+			true,
+			false,
+			2500
+		)
 	}
 
 	ngOnDestroy(): void {

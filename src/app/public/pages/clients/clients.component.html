@@ -260,6 +260,7 @@
 						title="Скачивание доступно только авторизованному пользователю "
 						[class.w-100]="!isDesktop"
 						[routerLink]="['/auth/login']"
+						(click)="getToast()"
 						type="ghost-primary"
 					>
 						Установить «Фактор – Клиент»
