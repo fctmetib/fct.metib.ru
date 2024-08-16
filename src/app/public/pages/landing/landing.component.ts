@@ -30,6 +30,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
 import {RequestLandingInterface} from '../../type/request-landing.interface'
 import {RequestLandingService} from '../../service/request-landing.service'
 import {GetAgentRequestService} from '../../service/get-agent-request.service'
+import {LandingAgreementModalService} from 'src/app/shared/modules/modals/landing-agreement-modal/landing-agreement-modal.service'
 
 @Component({
 	selector: 'mib-landing',
@@ -179,6 +180,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		private newsService: NewsService,
 		public breakpointService: BreakpointObserverService,
 		public landingRequestModalService: LandingRequestModalService,
+		public landingAgreementModalService: LandingAgreementModalService,
 		private fb: FormBuilder,
 		private requestLandingService: RequestLandingService,
 		private toaster: ToasterService,
@@ -186,7 +188,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	) {}
 
 	ngOnInit(): void {
-		this.getCurrentNews()
+		// this.getCurrentNews()
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
@@ -226,6 +228,10 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	openLandingRequestModal(data) {
 		this.landingRequestModalService.open(data)
+	}
+
+	openAgreementModal() {
+		this.landingAgreementModalService.open()
 	}
 
 	onSwipe(event: any) {
@@ -363,14 +369,6 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	clearInput(inputElement: HTMLInputElement) {
 		inputElement.value = ''
-	}
-
-	public downloadFile() {
-		let link = document.createElement('a')
-		link.download = 'Типовой договор обработки персональных данных'
-		link.href =
-			'assets/_files/tipovaya-forma-dogovora-porucheniya-na-obrabotku-personalnykh-dannykh.pdf'
-		link.click()
 	}
 
 	ngOnDestroy(): void {

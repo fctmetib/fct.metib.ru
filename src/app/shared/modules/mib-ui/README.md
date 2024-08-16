@@ -437,6 +437,13 @@ ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
  ng g c shared/modules/modals/landing-request-modal/landing-request-modal --flat --skip-tests --dry-run
  //---
 
+ //--- landing-agreement-modal
+ src\app\shared\modules\modals\landing-agreement-modal
+ ng g m shared/modules/modals/landing-agreement-modal/landing-agreement-modal --flat --dry-run
+ ng g s shared/modules/modals/landing-agreement-modal/landing-agreement-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/landing-agreement-modal/landing-agreement-modal --flat --skip-tests --dry-run
+ //---
+
  //--- free-duty-page-modal
  src\app\shared\modules\modals\free-duty-page-modal
  ng g m shared/modules/modals/free-duty-page-modal/free-duty-page-modal --flat --dry-run

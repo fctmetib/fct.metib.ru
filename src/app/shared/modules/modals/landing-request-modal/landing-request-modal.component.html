@@ -85,28 +85,32 @@
 	</div> -->
 	<mib-spacing type="s"></mib-spacing>
 	<mib-modal-footer>
-		<div class="flex gap-12 flex_column">
-			<mib-button
-				[disabled]="form.invalid"
-				[loading]="!!(isSubmitting$ | async)"
-				class="w-100"
-				size="{{ isDesktop ? 'xl' : 'l' }}"
-				(press)="onSubmit()"
-				>Отправить</mib-button
-			>
-			<div class="flex gap-12">
-				<mib-checkbox
-					size="{{ isDesktop ? 'l' : 'm' }}"
-					formControlName="Agree"
+		<div class="flex flex_column">
+			<div class="flex gap-12 flex_column">
+				<mib-button
+					[disabled]="form.invalid"
+					[loading]="!!(isSubmitting$ | async)"
+					class="w-100"
+					size="{{ isDesktop ? 'xl' : 'l' }}"
+					(press)="onSubmit()"
+					>Отправить</mib-button
 				>
-				</mib-checkbox>
-				<span
-					[ngClass]="isDesktop ? 'text_m' : 'text_s'"
-					class="text c-bti-tertiary"
-				>
-					Пожалуйста подтвердите Ваше согласие на обработку персональных данных.
-				</span>
+				<div class="flex gap-12">
+					<mib-checkbox
+						size="{{ isDesktop ? 'l' : 'm' }}"
+						formControlName="Agree"
+					>
+					</mib-checkbox>
+					<span
+						[ngClass]="isDesktop ? 'text_m' : 'text_s'"
+						class="text c-bti-tertiary"
+					>
+						Пожалуйста подтвердите Ваше согласие на обработку персональных
+						данных.
+					</span>
+				</div>
 			</div>
+			<mib-spacing type="xm2"></mib-spacing>
 		</div>
 	</mib-modal-footer>
 </mib-modal>

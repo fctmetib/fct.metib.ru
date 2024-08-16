@@ -64,6 +64,7 @@ import {LandingRequestModalModule} from '../shared/modules/modals/landing-reques
 import {TextareaModule} from '../shared/ui-kit/textarea/textarea.module'
 import {AutosizeModule} from 'ngx-autosize'
 import {CheckboxModule} from '../shared/ui-kit/checkbox/checkbox.module'
+import {LandingAgreementModalModule} from '../shared/modules/modals/landing-agreement-modal/landing-agreement-modal.module'
 
 const routes = [
 	{
@@ -157,7 +158,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		LandingRequestModalModule,
 		TextareaModule,
 		AutosizeModule,
-		CheckboxModule
+		CheckboxModule,
+		LandingAgreementModalModule
 	],
 	exports: [RouterModule],
 	declarations: [
