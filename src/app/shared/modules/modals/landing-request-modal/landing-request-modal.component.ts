@@ -94,7 +94,7 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 			],
 			Email: ['', [Validators.required, Validators.email]],
 			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
-			Comment: [''],
+			Comment: [false],
 			Agree: [false, Validators.requiredTrue]
 		})
 	}

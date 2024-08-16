@@ -336,7 +336,7 @@
 			class="flex flex_column w-100 flex-grow how-wrap"
 		>
 			<div class="flex flex_column how-card">
-				<div class="flex flex_justify-center how-icon">
+				<div class="flex how-icon">
 					<img src="{{ item.img }}" alt="{{ item.title }}" />
 				</div>
 				<div class="flex flex_column how-content">
@@ -404,7 +404,7 @@
 							<ng-container mibLabel>ИНН Вашей организации</ng-container>
 						</mib-input>
 					</div>
-					<mib-textarea
+					<!-- <mib-textarea
 						size="{{ isDesktop ? 'xl' : 'l' }}"
 						styleType="floating"
 					>
@@ -416,13 +416,36 @@
 							autosize
 							mibTextarea
 						></textarea>
-					</mib-textarea>
+					</mib-textarea> -->
+					<div class="flex gap-8">
+						<mib-checkbox
+							size="{{ isDesktop ? 'l' : 'm' }}"
+							formControlName="Comment"
+						>
+						</mib-checkbox>
+						<p
+							[ngClass]="isDesktop ? 'text_l' : 'text_m'"
+							class="text-left text c-bti-secondary"
+						>
+							Мы уже работаем по факторингу
+						</p>
+					</div>
 				</div>
-				<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-				<div class="flex gap-16">
+				<mib-spacing type="{{ isDesktop ? 's' : 'm' }}"></mib-spacing>
+				<div class="requests-btn flex">
+					<mib-button
+						size="{{ isDesktop ? 'xl' : 'l' }}"
+						(press)="onSubmit()"
+						[disabled]="form.invalid"
+						[loading]="!!(isSubmitting$ | async)"
+						type="filled-primary"
+					>
+						Оставить заявку
+					</mib-button>
+				</div>
+				<mib-spacing type="xs"></mib-spacing>
+				<div class="flex gap-8">
 					<mib-checkbox
-						style="padding-top: 3px"
-						[styled]="true"
 						size="{{ isDesktop ? 'l' : 'm' }}"
 						formControlName="Agree"
 					>
@@ -436,18 +459,6 @@
 							обработку персональных данных.
 						</span>
 					</p>
-				</div>
-				<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
-				<div class="requests-btn flex">
-					<mib-button
-						size="{{ isDesktop ? 'xl' : 'l' }}"
-						(press)="onSubmit()"
-						[disabled]="form.invalid"
-						[loading]="!!(isSubmitting$ | async)"
-						type="filled-primary"
-					>
-						Оставить заявку
-					</mib-button>
 				</div>
 				<mib-spacing type="xl"></mib-spacing>
 			</div>
@@ -532,7 +543,7 @@
 			></mib-news-panel>
 		</div>
 		<mib-spacing type="m"></mib-spacing>
-		<div [ngClass]="{flex_column: !isDesktop}" class="flex gap-16">
+		<div [ngClass]="{flex_column: !isDesktop}" class="news-wrap flex gap-16">
 			<mib-news-panel
 				[vertical]="isDesktop ? true : false"
 				[showLink]="isDesktop ? true : false"

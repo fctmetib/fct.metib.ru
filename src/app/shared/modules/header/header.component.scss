@@ -11,6 +11,11 @@
 }
 
 .header {
+	& .extension a.active {
+		color: var(--bti-primary);
+		border-bottom: 1px solid var(--bti-primary);
+	}
+
 	& .menu a.active {
 		color: var(--bti-secondary);
 	}

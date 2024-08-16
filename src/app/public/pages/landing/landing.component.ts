@@ -298,7 +298,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			],
 			Organization: ['', [Validators.required]],
 			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
-			Comment: [''],
+			Comment: [false],
 			Agree: [false, Validators.requiredTrue]
 		})
 	}

@@ -54,7 +54,20 @@
 		</mib-input>
 		<mib-autocomplete formControlName="Organization" [options]="options">
 		</mib-autocomplete>
-		<mib-textarea size="{{ isDesktop ? 'xl' : 'l' }}">
+		<div class="flex gap-8">
+			<mib-checkbox
+				size="{{ isDesktop ? 'l' : 'm' }}"
+				formControlName="Comment"
+			>
+			</mib-checkbox>
+			<p
+				[ngClass]="isDesktop ? 'text_l' : 'text_m'"
+				class="text-left text c-bti-secondary"
+			>
+				Мы уже работаем по факторингу
+			</p>
+		</div>
+		<!-- <mib-textarea size="{{ isDesktop ? 'xl' : 'l' }}">
 			<ng-container mibLabel>Использовали факторинг ранее?</ng-container>
 			<textarea
 				formControlName="Comment"
@@ -62,38 +75,38 @@
 				autosize
 				mibTextarea
 			></textarea>
-		</mib-textarea>
+		</mib-textarea> -->
 	</div>
-	<mib-spacing type="s"></mib-spacing>
-	<div class="flex gap-12">
-		<mib-checkbox
-			size="{{ isDesktop ? 'l' : 'm' }}"
-			formControlName="Agree"
-			class="pt-4"
-		>
-		</mib-checkbox>
-		<span
-			[ngClass]="isDesktop ? 'text_m' : 'text_s'"
-			class="text c-bti-tertiary"
-		>
-			Пожалуйста подтвердите Ваше согласие на обработку персональных данных.
-		</span>
-	</div>
-	<div
+	<!-- <div
 		class="text text_m c-bti-tertiarty"
 		*ngIf="form.get('Agree').invalid && form.get('Agree').touched"
 	>
 		* Подтвердите согласие на обработку данных
-	</div>
-	<mib-spacing type="m"></mib-spacing>
+	</div> -->
+	<mib-spacing type="s"></mib-spacing>
 	<mib-modal-footer>
-		<mib-button
-			[disabled]="form.invalid"
-			[loading]="!!(isSubmitting$ | async)"
-			class="w-100"
-			size="{{ isDesktop ? 'xl' : 'l' }}"
-			(press)="onSubmit()"
-			>Отправить</mib-button
-		>
+		<div class="flex gap-12 flex_column">
+			<mib-button
+				[disabled]="form.invalid"
+				[loading]="!!(isSubmitting$ | async)"
+				class="w-100"
+				size="{{ isDesktop ? 'xl' : 'l' }}"
+				(press)="onSubmit()"
+				>Отправить</mib-button
+			>
+			<div class="flex gap-12">
+				<mib-checkbox
+					size="{{ isDesktop ? 'l' : 'm' }}"
+					formControlName="Agree"
+				>
+				</mib-checkbox>
+				<span
+					[ngClass]="isDesktop ? 'text_m' : 'text_s'"
+					class="text c-bti-tertiary"
+				>
+					Пожалуйста подтвердите Ваше согласие на обработку персональных данных.
+				</span>
+			</div>
+		</div>
 	</mib-modal-footer>
 </mib-modal>
