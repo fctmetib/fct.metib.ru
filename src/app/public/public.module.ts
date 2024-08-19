@@ -65,6 +65,7 @@ import {TextareaModule} from '../shared/ui-kit/textarea/textarea.module'
 import {AutosizeModule} from 'ngx-autosize'
 import {CheckboxModule} from '../shared/ui-kit/checkbox/checkbox.module'
 import {LandingAgreementModalModule} from '../shared/modules/modals/landing-agreement-modal/landing-agreement-modal.module'
+import {QuestModule} from '../shared/ui-kit/quest/quest.module'
 
 const routes = [
 	{
@@ -147,7 +148,6 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		TagsGroupModule,
 		SkeletonModule,
 		SwipeTextSliderModule,
-		LeftIconModule,
 		AccordionItemModule,
 		FactoringCalculatorModule,
 		RateCardModule,
@@ -159,7 +159,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		TextareaModule,
 		AutosizeModule,
 		CheckboxModule,
-		LandingAgreementModalModule
+		LandingAgreementModalModule,
+		QuestModule
 	],
 	exports: [RouterModule],
 	declarations: [

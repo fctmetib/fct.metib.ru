@@ -46,8 +46,32 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	public options = []
 	public loading = false
 
-	maxPage: number = 3
-	progress: number = 2
+	questionList = [
+		{
+			question: 'Какой стороной сделки вы являетесь?',
+			options: [
+				{label: 'Поставщик', value: true},
+				{label: 'Покупатель', value: false}
+			],
+			answer: null
+		},
+		{
+			question: 'Для какой цели нужны денежные средства?',
+			options: [
+				{label: 'Финансирование поставок', value: true},
+				{label: 'Финансирование закупок', value: false}
+			],
+			answer: null
+		},
+		{
+			question: 'Ваш контрагент - резидент РФ?',
+			options: [
+				{label: 'Да, резидент', value: true},
+				{label: 'Резидент другой страны', value: false}
+			],
+			answer: null
+		}
+	]
 
 	public iconsDatas = [
 		{

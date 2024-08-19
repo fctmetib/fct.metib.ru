@@ -1,0 +1,78 @@
+<div class="flex quest">
+	<div class="flex flex_grow flex_column frame-l">
+		<mib-spacing type="{{ isDesktop ? 'm' : 's' }}" type="s"></mib-spacing>
+		<div *ngIf="!quizCompleted; else congratsTemplate" class="flex flex_column">
+			<h4>{{ getCurrentQuestion().question }}</h4>
+			<mib-spacing type="xs2"></mib-spacing>
+			<p *ngIf="currentQuestionIndex === 0" class="text text_l c-bti-secondary">
+				Заполните форму, чтобы мы смогли предложить вам один или несколько
+				подходящих продуктов.
+			</p>
+			<div
+				*ngIf="!quizCompleted; else congratsTemplate"
+				class="flex flex_column frame"
+			>
+				<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
+				<div class="flex flex_column inputs">
+					<form [formGroup]="quizForm">
+						<label *ngFor="let option of getCurrentQuestion().options">
+							<input
+								type="radio"
+								formControlName="answer"
+								[value]="option.value"
+							/>
+							{{ option.label }}
+						</label>
+					</form>
+					<div class="flex">
+						<mib-button
+							[disabled]="quizForm.invalid"
+							(click)="nextQuestion()"
+							size="m"
+							type="filled-primary"
+						>
+							{{ isLastQuestion() ? 'Готово' : 'Далее' }}
+							<mib-icon
+								btn-right-icon
+								class="stroke"
+								name="fi_chevron-right"
+							></mib-icon>
+						</mib-button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<ng-template #congratsTemplate>
+			<h4>Рекомендуем рассмотреть Продукты комплексного факторинга</h4>
+			<div class="flex">
+				<mib-button (press)="onPress.emit()" size="m" type="filled-primary"
+					>Получить консультацию
+					<mib-icon
+						btn-right-icon
+						class="stroke"
+						name="fi_chevron-right"
+					></mib-icon>
+				</mib-button>
+			</div>
+		</ng-template>
+	</div>
+	<div class="flex flex_grow flex_column frame-r">
+		<div class="quiz-progress">
+			<div class="progress-bar">
+				<div class="progress" [style.width.%]="progress"></div>
+			</div>
+			<div class="progress-info flex flex_column">
+				<div
+					class="flex item"
+					*ngFor="let p of progressInfo; let i = index"
+					[class.active]="
+						(i === currentQuestionIndex && !quizCompleted) ||
+						(quizCompleted && i === progressInfo.length - 1)
+					"
+				>
+					{{ p }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

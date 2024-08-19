@@ -199,7 +199,13 @@
 							требований.
 						</p>
 					</div>
-					<div
+					<div *ngSwitchCase="ProductTabsEnum.INDIVIDUAL" class="flex">
+						<mib-quest
+							(onPress)="openLandingRequestModal('Получить консультацию')"
+							[questions]="questionList"
+						></mib-quest>
+					</div>
+					<!-- <div
 						class="flex tags-content"
 						*ngSwitchCase="ProductTabsEnum.INDIVIDUAL"
 					>
@@ -288,7 +294,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</ng-container>
 				<div
 					[ngClass]="{hide: imgNumber === ProductTabsEnum.INDIVIDUAL}"
@@ -418,11 +424,7 @@
 						></textarea>
 					</mib-textarea> -->
 					<div class="flex gap-8">
-						<mib-checkbox
-							size="{{ isDesktop ? 'l' : 'm' }}"
-							formControlName="Comment"
-						>
-						</mib-checkbox>
+						<mib-checkbox size="{{ isDesktop ? 'l' : 'm' }}"> </mib-checkbox>
 						<p
 							[ngClass]="isDesktop ? 'text_l' : 'text_m'"
 							class="text-left text c-bti-secondary"
