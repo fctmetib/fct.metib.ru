@@ -161,6 +161,13 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 		this.dialogRef.close()
 	}
 
+	openAgreementDoc() {
+		window.open(
+			'assets/_files/Согласие_на_обработку_персональных_данных.pdf',
+			'_blanck'
+		)
+	}
+
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe()
 	}

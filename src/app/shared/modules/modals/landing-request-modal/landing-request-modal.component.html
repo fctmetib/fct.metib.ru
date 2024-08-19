@@ -102,13 +102,18 @@
 							formControlName="Agree"
 						>
 						</mib-checkbox>
-						<span
+						<p
 							[ngClass]="isDesktop ? 'text_m' : 'text_s'"
 							class="text c-bti-tertiary"
 						>
-							Пожалуйста подтвердите Ваше согласие на обработку персональных
-							данных.
-						</span>
+							Пожалуйста подтвердите Ваше согласие
+							<span
+								(click)="openAgreementDoc()"
+								class="c-mc-default cursor-pointer"
+							>
+								обработку персональных данных.
+							</span>
+						</p>
 					</div>
 				</div>
 				<mib-spacing type="xm2"></mib-spacing>

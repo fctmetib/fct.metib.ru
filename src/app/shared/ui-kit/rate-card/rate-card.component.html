@@ -4,13 +4,17 @@
 	class="rate flex flex_column"
 >
 	<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
-	<span class="rate-title text text_semi c-bti-primary">{{ title }}</span>
-	<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
-	<span class="text text_m c-bti-secondary">{{ description }}</span>
-	<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
-	<mib-button (press)="onRate.emit()" type="filled-primary"
-		>Рассчитать</mib-button
-	>
+	<div class="rate-header flex flex_column">
+		<h4 class="text text_semi c-bti-primary">{{ title }}</h4>
+		<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
+		<div class="flex flex_grow">
+			<span class="text text_m c-bti-secondary">{{ description }}</span>
+		</div>
+		<mib-spacing type="{{ isDesktop ? 'xs' : 'xm' }}"></mib-spacing>
+		<mib-button (press)="onRate.emit()" type="filled-primary"
+			>Рассчитать</mib-button
+		>
+	</div>
 	<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
 	<ng-container *ngIf="isDesktop">
 		<div class="rate-feature flex flex_column">
