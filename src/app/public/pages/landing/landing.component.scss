@@ -201,49 +201,6 @@
 				display: none;
 			}
 
-			& .tags-content {
-				& .frame {
-					padding-right: 32px;
-				}
-				& .frame-r {
-					padding-left: 64px;
-
-					& .progress-bar {
-						width: 216px;
-						padding-top: 8px;
-						gap: 4px;
-						& .wrap {
-							padding-bottom: 4px;
-							gap: 2px;
-						}
-						& .line {
-							width: 100%;
-							height: 4px;
-							border-radius: 4px;
-							background-color: #cddff1;
-
-							& .progress {
-								height: 4px;
-								border-radius: 4px;
-								background-color: var(--mc-default);
-							}
-						}
-					}
-
-					& .timeline {
-						& .point.active {
-							& span {
-								color: var(--mc-default);
-							}
-							& mib-icon {
-								@include icon-color(var(--mc-default));
-								@include icon-size(20px);
-							}
-						}
-					}
-				}
-			}
-
 			& .products-img {
 				justify-content: center;
 

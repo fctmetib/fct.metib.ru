@@ -46,6 +46,9 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	public options = []
 	public loading = false
 
+	maxPage: number = 3
+	progress: number = 2
+
 	questionList = [
 		{
 			question: 'Какой стороной сделки вы являетесь?',
@@ -212,7 +215,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	) {}
 
 	ngOnInit(): void {
-		// this.getCurrentNews()
+		this.getCurrentNews()
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
