@@ -57,6 +57,12 @@
 		</ng-template>
 	</div>
 	<div class="flex flex_grow flex_column frame-r">
+		<span *ngIf="!quizCompleted; else quizFin">
+			{{ currentQuestionIndex + 1 }} из {{ questions.length }}
+		</span>
+		<ng-template #quizFin>
+			<span>Готово!</span>
+		</ng-template>
 		<div class="quiz-progress">
 			<div class="progress-bar">
 				<div class="progress" [style.width.%]="progress"></div>
@@ -71,6 +77,14 @@
 					"
 				>
 					{{ p }}
+					<ng-container
+						*ngIf="
+							(i === currentQuestionIndex && !quizCompleted) ||
+							(quizCompleted && i === progressInfo.length - 1)
+						"
+					>
+						<i class="active-icon">✔️</i>
+					</ng-container>
 				</div>
 			</div>
 		</div>
