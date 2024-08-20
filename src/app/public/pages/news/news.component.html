@@ -27,14 +27,16 @@
 				<mib-spacing type="xs"></mib-spacing>
 			</ng-container>
 			<ng-template #newsPanel>
-				<div *ngFor="let news of getAdvancedNews">
-					<mib-news-panel
-						[newsTitle]="news.Title"
-						[newsDate]="news.Date | date : 'dd.MM.yyyy'"
-						[showPreview]="news.Image"
-						[link]="news.ID"
-					></mib-news-panel>
-					<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
+				<div *ngIf="hasNews; else noNewsAvailable">
+					<div *ngFor="let news of getAdvancedNews">
+						<mib-news-panel
+							[newsTitle]="news.Title"
+							[newsDate]="news.Date | date : 'dd.MM.yyyy'"
+							[showPreview]="news.Image"
+							[link]="news.ID"
+						></mib-news-panel>
+						<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
+					</div>
 				</div>
 			</ng-template>
 			<div [ngClass]="{'flex_justify-center': !isDesktop}" class="flex">
@@ -68,4 +70,9 @@
 			<mib-spacing type="xl"></mib-spacing>
 		</mib-tab-item>
 	</mib-tab-group>
+	<ng-template #noNewsAvailable>
+		<div style="height: calc(100vh - 665px)" class="flex">
+			<h4 class="c-wgr-quaternary">временно недоступны</h4>
+		</div>
+	</ng-template>
 </div>

@@ -61,26 +61,37 @@ export class SingleNewsComponent implements OnInit, OnDestroy {
 
 	public getCurrentNews() {
 		this.loading$.next(true)
+
+		const id = this.route.snapshot.paramMap.get('id')
+
+		if (!id) {
+			this.loading$.next(false)
+			return
+		}
+
 		this.newsService
-			.getNews(this.newsNumberCount)
+			.getNewsById(id)
 			.pipe(
 				switchMap(news =>
-					zip(
-						news.map(item =>
-							this.newsService
-								.getNewsImage(item.ID)
-								.pipe(map(image => ({...item, Image: image})))
-						)
-					).pipe(
-						tap(data => {
-							const id = Number(this.route.snapshot.paramMap.get('id'))
-							this.getSingleNews = data.filter(el => el.ID === id)
-						})
-					)
+					this.newsService
+						.getNewsImage(news.ID)
+						.pipe(map(image => ({...news, Image: image})))
 				),
+				tap(news => {
+					this.getSingleNews = [news]
+				}),
 				finalize(() => this.loading$.next(false))
 			)
-			.subscribe()
+			.subscribe({
+				error: err => {
+					console.error('Error fetching news or image', err)
+					this.loading$.next(false)
+				}
+			})
+	}
+
+	get hasNews(): boolean {
+		return this.getSingleNews && Object.keys(this.getSingleNews).length > 0
 	}
 
 	ngOnDestroy(): void {

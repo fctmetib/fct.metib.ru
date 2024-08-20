@@ -23,26 +23,33 @@
 				<mib-breadcrumb text="Новость банка" selected="true"></mib-breadcrumb>
 			</div>
 		</div>
-		<mib-spacing type="s"></mib-spacing>
-		<h3>{{ getSingleNews[0].Title }}</h3>
-		<mib-spacing type="xs2"></mib-spacing>
-		<div class="flex">
-			<mib-tag type="filled-secondary" size="m">
-				Опубликовано {{ getSingleNews[0].Date | date }}
-			</mib-tag>
+		<div *ngIf="hasNews" class="news-wrap">
+			<mib-spacing type="s"></mib-spacing>
+			<h3>{{ getSingleNews[0].Title }}</h3>
+			<mib-spacing type="xs2"></mib-spacing>
+			<div class="flex">
+				<mib-tag type="filled-secondary" size="m">
+					Опубликовано {{ getSingleNews[0].Date | date }}
+				</mib-tag>
+			</div>
+			<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
+			<div class="flex preview">
+				<img
+					src="{{ getSingleNews[0].Image }}"
+					alt="{{ getSingleNews[0].FileReference }}
+				"
+				/>
+			</div>
+			<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
+			<p class="text text_l c-bti-secondary">
+				{{ getSingleNews[0].Text }}
+			</p>
 		</div>
-		<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-		<div class="flex preview">
-			<img
-				src="{{ getSingleNews[0].Image }}"
-				alt="{{ getSingleNews[0].FileReference }}
-			"
-			/>
+		<div *ngIf="!hasNews">
+			<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
+			<h4 class="c-wgr-quaternary">Новости временно недоступны</h4>
+			<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 		</div>
-		<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-		<p class="text text_l c-bti-secondary">
-			{{ getSingleNews[0].Text }}
-		</p>
 		<mib-spacing type="m"></mib-spacing>
 		<div [ngClass]="{'flex_justify-center': !isDesktop}" class="flex">
 			<mib-button
