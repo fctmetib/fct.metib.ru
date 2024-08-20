@@ -37,6 +37,15 @@
 					<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 				</div>
 			</ng-template>
+			<div [ngClass]="{'flex_justify-center': !isDesktop}" class="flex">
+				<mib-button
+					[ngClass]="{'w-100': !isDesktop}"
+					[routerLink]="['/']"
+					size="m"
+					type="filled-secondary"
+					>Вернуться назад</mib-button
+				>
+			</div>
 			<mib-spacing type="{{ isDesktop ? 'xl' : 'm' }}"></mib-spacing>
 		</mib-tab-item>
 		<mib-tab-item value="2">
