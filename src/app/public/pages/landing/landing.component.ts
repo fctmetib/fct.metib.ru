@@ -353,7 +353,8 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			],
 			Organization: ['', [Validators.required]],
 			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
-			Comment: [false],
+			Comment: [''],
+			UseFactoring: [false],
 			Agree: [false, Validators.requiredTrue]
 		})
 	}
@@ -388,6 +389,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			INN: this.form.value.INN,
 			Organization: this.form.value.Organization,
 			Comment: this.form.value.Comment,
+			UseFactoring: this.form.value.UseFactoring,
 			Agree: this.form.value.Agree
 		}
 
@@ -414,10 +416,6 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 				})
 			)
 			.subscribe()
-	}
-
-	clearInput(inputElement: HTMLInputElement) {
-		inputElement.value = ''
 	}
 
 	ngOnDestroy(): void {

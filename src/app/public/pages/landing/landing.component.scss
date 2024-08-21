@@ -308,31 +308,6 @@
 				& .products-description {
 					padding: 0 16px;
 				}
-
-				& .tags-content {
-					padding: 0 16px;
-					flex-direction: column;
-
-					& .frame {
-						padding: 0;
-					}
-
-					& .frame-r {
-						padding: 0;
-
-						& .frame-mobile {
-							display: none;
-						}
-
-						& .progress-bar {
-							width: 100%;
-						}
-
-						& .timeline {
-							display: none;
-						}
-					}
-				}
 			}
 
 			@media (max-width: 576px) {
@@ -460,7 +435,7 @@
 				content: '';
 				width: 202px;
 				height: 245px;
-				top: 70%;
+				top: 75%;
 				left: 57%;
 				background: url('/assets/images/staff/requests/elem.png') no-repeat;
 			}

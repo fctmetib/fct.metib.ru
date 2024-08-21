@@ -41,4 +41,49 @@
 			}
 		}
 	}
+
+	@media (max-width: 768px) {
+		flex-direction: column;
+		padding: 0 16px;
+
+		& .frame-l {
+			padding: 0;
+
+			& .btn-wrap {
+				align-self: flex-start;
+			}
+		}
+
+		& .frame-r {
+			padding: 0;
+			border-top: 1px solid var(--wgr-tertiary);
+
+			& .timeline {
+				display: none;
+			}
+		}
+	}
+
+	@media (max-width: 576px) {
+		& .frame-l {
+			& .btn-wrap {
+				align-self: unset;
+			}
+
+			& mib-button {
+				width: 100%;
+			}
+		}
+		& .frame-r {
+			& .quiz-progress {
+				& span {
+					align-self: center;
+				}
+
+				& .progress-bar {
+					width: 100%;
+				}
+			}
+		}
+	}
 }

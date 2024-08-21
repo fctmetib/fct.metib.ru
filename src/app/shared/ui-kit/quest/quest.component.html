@@ -34,7 +34,7 @@
 						<mib-button
 							[disabled]="quizForm.invalid"
 							(click)="nextQuestion()"
-							size="l"
+							size="{{ isDesktop ? 'l' : 'm' }}"
 							type="filled-primary"
 						>
 							{{ isLastQuestion() ? 'Готово' : 'Далее' }}
@@ -73,7 +73,7 @@
 		</ng-template>
 	</div>
 	<div class="flex flex_grow flex_column frame-r">
-		<mib-spacing type="s"></mib-spacing>
+		<mib-spacing type="{{ isDesktop ? 's' : 'xm' }}"></mib-spacing>
 		<div class="flex flex_column gap-4 quiz-progress">
 			<span
 				class="flex text pb-4 gap-2 text_m c-bti-secondary"

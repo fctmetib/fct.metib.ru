@@ -24,6 +24,7 @@ import {RequestLandingService} from 'src/app/public/service/request-landing.serv
 import {RequestLandingInterface} from 'src/app/public/type/request-landing.interface'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
+import {LandingAgreementModalService} from '../landing-agreement-modal/landing-agreement-modal.service'
 
 @Component({
 	selector: 'mib-landing-request-modal',
@@ -47,6 +48,7 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 		private requestLandingService: RequestLandingService,
 		private toaster: ToasterService,
 		public breakpointService: BreakpointObserverService,
+		public landingAgreementModalService: LandingAgreementModalService,
 		private getAgentRequestService: GetAgentRequestService,
 		public dialogRef: MatDialogRef<LandingRequestModalComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: string
@@ -94,7 +96,8 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 			],
 			Email: ['', [Validators.required, Validators.email]],
 			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
-			Comment: [false],
+			Comment: [''],
+			UseFactoring: [false],
 			Agree: [false, Validators.requiredTrue]
 		})
 	}
@@ -115,6 +118,10 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 		return `+${country} (${area}) ${local}-${middle}-${last}`
 	}
 
+	openAgreementModal() {
+		this.landingAgreementModalService.open()
+	}
+
 	onSubmit() {
 		this.isSubmitting$.next(true)
 
@@ -130,6 +137,7 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 			INN: this.form.value.INN,
 			Organization: this.form.value.Organization,
 			Comment: this.form.value.Comment,
+			UseFactoring: this.form.value.UseFactoring,
 			Agree: this.form.value.Agree
 		}
 
@@ -159,13 +167,6 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 			.subscribe()
 
 		this.dialogRef.close()
-	}
-
-	openAgreementDoc() {
-		window.open(
-			'assets/_files/Согласие_на_обработку_персональных_данных.pdf',
-			'_blanck'
-		)
 	}
 
 	ngOnDestroy(): void {

@@ -320,11 +320,11 @@
 							<ng-container mibLabel>ИНН Вашей организации</ng-container>
 						</mib-input>
 					</div>
-					<!-- <mib-textarea
+					<mib-textarea
 						size="{{ isDesktop ? 'xl' : 'l' }}"
 						styleType="floating"
 					>
-						<ng-container mibLabel>Использовали факторинг ранее?</ng-container>
+						<ng-container mibLabel>Ваш комментарий</ng-container>
 						<textarea
 							styleType="floating"
 							[maxLength]="100"
@@ -332,9 +332,13 @@
 							autosize
 							mibTextarea
 						></textarea>
-					</mib-textarea> -->
+					</mib-textarea>
 					<div class="flex gap-8">
-						<mib-checkbox size="{{ isDesktop ? 'l' : 'm' }}"> </mib-checkbox>
+						<mib-checkbox
+							formControlName="UseFactoring"
+							size="{{ isDesktop ? 'l' : 'm' }}"
+						>
+						</mib-checkbox>
 						<p
 							[ngClass]="isDesktop ? 'text_l' : 'text_m'"
 							class="text-left text c-bti-secondary"
@@ -377,7 +381,7 @@
 				</div>
 				<mib-spacing type="xl"></mib-spacing>
 			</div>
-			<div class="requests-img flex flex_align-center flex_grow">
+			<div class="requests-img flex flex_align-end flex_grow">
 				<img
 					src="./assets/images/staff/requests/factoring-application.png"
 					alt="factoring"

@@ -55,10 +55,19 @@
 			</mib-input>
 			<mib-autocomplete formControlName="Organization" [options]="options">
 			</mib-autocomplete>
+			<mib-textarea size="{{ isDesktop ? 'xl' : 'l' }}">
+				<ng-container mibLabel>Ваш комментарий</ng-container>
+				<textarea
+					formControlName="Comment"
+					[maxLength]="100"
+					autosize
+					mibTextarea
+				></textarea>
+			</mib-textarea>
 			<div class="flex gap-8">
 				<mib-checkbox
 					size="{{ isDesktop ? 'l' : 'm' }}"
-					formControlName="Comment"
+					formControlName="UseFactoring"
 				>
 				</mib-checkbox>
 				<p
@@ -68,22 +77,7 @@
 					Мы уже работаем по факторингу
 				</p>
 			</div>
-			<!-- <mib-textarea size="{{ isDesktop ? 'xl' : 'l' }}">
-				<ng-container mibLabel>Использовали факторинг ранее?</ng-container>
-				<textarea
-					formControlName="Comment"
-					[maxLength]="100"
-					autosize
-					mibTextarea
-				></textarea>
-			</mib-textarea> -->
 		</div>
-		<!-- <div
-			class="text text_m c-bti-tertiarty"
-			*ngIf="form.get('Agree').invalid && form.get('Agree').touched"
-		>
-			* Подтвердите согласие на обработку данных
-		</div> -->
 		<mib-spacing type="s"></mib-spacing>
 		<mib-modal-footer>
 			<div class="flex flex_column">
@@ -108,7 +102,7 @@
 						>
 							Пожалуйста подтвердите Ваше согласие
 							<span
-								(click)="openAgreementDoc()"
+								(click)="openAgreementModal()"
 								class="c-mc-default cursor-pointer"
 							>
 								обработку персональных данных.
