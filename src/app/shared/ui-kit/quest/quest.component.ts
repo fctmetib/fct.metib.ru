@@ -81,6 +81,16 @@ export class QuestComponent implements OnInit {
 		}
 	}
 
+	goToQuestion(index: number): void {
+		if (index < this.questions.length) {
+			this.currentQuestionIndex = index
+			const selectedAnswer = this.questions[this.currentQuestionIndex].answer
+			this.quizForm.setValue({answer: selectedAnswer})
+
+			this.updateProgress()
+		}
+	}
+
 	updateProgress(): void {
 		this.progress = this.quizCompleted
 			? 100

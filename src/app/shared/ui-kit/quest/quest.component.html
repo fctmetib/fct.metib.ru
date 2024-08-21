@@ -97,7 +97,12 @@
 					"
 					class="flex point flex_align-center gap-8"
 				>
-					<span class="text text_l c-bti-quaternary"> {{ p }} </span>
+					<span
+						(click)="goToQuestion(i)"
+						class="text text_l c-bti-quaternary cursor-pointer"
+					>
+						{{ p }}
+					</span>
 					<ng-container
 						*ngIf="
 							(i === currentQuestionIndex && !quizCompleted) ||
