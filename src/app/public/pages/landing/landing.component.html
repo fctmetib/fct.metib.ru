@@ -82,7 +82,7 @@
 </section>
 <section class="products">
 	<div class="container flex">
-		<div class="flex wrapper">
+		<div class="flex wrapper w-100">
 			<div class="mob-products flex flex_grow flex_column">
 				<mib-spacing
 					[ngClass]="{individual: imgNumber === ProductTabsEnum.INDIVIDUAL}"
@@ -205,96 +205,6 @@
 							[questions]="questionList"
 						></mib-quest>
 					</div>
-					<!-- <div
-						class="flex tags-content"
-						*ngSwitchCase="ProductTabsEnum.INDIVIDUAL"
-					>
-						<div class="flex flex_grow flex_column frame">
-							<mib-spacing
-								type="{{ isDesktop ? 'm' : 's' }}"
-								type="s"
-							></mib-spacing>
-							<p class="products-title text_medium text text_l c-mc-default">
-								Индивидуальное предложение
-							</p>
-							<mib-spacing type="xs2"></mib-spacing>
-							<p class="text text_l c-bti-secondary">
-								Заполните форму, чтобы мы смогли предложить вам один или
-								несколько подходящих продуктов.
-							</p>
-							<div class="flex flex_column">
-								<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-								<mib-input>
-									<input
-										#innInput
-										type="number"
-										pattern="/^-?\d+\.?\d*$/"
-										onKeyPress="if(this.value.length==10) return false;"
-										size="l"
-										styleType="floating"
-										mibInput
-									/>
-									<ng-container mibLabel>ИНН Организации</ng-container>
-								</mib-input>
-								<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-								<div class="flex">
-									<mib-button
-										(press)="
-											openLandingRequestModal('Подобрать продукт');
-											clearInput(innInput)
-										"
-										size="m"
-										type="filled-primary"
-										>Далее
-										<mib-icon
-											btn-right-icon
-											class="stroke"
-											name="fi_chevron-right"
-										></mib-icon>
-									</mib-button>
-								</div>
-								<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-							</div>
-						</div>
-						<div class="flex flex_grow flex_column frame-r">
-							<mib-spacing class="frame-mobile" type="s"></mib-spacing>
-							<div class="flex flex_column progress-bar">
-								<div
-									class="wrap flex flex_justify-start text text_m c-bti-secondary"
-								>
-									<span>{{ progress }}</span>
-									<span> из {{ maxPage }}</span>
-								</div>
-								<div class="line">
-									<div
-										class="progress"
-										[ngStyle]="{width: (progress / maxPage) * 100 + '%'}"
-									></div>
-								</div>
-								<mib-spacing type="{{ isDesktop ? 'xs' : 's' }}"></mib-spacing>
-							</div>
-							<div class="flex flex_column timeline">
-								<div class="flex point">
-									<span class="text text_l c-bti-quaternary">
-										Сумма финансирования
-									</span>
-								</div>
-								<div class="flex point active flex_align-center gap-8">
-									<span class="text text_l c-bti-quaternary"> ИНН </span>
-									<mib-icon
-										btn-icon
-										class="stroke"
-										name="fi_chevron-left"
-									></mib-icon>
-								</div>
-								<div class="flex point">
-									<span class="text text_l c-bti-quaternary">
-										Срок отсрочки
-									</span>
-								</div>
-							</div>
-						</div>
-					</div> -->
 				</ng-container>
 				<div
 					[ngClass]="{hide: imgNumber === ProductTabsEnum.INDIVIDUAL}"
@@ -342,7 +252,7 @@
 			class="flex flex_column w-100 flex-grow how-wrap"
 		>
 			<div class="flex flex_column how-card">
-				<div class="flex how-icon">
+				<div class="flex flex_justify-center how-icon">
 					<img src="{{ item.img }}" alt="{{ item.title }}" />
 				</div>
 				<div class="flex flex_column how-content">
@@ -524,7 +434,7 @@
 	</div>
 	<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
 </section>
-<!-- <section class="press">
+<section class="press">
 	<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
 	<h3 class="text-center">Новости банка</h3>
 	<mib-spacing type="{{ isDesktop ? 'm' : 'xs' }}"></mib-spacing>
@@ -535,58 +445,70 @@
 		></mib-skeleton>
 	</ng-container>
 	<ng-template #newsPanel>
-		<div class="flex">
-			<mib-news-panel
-				[superHero]="isDesktop ? true : false"
-				[newsTitle]="getAdvancedNews[0].Title"
-				[newsText]="getAdvancedNews[0].Text"
-				[newsDate]="getAdvancedNews[0].Date | date : 'dd.MM.yyyy'"
-				linkText="Открыть новость"
-				[showPreview]="getAdvancedNews[0].Image"
-				[link]="'/news/' + getAdvancedNews[0].ID"
-				[altText]="getAdvancedNews[0].Title"
-			></mib-news-panel>
-		</div>
-		<mib-spacing type="m"></mib-spacing>
-		<div [ngClass]="{flex_column: !isDesktop}" class="news-wrap flex gap-16">
-			<mib-news-panel
-				[vertical]="isDesktop ? true : false"
-				[showLink]="isDesktop ? true : false"
-				[newsTitle]="getAdvancedNews[1]?.Title"
-				[newsDate]="getAdvancedNews[1]?.Date | date : 'dd.MM.yyyy'"
-				linkText="Подробнее"
-				[showPreview]="getAdvancedNews[1].Image"
-				[link]="'/news/' + getAdvancedNews[1].ID"
-				[altText]="getAdvancedNews[1]?.Title"
-			></mib-news-panel>
-			<mib-news-panel
-				[vertical]="isDesktop ? true : false"
-				[showLink]="isDesktop ? true : false"
-				[newsTitle]="getAdvancedNews[2]?.Title"
-				[newsDate]="getAdvancedNews[2]?.Date | date : 'dd.MM.yyyy'"
-				linkText="Подробнее"
-				[showPreview]="getAdvancedNews[2].Image"
-				[link]="'/news/' + getAdvancedNews[2].ID"
-				[altText]="getAdvancedNews[2]?.Title"
-			></mib-news-panel>
-			<mib-news-panel
-				[style.display]="isDesktop ? 'flex' : 'none'"
-				[vertical]="true"
-				[showLink]="true"
-				[newsTitle]="getAdvancedNews[3]?.Title"
-				[newsDate]="getAdvancedNews[3]?.Date | date : 'dd.MM.yyyy'"
-				linkText="Подробнее"
-				[showPreview]="getAdvancedNews[3].Image"
-				[link]="'/news/' + getAdvancedNews[3].ID"
-				[altText]="getAdvancedNews[3]?.Title"
-			></mib-news-panel>
+		<div *ngIf="hasNews; else noNewsAvailable" class="news-wrap">
+			<div class="flex">
+				<mib-news-panel
+					[superHero]="isDesktop ? true : false"
+					[newsTitle]="getAdvancedNews[0].Title"
+					[newsText]="getAdvancedNews[0].Text"
+					[newsDate]="getAdvancedNews[0].Date | date : 'dd.MM.yyyy'"
+					linkText="Открыть новость"
+					[showPreview]="getAdvancedNews[0].Image"
+					[link]="'/news/' + getAdvancedNews[0].ID"
+					[altText]="getAdvancedNews[0].Title"
+				></mib-news-panel>
+			</div>
+			<mib-spacing type="m"></mib-spacing>
+			<div [ngClass]="{flex_column: !isDesktop}" class="news-wrap flex gap-16">
+				<mib-news-panel
+					[vertical]="isDesktop ? true : false"
+					[showLink]="isDesktop ? true : false"
+					[newsTitle]="getAdvancedNews[1]?.Title"
+					[newsDate]="getAdvancedNews[1]?.Date | date : 'dd.MM.yyyy'"
+					linkText="Подробнее"
+					[showPreview]="getAdvancedNews[1].Image"
+					[link]="'/news/' + getAdvancedNews[1].ID"
+					[altText]="getAdvancedNews[1]?.Title"
+				></mib-news-panel>
+				<mib-news-panel
+					[vertical]="isDesktop ? true : false"
+					[showLink]="isDesktop ? true : false"
+					[newsTitle]="getAdvancedNews[2]?.Title"
+					[newsDate]="getAdvancedNews[2]?.Date | date : 'dd.MM.yyyy'"
+					linkText="Подробнее"
+					[showPreview]="getAdvancedNews[2].Image"
+					[link]="'/news/' + getAdvancedNews[2].ID"
+					[altText]="getAdvancedNews[2]?.Title"
+				></mib-news-panel>
+				<mib-news-panel
+					[style.display]="isDesktop ? 'flex' : 'none'"
+					[vertical]="true"
+					[showLink]="true"
+					[newsTitle]="getAdvancedNews[3]?.Title"
+					[newsDate]="getAdvancedNews[3]?.Date | date : 'dd.MM.yyyy'"
+					linkText="Подробнее"
+					[showPreview]="getAdvancedNews[3].Image"
+					[link]="'/news/' + getAdvancedNews[3].ID"
+					[altText]="getAdvancedNews[3]?.Title"
+				></mib-news-panel>
+			</div>
 		</div>
 	</ng-template>
 	<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
 	<div class="press-btn flex flex_justify-center">
-		<mib-button size="l" [routerLink]="'/news'" type="filled-secondary">
+		<mib-button
+			[disabled]="!hasNews"
+			size="l"
+			[routerLink]="'/news'"
+			type="filled-secondary"
+		>
 			Показать больше
 		</mib-button>
 	</div>
+	<ng-template #noNewsAvailable>
+		<div class="flex flex_justify-center">
+			<h4 class="c-wgr-quaternary">временно недоступны</h4>
+		</div>
+	</ng-template>
 	<mib-spacing type="{{ isDesktop ? 'xl' : 'l' }}"></mib-spacing>
-</section> -->
+</section>

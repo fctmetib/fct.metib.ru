@@ -125,7 +125,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
 					img: './assets/images/staff/big/belec-b.jpg',
 					name: 'Мотылёва Екатерина',
 					position: 'Начальник управления',
-					email: 'belec@metib.ru'
+					email: 'belek@metib.ru'
 				}
 			]
 		},

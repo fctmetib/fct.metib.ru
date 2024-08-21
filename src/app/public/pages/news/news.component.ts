@@ -2,8 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core'
 import {NewsService} from '../../service/news.service'
 import {
 	BehaviorSubject,
+	catchError,
 	finalize,
 	map,
+	of,
 	Subscription,
 	switchMap,
 	tap,
@@ -102,23 +104,44 @@ export class NewsComponent implements OnInit, OnDestroy {
 		this.newsService
 			.getNews(this.newsNumberCount)
 			.pipe(
+				tap(news => {
+					if (!news || news.length === 0) {
+						throw new Error('No news available')
+					}
+				}),
 				switchMap(news =>
 					zip(
 						news.map(item =>
-							this.newsService
-								.getNewsImage(item.ID)
-								.pipe(map(image => ({...item, Image: image})))
+							this.newsService.getNewsImage(item.ID).pipe(
+								map(image => ({...item, Image: image})),
+								catchError(error => {
+									console.error('Error fetching image:', error)
+									return of({
+										...item,
+										Image: 'assets/images/Image_not_available.png'
+									})
+								})
+							)
 						)
 					).pipe(
 						tap(data => {
 							this.getAdvancedNews = data
-							// console.log('data :>> ', data)
 						})
 					)
 				),
+				catchError(error => {
+					console.error('Error fetching news:', error)
+					return of([])
+				}),
 				finalize(() => this.loading$.next(false))
 			)
-			.subscribe()
+			.subscribe({
+				error: err => console.error('Error in subscription:', err)
+			})
+	}
+
+	get hasNews(): boolean {
+		return this.getAdvancedNews && this.getAdvancedNews.length > 0
 	}
 
 	ngOnDestroy(): void {

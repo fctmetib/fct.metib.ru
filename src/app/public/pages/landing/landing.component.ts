@@ -46,6 +46,9 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	public options = []
 	public loading = false
 
+	maxPage: number = 3
+	progress: number = 2
+
 	questionList = [
 		{
 			question: 'Какой стороной сделки вы являетесь?',
@@ -212,7 +215,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	) {}
 
 	ngOnInit(): void {
-		// this.getCurrentNews()
+		this.getCurrentNews()
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
@@ -289,28 +292,50 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			shadowRight.classList.remove('hide-shadow')
 		}
 	}
+
 	public getCurrentNews() {
 		this.loading$.next(true)
 		this.newsService
 			.getNews(this.newsNumberCount)
 			.pipe(
+				tap(news => {
+					if (!news || news.length === 0) {
+						throw new Error('No news available')
+					}
+				}),
 				switchMap(news =>
 					zip(
 						news.map(item =>
-							this.newsService
-								.getNewsImage(item.ID)
-								.pipe(map(image => ({...item, Image: image})))
+							this.newsService.getNewsImage(item.ID).pipe(
+								map(image => ({...item, Image: image})),
+								catchError(error => {
+									console.error('Error fetching image:', error)
+									return of({
+										...item,
+										Image: 'assets/images/Image_not_available.png'
+									})
+								})
+							)
 						)
 					).pipe(
 						tap(data => {
 							this.getAdvancedNews = data
-							// console.log('data :>> ', data)
 						})
 					)
 				),
+				catchError(error => {
+					console.error('Error fetching news:', error)
+					return of([])
+				}),
 				finalize(() => this.loading$.next(false))
 			)
-			.subscribe()
+			.subscribe({
+				error: err => console.error('Error in subscription:', err)
+			})
+	}
+
+	get hasNews(): boolean {
+		return this.getAdvancedNews && this.getAdvancedNews.length > 0
 	}
 
 	public onChange($num) {

@@ -15,75 +15,96 @@
 				<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
 				<div class="flex flex_column inputs">
 					<form [formGroup]="quizForm">
-						<label *ngFor="let option of getCurrentQuestion().options">
-							<input
-								type="radio"
-								formControlName="answer"
-								[value]="option.value"
-							/>
-							{{ option.label }}
-						</label>
+						<div class="flex flex_column gap-16">
+							<label
+								class="flex gap-8 text text_l c-bti-secondary"
+								*ngFor="let option of getCurrentQuestion().options"
+							>
+								<input
+									type="radio"
+									formControlName="answer"
+									[value]="option.value"
+								/>
+								{{ option.label }}
+							</label>
+						</div>
 					</form>
+					<mib-spacing type="s"></mib-spacing>
 					<div class="flex">
 						<mib-button
 							[disabled]="quizForm.invalid"
 							(click)="nextQuestion()"
-							size="m"
+							size="l"
 							type="filled-primary"
 						>
 							{{ isLastQuestion() ? 'Готово' : 'Далее' }}
 							<mib-icon
+								*ngIf="!isLastQuestion()"
 								btn-right-icon
 								class="stroke"
 								name="fi_chevron-right"
 							></mib-icon>
 						</mib-button>
 					</div>
+					<mib-spacing type="s"></mib-spacing>
 				</div>
 			</div>
 		</div>
 		<ng-template #congratsTemplate>
 			<h4>Рекомендуем рассмотреть Продукты комплексного факторинга</h4>
-			<div class="flex">
+			<mib-spacing type="xs2"></mib-spacing>
+			<ol style="padding: 0 20px">
+				<li style="list-style: decimal" class="text text_l c-bti-secondary">
+					Агентский факторинг – финансирование кредиторской задолженности и/или
+					поддержка вашей закупочной деятельности.
+				</li>
+				<li style="list-style: decimal" class="text text_l c-bti-secondary">
+					Предостаточный факторинг – финансирование под уступку будущих
+					требований.
+				</li>
+			</ol>
+			<div class="btn-wrap">
+				<mib-spacing type="s"></mib-spacing>
 				<mib-button (press)="onPress.emit()" size="m" type="filled-primary"
 					>Получить консультацию
-					<mib-icon
-						btn-right-icon
-						class="stroke"
-						name="fi_chevron-right"
-					></mib-icon>
 				</mib-button>
+				<mib-spacing type="s"></mib-spacing>
 			</div>
 		</ng-template>
 	</div>
 	<div class="flex flex_grow flex_column frame-r">
-		<span *ngIf="!quizCompleted; else quizFin">
-			{{ currentQuestionIndex + 1 }} из {{ questions.length }}
-		</span>
-		<ng-template #quizFin>
-			<span>Готово!</span>
-		</ng-template>
-		<div class="quiz-progress">
-			<div class="progress-bar">
+		<mib-spacing type="s"></mib-spacing>
+		<div class="flex flex_column gap-4 quiz-progress">
+			<span
+				class="flex text pb-4 gap-2 text_m c-bti-secondary"
+				*ngIf="!quizCompleted; else quizFin"
+			>
+				{{ currentQuestionIndex + 1 }} из {{ questions.length }}
+			</span>
+			<ng-template #quizFin>
+				<span class="flex text pb-4 gap-2 text_m c-bti-secondary">Готово!</span>
+			</ng-template>
+			<div class="flex progress-bar">
 				<div class="progress" [style.width.%]="progress"></div>
 			</div>
-			<div class="progress-info flex flex_column">
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex flex_column timeline">
 				<div
-					class="flex item"
 					*ngFor="let p of progressInfo; let i = index"
 					[class.active]="
 						(i === currentQuestionIndex && !quizCompleted) ||
 						(quizCompleted && i === progressInfo.length - 1)
 					"
+					class="flex point flex_align-center gap-8"
 				>
-					{{ p }}
+					<span class="text text_l c-bti-quaternary"> {{ p }} </span>
 					<ng-container
 						*ngIf="
 							(i === currentQuestionIndex && !quizCompleted) ||
 							(quizCompleted && i === progressInfo.length - 1)
 						"
 					>
-						<i class="active-icon">✔️</i>
+						<mib-icon btn-icon class="stroke" name="fi_chevron-left"></mib-icon>
 					</ng-container>
 				</div>
 			</div>

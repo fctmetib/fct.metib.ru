@@ -16,8 +16,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 	styleUrls: ['./quest.component.scss']
 })
 export class QuestComponent implements OnInit {
+	quizForm: FormGroup
+	currentQuestionIndex: number = 0
+	progress: number = 0
+	quizCompleted: boolean = false
 	public isDesktop: boolean = false
-
 	private subscriptions = new Subscription()
 
 	@Input() questions: {
@@ -37,30 +40,25 @@ export class QuestComponent implements OnInit {
 		'Результат'
 	]
 
-	// constructor(public breakpointService: BreakpointObserverService) {}
-	// ngOnInit(): void {
-	// 	this.subscriptions = this.breakpointService
-	// 		.isDesktop()
-	// 		.subscribe(b => (this.isDesktop = b))
-	// }
+	constructor(
+		private fb: FormBuilder,
+		public breakpointService: BreakpointObserverService
+	) {}
 
-	// ngOnDestroy(): void {
-	// 	this.subscriptions.unsubscribe()
-	// }
+	ngOnInit(): void {
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
 
-	quizForm: FormGroup
-	currentQuestionIndex: number = 0
-	progress: number = 0
-	quizCompleted: boolean = false
+		this.initForm()
 
-	constructor(private fb: FormBuilder) {
+		this.updateProgress()
+	}
+
+	initForm() {
 		this.quizForm = this.fb.group({
 			answer: [null, Validators.required]
 		})
-	}
-
-	ngOnInit(): void {
-		this.updateProgress()
 	}
 
 	getCurrentQuestion() {
@@ -79,7 +77,6 @@ export class QuestComponent implements OnInit {
 			} else {
 				this.quizCompleted = true
 				this.updateProgress()
-				console.log('Quiz finished!')
 			}
 		}
 	}
@@ -92,5 +89,9 @@ export class QuestComponent implements OnInit {
 
 	isLastQuestion(): boolean {
 		return this.currentQuestionIndex === this.questions.length - 1
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }
