@@ -144,8 +144,8 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		},
 		{name: 'MTS', img: './assets/images/staff/partners/MTC_Logo_RGB 2.svg'},
 		{
-			name: 'LeroyMerlin',
-			img: './assets/images/staff/partners/Leroy_Merlin 2.svg'
+			name: 'Lemana',
+			img: './assets/images/staff/partners/lemana.svg'
 		},
 		{name: 'Lenta', img: './assets/images/staff/partners/Lenta.svg'},
 		{name: 'Lamoda', img: './assets/images/staff/partners/Lamoda_logo 2.svg'},
