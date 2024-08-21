@@ -9,11 +9,38 @@ import {
 import {Subscription} from 'rxjs'
 import {BreakpointObserverService} from '../../services/common/breakpoint-observer.service'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
+import {animate, style, transition, trigger} from '@angular/animations'
 
 @Component({
 	selector: 'mib-quest',
 	templateUrl: './quest.component.html',
-	styleUrls: ['./quest.component.scss']
+	styleUrls: ['./quest.component.scss'],
+	animations: [
+		trigger('checkboxAnimation', [
+			transition(':enter', [
+				style({
+					transform: 'translate(-50%,-90%) rotateX(-60deg)'
+				}),
+				animate(
+					'300ms ease',
+					style({
+						transform: 'translate(-50%,-50%) rotateX(0deg)'
+					})
+				)
+			]),
+			transition(':leave', [
+				style({
+					transform: 'translate(-50%,-50%) rotateX(0deg)'
+				}),
+				animate(
+					'200ms ease',
+					style({
+						transform: 'translate(-50%,-20%) rotateX(60deg)'
+					})
+				)
+			])
+		])
+	]
 })
 export class QuestComponent implements OnInit {
 	quizForm: FormGroup

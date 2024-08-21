@@ -17,7 +17,7 @@
 					<form [formGroup]="quizForm">
 						<div class="flex flex_column gap-16">
 							<label
-								class="flex gap-8 text text_l c-bti-secondary"
+								class="custom-radio flex gap-8 text text_l c-bti-secondary"
 								*ngFor="let option of getCurrentQuestion().options"
 							>
 								<input
@@ -26,6 +26,7 @@
 									[value]="option.value"
 								/>
 								{{ option.label }}
+								<span class="checkmark"></span>
 							</label>
 						</div>
 					</form>

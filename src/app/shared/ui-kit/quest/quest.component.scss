@@ -9,6 +9,69 @@
 	width: 100%;
 	& .frame-l {
 		padding-right: 32px;
+
+		& .custom-radio {
+			position: relative;
+			cursor: pointer;
+			padding-left: 35px;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+
+			& input {
+				position: absolute;
+				opacity: 0;
+				cursor: pointer;
+			}
+
+			& .checkmark {
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 24px;
+				width: 24px;
+				border-radius: 50%;
+				border: 1px solid var(--wgr-tertiary);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				&::after {
+					content: '';
+					display: none;
+				}
+			}
+
+			&:hover input ~ .checkmark {
+				border: 1px solid var(--wgr-quaternary);
+				transition: border 0.5s ease;
+			}
+
+			&:active input ~ .checkmark {
+				background-color: var(--wgr-tertiary);
+				transition: background-color 0.2s ease;
+			}
+
+			& input:checked ~ .checkmark {
+				transition: background-color 0.5s ease;
+			}
+
+			& input:checked ~ .checkmark::after {
+				display: block;
+			}
+
+			& .checkmark::after {
+				width: 16px;
+				height: 16px;
+				border-radius: 50%;
+				background: var(--mc-default);
+			}
+
+			& input:checked:hover ~ .checkmark::after {
+				background: var(--mc-hover);
+			}
+		}
 	}
 	& .frame-r {
 		padding-left: 64px;
@@ -72,6 +135,14 @@
 
 			& mib-button {
 				width: 100%;
+			}
+
+			& .custom-radio {
+				& .checkmark {
+					top: 2px;
+					height: 20px;
+					width: 20px;
+				}
 			}
 		}
 		& .frame-r {
