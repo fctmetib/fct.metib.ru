@@ -173,14 +173,12 @@
 						>
 						<mib-spacing type="xs2"></mib-spacing>
 						<p class="text text_xl c-bti-secondary">
-							Комиссия за {{
-								form.get('defermentPeriodNumber')?.value
-							}} календарных
+							Комиссия за {{ form.get('defermentPeriodNumber')?.value }} 
 							{{
 								getLabel(form.get('defermentPeriodNumber')?.value, [
-									'день',
-									'дня',
-									'дней'
+									'календарный день',
+									'календарных дня',
+									'календарных дней'
 								])
 							}}
 						</p>
