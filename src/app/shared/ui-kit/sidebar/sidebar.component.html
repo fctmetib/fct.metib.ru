@@ -5,6 +5,28 @@
 	<div class="body flex_grow flex flex_column full-height">
 		<mib-spacing type="xs"></mib-spacing>
 		<div class="flex flex_column">
+			<!-- <div class="drop-wrap">
+				<div [mibDropdownTrigger]="userPanel" class="flex">
+					<p>halo</p>
+				</div>
+				<mib-dropdown #userPanel>
+					<mib-spacing dropdown-spacing type="s"></mib-spacing>
+					<mib-dropdown-point (press)="logout()" text="Сменить аккаунт">
+						<mib-icon
+							dropdown-point-left-icon
+							class="stroke"
+							name="fi_refresh-ccw"
+						></mib-icon>
+					</mib-dropdown-point>
+					<mib-dropdown-point (press)="logout()" text="Выйти">
+						<mib-icon
+							dropdown-point-left-icon
+							class="stroke"
+							name="fi_log-out"
+						></mib-icon>
+					</mib-dropdown-point>
+				</mib-dropdown>
+			</div> -->
 			<ng-container
 				*ngFor="
 					let items of isAdmin ? menuAdmin : isVerify ? menuUser : menuVerify

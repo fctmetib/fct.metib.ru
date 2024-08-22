@@ -2,17 +2,18 @@
 @import 'src/styles/_colors.vars';
 
 .hero {
-	background: linear-gradient(
-		135deg,
-		rgba(240, 245, 246, 0.4) 0%,
-		rgb(232 240 249) 100%
-	);
+	background-image: linear-gradient(
+			135deg,
+			rgba(240, 245, 246, 0.4) 0%,
+			rgb(232 240 249) 100%
+		),
+		url('/assets/images/staff/triangle-bg.png');
 
 	& .lineal {
 		background-color: var(--wgr-primary);
 	}
 	& img {
-		height: 600px;
+		height: 590px;
 		object-fit: none;
 
 		@media (max-width: 992px) {
