@@ -36,6 +36,17 @@ src\app\shared\ui-kit\tag
  ng g c shared/ui-kit/tag/tag --flat --skip-tests --dry-run
  ng g c shared/ui-kit/input/components/autocomplete --flat --skip-tests --dry-run
 
+// agent-client
+src\app\agent-client
+ng g m agent-client/agent-client --flat --routing --module=app
+ng g c agent-client/agent-client --flat --skip-tests --dry-run
+
+// agent-client/cabinet
+src\app\agent-client
+ng g m agent-client/modules/agent-client-cabinet --flat --routing --module=agent-client
+ng g c agent-client/modules/components/cabinet-page --flat --skip-tests --dry-run
+
+
  //--- add header module
 src\app\shared\modules\header\header.component.html
 ng g m shared/modules/header/header --flat --dry-run

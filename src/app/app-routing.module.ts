@@ -19,6 +19,13 @@ const routes: Routes = [
 			import('./client/client.module').then(m => m.ClientModule)
 	},
 	{
+		path: 'agent-client',
+		loadChildren: () =>
+			import('./agent-client/agent-client.module').then(
+				m => m.AgentClientModule
+			)
+	},
+	{
 		path: 'admin',
 		loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
 	},

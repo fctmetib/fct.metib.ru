@@ -22,6 +22,7 @@ import {MatDialogModule} from '@angular/material/dialog'
 import {AuthService} from './auth/services/auth.service'
 import {RequestsService} from './client/modules/requests/services/requests.service'
 import {ToasterModule} from './shared/ui-kit/toaster/toaster.module'
+import {AgentClientModule} from './agent-client/agent-client.module'
 
 registerLocaleData(localeRu, 'ru')
 
@@ -39,7 +40,8 @@ registerLocaleData(localeRu, 'ru')
 		ClientModule,
 		AuthModule,
 		MatDialogModule,
-		ToasterModule
+		ToasterModule,
+		AgentClientModule
 	],
 	providers: [
 		MessageService,
