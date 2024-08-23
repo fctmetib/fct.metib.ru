@@ -87,7 +87,7 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 
 	private initForms() {
 		this.form = this.fb.group({
-			FormName: 'Сайт',
+			FormName: 'Сайт | Модальное окно',
 			Organization: ['', [Validators.required]],
 			Name: ['', [Validators.required, Validators.minLength(2)]],
 			Phone: [
@@ -136,8 +136,10 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 			Email: this.form.value.Email,
 			INN: this.form.value.INN,
 			Organization: this.form.value.Organization,
-			Comment: this.form.value.Comment,
-			UseFactoring: this.form.value.UseFactoring,
+			Comment: `
+			${this.form.value.Comment}
+			Использует факторинг: ${this.form.value.UseFactoring ? "Да" : "Нет"}
+			`,
 			Agree: this.form.value.Agree
 		}
 

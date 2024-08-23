@@ -148,7 +148,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
 					img: './assets/images/staff/big/covyazina-b.jpg',
 					name: 'Ковязина Екатерина',
 					position:
-						'Главный специалист Отдела продаж факторинга ДО Санкт-Петербург',
+						'Главный специалист',
 					email: 'ekovyazina@metib.ru'
 				}
 			]

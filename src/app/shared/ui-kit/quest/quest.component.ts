@@ -50,6 +50,8 @@ export class QuestComponent implements OnInit {
 	public isDesktop: boolean = false
 	private subscriptions = new Subscription()
 
+	public recommendedProducts: string[] = [];
+
 	@Input() questions: {
 		question: string
 		options: {
@@ -94,19 +96,27 @@ export class QuestComponent implements OnInit {
 
 	nextQuestion() {
 		if (this.quizForm.valid) {
-			this.questions[this.currentQuestionIndex].answer =
-				this.quizForm.value.answer
-
+			this.questions[this.currentQuestionIndex].answer = this.quizForm.value.answer;
+	
 			if (this.currentQuestionIndex < this.questions.length - 1) {
-				this.currentQuestionIndex++
-				this.updateProgress()
-				this.quizForm.reset()
+				this.currentQuestionIndex++;
+				this.updateProgress();
+				this.quizForm.reset();
 			} else {
-				this.quizCompleted = true
-				this.updateProgress()
+				this.quizCompleted = true;
+				this.updateProgress();
+				
+				// Determine the result based on user answers
+				const recommendedProducts = this.determineResult();
+				this.displayResult(recommendedProducts);
 			}
 		}
 	}
+	
+	displayResult(products: string[]) {
+		this.recommendedProducts = products;
+	}
+	
 
 	goToQuestion(index: number): void {
 		if (index < this.questions.length) {
@@ -127,6 +137,45 @@ export class QuestComponent implements OnInit {
 	isLastQuestion(): boolean {
 		return this.currentQuestionIndex === this.questions.length - 1
 	}
+	
+	determineResult() {
+		const sideAnswer = this.questions[0].answer
+		const side = this.questions[0].options.find(x => x.value === sideAnswer).label;
+
+		const purposeAnswer = this.questions[1].answer
+		const purpose = this.questions[1].options.find(x => x.value === purposeAnswer).label;
+
+		
+		const isResidentAnswer = this.questions[2].answer
+		const isResident = this.questions[2].options.find(x => x.value === isResidentAnswer).label;
+
+		let recommendedProducts = [];
+	
+		if (side === 'Поставщик') {
+			if (purpose === 'Финансирование поставок') {
+				recommendedProducts.push('Продукты внутреннего факторинга');
+				if (isResident === 'Да, резидент') {
+					recommendedProducts.push('Продукты комплексного факторинга');
+				} else {
+					recommendedProducts.push('Экспортный факторинг');
+				}
+			} else if (purpose === 'Финансирование закупок') {
+				if (!isResident) {
+					recommendedProducts.push('Импортный факторинг');
+				}
+			}
+		} else if (side === 'Покупатель') {
+			if (purpose === 'Финансирование закупок') {
+				recommendedProducts.push('Продукты внутреннего факторинга');
+				if (isResident) {
+					recommendedProducts.push('Продукты комплексного факторинга');
+				}
+			}
+		}
+	
+		return recommendedProducts;
+	}
+	
 
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe()

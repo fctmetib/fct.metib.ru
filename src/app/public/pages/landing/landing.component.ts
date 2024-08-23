@@ -345,7 +345,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	initForm() {
 		this.form = this.fb.group({
-			FormName: 'Сайт',
+			FormName: 'Сайт  | Форма на главной странице, внизу',
 			Name: ['', [Validators.required, Validators.minLength(2)]],
 			Phone: [
 				'',
@@ -388,8 +388,10 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			Phone: formattedPhoneNumber,
 			INN: this.form.value.INN,
 			Organization: this.form.value.Organization,
-			Comment: this.form.value.Comment,
-			UseFactoring: this.form.value.UseFactoring,
+			Comment: `
+			${this.form.value.Comment}
+			Использует факторинг: ${this.form.value.UseFactoring ? "Да" : "Нет"}
+			`,
 			Agree: this.form.value.Agree
 		}
 
