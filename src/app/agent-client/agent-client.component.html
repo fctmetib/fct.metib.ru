@@ -1,2 +1,20 @@
-<p>agent-client works!</p>
-<router-outlet></router-outlet>
+<div class="full-height flex w-100">
+	<mib-sidebar></mib-sidebar>
+	<main class="flex_grow">
+		<mib-header signedIn="true" #header></mib-header>
+		<mib-spacing [customSpace]="header.height"></mib-spacing>
+		<div
+			#scrollable
+			class="scrollable flex flex_column"
+			[class.scroll-y]="!scrollService.isScrollBlocked$.value"
+			[class.overflow-y]="scrollService.isScrollBlocked$.value"
+			[ngStyle]="{height: 'calc(100vh - ' + (header?.height ?? 0) + 'px)'}"
+			[class.without-scroll]="
+				withoutScroll || scrollService.isScrollBlocked$.value
+			"
+		>
+			<router-outlet></router-outlet>
+			<mib-spacing type="xl2"></mib-spacing>
+		</div>
+	</main>
+</div>

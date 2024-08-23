@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core'
 import {AuthService} from 'src/app/auth/services/auth.service'
+import {ActivatedRoute, Router} from '@angular/router'
 
 export interface ISidebarGroup {
 	links: ISidebarLink[]
@@ -54,15 +55,34 @@ export class SidebarComponent implements OnInit {
 			links: [{name: 'Запросы', link: '/client/not-verify'}]
 		}
 	]
+	menuAgentUser = [
+		{
+			links: [{name: 'Кобинет', link: 'agent-client/cabinet'}]
+		}
+	]
 
 	isAdmin: boolean = true
 	isVerify: boolean = true
 
-	constructor(public authService: AuthService) {}
+	currentRoute: string
+
+	constructor(
+		public authService: AuthService,
+		private router: Router,
+		private route: ActivatedRoute
+	) {}
 
 	ngOnInit(): void {
 		this.isAdmin = this.authService.isUserAdmin()
 		this.isVerify = this.authService.isUserVerified()
+
+		this.route.url.subscribe(() => {
+			this.currentRoute = this.router.url.split('/').slice(-2)[0] || ''
+		})
+	}
+
+	navigateTo(currUrl) {
+		this.router.navigate([`${currUrl}/cabinet`])
 	}
 
 	logout() {

@@ -6,6 +6,7 @@ import {RouterLink} from '@angular/router'
 import {SpacingModule} from '../spacing/spacing.module'
 import {MenuPointModule} from '../menu-point/menu-point.module'
 import {DropdownPointModule} from '../dropdown-point/dropdown-point.module'
+import {SelectModule} from '../select/select.module'
 // import {DropdownModule} from '../dropdown/dropdown.module'
 
 @NgModule({
@@ -16,7 +17,8 @@ import {DropdownPointModule} from '../dropdown-point/dropdown-point.module'
 		RouterLink,
 		SpacingModule,
 		MenuPointModule,
-		DropdownPointModule
+		DropdownPointModule,
+		SelectModule
 		// DropdownModule
 	],
 	exports: [SidebarComponent]
