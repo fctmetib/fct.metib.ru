@@ -50,7 +50,7 @@ export class QuestComponent implements OnInit {
 	public isDesktop: boolean = false
 	private subscriptions = new Subscription()
 
-	public recommendedProducts: string[] = [];
+	public recommendedProduct: string;
 
 	@Input() questions: {
 		question: string
@@ -107,14 +107,14 @@ export class QuestComponent implements OnInit {
 				this.updateProgress();
 				
 				// Determine the result based on user answers
-				const recommendedProducts = this.determineResult();
-				this.displayResult(recommendedProducts);
+				const recommendedProduct = this.determineResult();
+				this.displayResult(recommendedProduct);
 			}
 		}
 	}
 	
-	displayResult(products: string[]) {
-		this.recommendedProducts = products;
+	displayResult(product: string) {
+		this.recommendedProduct = product;
 	}
 	
 
@@ -139,42 +139,33 @@ export class QuestComponent implements OnInit {
 	}
 	
 	determineResult() {
-		const sideAnswer = this.questions[0].answer
+		const sideAnswer = this.questions[0].answer;
 		const side = this.questions[0].options.find(x => x.value === sideAnswer).label;
-
-		const purposeAnswer = this.questions[1].answer
-		const purpose = this.questions[1].options.find(x => x.value === purposeAnswer).label;
-
-		
-		const isResidentAnswer = this.questions[2].answer
-		const isResident = this.questions[2].options.find(x => x.value === isResidentAnswer).label;
-
-		let recommendedProducts = [];
 	
-		if (side === 'Поставщик') {
-			if (purpose === 'Финансирование поставок') {
-				recommendedProducts.push('Продукты внутреннего факторинга');
-				if (isResident === 'Да, резидент') {
-					recommendedProducts.push('Продукты комплексного факторинга');
-				} else {
-					recommendedProducts.push('Экспортный факторинг');
-				}
-			} else if (purpose === 'Финансирование закупок') {
-				if (!isResident) {
-					recommendedProducts.push('Импортный факторинг');
-				}
+		const purposeAnswer = this.questions[1].answer;
+		const purpose = this.questions[1].options.find(x => x.value === purposeAnswer).label;
+	
+		const isResidentAnswer = this.questions[2].answer;
+		const isResident = this.questions[2].options.find(x => x.value === isResidentAnswer).label;
+	
+		// Determine the recommended product based on all three answers
+		if (side === 'Поставщик' && purpose === 'Финансирование поставок') {
+			if (isResident === 'Да, резидент') {
+				return 'Продукты внутреннего факторинга';
+			} else {
+				return 'Экспортный факторинг';
 			}
 		} else if (side === 'Покупатель') {
 			if (purpose === 'Финансирование закупок') {
-				recommendedProducts.push('Продукты внутреннего факторинга');
-				if (isResident) {
-					recommendedProducts.push('Продукты комплексного факторинга');
-				}
+				return 'Продукты комплексного факторинга';
+			} else if (purpose === 'Финансирование поставок' && isResident === 'Резидент другой страны') {
+				return 'Импортный факторинг';
 			}
 		}
 	
-		return recommendedProducts;
-	}
+		// Return a default or error message if no match found
+		return 'Нет подходящего продукта для ваших условий';
+	}	
 	
 
 	ngOnDestroy(): void {
