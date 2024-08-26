@@ -40,7 +40,7 @@
 
 	&_superhero {
 		flex-direction: row;
-		height: 340px;
+		// height: 340px;
 		transition: var(--transition);
 
 		&:hover {
@@ -57,7 +57,7 @@
 		& .image {
 			width: 50%;
 			align-items: center;
-			height: 100%;
+			// height: 100%;
 			justify-content: center;
 		}
 
@@ -69,7 +69,7 @@
 				padding: 48px 36px 0 48px;
 
 				& h3 {
-					@include text-news-overflow(2);
+					@include text-news-overflow(3);
 				}
 
 				& .except {

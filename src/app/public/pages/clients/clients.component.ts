@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core'
 import {Subscription} from 'rxjs'
+import {AuthService} from 'src/app/auth/services/auth.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
@@ -43,7 +44,8 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
 	constructor(
 		public breakpointService: BreakpointObserverService,
-		private toaster: ToasterService
+		private toaster: ToasterService,
+		private authService: AuthService
 	) {}
 
 	ngOnInit(): void {
@@ -52,21 +54,40 @@ export class ClientsComponent implements OnInit, OnDestroy {
 			.subscribe(b => (this.isDesktop = b))
 	}
 
-	public downloadFile(name) {
-		let link = document.createElement('a')
-		if (name === 'contract') {
-			link.download = 'Договор_о_предоставлении_факторинговых_услуг'
-			link.href =
-				'assets/_files/Договор_о_предоставлении_факторинговых_услуг.pdf'
-		} else if (name === 'instruction') {
-			link.download = 'FactorClientHelp'
-			link.href = 'assets/_files/FactorClientHelp New.pdf'
-		} else {
-			link.download = 'reglament'
-			link.href = 'assets/_files/reglament.pdf'
+	public downloadFile(name: string) {
+		const isAuthenticated = this.authService.isAuthenticated();
+	
+		let link = document.createElement('a');
+	
+		if (!isAuthenticated && (name === 'instruction' || name === 'installFactorClient')) {
+			this.getToast();
+			return;
 		}
-		link.click()
-	}
+	
+		switch (name) {
+			case 'reglament':
+				link.download = 'reglament';
+				link.href = 'assets/_files/reglament.pdf';
+				break;
+			case 'contract':
+				link.download = 'Договор_о_предоставлении_факторинговых_услуг';
+				link.href = 'assets/_files/Договор_о_предоставлении_факторинговых_услуг.pdf';
+				break;
+			case 'instruction':
+				link.download = 'FactorClientHelp';
+				link.href = 'assets/_files/FactorClientHelp New.pdf';
+				break;
+			case 'installFactorClient':
+				link.download = 'installFactorClient';
+				// link.href = 'assets/_files/installFactorClient.pdf';
+				break;
+			default:
+				console.warn('Invalid file name provided');
+				return; 
+		}
+	
+		link.click();
+	}	
 
 	getToast() {
 		this.toaster.show(

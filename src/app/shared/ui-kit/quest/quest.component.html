@@ -52,26 +52,21 @@
 			</div>
 		</div>
 		<ng-template #congratsTemplate>
-			<h4>Рекомендуем рассмотреть Продукты комплексного факторинга</h4>
+			<h4>Рекомендуем рассмотреть следующие продукты факторинга:</h4>
 			<mib-spacing type="xs2"></mib-spacing>
 			<ol style="padding: 0 20px">
-				<li style="list-style: decimal" class="text text_l c-bti-secondary">
-					Агентский факторинг – финансирование кредиторской задолженности и/или
-					поддержка вашей закупочной деятельности.
-				</li>
-				<li style="list-style: decimal" class="text text_l c-bti-secondary">
-					Предостаточный факторинг – финансирование под уступку будущих
-					требований.
+				<li *ngFor="let product of recommendedProducts" style="list-style: decimal" class="text text_l c-bti-secondary">
+					{{ product }}
 				</li>
 			</ol>
 			<div class="btn-wrap">
 				<mib-spacing type="s"></mib-spacing>
-				<mib-button (press)="onPress.emit()" size="m" type="filled-primary"
-					>Получить консультацию
+				<mib-button (press)="onPress.emit()" size="m" type="filled-primary">
+					Получить консультацию
 				</mib-button>
 				<mib-spacing type="s"></mib-spacing>
 			</div>
-		</ng-template>
+		</ng-template>		
 	</div>
 	<div class="flex flex_grow flex_column frame-r">
 		<mib-spacing type="{{ isDesktop ? 's' : 'xm' }}"></mib-spacing>
