@@ -35,18 +35,6 @@
 				</mib-select>
 				<mib-spacing type="xs"></mib-spacing>
 			</div>
-			<!-- *ngFor="
-			let items of isAdmin ? menuAdmin : isVerify ? menuUser : menuVerify
-			" -->
-			<!-- *ngFor="
-			let items of isAdmin
-			? menuAdmin
-			: isVerify && isAgentFactoring
-			? menuAgentUser
-			: isVerify && !isAgentFactoring
-			? menuUser
-			: menuVerify
-			" -->
 			<ng-container
 				*ngFor="
 					let items of isAdmin

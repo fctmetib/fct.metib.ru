@@ -83,8 +83,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 			this.currentRoute = this.router.url.split('/').slice(-2)[0] || ''
 			this.isAgentFactoring = this.currentRoute === 'agent-client'
 		})
-
-		console.log('this.isAgentFactoring :>> ', this.isAgentFactoring)
 	}
 
 	navigateTo(currUrl) {

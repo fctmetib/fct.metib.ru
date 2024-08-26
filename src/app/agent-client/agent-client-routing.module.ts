@@ -17,7 +17,7 @@ const routes: Routes = [
 					{
 						path: 'cabinet',
 						loadChildren: () =>
-							import('./modules/agent-client-cabinet.module').then(
+							import('./modules/cabinet/agent-client-cabinet.module').then(
 								m => m.AgentClientCabinetModule
 							),
 						title: 'Агентский Факторинг | Кабинет'
