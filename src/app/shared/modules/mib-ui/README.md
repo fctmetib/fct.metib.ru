@@ -43,9 +43,33 @@ ng g c agent-client/agent-client --flat --skip-tests --dry-run
 
 // agent-client/cabinet
 src\app\agent-client
-ng g m agent-client/modules/agent-client-cabinet --flat --routing --module=agent-client
-ng g c agent-client/modules/components/cabinet-page --flat --skip-tests --dry-run
+ng g m agent-client/modules/cabinet/agent-client-cabinet --flat --routing --module=agent-client
+ng g c agent-client/modules/cabinet/components/cabinet-page --flat --skip-tests --dry-run
 
+// agent-client/registers
+src\app\agent-client
+ng g m agent-client/modules/registers/agent-client-registers --flat --routing --module=agent-client
+ng g c agent-client/modules/registers/components/registers-page --flat --skip-tests --dry-run
+
+// agent-client/payment-register
+src\app\agent-client
+ng g m agent-client/modules/payment-register/agent-client-payment-register --flat --routing --module=agent-client
+ng g c agent-client/modules/payment-register/components/payment-register-page --flat --skip-tests --dry-run
+
+// agent-client/creditors
+src\app\agent-client
+ng g m agent-client/modules/creditors/agent-client-creditors --flat --routing --module=agent-client
+ng g c agent-client/modules/creditors/components/creditors-page --flat --skip-tests --dry-run
+
+// agent-client/payments
+src\app\agent-client
+ng g m agent-client/modules/payments/agent-client-payments --flat --routing --module=agent-client
+ng g c agent-client/modules/payments/components/payments-page --flat --skip-tests --dry-run
+
+// agent-client/invoices-payment
+src\app\agent-client
+ng g m agent-client/modules/invoices-payment/agent-client-invoices-payment --flat --routing --module=agent-client
+ng g c agent-client/modules/invoices-payment/components/invoices-payment-page --flat --skip-tests --dry-run
 
  //--- add header module
 src\app\shared\modules\header\header.component.html

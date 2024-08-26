@@ -58,7 +58,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
 	]
 	menuAgentUser = [
 		{
-			links: [{name: 'Кобинет-agent', link: '/agent-client/cabinet'}]
+			links: [{name: 'Кабинет', link: '/agent-client/cabinet'}]
+		},
+		{
+			links: [
+				{name: 'Реестры', link: '/agent-client/register'},
+				{name: 'Реестры к оплате', link: '/agent-client/payment-register'},
+				{name: 'Кредиторы', link: '/agent-client/creditors'}
+			]
+		},
+		{
+			links: [
+				{name: 'Оплаты', link: '/agent-client/payments'},
+				{name: 'Счета на оплату', link: '/agent-client/invoices-payment'}
+			]
 		}
 	]
 
