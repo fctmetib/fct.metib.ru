@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, OnDestroy, OnInit} from '@angular/core'
 import {AuthService} from 'src/app/auth/services/auth.service'
 import {ActivatedRoute, Router} from '@angular/router'
+import {Subject, takeUntil} from 'rxjs'
 
 export interface ISidebarGroup {
 	links: ISidebarLink[]
@@ -16,7 +17,7 @@ export interface ISidebarLink {
 	templateUrl: './sidebar.component.html',
 	styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
 	menuUser = [
 		{
 			links: [
@@ -57,12 +58,14 @@ export class SidebarComponent implements OnInit {
 	]
 	menuAgentUser = [
 		{
-			links: [{name: 'Кобинет', link: 'agent-client/cabinet'}]
+			links: [{name: 'Кобинет-agent', link: '/agent-client/cabinet'}]
 		}
 	]
 
 	isAdmin: boolean = true
 	isVerify: boolean = true
+	isAgentFactoring: boolean = false
+	private unsubscribe$ = new Subject<void>()
 
 	currentRoute: string
 
@@ -76,9 +79,12 @@ export class SidebarComponent implements OnInit {
 		this.isAdmin = this.authService.isUserAdmin()
 		this.isVerify = this.authService.isUserVerified()
 
-		this.route.url.subscribe(() => {
+		this.route.url.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
 			this.currentRoute = this.router.url.split('/').slice(-2)[0] || ''
+			this.isAgentFactoring = this.currentRoute === 'agent-client'
 		})
+
+		console.log('this.isAgentFactoring :>> ', this.isAgentFactoring)
 	}
 
 	navigateTo(currUrl) {
@@ -87,5 +93,10 @@ export class SidebarComponent implements OnInit {
 
 	logout() {
 		this.authService.logout()
+	}
+
+	ngOnDestroy(): void {
+		this.unsubscribe$.next()
+		this.unsubscribe$.complete()
 	}
 }
