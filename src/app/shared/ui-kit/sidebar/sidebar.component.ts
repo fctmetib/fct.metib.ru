@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, OnDestroy, OnInit} from '@angular/core'
 import {AuthService} from 'src/app/auth/services/auth.service'
 import {ActivatedRoute, Router} from '@angular/router'
+import {Subject, takeUntil} from 'rxjs'
 
 export interface ISidebarGroup {
 	links: ISidebarLink[]
@@ -16,7 +17,7 @@ export interface ISidebarLink {
 	templateUrl: './sidebar.component.html',
 	styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
 	menuUser = [
 		{
 			links: [
@@ -57,12 +58,27 @@ export class SidebarComponent implements OnInit {
 	]
 	menuAgentUser = [
 		{
-			links: [{name: 'Кобинет', link: 'agent-client/cabinet'}]
+			links: [{name: 'Кабинет', link: '/agent-client/cabinet'}]
+		},
+		{
+			links: [
+				{name: 'Реестры', link: '/agent-client/register'},
+				{name: 'Реестры к оплате', link: '/agent-client/payment-register'},
+				{name: 'Кредиторы', link: '/agent-client/creditors'}
+			]
+		},
+		{
+			links: [
+				{name: 'Оплаты', link: '/agent-client/payments'},
+				{name: 'Счета на оплату', link: '/agent-client/invoices-payment'}
+			]
 		}
 	]
 
 	isAdmin: boolean = true
 	isVerify: boolean = true
+	isAgentFactoring: boolean = false
+	private unsubscribe$ = new Subject<void>()
 
 	currentRoute: string
 
@@ -76,8 +92,9 @@ export class SidebarComponent implements OnInit {
 		this.isAdmin = this.authService.isUserAdmin()
 		this.isVerify = this.authService.isUserVerified()
 
-		this.route.url.subscribe(() => {
+		this.route.url.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
 			this.currentRoute = this.router.url.split('/').slice(-2)[0] || ''
+			this.isAgentFactoring = this.currentRoute === 'agent-client'
 		})
 	}
 
@@ -87,5 +104,10 @@ export class SidebarComponent implements OnInit {
 
 	logout() {
 		this.authService.logout()
+	}
+
+	ngOnDestroy(): void {
+		this.unsubscribe$.next()
+		this.unsubscribe$.complete()
 	}
 }

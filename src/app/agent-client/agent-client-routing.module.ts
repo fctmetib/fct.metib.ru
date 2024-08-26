@@ -17,10 +17,50 @@ const routes: Routes = [
 					{
 						path: 'cabinet',
 						loadChildren: () =>
-							import('./modules/agent-client-cabinet.module').then(
+							import('./modules/cabinet/agent-client-cabinet.module').then(
 								m => m.AgentClientCabinetModule
 							),
 						title: 'Агентский Факторинг | Кабинет'
+					},
+					{
+						path: 'register',
+						loadChildren: () =>
+							import('./modules/register/agent-client-register.module').then(
+								m => m.AgentClientRegisterModule
+							),
+						title: 'Агентский Факторинг | Реестры'
+					},
+					{
+						path: 'payment-register',
+						loadChildren: () =>
+							import(
+								'./modules/payment-register/agent-client-payment-register.module'
+							).then(m => m.AgentClientPaymentRegisterModule),
+						title: 'Агентский Факторинг | Реестры к оплате'
+					},
+					{
+						path: 'creditors',
+						loadChildren: () =>
+							import('./modules/creditors/agent-client-creditors.module').then(
+								m => m.AgentClientCreditorsModule
+							),
+						title: 'Агентский Факторинг | Кредиторы'
+					},
+					{
+						path: 'payments',
+						loadChildren: () =>
+							import('./modules/payments/agent-client-payments.module').then(
+								m => m.AgentClientPaymentsModule
+							),
+						title: 'Агентский Факторинг | Оплаты'
+					},
+					{
+						path: 'invoices-payment',
+						loadChildren: () =>
+							import(
+								'./modules/invoices-payment/agent-client-invoices-payment.module'
+							).then(m => m.AgentClientInvoicesPaymentModule),
+						title: 'Агентский Факторинг | Оплаты'
 					}
 				]
 			}

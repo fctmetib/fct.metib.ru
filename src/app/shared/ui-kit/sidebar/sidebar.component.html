@@ -5,7 +5,13 @@
 	<div class="body flex_grow flex flex_column full-height">
 		<mib-spacing type="xs"></mib-spacing>
 		<div class="flex flex_column">
-			<div class="drop-wrap">
+			<div
+				*ngIf="
+					currentRoute === 'agent-client' ||
+					(currentRoute === 'client' && isVerify)
+				"
+				class="drop-wrap"
+			>
 				<mib-select
 					size="s"
 					type="outline"
@@ -31,7 +37,13 @@
 			</div>
 			<ng-container
 				*ngFor="
-					let items of isAdmin ? menuAdmin : isVerify ? menuUser : menuVerify
+					let items of isAdmin
+						? menuAdmin
+						: isVerify && !isAgentFactoring
+						? menuUser
+						: isVerify && isAgentFactoring
+						? menuAgentUser
+						: menuVerify
 				"
 			>
 				<mib-menu-point *ngFor="let item of items.links" [link]="item.link"

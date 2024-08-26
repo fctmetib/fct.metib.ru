@@ -1,0 +1,15 @@
+:host {
+	display: block;
+	height: 100%;
+}
+
+@media (max-width: 992px) {
+	mib-sidebar {
+		display: none;
+	}
+}
+
+main {
+	height: 100vh;
+	position: relative;
+}
