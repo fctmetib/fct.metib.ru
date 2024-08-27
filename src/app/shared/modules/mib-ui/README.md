@@ -71,6 +71,31 @@ src\app\agent-client
 ng g m agent-client/modules/invoices-payment/agent-client-invoices-payment --flat --routing --module=agent-client
 ng g c agent-client/modules/invoices-payment/components/invoices-payment-page --flat --skip-tests --dry-run
 
+// agent-client/queries
+src\app\agent-client
+ng g m agent-client/modules/queries/agent-client-queries --flat --routing --module=agent-client
+ng g c agent-client/modules/queries/components/queries-page --flat --skip-tests
+
+// agent-client/contracts
+src\app\agent-client
+ng g m agent-client/modules/contracts/agent-client-contracts --flat --routing --module=agent-client
+ng g c agent-client/modules/contracts/components/contracts-page --flat --skip-tests
+
+// agent-client/reports
+src\app\agent-client
+ng g m agent-client/modules/reports/agent-client-reports --flat --routing --module=agent-client
+ng g c agent-client/modules/reports/components/reports-page --flat --skip-tests
+
+// agent-client/pay-agent-reports
+src\app\agent-client
+ng g m agent-client/modules/pay-agent-reports/agent-client-pay-agent-reports --flat --routing --module=agent-client
+ng g c agent-client/modules/pay-agent-reports/components/pay-agent-reports-page --flat --skip-tests
+
+// agent-client/documents
+src\app\agent-client
+ng g m agent-client/modules/documents/agent-client-documents --flat --routing --module=agent-client
+ng g c agent-client/modules/documents/components/documents-page --flat --skip-tests
+
  //--- add header module
 src\app\shared\modules\header\header.component.html
 ng g m shared/modules/header/header --flat --dry-run

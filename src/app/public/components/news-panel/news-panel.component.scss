@@ -1,5 +1,10 @@
 @import 'src/styles/_typography.vars.scss';
 
+:host {
+	width: 100%;
+	display: block;
+}
+
 .h-100 {
 	height: 100%;
 }

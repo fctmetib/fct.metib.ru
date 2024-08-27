@@ -70,7 +70,19 @@ export class SidebarComponent implements OnInit, OnDestroy {
 		{
 			links: [
 				{name: 'Оплаты', link: '/agent-client/payments'},
-				{name: 'Счета на оплату', link: '/agent-client/invoices-payment'}
+				{name: 'Счета на оплату', link: '/agent-client/invoices-payment'},
+				{name: 'Запросы', link: '/agent-client/queries'}
+			]
+		},
+		{
+			links: [
+				{name: 'Договоры', link: '/agent-client/contracts'},
+				{name: 'Отчеты', link: '/agent-client/reports'},
+				{
+					name: 'Отчеты платежного агента',
+					link: '/agent-client/pay-agent-reports'
+				},
+				{name: 'Электронные документы', link: '/agent-client/documents'}
 			]
 		}
 	]
