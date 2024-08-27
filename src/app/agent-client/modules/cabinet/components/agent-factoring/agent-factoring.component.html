@@ -1,0 +1,27 @@
+<div class="agent-factoring">
+	<ng-container *ngIf="loading$ | async; else title">
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'40px'"
+			*ngFor="let i of [1]"
+		></mib-skeleton>
+	</ng-container>
+	<ng-template #title>
+		<h3>ООО “Бизнес”</h3>
+	</ng-template>
+	<mib-spacing type="xs"></mib-spacing>
+	<ng-container *ngIf="loading$ | async; else body">
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'20px'"
+			*ngFor="let i of [1]"
+		></mib-skeleton>
+	</ng-container>
+	<ng-template #body>
+		<div class="organization flex gap-12">
+			<p class="text text_m">ИНН: 7714606819</p>
+			<div class="separator-vertical"></div>
+			<p class="text text_m">КПП: 772801001</p>
+		</div>
+	</ng-template>
+</div>

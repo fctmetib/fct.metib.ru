@@ -1,4 +1,50 @@
 <div class="container container_large">
 	<mib-spacing type="m"></mib-spacing>
-	<h2>Кабинет</h2>
+	<mib-agent-factoring></mib-agent-factoring>
+	<mib-spacing type="m"></mib-spacing>
+	<ng-container *ngIf="loading$ | async; else body">
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'130px'"
+			[style.padding]="isDesktop ? '' : '0 16px'"
+			*ngFor="let i of [1]"
+		></mib-skeleton>
+	</ng-container>
+	<ng-template #body>
+		<div class="flex flex_wrap gap-16">
+			<div class="limit flex">
+				<mib-cash-panel
+					[panelData]="1000000 | rub"
+					panelTitle="Лимит финансирования"
+				></mib-cash-panel>
+			</div>
+		</div>
+	</ng-template>
+	<mib-spacing type="s"></mib-spacing>
+</div>
+<div [class.extended]="extended" class="flex flex_column contracts-accordion">
+	<mib-spacing type="s"></mib-spacing>
+	<div
+		(click)="extended = !extended"
+		class="cursor-pointer container_large flex flex_align-center"
+	>
+		<div class="flex gap-6">
+			<span class="headline user-select-none">
+				Агентский договор №1085/08 от 09/01/2019
+			</span>
+		</div>
+		<mib-button size="m" type="ghost-secondary">
+			<mib-icon
+				btn-icon
+				class="stroke"
+				[name]="extended ? 'fi_chevron-up' : 'fi_chevron-down'"
+			></mib-icon>
+		</mib-button>
+	</div>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="dropdown container_large flex flex_column" *ngIf="extended">
+		Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure, molestiae.
+		Qui molestiae sequi earum quas ut. Sit similique fugiat ipsam?
+	</div>
+	<mib-spacing type="s"></mib-spacing>
 </div>

@@ -46,6 +46,10 @@ src\app\agent-client
 ng g m agent-client/modules/cabinet/agent-client-cabinet --flat --routing --module=agent-client
 ng g c agent-client/modules/cabinet/components/cabinet-page --flat --skip-tests --dry-run
 
+// agent-client/cabinet/agent-factoring
+src\app\agent-client\modules\cabinet\components
+ng g c agent-client/modules/cabinet/components/agent-factoring --skip-tests
+
 // agent-client/registers
 src\app\agent-client
 ng g m agent-client/modules/registers/agent-client-registers --flat --routing --module=agent-client
