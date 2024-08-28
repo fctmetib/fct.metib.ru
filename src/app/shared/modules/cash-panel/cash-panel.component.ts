@@ -17,15 +17,17 @@ import {Subscription} from 'rxjs'
 	styleUrls: ['./cash-panel.component.scss'],
 	animations: [OpacityViewAnimation]
 })
-export class CashPanelComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CashPanelComponent implements OnInit, OnDestroy {
 	@Input() device: DeviceType = 'desktop'
 	@Input() panelTitle: string
 	@Input() panelData: number
-	@Input() link?: string
+	@Input() panelTerm: string
+	@Input() link: string
 	@Input() extracted: boolean = false
+	@Input() accent: boolean = false
 
-	public isHover: boolean = false
-	public viewMounted: boolean = false
+	// public isHover: boolean = false
+	// public viewMounted: boolean = false
 	public isDesktop: boolean = false
 
 	private subscriptions = new Subscription()
@@ -38,9 +40,9 @@ export class CashPanelComponent implements OnInit, AfterViewInit, OnDestroy {
 			.subscribe(b => (this.isDesktop = b))
 	}
 
-	ngAfterViewInit() {
-		this.viewMounted = true
-	}
+	// ngAfterViewInit() {
+	// 	this.viewMounted = true
+	// }
 
 	get classes() {
 		return {

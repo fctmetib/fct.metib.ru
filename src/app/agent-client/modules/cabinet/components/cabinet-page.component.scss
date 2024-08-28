@@ -1,5 +1,11 @@
 .limit {
-	min-width: 380px;
+	& mib-cash-panel {
+		min-width: 380px;
+	}
+}
+
+.hide {
+	display: none;
 }
 
 .contracts-accordion {

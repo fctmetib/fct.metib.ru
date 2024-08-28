@@ -1,10 +1,14 @@
-<div
-	*ngIf="!extracted; else unextracted"
+<!-- 
 	(mouseenter)="isHover = true"
 	(mouseleave)="isHover = false"
+ 
+	[class.main-transition]="viewMounted"
+-->
+
+<div
+	*ngIf="!extracted; else unextracted"
 	class="cash-panel"
 	[ngClass]="classes"
-	[class.main-transition]="viewMounted"
 >
 	<div class="flex flex_column gap-4">
 		<div class="flex flex_align-center">
@@ -20,22 +24,34 @@
 	</div>
 	<mib-spacing type="xs2"></mib-spacing>
 	<div class="flex">
-		<p class="text text_m c-bti-tertiary flex_grow">
-			<!-- Актульно на: {{ relevantAt ? relevantAt : ' --- ' }} -->
-		</p>
-		<mib-link [routerLink]="link">
-			Подробнее
-			<mib-icon
-				[@opacityViewAnimation]="{
-					value: '',
-					params: {enterTime: 200, leaveTime: 0}
-				}"
-				*ngIf="isHover"
-				mibRightIcon
-				class="stroke"
-				name="fi_chevron-right"
-			></mib-icon>
-		</mib-link>
+		<div class="flex flex_grow">
+			<span
+				class="term text text_m c-bti-tertiary"
+				*ngIf="!accent; else origin"
+			>
+				Актульно на: {{ panelTerm ? panelTerm : '01.01.2000' }}
+			</span>
+			<ng-template #origin>
+				<span class="term text text_m c-alc-active">
+					Нужно погасить до: {{ panelTerm ? panelTerm : '01.01.2000' }}
+				</span>
+			</ng-template>
+		</div>
+		<div class="flex flex_grow flex_justify-end">
+			<mib-link *ngIf="link" [routerLink]="link">
+				Подробнее
+				<!-- <mib-icon
+					[@opacityViewAnimation]="{
+						value: '',
+						params: {enterTime: 200, leaveTime: 0}
+					}"
+					*ngIf="isHover"
+					mibRightIcon
+					class="stroke"
+					name="fi_chevron-right"
+				></mib-icon> -->
+			</mib-link>
+		</div>
 	</div>
 </div>
 <ng-template #unextracted>

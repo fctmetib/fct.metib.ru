@@ -15,7 +15,7 @@
 			<div class="limit flex">
 				<mib-cash-panel
 					[panelData]="1000000 | rub"
-					panelTitle="Лимит финансирования"
+					[panelTitle]="'Лимит финансирования'"
 				></mib-cash-panel>
 			</div>
 		</div>
@@ -41,10 +41,24 @@
 			></mib-icon>
 		</mib-button>
 	</div>
-	<mib-spacing type="xs2"></mib-spacing>
-	<div class="dropdown container_large flex flex_column" *ngIf="extended">
-		Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure, molestiae.
-		Qui molestiae sequi earum quas ut. Sit similique fugiat ipsam?
-	</div>
 	<mib-spacing type="s"></mib-spacing>
+	<div class="dropdown container_large flex flex_column" *ngIf="extended">
+		<div class="flex gap-16">
+			<div class="limit flex">
+				<mib-cash-panel
+					[panelData]="1000000 | rub"
+					[panelTitle]="'Задолженность'"
+					[accent]="true"
+				></mib-cash-panel>
+			</div>
+			<div class="limit flex">
+				<mib-cash-panel
+					[panelData]="1000000 | rub"
+					[panelTitle]="'Просроченная задолженность'"
+					[accent]="true"
+				></mib-cash-panel>
+			</div>
+		</div>
+	</div>
+	<mib-spacing [ngClass]="{hide: !extended}" type="s"></mib-spacing>
 </div>
