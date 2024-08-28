@@ -2,11 +2,25 @@
 
 :host {
 	width: 100%;
-	overflow: hidden;
+	display: block;
 }
 
 .accordion {
+	overflow: hidden;
 	border-bottom: 1px solid var(--wgr-tertiary);
+
+	&_basic {
+		& .header {
+			& mib-spacing[type='xs'] {
+				height: 24px;
+			}
+
+			& .frame-l {
+				flex: 0;
+				flex-basis: auto;
+			}
+		}
+	}
 
 	& .header {
 		background-color: var(--wgr-primary);
@@ -33,5 +47,11 @@
 
 	&.extended {
 		border-bottom: 1px solid var(--bti-primary);
+	}
+
+	&_basic {
+		&.extended {
+			border-bottom: 1px solid var(--wgr-tertiary);
+		}
 	}
 }

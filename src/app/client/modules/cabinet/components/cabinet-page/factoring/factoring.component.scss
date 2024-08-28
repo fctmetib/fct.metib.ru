@@ -1,3 +1,11 @@
+@import 'src/styles/_colors.vars';
+
+.organization {
+	& .separator-vertical {
+		border-right: 1px solid var(--wgr-tertiary);
+	}
+}
+
 @media (max-width: 768px) {
 	mib-spacing[type='xs'] {
 		height: 8px;

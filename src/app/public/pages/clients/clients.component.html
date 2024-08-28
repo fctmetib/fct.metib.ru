@@ -280,9 +280,18 @@
 			<mib-accordion-item
 				*ngFor="let item of questions"
 				[device]="isDesktop ? 'desktop' : 'mobile'"
-				[question]="item.title"
-				[answer]="item.content"
-			></mib-accordion-item>
+			>
+				<ng-container question>
+					<span class="text text_l text_medium c-bti-primary">
+						{{ item.title }}
+					</span>
+				</ng-container>
+				<ng-container answer>
+					<span class="text text_s c-bti-secondary">
+						{{ item.content }}
+					</span>
+				</ng-container>
+			</mib-accordion-item>
 		</div>
 		<mib-spacing type="{{ isDesktop ? 'xl2' : 'lm' }}"></mib-spacing>
 	</div>

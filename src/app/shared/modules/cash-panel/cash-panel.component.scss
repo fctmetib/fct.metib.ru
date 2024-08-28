@@ -38,6 +38,10 @@
 		@include cash-panel-hover;
 	}
 
+	& .term {
+		white-space: nowrap;
+	}
+
 	&_desktop {
 		@include cash-panel-desktop;
 	}

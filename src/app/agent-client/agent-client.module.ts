@@ -11,7 +11,12 @@ import {AgentClientRegisterModule} from './modules/register/agent-client-registe
 import {AgentClientPaymentRegisterModule} from './modules/payment-register/agent-client-payment-register.module'
 import {AgentClientCreditorsModule} from './modules/creditors/agent-client-creditors.module'
 import {AgentClientPaymentsModule} from './modules/payments/agent-client-payments.module';
-import { AgentClientInvoicesPaymentModule } from './modules/invoices-payment/agent-client-invoices-payment.module'
+import { AgentClientInvoicesPaymentModule } from './modules/invoices-payment/agent-client-invoices-payment.module';
+import { AgentClientQueriesModule } from './modules/queries/agent-client-queries.module';
+import { AgentClientContractsModule } from './modules/contracts/agent-client-contracts.module';
+import { AgentClientReportsModule } from './modules/reports/agent-client-reports.module';
+import { AgentClientPayAgentReportsModule } from './modules/pay-agent-reports/agent-client-pay-agent-reports.module';
+import { AgentClientDocumentsModule } from './modules/documents/agent-client-documents.module'
 
 @NgModule({
 	declarations: [AgentClientComponent],
@@ -26,7 +31,12 @@ import { AgentClientInvoicesPaymentModule } from './modules/invoices-payment/age
 		AgentClientPaymentRegisterModule,
 		AgentClientCreditorsModule,
 		AgentClientPaymentsModule,
-  AgentClientInvoicesPaymentModule
+  AgentClientInvoicesPaymentModule,
+  AgentClientQueriesModule,
+  AgentClientContractsModule,
+  AgentClientReportsModule,
+  AgentClientPayAgentReportsModule,
+  AgentClientDocumentsModule
 	]
 })
 export class AgentClientModule {}

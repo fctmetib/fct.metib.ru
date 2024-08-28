@@ -60,7 +60,47 @@ const routes: Routes = [
 							import(
 								'./modules/invoices-payment/agent-client-invoices-payment.module'
 							).then(m => m.AgentClientInvoicesPaymentModule),
-						title: 'Агентский Факторинг | Оплаты'
+						title: 'Агентский Факторинг | Счета на оплату'
+					},
+					{
+						path: 'queries',
+						loadChildren: () =>
+							import('./modules/queries/agent-client-queries.module').then(
+								m => m.AgentClientQueriesModule
+							),
+						title: 'Агентский Факторинг | Запросы'
+					},
+					{
+						path: 'contracts',
+						loadChildren: () =>
+							import('./modules/contracts/agent-client-contracts.module').then(
+								m => m.AgentClientContractsModule
+							),
+						title: 'Агентский Факторинг | Договоры'
+					},
+					{
+						path: 'reports',
+						loadChildren: () =>
+							import('./modules/reports/agent-client-reports.module').then(
+								m => m.AgentClientReportsModule
+							),
+						title: 'Агентский Факторинг | Отчеты'
+					},
+					{
+						path: 'pay-agent-reports',
+						loadChildren: () =>
+							import(
+								'./modules/pay-agent-reports/agent-client-pay-agent-reports.module'
+							).then(m => m.AgentClientPayAgentReportsModule),
+						title: 'Агентский Факторинг | Отчеты платежного агента'
+					},
+					{
+						path: 'documents',
+						loadChildren: () =>
+							import('./modules/documents/agent-client-documents.module').then(
+								m => m.AgentClientDocumentsModule
+							),
+						title: 'Агентский Факторинг | Отчеты платежного агента'
 					}
 				]
 			}

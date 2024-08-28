@@ -8,20 +8,16 @@
 		class="flex w-100 flex_column header cursor-pointer"
 	>
 		<mib-spacing type="xs"></mib-spacing>
-		<div class="flex w-100 gap-8">
-			<div class="flex flex_grow">
-				<span class="text text_l text_medium c-bti-primary">
-					{{ question }}
-				</span>
+		<div class="flex flex_align-center w-100 gap-8">
+			<div class="frame-l flex flex_grow">
+				<ng-content select="[question]"></ng-content>
 			</div>
 			<mib-icon btn-icon class="stroke" name="fi_chevron-down"></mib-icon>
 		</div>
 		<mib-spacing type="xs"></mib-spacing>
 	</div>
 	<div [@slideInOut]="extended ? 'in' : 'out'" class="flex flex_column">
-		<span class="text text_s c-bti-secondary">
-			{{ answer }}
-		</span>
+		<ng-content select="[answer]"></ng-content>
 		<mib-spacing type="s"></mib-spacing>
 	</div>
 </div>

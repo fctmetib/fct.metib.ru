@@ -1,0 +1,30 @@
+.limit {
+	& mib-cash-panel {
+		min-width: 380px;
+	}
+}
+
+mib-accordion-item {
+	&.top {
+		border-top: 1px solid var(--wgr-tertiary);
+	}
+
+	& span,
+	.wrap {
+		padding: 0 32px;
+	}
+}
+
+.hide {
+	display: none;
+}
+
+.contracts-accordion {
+	border-top: 1px solid var(--bg-social-color);
+	border-bottom: 1px solid var(--bg-social-color);
+	transition: var(--transition);
+}
+
+.extended {
+	background: var(--wgr-primary);
+}

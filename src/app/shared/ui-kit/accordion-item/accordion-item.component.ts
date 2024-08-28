@@ -12,16 +12,14 @@ import {AccordionItemDevice} from './interfaces/accordion-item.interface'
 				'in',
 				style({
 					height: '*',
-					opacity: 1,
-					display: 'flex'
+					opacity: 1
 				})
 			),
 			state(
 				'out',
 				style({
 					height: '0px',
-					opacity: 0,
-					display: 'none'
+					opacity: 0
 				})
 			),
 			transition('in => out', animate('400ms ease-in-out')),
@@ -31,14 +29,14 @@ import {AccordionItemDevice} from './interfaces/accordion-item.interface'
 })
 export class AccordionItemComponent {
 	@Input() device: AccordionItemDevice = 'desktop'
-	@Input() question: string = 'test question'
-	@Input() answer: string = 'this is answer'
+	@Input() basic: boolean = false
 
 	public extended: boolean = false
 
 	get classes() {
 		return {
-			[`accordion_${this.device}`]: true
+			[`accordion_${this.device}`]: true,
+			[`accordion_basic`]: this.basic
 		}
 	}
 }

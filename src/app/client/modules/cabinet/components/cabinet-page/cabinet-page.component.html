@@ -14,18 +14,17 @@
 		<div class="cash-panel flex flex_wrap gap-16">
 			<mib-cash-panel
 				[panelData]="statistics?.Limit | rub"
-				panelTitle="Лимит финансирования"
-				[link]="['/contacts']"
+				[panelTitle]="'Лимит финансирования'"
 			></mib-cash-panel>
 			<mib-cash-panel
 				[panelData]="statistics?.UsedLimit | rub"
-				panelTitle="Уступлено"
-				[link]="['/tariffs']"
+				[panelTitle]="'Уступлено'"
 			></mib-cash-panel>
 			<mib-cash-panel
 				[panelData]="statistics?.DelayAmount | rub"
-				panelTitle="Просрочка покупателя"
-				[link]="['/clients']"
+				[panelTitle]="'Просрочка покупателя'"
+				[accent]="true"
+				[panelTerm]=""
 			></mib-cash-panel>
 		</div>
 	</ng-template>
