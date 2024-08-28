@@ -12,16 +12,14 @@ import {AccordionItemDevice} from './interfaces/accordion-item.interface'
 				'in',
 				style({
 					height: '*',
-					opacity: 1,
-					display: 'flex'
+					opacity: 1
 				})
 			),
 			state(
 				'out',
 				style({
 					height: '0px',
-					opacity: 0,
-					display: 'none'
+					opacity: 0
 				})
 			),
 			transition('in => out', animate('400ms ease-in-out')),
