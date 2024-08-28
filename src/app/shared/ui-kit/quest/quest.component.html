@@ -54,11 +54,7 @@
 		<ng-template #congratsTemplate>
 			<h4>Рекомендуем рассмотреть следующие продукты факторинга:</h4>
 			<mib-spacing type="xs2"></mib-spacing>
-			<ol style="padding: 0 20px">
-				<li style="list-style: decimal" class="text text_l c-bti-secondary">
-					{{ recommendedProduct }}
-				</li>
-			</ol>
+			<p class="text text_l c-bti-secondary">{{ recommendedProduct }}</p>
 			<div class="btn-wrap">
 				<mib-spacing type="s"></mib-spacing>
 				<mib-button (press)="onPress.emit()" size="m" type="filled-primary">
