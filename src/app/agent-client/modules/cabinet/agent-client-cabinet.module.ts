@@ -10,6 +10,7 @@ import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
+import {AccordionItemModule} from 'src/app/shared/ui-kit/accordion-item/accordion-item.module'
 
 @NgModule({
 	declarations: [CabinetPageComponent, AgentFactoringComponent],
@@ -21,7 +22,8 @@ import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 		SkeletonModule,
 		RubModule,
 		ButtonModule,
-		IconModule
+		IconModule,
+		AccordionItemModule
 	]
 })
 export class AgentClientCabinetModule {}

@@ -4,6 +4,17 @@
 	}
 }
 
+mib-accordion-item {
+	&.top {
+		border-top: 1px solid var(--wgr-tertiary);
+	}
+
+	& span,
+	.wrap {
+		padding: 0 32px;
+	}
+}
+
 .hide {
 	display: none;
 }

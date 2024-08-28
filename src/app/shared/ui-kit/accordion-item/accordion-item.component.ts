@@ -31,14 +31,14 @@ import {AccordionItemDevice} from './interfaces/accordion-item.interface'
 })
 export class AccordionItemComponent {
 	@Input() device: AccordionItemDevice = 'desktop'
-	@Input() question: string = 'test question'
-	@Input() answer: string = 'this is answer'
+	@Input() basic: boolean = false
 
 	public extended: boolean = false
 
 	get classes() {
 		return {
-			[`accordion_${this.device}`]: true
+			[`accordion_${this.device}`]: true,
+			[`accordion_basic`]: this.basic
 		}
 	}
 }

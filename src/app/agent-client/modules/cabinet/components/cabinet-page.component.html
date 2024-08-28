@@ -22,28 +22,14 @@
 	</ng-template>
 	<mib-spacing type="s"></mib-spacing>
 </div>
-<div [class.extended]="extended" class="flex flex_column contracts-accordion">
-	<mib-spacing type="s"></mib-spacing>
-	<div
-		(click)="extended = !extended"
-		class="cursor-pointer container_large flex flex_align-center"
-	>
-		<div class="flex gap-6">
-			<span class="headline user-select-none">
-				Агентский договор №1085/08 от 09/01/2019
-			</span>
-		</div>
-		<mib-button size="m" type="ghost-secondary">
-			<mib-icon
-				btn-icon
-				class="stroke"
-				[name]="extended ? 'fi_chevron-up' : 'fi_chevron-down'"
-			></mib-icon>
-		</mib-button>
-	</div>
-	<mib-spacing type="s"></mib-spacing>
-	<div class="dropdown container_large flex flex_column" *ngIf="extended">
-		<div class="flex gap-16">
+<mib-accordion-item class="top" [basic]="true">
+	<ng-container question>
+		<span class="headline user-select-none">
+			Агентский договор №1085/08 от 09/01/2019
+		</span>
+	</ng-container>
+	<ng-container answer>
+		<div class="wrap flex gap-16">
 			<div class="limit flex">
 				<mib-cash-panel
 					[panelData]="1000000 | rub"
@@ -59,6 +45,30 @@
 				></mib-cash-panel>
 			</div>
 		</div>
-	</div>
-	<mib-spacing [ngClass]="{hide: !extended}" type="s"></mib-spacing>
-</div>
+	</ng-container>
+</mib-accordion-item>
+<mib-accordion-item [basic]="true">
+	<ng-container question>
+		<span class="headline user-select-none">
+			Агентский договор №1082/08 от 09/01/2019
+		</span>
+	</ng-container>
+	<ng-container answer>
+		<div class="wrap flex gap-16">
+			<div class="limit flex">
+				<mib-cash-panel
+					[panelData]="1000000 | rub"
+					[panelTitle]="'Задолженность'"
+					[accent]="true"
+				></mib-cash-panel>
+			</div>
+			<div class="limit flex">
+				<mib-cash-panel
+					[panelData]="1000000 | rub"
+					[panelTitle]="'Просроченная задолженность'"
+					[accent]="true"
+				></mib-cash-panel>
+			</div>
+		</div>
+	</ng-container>
+</mib-accordion-item>
