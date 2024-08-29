@@ -14,6 +14,7 @@ import {ToolsService} from 'src/app/shared/services/tools.service'
 import {ActivatedRoute, Router} from '@angular/router'
 import {Properties} from 'csstype'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser'
 
 @Component({
 	selector: 'mib-single-news',
@@ -45,11 +46,14 @@ export class SingleNewsComponent implements OnInit, OnDestroy {
 
 	private subscriptions = new Subscription()
 
+	newsContent: SafeHtml
+
 	constructor(
 		private newsService: NewsService,
 		public toolsService: ToolsService,
 		private route: ActivatedRoute,
-		public breakpointService: BreakpointObserverService
+		public breakpointService: BreakpointObserverService,
+		private sanitizer: DomSanitizer
 	) {}
 
 	ngOnInit(): void {
@@ -79,6 +83,9 @@ export class SingleNewsComponent implements OnInit, OnDestroy {
 				),
 				tap(news => {
 					this.getSingleNews = [news]
+					this.newsContent = this.sanitizer.bypassSecurityTrustHtml(
+						this.getSingleNews[0].Text
+					)
 				}),
 				finalize(() => this.loading$.next(false))
 			)

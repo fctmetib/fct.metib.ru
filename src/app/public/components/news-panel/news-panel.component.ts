@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser'
 
 @Component({
 	selector: 'mib-news-panel',
@@ -15,12 +16,19 @@ export class NewsPanelComponent {
 	@Input() isAdmin: boolean = false
 	@Input() showPreview: string = ''
 	@Input() newsTitle: string = ''
-	@Input() newsText: string = ''
 	@Input() newsDate: string = ''
 	@Input() altText: string = ''
 	@Output() onclick = new EventEmitter()
 	@Output() edit = new EventEmitter()
 	@Output() delete = new EventEmitter()
+
+	@Input() set newsText(value: string) {
+		this.newsContent = this.sanitizer.bypassSecurityTrustHtml(value)
+	}
+
+	newsContent: SafeHtml
+
+	constructor(private sanitizer: DomSanitizer) {}
 
 	get classes() {
 		return {

@@ -5,7 +5,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {Properties} from 'csstype'
 import {
 	BehaviorSubject,
-	concatMap,
+	catchError,
 	finalize,
 	map,
 	of,
@@ -14,6 +14,7 @@ import {
 } from 'rxjs'
 import {NewsService} from 'src/app/public/service/news.service'
 import {AdvancedNewsInterface} from 'src/app/public/type/news.interface'
+import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 
@@ -45,7 +46,8 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 		public dialogRef: MatDialogRef<CabinetCreateNewsDrawerComponent>,
 		private newsService: NewsService,
 		private fb: FormBuilder,
-		public datepipe: DatePipe
+		public datepipe: DatePipe,
+		private toaster: ToasterService
 	) {}
 
 	get newsID() {
@@ -97,18 +99,34 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	createNews() {
 		this.isSubmitting$.next(true)
 		const res = this.form.getRawValue()
+
+		const formattedText = this.formatText(res.formNewsText)
+
 		let newsData = {
 			ID: this.nextID,
 			Title: res.formNewsTitle,
 			Date: new Date(res.formNewsDate).toISOString(),
 			FileReference: res.formNewsTitle,
-			Text: res.formNewsText
+			Text: formattedText
 		}
+
 		this.newsService
 			.addNewsItem(newsData)
 			.pipe(
 				switchMap(() => {
 					return this.newsService.addNewsImage(this.imageFile, this.nextID)
+				}),
+				catchError(error => {
+					console.error('Ошибка при отправке данных:', error)
+					this.toaster.show(
+						'failure',
+						'Произошла ошибка при отправке данных!',
+						'',
+						true,
+						false,
+						2500
+					)
+					return of(null)
 				}),
 				finalize(() => this.isSubmitting$.next(false))
 			)
@@ -120,13 +138,17 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 	updateNews(id) {
 		this.isSubmitting$.next(true)
 		const res = this.form.getRawValue()
+
+		const formattedText = this.formatText(res.formNewsText)
+
 		const newsData = {
 			ID: id,
 			Title: res.formNewsTitle,
 			Date: new Date(res.formNewsDate).toISOString(),
 			FileReference: res.formNewsTitle,
-			Text: res.formNewsText
+			Text: formattedText
 		}
+
 		this.newsService
 			.updateNewsItem(newsData, id)
 			.pipe(
@@ -135,13 +157,36 @@ export class CabinetCreateNewsDrawerComponent implements OnInit {
 						return this.newsService.addNewsImage(this.imageFile, id)
 					}
 					this.dialogRef.close(id)
-					return of()
+					return of(null)
+				}),
+				catchError(error => {
+					console.error('Ошибка при обновлении новости:', error)
+					this.toaster.show(
+						'failure',
+						'Произошла ошибка при отправке данных!',
+						'',
+						true,
+						false,
+						2500
+					)
+					return of(null)
 				}),
 				finalize(() => this.isSubmitting$.next(false))
 			)
 			.subscribe(() => {
 				this.dialogRef.close(id)
 			})
+	}
+
+	formatText(text: string): string {
+		return text
+			.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>') // Заменить <b> на <strong>
+			.replace(/\n/g, '<br>') // Заменить новую строку на <br>
+			.replace(/<ul>/g, '<ul style="list-style-type: square;">')
+			.replace(
+				/<a href="(.*?)">(.*?)<\/a>/g,
+				'<a href="$1" target="_blank">$2</a>'
+			)
 	}
 
 	closeDrawer() {

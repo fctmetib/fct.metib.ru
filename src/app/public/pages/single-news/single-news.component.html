@@ -41,9 +41,7 @@
 				/>
 			</div>
 			<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
-			<p class="text text_l c-bti-secondary">
-				{{ getSingleNews[0].Text }}
-			</p>
+			<div [innerHTML]="newsContent" class="text text_l c-bti-secondary"></div>
 		</div>
 		<div *ngIf="!hasNews">
 			<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
