@@ -106,7 +106,6 @@ export class QuestComponent implements OnInit {
 				this.quizCompleted = true;
 				this.updateProgress();
 				
-				// Determine the result based on user answers
 				const recommendedProduct = this.determineResult();
 				this.displayResult(recommendedProduct);
 			}
@@ -148,7 +147,6 @@ export class QuestComponent implements OnInit {
 		const isResidentAnswer = this.questions[2].answer;
 		const isResident = this.questions[2].options.find(x => x.value === isResidentAnswer).label;
 	
-		// Determine the recommended product based on all three answers
 		if (side === 'Поставщик' && purpose === 'Финансирование поставок') {
 			if (isResident === 'Да, резидент') {
 				return 'Продукты внутреннего факторинга';
@@ -162,9 +160,8 @@ export class QuestComponent implements OnInit {
 				return 'Импортный факторинг';
 			}
 		}
-	
-		// Return a default or error message if no match found
-		return 'Нет подходящего продукта для ваших условий';
+
+		return 'Ваш запрос уникальный! Оставьте заявку на консультацию, и мы поможем Вам найти оптимальное решение.';
 	}	
 	
 
