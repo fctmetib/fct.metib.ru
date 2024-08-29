@@ -66,6 +66,7 @@ import {AutosizeModule} from 'ngx-autosize'
 import {CheckboxModule} from '../shared/ui-kit/checkbox/checkbox.module'
 import {LandingAgreementModalModule} from '../shared/modules/modals/landing-agreement-modal/landing-agreement-modal.module'
 import {QuestModule} from '../shared/ui-kit/quest/quest.module'
+import {LandingLoginModalModule} from '../shared/modules/modals/landing-login-modal/landing-login-modal.module'
 
 const routes = [
 	{
@@ -160,7 +161,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		AutosizeModule,
 		CheckboxModule,
 		LandingAgreementModalModule,
-		QuestModule
+		QuestModule,
+		LandingLoginModalModule
 	],
 	exports: [RouterModule],
 	declarations: [

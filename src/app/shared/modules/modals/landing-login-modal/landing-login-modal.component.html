@@ -1,0 +1,67 @@
+<mib-modal [formGroup]="form">
+	<mib-modal-header
+		(onClose)="dialogRef.close()"
+		title="Войти в личный кабинет"
+	>
+	</mib-modal-header>
+	<div class="modal-wrap flex flex_column">
+		<mib-spacing type="s"></mib-spacing>
+		<mib-input>
+			<input
+				autocomplete="login"
+				mibInput
+				formControlName="login"
+				size="l"
+				styleType="filled-secondary"
+				placeholder="Введите логин"
+			/>
+			<ng-container mibLabel>Введите логин</ng-container>
+		</mib-input>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-input>
+			<input
+				#password
+				autocomplete="password"
+				type="password"
+				mibInput
+				size="l"
+				styleType="filled-secondary"
+				formControlName="password"
+				placeholder="Введите пароль"
+			/>
+			<ng-container mibLabel>Введите пароль</ng-container>
+			<mib-icon
+				[passwordHider]="[password]"
+				class="stroke"
+				mibRightIcon
+				[name]="password.type === 'password' ? 'fi_eye' : 'fi_eye-off'"
+			></mib-icon>
+		</mib-input>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-link
+			(click)="dialogRef.close()"
+			[routerLink]="['/auth/reset-password']"
+		>
+			Забыли пароль?
+		</mib-link>
+		<mib-spacing type="m"></mib-spacing>
+		<div class="flex gap-16">
+			<mib-button
+				(click)="dialogRef.close()"
+				[routerLink]="['/auth/register']"
+				size="l"
+				type="filled-secondary"
+				class="flex_grow"
+				>Регистрация</mib-button
+			>
+			<mib-button
+				[loading]="!!(isSubmitting$ | async)"
+				[disabled]="form.invalid"
+				(press)="onSubmit()"
+				size="l"
+				class="flex_grow"
+				>Войти</mib-button
+			>
+		</div>
+	</div>
+</mib-modal>

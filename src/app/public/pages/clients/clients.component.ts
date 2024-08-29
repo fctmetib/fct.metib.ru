@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core'
 import {Subscription} from 'rxjs'
 import {AuthService} from 'src/app/auth/services/auth.service'
+import {LandingLoginModalService} from 'src/app/shared/modules/modals/landing-login-modal/landing-login-modal.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 
@@ -45,7 +46,8 @@ export class ClientsComponent implements OnInit, OnDestroy {
 	constructor(
 		public breakpointService: BreakpointObserverService,
 		private toaster: ToasterService,
-		private authService: AuthService
+		private authService: AuthService,
+		private landingLoginModalService: LandingLoginModalService
 	) {}
 
 	ngOnInit(): void {
@@ -55,39 +57,47 @@ export class ClientsComponent implements OnInit, OnDestroy {
 	}
 
 	public downloadFile(name: string) {
-		const isAuthenticated = this.authService.isAuthenticated();
-	
-		let link = document.createElement('a');
-	
-		if (!isAuthenticated && (name === 'instruction' || name === 'installFactorClient')) {
-			this.getToast();
-			return;
+		const isAuthenticated = this.authService.isAuthenticated()
+
+		let link = document.createElement('a')
+
+		if (
+			!isAuthenticated &&
+			(name === 'instruction' || name === 'installFactorClient')
+		) {
+			this.getToast()
+			return
 		}
-	
+
 		switch (name) {
-			case 'reglament':
-				link.download = 'reglament';
-				link.href = 'assets/_files/reglament.pdf';
-				break;
+			// case 'reglament':
+			// 	link.download = 'reglament'
+			// 	link.href = 'assets/_files/reglament.pdf'
+			// 	break
 			case 'contract':
-				link.download = 'Договор_о_предоставлении_факторинговых_услуг';
-				link.href = 'assets/_files/Договор_о_предоставлении_факторинговых_услуг.pdf';
-				break;
+				link.download = 'Договор_о_предоставлении_факторинговых_услуг'
+				link.href =
+					'assets/_files/Договор_о_предоставлении_факторинговых_услуг.pdf'
+				break
 			case 'instruction':
-				link.download = 'FactorClientHelp';
-				link.href = 'assets/_files/FactorClientHelp New.pdf';
-				break;
+				link.download = 'FactorClientHelp'
+				link.href = 'assets/_files/FactorClientHelp New.pdf'
+				break
 			case 'installFactorClient':
-				link.download = 'installFactorClient';
+				link.download = 'installFactorClient'
 				// link.href = 'assets/_files/installFactorClient.pdf';
-				break;
+				break
 			default:
-				console.warn('Invalid file name provided');
-				return; 
+				console.warn('Invalid file name provided')
+				return
 		}
-	
-		link.click();
-	}	
+
+		link.click()
+	}
+
+	openEntryModal() {
+		this.landingLoginModalService.open()
+	}
 
 	getToast() {
 		this.toaster.show(
