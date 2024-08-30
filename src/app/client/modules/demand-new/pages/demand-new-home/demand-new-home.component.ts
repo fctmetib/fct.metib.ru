@@ -20,6 +20,7 @@ import {DemandVerificationDrawerService} from '../../modules/demand-verification
 import {DemandFactoringDrawerService} from '../../modules/demand-factoring-drawer/demand-factoring-drawer.service'
 import {DemandAgentDrawerService} from '../../modules/demand-agent-drawer/demand-agent-drawer.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import {DemandService} from '../../services/demand.service'
 
 const ANIMATION_CONFIG = {
 	translateDistance: '-3%',
@@ -80,7 +81,8 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		private demandVerificationDrawerService: DemandVerificationDrawerService,
 		private demandFactoringDrawerService: DemandFactoringDrawerService,
 		private demandAgentDrawerService: DemandAgentDrawerService,
-		public breakpointService: BreakpointObserverService
+		public breakpointService: BreakpointObserverService,
+		private demandService: DemandService
 	) {}
 
 	ngOnInit(): void {
@@ -88,6 +90,63 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
+
+		// получить список запросов
+		this.demandService
+			.getDemands()
+			.pipe(
+				tap(data => {
+					console.log('список запросов :>> ', data)
+				})
+			)
+			.subscribe()
+
+		/* 
+		// ответ новое API !!!! error 500
+		// src\app\client\modules\demand-new\services\demand.service.ts
+			// https://api-factoring-test02.metib.ru/api/v1/demands
+			{
+    "DemandID": 9897,
+    "DemandTypeID": 7,
+    "DemandStatusID": 50,
+    "UserID": 1483,
+    "DateStatus": "2024-06-25T16:52:23+03:00",
+    "DateModify": "2024-06-25T16:52:23+03:00",
+    "DateCreated": "2024-06-25T11:26:43+03:00"
+}
+			*/
+
+		/* 
+		// ответ старое API (75)
+		// src\app\client\modules\demand-new\services\demand.service.ts
+// https://api-factoring-test02.metib.ru/api/demand
+{
+    "Type": "ProfileChange",
+    "Status": "Processing",
+    "User": "Андрей Котов",
+    "Manager": {
+        "Name": "Удалых Елена",
+        "Email": "emelocheva@metib.ru",
+        "Extension": "62-39",
+        "ID": 484
+    },
+    "DateCreated": "2024-06-25T11:26:43+03:00",
+    "DateModify": "2024-06-25T16:52:23+03:00",
+    "DateStatus": "2024-06-25T16:52:23+03:00",
+    "ID": 9897
+}
+*/
+
+		// получить черновики
+		// https://api-factoring-test02.metib.ru/api/v1/demands/draft // "Internal Server Error"
+		// this.demandService
+		// 	.getDrafts()
+		// 	.pipe(
+		// 		tap(data => {
+		// 			console.log('черновики :>> ', data)
+		// 		})
+		// 	)
+		// 	.subscribe()
 	}
 
 	getAllRequestesList() {
