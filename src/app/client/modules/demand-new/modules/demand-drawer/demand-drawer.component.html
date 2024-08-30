@@ -1,4 +1,4 @@
-<mib-drawer>
+<mib-drawer [formGroup]="form">
 	<mib-drawer-header
 		showEdits="true"
 		(onClose)="dialogRef.close()"
@@ -11,17 +11,18 @@
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-input>
 			<ng-container mibLabel>Тема обращения</ng-container>
-			<input mibInput />
+			<input formControlName="requestTitle" mibInput />
 		</mib-input>
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-textarea>
 			<ng-container mibLabel>Текст обращения</ng-container>
-			<textarea [maxLength]="100" autosize mibTextarea></textarea>
+			<textarea
+				formControlName="requestText"
+				[maxLength]="100"
+				autosize
+				mibTextarea
+			></textarea>
 		</mib-textarea>
-		<mib-spacing type="s"></mib-spacing>
-		<p class="text text_m text_medium">Прикрепленные документы</p>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-file-cell size="s"></mib-file-cell>
 		<mib-spacing type="s"></mib-spacing>
 		<p
 			class="text text_m text_medium"
@@ -105,7 +106,12 @@
 		<mib-spacing type="m"></mib-spacing>
 	</mib-drawer-container>
 	<mib-drawer-footer drawer-footer>
-		<mib-button [disabled]="true" [size]="size" type="filled-primary"
+		<mib-button
+			[disabled]="form.invalid || (loading$ | async) || (isSubmitting$ | async)"
+			(press)="onSubmit()"
+			[disabled]="true"
+			[size]="size"
+			type="filled-primary"
 			>Отправить запрос
 		</mib-button>
 	</mib-drawer-footer>
