@@ -138,8 +138,8 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 */
 
 		// получить черновики
-		// https://api-factoring-test02.metib.ru/api/v1/demands/draft // "Internal Server Error"
-		// this.demandService
+		//api-factoring-test02.metib.ru/api/v1/demands/draft // "Internal Server Error"
+		// https: this.demandService
 		// 	.getDrafts()
 		// 	.pipe(
 		// 		tap(data => {
@@ -168,18 +168,28 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 
 	getDraftList() {
 		this.loading$.next(true)
-		setTimeout(() => {
-			this.requestList
-				.getDraftList()
-				.pipe(
-					tap(data => {
-						this.drafts = data
-						this.onDraftListChange(1)
-					}),
-					finalize(() => this.loading$.next(false))
-				)
-				.subscribe()
-		}, 5000)
+		this.demandService
+			.getDrafts()
+			.pipe(
+				tap(data => {
+					console.log('ЗАПРОС ЧЕРНОВИКИ :>> ', data)
+					this.onDraftListChange(1)
+				}),
+				finalize(() => this.loading$.next(false))
+			)
+			.subscribe()
+		// setTimeout(() => {
+		// 	this.requestList
+		// 		.getDraftList()
+		// 		.pipe(
+		// 			tap(data => {
+		// 				this.drafts = data
+		// 				this.onDraftListChange(1)
+		// 			}),
+		// 			finalize(() => this.loading$.next(false))
+		// 		)
+		// 		.subscribe()
+		// }, 5000)
 	}
 
 	getHistoryList() {

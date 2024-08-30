@@ -26,12 +26,18 @@ export class DemandService {
 		return this.http.get<DemandInterface<any>>(url)
 	}
 
-	public createDemand<T>(
-		data: SaveDemandRequestInterface<T>
-	): Observable<DemandInterface<T>> {
-		const url = `${environment.apiUrl}/demand`
-		return this.http.post<DemandInterface<T>>(url, data)
+	// new API
+	public createDemand<T>(data: any): Observable<DemandInterface<T>> {
+		const url = `${environment.apiUrl}/v1/demands`
+		return this.http.post<any>(url, data)
 	}
+
+	// public createDemand<T>(
+	// 	data: SaveDemandRequestInterface<T>
+	// ): Observable<DemandInterface<T>> {
+	// 	const url = `${environment.apiUrl}/demand`
+	// 	return this.http.post<DemandInterface<T>>(url, data)
+	// }
 
 	public saveDraftById(
 		id: number,

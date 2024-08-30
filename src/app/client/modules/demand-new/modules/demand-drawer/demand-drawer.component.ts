@@ -9,6 +9,7 @@ import {extractBase64} from 'src/app/shared/services/tools.service'
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {BehaviorSubject} from 'rxjs'
+import {DemandService} from '../../services/demand.service'
 
 export interface freeDemandRequestDrawerInterface {
 	DraftId: string
@@ -150,6 +151,7 @@ export class DemandDrawerComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
 		private toaster: ToasterService,
+		private demandService: DemandService,
 		public dialogRef: MatDialogRef<DemandDrawerComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData
 	) {}
@@ -207,12 +209,20 @@ export class DemandDrawerComponent implements OnInit {
 		const res = this.form.getRawValue()
 
 		let reqData = {
-			Title: res.requestTitle,
-			Text: res.requestText,
-			Document: this.documents
+			Type: 1,
+			Subject: res.requestTitle,
+			Question: res.requestText
 		}
 
+		// let reqData = {
+		// 	Title: res.requestTitle,
+		// 	Text: res.requestText,
+		// 	Document: this.documents
+		// }
+
 		console.log('reqData :>> ', reqData)
+
+		this.demandService.createDemand(reqData).subscribe()
 
 		this.dialogRef.close()
 	}
