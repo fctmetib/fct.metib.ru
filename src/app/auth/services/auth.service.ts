@@ -125,6 +125,34 @@ export class AuthService {
     );
   }
 
+  loginModal(data: LoginRequestInterface): Observable<any> {
+    const url = environment.apiUrl + '/user/login';
+    return this.http.post<AuthRes>(url, data).pipe(
+      tap((response: AuthRes) => {
+        let isAdmin = response.Roles.find((x) => x === 'Administrator');
+        if (isAdmin) {
+          // admin current user
+          this.cookieService.put('_cu_admin', JSON.stringify(response));
+
+          // admin base token
+          let token = btoa(`${data.login}:${data.password}`);
+          this.cookieService.put('_bt_admin', token);
+        } else {
+          // current user
+          this.cookieService.put('_cu', JSON.stringify(response));
+
+          // base token
+          let token = btoa(`${data.login}:${data.password}`);
+          this.cookieService.put('_bt', token);
+        }
+      }),
+      switchMap(() => this.initCurrentUser()),
+      catchError((errorResponse: HttpErrorResponse) => {
+        return of({errors: errorResponse.error});
+      })
+    );
+  }
+
   initCurrentUser(): Observable<UserGeneral> {
     let adminCookie = this.cookieService.get('_cu_admin');
     let userCookie = this.cookieService.get('_cu');
