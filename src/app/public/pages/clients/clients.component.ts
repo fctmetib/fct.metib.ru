@@ -57,46 +57,49 @@ export class ClientsComponent implements OnInit, OnDestroy {
 	}
 
 	public downloadFile(name: string) {
-		const isAuthenticated = this.authService.isAuthenticated()
-
-		let link = document.createElement('a')
-
+		const isAuthenticated = this.authService.isAuthenticated();
+	
+		let link = document.createElement('a');
+	
 		if (
 			!isAuthenticated &&
-			(name === 'instruction' || name === 'installFactorClient')
+			(name === 'instruction' || name === 'installFactorClient' || name === 'reglament')
 		) {
-			this.getToast()
-			return
+			this.landingLoginModalService.open().afterClosed().subscribe(result => {
+				console.log(result)
+				if (result) {
+					this.downloadFile(name);
+				}
+			});
+			return;
 		}
-
+	
 		switch (name) {
-			// case 'reglament':
-			// 	link.download = 'reglament'
-			// 	link.href = 'assets/_files/reglament.pdf'
-			// 	break
+			case 'reglament':
+				link.download = 'reglament';
+				link.href = 'assets/_files/reglament.pdf';
+				break;
 			case 'contract':
-				link.download = 'Договор_о_предоставлении_факторинговых_услуг'
+				link.download = 'Договор_о_предоставлении_факторинговых_услуг';
 				link.href =
-					'assets/_files/Договор_о_предоставлении_факторинговых_услуг.pdf'
-				break
+					'assets/_files/Договор_о_предоставлении_факторинговых_услуг.pdf';
+				break;
 			case 'instruction':
-				link.download = 'FactorClientHelp'
-				link.href = 'assets/_files/FactorClientHelp New.pdf'
-				break
+				link.download = 'FactorClientHelp';
+				link.href = 'assets/_files/FactorClientHelp New.pdf';
+				break;
 			case 'installFactorClient':
-				link.download = 'installFactorClient'
-				// link.href = 'assets/_files/installFactorClient.pdf';
-				break
+				link.download = 'installFactorClient';
+				link.href = 'assets/_files/FactorClient_Portable.zip';
+				break;
 			default:
-				console.warn('Invalid file name provided')
-				return
+				return;
 		}
-
-		link.click()
+	
+		link.click();
 	}
-
+	
 	openEntryModal() {
-		this.landingLoginModalService.open()
 	}
 
 	getToast() {
