@@ -27,7 +27,17 @@ export class NewFooterComponent implements OnInit, OnDestroy {
 	getMap() {
 		console.log('get map')
 	}
+
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe()
+	}
+
+	public downloadFile() {
+		let link = document.createElement('a')
+
+		link.download = 'Политика_в_отношении_обработки_персональных_данных'
+		link.href = 'assets/_files/Политика_в_отношении_обработки_персональных_данных.pdf'
+
+		link.click()
 	}
 }
