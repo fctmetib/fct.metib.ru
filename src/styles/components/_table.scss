@@ -6,7 +6,7 @@ $text-selectors: 'label';
 @mixin table-head-cell {
 	height: 100%;
 	width: 100%;
-	padding: 10px 8px 10px 0;
+	padding: 10px 8px 10px;
 	border-right: var(--collapse);
 	justify-content: center;
 
@@ -53,6 +53,7 @@ mib-table-row:last-child .table-row {
 }
 
 .table-cell {
+	padding: 0 8px;
 	&_type {
 		&-person {
 			mib-avatar {
