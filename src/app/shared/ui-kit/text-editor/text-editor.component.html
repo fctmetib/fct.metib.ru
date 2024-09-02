@@ -1,0 +1,14 @@
+<div class="editor-toolbar">
+    <button type="button" (click)="format('bold')"><b>B</b></button>
+    <button type="button" (click)="format('italic')"><i>I</i></button>
+    <button type="button" (click)="format('underline')"><u>U</u></button>
+    <button type="button" (click)="formatLink()">Ссылка</button>
+  </div>
+  
+  <div
+    #editorContent
+    class="editor-content"
+    contenteditable="true"
+    (input)="onInput($event)"
+  ></div>
+  

@@ -24,7 +24,7 @@
 			<mib-spacing type="s"></mib-spacing>
 			<p class="text text_m c-bti-primary">Содержание новости</p>
 			<mib-spacing type="xs2"></mib-spacing>
-			<p class="text text_m c-bti-secondary">{{ singleNews.Text }}</p>
+			<p class="text text_m c-bti-secondary" [innerHTML]="singleNews.Text"></p>
 		</ng-template>
 	</mib-drawer-container>
 	<mib-drawer-footer drawer-footer>
