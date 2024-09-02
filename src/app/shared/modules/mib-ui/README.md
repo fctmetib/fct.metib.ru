@@ -132,6 +132,38 @@ ng g s client/modules/documents/modules/new-documents-page-drawer/new-documents-
 ng g i client/modules/documents/modules/new-documents-page-drawer/interfaces/new-documents-page-drawer.interface --dry-run
  //---
 
+ //--- agent-document-page
+src\app\agent-client\modules\documents\modules
+ng g m agent-client/modules/documents/modules/agent-document-page/agent-document-page --flat --dry-run
+ng g c agent-client/modules/documents/modules/agent-document-page/agent-document-page --flat --skip-tests  --dry-run
+ng g s agent-client/modules/documents/modules/agent-document-page/agent-document-page --flat --skip-tests  --dry-run
+ng g i agent-client/modules/documents/modules/agent-document-page/interfaces/agent-document-page.interface --dry-run
+ //---
+
+ //--- agent-document-view-drawer
+src\app\agent-client\modules\documents\modules
+ng g m agent-client/modules/documents/modules/agent-document-view-drawer/agent-document-view-drawer --flat --dry-run
+ng g c agent-client/modules/documents/modules/agent-document-view-drawer/agent-document-view-drawer --flat --skip-tests  --dry-run
+ng g s agent-client/modules/documents/modules/agent-document-view-drawer/agent-document-view-drawer --flat --skip-tests  --dry-run
+ng g i agent-client/modules/documents/modules/agent-document-view-drawer/interfaces/agent-document-view-drawer.interface --dry-run
+ //---
+
+ //--- agent-register-view-drawer
+src\app\agent-client\modules\register\modules
+ng g m agent-client/modules/register/modules/agent-register-view-drawer/agent-register-view-drawer --flat --dry-run
+ng g c agent-client/modules/register/modules/agent-register-view-drawer/agent-register-view-drawer --flat --skip-tests  --dry-run
+ng g s agent-client/modules/register/modules/agent-register-view-drawer/agent-register-view-drawer --flat --skip-tests  --dry-run
+ng g i agent-client/modules/register/modules/agent-register-view-drawer/interfaces/agent-register-view-drawer.interface --dry-run
+ //---
+
+ //--- agent-register-drawer
+src\app\agent-client\modules\register\modules
+ng g m agent-client/modules/register/modules/agent-register-drawer/agent-register-drawer --flat --dry-run
+ng g c agent-client/modules/register/modules/agent-register-drawer/agent-register-drawer --flat --skip-tests  --dry-run
+ng g s agent-client/modules/register/modules/agent-register-drawer/agent-register-drawer --flat --skip-tests  --dry-run
+ng g i agent-client/modules/register/modules/agent-register-drawer/interfaces/agent-register-drawer.interface --dry-run
+ //---
+
  //--- cabinet-news-drawer
 src\app\admin\modules\cabinet\modules
 ng g m admin/modules/cabinet/modules/cabinet-news-drawer/cabinet-news-drawer --flat --dry-run

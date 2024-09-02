@@ -1,4 +1,107 @@
 <div class="container container_large">
 	<mib-spacing type="m"></mib-spacing>
-	<h2>Реестры</h2>
+	<h3>Реестры</h3>
+	<mib-spacing type="m"></mib-spacing>
+</div>
+<div class="container container_large">
+	<div class="flex">
+		<div class="mobile-col flex gap-16 flex_justify-between">
+			<div class="flex flex_align-center gap-12">
+				<input styleType="outline" type="date" mibInput />
+				<input styleType="outline" type="date" mibInput />
+			</div>
+			<mib-button type="filled-primary" (press)="agentRegisterDrawer()">
+				<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
+				Добавить реестр
+			</mib-button>
+		</div>
+	</div>
+	<mib-spacing type="xs"></mib-spacing>
+	<mib-table (selectionChange)="selectionChange($event)">
+		<mib-table-head>
+			<mib-table-head-cell>ID </mib-table-head-cell>
+			<mib-table-head-cell>Договор</mib-table-head-cell>
+			<mib-table-head-cell>Номер</mib-table-head-cell>
+			<mib-table-head-cell>Дата</mib-table-head-cell>
+			<mib-table-head-cell>Тип</mib-table-head-cell>
+			<mib-table-head-cell>Состояние</mib-table-head-cell>
+			<mib-table-head-cell>Отправлена</mib-table-head-cell>
+			<mib-table-head-cell>Дата отправки</mib-table-head-cell>
+			<mib-table-head-cell>Профинансировано</mib-table-head-cell>
+			<mib-table-head-cell>Дата финансирования</mib-table-head-cell>
+			<mib-table-head-cell>Покупатель</mib-table-head-cell>
+			<mib-table-head-cell>Сумма</mib-table-head-cell>
+		</mib-table-head>
+		<ng-container *ngIf="loading$ | async; else table">
+			<mib-skeleton
+				[styles]="last ? skeletonWithoutUnderline : skeleton"
+				*ngFor="
+					let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
+					let last = last
+				"
+			></mib-skeleton>
+		</ng-container>
+		<ng-template #table>
+			<mib-table-row (dblclick)="agentRegisterViewsDrawer()">
+				<mib-table-cell>
+					<ng-container table-cell-title>qwe1</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>qwe2</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>qwe3</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>qwe4</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>qwe5</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>qwe6</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>qew7</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>qwe8</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>qew9</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>qwe10</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>qwe11</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>qwe12</ng-container>
+				</mib-table-cell>
+				<mib-button
+					[mibDropdownTrigger]="newDocumentRowMenu"
+					table-row-button
+					size="s"
+					type="ghost-secondary"
+				>
+					<mib-icon class="stroke" btn-icon name="fi_more-vertical"></mib-icon>
+				</mib-button>
+				<mib-dropdown #newDocumentRowMenu>
+					<mib-dropdown-point
+						(press)="agentRegisterViewsDrawer()"
+						text="Открыть"
+					></mib-dropdown-point>
+				</mib-dropdown>
+			</mib-table-row>
+		</ng-template>
+		<mib-table-footer [lined]="!(loading$ | async)">
+			<mib-paginator
+				(pageChange)="onPageChange($event)"
+				[totalCount]="5"
+				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+				[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+			></mib-paginator>
+		</mib-table-footer>
+	</mib-table>
 </div>
