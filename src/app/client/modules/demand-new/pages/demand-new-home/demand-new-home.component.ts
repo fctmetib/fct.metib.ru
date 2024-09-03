@@ -178,18 +178,18 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 				finalize(() => this.loading$.next(false))
 			)
 			.subscribe()
-		// setTimeout(() => {
-		// 	this.requestList
-		// 		.getDraftList()
-		// 		.pipe(
-		// 			tap(data => {
-		// 				this.drafts = data
-		// 				this.onDraftListChange(1)
-		// 			}),
-		// 			finalize(() => this.loading$.next(false))
-		// 		)
-		// 		.subscribe()
-		// }, 5000)
+		setTimeout(() => {
+			this.requestList
+				.getDraftList()
+				.pipe(
+					tap(data => {
+						this.drafts = data
+						this.onDraftListChange(1)
+					}),
+					finalize(() => this.loading$.next(false))
+				)
+				.subscribe()
+		}, 5000)
 	}
 
 	getHistoryList() {
