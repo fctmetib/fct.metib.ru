@@ -2,7 +2,10 @@ import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
 import {HttpClient, HttpHeaders} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
-import {DemandDataBaseInterface} from '../types/demand-data-base.interface'
+import {
+	DemandDataBaseInterface,
+	DemandQueryBaseInterface
+} from '../types/demand-data-base.interface'
 import {DemandInterface} from '../types/demand.interface'
 import {SaveDemandRequestInterface} from '../types/requests/save-demand-request.interface'
 import {DemandDraftInterface} from '../types/demand-draft.interface'
@@ -14,12 +17,21 @@ import {DebtorInterface} from '../types/debtor-interface'
 export class DemandService {
 	constructor(private http: HttpClient) {}
 
+	// new API
 	public prepareDemandByType(
 		type: string
-	): Observable<DemandDataBaseInterface> {
-		const url = `${environment.apiUrl}/demand/prepare/${type}`
-		return this.http.get<DemandDataBaseInterface>(url)
+	): Observable<DemandQueryBaseInterface> {
+		// const url = `${environment.apiUrl}/v1/demands/prepare?type=1`
+		const url = `${environment.apiUrl}/v1/demands/prepare/${type}?type=1`
+		return this.http.post<DemandQueryBaseInterface>(url, type)
 	}
+
+	// public prepareDemandByType(
+	// 	type: string
+	// ): Observable<DemandDataBaseInterface> {
+	// 	const url = `${environment.apiUrl}/demand/prepare/${type}`
+	// 	return this.http.get<DemandDataBaseInterface>(url)
+	// }
 
 	getDemandById(id: number): Observable<DemandInterface<any>> {
 		const url = `${environment.apiUrl}/demand/${id}`

@@ -8,7 +8,7 @@ import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.i
 import {extractBase64} from 'src/app/shared/services/tools.service'
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
-import {BehaviorSubject} from 'rxjs'
+import {BehaviorSubject, catchError, of, switchMap, tap} from 'rxjs'
 import {DemandService} from '../../services/demand.service'
 
 export interface freeDemandRequestDrawerInterface {
@@ -209,9 +209,10 @@ export class DemandDrawerComponent implements OnInit {
 		const res = this.form.getRawValue()
 
 		let reqData = {
-			Type: 1,
 			Subject: res.requestTitle,
-			Question: res.requestText
+			Question: res.requestText,
+			Type: 'Question',
+			Files: []
 		}
 
 		// let reqData = {
@@ -221,8 +222,31 @@ export class DemandDrawerComponent implements OnInit {
 		// }
 
 		console.log('reqData :>> ', reqData)
+		this.demandService
+			.prepareDemandByType(reqData.Type)
+			.pipe(
+				switchMap(result => {
+					const resObj = {
+						Subject: reqData.Subject,
+						Question: reqData.Question,
+						Type: reqData.Type,
+						Files: []
+					}
 
-		this.demandService.createDemand(reqData).subscribe()
+					return this.demandService.createDemand(resObj)
+				}),
+				catchError(error => {
+					console.error('An error occurred >>>:', error)
+					return of(null)
+				})
+			)
+			.subscribe(result => {
+				if (result) {
+					console.log('Second request successful:', result)
+				} else {
+					console.error('Failed to send the second request.')
+				}
+			})
 
 		this.dialogRef.close()
 	}

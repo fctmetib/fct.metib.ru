@@ -88,6 +88,7 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
 					this.onAdvancedPageChange(1)
 					this.onCurrentPageChange(1)
 					this.onCompletedPageChange(1)
+					console.log('this.currentContracts :>> ', this.currentContracts)
 				}),
 				finalize(() => this.loading$.next(false))
 			)

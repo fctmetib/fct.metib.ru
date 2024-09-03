@@ -226,10 +226,7 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 	}
 
 	openDrawer() {
-		this.demandDrawerService
-			.open({state: DrawerStateEnum.CREATE})
-			.afterClosed()
-			.subscribe()
+		this.demandDrawerService.open().afterClosed().subscribe()
 	}
 
 	openDrawers(id: number) {

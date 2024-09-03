@@ -1,4 +1,280 @@
 <div class="container container_large">
 	<mib-spacing type="m"></mib-spacing>
-	<h2>Договоры</h2>
+	<h3>Запросы</h3>
+	<mib-spacing type="m"></mib-spacing>
 </div>
+<mib-tab-group>
+	<mib-navbar class="container container_large">
+		<mib-navbar-point value="1">Действующие</mib-navbar-point>
+		<mib-navbar-point value="2">Прошедшие</mib-navbar-point>
+		<mib-navbar-point value="3">{{
+			isDesktop ? 'Все договоры' : 'Все'
+		}}</mib-navbar-point>
+	</mib-navbar>
+	<div class="container container_large">
+		<mib-tab-item value="1">
+			<mib-spacing type="m"></mib-spacing>
+			<mib-table (selectionChange)="selectionChange($event)">
+				<mib-table-head>
+					<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
+						>Договор</mib-table-head-cell
+					>
+					<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					<mib-table-head-cell>Вступил в силу</mib-table-head-cell>
+					<mib-table-head-cell>Действует до</mib-table-head-cell>
+					<mib-table-head-cell>Отсрочка</mib-table-head-cell>
+					<mib-table-head-cell>Лимит</mib-table-head-cell>
+					<mib-table-head-cell>Просрочка</mib-table-head-cell>
+				</mib-table-head>
+				<ng-container *ngIf="loading$ | async; else table">
+					<mib-skeleton
+						[styles]="last ? skeletonWithoutUnderline : skeleton"
+						*ngFor="
+							let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
+							let last = last
+						"
+					></mib-skeleton>
+				</ng-container>
+				<ng-template #table>
+					<mib-table-row
+						(dblclick)="contractDrawer(contract?.ID)"
+						*ngFor="let contract of currentContractsVisible; let last = last"
+						[underlined]="!last"
+					>
+						<mib-table-cell contracted="true" type="main">
+							<ng-container table-cell-title>cnt</ng-container>
+							<ng-container table-cell-description> cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title
+								>{{ contract?.Delay.Count }} к.д.</ng-container
+							>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-button
+							[mibDropdownTrigger]="newDocumentRowMenu"
+							table-row-button
+							size="s"
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-icon>
+						</mib-button>
+						<mib-dropdown #newDocumentRowMenu>
+							<mib-dropdown-point
+								(press)="contractDrawer(contract?.ID)"
+								text="Открыть"
+							></mib-dropdown-point>
+						</mib-dropdown>
+					</mib-table-row>
+				</ng-template>
+				<mib-table-footer [showIsland]="false" [lined]="!(loading$ | async)">
+					<mib-paginator
+						(pageChange)="onCurrentPageChange($event)"
+						[totalCount]="5"
+						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+					></mib-paginator>
+				</mib-table-footer>
+			</mib-table>
+		</mib-tab-item>
+		<mib-tab-item value="2">
+			<mib-spacing type="m"></mib-spacing>
+			<mib-table (selectionChange)="selectionChange($event)">
+				<mib-table-head>
+					<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
+						>Договор</mib-table-head-cell
+					>
+					<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					<mib-table-head-cell>Вступил в силу</mib-table-head-cell>
+					<mib-table-head-cell>Действует до</mib-table-head-cell>
+					<mib-table-head-cell>Отсрочка</mib-table-head-cell>
+					<mib-table-head-cell>Лимит</mib-table-head-cell>
+					<mib-table-head-cell>Просрочка</mib-table-head-cell>
+				</mib-table-head>
+				<ng-container *ngIf="loading$ | async; else table2">
+					<mib-skeleton
+						[styles]="last ? skeletonWithoutUnderline : skeleton"
+						*ngFor="
+							let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
+							let last = last
+						"
+					></mib-skeleton>
+				</ng-container>
+				<ng-template #table2>
+					<mib-table-row
+						(dblclick)="contractDrawer(contract?.ID)"
+						*ngFor="let contract of completedContractsVisible; let last = last"
+						[underlined]="!last"
+					>
+						<mib-table-cell contracted="true" type="main">
+							<ng-container table-cell-title>cnt</ng-container>
+							<ng-container table-cell-description>
+								{{ contract?.Tariff.Title }}</ng-container
+							>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>{{
+								contract?.DateTo | date : 'dd.MM.YYYY'
+							}}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt к.д.</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-button
+							[mibDropdownTrigger]="newDocumentRowMenu"
+							table-row-button
+							size="s"
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-icon>
+						</mib-button>
+						<mib-dropdown #newDocumentRowMenu>
+							<mib-dropdown-point
+								(press)="contractDrawer(contract?.ID)"
+								text="Открыть"
+							></mib-dropdown-point>
+						</mib-dropdown>
+					</mib-table-row>
+				</ng-template>
+				<mib-table-footer [showIsland]="false" [lined]="!(loading$ | async)">
+					<mib-paginator
+						(pageChange)="onCompletedPageChange($event)"
+						[totalCount]="5"
+						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+					></mib-paginator>
+				</mib-table-footer>
+			</mib-table>
+		</mib-tab-item>
+		<mib-tab-item value="3">
+			<mib-spacing type="m"></mib-spacing>
+			<mib-table (selectionChange)="selectionChange($event)">
+				<mib-table-head>
+					<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
+						>Договор</mib-table-head-cell
+					>
+					<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					<mib-table-head-cell>Вступил в силу</mib-table-head-cell>
+					<mib-table-head-cell>Действует до</mib-table-head-cell>
+					<mib-table-head-cell>Отсрочка</mib-table-head-cell>
+					<mib-table-head-cell>Статус</mib-table-head-cell>
+					<mib-table-head-cell>Лимит</mib-table-head-cell>
+					<mib-table-head-cell>Просрочка</mib-table-head-cell>
+				</mib-table-head>
+				<ng-container *ngIf="loading$ | async; else table3">
+					<mib-skeleton
+						[styles]="last ? skeletonWithoutUnderline : skeleton"
+						*ngFor="
+							let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
+							let last = last
+						"
+					></mib-skeleton>
+				</ng-container>
+				<ng-template #table3>
+					<mib-table-row
+						(dblclick)="contractDrawer(contract?.ID)"
+						*ngFor="let contract of advancedContractsVisible; let last = last"
+						[underlined]="!last"
+					>
+						<mib-table-cell contracted="true" type="main">
+							<ng-container table-cell-title>cnt</ng-container>
+							<ng-container table-cell-description> cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt к.д.</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>
+								<mib-badge
+									[type]="
+										contract?.AdvancedContract
+											? 'filled-accent'
+											: 'filled-success'
+									"
+									[extended]="true"
+									size="m"
+									>cnt</mib-badge
+								></ng-container
+							>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>cnt</ng-container>
+						</mib-table-cell>
+						<mib-button
+							[mibDropdownTrigger]="newDocumentRowMenu"
+							table-row-button
+							size="s"
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-icon>
+						</mib-button>
+						<mib-dropdown #newDocumentRowMenu>
+							<mib-dropdown-point
+								(press)="contractDrawer(3)"
+								text="Открыть"
+							></mib-dropdown-point>
+						</mib-dropdown>
+					</mib-table-row>
+				</ng-template>
+				<mib-table-footer [showIsland]="false" [lined]="!(loading$ | async)">
+					<mib-paginator
+						(pageChange)="onAdvancedPageChange($event)"
+						[totalCount]="5"
+						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+					></mib-paginator>
+				</mib-table-footer>
+			</mib-table>
+		</mib-tab-item>
+	</div>
+</mib-tab-group>
