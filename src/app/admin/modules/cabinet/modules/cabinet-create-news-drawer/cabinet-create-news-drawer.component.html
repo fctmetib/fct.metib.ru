@@ -60,14 +60,7 @@
 							<input formControlName="formNewsTitle" mibInput />
 							<ng-container mibLabel>Заголовок новости</ng-container>
 						</mib-input>
-						<mib-textarea>
-							<ng-container mibLabel>Содержание новости</ng-container>
-							<textarea
-								formControlName="formNewsText"
-								autosize
-								mibTextarea
-							></textarea>
-						</mib-textarea>
+						<mib-text-editor formControlName="formNewsText"></mib-text-editor>
 					</div>
 				</div>
 				<mib-spacing type="m"></mib-spacing>

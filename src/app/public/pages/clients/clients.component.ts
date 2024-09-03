@@ -57,7 +57,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
 	}
 
 	public downloadFile(name: string) {
-		const isAuthenticated = this.authService.isAuthenticated();
+		const isAuthenticated = this.authService.isAuthenticated() || this.authService.isAdminAuthenticated();
 	
 		let link = document.createElement('a');
 	

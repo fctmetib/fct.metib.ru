@@ -14,6 +14,7 @@ import {AutosizeModule} from 'ngx-autosize'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {ReactiveFormsModule} from '@angular/forms'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
+import { TextEditorModule } from 'src/app/shared/ui-kit/text-editor/text-editor.module'
 
 @NgModule({
 	declarations: [CabinetCreateNewsDrawerComponent],
@@ -23,6 +24,7 @@ import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 		MatDialogModule,
 		SpacingModule,
 		InputModule,
+		TextEditorModule,
 		LabelModule,
 		IconModule,
 		MibDragAndDropModule,

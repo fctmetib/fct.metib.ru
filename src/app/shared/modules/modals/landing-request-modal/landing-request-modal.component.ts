@@ -137,9 +137,12 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 			INN: this.form.value.INN,
 			Organization: this.form.value.Organization,
 			Comment: `
-			${this.form.value.Comment}
-			Использует факторинг: ${this.form.value.UseFactoring ? "Да" : "Нет"}
-			`,
+		  ${this.form.value.Comment}
+		  Использует факторинг: ${this.form.value.UseFactoring ? "Да" : "Нет"}
+		  `
+			  .split('\n') 
+			  .map(line => line.trim()) 
+			  .join('\n'), 
 			Agree: this.form.value.Agree
 		}
 
