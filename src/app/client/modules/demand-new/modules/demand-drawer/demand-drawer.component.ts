@@ -226,11 +226,15 @@ export class DemandDrawerComponent implements OnInit {
 			.prepareDemandByType(reqData.Type)
 			.pipe(
 				switchMap(result => {
+					console.log('result :>> ', result)
 					const resObj = {
-						Subject: reqData.Subject,
-						Question: reqData.Question,
-						Type: reqData.Type,
-						Files: []
+						DraftId: '',
+						DemandData: {
+							Subject: reqData.Subject,
+							Question: reqData.Question,
+							Type: reqData.Type,
+							Files: []
+						}
 					}
 
 					return this.demandService.createDemand(resObj)
