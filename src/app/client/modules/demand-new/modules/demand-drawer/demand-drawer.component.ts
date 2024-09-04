@@ -238,17 +238,13 @@ export class DemandDrawerComponent implements OnInit {
 				catchError(error => {
 					console.error('An error occurred >>>:', error)
 					return of(null)
+				}),
+				tap(result => {
+					console.log('Second request successful:', result)
+					this.dialogRef.close()
 				})
 			)
-			.subscribe(result => {
-				if (result) {
-					console.log('Second request successful:', result)
-				} else {
-					console.error('Failed to send the second request.')
-				}
-			})
-
-		this.dialogRef.close()
+			.subscribe()
 	}
 
 	public editDocument() {
