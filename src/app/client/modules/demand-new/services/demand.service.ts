@@ -60,9 +60,9 @@ export class DemandService {
 	}
 
 	// newAPI
-	public getDemands(): Observable<DemandInterface<any>[]> {
+	public getDemands(): Observable<any> {
 		const url = `${environment.apiUrl}/v1/demands`
-		return this.http.get<DemandInterface<any>[]>(url)
+		return this.http.get<any>(url)
 	}
 
 	// public getDemands(): Observable<DemandInterface<any>[]> {

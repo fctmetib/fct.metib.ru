@@ -165,31 +165,27 @@
 						[underlined]="!last"
 					>
 						<mib-table-cell type="main">
-							<ng-container table-cell-title>{{ history.number }}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title
-								><mib-badge
-									type="filled-secondary"
-									[extended]="true"
-									size="l"
-									>{{ history.type }}</mib-badge
-								></ng-container
+							<ng-container table-cell-title>
+								{{ history.DemandId }}</ng-container
 							>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								history.date | date
-							}}</ng-container>
+							<ng-container table-cell-title
+								><mib-badge type="filled-secondary" [extended]="true" size="l"
+									>{{ getType(history.Type) }}
+								</mib-badge></ng-container
+							>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title>
+								{{ history.DateCreated | date }}
+							</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title
-								><mib-badge
-									type="filled-secondary"
-									[extended]="true"
-									size="l"
-									>{{ history.status ? 'В работе' : 'Завершено' }}</mib-badge
-								></ng-container
+								><mib-badge type="filled-secondary" [extended]="true" size="l">
+									{{ getStatus(history.Status) }}
+								</mib-badge></ng-container
 							>
 						</mib-table-cell>
 						<mib-table-cell type="person">
@@ -197,13 +193,21 @@
 								<mib-avatar
 									type="round"
 									[showArrow]="false"
-									[src]="history.charge.avatarUrl"
+									[src]="
+										history.Manager?.avatarUrl ||
+										'assets/images/woman-avatar.jpg'
+									"
 									[showImage]="true"
 								></mib-avatar
 							></ng-container>
-							<ng-container table-cell-title>{{
-								history.charge.name
-							}}</ng-container>
+							<ng-container table-cell-title>
+								{{
+									history.Manager?.Name ? history.Manager.Name : 'Не назначен'
+								}}
+								{{
+									history.Manager?.Extension ? history.Manager.Extension : ''
+								}}
+							</ng-container>
 						</mib-table-cell>
 						<mib-button table-row-button size="s" type="ghost-secondary">
 							<mib-icon

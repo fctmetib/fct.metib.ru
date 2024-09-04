@@ -92,14 +92,14 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 			.subscribe(b => (this.isDesktop = b))
 
 		// получить список запросов
-		this.demandService
-			.getDemands()
-			.pipe(
-				tap(data => {
-					console.log('список запросов :>> ', data)
-				})
-			)
-			.subscribe()
+		// this.demandService
+		// 	.getDemands()
+		// 	.pipe(
+		// 		tap(data => {
+		// 			console.log('список запросов :>> ', data)
+		// 		})
+		// 	)
+		// 	.subscribe()
 
 		/* 
 		// ответ новое API !!!! error 500
@@ -194,18 +194,94 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 
 	getHistoryList() {
 		this.loading$.next(true)
-		setTimeout(() => {
-			this.requestList
-				.getHistoryList()
-				.pipe(
-					tap(data => {
-						this.historys = data
-						this.onHistoryListChange(1)
-					}),
-					finalize(() => this.loading$.next(false))
-				)
-				.subscribe()
-		}, 5000)
+
+		this.demandService
+			.getDemands()
+			.pipe(
+				tap(data => {
+					this.historys = data
+					console.log('this.historys :>> ', this.historys)
+					this.onHistoryListChange(1)
+				}),
+				finalize(() => this.loading$.next(false))
+			)
+			.subscribe()
+
+		// this.loading$.next(true)
+		// setTimeout(() => {
+		// 	this.requestList
+		// 		.getHistoryList()
+		// 		.pipe(
+		// 			tap(data => {
+		// 				this.historys = data
+		// 				this.onHistoryListChange(1)
+		// 			}),
+		// 			finalize(() => this.loading$.next(false))
+		// 		)
+		// 		.subscribe()
+		// }, 5000)
+	}
+
+	getType(type: string): string {
+		let result: string = ''
+		switch (type) {
+			case 'VerificationChannel':
+				result = 'Верификация'
+				break
+			case 'Guarantee':
+				result = 'Поручительство'
+				break
+			case 'Factoring':
+				result = 'Факторинг'
+				break
+			case 'DigitalSignature':
+				result = 'ЭЦП'
+				break
+			case 'ProfileChange':
+				result = 'Редактирование Профиля'
+				break
+			case 'Question':
+				result = 'Свободная тема'
+				break
+			case 'Limit':
+				result = 'Лимит'
+				break
+			case 'NewDebtor':
+				result = 'Новый дебитор'
+				break
+			case 'AgencyFactoring':
+				result = 'Агентский Факторинг'
+				break
+			default:
+				result = 'Свободная тема'
+				break
+		}
+		return result
+	}
+
+	public getStatus(status: string): string {
+		let result: string = ''
+		switch (status) {
+			case 'Created':
+				result = 'Создан'
+				break
+			case 'Completed':
+				result = 'Завершен'
+				break
+			case 'Processing':
+				result = 'В процессе'
+				break
+			case 'Rejected':
+				result = 'Отклонено'
+				break
+			case 'Draft':
+				result = 'Черновик'
+				break
+			case 'Canceled':
+				result = 'Отменен'
+				break
+		}
+		return result
 	}
 
 	onPageChange<T>(page: number, sourceArray: T[] = []) {
