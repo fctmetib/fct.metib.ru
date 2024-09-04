@@ -18,6 +18,7 @@ import {PaginatorModule} from 'src/app/shared/ui-kit/paginator/paginator.module'
 import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
 import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
+import {AgentQueriesDrawerModule} from './modules/agent-queries-drawer/agent-queries-drawer.module'
 
 @NgModule({
 	declarations: [QueriesPageComponent],
@@ -38,7 +39,8 @@ import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 		PaginatorModule,
 		BadgeModule,
 		TableModule,
-		SkeletonModule
+		SkeletonModule,
+		AgentQueriesDrawerModule
 	]
 })
 export class AgentClientQueriesModule {}

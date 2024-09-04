@@ -3,6 +3,7 @@ import {Properties} from 'csstype'
 import {BehaviorSubject, Subscription} from 'rxjs'
 import {AnimationService} from 'src/app/shared/animations/animations.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import {AgentQueriesDrawerService} from '../modules/agent-queries-drawer/agent-queries-drawer.service'
 
 const ANIMATION_CONFIG = {
 	translateDistance: '-3%',
@@ -61,7 +62,10 @@ export class QueriesPageComponent implements OnInit, OnDestroy {
 		}
 	]
 
-	constructor(public breakpointService: BreakpointObserverService) {}
+	constructor(
+		public breakpointService: BreakpointObserverService,
+		private agentQueriesDrawerService: AgentQueriesDrawerService
+	) {}
 	ngOnInit(): void {
 		this.subscriptions = this.breakpointService
 			.isDesktop()
@@ -69,11 +73,7 @@ export class QueriesPageComponent implements OnInit, OnDestroy {
 	}
 
 	openDrawer() {
-		console.log('OPEN DRAWER>>>>')
-		// this.demandDrawerService
-		// 	.open({state: DrawerStateEnum.CREATE})
-		// 	.afterClosed()
-		// 	.subscribe()
+		this.agentQueriesDrawerService.open()
 	}
 
 	tablePageChange() {

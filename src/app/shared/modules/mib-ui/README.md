@@ -164,6 +164,30 @@ ng g s agent-client/modules/register/modules/agent-register-drawer/agent-registe
 ng g i agent-client/modules/register/modules/agent-register-drawer/interfaces/agent-register-drawer.interface --dry-run
  //---
 
+ //--- agent-payments-drawer
+src\app\agent-client\modules\payments\modules
+ng g m agent-client/modules/payments/modules/agent-payments-drawer/agent-payments-drawer --flat --dry-run
+ng g c agent-client/modules/payments/modules/agent-payments-drawer/agent-payments-drawer --flat --skip-tests  --dry-run
+ng g s agent-client/modules/payments/modules/agent-payments-drawer/agent-payments-drawer --flat --skip-tests  --dry-run
+ng g i agent-client/modules/payments/modules/agent-payments-drawer/interfaces/agent-payments-drawer.interface --dry-run
+ //---
+
+ //--- agent-queries-drawer
+src\app\agent-client\modules\payments\modules
+ng g m agent-client/modules/payments/modules/agent-queries-drawer/agent-queries-drawer --flat --dry-run
+ng g c agent-client/modules/payments/modules/agent-queries-drawer/agent-queries-drawer --flat --skip-tests  --dry-run
+ng g s agent-client/modules/payments/modules/agent-queries-drawer/agent-queries-drawer --flat --skip-tests  --dry-run
+ng g i agent-client/modules/payments/modules/agent-queries-drawer/interfaces/agent-queries-drawer.interface --dry-run
+ //---
+
+ //--- agent-contracts-drawer
+src\app\agent-client\modules\contracts\modules
+ng g m agent-client/modules/contracts/modules/agent-contracts-drawer/agent-contracts-drawer --flat --dry-run
+ng g c agent-client/modules/contracts/modules/agent-contracts-drawer/agent-contracts-drawer --flat --skip-tests  --dry-run
+ng g s agent-client/modules/contracts/modules/agent-contracts-drawer/agent-contracts-drawer --flat --skip-tests  --dry-run
+ng g i agent-client/modules/contracts/modules/agent-contracts-drawer/interfaces/agent-contracts-drawer.interface --dry-run
+ //---
+
  //--- cabinet-news-drawer
 src\app\admin\modules\cabinet\modules
 ng g m admin/modules/cabinet/modules/cabinet-news-drawer/cabinet-news-drawer --flat --dry-run
@@ -530,6 +554,13 @@ ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
  ng g m shared/modules/modals/invoice-page-modal/invoice-page-modal --flat --dry-run
  ng g s shared/modules/modals/invoice-page-modal/invoice-page-modal --flat --skip-tests --dry-run
  ng g c shared/modules/modals/invoice-page-modal/invoice-page-modal --flat --skip-tests --dry-run
+ //---
+
+ //--- payments-page-modal
+ src\app\shared\modules\modals\payments-page-modal
+ ng g m shared/modules/modals/payments-page-modal/payments-page-modal --flat --dry-run
+ ng g s shared/modules/modals/payments-page-modal/payments-page-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/payments-page-modal/payments-page-modal --flat --skip-tests --dry-run
  //---
 
  //--- landing-request-modal

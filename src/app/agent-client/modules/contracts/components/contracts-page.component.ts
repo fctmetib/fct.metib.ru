@@ -5,6 +5,7 @@ import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoi
 import {ToolsService} from 'src/app/shared/services/tools.service'
 import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.interface'
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
+import {AgentContractsDrawerService} from '../modules/agent-contracts-drawer/agent-contracts-drawer.service'
 
 @Component({
 	selector: 'mib-contracts-page',
@@ -121,6 +122,7 @@ export class ContractsPageComponent {
 
 	constructor(
 		public toolsService: ToolsService,
+		public agentContractsDrawerService: AgentContractsDrawerService,
 		public breakpointService: BreakpointObserverService
 	) {}
 
@@ -144,7 +146,9 @@ export class ContractsPageComponent {
 	}
 
 	contractDrawer(id) {
-		console.log('open drawer>>>', id)
+		this.agentContractsDrawerService.open({
+			data: {id}
+		})
 	}
 
 	onCurrentPageChange($event) {
