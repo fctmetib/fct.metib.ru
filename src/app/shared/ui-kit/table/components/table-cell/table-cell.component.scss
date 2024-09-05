@@ -20,6 +20,12 @@ $text-selectors: 'label';
 	}
 }
 
+:host:has(.special) {
+	& > div {
+		justify-content: start;
+	}
+}
+
 .table-cell {
 	height: 100%;
 	justify-content: center;

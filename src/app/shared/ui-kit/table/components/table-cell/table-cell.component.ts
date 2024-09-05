@@ -31,6 +31,7 @@ export class TableCellComponent implements OnInit, OnChanges {
 	@Input() checked: boolean
 	@Input() showCheckbox: boolean = true
 	@Input() contracted: boolean = false
+	@Input() special: boolean = false
 	@Output() onCheck = new EventEmitter<boolean>()
 	@Output() press = new EventEmitter<any>()
 	@HostBinding('title') @Input() title: string = ''
@@ -58,7 +59,8 @@ export class TableCellComponent implements OnInit, OnChanges {
 	get classes() {
 		return {
 			[`table-cell_type-${this.type}`]: true,
-			[`table-cell_size-${this._size}`]: true
+			[`table-cell_size-${this._size}`]: true,
+			[`special`]: this.special
 		}
 	}
 
