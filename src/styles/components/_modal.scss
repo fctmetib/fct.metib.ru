@@ -32,12 +32,15 @@
 .custom-dialog-mib-ui {
 	@include absolute();
 	@include border();
+	background: transparent;
+	overflow: hidden;
 	top: 70px;
 }
 
 .custom-dialog-invoice {
 	@include absolute();
 	@include border();
+	overflow: hidden;
 	top: 48px;
 }
 
