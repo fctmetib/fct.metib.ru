@@ -11,12 +11,14 @@
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-input>
 			<ng-container mibLabel>Тема обращения</ng-container>
-			<input formControlName="requestTitle" mibInput />
+			<input id="requestTitle" formControlName="requestTitle" mibInput />
 		</mib-input>
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-textarea>
 			<ng-container mibLabel>Текст обращения</ng-container>
+			<!-- (blur)="saveData()" -->
 			<textarea
+				id="requestText"
 				formControlName="requestText"
 				[maxLength]="100"
 				autosize

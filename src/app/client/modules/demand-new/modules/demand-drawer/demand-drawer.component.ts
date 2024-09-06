@@ -8,8 +8,33 @@ import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.i
 import {extractBase64} from 'src/app/shared/services/tools.service'
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
-import {BehaviorSubject, catchError, of, switchMap, tap} from 'rxjs'
+import {
+	BehaviorSubject,
+	catchError,
+	debounceTime,
+	of,
+	switchMap,
+	tap
+} from 'rxjs'
 import {DemandService} from '../../services/demand.service'
+
+// export interface demandInterface {
+// 	DraftId: 'string'
+// 	DemandData: {
+// 		Subject: 'string'
+// 		Question: 'string'
+// 		Type: 'string'
+// 		Files: [
+// 			{
+// 				ID: 0
+// 				Identifier: 'string'
+// 				Code: 'string'
+// 				FileName: 'string'
+// 				Size: 0
+// 			}
+// 		]
+// 	}
+// }
 
 export interface freeDemandRequestDrawerInterface {
 	DraftId: string
@@ -148,6 +173,9 @@ export class DemandDrawerComponent implements OnInit {
 
 	public size: InputSize | ButtonSize = 'm'
 
+	freeRequestType = 'Question'
+	initialData: any = null
+
 	constructor(
 		private fb: FormBuilder,
 		private toaster: ToasterService,
@@ -162,6 +190,90 @@ export class DemandDrawerComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.initForms()
+		this.getByID()
+		this.demandService
+			.prepareDemandByType(this.freeRequestType)
+			.subscribe(data => {
+				this.initialData = data
+				this.form.patchValue({
+					requestTitle: data.Subject,
+					requestText: data.Question
+				})
+			})
+
+		this.form.valueChanges.pipe(debounceTime(3000)).subscribe(value => {
+			console.log('Form data changed:>>>', value)
+			this.autoSave()
+		})
+	}
+
+	getByID() {
+		this.demandService
+			.getDemandDraftById(15898)
+			.pipe(
+				tap(data => {
+					console.log('getByIDdata :>> ', data)
+				})
+			)
+			.subscribe()
+		// .pipe(
+		// 	catchError(error => {
+		// 		console.error('An error AUTOSAVE >>>:', error)
+		// 		return of(null)
+		// 	}),
+		// 	tap(result => {
+		// 		// this.toaster.show('success', 'Автосохранение', '', true, false, 1500)
+		// 		console.log('AUTOSAVE-RESULT:', result)
+		// 	})
+		// )
+		// .subscribe()
+	}
+
+	autoSave() {
+		const formData = this.form.getRawValue()
+
+		console.log('AUTOSAVE>>>')
+
+		const payload = {
+			// Type: this.initialData?.Type || 'Question',
+			// Files: [
+			// 	{
+			// 		ID: 0,
+			// 		Identifier: 'string',
+			// 		Code: 'string',
+			// 		FileName: 'string',
+			// 		Size: 0
+			// 	}
+			// ]
+			// DraftId: '',
+			// DemandData: {
+			// 	Subject: formData.requestTitle,
+			// 	Question: formData.requestText,
+			// 	Type: this.initialData.Type,
+			// 	Files: this.initialData.Files
+			// }
+
+			Subject: formData.requestTitle,
+			Question: formData.requestText,
+			// Type: 1,
+			Type: this.freeRequestType,
+			Files: []
+			// }
+		}
+
+		this.demandService
+			.saveDraft(payload)
+			.pipe(
+				catchError(error => {
+					console.error('An error AUTOSAVE >>>:', error)
+					return of(null)
+				}),
+				tap(result => {
+					// this.toaster.show('success', 'Автосохранение', '', true, false, 1500)
+					console.log('AUTOSAVE-RESULT:', result)
+				})
+			)
+			.subscribe()
 	}
 
 	initForms() {
@@ -204,6 +316,36 @@ export class DemandDrawerComponent implements OnInit {
 		this.addDocument(document)
 	}
 
+	saveData(): void {
+		const formData = this.form.getRawValue()
+
+		const payload = {
+			DraftId: '',
+			DemandData: {
+				Subject: formData.requestTitle,
+				Question: formData.requestText,
+				Type: this.initialData.Type,
+				Files: this.initialData.Files
+			}
+		}
+
+		console.log('payload :>> ', payload)
+
+		this.demandService
+			.createDemand(payload)
+			.pipe(
+				catchError(error => {
+					console.error('An error AUTOSAVE >>>:', error)
+					return of(null)
+				}),
+				tap(result => {
+					// this.toaster.show('success', 'Автосохранение', '', true, false, 1500)
+					console.log('AUTOSAVE++:', result)
+				})
+			)
+			.subscribe()
+	}
+
 	onSubmit() {
 		console.log('CREATE REQUEST>>>')
 		const res = this.form.getRawValue()
@@ -211,7 +353,7 @@ export class DemandDrawerComponent implements OnInit {
 		let reqData = {
 			Subject: res.requestTitle,
 			Question: res.requestText,
-			Type: 'Question',
+			Type: this.freeRequestType,
 			Files: []
 		}
 
@@ -223,7 +365,7 @@ export class DemandDrawerComponent implements OnInit {
 
 		console.log('reqData :>> ', reqData)
 		this.demandService
-			.prepareDemandByType(reqData.Type)
+			.prepareDemandByType(this.freeRequestType)
 			.pipe(
 				switchMap(result => {
 					console.log('result :>> ', result)

@@ -95,6 +95,7 @@
 
 	& .badge-text {
 		user-select: none;
+		@include text-overflow(1);
 	}
 	&_type-filled-primary {
 		background: var(--mc-quaternary);

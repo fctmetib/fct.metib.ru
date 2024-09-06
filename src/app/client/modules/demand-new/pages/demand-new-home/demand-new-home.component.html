@@ -131,13 +131,26 @@
 					<mib-icon class="stroke path" mibLeftIcon name="fi_search"></mib-icon>
 				</mib-input>
 				<mib-select type="outline" placeholder="Выберите статус запроса">
+					<mib-dropdown-point [value]="true" text="Создан"></mib-dropdown-point>
 					<mib-dropdown-point
-						[value]="true"
-						text="В работе"
+						[value]="false"
+						text="Завершен"
 					></mib-dropdown-point>
 					<mib-dropdown-point
 						[value]="false"
-						text="Завершено"
+						text="В процессе"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="false"
+						text="Отклонено"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="false"
+						text="Черновик"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="false"
+						text="Отменен"
 					></mib-dropdown-point>
 				</mib-select>
 			</div>

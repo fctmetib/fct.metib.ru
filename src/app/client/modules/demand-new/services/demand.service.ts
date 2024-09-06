@@ -51,6 +51,12 @@ export class DemandService {
 	// 	return this.http.post<DemandInterface<T>>(url, data)
 	// }
 
+	// new API
+	public saveDraft(data: any): Observable<any> {
+		const url = `${environment.apiUrl}/v1/demands/draft`
+		return this.http.post<any>(url, data)
+	}
+
 	public saveDraftById(
 		id: number,
 		data: DemandDataBaseInterface
@@ -114,8 +120,14 @@ export class DemandService {
 		return this.http.get<DebtorInterface[]>(url)
 	}
 
-	getDemandDraftById(id: number): Observable<DemandInterface<any>> {
-		const url = `${environment.apiUrl}/demand/draft/${id}`
-		return this.http.get<DemandInterface<any>>(url)
+	// new API
+	getDemandDraftById(id: number): Observable<any> {
+		const url = `${environment.apiUrl}/v1/demands/draft/?id=${id}`
+		return this.http.get<any>(url)
 	}
+
+	// getDemandDraftById(id: number): Observable<DemandInterface<any>> {
+	// 	const url = `${environment.apiUrl}/demand/draft/${id}`
+	// 	return this.http.get<DemandInterface<any>>(url)
+	// }
 }
