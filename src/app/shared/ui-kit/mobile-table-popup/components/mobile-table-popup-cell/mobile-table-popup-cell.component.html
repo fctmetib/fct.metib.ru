@@ -45,5 +45,16 @@
 				<mib-spacing type="xs2"></mib-spacing>
 			</div>
 		</ng-container>
+		<ng-container *ngSwitchCase="'badge'">
+			<div class="cell-m flex flex_column flex_grow">
+				<span class="text text_s c-bti-tertiary"> {{ sectionTitle }} </span>
+				<div class="flex pt-4 flex_align-center">
+					<mib-tag type="filled-secondary" size="s">
+						{{ badgeText }}
+					</mib-tag>
+				</div>
+				<mib-spacing type="xs2"></mib-spacing>
+			</div>
+		</ng-container>
 	</ng-container>
 </div>

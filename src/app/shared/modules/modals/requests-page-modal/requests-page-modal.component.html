@@ -4,6 +4,77 @@
 			<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
 		</mib-button>
 	</div>
+	<mib-mobile-table-popup [editable]="true" [title]="getTitle()">
+		<div chips class="flex flex_column">
+			<mib-spacing type="xs2"></mib-spacing>
+			<div class="flex gap-8">
+				<mib-tag size="s" type="filled-secondary"> {{ data.req.Type }}</mib-tag>
+				<mib-tag size="s" type="filled-primary">
+					{{ data.req.Status }}
+				</mib-tag>
+			</div>
+			<mib-spacing type="xm2"></mib-spacing>
+		</div>
+		<div class="flex">
+			<span class="text text_tv c-bti-quaternary">Детали заявки</span>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex gap-12">
+			<mib-mobile-table-popup-cell
+				[sectionTitle]="'Идентификатор '"
+				[title]="data.req.ID"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.req.Date)"
+				[showCopy]="true"
+				[sectionTitle]="'Дата заявки'"
+				[title]="data.req.Date | date : 'dd.MM.yyyy'"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex">
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.req.Delivery.ID)"
+				[showCopy]="true"
+				[sectionTitle]="'Договор поставки'"
+				[title]="data.req.Delivery.ID"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="xm"></mib-spacing>
+		<div class="flex">
+			<span class="text text_tv c-bti-quaternary">Параметры Доступа</span>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex gap-12">
+			<mib-mobile-table-popup-cell
+				[sectionTitle]="'Доступ'"
+				[badgeText]="
+					!data.req.Delivery.ReadOnly ? 'Просмотр' : 'Редактирование'
+				"
+				type="badge"
+			>
+			</mib-mobile-table-popup-cell>
+			<mib-mobile-table-popup-cell
+				[sectionTitle]="'Корректировка'"
+				[badgeText]="!data.req.Delivery.IsCorrected ? 'Не было' : 'Была'"
+				type="badge"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<div class="flex">
+			<mib-button class="w-100" size="m" type="filled-secondary">
+				Перейти к заявке
+			</mib-button>
+		</div>
+	</mib-mobile-table-popup>
+
 	<!-- <mib-mobile-table-popup title="Платеж">
 		<div class="flex">
 			<span class="text text_tv c-bti-quaternary">Основные</span>

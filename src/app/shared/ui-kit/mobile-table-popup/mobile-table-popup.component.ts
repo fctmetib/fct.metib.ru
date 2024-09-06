@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core'
+import {Component, EventEmitter, Input, Output} from '@angular/core'
 
 @Component({
 	selector: 'mib-mobile-table-popup',
@@ -7,4 +7,6 @@ import {Component, Input} from '@angular/core'
 })
 export class MobileTablePopupComponent {
 	@Input() title: string = ''
+	@Input() editable: boolean = false
+	@Output() onEdit = new EventEmitter()
 }

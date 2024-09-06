@@ -6,6 +6,7 @@ import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {MobileTablePopupModule} from 'src/app/shared/ui-kit/mobile-table-popup/mobile-table-popup.module'
+import {TagModule} from 'src/app/shared/ui-kit/tag/tag.module'
 
 @NgModule({
 	declarations: [RequestsPageModalComponent],
@@ -15,7 +16,8 @@ import {MobileTablePopupModule} from 'src/app/shared/ui-kit/mobile-table-popup/m
 		SpacingModule,
 		IconModule,
 		ButtonModule,
-		MobileTablePopupModule
+		MobileTablePopupModule,
+		TagModule
 	]
 })
 export class RequestsPageModalModule {}

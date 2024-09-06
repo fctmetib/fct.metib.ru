@@ -6,6 +6,8 @@ import {SpacingModule} from '../spacing/spacing.module'
 import {IconModule} from '../ref-icon/icon.module'
 import {LinkModule} from '../link/link.module'
 import {RightIconModule} from '../../directives/right-icon/right-icon.module'
+import {ButtonModule} from '../button/button.module'
+import {TagModule} from '../tag/tag.module'
 
 @NgModule({
 	declarations: [MobileTablePopupComponent, MobileTablePopupCellComponent],
@@ -14,7 +16,9 @@ import {RightIconModule} from '../../directives/right-icon/right-icon.module'
 		SpacingModule,
 		IconModule,
 		LinkModule,
-		RightIconModule
+		RightIconModule,
+		ButtonModule,
+		TagModule
 	],
 	exports: [MobileTablePopupComponent, MobileTablePopupCellComponent]
 })

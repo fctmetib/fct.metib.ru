@@ -15,6 +15,7 @@ export class MobileTablePopupCellComponent {
 	}
 	@Input() title: string = ''
 	@Input() sectionTitle: string = ''
+	@Input() badgeText: string = ''
 	@Input() type: MobileTablePopupCellType = 'text'
 	@Input() contracted: boolean = false
 	@Input() showCopy: boolean = false

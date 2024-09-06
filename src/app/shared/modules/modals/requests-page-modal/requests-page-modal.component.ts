@@ -17,6 +17,14 @@ export class RequestsPageModalComponent {
 		console.log('data :>> ', data)
 	}
 
+	getTitle() {
+		return `Заявка № ${this.data.req.Number}`
+	}
+
+	requestEdit() {
+		console.log('EDIT REQUEST>>>')
+	}
+
 	public copyData(data) {
 		this.clipboard.copy(data)
 		this.copied = true

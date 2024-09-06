@@ -1,5 +1,17 @@
 <div class="flex flex_column">
-	<h4>{{ title }}</h4>
+	<div
+		class="flex flex_align-center flex_justify-between"
+		*ngIf="editable; else unEditable"
+	>
+		<h4>{{ title }}</h4>
+		<mib-button size="m" (press)="onEdit.emit()" type="ghost-primary">
+			<mib-icon btn-icon class="stroke" name="fi_edit-3"></mib-icon>
+		</mib-button>
+	</div>
+	<ng-template #unEditable>
+		<h4>{{ title }}</h4>
+	</ng-template>
+	<ng-content select="[chips]"></ng-content>
 </div>
 <mib-spacing type="xm"></mib-spacing>
 <ng-content></ng-content>
