@@ -14,6 +14,7 @@ import {
 	debounceTime,
 	distinctUntilChanged,
 	filter,
+	forkJoin,
 	of,
 	pairwise,
 	startWith,
@@ -60,7 +61,7 @@ export class DemandDrawerComponent implements OnInit {
 	ngOnInit(): void {
 		this.initForms()
 
-		const modalData = this.data.data;
+		const modalData = this.data.data
 
 		// Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
 		if (modalData.isEdit || modalData.isView) {
@@ -73,17 +74,17 @@ export class DemandDrawerComponent implements OnInit {
 			this.initDraft()
 
 			// Включаем авто сохранение
-			this.enableAutoSaveDraft();
+			this.enableAutoSaveDraft()
 		}
 
 		// Если создание и есть черновик
 		if (modalData.isCreation && modalData.DraftId) {
-			this.DraftId = modalData.DraftId;
+			this.DraftId = modalData.DraftId
 			// получаем черновик по DraftId
 			// this.getCurrentDraft();
 
 			// Включаем авто сохранение
-			this.enableAutoSaveDraft();
+			this.enableAutoSaveDraft()
 		}
 	}
 
@@ -101,7 +102,7 @@ export class DemandDrawerComponent implements OnInit {
 	enableAutoSaveDraft() {
 		this.form.valueChanges
 			.pipe(
-				filter(() => true),
+				filter(() => !!this.DraftId),
 				debounceTime(300), // Ждем 300 мс после окончания ввода
 				distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
 				startWith(this.form.value), // Начальное значение формы
@@ -109,15 +110,12 @@ export class DemandDrawerComponent implements OnInit {
 				filter(([prev, curr]) => JSON.stringify(prev) !== JSON.stringify(curr)),
 				switchMap(([prev, curr]) => {
 					const payload = {
-						DraftId: this.DraftId,
-						DemandData: {
-							Subject: curr.requestTitle,
-							Question: curr.requestText,
-							Type: this.freeRequestType,
-							Files: []
-						}
+						Subject: curr.requestTitle,
+						Question: curr.requestText,
+						Type: this.freeRequestType,
+						Files: []
 					}
-					return this.demandService.changeCurrentDraft(this.DraftId, payload)
+					return this.demandService.updateDraft(this.DraftId, payload)
 				})
 			)
 			.subscribe(result => {
@@ -139,7 +137,7 @@ export class DemandDrawerComponent implements OnInit {
 			.pipe(
 				tap(id => {
 					console.log('create autosave id :>> ', id)
-					this.DraftId = id;
+					this.DraftId = id
 				})
 			)
 			.subscribe()
@@ -178,31 +176,49 @@ export class DemandDrawerComponent implements OnInit {
 			Description: `description ${file.name}`,
 			DocumentTypeID: 40,
 			OwnerTypeID: 6,
-			// Бекенд сказал, что информация берётся из токена
-			// OwnerID: this.userFactoring.OrganizationID,
 			Data: extractBase64(url)
 		}
+
 		this.addDocument(document)
 	}
 
 	onSubmit() {
 		const res = this.form.getRawValue()
-		this.demandService
-			.prepareDemandByTypes(this.freeRequestType)
-			.pipe(
-				switchMap(result => {
-					console.log('result :>> ', result)
-					const resObj = {
-						DraftId: '',
-						DemandData: {
-							Subject: res.requestTitle,
-							Question: res.requestText,
-							Type: this.initialData.Type,
-							Files: []
-						}
-					}
+		const resObj = {
+			DraftId: this.DraftId.toString(),
+			DemandData: {
+				Subject: res.requestTitle,
+				Question: res.requestText,
+				Type: this.freeRequestType
+			}
+		}
 
-					return this.demandService.createDemand(resObj)
+		this.demandService
+			.createDemand(resObj)
+			.pipe(
+				switchMap(createdDemandID => {
+					if (!createdDemandID) {
+						throw new Error('Создание запроса не удалось')
+					}
+					
+					const demandId = createdDemandID // Предполагается, что в ответе будет идентификатор созданного запроса
+
+					// Загрузка каждого документа
+					const uploadObservables = this.documents.controls.map(
+						(control: FormGroup) => {
+							const file = control.get('Data').value // Данные файла
+							const documentType = control.get('DocumentTypeID').value // Тип документа
+
+							return this.demandService.uploadFile(
+								file,
+								documentType,
+								createdDemandID
+							)
+						}
+					)
+
+					// Ожидание завершения всех запросов на загрузку файлов
+					return forkJoin(uploadObservables)
 				}),
 				catchError(error => {
 					console.error('An error occurred >>>:', error)

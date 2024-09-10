@@ -51,29 +51,46 @@ export class DemandService {
 	}
 
 	// new API
-	public createDemand<T>(data: any): Observable<DemandInterface<T>> {
+	public createDemand<T>(data: any): Observable<any> {
 		const url = `${environment.apiUrl}/v1/demands`
 		return this.http.post<any>(url, data)
 	}
 
 	// new API
-	public changeCurrentDraft(id: any, data: any): Observable<any> {
-		const url = `${environment.apiUrl}/v1/demands`
-		const params = new HttpParams()
-		.set('id', JSON.stringify(id));
-	
-		return this.http.put<any>(url, data, { params })
-	}
-
-	// new API
-	public createNewDraft(data: any): Observable<any> {
+	public updateDraft(id: any, data: any): Observable<any> {
 		const url = `${environment.apiUrl}/v1/demands/drafts`;
 		const params = new HttpParams()
-		.set('demandData', JSON.stringify(data));
-	
-		return this.http.post<any>(url, null, { params });
+		  .set('draftId', JSON.stringify(id))
+		  .set('demandData', JSON.stringify(data));
+	  
+		return this.http.put<any>(url, null, { params });
 	  }
 	  
+	// new API
+	public createNewDraft(data: any): Observable<any> {
+		const url = `${environment.apiUrl}/v1/demands/drafts`
+		const params = new HttpParams().set('demandData', JSON.stringify(data))
+
+		return this.http.post<any>(url, null, {params})
+	}
+
+	public uploadFile(
+		file: any,
+		documentType: string,
+		demandId: number
+	): Observable<any> {
+		const url = `${environment.apiUrl}/v1/demands/file/upload`
+		const params = new HttpParams()
+			.set('documentType ', documentType)
+			.set('demandId', demandId)
+
+		// Создаем объект FormData для отправки файлов
+		const formData = new FormData()
+		formData.append('file', file) // добавляем сам файл
+
+		return this.http.post<any>(url, file, {params})
+	}
+
 	public saveDraftById(
 		id: number,
 		data: DemandDataBaseInterface
