@@ -39,8 +39,10 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 	requestLists: IQueryList[] = []
 	drafts: IDraftList[] = []
 	draftLists: IDraftList[] = []
-	historys: IHistoryList[] = []
-	historyLists: IHistoryList[] = []
+	historys: any[] = []
+	historyLists: any[] = []
+	selectedHistoryLists: any[] = []
+	selectedStatus: string = 'All'
 
 	public isDesktop: boolean = false
 
@@ -200,7 +202,8 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 			.pipe(
 				tap(data => {
 					this.historys = data
-					console.log('this.historys :>> ', this.historys)
+					this.selectedHistoryLists = this.historys
+					// console.log('this.historys :>> ', this.historys)
 					this.onHistoryListChange(1)
 				}),
 				finalize(() => this.loading$.next(false))
@@ -285,6 +288,7 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 	}
 
 	onPageChange<T>(page: number, sourceArray: T[] = []) {
+		// console.log('page, sourceArray :>> ', page, sourceArray)
 		this.currentPage$.next(page)
 
 		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
@@ -298,16 +302,20 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 	}
 
 	onHistoryListChange($event) {
-		this.historyLists = this.onPageChange($event, this.historys)
+		// console.log('$event :>> ', $event)
+		this.historyLists = this.onPageChange($event, this.selectedHistoryLists)
 	}
 
 	openDrawer() {
-		this.demandDrawerService.open({
-			data: {
-				isCreation: true,
-				DraftId: null
-			}
-		}).afterClosed().subscribe()
+		this.demandDrawerService
+			.open({
+				data: {
+					isCreation: true,
+					DraftId: null
+				}
+			})
+			.afterClosed()
+			.subscribe()
 	}
 
 	openDrawers(id: number) {
@@ -371,6 +379,18 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 			default:
 				break
 		}
+	}
+
+	sortDemandByStatus(status: string) {
+		if (status === 'All') {
+			this.selectedHistoryLists = this.historys
+		} else {
+			this.selectedHistoryLists = this.historys.filter(
+				item => item.Status === status
+			)
+		}
+
+		this.onHistoryListChange(1)
 	}
 
 	ngOnDestroy(): void {

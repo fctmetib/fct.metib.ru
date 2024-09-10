@@ -130,27 +130,41 @@
 					<ng-container mibLabel>Поиск по запросам</ng-container>
 					<mib-icon class="stroke path" mibLeftIcon name="fi_search"></mib-icon>
 				</mib-input>
-				<mib-select type="outline" placeholder="Выберите статус запроса">
-					<mib-dropdown-point [value]="true" text="Создан"></mib-dropdown-point>
+				<mib-select placeholder="Выберите статус запроса" type="outline">
 					<mib-dropdown-point
-						[value]="false"
+						(press)="sortDemandByStatus('All')"
+						[value]="selectedStatus == 'All'"
+						text="Все зпросы"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						(press)="sortDemandByStatus('Created')"
+						[value]="selectedStatus == 'Created'"
+						text="Создан"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="selectedStatus == 'Completed'"
 						text="Завершен"
+						(press)="sortDemandByStatus('Completed')"
 					></mib-dropdown-point>
 					<mib-dropdown-point
-						[value]="false"
+						[value]="selectedStatus == 'Processing'"
 						text="В процессе"
+						(press)="sortDemandByStatus('Processing')"
 					></mib-dropdown-point>
 					<mib-dropdown-point
-						[value]="false"
+						[value]="selectedStatus == 'Rejected'"
 						text="Отклонено"
+						(press)="sortDemandByStatus('Rejected')"
 					></mib-dropdown-point>
 					<mib-dropdown-point
-						[value]="false"
+						[value]="selectedStatus == 'Draft'"
 						text="Черновик"
+						(press)="sortDemandByStatus('Draft')"
 					></mib-dropdown-point>
 					<mib-dropdown-point
-						[value]="false"
+						[value]="selectedStatus == 'Canceled'"
 						text="Отменен"
+						(press)="sortDemandByStatus('Canceled')"
 					></mib-dropdown-point>
 				</mib-select>
 			</div>
@@ -172,7 +186,11 @@
 				<ng-template #table2>
 					<mib-table-row
 						[@slideAnimation]="historyAnimationStates[history.id]"
-						*ngFor="let history of historyLists; let last = last"
+						*ngFor="
+							let history of historyLists;
+							else: emptyTable;
+							let last = last
+						"
 						[underlined]="!last"
 					>
 						<mib-table-cell>
@@ -224,18 +242,24 @@
 							</ng-container>
 						</mib-table-cell>
 						<!-- <mib-button table-row-button size="s" type="ghost-secondary">
-							<mib-icon
-								class="stroke"
-								btn-icon
-								name="fi_more-vertical"
-							></mib-icon>
-						</mib-button> -->
+								<mib-icon
+									class="stroke"
+									btn-icon
+									name="fi_more-vertical"
+								></mib-icon>
+							</mib-button> -->
+					</mib-table-row>
+					<mib-table-row #emptyTable>
+						<p class="text text_m w-100 flex_align-self-center text-center">
+							нет данных
+						</p>
 					</mib-table-row>
 				</ng-template>
 				<mib-table-footer [lined]="!(loading$ | async)">
 					<mib-paginator
+						*ngIf="selectedHistoryLists.length"
 						(pageChange)="onHistoryListChange($event)"
-						[totalCount]="historys.length"
+						[totalCount]="selectedHistoryLists.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 					></mib-paginator>
