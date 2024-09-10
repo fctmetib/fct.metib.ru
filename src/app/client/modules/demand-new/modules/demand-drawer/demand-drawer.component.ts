@@ -22,146 +22,6 @@ import {
 } from 'rxjs'
 import {DemandService} from '../../services/demand.service'
 
-// export interface demandInterface {
-// 	DraftId: 'string'
-// 	DemandData: {
-// 		Subject: 'string'
-// 		Question: 'string'
-// 		Type: 'string'
-// 		Files: [
-// 			{
-// 				ID: 0
-// 				Identifier: 'string'
-// 				Code: 'string'
-// 				FileName: 'string'
-// 				Size: 0
-// 			}
-// 		]
-// 	}
-// }
-
-// export interface freeDemandRequestDrawerInterface {
-// 	DraftId: string
-// 	DemandData: {
-// 		Organization: {
-// 			Type: 0
-// 			LegalForm: string
-// 			FullTitle: string
-// 			ShortTitle: string
-// 			ForeignTitle: string
-// 			Phone: string
-// 			Email: string
-// 			Website: string
-// 			LegalAddress: {
-// 				PostCode: string
-// 				Country: string
-// 				RegionTitle: string
-// 				RegionCode: 0
-// 				District: string
-// 				City: string
-// 				Locality: string
-// 				Street: string
-// 				House: string
-// 				Appartment: string
-// 			}
-// 			PostAddress: {
-// 				PostCode: string
-// 				Country: string
-// 				RegionTitle: string
-// 				RegionCode: 0
-// 				District: string
-// 				City: string
-// 				Locality: string
-// 				Street: string
-// 				House: string
-// 				Appartment: string
-// 			}
-// 			FactAddressEquals: true
-// 			PostAddressEquals: true
-// 			FactAddress: {
-// 				PostCode: string
-// 				Country: string
-// 				RegionTitle: string
-// 				RegionCode: 0
-// 				District: string
-// 				City: string
-// 				Locality: string
-// 				Street: string
-// 				House: string
-// 				Appartment: string
-// 			}
-// 			Requisites: {
-// 				LegalForm: string
-// 				INN: string
-// 				KPP: string
-// 				OGRN: string
-// 				OKPO: string
-// 				OKATO: string
-// 				OKVED: string
-// 				OKOGU: string
-// 				Signer: {
-// 					FIO: string
-// 					Position: string
-// 					Reason: string
-// 				}
-// 				AccountManager: string
-// 				BankAccount: {
-// 					Bank: string
-// 					COR: string
-// 					BIK: string
-// 					Number: string
-// 				}
-// 				RegistrationDate: Date
-// 				SalesManagerID: 0
-// 				RegistrationRegionID: 0
-// 			}
-// 			Settings: {
-// 				BorderHour: 0
-// 				AgregateUnload: true
-// 				FabricPostingType: 0
-// 				SystemNameType: 0
-// 			}
-// 		}
-// 		Person: {
-// 			NameFirst: string
-// 			NameLast: string
-// 			NameSecond: string
-// 			Gender: 0
-// 			Phone: string
-// 			Email: string
-// 			SNILS: string
-// 			INN: string
-// 			BirthDate: Date
-// 			BirthCountryCode: 0
-// 			BirthPlace: string
-// 			Address: string
-// 		}
-// 		Passport: {
-// 			Number: string
-// 			Date: Date
-// 			Expire: Date
-// 			IssuerTitle: string
-// 			IssuerCode: string
-// 			IsForeign: true
-// 			Nationality: string
-// 		}
-// 		PersonPosition: string
-// 		PersonalAgreement: true
-// 		identificationPointGuid: string
-// 		Type: string
-// 		Files: [
-// 			{
-// 				ID: 0
-// 				Identifier: string
-// 				Code: string
-// 				FileName: string
-// 				Size: 0
-// 			}
-// 		]
-// 		SkipIsDoneCheck: true
-// 	}
-// }
-
 @Component({
 	selector: 'mib-demand-drawer',
 	templateUrl: './demand-drawer.component.html',
@@ -183,6 +43,8 @@ export class DemandDrawerComponent implements OnInit {
 	isViewDemand: boolean = false
 	isDemandRequest: boolean = false
 
+	DraftId = null
+
 	constructor(
 		private fb: FormBuilder,
 		private toaster: ToasterService,
@@ -197,49 +59,32 @@ export class DemandDrawerComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.initForms()
-		this.getByID()
 
-		this.demandService.prepareDemandByTypes(1).subscribe(data => {
-			console.log('prepare >>> :>> ', data)
-		})
+		const modalData = this.data.data;
 
-		const currentDraft = null
-		const payload = {
-			Subject: '',
-			Question: '',
-			Type: 'Question',
-			Files: []
+		// Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
+		if (modalData.isEdit || modalData.isView) {
+			this.getByID()
 		}
-		this.demandService
-			.createNewDraft(payload)
-			.pipe(
-				tap(id => {
-					console.log('create autosave id :>> ', id)
-				})
-			)
-			.subscribe()
-		this.form.valueChanges
-			.pipe(
-				debounceTime(300), // Ждем 300 мс после окончания ввода
-				distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
-				startWith(this.form.value), // Начальное значение формы
-				pairwise(), // Получаем текущее и предыдущее значения формы
-				filter(([prev, curr]) => JSON.stringify(prev) !== JSON.stringify(curr)) // Выполняем только если данные изменились
-				//		switchMap(([prev, curr]) => {
-				// Выполняем запрос на API с текущими значениями формы
-				//			return this.demandService.changeCurrentDraft() // ============================== АПДЕЙТ ЧЕРНОВИКА
-				// return PUT (/api/v1/demands); // ============================== АПДЕЙТ ЧЕРНОВИКА
-				//		})
-			)
-			.subscribe(result => {
-				// Обрабатываем результат запроса
-				console.log('Результат API:', result)
-			})
 
-		this.form.valueChanges.pipe(debounceTime(3000)).subscribe(value => {
-			console.log('Form data changed:>>>', value)
-			// this.autoSave()
-		})
+		// Если создание и нет черновика
+		if (modalData.isCreation && !modalData.DraftId) {
+			// инициализируем черновик
+			this.initDraft()
+
+			// Включаем авто сохранение
+			this.enableAutoSaveDraft();
+		}
+
+		// Если создание и есть черновик
+		if (modalData.isCreation && modalData.DraftId) {
+			this.DraftId = modalData.DraftId;
+			// получаем черновик по DraftId
+			// this.getCurrentDraft();
+
+			// Включаем авто сохранение
+			this.enableAutoSaveDraft();
+		}
 	}
 
 	getByID() {
@@ -251,61 +96,50 @@ export class DemandDrawerComponent implements OnInit {
 				})
 			)
 			.subscribe()
-		// .pipe(
-		// 	catchError(error => {
-		// 		console.error('An error AUTOSAVE >>>:', error)
-		// 		return of(null)
-		// 	}),
-		// 	tap(result => {
-		// 		// this.toaster.show('success', 'Автосохранение', '', true, false, 1500)
-		// 		console.log('AUTOSAVE-RESULT:', result)
-		// 	})
-		// )
-		// .subscribe()
 	}
 
-	autoSave() {
-		const formData = this.form.getRawValue()
+	enableAutoSaveDraft() {
+		this.form.valueChanges
+			.pipe(
+				filter(() => true),
+				debounceTime(300), // Ждем 300 мс после окончания ввода
+				distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
+				startWith(this.form.value), // Начальное значение формы
+				pairwise(), // Получаем текущее и предыдущее значения формы
+				filter(([prev, curr]) => JSON.stringify(prev) !== JSON.stringify(curr)),
+				switchMap(([prev, curr]) => {
+					const payload = {
+						DraftId: this.DraftId,
+						DemandData: {
+							Subject: curr.requestTitle,
+							Question: curr.requestText,
+							Type: this.freeRequestType,
+							Files: []
+						}
+					}
+					return this.demandService.changeCurrentDraft(this.DraftId, payload)
+				})
+			)
+			.subscribe(result => {
+				// Обрабатываем результат запроса
+				console.log('Результат API:', result)
+			})
+	}
 
-		console.log('AUTOSAVE-init>>>')
-
+	initDraft() {
 		const payload = {
-			// Type: this.initialData?.Type || 'Question',
-			// Files: [
-			// 	{
-			// 		ID: 0,
-			// 		Identifier: 'string',
-			// 		Code: 'string',
-			// 		FileName: 'string',
-			// 		Size: 0
-			// 	}
-			// ]
-			// DraftId: '',
-			// DemandData: {
-			// 	Subject: formData.requestTitle,
-			// 	Question: formData.requestText,
-			// 	Type: this.initialData.Type,
-			// 	Files: this.initialData.Files
-			// }
-
-			Subject: formData.requestTitle,
-			Question: formData.requestText,
-			// Type: 1,
+			Subject: '',
+			Question: '',
 			Type: this.freeRequestType,
 			Files: []
-			// }
 		}
 
 		this.demandService
-			.changeCurrentDraft(payload)
+			.createNewDraft(payload)
 			.pipe(
-				catchError(error => {
-					console.error('An error AUTOSAVE >>>:', error)
-					return of(null)
-				}),
-				tap(result => {
-					// this.toaster.show('success', 'Автосохранение', '', true, false, 1500)
-					console.log('AUTOSAVE-RESULT:', result)
+				tap(id => {
+					console.log('create autosave id :>> ', id)
+					this.DraftId = id;
 				})
 			)
 			.subscribe()
@@ -351,81 +185,8 @@ export class DemandDrawerComponent implements OnInit {
 		this.addDocument(document)
 	}
 
-	saveData(): void {
-		const formData = this.form.getRawValue()
-
-		const payload = {
-			DraftId: '',
-			DemandData: {
-				Subject: formData.requestTitle,
-				Question: formData.requestText,
-				Type: this.initialData.Type,
-				Files: this.initialData.Files
-			}
-		}
-
-		console.log('payload :>> ', payload)
-
-		this.demandService
-			.createDemand(payload)
-			.pipe(
-				catchError(error => {
-					console.error('An error AUTOSAVE >>>:', error)
-					return of(null)
-				}),
-				tap(result => {
-					// this.toaster.show('success', 'Автосохранение', '', true, false, 1500)
-					console.log('AUTOSAVE++:', result)
-				})
-			)
-			.subscribe()
-	}
-
-	saveDraftAuto() {
-		console.log('SAVE DRAFT>>>')
-		const formData = this.form.getRawValue()
-
-		const payload = {
-			Subject: formData.requestTitle,
-			Question: formData.requestText,
-			Type: 'Question',
-			Files: []
-		}
-
-		this.demandService
-			.changeCurrentDraft(payload)
-			.pipe(
-				catchError(error => {
-					console.error('An error AUTOSAVE >>>:', error)
-					return of(null)
-				}),
-				tap(result => {
-					console.log('payload :>> ', payload)
-					// this.toaster.show('success', 'Автосохранение', '', true, false, 1500)
-					console.log('AUTOSAVE-RESULT:', result)
-				})
-			)
-			.subscribe()
-	}
-
 	onSubmit() {
-		console.log('CREATE REQUEST>>>')
 		const res = this.form.getRawValue()
-
-		let reqData = {
-			Subject: res.requestTitle,
-			Question: res.requestText,
-			Type: 'Question',
-			Files: []
-		}
-
-		// let reqData = {
-		// 	Title: res.requestTitle,
-		// 	Text: res.requestText,
-		// 	Document: this.documents
-		// }
-
-		console.log('reqData :>> ', reqData)
 		this.demandService
 			.prepareDemandByTypes(this.freeRequestType)
 			.pipe(
@@ -434,9 +195,9 @@ export class DemandDrawerComponent implements OnInit {
 					const resObj = {
 						DraftId: '',
 						DemandData: {
-							Subject: reqData.Subject,
-							Question: reqData.Question,
-							Type: reqData.Type,
+							Subject: res.requestTitle,
+							Question: res.requestText,
+							Type: this.initialData.Type,
 							Files: []
 						}
 					}
