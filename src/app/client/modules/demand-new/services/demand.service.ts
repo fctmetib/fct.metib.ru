@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
-import {HttpClient, HttpHeaders} from '@angular/common/http'
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
 import {
 	DemandDataBaseInterface,
@@ -56,25 +56,24 @@ export class DemandService {
 		return this.http.post<any>(url, data)
 	}
 
-	// public createDemand<T>(
-	// 	data: SaveDemandRequestInterface<T>
-	// ): Observable<DemandInterface<T>> {
-	// 	const url = `${environment.apiUrl}/demand`
-	// 	return this.http.post<DemandInterface<T>>(url, data)
-	// }
-
 	// new API
-	public changeCurrentDraft(id: any): Observable<any> {
+	public changeCurrentDraft(id: any, data: any): Observable<any> {
 		const url = `${environment.apiUrl}/v1/demands`
-		return this.http.put<any>(url, id)
+		const params = new HttpParams()
+		.set('id', JSON.stringify(id));
+	
+		return this.http.put<any>(url, data, { params })
 	}
 
 	// new API
 	public createNewDraft(data: any): Observable<any> {
-		const url = `${environment.apiUrl}/v1/demands/drafts`
-		return this.http.post<any>(url, data)
-	}
-
+		const url = `${environment.apiUrl}/v1/demands/drafts`;
+		const params = new HttpParams()
+		.set('demandData', JSON.stringify(data));
+	
+		return this.http.post<any>(url, null, { params });
+	  }
+	  
 	public saveDraftById(
 		id: number,
 		data: DemandDataBaseInterface
