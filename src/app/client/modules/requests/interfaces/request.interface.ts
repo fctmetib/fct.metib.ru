@@ -59,6 +59,7 @@ export interface DocumentReq {
   DocumentTypeID: number
   OwnerTypeID: number
   Data: string
+  File?: any
 }
 
 export interface DocumentRes extends Omit<DocumentReq, 'Data'> {

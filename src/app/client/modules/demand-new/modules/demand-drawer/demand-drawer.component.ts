@@ -158,7 +158,8 @@ export class DemandDrawerComponent implements OnInit {
 			Description: [null],
 			DocumentTypeID: [null],
 			OwnerTypeID: [null],
-			Data: [null]
+			Data: [null],
+			File: [null],
 		})
 		control.patchValue(data)
 		this.documents.push(control)
@@ -176,7 +177,8 @@ export class DemandDrawerComponent implements OnInit {
 			Description: `description ${file.name}`,
 			DocumentTypeID: 40,
 			OwnerTypeID: 6,
-			Data: extractBase64(url)
+			Data: extractBase64(url),
+			File: file
 		}
 
 		this.addDocument(document)
@@ -200,18 +202,14 @@ export class DemandDrawerComponent implements OnInit {
 					if (!createdDemandID) {
 						throw new Error('Создание запроса не удалось')
 					}
-					
-					const demandId = createdDemandID // Предполагается, что в ответе будет идентификатор созданного запроса
 
-					// Загрузка каждого документа
 					const uploadObservables = this.documents.controls.map(
 						(control: FormGroup) => {
-							const file = control.get('Data').value // Данные файла
-							const documentType = control.get('DocumentTypeID').value // Тип документа
+							const file = control.get('File').value
 
 							return this.demandService.uploadFile(
 								file,
-								documentType,
+								"test",
 								createdDemandID
 							)
 						}

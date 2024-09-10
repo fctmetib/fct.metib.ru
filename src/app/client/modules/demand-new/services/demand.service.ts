@@ -86,8 +86,8 @@ export class DemandService {
 
 		// Создаем объект FormData для отправки файлов
 		const formData = new FormData()
-		formData.append('file', file) // добавляем сам файл
-
+		formData.append('file', file); // добавляем сам файл
+		
 		return this.http.post<any>(url, file, {params})
 	}
 
