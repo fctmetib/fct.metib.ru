@@ -43,7 +43,6 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 	historyLists: any[] = []
 	selectedHistoryLists: any[] = []
 	selectedStatus: string = 'All'
-	isHistoryListEmpty: boolean = false
 
 	public isDesktop: boolean = false
 
@@ -204,7 +203,7 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 				tap(data => {
 					this.historys = data
 					this.selectedHistoryLists = this.historys
-					console.log('this.historys :>> ', this.historys)
+					// console.log('this.historys :>> ', this.historys)
 					this.onHistoryListChange(1)
 				}),
 				finalize(() => this.loading$.next(false))
@@ -289,7 +288,7 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 	}
 
 	onPageChange<T>(page: number, sourceArray: T[] = []) {
-		console.log('page, sourceArray :>> ', page, sourceArray)
+		// console.log('page, sourceArray :>> ', page, sourceArray)
 		this.currentPage$.next(page)
 
 		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
@@ -303,17 +302,20 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 	}
 
 	onHistoryListChange($event) {
-		console.log('$event :>> ', $event)
+		// console.log('$event :>> ', $event)
 		this.historyLists = this.onPageChange($event, this.selectedHistoryLists)
 	}
 
 	openDrawer() {
-		this.demandDrawerService.open({
-			data: {
-				isCreation: true,
-				DraftId: null
-			}
-		}).afterClosed().subscribe()
+		this.demandDrawerService
+			.open({
+				data: {
+					isCreation: true,
+					DraftId: null
+				}
+			})
+			.afterClosed()
+			.subscribe()
 	}
 
 	openDrawers(id: number) {
@@ -387,8 +389,6 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 				item => item.Status === status
 			)
 		}
-
-		this.isHistoryListEmpty = this.selectedHistoryLists.length === 0
 
 		this.onHistoryListChange(1)
 	}
