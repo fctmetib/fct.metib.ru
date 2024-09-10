@@ -18,12 +18,24 @@ export class DemandService {
 	constructor(private http: HttpClient) {}
 
 	// new API
+	// public prepareDemandByType(
+	// 	type: string
+	// ): Observable<any> {
+	// 	// const url = `${environment.apiUrl}/v1/demands/prepare?type=1`
+	// 	const url = `${environment.apiUrl}/v1/demands/prepare/${type}?type=1`
+	// 	return this.http.get<any>(url, type)
+	// }
+
+	public prepareDemandByTypes(type: any): Observable<any> {
+		const url = `${environment.apiUrl}/v1/demands/prepare?type=${type}`
+		return this.http.get<any>(url)
+	}
+
 	public prepareDemandByType(
 		type: string
-	): Observable<DemandQueryBaseInterface> {
-		// const url = `${environment.apiUrl}/v1/demands/prepare?type=1`
+	): Observable<DemandDataBaseInterface> {
 		const url = `${environment.apiUrl}/v1/demands/prepare/${type}?type=1`
-		return this.http.post<DemandQueryBaseInterface>(url, type)
+		return this.http.get<DemandDataBaseInterface>(url)
 	}
 
 	// public prepareDemandByType(
@@ -52,8 +64,14 @@ export class DemandService {
 	// }
 
 	// new API
-	public saveDraft(data: any): Observable<any> {
-		const url = `${environment.apiUrl}/v1/demands/draft`
+	public changeCurrentDraft(id: any): Observable<any> {
+		const url = `${environment.apiUrl}/v1/demands`
+		return this.http.put<any>(url, id)
+	}
+
+	// new API
+	public createNewDraft(data: any): Observable<any> {
+		const url = `${environment.apiUrl}/v1/demands/drafts`
 		return this.http.post<any>(url, data)
 	}
 
@@ -79,7 +97,7 @@ export class DemandService {
 	// new API
 	// https://api-factoring-test02.metib.ru/api/v1/demands/draft
 	public getDrafts(): Observable<DemandDraftInterface<any>[]> {
-		const url = `${environment.apiUrl}/v1/demands/draft`
+		const url = `${environment.apiUrl}/v1/demands/drafts`
 		return this.http.get<DemandDraftInterface<any>[]>(url)
 	}
 
@@ -122,7 +140,7 @@ export class DemandService {
 
 	// new API
 	getDemandDraftById(id: number): Observable<any> {
-		const url = `${environment.apiUrl}/v1/demands/draft/?id=${id}`
+		const url = `${environment.apiUrl}/v1/demands/drafts/${id}`
 		return this.http.get<any>(url)
 	}
 

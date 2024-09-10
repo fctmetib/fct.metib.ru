@@ -12,7 +12,11 @@ import {
 	BehaviorSubject,
 	catchError,
 	debounceTime,
+	distinctUntilChanged,
+	filter,
 	of,
+	pairwise,
+	startWith,
 	switchMap,
 	tap
 } from 'rxjs'
@@ -36,127 +40,127 @@ import {DemandService} from '../../services/demand.service'
 // 	}
 // }
 
-export interface freeDemandRequestDrawerInterface {
-	DraftId: string
-	DemandData: {
-		Organization: {
-			Type: 0
-			LegalForm: string
-			FullTitle: string
-			ShortTitle: string
-			ForeignTitle: string
-			Phone: string
-			Email: string
-			Website: string
-			LegalAddress: {
-				PostCode: string
-				Country: string
-				RegionTitle: string
-				RegionCode: 0
-				District: string
-				City: string
-				Locality: string
-				Street: string
-				House: string
-				Appartment: string
-			}
-			PostAddress: {
-				PostCode: string
-				Country: string
-				RegionTitle: string
-				RegionCode: 0
-				District: string
-				City: string
-				Locality: string
-				Street: string
-				House: string
-				Appartment: string
-			}
-			FactAddressEquals: true
-			PostAddressEquals: true
-			FactAddress: {
-				PostCode: string
-				Country: string
-				RegionTitle: string
-				RegionCode: 0
-				District: string
-				City: string
-				Locality: string
-				Street: string
-				House: string
-				Appartment: string
-			}
-			Requisites: {
-				LegalForm: string
-				INN: string
-				KPP: string
-				OGRN: string
-				OKPO: string
-				OKATO: string
-				OKVED: string
-				OKOGU: string
-				Signer: {
-					FIO: string
-					Position: string
-					Reason: string
-				}
-				AccountManager: string
-				BankAccount: {
-					Bank: string
-					COR: string
-					BIK: string
-					Number: string
-				}
-				RegistrationDate: Date
-				SalesManagerID: 0
-				RegistrationRegionID: 0
-			}
-			Settings: {
-				BorderHour: 0
-				AgregateUnload: true
-				FabricPostingType: 0
-				SystemNameType: 0
-			}
-		}
-		Person: {
-			NameFirst: string
-			NameLast: string
-			NameSecond: string
-			Gender: 0
-			Phone: string
-			Email: string
-			SNILS: string
-			INN: string
-			BirthDate: Date
-			BirthCountryCode: 0
-			BirthPlace: string
-			Address: string
-		}
-		Passport: {
-			Number: string
-			Date: Date
-			Expire: Date
-			IssuerTitle: string
-			IssuerCode: string
-			IsForeign: true
-			Nationality: string
-		}
-		PersonPosition: string
-		PersonalAgreement: true
-		identificationPointGuid: string
-		Type: string
-		Files: [
-			{
-				ID: 0
-				Identifier: string
-				Code: string
-				FileName: string
-				Size: 0
-			}
-		]
-		SkipIsDoneCheck: true
-	}
-}
+// export interface freeDemandRequestDrawerInterface {
+// 	DraftId: string
+// 	DemandData: {
+// 		Organization: {
+// 			Type: 0
+// 			LegalForm: string
+// 			FullTitle: string
+// 			ShortTitle: string
+// 			ForeignTitle: string
+// 			Phone: string
+// 			Email: string
+// 			Website: string
+// 			LegalAddress: {
+// 				PostCode: string
+// 				Country: string
+// 				RegionTitle: string
+// 				RegionCode: 0
+// 				District: string
+// 				City: string
+// 				Locality: string
+// 				Street: string
+// 				House: string
+// 				Appartment: string
+// 			}
+// 			PostAddress: {
+// 				PostCode: string
+// 				Country: string
+// 				RegionTitle: string
+// 				RegionCode: 0
+// 				District: string
+// 				City: string
+// 				Locality: string
+// 				Street: string
+// 				House: string
+// 				Appartment: string
+// 			}
+// 			FactAddressEquals: true
+// 			PostAddressEquals: true
+// 			FactAddress: {
+// 				PostCode: string
+// 				Country: string
+// 				RegionTitle: string
+// 				RegionCode: 0
+// 				District: string
+// 				City: string
+// 				Locality: string
+// 				Street: string
+// 				House: string
+// 				Appartment: string
+// 			}
+// 			Requisites: {
+// 				LegalForm: string
+// 				INN: string
+// 				KPP: string
+// 				OGRN: string
+// 				OKPO: string
+// 				OKATO: string
+// 				OKVED: string
+// 				OKOGU: string
+// 				Signer: {
+// 					FIO: string
+// 					Position: string
+// 					Reason: string
+// 				}
+// 				AccountManager: string
+// 				BankAccount: {
+// 					Bank: string
+// 					COR: string
+// 					BIK: string
+// 					Number: string
+// 				}
+// 				RegistrationDate: Date
+// 				SalesManagerID: 0
+// 				RegistrationRegionID: 0
+// 			}
+// 			Settings: {
+// 				BorderHour: 0
+// 				AgregateUnload: true
+// 				FabricPostingType: 0
+// 				SystemNameType: 0
+// 			}
+// 		}
+// 		Person: {
+// 			NameFirst: string
+// 			NameLast: string
+// 			NameSecond: string
+// 			Gender: 0
+// 			Phone: string
+// 			Email: string
+// 			SNILS: string
+// 			INN: string
+// 			BirthDate: Date
+// 			BirthCountryCode: 0
+// 			BirthPlace: string
+// 			Address: string
+// 		}
+// 		Passport: {
+// 			Number: string
+// 			Date: Date
+// 			Expire: Date
+// 			IssuerTitle: string
+// 			IssuerCode: string
+// 			IsForeign: true
+// 			Nationality: string
+// 		}
+// 		PersonPosition: string
+// 		PersonalAgreement: true
+// 		identificationPointGuid: string
+// 		Type: string
+// 		Files: [
+// 			{
+// 				ID: 0
+// 				Identifier: string
+// 				Code: string
+// 				FileName: string
+// 				Size: 0
+// 			}
+// 		]
+// 		SkipIsDoneCheck: true
+// 	}
+// }
 
 @Component({
 	selector: 'mib-demand-drawer',
@@ -175,6 +179,9 @@ export class DemandDrawerComponent implements OnInit {
 
 	freeRequestType = 'Question'
 	initialData: any = null
+	isDraft: boolean = false
+	isViewDemand: boolean = false
+	isDemandRequest: boolean = false
 
 	constructor(
 		private fb: FormBuilder,
@@ -191,25 +198,53 @@ export class DemandDrawerComponent implements OnInit {
 	ngOnInit(): void {
 		this.initForms()
 		this.getByID()
+
+		this.demandService.prepareDemandByTypes(1).subscribe(data => {
+			console.log('prepare >>> :>> ', data)
+		})
+
+		const currentDraft = null
+		const payload = {
+			Subject: '',
+			Question: '',
+			Type: 'Question',
+			Files: []
+		}
 		this.demandService
-			.prepareDemandByType(this.freeRequestType)
-			.subscribe(data => {
-				this.initialData = data
-				this.form.patchValue({
-					requestTitle: data.Subject,
-					requestText: data.Question
+			.createNewDraft(payload)
+			.pipe(
+				tap(id => {
+					console.log('create autosave id :>> ', id)
 				})
+			)
+			.subscribe()
+		this.form.valueChanges
+			.pipe(
+				debounceTime(300), // Ждем 300 мс после окончания ввода
+				distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
+				startWith(this.form.value), // Начальное значение формы
+				pairwise(), // Получаем текущее и предыдущее значения формы
+				filter(([prev, curr]) => JSON.stringify(prev) !== JSON.stringify(curr)) // Выполняем только если данные изменились
+				//		switchMap(([prev, curr]) => {
+				// Выполняем запрос на API с текущими значениями формы
+				//			return this.demandService.changeCurrentDraft() // ============================== АПДЕЙТ ЧЕРНОВИКА
+				// return PUT (/api/v1/demands); // ============================== АПДЕЙТ ЧЕРНОВИКА
+				//		})
+			)
+			.subscribe(result => {
+				// Обрабатываем результат запроса
+				console.log('Результат API:', result)
 			})
 
 		this.form.valueChanges.pipe(debounceTime(3000)).subscribe(value => {
 			console.log('Form data changed:>>>', value)
-			this.autoSave()
+			// this.autoSave()
 		})
 	}
 
 	getByID() {
 		this.demandService
-			.getDemandDraftById(15898)
+			.getDemandDraftById(1593)
 			.pipe(
 				tap(data => {
 					console.log('getByIDdata :>> ', data)
@@ -232,7 +267,7 @@ export class DemandDrawerComponent implements OnInit {
 	autoSave() {
 		const formData = this.form.getRawValue()
 
-		console.log('AUTOSAVE>>>')
+		console.log('AUTOSAVE-init>>>')
 
 		const payload = {
 			// Type: this.initialData?.Type || 'Question',
@@ -262,7 +297,7 @@ export class DemandDrawerComponent implements OnInit {
 		}
 
 		this.demandService
-			.saveDraft(payload)
+			.changeCurrentDraft(payload)
 			.pipe(
 				catchError(error => {
 					console.error('An error AUTOSAVE >>>:', error)
@@ -346,6 +381,33 @@ export class DemandDrawerComponent implements OnInit {
 			.subscribe()
 	}
 
+	saveDraftAuto() {
+		console.log('SAVE DRAFT>>>')
+		const formData = this.form.getRawValue()
+
+		const payload = {
+			Subject: formData.requestTitle,
+			Question: formData.requestText,
+			Type: 'Question',
+			Files: []
+		}
+
+		this.demandService
+			.changeCurrentDraft(payload)
+			.pipe(
+				catchError(error => {
+					console.error('An error AUTOSAVE >>>:', error)
+					return of(null)
+				}),
+				tap(result => {
+					console.log('payload :>> ', payload)
+					// this.toaster.show('success', 'Автосохранение', '', true, false, 1500)
+					console.log('AUTOSAVE-RESULT:', result)
+				})
+			)
+			.subscribe()
+	}
+
 	onSubmit() {
 		console.log('CREATE REQUEST>>>')
 		const res = this.form.getRawValue()
@@ -353,7 +415,7 @@ export class DemandDrawerComponent implements OnInit {
 		let reqData = {
 			Subject: res.requestTitle,
 			Question: res.requestText,
-			Type: this.freeRequestType,
+			Type: 'Question',
 			Files: []
 		}
 
@@ -365,7 +427,7 @@ export class DemandDrawerComponent implements OnInit {
 
 		console.log('reqData :>> ', reqData)
 		this.demandService
-			.prepareDemandByType(this.freeRequestType)
+			.prepareDemandByTypes(this.freeRequestType)
 			.pipe(
 				switchMap(result => {
 					console.log('result :>> ', result)
