@@ -1,0 +1,23 @@
+<label class="flex flex_align-center checkbox w-100" [ngClass]="class">
+	<input
+		[id]="id"
+		type="checkbox"
+		[checked]="value"
+		(click)="onCheckboxChange($event)"
+		class="checkbox-input"
+	/>
+	<span
+		[class.checked]="value"
+		[class.floating]="styled"
+		class="checkbox-control flex flex_center"
+		[ngClass]="'checkbox-control_' + size"
+	>
+		<mib-icon
+			@checkboxAnimation
+			*ngIf="value"
+			class="stroke"
+			name="fi_check"
+		></mib-icon>
+	</span>
+	<ng-content></ng-content>
+</label>

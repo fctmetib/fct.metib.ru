@@ -1,0 +1,110 @@
+<div class="flex quest">
+	<div class="flex flex_grow flex_column frame-l">
+		<mib-spacing type="{{ isDesktop ? 'm' : 's' }}" type="s"></mib-spacing>
+		<div *ngIf="!quizCompleted; else congratsTemplate" class="flex flex_column">
+			<h4>{{ getCurrentQuestion().question }}</h4>
+			<mib-spacing type="xs2"></mib-spacing>
+			<p *ngIf="currentQuestionIndex === 0" class="text text_l c-bti-secondary">
+				Заполните форму, чтобы мы смогли предложить вам один или несколько
+				подходящих продуктов.
+			</p>
+			<div
+				*ngIf="!quizCompleted; else congratsTemplate"
+				class="flex flex_column frame"
+			>
+				<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
+				<div class="flex flex_column inputs">
+					<form [formGroup]="quizForm">
+						<div class="flex flex_column gap-16">
+							<label
+								class="custom-radio flex gap-8 text text_l c-bti-secondary"
+								*ngFor="let option of getCurrentQuestion().options"
+							>
+								<input
+									type="radio"
+									formControlName="answer"
+									[value]="option.value"
+								/>
+								{{ option.label }}
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</form>
+					<mib-spacing type="s"></mib-spacing>
+					<div class="flex">
+						<mib-button
+							[disabled]="quizForm.invalid"
+							(click)="nextQuestion()"
+							size="{{ isDesktop ? 'l' : 'm' }}"
+							type="filled-primary"
+						>
+							{{ isLastQuestion() ? 'Готово' : 'Далее' }}
+							<mib-icon
+								*ngIf="!isLastQuestion()"
+								btn-right-icon
+								class="stroke"
+								name="fi_chevron-right"
+							></mib-icon>
+						</mib-button>
+					</div>
+					<mib-spacing type="s"></mib-spacing>
+				</div>
+			</div>
+		</div>
+		<ng-template #congratsTemplate>
+			<h4>Рекомендуем рассмотреть следующие продукты факторинга:</h4>
+			<mib-spacing type="xs2"></mib-spacing>
+			<p class="text text_l c-bti-secondary">{{ recommendedProduct }}</p>
+			<div class="btn-wrap">
+				<mib-spacing type="s"></mib-spacing>
+				<mib-button (press)="onPress.emit()" size="m" type="filled-primary">
+					Получить консультацию
+				</mib-button>
+				<mib-spacing type="s"></mib-spacing>
+			</div>
+		</ng-template>		
+	</div>
+	<div class="flex flex_grow flex_column frame-r">
+		<mib-spacing type="{{ isDesktop ? 's' : 'xm' }}"></mib-spacing>
+		<div class="flex flex_column gap-4 quiz-progress">
+			<span
+				class="flex text pb-4 gap-2 text_m c-bti-secondary"
+				*ngIf="!quizCompleted; else quizFin"
+			>
+				{{ currentQuestionIndex + 1 }} из {{ questions.length }}
+			</span>
+			<ng-template #quizFin>
+				<span class="flex text pb-4 gap-2 text_m c-bti-secondary">Готово!</span>
+			</ng-template>
+			<div class="flex progress-bar">
+				<div class="progress" [style.width.%]="progress"></div>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex flex_column timeline">
+				<div
+					*ngFor="let p of progressInfo; let i = index"
+					[class.active]="
+						(i === currentQuestionIndex && !quizCompleted) ||
+						(quizCompleted && i === progressInfo.length - 1)
+					"
+					class="flex point flex_align-center gap-8"
+				>
+					<span
+						(click)="goToQuestion(i)"
+						class="text text_l c-bti-quaternary cursor-pointer"
+					>
+						{{ p }}
+					</span>
+					<ng-container
+						*ngIf="
+							(i === currentQuestionIndex && !quizCompleted) ||
+							(quizCompleted && i === progressInfo.length - 1)
+						"
+					>
+						<mib-icon btn-icon class="stroke" name="fi_chevron-left"></mib-icon>
+					</ng-container>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

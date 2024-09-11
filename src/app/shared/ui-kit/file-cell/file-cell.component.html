@@ -1,0 +1,68 @@
+<div class="file-cell flex" [ngClass]="classes">
+	<input
+		type="file"
+		class="file-input"
+		(change)="onChange($event)"
+		#fileUpload
+	/>
+	<div class="flex flex_align-center gap-8 flex_grow">
+		<div class="flex flex_align-center upload-icon">
+			<ng-container [ngSwitch]="status">
+				<div *ngSwitchCase="'uploading'">
+					<div class="spinner"></div>
+					<!-- <mib-loader [prog]="progress"></mib-loader> -->
+				</div>
+				<div *ngSwitchCase="'success'">
+					<div *ngIf="content !== 'document'; else docBlock">
+						<mib-avatar
+							[showImage]="true"
+							[showArrow]="false"
+							[src]="imageUrl"
+						></mib-avatar>
+					</div>
+					<ng-template #docBlock>
+						<mib-icon class="stroke" name="fi_file"></mib-icon>
+					</ng-template>
+				</div>
+				<p *ngSwitchCase="'fail'">❌ Error!</p>
+				<p *ngSwitchDefault>
+					<mib-icon class="stroke" name="fi_file"></mib-icon>
+				</p>
+			</ng-container>
+		</div>
+		<div
+			title="{{ fileName }} {{
+				file?.size / 1024 / 1000 | number : '1.2-2'
+			}} мб"
+			class="flex gap-8 text-clamp"
+		>
+			<span
+				class="cursor-pointer text c-bti-primary"
+				(click)="fileUpload.click()"
+			>
+				{{ fileName || 'Название документа' }}
+			</span>
+			<span class="cursor-pointer text c-bti-tertiary" *ngIf="status"
+				>{{ file?.size / 1024 / 1000 | number : '1.2-2' }} мб</span
+			>
+		</div>
+	</div>
+	<div class="flex buttons-block">
+		<mib-button
+			(click)="onUpload()"
+			title="Загрузить"
+			size="s"
+			type="ghost-secondary"
+		>
+			<mib-icon class="stroke" btn-icon name="fi_download"></mib-icon>
+		</mib-button>
+		<mib-button
+			(click)="cancelUpload()"
+			title="Удалить"
+			size="s"
+			type="ghost-secondary"
+		>
+			<mib-icon class="stroke" btn-icon name="fi_x"></mib-icon>
+		</mib-button>
+	</div>
+</div>

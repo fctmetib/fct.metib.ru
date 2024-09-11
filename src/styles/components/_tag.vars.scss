@@ -1,0 +1,264 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+
+@mixin filled-primary($color) {
+	background-color: map-get($color, bg);
+	@include tag-iconly(map-get($color, main));
+
+	& {
+		font-weight: var(--fw-regular);
+		color: map-get($color, main);
+	}
+
+	&:hover {
+		color: map-get($color, hovr);
+	}
+
+	&:active {
+		background-color: map-get($color, actv);
+	}
+
+	&.selected {
+		color: map-get($color, selectext);
+		background-color: map-get($color, main);
+		@include tag-iconly(map-get($color, selectext));
+	}
+
+	&.selected:hover {
+		background-color: map-get($color, hovr);
+	}
+
+	&.selected:active {
+		background-color: map-get($color, selecactive);
+	}
+}
+
+@mixin filled-accent($color) {
+	background-color: map-get($color, bg);
+	@include tag-iconly(map-get($color, main));
+
+	& {
+		font-weight: var(--fw-regular);
+		color: map-get($color, main);
+	}
+
+	&:hover {
+		color: map-get($color, hovr);
+	}
+
+	&:active {
+		background-color: map-get($color, actv);
+	}
+
+	&.selected {
+		color: map-get($color, selectext);
+		background-color: map-get($color, main);
+		@include tag-iconly(map-get($color, selectext));
+	}
+
+	&.selected:hover {
+		background-color: map-get($color, hovr);
+	}
+
+	&.selected:active {
+		background-color: map-get($color, selecactive);
+	}
+}
+
+@mixin filled-secondary($color) {
+	background-color: map-get($color, bg);
+	@include tag-iconly(map-get($color, main));
+
+	& {
+		font-weight: var(--fw-regular);
+		color: map-get($color, main);
+	}
+
+	&:hover {
+		border: 1px solid map-get($color, hovr);
+	}
+
+	&:active {
+		background-color: map-get($color, actv);
+	}
+
+	&.selected {
+		color: map-get($color, selectext);
+		background-color: map-get($color, mainselect);
+		@include tag-iconly(map-get($color, selectext));
+	}
+
+	&.selected:hover {
+		color: map-get($color, hovrselect);
+		border: 1px solid map-get($color, mainselect);
+		background-color: map-get($color, mainselect);
+	}
+
+	&.selected:active {
+		background-color: map-get($color, actvselect);
+	}
+}
+
+@mixin floating($color) {
+	background-color: map-get($color, bg);
+	@include tag-iconly(map-get($color, main));
+
+	& {
+		font-weight: var(--fw-regular);
+		color: map-get($color, main);
+	}
+
+	&:hover {
+		box-shadow: map-get($color, hovr);
+	}
+
+	&:active {
+		background-color: map-get($color, actv);
+	}
+
+	&.selected {
+		color: map-get($color, mainselect);
+		background-color: map-get($color, bgselect);
+		@include tag-iconly(map-get($color, mainselect));
+	}
+
+	&.selected:hover {
+		color: map-get($color, hovrselect);
+		box-shadow: map-get($color, hovr);
+	}
+
+	&.selected:active {
+		background-color: map-get($color, actvselect);
+	}
+}
+
+@mixin special($color) {
+	background-color: map-get($color, bg);
+	@include tag-iconly(map-get($color, main));
+
+	& {
+		font-weight: var(--fw-regular);
+		color: map-get($color, main);
+	}
+
+	&:hover {
+		// box-shadow: map-get($color, hovr);
+		box-shadow: none;
+	}
+
+	&:active {
+		background-color: map-get($color, actv);
+	}
+
+	&.selected {
+		color: map-get($color, mainselect);
+		background-color: map-get($color, bgselect);
+		@include tag-iconly(map-get($color, mainselect));
+	}
+
+	&.selected:hover {
+		color: map-get($color, hovrselect);
+		// box-shadow: map-get($color, hovr);
+	}
+
+	&.selected:active {
+		background-color: map-get($color, actvselect);
+	}
+}
+
+@mixin outline($color) {
+	border: 1px solid map-get($color, bg);
+	@include tag-iconly(map-get($color, main));
+
+	& {
+		font-weight: var(--fw-regular);
+		color: map-get($color, main);
+	}
+
+	&:hover {
+		border: 1px solid map-get($color, hovr);
+	}
+
+	&:active {
+		border: 1px solid map-get($color, hovr);
+		background-color: map-get($color, actv);
+	}
+
+	&.selected {
+		color: map-get($color, mainselect);
+		border: 1px solid map-get($color, bgselect);
+		@include tag-iconly(map-get($color, mainselect));
+	}
+
+	&.selected:hover {
+		color: map-get($color, hovrselect);
+		border: 1px solid map-get($color, hovrselect);
+	}
+
+	&.selected:active {
+		border: 1px solid map-get($color, actvselect);
+	}
+}
+
+@mixin tag-iconly($color) {
+	mib-icon {
+		@include icon-color($color);
+	}
+}
+
+@mixin tag-disabled {
+	$color: var(--wti-quaternary);
+	cursor: not-allowed;
+	background-color: var(--wgr-secondary);
+
+	& {
+		font-weight: var(--fw-regular);
+		color: $color;
+	}
+
+	&.tag {
+		&_primary {
+			& {
+				font-weight: var(--fw-regular);
+			}
+		}
+	}
+
+	@include tag-iconly($color);
+}
+
+@mixin tag {
+	border: 1px solid transparent;
+	border-radius: var(--main-border-radius);
+	cursor: pointer;
+	line-height: 100%;
+	width: 100%;
+
+	&_left-iconly .tag_left-wrapper {
+		display: block;
+	}
+
+	&_right-iconly .tag_right-wrapper {
+		display: block;
+	}
+
+	&_icon-wrapper {
+		display: none;
+	}
+
+	& {
+		@include body-text;
+		user-select: none;
+		white-space: nowrap;
+	}
+	& {
+		transition: var(--main-transition);
+	}
+	overflow: hidden;
+
+	&.tag {
+		&:disabled,
+		&[status='disabled'] {
+			@include tag-disabled;
+		}
+	}
+}

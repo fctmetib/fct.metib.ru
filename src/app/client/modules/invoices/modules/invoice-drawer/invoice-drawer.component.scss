@@ -1,0 +1,19 @@
+@import 'src/styles/helpers/_icon_tools';
+@import 'src/styles/_colors.vars';
+@import 'src/styles/_typography.vars.scss';
+
+h4 {
+	@include text-overflow(1);
+}
+
+.table-select {
+	max-width: 110px;
+}
+
+mib-navbar {
+	padding: var(--drawer-container-paddings);
+}
+
+mib-icon[name='fi_arrow-right'] {
+	@include icon-color(var(--bti-tertiary));
+}

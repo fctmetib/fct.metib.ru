@@ -1,81 +1,102 @@
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment'
 
-import { Observable, of } from 'rxjs';
+import {Observable, catchError, of, throwError} from 'rxjs'
 import {
-  HttpClient,
-  HttpEvent,
-  HttpHeaders,
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { FileModeInterface } from '../../types/file/file-model.interface';
-import { Translator } from '../../classes/common/translator.class';
+	HttpClient,
+	HttpErrorResponse,
+	HttpEvent,
+	HttpHeaders
+} from '@angular/common/http'
+import {Injectable} from '@angular/core'
+import {FileMode} from '../../types/file/file-model.interface'
+import {Translator} from '../../classes/common/translator.class'
+import {IFile} from '../../interfaces/files.interface'
 
 @Injectable()
 export class FileService {
+	private _translator: Translator
 
-  private _translator: Translator;
+	constructor(private http: HttpClient) {
+		this._translator = new Translator()
+	}
 
-  constructor(private http: HttpClient) {
-    this._translator = new Translator();
-  }
+	//TODO: нужно узнать что передавать
+	addFile(): Observable<FileMode> {
+		let url = `${environment.apiUrl}/file`
+		return this.http.post<FileMode>(url, {})
+	}
 
-  //TODO: нужно узнать что передавать
-  addFile(): Observable<FileModeInterface> {
-    let url = `${environment.apiUrl}/file`;
-    return this.http.post<FileModeInterface>(url, {});
-  }
+	uploadFileChunks(
+		file: ArrayBuffer,
+		fileName: string,
+		fileSize: string,
+		guid: string
+	): Observable<HttpEvent<FileMode>> {
+		const fileNameNormal = this._translator.translitToEnglish(fileName)
 
-  uploadFileChunks(
-    file: Uint8Array[],
-    fileName: string,
-    fileSize: string,
-    guid: string
-  ): Observable<HttpEvent<FileModeInterface>> {
+		let headers = new HttpHeaders()
+		headers = headers.append('Upload-ChunkNumber', '1')
+		headers = headers.append('Upload-FileName', fileNameNormal)
+		headers = headers.append('Upload-GUID', guid)
+		headers = headers.append('Upload-TotalSize', fileSize)
 
-    const fileNameNormal = this._translator.translitToEnglish(fileName);
+		return this.http.post<FileMode>(
+			`${environment.apiFileUploadUrl}/file/chunks`,
+			file,
+			{
+				headers,
+				reportProgress: true,
+				observe: 'events'
+			}
+		)
+	}
 
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.append('Upload-ChunkNumber', '1');
-    headers = headers.append('Upload-FileName', fileNameNormal);
-    headers = headers.append('Upload-GUID', guid);
-    headers = headers.append('Upload-TotalSize', fileSize);
+	uploadAvatar(file: Blob, fileName: string): Observable<string> {
+		var formdata = new FormData()
+		formdata.append('', file, fileName)
 
-    let url = `${environment.apiFileUploadUrl}/file/chunks`;
+		let url = `${environment.apiFileUploadUrl}/avatar`
+		return this.http.post<string>(url, formdata)
+	}
 
-    const upload$: Observable<HttpEvent<FileModeInterface>> =
-      this.http.post<FileModeInterface>(url, file, {
-        headers,
-        reportProgress: true,
-        observe: 'events',
-      });
-    return upload$;
-  }
+	getFileByCode(code: string): Observable<FileMode> {
+		let url = `${environment.apiUrl}/file/${code}`
+		return this.http.get<FileMode>(url)
+	}
 
-  uploadAvatar(file: Blob, fileName: string): Observable<string> {
-    var formdata = new FormData();
-    formdata.append('', file, fileName);
+	getFileContentByCode(code: string): Observable<any> {
+		let url = `${environment.apiUrl}/file/${code}/content`
+		return this.http.get<any>(url)
+	}
 
-    let url = `${environment.apiFileUploadUrl}/avatar`;
-    return this.http.post<string>(url, formdata);
-  }
+	getFile(requestID, documentID): Observable<any> {
+		let url = `${environment.apiUrl}/request/${requestID}/documents/${documentID}/file `
+		return this.http.get<any>(url)
+	}
 
-  getFileByCode(code: string): Observable<FileModeInterface> {
-    let url = `${environment.apiUrl}/file/${code}`;
-    return this.http.get<FileModeInterface>(url);
-  }
+	getAvatar(code: string): Observable<any> {
+		let url = `${environment.apiUrl}/avatar/${code}`
+		return this.http.get<any>(url)
+	}
 
-  getFileContentByCode(code: string): Observable<any> {
-    let url = `${environment.apiUrl}/file/${code}/content`;
-    return this.http.get<any>(url);
-  }
+	uploadFileWithProgress(file: File): Observable<HttpEvent<IFile>> {
+		const formData: FormData = new FormData()
+		formData.append('file', file)
 
-  getFile(requestID, documentID): Observable<any> {
-    let url = `${environment.apiUrl}/request/${requestID}/documents/${documentID}/file `;
-    return this.http.get<any>(url);
-  }
+		const headers = new HttpHeaders({
+			Accept: 'application/json; charset=utf-8'
+		})
 
-  getAvatar(code: string): Observable<any> {
-    let url = `${environment.apiUrl}/avatar/${code}`;
-    return this.http.get<any>(url);
-  }
+		return this.http.post<IFile>(
+			`https://httpbin.org/post`,
+			// `${environment.apiUrl}/files/upload-file`,
+			formData,
+			{
+				reportProgress: true,
+				responseType: 'json',
+				headers: headers,
+				observe: 'events'
+			}
+		)
+	}
 }

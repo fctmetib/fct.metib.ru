@@ -1,11 +1,11 @@
-import { CurrentUserFactoringInterface } from '../../shared/types/currentUserFactoring.interface';
-import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
+import { UserFactoring } from '../../shared/types/userFactoring';
+import { UserGeneral } from 'src/app/shared/types/userGeneral';
 
 export interface AuthStateInterface {
   isSubmitting: boolean;
-  currentUserGeneral: CurrentUserGeneralInterface | null;
-  currentUserFactoring: CurrentUserFactoringInterface | null;
-  adminUserFactoring: CurrentUserFactoringInterface | null;
+  currentUserGeneral: UserGeneral | null;
+  currentUserFactoring: UserFactoring | null;
+  adminUserFactoring: UserFactoring | null;
   isLoggedIn: boolean | null;
   validationErrors: string | null;
   successMessage: string;

@@ -1,0 +1,14 @@
+@import 'src/styles/helpers/icon_tools';
+@import 'src/styles/_typography.vars.scss';
+
+.header h4 {
+	@include text-overflow(1);
+}
+
+mib-avatar[type='round'] {
+	@include icon-size(20px);
+}
+
+mib-navbar {
+	padding: var(--drawer-container-paddings);
+}

@@ -1,0 +1,77 @@
+@mixin modal-cdk {
+	.mat-mdc-dialog-container .mdc-dialog__surface {
+		box-shadow: none !important;
+		--mdc-dialog-container-color: transparent;
+		--mdc-dialog-container-shape: 0;
+		border-radius: unset;
+		background-color: unset;
+		box-shadow: unset;
+		overflow: hidden;
+		background-color: transparent;
+		&:before {
+			content: unset;
+		}
+	}
+}
+
+.modal-cdk {
+	@include modal-cdk;
+}
+
+@mixin absolute {
+	position: absolute !important;
+}
+
+@mixin border {
+	& .mat-mdc-dialog-container .mdc-dialog__surface {
+		border-radius: 16px 16px 0 0;
+		box-shadow: none;
+	}
+}
+
+.custom-dialog-mib-ui {
+	@include absolute();
+	@include border();
+	background: transparent;
+	overflow: hidden;
+	top: 70px;
+}
+
+.custom-dialog-invoice {
+	@include absolute();
+	@include border();
+	overflow: hidden;
+	top: 48px;
+}
+
+.custom-dialog-delays {
+	@include absolute();
+	@include border();
+	top: 272px;
+	// bottom: 164px;
+}
+
+.custom-dialog-request {
+	@include absolute();
+	@include border();
+	top: 400px;
+}
+
+.custom-dialog-freeduty {
+	@include absolute();
+	@include border();
+	top: 188px;
+	bottom: 164px;
+}
+
+.modal {
+	padding: 24px;
+	border-radius: 16px;
+	background: var(--wgr-primary);
+	overflow-y: auto;
+	// box-shadow: var(--shadow-normal);
+	@media (max-width: 576px) {
+		padding: 20px;
+		height: 100%;
+	}
+}

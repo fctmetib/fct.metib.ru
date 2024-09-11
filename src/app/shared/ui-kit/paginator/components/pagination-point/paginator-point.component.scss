@@ -1,0 +1,37 @@
+@import "src/styles/typography.vars";
+
+$text_selectors: '&, span';
+
+.paginator-point {
+  cursor: pointer;
+  transition: var(--transition);
+  height: 40px;
+  min-width: 24px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+
+  #{$text-selectors} {
+    color: var(--bti-secondary);
+    @include body-text;
+    @include text-m;
+  }
+
+  &:hover {
+    #{$text-selectors} {
+      color: var(--bti-tertiary);
+    }
+  }
+
+  &:active {
+    #{$text-selectors} {
+      color: var(--bti-primary);
+    }
+  }
+
+  &_selected {
+    #{$text-selectors} {
+      color: var(--mc-default);
+    }
+  }
+}

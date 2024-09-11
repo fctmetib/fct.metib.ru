@@ -1,0 +1,42 @@
+<div
+	(mouseenter)="isHover = true"
+	(mouseleave)="isHover = false"
+	class="request-card flex flex_column cursor-pointer"
+	[ngClass]="classes"
+	[class.transition]="viewMounted"
+>
+	<div class="headline">
+		{{ requestTitle ? requestTitle : 'Запрос на ЭЦП' }}
+	</div>
+	<p class="text text_m request-text">
+		{{
+			requestText
+				? requestText
+				: 'Запрос на подтверждение или авторизацию документа с использованием электронной цифровой подписи.'
+		}}
+	</p>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div *ngIf="isDesktop; else mobile" class="flex flex_justify-between">
+		<mib-link>
+			Создать запрос
+			<mib-icon
+				[@opacityViewAnimation]="{
+					value: '',
+					params: {enterTime: 200, leaveTime: 0}
+				}"
+				*ngIf="isHover"
+				mibRightIcon
+				class="stroke"
+				name="fi_plus"
+			></mib-icon>
+		</mib-link>
+		<!-- <mib-link [routerLink]="link" type="ghost-secondary">
+			{{ requestQuantity ? requestQuantity : 'нет' }} в истории
+		</mib-link> -->
+	</div>
+	<ng-template #mobile>
+		<div class="flex">
+			<mib-button size="m" type="filled-secondary">Создать запрос </mib-button>
+		</div>
+	</ng-template>
+</div>

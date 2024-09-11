@@ -1,19 +1,78 @@
-<mib-section-header-news>
-  <div class="news">
-    <div class="news__header">
-      <span class="date">{{ currentNews?.Date | date:"dd.MM.yyyy"}}</span>
-      <h1 class="news-title">{{currentNews?.Title}}</h1>
-    </div>
-    <div class="news__image">
-      <img [src]="imageSrc" alt="image">
-    </div>
-  </div>
-
-  <!-- <p class="desc">
-    За последние пол года все больше и больше людей стали заботиться о
-    своем здоровье и физической форме. В связи с этим в адрес
-    Металлинвестбанк Факторинг участились запросы на финансирование
-    поставок в сеть Спортмастер.
-  </p> -->
-</mib-section-header-news>
-<mib-section-body [contentHTML]="currentNews?.Text"></mib-section-body>
+<div class="flex flex_column news">
+	<mib-spacing type="{{ isDesktop ? 'l' : 'm' }}"></mib-spacing>
+	<mib-tab-group type="filled">
+		<div class="flex flex_justify-between">
+			<h3>Новости банка</h3>
+			<div style="display: none" class="flex">
+				<mib-navbar size="m">
+					<mib-navbar-point value="1" type="filled" class="flex_grow">
+						<mib-icon class="stroke" btn-icon name="fi_grid"></mib-icon>
+					</mib-navbar-point>
+					<mib-navbar-point value="2" type="filled" class="flex_grow">
+						<mib-icon class="stroke" btn-icon name="fi_list"></mib-icon>
+					</mib-navbar-point>
+				</mib-navbar>
+			</div>
+		</div>
+		<mib-spacing type="{{ isDesktop ? 'm' : 's' }}"></mib-spacing>
+		<mib-tab-item value="1">
+			<ng-container *ngIf="loading$ | async; else newsPanel">
+				<mib-skeleton
+					[styles]="last ? defaultSkeleton : skeleton"
+					*ngFor="
+						let i of toolsService.createEmptyArray(newsNumberCount);
+						let last = last
+					"
+				></mib-skeleton>
+				<mib-spacing type="xs"></mib-spacing>
+			</ng-container>
+			<ng-template #newsPanel>
+				<div *ngIf="hasNews; else noNewsAvailable">
+					<div *ngFor="let news of getAdvancedNews">
+						<mib-news-panel
+							[newsTitle]="news.Title"
+							[newsDate]="news.Date | date : 'dd.MM.yyyy'"
+							[showPreview]="news.Image"
+							[link]="news.ID"
+						></mib-news-panel>
+						<mib-spacing type="{{ isDesktop ? 's' : 'xs' }}"></mib-spacing>
+					</div>
+				</div>
+			</ng-template>
+			<div [ngClass]="{'flex_justify-center': !isDesktop}" class="flex">
+				<mib-button
+					[ngClass]="{'w-100': !isDesktop}"
+					[routerLink]="['/']"
+					size="m"
+					type="filled-secondary"
+					>Вернуться назад</mib-button
+				>
+			</div>
+			<mib-spacing type="{{ isDesktop ? 'xl' : 'm' }}"></mib-spacing>
+		</mib-tab-item>
+		<mib-tab-item value="2">
+			<ng-container *ngIf="loading$ | async; else cutNewsPanel">
+				<mib-skeleton
+					[styles]="defaultMinSkeleton"
+					*ngFor="let i of toolsService.createEmptyArray(newsNumberCount)"
+				></mib-skeleton>
+			</ng-container>
+			<ng-template #cutNewsPanel>
+				<div *ngFor="let news of getAdvancedNews">
+					<mib-news-panel
+						[newsTitle]="news.Title"
+						[newsDate]="news.Date | date : 'dd.MM.yyyy'"
+						[link]="news.ID"
+					></mib-news-panel>
+					<mib-spacing type="s"></mib-spacing>
+				</div>
+			</ng-template>
+			<mib-spacing type="xl"></mib-spacing>
+		</mib-tab-item>
+	</mib-tab-group>
+	<ng-template #noNewsAvailable>
+		<div style="height: calc(100vh - 665px)" class="flex">
+			<h4 class="c-wgr-quaternary">временно недоступны</h4>
+		</div>
+	</ng-template>
+</div>

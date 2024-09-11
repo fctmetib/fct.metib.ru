@@ -1,0 +1,16 @@
+<mib-modal>
+  <mib-modal-header (onClose)="closeModal()" modal-header title="Введите PIN-код"></mib-modal-header>
+  <mib-spacing type="xs"></mib-spacing>
+  <mib-code-input [symbolsCount]="symbolsCount" [formControl]="codeControl"></mib-code-input>
+  <mib-spacing type="m"></mib-spacing>
+  <mib-modal-footer modal-footer>
+    <ng-container>
+      <mib-button [loading]="isSigning$ | async" [disabled]="codeControl.invalid" (press)="onAction()" class="flex_grow" size="m" type="filled-primary">
+        Подписать
+      </mib-button>
+      <mib-button (press)="closeModal()" class="flex_grow" size="m" type="filled-secondary">
+        Отмена
+      </mib-button>
+    </ng-container>
+  </mib-modal-footer>
+</mib-modal>

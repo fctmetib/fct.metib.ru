@@ -1,0 +1,79 @@
+<!-- <div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<h2>Запросы</h2>
+	<mib-spacing type="m"></mib-spacing>
+	<div class="flex flex_wrap gap-16">
+		<mib-request-card
+			*ngFor="let action of actions"
+			[demandTitle]="action.text"
+			[link]="['history']"
+		></mib-request-card>
+	</div>
+</div>
+<mib-spacing type="xl2"></mib-spacing>
+<hr />
+
+<div [ngClass]="{ 'card-content': isUserVerified }">
+	<div class="header lg">
+		<div class="title">
+			<h2>Запросы</h2>
+			<div class="subheader">Список Запросов</div>
+		</div>
+		<div class="actions">
+			<button
+				pButton
+				pRipple
+				type="button"
+				label="История запросов"
+				[routerLink]="['history']"
+				class="basic"
+			></button>
+		</div>
+	</div> -->
+<div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<a
+		class="cursor-pointer"
+		[routerLink]="['/client/new-demand/home']"
+		routerLinkActive="router-link-active"
+		>Go demand-new-home.component →</a
+	>
+	<mib-spacing type="m"></mib-spacing>
+
+	<div class="p-grid demand-action">
+		<ng-container *ngFor="let action of actions">
+			<div
+				*ngIf="action.isForDefaultClient && isUserVerified"
+				class="p-col action"
+			>
+				<div
+					class="demand-action-card can-click"
+					(click)="openDemandAction(action.action)"
+				>
+					<div class="demand-action-content">
+						<div class="text">
+							{{ action.text }}
+						</div>
+						<div class="icon arrow_right"></div>
+					</div>
+				</div>
+			</div>
+			<div
+				*ngIf="action.isForNewClient && !isUserVerified"
+				class="p-col action"
+			>
+				<div
+					class="demand-action-card can-click"
+					(click)="openDemandAction(action.action)"
+				>
+					<div class="demand-action-content">
+						<div class="text">
+							{{ action.text }}
+						</div>
+						<div class="icon arrow_right"></div>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+	</div>
+</div>

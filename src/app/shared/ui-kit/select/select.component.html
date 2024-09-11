@@ -1,0 +1,36 @@
+<ng-container *ngIf="label">
+	<p class="text text_s c-bti-tertiary">
+		<ng-content select="[mibSelectLabel]"></ng-content>
+	</p>
+	<mib-spacing customSpace="4"></mib-spacing>
+</ng-container>
+<div
+	[mibDropdownTrigger]="dropdown"
+	#select
+	class="select flex flex_align-center"
+	[ngClass]="classes"
+>
+	<div class="select_icon-wrapper left-wrapper" #leftIcon>
+		<ng-content select="[mibLeftIcon]"></ng-content>
+	</div>
+	<span class="text">{{ selectedOption?.text ?? placeholder }}</span>
+	<!-- <span class="text-clamp">{{ selectedOption?.text ?? placeholder }}</span> -->
+	<div class="select_icon-wrapper right-wrapper" #rightIcon>
+		<ng-content select="[mibRightIcon]"></ng-content>
+		<mib-icon
+			class="stroke"
+			[name]="showDropdown ? 'fi_chevron-up' : 'fi_chevron-down'"
+		></mib-icon>
+	</div>
+</div>
+
+<mib-dropdown #dropdown>
+	<ng-content></ng-content>
+	<mib-dropdown-point
+		[value]="null"
+		*ngIf="!options.length"
+		[text]="placeholder"
+	>
+		<!--    <mib-icon dropdown-point-right-icon class="stroke" name="fi_frown"></mib-icon>-->
+	</mib-dropdown-point>
+</mib-dropdown>

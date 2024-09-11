@@ -1,0 +1,92 @@
+@import 'src/styles/_typography.vars';
+
+$md: (
+	// desktop
+	'd': 1440px,
+	// table horizontal
+	't-h': 1024px,
+	// mobile horizontal and table vertical
+	'mhtv': 768px,
+	// mobile vertical
+	'mv': 360px
+);
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.headline {
+	@include heading-styles;
+}
+
+.headline {
+	@include headline-desktop;
+}
+
+.headline-m {
+	@include headline-mobile;
+	font-weight: var(--fw-semi-bold);
+}
+
+h1 {
+	@include h1-desktop;
+	@media (max-width: map-get($md, 't-h')) {
+		@include h1-mobile;
+	}
+}
+h2 {
+	@include h2-desktop;
+	@media (max-width: map-get($md, 't-h')) {
+		@include h2-mobile;
+	}
+}
+h3 {
+	@include h3-desktop;
+	@media (max-width: map-get($md, 't-h')) {
+		@include h3-mobile;
+	}
+}
+h4 {
+	@include h4-desktop;
+	@media (max-width: map-get($md, 't-h')) {
+		@include h4-mobile;
+	}
+}
+h5 {
+	@include h5-desktop;
+	@media (max-width: map-get($md, 't-h')) {
+		@include h5-mobile;
+	}
+}
+
+.text {
+	@include body-text;
+	&_xl {
+		@include text-xl;
+	}
+	&_l {
+		@include text-l;
+	}
+	&_m {
+		@include text-m;
+	}
+	&_s {
+		@include text-s;
+	}
+	&_xs {
+		@include text-xs;
+	}
+	&_tv {
+		@include table_view-title;
+	}
+	&_regular {
+		font-weight: var(--fw-regular);
+	}
+	&_medium {
+		font-weight: var(--fw-medium);
+	}
+	&_semi {
+		font-weight: var(--fw-semi-bold);
+	}
+}

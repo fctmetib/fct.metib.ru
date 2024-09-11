@@ -1,0 +1,14 @@
+.breadcrumb {
+	display: none;
+}
+
+@media (max-width: 576px) {
+	.breadcrumb {
+		display: flex;
+		padding: 0 16px;
+	}
+
+	.mobile-col {
+		flex-direction: column;
+	}
+}

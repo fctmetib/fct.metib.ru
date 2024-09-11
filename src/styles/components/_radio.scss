@@ -1,0 +1,106 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+
+@mixin radio-l {
+	width: 24px;
+	height: 24px;
+	&::before {
+		content: '';
+		width: 18px;
+		height: 18px;
+		top: 2px;
+		left: 2px;
+	}
+}
+
+@mixin radio-m {
+	width: 20px;
+	height: 20px;
+	&::before {
+		content: '';
+		width: 14px;
+		height: 14px;
+		top: 2px;
+		left: 2px;
+	}
+}
+
+@mixin radio-s {
+	width: 16px;
+	height: 16px;
+	&::before {
+		content: '';
+		width: 10px;
+		height: 10px;
+		top: 2px;
+		left: 2px;
+	}
+}
+
+@mixin radio-control {
+	border-radius: 50%;
+	transition: var(--transition);
+	position: relative;
+	cursor: pointer;
+	background-color: var(--wgr-secondary);
+	border: 1px solid var(--wgr-tertiary);
+	&::before {
+		content: '';
+		border-radius: 50%;
+		transition: var(--transition);
+		position: absolute;
+	}
+
+	&:hover {
+		border: 1px solid var(--wgr-quaternary);
+	}
+
+	&:active {
+		background-color: var(--wgr-tertiary);
+	}
+
+	&.checked::before {
+		background-color: var(--mc-default);
+	}
+
+	&.checked:hover {
+		border: 1px solid var(--wgr-tertiary);
+	}
+
+	&.checked:hover::before {
+		background-color: var(--mc-hover);
+	}
+
+	&.checked:active::before {
+		background-color: var(--mc-active);
+	}
+}
+
+@mixin radio {
+	position: relative;
+	cursor: pointer;
+}
+
+.radio {
+	@include radio;
+
+	.text {
+		user-select: none;
+	}
+
+	&-control {
+		@include radio-control;
+		&_l {
+			@include radio-l;
+		}
+		&_m {
+			@include radio-m;
+		}
+		&_s {
+			@include radio-s;
+		}
+	}
+	&-input {
+		position: absolute;
+		left: -9999px;
+	}
+}

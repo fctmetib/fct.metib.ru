@@ -1,0 +1,50 @@
+<mib-drawer>
+	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
+	</mib-drawer-header>
+	<mib-drawer-container>
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'480px'"
+			*ngIf="loading$ | async; else news"
+		></mib-skeleton>
+		<ng-template #news>
+			<h4>{{ singleNews.Title }}</h4>
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex">
+				<mib-tag size="m" type="filled-secondary">
+					Опубликовано {{ singleNews.Date | date }}
+				</mib-tag>
+			</div>
+			<mib-spacing type="s"></mib-spacing>
+			<p class="text text_m c-bti-primary">Прикрепленное изображение</p>
+			<mib-spacing type="xs2"></mib-spacing>
+			<div class="flex picture-block">
+				<img src="{{ singleNews.Image }}" alt="{{ singleNews.Title }}" />
+			</div>
+			<mib-spacing type="s"></mib-spacing>
+			<p class="text text_m c-bti-primary">Содержание новости</p>
+			<mib-spacing type="xs2"></mib-spacing>
+			<p class="text text_m c-bti-secondary" [innerHTML]="singleNews.Text"></p>
+		</ng-template>
+	</mib-drawer-container>
+	<mib-drawer-footer drawer-footer>
+		<div class="flex gap-12">
+			<mib-button
+				[disabled]="loading$ | async"
+				(press)="editNews(singleNews.ID)"
+				size="m"
+				type="filled-secondary"
+				>Редактировать
+				<mib-icon btn-left-icon class="stroke" name="fi_edit-3"></mib-icon>
+			</mib-button>
+			<mib-button
+				[disabled]="loading$ | async"
+				(press)="removeNews(singleNews.ID)"
+				size="m"
+				type="ghost-alert"
+				>Удалить
+				<mib-icon btn-left-icon class="stroke" name="fi_trash"></mib-icon>
+			</mib-button>
+		</div>
+	</mib-drawer-footer>
+</mib-drawer>

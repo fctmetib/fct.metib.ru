@@ -1,0 +1,71 @@
+@import 'src/styles/typography.vars';
+@import 'src/styles/helpers/_icon_tools';
+
+$text-selectors: 'label';
+
+:host {
+	flex: var(--table-flex);
+	&:first-child > div {
+		justify-content: start;
+	}
+
+	@media (max-width: 576px) {
+		&:not(:first-child):not(:nth-child(2)) {
+			display: none;
+		}
+
+		.table-cell {
+			border-right: none;
+		}
+	}
+}
+
+:host:has(.special) {
+	& > div {
+		justify-content: start;
+	}
+}
+
+.table-cell {
+	height: 100%;
+	justify-content: center;
+	border-right: var(--collapse);
+	#{$text-selectors} {
+		@include body-text;
+		@include text-overflow(1);
+	}
+
+	&_type {
+		&-main {
+			#{$text-selectors} {
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+		}
+		&-editable {
+			padding: 0;
+			::ng-deep {
+				.input {
+					padding-left: 0 !important;
+				}
+			}
+		}
+	}
+	.description {
+		padding: 2px 0;
+	}
+	&_size {
+		&-s {
+			#{$text-selectors} {
+				@include text-s;
+			}
+		}
+		&-m {
+			#{$text-selectors} {
+				@include text-m;
+			}
+		}
+	}
+}

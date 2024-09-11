@@ -1,0 +1,160 @@
+@import 'src/styles/helpers/_icon_tools';
+@import 'src/styles/_colors.vars';
+
+:host {
+	width: 100%;
+}
+
+.quest {
+	width: 100%;
+	& .frame-l {
+		padding-right: 32px;
+
+		& .custom-radio {
+			position: relative;
+			cursor: pointer;
+			padding-left: 35px;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+
+			& input {
+				position: absolute;
+				opacity: 0;
+				cursor: pointer;
+			}
+
+			& .checkmark {
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 24px;
+				width: 24px;
+				border-radius: 50%;
+				border: 1px solid var(--wgr-tertiary);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				&::after {
+					content: '';
+					display: none;
+				}
+			}
+
+			&:hover input ~ .checkmark {
+				border: 1px solid var(--wgr-quaternary);
+				transition: border 0.5s ease;
+			}
+
+			&:active input ~ .checkmark {
+				background-color: var(--wgr-tertiary);
+				transition: background-color 0.2s ease;
+			}
+
+			& input:checked ~ .checkmark {
+				transition: background-color 0.5s ease;
+			}
+
+			& input:checked ~ .checkmark::after {
+				display: block;
+			}
+
+			& .checkmark::after {
+				width: 16px;
+				height: 16px;
+				border-radius: 50%;
+				background: var(--mc-default);
+			}
+
+			& input:checked:hover ~ .checkmark::after {
+				background: var(--mc-hover);
+			}
+		}
+	}
+	& .frame-r {
+		padding-left: 64px;
+		& .quiz-progress {
+			padding-top: 8px;
+			& .progress-bar {
+				width: 216px;
+				gap: 4px;
+				height: 4px;
+				border-radius: 4px;
+				background-color: #cddff1;
+				& .progress {
+					height: 4px;
+					border-radius: 4px;
+					background-color: var(--mc-default);
+					transition: width 0.5s ease;
+				}
+			}
+
+			& .timeline {
+				& .point.active {
+					& span {
+						color: var(--mc-default);
+					}
+					& mib-icon {
+						@include icon-color(var(--mc-default));
+						@include icon-size(20px);
+					}
+				}
+			}
+		}
+	}
+
+	@media (max-width: 768px) {
+		flex-direction: column;
+		padding: 0 16px;
+
+		& .frame-l {
+			padding: 0;
+
+			& .btn-wrap {
+				align-self: flex-start;
+			}
+		}
+
+		& .frame-r {
+			padding: 0;
+			border-top: 1px solid var(--wgr-tertiary);
+
+			& .timeline {
+				display: none;
+			}
+		}
+	}
+
+	@media (max-width: 576px) {
+		& .frame-l {
+			& .btn-wrap {
+				align-self: unset;
+			}
+
+			& mib-button {
+				width: 100%;
+			}
+
+			& .custom-radio {
+				& .checkmark {
+					top: 2px;
+					height: 20px;
+					width: 20px;
+				}
+			}
+		}
+		& .frame-r {
+			& .quiz-progress {
+				& span {
+					align-self: center;
+				}
+
+				& .progress-bar {
+					width: 100%;
+				}
+			}
+		}
+	}
+}

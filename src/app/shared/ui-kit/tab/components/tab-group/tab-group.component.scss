@@ -1,0 +1,10 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.tab-scrollable {
+	overflow-y: auto;
+	// overflow-y: scroll;
+}

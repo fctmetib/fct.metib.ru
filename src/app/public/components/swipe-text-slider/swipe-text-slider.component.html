@@ -1,0 +1,29 @@
+<div #textSlider class="flex text-slider">
+	<div class="flex slider-progress">
+		<div class="progress-bar" [style.width]="getProgressWidth()"></div>
+	</div>
+	<mib-button
+		[disabled]="currentIdx === 0"
+		(press)="prev()"
+		size="m"
+		type="ghost-secondary"
+	>
+		<mib-icon btn-icon class="stroke" name="fi_chevron-left"></mib-icon>
+	</mib-button>
+	<div class="flex flex_grow text-center flex_column">
+		<span class="headline-m c-mc-default">{{
+			sliderTextData[currentIdx].title
+		}}</span>
+		<span class="text text_s c-bti-secondary">{{
+			sliderTextData[currentIdx].description
+		}}</span>
+	</div>
+	<mib-button
+		[disabled]="currentIdx === sliderTextData.length - 1"
+		(press)="next()"
+		size="m"
+		type="ghost-secondary"
+	>
+		<mib-icon btn-icon class="stroke" name="fi_chevron-right"></mib-icon>
+	</mib-button>
+</div>

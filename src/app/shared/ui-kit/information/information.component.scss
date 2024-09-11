@@ -1,0 +1,37 @@
+@import "src/styles/helpers/icon_tools";
+
+@mixin information-color($color, $background-color) {
+  background-color: $background-color;
+  .text {
+    color: $color;
+  }
+  mib-icon {
+    @include icon-color($color);
+  }
+}
+
+.information {
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  padding: 12px 16px;
+
+  mib-icon {
+    @include icon-size(20px)
+  }
+
+  &_type {
+    &-information {
+      @include information-color(var(--mc-active), var(--mc-quinary));
+    }
+    &-warning {
+      @include information-color(var(--wc-active), var(--wc-quinary));
+    }
+    &-success {
+      @include information-color(var(--success-active), var(--success-quinary));
+    }
+    &-alert {
+      @include information-color(var(--alc-active), var(--alc-quinary));
+    }
+  }
+}

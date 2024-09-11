@@ -16,8 +16,8 @@ export class SignService {
     return this.http.get(`${environment.apiUrl}/v1/sign/session`)
   }
 
-  getPin(): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/v1/sign/PinRequest`, null, {
+  getPin(): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/v1/sign/PinRequest`, null, {
         params: {
             "secretDeliveryMethod": "Почта",
             "secretDeliveryParameter": "martsinyuk.pl@gmail.com"

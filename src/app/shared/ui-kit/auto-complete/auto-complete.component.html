@@ -1,0 +1,12 @@
+<div [mibDropdownTrigger]="menu" class="autocomplete-wrapper">
+	<ng-content select="[autocomplete-input]"></ng-content>
+</div>
+<mib-dropdown #menu>
+  <ng-content></ng-content>
+	<mib-dropdown-point
+		*ngIf="!options.length"
+		[value]="true"
+    [disabled]="true"
+		text="Нет данных"
+	></mib-dropdown-point>
+</mib-dropdown>

@@ -1,0 +1,20 @@
+<div class="container_m container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<h3>Запросы</h3>
+	<mib-spacing type="m"></mib-spacing>
+</div>
+<div class="container_m container_large">
+	<div class="flex flex_wrap gap-16">
+		<mib-request-card
+			title="Запрос на Электронню Цифровую Подпись"
+			(click)="openVerifyDrawer()"
+			[requestTitle]="notVerifyRequest.title"
+			[requestText]="notVerifyRequest.description"
+		></mib-request-card>
+	</div>
+	<mib-spacing type="s"></mib-spacing>
+	<mib-button (press)="openRequestDrawer()" type="filled-primary"
+		>Запрос на свободную тему</mib-button
+	>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>

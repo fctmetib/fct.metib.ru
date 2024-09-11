@@ -1,0 +1,10 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+
+input,
+mib-select {
+	max-width: 280px;
+	width: 100%;
+}
+.draft {
+	@include icon-color(var(--mc-default));
+}

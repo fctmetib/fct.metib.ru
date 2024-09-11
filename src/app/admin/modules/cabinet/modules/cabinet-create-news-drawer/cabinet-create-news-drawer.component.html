@@ -1,0 +1,90 @@
+<mib-drawer [formGroup]="form">
+	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
+	</mib-drawer-header>
+	<mib-drawer-container>
+		<h4>{{ newsID ? 'Редактирование новости' : 'Создание новости' }}</h4>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'480px'"
+			*ngIf="loading$ | async; else news"
+		></mib-skeleton>
+		<ng-template #news>
+			<mib-input class="flex_grow">
+				<input formControlName="formNewsDate" type="date" mibInput />
+				<ng-container mibLabel>Укажите дату публикации</ng-container>
+			</mib-input>
+			<mib-spacing type="s"></mib-spacing>
+			<p class="text text_m c-bti-primary">Загрузите изображение</p>
+			<mib-spacing type="xs2"></mib-spacing>
+			<div *ngIf="!isNewImage; else editImageTemplate" class="flex flex_column">
+				<mib-dnd
+					*ngIf="!(uploadNewImage | async); else editImageTemplate"
+					[IconName]="'fi_image'"
+					[multiple]="true"
+					(onChange)="onDocumentLoad($event)"
+					[accept]="['image/jpg', 'image/jpeg', 'image/png']"
+					headline="Загрузите изображение"
+				></mib-dnd>
+			</div>
+			<ng-template #editImageTemplate>
+				<div class="flex picture-block">
+					<img
+						src="{{ isNewImage ? singleNews?.Image : newImage }}"
+						alt="{{
+							isNewImage ? singleNews?.Title' : ''
+						}}"
+					/>
+					<div class="flex">
+						<mib-button size="s" (press)="addImage()" type="ghost-secondary">
+							<mib-icon btn-icon class="stroke" name="fi_repeat"></mib-icon>
+						</mib-button>
+						<div class="flex"></div>
+						<mib-button
+							size="s"
+							(press)="deleteNews(singleNews?.ID)"
+							type="ghost-secondary"
+						>
+							<mib-icon btn-icon class="stroke" name="fi_trash"></mib-icon>
+						</mib-button>
+					</div>
+				</div>
+			</ng-template>
+			<div class="flex flex_column">
+				<div class="flex flex_column">
+					<mib-spacing type="s"></mib-spacing>
+					<p class="text text_m c-bti-primary">Содержание</p>
+					<mib-spacing type="xs2"></mib-spacing>
+					<div class="flex gap-12 flex_column">
+						<mib-input class="flex_grow">
+							<input formControlName="formNewsTitle" mibInput />
+							<ng-container mibLabel>Заголовок новости</ng-container>
+						</mib-input>
+						<mib-text-editor formControlName="formNewsText"></mib-text-editor>
+					</div>
+				</div>
+				<mib-spacing type="m"></mib-spacing>
+			</div>
+		</ng-template>
+	</mib-drawer-container>
+	<mib-drawer-footer drawer-footer>
+		<div class="flex gap-12">
+			<mib-button
+				[disabled]="
+					form.invalid || (loading$ | async) || (isSubmitting$ | async)
+				"
+				(press)="!newsID ? createNews() : updateNews(newsID)"
+				size="m"
+				type="filled-primary"
+				>Создать новость</mib-button
+			>
+			<mib-button
+				[disabled]="(loading$ | async) || (isSubmitting$ | async)"
+				(press)="closeDrawer()"
+				size="m"
+				type="filled-secondary"
+				>Отмена
+			</mib-button>
+		</div>
+	</mib-drawer-footer>
+</mib-drawer>

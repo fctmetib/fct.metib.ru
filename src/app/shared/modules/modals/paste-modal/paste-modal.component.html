@@ -1,0 +1,13 @@
+<mib-modal>
+  <mib-modal-header title="Из буфера обмена" (onClose)="dialogRef.close()"></mib-modal-header>
+  <mib-spacing type="xs"></mib-spacing>
+  <mib-dnd
+    headline="Вставьте содержимое"
+    text="Вставьте содержимое в поле [Ctrl+V]"
+    [showPicker]="false"
+    [showIcon]="false"
+    [disabled]="true"
+  ></mib-dnd>
+  <mib-spacing type="m"></mib-spacing>
+  <mib-button (press)="dialogRef.close()" class="w-100" type="filled-secondary">Отмена</mib-button>
+</mib-modal>

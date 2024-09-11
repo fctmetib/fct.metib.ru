@@ -1,0 +1,22 @@
+<div (click)="focus()" #box class="box-wrapper flex flex_column" [ngClass]="classes">
+	<span #label class="box-label text c-bti-tertiary">
+		<ng-content select="[input-base-label]"></ng-content>
+	</span>
+  <div [class.box-right-iconly]="component.rightIcons.length" [class.box-left-iconly]="component.leftIcons.length" class="box">
+    <ng-content></ng-content>
+    <span class="box-description text_m text c-bti-tertiary">
+			<ng-content select="[input-description]"></ng-content>
+		</span>
+    <div class="input_icon-wrapper left-wrapper" #iconsLeftRef>
+      <ng-content select="[mibLeftIcon]"></ng-content>
+    </div>
+    <div class="input_icon-wrapper right-wrapper" #iconsRightRef>
+      <ng-content select="[mibRightIcon]"></ng-content>
+    </div>
+  </div>
+<!--  <div class="box-label box-label_message flex flex_column">-->
+<!--    <p class="text text_small text_medium c-ti-dark-quaternary">-->
+<!--      <ng-content select="[input-base-message]"></ng-content>-->
+<!--    </p>-->
+<!--  </div>-->
+</div>

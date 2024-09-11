@@ -1,79 +1,29 @@
-@import '/src/styles/colors.scss';
+@import 'src/styles/_colors.vars';
 
-
-:host ::ng-deep {
-  .organization {
-    margin-right: 37px;
-  }
-
-  .card-info {
-    height: 137px;
-
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-bottom: 14px;
-
-    background-color: $white;
-    box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
-
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    .header {
-      z-index: 1;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 24px;
-      line-height: 28px;
-
-      &.normal {
-        color: $main-blue;
-      }
-
-      &.success {
-        color: $success;
-      }
-
-      &.warn {
-        color: $warning;
-      }
-    }
-
-    .content {
-      font-style: normal;
-      font-weight: bold;
-      font-size: 14px;
-      line-height: 16px;
-      color: #102538;
-      position: absolute;
-      bottom: 14px;
-    }
-  }
-
-  .card-info::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    width: 80%;
-    height: 131px;
-    background: $white;
-    opacity: 0.4;
-    border-radius: 10px;
-  }
+.organization {
+	& .separator-vertical {
+		border-right: 1px solid var(--wgr-tertiary);
+	}
 }
 
-.stats {
-  display: flex;
-  flex-direction: row;
-  // flex-wrap: wrap;
-  gap: 24px;
+@media (max-width: 768px) {
+	mib-spacing[type='xs'] {
+		height: 8px;
+		display: block;
+	}
 
-  .p-col {
-    width: 100%;
-  }
+	.organization {
+		flex-direction: column;
+		gap: 4px;
+
+		& .separator-vertical {
+			display: none;
+		}
+	}
+}
+
+@media (max-width: 568px) {
+	.factoring {
+		padding: 0 16px;
+	}
 }

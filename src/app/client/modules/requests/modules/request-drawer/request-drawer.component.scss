@@ -1,0 +1,36 @@
+.breadcrumb {
+	display: none;
+}
+
+@media (max-width: 576px) {
+	.breadcrumb {
+		display: flex;
+		padding: 0 16px;
+	}
+
+	mib-spacing[class='spacing-m'] {
+		height: 12px;
+		display: block;
+	}
+
+	.double-input {
+		flex-direction: column;
+	}
+
+	.column-m {
+		flex-direction: column;
+	}
+
+	.hide-m {
+		display: none;
+	}
+
+	.mobile-dnd {
+		gap: 8px;
+
+		& p {
+			font-size: 13px;
+			line-height: 16px;
+		}
+	}
+}

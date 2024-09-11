@@ -1,0 +1,117 @@
+<mib-modal [formGroup]="form" class="landing">
+	<mib-modal-header
+		[showClose]="false"
+		(onClose)="dialogRef.close()"
+		title="{{ data }}"
+	>
+	</mib-modal-header>
+	<div class="modal-wrap flex flex_column">
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex flex_column gap-12">
+			<input type="hidden" formControlName="FormName" />
+			<mib-input class="flex_grow">
+				<input
+					size="{{ isDesktop ? 'xl' : 'l' }}"
+					formControlName="Name"
+					type="text"
+					styleType="filled-secondary"
+					mibInput
+				/>
+				<ng-container mibLabel>Имя</ng-container>
+			</mib-input>
+			<mib-input class="flex_grow">
+				<input
+					formControlName="Phone"
+					size="{{ isDesktop ? 'xl' : 'l' }}"
+					prefix="+"
+					mask="0 (000) 000-00-00"
+					type="tel"
+					styleType="filled-secondary"
+					mibInput
+				/>
+				<ng-container mibLabel>Телефон</ng-container>
+			</mib-input>
+			<mib-input class="flex_grow">
+				<input
+					size="{{ isDesktop ? 'xl' : 'l' }}"
+					formControlName="Email"
+					type="email"
+					styleType="filled-secondary"
+					mibInput
+				/>
+				<ng-container mibLabel>Электронная почта</ng-container>
+			</mib-input>
+			<mib-input class="flex_grow">
+				<input
+					size="{{ isDesktop ? 'xl' : 'l' }}"
+					type="text"
+					maxlength="12"
+					minlength="10"
+					formControlName="INN"
+					styleType="filled-secondary"
+					mibInput
+				/>
+				<ng-container mibLabel>ИНН Вашей компании</ng-container>
+			</mib-input>
+			<mib-autocomplete formControlName="Organization" [options]="options">
+			</mib-autocomplete>
+			<mib-textarea size="{{ isDesktop ? 'xl' : 'l' }}">
+				<ng-container mibLabel>Ваш комментарий</ng-container>
+				<textarea
+					formControlName="Comment"
+					[maxLength]="100"
+					autosize
+					mibTextarea
+				></textarea>
+			</mib-textarea>
+			<div class="flex gap-8">
+				<mib-checkbox
+					size="{{ isDesktop ? 'l' : 'm' }}"
+					formControlName="UseFactoring"
+				>
+				</mib-checkbox>
+				<p
+					[ngClass]="isDesktop ? 'text_l' : 'text_m'"
+					class="text-left text c-bti-secondary"
+				>
+					Мы уже работаем по факторингу
+				</p>
+			</div>
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<mib-modal-footer>
+			<div class="flex flex_column">
+				<div class="flex gap-12 flex_column">
+					<mib-button
+						[disabled]="form.invalid"
+						[loading]="!!(isSubmitting$ | async)"
+						class="w-100"
+						size="{{ isDesktop ? 'xl' : 'l' }}"
+						(press)="onSubmit()"
+						>Отправить</mib-button
+					>
+					<div class="flex gap-12">
+						<mib-checkbox
+							size="{{ isDesktop ? 'l' : 'm' }}"
+							formControlName="Agree"
+						>
+						</mib-checkbox>
+						<p
+							[ngClass]="isDesktop ? 'text_m' : 'text_s'"
+							class="text c-bti-tertiary"
+						>
+							Пожалуйста подтвердите Ваше согласие на
+							<span
+								(click)="openAgreementModal()"
+								class="c-mc-default cursor-pointer"
+							>
+								обработку персональных данных
+							</span>.
+						</p>
+					</div>
+				</div>
+				<mib-spacing type="xm2"></mib-spacing>
+			</div>
+		</mib-modal-footer>
+	</div>
+</mib-modal>

@@ -1,0 +1,48 @@
+@import 'src/styles/_typography.vars.scss';
+
+:host {
+	display: flex;
+	width: 100%;
+}
+
+.contact {
+	width: 100%;
+
+	&.hide {
+		display: none;
+	}
+
+	&_desktop {
+		max-width: 176px;
+		flex-direction: column;
+		border-bottom: 1px solid var(--wgr-secondary);
+	}
+
+	&_mobile {
+		width: 100%;
+		flex-direction: row;
+		padding: 0 16px 24px;
+		gap: 12px;
+
+		& .placeholder {
+			width: 72px;
+			height: 72px;
+			background-color: var(--wgr-primary);
+			border-radius: var(--main-border-radius);
+		}
+
+		& img {
+			width: 72px;
+			height: 72px;
+		}
+
+		& .description {
+			mib-spacing[type='xs'] {
+				display: none;
+			}
+		}
+	}
+	& img {
+		border-radius: var(--main-border-radius);
+	}
+}

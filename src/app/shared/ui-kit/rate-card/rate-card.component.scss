@@ -1,0 +1,63 @@
+@import 'src/styles/helpers/icon_tools';
+
+:host {
+	background-color: var(--wgr-secondary);
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+.rate {
+	padding: 0 38px;
+	max-width: 364px;
+
+	& .rate-header {
+		min-height: 164px;
+	}
+
+	& .rate-feature {
+		display: flex;
+	}
+
+	& .mobile-content {
+		display: none;
+
+		& mib-icon.rotate {
+			transform: rotate(180deg);
+		}
+	}
+
+	& .rate-mobile {
+		display: none;
+	}
+
+	& .mobile-s {
+		display: none;
+	}
+
+	&_mobile {
+		& .mobile-content {
+			display: flex;
+		}
+
+		& .rate-feature {
+			display: none;
+		}
+
+		& .rate-mobile {
+			display: flex;
+		}
+	}
+
+	& mib-icon[name='fi_chevron-down'] {
+		@include icon-color(var(--bti-secondary));
+		@include icon-size(26px);
+	}
+
+	@media (max-width: 576px) {
+		padding: 0 16px;
+
+		& .mobile-s {
+			display: block;
+		}
+	}
+}

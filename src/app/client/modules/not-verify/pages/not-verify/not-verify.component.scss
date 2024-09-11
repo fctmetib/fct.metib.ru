@@ -1,0 +1,12 @@
+@media (max-width: 576px) {
+	.container_m {
+		padding: 0;
+		& h3 {
+			padding: 0 16px;
+		}
+
+		& mib-button {
+			padding: 0 16px;
+		}
+	}
+}

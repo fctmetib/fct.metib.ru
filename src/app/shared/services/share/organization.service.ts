@@ -5,7 +5,7 @@ import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie';
-import {AuthResponseInterface} from 'src/app/auth/types/login/authResponse.interface';
+import {AuthRes} from 'src/app/auth/types/login/authRes';
 
 @Injectable()
 export class OrganizationService {
@@ -23,7 +23,7 @@ export class OrganizationService {
   getOrganizationById(id: number): Observable<OrganizationInterface> {
     let userCookie = this.cookieService.get('_cu');
 
-    let user: AuthResponseInterface;
+    let user: AuthRes;
     let token;
     if (userCookie) {
       user = JSON.parse(userCookie)

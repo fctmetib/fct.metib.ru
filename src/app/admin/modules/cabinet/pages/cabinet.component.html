@@ -1,0 +1,78 @@
+<div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<h3>Новости банка</h3>
+	<mib-spacing type="m"></mib-spacing>
+</div>
+<div class="news container container_large">
+	<div class="flex">
+		<div class="frame flex gap-16 w-100">
+			<mib-input>
+				<input
+					[disabled]="loading$ | async"
+					#searchNews
+					(input)="search(searchNews.value)"
+					mibInput
+				/>
+				<ng-container mibLabel>Поиск по новостям</ng-container>
+				<mib-icon mibLeftIcon class="stroke" name="fi_search"></mib-icon>
+			</mib-input>
+			<mib-button
+				(press)="openCreateNewsDrawer()"
+				[disabled]="loading$ | async"
+			>
+				Создать новость
+				<mib-icon btn-left-icon class="stroke" name="fi_plus"></mib-icon>
+			</mib-button>
+			<div class="flex flex_grow"></div>
+		</div>
+		<div class="sorting flex gap-8 flex_align-center">
+			<span class="text text_m c-bti-tertiary">Сортировака:</span>
+			<mib-select placeholder="По дате публикации">
+				<mib-dropdown-point
+					[value]="false"
+					(press)="sortNewsByDate('old')"
+					text="Сначала старые"
+				></mib-dropdown-point>
+				<mib-dropdown-point
+					[value]="true"
+					(press)="sortNewsByDate('new')"
+					text="Сначала новые"
+				></mib-dropdown-point>
+			</mib-select>
+		</div>
+	</div>
+	<mib-spacing type="s"></mib-spacing>
+	<mib-skeleton
+		*ngIf="loading$ | async; else newsTemplate"
+		[styles]="skeleton"
+	></mib-skeleton>
+	<ng-template #newsTemplate>
+		<div class="panel flex flex_wrap gap-16">
+			<mib-news-panel
+				title="{{ news.Title }}"
+				*ngFor="let news of displayNews$ | async"
+				(onclick)="openNewsDrawer(news.ID)"
+				(edit)="openCreateNewsDrawer(news.ID)"
+				(delete)="deleteNews(news.ID)"
+				[isAdmin]="isAdmin"
+				[newsTitle]="news.Title"
+				[newsDate]="news.Date | date : 'dd.MM.yyyy'"
+				[showPreview]="news.Image"
+				[altText]="news.Title"
+				[link]="null"
+			></mib-news-panel>
+			<mib-spacing type="xl2"></mib-spacing>
+		</div>
+	</ng-template>
+	<mib-spacing type="m"></mib-spacing>
+</div>
+<footer *ngIf="!(loading$ | async)" class="flex flex_justify-center">
+	<div class="flex">
+		<mib-paginator
+			(pageChange)="onPageChange($event)"
+			[totalCount]="getSortedNews?.length"
+			[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+			[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+		></mib-paginator>
+	</div>
+</footer>

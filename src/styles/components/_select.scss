@@ -1,0 +1,90 @@
+@import 'src/styles/typography.vars';
+@import 'src/styles/components/input.vars';
+
+$text-selectors: '&, span';
+
+.select {
+	position: relative;
+	@include input;
+	@include input-states-from-wrapper;
+	white-space: nowrap;
+
+	mib-icon {
+		@include icon-color(var(--bti-tertiary));
+	}
+
+	&:hover {
+		.select_icon-wrapper mib-icon {
+			@include icon-color(var(--bti-secondary));
+		}
+	}
+
+	cursor: pointer;
+
+	#{$text-selectors} {
+		@include body-text;
+		@include text-l;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	&-transition {
+		transition: color var(--transition), background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
+	}
+
+	&_left-iconly {
+		.left-wrapper {
+			display: flex;
+		}
+	}
+
+	&_right-iconly {
+		.right-wrapper {
+			display: flex;
+		}
+	}
+
+	&_type {
+		&-filled {
+			&-secondary {
+				@include input-type-filled-secondary;
+			}
+		}
+		&-floating {
+			@include input-type-floating;
+		}
+		&-outline {
+			@include input-type-outline;
+		}
+	}
+
+	&_xl {
+		@include input-xl;
+		span {
+			@include text-l;
+		}
+	}
+
+	&_l {
+		@include input-l;
+		span {
+			@include text-m;
+		}
+	}
+
+	&_m {
+		@include input-m;
+		span {
+			@include text-m;
+		}
+	}
+
+	&_s {
+		@include input-s;
+		span {
+			@include text-s;
+		}
+	}
+}

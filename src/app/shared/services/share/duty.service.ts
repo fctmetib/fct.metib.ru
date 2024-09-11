@@ -3,20 +3,20 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { DutyInterface } from '../../types/duty/duty.interface';
+import { Duty } from '../../types/duty/duty';
 import { DutyFilterRequestInterface } from '../../types/duty/duty-filter-request.interface';
 import { HeapDutyImportResultInterface } from '../../types/duty/heap-duty-import-result.interface';
 import { ConfirmRequestInterface } from '../../types/common/confirm-request.interface';
-import { ClientRequestSendingInitRequestInterface } from '../../types/client/client-request-sending-init-request.interface';
+import { ClientRequestSendingInitReq } from '../../types/client/client-request-sending-init.req';
 import { ClientRequestInterface } from '../../types/client/client-request.interface';
 
 @Injectable()
 export class DutyService {
   constructor(private http: HttpClient) {}
 
-  fetch(data: DutyFilterRequestInterface): Observable<DutyInterface[]> {
+  fetch(data: DutyFilterRequestInterface): Observable<Duty[]> {
     const url = `${environment.apiUrl}/duty/filter`;
-    return this.http.post<DutyInterface[]>(url, data);
+    return this.http.post<Duty[]>(url, data);
   }
 
   importHeap(

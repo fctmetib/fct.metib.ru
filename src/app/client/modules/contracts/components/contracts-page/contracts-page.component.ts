@@ -139,7 +139,7 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
     this.isOrganizationError = false;
 
     this.subscription$.add(
-      this.deliveryService.getRequisitesByDeliveryId(id).subscribe(
+      this.deliveryService.getRequisitesById(id).subscribe(
         (resp) => {
           this.currentOrganizationContent = resp;
           this.isOrganizationLoading = false;

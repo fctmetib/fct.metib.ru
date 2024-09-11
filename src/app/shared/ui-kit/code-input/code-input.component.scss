@@ -1,0 +1,11 @@
+@import 'src/styles/_typography.vars.scss';
+
+.pin-modal {
+  input,
+  input::placeholder {
+    text-align: center;
+    color: var(--bti-tertiary);
+    @include body-text;
+    @include text-l;
+  }
+}

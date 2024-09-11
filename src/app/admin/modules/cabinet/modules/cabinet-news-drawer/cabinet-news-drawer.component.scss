@@ -1,0 +1,9 @@
+.picture-block {
+	height: 158px;
+	justify-content: center;
+	border-radius: var(--main-border-radius);
+	background-color: var(--wgr-secondary);
+	& img {
+		object-fit: contain;
+	}
+}

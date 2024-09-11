@@ -1,0 +1,311 @@
+@import 'src/styles/helpers/_icon_tools';
+@import 'src/styles/_typography.vars.scss';
+
+@mixin input {
+	border-radius: var(--main-border-radius);
+  height: 100%;
+	width: 100%;
+	@include body-text;
+	transition: color var(--transition), background-color var(--transition),
+		border-color var(--transition);
+	border: 1px solid transparent;
+	&::placeholder {
+		color: transparent;
+	}
+
+	&_icon-wrapper {
+		top: 50%;
+		transform: translateY(-50%);
+		position: absolute;
+		display: none;
+
+		&.right-wrapper {
+			right: 16px;
+			padding-left: 8px;
+		}
+
+		&.left-wrapper {
+			left: 16px;
+			padding-right: 4px;
+		}
+	}
+}
+
+@mixin input-states-from-wrapper {
+	@include input-color(var(--bti-tertiary));
+
+	&:hover {
+		@include input-color(var(--bti-secondary));
+	}
+
+	&:active {
+		@include input-color(var(--bti-primary));
+	}
+
+	&:has(input:disabled) {
+		@include input-color(var(--bti-quaternary));
+	}
+
+  // STATUSES
+  &:not(&_without-label) {
+    @each $element in ('input', 'textarea') {
+      &:has(#{$element}:not([readonly]):focus), &:has(#{$element}:not(:placeholder-shown)) {
+        @include input-color(var(--bti-secondary));
+
+        input,
+        .left-wrapper {
+          padding-top: 12px;
+        }
+
+        textarea {
+          margin-top: 12px;
+        }
+
+        .box-label {
+          @include text-xs;
+          font-weight: var(--fw-medium);
+          color: var(--mc-default);
+          transform: unset;
+          //padding-left: 16px !important;
+        }
+      }
+    }
+  }
+}
+
+@mixin input-color($color) {
+	.input_icon-wrapper mib-icon,
+	.select_icon-wrapper mib-icon {
+		@include icon-color($color);
+	}
+	&,
+	.input,
+	&.select span,
+	.box-label {
+		color: $color;
+	}
+}
+
+@mixin box-label-styles($top) {
+  .box-label {
+    @content;
+  }
+  @each $element in ('input', 'textarea') {
+    &:has(#{$element}:not([readonly]):focus),
+    &:has(#{$element}:not(:placeholder-shown)) {
+      .box-label {
+        top: $top;
+      }
+    }
+  }
+}
+
+@mixin input-size($height, $iconSize, $iconsGap, $paddingsHorizontal: 16px) {
+	min-height: $height;
+	padding: 0 $paddingsHorizontal;
+	& ~ .input,
+	& ~ .select {
+		&_icon-wrapper {
+			mib-icon {
+				@include icon-size($iconSize);
+			}
+
+			gap: $iconsGap;
+		}
+	}
+}
+
+@mixin input-type-filled-secondary {
+	background: var(--wgr-secondary);
+	border: 1px solid transparent;
+
+	&.input,
+	&.select {
+		outline: 0;
+
+		&:hover {
+			border-color: var(--wgr-tertiary);
+		}
+
+		&:focus {
+			border: 1px solid var(--mc-default);
+			color: var(--bti-primary);
+		}
+
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-tertiary);
+			border: none;
+		}
+	}
+}
+
+@mixin input-type-floating {
+	background: var(--wgr-primary);
+
+	&.input,
+	&.select {
+		outline: 0;
+
+		&:hover {
+			box-shadow: var(--custom-floating-shadow);
+		}
+
+		&:focus {
+			border: 1px solid var(--mc-default);
+			box-shadow: var(--custom-floating-shadow);
+		}
+
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-tertiary);
+			box-shadow: none;
+
+			mib-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
+		}
+	}
+}
+
+@mixin input-type-outline {
+	background-color: transparent;
+	border: 1px solid var(--wgr-tertiary);
+
+	&.input,
+	&.select {
+		&:hover {
+			border-color: var(--wgr-quaternary);
+		}
+
+		&:focus {
+		}
+
+		&:disabled {
+			background: var(--wgr-tertiary);
+			box-shadow: none;
+
+			mib-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
+		}
+	}
+}
+
+@mixin input-type-separated {
+	background: var(--wgr-primary);
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	border: unset;
+
+	&.input {
+		outline: 0;
+		border-bottom-right-radius: unset;
+		border-bottom-left-radius: unset;
+		border-bottom: 1px solid var(--wgr-secondary);
+
+		&:focus {
+			border-bottom: 1px solid var(--wgr-secondary);
+		}
+
+		&:disabled {
+			color: var(--wti-quaternary);
+			background: var(--wgr-tertiary);
+			box-shadow: none;
+
+			mib-icon {
+				@include icon-color(var(--wti-quaternary));
+			}
+		}
+	}
+}
+
+@mixin input-error {
+	&,
+	&:hover,
+	&:focus {
+		$color: var(--alc-default);
+		border-color: $color;
+		@include input-color($color);
+	}
+}
+
+@mixin input-active {
+	&,
+	&:hover,
+	&:focus {
+		$color: var(--success-default);
+		border-color: $color;
+	}
+}
+
+@mixin input-xl {
+	@include input-size(
+		56px,
+		var(--input-xl-icon-size),
+		var(--input-xl-icons-gap)
+	);
+	@include text-l;
+}
+
+@mixin input-l {
+	@include input-size(48px, var(--input-l-icon-size), var(--input-l-icons-gap));
+	@include text-m;
+}
+
+@mixin input-m {
+	@include input-size(40px, var(--input-m-icon-size), var(--input-m-icons-gap));
+	@include text-m;
+}
+
+@mixin input-s {
+	@include input-size(32px, var(--input-s-icon-size), var(--input-s-icons-gap));
+	@include text-s;
+}
+
+@mixin input-addiction-xl {
+	&:has(.input_xl),
+	&.input_xl {
+		@include box-label-styles(10px) {
+			@include text-l;
+		}
+	}
+}
+
+@mixin input-addiction-l {
+	&:has(.input_l),
+	&.input_l {
+		@include box-label-styles(8px) {
+			@include text-m;
+		}
+	}
+}
+
+@mixin input-addiction-m {
+	&:has(.input_m),
+	&.input_m {
+		@include box-label-styles(4px) {
+			@include text-m;
+		}
+	}
+}
+
+@mixin input-addiction-s {
+	&:has(.input_s),
+	&.input_s {
+		@include box-label-styles(2px) {
+			@include text-s;
+		}
+
+		mib-icon {
+			@include icon-size(var(--input-m-icon-size));
+		}
+	}
+}
+
+@mixin textarea {
+	width: 100%;
+	resize: none;
+	display: flex;
+}

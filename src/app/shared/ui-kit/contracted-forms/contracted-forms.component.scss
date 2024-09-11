@@ -1,0 +1,17 @@
+.contracted-form {
+	max-width: 576px;
+	padding: 0px 8px 0px 16px;
+	border-radius: 8px;
+	border: 1px solid var(--bg-social-color);
+	transition: var(--transition);
+}
+
+.extended {
+	border-radius: 8px;
+	background: var(--wgr-primary);
+	box-shadow: var(--shadow-normal);
+}
+
+.dropdown {
+	padding: 0 16px;
+}

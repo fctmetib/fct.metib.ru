@@ -1,63 +1,127 @@
-import { DeliveryInterface, DeliveryRef } from './../../types/delivery/delivery.interface';
-import { environment } from 'src/environments/environment';
+import {
+	DeliveryInterface,
+	DeliveryRef
+} from '../../types/delivery/delivery.interface'
+import {environment} from 'src/environments/environment'
 
-import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { ClientAccountInterface } from '../../types/client/client-account.interface';
-import { ShipmentInterface } from '../../types/common/shipment-interface';
+import {Observable, of} from 'rxjs'
+import {HttpClient} from '@angular/common/http'
+import {Injectable} from '@angular/core'
+import {ClientAccountInterface} from '../../types/client/client-account.interface'
+import {
+	Delivery,
+	ExtendedDeliveryStatistics
+} from '../../types/delivery/delivery'
+import {Shipment} from '../../../client/modules/requests/modules/shipment-drawer/interfaces/shipment.interface'
+
+export interface DeliveriesReq {
+	ID?: number
+	getAll?: boolean
+	includeStatistics?: boolean
+}
+
+export type GenericDelivery<T extends DeliveriesReq> =
+	T['includeStatistics'] extends true ? ExtendedDeliveryStatistics : Delivery
 
 @Injectable()
 export class DeliveryService {
-  /**
-  * Creates an instance of delivery service.
-  */
-  constructor(private http: HttpClient) {}
+	/**
+	 * Creates an instance of delivery service.
+	 */
+	constructor(private http: HttpClient) {}
 
-  /**
-  * Получает список договоров, по ID организации
-  * @param ID организации
-  * @returns Возвращает список договоров с статистикой
-  */
-  getDeliveriesByIdWithStats(id: string): Observable<DeliveryInterface[]> {
-    let url = `${environment.apiUrl}/delivery/${id}?includeStatistics=false`;
-    return this.http.get<DeliveryInterface[]>(url);
-  }
+	/**
+	 * Список договоров поставки по поставщику
+	 * Базовый URL
+	 * api/v1/deliveries
+	 * Включить закрытые договора
+	 * /deliveries?getAll=true
+	 * Включить статистику
+	 * &includeStatistics=true
+	 */
 
-  getDeliveriesRef(debtorID: number): Observable<DeliveryRef[]> {
-    return this.http.get<DeliveryRef[]>(`${environment.apiUrl}/v1/deliveries/refs`, {
-      params: {
-        debtorID: debtorID
-      }
-    });
-  }
+	public getAllDeliveriesContracts = <T extends DeliveriesReq>(
+		data: T
+	): Observable<GenericDelivery<T>[]> => {
+		let url = `${environment.apiUrl}/v1/deliveries`
+		return this.http.get<any>(url, {
+			params: {
+				...(data as any)
+			}
+		})
+	}
 
-  /**
-  * Получает список договоров с статистикой из АПИ
-  * @param none
-  * @returns Возвращает список договоров с статистикой
-  */
-  getDeliveriesWithStats(): Observable<DeliveryInterface[]> {
-    let url = `${environment.apiUrl}/delivery?includeStatistics=false`;
-    return this.http.get<DeliveryInterface[]>(url);
-  }
+	getDeliveryById = <T extends DeliveriesReq>(
+		data: T
+	): Observable<GenericDelivery<T>> => {
+		return this.http.get<any>(
+			`${environment.apiUrl}/v1/deliveries/${data.ID}`,
+			{params: {...(data as any)}}
+		)
+	}
 
-  getDeliveryAccounts(id: string): Observable<ClientAccountInterface[]> {
-    let url = `${environment.apiUrl}/delivery/${id}/accounts`;
-    return this.http.get<ClientAccountInterface[]>(url);
-  }
+	/**
+	 * Получает договор по ID
+	 * @param ID
+	 */
+	// getDeliveryById(ID: number): Observable<Delivery> {
+	// 	return this.http.get<Delivery>(`${environment.apiUrl}/v1/deliveries/${ID}`)
+	// }
 
-  /**
-   * Получает реквизиты, по контракту
-   * @param id delivery
-   * @returns Возвращает реквизиты, по контракту
-   */
-  getRequisitesByDeliveryId(id: string): Observable<string> {
-    return this.http.get<string>(`${environment.apiUrl}/delivery/${id}/requisites`);
-  }
+	/**
+	 * Получает договор по ID
+	 * @param ID
+	 */
+	getShipments(ID: number): Observable<Shipment[]> {
+		return this.http.get<Shipment[]>(
+			`${environment.apiUrl}/v1/deliveries/${ID}/shipments`
+		)
+	}
 
-  getShipments(id: string): Observable<ShipmentInterface[]> {
-    let url = `${environment.apiUrl}/delivery/${id}/shipments`;
-    return this.http.get<ShipmentInterface[]>(url);
-  }
+	/**
+	 * Получает список договоров, по ID организации
+	 * @param ID организации
+	 * @returns Возвращает список договоров с статистикой
+	 */
+	getDeliveriesByIdWithStats(id: number): Observable<DeliveryInterface[]> {
+		let url = `${environment.apiUrl}/delivery/${id}?includeStatistics=true`
+		return this.http.get<DeliveryInterface[]>(url)
+	}
+
+	getDeliveriesRef(debtorID: number): Observable<DeliveryRef[]> {
+		return this.http.get<DeliveryRef[]>(
+			`${environment.apiUrl}/v1/deliveries/refs`,
+			{
+				params: {
+					debtorID: debtorID
+				}
+			}
+		)
+	}
+
+	/**
+	 * Получает список договоров с статистикой из АПИ
+	 * @param none
+	 * @returns Возвращает список договоров с статистикой
+	 */
+	getDeliveriesWithStats(): Observable<DeliveryInterface[]> {
+		let url = `${environment.apiUrl}/delivery?includeStatistics=false`
+		return this.http.get<DeliveryInterface[]>(url)
+	}
+
+	getDeliveryAccounts(id: string): Observable<ClientAccountInterface[]> {
+		let url = `${environment.apiUrl}/delivery/${id}/accounts`
+		return this.http.get<ClientAccountInterface[]>(url)
+	}
+
+	/**
+	 * Получает реквизиты, по контракту
+	 * @param id delivery
+	 * @returns Возвращает реквизиты, по контракту
+	 */
+	getRequisitesById(id: number): Observable<string> {
+		return this.http.get<string>(
+			`${environment.apiUrl}/delivery/${id}/requisites`
+		)
+	}
 }

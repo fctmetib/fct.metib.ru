@@ -96,8 +96,6 @@
   </ng-container>
   <ng-template #organizationTemplate>
     <ng-container *ngIf="isOrganizationError; else noErrorOrganizationTemplate">
-      <metib-backend-error-messages [backendErrors]="'Ошибка! У Вас нет доступа, к этой организации.'">
-      </metib-backend-error-messages>
     </ng-container>
     <ng-template #noErrorOrganizationTemplate>
       <p class="p-m-0">
@@ -120,7 +118,6 @@
   </ng-container>
   <ng-template #shipmentsTemplate>
     <ng-container *ngIf="isShipmentsError; else noErrorShipmentsTemplate">
-      <metib-backend-error-messages [backendErrors]="'Ошибка!'"></metib-backend-error-messages>
     </ng-container>
     <ng-template #noErrorShipmentsTemplate>
       <p-table [columns]="selectedColumns" [value]="currentShipments" dataKey="ID"

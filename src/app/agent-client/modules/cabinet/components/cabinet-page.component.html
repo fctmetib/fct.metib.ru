@@ -1,0 +1,74 @@
+<div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<mib-agent-factoring></mib-agent-factoring>
+	<mib-spacing type="m"></mib-spacing>
+	<ng-container *ngIf="loading$ | async; else body">
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'130px'"
+			[style.padding]="isDesktop ? '' : '0 16px'"
+			*ngFor="let i of [1]"
+		></mib-skeleton>
+	</ng-container>
+	<ng-template #body>
+		<div class="flex flex_wrap gap-16">
+			<div class="limit flex">
+				<mib-cash-panel
+					[panelData]="1000000 | rub"
+					[panelTitle]="'Лимит финансирования'"
+				></mib-cash-panel>
+			</div>
+		</div>
+	</ng-template>
+	<mib-spacing type="s"></mib-spacing>
+</div>
+<mib-accordion-item class="top" [basic]="true">
+	<ng-container question>
+		<span class="headline user-select-none">
+			Агентский договор №1085/08 от 09/01/2019
+		</span>
+	</ng-container>
+	<ng-container answer>
+		<div class="wrap flex gap-16">
+			<div class="limit flex">
+				<mib-cash-panel
+					[panelData]="1000000 | rub"
+					[panelTitle]="'Задолженность'"
+					[accent]="true"
+				></mib-cash-panel>
+			</div>
+			<div class="limit flex">
+				<mib-cash-panel
+					[panelData]="1000000 | rub"
+					[panelTitle]="'Просроченная задолженность'"
+					[accent]="true"
+				></mib-cash-panel>
+			</div>
+		</div>
+	</ng-container>
+</mib-accordion-item>
+<mib-accordion-item [basic]="true">
+	<ng-container question>
+		<span class="headline user-select-none">
+			Агентский договор №1082/08 от 09/01/2019
+		</span>
+	</ng-container>
+	<ng-container answer>
+		<div class="wrap flex gap-16">
+			<div class="limit flex">
+				<mib-cash-panel
+					[panelData]="1000000 | rub"
+					[panelTitle]="'Задолженность'"
+					[accent]="true"
+				></mib-cash-panel>
+			</div>
+			<div class="limit flex">
+				<mib-cash-panel
+					[panelData]="1000000 | rub"
+					[panelTitle]="'Просроченная задолженность'"
+					[accent]="true"
+				></mib-cash-panel>
+			</div>
+		</div>
+	</ng-container>
+</mib-accordion-item>

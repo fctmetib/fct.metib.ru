@@ -1,0 +1,29 @@
+@import 'src/styles/_colors.vars';
+
+.drawer-header {
+	padding: 12px 32px;
+	border-bottom: 1px solid var(--wgr-tertiary);
+	background: var(--wgr-primary);
+}
+
+.progress-bar {
+	width: 132px;
+	padding-top: 8px;
+	gap: 4px;
+	& .wrap {
+		padding-bottom: 4px;
+		gap: 2px;
+	}
+	& .line {
+		width: 100%;
+		height: 4px;
+		border-radius: 4px;
+		background-color: var(--bg-social-color);
+
+		& .progress {
+			height: 4px;
+			border-radius: 4px;
+			background-color: var(--Main-color-Default, #1760cf);
+		}
+	}
+}

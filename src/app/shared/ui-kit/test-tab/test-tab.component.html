@@ -1,0 +1,28 @@
+<div class="table-container">
+	<button class="nav-button" (click)="prevColumn()">&#9664;</button>
+	<div class="table-wrapper">
+		<table>
+			<thead>
+				<tr>
+					<th
+						*ngFor="let header of headers; let i = index"
+						[class.hidden]="i > 0 && i !== currentColumnIndex"
+					>
+						{{ header }}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let row of data">
+					<td
+						*ngFor="let cell of row; let i = index"
+						[class.hidden]="i > 0 && i !== currentColumnIndex"
+					>
+						{{ cell }}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<button class="nav-button" (click)="nextColumn()">&#9654;</button>
+</div>

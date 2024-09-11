@@ -1,0 +1,74 @@
+@import "src/styles/typography.vars";
+@import "src/styles/helpers/icon_tools";
+
+$text-selectors: '&, span';
+
+@mixin menu-point {
+  background-color: transparent;
+  cursor: pointer;
+  width: 100%;
+
+  height: 40px;
+  padding: 0 12px;
+  gap: 4px;
+
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+
+  &_icon-wrapper, mib-icon {
+    @include icon-size(16px);
+  }
+
+  #{$text-selectors} {
+    @include body-text;
+    @include text-s;
+    @include text-overflow(1);
+    text-align: left;
+    transition: var(--transition);
+  }
+
+  @include menu-point-color(var(--bti-tertiary));
+}
+
+@mixin menu-point-hover {
+  @include menu-point-color(var(--bti-secondary))
+
+}
+
+@mixin menu-point-color($color) {
+  #{$text-selectors} {
+    color: $color;
+  }
+
+  mib-icon {
+    @include icon-color($color)
+  }
+}
+
+@mixin menu-point-selected {
+  background-color: var(--mc-quaternary);
+  @include menu-point-color(var(--mc-default))
+}
+
+.menu-point {
+  @include menu-point;
+
+  &_selected {
+    @include menu-point-selected;
+  }
+
+  &:not(&_selected):hover {
+    @include menu-point-hover;
+  }
+
+  &_icon-wrapper {
+    display: none;
+  }
+
+  &_left-iconly {
+    .menu-point_icon-wrapper {
+      display: flex;
+    }
+  }
+}

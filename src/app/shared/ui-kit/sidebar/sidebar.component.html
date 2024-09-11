@@ -1,0 +1,67 @@
+<div class="sidebar flex flex_column">
+	<div routerLink="/client/cabinet" class="logotype cursor-pointer">
+		<mib-icon name="logotype"></mib-icon>
+	</div>
+	<div class="body flex_grow flex flex_column full-height">
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex flex_column">
+			<div
+				*ngIf="
+					currentRoute === 'agent-client' ||
+					(currentRoute === 'client' && isVerify)
+				"
+				class="drop-wrap"
+			>
+				<mib-select
+					size="s"
+					type="outline"
+					placeholder="{{
+						currentRoute === 'agent-client'
+							? 'Агентский факторинг'
+							: 'Факторинг'
+					}}"
+				>
+					<mib-dropdown-point
+						[value]="false"
+						text="{{
+							currentRoute === 'agent-client'
+								? 'Факторинг'
+								: 'Агентский факторинг'
+						}}"
+						(press)="
+							navigateTo(currentRoute === 'client' ? 'agent-client' : 'client')
+						"
+					></mib-dropdown-point>
+				</mib-select>
+				<mib-spacing type="xs"></mib-spacing>
+			</div>
+			<ng-container
+				*ngFor="
+					let items of isAdmin
+						? menuAdmin
+						: isVerify && !isAgentFactoring
+						? menuUser
+						: isVerify && isAgentFactoring
+						? menuAgentUser
+						: menuVerify
+				"
+			>
+				<mib-menu-point *ngFor="let item of items.links" [link]="item.link"
+					><span>{{ item.name }}</span></mib-menu-point
+				>
+				<mib-spacing type="xs"></mib-spacing>
+			</ng-container>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex flex_column flex_grow flex_justify-end">
+			<mib-dropdown-point (press)="logout()" text="Выйти">
+				<mib-icon
+					dropdown-point-left-icon
+					class="stroke"
+					name="fi_log-out"
+				></mib-icon>
+			</mib-dropdown-point>
+			<mib-spacing type="m"></mib-spacing>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,16 @@
+:host {
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	display: block;
+	border: 1px solid var(--wgr-secondary);
+	// border: var(--collapse);
+	--table-paddings: 0 48px 0 16px;
+	--table-flex: 1 0;
+	overflow: hidden;
+	@media (max-width: 576px) {
+		--table-paddings: 0 calc(100% / 4) 0 16px;
+
+		border-radius: unset;
+	}
+}

@@ -1,0 +1,1388 @@
+<h1>h1! mib-ui works!</h1>
+<h2>h2! mib-ui works!</h2>
+<h3>h3! mib-ui works!</h3>
+<h4>h4! mib-ui works!</h4>
+<h5>h5! mib-ui works!</h5>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'buttons' | titlecase }}
+	<button (click)="isShownBtns = !isShownBtns">
+		{{ isShownBtns ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownBtns" class="wrapper">
+	<h3>filled-primary</h3>
+	<div class="btn-wrapper">
+		<mib-button size="xl">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="l">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="m">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="s">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button [disabled]="true" size="xl">
+			<mib-icon btn-left-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			<mib-icon
+				btn-right-icon
+				class="stroke"
+				name="fi_chevron-right"
+			></mib-icon>
+			Disabled
+		</mib-button>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+	<h3>filled-accent</h3>
+	<div class="btn-wrapper">
+		<mib-button size="xl" type="filled-accent">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="l" type="filled-accent">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="m" type="filled-accent">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="s" type="filled-accent">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button [disabled]="true" size="xl" type="filled-accent">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Disabled
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+	<h3>filled-secondary</h3>
+	<div class="btn-wrapper">
+		<mib-button size="xl" type="filled-secondary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="l" type="filled-secondary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="m" type="filled-secondary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="s" type="filled-secondary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button [disabled]="true" size="xl" type="filled-secondary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Disabled
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+	<h3>floating</h3>
+	<div class="btn-wrapper">
+		<mib-button size="xl" type="floating">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="l" type="floating">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="m" type="floating">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="s" type="floating">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button [disabled]="true" size="xl" type="floating">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Disabled
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+	<h3>outline-primary</h3>
+	<div class="btn-wrapper">
+		<mib-button size="xl" type="outline-primary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="l" type="outline-primary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="m" type="outline-primary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="s" type="outline-primary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button [disabled]="true" size="xl" type="outline-primary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Disabled
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+	<h3>outline-accent</h3>
+	<div class="btn-wrapper">
+		<mib-button size="xl" type="outline-accent">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="l" type="outline-accent">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="m" type="outline-accent">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="s" type="outline-accent">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button [disabled]="true" size="xl" type="outline-accent">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Disabled
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+	<h3>ghost-primary</h3>
+	<div class="btn-wrapper">
+		<mib-button size="xl" type="ghost-primary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+		<mib-button size="l" type="ghost-primary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="m" type="ghost-primary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="s" type="ghost-primary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button [disabled]="true" size="xl" type="ghost-primary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Disabled
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+	<h3>ghost-secondary</h3>
+	<div class="btn-wrapper">
+		<mib-button size="xl" type="ghost-secondary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="l" type="ghost-secondary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="m" type="ghost-secondary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button size="s" type="ghost-secondary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Placeholder
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+
+		<mib-button [disabled]="true" size="xl" type="ghost-secondary">
+			<mib-icon class="stroke" name="fi_chevron-left"></mib-icon>
+			Disabled
+			<mib-icon class="stroke" name="fi_chevron-right"></mib-icon>
+		</mib-button>
+	</div>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'inputs' | titlecase }}
+	<button (click)="isShownInputs = !isShownInputs">
+		{{ isShownInputs ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<!-- <div [formGroup]="form" *ngIf="isShownInputs" class="wrapper">
+	<h3>filled-secondary</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div class="input-wrapper">
+		<div class="test-input">
+			<span>test input</span>
+			<mib-input>
+				<input
+					mibInput
+					type="text"
+					formControlName="testPlaceholder"
+					required
+					[size]="inputSizeXL"
+					styleType="filled-secondary"
+					placeholder="Label"
+				/>
+				<ng-container mibLabel>Label</ng-container>
+				<mib-icon
+					class="stroke path"
+					input-left-icon
+					name="fi_search"
+				></mib-icon>
+				<mib-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_x"
+				></mib-icon>
+			</mib-input>
+		</div>
+		{{ form.get('testPlaceholder').errors | json }}
+		<button (click)="lookIt()">check it</button>
+		<mib-input>
+			<ng-container mibLabel>Label</ng-container>
+			<input
+				mibInput
+				type="text"
+				[size]="inputSizeL"
+				styleType="filled-secondary"
+				placeholder="Label"
+			/>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container mibLabel>Label</ng-container>
+			<input
+				mibInput
+				type="text"
+				[size]="inputSizeM"
+				styleType="filled-secondary"
+				placeholder="Label"
+			/>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container mibLabel>Label</ng-container>
+			<input
+				mibInput
+				type="text"
+				[size]="inputSizeS"
+				styleType="filled-secondary"
+				placeholder="Label"
+			/>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-icon>
+		</mib-input>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+	<h3>floating</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div class="input-wrapper">
+		<div class="test-input">
+			<span>test input</span>
+			<mib-input>
+				<input
+					mibInput
+					type="text"
+					[size]="inputSizeXL"
+					formControlName="testPlaceholder2"
+					styleType="floating"
+					placeholder="Label"
+				/>
+				<ng-container mibLabel>Label</ng-container>
+				<mib-icon
+					class="stroke path"
+					input-left-icon
+					name="fi_search"
+				></mib-icon>
+				<mib-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_x"
+				></mib-icon>
+			</mib-input>
+		</div>
+		<mib-input>
+			<ng-container mibLabel>Label</ng-container>
+			<input
+				mibInput
+				type="text"
+				[size]="inputSizeL"
+				styleType="floating"
+				placeholder="Label"
+			/>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container mibLabel>Label</ng-container>
+			<input
+				mibInput
+				type="text"
+				[size]="inputSizeM"
+				styleType="floating"
+				placeholder="Label"
+			/>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container mibLabel>Label</ng-container>
+			<input
+				mibInput
+				type="text"
+				[size]="inputSizeS"
+				styleType="floating"
+				placeholder="Label"
+			/>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-icon>
+		</mib-input>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+	<h3>separated</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div class="input-wrapper">
+		<div class="test-input">
+			<span>test input</span>
+			<mib-input>
+				<input
+					mibInput
+					type="text"
+					[size]="inputSizeXL"
+					formControlName="testPlaceholder3"
+					styleType="separated"
+					placeholder="Label"
+				/>
+				<ng-container mibLabel>Label</ng-container>
+				<mib-icon
+					class="stroke path"
+					input-left-icon
+					name="fi_search"
+				></mib-icon>
+				<mib-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon
+					input-right-icon
+					c-bgr-secondary
+					class="stroke"
+					name="fi_x"
+				></mib-icon>
+			</mib-input>
+		</div>
+		<mib-input>
+			<ng-container mibLabel>Label</ng-container>
+			<input
+				mibInput
+				type="text"
+				[size]="inputSizeL"
+				styleType="separated"
+				placeholder="Label"
+			/>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container mibLabel>Label</ng-container>
+			<input
+				mibInput
+				type="text"
+				[size]="inputSizeM"
+				styleType="separated"
+				placeholder="Label"
+			/>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-icon>
+		</mib-input>
+		<mib-input>
+			<ng-container mibLabel>Label</ng-container>
+			<input
+				mibInput
+				type="text"
+				[size]="inputSizeS"
+				styleType="separated"
+				placeholder="Label"
+			/>
+			<mib-icon class="stroke path" input-left-icon name="fi_search"></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_chevron-left"
+			></mib-icon>
+			<mib-icon
+				input-right-icon
+				c-bgr-secondary
+				class="stroke"
+				name="fi_x"
+			></mib-icon>
+		</mib-input>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+</div> -->
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'textarea' | titlecase }}
+	<button (click)="isShownTextarea = !isShownTextarea">
+		{{ isShownTextarea ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownTextarea" class="wrapper">
+	<h3>filled-secondary</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div class="input-wrapper">
+		<p>control false</p>
+		<mib-textarea [controls]="false">
+			<ng-container mibLabel>Текст обращения</ng-container>
+			<textarea [maxLength]="300" autosize mibTextarea></textarea>
+		</mib-textarea>
+		<mib-spacing type="xs"></mib-spacing>
+		<p>control false</p>
+		<mib-textarea>
+			<ng-container mibLabel>Текст обращения</ng-container>
+			<textarea [maxLength]="300" autosize mibTextarea></textarea>
+		</mib-textarea>
+		<mib-spacing type="xs"></mib-spacing>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'badges' | titlecase }}
+	<button (click)="isShownBadges = !isShownBadges">
+		{{ isShownBadges ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownBadges" class="wrapper">
+	<h3>filled-secondary</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div class="input-wrapper">
+		<h5>badge extended:</h5>
+		<div class="test-badge">
+			<mib-badge [extended]="true" size="l">Оплачено</mib-badge>
+			<mib-badge [extended]="true" size="m">Оплачено</mib-badge>
+			<mib-badge [extended]="true" size="s">Оплачено</mib-badge>
+		</div>
+		<h5>badge:</h5>
+		<div class="test-badge">
+			<mib-badge size="l">10</mib-badge>
+			<mib-badge size="m">10</mib-badge>
+			<mib-badge size="s">10</mib-badge>
+		</div>
+		<mib-spacing type="l"></mib-spacing>
+	</div>
+	<h3>filled-accent</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div class="input-wrapper">
+		<h5>badge extended</h5>
+		<div class="test-badge">
+			<mib-badge type="filled-accent" [extended]="true" size="l"
+				>Оплачено</mib-badge
+			>
+			<mib-badge type="filled-accent" [extended]="true" size="m"
+				>Оплачено</mib-badge
+			>
+			<mib-badge type="filled-accent" [extended]="true" size="s"
+				>Оплачено</mib-badge
+			>
+		</div>
+		<h5>badge</h5>
+		<div class="test-badge">
+			<mib-badge type="filled-accent" size="l">10</mib-badge>
+			<mib-badge type="filled-accent" size="m">10</mib-badge>
+			<mib-badge type="filled-accent" size="s">10</mib-badge>
+		</div>
+		<mib-spacing type="l"></mib-spacing>
+	</div>
+	<h3>filled-success</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div class="input-wrapper">
+		<h5>badge extended</h5>
+		<div class="test-badge">
+			<mib-badge type="filled-success" [extended]="true" size="l"
+				>Оплачено</mib-badge
+			>
+			<mib-badge type="filled-success" [extended]="true" size="m"
+				>Оплачено</mib-badge
+			>
+			<mib-badge type="filled-success" [extended]="true" size="s"
+				>Оплачено</mib-badge
+			>
+		</div>
+		<h5>badge</h5>
+		<div class="test-badge">
+			<mib-badge type="filled-success" size="l">10</mib-badge>
+			<mib-badge type="filled-success" size="m">10</mib-badge>
+			<mib-badge type="filled-success" size="s">10</mib-badge>
+		</div>
+		<mib-spacing type="l"></mib-spacing>
+	</div>
+	<h3>filled-secondary</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div class="input-wrapper">
+		<h5>badge extended</h5>
+		<div class="test-badge">
+			<mib-badge type="filled-secondary" [extended]="true" size="l"
+				>Оплачено</mib-badge
+			>
+			<mib-badge type="filled-secondary" [extended]="true" size="m"
+				>Оплачено</mib-badge
+			>
+			<mib-badge type="filled-secondary" [extended]="true" size="s"
+				>Оплачено</mib-badge
+			>
+		</div>
+		<h5>badge</h5>
+		<div class="test-badge">
+			<mib-badge type="filled-secondary" size="l">10</mib-badge>
+			<mib-badge type="filled-secondary" size="m">10</mib-badge>
+			<mib-badge type="filled-secondary" size="s">10</mib-badge>
+		</div>
+		<mib-spacing type="xl"></mib-spacing>
+	</div>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'controls' | titlecase }}
+	<button (click)="isShownSwitch = !isShownSwitch">
+		{{ isShownSwitch ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownSwitch" class="wrapper">
+	<h3>filled-secondary</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div style="display: flex; gap: 2rem">
+		<h5>checkbox:</h5>
+		<div class="test-badge">
+			<mib-checkbox size="l"></mib-checkbox>
+			<mib-checkbox size="m"></mib-checkbox>
+			<mib-checkbox size="s"></mib-checkbox>
+		</div>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+	<!-- <div style="display: flex; gap: 2rem">
+		<h5>radio:</h5>
+		<div class="test-badge">
+			<mib-radio size="l"></mib-radio>
+			<mib-radio></mib-radio>
+			<mib-radio size="s"></mib-radio>
+		</div>
+	</div> -->
+	<mib-spacing type="l"></mib-spacing>
+	<div style="display: flex; gap: 2rem">
+		<h5>switch:</h5>
+		<div class="test-badge">
+			<mib-switch size="l"></mib-switch>
+			<mib-switch></mib-switch>
+			<mib-switch size="s"></mib-switch>
+		</div>
+	</div>
+	<mib-spacing type="l"></mib-spacing>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'tag' | titlecase }}
+	<button (click)="isShownTag = !isShownTag">
+		{{ isShownTag ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownTag" class="wrapper">
+	<h3>chips</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<h5>filled-primary:</h5>
+	<div style="display: flex; gap: 2rem">
+		<div class="test-badge">
+			<mib-tag>
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				placeholder
+			</mib-tag>
+			<mib-tag status="disabled">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				placeholder
+			</mib-tag>
+			<mib-tag size="m">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				primary
+			</mib-tag>
+			<mib-tag size="s">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				primary
+			</mib-tag>
+		</div>
+	</div>
+	<h5>filled-accent:</h5>
+	<div style="display: flex; gap: 2rem">
+		<div class="test-badge">
+			<mib-tag type="filled-accent">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				placeholder
+			</mib-tag>
+			<mib-tag type="filled-accent" status="disabled">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				placeholder
+			</mib-tag>
+			<mib-tag type="filled-accent" size="m">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				primary
+			</mib-tag>
+			<mib-tag type="filled-accent" size="s">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				primary
+			</mib-tag>
+		</div>
+	</div>
+	<h5>filled-secondary:</h5>
+	<div style="display: flex; gap: 2rem">
+		<div class="test-badge">
+			<mib-tag type="filled-secondary">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				placeholder
+			</mib-tag>
+			<mib-tag type="filled-secondary" status="disabled">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				placeholder
+			</mib-tag>
+			<mib-tag type="filled-secondary" size="m">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				primary
+			</mib-tag>
+			<mib-tag type="filled-secondary" size="s">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				primary
+			</mib-tag>
+		</div>
+	</div>
+	<h5>floating:</h5>
+	<div style="display: flex; gap: 2rem">
+		<div class="test-badge">
+			<mib-tag type="floating">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				placeholder
+			</mib-tag>
+			<mib-tag type="floating" status="disabled">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				placeholder
+			</mib-tag>
+			<mib-tag type="floating" size="m">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				primary
+			</mib-tag>
+			<mib-tag type="floating" size="s">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				primary
+			</mib-tag>
+		</div>
+	</div>
+	<h5>outline:</h5>
+	<div style="display: flex; gap: 2rem">
+		<div class="test-badge">
+			<mib-tag type="outline">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				placeholder
+			</mib-tag>
+			<mib-tag type="outline" status="disabled">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				placeholder
+			</mib-tag>
+			<mib-tag type="outline" size="m">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				primary
+			</mib-tag>
+			<mib-tag type="outline" size="s">
+				<mib-icon
+					tag-leftt-icon
+					class="stroke"
+					name="fi_chevron-left"
+				></mib-icon>
+				<mib-icon tag-right-icon class="stroke" name="fi_x"></mib-icon>
+				primary
+			</mib-tag>
+		</div>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'header' | titlecase }}
+	<button (click)="isShownHeader = !isShownHeader">
+		{{ isShownHeader ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownHeader" class="wrapper">
+	<h3>filled-secondary</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div style="display: flex; gap: 2rem">
+		<h5>header 1:</h5>
+		<mib-header showExtention="true"></mib-header>
+		<!-- <app-header></app-header> -->
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'toaster' | titlecase }}
+	<button (click)="isShownToaster = !isShownToaster">
+		{{ isShownToaster ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownToaster" class="wrapper">
+	<h3>toaster</h3>
+	<mib-spacing type="xs2"></mib-spacing>
+	<button
+		style="border: 1px solid green; margin-right: 5px"
+		(click)="showSuccessToaster()"
+	>
+		Success
+	</button>
+	<button
+		style="border: 1px solid grey; margin-right: 5px"
+		(click)="showDefaultToaster()"
+	>
+		Default
+	</button>
+	<button
+		style="border: 1px solid red; margin-right: 5px"
+		(click)="showFailureToaster()"
+	>
+		Failure
+	</button>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'media' | titlecase }}
+	<button (click)="isShownMedia = !isShownMedia">
+		{{ isShownMedia ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownMedia" class="wrapper">
+	<h3>filled-secondary</h3>
+	<mib-spacing type="l"></mib-spacing>
+	<div style="display: flex; gap: 2rem">
+		<h5>media</h5>
+		<mib-media></mib-media>
+		<mib-media type="whatsapp"></mib-media>
+		<mib-media type="vk"></mib-media>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+	<div style="display: flex; gap: 2rem">
+		<h5>media</h5>
+		<mib-media size="l"></mib-media>
+		<mib-media size="l" type="whatsapp"></mib-media>
+		<mib-media size="l" type="vk"></mib-media>
+	</div>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'FileCellComponent' | titlecase }}
+	<button (click)="isShownFileCell = !isShownFileCell">
+		{{ isShownFileCell ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isShownFileCell" style="margin-bottom: 10rem" class="wrapper">
+	<div style="display: flex; gap: 2rem; flex-direction: column">
+		<h5>FileCellComponent</h5>
+		<mib-file-cell size="s"></mib-file-cell>
+		<mib-file-cell></mib-file-cell>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'Contracted-forms' | titlecase }}
+	<button (click)="isContracted = !isContracted">
+		{{ isContracted ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isContracted" style="margin-bottom: 10rem" class="wrapper">
+	<div>
+		<h5>Contracted-form:</h5>
+		<mib-contracted-forms>
+			<ng-container contacted-label>ПАО АКБ "МЕТАЛЛИНВЕСТБАНК"</ng-container>
+			<ng-container contracted-bill>30101810300000000176</ng-container>
+			<ng-container contracted-open>22.11.2022</ng-container>
+			<ng-container contracted-close>22.11.2022</ng-container>
+			<ng-container contracted-description
+				>Для основных транзакций</ng-container
+			>
+		</mib-contracted-forms>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'modal' | titlecase }}
+	<button (click)="isModal = !isModal">
+		{{ isModal ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isModal" style="margin-bottom: 10rem" class="wrapper">
+	<div class="">
+		<h5>modal: success</h5>
+		<!-- <mib-modal>
+			<mib-modal-header title="Запрос отправлен"> </mib-modal-header>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-banner-modal type="success"></mib-banner-modal>
+			<mib-spacing type="xs"></mib-spacing>
+			<p class="text text_m">
+				Отследить статус запроса Вы сможете на странице запросов во вкладке
+				“История запросов”
+			</p>
+			<mib-spacing type="m"></mib-spacing>
+			<mib-modal-footer>
+				<ng-container>
+					<mib-button class="flex_grow" size="m" type="filled-primary">
+						Перейти к запросу
+					</mib-button>
+					<mib-button class="flex_grow" size="m" type="filled-secondary">
+						На главную
+					</mib-button>
+				</ng-container>
+			</mib-modal-footer>
+		</mib-modal> -->
+		<mib-spacing type="m"></mib-spacing>
+		<h5>modal: fail</h5>
+		<mib-button (click)="openRequestFailureModal()" type="filled-primary">
+			req-fail-modal
+		</mib-button>
+		<!-- <mib-modal>
+			<mib-modal-header title="Что-то пошло не так..."> </mib-modal-header>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-banner-modal type="fail"></mib-banner-modal>
+			<mib-spacing type="xs"></mib-spacing>
+			<p class="text text_m">
+				К сожалению, у нас не получилось сформировать запрос, проверьте
+				правильность заполнения запроса и попробуйте снова
+			</p>
+			<mib-spacing type="m"></mib-spacing>
+			<mib-modal-footer>
+				<ng-container>
+					<mib-button class="flex_grow" size="m" type="filled-primary">
+						Перейти к черновику
+					</mib-button>
+					<mib-button class="flex_grow" size="m" type="filled-secondary">
+						Отмена
+					</mib-button>
+				</ng-container>
+			</mib-modal-footer>
+		</mib-modal> -->
+		<mib-spacing type="m"></mib-spacing>
+		<h5>modal: info</h5>
+		<mib-button (click)="openRequestInfoModal()" type="filled-primary">
+			req-info-modal
+		</mib-button>
+		<!-- <mib-modal>
+			<mib-modal-header title="Запрос на модерации"> </mib-modal-header>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-banner-modal type="info"></mib-banner-modal>
+			<mib-spacing type="xs"></mib-spacing>
+			<p class="text text_m">
+				Отследить статус и процесс реализации заявки вы сможете на странице
+				запросов во вкладке “История запросов”
+			</p>
+			<mib-spacing type="m"></mib-spacing>
+			<mib-modal-footer>
+				<ng-container>
+					<mib-button class="flex_grow" size="m" type="filled-primary">
+						Перейти к запросу
+					</mib-button>
+					<mib-button class="flex_grow" size="m" type="filled-secondary">
+						На главную
+					</mib-button>
+				</ng-container>
+			</mib-modal-footer>
+		</mib-modal> -->
+		<mib-spacing type="m"></mib-spacing>
+		<h5>banners</h5>
+		<mib-spacing type="m"></mib-spacing>
+		<mib-banner-modal type="success"></mib-banner-modal>
+		<mib-spacing type="m"></mib-spacing>
+		<mib-banner-modal type="fail"></mib-banner-modal>
+		<mib-spacing type="m"></mib-spacing>
+		<mib-banner-modal type="info"></mib-banner-modal>
+		<mib-spacing type="m"></mib-spacing>
+		<h5>new-shipment-modal:</h5>
+		<!-- <mib-new-shipment-modal></mib-new-shipment-modal> -->
+		<mib-button (click)="openNewShipmentModal()" type="filled-primary">
+			модал ship
+		</mib-button>
+		<mib-spacing type="m"></mib-spacing>
+		<h5>suc-request-modal:</h5>
+		<mib-button (click)="openRequestCreateSuccessModal()" type="filled-primary">
+			suc-req-modal
+		</mib-button>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>
+
+<hr style="max-width: 50%; opacity: 0.5; margin: 3rem auto" />
+
+<h2
+	style="
+		text-align: center;
+		margin: 2rem 0 4rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	"
+>
+	{{ 'loader' | titlecase }}
+	<button (click)="isLoader = !isLoader">
+		{{ isLoader ? 'Hide' : 'Show' }}
+	</button>
+</h2>
+<div *ngIf="isLoader" style="margin-bottom: 10rem" class="wrapper">
+	<div>
+		<h5>loader:</h5>
+		<mib-loader></mib-loader>
+	</div>
+	<mib-spacing type="xl2"></mib-spacing>
+	<mib-spacing type="xl2"></mib-spacing>
+	<h2>test tab</h2>
+	<mib-spacing type="xl2"></mib-spacing>
+	<mib-test-tab></mib-test-tab>
+	<mib-spacing type="xl2"></mib-spacing>
+</div>
+
+<mib-spacing type="xl2"></mib-spacing>
+<h2>test swipe</h2>
+<mib-test-swipe></mib-test-swipe>
+<mib-spacing type="xl2"></mib-spacing>
+<mib-spacing type="xl2"></mib-spacing>
+<h2>test autocomplete</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+	<mib-input class="flex_grow">
+		<input
+			styleType="filled-secondary"
+			formControlName="name"
+			type="text"
+			mibInput
+		/>
+		<ng-container mibLabel>Name</ng-container>
+	</mib-input>
+	<mib-input class="flex_grow">
+		<input
+			styleType="filled-secondary"
+			formControlName="email"
+			type="email"
+			mibInput
+		/>
+		<ng-container mibLabel>Email</ng-container>
+	</mib-input>
+	<mib-test-autocomplete
+		[isMulti]="true"
+		formControlName="participantAutocomplete"
+		(onMultiplyChange)="onSelectPerson($event)"
+	>
+	</mib-test-autocomplete>
+	<button type="submit" [disabled]="form.invalid">Submit</button>
+</form>
+
+<mib-spacing type="xl2"></mib-spacing>
+<mib-spacing type="xl2"></mib-spacing>
+
+<h2>modal</h2>
+<button (click)="openModal()">Open Modal</button>
+
+<mib-spacing type="xl2"></mib-spacing>

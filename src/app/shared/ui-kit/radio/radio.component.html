@@ -1,0 +1,14 @@
+<label class="flex flex_align-center radio w100" [ngClass]="class">
+	<input (change)="onRadioChange()" type="checkbox" class="radio-input"/>
+	<div class="flex gap-8">
+		<span
+			[class.checked]="checked"
+			class="radio-control flex flex_center"
+			[ngClass]="'radio-control_' + size"
+		>
+		</span>
+		<span class="text text_m c-bti-secondary">
+			<ng-content></ng-content>
+		</span>
+	</div>
+</label>

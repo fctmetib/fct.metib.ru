@@ -1,0 +1,107 @@
+@import 'src/styles/helpers/colors';
+
+:root {
+	/* white-gradation */
+	--wgr-primary: #fff;
+	--wgr-secondary: #f2f4f7;
+	--wgr-tertiary: #e7eaee;
+	--wgr-quaternary: #c8cbd0;
+
+	/* black-gradation */
+	--bgr-primary: #000;
+	--bgr-secondary: #0a0d10;
+	--bgr-tertiary: #151a1e;
+	--bgr-quaternary: #2f3337;
+
+	/* white-text-icons */
+	--wti-primary: #fff;
+	--wti-secondary: #d5d6d8;
+	--wti-tertiary: #a7acb4;
+	--wti-quaternary: #8d97a5;
+
+	/* black-text-icons */
+	--bti-primary: #090a0c;
+	--bti-secondary: #24292e;
+	--bti-tertiary: #4b5258;
+	--bti-quaternary: #62666a;
+
+	/* overlay-primary */
+	--overlay-primary: rgba(9, 13, 17, 0.8);
+	--overlay-secondary: #090d1199;
+	--overlay-tertiary: #090d1166;
+	--overlay-quaternary: #090d1133;
+
+	/* main-color */
+	--mc-hover: #3687e2;
+	--mc-default: #1760cf;
+	--mc-active: #0d54a5;
+	--mc-quaternary: #dee8f7;
+	--mc-quinary: #f0f4f9;
+	--mc-gradient-default: linear-gradient(114deg, #3686e2 0%, #0d54a5 100%);
+
+	/* background-primary */
+	--bgp-hover: #1a57b2;
+	--bgp-default: #0f408a;
+	--bgp-active: #0a3576;
+	--bgp-quaternary: #bed3f4;
+	--bgp-quinary: #eaf1fb;
+	--bgp-gradient-default: linear-gradient(
+		114deg,
+		#1d61c9 0%,
+		#00337f 100%,
+		#043e95 100%
+	);
+
+	/* additional-color */
+	--adc-hover: #0ba3da;
+	--adc-default: #0593c7;
+	--adc-active: #0083b2;
+	--adc-quaternary: #c8dfe7;
+	--adc-quinary: #edf5f7;
+	--adc-gradient-default: linear-gradient(114deg, #36b5e2 0%, #0083b2 100%);
+
+	/* accent-color */
+	--ac-hover: #cb4d51;
+	--ac-default: #cc3338;
+	--ac-active: #bd282d;
+	--ac-quaternary: #e6cbcc;
+	--ac-quinary: #f6eeef;
+
+	/* alert-color */
+	--alc-hover: #cb4d4d;
+	--alc-default: #c33;
+	--alc-active: #bd2828;
+	--alc-quaternary: #e6cbcb;
+	--alc-quinary: #f6eeee;
+
+	/* warning-color */
+	--wc-hover: #f0b642;
+	--wc-default: #f2a60d;
+	--wc-active: #c78505;
+	--wc-quaternary: #f2e1c0;
+	--wc-quinary: #faf5eb;
+
+	/* succes-color */
+	--success-hover: #6aaf73;
+	--success-default: #53ac5f;
+	--success-active: #45a151;
+	--success-quaternary: #d1e0d3;
+	--success-quinary: #f0f4f1;
+
+	/* shadows */
+	--shadow-big: 0px 16px 32px 0px rgba(9, 13, 17, 0.1);
+	--shadow-normal: 0px 8px 16px 0px rgba(9, 13, 17, 0.08);
+	--shadow-small: 0px 4px 12px 0px rgba(9, 13, 17, 0.06);
+
+	/* social icon */
+	--bg-social-color: #f0f2f4;
+	--main-telegram: #0088cc;
+	--bg-telegram: #e5f7ff;
+	--main-whatsapp: #25d366;
+	--bg-whatsapp: #e9fbf0;
+	--main-vk: #0077ff;
+	--bg-vk: #e5f1ff;
+
+	/* table */
+	--collapse: 1px solid var(--wti-secondary);
+}

@@ -1,0 +1,87 @@
+<div
+	[routerLink]="link"
+	(click)="onclick.emit()"
+	[ngClass]="classes"
+	class="flex flex_column news"
+	[class.isAdmin]="isAdmin"
+	[class.cursor-pointer]="!isAdmin"
+>
+	<div *ngIf="showPreview" class="flex flex_justify-center image">
+		<img src="{{ showPreview }}" alt="{{ altText }}" />
+	</div>
+	<div *ngIf="superHero; else regular" class="content w-100 flex flex_column">
+		<div class="flex flex_grow flex_column top">
+			<div class="flex pt-4">
+				<span class="text text_l c-bti-secondary">
+					{{ newsDate }}
+				</span>
+			</div>
+			<h3>{{ newsTitle }}</h3>
+			<mib-spacing type="xs"></mib-spacing>
+			<div class="flex">
+				<div
+					[innerHTML]="newsContent"
+					class="text text_l c-bti-secondary except"
+				></div>
+			</div>
+		</div>
+		<div class="flex flex_grow bottom">
+			<mib-link size="l" type="ghost-primary">{{ linkText }} </mib-link>
+		</div>
+	</div>
+	<ng-template #regular>
+		<div class="regular news-text flex flex_column h-100 flex_grow">
+			<div class="news-title flex flex_grow flex_column">
+				<h4>{{ newsTitle }}</h4>
+				<div>
+					<span class="text text_l c-bti-secondary pt-4">
+						{{ newsDate }}
+					</span>
+				</div>
+				<div *ngIf="showCategories" class="flex">
+					<mib-spacing type="xs"></mib-spacing>
+					<div class="flex gap-8">
+						<mib-tag size="l" type="filled-secondary"> tags </mib-tag>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="showLink" class="links">
+				<div class="flex">
+					<mib-link size="l" type="ghost-primary">{{ linkText }} </mib-link>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+	<div *ngIf="isAdmin" class="edit-btn flex">
+		<div [mibDropdownTrigger]="adminPanel" class="flex gap-12">
+			<div class="flex flex_grow"></div>
+			<mib-button size="m" type="ghost-secondary">
+				<mib-icon btn-icon class="stroke" name="fi_more-horizontal"></mib-icon>
+			</mib-button>
+		</div>
+		<mib-dropdown #adminPanel>
+			<mib-dropdown-point
+				[underlined]="true"
+				(press)="edit.emit()"
+				text="Редактировать"
+			>
+				<mib-icon
+					dropdown-point-left-icon
+					class="stroke"
+					name="fi_edit-3"
+				></mib-icon>
+			</mib-dropdown-point>
+			<mib-dropdown-point
+				[danger]="true"
+				(press)="delete.emit()"
+				text="Удалить"
+			>
+				<mib-icon
+					dropdown-point-left-icon
+					class="stroke"
+					name="fi_trash"
+				></mib-icon>
+			</mib-dropdown-point>
+		</mib-dropdown>
+	</div>
+</div>

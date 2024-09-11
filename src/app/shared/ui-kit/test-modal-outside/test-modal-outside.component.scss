@@ -1,0 +1,22 @@
+:host {
+	display: block;
+	overflow-y: auto;
+	height: 100%;
+}
+
+.modal-content {
+	padding: 20px;
+	background-color: white;
+	border-radius: 8px;
+	text-align: center;
+}
+
+.close-button {
+	position: fixed;
+	top: 16px;
+	right: 16px;
+	z-index: 1000;
+	background-color: white;
+	border: 1px solid #ccc;
+	border-radius: 50%;
+}

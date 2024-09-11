@@ -1,0 +1,58 @@
+<mib-modal>
+  <mib-modal-header (onClose)="dialogRef.close()" title="Коррекция заявки"></mib-modal-header>
+  <mib-spacing type="xs"></mib-spacing>
+  <mib-table>
+    <mib-table-head>
+      <mib-table-head-cell>№ накладной</mib-table-head-cell>
+      <mib-table-head-cell>Дата накладной</mib-table-head-cell>
+      <mib-table-head-cell>№ с/ф</mib-table-head-cell>
+      <mib-table-head-cell>Дата с/ф</mib-table-head-cell>
+      <mib-table-head-cell>Дата поставки</mib-table-head-cell>
+      <mib-table-head-cell>Сумма поставки (начальная)</mib-table-head-cell>
+      <mib-table-head-cell>Сумма поставки</mib-table-head-cell>
+    </mib-table-head>
+    <mib-table-row *ngFor="let shipment of displayShipments; let i = index" [underlined]="true" [formGroup]="correctionForms[i]">
+      <mib-table-cell><ng-container table-cell-title>{{ shipment.WaybillNumber }}</ng-container></mib-table-cell>
+      <mib-table-cell><ng-container table-cell-title>{{ shipment.WaybillDate | date: 'dd.MM.yyyy' }}</ng-container></mib-table-cell>
+      <mib-table-cell><ng-container table-cell-title>{{ shipment.InvoiceNumber }}</ng-container></mib-table-cell>
+      <mib-table-cell><ng-container table-cell-title>{{ shipment.InvoiceDate | date: 'dd.MM.yyyy' }}</ng-container></mib-table-cell>
+      <mib-table-cell><ng-container table-cell-title>{{ shipment.DateShipment | date: 'dd.MM.yyyy' }}</ng-container></mib-table-cell>
+      <mib-table-cell><ng-container table-cell-title>{{ shipment.Summ | rub }}</ng-container></mib-table-cell>
+      <mib-table-cell type="editable">
+        <mib-input [formGroup]="correctionForms[i]">
+          <input formControlName="Amount" mask="separator" size="s" styleType="separated" [value]="shipment.SummToFactor" mibInput>
+          <mib-icon mibRightIcon class="stroke" name="fi_edit-3"></mib-icon>
+        </mib-input>
+      </mib-table-cell>
+    </mib-table-row>
+    <mib-table-row>
+      <mib-table-cell><ng-container table-cell-title>Итого</ng-container></mib-table-cell>
+      <mib-table-cell type="blank"></mib-table-cell>
+      <mib-table-cell type="blank"></mib-table-cell>
+      <mib-table-cell type="blank"></mib-table-cell>
+      <mib-table-cell type="blank"></mib-table-cell>
+      <mib-table-cell><ng-container table-cell-title>{{ totalSum | rub }}</ng-container></mib-table-cell>
+      <mib-table-cell><ng-container table-cell-title>{{ totalSumToFactor | rub }}</ng-container></mib-table-cell>
+    </mib-table-row>
+    <mib-table-footer>
+      <div class="flex flex_align-center flex_grow">
+        <mib-select [formControl]="paginatorItemsPerPageControl" type="floating" placeholder="Выберите кол-во рядов">
+          <mib-dropdown-point [value]="5" text="5 рядов"></mib-dropdown-point>
+          <mib-dropdown-point [value]="10" text="10 рядов"></mib-dropdown-point>
+        </mib-select>
+      </div>
+      <mib-paginator
+        (pageChange)="onPageChange($event)"
+        [totalCount]="shipments.length"
+        [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+        [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+      ></mib-paginator>
+      <div class="flex flex_align-center flex_grow"></div>
+    </mib-table-footer>
+  </mib-table>
+  <mib-spacing type="m"></mib-spacing>
+  <mib-modal-footer>
+    <mib-button [loading]="isSubmitting$ | async" (press)="send()">Отправить заявку</mib-button>
+    <mib-button (press)="dialogRef.close()" type="filled-secondary">Отменить изменения</mib-button>
+  </mib-modal-footer>
+</mib-modal>

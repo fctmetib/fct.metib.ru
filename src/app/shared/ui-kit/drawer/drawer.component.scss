@@ -1,0 +1,44 @@
+:host {
+	height: 100%;
+	width: 100%;
+	--drawer-container-paddings: 0 32px;
+	@media (max-width: 576px) {
+		--drawer-container-paddings: 0 16px;
+	}
+}
+
+@mixin drawer {
+	height: 100%;
+	width: 100%;
+
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	background-color: var(--wgr-primary);
+}
+
+@mixin drawer-content {
+	overflow-y: auto;
+	// overflow-y: scroll;
+}
+
+.drawer {
+	@include drawer;
+
+	&-content {
+		@media (max-width: 576px) {
+			.desktop-sp {
+				display: none;
+			}
+		}
+		@include drawer-content;
+	}
+
+	.footer {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+	}
+}

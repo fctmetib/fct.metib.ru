@@ -1,0 +1,135 @@
+@import 'src/styles/components/_tag.vars';
+
+.tag {
+	@include tag;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	gap: 4px;
+
+	&_filled-primary {
+		@include filled-primary(
+			$color: (
+				main: var(--mc-default),
+				bg: var(--mc-quinary),
+				hovr: var(--mc-hover),
+				actv: var(--mc-quaternary),
+				selectext: var(--wgr-primary),
+				selecactive: var(--mc-active)
+			)
+		);
+	}
+
+	&_filled-accent {
+		@include filled-accent(
+			$color: (
+				main: var(--ac-default),
+				bg: var(--ac-quinary),
+				hovr: var(--ac-hover),
+				actv: var(--ac-quaternary),
+				selectext: var(--wgr-primary),
+				selecactive: var(--ac-active)
+			)
+		);
+	}
+
+	&_filled-secondary {
+		@include filled-secondary(
+			$color: (
+				main: var(--bti-secondary),
+				mainselect: var(--mc-quinary),
+				bg: var(--wgr-secondary),
+				bgselect: var(--wgr-secondary),
+				hovr: var(--wgr-tertiary),
+				hovrselect: var(--mc-hover),
+				actv: var(--wgr-tertiary),
+				actvselect: var(--mc-quaternary),
+				selectext: var(--mc-default)
+			)
+		);
+	}
+
+	&_floating {
+		@include floating(
+			$color: (
+				main: var(--bti-secondary),
+				mainselect: var(--mc-default),
+				bg: var(--wgr-primary),
+				bgselect: var(--wgr-primary),
+				hovr: var(--shadow-normal),
+				hovrselect: var(--mc-hover),
+				actv: var(--wgr-secondary),
+				actvselect: var(--wgr-secondary),
+				selectext: var(--mc-default)
+			)
+		);
+	}
+
+	&_special {
+		@include special(
+			$color: (
+				main: var(--bti-secondary),
+				mainselect: var(--mc-default),
+				bg: var(--wgr-primary),
+				bgselect: var(--mc-quinary),
+				hovr: var(--shadow-normal),
+				hovrselect: var(--mc-hover),
+				actv: var(--wgr-secondary),
+				actvselect: var(--wgr-secondary),
+				selectext: var(--mc-default)
+			)
+		);
+	}
+
+	&_outline {
+		@include outline(
+			$color: (
+				main: var(--bti-secondary),
+				mainselect: var(--mc-default),
+				bg: var(--wgr-tertiary),
+				bgselect: var(--mc-quaternary),
+				hovr: var(--wgr-quaternary),
+				hovrselect: var(--mc-hover),
+				actv: var(--wgr-secondary),
+				actvselect: var(--mc-active),
+				selectext: var(--mc-default)
+			)
+		);
+	}
+
+	&_xl {
+		@include text-l;
+		height: 44px;
+		padding: 10px 14px;
+		mib-icon {
+			@include icon-size(20px);
+		}
+	}
+
+	&_l {
+		@include text-l;
+		height: 40px;
+		padding: 8px 16px;
+		mib-icon {
+			@include icon-size(20px);
+		}
+	}
+
+	&_m {
+		@include text-m;
+		height: 32px;
+		padding: 6px 12px;
+		mib-icon {
+			@include icon-size(20px);
+		}
+	}
+
+	&_s {
+		@include text-s;
+		height: 24px;
+		padding: 4px 8px;
+		mib-icon {
+			@include icon-size(16px);
+		}
+	}
+}

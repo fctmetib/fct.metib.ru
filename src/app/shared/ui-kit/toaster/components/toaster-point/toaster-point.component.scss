@@ -1,0 +1,111 @@
+@import 'src/styles/helpers/icon_tools';
+
+:host {
+	z-index: 9999;
+	position: relative;
+	display: flex;
+	justify-content: flex-end;
+}
+
+@mixin toaster-color($color, $background-color) {
+	background-color: $background-color;
+
+	mib-icon {
+		@include icon-color($color);
+	}
+
+	& .last-icon {
+		mib-icon {
+			@include icon-color(var(--bti-secondary));
+		}
+	}
+}
+
+@mixin toaster-point-desktop {
+	display: flex;
+	max-width: 608px;
+	padding: 12px 16px;
+}
+
+@mixin toaster-point-mobile {
+	display: flex;
+	max-width: 328px;
+	padding: 12px;
+}
+
+.toaster-point {
+	box-shadow: var(--normal-shadow);
+	color: var(--bti-primary);
+	border-radius: var(--main-border-radius);
+
+	mib-icon {
+		@include icon-size(20px);
+	}
+
+	&_default {
+		@include toaster-color(var(--bti-primary), var(--wti-primary));
+		& p {
+			color: var(--bti-primary);
+		}
+	}
+
+	&_success {
+		@include toaster-color(var(--success-active), var(--success-quinary));
+		& p {
+			color: var(--success-active);
+		}
+	}
+
+	&_success.toaster-point_contrast {
+		@include toaster-color(var(--wgr-primary), var(--success-active));
+		& p {
+			color: var(--wgr-primary);
+		}
+		& .last-icon {
+			mib-icon {
+				@include icon-color(var(--wgr-primary));
+			}
+		}
+	}
+
+	&_failure {
+		@include toaster-color(var(--alc-default), var(--alc-quinary));
+		& p {
+			color: var(--alc-default);
+		}
+	}
+
+	&_failure.toaster-point_contrast {
+		@include toaster-color(var(--wgr-primary), var(--alc-default));
+		& p {
+			color: var(--wgr-primary);
+		}
+		& .last-icon {
+			mib-icon {
+				@include icon-color(var(--wgr-primary));
+			}
+		}
+	}
+
+	&_device {
+		&-desktop {
+			@include toaster-point-desktop;
+		}
+		&-mobile {
+			@include toaster-point-mobile;
+		}
+	}
+
+	animation: fadeInFromNone 0.5s;
+}
+
+@keyframes fadeInFromNone {
+	0% {
+		opacity: 0;
+		transform: translateX(50%);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}

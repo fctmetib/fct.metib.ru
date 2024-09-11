@@ -1,0 +1,16 @@
+@import 'src/styles/helpers/icon_tools';
+@import 'src/styles/_colors.vars';
+
+:host {
+	width: 100%;
+
+	& .mib-mobile-popup-cell {
+		& .cell-m {
+			border-bottom: 1px solid var(--wgr-tertiary);
+			mib-icon[name='fi_copy'] {
+				@include icon-color(var(--bti-quaternary));
+				@include icon-size(16px);
+			}
+		}
+	}
+}

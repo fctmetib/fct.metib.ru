@@ -1,0 +1,58 @@
+@import 'src/styles/layout/_main';
+@import 'src/styles/_typography.elements.scss';
+@import 'src/styles/_fonts.scss';
+
+.scroll {
+	&-y {
+		overflow-y: auto;
+	}
+
+	&-x {
+		overflow-x: auto;
+	}
+}
+
+.overflow {
+	&-y {
+		overflow-y: hidden;
+	}
+
+	&-x {
+		overflow-x: hidden;
+	}
+}
+
+.user-select {
+	&-none {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	&-text {
+		-webkit-user-select: text;
+		-moz-user-select: text;
+		-ms-user-select: text;
+		user-select: text;
+	}
+}
+
+.container {
+	width: 100%;
+	max-width: 1440px;
+	padding: 0 152px;
+	margin: 0 auto;
+
+	&_large {
+		max-width: 100%;
+		padding: 0 32px;
+	}
+
+	&_m {
+		padding: 0 32px;
+	}
+
+	@media (max-width: 1200px) {
+		padding: 0 32px;
+	}
+}

@@ -1,0 +1,78 @@
+@import 'src/styles/helpers/icon_tools';
+
+:host {
+	display: block;
+	flex: 1 0 auto;
+}
+
+@mixin cash-panel {
+	width: 100%;
+	min-width: 300px;
+	padding: 16px;
+	background-color: var(--wgr-primary);
+}
+
+@mixin cash-panel-desktop {
+	border: 1px solid var(--wgr-tertiary);
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+@mixin cash-panel-mobile {
+	border-bottom: 1px solid var(--wgr-tertiary);
+	padding: 0px 0px 16px;
+	@media (max-width: 576px) {
+		padding: 0 16px;
+	}
+}
+
+@mixin cash-panel-hover {
+	box-shadow: var(--shadow-small);
+}
+
+.cash-panel {
+	@include cash-panel;
+
+	&:hover {
+		@include cash-panel-hover;
+	}
+
+	& .term {
+		white-space: nowrap;
+	}
+
+	&_desktop {
+		@include cash-panel-desktop;
+	}
+
+	&_mobile {
+		@include cash-panel-mobile;
+	}
+
+	mib-icon[name='fi_info'] {
+		@include icon-size(16px);
+		@include icon-color(var(--bti-tertiary));
+	}
+}
+
+.main-transition {
+	transition: var(--transition);
+}
+
+.extracted {
+	padding: 12px 16px;
+	border-radius: 8px;
+	border: 1px solid var(--wgr-tertiary);
+	background: var(--wgr-primary);
+	& .paneldata {
+		color: var(--bti-primary);
+	}
+	& .alert {
+		color: var(--alc-active);
+	}
+	mib-icon[name='fi_info'] {
+		@include icon-size(20px);
+		@include icon-color(var(--bti-tertiary));
+	}
+}

@@ -1,0 +1,63 @@
+@mixin icon-size($size) {
+	@include icon-width($size);
+	@include icon-height($size);
+}
+
+@mixin icon-width($size) {
+	width: $size;
+	max-width: $size;
+	min-width: $size;
+}
+
+@mixin icon-height($size) {
+	height: $size;
+	max-height: $size;
+	min-height: $size;
+}
+
+@mixin icon-color($color, $isImportant: false, $applyBoth: false) {
+	$important: if($isImportant, '!important', null);
+
+	@if $applyBoth {
+		&.stroke,
+		&:not(.stroke),
+		&.path path,
+		&:not(.stroke) .path path,
+		&:not(.stroke):not(.path) {
+			stroke: $color #{$important};
+			fill: $color #{$important};
+		}
+	} @else {
+		&.stroke {
+			stroke: $color #{$important};
+			&.path path {
+				stroke: $color #{$important};
+			}
+		}
+		&:not(.stroke) {
+			&.path path {
+				fill: $color #{$important};
+			}
+			&:not(.path) {
+				fill: $color #{$important};
+			}
+		}
+	}
+}
+
+@mixin icon-style() {
+	&.stroke {
+		@content;
+		&.path path {
+			@content;
+		}
+	}
+	&:not(.stroke) {
+		&.path path {
+			@content;
+		}
+		&:not(.path) {
+			@content;
+		}
+	}
+}

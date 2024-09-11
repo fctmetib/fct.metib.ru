@@ -1,0 +1,5 @@
+<div *ngIf="viewMounted" class="flex gap-8 flex_align-center" [formGroup]="form">
+  <input #inputRefs *ngFor="let inputId of inputs" [id]="inputId.toString()" [formControlName]="''+inputId"
+         class="text-center" styleType="filled-secondary" placeholder="0" inputEvent placeholderSuffix="" mibInput
+         size="xl" (onInput)="onInput($event)">
+</div>

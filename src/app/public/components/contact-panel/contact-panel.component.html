@@ -1,0 +1,27 @@
+<div [ngClass]="{hide: isImgSrcEmpty && isDesktop}" class="flex contact">
+	<div [ngClass]="classes" class="flex">
+		<div
+			*ngIf="isImgSrcEmpty; else imageTemplate"
+			class="flex placeholder"
+		></div>
+		<ng-template #imageTemplate>
+			<img src="{{ contactImage }}" alt="{{ contactName }}" />
+		</ng-template>
+		<div class="description flex flex_column flex_grow">
+			<mib-spacing type="xs"></mib-spacing>
+			<p class="headline">{{ contactName }}</p>
+			<div class="flex gap-8 flex_grow">
+				<span
+					[ngClass]="isDesktop ? 'text_m' : 'text_s'"
+					class="text c-bti-secondary"
+					>{{ contactPosition }}</span
+				>
+			</div>
+			<mib-spacing type="{{ isDesktop ? 'xs2' : 'xm2' }}"></mib-spacing>
+			<div class="flex flex_column">
+				<mib-link size="m" type="ghost-primary">{{ contactMail }} </mib-link>
+				<mib-spacing type="xs"></mib-spacing>
+			</div>
+		</div>
+	</div>
+</div>

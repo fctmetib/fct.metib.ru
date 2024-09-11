@@ -1,0 +1,15 @@
+<div class="breadcrumb flex" [ngClass]="classes">
+	<div *ngIf="!selected; else select" class="flex gap-4 flex_align-center">
+		<span class="text text_m c-bti-tertiary">
+			{{ text }}
+		</span>
+		<mib-icon btn-icon class="stroke" name="fi_chevron-right"></mib-icon>
+	</div>
+	<ng-template #select>
+		<div class="flex">
+			<span class="text text_m c-mc-default">
+				{{ text }}
+			</span>
+		</div>
+	</ng-template>
+</div>

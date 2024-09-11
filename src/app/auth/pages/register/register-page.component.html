@@ -1,0 +1,195 @@
+<ng-container *ngIf="confirmationCode.invalid; else confirmation">
+	<h3>Регистрация</h3>
+	<ng-container [formGroup]="form">
+		<mib-spacing type="s"></mib-spacing>
+		<div class="flex flex_column gap-xs">
+			<ng-container formGroupName="Profile">
+				<div class="flex gap-8">
+					<mib-input>
+						<input
+							mibInput
+							formControlName="First"
+							[size]="inputSize"
+							styleType="filled-secondary"
+						/>
+						<ng-container mibLabel>Имя</ng-container>
+					</mib-input>
+					<mib-input>
+						<input
+							mibInput
+							formControlName="Last"
+							[size]="inputSize"
+							styleType="filled-secondary"
+						/>
+						<ng-container mibLabel>Фамилия</ng-container>
+					</mib-input>
+				</div>
+        <mib-radio-group formControlName="IsMale">
+          <mib-radio [value]="true">
+            <ng-container>Мужчина</ng-container>
+          </mib-radio>
+          <mib-radio [value]="false">
+            <ng-container>Женщина</ng-container>
+          </mib-radio>
+        </mib-radio-group>
+				<mib-input>
+					<input
+						mibInput
+						prefix="+"
+						mask="0 (000) 000-00-00"
+						formControlName="Phone"
+						[size]="inputSize"
+						styleType="filled-secondary"
+					/>
+					<ng-container mibLabel>Телефон</ng-container>
+				</mib-input>
+				<mib-input>
+					<input
+						mibInput
+						type="email"
+						formControlName="Email"
+						[size]="inputSize"
+						styleType="filled-secondary"
+					/>
+					<ng-container mibLabel>E-mail</ng-container>
+				</mib-input>
+				<mib-input>
+					<input
+						mibInput
+						type="text"
+						formControlName="Login"
+						[size]="inputSize"
+						styleType="separated"
+            readonly
+					/>
+					<ng-container mibLabel>Ваш логин</ng-container>
+					<mib-icon
+						class="stroke path"
+						mibRightIcon
+						name="fi_lock"
+					></mib-icon>
+				</mib-input>
+				<!-- <mib-select [size]="inputSize" formControlName="IsMale">
+					<mib-dropdown-point
+						[value]="true"
+						text="Мужской"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="false"
+						text="Женский"
+					></mib-dropdown-point>
+				</mib-select> -->
+			</ng-container>
+			<mib-input>
+				<input
+					#password
+					mibInput
+					type="password"
+					[size]="inputSize"
+					styleType="filled-secondary"
+					formControlName="Password"
+				/>
+				<ng-container mibLabel>Введите пароль</ng-container>
+				<mib-icon
+					[passwordHider]="[password]"
+					class="stroke path"
+					mibRightIcon
+					[name]="password.type === 'password' ? 'fi_eye' : 'fi_eye-off'"
+				></mib-icon>
+			</mib-input>
+			<mib-input>
+				<input
+					#confirmPassword
+					mibInput
+					type="password"
+					[size]="inputSize"
+					styleType="filled-secondary"
+					formControlName="ConfirmPassword"
+				/>
+				<ng-container mibLabel>Подтвердите пароль</ng-container>
+				<mib-icon
+					[passwordHider]="[confirmPassword]"
+					class="stroke path"
+					mibRightIcon
+					[name]="confirmPassword.type === 'password' ? 'fi_eye' : 'fi_eye-off'"
+				></mib-icon>
+			</mib-input>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+		<ng-container formGroupName="Captcha">
+			<div class="flex gap-16">
+				<mib-skeleton class="flex_grow" [styles]="captchaSkeleton" *ngIf="isCaptchaLoading$ | async; else captchaImage"></mib-skeleton>
+        <ng-template #captchaImage>
+          <img class="flex_grow" [src]="image" alt="" />
+        </ng-template>
+				<div class="flex_grow flex flex_column gap-xs2">
+					<mib-input>
+						<input
+							mibInput
+							formControlName="Text"
+							[size]="inputSize"
+							styleType="filled-secondary"
+						/>
+						<ng-container mibLabel>Текст с картинки</ng-container>
+					</mib-input>
+					<mib-link (press)="updateCaptcha()">
+						<mib-icon
+							mibLeftIcon
+							class="stroke"
+							name="fi_refresh-ccw"
+						></mib-icon>
+						Обновить картинку
+					</mib-link>
+				</div>
+			</div>
+		</ng-container>
+	</ng-container>
+	<ng-container *ngIf="confirmationCode.valid">
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-input [formGroup]="formConfirm">
+			<input
+				mibInput
+				formControlName="Pin"
+				[size]="inputSize"
+				styleType="filled-secondary"
+			/>
+			<ng-container mibLabel>Смс код</ng-container>
+		</mib-input>
+	</ng-container>
+	<mib-spacing type="m"></mib-spacing>
+	<div class="flex gap-16">
+		<mib-button
+			[routerLink]="['/auth/login']"
+			size="l"
+			type="filled-secondary"
+			class="flex_grow"
+			>Есть аккаунт?</mib-button
+		>
+		<mib-button
+			*ngIf="confirmationCode.invalid"
+			[disabled]="form.invalid"
+			[loading]="!!(isSubmitting$ | async)"
+			size="l"
+			class="flex_grow"
+			(press)="onSubmit()"
+			>Продолжить</mib-button
+		>
+	</div>
+</ng-container>
+<ng-template #confirmation>
+	<mib-sms-confirmation
+		(back)="onBack()"
+		(confirm)="onConfirm($event)"
+		(resend)="onResend()"
+		[loading]="!!(isSubmitting$ | async)"
+	>
+		<ng-container sms-text>
+			На номер телефона
+			<span class="c-mc-default text_medium">{{
+				phone.value | mask : '+0(000)000-00-00'
+			}}</span>
+			отправлен код подтверждения регистрации
+		</ng-container>
+		Завершить регистрацию</mib-sms-confirmation
+	>
+</ng-template>

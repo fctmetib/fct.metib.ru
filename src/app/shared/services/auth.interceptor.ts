@@ -1,4 +1,4 @@
-import { AuthResponseInterface } from '../../auth/types/login/authResponse.interface';
+import { AuthRes } from '../../auth/types/login/authRes';
 import { CookieService } from 'ngx-cookie';
 import { Injectable } from '@angular/core';
 import {
@@ -12,13 +12,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
+import {ToolsService} from './tools.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private cookieService: CookieService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private toolsService: ToolsService
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,11 +30,9 @@ export class AuthInterceptor implements HttpInterceptor {
     let user;
     let token;
     if (userCookie) {
-      user = JSON.parse(userCookie)
+      user = this.toolsService.safeJson(userCookie)
       token = user.Code
     }
-
-    console.log('isAdmin', this.auth.isUserAdmin())
 
     if (this.auth.isUserAdmin()) {
       request = request.clone({
@@ -41,6 +41,7 @@ export class AuthInterceptor implements HttpInterceptor {
           "MetibToken": token ? token : '',
         },
       });
+
     } else {
       request = request.clone({
         setHeaders: {

@@ -1,0 +1,60 @@
+<div class="mib-mobile-popup-cell flex" [ngClass]="classes">
+	<ng-container [ngSwitch]="type">
+		<ng-container *ngSwitchCase="'numbers'">
+			<div
+				*ngIf="!showCopy; else hideCopy"
+				class="cell-m flex flex_column flex_grow"
+			>
+				<span class="text text_s c-bti-tertiary"> {{ sectionTitle }} </span>
+				<span class="text text_m pt-4 c-bti-secondary">
+					{{ title }}
+				</span>
+				<mib-spacing type="xs2"></mib-spacing>
+			</div>
+			<ng-template #hideCopy>
+				<div class="cell-m flex flex_column flex_grow">
+					<span class="text text_s c-bti-tertiary"> {{ sectionTitle }}</span>
+					<div
+						(click)="copyData.emit()"
+						class="flex gap-8 flex_align-center flex_justify-between"
+					>
+						<span class="text-clamp text text_m pt-4 c-bti-secondary">{{
+							title
+						}}</span>
+						<div class="flex pt-4">
+							<mib-icon class="stroke" name="fi_copy"></mib-icon>
+						</div>
+					</div>
+					<mib-spacing type="xs2"></mib-spacing>
+				</div>
+			</ng-template>
+		</ng-container>
+		<ng-container *ngSwitchCase="'link'">
+			<div class="cell-m flex flex_column flex_grow">
+				<span class="text text_s c-bti-tertiary"> {{ sectionTitle }} </span>
+				<div class="flex pt-4 flex_align-center">
+					<mib-link size="m" type="ghost-primary">
+						{{ title }}
+						<mib-icon
+							mibRightIcon
+							class="stroke"
+							name="fi_chevron-right"
+						></mib-icon>
+					</mib-link>
+				</div>
+				<mib-spacing type="xs2"></mib-spacing>
+			</div>
+		</ng-container>
+		<ng-container *ngSwitchCase="'badge'">
+			<div class="cell-m flex flex_column flex_grow">
+				<span class="text text_s c-bti-tertiary"> {{ sectionTitle }} </span>
+				<div class="flex pt-4 flex_align-center">
+					<mib-tag type="filled-secondary" size="s">
+						{{ badgeText }}
+					</mib-tag>
+				</div>
+				<mib-spacing type="xs2"></mib-spacing>
+			</div>
+		</ng-container>
+	</ng-container>
+</div>

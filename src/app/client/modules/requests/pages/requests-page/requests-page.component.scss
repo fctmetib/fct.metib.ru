@@ -1,0 +1,35 @@
+@media (max-width: 768px) {
+	.mobile-picker {
+		flex-wrap: wrap;
+	}
+}
+
+@media (max-width: 576px) {
+	.container {
+		padding: 0;
+
+		& h3 {
+			padding: 0 16px;
+		}
+
+		& mib-spacing[type='m'] {
+			height: 24px;
+			display: block;
+		}
+
+		& > div {
+			width: 100%;
+			display: block;
+		}
+	}
+
+	.mobile-picker {
+		flex-direction: column;
+		padding: 0 16px;
+		gap: 12px;
+		& input {
+			width: 115px;
+			padding: 7px;
+		}
+	}
+}

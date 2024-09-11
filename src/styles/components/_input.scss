@@ -1,0 +1,147 @@
+@import 'src/styles/helpers/_icon_tools';
+@import 'src/styles/_typography.vars.scss';
+@import 'src/styles/components/input.vars';
+
+.box-wrapper {
+  --input-xl-icon-size: 20px;
+  --input-l-icon-size: 20px;
+  --input-m-icon-size: 20px;
+  --input-s-icon-size: 16px;
+  --input-xl-icons-gap: 8px;
+  --input-l-icons-gap: 8px;
+  --input-m-icons-gap: 8px;
+  --input-s-icons-gap: 8px;
+}
+
+.box {
+  height: 100%;
+}
+
+.box-wrapper {
+  height: 100%;
+  position: relative;
+  border-radius: var(--main-border-radius);
+  transition: var(--main-transition);
+
+  .box-label {
+    @include body-text;
+    position: absolute;
+    white-space: nowrap;
+    cursor: text;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  &:not(&_without-label) {
+    .box-wrapper {
+      &_input {
+        input {
+          padding-top: 12px;
+        }
+      }
+      &_textarea {
+        textarea {
+          margin-top: 12px;
+        }
+      }
+    }
+  }
+
+  &_input {
+    .box-label {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  &_textarea {
+    .box-label {
+      top: 8px;
+    }
+    textarea {
+      margin-top: 12px;
+    }
+    &.input {
+      padding-bottom: 10px;
+    }
+  }
+
+  &-transition {
+    .box-label {
+      transition: var(--main-transition);
+    }
+
+    .input, .left-wrapper {
+      transition: var(--main-transition);
+    }
+  }
+
+  .box-right-iconly, .box-left-iconly {
+    .input_icon-wrapper {
+      display: flex;
+    }
+  }
+
+  // SIZES
+  @include input-addiction-xl;
+  @include input-addiction-l;
+  @include input-addiction-m;
+  @include input-addiction-s;
+}
+
+.input {
+  @include input();
+
+  &_xl {
+    @include input-xl;
+  }
+
+  &_l {
+    @include input-l;
+  }
+
+  &_m {
+    @include input-m;
+  }
+
+  &_s {
+    @include input-s;
+  }
+
+  // INPUT TYPES WITH BOX-WRAPPER ADDICTION
+  &_type-filled-secondary {
+    @include input-type-filled-secondary;
+  }
+
+  &_type-floating {
+    @include input-type-floating;
+  }
+
+  &_type-outline {
+    @include input-type-outline;
+  }
+
+  &_type-separated {
+    @include input-type-separated;
+  }
+
+  // STATUSES
+  &.input, &.select {
+    &_error {
+      @include input-error;
+    }
+    &_active {
+      @include input-active;
+    }
+  }
+}
+
+.input, .box-wrapper {
+  @include input-states-from-wrapper;
+}
+
+textarea {
+  @include textarea;
+}

@@ -1,0 +1,142 @@
+@mixin heading-styles {
+	font-family: var(--ff-primary);
+	font-weight: var(--fw-semi-bold);
+	font-style: normal;
+	margin: 0;
+	color: var(--bti-primary);
+	transition: var(--transition);
+	user-select: text;
+}
+
+@mixin h1-desktop {
+	font-size: 56px;
+	line-height: 72px;
+	letter-spacing: -0.84px;
+}
+
+@mixin h2-desktop {
+	font-size: 48px;
+	line-height: 56px;
+	letter-spacing: -0.72px;
+}
+
+@mixin h3-desktop {
+	font-size: 32px;
+	line-height: 40px;
+	letter-spacing: -0.32px;
+}
+
+@mixin h4-desktop {
+	font-size: 24px;
+	line-height: 32px;
+	letter-spacing: -0.24px;
+}
+
+@mixin h5-desktop {
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: -0.08px;
+}
+
+@mixin h1-mobile {
+	font-size: 40px;
+	line-height: 56px;
+	letter-spacing: -0.6px;
+}
+
+@mixin h2-mobile {
+	font-size: 32px;
+	line-height: 40px;
+	letter-spacing: -0.48px;
+}
+
+@mixin h3-mobile {
+	font-size: 24px;
+	line-height: 32px;
+	letter-spacing: -0.24px;
+}
+
+@mixin h4-mobile {
+	font-size: 20px;
+	line-height: 28px;
+	letter-spacing: -0.2px;
+}
+
+@mixin h5-mobile {
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: -0.08px;
+}
+
+@mixin body-text {
+	font-family: var(--ff-primary);
+	font-weight: var(--fw-regular);
+	font-style: normal;
+	color: var(--bti-primary);
+	transition: color var(--transition);
+	user-select: text;
+}
+
+@mixin text-xl {
+	font-size: 20px;
+	line-height: 32px;
+}
+@mixin text-l {
+	font-size: 16px;
+	line-height: 24px;
+}
+@mixin text-m {
+	font-size: 13.9px;
+	line-height: 20px;
+}
+@mixin text-s {
+	font-size: 13px;
+	line-height: 16px;
+}
+@mixin text-xs {
+	font-size: 10px;
+	line-height: 12px;
+}
+@mixin table_view-title {
+	text-transform: uppercase;
+	font-size: 13px;
+	line-height: 16px;
+}
+
+@mixin text-overflow($line_count) {
+	display: -webkit-box;
+	-webkit-line-clamp: $line_count;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	white-space: normal;
+	word-break: break-all;
+
+	&.expanded {
+		-webkit-line-clamp: initial;
+		line-clamp: initial;
+		overflow: auto;
+	}
+}
+
+@mixin text-news-overflow($line_count) {
+	display: -webkit-box;
+	-webkit-line-clamp: $line_count;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	white-space: normal;
+	word-break: normal;
+}
+
+@mixin headline-desktop {
+	font-family: var(--ff-primary);
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: -0.08px;
+}
+
+@mixin headline-mobile {
+	font-family: var(--ff-primary);
+	font-size: 14px;
+	line-height: 24px;
+	letter-spacing: -0.05px;
+}

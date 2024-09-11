@@ -1,11 +1,11 @@
-import { Router } from '@angular/router';
-import { ResetPasswordCompleteRequestInterface } from '../types/reset-password/resetPasswordCompleteRequest.interface';
-import { ResetPasswordConfirmRequestInterface } from '../types/reset-password/resetPasswordConfirmRequest.interface';
-import { ResetPasswordReponseInterface } from '../types/reset-password/resetPasswordResponse.interface';
-import { ResetPasswordRequestInterface } from '../types/reset-password/resetPasswordRequest.interface';
-import { CookieService } from 'ngx-cookie';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {Router} from '@angular/router';
+import {ResetPasswordCompleteReq} from '../types/reset-password/resetPasswordCompleteReq';
+import {ResetPasswordConfirmRequestInterface} from '../types/reset-password/resetPasswordConfirmRequest.interface';
+import {ResetPasswordRes} from '../types/reset-password/resetPasswordResponse.interface';
+import {ResetPasswordReq} from '../types/reset-password/resetPasswordReq';
+import {CookieService} from 'ngx-cookie';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {
   BehaviorSubject,
   Observable,
@@ -16,52 +16,60 @@ import {
   tap,
 } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
-import { RegisterRequestInterface } from 'src/app/auth/types/register/registerRequest.interface';
-import { CurrentUserGeneralInterface } from 'src/app/shared/types/currentUserGeneral.interface';
-import { LoginRequestInterface } from 'src/app/auth/types/login/loginRequest.interface';
-import { AuthResponseInterface } from 'src/app/auth/types/login/authResponse.interface';
-import { RegisterConfirmRequestInterface } from '../types/register/registerConfirmRequest.interface';
-import { RegisterReponseInterface } from '../types/register/registerResponse.interface';
-import { ReauthRequestInterface } from '../types/login/reauthRequest.interface';
-import { RequestStoreService } from 'src/app/shared/services/store/request.store.service';
-import { FreedutyStoreService } from 'src/app/shared/services/store/freeduty.store.service';
-import { isPlatformBrowser } from '@angular/common';
-import { CurrentUserFactoringInterface } from 'src/app/shared/types/currentUserFactoring.interface';
-import { CurrentUserInterface } from 'src/app/shared/types/currentUser.interface';
+import {environment} from 'src/environments/environment';
+import {RegisterReq} from 'src/app/auth/types/register/registerReq';
+import {UserGeneral} from 'src/app/shared/types/userGeneral';
+import {LoginRequestInterface} from 'src/app/auth/types/login/loginRequest.interface';
+import {AuthRes} from 'src/app/auth/types/login/authRes';
+import {RegisterConfirmReq} from '../types/register/registerConfirmReq';
+import {RegisterReponseInterface} from '../types/register/registerResponse.interface';
+import {ReauthRequestInterface} from '../types/login/reauthRequest.interface';
+import {RequestStoreService} from 'src/app/shared/services/store/request.store.service';
+import {FreedutyStoreService} from 'src/app/shared/services/store/freeduty.store.service';
+import {isPlatformBrowser} from '@angular/common';
+import {UserFactoring} from 'src/app/shared/types/userFactoring';
+import {CurrentUser} from 'src/app/shared/types/currentUser';
+import {ToolsService} from '../../shared/services/tools.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  public currentUserAdmin$ = new BehaviorSubject<CurrentUserInterface>(null);
-  public currentUser$ = new BehaviorSubject<CurrentUserInterface>(null);
+  public currentUserAdmin$ = new BehaviorSubject<CurrentUser>(null);
+  public currentUser$ = new BehaviorSubject<CurrentUser>(null);
 
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
+    private toolsService: ToolsService,
     private router: Router,
     private requestStoreService: RequestStoreService,
     private freedutyStoreService: FreedutyStoreService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    // // second user
+    // this.cookieService.put('_cu', JSON.stringify({"UserID":2484,"StaffID":18490,"ManagerID":0,"OrganizationID":22854,"CustomerID":1505,"DebtorID":0,"IP":"127.0.0.1","Login":"tdmariorioli","Name":"Сновский Владимир","Code":"7c4d9c8d-651c-4962-9472-3bf68e0b08d8","Date":"2023-12-11T18:11:33+03:00","Expire":"2023-12-11T22:11:33+03:00","Roles":["User","Staff","Customer"]}
+    // ));
+    //
+    // this.cookieService.put('_bt', 'dGRtYXJpb3Jpb2xpOjEyMzQ1Ng==')
+  }
 
   register(
-    data: RegisterRequestInterface
+    data: RegisterReq
   ): Observable<RegisterReponseInterface> {
     const url = environment.apiUrl + '/user/registration/init';
     return this.http.post<RegisterReponseInterface>(url, data);
   }
 
-  registerConfirm(data: RegisterConfirmRequestInterface): Observable<any> {
+  registerConfirm(data: RegisterConfirmReq): Observable<any> {
     const url = environment.apiUrl + '/user/registration/confirm';
     return this.http.post<any>(url, data);
   }
 
   reauth(user: ReauthRequestInterface): Observable<any> {
     const url = environment.apiUrl + `/user/reauth/${user.userId}`;
-    return this.http.post<AuthResponseInterface>(url, null).pipe(
-      tap((response: AuthResponseInterface) => {
+    return this.http.post<AuthRes>(url, null).pipe(
+      tap((response: AuthRes) => {
         // second user
         this.cookieService.put('_cu', JSON.stringify(response));
 
@@ -69,7 +77,7 @@ export class AuthService {
         let token = response.Code;
         this.cookieService.put('_bt', token)
 
-        let currentUserFactoring: CurrentUserFactoringInterface = response;
+        let currentUserFactoring: UserFactoring = response;
         this.currentUser$.next({
           userFactoring: currentUserFactoring,
           userGeneral: null
@@ -86,8 +94,8 @@ export class AuthService {
 
   login(data: LoginRequestInterface): Observable<any> {
     const url = environment.apiUrl + '/user/login';
-    return this.http.post<AuthResponseInterface>(url, data).pipe(
-      tap((response: AuthResponseInterface) => {
+    return this.http.post<AuthRes>(url, data).pipe(
+      tap((response: AuthRes) => {
         console.log('login res', response);
         let isAdmin = response.Roles.find((x) => x === 'Administrator');
         if (isAdmin) {
@@ -112,17 +120,47 @@ export class AuthService {
       }),
       switchMap(() => this.initCurrentUser()),
       catchError((errorResponse: HttpErrorResponse) => {
-        return of({ errors: errorResponse.error });
+        return of({errors: errorResponse.error});
       })
     );
   }
 
-  initCurrentUser(): Observable<CurrentUserGeneralInterface> {
+  loginModal(data: LoginRequestInterface): Observable<any> {
+    const url = environment.apiUrl + '/user/login';
+    return this.http.post<AuthRes>(url, data).pipe(
+      tap((response: AuthRes) => {
+        let isAdmin = response.Roles.find((x) => x === 'Administrator');
+        if (isAdmin) {
+          // admin current user
+          this.cookieService.put('_cu_admin', JSON.stringify(response));
+
+          // admin base token
+          let token = btoa(`${data.login}:${data.password}`);
+          this.cookieService.put('_bt_admin', token);
+        } else {
+          // current user
+          this.cookieService.put('_cu', JSON.stringify(response));
+
+          // base token
+          let token = btoa(`${data.login}:${data.password}`);
+          this.cookieService.put('_bt', token);
+        }
+      }),
+      switchMap(() => this.initCurrentUser()),
+      catchError((errorResponse: HttpErrorResponse) => {
+        return of({errors: errorResponse.error});
+      })
+    );
+  }
+
+  initCurrentUser(): Observable<UserGeneral> {
     let adminCookie = this.cookieService.get('_cu_admin');
     let userCookie = this.cookieService.get('_cu');
-    let user: AuthResponseInterface;
-    if (userCookie || adminCookie) {
-      user = JSON.parse(userCookie || adminCookie);
+    let user: AuthRes;
+    if (userCookie) {
+      user = this.toolsService.safeJson(userCookie);
+    } else if (adminCookie) {
+      user = this.toolsService.safeJson(adminCookie);
     }
 
     let userId;
@@ -138,47 +176,43 @@ export class AuthService {
       return of();
     }
 
-    return this.http
-      .get<CurrentUserGeneralInterface>(environment.apiUrl + `/user/${userId}`)
-      .pipe(
-        tap((currentUserResponse: CurrentUserGeneralInterface) => {
-          let userCookie = this.cookieService.get('_cu');
-          let currentUserFactoring: AuthResponseInterface;
-          if (userCookie) {
-            currentUserFactoring = JSON.parse(userCookie);
-            let currentUser: CurrentUserInterface = {
-              userGeneral: currentUserResponse,
-              userFactoring: currentUserFactoring,
-            };
-            this.currentUser$.next(currentUser);
-          }
+    return this.http.get<UserGeneral>(environment.apiUrl + `/user/${userId}`).pipe(
+      tap((currentUserResponse: UserGeneral) => {
+        let userCookie = this.cookieService.get('_cu');
+        let currentUserFactoring: AuthRes;
+        if (userCookie) {
+          currentUserFactoring = this.toolsService.safeJson(userCookie);
+          let currentUser: CurrentUser = {
+            userGeneral: currentUserResponse,
+            userFactoring: currentUserFactoring,
+          };
+          this.currentUser$.next(currentUser);
+        }
 
-          let userAdminCookie = this.cookieService.get('_cu_admin');
-          let currentAdminFactoring: AuthResponseInterface;
-          if (userAdminCookie) {
-            currentAdminFactoring = JSON.parse(userAdminCookie);
-            let currentUser: CurrentUserInterface = {
-              userGeneral: currentUserResponse,
-              userFactoring: currentAdminFactoring,
-            };
-            this.currentUserAdmin$.next(currentUser);
-          }
-        }),
-        catchError((error) => {
-          return of(error);
-        })
-      );
+        let userAdminCookie = this.cookieService.get('_cu_admin');
+        let currentAdminFactoring: AuthRes;
+        if (userAdminCookie) {
+          currentAdminFactoring = this.toolsService.safeJson(userAdminCookie);
+          let currentUser: CurrentUser = {
+            userGeneral: currentUserResponse,
+            userFactoring: currentAdminFactoring,
+          };
+          this.currentUserAdmin$.next(currentUser);
+        }
+      }),
+      catchError((error) => {
+        return of(error);
+      })
+    );
   }
 
   /**
    * Called first
    * @param data
    */
-  resetPassword(
-    data: ResetPasswordRequestInterface
-  ): Observable<ResetPasswordReponseInterface> {
+  resetPassword(data: ResetPasswordReq): Observable<ResetPasswordRes> {
     const url = environment.apiUrl + '/user/password/forget';
-    return this.http.post<ResetPasswordReponseInterface>(url, data);
+    return this.http.post<ResetPasswordRes>(url, data);
   }
 
   /**
@@ -197,7 +231,7 @@ export class AuthService {
    * @param data
    */
   resetPasswordComplete(
-    data: ResetPasswordCompleteRequestInterface
+    data: ResetPasswordCompleteReq
   ): Observable<{}> {
     const url = environment.apiUrl + '/user/password/recovery/complete';
     return this.http.post<{}>(url, data);
@@ -218,7 +252,12 @@ export class AuthService {
     }
   }
 
-  public getUserFromStore(): AuthResponseInterface {
+  get isUserLoggedIn(): boolean {
+    const userCookie = this.cookieService.get('_cu');
+    return Boolean(userCookie);
+  }
+
+  public getUserFromStore(): AuthRes {
     const userCookie = this.cookieService.get('_cu');
     return JSON.parse(userCookie);
   }
@@ -228,12 +267,8 @@ export class AuthService {
    * Если да, то открывает доступ к полноценному кабинету, иначе открывает доступ только к 1 вкладке меню "Запросы"
    */
   public isUserVerified(): boolean {
-    const user = this.getUserVerificationType();
-    if (user.CustomerID === 0) {
-      return false;
-    } else {
-      return true;
-    }
+    const user: AuthRes | null = this.getUserVerificationType();
+    return user?.CustomerID !== 0;
   }
 
   /**
@@ -304,7 +339,7 @@ export class AuthService {
       cookie = this.cookieService.get('_cu');
     }
 
-    let user: AuthResponseInterface;
+    let user: AuthRes;
     let token;
     if (cookie) {
       user = JSON.parse(cookie);
@@ -326,8 +361,8 @@ export class AuthService {
    * This function return current user roles
    */
   private getUserRoles(): string[] {
-    let user: AuthResponseInterface;
-    let admin: AuthResponseInterface;
+    let user: AuthRes;
+    let admin: AuthRes;
 
     const adminCookie = this.cookieService.get('_cu_admin');
     const userCookie = this.cookieService.get('_cu');
@@ -337,17 +372,17 @@ export class AuthService {
     }
 
     if (userCookie) {
-      user = JSON.parse(userCookie);
+      user = this.toolsService.safeJson(userCookie)
     }
 
     return user?.Roles ?? admin?.Roles ?? [];
   }
 
-  private getUserVerificationType(): AuthResponseInterface {
+  private getUserVerificationType(): null | AuthRes {
     const userCookie = this.cookieService.get('_cu');
 
     if (userCookie) {
-      return JSON.parse(userCookie);
+      return this.toolsService.safeJson(userCookie)
     }
 
     return null;

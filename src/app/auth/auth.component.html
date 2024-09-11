@@ -1,5 +1,9 @@
-<div class="pre-auth">
-  <div class="auth">
-    <router-outlet></router-outlet>
-  </div>
+<mib-header #header></mib-header>
+<mib-spacing [customSpace]="header.height"></mib-spacing>
+<div class="container">
+	<mib-spacing type="l"></mib-spacing>
+	<form class="form">
+		<router-outlet></router-outlet>
+	</form>
 </div>
+<!-- <mib-toaster></mib-toaster> -->

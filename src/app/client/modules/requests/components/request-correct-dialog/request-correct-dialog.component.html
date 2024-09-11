@@ -1,154 +1,151 @@
+<!--<div class="p-field p-col-12 p-md-12">-->
+<!--  <p class="p-text-center">Измените сумму поставок где это необходимо и нажмите "Сохранить изменения"</p>-->
+<!--  <div class="responsive-table">-->
+<!--    <p-table [value]="shipments" [rows]="10" styleClass="p-datatable-customers mib-table">-->
+<!--      <ng-template pTemplate="header">-->
+<!--        <tr>-->
+<!--          <th>-->
+<!--            <div class="m-th">-->
+<!--              <div>Счёт-фактура</div>-->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th>-->
+<!--            <div class="m-th">-->
+<!--              <div>Сч. фактур дата</div>-->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th>-->
+<!--            <div class="m-th">-->
+<!--              <div>Накладная</div>-->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th>-->
+<!--            <div class="m-th">-->
+<!--              <div>Дата накладной</div>-->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th>-->
+<!--            <div class="m-th">-->
+<!--              <div>Дата поставки</div>-->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th>-->
+<!--            <div class="m-th">-->
+<!--              <div>Сумма</div>-->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th>-->
+<!--            <div class="m-th">-->
+<!--              <div>Сумма(Исх.)</div>-->
+<!--            </div>-->
+<!--          </th>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="body" let-shipment>-->
+<!--        <tr [pSelectableRow]="shipment">-->
+<!--          <td>-->
+<!--            <div class="m-td">-->
+<!--              <div>{{shipment.ID}}</div>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <div class="m-td">-->
+<!--              <div>{{shipment.AccountDate | date: 'dd.MM.yyyy'}}</div>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <div class="m-td">-->
+<!--              <div>{{shipment.InvoiceNumber}}</div>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <div class="m-td">-->
+<!--              <div>{{shipment.InvoiceDate | date: 'dd.MM.yyyy'}}</div>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <div class="m-td">-->
+<!--              <div>{{shipment.DateShipment | date: 'dd.MM.yyyy'}}</div>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--          <td pEditableColumn>-->
+<!--            <div class="m-td with-icon can-click" style="justify-self: flex-start; flex-direction: row-reverse;">-->
+<!--              <div>-->
+<!--                <p-cellEditor>-->
+<!--                  <ng-template pTemplate="input">-->
+<!--                    <input pInputText type="text"-->
+<!--                      [(ngModel)]="shipment.Summ"-->
+<!--                      (ngModelChange)="setChangedShipment(shipment, shipment.Summ)"-->
+<!--                      [min]="shipment.SummToFactor"-->
+<!--                      required>-->
+<!--                  </ng-template>-->
+<!--                  <ng-template pTemplate="output">-->
+<!--                    <div></div>-->
+<!--                    {{shipment.Summ | currency:'RUB':'symbol-narrow'}}-->
+<!--                  </ng-template>-->
+<!--                </p-cellEditor>-->
+<!--              </div>-->
+<!--              <div class="icon">-->
+<!--                <img src="../../../../../../assets/icons/edit_icon.png" alt="">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <div class="m-td currency">-->
+<!--              <div>-->
+<!--                {{shipment.SummToFactor | currency:'RUB':'symbol-narrow'}}-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="footer">-->
+<!--        <tr>-->
+<!--          <td colspan="5"></td>-->
+<!--          <td style="text-align: right;">-->
+<!--            {{sumCurrentPage | currency:'RUB':'symbol-narrow'}}-->
+<!--          </td>-->
+<!--          <td colspan="1"></td>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
 
-<metib-success-messages *ngIf="successMessage" [message]="successMessage"></metib-success-messages>
-
-<div class="p-field p-col-12 p-md-12">
-  <p class="p-text-center">Измените сумму поставок где это необходимо и нажмите "Сохранить изменения"</p>
-  <div class="responsive-table">
-    <p-table [value]="shipments" [rows]="10" styleClass="p-datatable-customers mib-table">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>
-            <div class="m-th">
-              <div>Счёт-фактура</div>
-            </div>
-          </th>
-          <th>
-            <div class="m-th">
-              <div>Сч. фактур дата</div>
-            </div>
-          </th>
-          <th>
-            <div class="m-th">
-              <div>Накладная</div>
-            </div>
-          </th>
-          <th>
-            <div class="m-th">
-              <div>Дата накладной</div>
-            </div>
-          </th>
-          <th>
-            <div class="m-th">
-              <div>Дата поставки</div>
-            </div>
-          </th>
-          <th>
-            <div class="m-th">
-              <div>Сумма</div>
-            </div>
-          </th>
-          <th>
-            <div class="m-th">
-              <div>Сумма(Исх.)</div>
-            </div>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-shipment>
-        <tr [pSelectableRow]="shipment">
-          <td>
-            <div class="m-td">
-              <div>{{shipment.ID}}</div>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <div>{{shipment.AccountDate | date: 'dd.MM.yyyy'}}</div>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <div>{{shipment.InvoiceNumber}}</div>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <div>{{shipment.InvoiceDate | date: 'dd.MM.yyyy'}}</div>
-            </div>
-          </td>
-          <td>
-            <div class="m-td">
-              <div>{{shipment.DateShipment | date: 'dd.MM.yyyy'}}</div>
-            </div>
-          </td>
-          <td pEditableColumn>
-            <div class="m-td with-icon can-click" style="justify-self: flex-start; flex-direction: row-reverse;">
-              <div>
-                <p-cellEditor>
-                  <ng-template pTemplate="input">
-                    <input pInputText type="text"
-                      [(ngModel)]="shipment.Summ"
-                      (ngModelChange)="setChangedShipment(shipment, shipment.Summ)"
-                      [min]="shipment.SummToFactor"
-                      required>
-                  </ng-template>
-                  <ng-template pTemplate="output">
-                    <div></div>
-                    {{shipment.Summ | currency:'RUB':'symbol-narrow'}}
-                  </ng-template>
-                </p-cellEditor>
-              </div>
-              <div class="icon">
-                <img src="../../../../../../assets/icons/edit_icon.png" alt="">
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="m-td currency">
-              <div>
-                {{shipment.SummToFactor | currency:'RUB':'symbol-narrow'}}
-              </div>
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="footer">
-        <tr>
-          <td colspan="5"></td>
-          <td style="text-align: right;">
-            {{sumCurrentPage | currency:'RUB':'symbol-narrow'}}
-          </td>
-          <td colspan="1"></td>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="emptymessage">
-        <ng-container *ngIf="shipments; else skeletonRequestsTemplate">
-          <tr>
-            <td colspan="8">Нет данных.</td>
-          </tr>
-        </ng-container>
-        <ng-template #skeletonRequestsTemplate>
-          <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
-            <td>
-            </td>
-            <td>
-              <div class="m-td">
-                <p-skeleton></p-skeleton>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <p-skeleton></p-skeleton>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <p-skeleton></p-skeleton>
-              </div>
-            </td>
-            <td>
-              <div class="m-td">
-                <p-skeleton></p-skeleton>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </ng-template>
-    </p-table>
-  </div>
-</div>
-<div class="p-field p-col-12 p-md-12">
-  <button id="btn_submit" pButton pRipple type="submit" label="Сохранить изменения" class="btn-mib-submit"
-    (click)="onSubmit()"></button>
-</div>
+<!--      <ng-template pTemplate="emptymessage">-->
+<!--        <ng-container *ngIf="shipments; else skeletonRequestsTemplate">-->
+<!--          <tr>-->
+<!--            <td colspan="8">Нет данных.</td>-->
+<!--          </tr>-->
+<!--        </ng-container>-->
+<!--        <ng-template #skeletonRequestsTemplate>-->
+<!--          <tr *ngFor="let i of [{}, {}, {}, {}, {}]">-->
+<!--            <td>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--              <div class="m-td">-->
+<!--                <p-skeleton></p-skeleton>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--              <div class="m-td">-->
+<!--                <p-skeleton></p-skeleton>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--              <div class="m-td">-->
+<!--                <p-skeleton></p-skeleton>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--              <div class="m-td">-->
+<!--                <p-skeleton></p-skeleton>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--        </ng-template>-->
+<!--      </ng-template>-->
+<!--    </p-table>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="p-field p-col-12 p-md-12">-->
+<!--  <button id="btn_submit" pButton pRipple type="submit" label="Сохранить изменения" class="btn-mib-submit"-->
+<!--    (click)="onSubmit()"></button>-->
+<!--</div>-->

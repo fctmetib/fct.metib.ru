@@ -1,0 +1,76 @@
+<!-- 
+	(mouseenter)="isHover = true"
+	(mouseleave)="isHover = false"
+ 
+	[class.main-transition]="viewMounted"
+-->
+
+<div
+	*ngIf="!extracted; else unextracted"
+	class="cash-panel"
+	[ngClass]="classes"
+>
+	<div class="flex flex_column gap-4">
+		<div class="flex flex_align-center">
+			<p class="text text_m text_medium c-bti-tertiary flex_grow">
+				{{ panelTitle }}
+			</p>
+			<mib-icon class="stroke" name="fi_info"></mib-icon>
+		</div>
+		<h3>
+			{{ panelData }}
+			<!-- {{ panelData | currency : 'RUB' : 'symbol-narrow' }} -->
+		</h3>
+	</div>
+	<mib-spacing type="xs2"></mib-spacing>
+	<div class="flex">
+		<div class="flex flex_grow">
+			<span
+				class="term text text_m c-bti-tertiary"
+				*ngIf="!accent; else origin"
+			>
+				Актульно на: {{ panelTerm ? panelTerm : '01.01.2000' }}
+			</span>
+			<ng-template #origin>
+				<span class="term text text_m c-alc-active">
+					Нужно погасить до: {{ panelTerm ? panelTerm : '01.01.2000' }}
+				</span>
+			</ng-template>
+		</div>
+		<div class="flex flex_grow flex_justify-end">
+			<mib-link *ngIf="link" [routerLink]="link">
+				Подробнее
+				<!-- <mib-icon
+					[@opacityViewAnimation]="{
+						value: '',
+						params: {enterTime: 200, leaveTime: 0}
+					}"
+					*ngIf="isHover"
+					mibRightIcon
+					class="stroke"
+					name="fi_chevron-right"
+				></mib-icon> -->
+			</mib-link>
+		</div>
+	</div>
+</div>
+<ng-template #unextracted>
+	<div
+		[class.extracted]="extracted"
+		class="flex flex_justify-center gap-4 flex_justify-between"
+	>
+		<div class="flex flex_align-center w-100">
+			<span class="text text_m text_regular flex_grow">
+				{{ panelTitle }}
+			</span>
+			<span class="paneldata text text_m text_medium c-bti-secondary">
+				{{ panelData }}
+				<!-- {{ panelData | currency : 'RUB' : 'symbol-narrow' }} -->
+			</span>
+			<span class="alert text text_m text_medium">
+				<ng-content select="[alert]"></ng-content>
+			</span>
+		</div>
+		<mib-icon class="stroke" name="fi_info"></mib-icon>
+	</div>
+</ng-template>

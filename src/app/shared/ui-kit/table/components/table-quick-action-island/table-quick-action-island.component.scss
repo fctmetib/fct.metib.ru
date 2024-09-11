@@ -1,0 +1,14 @@
+:host {
+  max-width: 560px;
+  width: 100%;
+  display: block;
+}
+
+.table-quick-action-island {
+  background-color: var(--wgr-primary);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-normal);
+  padding: 8px;
+}

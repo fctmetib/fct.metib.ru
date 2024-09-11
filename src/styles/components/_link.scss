@@ -1,0 +1,151 @@
+@import 'src/styles/helpers/icon_tools';
+@import 'src/styles/typography.vars';
+
+$text-selectors: 'span';
+
+@mixin link-size($height, $icon-size) {
+	min-height: $height;
+
+	#{$text-selectors} {
+		@content;
+	}
+
+	.link_icon-wrapper,
+	mib-icon {
+		@include icon-size($icon-size);
+	}
+}
+
+@mixin link {
+	gap: 4px;
+	cursor: pointer;
+
+	#{$text-selectors} {
+		@include body-text;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+}
+
+@mixin link-ghost-primary {
+	#{$text-selectors} {
+		font-weight: var(--fw-medium);
+	}
+	@include link-color(var(--mc-default));
+	&:hover {
+		@include link-color(var(--mc-hover));
+	}
+	&:active {
+		@include link-color(var(--mc-active));
+	}
+
+	& .show-underline {
+		border-bottom: 1px solid var(--mc-default);
+	}
+}
+
+@mixin link-ghost-secondary {
+	@include link-color(var(--bti-secondary));
+	&:hover {
+		@include link-color(var(--bti-tertiary));
+	}
+	&:active {
+		@include link-color(var(--bti-primary));
+	}
+
+	& .show-underline {
+		border-bottom: 1px solid var(--bti-secondary);
+	}
+}
+
+@mixin link-ghost-accent {
+	@include link-color(var(--ac-default));
+	&:hover {
+		@include link-color(var(--alc-hover));
+	}
+	&:active {
+		@include link-color(var(--ac-active));
+	}
+
+	& .show-underline {
+		border-bottom: 1px solid var(--ac-default);
+	}
+}
+
+@mixin link-color($color) {
+	#{$text-selectors} {
+		color: $color;
+	}
+	mib-icon {
+		@include icon-color($color);
+	}
+}
+
+.link {
+	@include link;
+
+	&_l {
+		@include link-size(24px, 20px) {
+			@include text-l;
+		}
+	}
+
+	&_m {
+		@include link-size(20px, 20px) {
+			@include text-m;
+		}
+	}
+
+	&_s {
+		@include link-size(16px, 16px) {
+			@include text-s;
+		}
+	}
+
+	&_type {
+		&-ghost {
+			&-primary {
+				@include link-ghost-primary;
+			}
+
+			&-secondary {
+				@include link-ghost-secondary;
+			}
+
+			&-accent {
+				@include link-ghost-accent;
+			}
+		}
+	}
+
+	&:disabled {
+		@include link-color(var(--wti-quaternary));
+		cursor: not-allowed;
+	}
+
+	&_icon-wrapper {
+		display: none;
+	}
+
+	&_left-iconly {
+		.link_left-icon-wrapper {
+			display: flex;
+		}
+	}
+
+	&_right-iconly {
+		.link_right-icon-wrapper {
+			display: flex;
+		}
+	}
+
+	// & .show-underline {
+	// 	border-bottom: 1px solid var(--bti-secondary);
+	// }
+
+	& .link-text {
+		text-align: start;
+	}
+}

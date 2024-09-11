@@ -1,4 +1,4 @@
-import { CustomerInterface } from './../../types/customer/customer.interface';
+import { Customer } from '../../types/customer/customer';
 import { environment } from 'src/environments/environment';
 
 import { Observable, of } from 'rxjs';
@@ -9,13 +9,13 @@ import { Injectable } from '@angular/core';
 export class ClientService {
   constructor(private http: HttpClient) {}
 
-  getClientFactoringById(organizationID: number): Observable<CustomerInterface> {
+  getClientFactoringById(organizationID: number): Observable<Customer> {
     const url = `${environment.apiUrl}/client/${organizationID}/factoring`;
-    return this.http.get<CustomerInterface>(url);
+    return this.http.get<Customer>(url);
   }
 
-  getClient(id: number): Observable<CustomerInterface> {
+  getClient(id: number): Observable<Customer> {
     const url = `${environment.apiUrl}/Client`;
-    return this.http.get<CustomerInterface>(url);
+    return this.http.get<Customer>(url);
   }
 }

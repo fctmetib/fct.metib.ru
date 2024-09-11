@@ -1,0 +1,23 @@
+<div
+	class="toaster-point toaster-point_{{
+		toast.type
+	}} w-100 flex_justify-between flex_align-center"
+	[ngClass]="classes"
+>
+	<div class="flex flex_column gap-4">
+		<div class="flex gap-4">
+			<mib-icon class="stroke" [name]="IconName"></mib-icon>
+			<p class="text text_m text_medium">
+				{{ toast.title }}
+			</p>
+		</div>
+		<p *ngIf="showDescription" class="text text_m c-bti-secondary">
+			{{ toast.description }}
+		</p>
+	</div>
+	<div class="last-icon">
+		<mib-button (click)="remove.emit(i)" size="m" type="ghost-primary">
+			<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
+		</mib-button>
+	</div>
+</div>

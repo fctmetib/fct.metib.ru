@@ -1,0 +1,46 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+
+input,
+mib-select {
+	max-width: 280px;
+	width: 100%;
+}
+.draft {
+	@include icon-color(var(--mc-default));
+}
+
+@media (max-width: 576px) {
+	.container {
+		padding: 0;
+
+		& h3 {
+			padding: 0 16px;
+		}
+
+		& mib-spacing[type='m'] {
+			height: 24px;
+			display: block;
+		}
+
+		& > div {
+			width: 100%;
+			display: block;
+		}
+
+		& .mobile-col {
+			gap: 0;
+		}
+
+		& .mobile-btn {
+			padding: 0 16px;
+
+			& mib-button[type='filled-primary'] {
+				width: 100%;
+			}
+		}
+
+		& .mobile-sp {
+			display: none;
+		}
+	}
+}

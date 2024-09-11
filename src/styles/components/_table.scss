@@ -1,0 +1,64 @@
+@import 'src/styles/typography.vars';
+@import 'src/styles/helpers/icon_tools';
+
+$text-selectors: 'label';
+
+@mixin table-head-cell {
+	height: 100%;
+	width: 100%;
+	padding: 10px 8px 10px;
+	border-right: var(--collapse);
+	justify-content: center;
+
+	#{$text-selectors} {
+		@include body-text;
+		@include text-s;
+		@include text-overflow(1);
+		&.user-select-none {
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+	}
+
+	mib-icon {
+		@include icon-size(20px);
+	}
+	@include table-color(var(--bti-secondary));
+}
+
+@mixin table-color($color) {
+	#{$text-selectors} {
+		color: $color;
+	}
+	mib-icon {
+		@include icon-color($color);
+	}
+}
+
+mib-table-row:last-child .table-row {
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+.table-head-cell {
+	@include table-head-cell;
+	.cursor-pointer {
+		&,
+		& > * {
+			cursor: pointer;
+		}
+	}
+}
+
+.table-cell {
+	padding: 0 8px;
+	&_type {
+		&-person {
+			mib-avatar {
+				@include icon-size(24px);
+			}
+		}
+	}
+}

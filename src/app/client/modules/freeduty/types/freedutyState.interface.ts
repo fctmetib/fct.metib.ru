@@ -1,9 +1,9 @@
-import { DutyInterface } from "src/app/shared/types/duty/duty.interface";
+import { Duty } from "src/app/shared/types/duty/duty";
 
 export interface FreeDutyStateInterface {
   isLoading: boolean
   error: string | null
-  data: DutyInterface[] | null
+  data: Duty[] | null
   isSubmitting: boolean;
   crudSuccessMessage: string | null;
   crudError: string | null;

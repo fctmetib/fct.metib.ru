@@ -1,0 +1,27 @@
+@import 'src/styles/helpers/_icon_tools';
+@import 'src/styles/_colors.vars';
+
+.single {
+	max-width: 560px;
+	width: 100%;
+	min-height: calc(100vh - 444px);
+	margin: 0 auto;
+
+	& mib-icon[name='fi_chevron-right'] {
+		@include icon-size(16px);
+		@include icon-color(var(--bti-tertiary));
+	}
+
+	& .preview {
+		border-radius: var(--main-border-radius);
+		overflow: hidden;
+	}
+
+	@media (max-width: 768px) {
+		padding: 0 16px;
+
+		& mib-button {
+			max-width: 370px;
+		}
+	}
+}

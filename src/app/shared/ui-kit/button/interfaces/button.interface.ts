@@ -1,0 +1,11 @@
+export type ButtonSize = 'xl' | 'l' | 'm' | 's'
+export type ButtonType =
+	| 'filled-primary'
+	| 'filled-accent'
+	| 'filled-secondary'
+	| 'floating'
+	| 'outline-primary'
+	| 'outline-accent'
+	| 'ghost-primary'
+	| 'ghost-secondary'
+  | 'ghost-alert'

@@ -1,8 +1,8 @@
-import { CustomerInterface } from './../../shared/types/customer/customer.interface';
+import { Customer } from '../../shared/types/customer/customer';
 
 export interface ClientStateInterface {
   isSubmitting: boolean;
-  factoring: CustomerInterface | null;
+  factoring: Customer | null;
   validationErrors: string | null;
   successMessage: string;
   isLoading: boolean;

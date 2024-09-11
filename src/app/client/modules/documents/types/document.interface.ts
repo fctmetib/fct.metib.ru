@@ -1,7 +1,7 @@
 import { DocumentSignatureInterface } from './document-signature.interface';
 import { DocumentFlowInterface } from './document-flow.interface';
 import { OrganizationReferenceInterface } from './../../../../shared/types/organization/organization-reference.interface';
-import { FileModeInterface } from "src/app/shared/types/file/file-model.interface";
+import { FileMode } from "src/app/shared/types/file/file-model.interface";
 
 export interface DocumentInterface {
   Organization: OrganizationReferenceInterface;
@@ -13,7 +13,7 @@ export interface DocumentInterface {
   Title: string;
   User: string;
   Summ: number;
-  File: FileModeInterface;
+  File: FileMode;
   Flows: DocumentFlowInterface[];
   Signatures: DocumentSignatureInterface[];
   Parties: OrganizationReferenceInterface[];

@@ -1,0 +1,107 @@
+span.c,
+.text.c,
+.c {
+	// main
+	&-mc {
+		&-default {
+			color: var(--mc-default);
+		}
+		&-hover {
+			color: var(--mc-hover);
+		}
+		&-active {
+			color: var(--mc-active);
+		}
+	}
+
+	// accent
+	&-ac {
+		&-default {
+			color: var(--ac-default);
+		}
+    &-hover {
+      color: var(--ac-hover);
+    }
+    &-active {
+      color: var(--ac-active);
+    }
+	}
+
+	// white gradation
+	&-wgr-primary {
+		color: var(--wgr-primary);
+	}
+
+	&-wgr-secondary {
+		color: var(--wgr-secondary);
+	}
+
+	&-wgr-tertiary {
+		color: var(--wgr-tertiary);
+	}
+
+	&-wgr-quaternary {
+		color: var(--wgr-quaternary);
+	}
+
+	// black gradation
+	&-bgr-primary {
+		color: var(--bgr-primary);
+	}
+
+	&-bgr-secondary {
+		color: var(--bgr-secondary);
+	}
+
+	&-bgr-tertiary {
+		color: var(--bgr-tertiary);
+	}
+
+	&-bgr-quaternary {
+		color: var(--bgr-quaternary);
+	}
+
+	// text icons white
+	&-wti-primary {
+		color: var(--wti-primary);
+	}
+
+	&-wti-secondary {
+		color: var(--wti-secondary);
+	}
+
+	&-wti-tertiary {
+		color: var(--wti-tertiary);
+	}
+
+	&-wti-quaternary {
+		color: var(--wti-quaternary);
+	}
+
+	// text icons black
+	&-bti-primary {
+		color: var(--bti-primary);
+	}
+
+	&-bti-secondary {
+		color: var(--bti-secondary);
+	}
+
+	&-bti-tertiary {
+		color: var(--bti-tertiary);
+	}
+
+	&-bti-quaternary {
+		color: var(--bti-quaternary);
+	}
+
+	// alert color
+	&-alc-active {
+		color: var(--alc-active);
+	}
+
+	// warning color
+	&-wc-active {
+		color: var(--wc-active);
+	}
+}

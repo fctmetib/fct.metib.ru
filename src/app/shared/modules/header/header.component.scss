@@ -1,0 +1,171 @@
+@import 'src/styles/typography.vars';
+@import 'src/styles/helpers/icon_tools';
+
+:host {
+	background-color: var(--wgr-primary);
+	position: absolute;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.header {
+	& .extension a.active {
+		color: var(--bti-primary);
+		border-bottom: 1px solid var(--bti-primary);
+	}
+
+	& .menu a.active {
+		color: var(--mc-default);
+	}
+
+	&-inner {
+		padding: 9px 0;
+		border-bottom: 1px solid var(--wgr-secondary);
+
+		& .burger-btn {
+			display: none;
+		}
+
+		.btn-login-mobile {
+			display: none;
+		}
+
+		& mib-skeleton {
+			height: 46px;
+			width: 265px;
+		}
+
+		mib-icon[name='logotype-l'] {
+			@include icon-size(unset);
+			padding-right: 62px;
+		}
+
+		& mib-icon[name='fi_logo_round_main'] {
+			@include icon-size(unset);
+			display: none;
+		}
+
+		@media (max-width: 992px) {
+			padding: 12px 0;
+
+			& .burger-btn {
+				display: flex;
+			}
+
+			& .logo-container {
+				flex-grow: unset;
+			}
+
+			& .main-logo-round {
+				width: 40px;
+				height: 40px;
+			}
+
+			& mib-skeleton {
+				width: 40px;
+				height: 40px;
+			}
+
+			mib-icon[name='logotype-l'] {
+				display: none;
+			}
+
+			& mib-icon[name='fi_logo_round_main'] {
+				display: flex;
+			}
+
+			& .menu {
+				display: none;
+			}
+
+			& .btn-login-desktop {
+				display: none;
+			}
+
+			& .btn-login-mobile {
+				display: flex;
+			}
+
+			& .manager {
+				& .user-desktop {
+					display: none;
+				}
+				& mib-button[size='m'] {
+					display: none;
+				}
+				& mib-avatar {
+					@include icon-size(40px);
+				}
+			}
+
+			& .manager-desktop {
+				display: none;
+			}
+		}
+
+		@media (max-width: 576px) {
+			padding: 12px 16px;
+
+			& .container_m {
+				padding: 0;
+			}
+		}
+	}
+}
+
+.extension {
+	background-color: var(--wgr-secondary);
+	padding: 12px 0;
+	white-space: nowrap;
+	@media (max-width: 992px) {
+		display: none;
+	}
+}
+
+.container {
+	padding: 0 152px;
+
+	@media (max-width: 1200px) {
+		padding: 0 32px;
+	}
+}
+
+@media (max-width: 576px) {
+	.container-fix {
+		padding: 0;
+	}
+}
+
+.menu > a {
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.name {
+	@include text-overflow(1);
+	max-width: 132px;
+}
+
+.manager {
+	cursor: pointer;
+	align-items: center;
+	* {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+}
+
+.user {
+	.name {
+		max-width: 176px;
+	}
+}
+
+.label {
+	padding: 2px 0;
+}

@@ -1,0 +1,17 @@
+<h3>Код подтверждения</h3>
+<mib-spacing type="xs"></mib-spacing>
+<p class="text text_l c-bti-secondary">
+  <ng-content select="[sms-text]"></ng-content>
+</p>
+<mib-spacing type="xs"></mib-spacing>
+<mib-input>
+  <input [size]="size" mibInput [formControl]="control">
+  <ng-container mibLabel>Введите код подтверждения</ng-container>
+</mib-input>
+<mib-spacing type="xs"></mib-spacing>
+<mib-link [disabled]="delay>0" (press)="onResend()" disabled="true" type="ghost-primary">Отправить код повторно {{delay>0?'('+delay+'с)' : ''}}</mib-link>
+<mib-spacing type="m"></mib-spacing>
+<div class="flex gap-16">
+  <mib-button [size]="size" (press)="back.emit()" class="flex_grow" type="filled-secondary">Назад</mib-button>
+  <mib-button [size]="size" [disabled]="control.invalid" (press)="onConfirm()" class="flex_grow"><ng-content></ng-content></mib-button>
+</div>

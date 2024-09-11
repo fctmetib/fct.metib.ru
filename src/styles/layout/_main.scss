@@ -1,0 +1,54 @@
+@import 'src/styles/layout/_flex';
+@import 'src/styles/_colors.vars.scss';
+@import 'src/styles/typography.vars';
+
+.w-100 {
+	width: 100%;
+}
+
+.w-27 {
+	width: 27%;
+}
+
+.pt-4 {
+	padding-top: 4px;
+}
+
+.pb-4 {
+	padding-bottom: 4px;
+}
+
+.full-height {
+	height: 100%;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-uppercase {
+	text-transform: uppercase;
+}
+
+.text-underline {
+	text-decoration: underline;
+}
+
+.cursor {
+	&-pointer {
+		cursor: pointer;
+	}
+}
+
+.overflow-hidden {
+	overflow: hidden;
+}
+
+.text-clamp {
+	@include text-overflow(1);
+	max-width: 90%;
+}

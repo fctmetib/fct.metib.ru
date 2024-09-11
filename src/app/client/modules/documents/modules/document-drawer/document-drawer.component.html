@@ -1,0 +1,124 @@
+<mib-drawer [formGroup]="form">
+	<mib-drawer-header
+		[showShared]="true"
+		(onClose)="dialogRef.close()"
+		drawer-header
+	></mib-drawer-header>
+	<mib-drawer-container>
+		<h4>Добавить документы</h4>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-information
+			*ngIf="!documents.controls.length; else copiesTemplate"
+			type="alert"
+		>
+			<ng-container information-text
+				>Необходимо прикрепить скан-копии или фотографии документов
+			</ng-container>
+		</mib-information>
+		<ng-template #copiesTemplate>
+			<mib-table>
+				<mib-table-head>
+					<mib-table-head-cell>№</mib-table-head-cell>
+					<mib-table-head-cell>Имя файла</mib-table-head-cell>
+					<mib-table-head-cell>Описание</mib-table-head-cell>
+					<mib-table-head-cell>Тип документа</mib-table-head-cell>
+				</mib-table-head>
+				<mib-table-row
+					*ngFor="let document of documents.controls; let idx = index"
+				>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ idx + 1 }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							document.get('Title').value
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							document.get('Description').value
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							document.get('DocumentTypeID').value
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-button
+						table-row-button
+						[mibDropdownTrigger]="documentMenu"
+						size="s"
+						type="ghost-secondary"
+					>
+						<mib-icon
+							class="stroke"
+							btn-icon
+							name="fi_more-vertical"
+						></mib-icon>
+					</mib-button>
+					<mib-dropdown #documentMenu>
+						<mib-dropdown-point
+							(press)="removeDocument(idx)"
+							text="Удалить"
+						></mib-dropdown-point>
+					</mib-dropdown>
+				</mib-table-row>
+			</mib-table>
+		</ng-template>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex flex_column gap-12">
+			<mib-dnd
+				[multiple]="true"
+				(onChange)="onDocumentLoad($event)"
+				[accept]="[
+					'application/pdf',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-excel',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'image/jpeg',
+					'image/png'
+				]"
+				headline="Прикрепите копию документа"
+			></mib-dnd>
+			<p class="text text_xs c-bti-tertiary">
+				Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
+			</p>
+			<p class="text text_xs c-bti-tertiary">
+				Размер каждого документа не должен превышать 10 МБ
+			</p>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-textarea>
+			<ng-container mibLabel
+				>Описание для файлов (не обязательно для заполнения)</ng-container
+			>
+			<textarea
+				formControlName="documentDescription"
+				autosize
+				mibTextarea
+			></textarea>
+			<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
+		</mib-textarea>
+		<mib-spacing type="xs"></mib-spacing>
+		<mib-checkbox class="gap-8" formControlName="isDocumentSign">
+			<span class="text text_m">Подписать</span>
+		</mib-checkbox>
+	</mib-drawer-container>
+	<div
+		*ngFor="let document of documents.controls; let idx = index"
+		class="flex"
+	></div>
+	<mib-drawer-footer drawer-footer>
+		<!-- [disabled]="!documents.controls.length || !form.value.isDocumentSign" -->
+		<mib-button
+			[disabled]="!documents.controls.length"
+			[loading]="!!(isSubmitting$ | async)"
+			(press)="onSubmit()"
+			[size]="size"
+			type="filled-primary"
+		>
+			Добавить документы ({{ documents.controls.length }})
+		</mib-button>
+	</mib-drawer-footer>
+</mib-drawer>

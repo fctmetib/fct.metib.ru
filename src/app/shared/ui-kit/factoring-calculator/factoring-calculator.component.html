@@ -1,0 +1,207 @@
+<div class="flex factoring-calculator">
+	<div class="flex flex_column w-100 banner">
+		<div class="flex w-100 wrap">
+			<div class="flex flex_grow flex_column">
+				<mib-spacing type="xl"></mib-spacing>
+				<form [formGroup]="form">
+					<div class="flex flex_column inputs">
+						<div class="flex label">
+							<span class="text text_m c-bti-tertiary">
+								Размер финансирования
+							</span>
+						</div>
+						<mib-input class="flex_grow pt-4">
+							<p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+							<input
+								type="text"
+								id="finAmountNumber"
+								formControlName="finAmountNumber"
+								mask="separator"
+								size="l"
+								value="200 000 ₽"
+								styleType="floating"
+								mibInput
+							/>
+						</mib-input>
+						<mib-spacing type="xs"></mib-spacing>
+						<input
+							type="range"
+							id="finAmountRange"
+							min="0"
+							max="20000000"
+							step="100000"
+							formControlName="finAmountRange"
+							class="styled-range"
+						/>
+						<div class="flex flex_column label-area">
+							<mib-spacing type="xs"></mib-spacing>
+							<div class="flex gap-10">
+								<div class="flex flex_grow left-label">
+									<span class="text text_s c-bti-tertiary text-clamp">0 ₽</span>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>5 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>10 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>15 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-end right-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>20 млн ₽</span
+									>
+								</div>
+							</div>
+						</div>
+					</div>
+					<mib-spacing type="m"></mib-spacing>
+					<div class="flex flex_column inputs">
+						<div class="flex label">
+							<span class="text text_m c-bti-tertiary"> На сколько дней </span>
+						</div>
+						<mib-input class="flex_grow pt-4">
+							<input
+								type="text"
+								id="defermentPeriodNumber"
+								min="1"
+								max="180"
+								formControlName="defermentPeriodNumber"
+								size="l"
+								value="35 дней"
+								styleType="floating"
+								mibInput
+							/>
+						</mib-input>
+						<mib-spacing type="xs"></mib-spacing>
+						<input
+							type="range"
+							id="defermentPeriodRange"
+							min="1"
+							max="180"
+							formControlName="defermentPeriodRange"
+							class="styled-range"
+						/>
+						<div class="flex flex_column label-area">
+							<mib-spacing type="xs"></mib-spacing>
+							<div class="flex gap-10">
+								<div class="flex flex_grow left-label">
+									<span class="text text_s c-bti-tertiary">1 день</span>
+								</div>
+								<div class="flex flex_grow flex_justify-end right-label">
+									<span class="text text_s c-bti-tertiary">180+ дней</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<mib-spacing type="m"></mib-spacing>
+					<div class="flex flex_column inputs">
+						<div class="flex label">
+							<span class="text text_m c-bti-tertiary">
+								Среднемесячный оборот компании
+							</span>
+						</div>
+						<mib-input class="flex_grow pt-4">
+							<p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+							<input
+								type="text"
+								id="monthlyTurnoverNumber"
+								formControlName="monthlyTurnoverNumber"
+								size="l"
+								mask="separator"
+								value="3 200 000 ₽"
+								styleType="floating"
+								mibInput
+							/>
+						</mib-input>
+						<mib-spacing type="xs"></mib-spacing>
+						<input
+							type="range"
+							id="monthlyTurnoverRange"
+							min="0"
+							max="50000000"
+							step="1000000"
+							formControlName="monthlyTurnoverRange"
+							class="styled-range"
+						/>
+						<div class="flex flex_column label-area">
+							<mib-spacing type="xs"></mib-spacing>
+							<div class="flex gap-10">
+								<div class="flex flex_grow left-label">
+									<span class="text text_s c-bti-tertiary text-clamp">0 ₽</span>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>15 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>25 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-center middle-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>35 млн ₽</span
+									>
+								</div>
+								<div class="flex flex_grow flex_justify-end right-label">
+									<span class="text text_s c-bti-tertiary text-clamp"
+										>50+ млн ₽</span
+									>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="flex flex_grow flex_column">
+				<mib-spacing type="xl"></mib-spacing>
+				<div class="flex frame-l flex_column">
+					<div class="flex flex_column">
+						<h3>Ваш процент</h3>
+						<mib-spacing type="xs"></mib-spacing>
+						<span class="text text_semi c-mc-default"
+							>{{ result | number : '1.2-2' }}%</span
+						>
+						<mib-spacing type="xs2"></mib-spacing>
+						<p class="text text_xl c-bti-secondary">
+							Комиссия за {{ form.get('defermentPeriodNumber')?.value }} 
+							{{
+								getLabel(form.get('defermentPeriodNumber')?.value, [
+									'календарный день',
+									'календарных дня',
+									'календарных дней'
+								])
+							}}
+						</p>
+						<mib-spacing type="s"></mib-spacing>
+						<div class="flex">
+							<mib-button
+								(press)="onPress.emit()"
+								size="l"
+								type="filled-primary"
+							>
+								Оставить заявку
+							</mib-button>
+						</div>
+						<mib-spacing type="s"></mib-spacing>
+						<p class="text text_m c-bti-tertiary">
+							Указанная процентная ставка носит ознакомительный характер и не
+							включает НДС. Чтобы получить точный расчет, пожалуйста, оставьте
+							заявку на факторинг, и наш менеджер свяжется с Вами.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<mib-spacing type="xl2"></mib-spacing>
+	</div>
+</div>

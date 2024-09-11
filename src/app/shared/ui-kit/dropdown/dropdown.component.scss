@@ -1,0 +1,21 @@
+:host {
+  margin-top: 8px;
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  &.dropdown-open {
+    pointer-events: visible;
+  }
+}
+:host, .dropdown, .content {
+  max-height: 260px;
+}
+.dropdown {
+  border-radius: 8px;
+  box-shadow: var(--shadow-big);
+  overflow: hidden;
+  background: var(--wgr-primary);
+  padding: 4px 0;
+  transition: var(--transition);
+}

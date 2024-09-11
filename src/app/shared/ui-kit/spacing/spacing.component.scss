@@ -1,0 +1,35 @@
+.spacing {
+	&.xm2 {
+		height: var(--spacing-desktop-xm2);
+	}
+	&.xs2 {
+		height: var(--spacing-desktop-xs2);
+	}
+	&.xm {
+		height: var(--spacing-desktop-xm);
+	}
+	&.xs {
+		height: var(--spacing-desktop-xs);
+	}
+	&.x {
+		height: var(--spacing-desktop-x);
+	}
+	&.s {
+		height: var(--spacing-desktop-s);
+	}
+	&.m {
+		height: var(--spacing-desktop-m);
+	}
+	&.l {
+		height: var(--spacing-desktop-l);
+	}
+	&.lm {
+		height: var(--spacing-desktop-lm);
+	}
+	&.xl {
+		height: var(--spacing-desktop-xl);
+	}
+	&.xl2 {
+		height: var(--spacing-desktop-xl2);
+	}
+}

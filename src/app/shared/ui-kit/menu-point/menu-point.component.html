@@ -1,0 +1,7 @@
+<button (click)="onClick($event)" class="menu-point flex flex_align-center" [ngClass]="classes" [routerLink]="link" routerLinkActive="menu-point_selected" #routerLinkActive="routerLinkActive">
+  <div class="menu-point_icon-wrapper menu-point_left-icon-wrapper" #leftIcon>
+    <ng-content select="[menu-point-left-icon]"></ng-content>
+  </div>
+  <ng-content></ng-content>
+  <ng-content select="[menu-point-tag]"></ng-content>
+</button>

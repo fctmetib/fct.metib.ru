@@ -1,0 +1,26 @@
+@import 'src/styles/colors.vars';
+
+:host {
+	border-bottom: 1px solid transparent;
+
+	&:has(.navbar_separator) {
+		border-color: var(--wgr-tertiary);
+	}
+}
+
+.navbar {
+	&_separator {
+		gap: 32px;
+		@media (max-width: 576px) {
+			padding: 0 16px;
+		}
+	}
+
+	&_filled {
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+		border-radius: 8px;
+		background-color: var(--wgr-secondary);
+		padding: 2px;
+	}
+}

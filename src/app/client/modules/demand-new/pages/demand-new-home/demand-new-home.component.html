@@ -1,0 +1,270 @@
+<div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<h3>Запросы</h3>
+	<mib-spacing type="m"></mib-spacing>
+</div>
+<mib-tab-group>
+	<mib-navbar class="container container_large">
+		<mib-navbar-point value="1">{{
+			isDesktop ? 'Список запросов' : 'Список'
+		}}</mib-navbar-point>
+		<mib-navbar-point value="2">Черновики</mib-navbar-point>
+		<mib-navbar-point value="3">{{
+			isDesktop ? 'История запросов' : 'История'
+		}}</mib-navbar-point>
+	</mib-navbar>
+	<div class="container container_large">
+		<mib-tab-item value="1">
+			<mib-spacing type="s"></mib-spacing>
+			<div class="mobile-col flex flex_wrap gap-16">
+				<!-- [requestQuantity]="request.quantity" -->
+				<!-- [link]="['history']" -->
+				<mib-request-card
+					(click)="openDrawers(request.id)"
+					*ngFor="let request of requestLists"
+					[requestTitle]="request.title"
+					[requestText]="request.description"
+				></mib-request-card>
+			</div>
+			<mib-spacing type="s"></mib-spacing>
+			<div class="mobile-btn flex">
+				<mib-button (press)="openDrawer()" type="filled-primary"
+					>Запрос на свободную тему</mib-button
+				>
+			</div>
+			<mib-spacing class="mobile-sp" type="xl2"></mib-spacing>
+		</mib-tab-item>
+		<mib-tab-item value="2">
+			<mib-spacing type="m"></mib-spacing>
+			<div class="draft-controls flex flex_justify-between">
+				<mib-input>
+					<input
+						mibInput
+						type="text"
+						styleType="filled-secondary"
+						placeholder="Поиск по запросам"
+					/>
+					<ng-container mibLabel>Поиск по запросам</ng-container>
+					<mib-icon mibLeftIcon class="stroke path" name="fi_search"></mib-icon>
+				</mib-input>
+				<mib-select type="outline" placeholder="Прогресс заполнения">
+					<mib-dropdown-point
+						[value]="true"
+						text="Заполнено на 100%"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="false"
+						text="Заполнено на 50%"
+					></mib-dropdown-point>
+				</mib-select>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-table>
+				<mib-table-head>
+					<mib-table-head-cell
+						(onCheck)="severalRequestsChecked = $event"
+						[checked]="severalRequestsChecked"
+						[showCheckbox]="true"
+						>Запрос
+					</mib-table-head-cell>
+					<mib-table-head-cell>Тип запроса</mib-table-head-cell>
+					<mib-table-head-cell>Прогресс заполнения</mib-table-head-cell>
+				</mib-table-head>
+				<ng-container *ngIf="loading$ | async; else table">
+					<mib-skeleton
+						[styles]="last ? skeletonWithoutUnderline : skeleton"
+						*ngFor="let i of [1, 1, 1, 1, 1, 1, 1]; let last = last"
+					></mib-skeleton>
+				</ng-container>
+				<ng-template #table>
+					<mib-table-row
+						[@slideAnimation]="requestsAnimationStates[draft.id]"
+						*ngFor="let draft of draftLists; let last = last"
+						[underlined]="!last"
+					>
+						<mib-table-cell type="main">
+							<ng-container table-cell-title>{{ draft.number }}</ng-container>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title
+								><mib-badge
+									type="filled-secondary"
+									[extended]="true"
+									size="l"
+									>{{ draft.type }}</mib-badge
+								></ng-container
+							>
+						</mib-table-cell>
+						<mib-table-cell>
+							<ng-container table-cell-title
+								><mib-badge type="filled-secondary" [extended]="true" size="l"
+									>Заполнено на {{ draft.progress }}</mib-badge
+								></ng-container
+							>
+						</mib-table-cell>
+						<mib-button table-row-button size="s" type="ghost-secondary">
+							<mib-icon class="stroke draft" btn-icon name="fi_edit"></mib-icon>
+						</mib-button>
+					</mib-table-row>
+				</ng-template>
+				<mib-table-footer [lined]="!(loading$ | async)">
+					<mib-paginator
+						(pageChange)="onDraftListChange($event)"
+						[totalCount]="drafts.length"
+						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+					></mib-paginator>
+				</mib-table-footer>
+			</mib-table>
+		</mib-tab-item>
+		<mib-tab-item value="3">
+			<mib-spacing type="m"></mib-spacing>
+			<div class="history-controls flex flex_justify-between">
+				<mib-input>
+					<input
+						mibInput
+						type="text"
+						styleType="filled-secondary"
+						placeholder="Поиск по запросам"
+					/>
+					<ng-container mibLabel>Поиск по запросам</ng-container>
+					<mib-icon class="stroke path" mibLeftIcon name="fi_search"></mib-icon>
+				</mib-input>
+				<mib-select placeholder="Выберите статус запроса" type="outline">
+					<mib-dropdown-point
+						(press)="sortDemandByStatus('All')"
+						[value]="selectedStatus == 'All'"
+						text="Все зпросы"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						(press)="sortDemandByStatus('Created')"
+						[value]="selectedStatus == 'Created'"
+						text="Создан"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="selectedStatus == 'Completed'"
+						text="Завершен"
+						(press)="sortDemandByStatus('Completed')"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="selectedStatus == 'Processing'"
+						text="В процессе"
+						(press)="sortDemandByStatus('Processing')"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="selectedStatus == 'Rejected'"
+						text="Отклонено"
+						(press)="sortDemandByStatus('Rejected')"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="selectedStatus == 'Draft'"
+						text="Черновик"
+						(press)="sortDemandByStatus('Draft')"
+					></mib-dropdown-point>
+					<mib-dropdown-point
+						[value]="selectedStatus == 'Canceled'"
+						text="Отменен"
+						(press)="sortDemandByStatus('Canceled')"
+					></mib-dropdown-point>
+				</mib-select>
+			</div>
+			<mib-spacing type="xs"></mib-spacing>
+			<mib-table>
+				<mib-table-head>
+					<mib-table-head-cell>Номер запроса</mib-table-head-cell>
+					<mib-table-head-cell>Тип запроса</mib-table-head-cell>
+					<mib-table-head-cell>Дата запроса</mib-table-head-cell>
+					<mib-table-head-cell>Статус запроса</mib-table-head-cell>
+					<mib-table-head-cell>Ответственный</mib-table-head-cell>
+				</mib-table-head>
+				<ng-container *ngIf="loading$ | async; else table2">
+					<mib-skeleton
+						[styles]="last ? skeletonWithoutUnderline : skeleton"
+						*ngFor="let i of [1, 1, 1, 1, 1, 1, 1]; let last = last"
+					></mib-skeleton>
+				</ng-container>
+				<ng-template #table2>
+					<ng-container *ngIf="historyLists.length > 0; else emptyTable">
+						<mib-table-row
+							[@slideAnimation]="historyAnimationStates[history.id]"
+							*ngFor="let history of historyLists; let last = last"
+							[underlined]="!last"
+						>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+									{{ history.DemandId }}</ng-container
+								>
+							</mib-table-cell>
+							<mib-table-cell [special]="true">
+								<ng-container table-cell-title
+									><mib-badge type="filled-secondary" [extended]="true" size="l"
+										>{{ getType(history.Type) }}
+									</mib-badge></ng-container
+								>
+							</mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+									{{ history.DateCreated | date }}
+								</ng-container>
+							</mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title
+									><mib-badge type="filled-primary" [extended]="true" size="l">
+										{{ getStatus(history.Status) }}
+									</mib-badge></ng-container
+								>
+							</mib-table-cell>
+							<mib-table-cell type="person">
+								<ng-container table-cell-person>
+									<mib-avatar
+										*ngIf="history.Manager"
+										type="round"
+										[showArrow]="false"
+										[src]="
+											history.Manager?.avatarUrl ||
+											'assets/images/woman-avatar.jpg'
+										"
+										[showImage]="true"
+									></mib-avatar
+								></ng-container>
+								<ng-container table-cell-title>
+									{{
+										history.Manager?.Name
+											? history.Manager.Name
+											: 'Менеджер не назначен'
+									}}
+									{{
+										history.Manager?.Extension ? history.Manager.Extension : ''
+									}}
+								</ng-container>
+							</mib-table-cell>
+							<!-- <mib-button table-row-button size="s" type="ghost-secondary">
+									<mib-icon
+										class="stroke"
+										btn-icon
+										name="fi_more-vertical"
+									></mib-icon>
+								</mib-button> -->
+						</mib-table-row>
+					</ng-container>
+					<ng-template #emptyTable>
+						<mib-table-row>
+							<p class="text text_m w-100 flex_align-self-center text-center">
+								нет данных
+							</p>
+						</mib-table-row>
+					</ng-template>
+				</ng-template>
+				<mib-table-footer [lined]="!(loading$ | async)">
+					<mib-paginator
+						*ngIf="selectedHistoryLists.length"
+						(pageChange)="onHistoryListChange($event)"
+						[totalCount]="selectedHistoryLists.length"
+						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+						[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+					></mib-paginator>
+				</mib-table-footer>
+			</mib-table>
+		</mib-tab-item>
+	</div>
+</mib-tab-group>

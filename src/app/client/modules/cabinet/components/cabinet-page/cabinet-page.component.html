@@ -1,13 +1,31 @@
-<div class="card-content">
-  <app-factoring [stats]="statistics"></app-factoring>
+<div class="container container_large">
+	<mib-spacing type="m"></mib-spacing>
+	<app-factoring></app-factoring>
+	<mib-spacing type="s"></mib-spacing>
+	<ng-container *ngIf="loading$ | async; else body">
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'130px'"
+			[style.padding]="isDesktop ? '' : '0 16px'"
+			*ngFor="let i of [1]"
+		></mib-skeleton>
+	</ng-container>
+	<ng-template #body>
+		<div class="cash-panel flex flex_wrap gap-16">
+			<mib-cash-panel
+				[panelData]="statistics?.Limit | rub"
+				[panelTitle]="'Лимит финансирования'"
+			></mib-cash-panel>
+			<mib-cash-panel
+				[panelData]="statistics?.UsedLimit | rub"
+				[panelTitle]="'Уступлено'"
+			></mib-cash-panel>
+			<mib-cash-panel
+				[panelData]="statistics?.DelayAmount | rub"
+				[panelTitle]="'Просрочка покупателя'"
+				[accent]="true"
+				[panelTerm]=""
+			></mib-cash-panel>
+		</div>
+	</ng-template>
 </div>
-<!--
-<div class="widgets">
-  <div class="widget__full-height">
-    <widget-stats></widget-stats>
-  </div>
-  <div class="widget__normal">
-    <widget-actions></widget-actions>
-    <widget-news></widget-news>
-  </div>
-</div> -->

@@ -1,0 +1,45 @@
+:host {
+	height: 100%;
+}
+
+.news {
+	min-height: calc(100% - 65px);
+
+	& mib-news-panel {
+		cursor: pointer;
+		min-height: 238px;
+		max-width: 280px;
+	}
+
+	& mib-select {
+		width: 185px;
+	}
+
+	@media (max-width: 768px) {
+		.sorting {
+			display: none;
+		}
+	}
+
+	@media (max-width: 576px) {
+		padding: 0 16px;
+
+		& .frame {
+			flex-direction: column;
+		}
+
+		& .panel {
+			justify-content: center;
+		}
+	}
+}
+
+@media (max-width: 576px) {
+	h3 {
+		padding: 0 16px;
+	}
+}
+
+mib-paginator {
+	z-index: 1;
+}

@@ -1,0 +1,8 @@
+mib-table-footer {
+	& mib-select {
+		width: auto;
+	}
+}
+mib-navbar {
+	padding: var(--drawer-container-paddings);
+}

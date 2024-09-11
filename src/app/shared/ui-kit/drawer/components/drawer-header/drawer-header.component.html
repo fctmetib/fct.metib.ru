@@ -1,0 +1,44 @@
+<div class="drawer-header flex" [ngClass]="classes">
+	<div class="left flex_grow flex gap-8">
+		<mib-button
+			*ngIf="!showClose; else showCloseBtn"
+			size="m"
+			(press)="onClose.emit()"
+			type="filled-secondary"
+		>
+			<mib-icon btn-icon class="stroke" name="fi_chevrons-right"></mib-icon>
+		</mib-button>
+		<ng-template #showCloseBtn>
+			<mib-button (press)="onClose.emit()" size="m" type="filled-secondary">
+				Закрыть окно
+				<mib-icon btn-left-icon class="stroke" name="fi_x"></mib-icon>
+			</mib-button>
+		</ng-template>
+		<mib-button size="m" *ngIf="showMaximize" type="ghost-secondary">
+			На весь экран
+			<mib-icon btn-left-icon class="stroke" name="fi_maximize-2"></mib-icon>
+		</mib-button>
+	</div>
+	<div *ngIf="showProgressBar" class="flex flex_column progress-bar">
+		<div class="wrap flex flex_justify-center text text_m c-bti-secondary">
+			<span>{{ progress }}</span>
+			<span> из {{ maxPage }}</span>
+		</div>
+		<div class="line">
+			<div
+				class="progress"
+				[ngStyle]="{width: (progress / maxPage) * 100 + '%'}"
+			></div>
+		</div>
+	</div>
+	<div class="right flex_grow flex flex_justify-end">
+		<mib-button (press)="onEdit.emit()" *ngIf="showEdits" type="ghost-primary">
+			Редактировать
+			<mib-icon btn-left-icon class="stroke" name="fi_edit-3"></mib-icon>
+		</mib-button>
+		<mib-button *ngIf="showShared" type="ghost-primary">
+			Поделиться
+			<mib-icon btn-left-icon class="stroke" name="fi_share-2"></mib-icon>
+		</mib-button>
+	</div>
+</div>

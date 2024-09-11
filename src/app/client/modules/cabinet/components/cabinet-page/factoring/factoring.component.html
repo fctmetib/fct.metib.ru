@@ -1,4 +1,40 @@
-<div class="header lg">
+<div class="factoring">
+	<ng-container *ngIf="loading$ | async; else title">
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'40px'"
+			*ngFor="let i of [1]"
+		></mib-skeleton>
+	</ng-container>
+	<ng-template #title>
+		<h3>{{ (factoring$ | async)?.Title }}</h3>
+	</ng-template>
+	<mib-spacing type="xs"></mib-spacing>
+	<ng-container *ngIf="loading$ | async; else body">
+		<mib-skeleton
+			[styles]="defaultSkeleton"
+			[style.height]="'20px'"
+			*ngFor="let i of [1]"
+		></mib-skeleton>
+	</ng-container>
+	<ng-template #body>
+		<div class="organization flex gap-12">
+			<p class="text text_m">
+				ИНН: {{ (factoring$ | async)?.Organization?.Inn }}
+			</p>
+			<div class="separator-vertical"></div>
+			<p class="text text_m">
+				КПП: {{ (factoring$ | async)?.Organization?.Kpp }}
+			</p>
+			<div class="separator-vertical"></div>
+			<p class="text text_m">
+				Договор Факторинга: {{ (factoring$ | async)?.Contract.Number }} от
+				{{ (factoring$ | async)?.Contract.Date | date : 'dd/MM/yyyy' }}
+			</p>
+		</div>
+	</ng-template>
+</div>
+<!-- <div class="header lg">
   <div class="title">
     <h1 class="display-1">
       <ng-container *ngIf="(factoring$ | async); else skeletonFactoringTitleTemplate">
@@ -80,4 +116,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

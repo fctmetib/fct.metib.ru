@@ -1,29 +1,17 @@
+.news {
+	max-width: 560px;
+	width: 100%;
+	margin: 0 auto;
 
-// Desktop
-@media (min-width: 1300px) {
-  .news {
-    display: flex;
-    justify-content: space-between;
-    .news__image {
-      img {
-        width: 100%;
-        max-width: 400px;
-      }
-    }
-  }
-}
+	& mib-navbar {
+		width: 80px;
+	}
 
-// Mobile
-@media (max-width: 1300px) {
-  .news {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    .news__image {
-      img {
-        width: 100%;
-        max-width: 550px;
-      }
-    }
-  }
+	& mib-navbar-point {
+		width: 38px;
+	}
+
+	@media (max-width: 768px) {
+		padding: 0 16px;
+	}
 }

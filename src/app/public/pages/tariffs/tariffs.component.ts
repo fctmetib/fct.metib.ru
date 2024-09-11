@@ -1,83 +1,88 @@
-import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { OrganizationService } from '../../service/organization.service';
-import { Subscription } from 'rxjs';
-import { OrganizationInterface } from '../../type/organization.interface';
-import { Defender } from 'src/app/shared/classes/common/defender.class';
+import {Component, OnDestroy, OnInit} from '@angular/core'
+import {Subscription} from 'rxjs'
+import {LandingRequestModalService} from 'src/app/shared/modules/modals/landing-request-modal/landing-request-modal.service'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 
 @Component({
-  selector: 'tariffs.html',
-  styleUrls: ['./tariffs.component.scss'],
-  templateUrl: './tariffs.component.html',
+	selector: 'tariffs.html',
+	styleUrls: ['./tariffs.component.scss'],
+	templateUrl: './tariffs.component.html'
 })
-export class TariffsComponent implements OnDestroy {
-  private subscription$: Subscription = new Subscription();
+export class TariffsComponent implements OnInit, OnDestroy {
+	public isDesktop: boolean = false
 
-  public isRequestLoading: boolean = false;
+	private subscriptions = new Subscription()
 
-  public display: boolean = false;
-  public financeForm = this.fb.group({
-    organization: ['', [Validators.required, this._noWhitespaceValidator]],
-    name: ['', [Validators.required, this._noWhitespaceValidator]],
-    phone: ['', Validators.required],
-    inn: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    comment: [''],
-    isAccept: false,
-  });
+	public rates = [
+		{
+			title: 'Premium',
+			content:
+				'Максимальная выгода от финансирования поставок сетевым покупателям',
+			list: [
+				'Финансирование до 100%',
+				'Финансирование в день отгрузки',
+				'Выплата на любой расчетный счет',
+				'Страхование задолженности',
+				'Финансирование до 100%',
+				'Финансирование в день отгрузки'
+			],
+			extra: [
+				{title: 'Комиссия за каждый день', tariff: 'Compromise'},
+				{title: 'Защита от риска неплатежа', tariff: 'Compromise No risk'}
+			]
+		},
+		{
+			title: 'Compromise',
+			content: 'Компромиссное решение с возможностью гибкого финансирования',
+			list: [
+				'Финансирование до 100%',
+				'Финансирование в день отгрузки',
+				'Выплата на любой расчетный счет',
+				'Страхование задолженности',
+				'Финансирование до 100%',
+				'Финансирование в день отгрузки',
+				'Комиссия за каждый день'
+			],
+			extra: [
+				{title: 'Защита от риска неплатежа', tariff: 'Compromise No risk'}
+			]
+		},
+		{
+			title: 'Compromise No risk',
+			content: 'Финансирование поставок с покрытием риска покупателя',
+			list: [
+				'Финансирование до 100%',
+				'Финансирование в день отгрузки',
+				'Выплата на любой расчетный счет',
+				'Страхование задолженности',
+				'Финансирование до 100%',
+				'Финансирование в день отгрузки',
+				'Комиссия за каждый день',
+				'Защита от риска неплатежа'
+			]
+		}
+	]
 
-  constructor(
-    private readonly fb: FormBuilder,
-    private readonly organizationService: OrganizationService
-  ) { }
+	constructor(
+		public breakpointService: BreakpointObserverService,
+		public landingRequestModalService: LandingRequestModalService
+	) {}
 
-  public ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
-  }
+	ngOnInit(): void {
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
+	}
 
-  public sendFinanceRequest(id: string): void {
-    if (!this.isFinanceFormValid() || this.isRequestLoading) {
-      return;
-    }
+	openLandingRequestModal(data) {
+		this.landingRequestModalService.open(data)
+	}
 
-    this.isRequestLoading = true;
+	public calculate() {
+		console.log('calculate>>')
+	}
 
-    let organizationInterface: OrganizationInterface = {
-      Comment: Defender.defendValue(this.financeForm.value?.comment),
-      Email: Defender.defendValue(this.financeForm.value?.email),
-      Inn: Defender.defendValue(this.financeForm.value?.inn),
-      IsAccept: this.financeForm.value?.isAccept,
-      Organization: Defender.defendValue(this.financeForm.value?.organization),
-      Person: Defender.defendValue(this.financeForm.value?.name),
-      Phone: Defender.defendValue(this.financeForm.value?.phone),
-    };
-
-    this.subscription$.add(
-      this.organizationService
-        .send(organizationInterface)
-        .subscribe((response) => {
-          this.display = false;
-          this.financeForm.reset();
-        })
-    );
-  }
-
-  public isFinanceFormValid(): boolean {
-    if (this.financeForm.value.isAccept && this.financeForm.valid) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public onConsultationHandler(): void {
-    this.financeForm.reset();
-    this.display = true;
-  }
-
-  private _noWhitespaceValidator(control: FormControl): any {
-    const isWhitespace = (control.value || '').trim().length === 0;
-    const isValid = !isWhitespace;
-    return isValid ? null : { whitespace: true };
-  }
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
+	}
 }
