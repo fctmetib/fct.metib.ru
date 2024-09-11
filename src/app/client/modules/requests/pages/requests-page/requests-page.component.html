@@ -82,83 +82,92 @@
 			></mib-skeleton>
 		</ng-container>
 		<ng-template #table>
-			<mib-table-row
-				(dblclick)="openBrowserDrawer(req.ID)"
-				*ngFor="let req of requestsVisible; let last = last"
-				[rowId]="req.ID"
-				[underlined]="!last"
-			>
-				<mib-table-cell type="main">
-					<ng-container table-cell-title>{{ req.ID }}</ng-container>
-				</mib-table-cell>
-				<ng-container *ngIf="isDesktop; else mobileCell">
-					<mib-table-cell>
-						<ng-container table-cell-title>{{ req.Number }}</ng-container>
+			<ng-container *ngIf="requestsVisible.length > 0; else emptyTable">
+				<mib-table-row
+					(dblclick)="openBrowserDrawer(req.ID)"
+					*ngFor="let req of requestsVisible; let last = last"
+					[rowId]="req.ID"
+					[underlined]="!last"
+				>
+					<mib-table-cell type="main">
+						<ng-container table-cell-title>{{ req.ID }}</ng-container>
 					</mib-table-cell>
-				</ng-container>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						req.Date | date : 'dd.MM.YYYY'
-					}}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{ req.Delivery.ID }}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{ req.Type }}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{ req.Status }}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						req.ReadOnly ? 'Отсутствует' : 'Есть'
-					}}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						req.IsCorrected ? 'Да' : 'Нет'
-					}}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						req.Summ | currency : 'RUR'
-					}}</ng-container>
-				</mib-table-cell>
-				<ng-template #mobileCell>
-					<mib-table-head-cell>{{ getVisibleCell(req) }}</mib-table-head-cell>
-				</ng-template>
-				<ng-container table-row-button *ngIf="isDesktop; else mobile">
-					<mib-button
-						[mibDropdownTrigger]="requestRowMenu"
-						table-row-button
-						size="s"
-						type="ghost-secondary"
-					>
-						<mib-icon
-							class="stroke"
-							btn-icon
-							name="fi_more-vertical"
-						></mib-icon>
-					</mib-button>
-					<mib-dropdown #requestRowMenu>
-						<mib-dropdown-point
-							(press)="openBrowserDrawer(req.ID)"
-							text="Открыть"
-						></mib-dropdown-point>
-					</mib-dropdown>
-				</ng-container>
-				<ng-template #mobile>
-					<mib-button
-						(click)="openRequestsPageModal(req); $event.stopPropagation()"
-						size="s"
-						table-row-button
-						type="ghost-secondary"
-					>
-						<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
-					</mib-button>
-				</ng-template>
-			</mib-table-row>
+					<ng-container *ngIf="isDesktop; else mobileCell">
+						<mib-table-cell>
+							<ng-container table-cell-title>{{ req.Number }}</ng-container>
+						</mib-table-cell>
+					</ng-container>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							req.Date | date : 'dd.MM.YYYY'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ req.Delivery.ID }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ req.Type }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ req.Status }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							req.ReadOnly ? 'Отсутствует' : 'Есть'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							req.IsCorrected ? 'Да' : 'Нет'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							req.Summ | currency : 'RUR'
+						}}</ng-container>
+					</mib-table-cell>
+					<ng-template #mobileCell>
+						<mib-table-head-cell>{{ getVisibleCell(req) }}</mib-table-head-cell>
+					</ng-template>
+					<ng-container table-row-button *ngIf="isDesktop; else mobile">
+						<mib-button
+							[mibDropdownTrigger]="requestRowMenu"
+							table-row-button
+							size="s"
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-icon>
+						</mib-button>
+						<mib-dropdown #requestRowMenu>
+							<mib-dropdown-point
+								(press)="openBrowserDrawer(req.ID)"
+								text="Открыть"
+							></mib-dropdown-point>
+						</mib-dropdown>
+					</ng-container>
+					<ng-template #mobile>
+						<mib-button
+							(click)="openRequestsPageModal(req); $event.stopPropagation()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+						</mib-button>
+					</ng-template>
+				</mib-table-row>
+			</ng-container>
+			<ng-template #emptyTable>
+				<mib-table-row>
+					<p class="text text_m w-100 flex_align-self-center text-center">
+						нет данных
+					</p>
+				</mib-table-row>
+			</ng-template>
 		</ng-template>
 		<mib-table-footer
 			[showIsland]="true"
@@ -169,6 +178,7 @@
 		>
 			<ng-container table-footer-action>Подписать</ng-container>
 			<mib-paginator
+				*ngIf="requests.length"
 				(pageChange)="onPageChange($event)"
 				[totalCount]="requests.length"
 				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
