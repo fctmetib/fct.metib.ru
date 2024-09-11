@@ -80,7 +80,6 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		1: 'DateCreated',
 		2: 'Status',
 		3: {Manager: 'Name'}
-		// 2: {Delivery: 'ID'},
 	}
 
 	constructor(
@@ -214,6 +213,7 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 			.pipe(
 				tap(data => {
 					this.historys = data
+					console.log('this.historys :>> ', this.historys)
 					this.selectedHistoryLists = this.historys
 					// console.log('this.historys :>> ', this.historys)
 					this.onHistoryListChange(1)
@@ -314,7 +314,6 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 	}
 
 	onHistoryListChange($event) {
-		// console.log('$event :>> ', $event)
 		this.historyLists = this.onPageChange($event, this.selectedHistoryLists)
 	}
 
@@ -428,7 +427,13 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 
 			if (typeof path === 'string') {
 				// Если путь - строка, извлекаем значение напрямую
-				value = row[path]
+				if (path === 'Type') {
+					value = this.getType(row[path])
+				} else if (path === 'Status') {
+					value = this.getStatus(row[path])
+				} else {
+					value = row[path]
+				}
 			} else if (typeof path === 'object') {
 				// Если путь - объект, извлекаем вложенное значение
 				const [parentKey, childKey] = Object.entries(path)[0]
@@ -437,24 +442,20 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 			// Проверка и добавление префиксов
 			if (path === 'DateCreated' && value !== undefined) {
 				value = this.datePipe.transform(value, 'dd.MM.yyyy')
-				// } else if (path === 'ReadOnly' && value !== undefined) {
-				// 	value = value === false ? 'Есть' : 'Отсутствует'
-				// } else if (path === 'IsCorrected' && value !== undefined) {
-				// 	value = value === false ? 'Нет' : 'Да'
 			}
 
 			result[newKey] = value
 		}
-		// console.log('result :>> ', result)
+
 		return result[this.currentIndex]
 	}
 
-	// openBrowserDrawer() {
-	// 	console.log('open browser drawer >>>')
-	// }
+	openBrowserDrawer(data) {
+		console.log('open browser drawer >>>', data)
+	}
 
-	openDemandPageModal() {
-		console.log('open demand page modal >>>')
+	openDemandPageModal(data) {
+		console.log('open demand page modal >>>', data)
 	}
 
 	ngOnDestroy(): void {

@@ -133,7 +133,7 @@
 		</mib-tab-item>
 		<mib-tab-item value="3">
 			<mib-spacing type="m"></mib-spacing>
-			<div class="history-controls flex flex_justify-between">
+			<div class="history-controls gap-16 flex flex_justify-between">
 				<mib-input>
 					<input
 						mibInput
@@ -234,7 +234,11 @@
 					<ng-container *ngIf="historyLists.length > 0; else emptyTable">
 						<mib-table-row
 							[@slideAnimation]="historyAnimationStates[history.id]"
-							*ngFor="let history of historyLists; let last = last"
+							*ngFor="
+								let history of historyLists;
+								else: emptyTable;
+								let last = last
+							"
 							[underlined]="!last"
 						>
 							<mib-table-cell>
@@ -242,16 +246,21 @@
 									{{ history.DemandId }}</ng-container
 								>
 							</mib-table-cell>
-							<mib-table-cell [special]="true">
-								<ng-container table-cell-title
-									><mib-badge type="filled-secondary" [extended]="true" size="l"
-										>{{ getType(history.Type) }}
-									</mib-badge></ng-container
-								>
-							</mib-table-cell>
+							<ng-container *ngIf="isDesktop; else mobileCell">
+								<mib-table-cell [special]="true">
+									<ng-container table-cell-title
+										><mib-badge
+											type="filled-secondary"
+											[extended]="true"
+											size="l"
+											>{{ getType(history.Type) }}
+										</mib-badge></ng-container
+									>
+								</mib-table-cell>
+							</ng-container>
 							<mib-table-cell>
 								<ng-container table-cell-title>
-									{{ history.DateCreated | date }}
+									{{ history.DateCreated | date : 'dd.MM.YYYY' }}
 								</ng-container>
 							</mib-table-cell>
 							<mib-table-cell>
@@ -285,6 +294,43 @@
 									}}
 								</ng-container>
 							</mib-table-cell>
+							<ng-template #mobileCell>
+								<mib-table-head-cell>{{
+									getVisibleCell(history)
+								}}</mib-table-head-cell>
+							</ng-template>
+							<ng-container table-row-button *ngIf="isDesktop; else mobile">
+								<mib-button
+									[mibDropdownTrigger]="demanRowMenu"
+									table-row-button
+									size="s"
+									type="ghost-secondary"
+								>
+									<mib-icon
+										class="stroke"
+										btn-icon
+										name="fi_more-vertical"
+									></mib-icon>
+								</mib-button>
+								<mib-dropdown #demanRowMenu>
+									<mib-dropdown-point
+										(press)="openBrowserDrawer(history.DemandId)"
+										text="Открыть"
+									></mib-dropdown-point>
+								</mib-dropdown>
+							</ng-container>
+							<ng-template #mobile>
+								<mib-button
+									(click)="
+										openDemandPageModal(history); $event.stopPropagation()
+									"
+									size="s"
+									table-row-button
+									type="ghost-secondary"
+								>
+									<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+								</mib-button>
+							</ng-template>
 							<!-- <mib-button table-row-button size="s" type="ghost-secondary">
 									<mib-icon
 										class="stroke"

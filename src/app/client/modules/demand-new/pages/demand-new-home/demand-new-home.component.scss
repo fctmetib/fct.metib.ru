@@ -1,17 +1,29 @@
 @import 'src/styles/helpers/_icon_tools.scss';
 
-input,
-mib-select {
-	max-width: 280px;
-	width: 100%;
-}
-.draft {
-	@include icon-color(var(--mc-default));
-}
+.container {
+	& mib-input,
+	& mib-select {
+		max-width: 280px;
+		width: 100%;
+	}
+	& .draft {
+		@include icon-color(var(--mc-default));
+	}
 
-@media (max-width: 576px) {
-	.container {
+	@media (max-width: 576px) {
 		padding: 0;
+
+		& mib-input,
+		& mib-select {
+			max-width: 100%;
+			width: 100%;
+		}
+
+		& .history-controls {
+			padding: 0 16px;
+			flex-direction: column;
+			align-items: center;
+		}
 
 		& h3 {
 			padding: 0 16px;
