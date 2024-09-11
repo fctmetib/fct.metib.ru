@@ -39,8 +39,7 @@
 		</mib-input>
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-link
-			(click)="dialogRef.close()"
-			[routerLink]="['/auth/reset-password']"
+			(click)="openExternalSite()"
 		>
 			Забыли пароль?
 		</mib-link>

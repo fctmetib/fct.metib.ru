@@ -99,4 +99,9 @@ export class LandingLoginModalComponent implements OnInit {
 			)
 			.subscribe()
 	}
+		
+	openExternalSite() {
+		window.open('https://factoring.metallinvestbank.ru/reset-password', '_blank');
+		this.dialogRef.close();
+	}
 }
