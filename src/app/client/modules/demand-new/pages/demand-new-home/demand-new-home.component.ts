@@ -21,6 +21,7 @@ import {DemandFactoringDrawerService} from '../../modules/demand-factoring-drawe
 import {DemandAgentDrawerService} from '../../modules/demand-agent-drawer/demand-agent-drawer.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {DemandService} from '../../services/demand.service'
+import {DatePipe} from '@angular/common'
 
 const ANIMATION_CONFIG = {
 	translateDistance: '-3%',
@@ -71,6 +72,16 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 
 	public requestsAnimationStates: Record<number, boolean> = {}
 	public historyAnimationStates: Record<number, boolean> = {}
+	public currentIndex: number = 0
+	headers = ['Тип запроса', 'Дата запроса', 'Статус запроса', 'Ответственный']
+
+	public dataMap = {
+		0: 'Type',
+		1: 'DateCreated',
+		2: 'Status',
+		3: {Manager: 'Name'}
+		// 2: {Delivery: 'ID'},
+	}
 
 	constructor(
 		private requestList: DataService,
@@ -84,7 +95,8 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		private demandFactoringDrawerService: DemandFactoringDrawerService,
 		private demandAgentDrawerService: DemandAgentDrawerService,
 		public breakpointService: BreakpointObserverService,
-		private demandService: DemandService
+		private demandService: DemandService,
+		private datePipe: DatePipe
 	) {}
 
 	ngOnInit(): void {
@@ -391,6 +403,58 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		}
 
 		this.onHistoryListChange(1)
+	}
+
+	prev() {
+		if (this.currentIndex > 0) {
+			this.currentIndex--
+		}
+	}
+
+	next() {
+		if (this.currentIndex < this.headers.length - 1) {
+			this.currentIndex++
+		}
+	}
+
+	getVisibleHeader() {
+		return this.headers[this.currentIndex]
+	}
+
+	getVisibleCell(row: any) {
+		const result = {}
+		for (const [newKey, path] of Object.entries(this.dataMap)) {
+			let value
+
+			if (typeof path === 'string') {
+				// Если путь - строка, извлекаем значение напрямую
+				value = row[path]
+			} else if (typeof path === 'object') {
+				// Если путь - объект, извлекаем вложенное значение
+				const [parentKey, childKey] = Object.entries(path)[0]
+				value = row[parentKey] ? row[parentKey][childKey] : undefined
+			}
+			// Проверка и добавление префиксов
+			if (path === 'DateCreated' && value !== undefined) {
+				value = this.datePipe.transform(value, 'dd.MM.yyyy')
+				// } else if (path === 'ReadOnly' && value !== undefined) {
+				// 	value = value === false ? 'Есть' : 'Отсутствует'
+				// } else if (path === 'IsCorrected' && value !== undefined) {
+				// 	value = value === false ? 'Нет' : 'Да'
+			}
+
+			result[newKey] = value
+		}
+		// console.log('result :>> ', result)
+		return result[this.currentIndex]
+	}
+
+	// openBrowserDrawer() {
+	// 	console.log('open browser drawer >>>')
+	// }
+
+	openDemandPageModal() {
+		console.log('open demand page modal >>>')
 	}
 
 	ngOnDestroy(): void {
