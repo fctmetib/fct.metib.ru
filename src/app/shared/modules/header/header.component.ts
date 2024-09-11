@@ -166,4 +166,8 @@ export class HeaderComponent implements OnInit {
 	logout() {
 		this.authService.logout()
 	}
+	
+	openExternalSite() {
+		window.open('https://factoring.metallinvestbank.ru/login', '_blank');
+	}
 }

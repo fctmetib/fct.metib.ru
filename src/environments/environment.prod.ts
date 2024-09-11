@@ -1,7 +1,7 @@
 export const environment = {
 	// 17.11.2023 test
-	apiUrl: 'https://api-factoring-test02.metib.ru/api',
-	apiFileUploadUrl: 'https://api-factoring-test02.metib.ru/api/',
+	apiUrl: 'https://api-factoring.metib.ru//api',
+	apiFileUploadUrl: 'https://api-factoring.metib.ru//api/',
 	apiToken: 'bb7a3abe7995f91132c083549aaae9fdf332b66e',
 
 	// new  https://api-factoring.metib.ru/

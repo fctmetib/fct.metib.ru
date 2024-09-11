@@ -223,7 +223,7 @@
 					>
 						<mib-button
 							class="btn-login-desktop"
-							[routerLink]="['/auth/login']"
+							(click)="openExternalSite()"
 							type="filled-primary"
 							size="m"
 							>Личный кабинет
@@ -235,7 +235,7 @@
 						</mib-button>
 						<mib-button
 							class="btn-login-mobile"
-							[routerLink]="['/auth/login']"
+							(click)="openExternalSite()"
 							type="filled-primary"
 							size="m"
 						>

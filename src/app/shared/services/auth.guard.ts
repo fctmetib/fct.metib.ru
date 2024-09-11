@@ -13,6 +13,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    // TODO: Удалить после интеграции нового личного кабинета
+    return of(false)
+
     if (this.auth.isAuthenticated()) {
       return of(true)
     } else {

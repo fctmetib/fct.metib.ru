@@ -37,7 +37,7 @@ export class DropdownComponent {
 
   private lastTrigger: HTMLElement | null = null;
   private timeoutId: any = null;
-  public id: string = this.toolsService.generateId()
+  public id: string = null;
 
   constructor(
     public menuService: DropdownService,
@@ -49,6 +49,7 @@ export class DropdownComponent {
   }
 
   ngOnInit() {
+    this.id = this.toolsService.generateId();
   }
 
   ngOnDestroy() {

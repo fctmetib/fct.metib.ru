@@ -18,43 +18,42 @@ import {ToolsService} from '../shared/services/tools.service'
 	styleUrls: ['./agent-client.component.scss']
 })
 export class AgentClientComponent implements AfterViewInit, OnDestroy {
-	@ViewChild('scrollable') scrollable!: ElementRef<HTMLDivElement>
-
-	private resizeObserver!: ResizeObserver
-
-	public withoutScroll: boolean = !this.toolsService.mobileAndTabletCheck(
-		isPlatformBrowser(this.platformId)
-	)
-
+	@ViewChild('scrollable') scrollable!: ElementRef<HTMLDivElement>;
+  
+	private resizeObserver!: ResizeObserver;
+  
+	public withoutScroll: boolean = false; 
+  
 	constructor(
-		public scrollService: ScrollService,
-		private cdr: ChangeDetectorRef,
-		private toolsService: ToolsService,
-		@Inject(PLATFORM_ID) private platformId: Object
+	  public scrollService: ScrollService,
+	  private cdr: ChangeDetectorRef,
+	  private toolsService: ToolsService,
+	  @Inject(PLATFORM_ID) private platformId: Object 
 	) {}
-
+  
 	ngAfterViewInit() {
-		if (
-			isPlatformBrowser(this.platformId) &&
-			!this.toolsService.mobileAndTabletCheck(
-				isPlatformBrowser(this.platformId)
-			)
-		) {
-			this.resizeObserver = new ResizeObserver(entries => {
-				this.checkScroll(this.scrollable.nativeElement)
-			})
-			this.resizeObserver.observe(this.scrollable.nativeElement)
-		}
+	  if (
+		isPlatformBrowser(this.platformId) &&
+		!this.toolsService.mobileAndTabletCheck(isPlatformBrowser(this.platformId))
+	  ) {
+		this.resizeObserver = new ResizeObserver(entries => {
+		  this.checkScroll(this.scrollable.nativeElement);
+		});
+		this.resizeObserver.observe(this.scrollable.nativeElement);
+  
+		this.withoutScroll = !this.toolsService.mobileAndTabletCheck(isPlatformBrowser(this.platformId));
+	  }
 	}
-
+  
 	private checkScroll(element: HTMLDivElement) {
-		this.withoutScroll = element.scrollHeight <= element.clientHeight
-		this.cdr.detectChanges()
+	  this.withoutScroll = element.scrollHeight <= element.clientHeight;
+	  this.cdr.detectChanges();
 	}
-
+  
 	ngOnDestroy() {
-		if (this.resizeObserver && this.scrollable) {
-			this.resizeObserver.unobserve(this.scrollable.nativeElement)
-		}
+	  if (this.resizeObserver && this.scrollable) {
+		this.resizeObserver.unobserve(this.scrollable.nativeElement);
+	  }
 	}
-}
+  }
+  
