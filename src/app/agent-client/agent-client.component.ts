@@ -22,9 +22,7 @@ export class AgentClientComponent implements AfterViewInit, OnDestroy {
 
 	private resizeObserver!: ResizeObserver
 
-	public withoutScroll: boolean = !this.toolsService.mobileAndTabletCheck(
-		isPlatformBrowser(this.platformId)
-	)
+	public withoutScroll: boolean = false
 
 	constructor(
 		public scrollService: ScrollService,
@@ -44,6 +42,10 @@ export class AgentClientComponent implements AfterViewInit, OnDestroy {
 				this.checkScroll(this.scrollable.nativeElement)
 			})
 			this.resizeObserver.observe(this.scrollable.nativeElement)
+
+			this.withoutScroll = !this.toolsService.mobileAndTabletCheck(
+				isPlatformBrowser(this.platformId)
+			)
 		}
 	}
 

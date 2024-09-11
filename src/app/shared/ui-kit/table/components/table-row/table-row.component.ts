@@ -1,4 +1,10 @@
-import {Component, ContentChildren, Input, QueryList} from '@angular/core'
+import {
+	Component,
+	ContentChildren,
+	Input,
+	OnInit,
+	QueryList
+} from '@angular/core'
 import {DeviceType} from '../../../../interfaces/shared.interface'
 import {TableCellComponent} from '../table-cell/table-cell.component'
 import {TableRowAnimationService} from '../../services/table-row-animation.service'
@@ -21,20 +27,24 @@ export const TABLE_ROW_ANIMATION_CONFIG = {
 		new AnimationService().generateAnimation(TABLE_ROW_ANIMATION_CONFIG)
 	]
 })
-export class TableRowComponent {
+export class TableRowComponent implements OnInit {
 	@ContentChildren(TableCellComponent) cells: QueryList<TableCellComponent>
 	@Input() rowId: number // Уникальный идентификатор для строки
 	@Input() rowStatus: string
 	@Input() device: DeviceType = 'desktop'
 	@Input() underlined: boolean = false
 
-	id: string = this.toolsService.generateId()
+	id: string = null
 
 	constructor(
 		private tableComponent: TableComponent,
 		private tableRowAnimationService: TableRowAnimationService,
 		private toolsService: ToolsService
 	) {}
+
+	ngOnInit(): void {
+		this.id = this.toolsService.generateId()
+	}
 
 	get animationState() {
 		return this.tableRowAnimationService.getAnimationState(this.rowId)
