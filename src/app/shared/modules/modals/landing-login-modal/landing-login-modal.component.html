@@ -46,8 +46,7 @@
 		<mib-spacing type="m"></mib-spacing>
 		<div class="flex gap-16">
 			<mib-button
-				(click)="dialogRef.close()"
-				[routerLink]="['/auth/register']"
+				(click)="openExternalRegister()"
 				size="l"
 				type="filled-secondary"
 				class="flex_grow"
