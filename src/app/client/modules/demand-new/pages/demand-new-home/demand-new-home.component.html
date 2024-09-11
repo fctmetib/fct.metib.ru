@@ -184,76 +184,76 @@
 					></mib-skeleton>
 				</ng-container>
 				<ng-template #table2>
-					<mib-table-row
-						[@slideAnimation]="historyAnimationStates[history.id]"
-						*ngFor="
-							let history of historyLists;
-							else: emptyTable;
-							let last = last
-						"
-						[underlined]="!last"
-					>
-						<mib-table-cell>
-							<ng-container table-cell-title>
-								{{ history.DemandId }}</ng-container
-							>
-						</mib-table-cell>
-						<mib-table-cell [special]="true">
-							<ng-container table-cell-title
-								><mib-badge type="filled-secondary" [extended]="true" size="l"
-									>{{ getType(history.Type) }}
-								</mib-badge></ng-container
-							>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>
-								{{ history.DateCreated | date }}
-							</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title
-								><mib-badge type="filled-secondary" [extended]="true" size="l">
-									{{ getStatus(history.Status) }}
-								</mib-badge></ng-container
-							>
-						</mib-table-cell>
-						<mib-table-cell type="person">
-							<ng-container table-cell-person>
-								<mib-avatar
-									*ngIf="history.Manager"
-									type="round"
-									[showArrow]="false"
-									[src]="
-										history.Manager?.avatarUrl ||
-										'assets/images/woman-avatar.jpg'
-									"
-									[showImage]="true"
-								></mib-avatar
-							></ng-container>
-							<ng-container table-cell-title>
-								{{
-									history.Manager?.Name
-										? history.Manager.Name
-										: 'Менеджер не назначен'
-								}}
-								{{
-									history.Manager?.Extension ? history.Manager.Extension : ''
-								}}
-							</ng-container>
-						</mib-table-cell>
-						<!-- <mib-button table-row-button size="s" type="ghost-secondary">
-								<mib-icon
-									class="stroke"
-									btn-icon
-									name="fi_more-vertical"
-								></mib-icon>
-							</mib-button> -->
-					</mib-table-row>
-					<mib-table-row #emptyTable>
-						<p class="text text_m w-100 flex_align-self-center text-center">
-							нет данных
-						</p>
-					</mib-table-row>
+					<ng-container *ngIf="historyLists.length > 0; else emptyTable">
+						<mib-table-row
+							[@slideAnimation]="historyAnimationStates[history.id]"
+							*ngFor="let history of historyLists; let last = last"
+							[underlined]="!last"
+						>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+									{{ history.DemandId }}</ng-container
+								>
+							</mib-table-cell>
+							<mib-table-cell [special]="true">
+								<ng-container table-cell-title
+									><mib-badge type="filled-secondary" [extended]="true" size="l"
+										>{{ getType(history.Type) }}
+									</mib-badge></ng-container
+								>
+							</mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title>
+									{{ history.DateCreated | date }}
+								</ng-container>
+							</mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title
+									><mib-badge type="filled-primary" [extended]="true" size="l">
+										{{ getStatus(history.Status) }}
+									</mib-badge></ng-container
+								>
+							</mib-table-cell>
+							<mib-table-cell type="person">
+								<ng-container table-cell-person>
+									<mib-avatar
+										*ngIf="history.Manager"
+										type="round"
+										[showArrow]="false"
+										[src]="
+											history.Manager?.avatarUrl ||
+											'assets/images/woman-avatar.jpg'
+										"
+										[showImage]="true"
+									></mib-avatar
+								></ng-container>
+								<ng-container table-cell-title>
+									{{
+										history.Manager?.Name
+											? history.Manager.Name
+											: 'Менеджер не назначен'
+									}}
+									{{
+										history.Manager?.Extension ? history.Manager.Extension : ''
+									}}
+								</ng-container>
+							</mib-table-cell>
+							<!-- <mib-button table-row-button size="s" type="ghost-secondary">
+									<mib-icon
+										class="stroke"
+										btn-icon
+										name="fi_more-vertical"
+									></mib-icon>
+								</mib-button> -->
+						</mib-table-row>
+					</ng-container>
+					<ng-template #emptyTable>
+						<mib-table-row>
+							<p class="text text_m w-100 flex_align-self-center text-center">
+								нет данных
+							</p>
+						</mib-table-row>
+					</ng-template>
 				</ng-template>
 				<mib-table-footer [lined]="!(loading$ | async)">
 					<mib-paginator

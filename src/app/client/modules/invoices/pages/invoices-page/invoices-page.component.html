@@ -69,88 +69,98 @@
 			></mib-skeleton>
 		</ng-container>
 		<ng-template #table>
-			<mib-table-row
-				(dblclick)="openDrawer(invoice.ID)"
-				*ngFor="let invoice of invoices; let last = last"
-				[underlined]="!last"
-			>
-				<mib-table-cell type="main">
-					<ng-container table-cell-title>{{
-						invoice.Date | date : 'dd.MM.YYYY'
-					}}</ng-container>
-				</mib-table-cell>
-				<ng-container *ngIf="isDesktop; else mobileCell">
-					<mib-table-cell>
+			<ng-container *ngIf="invoices.length > 0; else emptyTable">
+				<mib-table-row
+					(dblclick)="openDrawer(invoice.ID)"
+					*ngFor="let invoice of invoices; let last = last"
+					[underlined]="!last"
+				>
+					<mib-table-cell type="main">
 						<ng-container table-cell-title>{{
-							invoice.Amount | rub
+							invoice.Date | date : 'dd.MM.YYYY'
 						}}</ng-container>
 					</mib-table-cell>
-				</ng-container>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{ invoice.ID }}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{ invoice.Comment }}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						invoice.Payer.Title
-					}}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						invoice.Beneficiary.Title
-					}}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						invoice.Payer.Account
-					}}</ng-container>
-				</mib-table-cell>
+					<ng-container *ngIf="isDesktop; else mobileCell">
+						<mib-table-cell>
+							<ng-container table-cell-title>{{
+								invoice.Amount | rub
+							}}</ng-container>
+						</mib-table-cell>
+					</ng-container>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ invoice.ID }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ invoice.Comment }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							invoice.Payer.Title
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							invoice.Beneficiary.Title
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							invoice.Payer.Account
+						}}</ng-container>
+					</mib-table-cell>
 
-				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						invoice.Beneficiary.Account
-					}}</ng-container>
-				</mib-table-cell>
-				<ng-template #mobileCell>
-					<mib-table-head-cell>{{
-						getVisibleCell(invoice)
-					}}</mib-table-head-cell>
-				</ng-template>
-				<ng-container table-row-button *ngIf="isDesktop; else mobile">
-					<mib-button
-						[mibDropdownTrigger]="newDocumentRowMenu"
-						size="s"
-						type="ghost-secondary"
-					>
-						<mib-icon
-							class="stroke"
-							btn-icon
-							name="fi_more-vertical"
-						></mib-icon>
-					</mib-button>
-					<mib-dropdown #newDocumentRowMenu>
-						<mib-dropdown-point
-							(press)="openDrawer(invoice.ID)"
-							text="Открыть"
-						></mib-dropdown-point>
-					</mib-dropdown>
-				</ng-container>
-				<ng-template #mobile>
-					<mib-button
-						(click)="openInvoicePageModal(invoice); $event.stopPropagation()"
-						size="s"
-						table-row-button
-						type="ghost-secondary"
-					>
-						<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
-					</mib-button>
-				</ng-template>
-			</mib-table-row>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							invoice.Beneficiary.Account
+						}}</ng-container>
+					</mib-table-cell>
+					<ng-template #mobileCell>
+						<mib-table-head-cell>{{
+							getVisibleCell(invoice)
+						}}</mib-table-head-cell>
+					</ng-template>
+					<ng-container table-row-button *ngIf="isDesktop; else mobile">
+						<mib-button
+							[mibDropdownTrigger]="newDocumentRowMenu"
+							size="s"
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-icon>
+						</mib-button>
+						<mib-dropdown #newDocumentRowMenu>
+							<mib-dropdown-point
+								(press)="openDrawer(invoice.ID)"
+								text="Открыть"
+							></mib-dropdown-point>
+						</mib-dropdown>
+					</ng-container>
+					<ng-template #mobile>
+						<mib-button
+							(click)="openInvoicePageModal(invoice); $event.stopPropagation()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+						</mib-button>
+					</ng-template>
+				</mib-table-row>
+			</ng-container>
+			<ng-template #emptyTable>
+				<mib-table-row>
+					<p class="text text_m w-100 flex_align-self-center text-center">
+						нет данных
+					</p>
+				</mib-table-row>
+			</ng-template>
 		</ng-template>
 		<mib-table-footer [lined]="!(loading$ | async)">
 			<mib-paginator
+				*ngIf="invoices.length"
 				[totalCount]="invoices.length"
 				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 				[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
