@@ -95,6 +95,7 @@ import {DemandFactoringDrawerModule} from './modules/demand-factoring-drawer/dem
 import {DemandAgentDrawerModule} from './modules/demand-agent-drawer/demand-agent-drawer.module'
 import {RequestDrawerModule} from '../not-verify/modules/verify-request-drawer/request-drawer.module'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
+import {DemandPageHistoryModalModule} from 'src/app/shared/modules/modals/demand-page-history-modal/demand-page-history-modal.module'
 
 @NgModule({
 	imports: [
@@ -154,7 +155,8 @@ import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 		DemandVerificationDrawerModule,
 		DemandFactoringDrawerModule,
 		DemandAgentDrawerModule,
-		RequestDrawerModule
+		RequestDrawerModule,
+		DemandPageHistoryModalModule
 	],
 	declarations: [
 		// Containers

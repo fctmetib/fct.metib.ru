@@ -22,6 +22,8 @@ import {DemandAgentDrawerService} from '../../modules/demand-agent-drawer/demand
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {DemandService} from '../../services/demand.service'
 import {DatePipe} from '@angular/common'
+import {MatDialog} from '@angular/material/dialog'
+import {DemandPageHistoryModalComponent} from 'src/app/shared/modules/modals/demand-page-history-modal/demand-page-history-modal.component'
 
 const ANIMATION_CONFIG = {
 	translateDistance: '-3%',
@@ -95,7 +97,8 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		private demandAgentDrawerService: DemandAgentDrawerService,
 		public breakpointService: BreakpointObserverService,
 		private demandService: DemandService,
-		private datePipe: DatePipe
+		private datePipe: DatePipe,
+		private dialog: MatDialog
 	) {}
 
 	ngOnInit(): void {
@@ -451,8 +454,15 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		console.log('open browser drawer >>>', data)
 	}
 
-	openDemandPageModal(data) {
-		console.log('open demand page modal >>>', data)
+	openDemandPageModal(d) {
+		const dialogConfig = {
+			width: '100%',
+			maxWidth: '600px',
+			// height: '100%',
+			panelClass: 'custom-dialog-request',
+			data: {d}
+		}
+		this.dialog.open(DemandPageHistoryModalComponent, dialogConfig)
 	}
 
 	ngOnDestroy(): void {
