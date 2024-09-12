@@ -2,21 +2,24 @@
 	<div *ngIf="showExtension" class="extension">
 		<div class="container flex flex_justify-between flex_align-center">
 			<div class="flex gap-16">
-				<a class="text text_s c-bti-quaternary" [routerLink]="['/']"
+				<a class="text text_s c-bti-quaternary" (click)="openExternalSiteByURL('https://metallinvestbank.ru/')"
 					>Частным клиентам</a
 				>
-				<a class="text text_s c-bti-quaternary" [routerLink]="['/']"
+				<a class="text text_s c-bti-quaternary" (click)="openExternalSiteByURL('https://metib.online/')"
 					>Корпоративным клиентам</a
 				>
-				<a class="text text_s c-bti-quaternary" [routerLink]="['/']">Лизинг</a>
+				<a class="text text_s c-bti-quaternary" (click)="openExternalSiteByURL('https://metib.online/leasing/')">Лизинг</a>
 				<a
 					routerLinkActive="active"
 					class="text text_s c-bti-quaternary"
 					[routerLink]="['/']"
 					>Факторинг</a
 				>
-				<a class="text text_s c-bti-quaternary" [routerLink]="['/']"
+				<a class="text text_s c-bti-quaternary"  (click)="openExternalSiteByURL('https://metallinvestbank.ru/finance/')"
 					>Финансовым институтам</a
+				>
+				<a class="text text_s c-bti-quaternary"  (click)="openExternalSiteByURL('https://metallinvestbank.ru/islamic-banking/')"
+					>Исламский банкинг</a
 				>
 			</div>
 			<div class="flex gap-24">

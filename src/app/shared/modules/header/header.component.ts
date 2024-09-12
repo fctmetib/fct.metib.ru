@@ -170,4 +170,8 @@ export class HeaderComponent implements OnInit {
 	openExternalSite() {
 		window.open('https://fct.metallinvestbank.ru/login', '_blank');
 	}
+
+	openExternalSiteByURL(url: string) {
+		window.open(url, '_blank');
+	}
 }
