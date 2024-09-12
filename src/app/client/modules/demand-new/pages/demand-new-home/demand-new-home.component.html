@@ -295,9 +295,25 @@
 								</ng-container>
 							</mib-table-cell>
 							<ng-template #mobileCell>
-								<mib-table-head-cell>{{
-									getVisibleCell(history)
-								}}</mib-table-head-cell>
+								<mib-table-head-cell>
+									<ng-container
+										*ngIf="
+											getVisibleCell(history) === 'Редактирование Профиля' ||
+												getVisibleCell(history) === 'Лимит';
+											else withoutBadge
+										"
+									>
+										<mib-badge
+											type="filled-secondary"
+											[extended]="true"
+											size="l"
+											>{{ getVisibleCell(history) }}</mib-badge
+										>
+									</ng-container>
+									<ng-template #withoutBadge>
+										{{ getVisibleCell(history) }}
+									</ng-template>
+								</mib-table-head-cell>
 							</ng-template>
 							<ng-container table-row-button *ngIf="isDesktop; else mobile">
 								<mib-button

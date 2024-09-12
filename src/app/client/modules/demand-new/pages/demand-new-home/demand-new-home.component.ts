@@ -213,9 +213,7 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 			.pipe(
 				tap(data => {
 					this.historys = data
-					console.log('this.historys :>> ', this.historys)
 					this.selectedHistoryLists = this.historys
-					// console.log('this.historys :>> ', this.historys)
 					this.onHistoryListChange(1)
 				}),
 				finalize(() => this.loading$.next(false))
@@ -443,7 +441,7 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 			if (path === 'DateCreated' && value !== undefined) {
 				value = this.datePipe.transform(value, 'dd.MM.yyyy')
 			}
-
+			console.log('result :>> ', result)
 			result[newKey] = value
 		}
 
