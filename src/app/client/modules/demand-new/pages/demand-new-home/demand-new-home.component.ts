@@ -441,7 +441,6 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 			if (path === 'DateCreated' && value !== undefined) {
 				value = this.datePipe.transform(value, 'dd.MM.yyyy')
 			}
-			console.log('result :>> ', result)
 			result[newKey] = value
 		}
 

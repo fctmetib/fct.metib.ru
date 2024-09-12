@@ -296,22 +296,65 @@
 							</mib-table-cell>
 							<ng-template #mobileCell>
 								<mib-table-head-cell>
-									<ng-container
-										*ngIf="
-											getVisibleCell(history) === 'Редактирование Профиля' ||
-												getVisibleCell(history) === 'Лимит';
-											else withoutBadge
-										"
-									>
-										<mib-badge
-											type="filled-secondary"
-											[extended]="true"
-											size="l"
-											>{{ getVisibleCell(history) }}</mib-badge
+									<ng-container *ngIf="getVisibleCell(history); else noData">
+										<ng-container
+											*ngIf="
+												getVisibleCell(history) === 'Отменен' ||
+													getVisibleCell(history) === 'Создан' ||
+													getVisibleCell(history) === 'Завершен' ||
+													getVisibleCell(history) === 'В процессе' ||
+													getVisibleCell(history) === 'Отклонено' ||
+													getVisibleCell(history) === 'Черновик';
+												else normalText
+											"
 										>
+											<mib-badge
+												type="filled-primary"
+												[extended]="true"
+												size="l"
+												>{{ getVisibleCell(history) }}</mib-badge
+											>
+										</ng-container>
+										<ng-template #normalText>
+											<mib-badge
+												type="filled-secondary"
+												[extended]="true"
+												size="l"
+												*ngIf="
+													getVisibleCell(history) ===
+														'Редактирование Профиля' ||
+													getVisibleCell(history) === 'Лимит' ||
+													getVisibleCell(history) === 'Верификация' ||
+													getVisibleCell(history) === 'Поручительство' ||
+													getVisibleCell(history) === 'Факторинг' ||
+													getVisibleCell(history) === 'ЭЦП' ||
+													getVisibleCell(history) === 'Свободная тема' ||
+													getVisibleCell(history) === 'Новый дебитор' ||
+													getVisibleCell(history) === 'Агентский Факторинг'
+												"
+											>
+												{{ getVisibleCell(history) }}
+											</mib-badge>
+											<ng-container
+												*ngIf="
+													getVisibleCell(history) !==
+														'Редактирование Профиля' &&
+													getVisibleCell(history) !== 'Лимит' &&
+													getVisibleCell(history) !== 'Верификация' &&
+													getVisibleCell(history) !== 'Поручительство' &&
+													getVisibleCell(history) !== 'Факторинг' &&
+													getVisibleCell(history) !== 'ЭЦП' &&
+													getVisibleCell(history) !== 'Свободная тема' &&
+													getVisibleCell(history) !== 'Новый дебитор' &&
+													getVisibleCell(history) !== 'Агентский Факторинг'
+												"
+											>
+												{{ getVisibleCell(history) }}
+											</ng-container>
+										</ng-template>
 									</ng-container>
-									<ng-template #withoutBadge>
-										{{ getVisibleCell(history) }}
+									<ng-template #noData>
+										<p>Данные отсутствуют</p>
 									</ng-template>
 								</mib-table-head-cell>
 							</ng-template>
