@@ -168,6 +168,6 @@ export class HeaderComponent implements OnInit {
 	}
 	
 	openExternalSite() {
-		window.open('https://factoring.metallinvestbank.ru/login', '_blank');
+		window.open('https://fct.metallinvestbank.ru/login', '_blank');
 	}
 }

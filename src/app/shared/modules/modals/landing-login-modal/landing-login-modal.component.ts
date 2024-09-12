@@ -101,12 +101,12 @@ export class LandingLoginModalComponent implements OnInit {
 	}
 		
 	openExternalSite() {
-		window.open('https://factoring.metallinvestbank.ru/reset-password', '_blank');
+		window.open('https://fct.metallinvestbank.ru/reset-password', '_blank');
 		this.dialogRef.close();
 	}
 
 	openExternalRegister() {
-		window.open('https://factoring.metallinvestbank.ru/register', '_blank');
+		window.open('https://fct.metallinvestbank.ru/register', '_blank');
 		this.dialogRef.close();
 	}
 }
