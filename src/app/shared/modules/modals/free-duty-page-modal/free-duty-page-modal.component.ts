@@ -14,11 +14,11 @@ export class FreeDutyPageModalComponent {
 		private clipboard: Clipboard,
 		@Inject(MAT_DIALOG_DATA) public data: any
 	) {
-		// console.log('data :>> ', data)
+		console.log('data :>> ', data)
 	}
 
-	public copyData(data) {
-		this.clipboard.copy(data)
+	public copyData(datas) {
+		this.clipboard.copy(datas)
 		this.copied = true
 		setTimeout(() => (this.copied = false), 2000)
 	}

@@ -4,6 +4,149 @@
 			<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
 		</mib-button>
 	</div>
-	<h2>freeduty modal table</h2>
-	<h3>{{ data.duty.Contract.Client }}</h3>
+
+	<mib-mobile-table-popup title="Накладная">
+		<div class="flex">
+			<span class="text text_tv c-bti-quaternary">Основные</span>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex gap-12">
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.duty.ID)"
+				[showCopy]="true"
+				[sectionTitle]="'Идентификатор'"
+				[title]="data.duty.ID"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.duty.Contract.Number)"
+				[showCopy]="true"
+				[sectionTitle]="'Контракт'"
+				[title]="data.duty.Contract.Number"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex gap-12">
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.duty.Contract.ID)"
+				[showCopy]="true"
+				[sectionTitle]="'№ поставки'"
+				[title]="data.duty.Contract.ID"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+			<mib-mobile-table-popup-cell
+				[sectionTitle]="'Дата поставки'"
+				[title]="data.duty.DateContract | date : 'dd.MM.yyyy'"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<!-- <mib-spacing type="xs2"></mib-spacing> -->
+		<!-- <div class="flex">
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.invoice.Comment)"
+				[showCopy]="true"
+				[sectionTitle]="'Назначение'"
+				[title]="data.invoice.Comment"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div> -->
+		<mib-spacing type="xm"></mib-spacing>
+		<div class="flex">
+			<span class="text text_tv c-bti-quaternary">счёт-фактура</span>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex gap-12">
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.duty.Number)"
+				[showCopy]="true"
+				[sectionTitle]="'№ с/ф'"
+				[title]="data.duty.Number"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+			<mib-mobile-table-popup-cell
+				[sectionTitle]="'Дата с/ф'"
+				[title]="data.duty.DateContract | date : 'dd.MM.yyyy'"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<!-- <div class="flex">
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.invoice.Payer.Title)"
+				[showCopy]="true"
+				[sectionTitle]="'Плательщик'"
+				[title]="data.invoice.Payer.Title"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div> -->
+		<!-- <div class="flex">
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.invoice.Payer.Account)"
+				[showCopy]="true"
+				[sectionTitle]="'Номер счета'"
+				[title]="data.invoice.Payer.Account"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div> -->
+		<mib-spacing type="xm"></mib-spacing>
+		<div class="flex">
+			<span class="text text_tv c-bti-quaternary">Дополнительные</span>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex">
+			<mib-mobile-table-popup-cell
+				[sectionTitle]="'Дата задолженности'"
+				[title]="data.duty.DateContract | date : 'dd.MM.yyyy'"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex">
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.duty.Summ)"
+				[showCopy]="true"
+				[sectionTitle]="'Сумма поставки'"
+				[title]="data.duty.Summ | rub"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex">
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.duty.Rest)"
+				[showCopy]="true"
+				[sectionTitle]="'Сумма уступка'"
+				[title]="data.duty.Rest | rub"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex">
+			<mib-mobile-table-popup-cell
+				[sectionTitle]="'Внешняя ссылка'"
+				[title]="data.duty.RefNum"
+				type="link"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<div class="flex">
+			<mib-button class="w-100" size="m" type="filled-secondary">
+				Перейти к заполнению
+			</mib-button>
+		</div>
+	</mib-mobile-table-popup>
+	<span class="success-copied text text_tv" *ngIf="copied">Скопированно!</span>
 </mib-modal>
