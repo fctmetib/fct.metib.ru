@@ -608,8 +608,15 @@ ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
  //--- demand-page-history-modal
  src\app\shared\modules\modals\demand-page-history-modal
  ng g m shared/modules/modals/demand-page-history-modal/demand-page-history-modal --flat --dry-run
- ng g s shared/modules/modals/demand-page-history-modal/demand-page-history-modal --flat --skip-tests --dry-run
+//  ng g s shared/modules/modals/demand-page-history-modal/demand-page-history-modal --flat --skip-tests --dry-run
  ng g c shared/modules/modals/demand-page-history-modal/demand-page-history-modal --flat --skip-tests --dry-run
+ //---
+
+ //--- documents-page-factoring-modal
+ src\app\shared\modules\modals\documents-page-factoring-modal
+ ng g m shared/modules/modals/documents-page-factoring-modal/documents-page-factoring-modal --flat --dry-run
+//  ng g s shared/modules/modals/documents-page-factoring-modal/documents-page-factoring-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/documents-page-factoring-modal/documents-page-factoring-modal --flat --skip-tests --dry-run
  //---
 
  //--- request-info-modal

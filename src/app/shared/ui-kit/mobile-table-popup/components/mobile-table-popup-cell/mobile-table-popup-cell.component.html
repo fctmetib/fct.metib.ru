@@ -56,5 +56,16 @@
 				<mib-spacing type="xs2"></mib-spacing>
 			</div>
 		</ng-container>
+		<ng-container *ngSwitchCase="'person'">
+			<div class="cell-m flex flex_column flex_grow">
+				<span class="text text_s c-bti-tertiary"> {{ sectionTitle }} </span>
+				<div class="flex pt-4 flex_align-center">
+					<div class="flex pt-2">
+						<ng-content select="[avatar]"></ng-content>
+					</div>
+				</div>
+				<mib-spacing type="xs2"></mib-spacing>
+			</div>
+		</ng-container>
 	</ng-container>
 </div>

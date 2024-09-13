@@ -44,6 +44,13 @@
 	top: 48px;
 }
 
+.documents-dialog-factoring {
+	@include absolute();
+	@include border();
+	overflow: hidden;
+	top: 318px;
+}
+
 .custom-dialog-delays {
 	@include absolute();
 	@include border();

@@ -142,6 +142,10 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
 			.subscribe()
 	}
 
+	openContractPageModal() {
+		console.log('contracts page modal>>>>')
+	}
+
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe()
 	}
