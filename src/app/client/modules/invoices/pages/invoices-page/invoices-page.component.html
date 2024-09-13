@@ -160,7 +160,7 @@
 		</ng-template>
 		<mib-table-footer [lined]="!(loading$ | async)">
 			<mib-paginator
-				*ngIf="invoices.length"
+				*ngIf="invoices.length || !(loading$ | async)"
 				[totalCount]="invoices.length"
 				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 				[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
