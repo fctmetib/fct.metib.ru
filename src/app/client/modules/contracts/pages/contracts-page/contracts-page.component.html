@@ -19,12 +19,45 @@
 					<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
 						>Договор</mib-table-head-cell
 					>
-					<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					<ng-container *ngIf="isDesktop; else mobile">
+						<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					</ng-container>
 					<mib-table-head-cell>Вступил в силу</mib-table-head-cell>
 					<mib-table-head-cell>Действует до</mib-table-head-cell>
 					<mib-table-head-cell>Отсрочка</mib-table-head-cell>
 					<mib-table-head-cell>Лимит</mib-table-head-cell>
 					<mib-table-head-cell>Просрочка</mib-table-head-cell>
+					<ng-template #mobile>
+						<mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
+					</ng-template>
+					<ng-container table-head-button *ngIf="!isDesktop">
+						<mib-button
+							[disabled]="loading$ | async"
+							(press)="prev()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_chevron-left"
+							></mib-icon>
+						</mib-button>
+						<mib-button
+							[disabled]="loading$ | async"
+							(press)="next()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_chevron-right"
+							></mib-icon>
+						</mib-button>
+					</ng-container>
 				</mib-table-head>
 				<ng-container *ngIf="loading$ | async; else table">
 					<mib-skeleton
@@ -52,11 +85,13 @@
 									{{ contract?.Tariff.Title }}</ng-container
 								>
 							</mib-table-cell>
-							<mib-table-cell>
-								<ng-container table-cell-title>{{
-									contract?.Debtor?.Title
-								}}</ng-container>
-							</mib-table-cell>
+							<ng-container *ngIf="isDesktop; else mobileCell">
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										contract?.Debtor?.Title
+									}}</ng-container>
+								</mib-table-cell>
+							</ng-container>
 							<mib-table-cell>
 								<ng-container table-cell-title>{{
 									contract?.DateFrom | date : 'dd.MM.YYYY'
@@ -82,6 +117,11 @@
 									contract?.Statistics.DelayDuty | rub
 								}}</ng-container>
 							</mib-table-cell>
+							<ng-template #mobileCell>
+								<mib-table-head-cell>{{
+									getVisibleCell(contract)
+								}}</mib-table-head-cell>
+							</ng-template>
 							<ng-container table-row-button *ngIf="isDesktop; else mobile">
 								<mib-button
 									[mibDropdownTrigger]="newDocumentRowMenu"
@@ -104,7 +144,9 @@
 							</ng-container>
 							<ng-template #mobile>
 								<mib-button
-									(click)="openContractPageModal(); $event.stopPropagation()"
+									(click)="
+										openContractPageModal(contract); $event.stopPropagation()
+									"
 									size="s"
 									table-row-button
 									type="ghost-secondary"
@@ -140,12 +182,45 @@
 					<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
 						>Договор</mib-table-head-cell
 					>
-					<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					<ng-container *ngIf="isDesktop; else mobile">
+						<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					</ng-container>
 					<mib-table-head-cell>Вступил в силу</mib-table-head-cell>
 					<mib-table-head-cell>Действует до</mib-table-head-cell>
 					<mib-table-head-cell>Отсрочка</mib-table-head-cell>
 					<mib-table-head-cell>Лимит</mib-table-head-cell>
 					<mib-table-head-cell>Просрочка</mib-table-head-cell>
+					<ng-template #mobile>
+						<mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
+					</ng-template>
+					<ng-container table-head-button *ngIf="!isDesktop">
+						<mib-button
+							[disabled]="loading$ | async"
+							(press)="prev()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_chevron-left"
+							></mib-icon>
+						</mib-button>
+						<mib-button
+							[disabled]="loading$ | async"
+							(press)="next()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_chevron-right"
+							></mib-icon>
+						</mib-button>
+					</ng-container>
 				</mib-table-head>
 				<ng-container *ngIf="loading$ | async; else table2">
 					<mib-skeleton
@@ -176,11 +251,13 @@
 									{{ contract?.Tariff.Title }}</ng-container
 								>
 							</mib-table-cell>
-							<mib-table-cell>
-								<ng-container table-cell-title>{{
-									contract?.Debtor?.Title
-								}}</ng-container>
-							</mib-table-cell>
+							<ng-container *ngIf="isDesktop; else mobileCell">
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										contract?.Debtor?.Title
+									}}</ng-container>
+								</mib-table-cell>
+							</ng-container>
 							<mib-table-cell>
 								<ng-container table-cell-title>{{
 									contract?.DateFrom | date : 'dd.MM.YYYY'
@@ -206,6 +283,11 @@
 									contract?.Statistics.DelayDuty | rub
 								}}</ng-container>
 							</mib-table-cell>
+							<ng-template #mobileCell>
+								<mib-table-head-cell>{{
+									getVisibleCell(contract)
+								}}</mib-table-head-cell>
+							</ng-template>
 							<ng-container table-row-button *ngIf="isDesktop; else mobile">
 								<mib-button
 									[mibDropdownTrigger]="newDocumentRowMenu"
@@ -228,7 +310,9 @@
 							</ng-container>
 							<ng-template #mobile>
 								<mib-button
-									(click)="openContractPageModal(); $event.stopPropagation()"
+									(click)="
+										openContractPageModal(contract); $event.stopPropagation()
+									"
 									size="s"
 									table-row-button
 									type="ghost-secondary"
@@ -264,13 +348,46 @@
 					<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
 						>Договор</mib-table-head-cell
 					>
-					<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					<ng-container *ngIf="isDesktop; else mobile">
+						<mib-table-head-cell>Дебитор</mib-table-head-cell>
+					</ng-container>
 					<mib-table-head-cell>Вступил в силу</mib-table-head-cell>
 					<mib-table-head-cell>Действует до</mib-table-head-cell>
 					<mib-table-head-cell>Отсрочка</mib-table-head-cell>
 					<mib-table-head-cell>Статус</mib-table-head-cell>
 					<mib-table-head-cell>Лимит</mib-table-head-cell>
 					<mib-table-head-cell>Просрочка</mib-table-head-cell>
+					<ng-template #mobile>
+						<mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
+					</ng-template>
+					<ng-container table-head-button *ngIf="!isDesktop">
+						<mib-button
+							[disabled]="loading$ | async"
+							(press)="prev()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_chevron-left"
+							></mib-icon>
+						</mib-button>
+						<mib-button
+							[disabled]="loading$ | async"
+							(press)="next()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_chevron-right"
+							></mib-icon>
+						</mib-button>
+					</ng-container>
 				</mib-table-head>
 				<ng-container *ngIf="loading$ | async; else table3">
 					<mib-skeleton
@@ -298,11 +415,13 @@
 									{{ contract?.Tariff.Title }}</ng-container
 								>
 							</mib-table-cell>
-							<mib-table-cell>
-								<ng-container table-cell-title>{{
-									contract?.Debtor?.Title
-								}}</ng-container>
-							</mib-table-cell>
+							<ng-container *ngIf="isDesktop; else mobileCell">
+								<mib-table-cell>
+									<ng-container table-cell-title>{{
+										contract?.Debtor?.Title
+									}}</ng-container>
+								</mib-table-cell>
+							</ng-container>
 							<mib-table-cell>
 								<ng-container table-cell-title>{{
 									contract?.DateFrom | date : 'dd.MM.YYYY'
@@ -344,6 +463,11 @@
 									contract?.Statistics.DelayDuty | rub
 								}}</ng-container>
 							</mib-table-cell>
+							<ng-template #mobileCell>
+								<mib-table-head-cell>{{
+									getVisibleCell(contract)
+								}}</mib-table-head-cell>
+							</ng-template>
 							<ng-container table-row-button *ngIf="isDesktop; else mobile">
 								<mib-button
 									[mibDropdownTrigger]="newDocumentRowMenu"
@@ -366,7 +490,9 @@
 							</ng-container>
 							<ng-template #mobile>
 								<mib-button
-									(click)="openContractPageModal(); $event.stopPropagation()"
+									(click)="
+										openContractPageModal(contract); $event.stopPropagation()
+									"
 									size="s"
 									table-row-button
 									type="ghost-secondary"

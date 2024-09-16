@@ -11,6 +11,10 @@ import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
 import {ContractsDrawerService} from '../../modules/new-contracts-page-drawer/contracts-drawer.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import {DatePipe} from '@angular/common'
+import {MatDialog} from '@angular/material/dialog'
+import {RubPipe} from 'src/app/shared/pipes/rub/rub.pipe'
+import {ContractsFactoringModalComponent} from 'src/app/shared/modules/modals/contracts-factoring-modal/contracts-factoring-modal.component'
 
 @Component({
 	selector: 'mib-contracts-page',
@@ -54,12 +58,33 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
 	public isDesktop: boolean = false
 
 	private subscriptions = new Subscription()
+	public currentIndex: number = 0
+	headers = [
+		'Дебитор',
+		'Вступил в силу',
+		'Действует до',
+		'Отсрочка',
+		'Лимит',
+		'Просрочка'
+	]
+
+	public dataMap = {
+		0: {Debtor: 'Title'},
+		1: 'DateFrom',
+		2: 'DateTo',
+		3: {Delay: 'Count'},
+		4: {Statistics: 'FreeLimit'},
+		5: {Statistics: 'DelayDuty'}
+	}
 
 	constructor(
 		public toolsService: ToolsService,
 		private deliveryService: DeliveryService,
 		private contractsDrawerService: ContractsDrawerService,
-		public breakpointService: BreakpointObserverService
+		public breakpointService: BreakpointObserverService,
+		private datePipe: DatePipe,
+		private rubPipe: RubPipe,
+		private dialog: MatDialog
 	) {}
 
 	ngOnInit(): void {
@@ -142,8 +167,62 @@ export class ContractsPageComponent implements OnInit, OnDestroy {
 			.subscribe()
 	}
 
-	openContractPageModal() {
-		console.log('contracts page modal>>>>')
+	openContractPageModal(c) {
+		const dialogConfig = {
+			width: '100%',
+			maxWidth: '600px',
+			// height: '100%',
+			panelClass: 'contracts-dialog-factoring',
+			data: {c}
+		}
+
+		this.dialog.open(ContractsFactoringModalComponent, dialogConfig)
+
+		// ContractsFactoringModalComponent
+	}
+
+	prev() {
+		if (this.currentIndex > 0) {
+			this.currentIndex--
+		}
+	}
+
+	next() {
+		if (this.currentIndex < this.headers.length - 1) {
+			this.currentIndex++
+		}
+	}
+
+	getVisibleHeader() {
+		return this.headers[this.currentIndex]
+	}
+
+	getVisibleCell(row) {
+		const result = {}
+		for (const [newKey, path] of Object.entries(this.dataMap)) {
+			let value
+
+			if (typeof path === 'string') {
+				// Если путь - строка, извлекаем значение напрямую
+				value = row[path]
+			} else if (typeof path === 'object') {
+				// Если путь - объект, извлекаем вложенное значение
+				const [parentKey, childKey] = Object.entries(path)[0]
+				value = row[parentKey] ? row[parentKey][childKey] : undefined
+				if (childKey === 'Count') {
+					value = `${row[parentKey][childKey]} к.д.`
+				} else if (childKey === 'FreeLimit' || childKey === 'DelayDuty') {
+					value = this.rubPipe.transform(row[parentKey][childKey])
+				}
+			}
+			if ((path === 'DateFrom' || path === 'DateTo') && value !== undefined) {
+				value = this.datePipe.transform(value, 'dd.MM.yyyy')
+			}
+
+			result[newKey] = value
+		}
+		// console.log('result :>> ', result)
+		return result[this.currentIndex]
 	}
 
 	ngOnDestroy(): void {

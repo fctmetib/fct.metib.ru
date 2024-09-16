@@ -42,6 +42,8 @@ import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {NewContractsPageDrawerModule} from './modules/new-contracts-page-drawer/new-contracts-page-drawer.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
+import {DatesService} from 'src/app/shared/services/dates.service'
+import {ContractsFactoringModalModule} from 'src/app/shared/modules/modals/contracts-factoring-modal/contracts-factoring-modal.module'
 
 @NgModule({
 	declarations: [ContractsPageComponent, ContractsPageComponent],
@@ -83,8 +85,9 @@ import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
 		ButtonModule,
 		NewContractsPageDrawerModule,
 		RubModule,
-		BadgeModule
+		BadgeModule,
+		ContractsFactoringModalModule
 	],
-	providers: [DeliveryService, RequestsService, AccountsService]
+	providers: [DeliveryService, RequestsService, AccountsService, DatesService]
 })
 export class ContractsModule {}

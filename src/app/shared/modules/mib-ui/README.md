@@ -612,6 +612,13 @@ ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
  ng g c shared/modules/modals/demand-page-history-modal/demand-page-history-modal --flat --skip-tests --dry-run
  //---
 
+ //--- contracts-factoring-modal
+ src\app\shared\modules\modals\contracts-factoring-modal
+ ng g m shared/modules/modals/contracts-factoring-modal/contracts-factoring-modal --flat --dry-run
+//  ng g s shared/modules/modals/contracts-factoring-modal/contracts-factoring-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/contracts-factoring-modal/contracts-factoring-modal --flat --skip-tests --dry-run
+ //---
+
  //--- documents-page-factoring-modal
  src\app\shared\modules\modals\documents-page-factoring-modal
  ng g m shared/modules/modals/documents-page-factoring-modal/documents-page-factoring-modal --flat --dry-run

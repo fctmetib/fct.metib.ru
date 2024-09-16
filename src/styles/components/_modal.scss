@@ -51,6 +51,13 @@
 	top: 318px;
 }
 
+.contracts-dialog-factoring {
+	@include absolute();
+	@include border();
+	overflow: hidden;
+	top: 292px;
+}
+
 .custom-dialog-delays {
 	@include absolute();
 	@include border();
