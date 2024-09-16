@@ -7,7 +7,9 @@
 	<div class="link_icon-wrapper link_left-icon-wrapper" #leftIcon>
 		<ng-content select="[mibLeftIcon]"></ng-content>
 	</div>
-	<span [ngClass]="{'show-underline': showUnderline}" class="link-text"
+	<span
+		[ngClass]="{'show-underline': showUnderline}"
+		class="text-clamp link-text"
 		><ng-content></ng-content
 	></span>
 	<div class="link_icon-wrapper link_right-icon-wrapper" #rightIcon>

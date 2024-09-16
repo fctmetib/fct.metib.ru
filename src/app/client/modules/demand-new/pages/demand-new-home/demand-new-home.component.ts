@@ -458,7 +458,6 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		const dialogConfig = {
 			width: '100%',
 			maxWidth: '600px',
-			// height: '100%',
 			panelClass: 'custom-dialog-request',
 			data: {d}
 		}

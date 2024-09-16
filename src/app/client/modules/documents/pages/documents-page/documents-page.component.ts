@@ -180,7 +180,6 @@ export class DocumentsPageComponent implements OnInit, OnDestroy {
 		const dialogConfig = {
 			width: '100%',
 			maxWidth: '600px',
-			// height: '100%',
 			panelClass: 'documents-dialog-factoring',
 			data: {doc}
 		}
