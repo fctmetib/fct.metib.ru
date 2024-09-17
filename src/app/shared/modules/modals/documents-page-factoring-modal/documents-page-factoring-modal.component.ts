@@ -17,6 +17,10 @@ export class DocumentsPageFactoringModalComponent {
 		console.log('data :>> ', data)
 	}
 
+	downloadCurrentFile() {
+		console.log('DOWNLOAD DOC>>>')
+	}
+
 	public copyData(data) {
 		this.clipboard.copy(data)
 		this.copied = true

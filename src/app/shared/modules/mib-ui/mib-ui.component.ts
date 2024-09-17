@@ -109,6 +109,13 @@ export class MibUiComponent implements OnInit {
 		// ---------------------
 	}
 
+	check() {
+		console.log('halo>>> check')
+	}
+	check2() {
+		console.log('halo check2>>>')
+	}
+
 	showSuccessToaster() {
 		console.log('halo toaster!!')
 		this.toaster.show(

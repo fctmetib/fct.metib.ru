@@ -65,7 +65,10 @@
 			<span class="text text_tv c-bti-quaternary">Файл документа</span>
 		</div>
 		<mib-spacing type="xs2"></mib-spacing>
-		<mib-file-cell></mib-file-cell>
+		<mib-dl-file-cell
+			(onDload)="downloadCurrentFile()"
+			[fileName]="data.doc.Title"
+		></mib-dl-file-cell>
 		<mib-spacing type="s"></mib-spacing>
 		<div class="flex flex_column gap-12">
 			<mib-button class="w-100" size="m" type="filled-secondary">

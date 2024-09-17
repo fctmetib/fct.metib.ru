@@ -1,0 +1,34 @@
+<div class="dl-file flex" [ngClass]="classes">
+	<div class="flex flex_align-center gap-8 flex_grow">
+		<div class="flex upload-icon flex_align-center">
+			<mib-icon class="stroke" name="fi_file"></mib-icon>
+		</div>
+		<div class="flex clamp-wrap gap-8">
+			<span class="clamp-text text c-bti-primary">
+				{{ fileName || 'Название документа' }}
+			</span>
+			<span *ngIf="fileSize" class="cursor-pointer text c-bti-tertiary">
+				мб</span
+			>
+		</div>
+	</div>
+	<div class="flex btn-block">
+		<mib-button
+			(press)="onDload.emit()"
+			title="Загрузить"
+			size="s"
+			type="ghost-secondary"
+		>
+			<mib-icon class="stroke" btn-icon name="fi_download"></mib-icon>
+		</mib-button>
+		<mib-button
+			*ngIf="showRemove"
+			(press)="onRemove.emit()"
+			title="Удалить"
+			size="s"
+			type="ghost-secondary"
+		>
+			<mib-icon class="stroke" btn-icon name="fi_x"></mib-icon>
+		</mib-button>
+	</div>
+</div>
