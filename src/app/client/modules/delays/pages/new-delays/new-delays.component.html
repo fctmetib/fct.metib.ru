@@ -83,7 +83,7 @@
 				[underlined]="!last"
 			>
 				<mib-table-cell>
-					<ng-container table-cell-title>Магнит</ng-container>
+					<ng-container table-cell-title>{{ item.Customer }}</ng-container>
 				</mib-table-cell>
 				<ng-container *ngIf="isDesktop; else mobileCell">
 					<mib-table-cell>
@@ -92,13 +92,11 @@
 				</ng-container>
 				<mib-table-cell>
 					<ng-container table-cell-title>{{
-						item.Date | date : 'dd.MM.YYYY'
+						todayIs | date : 'dd.MM.YYYY'
 					}}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						todayIs | date : 'dd.MM.YYYY'
-					}}</ng-container>
+					<ng-container table-cell-title>{{ item.Number }}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
 					<ng-container table-cell-title>{{ datas * 2 | rub }}</ng-container>
@@ -123,7 +121,7 @@
 				</ng-container>
 				<ng-template #mobile>
 					<mib-button
-						(click)="openInvoicePageModal(datas); $event.stopPropagation()"
+						(click)="openInvoicePageModal(mData); $event.stopPropagation()"
 						size="s"
 						table-row-button
 						type="ghost-secondary"
