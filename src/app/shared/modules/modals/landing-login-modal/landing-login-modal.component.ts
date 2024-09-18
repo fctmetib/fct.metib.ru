@@ -99,4 +99,14 @@ export class LandingLoginModalComponent implements OnInit {
 			)
 			.subscribe()
 	}
+		
+	openExternalSite() {
+		window.open('https://fct.metallinvestbank.ru/reset-password', '_blank');
+		this.dialogRef.close();
+	}
+
+	openExternalRegister() {
+		window.open('https://fct.metallinvestbank.ru/register', '_blank');
+		this.dialogRef.close();
+	}
 }

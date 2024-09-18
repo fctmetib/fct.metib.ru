@@ -18,6 +18,7 @@ import {ToolsService} from '../shared/services/tools.service'
 	styleUrls: ['./agent-client.component.scss']
 })
 export class AgentClientComponent implements AfterViewInit, OnDestroy {
+
 	@ViewChild('scrollable') scrollable!: ElementRef<HTMLDivElement>
 
 	private resizeObserver!: ResizeObserver
@@ -25,12 +26,12 @@ export class AgentClientComponent implements AfterViewInit, OnDestroy {
 	public withoutScroll: boolean = false
 
 	constructor(
-		public scrollService: ScrollService,
-		private cdr: ChangeDetectorRef,
-		private toolsService: ToolsService,
-		@Inject(PLATFORM_ID) private platformId: Object
+	  public scrollService: ScrollService,
+	  private cdr: ChangeDetectorRef,
+	  private toolsService: ToolsService,
+	  @Inject(PLATFORM_ID) private platformId: Object 
 	) {}
-
+  
 	ngAfterViewInit() {
 		if (
 			isPlatformBrowser(this.platformId) &&
@@ -48,15 +49,16 @@ export class AgentClientComponent implements AfterViewInit, OnDestroy {
 			)
 		}
 	}
-
+  
 	private checkScroll(element: HTMLDivElement) {
-		this.withoutScroll = element.scrollHeight <= element.clientHeight
-		this.cdr.detectChanges()
+	  this.withoutScroll = element.scrollHeight <= element.clientHeight;
+	  this.cdr.detectChanges();
 	}
-
+  
 	ngOnDestroy() {
-		if (this.resizeObserver && this.scrollable) {
-			this.resizeObserver.unobserve(this.scrollable.nativeElement)
-		}
+	  if (this.resizeObserver && this.scrollable) {
+		this.resizeObserver.unobserve(this.scrollable.nativeElement);
+	  }
 	}
-}
+  }
+  

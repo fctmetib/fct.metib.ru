@@ -39,16 +39,14 @@
 		</mib-input>
 		<mib-spacing type="xs"></mib-spacing>
 		<mib-link
-			(click)="dialogRef.close()"
-			[routerLink]="['/auth/reset-password']"
+			(click)="openExternalSite()"
 		>
 			Забыли пароль?
 		</mib-link>
 		<mib-spacing type="m"></mib-spacing>
 		<div class="flex gap-16">
 			<mib-button
-				(click)="dialogRef.close()"
-				[routerLink]="['/auth/register']"
+				(click)="openExternalRegister()"
 				size="l"
 				type="filled-secondary"
 				class="flex_grow"

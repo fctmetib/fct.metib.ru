@@ -22,7 +22,7 @@ export class AdminComponent implements AfterViewInit, OnDestroy {
 
 	private resizeObserver!: ResizeObserver
 
-	public withoutScroll: boolean = false
+	public withoutScroll: boolean = false;
 
 	constructor(
 		public scrollService: ScrollService,
@@ -34,19 +34,15 @@ export class AdminComponent implements AfterViewInit, OnDestroy {
 	ngAfterViewInit() {
 		if (
 			isPlatformBrowser(this.platformId) &&
-			!this.toolsService.mobileAndTabletCheck(
-				isPlatformBrowser(this.platformId)
-			)
-		) {
+			!this.toolsService.mobileAndTabletCheck(isPlatformBrowser(this.platformId))
+		  ) {
 			this.resizeObserver = new ResizeObserver(entries => {
-				this.checkScroll(this.scrollable.nativeElement)
-			})
-			this.resizeObserver.observe(this.scrollable.nativeElement)
-
-			this.withoutScroll = !this.toolsService.mobileAndTabletCheck(
-				isPlatformBrowser(this.platformId)
-			)
-		}
+			  this.checkScroll(this.scrollable.nativeElement);
+			});
+			this.resizeObserver.observe(this.scrollable.nativeElement);
+	  
+			this.withoutScroll = !this.toolsService.mobileAndTabletCheck(isPlatformBrowser(this.platformId));
+		  }
 	}
 
 	private checkScroll(element: HTMLDivElement) {
