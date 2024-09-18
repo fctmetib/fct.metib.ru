@@ -1,5 +1,5 @@
 export interface RequestLandingInterface {
-	Form: string
+	From: string
 	Organization: string
 	Name: string
 	Phone: string
