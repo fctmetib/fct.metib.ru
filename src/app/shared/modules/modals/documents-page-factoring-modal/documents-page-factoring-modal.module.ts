@@ -8,6 +8,7 @@ import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {MobileTablePopupModule} from 'src/app/shared/ui-kit/mobile-table-popup/mobile-table-popup.module'
 import {AvatarModule} from 'src/app/shared/ui-kit/avatar/avatar.module'
 import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
+import {DlFileCellModule} from 'src/app/shared/ui-kit/dl-file-cell/dl-file-cell.module'
 
 @NgModule({
 	declarations: [DocumentsPageFactoringModalComponent],
@@ -19,7 +20,8 @@ import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 		ButtonModule,
 		MobileTablePopupModule,
 		AvatarModule,
-		FileCellModule
+		FileCellModule,
+		DlFileCellModule
 	]
 })
 export class DocumentsPageFactoringModalModule {}

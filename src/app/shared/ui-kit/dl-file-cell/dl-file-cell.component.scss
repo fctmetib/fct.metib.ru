@@ -1,0 +1,67 @@
+@import 'src/styles/helpers/_icon_tools.scss';
+@import 'src/styles/_typography.vars.scss';
+
+@mixin upload-icon($width, $height) {
+	width: $width;
+	height: $height;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 8px;
+	background: var(--wgr-secondary);
+	overflow: hidden;
+}
+
+@mixin file-cell-m {
+	& .upload-icon {
+		@include upload-icon(32px, 32px);
+	}
+	& span {
+		@include text-m;
+	}
+}
+
+@mixin file-cell-s {
+	& .upload-icon {
+		@include upload-icon(24px, 24px);
+	}
+	& .buttons-block {
+		mib-button {
+			button {
+				padding: 0 4px;
+			}
+		}
+	}
+	& span {
+		@include text-s;
+	}
+}
+
+.dl-file {
+	border-bottom: 1px solid var(--wgr-tertiary);
+	padding-bottom: 8px;
+
+	& .clamp-wrap {
+		max-width: 80%;
+		.clamp-text {
+			@include text-overflow(1);
+		}
+	}
+
+	mib-icon {
+		@include icon-size(16px);
+	}
+
+	& mib-icon {
+		@include icon-color(var(--bti-tertiary));
+	}
+
+	&_size {
+		&-m {
+			@include file-cell-m;
+		}
+		&-s {
+			@include file-cell-s;
+		}
+	}
+}

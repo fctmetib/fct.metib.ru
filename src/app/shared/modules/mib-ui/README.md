@@ -534,6 +534,13 @@ ng g m shared/ui-kit/file-cell/file-cell --flat  --dry-run
 ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
  //---
 
+ //--- dl-file-cell
+src\app\shared\ui-kit\dl-file-cell
+ng g i shared/ui-kit/dl-file-cell/interfaces/dl-file-cell.interface  --dry-run
+ng g m shared/ui-kit/dl-file-cell/dl-file-cell --flat  --dry-run
+ng g c shared/ui-kit/dl-file-cell/dl-file-cell --flat  --skip-tests --dry-run
+ //---
+
  //--- modals-modules
  src\app\shared\modules\modals\new-shipment-modal
  ng g m shared/modules/modals/new-shipment-modal/new-shipment-modal --flat --dry-run
