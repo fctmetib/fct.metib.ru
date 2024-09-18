@@ -25,6 +25,7 @@ export class LinkComponent implements AfterContentInit {
 	@Input() type: LinkType = 'ghost-primary'
 	@Input() disabled: boolean = false
 	@Input() showUnderline: boolean = false
+	@Input() special: boolean = false
 	@Output() press = new EventEmitter()
 
 	ngAfterContentInit() {}
@@ -32,6 +33,7 @@ export class LinkComponent implements AfterContentInit {
 	get classes() {
 		return {
 			[`link_${this.size}`]: true,
+			[`link_special`]: this.special,
 			[`link_type-${this.type}`]: true,
 			'link_left-iconly': this.leftIcons.length,
 			'link_right-iconly': this.rightIcons.length
