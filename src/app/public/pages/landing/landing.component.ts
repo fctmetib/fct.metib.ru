@@ -353,6 +353,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			],
 			Organization: ['', [Validators.required]],
 			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
+			Email: ['', [Validators.required, Validators.email]],
 			Comment: [''],
 			UseFactoring: [false],
 			Agree: [false, Validators.requiredTrue]
@@ -386,6 +387,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			From: this.form.value.FormName,
 			Name: this.form.value.Name,
 			Phone: formattedPhoneNumber,
+			Email: this.form.value.Email,
 			INN: this.form.value.INN,
 			Organization: this.form.value.Organization,
 			Comment: `${this.form.value.Comment}\nИспользует факторинг: ${this.form.value.UseFactoring ? "Да" : "Нет"}`,
