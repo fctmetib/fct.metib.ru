@@ -1,7 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core'
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core'
 import {FormControl} from '@angular/forms'
 import {Properties} from 'csstype'
-import {BehaviorSubject, filter, finalize, zip, switchMap, tap} from 'rxjs'
+import {
+	BehaviorSubject,
+	filter,
+	finalize,
+	zip,
+	switchMap,
+	tap,
+	Subscription
+} from 'rxjs'
 import {DatesService} from 'src/app/shared/services/dates.service'
 import {ToolsService} from 'src/app/shared/services/tools.service'
 import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.interface'
@@ -12,13 +20,17 @@ import {DocumentsService} from '../../services/documents.service'
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
 import {DocumentRes} from '../../../requests/interfaces/request.interface'
 import {SignService} from 'src/app/shared/services/share/sign.service'
+import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import {DatePipe} from '@angular/common'
+import {MatDialog} from '@angular/material/dialog'
+import {DocumentsPageFactoringModalComponent} from 'src/app/shared/modules/modals/documents-page-factoring-modal/documents-page-factoring-modal.component'
 
 @Component({
 	selector: 'mib-documents-page',
 	templateUrl: './documents-page.component.html',
 	styleUrls: ['./documents-page.component.scss']
 })
-export class DocumentsPageComponent implements OnInit {
+export class DocumentsPageComponent implements OnInit, OnDestroy {
 	public loading$ = new BehaviorSubject<boolean>(false)
 	public isSigning$ = new BehaviorSubject<boolean>(false)
 
@@ -52,13 +64,36 @@ export class DocumentsPageComponent implements OnInit {
 	requests: any
 	requestsVisible: any
 
+	public isDesktop: boolean = false
+
+	private subscriptions = new Subscription()
+	public currentIndex: number = 0
+	headers = [
+		'Имя файла',
+		'Описание',
+		'Тип документа',
+		'Дата создания',
+		'Прикрепил'
+	]
+
+	public dataMap = {
+		0: 'Title',
+		1: 'DocumentTypeTitle',
+		2: 'Description',
+		3: 'CreatedTime',
+		4: ['CreatorLastName', 'CreatorFirstName']
+	}
+
 	constructor(
 		public toolsService: ToolsService,
 		public datesService: DatesService,
 		public documentDrawerService: DocumentDrawerService,
 		public documentViewDrawerService: DocumentViewDrawerService,
 		private documentsService: DocumentsService,
-		private signService: SignService
+		private signService: SignService,
+		public breakpointService: BreakpointObserverService,
+		private datePipe: DatePipe,
+		private dialog: MatDialog
 	) {}
 
 	ngOnInit() {
@@ -68,6 +103,11 @@ export class DocumentsPageComponent implements OnInit {
 				.toISOString(),
 			dateTo: new Date().toISOString()
 		})
+
+		this.subscriptions = this.breakpointService
+			.isDesktop()
+			.subscribe(b => (this.isDesktop = b))
+
 		this.dateFrom.setValue(dateFrom)
 		this.dateTo.setValue(dateTo)
 		this.getClientDocumentsList().subscribe()
@@ -136,11 +176,64 @@ export class DocumentsPageComponent implements OnInit {
 		this.requestsSelection = event
 	}
 
+	openDocumentsPageModal(doc) {
+		const dialogConfig = {
+			width: '100%',
+			maxWidth: '600px',
+			panelClass: 'documents-dialog-factoring',
+			data: {doc}
+		}
+
+		this.dialog.open(DocumentsPageFactoringModalComponent, dialogConfig)
+	}
+
 	onAction() {
 		this.isSigning$.next(true)
 		const requests$ = this.table.selectedRows.map(row =>
 			this.documentsService.sign(row.rowId)
 		)
 		this.documentsService.signModal(zip(requests$), this.isSigning$).subscribe()
+	}
+
+	prev() {
+		if (this.currentIndex > 0) {
+			this.currentIndex--
+		}
+	}
+
+	next() {
+		if (this.currentIndex < this.headers.length - 1) {
+			this.currentIndex++
+		}
+	}
+
+	getVisibleHeader() {
+		return this.headers[this.currentIndex]
+	}
+
+	getVisibleCell(doc: any) {
+		const result = {}
+		for (const [newKey, path] of Object.entries(this.dataMap)) {
+			let value
+			if (typeof path === 'string') {
+				// Если путь - строка, извлекаем значение напрямую
+				value = doc[path]
+			} else if (typeof path === 'object') {
+				// Если путь - объект, извлекаем вложенное значение
+				if (path[0] === 'CreatorLastName' && path[1] === 'CreatorFirstName') {
+					value = `${doc[path[0]]} ${doc[path[1]]}`
+				}
+			}
+			// Проверка и добавление префиксов
+			if (path === 'CreatedTime' && value !== undefined) {
+				value = this.datePipe.transform(value, 'dd.MM.yyyy')
+			}
+			result[newKey] = value
+		}
+		return result[this.currentIndex]
+	}
+
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe()
 	}
 }

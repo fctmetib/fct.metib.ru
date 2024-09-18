@@ -45,6 +45,7 @@ import {DocumentDrawerModule} from './modules/document-drawer/document-drawer.mo
 import {DocumentViewDrawerModule} from './modules/document-view-drawer/document-view-drawer.module'
 import {DocumentsPageComponent} from './pages/documents-page/documents-page.component'
 import {ToasterModule} from 'src/app/shared/ui-kit/toaster/toaster.module'
+import {DocumentsPageFactoringModalModule} from 'src/app/shared/modules/modals/documents-page-factoring-modal/documents-page-factoring-modal.module'
 
 @NgModule({
 	declarations: [DocumentsPageComponent],
@@ -91,7 +92,8 @@ import {ToasterModule} from 'src/app/shared/ui-kit/toaster/toaster.module'
 		DropdownModule,
 		DocumentDrawerModule,
 		DocumentViewDrawerModule,
-		ToasterModule
+		ToasterModule,
+		DocumentsPageFactoringModalModule
 	],
 	providers: [DocumentsService, DatesService, DatePipe]
 })

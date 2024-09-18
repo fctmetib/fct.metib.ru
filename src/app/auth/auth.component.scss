@@ -1,4 +1,10 @@
-.form {
-  max-width: 432px;
-  margin: 0 auto;
+.container {
+	.form {
+		max-width: 432px;
+		margin: 0 auto;
+	}
+
+	@media (max-width: 576px) {
+		padding: 16px;
+	}
 }

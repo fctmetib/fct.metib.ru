@@ -20,6 +20,9 @@
 
 @mixin absolute {
 	position: absolute !important;
+	height: 100%;
+	overflow-y: auto;
+	border-top-right-radius: 16px;
 }
 
 @mixin border {
@@ -29,39 +32,53 @@
 	}
 }
 
-.custom-dialog-mib-ui {
-	@include absolute();
-	@include border();
-	background: transparent;
-	overflow: hidden;
-	top: 70px;
-}
-
 .custom-dialog-invoice {
 	@include absolute();
 	@include border();
-	overflow: hidden;
+	max-height: calc(100vh - 15%);
 	top: 48px;
-}
-
-.custom-dialog-delays {
-	@include absolute();
-	@include border();
-	top: 272px;
-	// bottom: 164px;
-}
-
-.custom-dialog-request {
-	@include absolute();
-	@include border();
-	top: 400px;
 }
 
 .custom-dialog-freeduty {
 	@include absolute();
 	@include border();
+	max-height: calc(100vh - 35%);
 	top: 188px;
-	bottom: 164px;
+}
+
+.custom-dialog-mib-ui {
+	@include absolute();
+	@include border();
+	max-height: calc(100vh - 15%);
+	top: 70px;
+}
+
+.custom-dialog-request {
+	@include absolute();
+	@include border();
+	max-height: calc(100vh - 60%);
+	top: 400px;
+}
+
+.documents-dialog-factoring {
+	@include absolute();
+	@include border();
+	max-height: calc(100vh - 48%);
+	top: 318px;
+}
+
+.contracts-dialog-factoring {
+	@include absolute();
+	@include border();
+	max-height: calc(100vh - 48%);
+	top: 292px;
+}
+
+.custom-dialog-delays {
+	@include absolute();
+	@include border();
+	max-height: calc(100vh - 48%);
+	top: 272px;
 }
 
 .modal {

@@ -18,12 +18,13 @@ import {ToolsService} from '../shared/services/tools.service'
 	styleUrls: ['./agent-client.component.scss']
 })
 export class AgentClientComponent implements AfterViewInit, OnDestroy {
-	@ViewChild('scrollable') scrollable!: ElementRef<HTMLDivElement>;
-  
-	private resizeObserver!: ResizeObserver;
-  
-	public withoutScroll: boolean = false; 
-  
+
+	@ViewChild('scrollable') scrollable!: ElementRef<HTMLDivElement>
+
+	private resizeObserver!: ResizeObserver
+
+	public withoutScroll: boolean = false
+
 	constructor(
 	  public scrollService: ScrollService,
 	  private cdr: ChangeDetectorRef,
@@ -32,17 +33,21 @@ export class AgentClientComponent implements AfterViewInit, OnDestroy {
 	) {}
   
 	ngAfterViewInit() {
-	  if (
-		isPlatformBrowser(this.platformId) &&
-		!this.toolsService.mobileAndTabletCheck(isPlatformBrowser(this.platformId))
-	  ) {
-		this.resizeObserver = new ResizeObserver(entries => {
-		  this.checkScroll(this.scrollable.nativeElement);
-		});
-		this.resizeObserver.observe(this.scrollable.nativeElement);
-  
-		this.withoutScroll = !this.toolsService.mobileAndTabletCheck(isPlatformBrowser(this.platformId));
-	  }
+		if (
+			isPlatformBrowser(this.platformId) &&
+			!this.toolsService.mobileAndTabletCheck(
+				isPlatformBrowser(this.platformId)
+			)
+		) {
+			this.resizeObserver = new ResizeObserver(entries => {
+				this.checkScroll(this.scrollable.nativeElement)
+			})
+			this.resizeObserver.observe(this.scrollable.nativeElement)
+
+			this.withoutScroll = !this.toolsService.mobileAndTabletCheck(
+				isPlatformBrowser(this.platformId)
+			)
+		}
 	}
   
 	private checkScroll(element: HTMLDivElement) {

@@ -1,0 +1,80 @@
+<mib-modal>
+	<div class="close-btn flex">
+		<mib-button size="s" (press)="dialogRef.close()" type="ghost-secondary">
+			<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
+		</mib-button>
+	</div>
+	<mib-mobile-table-popup title="Электронный документ">
+		<div class="flex">
+			<span class="text text_tv c-bti-quaternary">О документе</span>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex">
+			<mib-mobile-table-popup-cell
+				(copyData)="copyData(data.doc.Description)"
+				[showCopy]="true"
+				[sectionTitle]="'Описание'"
+				[title]="data.doc.Description"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex">
+			<mib-mobile-table-popup-cell
+				[sectionTitle]="'Тип документа'"
+				[title]="data.doc.DocumentTypeTitle"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex">
+			<mib-mobile-table-popup-cell
+				[sectionTitle]="'Дата создания'"
+				[title]="data.doc.CreatedTime | date : 'dd.MM.yyyy'"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex">
+			<mib-mobile-table-popup-cell [sectionTitle]="'Прикрепил'" type="person">
+				<ng-container avatar>
+					<div class="flex flex_align-center gap-8">
+						<mib-avatar
+							[showImage]="true"
+							[showArrow]="false"
+							type="round"
+							src="./assets/images/user-avatar.jpg"
+						></mib-avatar>
+						<div class="flex gap-4">
+							<span class="text text_m c-bit-primary">
+								{{ data.doc.CreatorFirstName }}
+							</span>
+							<span class="text text_m c-bit-primary">
+								{{ data.doc.CreatorLastName }}
+							</span>
+						</div>
+					</div>
+				</ng-container>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="s"></mib-spacing>
+		<div class="flex">
+			<span class="text text_tv c-bti-quaternary">Файл документа</span>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<mib-dl-file-cell
+			(onDload)="downloadCurrentFile()"
+			[fileName]="data.doc.Title"
+		></mib-dl-file-cell>
+		<mib-spacing type="s"></mib-spacing>
+		<div class="flex flex_column gap-12">
+			<mib-button class="w-100" size="m" type="filled-secondary">
+				Перейти к заполнению
+			</mib-button>
+		</div>
+	</mib-mobile-table-popup>
+	<span class="success-copied text text_tv" *ngIf="copied">Скопированно!</span>
+</mib-modal>

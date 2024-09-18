@@ -41,7 +41,9 @@ export class NewDelaysComponent implements OnInit, OnDestroy {
 		{
 			ID: 143523,
 			Amount: 14369629,
+			Customer: 'Магнит',
 			Date: '2024-06-06T00:00:00',
+			Number: '1321',
 			Doc: '213/324a-22',
 			Payer: {
 				INN: '2540167061',
@@ -52,8 +54,10 @@ export class NewDelaysComponent implements OnInit, OnDestroy {
 		{
 			ID: 23423,
 			Amount: 30389307,
+			Customer: 'Магнит',
 			Date: '2024-06-14T00:00:00',
 			Doc: '213/324a-23',
+			Number: '1322',
 			Payer: {
 				INN: '2540167061',
 				Date: '2024-03-06T00:00:00',
@@ -63,8 +67,10 @@ export class NewDelaysComponent implements OnInit, OnDestroy {
 		{
 			ID: 33456,
 			Amount: 34507,
+			Customer: 'Магнит',
 			Date: '2024-06-06T00:00:00',
 			Doc: '213/324a-24',
+			Number: '1323',
 			Payer: {
 				INN: '2540167061',
 				Date: '2024-07-06T00:00:00',
@@ -177,7 +183,6 @@ export class NewDelaysComponent implements OnInit, OnDestroy {
 		const dialogConfig = {
 			width: '100%',
 			maxWidth: '600px',
-			// height: '100%',
 			panelClass: 'custom-dialog-delays',
 			data: {duty}
 		}

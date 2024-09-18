@@ -21,6 +21,9 @@ import {DemandFactoringDrawerService} from '../../modules/demand-factoring-drawe
 import {DemandAgentDrawerService} from '../../modules/demand-agent-drawer/demand-agent-drawer.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {DemandService} from '../../services/demand.service'
+import {DatePipe} from '@angular/common'
+import {MatDialog} from '@angular/material/dialog'
+import {DemandPageHistoryModalComponent} from 'src/app/shared/modules/modals/demand-page-history-modal/demand-page-history-modal.component'
 
 const ANIMATION_CONFIG = {
 	translateDistance: '-3%',
@@ -71,6 +74,15 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 
 	public requestsAnimationStates: Record<number, boolean> = {}
 	public historyAnimationStates: Record<number, boolean> = {}
+	public currentIndex: number = 0
+	headers = ['Тип запроса', 'Дата запроса', 'Статус запроса', 'Ответственный']
+
+	public dataMap = {
+		0: 'Type',
+		1: 'DateCreated',
+		2: 'Status',
+		3: {Manager: 'Name'}
+	}
 
 	constructor(
 		private requestList: DataService,
@@ -84,7 +96,9 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		private demandFactoringDrawerService: DemandFactoringDrawerService,
 		private demandAgentDrawerService: DemandAgentDrawerService,
 		public breakpointService: BreakpointObserverService,
-		private demandService: DemandService
+		private demandService: DemandService,
+		private datePipe: DatePipe,
+		private dialog: MatDialog
 	) {}
 
 	ngOnInit(): void {
@@ -203,7 +217,6 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 				tap(data => {
 					this.historys = data
 					this.selectedHistoryLists = this.historys
-					// console.log('this.historys :>> ', this.historys)
 					this.onHistoryListChange(1)
 				}),
 				finalize(() => this.loading$.next(false))
@@ -302,7 +315,6 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 	}
 
 	onHistoryListChange($event) {
-		// console.log('$event :>> ', $event)
 		this.historyLists = this.onPageChange($event, this.selectedHistoryLists)
 	}
 
@@ -391,6 +403,65 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		}
 
 		this.onHistoryListChange(1)
+	}
+
+	prev() {
+		if (this.currentIndex > 0) {
+			this.currentIndex--
+		}
+	}
+
+	next() {
+		if (this.currentIndex < this.headers.length - 1) {
+			this.currentIndex++
+		}
+	}
+
+	getVisibleHeader() {
+		return this.headers[this.currentIndex]
+	}
+
+	getVisibleCell(row: any) {
+		const result = {}
+		for (const [newKey, path] of Object.entries(this.dataMap)) {
+			let value
+
+			if (typeof path === 'string') {
+				// Если путь - строка, извлекаем значение напрямую
+				if (path === 'Type') {
+					value = this.getType(row[path])
+				} else if (path === 'Status') {
+					value = this.getStatus(row[path])
+				} else {
+					value = row[path]
+				}
+			} else if (typeof path === 'object') {
+				// Если путь - объект, извлекаем вложенное значение
+				const [parentKey, childKey] = Object.entries(path)[0]
+				value = row[parentKey] ? row[parentKey][childKey] : undefined
+			}
+			// Проверка и добавление префиксов
+			if (path === 'DateCreated' && value !== undefined) {
+				value = this.datePipe.transform(value, 'dd.MM.yyyy')
+			}
+			result[newKey] = value
+		}
+
+		return result[this.currentIndex]
+	}
+
+	openBrowserDrawer(data) {
+		console.log('open browser drawer >>>', data)
+	}
+
+	openDemandPageModal(d) {
+		const dialogConfig = {
+			width: '100%',
+			maxWidth: '600px',
+			panelClass: 'custom-dialog-request',
+			data: {d}
+		}
+		this.dialog.open(DemandPageHistoryModalComponent, dialogConfig)
 	}
 
 	ngOnDestroy(): void {

@@ -20,7 +20,9 @@
 	<mib-table (selectionChange)="selectionChange($event)">
 		<mib-table-head>
 			<mib-table-head-cell>ID </mib-table-head-cell>
-			<mib-table-head-cell>Договор</mib-table-head-cell>
+			<ng-container *ngIf="isDesktop; else mobile">
+				<mib-table-head-cell>Договор</mib-table-head-cell>
+			</ng-container>
 			<mib-table-head-cell>Номер</mib-table-head-cell>
 			<mib-table-head-cell>Дата</mib-table-head-cell>
 			<mib-table-head-cell>Тип</mib-table-head-cell>
@@ -31,6 +33,29 @@
 			<mib-table-head-cell>Дата финансирования</mib-table-head-cell>
 			<mib-table-head-cell>Покупатель</mib-table-head-cell>
 			<mib-table-head-cell>Сумма</mib-table-head-cell>
+			<ng-template #mobile>
+				<mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
+			</ng-template>
+			<ng-container table-head-button *ngIf="!isDesktop">
+				<mib-button
+					[disabled]="loading$ | async"
+					(press)="prev()"
+					size="s"
+					table-row-button
+					type="ghost-secondary"
+				>
+					<mib-icon class="stroke" btn-icon name="fi_chevron-left"></mib-icon>
+				</mib-button>
+				<mib-button
+					[disabled]="loading$ | async"
+					(press)="next()"
+					size="s"
+					table-row-button
+					type="ghost-secondary"
+				>
+					<mib-icon class="stroke" btn-icon name="fi_chevron-right"></mib-icon>
+				</mib-button>
+			</ng-container>
 		</mib-table-head>
 		<ng-container *ngIf="loading$ | async; else table">
 			<mib-skeleton
@@ -42,61 +67,96 @@
 			></mib-skeleton>
 		</ng-container>
 		<ng-template #table>
-			<mib-table-row (dblclick)="agentRegisterViewsDrawer()">
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe1</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe2</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe3</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe4</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe5</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe6</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qew7</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe8</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qew9</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe10</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe11</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe12</ng-container>
-				</mib-table-cell>
-				<mib-button
-					[mibDropdownTrigger]="newDocumentRowMenu"
-					table-row-button
-					size="s"
-					type="ghost-secondary"
-				>
-					<mib-icon class="stroke" btn-icon name="fi_more-vertical"></mib-icon>
-				</mib-button>
-				<mib-dropdown #newDocumentRowMenu>
-					<mib-dropdown-point
-						(press)="agentRegisterViewsDrawer()"
-						text="Открыть"
-					></mib-dropdown-point>
-				</mib-dropdown>
-			</mib-table-row>
+			<ng-container *ngIf="headers.length > 0; else emptyTable">
+				<mib-table-row (dblclick)="agentRegisterViewsDrawer()">
+					<mib-table-cell>
+						<ng-container table-cell-title>qwe1</ng-container>
+					</mib-table-cell>
+					<ng-container *ngIf="isDesktop; else mobileCell">
+						<mib-table-cell>
+							<ng-container table-cell-title>qwe2</ng-container>
+						</mib-table-cell>
+					</ng-container>
+					<mib-table-cell>
+						<ng-container table-cell-title>qwe3</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>qwe4</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>qwe5</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>qwe6</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>qew7</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>qwe8</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>qew9</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>qwe10</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>qwe11</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>qwe12</ng-container>
+					</mib-table-cell>
+					<ng-template #mobileCell>
+						<mib-table-head-cell>{{
+							getVisibleCell('halo')
+						}}</mib-table-head-cell>
+					</ng-template>
+					<ng-container table-row-button *ngIf="isDesktop; else mobile">
+						<mib-button
+							[mibDropdownTrigger]="newDocumentRowMenu"
+							table-row-button
+							size="s"
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-icon>
+						</mib-button>
+						<mib-dropdown #newDocumentRowMenu>
+							<mib-dropdown-point
+								(press)="agentRegisterViewsDrawer()"
+								text="Открыть"
+							></mib-dropdown-point>
+						</mib-dropdown>
+					</ng-container>
+					<ng-template #mobile>
+						<mib-button
+							(click)="
+								openRegisterPageModal('halo modal'); $event.stopPropagation()
+							"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+						</mib-button>
+					</ng-template>
+				</mib-table-row>
+			</ng-container>
+			<ng-template #emptyTable>
+				<mib-table-row>
+					<p class="text text_m w-100 flex_align-self-center text-center">
+						нет данных
+					</p>
+				</mib-table-row>
+			</ng-template>
 		</ng-template>
 		<mib-table-footer [lined]="!(loading$ | async)">
 			<mib-paginator
+				*ngIf="headers.length || !(loading$ | async)"
 				(pageChange)="onPageChange($event)"
 				[totalCount]="5"
 				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"

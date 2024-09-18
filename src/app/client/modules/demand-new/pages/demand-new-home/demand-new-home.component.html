@@ -77,38 +77,52 @@
 					></mib-skeleton>
 				</ng-container>
 				<ng-template #table>
-					<mib-table-row
-						[@slideAnimation]="requestsAnimationStates[draft.id]"
-						*ngFor="let draft of draftLists; let last = last"
-						[underlined]="!last"
-					>
-						<mib-table-cell type="main">
-							<ng-container table-cell-title>{{ draft.number }}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title
-								><mib-badge
-									type="filled-secondary"
-									[extended]="true"
-									size="l"
-									>{{ draft.type }}</mib-badge
-								></ng-container
-							>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title
-								><mib-badge type="filled-secondary" [extended]="true" size="l"
-									>Заполнено на {{ draft.progress }}</mib-badge
-								></ng-container
-							>
-						</mib-table-cell>
-						<mib-button table-row-button size="s" type="ghost-secondary">
-							<mib-icon class="stroke draft" btn-icon name="fi_edit"></mib-icon>
-						</mib-button>
-					</mib-table-row>
+					<ng-container *ngIf="draftLists.length > 0; else emptyTable">
+						<mib-table-row
+							[@slideAnimation]="requestsAnimationStates[draft.id]"
+							*ngFor="let draft of draftLists; let last = last"
+							[underlined]="!last"
+						>
+							<mib-table-cell type="main">
+								<ng-container table-cell-title>{{ draft.number }}</ng-container>
+							</mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title
+									><mib-badge
+										type="filled-secondary"
+										[extended]="true"
+										size="l"
+										>{{ draft.type }}</mib-badge
+									></ng-container
+								>
+							</mib-table-cell>
+							<mib-table-cell>
+								<ng-container table-cell-title
+									><mib-badge type="filled-secondary" [extended]="true" size="l"
+										>Заполнено на {{ draft.progress }}</mib-badge
+									></ng-container
+								>
+							</mib-table-cell>
+							<mib-button table-row-button size="s" type="ghost-secondary">
+								<mib-icon
+									class="stroke draft"
+									btn-icon
+									name="fi_edit"
+								></mib-icon>
+							</mib-button>
+						</mib-table-row>
+					</ng-container>
+					<ng-template #emptyTable>
+						<mib-table-row>
+							<p class="text text_m w-100 flex_align-self-center text-center">
+								нет данных
+							</p>
+						</mib-table-row>
+					</ng-template>
 				</ng-template>
 				<mib-table-footer [lined]="!(loading$ | async)">
 					<mib-paginator
+						*ngIf="drafts.length || !(loading$ | async)"
 						(pageChange)="onDraftListChange($event)"
 						[totalCount]="drafts.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
@@ -119,7 +133,7 @@
 		</mib-tab-item>
 		<mib-tab-item value="3">
 			<mib-spacing type="m"></mib-spacing>
-			<div class="history-controls flex flex_justify-between">
+			<div class="history-controls gap-16 flex flex_justify-between">
 				<mib-input>
 					<input
 						mibInput
@@ -172,10 +186,43 @@
 			<mib-table>
 				<mib-table-head>
 					<mib-table-head-cell>Номер запроса</mib-table-head-cell>
-					<mib-table-head-cell>Тип запроса</mib-table-head-cell>
+					<ng-container *ngIf="isDesktop; else mobile">
+						<mib-table-head-cell>Тип запроса</mib-table-head-cell>
+					</ng-container>
 					<mib-table-head-cell>Дата запроса</mib-table-head-cell>
 					<mib-table-head-cell>Статус запроса</mib-table-head-cell>
 					<mib-table-head-cell>Ответственный</mib-table-head-cell>
+					<ng-template #mobile>
+						<mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
+					</ng-template>
+					<ng-container table-head-button *ngIf="!isDesktop">
+						<mib-button
+							[disabled]="loading$ | async"
+							(press)="prev()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_chevron-left"
+							></mib-icon>
+						</mib-button>
+						<mib-button
+							[disabled]="loading$ | async"
+							(press)="next()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_chevron-right"
+							></mib-icon>
+						</mib-button>
+					</ng-container>
 				</mib-table-head>
 				<ng-container *ngIf="loading$ | async; else table2">
 					<mib-skeleton
@@ -187,7 +234,11 @@
 					<ng-container *ngIf="historyLists.length > 0; else emptyTable">
 						<mib-table-row
 							[@slideAnimation]="historyAnimationStates[history.id]"
-							*ngFor="let history of historyLists; let last = last"
+							*ngFor="
+								let history of historyLists;
+								else: emptyTable;
+								let last = last
+							"
 							[underlined]="!last"
 						>
 							<mib-table-cell>
@@ -195,16 +246,21 @@
 									{{ history.DemandId }}</ng-container
 								>
 							</mib-table-cell>
-							<mib-table-cell [special]="true">
-								<ng-container table-cell-title
-									><mib-badge type="filled-secondary" [extended]="true" size="l"
-										>{{ getType(history.Type) }}
-									</mib-badge></ng-container
-								>
-							</mib-table-cell>
+							<ng-container *ngIf="isDesktop; else mobileCell">
+								<mib-table-cell [special]="true">
+									<ng-container table-cell-title
+										><mib-badge
+											type="filled-secondary"
+											[extended]="true"
+											size="l"
+											>{{ getType(history.Type) }}
+										</mib-badge></ng-container
+									>
+								</mib-table-cell>
+							</ng-container>
 							<mib-table-cell>
 								<ng-container table-cell-title>
-									{{ history.DateCreated | date }}
+									{{ history.DateCreated | date : 'dd.MM.YYYY' }}
 								</ng-container>
 							</mib-table-cell>
 							<mib-table-cell>
@@ -238,6 +294,102 @@
 									}}
 								</ng-container>
 							</mib-table-cell>
+							<ng-template #mobileCell>
+								<mib-table-head-cell>
+									<ng-container *ngIf="getVisibleCell(history); else noData">
+										<ng-container
+											*ngIf="
+												getVisibleCell(history) === 'Отменен' ||
+													getVisibleCell(history) === 'Создан' ||
+													getVisibleCell(history) === 'Завершен' ||
+													getVisibleCell(history) === 'В процессе' ||
+													getVisibleCell(history) === 'Отклонено' ||
+													getVisibleCell(history) === 'Черновик';
+												else normalText
+											"
+										>
+											<mib-badge
+												type="filled-primary"
+												[extended]="true"
+												size="l"
+												>{{ getVisibleCell(history) }}</mib-badge
+											>
+										</ng-container>
+										<ng-template #normalText>
+											<mib-badge
+												type="filled-secondary"
+												[extended]="true"
+												size="l"
+												*ngIf="
+													getVisibleCell(history) ===
+														'Редактирование Профиля' ||
+													getVisibleCell(history) === 'Лимит' ||
+													getVisibleCell(history) === 'Верификация' ||
+													getVisibleCell(history) === 'Поручительство' ||
+													getVisibleCell(history) === 'Факторинг' ||
+													getVisibleCell(history) === 'ЭЦП' ||
+													getVisibleCell(history) === 'Свободная тема' ||
+													getVisibleCell(history) === 'Новый дебитор' ||
+													getVisibleCell(history) === 'Агентский Факторинг'
+												"
+											>
+												{{ getVisibleCell(history) }}
+											</mib-badge>
+											<ng-container
+												*ngIf="
+													getVisibleCell(history) !==
+														'Редактирование Профиля' &&
+													getVisibleCell(history) !== 'Лимит' &&
+													getVisibleCell(history) !== 'Верификация' &&
+													getVisibleCell(history) !== 'Поручительство' &&
+													getVisibleCell(history) !== 'Факторинг' &&
+													getVisibleCell(history) !== 'ЭЦП' &&
+													getVisibleCell(history) !== 'Свободная тема' &&
+													getVisibleCell(history) !== 'Новый дебитор' &&
+													getVisibleCell(history) !== 'Агентский Факторинг'
+												"
+											>
+												{{ getVisibleCell(history) }}
+											</ng-container>
+										</ng-template>
+									</ng-container>
+									<ng-template #noData>
+										<p>Данные отсутствуют</p>
+									</ng-template>
+								</mib-table-head-cell>
+							</ng-template>
+							<ng-container table-row-button *ngIf="isDesktop; else mobile">
+								<mib-button
+									[mibDropdownTrigger]="demanRowMenu"
+									table-row-button
+									size="s"
+									type="ghost-secondary"
+								>
+									<mib-icon
+										class="stroke"
+										btn-icon
+										name="fi_more-vertical"
+									></mib-icon>
+								</mib-button>
+								<mib-dropdown #demanRowMenu>
+									<mib-dropdown-point
+										(press)="openBrowserDrawer(history.DemandId)"
+										text="Открыть"
+									></mib-dropdown-point>
+								</mib-dropdown>
+							</ng-container>
+							<ng-template #mobile>
+								<mib-button
+									(click)="
+										openDemandPageModal(history); $event.stopPropagation()
+									"
+									size="s"
+									table-row-button
+									type="ghost-secondary"
+								>
+									<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+								</mib-button>
+							</ng-template>
 							<!-- <mib-button table-row-button size="s" type="ghost-secondary">
 									<mib-icon
 										class="stroke"
@@ -257,7 +409,7 @@
 				</ng-template>
 				<mib-table-footer [lined]="!(loading$ | async)">
 					<mib-paginator
-						*ngIf="selectedHistoryLists.length"
+						*ngIf="selectedHistoryLists.length || !(loading$ | async)"
 						(pageChange)="onHistoryListChange($event)"
 						[totalCount]="selectedHistoryLists.length"
 						[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"

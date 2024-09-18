@@ -178,7 +178,7 @@
 		>
 			<ng-container table-footer-action>Подписать</ng-container>
 			<mib-paginator
-				*ngIf="requests.length"
+				*ngIf="requests.length || !(loading$ | async)"
 				(pageChange)="onPageChange($event)"
 				[totalCount]="requests.length"
 				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"

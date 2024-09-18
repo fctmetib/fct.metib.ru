@@ -32,11 +32,36 @@
 			<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
 				>№
 			</mib-table-head-cell>
-			<mib-table-head-cell>Имя файла</mib-table-head-cell>
+			<ng-container *ngIf="isDesktop; else mobile">
+				<mib-table-head-cell>Имя файла</mib-table-head-cell>
+			</ng-container>
 			<mib-table-head-cell>Описание</mib-table-head-cell>
 			<mib-table-head-cell>Тип документа</mib-table-head-cell>
 			<mib-table-head-cell>Дата создания</mib-table-head-cell>
 			<mib-table-head-cell>Прикрепил</mib-table-head-cell>
+			<ng-template #mobile>
+				<mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
+			</ng-template>
+			<ng-container table-head-button *ngIf="!isDesktop">
+				<mib-button
+					[disabled]="loading$ | async"
+					(press)="prev()"
+					size="s"
+					table-row-button
+					type="ghost-secondary"
+				>
+					<mib-icon class="stroke" btn-icon name="fi_chevron-left"></mib-icon>
+				</mib-button>
+				<mib-button
+					[disabled]="loading$ | async"
+					(press)="next()"
+					size="s"
+					table-row-button
+					type="ghost-secondary"
+				>
+					<mib-icon class="stroke" btn-icon name="fi_chevron-right"></mib-icon>
+				</mib-button>
+			</ng-container>
 		</mib-table-head>
 		<ng-container *ngIf="loading$ | async; else table">
 			<mib-skeleton
@@ -48,52 +73,82 @@
 			></mib-skeleton>
 		</ng-container>
 		<ng-template #table>
-			<mib-table-row
-				[rowId]="doc.DocumentID"
-				(dblclick)="newDocumentViewsDrawer(doc?.DocumentID)"
-				*ngFor="let doc of clientDocumentsVisible; let last = last"
-				[underlined]="!last"
-			>
-				<mib-table-cell type="main">
-					<ng-container table-cell-title>{{ doc?.Number }}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{ doc?.Title }}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						doc?.DocumentTypeTitle
-					}}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{ doc?.Description }}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>{{
-						doc?.CreatedTime | date : 'dd.MM.YYYY'
-					}}</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title
-						>{{ doc?.CreatorLastName }}
-						{{ doc?.CreatorFirstName }}</ng-container
-					>
-				</mib-table-cell>
-				<mib-button
-					[mibDropdownTrigger]="newDocumentRowMenu"
-					table-row-button
-					size="s"
-					type="ghost-secondary"
+			<ng-container *ngIf="clientDocumentsVisible.length > 0; else emptyTable">
+				<mib-table-row
+					[rowId]="doc.DocumentID"
+					(dblclick)="newDocumentViewsDrawer(doc?.DocumentID)"
+					*ngFor="let doc of clientDocumentsVisible; let last = last"
+					[underlined]="!last"
 				>
-					<mib-icon class="stroke" btn-icon name="fi_more-vertical"></mib-icon>
-				</mib-button>
-				<mib-dropdown #newDocumentRowMenu>
-					<mib-dropdown-point
-						(press)="newDocumentViewsDrawer(doc?.DocumentID)"
-						text="Открыть"
-					></mib-dropdown-point>
-				</mib-dropdown>
-			</mib-table-row>
+					<mib-table-cell type="main">
+						<ng-container table-cell-title>{{ doc?.Number }}</ng-container>
+					</mib-table-cell>
+					<ng-container *ngIf="isDesktop; else mobileCell">
+						<mib-table-cell>
+							<ng-container table-cell-title>{{ doc?.Title }}</ng-container>
+						</mib-table-cell>
+					</ng-container>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							doc?.DocumentTypeTitle
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ doc?.Description }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							doc?.CreatedTime | date : 'dd.MM.YYYY'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title
+							>{{ doc?.CreatorLastName }}
+							{{ doc?.CreatorFirstName }}</ng-container
+						>
+					</mib-table-cell>
+					<ng-template #mobileCell>
+						<mib-table-head-cell>{{ getVisibleCell(doc) }}</mib-table-head-cell>
+					</ng-template>
+					<ng-container table-row-button *ngIf="isDesktop; else mobile">
+						<mib-button
+							[mibDropdownTrigger]="newDocumentRowMenu"
+							table-row-button
+							size="s"
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-icon>
+						</mib-button>
+						<mib-dropdown #newDocumentRowMenu>
+							<mib-dropdown-point
+								(press)="newDocumentViewsDrawer(doc?.DocumentID)"
+								text="Открыть"
+							></mib-dropdown-point>
+						</mib-dropdown>
+					</ng-container>
+					<ng-template #mobile>
+						<mib-button
+							(click)="openDocumentsPageModal(doc); $event.stopPropagation()"
+							size="s"
+							table-row-button
+							type="ghost-secondary"
+						>
+							<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+						</mib-button>
+					</ng-template>
+				</mib-table-row>
+			</ng-container>
+			<ng-template #emptyTable>
+				<mib-table-row #emptyTable>
+					<p class="text text_m w-100 flex_align-self-center text-center">
+						нет данных
+					</p>
+				</mib-table-row>
+			</ng-template>
 		</ng-template>
 		<mib-table-footer
 			[actionLoading]="isSigning$ | async"
@@ -103,6 +158,7 @@
 		>
 			<ng-container table-footer-action>Подписать</ng-container>
 			<mib-paginator
+				*ngIf="clientDocuments.length || !(loading$ | async)"
 				(pageChange)="onPageChange($event)"
 				[totalCount]="clientDocuments.length"
 				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"

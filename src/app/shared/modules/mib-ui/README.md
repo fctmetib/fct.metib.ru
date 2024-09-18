@@ -534,6 +534,13 @@ ng g m shared/ui-kit/file-cell/file-cell --flat  --dry-run
 ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
  //---
 
+ //--- dl-file-cell
+src\app\shared\ui-kit\dl-file-cell
+ng g i shared/ui-kit/dl-file-cell/interfaces/dl-file-cell.interface  --dry-run
+ng g m shared/ui-kit/dl-file-cell/dl-file-cell --flat  --dry-run
+ng g c shared/ui-kit/dl-file-cell/dl-file-cell --flat  --skip-tests --dry-run
+ //---
+
  //--- modals-modules
  src\app\shared\modules\modals\new-shipment-modal
  ng g m shared/modules/modals/new-shipment-modal/new-shipment-modal --flat --dry-run
@@ -603,6 +610,27 @@ ng g c shared/ui-kit/file-cell/file-cell --flat  --skip-tests --dry-run
 //  ng g m shared/modules/modals/requests-page-modal/requests-page-modal --flat --dry-run
  ng g s shared/modules/modals/requests-page-modal/requests-page-modal --flat --skip-tests --dry-run
  ng g c shared/modules/modals/requests-page-modal/requests-page-modal --flat --skip-tests --dry-run
+ //---
+
+ //--- demand-page-history-modal
+ src\app\shared\modules\modals\demand-page-history-modal
+ ng g m shared/modules/modals/demand-page-history-modal/demand-page-history-modal --flat --dry-run
+//  ng g s shared/modules/modals/demand-page-history-modal/demand-page-history-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/demand-page-history-modal/demand-page-history-modal --flat --skip-tests --dry-run
+ //---
+
+ //--- contracts-factoring-modal
+ src\app\shared\modules\modals\contracts-factoring-modal
+ ng g m shared/modules/modals/contracts-factoring-modal/contracts-factoring-modal --flat --dry-run
+//  ng g s shared/modules/modals/contracts-factoring-modal/contracts-factoring-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/contracts-factoring-modal/contracts-factoring-modal --flat --skip-tests --dry-run
+ //---
+
+ //--- documents-page-factoring-modal
+ src\app\shared\modules\modals\documents-page-factoring-modal
+ ng g m shared/modules/modals/documents-page-factoring-modal/documents-page-factoring-modal --flat --dry-run
+//  ng g s shared/modules/modals/documents-page-factoring-modal/documents-page-factoring-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/documents-page-factoring-modal/documents-page-factoring-modal --flat --skip-tests --dry-run
  //---
 
  //--- request-info-modal

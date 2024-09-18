@@ -1,0 +1,79 @@
+<mib-modal>
+	<div class="close-btn flex">
+		<mib-button size="s" (press)="dialogRef.close()" type="ghost-secondary">
+			<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
+		</mib-button>
+	</div>
+	<mib-mobile-table-popup [title]="getTitle()">
+		<mib-spacing type="xs2"></mib-spacing>
+		<div class="flex gap-8">
+			<mib-tag size="s" type="filled-primary">
+				{{ data.c.Tariff.Title }}</mib-tag
+			>
+		</div>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex">
+			<span class="text text_tv c-bti-quaternary"> Детали договора </span>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<mib-mobile-table-popup-cell
+			(copyData)="copyData(data.c.Debtor.Title)"
+			[showCopy]="true"
+			[sectionTitle]="'Дебитор'"
+			[title]="data.c.Debtor.Title"
+			type="numbers"
+		>
+		</mib-mobile-table-popup-cell>
+		<mib-spacing type="xs"></mib-spacing>
+		<div class="flex gap-12">
+			<mib-mobile-table-popup-cell
+				[sectionTitle]="'Вступил в силу '"
+				[title]="data.c.DateFrom | date : 'dd.MM.yyyy'"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+			<mib-mobile-table-popup-cell
+				[sectionTitle]="'Действует до'"
+				[title]="data.c.DateTo | date : 'dd.MM.yyyy'"
+				type="numbers"
+			>
+			</mib-mobile-table-popup-cell>
+		</div>
+		<mib-spacing type="xm"></mib-spacing>
+		<div class="flex">
+			<span class="text text_tv c-bti-quaternary">Детали сделки</span>
+		</div>
+		<mib-spacing type="xs2"></mib-spacing>
+		<mib-mobile-table-popup-cell
+			[sectionTitle]="'Отсрочка'"
+			[title]="getDelayCell()"
+			type="numbers"
+		>
+		</mib-mobile-table-popup-cell>
+		<mib-spacing type="xs2"></mib-spacing>
+		<mib-mobile-table-popup-cell
+			(copyData)="copyData(data.c.Statistics.FreeLimit)"
+			[showCopy]="true"
+			[sectionTitle]="'Лимит'"
+			[title]="data.c.Statistics.FreeLimit | rub"
+			type="numbers"
+		>
+		</mib-mobile-table-popup-cell>
+		<mib-spacing type="xs2"></mib-spacing>
+		<mib-mobile-table-popup-cell
+			(copyData)="copyData(data.c.Statistics.DelayDuty)"
+			[showCopy]="true"
+			[sectionTitle]="'Просрочка'"
+			[title]="data.c.Statistics.DelayDuty | rub"
+			type="numbers"
+		>
+		</mib-mobile-table-popup-cell>
+		<mib-spacing type="s"></mib-spacing>
+		<div class="flex">
+			<mib-button class="w-100" size="m" type="filled-secondary">
+				Перейти к заявке
+			</mib-button>
+		</div>
+	</mib-mobile-table-popup>
+	<span class="success-copied text text_tv" *ngIf="copied">Скопированно!</span>
+</mib-modal>

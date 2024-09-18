@@ -3,7 +3,7 @@ import {VerifyComponent} from './components/verify/verify.component'
 import {DialogModule} from 'primeng/dialog'
 import {DemandNewRoutingModule} from './demand-new-routing.module'
 import {CommonModule, CurrencyPipe} from '@angular/common'
-import {DropdownModule} from 'primeng/dropdown'
+import {DropdownModule as DropdownModule22} from 'primeng/dropdown'
 import {CardModule} from 'primeng/card'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {ButtonModule as ButtonModule22} from 'primeng/button'
@@ -94,6 +94,8 @@ import {DemandVerificationDrawerModule} from './modules/demand-verification-draw
 import {DemandFactoringDrawerModule} from './modules/demand-factoring-drawer/demand-factoring-drawer.module'
 import {DemandAgentDrawerModule} from './modules/demand-agent-drawer/demand-agent-drawer.module'
 import {RequestDrawerModule} from '../not-verify/modules/verify-request-drawer/request-drawer.module'
+import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
+import {DemandPageHistoryModalModule} from 'src/app/shared/modules/modals/demand-page-history-modal/demand-page-history-modal.module'
 
 @NgModule({
 	imports: [
@@ -113,6 +115,7 @@ import {RequestDrawerModule} from '../not-verify/modules/verify-request-drawer/r
 		TableModule22,
 		StepsModule,
 		SkeletonModule22,
+		DropdownModule22,
 		DropdownModule,
 		FormsModule,
 		ProgressBarModule,
@@ -152,7 +155,8 @@ import {RequestDrawerModule} from '../not-verify/modules/verify-request-drawer/r
 		DemandVerificationDrawerModule,
 		DemandFactoringDrawerModule,
 		DemandAgentDrawerModule,
-		RequestDrawerModule
+		RequestDrawerModule,
+		DemandPageHistoryModalModule
 	],
 	declarations: [
 		// Containers

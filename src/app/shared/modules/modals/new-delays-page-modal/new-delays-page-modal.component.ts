@@ -14,7 +14,11 @@ export class NewDelaysPageModalComponent {
 		private clipboard: Clipboard,
 		@Inject(MAT_DIALOG_DATA) public data: any
 	) {
-		// console.log('data :>> ', data)
+		console.log('data :>> ', data)
+	}
+
+	getTitle() {
+		return `Просрочка - ${this.data.duty[0].Customer}`
 	}
 
 	public copyData(data) {

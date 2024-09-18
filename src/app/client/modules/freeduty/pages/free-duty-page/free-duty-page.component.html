@@ -162,7 +162,7 @@
 						<ng-container *ngIf="isDesktop; else mobileCell">
 							<mib-table-cell>
 								<ng-container table-cell-title>{{
-									duty.Contract.ID
+									duty.Contract.Number
 								}}</ng-container>
 							</mib-table-cell>
 						</ng-container>
@@ -172,7 +172,9 @@
 							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>{{ duty.Number }}</ng-container>
+							<ng-container table-cell-title>{{
+								duty.Contract.ID
+							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title>{{
@@ -185,9 +187,7 @@
 							}}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								duty.NumberInvoice
-							}}</ng-container>
+							<ng-container table-cell-title>{{ duty.Number }}</ng-container>
 						</mib-table-cell>
 						<mib-table-cell>
 							<ng-container table-cell-title>{{
