@@ -563,6 +563,13 @@ ng g c shared/ui-kit/dl-file-cell/dl-file-cell --flat  --skip-tests --dry-run
  ng g c shared/modules/modals/invoice-page-modal/invoice-page-modal --flat --skip-tests --dry-run
  //---
 
+ //--- register-agent-page-modal
+ src\app\shared\modules\modals\register-agent-page-modal
+ ng g m shared/modules/modals/register-agent-page-modal/register-agent-page-modal --flat --dry-run
+//  ng g s shared/modules/modals/register-agent-page-modal/register-agent-page-modal --flat --skip-tests --dry-run
+ ng g c shared/modules/modals/register-agent-page-modal/register-agent-page-modal --flat --skip-tests --dry-run
+ //---
+
  //--- payments-page-modal
  src\app\shared\modules\modals\payments-page-modal
  ng g m shared/modules/modals/payments-page-modal/payments-page-modal --flat --dry-run

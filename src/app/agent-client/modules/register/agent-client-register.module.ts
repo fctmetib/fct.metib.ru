@@ -16,6 +16,7 @@ import {AgentRegisterViewDrawerModule} from './modules/agent-register-view-drawe
 import {AgentRegisterDrawerModule} from './modules/agent-register-drawer/agent-register-drawer.module'
 import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
+import {RegisterAgentPageModalModule} from 'src/app/shared/modules/modals/register-agent-page-modal/register-agent-page-modal.module'
 
 @NgModule({
 	declarations: [RegisterPageComponent],
@@ -34,7 +35,8 @@ import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 		AgentRegisterDrawerModule,
 		AgentRegisterViewDrawerModule,
 		BadgeModule,
-		RubModule
+		RubModule,
+		RegisterAgentPageModalModule
 	]
 })
 export class AgentClientRegisterModule {}
