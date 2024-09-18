@@ -14,6 +14,8 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {AgentRegisterViewDrawerModule} from './modules/agent-register-view-drawer/agent-register-view-drawer.module'
 import {AgentRegisterDrawerModule} from './modules/agent-register-drawer/agent-register-drawer.module'
+import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
+import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 
 @NgModule({
 	declarations: [RegisterPageComponent],
@@ -30,7 +32,9 @@ import {AgentRegisterDrawerModule} from './modules/agent-register-drawer/agent-r
 		DropdownPointModule,
 		DropdownModule,
 		AgentRegisterDrawerModule,
-		AgentRegisterViewDrawerModule
+		AgentRegisterViewDrawerModule,
+		BadgeModule,
+		RubModule
 	]
 })
 export class AgentClientRegisterModule {}

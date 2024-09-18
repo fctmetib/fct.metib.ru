@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core'
-import { MibBadgeSize, MibBadgeType } from './interfaces/badge.interface'
+import {Component, Input} from '@angular/core'
+import {MibBadgeSize, MibBadgeType} from './interfaces/badge.interface'
 
 @Component({
 	selector: 'mib-badge',
@@ -11,4 +11,5 @@ export class BadgeComponent {
 	@Input() type: MibBadgeType = 'filled-primary'
 	@Input() extended: boolean = false
 	@Input() showIcon: boolean = false
+	@Input() showText: boolean = true
 }

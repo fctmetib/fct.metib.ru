@@ -40,6 +40,79 @@ export class RegisterPageComponent implements OnInit {
 	private subscriptions = new Subscription()
 	public currentIndex: number = 0
 
+	public regData = [
+		{
+			ID: 143523,
+			Amount: 14369629,
+			Buyer: 'ООО "Бизнес"',
+			Date: '2024-02-06T00:00:00',
+			Contract: '27/02-19',
+			Number: 'AR/129',
+			FinType: true,
+			Status: true,
+			Send: true,
+			SendDate: '2024-09-18T09:19:26.000Z',
+			Finance: true,
+			FinDate: '2024-04-18T09:19:26.000Z'
+		},
+		{
+			ID: 144353,
+			Amount: 234629,
+			Buyer: 'ООО "Бизнес"',
+			Date: '2023-02-06T00:00:00',
+			Contract: '27/02-19',
+			Number: 'AR/131',
+			FinType: true,
+			Status: false,
+			Send: true,
+			SendDate: '2024-09-18T09:19:26.000Z',
+			Finance: false,
+			FinDate: '2023-04-18T09:19:26.000Z'
+		},
+		{
+			ID: 23453,
+			Amount: 234629,
+			Buyer: 'ООО "Бизнес"',
+			Date: '2022-02-06T00:00:00',
+			Contract: '27/02-19',
+			Number: 'AR/132',
+			FinType: true,
+			Status: true,
+			Send: true,
+			SendDate: '2024-09-18T09:19:26.000Z',
+			Finance: true,
+			FinDate: '2023-04-18T09:19:26.000Z'
+		},
+		{
+			ID: 143456,
+			Amount: 1443529,
+			Buyer: 'ООО "Бизнес"',
+			Date: '2024-04-06T00:00:00',
+			Contract: '27/02-19',
+			Number: 'AR/130',
+			FinType: false,
+			Status: true,
+			Send: false,
+			SendDate: '2024-05-18T09:19:26.000Z',
+			Finance: true,
+			FinDate: '2024-06-18T09:19:26.000Z'
+		},
+		{
+			ID: 23443453,
+			Amount: 53429,
+			Buyer: 'ООО "Бизнес"',
+			Date: '2023-02-06T00:00:00',
+			Contract: '27/02-19',
+			Number: 'AR/134',
+			FinType: true,
+			Status: true,
+			Send: true,
+			SendDate: '2024-09-18T09:19:26.000Z',
+			Finance: true,
+			FinDate: '2023-04-18T09:19:26.000Z'
+		}
+	]
+
 	headers = [
 		'Договор',
 		'Номер',
