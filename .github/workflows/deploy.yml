@@ -25,6 +25,6 @@ jobs:
           git reset --hard origin/ui-ref
           git pull origin ui-ref --force
           npm install --force
-          npm run-script build:ssr
+          NODE_OPTIONS="--max_old_space_size=4096" npm run-script build:ssr
           pm2 reload fct.metib.ru
 
