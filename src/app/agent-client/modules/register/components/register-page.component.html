@@ -158,7 +158,58 @@
 						<ng-container table-cell-title>{{ reg.Amount | rub }}</ng-container>
 					</mib-table-cell>
 					<ng-template #mobileCell>
-						<mib-table-head-cell>{{ getVisibleCell(reg) }}</mib-table-head-cell>
+						<mib-table-head-cell>
+							<ng-container [ngSwitch]="getVisibleCell(reg)">
+								<mib-badge
+									[extended]="true"
+									size="m"
+									*ngSwitchCase="'С финанс.'"
+									[type]="'filled-secondary'"
+								>
+									{{ getVisibleCell(reg) }}
+								</mib-badge>
+								<mib-badge
+									[extended]="true"
+									size="m"
+									*ngSwitchCase="'Без финанс.'"
+									[type]="'filled-accent'"
+								>
+									{{ getVisibleCell(reg) }}
+								</mib-badge>
+								<mib-badge
+									[extended]="true"
+									size="m"
+									*ngSwitchCase="'Исполнена'"
+									[type]="'filled-primary'"
+								>
+									{{ getVisibleCell(reg) }}
+								</mib-badge>
+								<mib-badge
+									[extended]="true"
+									size="m"
+									*ngSwitchCase="'Действует'"
+									[type]="'filled-success'"
+								>
+									{{ getVisibleCell(reg) }}
+								</mib-badge>
+								<mib-badge
+									size="m"
+									[showText]="false"
+									[showIcon]="true"
+									*ngSwitchCase="'Да'"
+									[type]="'filled-primary'"
+								>
+									{{ getVisibleCell(reg) }}
+								</mib-badge>
+								<mib-badge
+									*ngSwitchCase="'Нет'"
+									size="m"
+									[type]="'filled-secondary'"
+								>
+								</mib-badge>
+								<span *ngSwitchDefault>{{ getVisibleCell(reg) }}</span>
+							</ng-container>
+						</mib-table-head-cell>
 					</ng-template>
 					<ng-container table-row-button *ngIf="isDesktop; else mobile">
 						<mib-button
