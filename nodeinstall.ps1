@@ -6,7 +6,7 @@ Write-Host "Installing packages..."
 npm install --force;
 Write-Host "Done."
 Write-Host "Building website..."
-NODE_OPTIONS="--max_old_space_size=4096" npm run-script build:ssr
+npm run-script build:ssr
 if (!(Test-Path "dist/metallinvestbank-web/index.html"))
 {
   Write-Error "Website building failed!"
