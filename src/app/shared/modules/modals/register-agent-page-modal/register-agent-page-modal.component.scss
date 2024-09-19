@@ -1,0 +1,37 @@
+@import 'src/styles/helpers/icon_tools';
+@import 'src/styles/_colors.vars';
+
+:host {
+	display: block;
+	position: relative;
+	background-color: white;
+	border-top-right-radius: 16px;
+	border-top-left-radius: 16px;
+	overflow-y: auto;
+	height: 100%;
+
+	& .success-copied {
+		position: absolute;
+		top: 10px;
+		right: 20px;
+		color: var(--success-hover);
+	}
+
+	.close-btn {
+		position: fixed;
+		top: 0px;
+		right: 0px;
+		z-index: 1000;
+		padding: 12px 16px;
+		mib-icon[name='fi_x'] {
+			@include icon-color(var(--wti-primary));
+			@include icon-size(24px);
+		}
+	}
+
+	mib-modal-header {
+		& mib-button {
+			display: none;
+		}
+	}
+}

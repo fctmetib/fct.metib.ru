@@ -53,6 +53,13 @@
 	top: 70px;
 }
 
+.custom-dialog-register {
+	@include absolute();
+	@include border();
+	max-height: calc(100vh - 48%);
+	top: 316px;
+}
+
 .custom-dialog-request {
 	@include absolute();
 	@include border();
