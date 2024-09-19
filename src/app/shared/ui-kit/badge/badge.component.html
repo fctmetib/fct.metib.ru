@@ -5,7 +5,7 @@
 	[class.showIcon]="showIcon"
 >
 	<mib-icon class="stroke" name="fi_check"></mib-icon>
-	<p class="badge-text text">
+	<p *ngIf="showText" class="badge-text text">
 		<ng-content></ng-content>
 	</p>
 </div>

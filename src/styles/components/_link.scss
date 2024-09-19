@@ -147,6 +147,12 @@ $text-selectors: 'span';
 
 	& .link-text {
 		text-align: start;
-		@include text-overflow(1);
+	}
+
+	&.link_special {
+		& .link-text {
+			text-align: start;
+			@include text-overflow(1);
+		}
 	}
 }

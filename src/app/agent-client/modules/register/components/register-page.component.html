@@ -67,50 +67,98 @@
 			></mib-skeleton>
 		</ng-container>
 		<ng-template #table>
-			<ng-container *ngIf="headers.length > 0; else emptyTable">
-				<mib-table-row (dblclick)="agentRegisterViewsDrawer()">
+			<ng-container *ngIf="regData.length > 0; else emptyTable">
+				<mib-table-row
+					(dblclick)="agentRegisterViewsDrawer()"
+					*ngFor="let reg of regData; let last = last"
+					[underlined]="!last"
+				>
 					<mib-table-cell>
-						<ng-container table-cell-title>qwe1</ng-container>
+						<ng-container table-cell-title>{{ reg.ID }}</ng-container>
 					</mib-table-cell>
 					<ng-container *ngIf="isDesktop; else mobileCell">
 						<mib-table-cell>
-							<ng-container table-cell-title>qwe2</ng-container>
+							<ng-container table-cell-title>{{ reg.Contract }} </ng-container>
 						</mib-table-cell>
 					</ng-container>
 					<mib-table-cell>
-						<ng-container table-cell-title>qwe3</ng-container>
+						<ng-container table-cell-title>{{ reg.Number }}</ng-container>
 					</mib-table-cell>
 					<mib-table-cell>
-						<ng-container table-cell-title>qwe4</ng-container>
+						<ng-container table-cell-title>
+							{{ reg.Date | date : 'dd.MM.YYYY' }}</ng-container
+						>
 					</mib-table-cell>
 					<mib-table-cell>
-						<ng-container table-cell-title>qwe5</ng-container>
+						<ng-container table-cell-title>
+							<mib-badge
+								[type]="reg?.FinType ? 'filled-secondary' : 'filled-accent'"
+								[extended]="true"
+								size="m"
+								>{{ reg?.FinType ? 'С финанас.' : 'Без финанас.' }}</mib-badge
+							>
+						</ng-container>
 					</mib-table-cell>
 					<mib-table-cell>
-						<ng-container table-cell-title>qwe6</ng-container>
+						<ng-container table-cell-title>
+							<mib-badge
+								[type]="reg?.Status ? 'filled-primary' : 'filled-success'"
+								[extended]="true"
+								size="m"
+								>{{ reg?.Status ? 'Исполнена' : 'Действует' }}</mib-badge
+							>
+						</ng-container>
+					</mib-table-cell>
+					<mib-table-cell [special]="true">
+						<ng-container table-cell-title>
+							<ng-container *ngIf="reg.Send; else empty">
+								<mib-badge
+									[showText]="false"
+									[showIcon]="true"
+									[type]="'filled-primary'"
+									size="m"
+								>
+								</mib-badge>
+							</ng-container>
+							<ng-template #empty>
+								<mib-badge [type]="'filled-secondary'" size="m"> </mib-badge>
+							</ng-template>
+						</ng-container>
 					</mib-table-cell>
 					<mib-table-cell>
-						<ng-container table-cell-title>qew7</ng-container>
+						<ng-container table-cell-title>{{
+							reg.SendDate | date : 'dd.MM.YYYY'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell [special]="true">
+						<ng-container table-cell-title>
+							<ng-container *ngIf="reg.Finance; else empty">
+								<mib-badge
+									[showText]="false"
+									[showIcon]="true"
+									[type]="'filled-primary'"
+									size="m"
+								>
+								</mib-badge>
+							</ng-container>
+							<ng-template #empty>
+								<mib-badge [type]="'filled-secondary'" size="m"> </mib-badge>
+							</ng-template>
+						</ng-container>
 					</mib-table-cell>
 					<mib-table-cell>
-						<ng-container table-cell-title>qwe8</ng-container>
+						<ng-container table-cell-title>{{
+							reg.FinDate | date : 'dd.MM.YYYY'
+						}}</ng-container>
 					</mib-table-cell>
 					<mib-table-cell>
-						<ng-container table-cell-title>qew9</ng-container>
+						<ng-container table-cell-title>{{ reg.Buyer }}</ng-container>
 					</mib-table-cell>
 					<mib-table-cell>
-						<ng-container table-cell-title>qwe10</ng-container>
-					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title>qwe11</ng-container>
-					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title>qwe12</ng-container>
+						<ng-container table-cell-title>{{ reg.Amount | rub }}</ng-container>
 					</mib-table-cell>
 					<ng-template #mobileCell>
-						<mib-table-head-cell>{{
-							getVisibleCell('halo')
-						}}</mib-table-head-cell>
+						<mib-table-head-cell>{{ getVisibleCell(reg) }}</mib-table-head-cell>
 					</ng-template>
 					<ng-container table-row-button *ngIf="isDesktop; else mobile">
 						<mib-button
@@ -134,9 +182,7 @@
 					</ng-container>
 					<ng-template #mobile>
 						<mib-button
-							(click)="
-								openRegisterPageModal('halo modal'); $event.stopPropagation()
-							"
+							(click)="openRegisterPageModal(reg); $event.stopPropagation()"
 							size="s"
 							table-row-button
 							type="ghost-secondary"
@@ -156,9 +202,9 @@
 		</ng-template>
 		<mib-table-footer [lined]="!(loading$ | async)">
 			<mib-paginator
-				*ngIf="headers.length || !(loading$ | async)"
+				*ngIf="regData.length || !(loading$ | async)"
 				(pageChange)="onPageChange($event)"
-				[totalCount]="5"
+				[totalCount]="regData.length"
 				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 				[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 			></mib-paginator>
