@@ -7,6 +7,10 @@ import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
 import {AgentRegisterViewDrawerService} from '../modules/agent-register-view-drawer/agent-register-view-drawer.service'
 import {AgentRegisterDrawerService} from '../modules/agent-register-drawer/agent-register-drawer.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import {RubPipe} from 'src/app/shared/pipes/rub/rub.pipe'
+import {DatePipe} from '@angular/common'
+import {MatDialog} from '@angular/material/dialog'
+import {RegisterAgentPageModalComponent} from 'src/app/shared/modules/modals/register-agent-page-modal/register-agent-page-modal.component'
 
 @Component({
 	selector: 'mib-register-page',
@@ -127,21 +131,28 @@ export class RegisterPageComponent implements OnInit {
 		'Сумма'
 	]
 
-	public invoiceMap = {
-		0: 'Amount',
-		1: 'ID',
-		2: 'Comment',
-		3: {Payer: 'Title'},
-		4: {Beneficiary: 'Title'},
-		5: {Payer: 'Account'},
-		6: {Beneficiary: 'Account'}
+	public dataMap = {
+		0: 'Contract',
+		1: 'Number',
+		2: 'Date',
+		3: 'FinType',
+		4: 'Status',
+		5: 'Send',
+		6: 'SendDate',
+		7: 'Finance',
+		8: 'FinDate',
+		9: 'Buyer',
+		10: 'Amount'
 	}
 
 	constructor(
 		public toolsService: ToolsService,
 		private agentRegisterViewDrawerService: AgentRegisterViewDrawerService,
 		private agentRegisterDrawerService: AgentRegisterDrawerService,
-		public breakpointService: BreakpointObserverService
+		public breakpointService: BreakpointObserverService,
+		private rubPipe: RubPipe,
+		private datePipe: DatePipe,
+		private dialog: MatDialog
 	) {}
 
 	ngOnInit(): void {
@@ -186,28 +197,35 @@ export class RegisterPageComponent implements OnInit {
 	}
 
 	getVisibleCell(row) {
-		console.log('row :>> ', row)
-		// const result = {}
-		// for (const [newKey, path] of Object.entries(this.invoiceMap)) {
-		// 	let value
-		// 	if (typeof path === 'string') {
-		// 		// Если путь - строка, извлекаем значение напрямую
-		// 		value = row[path]
-		// 	} else if (typeof path === 'object') {
-		// 		// Если путь - объект, извлекаем вложенное значение
-		// 		const [parentKey, childKey] = Object.entries(path)[0]
-		// 		value = row[parentKey] ? row[parentKey][childKey] : undefined
-		// 	}
-		// 	// Проверка и добавление префиксов
-		// 	if (path === 'Amount' && value !== undefined) {
-		// 		value = this.rubPipe.transform(value)
-		// 	} else if (path === 'Date' && value !== undefined) {
-		// 		value = this.datePipe.transform(value, 'dd.MM.yyyy')
-		// 	}
-		// 	result[newKey] = value
-		// }
-		// // console.log('result :>> ', result)
-		// return result[this.currentIndex]
+		const result = {}
+		for (const [newKey, path] of Object.entries(this.dataMap)) {
+			let value
+			if (typeof path === 'string') {
+				// Если путь - строка, извлекаем значение напрямую
+				value = row[path]
+			}
+			// Проверка и добавление префиксов
+			if (path === 'Amount' && value !== undefined) {
+				value = this.rubPipe.transform(value)
+			} else if (
+				path === 'Date' ||
+				path === 'FinDate' ||
+				(path === 'SendDate' && value !== undefined)
+			) {
+				value = this.datePipe.transform(value, 'dd.MM.yyyy')
+			} else if (path === 'FinType' && value !== undefined) {
+				value = value ? 'С финанс.' : 'Без финанс.'
+			} else if (path === 'Status' && value !== undefined) {
+				value = value ? 'Исполнена' : 'Действует'
+			} else if (path === 'Send' && value !== undefined) {
+				value = value ? 'Да' : 'Нет'
+			} else if (path === 'Finance' && value !== undefined) {
+				value = value ? 'Да' : 'Нет'
+			}
+			result[newKey] = value
+		}
+		// console.log('result :>> ', result)
+		return result[this.currentIndex]
 	}
 
 	openRegisterPageModal(reg) {
@@ -218,7 +236,7 @@ export class RegisterPageComponent implements OnInit {
 			data: {reg}
 		}
 		console.log('openRegisterPageModal')
-		// this.dialog.open(InvoicePageModalComponent, dialogConfig)
+		this.dialog.open(RegisterAgentPageModalComponent, dialogConfig)
 	}
 
 	ngOnDestroy(): void {
