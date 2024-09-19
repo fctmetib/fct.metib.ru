@@ -191,6 +191,10 @@
 				display: flex;
 				border-radius: 8px;
 				padding: 2px;
+
+				& .extra {
+					width: 235px;
+				}
 			}
 
 			& .hide {
@@ -437,7 +441,7 @@
 				content: '';
 				width: 202px;
 				height: 245px;
-				top: 75%;
+				top: 77%;
 				left: 57%;
 				background: url('/assets/images/staff/requests/elem.png') no-repeat;
 			}
