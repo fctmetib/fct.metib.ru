@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core'
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core'
 import {
 	BehaviorSubject,
 	finalize,
@@ -9,99 +9,115 @@ import {
 	zip
 } from 'rxjs'
 import {AdvancedNewsInterface} from '../../type/news.interface'
-import {NewsService} from '../../service/news.service'
-import {ToolsService} from 'src/app/shared/services/tools.service'
 import {ActivatedRoute, Router} from '@angular/router'
 import {Properties} from 'csstype'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser'
+import {
+	DomSanitizer,
+	makeStateKey,
+	SafeHtml,
+	TransferState
+} from '@angular/platform-browser'
+import {isPlatformBrowser, isPlatformServer} from '@angular/common'
+const NEWS_KEY = makeStateKey<AdvancedNewsInterface[]>('news');
 
 @Component({
-	selector: 'mib-single-news',
-	templateUrl: './single-news.component.html',
-	styleUrls: ['./single-news.component.scss']
+  selector: 'mib-single-news',
+  templateUrl: './single-news.component.html',
+  styleUrls: ['./single-news.component.scss']
 })
 export class SingleNewsComponent implements OnInit, OnDestroy {
-	public imageSrc: string = './assets/images/news/news-2.jpg'
+  public defaultSkeleton: Properties = {
+    borderRadius: '8px',
+    width: '560px',
+    height: '315px',
+    margin: '0 auto'
+  };
 
-	public defaultSkeleton: Properties = {
-		borderRadius: '8px',
-		width: '560px',
-		height: '315px',
-		margin: '0 auto'
-	}
+  public mobileSkeleton: Properties = {
+    borderRadius: '8px',
+    width: 'calc(100% - 32px)',
+    height: '262px',
+    margin: '0 16px'
+  };
 
-	public mobileSkeleton: Properties = {
-		borderRadius: '8px',
-		width: 'calc(100% - 32px)',
-		height: '262px',
-		margin: '0 16px'
-	}
+  public loading$ = new BehaviorSubject<boolean>(true);
+  public newsNumberCount: number = 5;
+  public getSingleNews: AdvancedNewsInterface[];
 
-	public loading$ = new BehaviorSubject<boolean>(false)
-	public newsNumberCount: number = 5
-	public getSingleNews: AdvancedNewsInterface[]
+  public isDesktop: boolean = false;
+  public isBrowser: boolean;
 
-	public isDesktop: boolean = false
+  private subscriptions = new Subscription();
 
-	private subscriptions = new Subscription()
+  newsContent: SafeHtml;
 
-	newsContent: SafeHtml
+  constructor(
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private transferState: TransferState,
+    public breakpointService: BreakpointObserverService
+  ) {}
 
-	constructor(
-		private newsService: NewsService,
-		public toolsService: ToolsService,
-		private route: ActivatedRoute,
-		public breakpointService: BreakpointObserverService,
-		private sanitizer: DomSanitizer
-	) {}
+  ngOnInit(): void {
+    this.isBrowser = isPlatformBrowser(this.platformId);
 
-	ngOnInit(): void {
-		this.getCurrentNews()
-		this.subscriptions = this.breakpointService
-			.isDesktop()
-			.subscribe(b => (this.isDesktop = b))
-	}
+    if (this.isBrowser) {
+      this.subscriptions.add(
+        this.breakpointService.isDesktop().subscribe(b => (this.isDesktop = b))
+      );
+    }
 
-	public getCurrentNews() {
-		this.loading$.next(true)
+    this.getCurrentNews();
+  }
 
-		const id = this.route.snapshot.paramMap.get('id')
+  public getCurrentNews() {
+	console.log('getCurrentNews called');
+	const savedNews = this.transferState.get<AdvancedNewsInterface[]>(NEWS_KEY, null);
+	console.log('savedNews:', savedNews);
 
-		if (!id) {
-			this.loading$.next(false)
-			return
-		}
+    if (savedNews) {
+      this.getSingleNews = savedNews;
+      this.transferState.remove(NEWS_KEY);
+      this.processNewsContent();
+      this.loading$.next(false);
+    } else {
+		const routeData = this.route.snapshot.data['newsData'] as AdvancedNewsInterface[];
+    	console.log('routeData:', routeData);
 
-		this.newsService
-			.getNewsById(id)
-			.pipe(
-				switchMap(news =>
-					this.newsService
-						.getNewsImage(news.ID)
-						.pipe(map(image => ({...news, Image: image})))
-				),
-				tap(news => {
-					this.getSingleNews = [news]
-					this.newsContent = this.sanitizer.bypassSecurityTrustHtml(
-						this.getSingleNews[0].Text
-					)
-				}),
-				finalize(() => this.loading$.next(false))
-			)
-			.subscribe({
-				error: err => {
-					console.error('Error fetching news or image', err)
-					this.loading$.next(false)
-				}
-			})
-	}
+      if (routeData && routeData.length > 0) {
+        this.getSingleNews = routeData;
 
-	get hasNews(): boolean {
-		return this.getSingleNews && Object.keys(this.getSingleNews).length > 0
-	}
+        // Сохраняем данные в TransferState на сервере
+        if (isPlatformServer(this.platformId)) {
+          this.transferState.set(NEWS_KEY, this.getSingleNews);
+        }
 
-	ngOnDestroy(): void {
-		this.subscriptions.unsubscribe()
-	}
+        this.processNewsContent();
+        this.loading$.next(false);
+      } else {
+		console.warn('No data received from Resolver');
+        // Обработка ситуации, когда данных нет
+        this.getSingleNews = [];
+        this.loading$.next(false);
+      }
+    }
+  }
+
+  private processNewsContent() {
+    if (this.getSingleNews[0] && this.getSingleNews[0].Text) {
+      this.newsContent = this.isBrowser
+        ? this.sanitizer.bypassSecurityTrustHtml(this.getSingleNews[0].Text)
+        : this.getSingleNews[0].Text;
+    }
+  }
+
+  get hasNews(): boolean {
+    return this.getSingleNews && this.getSingleNews.length > 0;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 }

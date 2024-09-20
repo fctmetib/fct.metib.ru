@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core'
+import { isPlatformBrowser } from '@angular/common'
+import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID} from '@angular/core'
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser'
 
 @Component({
@@ -23,12 +24,20 @@ export class NewsPanelComponent {
 	@Output() delete = new EventEmitter()
 
 	@Input() set newsText(value: string) {
-		this.newsContent = this.sanitizer.bypassSecurityTrustHtml(value)
-	}
+		if (isPlatformBrowser(this.platformId)) {
+		  this.newsContent = this.sanitizer.bypassSecurityTrustHtml(value);
+		} else {
+		  // Обработка для сервера, если необходимо
+		  this.newsContent = value;
+		}
+	  }
 
 	newsContent: SafeHtml
 
-	constructor(private sanitizer: DomSanitizer) {}
+	constructor(
+		@Inject(PLATFORM_ID) private platformId: Object,
+		private sanitizer: DomSanitizer
+	  ) {}
 
 	get classes() {
 		return {

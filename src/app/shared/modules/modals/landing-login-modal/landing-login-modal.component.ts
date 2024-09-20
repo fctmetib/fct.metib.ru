@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core'
+import {isPlatformBrowser} from '@angular/common'
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core'
 import {FormControl, FormGroup, Validators} from '@angular/forms'
 import {MatDialogRef} from '@angular/material/dialog'
 import {ActivatedRoute, Params} from '@angular/router'
@@ -34,7 +35,8 @@ export class LandingLoginModalComponent implements OnInit {
 		public dialogRef: MatDialogRef<LandingLoginModalComponent>,
 		private readonly commonService: CommonService,
 		private readonly route: ActivatedRoute,
-		private readonly authService: AuthService
+		private readonly authService: AuthService,
+		@Inject(PLATFORM_ID) private platformId: Object
 	) {}
 
 	public ngOnInit(): void {
@@ -99,14 +101,18 @@ export class LandingLoginModalComponent implements OnInit {
 			)
 			.subscribe()
 	}
-		
+
 	openExternalSite() {
-		window.open('https://fct.metallinvestbank.ru/reset-password', '_blank');
-		this.dialogRef.close();
+		if (isPlatformBrowser(this.platformId)) {
+			window.open('https://fct.metallinvestbank.ru/reset-password', '_blank')
+			this.dialogRef.close()
+		}
 	}
 
 	openExternalRegister() {
-		window.open('https://fct.metallinvestbank.ru/register', '_blank');
-		this.dialogRef.close();
+		if (isPlatformBrowser(this.platformId)) {
+			window.open('https://fct.metallinvestbank.ru/register', '_blank')
+			this.dialogRef.close()
+		}
 	}
 }

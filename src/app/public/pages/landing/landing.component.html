@@ -340,7 +340,7 @@
 							styleType="floating"
 							[maxLength]="100"
 							formControlName="Comment"
-							autosize
+							[attr.autosize]="isBrowser ? '' : null"
 							mibTextarea
 						></textarea>
 					</mib-textarea>

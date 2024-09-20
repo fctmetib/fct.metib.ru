@@ -23,7 +23,6 @@ export class ToasterComponent {
 
 	remove(index: number) {
 		this.toasts = this.toasts.filter((_, i) => i !== index)
-		console.log('index :>> ', index)
 	}
 }
 1

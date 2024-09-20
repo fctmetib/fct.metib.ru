@@ -49,16 +49,8 @@ export class MibModalComponent implements OnInit, OnDestroy {
     }
 
     if (isPlatformBrowser(this.platformId)) {
-      // перемещает элемент в конец страницы (перед </body>), для отображения поверх остального контента
       document.body.appendChild(this.element);
     }
-
-    // закрывает окно при нажатии на фон
-    // this.element.addEventListener('click', (el) => {
-    //   if (el.target.className === 'mib-modal') {
-    //     this.close();
-    //   }
-    // });
 
     // добавляет текущее окно в сервис
     this.mibModalService.add(this);

@@ -1,20 +1,23 @@
-import {Injectable} from '@angular/core'
-import {Observable, map, switchMap} from 'rxjs'
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core'
+import {Observable, catchError, map, of, switchMap} from 'rxjs'
 import {HttpClient} from '@angular/common/http'
 import {NewsInterface} from '../type/news.interface'
 import {environment} from 'src/environments/environment'
-import {blob} from 'stream/consumers'
+import {isPlatformServer} from '@angular/common'
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class NewsService {
-	constructor(private http: HttpClient) {}
+	constructor(
+		private http: HttpClient,
+		@Inject(PLATFORM_ID) private platformId: Object
+	) {}
 
 	public getAllNews() {
 		const url = `${environment.apiUrl}/v1/news/`
 		return this.http.get<NewsInterface[]>(url)
 	}
-
-	// https://api-factoring-test02.metib.ru/api/v{version}/news/top/3
 
 	public getNews(newsCount: number): Observable<NewsInterface[]> {
 		const url = `${environment.apiUrl}/v1/news/top/${newsCount}`
@@ -25,38 +28,48 @@ export class NewsService {
 
 	public getNewsImage(newsId: number): Observable<string> {
 		const url = `${environment.apiUrl}/v1/news/${newsId}/image`
-		return this.http.get(url, {responseType: 'blob'}).pipe(
-			switchMap(blob => {
-				return new Observable<string>(observer => {
-					const reader = new FileReader()
-					reader.readAsDataURL(blob)
-					reader.onloadend = function () {
-						observer.next(reader.result as string)
-						observer.complete()
-					}
-					reader.onerror = function (error) {
-						observer.error(error)
-					}
+		if (isPlatformServer(this.platformId)) {
+			return this.http.get(url, {responseType: 'arraybuffer'}).pipe(
+				map(arrayBuffer => {
+					const base64 = Buffer.from(arrayBuffer).toString('base64')
+					const mimeType = 'image/jpeg'
+					return `data:${mimeType};base64,${base64}`
+				}),
+				catchError(error => {
+					return of('')
 				})
-			})
-		)
+			)
+		} else {
+			return this.http.get(url, {responseType: 'blob'}).pipe(
+				switchMap(blob => {
+					return new Observable<string>(observer => {
+						const reader = new FileReader()
+						reader.readAsDataURL(blob)
+						reader.onloadend = function () {
+							observer.next(reader.result as string)
+							observer.complete()
+						}
+						reader.onerror = function (error) {
+							observer.error(error)
+						}
+					})
+				}),
+				catchError(error => {
+					return of('')
+				})
+			)
+		}
 	}
-
-	// https://api-factoring-test02.metib.ru/api/v{version}/news/33
 
 	public getNewsById(newsId: string): Observable<NewsInterface> {
 		const url = `${environment.apiUrl}/v1/news/${newsId}`
 		return this.http.get<NewsInterface>(url)
 	}
 
-	// https://api-factoring-test02.metib.ru/api/v{version}/news
-
 	public getNewsList(): Observable<NewsInterface[]> {
 		const url = `${environment.apiUrl}/v1/news`
 		return this.http.get<NewsInterface[]>(url)
 	}
-
-	// https://api-factoring-test02.metib.ru/api/v{version}/news
 
 	addNewsItem(data: NewsInterface): Observable<NewsInterface> {
 		let url = `${environment.apiUrl}/v1/news`
@@ -71,8 +84,6 @@ export class NewsService {
 		return this.http.post<string>(url, formdata)
 	}
 
-	// https://api-factoring-test02.metib.ru/api/v{version}/news/22
-
 	updateNewsItem(
 		data: NewsInterface,
 		newsId: string
@@ -81,25 +92,8 @@ export class NewsService {
 		return this.http.put<NewsInterface>(url, data)
 	}
 
-	// https://api-factoring-test02.metib.ru/api/v{version}/news/22
-
 	removeNewsItem(newsId: number): Observable<any> {
 		let url = `${environment.apiUrl}/v1/news/${newsId}`
 		return this.http.delete<any>(url)
 	}
-
-	// public getNews(newsCount: number): Observable<NewsInterface[]> {
-	//   const url = `${environment.apiUrl}/news/top/${newsCount}`;
-	//   return this.http.get<NewsInterface[]>(url);
-	// }
-
-	// public getNewsById(id: string): Observable<NewsInterface> {
-	//   const url = `${environment.apiUrl}/news/${id}`;
-	//   return this.http.get<NewsInterface>(url);
-	// }
-
-	// public getNewsList(): Observable<NewsInterface[]> {
-	//   const url = `${environment.apiUrl}/news`;
-	//   return this.http.get<NewsInterface[]>(url);
-	// }
 }

@@ -1,6 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core'
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core'
 import {Subscription} from 'rxjs'
 import {BreakpointObserverService} from '../../services/common/breakpoint-observer.service'
+import { isPlatformBrowser } from '@angular/common'
 
 @Component({
 	selector: 'mib-new-footer',
@@ -14,7 +15,10 @@ export class NewFooterComponent implements OnInit, OnDestroy {
 
 	public getNewYear: number = 2000
 
-	constructor(public breakpointService: BreakpointObserverService) {}
+	constructor(
+		public breakpointService: BreakpointObserverService,
+		@Inject(PLATFORM_ID) private platformId: Object
+	) {}
 
 	ngOnInit(): void {
 		this.subscriptions = this.breakpointService
@@ -39,5 +43,11 @@ export class NewFooterComponent implements OnInit, OnDestroy {
 		link.href = 'assets/_files/Политика_в_отношении_обработки_персональных_данных.pdf'
 
 		link.click()
+	}
+
+	openExternalSite() {
+		if (isPlatformBrowser(this.platformId)) {
+			window.open('https://fct.metallinvestbank.ru/login', '_blank')
+		}
 	}
 }

@@ -17,7 +17,6 @@ import {NotFoundComponent} from './client/shared/not-found/not-found.component'
 import {MibUiModule} from './shared/modules/mib-ui/mib-ui.module'
 import {appInitializer} from './shared/factories/init.factory'
 import {IconsService} from './shared/services/icons.servcie'
-import {MibCoreModule} from './core/mib-core.module'
 import {MatDialogModule} from '@angular/material/dialog'
 import {AuthService} from './auth/services/auth.service'
 import {RequestsService} from './client/modules/requests/services/requests.service'
@@ -30,7 +29,6 @@ registerLocaleData(localeRu, 'ru')
 	declarations: [AppComponent, NotFoundComponent],
 	imports: [
 		BrowserModule.withServerTransition({appId: 'serverApp'}),
-		MibCoreModule,
 		HttpClientModule,
 		BrowserAnimationsModule,
 		ToastModule,

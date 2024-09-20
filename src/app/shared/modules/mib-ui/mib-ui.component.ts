@@ -110,14 +110,11 @@ export class MibUiComponent implements OnInit {
 	}
 
 	check() {
-		console.log('halo>>> check')
 	}
 	check2() {
-		console.log('halo check2>>>')
 	}
 
 	showSuccessToaster() {
-		console.log('halo toaster!!')
 		this.toaster.show(
 			'success',
 			'Halo success!',
@@ -129,7 +126,6 @@ export class MibUiComponent implements OnInit {
 	}
 
 	showDefaultToaster() {
-		console.log('halo toaster!!')
 		this.toaster.show(
 			'default',
 			'defaulty',
@@ -141,7 +137,6 @@ export class MibUiComponent implements OnInit {
 	}
 
 	showFailureToaster() {
-		console.log('halo toaster!!')
 		this.toaster.show(
 			'failure',
 			'Halo failure!',
@@ -153,14 +148,6 @@ export class MibUiComponent implements OnInit {
 	}
 
 	lookIt() {
-		// console.log(
-		// 	'ERR>>>',
-		// 	this.form.errors,
-		// 	'VALID>>>',
-		// 	this.form.valid,
-		// 	'VALUE>>>',
-		// 	this.form.value
-		// )
 	}
 
 	openNewShipmentModal() {
@@ -180,15 +167,9 @@ export class MibUiComponent implements OnInit {
 	}
 
 	onSelectPerson(event: any) {
-		console.log('Selected data:', event)
 	}
 
 	onSubmit() {
-		if (this.form.valid) {
-			console.log('this.form values :>> ', this.form.value)
-		} else {
-			console.log('Form is invalid')
-		}
 	}
 
 	openModal(): void {
