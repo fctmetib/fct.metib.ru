@@ -6,6 +6,10 @@ import {ToolsService} from 'src/app/shared/services/tools.service'
 import {TableSelectionEvent} from 'src/app/shared/ui-kit/table/interfaces/table.interface'
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
 import {AgentContractsDrawerService} from '../modules/agent-contracts-drawer/agent-contracts-drawer.service'
+import {RubPipe} from 'src/app/shared/pipes/rub/rub.pipe'
+import {DatePipe} from '@angular/common'
+import {MatDialog} from '@angular/material/dialog'
+import {ContractsAgentPageModalComponent} from 'src/app/shared/modules/modals/contracts-agent-page-modal/contracts-agent-page-modal.component'
 
 @Component({
 	selector: 'mib-contracts-page',
@@ -40,90 +44,119 @@ export class ContractsPageComponent {
 
 	private subscriptions = new Subscription()
 
-	currentContractsVisible = [
+	public cData = [
 		{
-			ID: 38230,
-			Number: '01-3250/08-2022 (Compromise 165к.д.)',
-			DateFrom: '2022-07-30T00:00:00',
+			ID: 382546,
+			Number: 'ПД18-05-45',
+			DateFrom: '2022-02-30T00:00:00',
 			DateTo: '2025-07-29T23:59:00',
 			Tariff: {
-				Identifier: 'T_CompromisWithCA',
 				Title: 'Compromise'
 			},
-			Customer: {
-				ID: 1050,
-				OrganizationID: 44110,
-				INN: '7704742940',
-				Title: 'ДРИВИКС ООО'
-			},
-			Debtor: {
-				ID: 105,
-				OrganizationID: 105,
-				INN: '7707548740',
-				Title: 'МВМ'
-			},
-			Delay: {
-				Count: 165,
-				Day: 0,
-				Work: false,
-				Min: 20,
-				Max: 45
+			Creditor: {
+				Title: 'ООО “Бизнес”'
 			},
 			Statistics: {
-				Count: 1,
-				DutyDebtor: 0,
-				DutyCustomer: 0,
-				DelayDuty: 0,
-				FreeLimit: 0
-			},
-			AdvancedContract: false
+				FreeLimit: 100654600
+			}
 		},
 		{
-			ID: 38231,
-			Number: '01-3250/08-2022  Premium (150)',
+			ID: 45630,
+			Number: 'ПД18-03-13',
+			DateFrom: '2022-04-30T00:00:00',
+			DateTo: '2025-06-29T23:59:00',
+			Tariff: {
+				Title: 'Premium'
+			},
+			Creditor: {
+				Title: 'ООО “МДМ”'
+			},
+			Statistics: {
+				FreeLimit: 1000000
+			}
+		},
+		{
+			ID: 38230,
+			Number: 'ПД38-234.3',
 			DateFrom: '2022-07-30T00:00:00',
 			DateTo: '2025-07-29T23:59:00',
 			Tariff: {
-				Identifier: 'T_Premium',
 				Title: 'Premium'
 			},
-			Customer: {
-				ID: 1050,
-				OrganizationID: 44110,
-				INN: '7704742940',
-				Title: 'ДРИВИКС ООО'
-			},
-			Debtor: {
-				ID: 105,
-				OrganizationID: 105,
-				INN: '7707548740',
-				Title: 'МВМ'
-			},
-			Delay: {
-				Count: 150,
-				Day: 0,
-				Work: false,
-				Min: 15,
-				Max: 15
+			Creditor: {
+				Title: 'ООО “Бизнес”'
 			},
 			Statistics: {
-				Count: 1,
-				DutyDebtor: 0,
-				DutyCustomer: 0,
-				DelayDuty: 0,
-				FreeLimit: 0
+				FreeLimit: 56000000
+			}
+		},
+		{
+			ID: 38230,
+			Number: 'ПД19-34-23',
+			DateFrom: '2022-06-30T00:00:00',
+			DateTo: '2025-04-29T23:59:00',
+			Tariff: {
+				Title: 'Premium'
 			},
-			AdvancedContract: false
+			Creditor: {
+				Title: 'ООО “Траст”'
+			},
+			Statistics: {
+				FreeLimit: 70000
+			}
+		},
+		{
+			ID: 38230,
+			Number: 'ПДл234-23',
+			DateFrom: '2022-07-30T00:00:00',
+			DateTo: '2025-02-29T23:59:00',
+			Tariff: {
+				Title: 'Compromise'
+			},
+			Creditor: {
+				Title: 'ООО “Бизнес”'
+			},
+			Statistics: {
+				FreeLimit: 105460000
+			}
+		},
+		{
+			ID: 38230,
+			Number: 'ПД13-234-у3',
+			DateFrom: '2022-03-30T00:00:00',
+			DateTo: '2025-04-29T23:59:00',
+			Tariff: {
+				Title: 'Premium'
+			},
+			Creditor: {
+				Title: 'ООО “Бизнес”'
+			},
+			Statistics: {
+				FreeLimit: 3400000
+			}
 		}
 	]
 
-	completedContractsVisible = this.currentContractsVisible
+	headers = ['Кредитор', 'Вступил в силу', 'Действует до', 'Лимит']
+
+	public dataMap = {
+		0: {Creditor: 'Title'},
+		1: 'DateFrom',
+		2: 'DateTo',
+		3: {Statistics: 'FreeLimit'}
+	}
+
+	completedContractsVisible = this.cData
 	advancedContractsVisible = this.completedContractsVisible
+	public currentIndex: number = 0
 
 	constructor(
 		public toolsService: ToolsService,
 		public agentContractsDrawerService: AgentContractsDrawerService,
-		public breakpointService: BreakpointObserverService
+		public breakpointService: BreakpointObserverService,
+		private rubPipe: RubPipe,
+		private datePipe: DatePipe,
+		private dialog: MatDialog
 	) {}
 
 	ngOnInit(): void {
@@ -161,6 +194,59 @@ export class ContractsPageComponent {
 
 	onAdvancedPageChange($event) {
 		console.log('$event :>> ', $event)
+	}
+
+	prev() {
+		if (this.currentIndex > 0) {
+			this.currentIndex--
+		}
+	}
+
+	next() {
+		if (this.currentIndex < this.headers.length - 1) {
+			this.currentIndex++
+		}
+	}
+
+	getVisibleHeader() {
+		return this.headers[this.currentIndex]
+	}
+
+	getVisibleCell(row) {
+		const result = {}
+		for (const [newKey, path] of Object.entries(this.dataMap)) {
+			let value
+
+			if (typeof path === 'string') {
+				// Если путь - строка, извлекаем значение напрямую
+				value = row[path]
+			} else if (typeof path === 'object') {
+				// Если путь - объект, извлекаем вложенное значение
+				const [parentKey, childKey] = Object.entries(path)[0]
+				value = row[parentKey] ? row[parentKey][childKey] : undefined
+				if (childKey === 'FreeLimit') {
+					value = this.rubPipe.transform(row[parentKey][childKey])
+				}
+			}
+			// Проверка и добавление префиксов
+			if (path === 'DateFrom' || (path === 'DateTo' && value !== undefined)) {
+				value = this.datePipe.transform(value, 'dd.MM.yyyy')
+			}
+			result[newKey] = value
+		}
+		// console.log('result :>> ', result)
+		return result[this.currentIndex]
+	}
+
+	openContractsAgentModal(c) {
+		const dialogConfig = {
+			width: '100%',
+			maxWidth: '600px',
+			panelClass: 'custom-contracts-agent',
+			data: {c}
+		}
+		console.log('openRegisterPageModal')
+		this.dialog.open(ContractsAgentPageModalComponent, dialogConfig)
 	}
 
 	ngOnDestroy(): void {
