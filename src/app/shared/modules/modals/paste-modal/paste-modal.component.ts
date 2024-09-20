@@ -16,7 +16,6 @@ export class PasteModalComponent {
     @Inject(MAT_DIALOG_DATA) private data: PasteModalData<any>
   ) { }
 
-  // Это обработчик события вставки
   @HostListener('window:paste', ['$event'])
   onPaste(event: ClipboardEvent) {
     event.preventDefault();

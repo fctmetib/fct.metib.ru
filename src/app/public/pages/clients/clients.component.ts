@@ -66,7 +66,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
 			(name === 'instruction' || name === 'installFactorClient' || name === 'reglament')
 		) {
 			this.landingLoginModalService.open().afterClosed().subscribe(result => {
-				console.log(result)
 				if (result) {
 					this.downloadFile(name);
 				}

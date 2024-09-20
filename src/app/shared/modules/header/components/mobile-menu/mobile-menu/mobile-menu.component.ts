@@ -1,11 +1,14 @@
+import {isPlatformBrowser} from '@angular/common'
 import {
 	AfterContentInit,
 	ChangeDetectorRef,
 	Component,
 	ElementRef,
 	HostListener,
+	Inject,
 	Input,
 	OnInit,
+	PLATFORM_ID,
 	ViewChild
 } from '@angular/core'
 import {AuthService} from 'src/app/auth/services/auth.service'
@@ -16,7 +19,7 @@ import {AuthService} from 'src/app/auth/services/auth.service'
 	styleUrls: ['./mobile-menu.component.scss']
 })
 export class MobileMenuComponent implements OnInit, AfterContentInit {
-	@ViewChild('mobileMenu') mobileMenu: ElementRef
+	@ViewChild('mobileMenu') mobileMenu!: ElementRef
 
 	menuUser = [
 		{
@@ -41,6 +44,7 @@ export class MobileMenuComponent implements OnInit, AfterContentInit {
 			]
 		}
 	]
+
 	menuAdmin = [
 		{
 			links: [
@@ -51,11 +55,13 @@ export class MobileMenuComponent implements OnInit, AfterContentInit {
 			]
 		}
 	]
+
 	menuVerify = [
 		{
 			links: [{name: 'Запросы', link: '/client/not-verify'}]
 		}
 	]
+
 	menuMain = [
 		{
 			links: [
@@ -78,40 +84,49 @@ export class MobileMenuComponent implements OnInit, AfterContentInit {
 
 	constructor(
 		public authService: AuthService,
-		private cdr: ChangeDetectorRef
+		private cdr: ChangeDetectorRef,
+		@Inject(PLATFORM_ID) private platformId: Object
 	) {}
 
 	ngAfterContentInit(): void {
-		this.checkIfScrollable()
+		if (isPlatformBrowser(this.platformId)) {
+			this.checkIfScrollable()
+		}
 	}
 
 	@HostListener('window:resize')
 	onWindowResize() {
-		if (this.isOpen) {
+		if (this.isOpen && isPlatformBrowser(this.platformId)) {
 			this.checkIfScrollable()
 		}
 	}
 
 	ngOnInit(): void {
-		this.isVerify = this.authService.isUserVerified()
-		this.isLogged = this.authService.isUserLoggedIn
+		if (isPlatformBrowser(this.platformId)) {
+			this.isVerify = this.authService.isUserVerified()
+			this.isLogged = this.authService.isUserLoggedIn
+		}
 	}
 
 	public onBurger() {
 		this.isOpen = !this.isOpen
-		this.cdr.detectChanges()
+		if (isPlatformBrowser(this.platformId)) {
+			this.cdr.detectChanges()
 
-		setTimeout(() => {
-			this.checkIfScrollable()
-		}, 0)
+			setTimeout(() => {
+				this.checkIfScrollable()
+			}, 0)
+		}
 	}
 
 	logout() {
-		this.authService.logout()
+		if (isPlatformBrowser(this.platformId)) {
+			this.authService.logout()
+		}
 	}
 
 	checkIfScrollable() {
-		if (this.mobileMenu) {
+		if (isPlatformBrowser(this.platformId) && this.mobileMenu) {
 			const menuHeight = this.mobileMenu.nativeElement.scrollHeight
 			const viewHeight = window.innerHeight
 			this.isScrollable = menuHeight > viewHeight

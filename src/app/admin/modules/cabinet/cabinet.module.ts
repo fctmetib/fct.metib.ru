@@ -1,5 +1,3 @@
-// import {NewsService} from '../../shared/services/news.service'
-import {NewsService} from 'src/app/public/service/news.service'
 import {CommonModule, DatePipe} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
@@ -94,6 +92,6 @@ const routes = [
 		CardNewsComponent,
 		CreateNewsDialogComponent
 	],
-	providers: [DatePipe, DialogService, NewsService]
+	providers: [DatePipe, DialogService]
 })
 export class CabinetModule {}

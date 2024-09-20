@@ -196,7 +196,8 @@
 					"options": {
 						"outputPath": "dist/metallinvestbank-web/server",
 						"main": "server.ts",
-						"tsConfig": "tsconfig.server.json"
+						"tsConfig": "tsconfig.server.json",
+						"sourceMap": true
 					},
 					"configurations": {
 						"production": {

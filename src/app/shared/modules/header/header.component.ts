@@ -2,9 +2,11 @@ import {
 	Component,
 	ElementRef,
 	EventEmitter,
+	Inject,
 	Input,
 	OnInit,
 	Output,
+	PLATFORM_ID,
 	ViewChild
 } from '@angular/core'
 import {AuthService} from 'src/app/auth/services/auth.service'
@@ -27,6 +29,7 @@ import {ClientService} from '../../services/common/client.service'
 import {Properties} from 'csstype'
 import {DropdownService} from '../../ui-kit/dropdown/services/dropdown.service'
 import {BreakpointObserverService} from '../../services/common/breakpoint-observer.service'
+import {isPlatformBrowser} from '@angular/common'
 
 @Component({
 	selector: 'mib-header',
@@ -69,7 +72,8 @@ export class HeaderComponent implements OnInit {
 		private toolsService: ToolsService,
 		private clientService: ClientService,
 		public dropdownService: DropdownService,
-		public breakpointService: BreakpointObserverService
+		public breakpointService: BreakpointObserverService,
+		@Inject(PLATFORM_ID) private platformId: Object
 	) {}
 
 	get classes() {
@@ -166,12 +170,16 @@ export class HeaderComponent implements OnInit {
 	logout() {
 		this.authService.logout()
 	}
-	
+
 	openExternalSite() {
-		window.open('https://fct.metallinvestbank.ru/login', '_blank');
+		if (isPlatformBrowser(this.platformId)) {
+			window.open('https://fct.metallinvestbank.ru/login', '_blank')
+		}
 	}
 
 	openExternalSiteByURL(url: string) {
-		window.open(url, '_blank');
+		if (isPlatformBrowser(this.platformId)) {
+			window.open(url, '_blank')
+		}
 	}
 }

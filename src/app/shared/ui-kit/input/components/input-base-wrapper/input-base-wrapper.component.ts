@@ -1,17 +1,13 @@
 import {
 	AfterViewInit,
 	Component,
-	ContentChildren,
 	ElementRef,
 	Inject,
 	Optional,
 	PLATFORM_ID,
-	QueryList,
 	Renderer2,
 	ViewChild
 } from '@angular/core'
-import {LeftIconDirective} from '../../../../directives/left-icon/left-icon.directive'
-import {RightIconDirective} from '../../../../directives/right-icon/right-icon.directive'
 import {startWith, takeUntil} from 'rxjs/operators'
 import {merge, tap} from 'rxjs'
 import {setPaddings} from '../../services/set-paddings.service'

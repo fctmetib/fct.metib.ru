@@ -2,8 +2,10 @@ import {
 	AfterViewInit,
 	Component,
 	ElementRef,
+	Inject,
 	OnDestroy,
 	OnInit,
+	PLATFORM_ID,
 	ViewChild
 } from '@angular/core'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
@@ -31,6 +33,8 @@ import {RequestLandingInterface} from '../../type/request-landing.interface'
 import {RequestLandingService} from '../../service/request-landing.service'
 import {GetAgentRequestService} from '../../service/get-agent-request.service'
 import {LandingAgreementModalService} from 'src/app/shared/modules/modals/landing-agreement-modal/landing-agreement-modal.service'
+import {isPlatformBrowser} from '@angular/common'
+import {ActivatedRoute} from '@angular/router'
 
 @Component({
 	selector: 'mib-landing',
@@ -180,6 +184,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	public newsNumberCount: number = 4
 	public getAdvancedNews: AdvancedNewsInterface[]
 	public imgNumber: number = 0
+	public isBrowser: boolean
 
 	public currentProductsTab?: ProductTabsEnum
 
@@ -204,6 +209,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	@ViewChild('tagsContainer', {static: true}) tagsContainer: ElementRef
 
 	constructor(
+		@Inject(PLATFORM_ID) private platformId: Object,
 		private newsService: NewsService,
 		public breakpointService: BreakpointObserverService,
 		public landingRequestModalService: LandingRequestModalService,
@@ -211,32 +217,45 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		private fb: FormBuilder,
 		private requestLandingService: RequestLandingService,
 		private toaster: ToasterService,
-		private getAgentRequestService: GetAgentRequestService
+		private getAgentRequestService: GetAgentRequestService,
+		private route: ActivatedRoute
 	) {}
 
 	ngOnInit(): void {
-		this.getCurrentNews()
-		this.subscriptions = this.breakpointService
-			.isDesktop()
-			.subscribe(b => (this.isDesktop = b))
-
 		this.initForm()
+		this.isBrowser = isPlatformBrowser(this.platformId)
 
-		this.form
-			.get('Organization')
-			?.valueChanges.pipe(
-				debounceTime(300),
-				distinctUntilChanged(),
-				tap(() => {
-					this.options = []
-					this.loading = true
-				}),
-				switchMap(value => this.fetchOptions(value))
+		if (isPlatformBrowser(this.platformId)) {
+			this.subscriptions.add(
+				this.breakpointService.isDesktop().subscribe(b => (this.isDesktop = b))
 			)
-			.subscribe(options => {
-				this.options = options.suggestions || []
-				this.loading = false
-			})
+
+			this.form
+				.get('Organization')
+				?.valueChanges.pipe(
+					debounceTime(300),
+					distinctUntilChanged(),
+					tap(() => {
+						this.options = []
+						this.loading = true
+					}),
+					switchMap(value => this.fetchOptions(value))
+				)
+				.subscribe(options => {
+					this.options = options.suggestions || []
+					this.loading = false
+				})
+		}
+
+		const routeData = this.route.snapshot.data[
+			'landingNewsData'
+		] as AdvancedNewsInterface[]
+		if (routeData && routeData.length > 0) {
+			this.getAdvancedNews = routeData
+		} else {
+			console.warn('No data received from LandingNewsResolver')
+			this.getAdvancedNews = []
+		}
 	}
 
 	fetchOptions(query: string) {
@@ -247,10 +266,12 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		this.updateShadows()
-		this.tagsContainer.nativeElement.addEventListener('scroll', () =>
+		if (isPlatformBrowser(this.platformId)) {
 			this.updateShadows()
-		)
+			this.tagsContainer.nativeElement.addEventListener('scroll', () =>
+				this.updateShadows()
+			)
+		}
 	}
 
 	openLandingRequestModal(data) {
@@ -291,47 +312,6 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		} else {
 			shadowRight.classList.remove('hide-shadow')
 		}
-	}
-
-	public getCurrentNews() {
-		this.loading$.next(true)
-		this.newsService
-			.getNews(this.newsNumberCount)
-			.pipe(
-				tap(news => {
-					if (!news || news.length === 0) {
-						throw new Error('No news available')
-					}
-				}),
-				switchMap(news =>
-					zip(
-						news.map(item =>
-							this.newsService.getNewsImage(item.ID).pipe(
-								map(image => ({...item, Image: image})),
-								catchError(error => {
-									console.error('Error fetching image:', error)
-									return of({
-										...item,
-										Image: 'assets/images/Image_not_available.png'
-									})
-								})
-							)
-						)
-					).pipe(
-						tap(data => {
-							this.getAdvancedNews = data
-						})
-					)
-				),
-				catchError(error => {
-					console.error('Error fetching news:', error)
-					return of([])
-				}),
-				finalize(() => this.loading$.next(false))
-			)
-			.subscribe({
-				error: err => console.error('Error in subscription:', err)
-			})
 	}
 
 	get hasNews(): boolean {
@@ -390,7 +370,9 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			Email: this.form.value.Email,
 			INN: this.form.value.INN,
 			Organization: this.form.value.Organization,
-			Comment: `${this.form.value.Comment}\nИспользует факторинг: ${this.form.value.UseFactoring ? "Да" : "Нет"}`,
+			Comment: `${this.form.value.Comment}\nИспользует факторинг: ${
+				this.form.value.UseFactoring ? 'Да' : 'Нет'
+			}`,
 			Agree: this.form.value.Agree
 		}
 

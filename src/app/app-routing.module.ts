@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core'
-import {Routes, RouterModule} from '@angular/router'
+import {Routes, RouterModule, PreloadAllModules} from '@angular/router'
 import {NotFoundComponent} from './client/shared/not-found/not-found.component'
 import {MibUiComponent} from './shared/modules/mib-ui/mib-ui.component'
 
@@ -37,7 +37,9 @@ const routes: Routes = [
 @NgModule({
 	imports: [
 		RouterModule.forRoot(routes, {
-			scrollPositionRestoration: 'top'
+			scrollPositionRestoration: 'top',
+			initialNavigation: 'enabledBlocking',
+			preloadingStrategy: PreloadAllModules 
 		})
 	],
 	exports: [RouterModule]

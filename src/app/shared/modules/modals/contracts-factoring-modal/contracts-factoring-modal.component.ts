@@ -14,7 +14,6 @@ export class ContractsFactoringModalComponent {
 		private clipboard: Clipboard,
 		@Inject(MAT_DIALOG_DATA) public data: any
 	) {
-		console.log('data :>> ', data)
 	}
 
 	getTitle() {

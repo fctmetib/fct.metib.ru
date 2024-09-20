@@ -1,15 +1,9 @@
-import {MibSliderPartnersComponent} from './shared/mib-slider-partners/mib-slider-partners.component'
-import {ContactsComponent} from './pages/contacts/contacts.component'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {RouterModule} from '@angular/router'
-import {HomeComponent} from './pages/home/home.component'
-import {UIKitTestComponent} from './shared/ui-kit-test/ui-kit-test.component'
 import {MibMenuComponent} from './shared/menu/mib-menu/mib-menu.component'
 import {MibCardInfoComponent} from './shared/cards/card-info/mib-card-info.component'
-import {TariffsComponent} from './pages/tariffs/tariffs.component'
-import {ClientsComponent} from './pages/clients/clients.component'
 import {MibFooterComponent} from './shared/mib-footer/mib-footer.component'
 import {MibModalModule} from './shared/mib-modal'
 import {MibTabModule} from './shared/mib-tab'
@@ -18,23 +12,17 @@ import {MibSliderComponent} from './shared/mib-slider/mib-slider.component'
 import {MibCardNewsComponent} from './shared/cards/card-news/mib-card-news.component'
 import {PublicComponent} from './public.component'
 import {MibSectionHeaderComponent} from './shared/mib-sections/mib-section-header/mib-section-header.component'
-import {NewsComponent} from './pages/news/news.component'
 import {MibSectionBodyComponent} from './shared/mib-sections/mib-section-body/mib-section-body.component'
 import {MibCardTariffComponent} from './shared/cards/card-tariff/mib-card-tariff.component'
 import {MibCardPersonComponent} from './shared/cards/card-person/mib-card-person.component'
 import {OrganizationService} from './service/organization.service'
-import {NewsService} from './service/news.service'
 import {MibSectionHeaderNewsComponent} from './shared/mib-sections/mib-section-header-news/mib-section-header-news.component'
 import {IConfig, NgxMaskModule} from 'ngx-mask'
 import {InputMaskModule} from 'primeng/inputmask'
-import {DialogModule} from 'primeng/dialog'
 import {CheckboxModule as CheckboxModule22} from 'primeng/checkbox'
-import {CarouselModule} from 'primeng/carousel'
-import {MibSliderNewsComponent} from './shared/mib-slider-news/mib-slider-news.component'
 import {ButtonModule} from '../shared/ui-kit/button/button.module'
 import {HeaderModule} from '../shared/modules/header/header.module'
 import {SpacingModule} from '../shared/ui-kit/spacing/spacing.module'
-import {LandingComponent} from './pages/landing/landing.component'
 import {IconModule} from '../shared/ui-kit/ref-icon/icon.module'
 import {AdvantagesIconModule} from './components/advantages-icon/advantages-icon.module'
 import {NavbarModule} from '../shared/ui-kit/navbar/navbar.module'
@@ -43,7 +31,6 @@ import {ContactPanelModule} from './components/contact-panel/contact-panel.modul
 import {NewFooterModule} from '../shared/modules/new-footer/new-footer.module'
 import {DropdownPointModule} from '../shared/ui-kit/dropdown-point/dropdown-point.module'
 import {NewsPanelModule} from './components/news-panel/news-panel.module'
-import {SingleNewsComponent} from './pages/single-news/single-news.component'
 import {TagModule} from '../shared/ui-kit/tag/tag.module'
 import {CounterModule} from './components/counter/counter.module'
 import {LinkModule} from '../shared/ui-kit/link/link.module'
@@ -67,6 +54,17 @@ import {CheckboxModule} from '../shared/ui-kit/checkbox/checkbox.module'
 import {LandingAgreementModalModule} from '../shared/modules/modals/landing-agreement-modal/landing-agreement-modal.module'
 import {QuestModule} from '../shared/ui-kit/quest/quest.module'
 import {LandingLoginModalModule} from '../shared/modules/modals/landing-login-modal/landing-login-modal.module'
+import {LandingComponent} from './pages/landing/landing.component'
+import {ContactsComponent} from './pages/contacts/contacts.component'
+import {UIKitTestComponent} from './shared/ui-kit-test/ui-kit-test.component'
+import {TariffsComponent} from './pages/tariffs/tariffs.component'
+import {ClientsComponent} from './pages/clients/clients.component'
+import {SingleNewsComponent} from './pages/single-news/single-news.component'
+import {NewsComponent} from './pages/news/news.component'
+import { NewsResolver } from './service/news.resolver'
+import { HttpClientModule } from '@angular/common/http'
+import { LandingNewsResolver } from './service/landing-news.resolver'
+
 
 const routes = [
 	{
@@ -76,7 +74,10 @@ const routes = [
 			{
 				path: '',
 				component: LandingComponent,
-				title: 'Факторинг | Металлинвест Банк'
+				title: 'Факторинг | Металлинвест Банк',
+				resolve: {
+					landingNewsData: LandingNewsResolver,
+				},
 			},
 			{
 				path: 'tariffs',
@@ -100,7 +101,10 @@ const routes = [
 			},
 			{
 				path: 'news/:id',
-				component: SingleNewsComponent
+				component: SingleNewsComponent,
+				resolve: {
+					newsData: NewsResolver,
+				  },
 			},
 			{
 				path: 'ui-kit-test',
@@ -119,15 +123,14 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 @NgModule({
 	imports: [
 		CommonModule,
+		HttpClientModule,
 		FormsModule,
 		ReactiveFormsModule,
 		RouterModule.forChild(routes),
 		InputMaskModule,
 		NgxMaskModule.forRoot(maskConfigFunction),
 		MibModalModule,
-		DialogModule,
 		MibTabModule,
-		CarouselModule,
 		CheckboxModule22,
 		ButtonModule,
 		HeaderModule,
@@ -167,11 +170,6 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 	exports: [RouterModule],
 	declarations: [
 		PublicComponent,
-		HomeComponent,
-		TariffsComponent,
-		ClientsComponent,
-		ContactsComponent,
-		NewsComponent,
 		// TODO: REMOVE IT AFTER TEST, ADD SHARED MODULE
 		// DIRECTIVES
 		MibScrollDirective,
@@ -181,22 +179,21 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 		MibSectionBodyComponent,
 		// COMPONENTS
 		MibSliderComponent,
-		UIKitTestComponent,
 		MibMenuComponent,
 		MibFooterComponent,
-		MibSliderPartnersComponent,
-		MibSliderNewsComponent,
 		// CARDS
 		MibCardTariffComponent,
 		MibCardPersonComponent,
 		MibCardNewsComponent,
 		MibCardInfoComponent,
-		TariffsComponent,
-		ClientsComponent,
-		ContactsComponent,
 		LandingComponent,
-		SingleNewsComponent
+		ContactsComponent,
+		ClientsComponent,
+		TariffsComponent,
+		SingleNewsComponent,
+		NewsComponent,
+		UIKitTestComponent,
 	],
-	providers: [OrganizationService, NewsService]
+	providers: [OrganizationService]
 })
 export class PublicModule {}

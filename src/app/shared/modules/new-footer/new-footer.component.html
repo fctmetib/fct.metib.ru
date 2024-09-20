@@ -125,7 +125,7 @@
 				</mib-link>
 			</div>
 		</div>
-		<mib-button [routerLink]="['/auth/login']" type="filled-primary" size="m">
+		<mib-button (click)="openExternalSite()" type="filled-primary" size="m">
 			<ng-container *ngIf="isDesktop; else mobileEntry"
 				>Регистрация и вход</ng-container
 			>
