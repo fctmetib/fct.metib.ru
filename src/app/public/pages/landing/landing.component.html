@@ -332,15 +332,14 @@
 						</mib-input>
 					</div>
 					<mib-textarea
-						size="{{ isDesktop ? 'xl' : 'l' }}"
 						styleType="floating"
+						size="{{ isDesktop ? 'xl' : 'l' }}"
 					>
 						<ng-container mibLabel>Ваш комментарий</ng-container>
 						<textarea
-							styleType="floating"
-							[maxLength]="100"
 							formControlName="Comment"
-							[attr.autosize]="isBrowser ? '' : null"
+							[maxLength]="100"
+							autosize
 							mibTextarea
 						></textarea>
 					</mib-textarea>
