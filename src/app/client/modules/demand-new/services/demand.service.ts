@@ -81,14 +81,14 @@ export class DemandService {
 	): Observable<any> {
 		const url = `${environment.apiUrl}/v1/demands/file/upload`
 		const params = new HttpParams()
-			.set('documentType ', documentType)
+			.set('documentType', documentType)
 			.set('demandId', demandId)
 
-		// Создаем объект FormData для отправки файлов
+		console.log(file);
 		const formData = new FormData()
-		formData.append('file', file); // добавляем сам файл
+		formData.append('file', file);
 		
-		return this.http.post<any>(url, file, {params})
+		return this.http.post<any>(url, formData, {params})
 	}
 
 	public saveDraftById(
