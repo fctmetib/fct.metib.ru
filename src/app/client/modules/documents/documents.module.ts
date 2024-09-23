@@ -16,7 +16,7 @@ import {CheckboxModule} from 'primeng/checkbox'
 import {RadioButtonModule} from 'primeng/radiobutton'
 import {InputTextareaModule} from 'primeng/inputtextarea'
 import {MenubarModule} from 'primeng/menubar'
-import {AvatarModule} from 'primeng/avatar'
+import {AvatarModule as AvatarModule22} from 'primeng/avatar'
 import {ToastModule} from 'primeng/toast'
 import {TabViewModule} from 'primeng/tabview'
 import {TieredMenuModule} from 'primeng/tieredmenu'
@@ -46,6 +46,7 @@ import {DocumentViewDrawerModule} from './modules/document-view-drawer/document-
 import {DocumentsPageComponent} from './pages/documents-page/documents-page.component'
 import {ToasterModule} from 'src/app/shared/ui-kit/toaster/toaster.module'
 import {DocumentsPageFactoringModalModule} from 'src/app/shared/modules/modals/documents-page-factoring-modal/documents-page-factoring-modal.module'
+import {AvatarModule} from 'src/app/shared/ui-kit/avatar/avatar.module'
 
 @NgModule({
 	declarations: [DocumentsPageComponent],
@@ -65,7 +66,7 @@ import {DocumentsPageFactoringModalModule} from 'src/app/shared/modules/modals/d
 		ReactiveFormsModule,
 		CardModule,
 		MenubarModule,
-		AvatarModule,
+		AvatarModule22,
 		DocumentsRoutingModule,
 		ToastModule,
 		TabViewModule,
@@ -93,7 +94,8 @@ import {DocumentsPageFactoringModalModule} from 'src/app/shared/modules/modals/d
 		DocumentDrawerModule,
 		DocumentViewDrawerModule,
 		ToasterModule,
-		DocumentsPageFactoringModalModule
+		DocumentsPageFactoringModalModule,
+		AvatarModule
 	],
 	providers: [DocumentsService, DatesService, DatePipe]
 })

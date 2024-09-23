@@ -101,11 +101,24 @@
 							doc?.CreatedTime | date : 'dd.MM.YYYY'
 						}}</ng-container>
 					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title
-							>{{ doc?.CreatorLastName }}
-							{{ doc?.CreatorFirstName }}</ng-container
-						>
+					<mib-table-cell type="person" [special]="true">
+						<ng-container table-cell-title>
+							<div class="flex flex_align-center gap-8">
+								<!-- *ngIf="doc?.CreatorAvatarUrl" -->
+								<mib-avatar
+									type="round"
+									[showArrow]="false"
+									[src]="
+										doc?.Creator?.avatarUrl || 'assets/images/woman-avatar.jpg'
+									"
+									[showImage]="true"
+								></mib-avatar>
+								<span class="text-clamp">
+									{{ doc?.CreatorLastName }}
+									{{ doc?.CreatorFirstName }}
+								</span>
+							</div>
+						</ng-container>
 					</mib-table-cell>
 					<ng-template #mobileCell>
 						<mib-table-head-cell>{{ getVisibleCell(doc) }}</mib-table-head-cell>

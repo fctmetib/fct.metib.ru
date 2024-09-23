@@ -117,6 +117,7 @@ export class DocumentsPageComponent implements OnInit, OnDestroy {
 		this.loading$.next(true)
 		return this.documentsService.fetchDocuments().pipe(
 			tap(data => {
+				// console.log('data :>> ', data)
 				this.clientDocuments = data.sort((a, b) => {
 					// Преобразование строковых дат в объекты Date для сравнения
 					const dateA = new Date(a.CreatedTime)
