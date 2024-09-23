@@ -14,6 +14,8 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {AgentDocumentDrawerModule} from './modules/agent-document-drawer/agent-document-drawer.module'
 import {AgentDocumentViewDrawerModule} from './modules/agent-document-view-drawer/agent-document-view-drawer.module'
+import {AvatarModule} from 'src/app/shared/ui-kit/avatar/avatar.module'
+import {DocumentsAgentPageModalModule} from 'src/app/shared/modules/modals/documents-agent-page-modal/documents-agent-page-modal.module'
 
 @NgModule({
 	declarations: [DocumentsPageComponent],
@@ -30,7 +32,9 @@ import {AgentDocumentViewDrawerModule} from './modules/agent-document-view-drawe
 		DropdownPointModule,
 		DropdownModule,
 		AgentDocumentDrawerModule,
-		AgentDocumentViewDrawerModule
+		AgentDocumentViewDrawerModule,
+		AvatarModule,
+		DocumentsAgentPageModalModule
 	]
 })
 export class AgentClientDocumentsModule {}

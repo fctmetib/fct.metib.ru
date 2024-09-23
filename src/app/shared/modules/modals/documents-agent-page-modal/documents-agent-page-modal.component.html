@@ -1,0 +1,10 @@
+<mib-modal>
+	<div class="close-btn flex">
+		<mib-button size="s" (press)="dialogRef.close()" type="ghost-secondary">
+			<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
+		</mib-button>
+	</div>
+	<mib-mobile-table-popup title="Электронный документ">
+		<p>{{ data.doc | json }}</p>
+	</mib-mobile-table-popup>
+</mib-modal>

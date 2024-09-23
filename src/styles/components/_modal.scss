@@ -74,7 +74,8 @@
 	top: 400px;
 }
 
-.documents-dialog-factoring {
+.documents-dialog-factoring,
+.documents-dialog-agent {
 	@include absolute();
 	@include border();
 	max-height: calc(100vh - 48%);
