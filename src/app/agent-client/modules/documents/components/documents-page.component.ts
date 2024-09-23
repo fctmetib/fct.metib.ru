@@ -41,6 +41,59 @@ export class DocumentsPageComponent implements OnInit, OnDestroy {
 
 	private subscriptions = new Subscription()
 
+	mDate = [
+		{
+			Number: '1407',
+			Title: 'Guaranty_1407.pdf',
+			Location: 'O_44110\\Requests\\Guaranty_1407.zip',
+			Description: 'Договор поручительства к заявке 1407 от 18.09.2024',
+			DocumentType: 'CustomerRequestGuaranty',
+			CreatedTime: '2024-02-19T14:58:32.557',
+			CreatorLastName: 'Богатырёв',
+			CreatorFirstName: 'Станислав'
+		},
+		{
+			Number: '1408',
+			Title: 'Guaranty_1409.pdf',
+			Location: 'O_44110\\Requests\\Guaranty_1407.zip',
+			Description: 'Договор поручительства к заявке 1407 от 18.09.2024',
+			DocumentType: 'CustomerRequestGuaranty',
+			CreatedTime: '2024-03-19T14:58:32.557',
+			CreatorLastName: 'Богатырёв',
+			CreatorFirstName: 'Станислав'
+		},
+		{
+			Number: '1409',
+			Title: 'Guaranty_1410.pdf',
+			Location: 'O_44110\\Requests\\Guaranty_1407.zip',
+			Description: 'Договор поручительства к заявке 1407 от 18.09.2024',
+			DocumentType: 'CustomerRequestGuaranty',
+			CreatedTime: '2024-08-19T14:58:32.557',
+			CreatorLastName: 'Кочеткова',
+			CreatorFirstName: 'Валерия'
+		},
+		{
+			Number: '1410',
+			Title: 'Guaranty_1411.pdf',
+			Location: 'O_44110\\Requests\\Guaranty_1407.zip',
+			Description: 'Договор поручительства к заявке 1407 от 18.09.2024',
+			DocumentType: 'CustomerRequestGuaranty',
+			CreatedTime: '2024-07-19T14:58:32.557',
+			CreatorLastName: 'Богатырёв',
+			CreatorFirstName: 'Станислав'
+		},
+		{
+			Number: '1411',
+			Title: 'Guaranty_1412.pdf',
+			Location: 'O_44110\\Requests\\Guaranty_1407.zip',
+			Description: 'Договор поручительства к заявке 1407 от 18.09.2024',
+			DocumentType: 'CustomerRequestGuaranty',
+			CreatedTime: '2024-06-19T14:58:32.557',
+			CreatorLastName: 'Кочеткова',
+			CreatorFirstName: 'Валерия'
+		}
+	]
+
 	constructor(
 		public toolsService: ToolsService,
 		private agentDocumentDrawerService: AgentDocumentDrawerService,
