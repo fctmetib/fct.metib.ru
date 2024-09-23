@@ -1,4 +1,4 @@
-import {Component} from '@angular/core'
+import {Component, EventEmitter, Output} from '@angular/core'
 import {MatDialogRef} from '@angular/material/dialog'
 
 @Component({
@@ -7,6 +7,9 @@ import {MatDialogRef} from '@angular/material/dialog'
 	styleUrls: ['./request-create-success-modal.component.scss']
 })
 export class RequestCreateSuccessModalComponent {
+	@Output() onDraft = new EventEmitter()
+	@Output() onClose = new EventEmitter()
+
 	constructor(
 		public dialogRef: MatDialogRef<RequestCreateSuccessModalComponent>
 	) {}

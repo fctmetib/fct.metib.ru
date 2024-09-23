@@ -58,14 +58,14 @@ export class DemandService {
 
 	// new API
 	public updateDraft(id: any, data: any): Observable<any> {
-		const url = `${environment.apiUrl}/v1/demands/drafts`;
+		const url = `${environment.apiUrl}/v1/demands/drafts`
 		const params = new HttpParams()
-		  .set('draftId', JSON.stringify(id))
-		  .set('demandData', JSON.stringify(data));
-	  
-		return this.http.put<any>(url, null, { params });
-	  }
-	  
+			.set('draftId', JSON.stringify(id))
+			.set('demandData', JSON.stringify(data))
+
+		return this.http.put<any>(url, null, {params})
+	}
+
 	// new API
 	public createNewDraft(data: any): Observable<any> {
 		const url = `${environment.apiUrl}/v1/demands/drafts`
@@ -84,10 +84,10 @@ export class DemandService {
 			.set('documentType', documentType)
 			.set('demandId', demandId)
 
-		console.log(file);
+		console.log(file)
 		const formData = new FormData()
-		formData.append('file', file);
-		
+		formData.append('file', file)
+
 		return this.http.post<any>(url, formData, {params})
 	}
 

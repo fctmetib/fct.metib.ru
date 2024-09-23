@@ -14,6 +14,7 @@ import {
 	debounceTime,
 	distinctUntilChanged,
 	filter,
+	finalize,
 	forkJoin,
 	of,
 	pairwise,
@@ -22,6 +23,8 @@ import {
 	tap
 } from 'rxjs'
 import {DemandService} from '../../services/demand.service'
+import {RequestFailureModalService} from 'src/app/shared/modules/modals/request-failure-modal/request-failure-modal.service'
+import {RequestCreateSuccessModalService} from 'src/app/shared/modules/modals/request-create-success-modal/request-create-success-modal.service'
 
 @Component({
 	selector: 'mib-demand-drawer',
@@ -50,6 +53,8 @@ export class DemandDrawerComponent implements OnInit {
 		private fb: FormBuilder,
 		private toaster: ToasterService,
 		private demandService: DemandService,
+		private requestFailureModalService: RequestFailureModalService,
+		private requestCreateSuccessModalService: RequestCreateSuccessModalService,
 		public dialogRef: MatDialogRef<DemandDrawerComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData
 	) {}
@@ -64,12 +69,12 @@ export class DemandDrawerComponent implements OnInit {
 		const modalData = this.data.data
 
 		// Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
-		if (modalData.isEdit || modalData.isView) {
+		if (modalData?.isEdit || modalData?.isView) {
 			this.getByID()
 		}
 
 		// Если создание и нет черновика
-		if (modalData.isCreation && !modalData.DraftId) {
+		if (modalData?.isCreation && !modalData?.DraftId) {
 			// инициализируем черновик
 			this.initDraft()
 
@@ -78,7 +83,7 @@ export class DemandDrawerComponent implements OnInit {
 		}
 
 		// Если создание и есть черновик
-		if (modalData.isCreation && modalData.DraftId) {
+		if (modalData?.isCreation && modalData?.DraftId) {
 			this.DraftId = modalData.DraftId
 			// получаем черновик по DraftId
 			// this.getCurrentDraft();
@@ -159,7 +164,7 @@ export class DemandDrawerComponent implements OnInit {
 			DocumentTypeID: [null],
 			OwnerTypeID: [null],
 			Data: [null],
-			File: [null],
+			File: [null]
 		})
 		control.patchValue(data)
 		this.documents.push(control)
@@ -185,6 +190,7 @@ export class DemandDrawerComponent implements OnInit {
 	}
 
 	onSubmit() {
+		this.isSubmitting$.next(true)
 		const res = this.form.getRawValue()
 		const resObj = {
 			DraftId: this.DraftId.toString(),
@@ -206,28 +212,50 @@ export class DemandDrawerComponent implements OnInit {
 					const uploadObservables = this.documents.controls.map(
 						(control: FormGroup) => {
 							const file = control.get('File').value
-
-							return this.demandService.uploadFile(
-								file,
-								"test",
-								createdDemandID
-							)
+							if (file) {
+								return this.demandService.uploadFile(
+									file,
+									'test',
+									createdDemandID
+								)
+							} else {
+								return of(null) // Если файл отсутствует, пропускаем загрузку
+							}
 						}
 					)
 
 					// Ожидание завершения всех запросов на загрузку файлов
 					return forkJoin(uploadObservables)
 				}),
-				catchError(error => {
-					console.error('An error occurred >>>:', error)
-					return of(null)
-				}),
-				tap(result => {
-					console.log('Second request successful:', result)
-					this.dialogRef.close()
-				})
+				// catchError(error => {
+				// 	this.dialogRef.close()
+				// 	this.openRequestFailureModal(this.data)
+				// 	return of(null)
+				// }),
+				finalize(() => this.isSubmitting$.next(false))
 			)
-			.subscribe()
+			.subscribe({
+				error: () => {
+					this.dialogRef.close()
+					this.openRequestFailureModal(this.data)
+				},
+				complete: () => {
+					this.dialogRef.close()
+					this.openRequestSuccessModal()
+				}
+			})
+	}
+
+	openRequestFailureModal(d) {
+		this.requestFailureModalService.open(d)
+	}
+
+	openRequestSuccessModal() {
+		this.requestCreateSuccessModalService.open()
+	}
+
+	openDraftFromModal() {
+		console.log('HALO FROM MODAL TO OPEN DRAFT >>>>')
 	}
 
 	public editDocument() {

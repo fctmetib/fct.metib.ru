@@ -6,6 +6,7 @@ import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {SpacingModule} from 'src/app/shared/ui-kit/spacing/spacing.module'
 import {InputModule} from 'src/app/shared/ui-kit/input/input.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
+import {RequestCreateSuccessModalService} from './request-create-success-modal.service'
 
 @NgModule({
 	declarations: [RequestCreateSuccessModalComponent],
@@ -16,6 +17,7 @@ import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 		SpacingModule,
 		InputModule,
 		IconModule
-	]
+	],
+	providers: [RequestCreateSuccessModalService]
 })
 export class RequestCreateSuccessModalModule {}

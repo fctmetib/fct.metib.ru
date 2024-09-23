@@ -14,10 +14,20 @@
 	<mib-spacing type="m"></mib-spacing>
 	<mib-modal-footer>
 		<ng-container>
-			<mib-button class="flex_grow" size="m" type="filled-primary">
+			<mib-button
+				(press)="openBrowserDrawer(data)"
+				class="flex_grow"
+				size="m"
+				type="filled-primary"
+			>
 				Перейти к черновику
 			</mib-button>
-			<mib-button class="flex_grow" size="m" type="filled-secondary">
+			<mib-button
+				(press)="onClose.emit(); dialogRef.close()"
+				class="flex_grow"
+				size="m"
+				type="filled-secondary"
+			>
 				Отмена
 			</mib-button>
 		</ng-container>
