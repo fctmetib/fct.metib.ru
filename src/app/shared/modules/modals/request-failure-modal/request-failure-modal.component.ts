@@ -21,10 +21,20 @@ export class RequestFailureModalComponent {
 		@Inject(MAT_DIALOG_DATA) public data: any
 	) {}
 
-	openBrowserDrawer(data) {
-		const draft = data.d.data || null
+	openBrowserDrawer({d: draftId}) {
+		if (!draftId) {
+			console.error('Draft ID is missing')
+			return
+		}
+
+		const draft = {
+			data: {
+				isCreation: true,
+				DraftId: draftId
+			}
+		}
+
 		this.dialogRef.close()
-		console.log('draft from failure :>> ', draft)
 		this.demandDrawerService.open(draft)
 	}
 }

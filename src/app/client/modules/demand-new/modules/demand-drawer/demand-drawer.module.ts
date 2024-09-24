@@ -20,6 +20,7 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 import {RequestFailureModalModule} from 'src/app/shared/modules/modals/request-failure-modal/request-failure-modal.module'
+import {DlFileCellModule} from 'src/app/shared/ui-kit/dl-file-cell/dl-file-cell.module'
 
 @NgModule({
 	declarations: [DemandDrawerComponent],
@@ -42,7 +43,8 @@ import {RequestFailureModalModule} from 'src/app/shared/modules/modals/request-f
 		DropdownPointModule,
 		DropdownModule,
 		FileCellModule,
-		RequestFailureModalModule
+		RequestFailureModalModule,
+		DlFileCellModule
 	],
 	providers: [DemandDrawerService]
 })

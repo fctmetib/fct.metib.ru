@@ -26,15 +26,24 @@
 			></textarea>
 		</mib-textarea>
 		<mib-spacing type="s"></mib-spacing>
-		<p
-			class="text text_m text_medium"
+		<ng-container
 			*ngIf="!documents.controls.length; else copiesTemplate"
-		>
+		></ng-container>
+		<p class="text text_m text_medium">
 			При необходимости прикрепите документы в поле ниже
 		</p>
 		<mib-spacing type="xs2"></mib-spacing>
 		<ng-template #copiesTemplate>
-			<mib-table>
+			<p class="text text_m text_medium">Прикрепленные документы</p>
+			<mib-spacing type="xs2"></mib-spacing>
+			<div *ngFor="let document of documents.controls; let idx = index">
+				<mib-dl-file-cell
+					(onDload)="downloadCurrentFile()"
+					[fileName]="document.get('Title').value"
+				></mib-dl-file-cell>
+				<mib-spacing type="xs2"></mib-spacing>
+			</div>
+			<!-- <mib-table>
 				<mib-table-head>
 					<mib-table-head-cell>№</mib-table-head-cell>
 					<mib-table-head-cell>Имя файла</mib-table-head-cell>
@@ -42,46 +51,47 @@
 					<mib-table-head-cell>Тип документа</mib-table-head-cell>
 				</mib-table-head>
 				<mib-table-row
-					*ngFor="let document of documents.controls; let idx = index"
+				*ngFor="let document of documents.controls; let idx = index"
 				>
-					<mib-table-cell>
-						<ng-container table-cell-title>{{ idx + 1 }}</ng-container>
-					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title>{{
-							document.get('Title').value
-						}}</ng-container>
-					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title>{{
-							document.get('Description').value
-						}}</ng-container>
-					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title>{{
-							document.get('DocumentTypeID').value
-						}}</ng-container>
-					</mib-table-cell>
-					<mib-button
-						table-row-button
-						[mibDropdownTrigger]="documentMenu"
-						size="s"
-						type="ghost-secondary"
-					>
-						<mib-icon
-							class="stroke"
-							btn-icon
-							name="fi_more-vertical"
-						></mib-icon>
-					</mib-button>
-					<mib-dropdown #documentMenu>
-						<mib-dropdown-point
-							(press)="removeDocument(idx)"
-							text="Удалить"
-						></mib-dropdown-point>
-					</mib-dropdown>
-				</mib-table-row>
-			</mib-table>
+				<mib-table-cell>
+					<ng-container table-cell-title>{{ idx + 1 }}</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>{{
+						document.get('Title').value
+					}}</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>{{
+						document.get('Description').value
+					}}</ng-container>
+				</mib-table-cell>
+				<mib-table-cell>
+					<ng-container table-cell-title>{{
+						document.get('DocumentTypeID').value
+					}}</ng-container>
+				</mib-table-cell>
+				<mib-button
+				table-row-button
+				[mibDropdownTrigger]="documentMenu"
+				size="s"
+				type="ghost-secondary"
+				>
+				<mib-icon
+				class="stroke"
+				btn-icon
+				name="fi_more-vertical"
+				></mib-icon>
+			</mib-button>
+			<mib-dropdown #documentMenu>
+				<mib-dropdown-point
+				(press)="removeDocument(idx)"
+				text="Удалить"
+				></mib-dropdown-point>
+			</mib-dropdown>
+		</mib-table-row>
+	</mib-table> -->
+			<mib-spacing type="s"></mib-spacing>
 		</ng-template>
 		<div class="flex flex_column gap-12">
 			<mib-dnd

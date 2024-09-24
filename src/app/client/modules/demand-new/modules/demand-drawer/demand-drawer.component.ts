@@ -5,7 +5,10 @@ import {ButtonSize} from 'src/app/shared/ui-kit/button/interfaces/button.interfa
 import {InputSize} from 'src/app/shared/ui-kit/input/interfaces/input.interface'
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
-import {extractBase64} from 'src/app/shared/services/tools.service'
+import {
+	downloadBase64File,
+	extractBase64
+} from 'src/app/shared/services/tools.service'
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {
@@ -25,6 +28,7 @@ import {
 import {DemandService} from '../../services/demand.service'
 import {RequestFailureModalService} from 'src/app/shared/modules/modals/request-failure-modal/request-failure-modal.service'
 import {RequestCreateSuccessModalService} from 'src/app/shared/modules/modals/request-create-success-modal/request-create-success-modal.service'
+import {DocumentsService} from '../../../documents/services/documents.service'
 
 @Component({
 	selector: 'mib-demand-drawer',
@@ -47,6 +51,8 @@ export class DemandDrawerComponent implements OnInit {
 	isViewDemand: boolean = false
 	isDemandRequest: boolean = false
 
+	public isDownloading$ = new BehaviorSubject<boolean>(false)
+
 	DraftId = null
 
 	constructor(
@@ -56,6 +62,7 @@ export class DemandDrawerComponent implements OnInit {
 		private requestFailureModalService: RequestFailureModalService,
 		private requestCreateSuccessModalService: RequestCreateSuccessModalService,
 		public dialogRef: MatDialogRef<DemandDrawerComponent>,
+		private documentsService: DocumentsService,
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData
 	) {}
 
@@ -67,7 +74,7 @@ export class DemandDrawerComponent implements OnInit {
 		this.initForms()
 
 		const modalData = this.data.data
-
+		console.log('modalData :>> ', modalData)
 		// Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
 		if (modalData?.isEdit || modalData?.isView) {
 			this.getByID()
@@ -86,7 +93,9 @@ export class DemandDrawerComponent implements OnInit {
 		if (modalData?.isCreation && modalData?.DraftId) {
 			this.DraftId = modalData.DraftId
 			// получаем черновик по DraftId
-			// this.getCurrentDraft();
+			console.log('HALO DRAFT >>>>')
+			console.log('modalData :>> ', modalData)
+			this.getCurrentDraft()
 
 			// Включаем авто сохранение
 			this.enableAutoSaveDraft()
@@ -189,6 +198,50 @@ export class DemandDrawerComponent implements OnInit {
 		this.addDocument(document)
 	}
 
+	downloadCurrentFile() {
+		console.log('HALO DOWNLOAD FILE >>>')
+		// this.isDownloading$.next(true)
+		// this.documentsService
+		// 	.getDocumentContent(DocumentID)
+		// 	.pipe(
+		// 		tap(data => {
+		// 			downloadBase64File(data, DocTitle)
+		// 		}),
+		// 		finalize(() => {
+		// 			this.isDownloading$.next(false)
+		// 		})
+		// 	)
+		// 	.subscribe()
+	}
+
+	getCurrentDraft() {
+		this.loading$.next(true)
+		this.demandService
+			.getDemandDraftById(this.DraftId)
+			.pipe(
+				tap(data => {
+					/* 
+						{
+						"ID": 15972,
+						"User": "Котов Андрей",
+						"DateCreated": "2024-09-24T15:44:17Z",
+						"DateModify": "2024-09-24T15:44:31Z",
+						"DemandData": "{\"Subject\":\"fail test \",\"Question\":\"fail test text\",\"Type\":\"Question\",\"Files\":[]}"
+						}
+						*/
+					console.log('data :>> ', data)
+					const demandData = JSON.parse(data.DemandData)
+					const subject = demandData.Subject
+					const question = demandData.Question
+
+					this.form.get('requestTitle').setValue(subject)
+					this.form.get('requestText').setValue(question)
+				}),
+				finalize(() => this.loading$.next(false))
+			)
+			.subscribe()
+	}
+
 	onSubmit() {
 		this.isSubmitting$.next(true)
 		const res = this.form.getRawValue()
@@ -227,17 +280,12 @@ export class DemandDrawerComponent implements OnInit {
 					// Ожидание завершения всех запросов на загрузку файлов
 					return forkJoin(uploadObservables)
 				}),
-				// catchError(error => {
-				// 	this.dialogRef.close()
-				// 	this.openRequestFailureModal(this.data)
-				// 	return of(null)
-				// }),
 				finalize(() => this.isSubmitting$.next(false))
 			)
 			.subscribe({
 				error: () => {
 					this.dialogRef.close()
-					this.openRequestFailureModal(this.data)
+					this.openRequestFailureModal(this.DraftId)
 				},
 				complete: () => {
 					this.dialogRef.close()
