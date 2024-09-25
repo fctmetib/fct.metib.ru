@@ -38,7 +38,10 @@
 			<mib-spacing type="xs2"></mib-spacing>
 			<div *ngFor="let document of documents.controls; let idx = index">
 				<mib-dl-file-cell
+					[attr.index]="idx"
+					[showRemove]="true"
 					(onDload)="downloadCurrentFile()"
+					(onRemove)="removeDocument(idx)"
 					[fileName]="document.get('Title').value"
 				></mib-dl-file-cell>
 				<mib-spacing type="xs2"></mib-spacing>

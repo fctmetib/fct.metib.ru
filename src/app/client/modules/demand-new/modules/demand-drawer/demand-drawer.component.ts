@@ -199,10 +199,10 @@ export class DemandDrawerComponent implements OnInit {
 	}
 
 	downloadCurrentFile() {
-		console.log('HALO DOWNLOAD FILE >>>')
+		console.log('HALO DOWNLOAD FILE >>>', this.documents)
 		// this.isDownloading$.next(true)
 		// this.documentsService
-		// 	.getDocumentContent(DocumentID)
+		// 	.getDocumentContent(this.documents.   DocumentID)
 		// 	.pipe(
 		// 		tap(data => {
 		// 			downloadBase64File(data, DocTitle)
