@@ -11,9 +11,7 @@ export class DemandSignatureDrawerService {
 	open(
 		data?: DrawerData<any>
 	): MatDialogRef<DemandSignatureDrawerComponent, number[]> {
-		const config: DrawerData = {
-			state: 'view'
-		}
+		const config: DrawerData = {}
 		return this.dialog.open(
 			DemandSignatureDrawerComponent,
 			drawerConfig(data?.maxWidth, Object.assign(config, data))

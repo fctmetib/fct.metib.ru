@@ -79,6 +79,11 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 
 	selectedRequestsCount: number
 	severalRequestsChecked: boolean = false
+	public demadDrawersData: any = []
+
+	isCreate: boolean = false
+	isEdits: boolean = false
+	isViews: boolean = false
 
 	public requestsAnimationStates: Record<number, boolean> = {}
 	public historyAnimationStates: Record<number, boolean> = {}
@@ -159,7 +164,7 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 
 								return {
 									ID: draft.ID,
-									Type: `Запрос на ${translatedType}`,
+									Type: translatedType,
 									Progress: `Заполнено на ${fillProgress}`
 								}
 							})
@@ -208,7 +213,7 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 				result = 'Факторинг'
 				break
 			case 'DigitalSignature':
-				result = 'ЭЦП'
+				result = 'Запрос на ЭЦП'
 				break
 			case 'ProfileChange':
 				result = 'Редактирование Профиля'
@@ -217,7 +222,7 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 				result = 'Свободная тема'
 				break
 			case 'Limit':
-				result = 'Лимит'
+				result = 'Запрос на Лимит'
 				break
 			case 'NewDebtor':
 				result = 'Новый дебитор'
@@ -287,15 +292,44 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 			.subscribe()
 	}
 
-	openDrawers(id: number) {
+	openDrawers(id: number, extraData?) {
 		switch (id) {
 			case 1:
-				this.demandSignatureDrawerService
-					.open({data: {id}})
-					// .open({state: DrawerStateEnum.CREATE})
-					.afterClosed()
-					.subscribe()
-				break
+				if (this.isCreate) {
+					return this.demandSignatureDrawerService
+						.open({
+							data: {
+								isCreation: true,
+								DraftId: null
+							}
+						})
+						.afterClosed()
+						.subscribe(() => {
+							this.isCreate = false
+						})
+				} else if (this.isEdits) {
+					return this.demandSignatureDrawerService
+						.open({
+							data: {
+								isEdit: true,
+								DraftId: extraData
+							}
+						})
+						.afterClosed()
+						.subscribe(() => {
+							this.isEdits = false
+						})
+				} else {
+					return this.demandSignatureDrawerService
+						.open({
+							data: {
+								isView: true,
+								DraftId: extraData
+							}
+						})
+						.afterClosed()
+						.subscribe()
+				}
 			case 2:
 				this.demandSuretyDrawerService
 					.open({data: {id}})
@@ -384,7 +418,6 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 			let value
 
 			if (typeof path === 'string') {
-				// Если путь - строка, извлекаем значение напрямую
 				if (path === 'Type') {
 					value = this.getType(row[path])
 				} else if (path === 'Status') {
@@ -393,11 +426,9 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 					value = row[path]
 				}
 			} else if (typeof path === 'object') {
-				// Если путь - объект, извлекаем вложенное значение
 				const [parentKey, childKey] = Object.entries(path)[0]
 				value = row[parentKey] ? row[parentKey][childKey] : undefined
 			}
-			// Проверка и добавление префиксов
 			if (path === 'DateCreated' && value !== undefined) {
 				value = this.datePipe.transform(value, 'dd.MM.yyyy')
 			}
@@ -407,12 +438,11 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		return result[this.currentIndex]
 	}
 
-	openDraftViewsDrawer(data) {
-		console.log('open openDraftViewsDrawer drawer >>>', data)
-	}
-
-	newDraftEditDrawer(data) {
-		console.log('open newDraftEditDrawer drawer >>>', data)
+	newDraftDrawer(id, type) {
+		if (type === 'Запрос на ЭЦП' || type === 'ЭЦП') {
+			this.openDrawers(1, id)
+			this.isEdits = false
+		}
 	}
 
 	openDemandPageModal(d) {

@@ -73,7 +73,7 @@ export class DemandDrawerComponent implements OnInit {
 	ngOnInit(): void {
 		this.initForms()
 		// test by id
-		this.getByID()
+		// this.getByID()
 
 		const modalData = this.data.data
 		console.log('modalData :>> ', modalData)

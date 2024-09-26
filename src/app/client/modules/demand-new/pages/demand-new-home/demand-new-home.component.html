@@ -20,7 +20,7 @@
 				<!-- [requestQuantity]="request.quantity" -->
 				<!-- [link]="['history']" -->
 				<mib-request-card
-					(click)="openDrawers(request.id)"
+					(click)="isCreate = true; openDrawers(request.id)"
 					*ngFor="let request of requestLists"
 					[requestTitle]="request.title"
 					[requestText]="request.description"
@@ -79,7 +79,7 @@
 				<ng-template #table>
 					<ng-container *ngIf="draftLists.length > 0; else emptyTable">
 						<mib-table-row
-							(dblclick)="newDraftEditDrawer(draft?.ID)"
+							(dblclick)="isEdits = true; newDraftDrawer(draft?.ID, draft.Type)"
 							[@slideAnimation]="requestsAnimationStates[draft.id]"
 							*ngFor="let draft of draftLists; let last = last"
 							[underlined]="!last"
@@ -108,7 +108,7 @@
 								>
 							</mib-table-cell>
 							<mib-button
-								(press)="newDraftEditDrawer(draft?.ID)"
+								(press)="isEdits = true; newDraftDrawer(draft?.ID, draft.Type)"
 								table-row-button
 								size="s"
 								type="ghost-secondary"
@@ -242,7 +242,9 @@
 				<ng-template #table2>
 					<ng-container *ngIf="historyLists.length > 0; else emptyTable">
 						<mib-table-row
-							(dblclick)="openDraftViewsDrawer(history.DemandId)"
+							(dblclick)="
+								newDraftDrawer(history.DemandId, getType(history.Type))
+							"
 							[@slideAnimation]="historyAnimationStates[history.id]"
 							*ngFor="
 								let history of historyLists;
@@ -333,11 +335,11 @@
 												*ngIf="
 													getVisibleCell(history) ===
 														'Редактирование Профиля' ||
-													getVisibleCell(history) === 'Лимит' ||
+													getVisibleCell(history) === 'Запрос на Лимит' ||
 													getVisibleCell(history) === 'Верификация' ||
 													getVisibleCell(history) === 'Поручительство' ||
 													getVisibleCell(history) === 'Факторинг' ||
-													getVisibleCell(history) === 'ЭЦП' ||
+													getVisibleCell(history) === 'Запрос на ЭЦП' ||
 													getVisibleCell(history) === 'Свободная тема' ||
 													getVisibleCell(history) === 'Новый дебитор' ||
 													getVisibleCell(history) === 'Агентский Факторинг'
@@ -349,11 +351,11 @@
 												*ngIf="
 													getVisibleCell(history) !==
 														'Редактирование Профиля' &&
-													getVisibleCell(history) !== 'Лимит' &&
+													getVisibleCell(history) !== 'Запрос на Лимит' &&
 													getVisibleCell(history) !== 'Верификация' &&
 													getVisibleCell(history) !== 'Поручительство' &&
 													getVisibleCell(history) !== 'Факторинг' &&
-													getVisibleCell(history) !== 'ЭЦП' &&
+													getVisibleCell(history) !== 'Запрос на ЭЦП' &&
 													getVisibleCell(history) !== 'Свободная тема' &&
 													getVisibleCell(history) !== 'Новый дебитор' &&
 													getVisibleCell(history) !== 'Агентский Факторинг'
@@ -383,7 +385,9 @@
 								</mib-button>
 								<mib-dropdown #demanRowMenu>
 									<mib-dropdown-point
-										(press)="openDraftViewsDrawer(history.DemandId)"
+										(press)="
+											newDraftDrawer(history.DemandId, getType(history.Type))
+										"
 										text="Открыть"
 									></mib-dropdown-point>
 								</mib-dropdown>
