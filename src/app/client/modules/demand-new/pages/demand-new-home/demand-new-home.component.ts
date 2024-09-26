@@ -1,5 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core'
-import {BehaviorSubject, Subscription, finalize, tap} from 'rxjs'
+import {
+	BehaviorSubject,
+	Subscription,
+	forkJoin,
+	finalize,
+	map,
+	switchMap,
+	tap
+} from 'rxjs'
 import {
 	IDraftList,
 	IHistoryList,
@@ -40,8 +48,8 @@ const ANIMATION_CONFIG = {
 })
 export class DemandNewHomeComponent implements OnInit, OnDestroy {
 	requestLists: IQueryList[] = []
-	drafts: IDraftList[] = []
-	draftLists: IDraftList[] = []
+	drafts: any = []
+	draftLists: any = []
 	historys: any[] = []
 	historyLists: any[] = []
 	selectedHistoryLists: any[] = []
@@ -106,63 +114,6 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
-
-		// получить список запросов
-		// this.demandService
-		// 	.getDemands()
-		// 	.pipe(
-		// 		tap(data => {
-		// 			console.log('список запросов :>> ', data)
-		// 		})
-		// 	)
-		// 	.subscribe()
-
-		/* 
-		// ответ новое API !!!! error 500
-		// src\app\client\modules\demand-new\services\demand.service.ts
-			// https://api-factoring-test02.metib.ru/api/v1/demands
-			{
-    "DemandID": 9897,
-    "DemandTypeID": 7,
-    "DemandStatusID": 50,
-    "UserID": 1483,
-    "DateStatus": "2024-06-25T16:52:23+03:00",
-    "DateModify": "2024-06-25T16:52:23+03:00",
-    "DateCreated": "2024-06-25T11:26:43+03:00"
-}
-			*/
-
-		/* 
-		// ответ старое API (75)
-		// src\app\client\modules\demand-new\services\demand.service.ts
-// https://api-factoring-test02.metib.ru/api/demand
-{
-    "Type": "ProfileChange",
-    "Status": "Processing",
-    "User": "Андрей Котов",
-    "Manager": {
-        "Name": "Удалых Елена",
-        "Email": "emelocheva@metib.ru",
-        "Extension": "62-39",
-        "ID": 484
-    },
-    "DateCreated": "2024-06-25T11:26:43+03:00",
-    "DateModify": "2024-06-25T16:52:23+03:00",
-    "DateStatus": "2024-06-25T16:52:23+03:00",
-    "ID": 9897
-}
-*/
-
-		// получить черновики
-		//api-factoring-test02.metib.ru/api/v1/demands/draft // "Internal Server Error"
-		// https: this.demandService
-		// 	.getDrafts()
-		// 	.pipe(
-		// 		tap(data => {
-		// 			console.log('черновики :>> ', data)
-		// 		})
-		// 	)
-		// 	.subscribe()
 	}
 
 	getAllRequestesList() {
@@ -182,30 +133,50 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 			.subscribe()
 	}
 
+	getByID(id) {
+		this.demandService
+			.getDemandDraftById(id)
+			.pipe(
+				tap(data => {
+					console.log('getByIDdata :>> ', data)
+				})
+			)
+			.subscribe()
+	}
+
 	getDraftList() {
 		this.loading$.next(true)
 		this.demandService
 			.getDrafts()
 			.pipe(
+				switchMap((drafts: any[]) => {
+					const draftRequests = drafts.map(draft =>
+						this.demandService.getDemandDraftById(draft.ID).pipe(
+							map(demand => {
+								const {Type} = JSON.parse(demand.DemandData)
+								const translatedType = this.getType(Type)
+								const fillProgress = '30%'
+
+								return {
+									ID: draft.ID,
+									Type: `Запрос на ${translatedType}`,
+									Progress: `Заполнено на ${fillProgress}`
+								}
+							})
+						)
+					)
+					// Ожидаем завершения всех запросов
+					return forkJoin(draftRequests)
+				})
+			)
+			.pipe(
 				tap(data => {
-					console.log('ЗАПРОС ЧЕРНОВИКИ :>> ', data)
+					this.drafts = data
 					this.onDraftListChange(1)
 				}),
 				finalize(() => this.loading$.next(false))
 			)
 			.subscribe()
-		setTimeout(() => {
-			this.requestList
-				.getDraftList()
-				.pipe(
-					tap(data => {
-						this.drafts = data
-						this.onDraftListChange(1)
-					}),
-					finalize(() => this.loading$.next(false))
-				)
-				.subscribe()
-		}, 5000)
 	}
 
 	getHistoryList() {
@@ -222,20 +193,6 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 				finalize(() => this.loading$.next(false))
 			)
 			.subscribe()
-
-		// this.loading$.next(true)
-		// setTimeout(() => {
-		// 	this.requestList
-		// 		.getHistoryList()
-		// 		.pipe(
-		// 			tap(data => {
-		// 				this.historys = data
-		// 				this.onHistoryListChange(1)
-		// 			}),
-		// 			finalize(() => this.loading$.next(false))
-		// 		)
-		// 		.subscribe()
-		// }, 5000)
 	}
 
 	getType(type: string): string {
@@ -450,8 +407,12 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 		return result[this.currentIndex]
 	}
 
-	openBrowserDrawer(data) {
-		console.log('open browser drawer >>>', data)
+	openDraftViewsDrawer(data) {
+		console.log('open openDraftViewsDrawer drawer >>>', data)
+	}
+
+	newDraftEditDrawer(data) {
+		console.log('open newDraftEditDrawer drawer >>>', data)
 	}
 
 	openDemandPageModal(d) {

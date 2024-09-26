@@ -79,12 +79,13 @@
 				<ng-template #table>
 					<ng-container *ngIf="draftLists.length > 0; else emptyTable">
 						<mib-table-row
+							(dblclick)="newDraftEditDrawer(draft?.ID)"
 							[@slideAnimation]="requestsAnimationStates[draft.id]"
 							*ngFor="let draft of draftLists; let last = last"
 							[underlined]="!last"
 						>
 							<mib-table-cell type="main">
-								<ng-container table-cell-title>{{ draft.number }}</ng-container>
+								<ng-container table-cell-title>{{ draft.ID }}</ng-container>
 							</mib-table-cell>
 							<mib-table-cell>
 								<ng-container table-cell-title
@@ -92,18 +93,26 @@
 										type="filled-secondary"
 										[extended]="true"
 										size="l"
-										>{{ draft.type }}</mib-badge
+										>{{ draft.Type }}</mib-badge
 									></ng-container
 								>
 							</mib-table-cell>
 							<mib-table-cell>
 								<ng-container table-cell-title
-									><mib-badge type="filled-secondary" [extended]="true" size="l"
-										>Заполнено на {{ draft.progress }}</mib-badge
+									><mib-badge
+										type="filled-secondary"
+										[extended]="true"
+										size="l"
+										>{{ draft.Progress }}</mib-badge
 									></ng-container
 								>
 							</mib-table-cell>
-							<mib-button table-row-button size="s" type="ghost-secondary">
+							<mib-button
+								(press)="newDraftEditDrawer(draft?.ID)"
+								table-row-button
+								size="s"
+								type="ghost-secondary"
+							>
 								<mib-icon
 									class="stroke draft"
 									btn-icon
@@ -233,6 +242,7 @@
 				<ng-template #table2>
 					<ng-container *ngIf="historyLists.length > 0; else emptyTable">
 						<mib-table-row
+							(dblclick)="openDraftViewsDrawer(history.DemandId)"
 							[@slideAnimation]="historyAnimationStates[history.id]"
 							*ngFor="
 								let history of historyLists;
@@ -373,7 +383,7 @@
 								</mib-button>
 								<mib-dropdown #demanRowMenu>
 									<mib-dropdown-point
-										(press)="openBrowserDrawer(history.DemandId)"
+										(press)="openDraftViewsDrawer(history.DemandId)"
 										text="Открыть"
 									></mib-dropdown-point>
 								</mib-dropdown>

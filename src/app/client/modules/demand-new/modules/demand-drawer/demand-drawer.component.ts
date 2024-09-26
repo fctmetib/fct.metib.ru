@@ -72,6 +72,8 @@ export class DemandDrawerComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.initForms()
+		// test by id
+		this.getByID()
 
 		const modalData = this.data.data
 		console.log('modalData :>> ', modalData)
@@ -104,7 +106,7 @@ export class DemandDrawerComponent implements OnInit {
 
 	getByID() {
 		this.demandService
-			.getDemandDraftById(1593)
+			.getDemandDraftById(11489)
 			.pipe(
 				tap(data => {
 					console.log('getByIDdata :>> ', data)
@@ -216,26 +218,18 @@ export class DemandDrawerComponent implements OnInit {
 
 	getCurrentDraft() {
 		this.loading$.next(true)
+
 		this.demandService
 			.getDemandDraftById(this.DraftId)
 			.pipe(
 				tap(data => {
-					/* 
-						{
-						"ID": 15972,
-						"User": "Котов Андрей",
-						"DateCreated": "2024-09-24T15:44:17Z",
-						"DateModify": "2024-09-24T15:44:31Z",
-						"DemandData": "{\"Subject\":\"fail test \",\"Question\":\"fail test text\",\"Type\":\"Question\",\"Files\":[]}"
-						}
-						*/
-					console.log('data :>> ', data)
-					const demandData = JSON.parse(data.DemandData)
-					const subject = demandData.Subject
-					const question = demandData.Question
-
-					this.form.get('requestTitle').setValue(subject)
-					this.form.get('requestText').setValue(question)
+					const {Subject: subject, Question: question} = JSON.parse(
+						data.DemandData
+					)
+					this.form.patchValue({
+						requestTitle: subject,
+						requestText: question
+					})
 				}),
 				finalize(() => this.loading$.next(false))
 			)
