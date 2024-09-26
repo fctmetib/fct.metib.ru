@@ -1,11 +1,12 @@
-import {Component} from '@angular/core'
-import {MatDialogRef} from '@angular/material/dialog'
+import {Component, Inject} from '@angular/core'
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {BehaviorSubject} from 'rxjs'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {ContractedFormsEnum} from 'src/app/shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {extractBase64} from 'src/app/shared/services/tools.service'
+import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 
 @Component({
 	selector: 'mib-demand-surety-drawer',
@@ -23,7 +24,8 @@ export class DemandSuretyDrawerComponent {
 
 	constructor(
 		private toaster: ToasterService,
-		public dialogRef: MatDialogRef<DemandSuretyDrawerComponent>
+		public dialogRef: MatDialogRef<DemandSuretyDrawerComponent>,
+		@Inject(MAT_DIALOG_DATA) public data: DrawerData
 	) {}
 
 	onDocumentLoad({file, url}: FileDnd) {

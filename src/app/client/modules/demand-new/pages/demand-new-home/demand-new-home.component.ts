@@ -331,12 +331,46 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 						.subscribe()
 				}
 			case 2:
-				this.demandSuretyDrawerService
-					.open({data: {id}})
-					// .open({state: DrawerStateEnum.CREATE})
-					.afterClosed()
-					.subscribe()
-				break
+				if (this.isCreate) {
+					return this.demandSuretyDrawerService
+						.open({
+							data: {
+								isCreation: true,
+								DraftId: null
+							}
+						})
+						.afterClosed()
+						.subscribe(() => {
+							this.isCreate = false
+						})
+				} else if (this.isEdits) {
+					return this.demandSuretyDrawerService
+						.open({
+							data: {
+								isEdit: true,
+								DraftId: extraData
+							}
+						})
+						.afterClosed()
+						.subscribe(() => {
+							this.isEdits = false
+						})
+				} else {
+					return this.demandSuretyDrawerService
+						.open({
+							data: {
+								isView: true,
+								DraftId: extraData
+							}
+						})
+						.afterClosed()
+						.subscribe()
+				}
+			// this.demandSuretyDrawerService
+			// 	.open({data: {id}})
+			// 	// .open({state: DrawerStateEnum.CREATE})
+			// 	.afterClosed()
+			// 	.subscribe()
 			case 3:
 				this.demandEditingDrawerService
 					.open({data: {id}})
@@ -440,8 +474,9 @@ export class DemandNewHomeComponent implements OnInit, OnDestroy {
 
 	newDraftDrawer(id, type) {
 		if (type === 'Запрос на ЭЦП' || type === 'ЭЦП') {
-			this.openDrawers(1, id)
-			this.isEdits = false
+			return this.openDrawers(1, id)
+		} else if (type === 'Поручительство') {
+			return this.openDrawers(2, id)
 		}
 	}
 

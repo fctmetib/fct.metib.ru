@@ -9,6 +9,7 @@
 	</mib-drawer-header>
 	<mib-drawer-container>
 		<p class="text text_m c-bti-secondary">Запрос на поручительство</p>
+		<h3>halo data : {{ data | json }}</h3>
 		<div [ngSwitch]="progress">
 			<!-- первый скрин -->
 			<div *ngSwitchCase="progress === 1">

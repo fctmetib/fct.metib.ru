@@ -11,9 +11,7 @@ export class DemandSuretyDrawerService {
 	open(
 		data?: DrawerData<any>
 	): MatDialogRef<DemandSuretyDrawerComponent, number[]> {
-		const config: DrawerData = {
-			state: 'view'
-		}
+		const config: DrawerData = {}
 		return this.dialog.open(
 			DemandSuretyDrawerComponent,
 			drawerConfig(data?.maxWidth, Object.assign(config, data))
