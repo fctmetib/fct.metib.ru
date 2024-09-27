@@ -1,6 +1,7 @@
-import {Component} from '@angular/core'
-import {MatDialogRef} from '@angular/material/dialog'
+import {Component, Inject} from '@angular/core'
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
+import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface'
 
 @Component({
 	selector: 'mib-demand-debtor-drawer',
@@ -10,8 +11,11 @@ import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 export class DemandDebtorDrawerComponent {
 	constructor(
 		private toaster: ToasterService,
-		public dialogRef: MatDialogRef<DemandDebtorDrawerComponent>
-	) {}
+		public dialogRef: MatDialogRef<DemandDebtorDrawerComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DrawerData
+  ) {
+    console.log(data.data.id)
+  }
 
 	public submitData() {
 		this.toaster.show(

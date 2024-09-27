@@ -6,308 +6,336 @@ import {InputSize} from 'src/app/shared/ui-kit/input/interfaces/input.interface'
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {
-	downloadBase64File,
-	extractBase64
+  downloadBase64File,
+  extractBase64
 } from 'src/app/shared/services/tools.service'
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {
-	BehaviorSubject,
-	catchError,
-	debounceTime,
-	distinctUntilChanged,
-	filter,
-	finalize,
-	forkJoin,
-	of,
-	pairwise,
-	startWith,
-	switchMap,
-	tap
+  BehaviorSubject,
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  finalize,
+  forkJoin,
+  of,
+  pairwise,
+  startWith,
+  switchMap,
+  tap
 } from 'rxjs'
 import {DemandService} from '../../services/demand.service'
-import {RequestFailureModalService} from 'src/app/shared/modules/modals/request-failure-modal/request-failure-modal.service'
-import {RequestCreateSuccessModalService} from 'src/app/shared/modules/modals/request-create-success-modal/request-create-success-modal.service'
+import {
+  RequestFailureModalService
+} from 'src/app/shared/modules/modals/request-failure-modal/request-failure-modal.service'
+import {
+  RequestCreateSuccessModalService
+} from 'src/app/shared/modules/modals/request-create-success-modal/request-create-success-modal.service'
 import {DocumentsService} from '../../../documents/services/documents.service'
 
 @Component({
-	selector: 'mib-demand-drawer',
-	templateUrl: './demand-drawer.component.html',
-	styleUrls: ['./demand-drawer.component.scss']
+  selector: 'mib-demand-drawer',
+  templateUrl: './demand-drawer.component.html',
+  styleUrls: ['./demand-drawer.component.scss']
 })
 export class DemandDrawerComponent implements OnInit {
-	public form: FormGroup
+  form: FormGroup
 
-	public isSubmitting$ = new BehaviorSubject<boolean>(false)
-	public loading$ = new BehaviorSubject<boolean>(false)
+  isSubmitting$ = new BehaviorSubject<boolean>(false)
+  loading$ = new BehaviorSubject<boolean>(false)
 
-	public nextID: number = 0
+  nextID: number = 0
 
-	public size: InputSize | ButtonSize = 'm'
+  size: InputSize | ButtonSize = 'm'
 
-	freeRequestType = 'Question'
-	initialData: any = null
-	isDraft: boolean = false
-	isViewDemand: boolean = false
-	isDemandRequest: boolean = false
+  freeRequestType = 'Question'
+  initialData: any = null
+  isDraft: boolean = false
+  isViewDemand: boolean = false
+  isDemandRequest: boolean = false
 
-	public isDownloading$ = new BehaviorSubject<boolean>(false)
+  isDownloading$ = new BehaviorSubject<boolean>(false)
 
-	DraftId = null
+  DraftId = null
 
-	constructor(
-		private fb: FormBuilder,
-		private toaster: ToasterService,
-		private demandService: DemandService,
-		private requestFailureModalService: RequestFailureModalService,
-		private requestCreateSuccessModalService: RequestCreateSuccessModalService,
-		public dialogRef: MatDialogRef<DemandDrawerComponent>,
-		private documentsService: DocumentsService,
-		@Inject(MAT_DIALOG_DATA) public data: DrawerData
-	) {}
+  constructor(
+    private fb: FormBuilder,
+    private toaster: ToasterService,
+    private demandService: DemandService,
+    private requestFailureModalService: RequestFailureModalService,
+    private requestCreateSuccessModalService: RequestCreateSuccessModalService,
+    public dialogRef: MatDialogRef<DemandDrawerComponent>,
+    private documentsService: DocumentsService,
+    @Inject(MAT_DIALOG_DATA) public data: DrawerData
+  ) {
+    console.log(data)
+    // this.form.valueChanges.subscribe(res => console.log(res))
+  }
 
-	get documents() {
-		return this.form.get('Documents') as FormArray
-	}
+  get documents() {
+    return this.form.get('Documents') as FormArray
+  }
 
-	ngOnInit(): void {
-		this.initForms()
-		// test by id
-		// this.getByID()
+  ngOnInit(): void {
+    const modalData = this.data.data
+    this.initForms()
+    // test by id
+    // this.getByID()
 
-		const modalData = this.data.data
-		console.log('modalData :>> ', modalData)
-		// Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
-		if (modalData?.isEdit || modalData?.isView) {
-			this.getByID()
-		}
 
-		// Если создание и нет черновика
-		if (modalData?.isCreation && !modalData?.DraftId) {
-			// инициализируем черновик
-			this.initDraft()
+    console.log('modalData :>> ', modalData)
+    // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
+    if (modalData?.isEdit || modalData?.isView) {
+      this.getByID(modalData.id)
+    }
 
-			// Включаем авто сохранение
-			this.enableAutoSaveDraft()
-		}
+    // Если создание и нет черновика
+    if (modalData?.isCreation && !modalData?.id) {
+      // инициализируем черновик
+      this.initDraft()
 
-		// Если создание и есть черновик
-		if (modalData?.isCreation && modalData?.DraftId) {
-			this.DraftId = modalData.DraftId
-			// получаем черновик по DraftId
-			console.log('HALO DRAFT >>>>')
-			console.log('modalData :>> ', modalData)
-			this.getCurrentDraft()
+      // Включаем авто сохранение
+      this.enableAutoSaveDraft()
+    }
 
-			// Включаем авто сохранение
-			this.enableAutoSaveDraft()
-		}
-	}
+    // Если создание и есть черновик
+    if (modalData?.isCreation && modalData?.id) {
+      this.DraftId = modalData.id
+      // получаем черновик по DraftId
+      console.log('HALO DRAFT >>>>')
+      console.log('modalData :>> ', modalData)
+      this.getCurrentDraft()
 
-	getByID() {
-		this.demandService
-			.getDemandDraftById(11489)
-			.pipe(
-				tap(data => {
-					console.log('getByIDdata :>> ', data)
-				})
-			)
-			.subscribe()
-	}
+      // Включаем авто сохранение
+      this.enableAutoSaveDraft()
+    }
+  }
 
-	enableAutoSaveDraft() {
-		this.form.valueChanges
-			.pipe(
-				filter(() => !!this.DraftId),
-				debounceTime(300), // Ждем 300 мс после окончания ввода
-				distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
-				startWith(this.form.value), // Начальное значение формы
-				pairwise(), // Получаем текущее и предыдущее значения формы
-				filter(([prev, curr]) => JSON.stringify(prev) !== JSON.stringify(curr)),
-				switchMap(([prev, curr]) => {
-					const payload = {
-						Subject: curr.requestTitle,
-						Question: curr.requestText,
-						Type: this.freeRequestType,
-						Files: []
-					}
-					return this.demandService.updateDraft(this.DraftId, payload)
-				})
-			)
-			.subscribe(result => {
-				// Обрабатываем результат запроса
-				console.log('Результат API:', result)
-			})
-	}
+  getByID(id: number) {
+    this.demandService
+      .getDemandDraftById(id)
+      .pipe(
+        tap(res => {
+          const data = JSON.parse(res.DemandData)
+          this.form.patchValue({
+            requestTitle: data.Subject,
+            requestText: data.Question,
+            Documents: data.Files
+          })
+          // this.form.updateValueAndValidity()
+        })
+      )
+      .subscribe(
+        // {
+        //   "ID": 16011,
+        //   "User": "Сновский Владимир",
+        //   "DateCreated": "2024-09-27T10:06:26Z",
+        //   "DateModify": "2024-09-27T10:06:53Z",
+        //   "DemandData": "{\"Subject\":\"Тест\",\"Question\":\"Тест 2 2\",\"Type\":\"Question\",\"Files\":[]}"
+        // }
+        // {
+        //   "Subject": "Тест",
+        //   "Question": "Тест 2 2",
+        //   "Type": "Question",
+        //   "Files": []
+        // }
+      )
+  }
 
-	initDraft() {
-		const payload = {
-			Subject: '',
-			Question: '',
-			Type: this.freeRequestType,
-			Files: []
-		}
+  enableAutoSaveDraft() {
+    this.form.valueChanges
+      .pipe(
+        filter(() => !!this.DraftId), tap(ev => console.log(ev)),
+        debounceTime(300), // Ждем 300 мс после окончания ввода
+        distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
+        startWith(this.form.value), // Начальное значение формы
+        pairwise(), // Получаем текущее и предыдущее значения формы
+        filter(([prev, curr]) => JSON.stringify(prev) !== JSON.stringify(curr)),
+        switchMap(([prev, curr]) => {
+          const payload = {
+            Subject: curr.requestTitle,
+            Question: curr.requestText,
+            Type: this.freeRequestType,
+            Files: []
+          }
+          return this.demandService.updateDraft(this.DraftId, payload)
+        })
+      )
+      .subscribe(result => {
+        // Обрабатываем результат запроса
+        console.log('Результат API:', result)
+      })
+  }
 
-		this.demandService
-			.createNewDraft(payload)
-			.pipe(
-				tap(id => {
-					console.log('create autosave id :>> ', id)
-					this.DraftId = id
-				})
-			)
-			.subscribe()
-	}
+  initDraft() {
+    const payload = {
+      Subject: '',
+      Question: '',
+      Type: this.freeRequestType,
+      Files: []
+    }
 
-	initForms() {
-		this.form = this.fb.group({
-			requestTitle: [null, [Validators.required]],
-			requestText: [null, [Validators.required]],
-			Documents: this.fb.array([])
-		})
-	}
+    this.demandService
+      .createNewDraft(payload)
+      .pipe(
+        tap(id => {
+          console.log('create autosave id :>> ', id)
+          this.DraftId = id
+        })
+      )
+      .subscribe()
+  }
 
-	addDocument(data: DocumentReq) {
-		const control: FormGroup = this.fb.group({
-			Number: [null],
-			Title: [null],
-			Description: [null],
-			DocumentTypeID: [null],
-			OwnerTypeID: [null],
-			Data: [null],
-			File: [null]
-		})
-		control.patchValue(data)
-		this.documents.push(control)
-	}
+  initForms() {
+    this.form = this.fb.group({
+      requestTitle: [null, [Validators.required]],
+      requestText: [null, [Validators.required]],
+      Documents: this.fb.array([])
+    })
+  }
 
-	removeDocument(idx: number) {
-		this.documents.removeAt(idx)
-	}
+  addDocument(data: DocumentReq) {
+    const control: FormGroup = this.fb.group({
+      Number: [null],
+      Title: [null],
+      Description: [null],
+      DocumentTypeID: [null],
+      OwnerTypeID: [null],
+      Data: [null],
+      File: [null]
+    })
+    control.patchValue(data)
+    this.documents.push(control)
+  }
 
-	onDocumentLoad({file, url}: FileDnd) {
-		const document: DocumentReq = {
-			// TODO: ДОБАВИТЬ ИНПУТ С "type='number'" В ФОРМУ
-			Number: null,
-			Title: file.name,
-			Description: `description ${file.name}`,
-			DocumentTypeID: 40,
-			OwnerTypeID: 6,
-			Data: extractBase64(url),
-			File: file
-		}
+  removeDocument(idx: number) {
+    this.documents.removeAt(idx)
+  }
 
-		this.addDocument(document)
-	}
+  onDocumentLoad({file, url}: FileDnd) {
+    const document: DocumentReq = {
+      // TODO: ДОБАВИТЬ ИНПУТ С "type='number'" В ФОРМУ
+      Number: null,
+      Title: file.name,
+      Description: `description ${file.name}`,
+      DocumentTypeID: 40,
+      OwnerTypeID: 6,
+      Data: extractBase64(url),
+      File: file
+    }
 
-	downloadCurrentFile() {
-		console.log('HALO DOWNLOAD FILE >>>', this.documents)
-		// this.isDownloading$.next(true)
-		// this.documentsService
-		// 	.getDocumentContent(this.documents.   DocumentID)
-		// 	.pipe(
-		// 		tap(data => {
-		// 			downloadBase64File(data, DocTitle)
-		// 		}),
-		// 		finalize(() => {
-		// 			this.isDownloading$.next(false)
-		// 		})
-		// 	)
-		// 	.subscribe()
-	}
+    this.addDocument(document)
+  }
 
-	getCurrentDraft() {
-		this.loading$.next(true)
+  downloadCurrentFile() {
+    console.log('HALO DOWNLOAD FILE >>>', this.documents)
+    // this.isDownloading$.next(true)
+    // this.documentsService
+    // 	.getDocumentContent(this.documents.   DocumentID)
+    // 	.pipe(
+    // 		tap(data => {
+    // 			downloadBase64File(data, DocTitle)
+    // 		}),
+    // 		finalize(() => {
+    // 			this.isDownloading$.next(false)
+    // 		})
+    // 	)
+    // 	.subscribe()
+  }
 
-		this.demandService
-			.getDemandDraftById(this.DraftId)
-			.pipe(
-				tap(data => {
-					const {Subject: subject, Question: question} = JSON.parse(
-						data.DemandData
-					)
-					this.form.patchValue({
-						requestTitle: subject,
-						requestText: question
-					})
-				}),
-				finalize(() => this.loading$.next(false))
-			)
-			.subscribe()
-	}
+  getCurrentDraft() {
+    this.loading$.next(true)
 
-	onSubmit() {
-		this.isSubmitting$.next(true)
-		const res = this.form.getRawValue()
-		const resObj = {
-			DraftId: this.DraftId.toString(),
-			DemandData: {
-				Subject: res.requestTitle,
-				Question: res.requestText,
-				Type: this.freeRequestType
-			}
-		}
+    this.demandService
+      .getDemandDraftById(this.DraftId)
+      .pipe(
+        tap(data => {
+          const {Subject: subject, Question: question} = JSON.parse(
+            data.DemandData
+          )
+          this.form.patchValue({
+            requestTitle: subject,
+            requestText: question
+          })
+        }),
+        finalize(() => this.loading$.next(false))
+      )
+      .subscribe()
+  }
 
-		this.demandService
-			.createDemand(resObj)
-			.pipe(
-				switchMap(createdDemandID => {
-					if (!createdDemandID) {
-						throw new Error('Создание запроса не удалось')
-					}
+  onSubmit() {
+    this.isSubmitting$.next(true)
+    const res = this.form.getRawValue()
+    const resObj = {
+      DraftId: this.DraftId.toString(),
+      DemandData: {
+        Subject: res.requestTitle,
+        Question: res.requestText,
+        Type: this.freeRequestType
+      }
+    }
 
-					const uploadObservables = this.documents.controls.map(
-						(control: FormGroup) => {
-							const file = control.get('File').value
-							if (file) {
-								return this.demandService.uploadFile(
-									file,
-									'test',
-									createdDemandID
-								)
-							} else {
-								return of(null) // Если файл отсутствует, пропускаем загрузку
-							}
-						}
-					)
+    this.demandService
+      .createDemand(resObj)
+      .pipe(
+        switchMap(createdDemandID => {
+          if (!createdDemandID) {
+            throw new Error('Создание запроса не удалось')
+          }
 
-					// Ожидание завершения всех запросов на загрузку файлов
-					return forkJoin(uploadObservables)
-				}),
-				finalize(() => this.isSubmitting$.next(false))
-			)
-			.subscribe({
-				error: () => {
-					this.dialogRef.close()
-					this.openRequestFailureModal(this.DraftId)
-				},
-				complete: () => {
-					this.dialogRef.close()
-					this.openRequestSuccessModal()
-				}
-			})
-	}
+          const uploadObservables = this.documents.controls.map(
+            (control: FormGroup) => {
+              const file = control.get('File').value
+              if (file) {
+                return this.demandService.uploadFile(
+                  file,
+                  'test',
+                  createdDemandID
+                )
+              } else {
+                return of(null) // Если файл отсутствует, пропускаем загрузку
+              }
+            }
+          )
 
-	openRequestFailureModal(d) {
-		this.requestFailureModalService.open(d)
-	}
+          // Ожидание завершения всех запросов на загрузку файлов
+          return forkJoin(uploadObservables)
+        }),
+        finalize(() => this.isSubmitting$.next(false))
+      )
+      .subscribe({
+        error: () => {
+          this.dialogRef.close()
+          this.openRequestFailureModal(this.DraftId)
+        },
+        complete: () => {
+          this.dialogRef.close()
+          this.openRequestSuccessModal()
+        }
+      })
+  }
 
-	openRequestSuccessModal() {
-		this.requestCreateSuccessModalService.open()
-	}
+  openRequestFailureModal(d) {
+    this.requestFailureModalService.open(d)
+  }
 
-	openDraftFromModal() {
-		console.log('HALO FROM MODAL TO OPEN DRAFT >>>>')
-	}
+  openRequestSuccessModal() {
+    this.requestCreateSuccessModalService.open()
+  }
 
-	public editDocument() {
-		this.toaster.show(
-			'failure',
-			'Функционал в разработке!',
-			'',
-			true,
-			false,
-			3000
-		)
-	}
+  openDraftFromModal() {
+    console.log('HALO FROM MODAL TO OPEN DRAFT >>>>')
+  }
+
+  public editDocument() {
+    this.toaster.show(
+      'failure',
+      'Функционал в разработке!',
+      '',
+      true,
+      false,
+      3000
+    )
+  }
 }

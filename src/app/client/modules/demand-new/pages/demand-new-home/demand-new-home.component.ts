@@ -1,496 +1,485 @@
-import {Component, OnDestroy, OnInit} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import {
-	BehaviorSubject,
-	Subscription,
-	forkJoin,
-	finalize,
-	map,
-	switchMap,
-	tap
+  BehaviorSubject,
+  forkJoin,
+  finalize,
+  map,
+  switchMap,
+  tap,
+  takeUntil
 } from 'rxjs'
 import {
-	IDraftList,
-	IHistoryList,
-	IQueryList
+  IDraftList,
+  IHistoryList,
+  IQueryList
 } from '../mock-data-service/data.models'
 import {DataService} from '../mock-data-service/data.srrvice'
 import {AnimationService} from 'src/app/shared/animations/animations.service'
 import {Properties} from 'csstype'
 import {DemandDrawerService} from '../../modules/demand-drawer/demand-drawer.service'
-import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {RequestRes} from '../../../requests/interfaces/request.interface'
 import {DemandSignatureDrawerService} from '../../modules/demand-signature-drawer/demand-signature-drawer.service'
 import {DemandSuretyDrawerService} from '../../modules/demand-surety-drawer/demand-surety-drawer.service'
 import {DemandEditingDrawerService} from '../../modules/demand-editing-drawer/demand-editing-drawer.service'
 import {DemandLimitDrawerService} from '../../modules/demand-limit-drawer/demand-limit-drawer.service'
 import {DemandDebtorDrawerService} from '../../modules/demand-debtor-drawer/demand-debtor-drawer.service'
-import {DemandVerificationDrawerService} from '../../modules/demand-verification-drawer/demand-verification-drawer.service'
+import {
+  DemandVerificationDrawerService
+} from '../../modules/demand-verification-drawer/demand-verification-drawer.service'
 import {DemandFactoringDrawerService} from '../../modules/demand-factoring-drawer/demand-factoring-drawer.service'
 import {DemandAgentDrawerService} from '../../modules/demand-agent-drawer/demand-agent-drawer.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {DemandService} from '../../services/demand.service'
 import {DatePipe} from '@angular/common'
 import {MatDialog} from '@angular/material/dialog'
-import {DemandPageHistoryModalComponent} from 'src/app/shared/modules/modals/demand-page-history-modal/demand-page-history-modal.component'
+import {
+  DemandPageHistoryModalComponent
+} from 'src/app/shared/modules/modals/demand-page-history-modal/demand-page-history-modal.component'
+import {DestroyService} from 'src/app/shared/services/common/destroy.service'
 
 const ANIMATION_CONFIG = {
-	translateDistance: '-3%',
-	endOpacity: 0,
-	startOpacity: 1,
-	duration: 300
+  translateDistance: '-3%',
+  endOpacity: 0,
+  startOpacity: 1,
+  duration: 300
+}
+
+export enum DialogType {
+  Signature = 1,
+  Surety, //поручительство
+  Profile,
+  Limit,
+  Debitor,
+  Verify,
+  Free
+}
+
+export enum TabType {
+  Request,
+  Draft,
+  History
 }
 
 @Component({
-	selector: 'mib-demand-new-home',
-	templateUrl: './demand-new-home.component.html',
-	styleUrls: ['./demand-new-home.component.scss'],
-	animations: [new AnimationService().generateAnimation(ANIMATION_CONFIG)]
+  selector: 'mib-demand-new-home',
+  templateUrl: './demand-new-home.component.html',
+  styleUrls: ['./demand-new-home.component.scss'],
+  animations: [new AnimationService().generateAnimation(ANIMATION_CONFIG)],
+  providers: [DestroyService]
 })
-export class DemandNewHomeComponent implements OnInit, OnDestroy {
-	requestLists: IQueryList[] = []
-	drafts: any = []
-	draftLists: any = []
-	historys: any[] = []
-	historyLists: any[] = []
-	selectedHistoryLists: any[] = []
-	selectedStatus: string = 'All'
+export class DemandNewHomeComponent implements OnInit {
+  requestLists: IQueryList[] = []
+  drafts: any = []
+  draftLists: any = []
+  historys: any[] = []
+  historyLists: any[] = []
+  selectedHistoryLists: any[] = []
+  selectedStatus: string = 'All'
+  dialogType = DialogType
+  tabType = TabType
+  isDesktop: boolean = false
+  loading$ = new BehaviorSubject<boolean>(false)
 
-	public isDesktop: boolean = false
+  skeletonWithoutUnderline: Properties = {
+    height: '48px',
+    width: '100%'
+  }
+  skeleton: Properties = {
+    ...this.skeletonWithoutUnderline,
+    borderBottom: '1px solid var(--wgr-tertiary)'
+  }
+  PAGINATOR_ITEMS_PER_PAGE = 7
+  PAGINATOR_PAGE_TO_SHOW = 5
 
-	private subscriptions = new Subscription()
+  currentPage$ = new BehaviorSubject<number>(1)
 
-	public isNewClient: boolean = true
+  selectedRequestsCount: number
+  severalRequestsChecked: boolean = false
+  demadDrawersData: any = []
 
-	public loading$ = new BehaviorSubject<boolean>(false)
+  isEdits: boolean = false
 
-	public skeletonWithoutUnderline: Properties = {
-		height: '48px',
-		width: '100%'
-	}
-	public skeleton: Properties = {
-		...this.skeletonWithoutUnderline,
-		borderBottom: '1px solid var(--wgr-tertiary)'
-	}
+  requestsAnimationStates: Record<number, boolean> = {}
+  historyAnimationStates: Record<number, boolean> = {}
+  currentIndex: number = 0
+  headers = ['Тип запроса', 'Дата запроса', 'Статус запроса', 'Ответственный']
 
-	public PAGINATOR_ITEMS_PER_PAGE = 7
-	public PAGINATOR_PAGE_TO_SHOW = 5
+  dataMap = {
+    0: 'Type',
+    1: 'DateCreated',
+    2: 'Status',
+    3: {Manager: 'Name'}
+  }
 
-	public currentPage$ = new BehaviorSubject<number>(1)
+  constructor(
+    private requestList: DataService,
+    private demandDrawerService: DemandDrawerService,
+    private demandSignatureDrawerService: DemandSignatureDrawerService,
+    private demandSuretyDrawerService: DemandSuretyDrawerService,
+    private demandEditingDrawerService: DemandEditingDrawerService,
+    private demandLimitDrawerService: DemandLimitDrawerService,
+    private demandDebtorDrawerService: DemandDebtorDrawerService,
+    private demandVerificationDrawerService: DemandVerificationDrawerService,
+    private demandFactoringDrawerService: DemandFactoringDrawerService,
+    private demandAgentDrawerService: DemandAgentDrawerService,
+    public breakpointService: BreakpointObserverService,
+    private demandService: DemandService,
+    private datePipe: DatePipe,
+    private dialog: MatDialog,
+    private destroy$: DestroyService
+  ) {
+  }
 
-	selectedRequestsCount: number
-	severalRequestsChecked: boolean = false
-	public demadDrawersData: any = []
+  ngOnInit(): void {
+    this.getAllRequestesList()
+    this.breakpointService
+      .isDesktop()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(b => {
+        this.isDesktop = b
+      })
+  }
 
-	isCreate: boolean = false
-	isEdits: boolean = false
-	isViews: boolean = false
+  getRequestList(): void {
+    this.requestList
+      .getRequestList()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: val => {
+          this.requestLists = val
+        }
+      })
+  }
 
-	public requestsAnimationStates: Record<number, boolean> = {}
-	public historyAnimationStates: Record<number, boolean> = {}
-	public currentIndex: number = 0
-	headers = ['Тип запроса', 'Дата запроса', 'Статус запроса', 'Ответственный']
+  getDraftList(): void {
+    this.loading$.next(true)
+    this.demandService
+      .getDrafts()
+      .pipe(
+        switchMap((drafts: any[]) => {
+          const draftRequests = drafts.map(draft =>
+            this.demandService.getDemandDraftById(draft.ID).pipe(
+              map(demand => {
+                const {Type} = JSON.parse(demand.DemandData)
+                const translatedType = this.getType(Type).result
+                const fillProgress = '30%'
 
-	public dataMap = {
-		0: 'Type',
-		1: 'DateCreated',
-		2: 'Status',
-		3: {Manager: 'Name'}
-	}
+                return {
+                  ID: draft.ID,
+                  Type: translatedType,
+                  Progress: `Заполнено на ${fillProgress}`
+                }
+              })
+            )
+          )
+          // Ожидаем завершения всех запросов
+          return forkJoin(draftRequests)
+        }),
+        tap(data => {
+          this.drafts = data
+          this.onDraftListChange(1)
+        }),
+        finalize(() => this.loading$.next(false)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe()
+  }
 
-	constructor(
-		private requestList: DataService,
-		private demandDrawerService: DemandDrawerService,
-		private demandSignatureDrawerService: DemandSignatureDrawerService,
-		private demandSuretyDrawerService: DemandSuretyDrawerService,
-		private demandEditingDrawerService: DemandEditingDrawerService,
-		private demandLimitDrawerService: DemandLimitDrawerService,
-		private demandDebtorDrawerService: DemandDebtorDrawerService,
-		private demandVerificationDrawerService: DemandVerificationDrawerService,
-		private demandFactoringDrawerService: DemandFactoringDrawerService,
-		private demandAgentDrawerService: DemandAgentDrawerService,
-		public breakpointService: BreakpointObserverService,
-		private demandService: DemandService,
-		private datePipe: DatePipe,
-		private dialog: MatDialog
-	) {}
+  getHistoryList(): void {
+    this.loading$.next(true)
 
-	ngOnInit(): void {
-		this.getAllRequestesList()
-		this.subscriptions = this.breakpointService
-			.isDesktop()
-			.subscribe(b => (this.isDesktop = b))
-	}
+    this.demandService
+      .getDemands()
+      .pipe(
+        tap(data => {
+          this.historys = data
+          this.selectedHistoryLists = this.historys
+          this.onHistoryListChange(1)
+        }),
 
-	getAllRequestesList() {
-		this.getRequestList()
-		this.getDraftList()
-		this.getHistoryList()
-	}
+        finalize(() => this.loading$.next(false)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe()
+  }
 
-	getRequestList() {
-		this.requestList
-			.getRequestList()
-			.pipe(
-				tap(data => {
-					this.requestLists = data
-				})
-			)
-			.subscribe()
-	}
+  getType(type: string): {result: string, resultNum: number} {
+    let resultNum: number
+    let result: string = ''
+    switch (type) {
+      case 'VerificationChannel':
+        result = 'Верификация'
+        resultNum = this.dialogType.Verify
+        break
+      case 'Guarantee':
+        result = 'Поручительство'
+        resultNum = this.dialogType.Surety
+        break
+      case 'Factoring':
+        result = 'Факторинг'
+        break
+      case 'DigitalSignature':
+        result = 'Запрос на ЭЦП'
+        resultNum = this.dialogType.Signature
+        break
+      case 'ProfileChange':
+        result = 'Редактирование Профиля'
+        resultNum = this.dialogType.Profile
+        break
+      case 'Question':
+        result = 'Свободная тема'
+        resultNum = this.dialogType.Free
+        break
+      case 'Limit':
+        result = 'Запрос на Лимит'
+        resultNum = this.dialogType.Limit
+        break
+      case 'NewDebtor':
+        result = 'Новый дебитор'
+        resultNum = this.dialogType.Debitor
+        break
+      case 'AgencyFactoring': //??
+        result = 'Агентский Факторинг'
+        resultNum = this.dialogType.Free
+        break
+      default:
+        result = 'Свободная тема'
+        resultNum = this.dialogType.Free
+        break
+    }
+    return {result, resultNum}
+  }
 
-	getByID(id) {
-		this.demandService
-			.getDemandDraftById(id)
-			.pipe(
-				tap(data => {
-					console.log('getByIDdata :>> ', data)
-				})
-			)
-			.subscribe()
-	}
+  public getStatus(status: string): string {
+    let result: string = ''
+    switch (status) {
+      case 'Created':
+        result = 'Создан'
+        break
+      case 'Completed':
+        result = 'Завершен'
+        break
+      case 'Processing':
+        result = 'В процессе'
+        break
+      case 'Rejected':
+        result = 'Отклонено'
+        break
+      case 'Draft':
+        result = 'Черновик'
+        break
+      case 'Canceled':
+        result = 'Отменен'
+        break
+    }
+    return result
+  }
 
-	getDraftList() {
-		this.loading$.next(true)
-		this.demandService
-			.getDrafts()
-			.pipe(
-				switchMap((drafts: any[]) => {
-					const draftRequests = drafts.map(draft =>
-						this.demandService.getDemandDraftById(draft.ID).pipe(
-							map(demand => {
-								const {Type} = JSON.parse(demand.DemandData)
-								const translatedType = this.getType(Type)
-								const fillProgress = '30%'
+  onPageChange<T>(page: number, sourceArray: T[] = []): T[] {
+    this.currentPage$.next(page)
 
-								return {
-									ID: draft.ID,
-									Type: translatedType,
-									Progress: `Заполнено на ${fillProgress}`
-								}
-							})
-						)
-					)
-					// Ожидаем завершения всех запросов
-					return forkJoin(draftRequests)
-				})
-			)
-			.pipe(
-				tap(data => {
-					this.drafts = data
-					this.onDraftListChange(1)
-				}),
-				finalize(() => this.loading$.next(false))
-			)
-			.subscribe()
-	}
+    const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
+    const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
 
-	getHistoryList() {
-		this.loading$.next(true)
+    return (sourceArray || []).slice(startIndex, endIndex)
+  }
 
-		this.demandService
-			.getDemands()
-			.pipe(
-				tap(data => {
-					this.historys = data
-					this.selectedHistoryLists = this.historys
-					this.onHistoryListChange(1)
-				}),
-				finalize(() => this.loading$.next(false))
-			)
-			.subscribe()
-	}
+  onDraftListChange($event): void {
+    this.draftLists = this.onPageChange($event, this.drafts)
+  }
 
-	getType(type: string): string {
-		let result: string = ''
-		switch (type) {
-			case 'VerificationChannel':
-				result = 'Верификация'
-				break
-			case 'Guarantee':
-				result = 'Поручительство'
-				break
-			case 'Factoring':
-				result = 'Факторинг'
-				break
-			case 'DigitalSignature':
-				result = 'Запрос на ЭЦП'
-				break
-			case 'ProfileChange':
-				result = 'Редактирование Профиля'
-				break
-			case 'Question':
-				result = 'Свободная тема'
-				break
-			case 'Limit':
-				result = 'Запрос на Лимит'
-				break
-			case 'NewDebtor':
-				result = 'Новый дебитор'
-				break
-			case 'AgencyFactoring':
-				result = 'Агентский Факторинг'
-				break
-			default:
-				result = 'Свободная тема'
-				break
-		}
-		return result
-	}
+  onHistoryListChange($event) {
+    this.historyLists = this.onPageChange($event, this.selectedHistoryLists)
+  }
 
-	public getStatus(status: string): string {
-		let result: string = ''
-		switch (status) {
-			case 'Created':
-				result = 'Создан'
-				break
-			case 'Completed':
-				result = 'Завершен'
-				break
-			case 'Processing':
-				result = 'В процессе'
-				break
-			case 'Rejected':
-				result = 'Отклонено'
-				break
-			case 'Draft':
-				result = 'Черновик'
-				break
-			case 'Canceled':
-				result = 'Отменен'
-				break
-		}
-		return result
-	}
+  openDrawers(id: number, reqId: number, type?: TabType): void {
+    let dialog$
+    switch (id) {
+      case this.dialogType.Signature:
+        dialog$ = this.demandSignatureDrawerService
+          .open({
+            data: {
+              isCreation: type === this.tabType.Request,
+              isEdit: type === this.tabType.Draft,
+              isView: type === this.tabType.History,
+              id:
+                type === this.tabType.History || type === this.tabType.Draft
+                  ? reqId
+                  : null
+            }
+          })
+          .afterClosed()
+        break
+      case this.dialogType.Surety:
+        dialog$ = this.demandSuretyDrawerService
+          .open({
+            data: {
+              isCreation: type === this.tabType.Request,
+              isEdit: type === this.tabType.Draft,
+              isView: type === this.tabType.History,
+              id:
+                type === this.tabType.History || type === this.tabType.Draft
+                  ? reqId
+                  : null
+            }
+          })
+          .afterClosed()
+        break
+      case this.dialogType.Profile:
+        dialog$ = this.demandEditingDrawerService
+          .open({
+            data: {
+              isCreation: type === this.tabType.Request,
+              isEdit: type === this.tabType.Draft,
+              isView: type === this.tabType.History,
+              id:
+                type === this.tabType.History || type === this.tabType.Draft
+                  ? reqId
+                  : null
+            }
+          })
+          .afterClosed()
+          .subscribe()
+        break
+      case this.dialogType.Limit:
+        dialog$ = this.demandLimitDrawerService
+          .open(
+            {
+              data: {
+                isCreation: type === this.tabType.Request,
+                isEdit: type === this.tabType.Draft,
+                isView: type === this.tabType.History,
+                id:
+                  type === this.tabType.History || type === this.tabType.Draft
+                    ? reqId
+                    : null
+              }
+            }
+          )
+          .afterClosed()
+        break
+      case this.dialogType.Debitor:
+        dialog$ = this.demandDebtorDrawerService
+          .open({
+            data: {
+              isCreation: type === this.tabType.Request,
+              isEdit: type === this.tabType.Draft,
+              isView: type === this.tabType.History,
+              id:
+                type === this.tabType.History || type === this.tabType.Draft
+                  ? reqId
+                  : null
+            }
+          })
+          .afterClosed()
+        break
+      case this.dialogType.Verify:
+        dialog$ = this.demandVerificationDrawerService
+          .open({
+            data: {
+              isCreation: type === this.tabType.Request,
+              isEdit: type === this.tabType.Draft,
+              isView: type === this.tabType.History,
+              id:
+                type === this.tabType.History || type === this.tabType.Draft
+                  ? reqId
+                  : null
+            }
+          })
+          .afterClosed()
+        break
+      case this.dialogType.Free:
+        dialog$ = this.demandDrawerService
+          .open({
+            data: {
+              isCreation: type === this.tabType.Request,
+              isEdit: type === this.tabType.Draft,
+              isView: type === this.tabType.History,
+              id:
+                type === this.tabType.History || type === this.tabType.Draft
+                  ? reqId
+                  : null
+            }
+          })
+          .afterClosed()
+    }
 
-	onPageChange<T>(page: number, sourceArray: T[] = []) {
-		// console.log('page, sourceArray :>> ', page, sourceArray)
-		this.currentPage$.next(page)
+    dialog$.subscribe()
+  }
 
-		const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE
-		const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE
+  sortDemandByStatus(status: string): void {
+    if (status === 'All') {
+      this.selectedHistoryLists = this.historys
+    } else {
+      this.selectedHistoryLists = this.historys.filter(
+        item => item.Status === status
+      )
+    }
 
-		return (sourceArray || []).slice(startIndex, endIndex)
-	}
+    this.onHistoryListChange(1)
+  }
 
-	onDraftListChange($event) {
-		this.draftLists = this.onPageChange($event, this.drafts)
-	}
+  prev(): void {
+    if (this.currentIndex > 0) {
+      this.currentIndex--
+    }
+  }
 
-	onHistoryListChange($event) {
-		this.historyLists = this.onPageChange($event, this.selectedHistoryLists)
-	}
+  next(): void {
+    if (this.currentIndex < this.headers.length - 1) {
+      this.currentIndex++
+    }
+  }
 
-	openDrawer() {
-		this.demandDrawerService
-			.open({
-				data: {
-					isCreation: true,
-					DraftId: null
-				}
-			})
-			.afterClosed()
-			.subscribe()
-	}
+  getVisibleHeader() {
+    return this.headers[this.currentIndex]
+  }
 
-	openDrawers(id: number, extraData?) {
-		switch (id) {
-			case 1:
-				if (this.isCreate) {
-					return this.demandSignatureDrawerService
-						.open({
-							data: {
-								isCreation: true,
-								DraftId: null
-							}
-						})
-						.afterClosed()
-						.subscribe(() => {
-							this.isCreate = false
-						})
-				} else if (this.isEdits) {
-					return this.demandSignatureDrawerService
-						.open({
-							data: {
-								isEdit: true,
-								DraftId: extraData
-							}
-						})
-						.afterClosed()
-						.subscribe(() => {
-							this.isEdits = false
-						})
-				} else {
-					return this.demandSignatureDrawerService
-						.open({
-							data: {
-								isView: true,
-								DraftId: extraData
-							}
-						})
-						.afterClosed()
-						.subscribe()
-				}
-			case 2:
-				if (this.isCreate) {
-					return this.demandSuretyDrawerService
-						.open({
-							data: {
-								isCreation: true,
-								DraftId: null
-							}
-						})
-						.afterClosed()
-						.subscribe(() => {
-							this.isCreate = false
-						})
-				} else if (this.isEdits) {
-					return this.demandSuretyDrawerService
-						.open({
-							data: {
-								isEdit: true,
-								DraftId: extraData
-							}
-						})
-						.afterClosed()
-						.subscribe(() => {
-							this.isEdits = false
-						})
-				} else {
-					return this.demandSuretyDrawerService
-						.open({
-							data: {
-								isView: true,
-								DraftId: extraData
-							}
-						})
-						.afterClosed()
-						.subscribe()
-				}
-			// this.demandSuretyDrawerService
-			// 	.open({data: {id}})
-			// 	// .open({state: DrawerStateEnum.CREATE})
-			// 	.afterClosed()
-			// 	.subscribe()
-			case 3:
-				this.demandEditingDrawerService
-					.open({data: {id}})
-					// .open({state: DrawerStateEnum.CREATE})
-					.afterClosed()
-					.subscribe()
-				break
-			case 4:
-				this.demandLimitDrawerService
-					.open({data: {id}})
-					// .open({state: DrawerStateEnum.CREATE})
-					.afterClosed()
-					.subscribe()
-				break
-			case 5:
-				this.demandDebtorDrawerService
-					.open({data: {id}})
-					// .open({state: DrawerStateEnum.CREATE})
-					.afterClosed()
-					.subscribe()
-				break
-			case 6:
-				this.demandVerificationDrawerService
-					.open({data: {id}})
-					// .open({state: DrawerStateEnum.CREATE})
-					.afterClosed()
-					.subscribe()
-				break
-			case 7:
-				this.demandFactoringDrawerService
-					.open({data: {id}})
-					// .open({state: DrawerStateEnum.CREATE})
-					.afterClosed()
-					.subscribe()
-				break
-			case 8:
-				this.demandAgentDrawerService
-					.open({data: {id}})
-					// .open({state: DrawerStateEnum.CREATE})
-					.afterClosed()
-					.subscribe()
-				break
-			default:
-				break
-		}
-	}
+  getVisibleCell(row: any) {
+    const result = {}
+    for (const [newKey, path] of Object.entries(this.dataMap)) {
+      let value
 
-	sortDemandByStatus(status: string) {
-		if (status === 'All') {
-			this.selectedHistoryLists = this.historys
-		} else {
-			this.selectedHistoryLists = this.historys.filter(
-				item => item.Status === status
-			)
-		}
+      if (typeof path === 'string') {
+        if (path === 'Type') {
+          value = this.getType(row[path]).result
+        } else if (path === 'Status') {
+          value = this.getStatus(row[path])
+        } else {
+          value = row[path]
+        }
+      } else if (typeof path === 'object') {
+        const [parentKey, childKey] = Object.entries(path)[0]
+        value = row[parentKey] ? row[parentKey][childKey] : undefined
+      }
+      if (path === 'DateCreated' && value !== undefined) {
+        value = this.datePipe.transform(value, 'dd.MM.yyyy')
+      }
+      result[newKey] = value
+    }
 
-		this.onHistoryListChange(1)
-	}
+    return result[this.currentIndex]
+  }
 
-	prev() {
-		if (this.currentIndex > 0) {
-			this.currentIndex--
-		}
-	}
+  newDraftDrawer(id: number, type: number, typeTab?: TabType) {
+    this.openDrawers(type, id, typeTab)
+  }
 
-	next() {
-		if (this.currentIndex < this.headers.length - 1) {
-			this.currentIndex++
-		}
-	}
+  openDemandPageModal(d): void {
+    const dialogConfig = {
+      width: '100%',
+      maxWidth: '600px',
+      panelClass: 'custom-dialog-request',
+      data: {d}
+    }
+    this.dialog.open(DemandPageHistoryModalComponent, dialogConfig)
+  }
 
-	getVisibleHeader() {
-		return this.headers[this.currentIndex]
-	}
+  private getAllRequestesList(): void {
+    this.getRequestList()
+    this.getDraftList()
+    this.getHistoryList()
+  }
 
-	getVisibleCell(row: any) {
-		const result = {}
-		for (const [newKey, path] of Object.entries(this.dataMap)) {
-			let value
-
-			if (typeof path === 'string') {
-				if (path === 'Type') {
-					value = this.getType(row[path])
-				} else if (path === 'Status') {
-					value = this.getStatus(row[path])
-				} else {
-					value = row[path]
-				}
-			} else if (typeof path === 'object') {
-				const [parentKey, childKey] = Object.entries(path)[0]
-				value = row[parentKey] ? row[parentKey][childKey] : undefined
-			}
-			if (path === 'DateCreated' && value !== undefined) {
-				value = this.datePipe.transform(value, 'dd.MM.yyyy')
-			}
-			result[newKey] = value
-		}
-
-		return result[this.currentIndex]
-	}
-
-	newDraftDrawer(id, type) {
-		if (type === 'Запрос на ЭЦП' || type === 'ЭЦП') {
-			return this.openDrawers(1, id)
-		} else if (type === 'Поручительство') {
-			return this.openDrawers(2, id)
-		}
-	}
-
-	openDemandPageModal(d) {
-		const dialogConfig = {
-			width: '100%',
-			maxWidth: '600px',
-			panelClass: 'custom-dialog-request',
-			data: {d}
-		}
-		this.dialog.open(DemandPageHistoryModalComponent, dialogConfig)
-	}
-
-	ngOnDestroy(): void {
-		this.subscriptions.unsubscribe()
-	}
 }

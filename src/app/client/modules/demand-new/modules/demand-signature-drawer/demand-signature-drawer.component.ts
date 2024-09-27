@@ -22,7 +22,9 @@ export class DemandSignatureDrawerComponent {
 		public dialogRef: MatDialogRef<DemandSignatureDrawerComponent>,
 		private toaster: ToasterService,
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData
-	) {}
+	) {
+    console.log(data.data.id)
+  }
 
 	public nextPage() {
 		if (this.pageCount >= 1 && this.pageCount <= this.maxPage - 1) {

@@ -66,8 +66,8 @@ export class AuthService {
     return this.http.post<any>(url, data);
   }
 
-  reauth(user: ReauthRequestInterface): Observable<any> {
-    const url = environment.apiUrl + `/user/reauth/${user.userId}`;
+  reauth(): Observable<any> {
+    const url = environment.apiUrl + `/v1/reauth`;
     return this.http.post<AuthRes>(url, null).pipe(
       tap((response: AuthRes) => {
         // second user
@@ -83,7 +83,6 @@ export class AuthService {
           userGeneral: null
         });
 
-        this.router.navigateByUrl('/client/cabinet');
       }),
       switchMap(() => this.initCurrentUser()),
       catchError((errorResponse: HttpErrorResponse) => {

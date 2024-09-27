@@ -26,7 +26,9 @@ export class DemandSuretyDrawerComponent {
 		private toaster: ToasterService,
 		public dialogRef: MatDialogRef<DemandSuretyDrawerComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData
-	) {}
+	) {
+    console.log(data.data.id)
+  }
 
 	onDocumentLoad({file, url}: FileDnd) {
 		const document: DocumentReq = {

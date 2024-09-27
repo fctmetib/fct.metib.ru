@@ -1,6 +1,7 @@
-import {Component} from '@angular/core'
-import {MatDialogRef} from '@angular/material/dialog'
+import {Component, Inject} from '@angular/core'
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
+import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface'
 
 @Component({
 	selector: 'mib-demand-verification-drawer',
@@ -10,8 +11,12 @@ import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 export class DemandVerificationDrawerComponent {
 	constructor(
 		private toaster: ToasterService,
-		public dialogRef: MatDialogRef<DemandVerificationDrawerComponent>
-	) {}
+		public dialogRef: MatDialogRef<DemandVerificationDrawerComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+	) {
+    console.log(data.data.id)
+  }
+
 
 	public submitData() {
 		this.toaster.show(

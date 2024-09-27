@@ -1,29 +1,37 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core'
-import {AutoUnsubscribeService} from './shared/services/auto-unsubscribe.service'
 import {NavigationEnd, Router} from '@angular/router'
+import {AuthService} from './auth/services/auth.service'
+import {DestroyService} from './shared/services/common/destroy.service'
+import {takeUntil} from 'rxjs/operators'
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'],
-	providers: [AutoUnsubscribeService]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  providers: [DestroyService]
 })
 export class AppComponent implements OnInit {
-	@ViewChild('scrollContainer') scrollContainer: ElementRef
+  @ViewChild('scrollContainer') scrollContainer: ElementRef
 
-	constructor(private router: Router) {}
+  constructor(private router: Router, private authSrv: AuthService, private destroy$: DestroyService) {
+  }
 
-	ngOnInit(): void {
-		this.router.events.subscribe(event => {
-			if (event instanceof NavigationEnd) {
-				this.scrollToTop()
-			}
-		})
-	}
+  ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.scrollToTop()
+      }
+    })
 
-	scrollToTop(): void {
-		if (this.scrollContainer && this.scrollContainer.nativeElement) {
-			this.scrollContainer.nativeElement.scrollTop = 0
-		}
-	}
+    setInterval(() => {
+      console.log(this.authSrv.isUserLoggedIn)
+      if (this.authSrv.isUserLoggedIn) this.authSrv.reauth().pipe(takeUntil(this.destroy$)).subscribe()
+    }, 1800000)
+  }
+
+  scrollToTop(): void {
+    if (this.scrollContainer && this.scrollContainer.nativeElement) {
+      this.scrollContainer.nativeElement.scrollTop = 0
+    }
+  }
 }
