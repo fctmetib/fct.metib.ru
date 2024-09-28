@@ -71,24 +71,39 @@ export class TextareaComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     if (this.textareaDirective) {
-      const {maxLength, textLength} = this.textareaElement
-      this.maxLength = maxLength
-      this.textLength = textLength
-      fromEvent(this.textareaElement, 'input').pipe(
-        tap(event => {
-          const target = event.target as HTMLTextAreaElement
-          this.maxLength = target.maxLength
-          this.textLength = target.textLength
-          this.cdr.detectChanges()
-        }),
-        takeUntil(this.au.destroyer)
-      ).subscribe()
+      const { maxLength } = this.textareaElement;
+      this.maxLength = maxLength;
+      this.textLength = (this.textareaElement.value || '').length;
+
+      fromEvent(this.textareaElement, 'input')
+        .pipe(
+          tap(event => {
+            const target = event.target as HTMLTextAreaElement;
+            this.maxLength = target.maxLength;
+            this.textLength = target.textLength;
+            this.cdr.detectChanges();
+          }),
+          takeUntil(this.au.destroyer)
+        )
+        .subscribe();
+
+      if (this.textareaDirective.ngControl) {
+        this.textareaDirective.ngControl.valueChanges
+          .pipe(
+            tap(value => {
+              this.textLength = (value || '').length;
+              this.cdr.detectChanges();
+            }),
+            takeUntil(this.au.destroyer)
+          )
+          .subscribe();
+      }
 
       this.toolsService.parseClassesObject(this.classes, className => {
-        this.r2.addClass(this.base.box.nativeElement, className)
-      })
+        this.r2.addClass(this.base.box.nativeElement, className);
+      });
     } else {
-      throw new Error('mib-textarea should contains <input mibTextarea/>!')
+      throw new Error('mib-textarea should contain <textarea mibTextarea></textarea>!');
     }
   }
 

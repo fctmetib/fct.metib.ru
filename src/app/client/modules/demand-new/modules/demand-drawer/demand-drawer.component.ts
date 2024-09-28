@@ -56,12 +56,6 @@ export class DemandDrawerComponent implements OnInit {
     private documentsService: DocumentsService,
     @Inject(MAT_DIALOG_DATA) public data: DrawerData
   ) {
-    const info = data?.data?.info
-    this.form = this.fb.group({
-      requestTitle: [info?.Subject ?? null, [Validators.required]],
-      requestText: [info?.Question ?? null, [Validators.required]],
-      Documents: this.fb.array(info?.Files ?? [])
-    })
   }
 
   get requestId(): number {
@@ -78,7 +72,13 @@ export class DemandDrawerComponent implements OnInit {
 
   ngOnInit(): void {
     const modalData = this.data.data
-    this
+    this.initForms()
+
+    // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
+    if (modalData?.isEdit || modalData?.isView) {
+      this.getByID(modalData.id)
+    }
+
     // Если создание и нет черновика
     if (modalData?.isCreation && !modalData?.id) {
       // инициализируем черновик
@@ -119,6 +119,23 @@ export class DemandDrawerComponent implements OnInit {
       })
   }
 
+  getByID(id: number) {
+    this.demandService
+      .getDemandDraftById(id)
+      .pipe(
+        tap(res => {
+          const data = JSON.parse(res.DemandData)
+          this.form.patchValue({
+            requestTitle: data.Subject,
+            requestText: data.Question,
+            Documents: data.Files
+          })
+        })
+      )
+      .subscribe(
+      )
+  }
+
   initDraft(): void {
     const payload = {
       Subject: '',
@@ -154,6 +171,14 @@ export class DemandDrawerComponent implements OnInit {
 
   removeDocument(idx: number): void {
     this.documents.removeAt(idx)
+  }
+
+  initForms() {
+    this.form = this.fb.group({
+      requestTitle: [null, [Validators.required]],
+      requestText: [null, [Validators.required]],
+      Documents: this.fb.array([])
+    })
   }
 
   onDocumentLoad({file, url}: FileDnd): void {
