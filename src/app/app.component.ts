@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
         this.scrollToTop()
       }
     })
-
+    if (this.authSrv.isUserLoggedIn) this.authSrv.reauth().pipe(takeUntil(this.destroy$)).subscribe()
     setInterval(() => {
       console.log(this.authSrv.isUserLoggedIn)
       if (this.authSrv.isUserLoggedIn) this.authSrv.reauth().pipe(takeUntil(this.destroy$)).subscribe()

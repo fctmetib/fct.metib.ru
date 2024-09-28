@@ -28,7 +28,7 @@
       </div>
       <mib-spacing type="s"></mib-spacing>
       <div class="mobile-btn flex">
-        <mib-button (press)="openDrawers(dialogType.Free, null)" type="filled-primary"
+        <mib-button (press)="openDrawers(dialogType.Free, null, tabType.Request, null)" type="filled-primary"
         >Запрос на свободную тему
         </mib-button
         >
@@ -77,7 +77,7 @@
         <ng-template #table>
           <ng-container *ngIf="draftLists.length > 0; else emptyTable">
             <mib-table-row
-              (dblclick)="isEdits = true; newDraftDrawer(draft?.ID, draft.Type)"
+              (dblclick)="newDraftDrawer(draft?.ID, draft.TypeInt, TabType.Draft, draft)"
               [@slideAnimation]="requestsAnimationStates[draft.id]"
               *ngFor="let draft of draftLists; let last = last"
               [underlined]="!last"
@@ -112,7 +112,7 @@
                 >
               </mib-table-cell>
               <mib-button
-                (press)="newDraftDrawer(draft?.ID, getType(draft.Type).resultNum, tabType.Draft)"
+                (press)="newDraftDrawer(draft?.ID, draft.TypeInt, TabType.Draft, draft)"
                 table-row-button
                 size="s"
                 type="ghost-secondary"

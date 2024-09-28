@@ -154,7 +154,7 @@ export class DemandService {
 		return this.http.get<DebtorInterface[]>(url)
 	}
 
-	// new API
+	// new API //
 	getDemandDraftById(id: number): Observable<any> {
 		const url = `${environment.apiUrl}/v1/demands/drafts/${id}`
 		return this.http.get<any>(url)

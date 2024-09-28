@@ -12,22 +12,26 @@ import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {TextareaModule} from 'src/app/shared/ui-kit/textarea/textarea.module'
 import {AutosizeModule} from 'ngx-autosize'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
-	declarations: [DemandVerificationDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		SpacingModule,
-		DropdownPointModule,
-		CheckboxModule,
-		InputModule,
-		LabelModule,
-		ButtonModule,
-		SelectModule,
-		TextareaModule,
-		AutosizeModule
-	],
-	providers: [DemandVerificationDrawerService]
+  declarations: [DemandVerificationDrawerComponent],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    SpacingModule,
+    DropdownPointModule,
+    CheckboxModule,
+    InputModule,
+    LabelModule,
+    ButtonModule,
+    SelectModule,
+    TextareaModule,
+    AutosizeModule,
+    ReactiveFormsModule,
+    FormsModule
+  ],
+  providers: [DemandVerificationDrawerService]
 })
-export class DemandVerificationDrawerModule {}
+export class DemandVerificationDrawerModule {
+}

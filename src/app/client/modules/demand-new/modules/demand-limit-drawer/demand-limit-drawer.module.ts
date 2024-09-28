@@ -13,23 +13,26 @@ import {InformationModule} from 'src/app/shared/ui-kit/information/information.m
 import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
-	declarations: [DemandLimitDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		SpacingModule,
-		CashPanelModule,
-		InputModule,
-		LabelModule,
-		TextareaModule,
-		AutosizeModule,
-		InformationModule,
-		MibDragAndDropModule,
-		ButtonModule,
-		RubModule
-	],
-	providers: [DemandLimitDrawerService]
+  declarations: [DemandLimitDrawerComponent],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    SpacingModule,
+    CashPanelModule,
+    InputModule,
+    LabelModule,
+    TextareaModule,
+    AutosizeModule,
+    InformationModule,
+    MibDragAndDropModule,
+    ButtonModule,
+    ReactiveFormsModule, FormsModule,
+    RubModule
+  ],
+  providers: [DemandLimitDrawerService]
 })
-export class DemandLimitDrawerModule {}
+export class DemandLimitDrawerModule {
+}

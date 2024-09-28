@@ -13,7 +13,6 @@ import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {
   BehaviorSubject,
-  catchError,
   debounceTime,
   distinctUntilChanged,
   filter,
@@ -41,23 +40,11 @@ import {DocumentsService} from '../../../documents/services/documents.service'
 })
 export class DemandDrawerComponent implements OnInit {
   form: FormGroup
-
   isSubmitting$ = new BehaviorSubject<boolean>(false)
   loading$ = new BehaviorSubject<boolean>(false)
-
-  nextID: number = 0
-
   size: InputSize | ButtonSize = 'm'
-
   freeRequestType = 'Question'
-  initialData: any = null
-  isDraft: boolean = false
-  isViewDemand: boolean = false
-  isDemandRequest: boolean = false
-
   isDownloading$ = new BehaviorSubject<boolean>(false)
-
-  DraftId = null
 
   constructor(
     private fb: FormBuilder,
@@ -69,84 +56,48 @@ export class DemandDrawerComponent implements OnInit {
     private documentsService: DocumentsService,
     @Inject(MAT_DIALOG_DATA) public data: DrawerData
   ) {
-    console.log(data)
-    // this.form.valueChanges.subscribe(res => console.log(res))
+    const info = data?.data?.info
+    this.form = this.fb.group({
+      requestTitle: [info?.Subject ?? null, [Validators.required]],
+      requestText: [info?.Question ?? null, [Validators.required]],
+      Documents: this.fb.array(info?.Files ?? [])
+    })
   }
 
-  get documents() {
+  get requestId(): number {
+    return this.data.data.id
+  }
+
+  set requestId(val: number) {
+    this.data.data.id = val
+  }
+
+  get documents(): FormArray<any> {
     return this.form.get('Documents') as FormArray
   }
 
   ngOnInit(): void {
     const modalData = this.data.data
-    this.initForms()
-    // test by id
-    // this.getByID()
-
-
-    console.log('modalData :>> ', modalData)
-    // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
-    if (modalData?.isEdit || modalData?.isView) {
-      this.getByID(modalData.id)
-    }
-
+    this
     // Если создание и нет черновика
     if (modalData?.isCreation && !modalData?.id) {
       // инициализируем черновик
       this.initDraft()
-
       // Включаем авто сохранение
       this.enableAutoSaveDraft()
     }
 
     // Если создание и есть черновик
     if (modalData?.isCreation && modalData?.id) {
-      this.DraftId = modalData.id
-      // получаем черновик по DraftId
-      console.log('HALO DRAFT >>>>')
-      console.log('modalData :>> ', modalData)
-      this.getCurrentDraft()
-
       // Включаем авто сохранение
       this.enableAutoSaveDraft()
     }
   }
 
-  getByID(id: number) {
-    this.demandService
-      .getDemandDraftById(id)
-      .pipe(
-        tap(res => {
-          const data = JSON.parse(res.DemandData)
-          this.form.patchValue({
-            requestTitle: data.Subject,
-            requestText: data.Question,
-            Documents: data.Files
-          })
-          // this.form.updateValueAndValidity()
-        })
-      )
-      .subscribe(
-        // {
-        //   "ID": 16011,
-        //   "User": "Сновский Владимир",
-        //   "DateCreated": "2024-09-27T10:06:26Z",
-        //   "DateModify": "2024-09-27T10:06:53Z",
-        //   "DemandData": "{\"Subject\":\"Тест\",\"Question\":\"Тест 2 2\",\"Type\":\"Question\",\"Files\":[]}"
-        // }
-        // {
-        //   "Subject": "Тест",
-        //   "Question": "Тест 2 2",
-        //   "Type": "Question",
-        //   "Files": []
-        // }
-      )
-  }
-
-  enableAutoSaveDraft() {
+  enableAutoSaveDraft(): void {
     this.form.valueChanges
       .pipe(
-        filter(() => !!this.DraftId), tap(ev => console.log(ev)),
+        filter(() => !!this.data.data.id),
         debounceTime(300), // Ждем 300 мс после окончания ввода
         distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
         startWith(this.form.value), // Начальное значение формы
@@ -159,7 +110,7 @@ export class DemandDrawerComponent implements OnInit {
             Type: this.freeRequestType,
             Files: []
           }
-          return this.demandService.updateDraft(this.DraftId, payload)
+          return this.demandService.updateDraft(this.requestId, payload)
         })
       )
       .subscribe(result => {
@@ -168,7 +119,7 @@ export class DemandDrawerComponent implements OnInit {
       })
   }
 
-  initDraft() {
+  initDraft(): void {
     const payload = {
       Subject: '',
       Question: '',
@@ -181,21 +132,13 @@ export class DemandDrawerComponent implements OnInit {
       .pipe(
         tap(id => {
           console.log('create autosave id :>> ', id)
-          this.DraftId = id
+          this.requestId = id
         })
       )
       .subscribe()
   }
 
-  initForms() {
-    this.form = this.fb.group({
-      requestTitle: [null, [Validators.required]],
-      requestText: [null, [Validators.required]],
-      Documents: this.fb.array([])
-    })
-  }
-
-  addDocument(data: DocumentReq) {
+  addDocument(data: DocumentReq): void {
     const control: FormGroup = this.fb.group({
       Number: [null],
       Title: [null],
@@ -209,11 +152,11 @@ export class DemandDrawerComponent implements OnInit {
     this.documents.push(control)
   }
 
-  removeDocument(idx: number) {
+  removeDocument(idx: number): void {
     this.documents.removeAt(idx)
   }
 
-  onDocumentLoad({file, url}: FileDnd) {
+  onDocumentLoad({file, url}: FileDnd): void {
     const document: DocumentReq = {
       // TODO: ДОБАВИТЬ ИНПУТ С "type='number'" В ФОРМУ
       Number: null,
@@ -228,7 +171,7 @@ export class DemandDrawerComponent implements OnInit {
     this.addDocument(document)
   }
 
-  downloadCurrentFile() {
+  downloadCurrentFile(): void {
     console.log('HALO DOWNLOAD FILE >>>', this.documents)
     // this.isDownloading$.next(true)
     // this.documentsService
@@ -244,31 +187,11 @@ export class DemandDrawerComponent implements OnInit {
     // 	.subscribe()
   }
 
-  getCurrentDraft() {
-    this.loading$.next(true)
-
-    this.demandService
-      .getDemandDraftById(this.DraftId)
-      .pipe(
-        tap(data => {
-          const {Subject: subject, Question: question} = JSON.parse(
-            data.DemandData
-          )
-          this.form.patchValue({
-            requestTitle: subject,
-            requestText: question
-          })
-        }),
-        finalize(() => this.loading$.next(false))
-      )
-      .subscribe()
-  }
-
-  onSubmit() {
+  onSubmit(): void {
     this.isSubmitting$.next(true)
     const res = this.form.getRawValue()
     const resObj = {
-      DraftId: this.DraftId.toString(),
+      DraftId: this.requestId.toString(),
       DemandData: {
         Subject: res.requestTitle,
         Question: res.requestText,
@@ -307,7 +230,7 @@ export class DemandDrawerComponent implements OnInit {
       .subscribe({
         error: () => {
           this.dialogRef.close()
-          this.openRequestFailureModal(this.DraftId)
+          this.openRequestFailureModal(this.requestId)
         },
         complete: () => {
           this.dialogRef.close()
@@ -316,7 +239,7 @@ export class DemandDrawerComponent implements OnInit {
       })
   }
 
-  openRequestFailureModal(d) {
+  openRequestFailureModal(d): void {
     this.requestFailureModalService.open(d)
   }
 
@@ -324,11 +247,11 @@ export class DemandDrawerComponent implements OnInit {
     this.requestCreateSuccessModalService.open()
   }
 
-  openDraftFromModal() {
+  openDraftFromModal(): void {
     console.log('HALO FROM MODAL TO OPEN DRAFT >>>>')
   }
 
-  public editDocument() {
+  public editDocument(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',

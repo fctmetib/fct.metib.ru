@@ -84,7 +84,6 @@ export class AuthService {
         });
 
       }),
-      switchMap(() => this.initCurrentUser()),
       catchError((errorResponse: HttpErrorResponse) => {
         return of({errors: errorResponse.error});
       })

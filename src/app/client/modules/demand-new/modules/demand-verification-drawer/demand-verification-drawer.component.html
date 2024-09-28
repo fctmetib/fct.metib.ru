@@ -1,56 +1,57 @@
-<mib-drawer>
-	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
-	</mib-drawer-header>
-	<mib-drawer-container>
-		<h4>Запрос на верификацию</h4>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-select placeholder="Дебитор">
-			<mib-dropdown-point [value]="true" text="Дебитор А"></mib-dropdown-point>
-			<mib-dropdown-point [value]="false" text="Дебитор Б"></mib-dropdown-point>
-			<mib-dropdown-point [value]="false" text="Дебитор В"></mib-dropdown-point>
-		</mib-select>
-		<mib-spacing type="xs"></mib-spacing>
-		<div class="flex gap-12">
-			<mib-select class="flex_grow" placeholder="Тип верификации">
-				<mib-dropdown-point
-					[value]="true"
-					text="Верификация А"
-				></mib-dropdown-point>
-				<mib-dropdown-point
-					[value]="false"
-					text="Верификация Б"
-				></mib-dropdown-point>
-				<mib-dropdown-point
-					[value]="false"
-					text="Верификация В"
-				></mib-dropdown-point>
-			</mib-select>
-			<mib-input class="flex_grow">
-				<input mibInput />
-				<ng-container mibLabel>GLN поставщика</ng-container>
-			</mib-input>
-		</div>
-		<mib-spacing type="xs"></mib-spacing>
-		<div class="flex">
-			<mib-checkbox class="gap-8 flex_grow">
-				<span class="text text_m">Заказ (ORDER)</span>
-			</mib-checkbox>
-			<mib-checkbox class="gap-8 flex_grow">
-				<span class="text text_m">Уведомление о приёмке</span>
-			</mib-checkbox>
-		</div>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-textarea>
-			<ng-container mibLabel>Комментарий к запросу</ng-container>
-			<textarea [maxLength]="100" autosize mibTextarea></textarea>
-		</mib-textarea>
-		<mib-spacing type="m"></mib-spacing>
-	</mib-drawer-container>
-	<mib-drawer-footer drawer-footer>
-		<div class="flex w-100">
-			<mib-button (press)="submitData()" size="m" type="filled-secondary"
-				>Отправить запрос</mib-button
-			>
-		</div>
-	</mib-drawer-footer>
+<mib-drawer [formGroup]="form">
+  <mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
+  </mib-drawer-header>
+  <mib-drawer-container>
+    <h4>Запрос на верификацию</h4>
+    <mib-spacing type="xs"></mib-spacing>
+    <mib-select placeholder="Дебитор" formControlName="DebtorID">
+      <mib-dropdown-point [value]="1" text="Дебитор А"></mib-dropdown-point>
+      <mib-dropdown-point [value]="2" text="Дебитор Б"></mib-dropdown-point>
+      <mib-dropdown-point [value]="3" text="Дебитор В"></mib-dropdown-point>
+    </mib-select>
+    <mib-spacing type="xs"></mib-spacing>
+    <div class="flex gap-12">
+      <mib-select class="flex_grow" placeholder="Тип верификации" formControlName="VerificationType">
+        <mib-dropdown-point
+          value="Верификация А"
+          text="Верификация А"
+        ></mib-dropdown-point>
+        <mib-dropdown-point
+          value="Верификация Б"
+          text="Верификация Б"
+        ></mib-dropdown-point>
+        <mib-dropdown-point
+          value="Верификация В"
+          text="Верификация В"
+        ></mib-dropdown-point>
+      </mib-select>
+      <mib-input class="flex_grow">
+        <input mibInput formControlName="gln" />
+        <ng-container mibLabel>GLN поставщика</ng-container>
+      </mib-input>
+    </div>
+    <mib-spacing type="xs"></mib-spacing>
+    <div class="flex">
+      <mib-checkbox class="gap-8 flex_grow" formControlName="order">
+        <span class="text text_m">Заказ (ORDER)</span>
+      </mib-checkbox>
+      <mib-checkbox class="gap-8 flex_grow" formControlName="notification">
+        <span class="text text_m">Уведомление о приёмке</span>
+      </mib-checkbox>
+    </div>
+    <mib-spacing type="xs"></mib-spacing>
+    <mib-textarea>
+      <ng-container mibLabel>Комментарий к запросу</ng-container>
+      <textarea [maxLength]="100" autosize mibTextarea formControlName="Comment"></textarea>
+    </mib-textarea>
+    <mib-spacing type="m"></mib-spacing>
+  </mib-drawer-container>
+  <mib-drawer-footer drawer-footer>
+    <div class="flex w-100">
+      <mib-button (press)="submitData()" size="m" type="filled-secondary"
+      >Отправить запрос
+      </mib-button
+      >
+    </div>
+  </mib-drawer-footer>
 </mib-drawer>

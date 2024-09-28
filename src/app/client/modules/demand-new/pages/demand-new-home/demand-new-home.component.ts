@@ -161,14 +161,16 @@ export class DemandNewHomeComponent implements OnInit {
           const draftRequests = drafts.map(draft =>
             this.demandService.getDemandDraftById(draft.ID).pipe(
               map(demand => {
-                const {Type} = JSON.parse(demand.DemandData)
-                const translatedType = this.getType(Type).result
+                const Type = JSON.parse(demand.DemandData)
+                const translatedType = this.getType(Type.Type)
                 const fillProgress = '30%'
 
                 return {
                   ID: draft.ID,
-                  Type: translatedType,
-                  Progress: `Заполнено на ${fillProgress}`
+                  Type: translatedType.result,
+                  TypeInt:translatedType.resultNum ,
+                  Progress: `Заполнено на ${fillProgress}`,
+                  info: Type
                 }
               })
             )
@@ -234,6 +236,7 @@ export class DemandNewHomeComponent implements OnInit {
       case 'Limit':
         result = 'Запрос на Лимит'
         resultNum = this.dialogType.Limit
+        console.log('Limit', this.dialogType.Limit)
         break
       case 'NewDebtor':
         result = 'Новый дебитор'
@@ -243,10 +246,10 @@ export class DemandNewHomeComponent implements OnInit {
         result = 'Агентский Факторинг'
         resultNum = this.dialogType.Free
         break
-      default:
-        result = 'Свободная тема'
-        resultNum = this.dialogType.Free
-        break
+      // default:
+      //   result = 'Свободная тема'
+      //   resultNum = this.dialogType.Free
+      //   break
     }
     return {result, resultNum}
   }
@@ -293,7 +296,7 @@ export class DemandNewHomeComponent implements OnInit {
     this.historyLists = this.onPageChange($event, this.selectedHistoryLists)
   }
 
-  openDrawers(id: number, reqId: number, type?: TabType): void {
+  openDrawers(id: number, reqId: number, type?: TabType, info?: any): void {
     let dialog$
     switch (id) {
       case this.dialogType.Signature:
@@ -321,7 +324,8 @@ export class DemandNewHomeComponent implements OnInit {
               id:
                 type === this.tabType.History || type === this.tabType.Draft
                   ? reqId
-                  : null
+                  : null,
+              info: type === this.tabType.Request ? null : info
             }
           })
           .afterClosed()
@@ -342,6 +346,8 @@ export class DemandNewHomeComponent implements OnInit {
           .afterClosed()
           .subscribe()
         break
+
+      //Done
       case this.dialogType.Limit:
         dialog$ = this.demandLimitDrawerService
           .open(
@@ -353,7 +359,8 @@ export class DemandNewHomeComponent implements OnInit {
                 id:
                   type === this.tabType.History || type === this.tabType.Draft
                     ? reqId
-                    : null
+                    : null,
+                info: type === this.tabType.Request ? null : info
               }
             }
           )
@@ -384,11 +391,14 @@ export class DemandNewHomeComponent implements OnInit {
               id:
                 type === this.tabType.History || type === this.tabType.Draft
                   ? reqId
-                  : null
+                  : null,
+              info: type === this.tabType.Request ? null : info
             }
           })
           .afterClosed()
         break
+
+      //Done
       case this.dialogType.Free:
         dialog$ = this.demandDrawerService
           .open({
@@ -399,7 +409,8 @@ export class DemandNewHomeComponent implements OnInit {
               id:
                 type === this.tabType.History || type === this.tabType.Draft
                   ? reqId
-                  : null
+                  : null,
+              info: type === this.tabType.Request ? null : info
             }
           })
           .afterClosed()
@@ -462,8 +473,9 @@ export class DemandNewHomeComponent implements OnInit {
     return result[this.currentIndex]
   }
 
-  newDraftDrawer(id: number, type: number, typeTab?: TabType) {
-    this.openDrawers(type, id, typeTab)
+  newDraftDrawer(id: number, type: number, typeTab?: TabType, data?: any) {
+    console.log(type, id, typeTab, data)
+    this.openDrawers(type, id, typeTab, data.info)
   }
 
   openDemandPageModal(d): void {
@@ -482,4 +494,5 @@ export class DemandNewHomeComponent implements OnInit {
     this.getHistoryList()
   }
 
+  protected readonly TabType = TabType
 }

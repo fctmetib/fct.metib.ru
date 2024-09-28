@@ -1,42 +1,42 @@
-<mib-drawer>
-	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
-	</mib-drawer-header>
-	<mib-drawer-container>
-		<h4>Запрос на обновление лимита</h4>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-cash-panel
-			[panelData]="data | rub"
-			panelTitle="Ваш текущий лимит финансирования"
-		></mib-cash-panel>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-input>
-			<input mibInput />
-			<ng-container mibLabel>Введите требуемый лимит</ng-container>
-		</mib-input>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-textarea>
-			<ng-container mibLabel>Комментарий к запросу</ng-container>
-			<textarea [maxLength]="100" autosize mibTextarea></textarea>
-		</mib-textarea>
-		<mib-spacing type="s"></mib-spacing>
-		<p class="headline">Необходимые документы</p>
-		<mib-spacing type="xs2"></mib-spacing>
-		<mib-information type="information">
-			<ng-container information-text
-				>Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG,
-				PNG. Размер каждого документа не должен превышать 10 МБ
-			</ng-container>
-		</mib-information>
-		<mib-spacing type="xs"></mib-spacing>
-		<p class="text text_m c-bti-primary">
-			Оборотно-сальдовая ведомость по P/C За последние 12 месяцев
-		</p>
-		<mib-spacing type="xs2"></mib-spacing>
-		<mib-dnd
-			[headline]="''"
-			[showIcon]="false"
-			(onChange)="onDocumentLoad($event)"
-			[accept]="[
+<mib-drawer [formGroup]="form">
+  <mib-drawer-header (onClose)="dialogRef.close()" drawer-header showEdits="true">
+  </mib-drawer-header>
+  <mib-drawer-container>
+    <h4>Запрос на обновление лимита</h4>
+    <mib-spacing type="xs"></mib-spacing>
+    <mib-cash-panel
+      [panelData]="limit | rub"
+      panelTitle="Ваш текущий лимит финансирования"
+    ></mib-cash-panel>
+    <mib-spacing type="xs"></mib-spacing>
+    <mib-input>
+      <input mibInput id="limit" formControlName="limit" />
+      <ng-container mibLabel>Введите требуемый лимит</ng-container>
+    </mib-input>
+    <mib-spacing type="xs"></mib-spacing>
+    <mib-textarea>
+      <ng-container mibLabel>Комментарий к запросу</ng-container>
+      <textarea [maxLength]="100" id="requestText" autosize mibTextarea formControlName="requestText"></textarea>
+    </mib-textarea>
+    <mib-spacing type="s"></mib-spacing>
+    <p class="headline">Необходимые документы</p>
+    <mib-spacing type="xs2"></mib-spacing>
+    <mib-information type="information">
+      <ng-container information-text
+      >Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG,
+        PNG. Размер каждого документа не должен превышать 10 МБ
+      </ng-container>
+    </mib-information>
+    <mib-spacing type="xs"></mib-spacing>
+    <p class="text text_m c-bti-primary">
+      Оборотно-сальдовая ведомость по P/C За последние 12 месяцев
+    </p>
+    <mib-spacing type="xs2"></mib-spacing>
+    <mib-dnd
+      headline="Прикрепите документ"
+      [showIcon]="false"
+      (onChange)="onDocumentLoad($event)"
+      [accept]="[
 				'application/pdf',
 				'application/msword',
 				'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -45,17 +45,17 @@
 				'image/jpeg',
 				'image/png'
 			]"
-		></mib-dnd>
-		<mib-spacing type="s"></mib-spacing>
-		<p class="text text_m c-bti-primary">
-			Отчетность на последнюю отчетную дату ББиОПиУ
-		</p>
-		<mib-spacing type="xs2"></mib-spacing>
-		<mib-dnd
-			[headline]="''"
-			[showIcon]="false"
-			(onChange)="onDocumentLoad($event)"
-			[accept]="[
+    ></mib-dnd>
+    <mib-spacing type="s"></mib-spacing>
+    <p class="text text_m c-bti-primary">
+      Отчетность на последнюю отчетную дату ББиОПиУ
+    </p>
+    <mib-spacing type="xs2"></mib-spacing>
+    <mib-dnd
+      [headline]="''"
+      [showIcon]="false"
+      (onChange)="onDocumentLoad($event)"
+      [accept]="[
 				'application/pdf',
 				'application/msword',
 				'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -64,17 +64,17 @@
 				'image/jpeg',
 				'image/png'
 			]"
-		></mib-dnd>
-		<mib-spacing type="s"></mib-spacing>
-		<p class="text text_m c-bti-primary">
-			Информационное письмо о заёмах и кредитах на текущую дату*
-		</p>
-		<mib-spacing type="xs2"></mib-spacing>
-		<mib-dnd
-			[headline]="''"
-			[showIcon]="false"
-			(onChange)="onDocumentLoad($event)"
-			[accept]="[
+    ></mib-dnd>
+    <mib-spacing type="s"></mib-spacing>
+    <p class="text text_m c-bti-primary">
+      Информационное письмо о заёмах и кредитах на текущую дату*
+    </p>
+    <mib-spacing type="xs2"></mib-spacing>
+    <mib-dnd
+      [headline]="''"
+      [showIcon]="false"
+      (onChange)="onDocumentLoad($event)"
+      [accept]="[
 				'application/pdf',
 				'application/msword',
 				'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -83,14 +83,15 @@
 				'image/jpeg',
 				'image/png'
 			]"
-		></mib-dnd>
-		<mib-spacing type="m"></mib-spacing>
-	</mib-drawer-container>
-	<mib-drawer-footer drawer-footer>
-		<div class="flex w-100">
-			<mib-button (press)="submitData()" size="m" type="filled-primary"
-				>Отправить запрос</mib-button
-			>
-		</div>
-	</mib-drawer-footer>
+    ></mib-dnd>
+    <mib-spacing type="m"></mib-spacing>
+  </mib-drawer-container>
+  <mib-drawer-footer drawer-footer>
+    <div class="flex w-100">
+      <mib-button (press)="submitData()" size="m" type="filled-primary"
+      >Отправить запрос
+      </mib-button
+      >
+    </div>
+  </mib-drawer-footer>
 </mib-drawer>
