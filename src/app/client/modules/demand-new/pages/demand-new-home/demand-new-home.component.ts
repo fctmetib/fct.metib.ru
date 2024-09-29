@@ -170,7 +170,6 @@ export class DemandNewHomeComponent implements OnInit {
                   Type: translatedType.result,
                   TypeInt:translatedType.resultNum ,
                   Progress: `Заполнено на ${fillProgress}`,
-                  info: Type
                 }
               })
             )
@@ -324,8 +323,7 @@ export class DemandNewHomeComponent implements OnInit {
               id:
                 type === this.tabType.History || type === this.tabType.Draft
                   ? reqId
-                  : null,
-              info: type === this.tabType.Request ? null : info
+                  : null
             }
           })
           .afterClosed()
@@ -409,8 +407,7 @@ export class DemandNewHomeComponent implements OnInit {
               id:
                 type === this.tabType.History || type === this.tabType.Draft
                   ? reqId
-                  : null,
-              info: type === this.tabType.Request ? null : info
+                  : null
             }
           })
           .afterClosed()
@@ -474,7 +471,6 @@ export class DemandNewHomeComponent implements OnInit {
   }
 
   newDraftDrawer(id: number, type: number, typeTab?: TabType, data?: any) {
-    console.log(type, id, typeTab, data)
     this.openDrawers(type, id, typeTab, data.info)
   }
 

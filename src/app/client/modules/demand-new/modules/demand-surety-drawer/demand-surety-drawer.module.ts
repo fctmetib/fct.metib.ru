@@ -21,31 +21,36 @@ import {LinkModule} from 'src/app/shared/ui-kit/link/link.module'
 import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
 import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/contracted-forms.module'
 import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import {DemandService} from '../../services/demand.service'
 
 @NgModule({
-	declarations: [DemandSuretyDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		SpacingModule,
-		TabModule,
-		InformationModule,
-		NavbarModule,
-		ButtonModule,
-		InputModule,
-		LabelModule,
-		RightIconModule,
-		IconModule,
-		SelectModule,
-		DropdownPointModule,
-		LeftIconModule,
-		TextareaModule,
-		AutosizeModule,
-		LinkModule,
-		BadgeModule,
-		ContractedFormsModule,
-		MibDragAndDropModule
-	],
-	providers: [DemandSuretyDrawerService]
+  declarations: [DemandSuretyDrawerComponent],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    SpacingModule,
+    TabModule,
+    InformationModule,
+    NavbarModule,
+    ButtonModule,
+    InputModule,
+    LabelModule,
+    RightIconModule,
+    IconModule,
+    SelectModule,
+    DropdownPointModule,
+    LeftIconModule,
+    TextareaModule,
+    AutosizeModule,
+    LinkModule,
+    BadgeModule,
+    ContractedFormsModule,
+    MibDragAndDropModule,
+    ReactiveFormsModule,
+    FormsModule
+  ],
+  providers: [DemandSuretyDrawerService, DemandService]
 })
-export class DemandSuretyDrawerModule {}
+export class DemandSuretyDrawerModule {
+}
