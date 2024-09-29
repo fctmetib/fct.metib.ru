@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core'
+import {AfterContentInit, AfterViewInit, Component, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {BehaviorSubject} from 'rxjs'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
@@ -7,33 +7,63 @@ import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.i
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {extractBase64} from 'src/app/shared/services/tools.service'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {FormBuilder, FormGroup} from '@angular/forms'
+import {FormBuilder, FormGroup, Validators} from '@angular/forms'
+import {DestroyService} from '../../../../../shared/services/common/destroy.service'
+import {DemandService} from '../../services/demand.service'
+import {takeUntil} from 'rxjs/operators'
 
 @Component({
   selector: 'mib-demand-surety-drawer',
   templateUrl: './demand-surety-drawer.component.html',
-  styleUrls: ['./demand-surety-drawer.component.scss']
+  styleUrls: ['./demand-surety-drawer.component.scss'],
+  providers: [DestroyService]
 })
-export class DemandSuretyDrawerComponent {
+export class DemandSuretyDrawerComponent implements OnInit {
   progres$ = new BehaviorSubject<number>(1)
   progress: number = 1
   maxPage: number = 5
   pageCount: number = 1
-  form: FormGroup;
+  firstPageForm: FormGroup
+  secondPageForm: FormGroup
+  thirdPageForm: FormGroup
+  fourthPageForm: FormGroup
   ContractedFormsEnum = ContractedFormsEnum
   requisites: string = ''
 
   constructor(
     private toaster: ToasterService,
+    private demandSrv: DemandService,
+    private destroy$: DestroyService,
     public dialogRef: MatDialogRef<DemandSuretyDrawerComponent>,
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: DrawerData
+    @Inject(MAT_DIALOG_DATA) data: DrawerData
   ) {
-    const info = data?.data?.info
+    const info = data?.data
+    // {
+    //   "isCreation": true,
+    //   "isEdit": false,
+    //   "isView": false,
+    //   "id": null
+    // }[Validators.required, Validators.pattern(/^[\d]+$/)]
 
+    if (info?.isEdit) {
+      this.getDemandById((info.id)).pipe(takeUntil(this.destroy$)).subscribe({
+        next: res => {
+
+        }
+      })
+    }
   }
 
-  onDocumentLoad({file, url}: FileDnd) {
+  ngOnInit(): void {
+    this.firstPageForm = this.fb.group({
+      organizationType: [1, [Validators.required]],
+      compInn: [''],
+      personInn: ['']
+    })
+  }
+
+  onDocumentLoad({file, url}: FileDnd): void {
     const document: DocumentReq = {
       Description: `description ${file.name}`,
       DocumentTypeID: 40,
@@ -44,29 +74,28 @@ export class DemandSuretyDrawerComponent {
     // this.addDocument(document)
   }
 
-  public nextPage() {
+  nextPage(): void {
     if (this.pageCount >= 1 && this.pageCount <= this.maxPage - 1) {
       this.progress = this.progres$.value + 1
       this.progres$.next(this.progress)
       this.pageCount = this.progress
+      if (this.pageCount === 2) this.initSecondForm()
+      if (this.pageCount === 3) this.initThirdForm()
+      if (this.pageCount === 4) this.initFourthForm()
       console.log('next', this.progress)
-    } else {
-      return
     }
   }
 
-  public prevPage() {
+  prevPage(): void {
     if (this.pageCount >= 2 && this.pageCount <= this.maxPage) {
       this.progress = this.progres$.value - 1
       this.progres$.next(this.progress)
       this.pageCount = this.progress
       console.log('prev', this.progress)
-    } else {
-      return
     }
   }
 
-  public submitData() {
+  submitData(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -78,7 +107,7 @@ export class DemandSuretyDrawerComponent {
     // this.dialogRef.close()
   }
 
-  public confirmIds() {
+  confirmIds(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -89,7 +118,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public addAccount() {
+  addAccount(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -100,7 +129,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public accountEdit() {
+  accountEdit(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -111,7 +140,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public saveAccountData() {
+  saveAccountData(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -122,7 +151,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public canselAccountData() {
+  canselAccountData(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -133,7 +162,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public saveRealtyData() {
+  saveRealtyData(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -144,7 +173,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public canselRealtyData() {
+  canselRealtyData(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -155,7 +184,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public addRealty() {
+  addRealty(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -166,7 +195,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public saveDebentures() {
+  saveDebentures(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -177,7 +206,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public cancelDebentures() {
+  cancelDebentures(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -188,7 +217,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public addDebentures() {
+  addDebentures(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -199,7 +228,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public addEdms() {
+  addEdms() {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -210,7 +239,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public cancelEdms() {
+  cancelEdms(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -221,7 +250,7 @@ export class DemandSuretyDrawerComponent {
     )
   }
 
-  public saveEdms() {
+  saveEdms(): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -230,5 +259,59 @@ export class DemandSuretyDrawerComponent {
       false,
       3000
     )
+  }
+
+  private initSecondForm(): void {
+    this.secondPageForm = this.fb.group({
+      organizationType: [1],
+      compInn: [null],
+      organizationForm: [null],
+      shortName: [null],
+      phone: [null],
+      mail: [null],
+      url: [null],
+      personInn: [null],
+      shortNamePerson: [null],
+      personPhone: [null],
+      personMail: [null],
+      personUrl: [null]
+    })
+  }
+
+  private initThirdForm(): void {
+    this.thirdPageForm = this.fb.group({
+      bank: [null],
+      bik: [null],
+      coreBankNum: [null],
+      bankNum: [null],
+      date: [null],
+      commmet: [null],
+      bank2: [null],
+      bankNum2: [null],
+      date2: [null],
+      closeDate: [null],
+      openTarget: [null]
+    })
+  }
+
+  private initFourthForm(): void {
+    this.fourthPageForm = this.fb.group({
+      typeProducts: [null],
+      trademarks: [null],
+      suppliers: [null],
+      limit: [null],
+      countEmpl: [null],
+      fullAddress: [null],
+      creditor: [null],
+      contractAmount: [null],
+      commitmentType: [null],
+      dateEnd: [null],
+      balanceEnd: [null],
+      balanceToday: [null]
+    })
+  }
+
+  private getDemandById(id: number) {
+    return this.demandSrv.getDemandDraftById(id)
   }
 }

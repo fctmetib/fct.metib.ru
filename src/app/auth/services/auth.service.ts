@@ -76,13 +76,6 @@ export class AuthService {
         // second base token
         let token = response.Code;
         this.cookieService.put('_bt', token)
-
-        let currentUserFactoring: UserFactoring = response;
-        this.currentUser$.next({
-          userFactoring: currentUserFactoring,
-          userGeneral: null
-        });
-
       }),
       catchError((errorResponse: HttpErrorResponse) => {
         return of({errors: errorResponse.error});
