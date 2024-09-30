@@ -17,27 +17,32 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {CheckboxModule} from 'src/app/shared/ui-kit/checkbox/checkbox.module'
 import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
 import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
+import {DemandService} from '../../services/demand.service'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
-	declarations: [DemandSignatureDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		SpacingModule,
-		InformationModule,
-		NavbarModule,
-		ButtonModule,
-		InputModule,
-		LabelModule,
-		TabModule,
-		RightIconModule,
-		IconModule,
-		SelectModule,
-		DropdownPointModule,
-		CheckboxModule,
-		MibDragAndDropModule,
-		FileCellModule
-	],
-	providers: [DemandSignatureDrawerService]
+  declarations: [DemandSignatureDrawerComponent],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    SpacingModule,
+    InformationModule,
+    NavbarModule,
+    ButtonModule,
+    InputModule,
+    LabelModule,
+    TabModule,
+    RightIconModule,
+    IconModule,
+    SelectModule,
+    DropdownPointModule,
+    CheckboxModule,
+    MibDragAndDropModule,
+    FileCellModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  providers: [DemandSignatureDrawerService, DemandService]
 })
-export class DemandSignatureDrawerModule {}
+export class DemandSignatureDrawerModule {
+}

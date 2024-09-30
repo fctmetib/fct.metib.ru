@@ -14,6 +14,7 @@ import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag
 import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import {DemandService} from '../../services/demand.service'
 
 @NgModule({
   declarations: [DemandLimitDrawerComponent],
@@ -32,7 +33,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
     ReactiveFormsModule, FormsModule,
     RubModule
   ],
-  providers: [DemandLimitDrawerService]
+  providers: [DemandLimitDrawerService, DemandService]
 })
 export class DemandLimitDrawerModule {
 }

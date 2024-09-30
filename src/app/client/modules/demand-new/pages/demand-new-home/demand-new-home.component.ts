@@ -78,7 +78,6 @@ export class DemandNewHomeComponent implements OnInit {
   tabType = TabType
   isDesktop: boolean = false
   loading$ = new BehaviorSubject<boolean>(false)
-
   skeletonWithoutUnderline: Properties = {
     height: '48px',
     width: '100%'
@@ -89,20 +88,12 @@ export class DemandNewHomeComponent implements OnInit {
   }
   PAGINATOR_ITEMS_PER_PAGE = 7
   PAGINATOR_PAGE_TO_SHOW = 5
-
   currentPage$ = new BehaviorSubject<number>(1)
-
-  selectedRequestsCount: number
-  severalRequestsChecked: boolean = false
-  demadDrawersData: any = []
-
-  isEdits: boolean = false
-
   requestsAnimationStates: Record<number, boolean> = {}
   historyAnimationStates: Record<number, boolean> = {}
   currentIndex: number = 0
   headers = ['Тип запроса', 'Дата запроса', 'Статус запроса', 'Ответственный']
-
+  TabType = TabType
   dataMap = {
     0: 'Type',
     1: 'DateCreated',
@@ -168,8 +159,8 @@ export class DemandNewHomeComponent implements OnInit {
                 return {
                   ID: draft.ID,
                   Type: translatedType.result,
-                  TypeInt:translatedType.resultNum ,
-                  Progress: `Заполнено на ${fillProgress}`,
+                  TypeInt: translatedType.resultNum,
+                  Progress: `Заполнено на ${fillProgress}`
                 }
               })
             )
@@ -291,11 +282,11 @@ export class DemandNewHomeComponent implements OnInit {
     this.draftLists = this.onPageChange($event, this.drafts)
   }
 
-  onHistoryListChange($event) {
+  onHistoryListChange($event): void {
     this.historyLists = this.onPageChange($event, this.selectedHistoryLists)
   }
 
-  openDrawers(id: number, reqId: number, type?: TabType, info?: any): void {
+  openDrawers(id: number, reqId: number, type?: TabType): void {
     let dialog$
     switch (id) {
       case this.dialogType.Signature:
@@ -313,6 +304,8 @@ export class DemandNewHomeComponent implements OnInit {
           })
           .afterClosed()
         break
+
+
       case this.dialogType.Surety:
         dialog$ = this.demandSuretyDrawerService
           .open({
@@ -342,7 +335,6 @@ export class DemandNewHomeComponent implements OnInit {
             }
           })
           .afterClosed()
-          .subscribe()
         break
 
       //Done
@@ -357,13 +349,13 @@ export class DemandNewHomeComponent implements OnInit {
                 id:
                   type === this.tabType.History || type === this.tabType.Draft
                     ? reqId
-                    : null,
-                info: type === this.tabType.Request ? null : info
+                    : null
               }
             }
           )
           .afterClosed()
         break
+
       case this.dialogType.Debitor:
         dialog$ = this.demandDebtorDrawerService
           .open({
@@ -379,6 +371,7 @@ export class DemandNewHomeComponent implements OnInit {
           })
           .afterClosed()
         break
+
       case this.dialogType.Verify:
         dialog$ = this.demandVerificationDrawerService
           .open({
@@ -389,8 +382,7 @@ export class DemandNewHomeComponent implements OnInit {
               id:
                 type === this.tabType.History || type === this.tabType.Draft
                   ? reqId
-                  : null,
-              info: type === this.tabType.Request ? null : info
+                  : null
             }
           })
           .afterClosed()
@@ -470,8 +462,8 @@ export class DemandNewHomeComponent implements OnInit {
     return result[this.currentIndex]
   }
 
-  newDraftDrawer(id: number, type: number, typeTab?: TabType, data?: any) {
-    this.openDrawers(type, id, typeTab, data.info)
+  newDraftDrawer(id: number, type: number, typeTab?: TabType): void {
+    this.openDrawers(type, id, typeTab)
   }
 
   openDemandPageModal(d): void {
@@ -489,6 +481,4 @@ export class DemandNewHomeComponent implements OnInit {
     this.getDraftList()
     this.getHistoryList()
   }
-
-  protected readonly TabType = TabType
 }

@@ -8,20 +8,21 @@ import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {InputSize} from '../../../../../shared/ui-kit/input/interfaces/input.interface'
 import {ButtonSize} from '../../../../../shared/ui-kit/button/interfaces/button.interface'
+import {DemandService} from '../../services/demand.service'
+import {DestroyService} from '../../../../../shared/services/common/destroy.service'
+import {takeUntil} from 'rxjs/operators'
 
 @Component({
   selector: 'mib-demand-limit-drawer',
   templateUrl: './demand-limit-drawer.component.html',
-  styleUrls: ['./demand-limit-drawer.component.scss']
+  styleUrls: ['./demand-limit-drawer.component.scss'],
+  providers: [DestroyService]
 })
 export class DemandLimitDrawerComponent {
-  limit: number = null
+  limit: number = 0
   form: FormGroup
   size: InputSize | ButtonSize = 'm'
   freeRequestType = 'Question'
-  get infoVal() {
-    return this.info?.data?.info
-  }
 
   get documents(): FormArray<any> {
     return this.form.get('Documents') as FormArray
@@ -30,17 +31,19 @@ export class DemandLimitDrawerComponent {
   constructor(
     private toaster: ToasterService,
     private fb: FormBuilder,
+    private demandSrv: DemandService,
+    private destroy$: DestroyService,
     public dialogRef: MatDialogRef<DemandLimitDrawerComponent>,
     @Inject(MAT_DIALOG_DATA) public info: DrawerData
   ) {
 
-    const data = info?.data?.info;
+    const data = info?.data
     this.form = this.fb.group({
       limit: [null, [Validators.required]],
-      requestText: [this.infoVal?.Comment ?? null, [Validators.required]],
-      Documents: this.fb.array(data.Files ?? [])
+      requestText: [null, [Validators.required]],
+      Documents: this.fb.array([])
     })
-    this.limit = this.infoVal?.Limit
+    if (data?.isEdit) this.getDemandByID(data.id)
   }
 
   onDocumentLoad({file, url}: FileDnd) {
@@ -54,7 +57,7 @@ export class DemandLimitDrawerComponent {
     this.addDocument(document)
   }
 
-  public submitData() {
+  submitData() {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -78,5 +81,18 @@ export class DemandLimitDrawerComponent {
     })
     control.patchValue(data)
     this.documents.push(control)
+  }
+
+  private getDemandByID(id: number) {
+    this.demandSrv.getDemandDraftById(id).pipe(takeUntil(this.destroy$)).subscribe({
+      next: val => {
+        const demandData = JSON.parse(val.DemandData)
+        this.form.patchValue({
+          limit: demandData.Limit,
+          requestText: demandData.Comment,
+          Documents: demandData.Files
+        })
+      }
+    })
   }
 }

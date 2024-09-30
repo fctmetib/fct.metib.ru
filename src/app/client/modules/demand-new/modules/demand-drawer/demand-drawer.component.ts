@@ -44,7 +44,6 @@ export class DemandDrawerComponent implements OnInit {
   loading$ = new BehaviorSubject<boolean>(false)
   size: InputSize | ButtonSize = 'm'
   freeRequestType = 'Question'
-  isDownloading$ = new BehaviorSubject<boolean>(false)
 
   constructor(
     private fb: FormBuilder,
@@ -73,10 +72,10 @@ export class DemandDrawerComponent implements OnInit {
   ngOnInit(): void {
     const modalData = this.data.data
     this.initForms()
-
+    console.log(modalData?.isView)
     // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
     if (modalData?.isEdit || modalData?.isView) {
-      this.getByID(modalData.id)
+      this.getByID(modalData.id, modalData.isEdit)
     }
 
     // Если создание и нет черновика
@@ -108,7 +107,7 @@ export class DemandDrawerComponent implements OnInit {
             Subject: curr.requestTitle,
             Question: curr.requestText,
             Type: this.freeRequestType,
-            Files: []
+            Files: this.documents.value
           }
           return this.demandService.updateDraft(this.requestId, payload)
         })
@@ -119,21 +118,22 @@ export class DemandDrawerComponent implements OnInit {
       })
   }
 
-  getByID(id: number) {
-    this.demandService
-      .getDemandDraftById(id)
-      .pipe(
-        tap(res => {
-          const data = JSON.parse(res.DemandData)
-          this.form.patchValue({
-            requestTitle: data.Subject,
-            requestText: data.Question,
-            Documents: data.Files
-          })
+  getByID(id: number, isDraft: boolean): void {
+    const req$ = isDraft ?
+      this.demandService
+        .getDemandDraftById(id) : this.demandService.getDemandById(id)
+
+    req$.pipe(
+      tap(res => {
+        const data = isDraft ? JSON.parse(res?.DemandData) : res.Data
+        this.form.patchValue({
+          requestTitle: data?.Subject,
+          requestText: data?.Question,
+          Documents: data?.Files
         })
-      )
-      .subscribe(
-      )
+      })
+    )
+      .subscribe()
   }
 
   initDraft(): void {
@@ -148,7 +148,6 @@ export class DemandDrawerComponent implements OnInit {
       .createNewDraft(payload)
       .pipe(
         tap(id => {
-          console.log('create autosave id :>> ', id)
           this.requestId = id
         })
       )
@@ -173,7 +172,7 @@ export class DemandDrawerComponent implements OnInit {
     this.documents.removeAt(idx)
   }
 
-  initForms() {
+  initForms(): void {
     this.form = this.fb.group({
       requestTitle: [null, [Validators.required]],
       requestText: [null, [Validators.required]],
@@ -200,7 +199,7 @@ export class DemandDrawerComponent implements OnInit {
     console.log('HALO DOWNLOAD FILE >>>', this.documents)
     // this.isDownloading$.next(true)
     // this.documentsService
-    // 	.getDocumentContent(this.documents.   DocumentID)
+    // 	.getDocumentContent(this.documents.DocumentID)
     // 	.pipe(
     // 		tap(data => {
     // 			downloadBase64File(data, DocTitle)
@@ -268,12 +267,8 @@ export class DemandDrawerComponent implements OnInit {
     this.requestFailureModalService.open(d)
   }
 
-  openRequestSuccessModal() {
+  openRequestSuccessModal(): void {
     this.requestCreateSuccessModalService.open()
-  }
-
-  openDraftFromModal(): void {
-    console.log('HALO FROM MODAL TO OPEN DRAFT >>>>')
   }
 
   public editDocument(): void {

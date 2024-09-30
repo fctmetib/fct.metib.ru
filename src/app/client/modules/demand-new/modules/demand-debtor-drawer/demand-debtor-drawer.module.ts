@@ -17,27 +17,32 @@ import {LinkModule} from 'src/app/shared/ui-kit/link/link.module'
 import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {InformationModule} from 'src/app/shared/ui-kit/information/information.module'
+import {DemandService} from '../../services/demand.service'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
-	declarations: [DemandDebtorDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		SpacingModule,
-		TabModule,
-		NavbarModule,
-		ButtonModule,
-		SelectModule,
-		DropdownPointModule,
-		CheckboxModule,
-		InputModule,
-		LabelModule,
-		LeftIconModule,
-		LinkModule,
-		FileCellModule,
-		IconModule,
-		InformationModule
-	],
-	providers: [DemandDebtorDrawerService]
+  declarations: [DemandDebtorDrawerComponent],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    SpacingModule,
+    TabModule,
+    NavbarModule,
+    ButtonModule,
+    SelectModule,
+    DropdownPointModule,
+    CheckboxModule,
+    InputModule,
+    LabelModule,
+    LeftIconModule,
+    LinkModule,
+    FileCellModule,
+    IconModule,
+    InformationModule,
+    ReactiveFormsModule,
+    FormsModule
+  ],
+  providers: [DemandDebtorDrawerService, DemandService]
 })
-export class DemandDebtorDrawerModule {}
+export class DemandDebtorDrawerModule {
+}

@@ -12,22 +12,27 @@ import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag
 import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
+import {DemandService} from '../../services/demand.service'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
-	declarations: [DemandEditingDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		SpacingModule,
-		ButtonModule,
-		InputModule,
-		LabelModule,
-		CheckboxModule,
-		MibDragAndDropModule,
-		SelectModule,
-		DropdownPointModule,
-		FileCellModule
-	],
-	providers: [DemandEditingDrawerService]
+  declarations: [DemandEditingDrawerComponent],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    SpacingModule,
+    ButtonModule,
+    InputModule,
+    LabelModule,
+    CheckboxModule,
+    MibDragAndDropModule,
+    SelectModule,
+    DropdownPointModule,
+    FileCellModule,
+    ReactiveFormsModule,
+    FormsModule
+  ],
+  providers: [DemandEditingDrawerService, DemandService]
 })
-export class DemandEditingDrawerModule {}
+export class DemandEditingDrawerModule {
+}

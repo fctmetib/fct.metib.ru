@@ -1,4 +1,4 @@
-<mib-drawer>
+<mib-drawer [formGroup]="form">
 	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
 	</mib-drawer-header>
 	<mib-drawer-container>
@@ -9,21 +9,21 @@
 		<div class="flex flex_column gap-12">
 			<div class="flex gap-12">
 				<mib-input class="flex_grow">
-					<input mibInput />
+					<input mibInput formControlName="surname"/>
 					<ng-container mibLabel>Фамилия</ng-container>
 				</mib-input>
 				<mib-input class="flex_grow">
-					<input mibInput />
+					<input mibInput formControlName="name"/>
 					<ng-container mibLabel>Имя</ng-container>
 				</mib-input>
 			</div>
 			<div class="flex flex_column">
 				<p class="text text_s c-bti-tertiary">Пол</p>
 				<div class="flex pt-4">
-					<mib-checkbox class="gap-8 flex_grow">
+					<mib-checkbox class="gap-8 flex_grow" formControlName="male">
 						<span class="text text_m">Мужской</span>
 					</mib-checkbox>
-					<mib-checkbox class="gap-8 flex_grow">
+					<mib-checkbox class="gap-8 flex_grow" formControlName="female">
 						<span class="text text_m">Женский</span>
 					</mib-checkbox>
 				</div>
@@ -34,11 +34,11 @@
 		<mib-spacing type="xs2"></mib-spacing>
 		<div class="flex gap-12">
 			<mib-input class="flex_grow">
-				<input mibInput />
+				<input mibInput formControlName="phone"/>
 				<ng-container mibLabel>Мобильный телефон</ng-container>
 			</mib-input>
 			<mib-input class="flex_grow">
-				<input mibInput />
+				<input mibInput formControlName="mail"/>
 				<ng-container mibLabel>Электронная почта</ng-container>
 			</mib-input>
 		</div>
@@ -46,7 +46,7 @@
 		<div class="flex flex_column gap-12">
 			<p class="headline">Персональные данные</p>
 			<div class="flex">
-				<mib-select class="w-100" type="outline" placeholder="Гражданство РФ">
+				<mib-select class="w-100" type="outline" placeholder="Гражданство РФ" formControlName="nationality">
 					<mib-dropdown-point
 						[value]="true"
 						text="Гражданство РБ"
@@ -55,24 +55,24 @@
 			</div>
 			<div class="flex gap-12">
 				<mib-input class="flex_grow">
-					<input mibInput />
+					<input mibInput formControlName="series"/>
 					<ng-container mibLabel>Серия</ng-container>
 				</mib-input>
 				<mib-input class="flex_grow">
-					<input mibInput />
+					<input mibInput formControlName="passportNumber"/>
 					<ng-container mibLabel>Номер</ng-container>
 				</mib-input>
 				<mib-input class="flex_grow">
-					<input type="date" mibInput />
+					<input type="date" mibInput formControlName="date"/>
 					<ng-container mibLabel>Дата выдачи</ng-container>
 				</mib-input>
 			</div>
 			<mib-input>
-				<input mibInput />
+				<input mibInput formControlName="code"/>
 				<ng-container mibLabel>Код подразделения</ng-container>
 			</mib-input>
 			<mib-input>
-				<input mibInput />
+				<input mibInput formControlName="whoGave"/>
 				<ng-container mibLabel>Кем выдан паспорт</ng-container>
 			</mib-input>
 		</div>

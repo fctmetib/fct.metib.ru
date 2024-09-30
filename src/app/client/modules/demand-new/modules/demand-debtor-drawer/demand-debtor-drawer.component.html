@@ -1,10 +1,10 @@
-<mib-drawer>
+<mib-drawer [formGroup]="form">
 	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header>
 	</mib-drawer-header>
 	<mib-drawer-container>
 		<h4>Добавить дебитора</h4>
 		<mib-spacing type="xs"></mib-spacing>
-		<mib-tab-group type="filled">
+		<mib-tab-group type="filled" formControlName="addingType">
 			<mib-navbar size="m">
 				<mib-navbar-point value="1" type="filled" class="flex_grow"
 					>Выбрать из списка</mib-navbar-point
@@ -14,7 +14,7 @@
 				>
 			</mib-navbar>
 			<mib-spacing type="xs"></mib-spacing>
-			<mib-select placeholder="Дебитор">
+			<mib-select placeholder="Дебитор" formControlName="debitor">
 				<mib-dropdown-point
 					[value]="true"
 					text="Дебитор А"
@@ -28,80 +28,81 @@
 					text="Дебитор В"
 				></mib-dropdown-point>
 			</mib-select>
+
 			<mib-tab-item value="1">
 				<mib-spacing type="xs"></mib-spacing>
 				<div class="flex flex_column gap-12">
 					<div class="flex gap-12 w-100">
-						<mib-select class="w-27" placeholder="Организация">
+						<mib-select class="w-27" placeholder="Организация" formControlName="organizationType">
 							<mib-dropdown-point
-								[value]="true"
+								value="ООО"
 								text="ООО"
 							></mib-dropdown-point>
 							<mib-dropdown-point
-								[value]="false"
+								value="ЗАО"
 								text="ЗАО"
 							></mib-dropdown-point>
 							<mib-dropdown-point
-								[value]="false"
+								value="ОАО"
 								text="ОАО"
 							></mib-dropdown-point>
 							<mib-dropdown-point
-								[value]="false"
+								value="ПАО"
 								text="ПАО"
 							></mib-dropdown-point>
 						</mib-select>
 						<mib-input class="flex_grow">
-							<input mibInput />
+							<input mibInput formControlName="shortOrganizationName"/>
 							<ng-container mibLabel
 								>Краткое наименование организации</ng-container
 							>
 						</mib-input>
 					</div>
 					<mib-input class="flex_grow">
-						<input mibInput />
+						<input mibInput formControlName="fullOrganizationName"/>
 						<ng-container mibLabel
 							>Полное наименование организации</ng-container
 						>
 					</mib-input>
 					<div class="flex gap-12">
 						<mib-input class="flex_grow">
-							<input mibInput />
+							<input mibInput formControlName="inn"/>
 							<ng-container mibLabel>ИНН</ng-container>
 						</mib-input>
 						<mib-input class="flex_grow">
-							<input mibInput />
+							<input mibInput formControlName="kpp"/>
 							<ng-container mibLabel>КПП</ng-container>
 						</mib-input>
 						<mib-input class="flex_grow">
-							<input mibInput />
+							<input mibInput formControlName="ogrn"/>
 							<ng-container mibLabel>ОГРН</ng-container>
 						</mib-input>
 					</div>
 					<mib-input class="flex_grow">
-						<input mibInput />
+						<input mibInput formControlName="okpo"/>
 						<ng-container mibLabel>ОКПО</ng-container>
 					</mib-input>
 					<div class="flex gap-12">
 						<mib-input class="flex_grow">
-							<input mibInput />
+							<input mibInput formControlName="phone"/>
 							<ng-container mibLabel>Номер телефона</ng-container>
 						</mib-input>
 						<mib-input class="flex_grow">
-							<input mibInput />
+							<input mibInput formControlName="mail"/>
 							<ng-container mibLabel>Электронная почта</ng-container>
 						</mib-input>
 					</div>
 					<mib-input class="flex_grow">
-						<input mibInput />
+						<input mibInput formControlName="address"/>
 						<ng-container mibLabel>Юридический адрес</ng-container>
 					</mib-input>
-					<mib-checkbox class="gap-8">
+					<mib-checkbox class="gap-8" formControlName="addressMatch">
 						<span class="text text_m"
 							>Фактический адрес совпадает с юридическим</span
 						>
 					</mib-checkbox>
 					<mib-input class="flex_grow">
-						<input mibInput />
+						<input mibInput formControlName="realAddress"/>
 						<ng-container mibLabel>Фактический адрес</ng-container>
 					</mib-input>
 				</div>
@@ -129,7 +130,7 @@
 				<mib-spacing type="xs"></mib-spacing>
 				<div class="flex flex_align-center gap-12">
 					<mib-input class="flex_grow">
-						<input mibInput />
+						<input mibInput formControlName="organizationInn"/>
 						<ng-container mibLabel>Введите ИНН организации</ng-container>
 					</mib-input>
 					<mib-button type="filled-primary">Подтвердить</mib-button>

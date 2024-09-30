@@ -12,5 +12,4 @@ export interface DrawerData<T = any> {
 	state?: DrawerState
 	maxWidth?: DrawerMaxWidthType
 	data?: T
-
 }

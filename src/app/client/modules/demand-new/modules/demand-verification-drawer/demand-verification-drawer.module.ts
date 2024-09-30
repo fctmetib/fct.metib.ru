@@ -13,6 +13,7 @@ import {SelectModule} from 'src/app/shared/ui-kit/select/select.module'
 import {TextareaModule} from 'src/app/shared/ui-kit/textarea/textarea.module'
 import {AutosizeModule} from 'ngx-autosize'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import {DemandService} from '../../services/demand.service'
 
 @NgModule({
   declarations: [DemandVerificationDrawerComponent],
@@ -31,7 +32,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [DemandVerificationDrawerService]
+  providers: [DemandVerificationDrawerService, DemandService]
 })
 export class DemandVerificationDrawerModule {
 }
