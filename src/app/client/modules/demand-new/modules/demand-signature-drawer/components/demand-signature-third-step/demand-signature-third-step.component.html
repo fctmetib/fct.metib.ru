@@ -1,0 +1,123 @@
+<mib-spacing type="xs2"></mib-spacing>
+<h4>Данные о владельце сертификата</h4>
+<mib-spacing type="xs"></mib-spacing>
+<div class="flex flex_column gap-12">
+  <div class="flex gap-12">
+    <mib-input class="flex_grow">
+      <input mibInput />
+      <ng-container mibLabel>Фамилия</ng-container>
+    </mib-input>
+    <mib-input class="flex_grow">
+      <input mibInput />
+      <ng-container mibLabel>Имя</ng-container>
+    </mib-input>
+    <mib-input class="flex_grow">
+      <input mibInput />
+      <ng-container mibLabel>Отчество</ng-container>
+    </mib-input>
+  </div>
+  <div class="flex flex_column">
+    <p class="text text_s c-bti-tertiary">Пол</p>
+    <div class="flex pt-4">
+      <mib-checkbox class="gap-8 flex_grow">
+        <span class="text text_m">Мужской</span>
+      </mib-checkbox>
+      <mib-checkbox class="gap-8 flex_grow">
+        <span class="text text_m">Женский</span>
+      </mib-checkbox>
+    </div>
+  </div>
+  <mib-input>
+    <input mibInput />
+    <ng-container mibLabel>ИНН</ng-container>
+  </mib-input>
+  <mib-input>
+    <input mibInput />
+    <ng-container mibLabel>СНИЛС</ng-container>
+  </mib-input>
+  <mib-input>
+    <input type="date" mibInput />
+    <ng-container mibLabel>Дата рождения</ng-container>
+  </mib-input>
+  <mib-input>
+    <input mibInput />
+    <ng-container mibLabel>Место рождения</ng-container>
+  </mib-input>
+  <mib-input>
+    <input mibInput />
+    <ng-container mibLabel>Должность в компании</ng-container>
+  </mib-input>
+</div>
+<mib-spacing type="s"></mib-spacing>
+<div class="flex flex_column gap-8">
+  <p class="headline">Контактные данные</p>
+  <div class="flex gap-12">
+    <mib-input class="flex_grow">
+      <input mibInput />
+      <ng-container mibLabel>Мобильный телефон</ng-container>
+    </mib-input>
+    <mib-input class="flex_grow">
+      <input mibInput />
+      <ng-container mibLabel>Электронная почта</ng-container>
+    </mib-input>
+  </div>
+</div>
+<mib-spacing type="s"></mib-spacing>
+<div class="flex flex_column gap-12">
+  <p class="headline">Паспортные данные</p>
+  <div class="flex">
+    <mib-select
+      class="w-100"
+      type="outline"
+      placeholder="Гражданство РФ"
+    >
+      <mib-dropdown-point
+        [value]="true"
+        text="Гражданство РБ"
+      ></mib-dropdown-point>
+    </mib-select>
+  </div>
+  <div class="flex gap-12">
+    <mib-input class="flex_grow">
+      <input mibInput />
+      <ng-container mibLabel>Серия</ng-container>
+    </mib-input>
+    <mib-input class="flex_grow">
+      <input mibInput />
+      <ng-container mibLabel>Номер</ng-container>
+    </mib-input>
+    <mib-input class="flex_grow">
+      <input type="date" mibInput />
+      <ng-container mibLabel>Дата выдачи</ng-container>
+    </mib-input>
+  </div>
+  <mib-input>
+    <input mibInput />
+    <ng-container mibLabel>Код подразделения</ng-container>
+  </mib-input>
+  <mib-input>
+    <input mibInput />
+    <ng-container mibLabel>Кем выдан паспорт</ng-container>
+  </mib-input>
+</div>
+<mib-spacing type="xs"></mib-spacing>
+<div class="flex flex_column gap-12">
+  <p class="headline">Прикрепите скан-копию паспорта в поле ниже</p>
+  <mib-dnd
+    (onChange)="onDocumentLoad($event)"
+    [accept]="[
+							'application/pdf',
+							'application/msword',
+							'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+							'application/vnd.ms-excel',
+							'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+							'image/jpeg',
+							'image/png'
+						]"
+    headline="Прикрепите документ"
+  ></mib-dnd>
+  <p class="text text_xs c-bti-tertiary">
+    Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG,
+    PNG
+  </p>
+</div>

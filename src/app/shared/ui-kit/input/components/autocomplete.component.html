@@ -1,11 +1,10 @@
 <div class="autocomplete">
+
 	<mib-input>
 		<input
-			[style.display]="!extra ? 'block' : 'none'"
 			required
 			style="padding-right: 40px"
 			#input
-			size="{{ isDesktop ? 'xl' : 'l' }}"
 			mibInput
 			[formControl]="control"
 			(focus)="showDropdown = true"
@@ -23,7 +22,7 @@
 			(focus)="showDropdown = true"
 			(blur)="onBlur()"
 		/>
-		<ng-container mibLabel>Ваш контрагент</ng-container>
+		<ng-container mibLabel>{{label ? label : 'Ваш контрагент'}}</ng-container>
 		<mib-icon
 			class="stroke cursor-pointer"
 			mibRightIcon

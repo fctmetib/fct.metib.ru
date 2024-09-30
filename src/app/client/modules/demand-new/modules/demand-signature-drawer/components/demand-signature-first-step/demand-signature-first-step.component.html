@@ -1,0 +1,21 @@
+<form [formGroup]="orgDataForm">
+  <mib-spacing type="xs"></mib-spacing>
+  <mib-information type="information">
+    <ng-container information-text
+    >Инфо: Введите ИНН организации и остальные данные заполнятся
+      автоматически
+    </ng-container>
+  </mib-information>
+  <mib-spacing type="xs"></mib-spacing>
+  <div class="flex flex_align-center gap-12">
+    <mib-autocomplete
+      [options]="options"
+      label="Введите ИНН организации"
+      formControlName="organizationInn"
+      class="flex_grow">
+    </mib-autocomplete>
+    <mib-button (click)="confirmIds()" type="filled-primary">Подтвердить</mib-button>
+  </div>
+  <mib-spacing type="m"></mib-spacing>
+</form>
+

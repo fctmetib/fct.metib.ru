@@ -1,0 +1,62 @@
+<mib-spacing type="xs2"></mib-spacing>
+<h4>Распечатайте заявку</h4>
+<mib-spacing type="xs"></mib-spacing>
+<mib-information type="alert">
+  <ng-container information-text
+  >Внимание: перед отправкой необходимо установить заявку и
+    распечатать ее на принтере. Распечатка обязательно понадобится при
+    сверке документов при получении сертификата
+  </ng-container>
+</mib-information>
+<mib-spacing type="xs"></mib-spacing>
+<div class="flex flex_align-center document">
+  <div class="flex flex_grow gap-4">
+    <span class="text text_m c-bti-primary"> Название документа </span>
+    <span class="text text_m c-bti-tertiary"> 2,37мб </span>
+  </div>
+  <div class="flex">
+    <mib-button type="ghost-primary" (press)="downloadFile()">
+      <mib-icon
+        mibLeftIcon
+        class="stroke"
+        name="fi_download"
+      ></mib-icon>
+      <span>Скачать заявку</span>
+    </mib-button>
+  </div>
+</div>
+<mib-spacing type="m"></mib-spacing>
+<p class="text text_m c-bti-secondary">
+  После установки заявке, распечатайте ее на принтере и отсканируйте,
+  после чего прикрепите ее в разделе ниже.
+</p>
+<mib-spacing type="s"></mib-spacing>
+<p class="text text_m c-bti-primary">
+  Прикрепите скан заполненной заявки
+</p>
+<mib-spacing type="xs2"></mib-spacing>
+<div class="flex flex_column gap-12">
+  <mib-dnd
+    (onChange)="onDocumentLoad($event)"
+    [accept]="[
+							'application/pdf',
+							'application/msword',
+							'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+							'application/vnd.ms-excel',
+							'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+							'image/jpeg',
+							'image/png'
+						]"
+    headline="Прикрепите документ"
+  ></mib-dnd>
+  <div>
+    <p class="text text_xs c-bti-tertiary">
+      Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX,
+      JPEG, PNG
+    </p>
+    <p class="text text_xs c-bti-tertiary">
+      Размер каждого документа не должен превышать 10 МБ
+    </p>
+  </div>
+</div>
+<mib-spacing type="m"></mib-spacing>
