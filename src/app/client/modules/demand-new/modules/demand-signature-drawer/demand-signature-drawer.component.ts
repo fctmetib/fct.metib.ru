@@ -1,87 +1,123 @@
-import {Component, Inject} from '@angular/core'
+import {Component, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
-import {extractBase64} from 'src/app/shared/services/tools.service'
-import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {DocumentReq} from '../../../requests/interfaces/request.interface'
-import {BehaviorSubject, Observable} from 'rxjs'
+import {BehaviorSubject, debounceTime, distinctUntilChanged, switchMap, takeUntil, tap} from 'rxjs'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
-import {FormBuilder, FormGroup} from '@angular/forms'
-import {DemandService} from '../../services/demand.service'
-import {DestroyService} from '../../../../../shared/services/common/destroy.service'
-import {takeUntil} from 'rxjs/operators'
+import {GetAgentRequestService} from '../../../../../public/service/get-agent-request.service'
+import {FormBuilder, FormGroup, Validators} from '@angular/forms'
+import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service'
 
 @Component({
   selector: 'mib-demand-signature-drawer',
   templateUrl: './demand-signature-drawer.component.html',
-  styleUrls: ['./demand-signature-drawer.component.scss'],
-  providers: [DestroyService]
+  styleUrls: ['./demand-signature-drawer.component.scss']
 })
-export class DemandSignatureDrawerComponent {
-  progres$ = new BehaviorSubject<number>(1)
-  progress: number = 1
-  maxPage: number = 4
-  pageCount: number = 1
-  firstPageForm: FormGroup
-  secondPageForm: FormGroup
-  thirdPageForm: FormGroup
+export class DemandSignatureDrawerComponent implements OnInit {
+  public progress$ = new BehaviorSubject<number>(1)
+  public progress: number = 1
+  public maxPage: number = 4
+  public pageCount: number = 1
+  public dataByINN = []
+  public orgDataForm: FormGroup
+  public personalDataForm: FormGroup
+  public filesForm: FormGroup
 
   constructor(
     public dialogRef: MatDialogRef<DemandSignatureDrawerComponent>,
     private toaster: ToasterService,
+    private getAgentRequestService: GetAgentRequestService,
     private fb: FormBuilder,
-    private demandSrv: DemandService,
-    private destroy$: DestroyService,
+    private au: AutoUnsubscribeService,
     @Inject(MAT_DIALOG_DATA) public data: DrawerData
   ) {
     console.log(data.data.id)
-    const info = data?.data
-    this.firstPageForm = this.fb.group({
-      organizationType: 1,
-      organizationInn: '',
-      personInn: ''
+  }
+
+  ngOnInit() {
+    this.initOrgDataForm()
+    this.initPersonalDataForm()
+  }
+
+  public initOrgDataForm() {
+    this.orgDataForm = this.fb.group({
+      organizationInn: [null, Validators.required],
+      organizationType: null,
+      organizationForm: null,
+      shortNameOrg: null,
+      fullNameOrg: null,
+      orgInn: null,
+      orgKpp: null,
+      orgOgrn: null,
+      orgOkpo: null,
+      orgPhone: null,
+      orgMail: null,
+      orgLegalAddress: null,
+      legalMatchesReal: false,
+      realAddress: null,
+      personInn: null
     })
 
-    if (info?.isEdit) {
-      this.getDemandById((info.id)).pipe(takeUntil(this.destroy$)).subscribe({
-        next: res => {
-
-        }
-      })
-    }
+    this.getDataByINN()
   }
 
-  nextPage(): void {
+  public initPersonalDataForm() {
+    this.personalDataForm = this.fb.group({
+      surname: null,
+      name: null,
+      secondName: null,
+      male: false,
+      female: false,
+      inn: null,
+      snils: null,
+      birthday: null,
+      bornPlace: null,
+      role: null,
+      phone: null,
+      mail: null,
+      nationality: null,
+      series: null,
+      number: null,
+      dateGave: null,
+      code: null,
+      whoGave: null
+    })
+  }
+
+  public getDataByINN() {
+    this.orgDataForm.get('organizationInn')?.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => this.getAgentRequestService.getAgentData(value)),
+      takeUntil(this.au.destroyer)
+    ).subscribe(options => {
+      console.log(options.suggestions)
+      this.dataByINN = options.suggestions || []
+    })
+  }
+
+  public nextPage() {
     if (this.pageCount >= 1 && this.pageCount <= this.maxPage - 1) {
-      this.progress = this.progres$.value + 1
-      this.progres$.next(this.progress)
+      this.progress = this.progress$.value + 1
+      this.progress$.next(this.progress)
       this.pageCount = this.progress
-      if (this.pageCount === 2) this.initSecondForm()
-      if (this.pageCount === 3) this.initThirdForm()
       console.log('next', this.progress)
+    } else {
+      return
     }
   }
 
-  prevPage(): void {
+  public prevPage() {
     if (this.pageCount >= 2 && this.pageCount <= this.maxPage) {
-      this.progress = this.progres$.value - 1
-      this.progres$.next(this.progress)
+      this.progress = this.progress$.value - 1
+      this.progress$.next(this.progress)
       this.pageCount = this.progress
+      console.log('prev', this.progress)
+    } else {
+      return
     }
   }
 
-  onDocumentLoad({file, url}: FileDnd): void {
-    const document: DocumentReq = {
-      Description: `description ${file.name}`,
-      DocumentTypeID: 40,
-      Title: file.name,
-      OwnerTypeID: 20,
-      Data: extractBase64(url)
-    }
-    // this.addDocument(document)
-  }
-
-  submitData() : void{
+  public submitData() {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -93,79 +129,18 @@ export class DemandSignatureDrawerComponent {
     // this.dialogRef.close()
   }
 
-  confirmIds(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
-
-  downloadFile(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
-
-  private getDemandById(id: number): Observable<any> {
-    return this.demandSrv.getDemandDraftById(id)
-  }
-
-  private initSecondForm(): void {
-    this.secondPageForm = this.fb.group({
-      organizationType: this.firstPageForm.get('organizationType').value,
-      organizationInn: '',
-      organizationForm: '',
-      shortNameOrg: '',
-      fullNameOrg: '',
-      orgInn: '',
-      orgKpp: '',
-      orgOgrn: '',
-      orgOkpo: '',
-      orgPhone: '',
-      orgMail: '',
-      orgLegalAddress: '',
-      legalMatchesReal: false,
-      realAddress: '',
-      personInn: ''
-    })
-    this.secondPageForm.get('legalMatchesReal').valueChanges.pipe(takeUntil(this.destroy$)).subscribe({
-      next: val => {
-        this.secondPageForm.patchValue({
-          realAddress: val ? this.secondPageForm.get('orgLegalAddress').value : ''
-        })
-      }
-    })
-  }
-
-  private initThirdForm(): void {
-    this.thirdPageForm = this.fb.group({
-      surname: '',
-      name: '',
-      secondName: '',
-      male: false,
-      female: false,
-      inn: '',
-      snils: '',
-      birthday: '',
-      bornPlace: '',
-      role: '',
-      phone: '',
-      mail: '',
-      nationality: '',
-      series: '',
-      number:'',
-      dateGave:'',
-      code:'',
-      whoGave:''
-    })
+  public formIsValid(): boolean {
+    switch (this.progress) {
+      case 1:
+        return this.orgDataForm.get('organizationInn')?.value
+      case 2:
+        return this.orgDataForm?.valid
+      case 3:
+        return this.personalDataForm?.valid
+      case 4:
+        return this.filesForm?.valid
+      default:
+        return false
+    }
   }
 }
