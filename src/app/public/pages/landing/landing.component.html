@@ -339,7 +339,7 @@
 						<textarea
 							formControlName="Comment"
 							[maxLength]="100"
-							autosize
+							[attr.autosize]="isBrowser ? '' : null"
 							mibTextarea
 						></textarea>
 					</mib-textarea>
