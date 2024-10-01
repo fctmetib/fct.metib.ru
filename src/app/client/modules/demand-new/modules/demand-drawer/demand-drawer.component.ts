@@ -88,6 +88,7 @@ export class DemandDrawerComponent implements OnInit {
     // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
     if (modalData?.isEdit || modalData?.isView) {
       this.getByID(modalData.id, modalData.isEdit)
+      if (modalData?.isEdit) this.enableAutoSaveDraft()
     }
 
     // Если создание и нет черновика
@@ -103,132 +104,6 @@ export class DemandDrawerComponent implements OnInit {
       // Включаем авто сохранение
       this.enableAutoSaveDraft()
     }
-  }
-
-  enableAutoSaveDraft(): void {
-    this.form.valueChanges
-      .pipe(
-        filter(() => !!this.data.data.id),
-        debounceTime(500), // Ждем 300 мс после окончания ввода
-        distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
-        startWith(this.form.value), // Начальное значение формы
-        pairwise(), // Получаем текущее и предыдущее значения формы
-        filter(([prev, curr]) => JSON.stringify(prev) !== JSON.stringify(curr)),
-        switchMap(([prev, curr]) => {
-          const payload = {
-            Subject: curr.requestTitle,
-            Question: curr.requestText,
-            Type: this.freeRequestType,
-            Files: this.documents.value
-          }
-          return this.demandService.updateDraft(this.requestId, payload)
-        })
-      )
-      .subscribe(result => {
-        // Обрабатываем результат запроса
-        console.log('Результат API:', result)
-      })
-  }
-
-  getByID(id: number, isDraft: boolean): void {
-    const req$ = isDraft ?
-      this.demandService
-        .getDemandDraftById(id) : this.demandService.getDemandById(id)
-
-    req$.pipe(
-      tap(res => {
-        // {
-        //   "Type": "Question",
-        //   "Status": "Created",
-        //   "User": "Владимир Сновский",
-        //   "DateCreated": "2024-10-01T09:59:16+00:00",
-        //   "DateModify": "2024-10-01T09:59:16+00:00",
-        //   "DateStatus": "2024-10-01T09:59:16+00:00",
-        //   "Requirements": [],
-        //   "Steps": [],
-        //   "Messages": [
-        //   {
-        //     "Type": "StatusChange",
-        //     "Date": "2024-10-01T09:59:16+00:00",
-        //     "User": "Владимир Сновский",
-        //     "Comment": "Создан новый запрос",
-        //     "ID": 73271
-        //   }
-        // ],
-        //   "Files": [],
-        //   "Data": {
-        //   "Subject": "проблемы",
-        //     "Question": "проблемы",
-        //     "Type": "Question",
-        //     "Files": []
-        // },
-        //   "ID": 10149
-        // }
-        const data = isDraft ? JSON.parse(res?.DemandData) : res.Data
-        this.formDataForChangeOnView = res.Data
-        if (!isDraft) {
-          this.titleInfo = {create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status)}
-        } else {
-          this.form.patchValue({
-            requestTitle: data?.Subject,
-            requestText: data?.Question,
-            Documents: data?.Files
-          })
-        }
-
-
-      })
-    )
-      .subscribe()
-  }
-
-  initDraft(): void {
-    const payload = {
-      Subject: '',
-      Question: '',
-      Type: this.freeRequestType,
-      Files: []
-    }
-
-    this.demandService
-      .createNewDraft(payload)
-      .pipe(
-        tap(id => {
-          this.requestId = id
-        })
-      )
-      .subscribe()
-  }
-
-  addDocument(data: DocumentReq): void {
-    const control: FormGroup = this.fb.group({
-      Number: [null],
-      Title: [null],
-      Description: [null],
-      DocumentTypeID: [null],
-      OwnerTypeID: [null],
-      Data: [null],
-      File: [null]
-    })
-    control.patchValue(data)
-    this.documents.push(control)
-  }
-
-  removeDocument(idx: number): void {
-    this.documents.removeAt(idx)
-  }
-
-  initForms(): void {
-    console.log(this.isChangeByView)
-    this.form = this.fb.group({
-      requestTitle: [this.isChangeByView ? this.formDataForChangeOnView.Subject : null, [Validators.required]],
-      requestText: [this.isChangeByView ? this.formDataForChangeOnView.Question : null, [Validators.required]],
-      Documents: this.isChangeByView ? this.formDataForChangeOnView.Files : this.fb.array([])
-    })
-
-    // data?.Subject,
-    //   requestText: data?.Question,
-    //   Documents: data?.Files
   }
 
   onDocumentLoad({file, url}: FileDnd): void {
@@ -303,28 +178,149 @@ export class DemandDrawerComponent implements OnInit {
         finalize(() => this.isSubmitting$.next(false))
       )
       .subscribe({
-        error: () => {
-          this.dialogRef.close()
-          this.openRequestFailureModal(this.requestId)
-        },
         complete: () => {
           this.dialogRef.close()
           this.openRequestSuccessModal()
+        },
+        error: () => {
+          this.dialogRef.close()
+          this.openRequestFailureModal(this.requestId)
         }
       })
   }
 
-  openRequestFailureModal(d): void {
+  editDocument(): void {
+    this.viewChange = true
+    this.initForms(true)
+    this.enableAutoSaveDraft()
+  }
+
+  removeDocument(idx: number): void {
+    this.documents.removeAt(idx)
+  }
+
+  private addDocument(data: DocumentReq): void {
+    const control: FormGroup = this.fb.group({
+      Number: [null],
+      Title: [null],
+      Description: [null],
+      DocumentTypeID: [null],
+      OwnerTypeID: [null],
+      Data: [null],
+      File: [null]
+    })
+    control.patchValue(data)
+    this.documents.push(control)
+  }
+
+  private enableAutoSaveDraft(): void {
+    this.form.valueChanges
+      .pipe(
+        filter(() => !!this.data.data.id),
+        debounceTime(500), // Ждем 300 мс после окончания ввода
+        distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
+        startWith(this.form.value), // Начальное значение формы
+        pairwise(), // Получаем текущее и предыдущее значения формы
+        filter(([prev, curr]) => JSON.stringify(prev) !== JSON.stringify(curr)),
+        switchMap(([prev, curr]) => {
+          const payload = {
+            Subject: curr.requestTitle,
+            Question: curr.requestText,
+            Type: this.freeRequestType,
+            Files: this.documents.value
+          }
+          return this.demandService.updateDraft(this.requestId, payload)
+        })
+      )
+      .subscribe(result => {
+        // Обрабатываем результат запроса
+        console.log('Результат API:', result)
+      })
+  }
+
+  private getByID(id: number, isDraft: boolean): void {
+    const req$ = isDraft ?
+      this.demandService
+        .getDemandDraftById(id) : this.demandService.getDemandById(id)
+    // {
+    //   "Type": "Question",
+    //   "Status": "Created",
+    //   "User": "Владимир Сновский",
+    //   "DateCreated": "2024-10-01T17:18:01+00:00",
+    //   "DateModify": "2024-10-01T17:18:01+00:00",
+    //   "DateStatus": "2024-10-01T17:18:01+00:00",
+    //   "Requirements": [],
+    //   "Steps": [],
+    //   "Messages": [
+    //   {
+    //     "Type": "StatusChange",
+    //     "Date": "2024-10-01T17:18:01+00:00",
+    //     "User": "Владимир Сновский",
+    //     "Comment": "Создан новый запрос",
+    //     "ID": 73274
+    //   }
+    // ],
+    //   "Files": [],
+    //   "Data": {
+    //   "Subject": "klklklklk",
+    //     "Question": "klklkllkl",
+    //     "Type": "Question",
+    //     "Files": []
+    // },
+    //   "ID": 10172
+    // }
+    req$.pipe(
+      tap(res => {
+        const data = isDraft ? res.DemandData : res.Data
+        this.formDataForChangeOnView = res.Data
+        if (!isDraft) {
+          this.titleInfo = {create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status)}
+        } else {
+          this.form.patchValue({
+            requestTitle: data?.Subject,
+            requestText: data?.Question,
+            Documents: data?.Files
+          })
+        }
+
+
+      })
+    )
+      .subscribe()
+  }
+
+  private initDraft(): void {
+    const payload = {
+      Subject: '',
+      Question: '',
+      Type: this.freeRequestType,
+      Files: []
+    }
+
+    this.demandService
+      .createNewDraft(payload)
+      .pipe(
+        tap(id => {
+          this.requestId = id
+        })
+      )
+      .subscribe()
+  }
+
+  private initForms(isEdit = false): void {
+    this.form = this.fb.group({
+      requestTitle: [isEdit ? this.formDataForChangeOnView?.Subject : null, [Validators.required]],
+      requestText: [isEdit ? this.formDataForChangeOnView?.Question : null, [Validators.required]],
+      Documents: isEdit ? this.formDataForChangeOnView?.Files : this.fb.array([])
+    })
+  }
+
+  private openRequestFailureModal(d): void {
     this.requestFailureModalService.open(d)
   }
 
-  openRequestSuccessModal(): void {
+  private openRequestSuccessModal(): void {
     this.requestCreateSuccessModalService.open()
-  }
-
-  editDocument(): void {
-    this.viewChange = true
-    this.initForms()
   }
 
   private getStatus(status: string): string {
@@ -351,6 +347,4 @@ export class DemandDrawerComponent implements OnInit {
     }
     return result
   }
-
-
 }

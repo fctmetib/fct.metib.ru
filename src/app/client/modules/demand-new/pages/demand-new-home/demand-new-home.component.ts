@@ -9,8 +9,6 @@ import {
   takeUntil
 } from 'rxjs'
 import {
-  IDraftList,
-  IHistoryList,
   IQueryList
 } from '../mock-data-service/data.models'
 import {DataService} from '../mock-data-service/data.srrvice'
@@ -152,14 +150,11 @@ export class DemandNewHomeComponent implements OnInit {
           const draftRequests = drafts.map(draft =>
             this.demandService.getDemandDraftById(draft.ID).pipe(
               map(demand => {
-                const Type = JSON.parse(demand.DemandData)
-                const translatedType = this.getType(Type.Type)
                 const fillProgress = '30%'
-
                 return {
                   ID: draft.ID,
-                  Type: translatedType.result,
-                  TypeInt: translatedType.resultNum,
+                  Type: this.getType(demand.DemandData.Type).result,
+                  TypeInt: this.getType(demand.DemandData.Type).resultNum,
                   Progress: `Заполнено на ${fillProgress}`
                 }
               })
@@ -226,7 +221,6 @@ export class DemandNewHomeComponent implements OnInit {
       case 'Limit':
         result = 'Запрос на Лимит'
         resultNum = this.dialogType.Limit
-        console.log('Limit', this.dialogType.Limit)
         break
       case 'NewDebtor':
         result = 'Новый дебитор'
@@ -236,15 +230,15 @@ export class DemandNewHomeComponent implements OnInit {
         result = 'Агентский Факторинг'
         resultNum = this.dialogType.Free
         break
-      // default:
-      //   result = 'Свободная тема'
-      //   resultNum = this.dialogType.Free
-      //   break
+      default:
+        result = 'Свободная тема'
+        resultNum = this.dialogType.Free
+        break
     }
     return {result, resultNum}
   }
 
-  getStatus(status: string): string {
+  public getStatus(status: string): string {
     let result: string = ''
     switch (status) {
       case 'Created':
@@ -432,7 +426,7 @@ export class DemandNewHomeComponent implements OnInit {
     }
   }
 
-  getVisibleHeader() {
+  getVisibleHeader(): string {
     return this.headers[this.currentIndex]
   }
 

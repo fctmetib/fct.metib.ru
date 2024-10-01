@@ -73,7 +73,7 @@
         </mib-textarea>
         <mib-spacing type="s"></mib-spacing>
         <ng-container
-          *ngIf="!documents.controls.length; else copiesTemplate"
+          *ngIf="!documents?.controls?.length; else copiesTemplate"
         ></ng-container>
         <p class="text text_m text_medium">
           При необходимости прикрепите документы в поле ниже

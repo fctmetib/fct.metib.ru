@@ -24,7 +24,6 @@ export class DemandDebtorDrawerComponent {
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: DrawerData
   ) {
-    console.log(data?.data?.id)
     this.form = this.fb.group({
       addingType: 1,
       debitor: null,
@@ -45,15 +44,6 @@ export class DemandDebtorDrawerComponent {
 
     if (data?.data?.isEdit) this.getDemandByID(data?.data?.id)
   }
-
-// {
-//   "ID": "",
-//   "Title": "",
-//   "INN": "",
-//   "IsNew": false,
-//   "Type": "NewDebtor",
-//   "Files": []
-// }
 
   submitData() {
     this.toaster.show(
