@@ -1,4 +1,5 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {FormGroup} from '@angular/forms'
 
 @Component({
   selector: 'mib-demand-signature-second-step',
@@ -7,5 +8,5 @@ import {ChangeDetectionStrategy, Component} from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DemandSignatureSecondStepComponent {
-
+  @Input() orgDataForm: FormGroup;
 }

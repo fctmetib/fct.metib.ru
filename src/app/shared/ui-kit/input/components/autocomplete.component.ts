@@ -35,6 +35,7 @@ export class AutocompleteComponent
   @Input() options: any[] = []
   @Input() loading: boolean = false
   @Input() extra: boolean = false
+  @Input() innType: boolean = false
   @Input() label: string
   @Output() valueChanged = new EventEmitter<string>()
   control = new FormControl()
@@ -76,7 +77,7 @@ export class AutocompleteComponent
   }
 
   toggleSelection(option: any) {
-    this.control.setValue(option.value, {emitEvent: true})
+    this.control.setValue(this.innType ? option?.data?.inn : option.value, {emitEvent: true})
     this.showDropdown = false
   }
 
