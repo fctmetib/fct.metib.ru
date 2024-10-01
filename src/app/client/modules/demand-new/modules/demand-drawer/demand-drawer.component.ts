@@ -10,7 +10,6 @@ import {
   extractBase64
 } from 'src/app/shared/services/tools.service'
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
-import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {
   BehaviorSubject,
   debounceTime,
@@ -44,10 +43,12 @@ export class DemandDrawerComponent implements OnInit {
   loading$ = new BehaviorSubject<boolean>(false)
   size: InputSize | ButtonSize = 'm'
   freeRequestType = 'Question'
+  private titleInfo = {create: null, update: null, status: null}
+  private viewChange = false
+  private formDataForChangeOnView = null
 
   constructor(
     private fb: FormBuilder,
-    private toaster: ToasterService,
     private demandService: DemandService,
     private requestFailureModalService: RequestFailureModalService,
     private requestCreateSuccessModalService: RequestCreateSuccessModalService,
@@ -69,10 +70,21 @@ export class DemandDrawerComponent implements OnInit {
     return this.form.get('Documents') as FormArray
   }
 
+  get date(): {create: string, update: string, status: string} {
+    return this.titleInfo
+  }
+
+  get isView(): boolean {
+    return this.data.data.isView
+  }
+
+  get isChangeByView(): boolean {
+    return this.isView && !this.viewChange
+  }
+
   ngOnInit(): void {
     const modalData = this.data.data
-    this.initForms()
-    console.log(modalData?.isView)
+    if (modalData?.isEdit || modalData?.isCreation) this.initForms()
     // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
     if (modalData?.isEdit || modalData?.isView) {
       this.getByID(modalData.id, modalData.isEdit)
@@ -97,7 +109,7 @@ export class DemandDrawerComponent implements OnInit {
     this.form.valueChanges
       .pipe(
         filter(() => !!this.data.data.id),
-        debounceTime(300), // Ждем 300 мс после окончания ввода
+        debounceTime(500), // Ждем 300 мс после окончания ввода
         distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
         startWith(this.form.value), // Начальное значение формы
         pairwise(), // Получаем текущее и предыдущее значения формы
@@ -125,12 +137,46 @@ export class DemandDrawerComponent implements OnInit {
 
     req$.pipe(
       tap(res => {
+        // {
+        //   "Type": "Question",
+        //   "Status": "Created",
+        //   "User": "Владимир Сновский",
+        //   "DateCreated": "2024-10-01T09:59:16+00:00",
+        //   "DateModify": "2024-10-01T09:59:16+00:00",
+        //   "DateStatus": "2024-10-01T09:59:16+00:00",
+        //   "Requirements": [],
+        //   "Steps": [],
+        //   "Messages": [
+        //   {
+        //     "Type": "StatusChange",
+        //     "Date": "2024-10-01T09:59:16+00:00",
+        //     "User": "Владимир Сновский",
+        //     "Comment": "Создан новый запрос",
+        //     "ID": 73271
+        //   }
+        // ],
+        //   "Files": [],
+        //   "Data": {
+        //   "Subject": "проблемы",
+        //     "Question": "проблемы",
+        //     "Type": "Question",
+        //     "Files": []
+        // },
+        //   "ID": 10149
+        // }
         const data = isDraft ? JSON.parse(res?.DemandData) : res.Data
-        this.form.patchValue({
-          requestTitle: data?.Subject,
-          requestText: data?.Question,
-          Documents: data?.Files
-        })
+        this.formDataForChangeOnView = res.Data
+        if (!isDraft) {
+          this.titleInfo = {create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status)}
+        } else {
+          this.form.patchValue({
+            requestTitle: data?.Subject,
+            requestText: data?.Question,
+            Documents: data?.Files
+          })
+        }
+
+
       })
     )
       .subscribe()
@@ -173,11 +219,16 @@ export class DemandDrawerComponent implements OnInit {
   }
 
   initForms(): void {
+    console.log(this.isChangeByView)
     this.form = this.fb.group({
-      requestTitle: [null, [Validators.required]],
-      requestText: [null, [Validators.required]],
-      Documents: this.fb.array([])
+      requestTitle: [this.isChangeByView ? this.formDataForChangeOnView.Subject : null, [Validators.required]],
+      requestText: [this.isChangeByView ? this.formDataForChangeOnView.Question : null, [Validators.required]],
+      Documents: this.isChangeByView ? this.formDataForChangeOnView.Files : this.fb.array([])
     })
+
+    // data?.Subject,
+    //   requestText: data?.Question,
+    //   Documents: data?.Files
   }
 
   onDocumentLoad({file, url}: FileDnd): void {
@@ -271,14 +322,35 @@ export class DemandDrawerComponent implements OnInit {
     this.requestCreateSuccessModalService.open()
   }
 
-  public editDocument(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
+  editDocument(): void {
+    this.viewChange = true
+    this.initForms()
   }
+
+  private getStatus(status: string): string {
+    let result: string = ''
+    switch (status) {
+      case 'Created':
+        result = 'Создан'
+        break
+      case 'Completed':
+        result = 'Завершен'
+        break
+      case 'Processing':
+        result = 'В процессе'
+        break
+      case 'Rejected':
+        result = 'Отклонено'
+        break
+      case 'Draft':
+        result = 'Черновик'
+        break
+      case 'Canceled':
+        result = 'Отменен'
+        break
+    }
+    return result
+  }
+
+
 }

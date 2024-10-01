@@ -40,13 +40,6 @@ export const querylist: IQueryList[] = [
       'Запрос для проверки и подтверждения информации или данных о компании',
     quantity: 6
   },
-  {
-    id: 7,
-    title: 'Свободная тема',
-    description:
-      'Свободная тема',
-    quantity: 7
-  }
 
   // {
   // 	id: 7,
