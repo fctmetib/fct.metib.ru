@@ -10,8 +10,8 @@
   <div class="flex flex_align-center gap-12">
     <mib-autocomplete
       [options]="options"
-      label="Введите ИНН организации"
-      formControlName="organizationInn"
+      [innType] = "true"
+      formControlName="INN"
       class="flex_grow">
     </mib-autocomplete>
     <mib-button (click)="confirmIds()" type="filled-primary">Подтвердить</mib-button>
