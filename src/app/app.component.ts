@@ -1,8 +1,9 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core'
+import {Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild} from '@angular/core'
 import {NavigationEnd, Router} from '@angular/router'
 import {AuthService} from './auth/services/auth.service'
 import {DestroyService} from './shared/services/common/destroy.service'
 import {takeUntil} from 'rxjs/operators'
+import { isPlatformBrowser } from '@angular/common'
 
 @Component({
   selector: 'app-root',
@@ -13,20 +14,32 @@ import {takeUntil} from 'rxjs/operators'
 export class AppComponent implements OnInit {
   @ViewChild('scrollContainer') scrollContainer: ElementRef
 
-  constructor(private router: Router, private authSrv: AuthService, private destroy$: DestroyService) {
+  constructor(
+    private router: Router, 
+    private authSrv: AuthService, 
+    private destroy$: DestroyService,
+    @Inject(PLATFORM_ID) private platformId: Object) {
   }
 
   ngOnInit(): void {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.scrollToTop()
-      }
-    })
-    if (this.authSrv.isUserLoggedIn) this.authSrv.reauth().pipe(takeUntil(this.destroy$)).subscribe()
-    setInterval(() => {
-      console.log(this.authSrv.isUserLoggedIn)
-      if (this.authSrv.isUserLoggedIn) this.authSrv.reauth().pipe(takeUntil(this.destroy$)).subscribe()
-    }, 1800000)
+    if (isPlatformBrowser(this.platformId)) {
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.scrollToTop();
+        }
+      });
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      setInterval(() => {
+        console.log(this.authSrv.isUserLoggedIn);
+        if (this.authSrv.isUserLoggedIn) {
+          this.authSrv.reauth().pipe(takeUntil(this.destroy$)).subscribe();
+        }
+      }, 1800000);
+    }
   }
 
   scrollToTop(): void {

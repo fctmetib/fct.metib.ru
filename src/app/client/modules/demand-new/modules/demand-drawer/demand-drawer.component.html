@@ -1,58 +1,104 @@
-<mib-drawer [formGroup]="form">
-	<mib-drawer-header
-		showEdits="true"
-		(onClose)="dialogRef.close()"
-		(onEdit)="editDocument()"
-		drawer-header
-	>
-	</mib-drawer-header>
-	<mib-drawer-container>
-		<h4>Запрос на свободную тему</h4>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-input>
-			<ng-container mibLabel>Тема обращения</ng-container>
-			<input id="requestTitle" formControlName="requestTitle" mibInput />
-		</mib-input>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-textarea>
-			<ng-container mibLabel>Текст обращения</ng-container>
-			<!-- (blur)="saveData()" -->
-			<textarea
-				id="requestText"
-				formControlName="requestText"
-				[maxLength]="100"
-				autosize
-				mibTextarea
-			></textarea>
-		</mib-textarea>
-		<mib-spacing type="s"></mib-spacing>
-		<ng-container
-			*ngIf="!documents.controls.length; else copiesTemplate"
-		></ng-container>
-		<p class="text text_m text_medium">
-			При необходимости прикрепите документы в поле ниже
-		</p>
-		<mib-spacing type="xs2"></mib-spacing>
-		<ng-template #copiesTemplate>
-			<p class="text text_m text_medium">Прикрепленные документы</p>
-			<mib-spacing type="xs2"></mib-spacing>
-			<div *ngFor="let document of documents.controls; let idx = index">
-				<mib-dl-file-cell
-					[attr.index]="idx"
-					[showRemove]="true"
-					(onDload)="downloadCurrentFile()"
-					(onRemove)="removeDocument(idx)"
-					[fileName]="document.get('Title').value"
-				></mib-dl-file-cell>
-				<mib-spacing type="xs2"></mib-spacing>
-			</div>
-			<mib-spacing type="s"></mib-spacing>
-		</ng-template>
-		<div class="flex flex_column gap-12">
-			<mib-dnd
-				[multiple]="true"
-				(onChange)="onDocumentLoad($event)"
-				[accept]="[
+<mib-drawer>
+  <mib-drawer-header
+    showEdits="true"
+    (onClose)="dialogRef.close()"
+    (onEdit)="editDocument()"
+    drawer-header
+  >
+  </mib-drawer-header>
+  <mib-drawer-container>
+    <ng-container *ngIf="isView && date.status; else edit">
+      <h4>Запрос №{{ data.data.id }}</h4>
+      <mib-spacing type="xs"></mib-spacing>
+      <p class="text text_m c-bti-secondary">Запрос создан: {{ date.create | date: 'dd.MM.yyyy' }}, запрос
+        отредактирован: {{ date.update | date: 'dd.MM.yyyy' }}</p>
+      <mib-spacing type="xs"></mib-spacing>
+      <div class="flex flex_align-center gap-12">
+        <mib-badge
+          type="filled-secondary"
+          [extended]="true"
+          size="l"
+        >Свободная тема
+        </mib-badge
+        >
+        <mib-badge
+          type="filled-primary"
+          [extended]="true"
+          size="l"
+        >{{ date.status }}
+        </mib-badge
+        >
+      </div>
+    </ng-container>
+    <ng-template #edit>
+      <h4>Запрос на свободную тему</h4>
+      <mib-spacing type="xs"></mib-spacing>
+    </ng-template>
+    <div *ngIf="isChangeByView; else editing">
+      <mib-spacing type="xs"></mib-spacing>
+      <mib-tab-group>
+        <mib-navbar class="container container_large">
+          <mib-navbar-point value="1">События</mib-navbar-point>
+          <mib-navbar-point value="2">Информация</mib-navbar-point>
+          <mib-navbar-point value="3">Документы</mib-navbar-point>
+          <mib-navbar-point value="4">Результат</mib-navbar-point>
+        </mib-navbar>
+        <div class="container container_large">
+          <mib-tab-item value="1"></mib-tab-item>
+          <mib-tab-item value="2"></mib-tab-item>
+          <mib-tab-item value="3"></mib-tab-item>
+          <mib-tab-item value="4"></mib-tab-item>
+        </div>
+      </mib-tab-group>
+      <mib-spacing type="xs"></mib-spacing>
+    </div>
+    <ng-template #editing>
+      <div [formGroup]="form">
+        <mib-spacing type="xs"></mib-spacing>
+        <mib-input>
+          <ng-container mibLabel>Тема обращения</ng-container>
+          <input id="requestTitle" formControlName="requestTitle" mibInput />
+        </mib-input>
+        <mib-spacing type="xs"></mib-spacing>
+        <mib-textarea>
+          <ng-container mibLabel>Текст обращения</ng-container>
+          <!-- (blur)="saveData()" -->
+          <textarea
+            id="requestText"
+            formControlName="requestText"
+            [maxLength]="100"
+            autosize
+            mibTextarea
+          ></textarea>
+        </mib-textarea>
+        <mib-spacing type="s"></mib-spacing>
+        <ng-container
+          *ngIf="!documents.controls.length; else copiesTemplate"
+        ></ng-container>
+        <p class="text text_m text_medium">
+          При необходимости прикрепите документы в поле ниже
+        </p>
+        <mib-spacing type="xs2"></mib-spacing>
+        <ng-template #copiesTemplate>
+          <p class="text text_m text_medium">Прикрепленные документы</p>
+          <mib-spacing type="xs2"></mib-spacing>
+          <div *ngFor="let document of documents.controls; let idx = index">
+            <mib-dl-file-cell
+              [attr.index]="idx"
+              [showRemove]="true"
+              (onDload)="downloadCurrentFile()"
+              (onRemove)="removeDocument(idx)"
+              [fileName]="document.get('Title').value"
+            ></mib-dl-file-cell>
+            <mib-spacing type="xs2"></mib-spacing>
+          </div>
+          <mib-spacing type="s"></mib-spacing>
+        </ng-template>
+        <div class="flex flex_column gap-12">
+          <mib-dnd
+            [multiple]="true"
+            (onChange)="onDocumentLoad($event)"
+            [accept]="[
 					'application/pdf',
 					'application/msword',
 					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -61,25 +107,28 @@
 					'image/jpeg',
 					'image/png'
 				]"
-				headline="Прикрепите документ"
-			></mib-dnd>
-			<p class="text text_xs c-bti-tertiary">
-				Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
-			</p>
-			<p class="text text_xs c-bti-tertiary">
-				Размер каждого документа не должен превышать 10 МБ
-			</p>
-		</div>
-		<mib-spacing type="m"></mib-spacing>
-	</mib-drawer-container>
-	<mib-drawer-footer drawer-footer>
-		<mib-button
-			[disabled]="form.invalid || (loading$ | async) || (isSubmitting$ | async)"
-			(press)="onSubmit()"
-			[disabled]="true"
-			[size]="size"
-			type="filled-primary"
-			>Отправить запрос
-		</mib-button>
-	</mib-drawer-footer>
+            headline="Прикрепите документ"
+          ></mib-dnd>
+          <p class="text text_xs c-bti-tertiary">
+            Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
+          </p>
+          <p class="text text_xs c-bti-tertiary">
+            Размер каждого документа не должен превышать 10 МБ
+          </p>
+        </div>
+        <mib-spacing type="m"></mib-spacing>
+      </div>
+    </ng-template>
+  </mib-drawer-container>
+  <mib-drawer-footer drawer-footer>
+    <mib-button
+      [disabled]="form?.invalid || (loading$ | async) || (isSubmitting$ | async)"
+      (press)="onSubmit()"
+      [disabled]="true"
+      [size]="size"
+      type="filled-primary"
+      *ngIf="!isChangeByView"
+    >Отправить запрос
+    </mib-button>
+  </mib-drawer-footer>
 </mib-drawer>

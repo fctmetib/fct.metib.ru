@@ -21,31 +21,37 @@ import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 import {RequestFailureModalModule} from 'src/app/shared/modules/modals/request-failure-modal/request-failure-modal.module'
 import {DlFileCellModule} from 'src/app/shared/ui-kit/dl-file-cell/dl-file-cell.module'
+import {BadgeModule} from '../../../../../shared/ui-kit/badge/badge.module'
+import {TabModule} from '../../../../../shared/ui-kit/tab/tab.module'
+import {NavbarModule} from '../../../../../shared/ui-kit/navbar/navbar.module'
 
 @NgModule({
 	declarations: [DemandDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		MatDialogModule,
-		SpacingModule,
-		ButtonModule,
-		IconModule,
-		MibDragAndDropModule,
-		InputModule,
-		TextareaModule,
-		AutosizeModule,
-		LabelModule,
-		SkeletonModule,
-		ReactiveFormsModule,
-		InformationModule,
-		TableModule,
-		DropdownPointModule,
-		DropdownModule,
-		FileCellModule,
-		RequestFailureModalModule,
-		DlFileCellModule
-	],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    MatDialogModule,
+    SpacingModule,
+    ButtonModule,
+    IconModule,
+    MibDragAndDropModule,
+    InputModule,
+    TextareaModule,
+    AutosizeModule,
+    LabelModule,
+    SkeletonModule,
+    ReactiveFormsModule,
+    InformationModule,
+    TableModule,
+    DropdownPointModule,
+    DropdownModule,
+    FileCellModule,
+    RequestFailureModalModule,
+    DlFileCellModule,
+    BadgeModule,
+    TabModule,
+    NavbarModule
+  ],
 	providers: [DemandDrawerService]
 })
 export class DemandDrawerModule {}
