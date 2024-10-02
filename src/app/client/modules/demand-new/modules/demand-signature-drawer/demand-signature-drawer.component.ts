@@ -43,16 +43,16 @@ export class DemandSignatureDrawerComponent implements OnInit {
   public initOrgDataForm() {
     this.orgDataForm = this.fb.group({
       INN: [null, [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
-      Type: null,
-      ShortTitle: null,
-      FullTitle: null,
-      KPP: null,
-      OGRN: null,
-      OKPO: null,
-      Phone: null,
-      Email: null,
-      LegalAddress: null,
-      FactAddress: false
+      Type: [null, Validators.required],
+      ShortTitle: [null, Validators.required],
+      FullTitle: [null, Validators.required],
+      KPP: [null, Validators.required],
+      OGRN: [null, Validators.required],
+      OKPO: [null, Validators.required],
+      Phone: [null, [Validators.required, Validators.pattern(/^\+?[0-9]{7,15}$/)]],
+      Email: [null, [Validators.required, Validators.email]],
+      LegalAddress: [null, Validators.required],
+      FactAddress: [null, Validators.required],
     })
 
     this.getDataByINN()
@@ -73,23 +73,42 @@ export class DemandSignatureDrawerComponent implements OnInit {
 
   public initPersonalDataForm() {
     this.personalDataForm = this.fb.group({
-      NameFirst: null,
-      NameLast: null,
-      NameSecond: null,
-      Gender: false,
-      INN: false,
-      SNILS: null,
-      BirthDate: null,
-      BirthPlace: null,
-      Role: null,
-      Phone: null,
-      Email: null,
-      Nationality: null,
-      PassportDate: null,
-      PassportNumber: null,
-      IssuerSeries: null,
-      IssuerCode: null,
-      IssuerTitle: null
+      NameFirst: [null, Validators.required],
+      NameLast: [null, Validators.required],
+      NameSecond: [null, Validators.required],
+      Male: [false, Validators.required],
+      Female: [false, Validators.required],
+      INN: [null, Validators.required],
+      SNILS: [null, Validators.required],
+      BirthDate: [null, Validators.required],
+      BirthPlace: [null, Validators.required],
+      Role: [null, Validators.required],
+      Phone: [null, [Validators.required, Validators.pattern(/^\+?[0-9]{7,15}$/)]],
+      Email: [null, [Validators.required, Validators.email]],
+      Nationality: [null, Validators.required],
+      PassportDate: [null, Validators.required],
+      PassportNumber: [null, Validators.required],
+      PassportSeries: [null, Validators.required],
+      IssuerCode: [null, Validators.required],
+      IssuerTitle: [null, Validators.required]
+    })
+
+    this.addSingleChoiceGender()
+  }
+
+  public addSingleChoiceGender() {
+    this.personalDataForm.get('Male')?.valueChanges.pipe(
+      filter(Boolean),
+      takeUntil(this.au.destroyer)
+    ).subscribe(value => {
+      this.personalDataForm.get('Female').setValue(false)
+    })
+
+    this.personalDataForm.get('Female')?.valueChanges.pipe(
+      filter(Boolean),
+      takeUntil(this.au.destroyer)
+    ).subscribe(value => {
+      this.personalDataForm.get('Male').setValue(false)
     })
   }
 
@@ -135,11 +154,12 @@ export class DemandSignatureDrawerComponent implements OnInit {
       case 1:
         return this.orgDataForm.get('INN')?.valid
       case 2:
-        return this.orgDataForm?.valid
+        console.log(this.orgDataForm)
+        return this.orgDataForm.valid
       case 3:
-        return this.personalDataForm?.valid
+        return this.personalDataForm.valid
       case 4:
-        return this.filesForm?.valid
+        return this.filesForm.valid
       default:
         return false
     }
@@ -159,70 +179,4 @@ export class DemandSignatureDrawerComponent implements OnInit {
       FactAddress: data.address?.value
     })
   }
-
-/*  let organization: OrganizationDataInterface = {
-    Email: form.organizationEmail,
-    FactAddress: form.organizationActualAddress.factoringPlacesAddress,
-    FactAddressEquals: form.organizationIsActualAdressEqual,
-    ForeignTitle: '',
-    FullTitle: form.organizationFullName,
-    LegalAddress: form.organizationLegalAddress.factoringPlacesAddress,
-    LegalForm: form.organizationLegalForm,
-    Phone: form.organizationPhone,
-    PostAddress: form.organizationPostAddress.factoringPlacesAddress,
-    PostAddressEquals: form.organizationIsLegalAdressEqual,
-    Requisites: {
-      INN: form.organizationINN,
-      KPP: form.organizationKPP,
-      OGRN: form.organizationOGRN,
-      OKATO: '',
-      OKPO: form.organizationOKPO,
-    },
-    ShortTitle: form.organizationShortName,
-    Type: form.organizationType,
-    Website: form.organizationWEB,
-  };
-
-  let passport: PassportInterface = {
-    Date: form?.passportDate
-      ? new Date(form.passportDate).toISOString().slice(0, 19) + '+03:00'
-      : null,
-    IsForeign: false,
-    IssuerCode: form.passportCode,
-    IssuerTitle: form.passportFrom,
-    Nationality: form.passportNationality,
-    Number: form.passportNumber,
-  };
-
-  let person: PersonInterface = {
-    Name: {
-      First: '',
-      Last: '',
-      Second: '',
-    },
-
-    NameFirst: form.ownerName,
-    NameLast: form.ownerSurname,
-    NameSecond: form.ownerMiddlename,
-    Gender: form.ownerGender,
-
-    SNILS: form.ownerSNILS,
-    BirthDate: new Date(form.ownerDateBurn),
-    BirthPlace: form.ownerPlaceBurn,
-
-    Phone: form.ownerPhone,
-    Email: form.ownerEmail,
-    INN: form.ownerINN,
-  };
-
-  let data: CreateDemandEDSRequestInterface = {
-    Files: files,
-    Organization: organization,
-    Passport: passport,
-    Person: person,
-    PersonPosition: form.ownerWorkPosition,
-    Type: 'DigitalSignature',
-  };
-  return data;
-}*/
 }

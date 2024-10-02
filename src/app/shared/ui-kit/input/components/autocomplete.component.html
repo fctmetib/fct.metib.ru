@@ -22,7 +22,7 @@
 			(focus)="showDropdown = true"
 			(blur)="onBlur()"
 		/>
-		<ng-container mibLabel>{{innType ? "Введите ИНН организации" : 'Ваш контрагент'}}</ng-container>
+		<ng-container mibLabel>{{label ? label : 'Ваш контрагент'}}</ng-container>
 		<mib-icon
 			class="stroke cursor-pointer"
 			mibRightIcon
