@@ -13,3 +13,7 @@
 		@include icon-color(var(--bti-tertiary));
 	}
 }
+
+mib-tab-item.first-step {
+  min-height: 450px;
+}

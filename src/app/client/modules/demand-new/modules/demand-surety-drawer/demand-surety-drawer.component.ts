@@ -1,6 +1,6 @@
 import {AfterContentInit, AfterViewInit, Component, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
-import {BehaviorSubject} from 'rxjs'
+import {BehaviorSubject, debounceTime, distinctUntilChanged, filter, switchMap} from 'rxjs'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {ContractedFormsEnum} from 'src/app/shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
@@ -11,6 +11,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {DestroyService} from '../../../../../shared/services/common/destroy.service'
 import {DemandService} from '../../services/demand.service'
 import {takeUntil} from 'rxjs/operators'
+import {GetAgentRequestService} from '../../../../../public/service/get-agent-request.service'
+import {AgentDataInterface, AgentSuggestionsInterface, BankInfo} from '../../../../../public/type/agent.interface'
 
 @Component({
   selector: 'mib-demand-surety-drawer',
@@ -23,17 +25,21 @@ export class DemandSuretyDrawerComponent implements OnInit {
   progress: number = 1
   maxPage: number = 5
   pageCount: number = 1
-  firstPageForm: FormGroup
-  secondPageForm: FormGroup
-  thirdPageForm: FormGroup
   fourthPageForm: FormGroup
   ContractedFormsEnum = ContractedFormsEnum
   requisites: string = ''
+  orgData: AgentSuggestionsInterface
+  dataByINN = []
+  bankDataByName = []
+  bankData: BankInfo
+  orgDataForm: FormGroup
+  bankForm: FormGroup
 
   constructor(
     private toaster: ToasterService,
     private demandSrv: DemandService,
     private destroy$: DestroyService,
+    private getAgentRequestSrv: GetAgentRequestService,
     public dialogRef: MatDialogRef<DemandSuretyDrawerComponent>,
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) data: DrawerData
@@ -56,10 +62,61 @@ export class DemandSuretyDrawerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.firstPageForm = this.fb.group({
-      organizationType: [1, [Validators.required]],
-      compInn: [''],
-      personInn: ['']
+    this.initOrgDataForm()
+    this.initBankForm()
+  }
+
+  initOrgDataForm(): void {
+    this.orgDataForm = this.fb.group({
+      INN: [null, [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
+      Type: null,
+      ShortTitle: null,
+      Phone: null,
+      Email: null,
+      Url: null
+    })
+
+    this.getDataByINN()
+  }
+
+  initBankForm(): void {
+    this.bankForm = this.fb.group({
+      Bank: null,
+      Bik: null,
+      KorrespondentAccount: null,
+      Bill: null,
+      RegistrationDate: null,
+      Comment: null
+    })
+
+    this.getBankData()
+  }
+
+  getBankData(): void {
+    this.bankForm.get('Bank').valueChanges.pipe(
+      filter(() => this.pageCount === 3),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => this.getAgentRequestSrv.getBankData(value)),
+      takeUntil(this.destroy$)).subscribe({
+      next: val => {
+        this.bankDataByName = val
+        this.bankData = this.bankDataByName.find((el) => this.bankForm.get('Bank').value === el.value)
+        this.setDataToBankForm()
+      }
+    })
+  }
+
+  getDataByINN(): void {
+    this.orgDataForm.get('INN')?.valueChanges.pipe(
+      filter(() => this.pageCount === 1),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => this.getAgentRequestSrv.getAgentData(value)),
+      takeUntil(this.destroy$)
+    ).subscribe(options => {
+      this.dataByINN = options.suggestions || []
+      this.orgData = this.dataByINN.find((option) => this.orgDataForm.get('INN').value === option?.data?.inn)
     })
   }
 
@@ -79,9 +136,10 @@ export class DemandSuretyDrawerComponent implements OnInit {
       this.progress = this.progres$.value + 1
       this.progres$.next(this.progress)
       this.pageCount = this.progress
-      if (this.pageCount === 2) this.initSecondForm()
-      if (this.pageCount === 3) this.initThirdForm()
-      if (this.pageCount === 4) this.initFourthForm()
+      if (this.pageCount === 4) {
+
+        this.initFourthForm();
+      }
       console.log('next', this.progress)
     }
   }
@@ -261,37 +319,30 @@ export class DemandSuretyDrawerComponent implements OnInit {
     )
   }
 
-  private initSecondForm(): void {
-    this.secondPageForm = this.fb.group({
-      organizationType: [1],
-      compInn: [null],
-      organizationForm: [null],
-      shortName: [null],
-      phone: [null],
-      mail: [null],
-      url: [null],
-      personInn: [null],
-      shortNamePerson: [null],
-      personPhone: [null],
-      personMail: [null],
-      personUrl: [null]
-    })
+  setDataToBankForm() {
+    if (this.bankData?.data) {
+      const data = this.bankData.data
+      this.bankForm.patchValue({
+        Bik: data.bic,
+        KorrespondentAccount: data.correspondent_account
+      })
+    }
   }
 
-  private initThirdForm(): void {
-    this.thirdPageForm = this.fb.group({
-      bank: [null],
-      bik: [null],
-      coreBankNum: [null],
-      bankNum: [null],
-      date: [null],
-      commmet: [null],
-      bank2: [null],
-      bankNum2: [null],
-      date2: [null],
-      closeDate: [null],
-      openTarget: [null]
-    })
+
+  setDataToOrgForm(): void {
+    if (this.orgData.data) {
+      const data = this.orgData.data
+      this.orgDataForm.patchValue({
+        Type: data.type,
+        ShortTitle: data.name?.short,
+        Phone: data.phones?.length ? data.phones[0].value : null,
+        Email: data.emails?.length ? data.emails[0].value : null,
+        Url: null
+      })
+      this.nextPage()
+    }
+
   }
 
   private initFourthForm(): void {

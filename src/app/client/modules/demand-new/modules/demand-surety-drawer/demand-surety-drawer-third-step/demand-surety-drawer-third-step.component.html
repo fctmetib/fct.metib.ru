@@ -1,0 +1,44 @@
+<form [formGroup]="bankForm">
+  <mib-spacing type="xs2"></mib-spacing>
+  <h4>Банковские реквизиты</h4>
+  <mib-spacing type="xs"></mib-spacing>
+  <p class="headline">Основной счёт</p>
+  <mib-spacing type="xs"></mib-spacing>
+  <div class="flex flex_column gap-12">
+    <div class="flex flex_align-center gap-12">
+      <mib-autocomplete
+        [options]="options"
+        formControlName="Bank"
+        class="flex_grow">
+      </mib-autocomplete>
+    </div>
+    <div class="flex gap-12 w-100">
+      <mib-input class="w-27">
+        <input mibInput formControlName="Bik" />
+        <ng-container mibLabel>БИК банка</ng-container>
+      </mib-input>
+      <mib-input class="flex_grow">
+        <input mibInput formControlName="KorrespondentAccount" />
+        <ng-container mibLabel>Корр. счёт банка</ng-container>
+      </mib-input>
+    </div>
+  </div>
+  <mib-spacing type="xs"></mib-spacing>
+  <div class="flex flex_column gap-12">
+    <div class="flex gap-12">
+      <mib-input class="flex_grow">
+        <input mibInput formControlName="Bill" />
+        <ng-container mibLabel>Номер счёта</ng-container>
+      </mib-input>
+      <mib-input class="flex_grow">
+        <input type="date" mibInput formControlName="RegistrationDate" />
+        <ng-container mibLabel>Дата открытия</ng-container>
+      </mib-input>
+    </div>
+    <mib-textarea>
+      <ng-container mibLabel>Комментарий к запросу</ng-container>
+      <textarea [maxLength]="100" autosize mibTextarea formControlName="Comment"></textarea>
+    </mib-textarea>
+  </div>
+  <mib-spacing type="s"></mib-spacing>
+</form>

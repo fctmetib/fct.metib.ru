@@ -22,34 +22,40 @@ import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
 import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/contracted-forms.module'
 import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
-import {DemandService} from '../../services/demand.service'
+import {DemandService} from '../../services/demand.service';
+import { DemandSuretyDrawerSecondStepComponent } from './demand-surety-drawer-second-step/demand-surety-drawer-second-step.component'
+import {DemandSignatureDrawerModule} from '../demand-signature-drawer/demand-signature-drawer.module'
+import {CheckboxModule} from '../../../../../shared/ui-kit/checkbox/checkbox.module';
+import { DemandSuretyDrawerThirdStepComponent } from './demand-surety-drawer-third-step/demand-surety-drawer-third-step.component'
 
 @NgModule({
-  declarations: [DemandSuretyDrawerComponent],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    SpacingModule,
-    TabModule,
-    InformationModule,
-    NavbarModule,
-    ButtonModule,
-    InputModule,
-    LabelModule,
-    RightIconModule,
-    IconModule,
-    SelectModule,
-    DropdownPointModule,
-    LeftIconModule,
-    TextareaModule,
-    AutosizeModule,
-    LinkModule,
-    BadgeModule,
-    ContractedFormsModule,
-    MibDragAndDropModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
+  declarations: [DemandSuretyDrawerComponent, DemandSuretyDrawerSecondStepComponent, DemandSuretyDrawerThirdStepComponent],
+	imports: [
+		CommonModule,
+		DrawerModule,
+		SpacingModule,
+		TabModule,
+		InformationModule,
+		NavbarModule,
+		ButtonModule,
+		InputModule,
+		LabelModule,
+		RightIconModule,
+		IconModule,
+		SelectModule,
+		DropdownPointModule,
+		LeftIconModule,
+		TextareaModule,
+		AutosizeModule,
+		LinkModule,
+		BadgeModule,
+		ContractedFormsModule,
+		MibDragAndDropModule,
+		ReactiveFormsModule,
+		FormsModule,
+		DemandSignatureDrawerModule,
+		CheckboxModule
+	],
   providers: [DemandSuretyDrawerService, DemandService]
 })
 export class DemandSuretyDrawerModule {
