@@ -14,7 +14,7 @@ export class DemandSignatureFirstStepComponent {
   @Output() apply = new EventEmitter<void>()
 
   get disableBtn(): boolean {
-    return !this.orgDataForm.get('INN')?.value
+    return !this.orgDataForm?.get('INN')?.valid
   }
 
   public confirmIds() {
