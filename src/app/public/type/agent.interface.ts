@@ -32,3 +32,29 @@ export interface AgentNameInterface {
 export interface AgentCommonEntityInterface {
   value: string;
 }
+
+export interface BankInfo {
+  value: string;
+  unrestricted_value: string;
+  data: DataBankInfo;
+}
+
+export interface DataBankInfo {
+  opf: {
+    type: string,
+    full: string,
+    short: string
+  }
+  name: {
+    payment: string;
+    short: string
+  }
+  bic: string;
+  swift: string;
+  inn: string;
+  kpp: string;
+  correspondent_account: string;
+  state: {
+    registration_date: string;
+  }
+}

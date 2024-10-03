@@ -59,7 +59,8 @@ import {
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [DemandSignatureDrawerService]
+  providers: [DemandSignatureDrawerService],
+  exports: [DemandSignatureFirstStepComponent]
 })
 export class DemandSignatureDrawerModule {
 }

@@ -11,10 +11,14 @@ export class DemandSignatureFirstStepComponent {
 
   @Input() orgDataForm: FormGroup;
   @Input() options: [] = [];
+  @Output() apply = new EventEmitter<void>()
 
-  constructor() {}
+  get disableBtn(): boolean {
+    return !this.orgDataForm.get('INN').value
+  }
 
   public confirmIds() {
+    this.apply.emit();
 /*    this.toaster.show(
       'failure',
       'Функционал в разработке!',

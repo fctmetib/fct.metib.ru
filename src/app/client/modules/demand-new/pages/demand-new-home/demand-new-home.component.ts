@@ -238,7 +238,7 @@ export class DemandNewHomeComponent implements OnInit {
     return {result, resultNum}
   }
 
-  public getStatus(status: string): string {
+  getStatus(status: string): string {
     let result: string = ''
     switch (status) {
       case 'Created':
