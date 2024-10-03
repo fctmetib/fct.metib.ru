@@ -76,8 +76,8 @@ export class DemandSignatureDrawerComponent implements OnInit {
       NameFirst: [null, Validators.required],
       NameLast: [null, Validators.required],
       NameSecond: [null, Validators.required],
-      Male: [false, Validators.required],
-      Female: [false, Validators.required],
+      Male: [false],
+      Female: [false],
       INN: [null, Validators.required],
       SNILS: [null, Validators.required],
       BirthDate: [null, Validators.required],
@@ -85,7 +85,7 @@ export class DemandSignatureDrawerComponent implements OnInit {
       Role: [null, Validators.required],
       Phone: [null, [Validators.required, Validators.pattern(/^\+?[0-9]{7,15}$/)]],
       Email: [null, [Validators.required, Validators.email]],
-      Nationality: [null, Validators.required],
+      Nationality: ['РФ', Validators.required],
       PassportDate: [null, Validators.required],
       PassportNumber: [null, Validators.required],
       PassportSeries: [null, Validators.required],
@@ -154,12 +154,11 @@ export class DemandSignatureDrawerComponent implements OnInit {
       case 1:
         return this.orgDataForm.get('INN')?.valid
       case 2:
-        console.log(this.orgDataForm)
         return this.orgDataForm.valid
       case 3:
-        return this.personalDataForm.valid
+        return this.personalDataForm?.valid && (this.personalDataForm.get('Male')?.value || this.personalDataForm.get('Female')?.value)
       case 4:
-        return this.filesForm.valid
+        return this.filesForm?.valid
       default:
         return false
     }
@@ -167,7 +166,7 @@ export class DemandSignatureDrawerComponent implements OnInit {
 
   setDataToOrgForm(data: AgentDataInterface) {
     this.orgDataForm.patchValue({
-      Type: data.type,
+      Type: data.opf?.short,
       ShortTitle: data.name?.short,
       FullTitle: data.name?.full,
       KPP: data.kpp,

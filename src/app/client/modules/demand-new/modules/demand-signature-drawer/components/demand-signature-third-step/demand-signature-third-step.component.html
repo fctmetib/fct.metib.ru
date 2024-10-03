@@ -9,12 +9,12 @@
         <ng-container mibLabel>Фамилия</ng-container>
       </mib-input>
       <mib-input class="flex_grow">
-        <input mibInput />
-        <ng-container mibLabel formControlName = "NameFirst">Имя</ng-container>
+        <input mibInput formControlName = "NameFirst" />
+        <ng-container mibLabel>Имя</ng-container>
       </mib-input>
       <mib-input class="flex_grow">
-        <input mibInput />
-        <ng-container mibLabel formControlName = "NameSecond">Отчество</ng-container>
+        <input mibInput formControlName = "NameSecond"/>
+        <ng-container mibLabel>Отчество</ng-container>
       </mib-input>
     </div>
     <div class="flex flex_column">
@@ -58,8 +58,8 @@
         <ng-container mibLabel>Мобильный телефон</ng-container>
       </mib-input>
       <mib-input class="flex_grow">
-        <input mibInput />
-        <ng-container mibLabel formControlName="Email">Электронная почта</ng-container>
+        <input mibInput formControlName="Email"/>
+        <ng-container mibLabel>Электронная почта</ng-container>
       </mib-input>
     </div>
   </div>
@@ -70,11 +70,15 @@
       <mib-select
         class="w-100"
         type="outline"
-        placeholder="Гражданство РФ"
+        placeholder="Гражданство"
         formControlName="Nationality"
       >
         <mib-dropdown-point
-          [value]="true"
+          value="РФ"
+          text="Гражданство РФ"
+        ></mib-dropdown-point>
+        <mib-dropdown-point
+          value="РБ"
           text="Гражданство РБ"
         ></mib-dropdown-point>
       </mib-select>

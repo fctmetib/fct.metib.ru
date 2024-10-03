@@ -1,109 +1,105 @@
 <mib-drawer>
-	<mib-drawer-header
-		showProgressBar="true"
-		(onClose)="dialogRef.close()"
-		drawer-header
-		[maxPage]="maxPage"
-		[progress]="progress"
-	>
-	</mib-drawer-header>
-	<mib-drawer-container>
-		<p class="text text_m c-bti-secondary">Запрос на ЭПЦ</p>
-		<h3>halo data : {{ data | json }}</h3>
-		<div [ngSwitch]="progress">
-			<!-- первый скрин -->
-			<div *ngSwitchCase="progress === 1">
-				<mib-spacing type="xs2"></mib-spacing>
-				<h4>Основная информация</h4>
-				<mib-spacing type="xs"></mib-spacing>
-				<p class="text text_m c-bti-secondary">Тип организации</p>
-				<mib-tab-group type="filled">
-					<mib-navbar size="m">
-						<mib-navbar-point value="1" type="filled" class="flex_grow"
-							>От юридических лиц</mib-navbar-point
-						>
-						<mib-navbar-point value="2" type="filled" class="flex_grow"
-							>От ИП</mib-navbar-point
-						>
-					</mib-navbar>
-					<!-- первый таб -->
-					<mib-tab-item value="1" class="first-step">
-            <mib-demand-signature-first-step [orgDataForm] = "orgDataForm" [options] = dataByINN></mib-demand-signature-first-step>
-					</mib-tab-item>
-					<!-- второй таб -->
-					<mib-tab-item value="2">
+  <mib-drawer-header
+    showProgressBar="true"
+    (onClose)="dialogRef.close()"
+    drawer-header
+    [maxPage]="maxPage"
+    [progress]="progress"
+  >
+  </mib-drawer-header>
+  <mib-drawer-container>
+    <p class="text text_m c-bti-secondary">Запрос на ЭПЦ</p>
+    <h3>halo data : {{ data | json }}</h3>
+    <div [ngSwitch]="progress">
+      <!-- первый скрин -->
+      <div *ngSwitchCase="progress === 1">
+        <mib-spacing type="xs2"></mib-spacing>
+        <h4>Основная информация</h4>
+        <mib-spacing type="xs"></mib-spacing>
+        <p class="text text_m c-bti-secondary">Тип организации</p>
+        <mib-tab-group type="filled">
+          <mib-navbar size="m">
+            <mib-navbar-point value="1" type="filled" class="flex_grow">От юридических лиц</mib-navbar-point>
+            <mib-navbar-point value="2" type="filled" class="flex_grow">От ИП</mib-navbar-point>
+          </mib-navbar>
+          <!-- первый таб -->
+          <mib-tab-item value="1" class="first-step">
+            <mib-demand-signature-first-step [orgDataForm]="orgDataForm"
+                                             [options]=dataByINN></mib-demand-signature-first-step>
+          </mib-tab-item>
+          <!-- второй таб -->
+          <mib-tab-item value="2">
             <mib-demand-signature-first-step></mib-demand-signature-first-step>
-					</mib-tab-item>
-				</mib-tab-group>
-			</div>
-			<!-- второй скрин -->
-			<div *ngSwitchCase="2">
-				<mib-spacing type="xs2"></mib-spacing>
-				<h4>Основная информация</h4>
-				<mib-spacing type="xs"></mib-spacing>
-				<p class="text text_m c-bti-secondary">Тип организации</p>
-				<mib-tab-group type="filled">
-					<mib-navbar size="m">
-						<mib-navbar-point value="1" type="filled" class="flex_grow"
-							>От юридического лиц</mib-navbar-point
-						>
-						<mib-navbar-point value="2" type="filled" class="flex_grow"
-							>От ИП</mib-navbar-point
-						>
-					</mib-navbar>
-					<!-- первый таб второго скрина -->
-					<mib-tab-item value="1">
-		       <mib-demand-signature-second-step  [orgDataForm] = "orgDataForm"></mib-demand-signature-second-step>
-					</mib-tab-item>
-					<!-- второй таб второго скрина -->
-					<mib-tab-item value="2">
-            <mib-demand-signature-second-step [orgDataForm] = "orgDataForm"></mib-demand-signature-second-step>
-					</mib-tab-item>
-				</mib-tab-group>
-				<mib-spacing type="m"></mib-spacing>
-			</div>
-			<!-- третий скрин -->
-			<div *ngSwitchCase="3">
-        <mib-demand-signature-third-step [personalDataForm] = "personalDataForm"></mib-demand-signature-third-step>
-			</div>
-			<!-- четвертый скрин -->
-			<div *ngSwitchCase="4">
+          </mib-tab-item>
+        </mib-tab-group>
+      </div>
+      <!-- второй скрин -->
+      <div *ngSwitchCase="2">
+        <mib-spacing type="xs2"></mib-spacing>
+        <h4>Основная информация</h4>
+        <mib-spacing type="xs"></mib-spacing>
+        <p class="text text_m c-bti-secondary">Тип организации</p>
+        <mib-tab-group type="filled">
+          <mib-navbar size="m">
+            <mib-navbar-point value="1" type="filled" class="flex_grow">От юридического лиц</mib-navbar-point>
+            <mib-navbar-point value="2" type="filled" class="flex_grow">От ИП</mib-navbar-point>
+          </mib-navbar>
+          <!-- первый таб второго скрина -->
+          <mib-tab-item value="1">
+            <mib-demand-signature-second-step [orgDataForm]="orgDataForm"></mib-demand-signature-second-step>
+          </mib-tab-item>
+          <!-- второй таб второго скрина -->
+          <mib-tab-item value="2">
+            <mib-demand-signature-second-step [orgDataForm]="orgDataForm"></mib-demand-signature-second-step>
+          </mib-tab-item>
+        </mib-tab-group>
+        <mib-spacing type="m"></mib-spacing>
+      </div>
+      <!-- третий скрин -->
+      <div *ngSwitchCase="3">
+        <mib-demand-signature-third-step [personalDataForm]="personalDataForm"></mib-demand-signature-third-step>
+      </div>
+      <!-- четвертый скрин -->
+      <div *ngSwitchCase="4">
         <mib-demand-signature-fourth-step></mib-demand-signature-fourth-step>
-			</div>
-			<div *ngSwitchDefault>
-				<h4>default switch</h4>
-			</div>
-		</div>
-	</mib-drawer-container>
-	<!-- дровер футер -->
-	<mib-drawer-footer drawer-footer>
-		<div class="flex w-100 flex_justify-between">
-			<div class="flex">
-				<mib-button
-					[ngStyle]="{display: progress <= 1 ? 'none' : 'block'}"
-					(click)="prevPage()"
-					size="m"
-					type="filled-secondary"
-					>Назад</mib-button
-				>
-			</div>
-			<div class="flex">
-				<mib-button
-					[ngStyle]="{display: progress === maxPage ? 'none' : 'block'}"
-					(click)="nextPage()"
-					size="m"
-					type="filled-primary"
-          [disabled] = "!formIsValid()"
-					>Продолжить
-				</mib-button>
-				<mib-button
-					[ngStyle]="{display: progress === maxPage ? 'block' : 'none'}"
-					(click)="submitData()"
-					size="m"
-					type="filled-primary"
-					>Отправить</mib-button
-				>
-			</div>
-		</div>
-	</mib-drawer-footer>
+      </div>
+      <div *ngSwitchDefault>
+        <h4>default switch</h4>
+      </div>
+    </div>
+  </mib-drawer-container>
+  <!-- дровер футер -->
+  <mib-drawer-footer drawer-footer>
+    <div class="flex w-100 flex_justify-between">
+      <div class="flex">
+        <mib-button
+          [ngStyle]="{display: progress <= 1 ? 'none' : 'block'}"
+          (click)="prevPage()"
+          size="m"
+          type="filled-secondary"
+        >Назад
+        </mib-button
+        >
+      </div>
+      <div class="flex">
+        <mib-button
+          [ngStyle]="{display: progress === maxPage ? 'none' : 'block'}"
+          (click)="nextPage()"
+          [disabled]="!formIsValid()"
+          size="m"
+          type="filled-primary"
+        >Продолжить
+        </mib-button>
+        <mib-button
+          [ngStyle]="{display: progress === maxPage ? 'block' : 'none'}"
+          (click)="submitData()"
+          [disabled]="!formIsValid()"
+          size="m"
+          type="filled-primary"
+        >Отправить
+        </mib-button
+        >
+      </div>
+    </div>
+  </mib-drawer-footer>
 </mib-drawer>

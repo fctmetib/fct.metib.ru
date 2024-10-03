@@ -8,21 +8,21 @@
   <mib-spacing type="s"></mib-spacing>
   <div class="flex flex_column gap-12">
     <div class="flex gap-12 w-100">
-      <mib-select class="w-27" placeholder="Организация"> <!--what formControlName ?-->
+      <mib-select formControlName = "Type" class="w-27" placeholder="Организация">
         <mib-dropdown-point
-          [value]="true"
+          value="ООО"
           text="ООО"
         ></mib-dropdown-point>
         <mib-dropdown-point
-          [value]="false"
+          value="ЗАО"
           text="ЗАО"
         ></mib-dropdown-point>
         <mib-dropdown-point
-          [value]="false"
+          value="ОАО"
           text="ОАО"
         ></mib-dropdown-point>
         <mib-dropdown-point
-          [value]="false"
+          value="ПАО"
           text="ПАО"
         ></mib-dropdown-point>
       </mib-select>
