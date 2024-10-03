@@ -1,0 +1,153 @@
+<mib-spacing type="xs2"></mib-spacing>
+<h4>Состояние предприятия</h4>
+<mib-spacing type="xs"></mib-spacing>
+<div class="flex flex_column">
+  <p class="headline">Необходимые документы</p>
+  <p class="text text_s pt-4 c-bti-secondary">
+    Кредитная история и текущая кредиторская задолженность, в т. ч.
+    ссуды из других источников, включая государственные учреждения
+  </p>
+  <mib-spacing type="xs"></mib-spacing>
+  <mib-information type="information">
+    <ng-container information-text
+    >Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX,
+      JPEG, PNG. Размер каждого документа не должен превышать 10 МБ
+    </ng-container>
+  </mib-information>
+  <mib-spacing type="xs"></mib-spacing>
+  <div class="flex flex_column gap-8">
+    <p class="text text_m c-bti-primary">Устав со всеми изменениями</p>
+    <mib-dnd
+      [headline]="''"
+      [showIcon]="false"
+      (onChange)="onDocumentLoad($event)"
+      [accept]="[
+								'application/pdf',
+								'application/msword',
+								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+								'application/vnd.ms-excel',
+								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+								'image/jpeg',
+								'image/png'
+							]"
+    ></mib-dnd>
+  </div>
+  <mib-spacing type="xs2"></mib-spacing>
+  <div class="flex flex_column gap-8">
+    <p class="text text_m c-bti-primary">
+      Паспорт генерального директора (все страницы)
+    </p>
+    <mib-dnd
+      [headline]="''"
+      [showIcon]="false"
+      (onChange)="onDocumentLoad($event)"
+      [accept]="[
+								'application/pdf',
+								'application/msword',
+								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+								'application/vnd.ms-excel',
+								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+								'image/jpeg',
+								'image/png'
+							]"
+    ></mib-dnd>
+  </div>
+  <mib-spacing type="xs2"></mib-spacing>
+  <div class="flex flex_column gap-8">
+    <p class="text text_m c-bti-primary">
+      Протокол/решение об учреждении организации
+    </p>
+    <mib-dnd
+      [headline]="''"
+      [showIcon]="false"
+      (onChange)="onDocumentLoad($event)"
+      [accept]="[
+								'application/pdf',
+								'application/msword',
+								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+								'application/vnd.ms-excel',
+								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+								'image/jpeg',
+								'image/png'
+							]"
+    ></mib-dnd>
+  </div>
+  <mib-spacing type="xs2"></mib-spacing>
+  <div class="flex flex_column gap-8">
+    <p class="text text_m c-bti-primary">
+      Приказ о назначении генерального директора
+    </p>
+    <mib-dnd
+      [headline]="''"
+      [showIcon]="false"
+      (onChange)="onDocumentLoad($event)"
+      [accept]="[
+								'application/pdf',
+								'application/msword',
+								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+								'application/vnd.ms-excel',
+								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+								'image/jpeg',
+								'image/png'
+							]"
+    ></mib-dnd>
+  </div>
+  <mib-spacing type="xs2"></mib-spacing>
+  <div class="flex flex_column gap-8">
+    <p class="text text_m c-bti-primary">Бухгалтерский Баланс</p>
+    <mib-dnd
+      [headline]="''"
+      [showIcon]="false"
+      (onChange)="onDocumentLoad($event)"
+      [accept]="[
+								'application/pdf',
+								'application/msword',
+								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+								'application/vnd.ms-excel',
+								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+								'image/jpeg',
+								'image/png'
+							]"
+    ></mib-dnd>
+  </div>
+  <mib-spacing type="xs2"></mib-spacing>
+  <div class="flex flex_column gap-8">
+    <p class="text text_m c-bti-primary">
+      ОСВ (оборотно-сальдовая ведомость)
+    </p>
+    <mib-dnd
+      [headline]="''"
+      [showIcon]="false"
+      (onChange)="onDocumentLoad($event)"
+      [accept]="[
+								'application/pdf',
+								'application/msword',
+								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+								'application/vnd.ms-excel',
+								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+								'image/jpeg',
+								'image/png'
+							]"
+    ></mib-dnd>
+  </div>
+  <mib-spacing type="xs2"></mib-spacing>
+  <div class="flex flex_column gap-8">
+    <p class="text text_m c-bti-primary">Паспорта учредителей</p>
+    <mib-dnd
+      [headline]="''"
+      [showIcon]="false"
+      (onChange)="onDocumentLoad($event)"
+      [accept]="[
+								'application/pdf',
+								'application/msword',
+								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+								'application/vnd.ms-excel',
+								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+								'image/jpeg',
+								'image/png'
+							]"
+    ></mib-dnd>
+  </div>
+  <mib-spacing type="xs2"></mib-spacing>
+</div>
+<mib-spacing type="m"></mib-spacing>

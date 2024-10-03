@@ -26,10 +26,12 @@ import {DemandService} from '../../services/demand.service';
 import { DemandSuretyDrawerSecondStepComponent } from './demand-surety-drawer-second-step/demand-surety-drawer-second-step.component'
 import {DemandSignatureDrawerModule} from '../demand-signature-drawer/demand-signature-drawer.module'
 import {CheckboxModule} from '../../../../../shared/ui-kit/checkbox/checkbox.module';
-import { DemandSuretyDrawerThirdStepComponent } from './demand-surety-drawer-third-step/demand-surety-drawer-third-step.component'
+import { DemandSuretyDrawerThirdStepComponent } from './demand-surety-drawer-third-step/demand-surety-drawer-third-step.component';
+import { DemandSuretyDrawerFourthStepComponent } from './demand-surety-drawer-fourth-step/demand-surety-drawer-fourth-step.component';
+import { DemandSuretyDrawerFifthStepComponent } from './demand-surety-drawer-fifth-step/demand-surety-drawer-fifth-step.component';
 
 @NgModule({
-  declarations: [DemandSuretyDrawerComponent, DemandSuretyDrawerSecondStepComponent, DemandSuretyDrawerThirdStepComponent],
+  declarations: [DemandSuretyDrawerComponent, DemandSuretyDrawerSecondStepComponent, DemandSuretyDrawerThirdStepComponent, DemandSuretyDrawerFourthStepComponent, DemandSuretyDrawerFifthStepComponent],
 	imports: [
 		CommonModule,
 		DrawerModule,
