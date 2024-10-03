@@ -299,7 +299,6 @@ export class DemandNewHomeComponent implements OnInit {
           .afterClosed()
         break
 
-
       case this.dialogType.Surety:
         dialog$ = this.demandSuretyDrawerService
           .open({
