@@ -7,7 +7,7 @@ import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.i
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {extractBase64} from 'src/app/shared/services/tools.service'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {FormBuilder, FormGroup, Validators} from '@angular/forms'
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {DestroyService} from '../../../../../shared/services/common/destroy.service'
 import {DemandService} from '../../services/demand.service'
 import {takeUntil} from 'rxjs/operators'
@@ -25,7 +25,6 @@ export class DemandSuretyDrawerComponent implements OnInit {
   progress: number = 1
   maxPage: number = 5
   pageCount: number = 1
-  fourthPageForm: FormGroup
   ContractedFormsEnum = ContractedFormsEnum
   requisites: string = ''
   orgData: AgentSuggestionsInterface
@@ -34,6 +33,9 @@ export class DemandSuretyDrawerComponent implements OnInit {
   bankData: BankInfo
   orgDataForm: FormGroup
   bankForm: FormGroup
+  mainDataForm: FormGroup
+  form: FormGroup
+  fourthPageForm: FormGroup
 
   constructor(
     private toaster: ToasterService,
@@ -45,12 +47,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data: DrawerData
   ) {
     const info = data?.data
-    // {
-    //   "isCreation": true,
-    //   "isEdit": false,
-    //   "isView": false,
-    //   "id": null
-    // }[Validators.required, Validators.pattern(/^[\d]+$/)]
+    // [Validators.required, Validators.pattern(/^[\d]+$/)]
 
     if (info?.isEdit) {
       this.getDemandById((info.id)).pipe(takeUntil(this.destroy$)).subscribe({
@@ -64,6 +61,9 @@ export class DemandSuretyDrawerComponent implements OnInit {
   ngOnInit(): void {
     this.initOrgDataForm()
     this.initBankForm()
+    this.initForm()
+    this.initMainDataForm()
+    this.initForthPageForm()
   }
 
   initOrgDataForm(): void {
@@ -136,10 +136,6 @@ export class DemandSuretyDrawerComponent implements OnInit {
       this.progress = this.progres$.value + 1
       this.progres$.next(this.progress)
       this.pageCount = this.progress
-      if (this.pageCount === 4) {
-
-        this.initFourthForm();
-      }
       console.log('next', this.progress)
     }
   }
@@ -177,14 +173,13 @@ export class DemandSuretyDrawerComponent implements OnInit {
   }
 
   addAccount(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
+    let control = this.form.get('additionalAccountForm') as FormArray
+    control.push(this.createAdditionalAccountForm())
+  }
+
+  deleteAccount(idx: number) {
+    let control = this.form.get('additionalAccountForm') as FormArray
+    control.removeAt(idx)
   }
 
   accountEdit(): void {
@@ -345,22 +340,40 @@ export class DemandSuretyDrawerComponent implements OnInit {
 
   }
 
-  private initFourthForm(): void {
-    this.fourthPageForm = this.fb.group({
-      typeProducts: [null],
-      trademarks: [null],
-      suppliers: [null],
-      limit: [null],
-      countEmpl: [null],
-      fullAddress: [null],
-      creditor: [null],
-      contractAmount: [null],
-      commitmentType: [null],
-      dateEnd: [null],
-      balanceEnd: [null],
-      balanceToday: [null]
+  private initForm() {
+    this.form = this.fb.group({
+      additionalAccountForm: this.fb.array([])
     })
   }
+
+  private initMainDataForm(): void {
+    this.mainDataForm = this.fb.group({
+      typeProducts: null,
+      trademarks: null,
+      suppliers: null,
+      limit: null,
+      countEmpl: null
+    })
+  }
+
+  private initForthPageForm() {
+    this.fourthPageForm = this.fb.group({
+      houses: this.fb.array([]),
+      debt: this.fb.array([]),
+      docs: this.fb.array([])
+    })
+  }
+
+  private createAdditionalAccountForm(): FormGroup {
+    return this.fb.group({
+      bank: null,
+      bill: null,
+      createDate: null,
+      closeDate: null,
+      reason: null
+    })
+  }
+
 
   private getDemandById(id: number) {
     return this.demandSrv.getDemandDraftById(id)
