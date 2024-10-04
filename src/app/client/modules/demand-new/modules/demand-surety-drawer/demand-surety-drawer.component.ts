@@ -1,18 +1,18 @@
-import { Component, Inject, OnInit } from '@angular/core'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { BehaviorSubject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs'
-import { ToasterService } from 'src/app/shared/services/common/toaster.service'
-import { ContractedFormsEnum } from 'src/app/shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface'
-import { FileDnd } from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
-import { DocumentReq } from '../../../requests/interfaces/request.interface'
-import { extractBase64 } from 'src/app/shared/services/tools.service'
-import { DrawerData } from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { DestroyService } from '../../../../../shared/services/common/destroy.service'
-import { DemandService } from '../../services/demand.service'
-import { takeUntil } from 'rxjs/operators'
-import { GetAgentRequestService } from '../../../../../public/service/get-agent-request.service'
-import { AgentSuggestionsInterface, BankInfo } from '../../../../../public/type/agent.interface'
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { BehaviorSubject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
+import { ToasterService } from 'src/app/shared/services/common/toaster.service';
+import { ContractedFormsEnum } from 'src/app/shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface';
+import { FileDnd } from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
+import { DocumentReq } from '../../../requests/interfaces/request.interface';
+import { extractBase64 } from 'src/app/shared/services/tools.service';
+import { DrawerData } from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DestroyService } from '../../../../../shared/services/common/destroy.service';
+import { DemandService } from '../../services/demand.service';
+import { takeUntil } from 'rxjs/operators';
+import { GetAgentRequestService } from '../../../../../public/service/get-agent-request.service';
+import { AgentSuggestionsInterface, BankInfo } from '../../../../../public/type/agent.interface';
 
 @Component({
   selector: 'mib-demand-surety-drawer',
@@ -21,21 +21,21 @@ import { AgentSuggestionsInterface, BankInfo } from '../../../../../public/type/
   providers: [DestroyService]
 })
 export class DemandSuretyDrawerComponent implements OnInit {
-  progres$ = new BehaviorSubject<number>(1)
-  progress: number = 1
-  maxPage: number = 5
-  pageCount: number = 1
-  ContractedFormsEnum = ContractedFormsEnum
-  requisites: string = ''
-  orgData: AgentSuggestionsInterface
-  dataByINN = []
-  bankDataByName = []
-  bankData: BankInfo
-  orgDataForm: FormGroup
-  bankForm: FormGroup
-  mainDataForm: FormGroup
-  form: FormGroup
-  fourthPageForm: FormGroup
+  progres$ = new BehaviorSubject<number>(1);
+  progress: number = 1;
+  maxPage: number = 5;
+  pageCount: number = 1;
+  ContractedFormsEnum = ContractedFormsEnum;
+  requisites: string = '';
+  orgData: AgentSuggestionsInterface;
+  dataByINN = [];
+  bankDataByName = [];
+  bankData: BankInfo;
+  orgDataForm: FormGroup;
+  bankForm: FormGroup;
+  mainDataForm: FormGroup;
+  form: FormGroup;
+  fourthPageForm: FormGroup;
 
   constructor(
     private toaster: ToasterService,
@@ -46,7 +46,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) data: DrawerData
   ) {
-    const info = data?.data
+    const info = data?.data;
     // [Validators.required, Validators.pattern(/^[\d]+$/)]
 
     if (info?.isEdit) {
@@ -54,16 +54,16 @@ export class DemandSuretyDrawerComponent implements OnInit {
         next: res => {
 
         }
-      })
+      });
     }
   }
 
   ngOnInit(): void {
-    this.initOrgDataForm()
-    this.initBankForm()
-    this.initForm()
-    this.initMainDataForm()
-    this.initForthPageForm()
+    this.initOrgDataForm();
+    this.initBankForm();
+    this.initForm();
+    this.initMainDataForm();
+    this.initForthPageForm();
   }
 
   initOrgDataForm(): void {
@@ -74,9 +74,9 @@ export class DemandSuretyDrawerComponent implements OnInit {
       Phone: null,
       Email: null,
       Url: null
-    })
+    });
 
-    this.getDataByINN()
+    this.getDataByINN();
   }
 
   initBankForm(): void {
@@ -87,9 +87,9 @@ export class DemandSuretyDrawerComponent implements OnInit {
       Bill: null,
       RegistrationDate: null,
       Comment: null
-    })
+    });
 
-    this.getBankData()
+    this.getBankData();
   }
 
   getBankData(): void {
@@ -100,11 +100,11 @@ export class DemandSuretyDrawerComponent implements OnInit {
       switchMap(value => this.getAgentRequestSrv.getBankData(value)),
       takeUntil(this.destroy$)).subscribe({
       next: val => {
-        this.bankDataByName = val
-        this.bankData = this.bankDataByName.find((el) => this.bankForm.get('Bank').value === el.value)
-        this.setDataToBankForm()
+        this.bankDataByName = val;
+        this.bankData = this.bankDataByName.find((el) => this.bankForm.get('Bank').value === el.value);
+        this.setDataToBankForm();
       }
-    })
+    });
   }
 
   getDataByINN(): void {
@@ -115,9 +115,9 @@ export class DemandSuretyDrawerComponent implements OnInit {
       switchMap(value => this.getAgentRequestSrv.getAgentData(value)),
       takeUntil(this.destroy$)
     ).subscribe(options => {
-      this.dataByINN = options.suggestions || []
-      this.orgData = this.dataByINN.find((option) => this.orgDataForm.get('INN').value === option?.data?.inn)
-    })
+      this.dataByINN = options.suggestions || [];
+      this.orgData = this.dataByINN.find((option) => this.orgDataForm.get('INN').value === option?.data?.inn);
+    });
   }
 
   onDocumentLoad({ file, url }: FileDnd): void {
@@ -127,25 +127,25 @@ export class DemandSuretyDrawerComponent implements OnInit {
       Title: file.name,
       OwnerTypeID: 20,
       Data: extractBase64(url)
-    }
+    };
     // this.addDocument(document)
   }
 
   nextPage(): void {
     if (this.pageCount >= 1 && this.pageCount <= this.maxPage - 1) {
-      this.progress = this.progres$.value + 1
-      this.progres$.next(this.progress)
-      this.pageCount = this.progress
-      console.log('next', this.progress)
+      this.progress = this.progres$.value + 1;
+      this.progres$.next(this.progress);
+      this.pageCount = this.progress;
+      console.log('next', this.progress);
     }
   }
 
   prevPage(): void {
     if (this.pageCount >= 2 && this.pageCount <= this.maxPage) {
-      this.progress = this.progres$.value - 1
-      this.progres$.next(this.progress)
-      this.pageCount = this.progress
-      console.log('prev', this.progress)
+      this.progress = this.progres$.value - 1;
+      this.progres$.next(this.progress);
+      this.pageCount = this.progress;
+      console.log('prev', this.progress);
     }
   }
 
@@ -157,7 +157,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
       true,
       false,
       3000
-    )
+    );
     // this.dialogRef.close()
   }
 
@@ -169,79 +169,53 @@ export class DemandSuretyDrawerComponent implements OnInit {
       true,
       false,
       3000
-    )
+    );
   }
 
   addAccount(): void {
-    let control = this.form.get('additionalAccountForm') as FormArray
-    control.push(this.createAdditionalAccountForm())
+    let control = this.form.get('additionalAccountForm') as FormArray;
+    control.push(this.createAdditionalAccountForm());
   }
 
   deleteAccount(idx: number) {
-    let control = this.form.get('additionalAccountForm') as FormArray
-    control.removeAt(idx)
+    let control = this.form.get('additionalAccountForm') as FormArray;
+    control.removeAt(idx);
   }
 
-  accountEdit(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
+  accountEdit(idx: number): void {
+    this.form.get('additionalAccountForm')['controls'][idx].enable();
   }
 
-  saveAccountData(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
+  saveAccountData(idx: number): void {
+    const control = this.form.get('additionalAccountForm') as FormArray;
+    const accountGroup = control.at(idx) as FormGroup;
+    accountGroup.disable();
   }
 
-  canselAccountData(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
+  canselAccountData(idx: number): void {
+    const control = this.form.get('additionalAccountForm') as FormArray;
+    const accountGroup = control.at(idx) as FormGroup;
+    accountGroup.reset();
   }
 
-  saveRealtyData(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
+  saveRealtyData(idx: number): void {
+    const control = this.fourthPageForm.get('houses') as FormArray;
+    const accountGroup = control.at(idx) as FormGroup;
+    accountGroup.disable();
   }
 
-  canselRealtyData(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
+  canselRealtyData(idx: number): void {
+    const control = this.fourthPageForm.get('houses') as FormArray;
+    const accountGroup = control.at(idx) as FormGroup;
+    accountGroup.reset();
   }
 
   addRealty(): void {
-    let control = this.fourthPageForm.get('houses') as FormArray
+    let control = this.fourthPageForm.get('houses') as FormArray;
     control.push(this.fb.group({
-      fullAddress: null
-    }))
+      fullAddress: null,
+      owner: true
+    }));
   }
 
   saveDebentures(idx: number): void {
@@ -252,16 +226,16 @@ export class DemandSuretyDrawerComponent implements OnInit {
       true,
       false,
       3000
-    )
+    );
   }
 
   cancelDebentures(idx: number): void {
-    let control = this.fourthPageForm.get('debt') as FormArray
-    control.controls[idx].reset()
+    let control = this.fourthPageForm.get('debt') as FormArray;
+    control.controls[idx].reset();
   }
 
   addDebentures(): void {
-    let control = this.fourthPageForm.get('debt') as FormArray
+    let control = this.fourthPageForm.get('debt') as FormArray;
     control.push(this.fb.group({
       creditor: null,
       contractAmount: null,
@@ -270,25 +244,25 @@ export class DemandSuretyDrawerComponent implements OnInit {
       balanceEnd: null,
       balanceToday: null
 
-    }))
+    }));
   }
 
   deleteDebt(idx: number): void {
-    let control = this.fourthPageForm.get('debt') as FormArray
-    control.removeAt(idx)
+    let control = this.fourthPageForm.get('debt') as FormArray;
+    control.removeAt(idx);
   }
 
   addEdms(): void {
-    let control = this.fourthPageForm.get('docs') as FormArray
+    let control = this.fourthPageForm.get('docs') as FormArray;
     control.push(this.fb.group({
       debitor: null,
       provider: null
-    }))
+    }));
   }
 
   deleteEdm(idx: number): void {
-    let control = this.fourthPageForm.get('docs') as FormArray
-    control.removeAt(idx)
+    let control = this.fourthPageForm.get('docs') as FormArray;
+    control.removeAt(idx);
   }
 
   cancelEdms(): void {
@@ -299,7 +273,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
       true,
       false,
       3000
-    )
+    );
   }
 
   saveEdms(): void {
@@ -310,44 +284,44 @@ export class DemandSuretyDrawerComponent implements OnInit {
       true,
       false,
       3000
-    )
+    );
   }
 
   setDataToBankForm() {
     if (this.bankData?.data) {
-      const data = this.bankData.data
+      const data = this.bankData.data;
       this.bankForm.patchValue({
         Bik: data.bic,
         KorrespondentAccount: data.correspondent_account
-      })
+      });
     }
   }
 
 
   setDataToOrgForm(): void {
     if (this.orgData.data) {
-      const data = this.orgData.data
+      const data = this.orgData.data;
       this.orgDataForm.patchValue({
         Type: data.type,
         ShortTitle: data.name?.short,
         Phone: data.phones?.length ? data.phones[0].value : null,
         Email: data.emails?.length ? data.emails[0].value : null,
         Url: null
-      })
-      this.nextPage()
+      });
+      this.nextPage();
     }
 
   }
 
   deleteHouse(idx: number) {
-    let control = this.fourthPageForm.get('houses') as FormArray
-    control.removeAt(idx)
+    let control = this.fourthPageForm.get('houses') as FormArray;
+    control.removeAt(idx);
   }
 
   private initForm() {
     this.form = this.fb.group({
       additionalAccountForm: this.fb.array([])
-    })
+    });
   }
 
   private initMainDataForm(): void {
@@ -357,7 +331,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
       suppliers: null,
       limit: null,
       countEmpl: null
-    })
+    });
   }
 
   private initForthPageForm() {
@@ -365,7 +339,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
       houses: this.fb.array([]),
       debt: this.fb.array([]),
       docs: this.fb.array([])
-    })
+    });
   }
 
   private createAdditionalAccountForm(): FormGroup {
@@ -375,11 +349,11 @@ export class DemandSuretyDrawerComponent implements OnInit {
       createDate: null,
       closeDate: null,
       reason: null
-    })
+    });
   }
 
 
   private getDemandById(id: number) {
-    return this.demandSrv.getDemandDraftById(id)
+    return this.demandSrv.getDemandDraftById(id);
   }
 }

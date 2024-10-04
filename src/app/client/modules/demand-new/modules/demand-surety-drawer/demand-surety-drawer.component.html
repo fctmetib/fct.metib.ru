@@ -105,7 +105,7 @@
                   <div class="flex">
                     <mib-button
                       size="s"
-                      (press)="accountEdit()"
+                      (press)="accountEdit(i)"
                       type="ghost-secondary"
                     >
                       <mib-icon
@@ -145,14 +145,6 @@
                       <input mibInput formControlName="bill" />
                       <ng-container mibLabel>Номер счёта</ng-container>
                     </mib-input>
-
-                    <!--                  <div class="flex flex_align-center gap-12">-->
-                    <!--                    <mib-autocomplete-->
-                    <!--                      [options]="options"-->
-                    <!--                      formControlName="Bank"-->
-                    <!--                      class="flex_grow">-->
-                    <!--                    </mib-autocomplete>-->
-                    <!--                  </div>-->
                   </div>
                   <div class="flex gap-12">
                     <mib-input class="flex_grow">
@@ -172,13 +164,13 @@
                 <mib-spacing type="s"></mib-spacing>
                 <div class="flex gap-12">
                   <mib-button
-                    (press)="saveAccountData()"
+                    (press)="saveAccountData(i)"
                     size="m"
                     type="filled-primary"
                   >Сохранить
                   </mib-button>
                   <mib-button
-                    (press)="canselAccountData()"
+                    (press)="canselAccountData(i)"
                     size="m"
                     type="filled-secondary"
                   >Отмена
@@ -198,7 +190,6 @@
         </mib-link>
         <mib-spacing type="m"></mib-spacing>
       </div>
-
 
       <!-- четвертый скрин -->
       <div *ngSwitchCase="4">
@@ -228,7 +219,7 @@
                     <div class="flex">
                       <mib-button
                         size="s"
-                        (press)="accountEdit()"
+                        (press)="deleteHouse(i)"
                         type="ghost-secondary"
                       >
                         <mib-icon
@@ -273,13 +264,13 @@
                   <mib-spacing type="s"></mib-spacing>
                   <div class="flex gap-12">
                     <mib-button
-                      (press)="saveRealtyData()"
+                      (press)="saveRealtyData(i)"
                       size="m"
                       type="filled-primary"
                     >Сохранить
                     </mib-button>
                     <mib-button
-                      (press)="canselRealtyData()"
+                      (press)="canselRealtyData(i)"
                       size="m"
                       type="filled-secondary"
                     >Отмена
@@ -296,8 +287,6 @@
             <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>
           </mib-link>
           <mib-spacing type="s"></mib-spacing>
-          <!-- contracted-form Недвижимость предприятия end -->
-          <!-- contracted-form Долговые обязательства start-->
           <div class="flex flex_column">
             <div class="flex flex_column">
               <p class="headline">Долговые обязательства</p>
@@ -320,7 +309,7 @@
                     <div class="flex">
                       <mib-button
                         size="s"
-                        (press)="accountEdit()"
+                        (press)="accountEdit(i)"
                         type="ghost-secondary"
                       >
                         <mib-icon
@@ -429,7 +418,7 @@
                     <div class="flex">
                       <mib-button
                         size="s"
-                        (press)="accountEdit()"
+                        (press)="accountEdit(i)"
                         type="ghost-secondary"
                       >
                         <mib-icon
