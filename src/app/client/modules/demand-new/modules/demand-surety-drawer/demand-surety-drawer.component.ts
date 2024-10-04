@@ -1,18 +1,18 @@
-import {AfterContentInit, AfterViewInit, Component, Inject, OnInit} from '@angular/core'
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
-import {BehaviorSubject, debounceTime, distinctUntilChanged, filter, switchMap} from 'rxjs'
-import {ToasterService} from 'src/app/shared/services/common/toaster.service'
-import {ContractedFormsEnum} from 'src/app/shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface'
-import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
-import {DocumentReq} from '../../../requests/interfaces/request.interface'
-import {extractBase64} from 'src/app/shared/services/tools.service'
-import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms'
-import {DestroyService} from '../../../../../shared/services/common/destroy.service'
-import {DemandService} from '../../services/demand.service'
-import {takeUntil} from 'rxjs/operators'
-import {GetAgentRequestService} from '../../../../../public/service/get-agent-request.service'
-import {AgentDataInterface, AgentSuggestionsInterface, BankInfo} from '../../../../../public/type/agent.interface'
+import { Component, Inject, OnInit } from '@angular/core'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
+import { BehaviorSubject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs'
+import { ToasterService } from 'src/app/shared/services/common/toaster.service'
+import { ContractedFormsEnum } from 'src/app/shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface'
+import { FileDnd } from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
+import { DocumentReq } from '../../../requests/interfaces/request.interface'
+import { extractBase64 } from 'src/app/shared/services/tools.service'
+import { DrawerData } from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { DestroyService } from '../../../../../shared/services/common/destroy.service'
+import { DemandService } from '../../services/demand.service'
+import { takeUntil } from 'rxjs/operators'
+import { GetAgentRequestService } from '../../../../../public/service/get-agent-request.service'
+import { AgentSuggestionsInterface, BankInfo } from '../../../../../public/type/agent.interface'
 
 @Component({
   selector: 'mib-demand-surety-drawer',
@@ -120,7 +120,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
     })
   }
 
-  onDocumentLoad({file, url}: FileDnd): void {
+  onDocumentLoad({ file, url }: FileDnd): void {
     const document: DocumentReq = {
       Description: `description ${file.name}`,
       DocumentTypeID: 40,
@@ -238,6 +238,13 @@ export class DemandSuretyDrawerComponent implements OnInit {
   }
 
   addRealty(): void {
+    let control = this.fourthPageForm.get('houses') as FormArray
+    control.push(this.fb.group({
+      fullAddress: null
+    }))
+  }
+
+  saveDebentures(idx: number): void {
     this.toaster.show(
       'failure',
       'Функционал в разработке!',
@@ -248,48 +255,40 @@ export class DemandSuretyDrawerComponent implements OnInit {
     )
   }
 
-  saveDebentures(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
-
-  cancelDebentures(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
+  cancelDebentures(idx: number): void {
+    let control = this.fourthPageForm.get('debt') as FormArray
+    control.controls[idx].reset()
   }
 
   addDebentures(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
+    let control = this.fourthPageForm.get('debt') as FormArray
+    control.push(this.fb.group({
+      creditor: null,
+      contractAmount: null,
+      commitmentType: null,
+      dateEnd: null,
+      balanceEnd: null,
+      balanceToday: null
+
+    }))
   }
 
-  addEdms() {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
+  deleteDebt(idx: number): void {
+    let control = this.fourthPageForm.get('debt') as FormArray
+    control.removeAt(idx)
+  }
+
+  addEdms(): void {
+    let control = this.fourthPageForm.get('docs') as FormArray
+    control.push(this.fb.group({
+      debitor: null,
+      provider: null
+    }))
+  }
+
+  deleteEdm(idx: number): void {
+    let control = this.fourthPageForm.get('docs') as FormArray
+    control.removeAt(idx)
   }
 
   cancelEdms(): void {
@@ -338,6 +337,11 @@ export class DemandSuretyDrawerComponent implements OnInit {
       this.nextPage()
     }
 
+  }
+
+  deleteHouse(idx: number) {
+    let control = this.fourthPageForm.get('houses') as FormArray
+    control.removeAt(idx)
   }
 
   private initForm() {
