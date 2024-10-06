@@ -1,368 +1,348 @@
-import {AfterContentInit, AfterViewInit, Component, Inject, OnInit} from '@angular/core'
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
-import {BehaviorSubject, debounceTime, distinctUntilChanged, filter, switchMap} from 'rxjs'
-import {ToasterService} from 'src/app/shared/services/common/toaster.service'
-import {ContractedFormsEnum} from 'src/app/shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface'
-import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
-import {DocumentReq} from '../../../requests/interfaces/request.interface'
-import {extractBase64} from 'src/app/shared/services/tools.service'
-import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {FormBuilder, FormGroup, Validators} from '@angular/forms'
-import {DestroyService} from '../../../../../shared/services/common/destroy.service'
-import {DemandService} from '../../services/demand.service'
-import {takeUntil} from 'rxjs/operators'
-import {GetAgentRequestService} from '../../../../../public/service/get-agent-request.service'
-import {AgentDataInterface, AgentSuggestionsInterface, BankInfo} from '../../../../../public/type/agent.interface'
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+	BehaviorSubject,
+	debounceTime,
+	distinctUntilChanged,
+	filter,
+	Observable,
+	switchMap
+} from 'rxjs';
+import { ToasterService } from 'src/app/shared/services/common/toaster.service';
+import { FileDnd } from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
+import { DocumentReq } from '../../../requests/interfaces/request.interface';
+import { extractBase64 } from 'src/app/shared/services/tools.service';
+import { DrawerData } from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DestroyService } from '../../../../../shared/services/common/destroy.service';
+import { DemandService } from '../../services/demand.service';
+import { takeUntil } from 'rxjs/operators';
+import { GetAgentRequestService } from '../../../../../public/service/get-agent-request.service';
+import { AgentSuggestionsInterface, BankInfo } from '../../../../../public/type/agent.interface';
 
 @Component({
-  selector: 'mib-demand-surety-drawer',
-  templateUrl: './demand-surety-drawer.component.html',
-  styleUrls: ['./demand-surety-drawer.component.scss'],
-  providers: [DestroyService]
+	selector: 'mib-demand-surety-drawer',
+	templateUrl: './demand-surety-drawer.component.html',
+	styleUrls: ['./demand-surety-drawer.component.scss'],
+	providers: [DestroyService]
 })
 export class DemandSuretyDrawerComponent implements OnInit {
-  progres$ = new BehaviorSubject<number>(1)
-  progress: number = 1
-  maxPage: number = 5
-  pageCount: number = 1
-  fourthPageForm: FormGroup
-  ContractedFormsEnum = ContractedFormsEnum
-  requisites: string = ''
-  orgData: AgentSuggestionsInterface
-  dataByINN = []
-  bankDataByName = []
-  bankData: BankInfo
-  orgDataForm: FormGroup
-  bankForm: FormGroup
+	progress$ = new BehaviorSubject<number>(1);
+	progress: number = 1;
+	maxPage: number = 5;
+	pageCount: number = 1;
+	requisites: string = '';
+	orgData: AgentSuggestionsInterface | null = null;
+	dataByINN = [];
+	bankDataByName = [];
+	bankData: BankInfo | null = null;
+	orgDataForm: FormGroup;
+	bankForm: FormGroup;
+	mainDataForm: FormGroup;
+	form: FormGroup;
+	fourthPageForm: FormGroup;
 
-  constructor(
-    private toaster: ToasterService,
-    private demandSrv: DemandService,
-    private destroy$: DestroyService,
-    private getAgentRequestSrv: GetAgentRequestService,
-    public dialogRef: MatDialogRef<DemandSuretyDrawerComponent>,
-    private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) data: DrawerData
-  ) {
-    const info = data?.data
-    // {
-    //   "isCreation": true,
-    //   "isEdit": false,
-    //   "isView": false,
-    //   "id": null
-    // }[Validators.required, Validators.pattern(/^[\d]+$/)]
+	constructor(
+		private toaster: ToasterService,
+		private demandSrv: DemandService,
+		private destroy$: DestroyService,
+		private getAgentRequestSrv: GetAgentRequestService,
+		public dialogRef: MatDialogRef<DemandSuretyDrawerComponent>,
+		private fb: FormBuilder,
+		@Inject(MAT_DIALOG_DATA) private data: DrawerData
+	) {}
 
-    if (info?.isEdit) {
-      this.getDemandById((info.id)).pipe(takeUntil(this.destroy$)).subscribe({
-        next: res => {
+	ngOnInit(): void {
+		this.initForms();
+	}
 
-        }
-      })
-    }
-  }
+	onDocumentLoad({ file, url }: FileDnd): void {
+		const document: DocumentReq = {
+			Description: `description ${file.name}`,
+			DocumentTypeID: 40,
+			Title: file.name,
+			OwnerTypeID: 20,
+			Data: extractBase64(url)
+		};
+		// this.addDocument(document)
+	}
 
-  ngOnInit(): void {
-    this.initOrgDataForm()
-    this.initBankForm()
-  }
+	nextPage(): void {
+		if (this.pageCount >= 1 && this.pageCount < this.maxPage) {
+			this.updateProgress(1);
+		}
+	}
 
-  initOrgDataForm(): void {
-    this.orgDataForm = this.fb.group({
-      INN: [null, [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
-      Type: null,
-      ShortTitle: null,
-      Phone: null,
-      Email: null,
-      Url: null
-    })
+	prevPage(): void {
+		if (this.pageCount > 1 && this.pageCount <= this.maxPage) {
+			this.updateProgress(-1);
+		}
+	}
 
-    this.getDataByINN()
-  }
+	submitData(): void {
+		this.toaster.show('failure', 'Функционал в разработке!', '', true, false, 3000);
+		// this.dialogRef.close()
+	}
 
-  initBankForm(): void {
-    this.bankForm = this.fb.group({
-      Bank: null,
-      Bik: null,
-      KorrespondentAccount: null,
-      Bill: null,
-      RegistrationDate: null,
-      Comment: null
-    })
+	confirmIds(): void {
+		this.toaster.show('failure', 'Функционал в разработке!', '', true, false, 3000);
+	}
 
-    this.getBankData()
-  }
+	addAccount(): void {
+		let control = this.form.get('additionalAccountForm') as FormArray;
+		control.push(this.createAdditionalAccountForm());
+	}
 
-  getBankData(): void {
-    this.bankForm.get('Bank').valueChanges.pipe(
-      filter(() => this.pageCount === 3),
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap(value => this.getAgentRequestSrv.getBankData(value)),
-      takeUntil(this.destroy$)).subscribe({
-      next: val => {
-        this.bankDataByName = val
-        this.bankData = this.bankDataByName.find((el) => this.bankForm.get('Bank').value === el.value)
-        this.setDataToBankForm()
-      }
-    })
-  }
+	deleteAccount(idx: number): void {
+		let control = this.form.get('additionalAccountForm') as FormArray;
+		control.removeAt(idx);
+	}
 
-  getDataByINN(): void {
-    this.orgDataForm.get('INN')?.valueChanges.pipe(
-      filter(() => this.pageCount === 1),
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap(value => this.getAgentRequestSrv.getAgentData(value)),
-      takeUntil(this.destroy$)
-    ).subscribe(options => {
-      this.dataByINN = options.suggestions || []
-      this.orgData = this.dataByINN.find((option) => this.orgDataForm.get('INN').value === option?.data?.inn)
-    })
-  }
+	accountEdit(idx: number): void {
+		this.form.get('additionalAccountForm')['controls'][idx].enable();
+	}
 
-  onDocumentLoad({file, url}: FileDnd): void {
-    const document: DocumentReq = {
-      Description: `description ${file.name}`,
-      DocumentTypeID: 40,
-      Title: file.name,
-      OwnerTypeID: 20,
-      Data: extractBase64(url)
-    }
-    // this.addDocument(document)
-  }
+	saveAccountData(idx: number): void {
+		this.form.get('additionalAccountForm')['controls'][idx].disable();
+	}
 
-  nextPage(): void {
-    if (this.pageCount >= 1 && this.pageCount <= this.maxPage - 1) {
-      this.progress = this.progres$.value + 1
-      this.progres$.next(this.progress)
-      this.pageCount = this.progress
-      if (this.pageCount === 4) {
+	canselAccountData(idx: number): void {
+		const control = this.form.get('additionalAccountForm')['controls'][idx];
+		control.enable();
+		control.reset();
+	}
 
-        this.initFourthForm();
-      }
-      console.log('next', this.progress)
-    }
-  }
+	saveRealtyData(idx: number): void {
+		this.fourthPageForm.get('houses')['controls'][idx].disable();
+	}
 
-  prevPage(): void {
-    if (this.pageCount >= 2 && this.pageCount <= this.maxPage) {
-      this.progress = this.progres$.value - 1
-      this.progres$.next(this.progress)
-      this.pageCount = this.progress
-      console.log('prev', this.progress)
-    }
-  }
+	canselRealtyData(idx: number): void {
+		const control = this.fourthPageForm.get('houses')['controls'][idx];
+		control.enable();
+		control.reset();
+	}
 
-  submitData(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-    // this.dialogRef.close()
-  }
+	addRealty(): void {
+		let control = this.fourthPageForm.get('houses') as FormArray;
+		control.push(
+			this.fb.group({
+				fullAddress: null,
+				owner: true
+			})
+		);
+	}
 
-  confirmIds(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	saveDebentures(idx: number): void {
+		this.fourthPageForm.get('debt')['controls'][idx].disable();
+	}
 
-  addAccount(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	cancelDebentures(idx: number): void {
+		const control = this.fourthPageForm.get('debt')['controls'][idx];
+		control.enable();
+		control.reset();
+	}
 
-  accountEdit(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	editDebt(idx: number): void {
+		this.fourthPageForm.get('debt')['controls'][idx].enable();
+	}
 
-  saveAccountData(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	addDebentures(): void {
+		let control = this.fourthPageForm.get('debt') as FormArray;
+		control.push(
+			this.fb.group({
+				creditor: null,
+				contractAmount: null,
+				commitmentType: null,
+				dateEnd: null,
+				balanceEnd: null,
+				balanceToday: null
+			})
+		);
+	}
 
-  canselAccountData(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	deleteDebt(idx: number): void {
+		let control = this.fourthPageForm.get('debt') as FormArray;
+		control.removeAt(idx);
+	}
 
-  saveRealtyData(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	addEdms(): void {
+		let control = this.fourthPageForm.get('docs') as FormArray;
+		control.push(
+			this.fb.group({
+				debitor: null,
+				provider: null
+			})
+		);
+	}
 
-  canselRealtyData(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	deleteEdm(idx: number): void {
+		let control = this.fourthPageForm.get('docs') as FormArray;
+		control.removeAt(idx);
+	}
 
-  addRealty(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	cancelEdms(idx: number): void {
+		const control = this.fourthPageForm.get('docs')['controls'][idx];
+		control.enable();
+		control.reset();
+	}
 
-  saveDebentures(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	saveEdms(idx: number): void {
+		this.fourthPageForm.get('docs')['controls'][idx].disable();
+	}
 
-  cancelDebentures(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	editEdms(idx: number): void {
+		this.fourthPageForm.get('docs')['controls'][idx].enable();
+	}
 
-  addDebentures(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	setDataToBankForm(): void {
+		if (this.bankData?.data) {
+			const data = this.bankData.data;
+			this.bankForm.patchValue({
+				Bik: data.bic,
+				KorrespondentAccount: data.correspondent_account
+			});
+		}
+	}
 
-  addEdms() {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	setDataToOrgForm(): void {
+		if (this.orgData.data) {
+			const data = this.orgData.data;
+			this.orgDataForm.patchValue({
+				Type: data.type,
+				ShortTitle: data.name?.short,
+				Phone: data.phones?.length ? data.phones[0].value : null,
+				Email: data.emails?.length ? data.emails[0].value : null,
+				Url: null
+			});
+			this.nextPage();
+		}
+	}
 
-  cancelEdms(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	deleteHouse(idx: number): void {
+		let control = this.fourthPageForm.get('houses') as FormArray;
+		control.removeAt(idx);
+	}
 
-  saveEdms(): void {
-    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )
-  }
+	editHouse(idx: number): void {
+		this.fourthPageForm.get('houses')['controls'][idx].enable();
+	}
 
-  setDataToBankForm() {
-    if (this.bankData?.data) {
-      const data = this.bankData.data
-      this.bankForm.patchValue({
-        Bik: data.bic,
-        KorrespondentAccount: data.correspondent_account
-      })
-    }
-  }
+	private initForm(): void {
+		this.form = this.fb.group({
+			additionalAccountForm: this.fb.array([])
+		});
+		this.form.controls.additionalAccountForm.valueChanges.subscribe(res => console.log(res));
+	}
 
+	private initMainDataForm(): void {
+		this.mainDataForm = this.fb.group({
+			typeProducts: null,
+			trademarks: null,
+			suppliers: null,
+			limit: null,
+			countEmpl: null
+		});
+	}
 
-  setDataToOrgForm(): void {
-    if (this.orgData.data) {
-      const data = this.orgData.data
-      this.orgDataForm.patchValue({
-        Type: data.type,
-        ShortTitle: data.name?.short,
-        Phone: data.phones?.length ? data.phones[0].value : null,
-        Email: data.emails?.length ? data.emails[0].value : null,
-        Url: null
-      })
-      this.nextPage()
-    }
+	private initFourthPageForm(): void {
+		this.fourthPageForm = this.fb.group({
+			houses: this.fb.array([]),
+			debt: this.fb.array([]),
+			docs: this.fb.array([])
+		});
+	}
 
-  }
+	private createAdditionalAccountForm(): FormGroup {
+		return this.fb.group({
+			bank: null,
+			bill: null,
+			createDate: null,
+			closeDate: null,
+			reason: null
+		});
+	}
 
-  private initFourthForm(): void {
-    this.fourthPageForm = this.fb.group({
-      typeProducts: [null],
-      trademarks: [null],
-      suppliers: [null],
-      limit: [null],
-      countEmpl: [null],
-      fullAddress: [null],
-      creditor: [null],
-      contractAmount: [null],
-      commitmentType: [null],
-      dateEnd: [null],
-      balanceEnd: [null],
-      balanceToday: [null]
-    })
-  }
+	private getDemandById(id: number): Observable<any> {
+		return this.demandSrv.getDemandDraftById(id);
+	}
 
-  private getDemandById(id: number) {
-    return this.demandSrv.getDemandDraftById(id)
-  }
+	private updateProgress(delta: number) {
+		this.progress += delta;
+		this.progress$.next(this.progress);
+		this.pageCount = this.progress;
+		console.log(`${delta > 0 ? 'next' : 'prev'} page`, this.progress);
+	}
+
+	private initForms(): void {
+		this.initOrgDataForm();
+		this.initBankForm();
+		this.initForm();
+		this.initMainDataForm();
+		this.initFourthPageForm();
+
+		if (this.data?.data?.isEdit) {
+			this.getDemandById(this.data.data.id)
+				.pipe(takeUntil(this.destroy$))
+				.subscribe({
+					next: res => {
+						// Обработка данных при редактировании
+					}
+				});
+		}
+	}
+
+	private initOrgDataForm(): void {
+		this.orgDataForm = this.fb.group({
+			INN: [null, [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
+			Type: null,
+			ShortTitle: null,
+			Phone: null,
+			Email: null,
+			Url: null
+		});
+
+		this.orgDataForm
+			.get('INN')
+			?.valueChanges.pipe(
+				filter(() => this.pageCount === 1),
+				debounceTime(300),
+				distinctUntilChanged(),
+				switchMap(value => this.getAgentRequestSrv.getAgentData(value)),
+				takeUntil(this.destroy$)
+			)
+			.subscribe(options => {
+				this.dataByINN = options.suggestions || [];
+				this.orgData = this.dataByINN.find(
+					option => option?.data?.inn === this.orgDataForm.get('INN')?.value
+				);
+			});
+	}
+
+	private initBankForm(): void {
+		this.bankForm = this.fb.group({
+			Bank: null,
+			Bik: null,
+			KorrespondentAccount: null,
+			Bill: null,
+			RegistrationDate: null,
+			Comment: null
+		});
+
+		this.bankForm
+			.get('Bank')
+			?.valueChanges.pipe(
+				filter(() => this.pageCount === 3),
+				debounceTime(300),
+				distinctUntilChanged(),
+				switchMap(value => this.getAgentRequestSrv.getBankData(value)),
+				takeUntil(this.destroy$)
+			)
+			.subscribe(val => {
+				this.bankDataByName = val;
+				this.bankData = this.bankDataByName.find(
+					el => el.value === this.bankForm.get('Bank')?.value
+				);
+				this.setDataToBankForm();
+			});
+	}
 }
