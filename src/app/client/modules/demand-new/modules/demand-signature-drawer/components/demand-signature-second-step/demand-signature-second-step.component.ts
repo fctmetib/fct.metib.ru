@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import {FormGroup} from '@angular/forms'
+import { FormGroup } from '@angular/forms'
 
 @Component({
   selector: 'mib-demand-signature-second-step',

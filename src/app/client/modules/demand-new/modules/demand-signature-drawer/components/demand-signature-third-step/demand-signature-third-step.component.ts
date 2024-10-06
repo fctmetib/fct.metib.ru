@@ -21,6 +21,5 @@ export class DemandSignatureThirdStepComponent {
       OwnerTypeID: 20,
       Data: extractBase64(url)
     }
-    // this.addDocument(document)
   }
 }

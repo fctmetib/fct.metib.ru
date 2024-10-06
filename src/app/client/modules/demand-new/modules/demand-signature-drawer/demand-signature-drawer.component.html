@@ -4,15 +4,15 @@
     (onClose)="dialogRef.close()"
     drawer-header
     [maxPage]="maxPage"
-    [progress]="progress"
+    [progress]="pageCount"
   >
   </mib-drawer-header>
   <mib-drawer-container>
     <p class="text text_m c-bti-secondary">Запрос на ЭПЦ</p>
     <h3>halo data : {{ data | json }}</h3>
-    <div [ngSwitch]="progress">
+    <div [ngSwitch]="pageCount">
       <!-- первый скрин -->
-      <div *ngSwitchCase="progress === 1">
+      <div *ngSwitchCase="pageCount === 1">
         <mib-spacing type="xs2"></mib-spacing>
         <h4>Основная информация</h4>
         <mib-spacing type="xs"></mib-spacing>
@@ -73,7 +73,7 @@
     <div class="flex w-100 flex_justify-between">
       <div class="flex">
         <mib-button
-          [ngStyle]="{display: progress <= 1 ? 'none' : 'block'}"
+          [ngStyle]="{display: pageCount <= 1 ? 'none' : 'block'}"
           (click)="prevPage()"
           size="m"
           type="filled-secondary"
@@ -83,7 +83,7 @@
       </div>
       <div class="flex">
         <mib-button
-          [ngStyle]="{display: progress === maxPage ? 'none' : 'block'}"
+          [ngStyle]="{display: pageCount === maxPage ? 'none' : 'block'}"
           (click)="nextPage()"
           [disabled]="!formIsValid()"
           size="m"
@@ -91,7 +91,7 @@
         >Продолжить
         </mib-button>
         <mib-button
-          [ngStyle]="{display: progress === maxPage ? 'block' : 'none'}"
+          [ngStyle]="{display: pageCount === maxPage ? 'block' : 'none'}"
           (click)="submitData()"
           [disabled]="!formIsValid()"
           size="m"

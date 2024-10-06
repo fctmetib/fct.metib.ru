@@ -1,11 +1,10 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import {FormGroup} from '@angular/forms'
 
 @Component({
   selector: 'mib-demand-signature-first-step',
   templateUrl: './demand-signature-first-step.component.html',
-  styleUrls: ['./demand-signature-first-step.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./demand-signature-first-step.component.scss']
 })
 export class DemandSignatureFirstStepComponent {
 
@@ -19,13 +18,5 @@ export class DemandSignatureFirstStepComponent {
 
   public confirmIds() {
     this.apply.emit();
-/*    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )*/
   }
 }

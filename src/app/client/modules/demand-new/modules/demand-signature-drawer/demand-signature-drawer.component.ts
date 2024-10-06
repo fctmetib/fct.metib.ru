@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {BehaviorSubject, debounceTime, distinctUntilChanged, filter, switchMap, takeUntil} from 'rxjs'
+import {debounceTime, distinctUntilChanged, filter, switchMap, takeUntil} from 'rxjs'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {GetAgentRequestService} from '../../../../../public/service/get-agent-request.service'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
@@ -14,8 +14,6 @@ import {AgentDataInterface, AgentSuggestionsInterface} from '../../../../../publ
   styleUrls: ['./demand-signature-drawer.component.scss']
 })
 export class DemandSignatureDrawerComponent implements OnInit {
-  public progress$ = new BehaviorSubject<number>(1)
-  public progress: number = 1
   public maxPage: number = 4
   public pageCount: number = 1
   public dataByINN = []
@@ -113,27 +111,18 @@ export class DemandSignatureDrawerComponent implements OnInit {
   }
 
   public nextPage() {
-    if (this.pageCount >= 1 && this.pageCount <= this.maxPage - 1) {
-      this.progress = this.progress$.value + 1
-      this.progress$.next(this.progress)
-      this.pageCount = this.progress
+    if (this.pageCount <= this.maxPage - 1) {
+      this.pageCount += 1
+
       if (this.pageCount === 2 && this.orgData?.data) {
         this.setDataToOrgForm(this.orgData.data)
       }
-      console.log('next', this.progress)
-    } else {
-      return
     }
   }
 
   public prevPage() {
-    if (this.pageCount >= 2 && this.pageCount <= this.maxPage) {
-      this.progress = this.progress$.value - 1
-      this.progress$.next(this.progress)
-      this.pageCount = this.progress
-      console.log('prev', this.progress)
-    } else {
-      return
+    if (this.pageCount >= 2) {
+      this.pageCount -= 1;
     }
   }
 
@@ -146,7 +135,6 @@ export class DemandSignatureDrawerComponent implements OnInit {
       false,
       3000
     )
-    // this.dialogRef.close()
   }
 
   public formIsValid(): boolean {

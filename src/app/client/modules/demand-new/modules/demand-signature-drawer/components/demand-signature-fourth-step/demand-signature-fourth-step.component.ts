@@ -17,17 +17,8 @@ export class DemandSignatureFourthStepComponent {
       OwnerTypeID: 20,
       Data: extractBase64(url)
     }
-    // this.addDocument(document)
   }
 
   public downloadFile() {
-/*    this.toaster.show(
-      'failure',
-      'Функционал в разработке!',
-      '',
-      true,
-      false,
-      3000
-    )*/
   }
 }
