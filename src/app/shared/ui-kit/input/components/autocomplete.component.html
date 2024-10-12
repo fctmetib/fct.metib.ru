@@ -1,7 +1,7 @@
 <div class="autocomplete">
 	<mib-input>
 		<input
-			[style.display]="!extra ? 'block' : 'none'"
+			*ngIf="!extra"
 			required
 			style="padding-right: 40px"
 			#input
@@ -12,7 +12,7 @@
 			(blur)="onBlur()"
 		/>
 		<input
-			[style.display]="extra ? 'block' : 'none'"
+			*ngIf="extra"
 			required
 			style="padding-right: 40px"
 			#input
@@ -32,7 +32,7 @@
 			(click)="clearInput()"
 		></mib-icon>
 	</mib-input>
-	<div *ngIf="loading">Loading...</div>
+	<div *ngIf="loading">Загрузка...</div>
 	<div class="list">
 		<ul class="flex flex_column" *ngIf="showDropdown">
 			<li
@@ -45,7 +45,7 @@
 					ИНН: {{ option.data.inn }}
 				</span>
 			</li>
-			<li *ngIf="noData">No data found</li>
+			<li *ngIf="noData">Нет данных</li>
 		</ul>
 	</div>
 </div>
