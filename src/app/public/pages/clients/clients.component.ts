@@ -85,7 +85,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
 				break;
 			case 'instruction':
 				link.download = 'FactorClientHelp';
-				link.href = 'assets/_files/FactorClientHelp New.pdf';
+				link.href = 'assets/_files/FactorClientHelp2024.pdf';
 				break;
 			case 'installFactorClient':
 				link.download = 'installFactorClient';
