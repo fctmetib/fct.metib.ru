@@ -1,10 +1,10 @@
 export interface RequestLandingInterface {
-	From: string
-	Organization: string
-	Name: string
-	Phone: string
-	Email?: string
-	INN: string
-	Comment?: string
-	Agree: boolean
+	from: string
+	organization: string
+	name: string
+	phone: string
+	email?: string
+	inn: string
+	comment?: string
+	agree: boolean
 }

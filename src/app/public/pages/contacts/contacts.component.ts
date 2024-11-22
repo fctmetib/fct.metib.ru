@@ -38,16 +38,16 @@ export class ContactsComponent implements OnInit, OnDestroy {
 		{
 			salesDep: [
 				{
-					img: '',
-					name: 'Капитанский Павел',
-					position: 'Специалист',
-					email: 'pkapitanskiy@metib.ru'
+					img: './assets/images/staff/big/nazrin.jpg',
+					name: 'Гаджиева Назрин',
+					position: 'Начальник отдела',
+					email: 'ngezalova@metib.ru'
 				},
 				{
-					img: './assets/images/staff/big/dkobyakov-b.jpg',
-					name: 'Кобяков Даниил',
+					img: './assets/images/staff/big/fursova.jpg',
+					name: 'Фурсова Светлана',
 					position: 'Специалист',
-					email: 'dkobyakov@metib.ru'
+					email: 'sfursova@metib.ru'
 				},
 				{
 					img: './assets/images/staff/big/dnovikova-b.jpg',
@@ -86,12 +86,6 @@ export class ContactsComponent implements OnInit, OnDestroy {
 					name: 'Евтушенко Ирина',
 					position: 'Старший экономист',
 					email: 'ievtushenko@metib.ru'
-				},
-				{
-					img: './assets/images/staff/big/dladnaya-b.jpg',
-					name: 'Ладная Дарья',
-					position: 'Главный экономист',
-					email: 'dladnaya@metib.ru'
 				},
 				{
 					img: './assets/images/staff/big/chai-b.jpg',
