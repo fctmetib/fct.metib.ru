@@ -41,7 +41,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 	}
 
 	public loading$ = new BehaviorSubject<boolean>(false)
-	public newsNumberCount: number = 10
+	public newsNumberCount: number = 50
 	public getAdvancedNews: AdvancedNewsInterface[]
 
 	public isDesktop: boolean = false
