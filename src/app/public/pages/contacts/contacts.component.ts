@@ -44,12 +44,6 @@ export class ContactsComponent implements OnInit, OnDestroy {
 					email: 'ngezalova@metib.ru'
 				},
 				{
-					img: './assets/images/staff/big/fursova.jpg',
-					name: 'Фурсова Светлана',
-					position: 'Специалист',
-					email: 'sfursova@metib.ru'
-				},
-				{
 					img: './assets/images/staff/big/dnovikova-b.jpg',
 					name: 'Новикова Дарья',
 					position: 'Специалист',
@@ -144,7 +138,13 @@ export class ContactsComponent implements OnInit, OnDestroy {
 					position:
 						'Главный специалист',
 					email: 'ekovyazina@metib.ru'
-				}
+				},
+				{
+					img: './assets/images/staff/big/fursova.jpg',
+					name: 'Фурсова Светлана',
+					position: 'Специалист',
+					email: 'sfursova@metib.ru'
+				},
 			]
 		}
 	]
