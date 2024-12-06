@@ -3,7 +3,7 @@
 
 @mixin input {
 	border-radius: var(--main-border-radius);
-  height: 100%;
+  	height: 100%;
 	width: 100%;
 	@include body-text;
 	transition: color var(--transition), background-color var(--transition),
@@ -238,6 +238,15 @@
 		$color: var(--success-default);
 		border-color: $color;
 	}
+}
+
+@mixin input-xxl {
+	@include input-size(
+		100px,
+		var(--input-xl-icon-size),
+		var(--input-xl-icons-gap)
+	);
+	@include text-l;
 }
 
 @mixin input-xl {

@@ -1,15 +1,18 @@
 import {
 	Component,
 	EventEmitter,
+	Inject,
 	Input,
 	OnDestroy,
 	OnInit,
-	Output
+	Output,
+	PLATFORM_ID
 } from '@angular/core'
 import {Subscription} from 'rxjs'
 import {BreakpointObserverService} from '../../services/common/breakpoint-observer.service'
 import {animate, state, style, transition, trigger} from '@angular/animations'
 import {RateCardInterface} from './interfaces/rate-card.interface'
+import {isPlatformBrowser} from '@angular/common'
 
 @Component({
 	selector: 'mib-rate-card',
@@ -50,7 +53,10 @@ export class RateCardComponent implements OnInit, OnDestroy {
 	public isDesktop: boolean = false
 	private subscriptions = new Subscription()
 
-	constructor(public breakpointService: BreakpointObserverService) {}
+	constructor(
+		@Inject(PLATFORM_ID) private platformId: Object,
+		public breakpointService: BreakpointObserverService
+	) {}
 
 	get classes() {
 		return {
@@ -58,11 +64,20 @@ export class RateCardComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	ngOnInit() {
-		this.subscriptions = this.breakpointService
-			.isDesktop()
-			.subscribe(b => (this.isDesktop = b))
-	}
+	ngOnInit(): void {
+		if (isPlatformBrowser(this.platformId)) {
+		  this.subscriptions.add(
+			this.breakpointService.isDesktop().subscribe(
+			  (b) => (this.isDesktop = b),
+			  (err) => {
+				this.isDesktop = false;
+			  }
+			)
+		  );
+		} else {
+		  this.isDesktop = true;
+		}
+	  }	  
 
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe()

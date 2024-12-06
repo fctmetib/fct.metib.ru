@@ -1,4 +1,5 @@
-import {Component, OnDestroy, OnInit} from '@angular/core'
+import {isPlatformBrowser} from '@angular/common'
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core'
 import {Subscription} from 'rxjs'
 import {LandingRequestModalService} from 'src/app/shared/modules/modals/landing-request-modal/landing-request-modal.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
@@ -58,14 +59,19 @@ export class TariffsComponent implements OnInit, OnDestroy {
 	]
 
 	constructor(
+		@Inject(PLATFORM_ID) private platformId: Object,
 		public breakpointService: BreakpointObserverService,
 		public landingRequestModalService: LandingRequestModalService
 	) {}
 
 	ngOnInit(): void {
-		this.subscriptions = this.breakpointService
-			.isDesktop()
-			.subscribe(b => (this.isDesktop = b))
+		if (isPlatformBrowser(this.platformId)) {
+			this.subscriptions.add(
+				this.breakpointService.isDesktop().subscribe(b => (this.isDesktop = b))
+			)
+		} else {
+			this.isDesktop = true
+		}
 	}
 
 	openLandingRequestModal(data) {
