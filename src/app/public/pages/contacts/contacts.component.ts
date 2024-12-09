@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core'
 import {Subscription} from 'rxjs'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import { SeoService } from 'src/app/shared/services/seo.service'
 
 @Component({
 	selector: 'contacts',
@@ -12,7 +13,10 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
 	private subscriptions = new Subscription()
 
-	constructor(public breakpointService: BreakpointObserverService) {}
+	constructor(
+		public breakpointService: BreakpointObserverService,
+		private seoService: SeoService
+	) {}
 
 	datas = [
 		{
@@ -153,6 +157,17 @@ export class ContactsComponent implements OnInit, OnDestroy {
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
+
+								
+		this.seoService.updateMetaTags({
+			title:
+				'Контакты Металлинвестбанк факторинг',
+			description:
+				'Контакты Металлинвестбанк факторинг адрес, телефон Москва, Санкт-Петербург',
+			image: 'https://factoring.metallinvestbank.ru/ogimagemain.jpg',
+			ogDescription:
+				'Контакты Металлинвестбанк факторинг адрес, телефон Москва, Санкт-Петербург'
+		})
 	}
 
 	ngOnDestroy(): void {

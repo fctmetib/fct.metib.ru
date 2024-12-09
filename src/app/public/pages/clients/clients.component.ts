@@ -4,6 +4,7 @@ import {AuthService} from 'src/app/auth/services/auth.service'
 import {LandingLoginModalService} from 'src/app/shared/modules/modals/landing-login-modal/landing-login-modal.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
+import { SeoService } from 'src/app/shared/services/seo.service'
 
 @Component({
 	selector: 'clients',
@@ -47,13 +48,25 @@ export class ClientsComponent implements OnInit, OnDestroy {
 		public breakpointService: BreakpointObserverService,
 		private toaster: ToasterService,
 		private authService: AuthService,
-		private landingLoginModalService: LandingLoginModalService
+		private landingLoginModalService: LandingLoginModalService,
+		private seoService: SeoService
 	) {}
 
 	ngOnInit(): void {
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
+
+					
+		this.seoService.updateMetaTags({
+			title:
+				'Документы для оформления услуги факторинга, как заказать факторинг',
+			description:
+				'Документы для оформления услуги факторинга для поставщиков, как заказать факторинг',
+			image: 'https://factoring.metallinvestbank.ru/ogimagemain.jpg',
+			ogDescription:
+				'Документы для оформления услуги факторинга для поставщиков, как заказать факторинг'
+		})
 	}
 
 	public downloadFile(name: string) {
