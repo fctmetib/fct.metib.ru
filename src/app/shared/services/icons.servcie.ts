@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core'
 import {DomSanitizer} from '@angular/platform-browser'
 import {RefIconService} from '../ui-kit/ref-icon/services/ref-icon.service'
 
-export type IconsNames = typeof IconsService.prototype.icons[number] | '';
+export type IconsNames = (typeof IconsService.prototype.icons)[number] | ''
 
 @Injectable({
 	providedIn: 'root'
@@ -66,19 +66,18 @@ export class IconsService {
 		'fi_image',
 		'fi_repeat',
 		'fi_logo_round_main',
-    'fi_chevrons-down',
-    'fi_chevrons-up',
-    'fi_filter',
+		'fi_chevrons-down',
+		'fi_chevrons-up',
+		'fi_filter'
 	] as const
 
-	public async initIcons(): Promise<void> {
-		const promises = this.icons.map(icon =>
-			this.iconService.registerIconFromAssets(
-				icon,
-				`assets/icons/ui-kit-icons/${icon}.svg`
-			)
-		)
+	// public async initIcons(): Promise<void> {
+	// 	const promises = this.icons.map(icon =>
+	// 		this.iconService.loadIcon(
+	// 			icon
+	// 		)
+	// 	)
 
-		await Promise.all(promises)
-	}
+	// 	await Promise.all(promises)
+	// }
 }

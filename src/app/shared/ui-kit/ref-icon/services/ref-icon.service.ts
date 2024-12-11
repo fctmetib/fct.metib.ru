@@ -1,27 +1,43 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {Inject, Injectable} from '@angular/core'
+import {HttpClient} from '@angular/common/http'
+import {TransferState, makeStateKey} from '@angular/platform-browser'
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class RefIconService {
-  private icons: Record<string, string> = {};
+	private icons: {[key: string]: string} = {}
+	private readonly ICONS_KEY = makeStateKey<{[key: string]: string}>('icons')
 
-  constructor(private http: HttpClient) {}
-  public async registerIconFromAssets(name: string, path: string): Promise<void> {
+	constructor(
+		private http: HttpClient,
+		private transferState: TransferState,
+		@Inject('BASE_URL') private baseUrl: string
+	) {
+		const initialIcons = this.transferState.get(this.ICONS_KEY, null)
+		if (initialIcons) {
+			this.icons = initialIcons
+		}
+	}
+
+	public async getIcon(name: string): Promise<string> {
+		if (this.icons[name]) {
+			return this.icons[name]
+		}
+
+		await this.loadAllIcons()
+		return this.icons[name] || '<svg></svg>'
+	}
+
+  private async loadAllIcons(): Promise<void> {
     try {
-      const svgText = await this.http.get(path, { responseType: 'text' as 'json' }).toPromise() as string;
-      this.registerIcon(name, svgText);
-    } catch (e) {
-      // console.log(e)
+      const url = `${this.baseUrl}/assets/icons/icons.json`;
+      const allIcons = await this.http
+        .get<{ [key: string]: string }>(url)
+        .toPromise();
+      this.icons = allIcons || {};
+    } catch (error) {
+      console.error('Failed to load icons:', error);
     }
-  }
-
-  public registerIcon(name: string, svg: string): void {
-    this.icons[name] = svg;
-  }
-
-  public getIcon(name: string): string {
-    return this.icons[name];
   }
 }

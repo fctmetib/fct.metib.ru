@@ -9,15 +9,12 @@ import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 
 import { AppServerModule } from './src/main.server';
 
-// The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
-  // const distFolder = join(process.cwd(), 'dist/metallinvestbank-web/browser');
   const distFolder = join(__dirname, '../browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
   console.log(`Rendering index: ${indexHtml}, path: ${join(distFolder, indexHtml)}`);
 
-  // Our Universal express-engine (found @ https://github.com/angular/universal/tree/main/modules/express-engine)
   server.engine('html', ngExpressEngine({
     bootstrap: AppServerModule,
   }));
@@ -25,19 +22,17 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
-  // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
-  // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'
   }));
 
-  // All regular routes use the Universal engine
   server.get('*', (req, res) => {
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
     res.render(indexHtml, {
       req,
       res,
       providers: [
+        { provide: 'BASE_URL', useValue: baseUrl },
         {provide: APP_BASE_HREF, useValue: req.baseUrl},
         {provide: REQUEST, useValue: req},
         {provide: RESPONSE, useValue: res}

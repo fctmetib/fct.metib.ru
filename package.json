@@ -13,7 +13,7 @@
     "serve:ssr": "node dist/metallinvestbank-web/server/main.js",
     "start:dev": "ng serve --configuration development",
     "build:dev": "ng build --configuration development",
-    "build:ssr": "ng build && ng run metallinvestbank-web:server",
+    "build:ssr": "ng build && node generate-icons-json.js && ng run metallinvestbank-web:server",
     "prerender": "ng run metallinvestbank-web:prerender"
   },
   "private": true,
