@@ -8,6 +8,9 @@ import { join } from 'path';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 
 import { AppServerModule } from './src/main.server';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
+
+const BASE_URL_KEY = makeStateKey<string>('BASE_URL');
 
 export function app(): express.Express {
   const server = express();
@@ -33,6 +36,14 @@ export function app(): express.Express {
       res,
       providers: [
         { provide: 'BASE_URL', useValue: baseUrl },
+        {
+          provide: TransferState,
+          useFactory: () => {
+            const transferState = new TransferState();
+            transferState.set(BASE_URL_KEY, baseUrl);
+            return transferState;
+          },
+        },
         {provide: APP_BASE_HREF, useValue: req.baseUrl},
         {provide: REQUEST, useValue: req},
         {provide: RESPONSE, useValue: res}

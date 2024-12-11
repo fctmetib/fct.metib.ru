@@ -1,14 +1,19 @@
-import { IconsService } from '../services/icons.servcie'
-import {AuthService} from '../../auth/services/auth.service';
+import { lastValueFrom } from 'rxjs';
+import { AuthService } from '../../auth/services/auth.service';
+import { isPlatformServer } from '@angular/common';
 
-export function appInitializer(iconsService: IconsService, authService: AuthService): () => Promise<any> {
-	return async () => {
-	  try {
+export function appInitializer(
+  authService: AuthService,
+  platformId: Object
+): () => Promise<any> {
+  return async () => {
+    try {
+      if (!isPlatformServer(platformId)) {
 		// await iconsService.initIcons();
-		await authService.initCurrentUser().toPromise();
-	  } catch (e) {
-		console.error('App initialization failed:', e);
-	  }
-	};
-  }
-  
+        await lastValueFrom(authService.initCurrentUser());
+      }
+    } catch (e) {
+      // console.error('App initialization failed:', e);
+    }
+  };
+}

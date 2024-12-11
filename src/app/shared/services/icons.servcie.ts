@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core'
 import {DomSanitizer} from '@angular/platform-browser'
-import {RefIconService} from '../ui-kit/ref-icon/services/ref-icon.service'
 
 export type IconsNames = (typeof IconsService.prototype.icons)[number] | ''
 
@@ -9,8 +8,7 @@ export type IconsNames = (typeof IconsService.prototype.icons)[number] | ''
 })
 export class IconsService {
 	constructor(
-		private domSanitizer: DomSanitizer,
-		private iconService: RefIconService
+		private domSanitizer: DomSanitizer
 	) {}
 
 	public icons = [
