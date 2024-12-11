@@ -32,6 +32,7 @@ export class RefIconService {
   private async loadAllIcons(): Promise<void> {
     try {
       const url = `${this.baseUrl}/assets/icons/icons.json`;
+	  console.log("URL: ", url)
       const allIcons = await this.http
         .get<{ [key: string]: string }>(url)
         .toPromise();
