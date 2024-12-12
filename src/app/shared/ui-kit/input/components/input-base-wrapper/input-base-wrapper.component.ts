@@ -1,13 +1,13 @@
 import {
-	AfterViewInit,
-	Component,
-	ElementRef,
-	Inject,
-	Optional,
-	PLATFORM_ID,
-	Renderer2,
-	ViewChild
-} from '@angular/core'
+  AfterViewInit,
+  Component,
+  ElementRef, inject,
+  Inject,
+  Optional,
+  PLATFORM_ID,
+  Renderer2,
+  ViewChild
+} from '@angular/core';
 import {startWith, takeUntil} from 'rxjs/operators'
 import {merge, tap} from 'rxjs'
 import {setPaddings} from '../../services/set-paddings.service'
@@ -17,6 +17,7 @@ import {MibTextareaDirective} from '../../../textarea/directives/mib-textarea.di
 import {isPlatformBrowser} from '@angular/common'
 import {InputComponent} from '../../input.component'
 import {TextareaComponent} from '../../../textarea/textarea.component'
+import { WINDOW } from '../../../../tokens/window.token';
 
 @Component({
 	selector: 'mib-input-base-wrapper',
@@ -40,6 +41,8 @@ export class InputBaseWrapperComponent implements AfterViewInit {
 		@Optional() private input: InputComponent,
 		@Optional() private textarea: TextareaComponent
 	) {}
+
+  private window = inject(WINDOW)
 
 	get inputElement(): HTMLInputElement | HTMLTextAreaElement {
 		return this.directive?.elementRef?.nativeElement
@@ -90,6 +93,7 @@ export class InputBaseWrapperComponent implements AfterViewInit {
 						element: this.inputElement
 					},
 					this.r2,
+          this.window,
 					({newPaddingLeft}) => {
 						this.r2.setStyle(
 							this.labelEl.nativeElement,

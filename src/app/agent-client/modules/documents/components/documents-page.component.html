@@ -19,7 +19,7 @@
 	<mib-spacing type="xs"></mib-spacing>
 	<mib-table (selectionChange)="selectionChange($event)">
 		<mib-table-head>
-			<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
+			<mib-table-head-cell
 				>№
 			</mib-table-head-cell>
 			<ng-container *ngIf="isDesktop; else mobile">
@@ -37,7 +37,6 @@
 					[disabled]="loading$ | async"
 					(press)="prev()"
 					size="s"
-					table-row-button
 					type="ghost-secondary"
 				>
 					<mib-icon class="stroke" btn-icon name="fi_chevron-left"></mib-icon>
@@ -46,7 +45,6 @@
 					[disabled]="loading$ | async"
 					(press)="next()"
 					size="s"
-					table-row-button
 					type="ghost-secondary"
 				>
 					<mib-icon class="stroke" btn-icon name="fi_chevron-right"></mib-icon>
@@ -138,7 +136,6 @@
 						<mib-button
 							(click)="openDocumentsPageModal(doc); $event.stopPropagation()"
 							size="s"
-							table-row-button
 							type="ghost-secondary"
 						>
 							<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>

@@ -135,14 +135,14 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 		const rawPhoneNumber = this.form.value.Phone
 		const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber)
 		const formData = {
-			From: this.form.value.FormName,
-			Name: this.form.value.Name,
-			Phone: formattedPhoneNumber,
-			Email: this.form.value.Email,
-			INN: this.form.value.INN,
-			Organization: this.form.value.Organization,
-			Comment: `${this.form.value.Comment}\nИспользует факторинг: ${this.form.value.UseFactoring ? "Да" : "Нет"}`,
-			Agree: this.form.value.Agree
+			from: this.form.value.FormName,
+			name: this.form.value.Name,
+			phone: formattedPhoneNumber,
+			email: this.form.value.Email,
+			inn: this.form.value.INN,
+			organization: this.form.value.Organization,
+			comment: `${this.form.value.Comment}\nИспользует факторинг: ${this.form.value.UseFactoring ? "Да" : "Нет"}`,
+			agree: this.form.value.Agree
 		}
 		
 		this.requestLandingService

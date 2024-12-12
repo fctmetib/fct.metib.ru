@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation, forwardRef} from '@angular/core'
+import { Component, Input, ViewEncapsulation, forwardRef, inject, ChangeDetectorRef } from '@angular/core';
 import {MibCheckboxSize} from './interfaces/checkbox.interface'
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {animate, style, transition, trigger} from '@angular/animations'
@@ -16,7 +16,7 @@ import {animate, style, transition, trigger} from '@angular/animations'
 			provide: NG_VALUE_ACCESSOR,
 			useExisting: forwardRef(() => CheckboxComponent),
 			multi: true
-		}
+		},
 	],
 	animations: [
 		trigger('checkboxAnimation', [
@@ -53,6 +53,7 @@ export class CheckboxComponent implements ControlValueAccessor {
 	@Input() styled: boolean = false
 
 	public value: boolean = false
+  private cdr = inject(ChangeDetectorRef)
 
 	ngAfterViewInit() {}
 
@@ -62,6 +63,7 @@ export class CheckboxComponent implements ControlValueAccessor {
 	writeValue(value: boolean): void {
 		this.value = value
 		this.onChange(this.value)
+    this.cdr.detectChanges()
 	}
 
 	registerOnChange(fn: any): void {

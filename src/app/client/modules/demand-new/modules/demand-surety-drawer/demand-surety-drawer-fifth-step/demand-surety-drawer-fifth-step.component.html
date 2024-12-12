@@ -1,7 +1,7 @@
 <mib-spacing type="xs2"></mib-spacing>
 <h4>Состояние предприятия</h4>
 <mib-spacing type="xs"></mib-spacing>
-<div class="flex flex_column">
+<div class="flex flex_column" [formGroup]="form">
   <p class="headline">Необходимые документы</p>
   <p class="text text_s pt-4 c-bti-secondary">
     Кредитная история и текущая кредиторская задолженность, в т. ч.
@@ -17,135 +17,249 @@
   <mib-spacing type="xs"></mib-spacing>
   <div class="flex flex_column gap-8">
     <p class="text text_m c-bti-primary">Устав со всеми изменениями</p>
+    <ng-container
+      *ngIf="!form.get('charter')['controls']?.length; else charterTemplate"
+    ></ng-container>
+    <ng-template #charterTemplate>
+      <p class="text text_m text_medium">Прикрепленные документы!</p>
+      <mib-dl-file-cell
+        *ngFor="let document of form.get('charter')['controls']; let idx = index"
+        [attr.index]="idx"
+        [showRemove]="!data.data?.isView"
+        [showDownload]="true"
+        (onDload)="downloadCurrentFile(document)"
+        (onRemove)="deleteDocument(idx,'charter')"
+        [fileName]="document.get('FileName').value"
+      ></mib-dl-file-cell>
+      <mib-spacing type="xs2"></mib-spacing>
+    </ng-template>
     <mib-dnd
-      [headline]="''"
-      [showIcon]="false"
-      (onChange)="onDocumentLoad($event)"
+      [multiple]="true"
+      (onChange)="onDocumentLoad($event, 'charter')"
       [accept]="[
-								'application/pdf',
-								'application/msword',
-								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-								'application/vnd.ms-excel',
-								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-								'image/jpeg',
-								'image/png'
-							]"
+					'application/pdf',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-excel',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'image/jpeg',
+					'image/png'
+				]"
+      headline="Прикрепите документ"
     ></mib-dnd>
   </div>
-  <mib-spacing type="xs2"></mib-spacing>
+  <mib-spacing type="m"></mib-spacing>
   <div class="flex flex_column gap-8">
+
     <p class="text text_m c-bti-primary">
       Паспорт генерального директора (все страницы)
     </p>
+    <ng-container
+      *ngIf="!form.get('ceoPassport')['controls']?.length; else ceoPassportTemplate"
+    ></ng-container>
+    <ng-template #ceoPassportTemplate>
+      <p class="text text_m text_medium">Прикрепленные документы</p>
+      <mib-dl-file-cell
+        *ngFor="let document of form.get('ceoPassport')['controls']; let idx = index"
+        [attr.index]="idx"
+        [showRemove]="!data.data?.isView"
+        [showDownload]="true"
+        (onDload)="downloadCurrentFile(document)"
+        (onRemove)="deleteDocument(idx,'ceoPassport')"
+        [fileName]="document.get('FileName').value"
+      ></mib-dl-file-cell>
+      <mib-spacing type="xs2"></mib-spacing>
+    </ng-template>
     <mib-dnd
-      [headline]="''"
-      [showIcon]="false"
-      (onChange)="onDocumentLoad($event)"
+      [multiple]="true"
+      (onChange)="onDocumentLoad($event, 'ceoPassport')"
       [accept]="[
-								'application/pdf',
-								'application/msword',
-								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-								'application/vnd.ms-excel',
-								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-								'image/jpeg',
-								'image/png'
-							]"
+					'application/pdf',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-excel',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'image/jpeg',
+					'image/png'
+				]"
+      headline="Прикрепите документ"
     ></mib-dnd>
   </div>
-  <mib-spacing type="xs2"></mib-spacing>
+  <mib-spacing type="m"></mib-spacing>
   <div class="flex flex_column gap-8">
     <p class="text text_m c-bti-primary">
       Протокол/решение об учреждении организации
     </p>
+    <ng-container
+      *ngIf="!form.get('foundingDecision')['controls']?.length; else foundingDecisionTemplate"
+    ></ng-container>
+    <ng-template #foundingDecisionTemplate>
+      <p class="text text_m text_medium">Прикрепленные документы</p>
+      <mib-dl-file-cell
+        *ngFor="let document of form.get('foundingDecision')['controls']; let idx = index"
+        [attr.index]="idx"
+        [showRemove]="!data.data?.isView"
+        [showDownload]="true"
+        (onDload)="downloadCurrentFile(document)"
+        (onRemove)="deleteDocument(idx,'foundfoundingDecision')"
+        [fileName]="document.get('FileName').value"
+      ></mib-dl-file-cell>
+      <mib-spacing type="xs2"></mib-spacing>
+    </ng-template>
     <mib-dnd
-      [headline]="''"
-      [showIcon]="false"
-      (onChange)="onDocumentLoad($event)"
+      [multiple]="true"
+      (onChange)="onDocumentLoad($event, 'foundingDecision')"
       [accept]="[
-								'application/pdf',
-								'application/msword',
-								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-								'application/vnd.ms-excel',
-								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-								'image/jpeg',
-								'image/png'
-							]"
+					'application/pdf',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-excel',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'image/jpeg',
+					'image/png'
+				]"
+      headline="Прикрепите документ"
     ></mib-dnd>
   </div>
-  <mib-spacing type="xs2"></mib-spacing>
+  <mib-spacing type="m"></mib-spacing>
   <div class="flex flex_column gap-8">
     <p class="text text_m c-bti-primary">
       Приказ о назначении генерального директора
     </p>
+    <ng-container
+      *ngIf="!form.get('appointmentOrder')['controls']?.length; else appointmentOrderTemplate"
+    ></ng-container>
+    <ng-template #appointmentOrderTemplate>
+      <p class="text text_m text_medium">Прикрепленные документы</p>
+      <mib-dl-file-cell
+        *ngFor="let document of form.get('appointmentOrder')['controls']; let idx = index"
+        [attr.index]="idx"
+        [showRemove]="!data.data?.isView"
+        [showDownload]="true"
+        (onDload)="downloadCurrentFile(document)"
+        (onRemove)="deleteDocument(idx,'foundappointmentOrder')"
+        [fileName]="document.get('FileName').value"
+      ></mib-dl-file-cell>
+      <mib-spacing type="xs2"></mib-spacing>
+    </ng-template>
     <mib-dnd
-      [headline]="''"
-      [showIcon]="false"
-      (onChange)="onDocumentLoad($event)"
+      [multiple]="true"
+      (onChange)="onDocumentLoad($event, 'appointmentOrder')"
       [accept]="[
-								'application/pdf',
-								'application/msword',
-								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-								'application/vnd.ms-excel',
-								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-								'image/jpeg',
-								'image/png'
-							]"
+					'application/pdf',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-excel',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'image/jpeg',
+					'image/png'
+				]"
+      headline="Прикрепите документ"
     ></mib-dnd>
   </div>
-  <mib-spacing type="xs2"></mib-spacing>
+  <mib-spacing type="m"></mib-spacing>
   <div class="flex flex_column gap-8">
     <p class="text text_m c-bti-primary">Бухгалтерский Баланс</p>
+    <ng-container
+      *ngIf="!form.get('balanceSheet')['controls']?.length; else balanceSheetTemplate"
+    ></ng-container>
+    <ng-template #balanceSheetTemplate>
+      <p class="text text_m text_medium">Прикрепленные документы</p>
+      <mib-dl-file-cell
+        *ngFor="let document of form.get('balanceSheet')['controls']; let idx = index"
+        [attr.index]="idx"
+        [showRemove]="!data.data?.isView"
+        [showDownload]="true"
+        (onDload)="downloadCurrentFile(document)"
+        (onRemove)="deleteDocument(idx,'fobalanceSheet')"
+        [fileName]="document.get('FileName').value"
+      ></mib-dl-file-cell>
+      <mib-spacing type="xs2"></mib-spacing>
+    </ng-template>
     <mib-dnd
-      [headline]="''"
-      [showIcon]="false"
-      (onChange)="onDocumentLoad($event)"
+      [multiple]="true"
+      (onChange)="onDocumentLoad($event, 'balanceSheet')"
       [accept]="[
-								'application/pdf',
-								'application/msword',
-								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-								'application/vnd.ms-excel',
-								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-								'image/jpeg',
-								'image/png'
-							]"
+					'application/pdf',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-excel',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'image/jpeg',
+					'image/png'
+				]"
+      headline="Прикрепите документ"
     ></mib-dnd>
   </div>
-  <mib-spacing type="xs2"></mib-spacing>
+  <mib-spacing type="m"></mib-spacing>
   <div class="flex flex_column gap-8">
     <p class="text text_m c-bti-primary">
       ОСВ (оборотно-сальдовая ведомость)
     </p>
+    <ng-container
+      *ngIf="!form.get('turnoverBalanceSheet')['controls']?.length; else turnoverBalanceSheetTemplate"
+    ></ng-container>
+    <ng-template #turnoverBalanceSheetTemplate>
+      <p class="text text_m text_medium">Прикрепленные документы</p>
+      <mib-dl-file-cell
+        *ngFor="let document of form.get('turnoverBalanceSheet')['controls']; let idx = index"
+        [attr.index]="idx"
+        [showRemove]="!data.data?.isView"
+        [showDownload]="true"
+        (onDload)="downloadCurrentFile(document)"
+        (onRemove)="deleteDocument(idx,'foundersPaturnoverBalanceSheet')"
+        [fileName]="document.get('FileName').value"
+      ></mib-dl-file-cell>
+      <mib-spacing type="xs2"></mib-spacing>
+    </ng-template>
     <mib-dnd
-      [headline]="''"
-      [showIcon]="false"
-      (onChange)="onDocumentLoad($event)"
+      [multiple]="true"
+      (onChange)="onDocumentLoad($event, 'turnoverBalanceSheet')"
       [accept]="[
-								'application/pdf',
-								'application/msword',
-								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-								'application/vnd.ms-excel',
-								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-								'image/jpeg',
-								'image/png'
-							]"
+					'application/pdf',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-excel',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'image/jpeg',
+					'image/png'
+				]"
+      headline="Прикрепите документ"
     ></mib-dnd>
   </div>
-  <mib-spacing type="xs2"></mib-spacing>
+  <mib-spacing type="m"></mib-spacing>
   <div class="flex flex_column gap-8">
     <p class="text text_m c-bti-primary">Паспорта учредителей</p>
+    <ng-container
+      *ngIf="!form.get('foundersPassports')['controls']?.length; else foundersPassportsTemplate"
+    ></ng-container>
+    <ng-template #foundersPassportsTemplate>
+      <p class="text text_m text_medium">Прикрепленные документы</p>
+      <mib-dl-file-cell
+        *ngFor="let document of form.get('foundersPassports')['controls'] let idx = index"
+        [attr.index]="idx"
+        [showRemove]="!data.data?.isView"
+        [showDownload]="true"
+        (onDload)="downloadCurrentFile(document)"
+        (onRemove)="deleteDocument(idx,'foundersPassports')"
+        [fileName]="document.get('FileName').value"
+      ></mib-dl-file-cell>
+
+      <mib-spacing type="xs2"></mib-spacing>
+    </ng-template>
     <mib-dnd
-      [headline]="''"
-      [showIcon]="false"
-      (onChange)="onDocumentLoad($event)"
+      [multiple]="true"
+      (onChange)="onDocumentLoad($event, 'foundersPassports')"
       [accept]="[
-								'application/pdf',
-								'application/msword',
-								'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-								'application/vnd.ms-excel',
-								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-								'image/jpeg',
-								'image/png'
-							]"
+					'application/pdf',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+					'application/vnd.ms-excel',
+					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					'image/jpeg',
+					'image/png'
+				]"
+      headline="Прикрепите документ"
     ></mib-dnd>
   </div>
   <mib-spacing type="xs2"></mib-spacing>

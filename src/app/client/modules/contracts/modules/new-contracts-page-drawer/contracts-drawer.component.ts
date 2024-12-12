@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {ContractsDrawerData} from './interfaces/contracts-drawer.data'
 import {ToolsService} from 'src/app/shared/services/tools.service'
-import {BehaviorSubject, finalize, zip, tap} from 'rxjs'
+import {BehaviorSubject, finalize, zip, tap, switchMap} from 'rxjs'
 import {Properties} from 'csstype'
 import {DeliveryService} from 'src/app/shared/services/share/delivery.service'
 import {Delivery} from 'src/app/shared/types/delivery/delivery'
@@ -74,36 +74,38 @@ export class ContractsDrawerComponent implements OnInit {
 	}
 
 	getCurrentContract() {
-		this.loading$.next(true)
-		zip(
-			this.deliveryService.getRequisitesById(this.deliveryId).pipe(
-				tap(requisites => {
-					this.requisites = requisites
-				})
-			),
-			this.deliveryService.getShipments(this.deliveryId).pipe(
-				tap(shipments => {
-					this.shipments = shipments
-					this.onPageChange(1)
-					this.shipmentsReducedAmount = shipments.reduce(
-						(acc, n) => acc + n.Summ,
-						0
-					)
-				})
-			),
-			this.deliveryService
-				.getDeliveryById({
-					includeStatistics: true,
-					ID: this.deliveryId
-				})
-				.pipe(
-					tap(data => {
-						this.delivery = data
+		this.loading$.next(true);
+	
+		this.deliveryService.getRequisitesById(this.deliveryId).pipe(
+			tap(requisites => {
+				this.requisites = requisites; // Сохраняем реквизиты
+			}),
+			switchMap(() =>
+				this.deliveryService.getShipments(this.deliveryId).pipe(
+					tap(shipments => {
+						this.shipments = shipments; // Сохраняем отправления
+						this.onPageChange(1); // Обновляем страницу
+						this.shipmentsReducedAmount = shipments.reduce(
+							(acc, n) => acc + n.Summ,
+							0
+						); // Рассчитываем сумму
 					})
 				)
-		)
-			.pipe(finalize(() => this.loading$.next(false)))
-			.subscribe()
+			),
+			switchMap(() =>
+				this.deliveryService.getDeliveryById({
+					includeStatistics: true,
+					ID: this.deliveryId
+				}).pipe(
+					tap(delivery => {
+						this.delivery = delivery; // Сохраняем данные доставки
+					})
+				)
+			),
+			finalize(() => this.loading$.next(false)) // Обновляем состояние загрузки
+		).subscribe({
+			error: err => console.error('Error loading contract data:', err)
+		});
 	}
 
 	onPageChange(page: number) {

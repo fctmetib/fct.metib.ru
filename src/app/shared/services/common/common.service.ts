@@ -45,7 +45,7 @@ export class CommonService {
   }
 
   getCountries(): Observable<RegionInterface[]> {
-    let url = `${environment.apiUrl}/public/countries`;
+    let url = `${environment.apiUrl}/v1/public/countries`;
     return this.http.get<RegionInterface[]>(url);
   }
 

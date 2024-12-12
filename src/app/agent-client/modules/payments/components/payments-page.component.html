@@ -15,10 +15,9 @@
 	<mib-table>
 		<mib-table-head>
 			<mib-table-head-cell
-				[sortable]="true"
 				(onCheck)="severalRequestsChecked = $event"
-				[checked]="severalRequestsChecked"
-				[showCheckbox]="true"
+
+
 				>Дата</mib-table-head-cell
 			>
 			<ng-container *ngIf="isDesktop; else mobile">
@@ -124,7 +123,6 @@
 					<mib-button
 						(click)="openPaymentsModal(333); $event.stopPropagation()"
 						size="s"
-						table-row-button
 						type="ghost-secondary"
 					>
 						<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>

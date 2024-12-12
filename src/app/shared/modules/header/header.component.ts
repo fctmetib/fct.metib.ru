@@ -1,14 +1,14 @@
 import {
-	Component,
-	ElementRef,
-	EventEmitter,
-	Inject,
-	Input,
-	OnInit,
-	Output,
-	PLATFORM_ID,
-	ViewChild
-} from '@angular/core'
+  Component,
+  ElementRef,
+  EventEmitter, inject,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+  PLATFORM_ID,
+  ViewChild
+} from '@angular/core';
 import {AuthService} from 'src/app/auth/services/auth.service'
 import {ToolsService} from '../../services/tools.service'
 import {
@@ -30,6 +30,7 @@ import {Properties} from 'csstype'
 import {DropdownService} from '../../ui-kit/dropdown/services/dropdown.service'
 import {BreakpointObserverService} from '../../services/common/breakpoint-observer.service'
 import {isPlatformBrowser} from '@angular/common'
+import { WINDOW } from '../../tokens/window.token';
 
 @Component({
 	selector: 'mib-header',
@@ -76,6 +77,8 @@ export class HeaderComponent implements OnInit {
 		@Inject(PLATFORM_ID) private platformId: Object
 	) {}
 
+  private window = inject(WINDOW)
+
 	get classes() {
 		return {
 			'header_show-extension': this.showExtension,
@@ -92,7 +95,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	get currentUserAvatar() {
-		return this.currentUser$?.value?.Avatar
+		return this.currentUser$?.value?.Profile.AvatarImage
 	}
 
 	get manager() {
@@ -108,10 +111,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	get name() {
-		return this.toolsService.concatArray([
-			this.profile?.Name?.Last,
-			this.profile?.Name?.First
-		])
+		return `${this.profile?.Name?.Last} ${this.profile?.Name?.First}`
 	}
 
 	get nameInitials() {
@@ -138,6 +138,7 @@ export class HeaderComponent implements OnInit {
 			.pipe(
 				filter(Boolean),
 				tap(currentUser => {
+          console.log(currentUser);
 					this.currentUser$.next(currentUser.userGeneral)
 					this.currentUserFactoring$.next(currentUser.userFactoring)
 					this.userLoading$.next(false)
@@ -173,13 +174,13 @@ export class HeaderComponent implements OnInit {
 
 	openExternalSite() {
 		if (isPlatformBrowser(this.platformId)) {
-			window.open('https://fct.metallinvestbank.ru/login', '_blank')
+			this.window?.open('https://fct.metallinvestbank.ru/login', '_blank')
 		}
 	}
 
 	openExternalSiteByURL(url: string) {
 		if (isPlatformBrowser(this.platformId)) {
-			window.open(url, '_blank')
+			this.window?.open(url, '_blank')
 		}
 	}
 }

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {FormGroup} from '@angular/forms'
 
 @Component({
@@ -8,6 +8,12 @@ import {FormGroup} from '@angular/forms'
 })
 export class DemandSuretyDrawerSecondStepComponent {
   @Input() orgDataForm: FormGroup;
+  @Input() options: [] = [];
+  @Output() apply = new EventEmitter<void>()
+
+  public confirmIds() {
+    this.apply.emit();
+  }
 }
 // {
 //   "value": "ООО \"ПР\"",

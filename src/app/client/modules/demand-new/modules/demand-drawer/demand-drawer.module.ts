@@ -24,6 +24,9 @@ import {DlFileCellModule} from 'src/app/shared/ui-kit/dl-file-cell/dl-file-cell.
 import {BadgeModule} from '../../../../../shared/ui-kit/badge/badge.module'
 import {TabModule} from '../../../../../shared/ui-kit/tab/tab.module'
 import {NavbarModule} from '../../../../../shared/ui-kit/navbar/navbar.module'
+import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
+import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
+import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
 
 @NgModule({
 	declarations: [DemandDrawerComponent],
@@ -50,7 +53,10 @@ import {NavbarModule} from '../../../../../shared/ui-kit/navbar/navbar.module'
     DlFileCellModule,
     BadgeModule,
     TabModule,
-    NavbarModule
+    NavbarModule,
+    MessageItemModule,
+    SendMessagesModule,
+    AttachedDocumentModule
   ],
 	providers: [DemandDrawerService]
 })

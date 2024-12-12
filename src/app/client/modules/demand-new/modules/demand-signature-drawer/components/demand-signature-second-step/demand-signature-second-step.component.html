@@ -1,31 +1,34 @@
 <form [formGroup]="orgDataForm">
   <mib-spacing type="xs"></mib-spacing>
-  <mib-input class="flex_grow">
-    <input formControlName = "INN" mibInput />
-    <ng-container mibLabel>ИНН организации</ng-container>
-    <mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
-  </mib-input>
+  <mib-autocomplete
+    (confirm)="confirmIds()"
+    [options]="options"
+    [innType]="true"
+    label = "Введите ИНН организации"
+    formControlName="INN"
+    class="flex_grow">
+  </mib-autocomplete>
   <mib-spacing type="s"></mib-spacing>
   <div class="flex flex_column gap-12">
     <div class="flex gap-12 w-100">
-      <mib-select formControlName = "Type" class="w-27" placeholder="Организация">
-        <mib-dropdown-point
-          value="ООО"
-          text="ООО"
-        ></mib-dropdown-point>
-        <mib-dropdown-point
-          value="ЗАО"
-          text="ЗАО"
-        ></mib-dropdown-point>
-        <mib-dropdown-point
-          value="ОАО"
-          text="ОАО"
-        ></mib-dropdown-point>
-        <mib-dropdown-point
-          value="ПАО"
-          text="ПАО"
-        ></mib-dropdown-point>
-      </mib-select>
+<!--      <mib-select formControlName = "Type" class="w-27" placeholder="Организация">-->
+<!--        <mib-dropdown-point-->
+<!--          value="ООО"-->
+<!--          text="ООО"-->
+<!--        ></mib-dropdown-point>-->
+<!--        <mib-dropdown-point-->
+<!--          value="ЗАО"-->
+<!--          text="ЗАО"-->
+<!--        ></mib-dropdown-point>-->
+<!--        <mib-dropdown-point-->
+<!--          value="ОАО"-->
+<!--          text="ОАО"-->
+<!--        ></mib-dropdown-point>-->
+<!--        <mib-dropdown-point-->
+<!--          value="ПАО"-->
+<!--          text="ПАО"-->
+<!--        ></mib-dropdown-point>-->
+<!--      </mib-select>-->
       <mib-input class="flex_grow">
         <input mibInput formControlName = "ShortTitle" />
         <ng-container mibLabel>Краткое наименование организации</ng-container>
@@ -63,7 +66,7 @@
       <input mibInput formControlName = "LegalAddress" />
       <ng-container mibLabel>Юридический адрес</ng-container>
     </mib-input>
-    <mib-checkbox class="gap-8">
+    <mib-checkbox class="gap-8" formControlName = "FactAddressEquals">
       <span class="text text_m">Фактический адрес совпадает с юридическим</span>
     </mib-checkbox>
     <mib-input class="flex_grow">

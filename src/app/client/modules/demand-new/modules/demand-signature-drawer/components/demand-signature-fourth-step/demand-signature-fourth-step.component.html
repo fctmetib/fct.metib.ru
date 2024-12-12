@@ -34,19 +34,32 @@
 <p class="text text_m c-bti-primary">
   Прикрепите скан заполненной заявки
 </p>
+<ng-container *ngIf="documents?.controls?.length;">
+  <p class="text text_m text_medium">Прикрепленные документы</p>
+  <div *ngFor="let document of documents.controls; let idx = index">
+    <mib-dl-file-cell
+      [attr.index]="idx"
+      [showRemove]="true"
+      (onDload)="downloadCurrentFile()"
+      (onRemove)="removeDocument(idx)"
+      [fileName]="document.get('FileName').value"
+    ></mib-dl-file-cell>
+  </div>
+  <mib-spacing type="xs2"></mib-spacing>
+</ng-container>
 <mib-spacing type="xs2"></mib-spacing>
-<div class="flex flex_column gap-12">
+<div class="flex flex_column gap-12" [formGroup]="form">
   <mib-dnd
     (onChange)="onDocumentLoad($event)"
     [accept]="[
-							'application/pdf',
-							'application/msword',
-							'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-							'application/vnd.ms-excel',
-							'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-							'image/jpeg',
-							'image/png'
-						]"
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'image/jpeg',
+      'image/png'
+    ]"
     headline="Прикрепите документ"
   ></mib-dnd>
   <div>

@@ -1,0 +1,25 @@
+<div class="scroll-y" [style.height]="height">
+  <ng-template #messagesTemplate>
+    <div
+      #messagesContent
+      [id]="i"
+      *ngFor="let message of messages;trackBy:identify; let i = index"
+    >
+      <mib-message-item [message]="message"></mib-message-item>
+    </div>
+  </ng-template>
+
+  <ng-container *ngIf="loading; else messagesTemplate">
+    <mib-skeleton [styles]="skeleton"></mib-skeleton>
+    <mib-spacing type="xs2"></mib-spacing>
+    <mib-skeleton [styles]="skeleton"></mib-skeleton>
+    <mib-spacing type="xs2"></mib-spacing>
+    <mib-skeleton [styles]="skeleton"></mib-skeleton>
+    <mib-spacing type="xs2"></mib-spacing>
+    <mib-skeleton [styles]="skeleton"></mib-skeleton>
+    <mib-spacing type="xs2"></mib-spacing>
+    <mib-skeleton [styles]="skeleton"></mib-skeleton>
+    <mib-spacing type="xs2"></mib-spacing>
+    <mib-skeleton [styles]="skeleton"></mib-skeleton>
+  </ng-container>
+</div>

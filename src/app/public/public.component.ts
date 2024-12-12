@@ -1,4 +1,15 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core'
+import {isPlatformBrowser} from '@angular/common'
+import {
+	AfterViewInit,
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	Inject,
+	OnInit,
+	PLATFORM_ID,
+	ViewChild,
+	ViewEncapsulation
+} from '@angular/core'
 
 @Component({
 	selector: 'public',
@@ -6,10 +17,24 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core'
 	styleUrls: ['./public.component.scss'],
 	encapsulation: ViewEncapsulation.Emulated
 })
-export class PublicComponent implements OnInit {
-	constructor() {}
+export class PublicComponent implements AfterViewInit {
+	public height: number = 103
 
-	ngOnInit(): void {}
+	@ViewChild('header', {static: false}) headerElement!: ElementRef
 
-	ngOnDestroy() {}
+	constructor(
+		private elementRef: ElementRef,
+		private cd: ChangeDetectorRef,
+		@Inject(PLATFORM_ID) private platformId: object
+	) {}
+
+	ngAfterViewInit(): void {
+		if (isPlatformBrowser(this.platformId)) {
+			if (this.headerElement?.nativeElement) {
+				const headerNativeElement = this.headerElement.nativeElement
+				this.height = headerNativeElement.offsetHeight
+				this.cd.detectChanges()
+			}
+		}
+	}
 }

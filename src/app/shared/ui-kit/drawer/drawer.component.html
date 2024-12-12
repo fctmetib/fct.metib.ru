@@ -2,7 +2,7 @@
 	<div #header>
 		<ng-content select="[drawer-header]"></ng-content>
 	</div>
-	<div class="drawer-content" [style.height]="height">
+	<div class="drawer-content" [style.height]="autoHeight ? 'auto' : height">
 		<mib-spacing class="desktop-sp" type="m"></mib-spacing>
 		<ng-content></ng-content>
 		<mib-spacing type="m"></mib-spacing>

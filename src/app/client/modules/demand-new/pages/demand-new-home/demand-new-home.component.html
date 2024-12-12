@@ -5,18 +5,18 @@
 </div>
 <mib-tab-group>
   <mib-navbar class="container container_large">
-    <mib-navbar-point value="1">{{
+    <mib-navbar-point (press)="getTabId($event)" [value]="String(tabType.Request)">{{
         isDesktop ? 'Список запросов' : 'Список'
       }}
     </mib-navbar-point>
-    <mib-navbar-point value="2">Черновики</mib-navbar-point>
-    <mib-navbar-point value="3">{{
+    <mib-navbar-point (press)="getTabId($event)" [value]="String(tabType.Draft)">Черновики</mib-navbar-point>
+    <mib-navbar-point (press)="getTabId($event)" [value]="String(tabType.History)">{{
         isDesktop ? 'История запросов' : 'История'
       }}
     </mib-navbar-point>
   </mib-navbar>
   <div class="container container_large">
-    <mib-tab-item value="1">
+    <mib-tab-item [value]="String(tabType.Request)">
       <mib-spacing type="s"></mib-spacing>
       <div class="mobile-col flex flex_wrap gap-16">
         <mib-request-card
@@ -28,14 +28,14 @@
       </div>
       <mib-spacing type="s"></mib-spacing>
       <div class="mobile-btn flex">
-        <mib-button (press)="openDrawers(dialogType.Free, null, tabType.Request)" type="filled-primary"
+        <mib-button (press)="openDrawers(dialogType.Question, null, tabType.Request)" type="filled-primary"
         >Запрос на свободную тему
         </mib-button
         >
       </div>
       <mib-spacing class="mobile-sp" type="xl2"></mib-spacing>
     </mib-tab-item>
-    <mib-tab-item value="2">
+    <mib-tab-item [value]="String(tabType.Draft)">
       <mib-spacing type="m"></mib-spacing>
       <div class="draft-controls flex flex_justify-between">
         <mib-input>
@@ -66,6 +66,7 @@
           >Запрос
           </mib-table-head-cell>
           <mib-table-head-cell>Тип запроса</mib-table-head-cell>
+          <mib-table-head-cell>Дата редактирования</mib-table-head-cell>
           <mib-table-head-cell>Прогресс заполнения</mib-table-head-cell>
         </mib-table-head>
         <ng-container *ngIf="loading$ | async; else table">
@@ -77,7 +78,7 @@
         <ng-template #table>
           <ng-container *ngIf="draftLists.length > 0; else emptyTable">
             <mib-table-row
-              (dblclick)="newDraftDrawer(draft?.ID, draft.TypeInt, TabType.Draft)"
+              (dblclick)="newDraftDrawer(draft?.ID, +dialogType[draft.Type], TabType.Draft)"
               [@slideAnimation]="requestsAnimationStates[draft.id]"
               *ngFor="let draft of draftLists; let last = last"
               [underlined]="!last"
@@ -92,11 +93,14 @@
                     type="filled-secondary"
                     [extended]="true"
                     size="l"
-                  >{{ draft.Type }}
+                  >{{ demandsPrepareTranslationEnum[draft.Type] }}
                   </mib-badge
                   >
                 </ng-container
                 >
+              </mib-table-cell>
+              <mib-table-cell>
+                <ng-container table-cell-title>{{ draft.DateModify | date: 'dd.MM.yyyy' }}</ng-container>
               </mib-table-cell>
               <mib-table-cell>
                 <ng-container table-cell-title
@@ -112,7 +116,7 @@
                 >
               </mib-table-cell>
               <mib-button
-                (press)="newDraftDrawer(draft?.ID, draft.TypeInt, TabType.Draft)"
+                (press)="newDraftDrawer(draft?.ID, +dialogType[draft.Type], TabType.Draft)"
                 table-row-button
                 size="s"
                 type="ghost-secondary"
@@ -144,7 +148,7 @@
         </mib-table-footer>
       </mib-table>
     </mib-tab-item>
-    <mib-tab-item value="3">
+    <mib-tab-item [value]="String(tabType.History)">
       <mib-spacing type="m"></mib-spacing>
       <div class="history-controls gap-16 flex flex_justify-between">
         <mib-input>

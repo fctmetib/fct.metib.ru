@@ -1,7 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core'
+import {isPlatformBrowser} from '@angular/common'
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core'
 import {Subscription} from 'rxjs'
 import {LandingRequestModalService} from 'src/app/shared/modules/modals/landing-request-modal/landing-request-modal.service'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import { SeoService } from 'src/app/shared/services/seo.service'
 
 @Component({
 	selector: 'tariffs.html',
@@ -58,14 +60,34 @@ export class TariffsComponent implements OnInit, OnDestroy {
 	]
 
 	constructor(
+		@Inject(PLATFORM_ID) private platformId: Object,
 		public breakpointService: BreakpointObserverService,
-		public landingRequestModalService: LandingRequestModalService
+		public landingRequestModalService: LandingRequestModalService,
+		private seoService: SeoService
 	) {}
 
 	ngOnInit(): void {
-		this.subscriptions = this.breakpointService
-			.isDesktop()
-			.subscribe(b => (this.isDesktop = b))
+		if (isPlatformBrowser(this.platformId)) {
+			this.subscriptions.add(
+				this.breakpointService.isDesktop().subscribe(b => (this.isDesktop = b))
+			)
+		} else {
+			this.isDesktop = true
+		}
+
+		
+		this.seoService.updateMetaTags({
+			title:
+				'Тарифы на услуги банковского факторинга, факторинг стоимость',
+			description:
+				'Тарифы на услуги банковского факторинга для поставщиков, сколько стоит факторинг',
+			image: 'https://factoring.metallinvestbank.ru/ogimagemain.jpg',
+			ogDescription:
+				'Тарифы на услуги банковского факторинга для поставщиков, сколько стоит факторинг'
+		})
+
+		const currentUrl = "https://factoring.metallinvestbank.ru/tariffs";
+		this.addCanonicalLink(currentUrl)
 	}
 
 	openLandingRequestModal(data) {
@@ -76,6 +98,15 @@ export class TariffsComponent implements OnInit, OnDestroy {
 		console.log('calculate>>')
 	}
 
+	private addCanonicalLink(url: string) {
+		const link: HTMLLinkElement =
+			document.querySelector("link[rel='canonical']") ||
+			document.createElement('link')
+		link.setAttribute('rel', 'canonical')
+		link.setAttribute('href', url)
+		document.head.appendChild(link)
+	}
+	
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe()
 	}

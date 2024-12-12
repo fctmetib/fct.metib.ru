@@ -1,9 +1,17 @@
 import {ClientModule} from './client/client.module'
 
 import {AuthModule} from './auth/auth.module'
-import {BrowserModule} from '@angular/platform-browser'
-import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core'
-import {CommonModule, registerLocaleData} from '@angular/common'
+import {
+	BrowserModule,
+	makeStateKey,
+	TransferState
+} from '@angular/platform-browser'
+import {APP_INITIALIZER, LOCALE_ID, NgModule, PLATFORM_ID} from '@angular/core'
+import {
+	CommonModule,
+	isPlatformServer,
+	registerLocaleData
+} from '@angular/common'
 import localeRu from '@angular/common/locales/ru'
 import {AppRoutingModule} from './app-routing.module'
 import {AppComponent} from './app.component'
@@ -24,6 +32,7 @@ import {ToasterModule} from './shared/ui-kit/toaster/toaster.module'
 import {AgentClientModule} from './agent-client/agent-client.module'
 
 registerLocaleData(localeRu, 'ru')
+const BASE_URL_KEY = makeStateKey<string>('BASE_URL')
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
@@ -51,10 +60,24 @@ registerLocaleData(localeRu, 'ru')
 			multi: true
 		},
 		{
+			provide: 'BASE_URL',
+			useFactory: (transferState: TransferState, platformId: Object) => {
+				if (isPlatformServer(platformId)) {
+					return (
+						transferState.get<string>(BASE_URL_KEY, 'https://factoring.metallinvestbank.ru/') ||
+						'https://factoring.metallinvestbank.ru/'
+					)
+				} else {
+					return window.location.origin
+				}
+			},
+			deps: [TransferState, PLATFORM_ID]
+		},
+		{
 			provide: APP_INITIALIZER,
 			useFactory: appInitializer,
-			multi: true,
-			deps: [IconsService, AuthService]
+			deps: [AuthService, PLATFORM_ID],
+			multi: true
 		}
 	],
 	bootstrap: [AppComponent]

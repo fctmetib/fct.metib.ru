@@ -1,5 +1,5 @@
 import {BankRequisitesInterface} from '../../types/bank/bank-requisites.interface';
-import {ReportCardInterface} from 'src/app/client/modules/cabinet/types/common/report-card.interface';
+import {IReportCard} from 'src/app/client/modules/cabinet/types/common/i-report.card';
 import {DemandSelectboxInterface} from '../../../client/modules/demand-new/types/demand-selectbox.interface';
 
 export class MIBCommon {
@@ -11,7 +11,7 @@ export class MIBCommon {
   private countryList: DemandSelectboxInterface[] = [];
   private regionList: DemandSelectboxInterface[] = [];
 
-  private reportList: ReportCardInterface[] = [];
+  private reportList: IReportCard[] = [];
 
   private bankRequisites: BankRequisitesInterface;
 
@@ -39,7 +39,7 @@ export class MIBCommon {
     return this.regionList;
   }
 
-  getReports(): ReportCardInterface[] {
+  getReports(): IReportCard[] {
     return this.reportList;
   }
 
@@ -584,18 +584,19 @@ export class MIBCommon {
           isEmpty: true,
         }
       },
-      {
-        title: 'Протокол Отчетов',
-        description: 'Список выполненных клиентом отчетов за указанный период',
-        link: '',
-        type: 'ReportProtocol',
-        config: {
-          isDateFrom: true,
-          isDateTo: true,
-          isSelectReportDropdown: true,
-          isSelectReportCheckbox: true
-        }
-      },
+      // TODO: РАССКОММЕНТИРОВАТЬ, КОГДА ПОЯВИТСЯ АПИ
+      // {
+      //   title: 'Протокол Отчетов',
+      //   description: 'Список выполненных клиентом отчетов за указанный период',
+      //   link: '',
+      //   type: 'ReportProtocol',
+      //   config: {
+      //     isDateFrom: true,
+      //     isDateTo: true,
+      //     isSelectReportDropdown: true,
+      //     isSelectReportCheckbox: true
+      //   }
+      // },
       {
         title: 'Счета-Фактуры',
         description:
@@ -616,6 +617,7 @@ export class MIBCommon {
           isNumberOrder: true
         }
       },
+      // TODO: РАССКОММЕНТИРОВАТЬ, КОГДА БЕК ПОПРАВИТ ОШИБКУ
       {
         title: 'Отчеты Дебиторов',
         description: 'Отчеты, полученные от Дебиторов',

@@ -3,9 +3,9 @@ import {
   AfterViewInit,
   Component, ContentChild,
   ContentChildren,
-  ElementRef,
-  forwardRef, Inject,
-  Input, PLATFORM_ID,
+  ElementRef, EventEmitter,
+  forwardRef, inject, Inject,
+  Input, Output, PLATFORM_ID,
   QueryList, Renderer2,
   ViewChild
 } from '@angular/core';
@@ -18,6 +18,7 @@ import {DropdownService} from '../dropdown/services/dropdown.service';
 import {DropdownComponent} from '../dropdown/dropdown.component';
 import {SelectLabelDirective} from './directives/select-label.directive';
 import {isPlatformBrowser} from '@angular/common';
+import { WINDOW } from '../../tokens/window.token';
 
 @Component({
   selector: 'mib-select',
@@ -42,6 +43,8 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   @Input() placeholder: string = 'Выберите опцию'
   @Input() size: InputSize = 'm';
   @Input() type: SelectType = 'filled-secondary';
+  @Output() onSelect = new EventEmitter();
+  @Output() onMultiSelectLast = new EventEmitter()
 
   private innerValue: any;
   private viewMounted: boolean = false;
@@ -55,6 +58,8 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     private dropdownService: DropdownService
   ) {
   }
+
+  private window = inject(WINDOW)
 
   get showDropdown() {
     const menuId = this.menu?.id
@@ -81,7 +86,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
           leftEl: this.leftIcon.nativeElement,
           rightEl: this.rightIcon.nativeElement,
           element: this.select.nativeElement,
-        }, this.r2)
+        }, this.r2, this.window)
       })
     }
   }
@@ -165,9 +170,11 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
       }
 
       this.onChange(this.selectedOptions.map(opt => opt.value));
+      this.onMultiSelectLast.emit(option.value)
     } else {
       this.selectedOption = option;
       this.onChange(option.value);
+      this.onSelect.emit(option.value)
       this.close();
     }
   }

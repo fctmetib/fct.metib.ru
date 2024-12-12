@@ -1,13 +1,13 @@
 import {
-	AfterContentInit,
-	Component,
-	ContentChild,
-	ContentChildren,
-	EventEmitter,
-	Input,
-	Output,
-	QueryList
-} from '@angular/core'
+  AfterContentInit,
+  Component,
+  ContentChild,
+  ContentChildren,
+  EventEmitter, forwardRef,
+  Input,
+  Output,
+  QueryList
+} from '@angular/core';
 import {TagComponent} from '../tag/tag.component'
 import {pipe, startWith, takeUntil, tap} from 'rxjs'
 import {AutoUnsubscribeService} from '../../services/auto-unsubscribe.service'
@@ -23,7 +23,7 @@ export class TagsGroupComponent implements AfterContentInit {
 
 	@Output() onChange = new EventEmitter<string>()
 
-	@ContentChildren(TagComponent, {
+	@ContentChildren(forwardRef(() => TagComponent), {
 		descendants: true
 	})
 	public tags: QueryList<TagComponent>

@@ -1,7 +1,7 @@
 /**
  * Описание интерфейса
  *
- * @interface ControlConfigReportInterface
+ * @interface IControlConfigReport
  * @isEmpty {boolean} отвечает за отображение сообщения "Для этого отчета не нужны параметры...
 В отчете будут указаны актуальные данные на текущий момент."
  * @isDateFrom {boolean} отвечает за отображение поля "Дата С"
@@ -16,7 +16,7 @@
  * @isSelectReportDropdown {boolean} отвечает за отображение поля с выбором отчетов - дропдаун
  * @isSelectReportCheckbox {boolean} отвечает за отображение поля с выбором отчетов - чекбокс
  */
-export interface ControlConfigReportInterface {
+export interface IControlConfigReport {
   isEmpty?: boolean;
   isDateFrom?: boolean;
   isDateTo?: boolean;

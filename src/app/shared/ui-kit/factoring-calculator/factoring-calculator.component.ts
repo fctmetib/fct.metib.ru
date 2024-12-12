@@ -1,4 +1,12 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core'
+import {isPlatformBrowser} from '@angular/common'
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	OnInit,
+	Output,
+	PLATFORM_ID
+} from '@angular/core'
 import {FormBuilder, FormGroup} from '@angular/forms'
 
 @Component({
@@ -12,7 +20,10 @@ export class FactoringCalculatorComponent implements OnInit {
 
 	@Output() onPress = new EventEmitter()
 
-	constructor(private fb: FormBuilder) {}
+	constructor(
+		private fb: FormBuilder,
+		@Inject(PLATFORM_ID) private platformId: Object
+	) {}
 
 	ngOnInit() {
 		this.form = this.fb.group({
@@ -30,9 +41,11 @@ export class FactoringCalculatorComponent implements OnInit {
 		this.syncInputs('monthlyTurnover')
 		this.syncInputs('defermentPeriod')
 
-		this.updateRangeBackground('finAmount')
-		this.updateRangeBackground('monthlyTurnover')
-		this.updateRangeBackground('defermentPeriod')
+		if (isPlatformBrowser(this.platformId)) {
+			this.updateRangeBackground('finAmount')
+			this.updateRangeBackground('monthlyTurnover')
+			this.updateRangeBackground('defermentPeriod')
+		}
 
 		this.calculate()
 	}
@@ -45,14 +58,18 @@ export class FactoringCalculatorComponent implements OnInit {
 			if (rangeControl?.value !== value) {
 				rangeControl?.setValue(value, {emitEvent: false})
 			}
-			this.updateRangeBackground(controlPrefix)
+			if (isPlatformBrowser(this.platformId)) {
+				this.updateRangeBackground(controlPrefix)
+			}
 		})
 
 		rangeControl?.valueChanges.subscribe(value => {
 			if (numberControl?.value !== value) {
 				numberControl?.setValue(value, {emitEvent: false})
 			}
-			this.updateRangeBackground(controlPrefix)
+			if (isPlatformBrowser(this.platformId)) {
+				this.updateRangeBackground(controlPrefix)
+			}
 		})
 	}
 
@@ -77,10 +94,13 @@ export class FactoringCalculatorComponent implements OnInit {
 	}
 
 	updateRangeBackground(controlPrefix: string) {
+		if (!isPlatformBrowser(this.platformId)) return
+
 		const rangeControl = this.form.get(`${controlPrefix}Range`)
 		const rangeInput = document.getElementById(
 			`${controlPrefix}Range`
 		) as HTMLInputElement
+
 		if (rangeInput) {
 			const max = rangeInput.max ? +rangeInput.max : 100
 			const value = Math.min(rangeControl?.value, max)

@@ -1,76 +1,90 @@
 import {
-	Component,
-	EventEmitter,
-	Input,
-	OnChanges,
-	OnInit,
-	Output,
-	SimpleChanges
-} from '@angular/core'
-import {FormControl} from '@angular/forms'
-import {tap} from 'rxjs'
-import {ToolsService} from '../../../../services/tools.service'
-import {TableComponent} from '../../table.component'
+  Component, ContentChildren, ElementRef,
+  EventEmitter, HostListener,
+  inject, InjectionToken,
+  Input,
+  OnInit,
+  Output, QueryList,
+  ViewChild
+} from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { ToolsService } from '../../../../services/tools.service';
+import { SortTableActionComponent } from '../sort-table-action/sort-table-action.component';
+import { FilterTableActionComponent } from '../filter-table-action/filter-table-action.component';
+import {
+  HeadCellFilterActionsDirective
+} from './directives/head-cell-filter-action/head-cell-filter-actions.directive';
+import { TableCellBaseComponent } from '../table-cell-base/table-cell-base.component';
+
+export const HEAD_CELL_IS_HOVER = new InjectionToken<Observable<boolean>>('HEAD_CELL_IS_HOVER', {
+  providedIn: 'root',
+  factory: () => of(false)
+});
+
 
 @Component({
-	selector: 'mib-table-head-cell',
-	templateUrl: './table-head-cell.component.html',
-	styleUrls: ['./table-head-cell.component.scss']
+  selector: 'mib-table-head-cell',
+  templateUrl: './table-head-cell.component.html',
+  styleUrls: ['./table-head-cell.component.scss'],
+  providers: [
+    {
+      provide: HEAD_CELL_IS_HOVER,
+      useFactory: (headCellComponent: TableHeadCellComponent) => headCellComponent.isHover$.asObservable(),
+      deps: [TableHeadCellComponent]
+    }
+  ]
 })
-export class TableHeadCellComponent implements OnInit, OnChanges {
-	checkboxId: string
-	@Input() showCheckbox: boolean = false
-	@Input() checked: boolean = false
-	@Input() sortable: boolean = false
-	@Output() onCheck = new EventEmitter<boolean>()
-	@Output() onSort = new EventEmitter<boolean>()
+export class TableHeadCellComponent extends TableCellBaseComponent implements OnInit {
+  @Input() field = '';
+  @Input() sortType: 'alphabetical' | 'numerical' | 'date' | 'boolean' = 'alphabetical';
+  @Output() onCheck = new EventEmitter<boolean>();
 
-	control: FormControl = new FormControl<boolean>(false)
+  @ViewChild(SortTableActionComponent) sortActionComponent?: SortTableActionComponent;
+  @ViewChild(FilterTableActionComponent) filterActionComponent?: FilterTableActionComponent;
+  @ViewChild('label', { static: true }) labelElement: ElementRef<HTMLLabelElement>;
 
-	id: string = null
-	selected: boolean = false
-	selectedAsSortable: boolean = false
+  @ContentChildren(HeadCellFilterActionsDirective) filterPoints: QueryList<HeadCellFilterActionsDirective>;
 
-	constructor(
-		private toolsService: ToolsService,
-		private tableComponent: TableComponent
-	) {}
+  checkboxId: string;
+  id: string = null;
+  control = new FormControl<boolean>(false);
+  isHover$ = new BehaviorSubject<boolean>(false);
 
-	ngOnInit() {
-		this.id = this.toolsService.generateId()
-		this.checkboxId = 'checkbox-' + Math.random().toString(36).substr(2, 9)
+  private toolsService = inject(ToolsService);
 
-		this.control.valueChanges
-			.pipe(
-				tap(value => {
-					this.onCheck.emit(value)
-				})
-			)
-			.subscribe()
-	}
+  get label() {
+    return this.labelElement.nativeElement.innerHTML;
+  }
 
-	ngOnChanges(changes: SimpleChanges) {
-		if (changes.checked) {
-			this.control.setValue(this.checked, {emitEvent: false})
-		}
-	}
+  get isSortable() {
+    return Boolean(this.sortType && this.field);
+  }
 
-	toggle() {
-		if (this.sortable) {
-			this.selected = this.selectedAsSortable ? !this.selected : false
-			this.onChange()
-		}
-	}
+  get isFilterable() {
+    return Boolean(this.filterPoints.length);
+  }
 
-	onChange() {
-		this.onSort.emit(this.selected)
-		this.tableComponent.selectHeadCell(this)
-	}
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    this.isHover$.next(true);
+  }
 
-	setSelectedValue(value: boolean) {
-		if (this.sortable) {
-			this.selected = value
-			this.onChange()
-		}
-	}
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    const state = Boolean(this.filterActionComponent?.filterDropdown?.isVisible);
+    this.isHover$.next(state);
+  }
+
+  ngOnInit() {
+    this.id = this.toolsService.generateId();
+    this.checkboxId = 'checkbox-' + Math.random().toString(36).substr(2, 9);
+
+    this.control.valueChanges.pipe(
+      tap(value => {
+        this.onCheck.emit(value);
+      })
+    ).subscribe();
+  }
+
 }

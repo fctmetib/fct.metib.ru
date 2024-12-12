@@ -24,8 +24,6 @@ export const setPaddings = ({leftEl, rightEl, element}: SetInputIconsPaddings, r
   const newPaddingRight = `calc(${paddingRight} + ${rightWidth}px)`
   const newPaddingLeft = `calc(${paddingLeft} + ${leftWidth}px)`
 
-  console.log(paddingLeft, leftWidth, newPaddingLeft)
-
   r2.setStyle(element, 'padding-right', newPaddingRight)
   r2.setStyle(element, 'padding-left', newPaddingLeft)
 

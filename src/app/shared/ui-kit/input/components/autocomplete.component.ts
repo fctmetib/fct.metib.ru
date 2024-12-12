@@ -17,6 +17,7 @@ import {
 } from '@angular/forms'
 import {Subscription} from 'rxjs'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import { InputType } from '../interfaces/input.interface';
 
 @Component({
   selector: 'mib-autocomplete',
@@ -36,8 +37,13 @@ export class AutocompleteComponent
   @Input() loading: boolean = false
   @Input() extra: boolean = false
   @Input() innType: boolean = false
+  @Input() searchIcon: boolean = false
+  @Input() inlineStyle: boolean = false
+  @Input() styleType: InputType = 'floating'
   @Input() label: string
   @Output() valueChanged = new EventEmitter<string>()
+  @Output() focus = new EventEmitter<any>()
+  @Output() confirm = new EventEmitter<any>()
   control = new FormControl()
   showDropdown = false
   noData = false
@@ -79,6 +85,7 @@ export class AutocompleteComponent
   toggleSelection(option: any) {
     this.control.setValue(this.innType ? option?.data?.inn : option.value, {emitEvent: true})
     this.showDropdown = false
+    this.confirm.emit()
   }
 
   onBlur() {

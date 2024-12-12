@@ -4,14 +4,14 @@
   <mib-drawer-container>
     <h4>Запрос на верификацию</h4>
     <mib-spacing type="xs"></mib-spacing>
-    <mib-select placeholder="Дебитор" formControlName="DebtorID">
+    <mib-select placeholder="Дебитор" formControlName="debtorID">
       <mib-dropdown-point [value]="1" text="Дебитор А"></mib-dropdown-point>
       <mib-dropdown-point [value]="2" text="Дебитор Б"></mib-dropdown-point>
       <mib-dropdown-point [value]="3" text="Дебитор В"></mib-dropdown-point>
     </mib-select>
     <mib-spacing type="xs"></mib-spacing>
     <div class="flex gap-12">
-      <mib-select class="flex_grow" placeholder="Тип верификации" formControlName="VerificationType">
+      <mib-select class="flex_grow" placeholder="Тип верификации" formControlName="verificationType">
         <mib-dropdown-point
           value="Верификация А"
           text="Верификация А"
@@ -31,24 +31,28 @@
       </mib-input>
     </div>
     <mib-spacing type="xs"></mib-spacing>
-    <div class="flex">
-      <mib-checkbox class="gap-8 flex_grow" formControlName="order">
+    <div class="flex" formGroupName="documentTypes">
+      <mib-checkbox class="gap-8 flex_grow" formControlName="ORDER">
         <span class="text text_m">Заказ (ORDER)</span>
       </mib-checkbox>
-      <mib-checkbox class="gap-8 flex_grow" formControlName="notification">
+      <mib-checkbox class="gap-8 flex_grow" formControlName="RECADV">
         <span class="text text_m">Уведомление о приёмке</span>
       </mib-checkbox>
     </div>
     <mib-spacing type="xs"></mib-spacing>
     <mib-textarea>
       <ng-container mibLabel>Комментарий к запросу</ng-container>
-      <textarea [maxLength]="100" autosize mibTextarea formControlName="Comment"></textarea>
+      <textarea [maxLength]="100" autosize mibTextarea formControlName="comment"></textarea>
     </mib-textarea>
     <mib-spacing type="m"></mib-spacing>
   </mib-drawer-container>
   <mib-drawer-footer drawer-footer>
     <div class="flex w-100">
-      <mib-button (press)="submitData()" size="m" type="filled-secondary"
+      <mib-button
+        [disabled]="false"
+        (press)="submitData()"
+        size="m"
+        type="filled-primary"
       >Отправить запрос
       </mib-button
       >

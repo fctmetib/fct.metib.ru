@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core'
 import {DomSanitizer} from '@angular/platform-browser'
-import {RefIconService} from '../ui-kit/ref-icon/services/ref-icon.service'
+
+export type IconsNames = (typeof IconsService.prototype.icons)[number] | ''
 
 @Injectable({
 	providedIn: 'root'
 })
 export class IconsService {
 	constructor(
-		private domSanitizer: DomSanitizer,
-		private iconService: RefIconService
+		private domSanitizer: DomSanitizer
 	) {}
 
-	public icons: string[] = [
+	public icons = [
 		'fi_chevron-left',
 		'fi_chevron-right',
 		'fi_search',
@@ -34,6 +34,7 @@ export class IconsService {
 		'fi_log-out',
 		'fi_eye',
 		'fi_refresh-ccw',
+		'fi_send',
 		'fi_eye-off',
 		'fi_frown',
 		'fi_plus',
@@ -62,17 +63,19 @@ export class IconsService {
 		'fi_more-horizontal',
 		'fi_image',
 		'fi_repeat',
-		'fi_logo_round_main'
-	]
+		'fi_logo_round_main',
+		'fi_chevrons-down',
+		'fi_chevrons-up',
+		'fi_filter'
+	] as const
 
-	public async initIcons(): Promise<void> {
-		const promises = this.icons.map(icon =>
-			this.iconService.registerIconFromAssets(
-				icon,
-				`assets/icons/ui-kit-icons/${icon}.svg`
-			)
-		)
+	// public async initIcons(): Promise<void> {
+	// 	const promises = this.icons.map(icon =>
+	// 		this.iconService.loadIcon(
+	// 			icon
+	// 		)
+	// 	)
 
-		await Promise.all(promises)
-	}
+	// 	await Promise.all(promises)
+	// }
 }

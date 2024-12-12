@@ -38,17 +38,84 @@
       <mib-spacing type="xs"></mib-spacing>
       <mib-tab-group>
         <mib-navbar class="container container_large">
-          <mib-navbar-point value="1">События</mib-navbar-point>
-          <mib-navbar-point value="2">Информация</mib-navbar-point>
-          <mib-navbar-point value="3">Документы</mib-navbar-point>
-          <mib-navbar-point value="4">Результат</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="1">События</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="2">Информация</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="3">Документы</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="4">Результат</mib-navbar-point>
         </mib-navbar>
-        <div class="container container_large">
-          <mib-tab-item value="1"></mib-tab-item>
-          <mib-tab-item value="2"></mib-tab-item>
-          <mib-tab-item value="3"></mib-tab-item>
-          <mib-tab-item value="4"></mib-tab-item>
-        </div>
+        <mib-spacing type="m"></mib-spacing>
+        <mib-tab-item value="1">
+          <div class="scroll-y" [style.height]="height">
+            <ng-template #messagesTemplate>
+              <div
+                #messagesContent
+                [id]="i"
+                *ngFor="let message of viewingData?.Messages;trackBy:identify; let i = index"
+              >
+                <mib-message-item [message]="message"></mib-message-item>
+              </div>
+            </ng-template>
+
+            <ng-container *ngIf="loading$ | async; else messagesTemplate">
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+              <mib-spacing type="xs2"></mib-spacing>
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+              <mib-spacing type="xs2"></mib-spacing>
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+              <mib-spacing type="xs2"></mib-spacing>
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+              <mib-spacing type="xs2"></mib-spacing>
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+              <mib-spacing type="xs2"></mib-spacing>
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+            </ng-container>
+          </div>
+
+        </mib-tab-item>
+        <mib-tab-item value="2">
+          <h5>{{viewingData?.Data?.Subject}}</h5>
+          <mib-spacing type="xs2"></mib-spacing>
+          <div class="text text_m">{{viewingData?.Data?.Question}}</div>
+        </mib-tab-item>
+        <mib-tab-item value="3">
+          <h5>Прикреплённые документы</h5>
+          <mib-spacing type="xs2"></mib-spacing>
+          <ng-container *ngIf="viewingData?.Files?.length; else emptyFiles">
+            <mib-attached-document
+              *ngFor="let document of viewingData?.Files"
+              [fileForRead]="{FileName: document.FileName, Size: document.Size, DemandFileID: document.DemandFileID}"
+              [file]="document"
+              [download]="true"
+              [remove]="true"
+              (deleteFile)="deleteFile()"
+            ></mib-attached-document>
+          </ng-container>
+          <ng-template #emptyFiles>
+            <div class="text text_s">Прикреплённых файлов нет...</div>
+          </ng-template>
+        </mib-tab-item>
+        <mib-tab-item value="4">
+          <h5>Комментарий к запросу</h5>
+          <mib-spacing type="xs2"></mib-spacing>
+          <div class="text text_m" *ngIf="viewingData?.Result?.Comment;else commentPlaceholder">
+            {{viewingData?.Result?.Comment}}
+          </div>
+          <ng-template #commentPlaceholder>
+            <div class="text text_s">Комментариев не оставлено...</div>
+          </ng-template>
+          <mib-spacing type="xs"></mib-spacing>
+          <h6 class="text text_m text_medium">Отчет по запросу</h6>
+          <ng-container *ngIf="viewingData?.Data?.Files?.length; else emptyReportsFiles">
+            <mib-attached-document
+              *ngFor="let document of viewingData?.Data.Files"
+              [download]="true"
+              [remove]="true"
+            ></mib-attached-document>
+          </ng-container>
+          <ng-template #emptyReportsFiles>
+            <div class="text text_s">Прикреплённых отчётов нет...</div>
+          </ng-template>
+        </mib-tab-item>
       </mib-tab-group>
       <mib-spacing type="xs"></mib-spacing>
     </div>
@@ -120,11 +187,17 @@
       </div>
     </ng-template>
   </mib-drawer-container>
-  <mib-drawer-footer drawer-footer>
+  <mib-drawer-footer drawer-footer *ngIf="(isChangeByView && tabIndex === '1')">
+    <mib-send-messages
+      [disabled]="(isSubmitting$ | async)"
+      [form]="messageForm"
+      (sendMessage)="sendMessage()"
+    ></mib-send-messages>
+  </mib-drawer-footer>
+  <mib-drawer-footer drawer-footer *ngIf="!isChangeByView">
     <mib-button
       [disabled]="form?.invalid || (loading$ | async) || (isSubmitting$ | async)"
       (press)="onSubmit()"
-      [disabled]="true"
       [size]="size"
       type="filled-primary"
       *ngIf="!isChangeByView"

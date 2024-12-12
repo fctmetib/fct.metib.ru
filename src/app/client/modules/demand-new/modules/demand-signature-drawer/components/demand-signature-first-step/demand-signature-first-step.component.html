@@ -8,13 +8,13 @@
   <mib-spacing type="xs"></mib-spacing>
   <div class="flex flex_align-center gap-12">
     <mib-autocomplete
+      (confirm)="confirmIds()"
       [options]="options"
       [innType]="true"
       label = "Введите ИНН организации"
       formControlName="INN"
       class="flex_grow">
     </mib-autocomplete>
-    <mib-button (click)="confirmIds()" type="filled-primary" [disabled]="disableBtn">Подтвердить</mib-button>
   </div>
   <mib-spacing type="m"></mib-spacing>
 </form>

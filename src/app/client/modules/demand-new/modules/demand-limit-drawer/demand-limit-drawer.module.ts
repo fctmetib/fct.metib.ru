@@ -15,6 +15,10 @@ import {ButtonModule} from 'src/app/shared/ui-kit/button/button.module'
 import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {DemandService} from '../../services/demand.service'
+import { DlFileCellModule } from '../../../../../shared/ui-kit/dl-file-cell/dl-file-cell.module';
+import { NgxMaskModule } from 'ngx-mask';
+import { RightIconModule } from '../../../../../shared/directives/right-icon/right-icon.module';
+import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-loader.module';
 
 @NgModule({
   declarations: [DemandLimitDrawerComponent],
@@ -31,7 +35,7 @@ import {DemandService} from '../../services/demand.service'
     MibDragAndDropModule,
     ButtonModule,
     ReactiveFormsModule, FormsModule,
-    RubModule
+    RubModule, DlFileCellModule, NgxMaskModule, RightIconModule, BlurLoaderModule
   ],
   providers: [DemandLimitDrawerService, DemandService]
 })

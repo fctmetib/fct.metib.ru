@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core'
-import {Observable} from 'rxjs'
+import { map, Observable } from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http'
 import {environment} from 'src/environments/environment'
 import {
@@ -12,6 +12,8 @@ import {DemandDraftInterface} from '../types/demand-draft.interface'
 import {CreateDemandMessageRequestInterface} from '../types/requests/create-demand-message-request.interface'
 import {CreateDemandEDSRequestInterface} from '../types/requests/create-demand-eds-request.interface'
 import {DebtorInterface} from '../types/debtor-interface'
+import { DemandsPrepareEnum } from '../pages/demand-new-home/demand-new-home.component';
+import { FileMode } from '../../../../shared/types/file/file-model.interface';
 
 @Injectable()
 export class DemandService {
@@ -26,7 +28,7 @@ export class DemandService {
 	// 	return this.http.get<any>(url, type)
 	// }
 
-	public prepareDemandByTypes(type: any): Observable<any> {
+	public prepareDemandByTypes(type: DemandsPrepareEnum): Observable<any> {
 		const url = `${environment.apiUrl}/v1/demands/prepare?type=${type}`
 		return this.http.get<any>(url)
 	}
@@ -45,34 +47,56 @@ export class DemandService {
 	// 	return this.http.get<DemandDataBaseInterface>(url)
 	// }
 
-	getDemandById(id: number): Observable<DemandInterface<any>> {
-		const url = `${environment.apiUrl}/demand/${id}`
-		return this.http.get<DemandInterface<any>>(url)
+	getDemandById(id: number) {
+		const url = `${environment.apiUrl}/v1/demands/${id}`
+		return this.http.get<any>(url)
 	}
 
 	// new API
 	public createDemand<T>(data: any): Observable<any> {
-		const url = `${environment.apiUrl}/v1/demands`
+    const params = new HttpParams()
+      .set('draftId', data.draftId)
+		const url = `${environment.apiUrl}/v1/demands?${params}`
 		return this.http.post<any>(url, data)
 	}
 
 	// new API
 	public updateDraft(id: any, data: any): Observable<any> {
-		const url = `${environment.apiUrl}/v1/demands/drafts`
 		const params = new HttpParams()
 			.set('draftId', JSON.stringify(id))
-			.set('demandData', JSON.stringify(data))
+    const url = `${environment.apiUrl}/v1/demands/drafts?${params}`
 
-		return this.http.put<any>(url, null, {params})
+		return this.http.put<any>(url, data)
 	}
 
 	// new API
 	public createNewDraft(data: any): Observable<any> {
 		const url = `${environment.apiUrl}/v1/demands/drafts`
-		const params = new HttpParams().set('demandData', JSON.stringify(data))
-
-		return this.http.post<any>(url, null, {params})
+		return this.http.post<any>(url, data)
 	}
+
+	public uploadDraftFile(
+		file: any,
+		documentType: string,
+		draftId: number) {
+			const url = `${environment.apiUrl}/v1/demands/drafts/file/upload`
+			const params = new HttpParams()
+				.set('documentType', documentType)
+				.set('draftId', draftId)
+
+			console.log(file)
+			const formData = new FormData()
+			formData.append('file', file)
+
+			return this.http.post<FileMode>(url, formData, {params})
+		}
+
+  public sendDemandsMessage<T>(data: CreateDemandMessageRequestInterface, id: string): Observable<any> {
+    const params = new HttpParams()
+      .set('id', id)
+    const url = `${environment.apiUrl}/v1/demands/message?${params}`
+    return this.http.post<any>(url, data)
+  }
 
 	public uploadFile(
 		file: any,
@@ -90,6 +114,25 @@ export class DemandService {
 
 		return this.http.post<any>(url, formData, {params})
 	}
+
+  public downloadFile(demandFileId: number): Observable<any> {
+    const params = new HttpParams()
+      .set('demandFileId', demandFileId)
+    const url = `${environment.apiUrl}/v1/demands/file?${params}`
+    return this.http.get(url, {
+      responseType: 'arraybuffer'
+    }).pipe(
+      map((buffer) => {
+        let binary = '';
+        const bytes = new Uint8Array(buffer);
+        const len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        return btoa(binary);
+      })
+    )
+  }
 
 	public saveDraftById(
 		id: number,
@@ -127,6 +170,13 @@ export class DemandService {
 		return this.http.delete<DemandDraftInterface<any>>(url)
 	}
 
+  public deleteDemandFileById(demandFileId: number): Observable<any> {
+    const params = new HttpParams()
+      .set('demandFileId', demandFileId)
+    const url = `${environment.apiUrl}/v1/demands/file?${params}`
+    return this.http.delete<any>(url)
+  }
+
 	public cancelByDemandId(id: number): Observable<any> {
 		const url = `${environment.apiUrl}/demand/${id}/cancel`
 		return this.http.post<any>(url, {})
@@ -140,13 +190,16 @@ export class DemandService {
 		return this.http.post<any>(url, data)
 	}
 
-	getDigitalSignatureRequest(
-		data: CreateDemandEDSRequestInterface
-	): Observable<any> {
-		const url = `${environment.apiUrl}/demand/document/DigitalSignatureRequest`
-		return this.http.post<any>(url, data, {
-			responseType: 'arraybuffer' as 'json'
-		})
+	getDemandDocumentByType(
+		data: any,
+    type: string
+	) {
+		const url = `${environment.apiUrl}/v1/demands/document/DigitalSignatureRequest`
+		return this.http.post<any>(url, JSON.stringify(data), {
+      params: {
+        documentType: type
+      }
+    })
 	}
 
 	getDebtors(): Observable<DebtorInterface[]> {
@@ -155,13 +208,38 @@ export class DemandService {
 	}
 
 	// new API //
-	getDemandDraftById(id: number): Observable<any> {
+	getDemandDraftById(id: number) {
 		const url = `${environment.apiUrl}/v1/demands/drafts/${id}`
-		return this.http.get<any>(url)
+		return this.http.get<DemandInterface<any>>(url)
 	}
 
 	// getDemandDraftById(id: number): Observable<DemandInterface<any>> {
 	// 	const url = `${environment.apiUrl}/demand/draft/${id}`
 	// 	return this.http.get<DemandInterface<any>>(url)
 	// }
+
+  getStatus(status: string): string {
+    let result: string = ''
+    switch (status) {
+      case 'Created':
+        result = 'Создан'
+        break
+      case 'Completed':
+        result = 'Завершен'
+        break
+      case 'Processing':
+        result = 'В процессе'
+        break
+      case 'Rejected':
+        result = 'Отклонено'
+        break
+      case 'Draft':
+        result = 'Черновик'
+        break
+      case 'Canceled':
+        result = 'Отменен'
+        break
+    }
+    return result
+  }
 }

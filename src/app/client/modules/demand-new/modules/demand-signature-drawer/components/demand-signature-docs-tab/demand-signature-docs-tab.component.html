@@ -1,0 +1,22 @@
+<h5>Прикреплённые документы</h5>
+<mib-spacing type="xs2"></mib-spacing>
+<div *ngFor="let file of filesWithTypes">
+  <h6 class="text text_m text_medium">
+    {{filesTypeEnum[file.identifier] || 'Прочие документы'}}
+  </h6>
+  <ng-container *ngIf="file?.files?.length; else emptyFiles">
+    <div>
+      <mib-attached-document
+        *ngFor="let file of file?.files"
+        [fileForRead]="{FileName: file.FileName, Size: file.Size, DemandFileID: file.DemandFileID}"
+        [file]="file"
+        [download]="true"
+        (deleteFile)="deleteFile.emit()"
+      ></mib-attached-document>
+    </div>
+    <mib-spacing type="xs"></mib-spacing>
+  </ng-container>
+  <ng-template #emptyFiles>
+    <div class="text text_s">Прикреплённых файлов нет...</div>
+  </ng-template>
+</div>

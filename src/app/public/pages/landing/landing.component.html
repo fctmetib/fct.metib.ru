@@ -122,7 +122,6 @@
 								Комплексный
 							</mib-tag>
 							<mib-tag
-								class="extra"
 								size="xl"
 								type="special"
 								[value]="ProductTabsEnum.INDIVIDUAL"
@@ -157,7 +156,7 @@
 						<mib-spacing type="xs2"></mib-spacing>
 						<p class="products-description text text_l c-bti-secondary">
 							Скрытый факторинг – пополнение оборотных средств без уведомления
-							поставщика.
+							покупателя.
 						</p>
 					</div>
 					<div
@@ -332,14 +331,14 @@
 						</mib-input>
 					</div>
 					<mib-textarea
+						size="xxl"
 						styleType="floating"
-						size="{{ isDesktop ? 'xl' : 'l' }}"
 					>
 						<ng-container mibLabel>Ваш комментарий</ng-container>
 						<textarea
+							styleType="floating"
+							[maxLength]="200"
 							formControlName="Comment"
-							[maxLength]="100"
-							[attr.autosize]="isBrowser ? '' : null"
 							mibTextarea
 						></textarea>
 					</mib-textarea>

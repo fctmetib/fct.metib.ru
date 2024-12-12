@@ -15,11 +15,10 @@
         <ng-container mibLabel>Торговые марки</ng-container>
       </mib-input>
       <div class="flex gap-4 flex_align-center pt-4 description">
-        <mib-icon mibLeftIcon class="stroke" name="fi_info"></mib-icon>
-        <span class="text text_m c-bti-tertiary"
-        >Товарные знаки, под которыми осуществляется продажа
-								продукции</span
-        >
+        <mib-icon class="stroke" name="fi_info"></mib-icon>
+        <span class="text text_m c-bti-tertiary">
+          Товарные знаки, под которыми осуществляется продажа продукции
+        </span>
       </div>
     </div>
     <mib-input>
@@ -28,7 +27,8 @@
     </mib-input>
     <div class="flex gap-12">
       <mib-input class="flex_grow">
-        <input mibInput formControlName="limit" />
+        <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+        <input mask="separator" mibInput formControlName="limit" />
         <ng-container mibLabel>Лимит финансирования</ng-container>
       </mib-input>
       <mib-input class="flex_grow">

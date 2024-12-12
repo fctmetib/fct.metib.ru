@@ -1,0 +1,28 @@
+<mib-drawer>
+  <mib-drawer-header (onClose)="handleClose()" drawer-header></mib-drawer-header>
+  <mib-drawer-container>
+    <h4><ng-content select="[report-drawer-title]"></ng-content></h4>
+    <mib-spacing type="xs"></mib-spacing>
+    <ng-content></ng-content>
+  </mib-drawer-container>
+  <mib-drawer-footer drawer-footer>
+    <div class="flex gap-12">
+      <mib-button
+        [disabled]="disabled"
+        (click)="handleReport()"
+        size="m"
+        type="filled-primary"
+        [loading]="loading"
+      >
+        Сформировать отчет
+      </mib-button>
+      <mib-button
+        type="filled-secondary"
+        size="m"
+        (click)="handleClose()"
+      >
+        Отмена
+      </mib-button>
+    </div>
+  </mib-drawer-footer>
+</mib-drawer>

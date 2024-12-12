@@ -25,6 +25,11 @@ export class GetAgentRequestService {
     return this.http.post<{suggestions: BankInfo[]}>(bankUrl, {query}).pipe(map(res => res.suggestions))
   }
 
+  getAddressData(query: string): Observable<BankInfo[]> {
+    const addressUrl = 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address'
+    return this.http.post<{suggestions: BankInfo[]}>(addressUrl, {query}).pipe(map(res => res.suggestions))
+  }
+
   // private url =
   // 	'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party'
 

@@ -1,7 +1,8 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core'
+import { Component, inject, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import {Subscription} from 'rxjs'
 import {BreakpointObserverService} from '../../services/common/breakpoint-observer.service'
 import { isPlatformBrowser } from '@angular/common'
+import { WINDOW } from '../../tokens/window.token';
 
 @Component({
 	selector: 'mib-new-footer',
@@ -19,6 +20,8 @@ export class NewFooterComponent implements OnInit, OnDestroy {
 		public breakpointService: BreakpointObserverService,
 		@Inject(PLATFORM_ID) private platformId: Object
 	) {}
+
+  private window = inject(WINDOW)
 
 	ngOnInit(): void {
 		this.subscriptions = this.breakpointService
@@ -47,7 +50,7 @@ export class NewFooterComponent implements OnInit, OnDestroy {
 
 	openExternalSite() {
 		if (isPlatformBrowser(this.platformId)) {
-			window.open('https://fct.metallinvestbank.ru/login', '_blank')
+			this.window?.open('https://fct.metallinvestbank.ru/login', '_blank')
 		}
 	}
 }

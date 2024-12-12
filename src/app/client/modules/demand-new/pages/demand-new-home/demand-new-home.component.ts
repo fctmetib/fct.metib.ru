@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core'
 import {
   BehaviorSubject,
-  forkJoin,
   finalize,
-  map,
-  switchMap,
   tap,
   takeUntil
 } from 'rxjs'
@@ -42,13 +39,35 @@ const ANIMATION_CONFIG = {
 }
 
 export enum DialogType {
-  Signature = 1,
-  Surety, //поручительство
-  Profile,
+  DigitalSignature = 1,
+  Guarantee, //поручительство
+  ProfileChange,
   Limit,
-  Debitor,
-  Verify,
-  Free
+  NewDebtor,
+  VerificationChannel,
+  Question,
+}
+
+export enum DemandsPrepareEnum {
+  Question = 1, // Произвольный вопрос
+  DigitalSignature = 2, // ЭЦП
+  Limit = 4, // Увеличение лимита
+  NewDebtor = 5, // Новый дебитор
+  ProfileChange = 7, // Редактирование профиля
+  VerificationChannel = 8, // Канал верификации
+  Guarantee = 9, // Поручительство
+}
+
+export enum DemandsPrepareTranslationEnum {
+  Question = 'Произвольный вопрос',
+  DigitalSignature = 'ЭЦП',
+  Factoring = 'Факторинг',
+  Limit = 'Увеличение лимита',
+  NewDebtor = 'Новый дебитор',
+  ProfileChange = 'Редактирование профиля',
+  VerificationChannel = 'Канал верификации',
+  Guarantee = 'Поручительство',
+  AgencyFactoring = 'Агентский факторинг',
 }
 
 export enum TabType {
@@ -74,6 +93,7 @@ export class DemandNewHomeComponent implements OnInit {
   selectedStatus: string = 'All'
   dialogType = DialogType
   tabType = TabType
+  demandsPrepareEnum = DemandsPrepareEnum
   isDesktop: boolean = false
   loading$ = new BehaviorSubject<boolean>(false)
   skeletonWithoutUnderline: Properties = {
@@ -98,6 +118,7 @@ export class DemandNewHomeComponent implements OnInit {
     2: 'Status',
     3: {Manager: 'Name'}
   }
+  protected readonly String = String;
 
   constructor(
     private requestList: DataService,
@@ -119,13 +140,17 @@ export class DemandNewHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllRequestesList()
+    this.getRequestList()
     this.breakpointService
       .isDesktop()
       .pipe(takeUntil(this.destroy$))
       .subscribe(b => {
         this.isDesktop = b
       })
+  }
+
+  get demandsPrepareTranslationEnum(): typeof DemandsPrepareTranslationEnum {
+    return DemandsPrepareTranslationEnum;
   }
 
   getRequestList(): void {
@@ -137,6 +162,8 @@ export class DemandNewHomeComponent implements OnInit {
       .subscribe({
         next: val => {
           this.requestLists = val
+
+          console.log('requestLists==', val);
         }
       })
   }
@@ -146,23 +173,23 @@ export class DemandNewHomeComponent implements OnInit {
     this.demandService
       .getDrafts()
       .pipe(
-        switchMap((drafts: any[]) => {
-          const draftRequests = drafts.map(draft =>
-            this.demandService.getDemandDraftById(draft.ID).pipe(
-              map(demand => {
-                const fillProgress = '30%'
-                return {
-                  ID: draft.ID,
-                  Type: this.getType(demand.DemandData.Type).result,
-                  TypeInt: this.getType(demand.DemandData.Type).resultNum,
-                  Progress: `Заполнено на ${fillProgress}`
-                }
-              })
-            )
-          )
-          // Ожидаем завершения всех запросов
-          return forkJoin(draftRequests)
-        }),
+        // switchMap((drafts: any[]) => {
+        //   const draftRequests = drafts.map(draft =>
+        //     this.demandService.getDemandDraftById(draft.ID).pipe(
+        //       map(demand => {
+        //         const fillProgress = '30%'
+        //         return {
+        //           ID: draft.ID,
+        //           Type: this.getType(demand.DemandData.Type).result,
+        //           TypeInt: this.getType(demand.DemandData.Type).resultNum,
+        //           Progress: `Заполнено на ${fillProgress}`
+        //         }
+        //       })
+        //     )
+        //   )
+        //   // Ожидаем завершения всех запросов
+        //   return forkJoin(draftRequests)
+        // }),
         tap(data => {
           this.drafts = data
           this.onDraftListChange(1)
@@ -197,26 +224,26 @@ export class DemandNewHomeComponent implements OnInit {
     switch (type) {
       case 'VerificationChannel':
         result = 'Верификация'
-        resultNum = this.dialogType.Verify
+        resultNum = this.dialogType.VerificationChannel
         break
       case 'Guarantee':
         result = 'Поручительство'
-        resultNum = this.dialogType.Surety
+        resultNum = this.dialogType.Guarantee
         break
       case 'Factoring':
         result = 'Факторинг'
         break
       case 'DigitalSignature':
         result = 'Запрос на ЭЦП'
-        resultNum = this.dialogType.Signature
+        resultNum = this.dialogType.DigitalSignature
         break
       case 'ProfileChange':
         result = 'Редактирование Профиля'
-        resultNum = this.dialogType.Profile
+        resultNum = this.dialogType.ProfileChange
         break
       case 'Question':
         result = 'Свободная тема'
-        resultNum = this.dialogType.Free
+        resultNum = this.dialogType.Question
         break
       case 'Limit':
         result = 'Запрос на Лимит'
@@ -224,15 +251,15 @@ export class DemandNewHomeComponent implements OnInit {
         break
       case 'NewDebtor':
         result = 'Новый дебитор'
-        resultNum = this.dialogType.Debitor
+        resultNum = this.dialogType.NewDebtor
         break
       case 'AgencyFactoring': //??
         result = 'Агентский Факторинг'
-        resultNum = this.dialogType.Free
+        resultNum = this.dialogType.Question
         break
       default:
         result = 'Свободная тема'
-        resultNum = this.dialogType.Free
+        resultNum = this.dialogType.Question
         break
     }
     return {result, resultNum}
@@ -280,126 +307,62 @@ export class DemandNewHomeComponent implements OnInit {
     this.historyLists = this.onPageChange($event, this.selectedHistoryLists)
   }
 
-  openDrawers(id: number, reqId: number, type?: TabType): void {
-    let dialog$
-    switch (id) {
-      case this.dialogType.Signature:
-        dialog$ = this.demandSignatureDrawerService
-          .open({
-            data: {
-              isCreation: type === this.tabType.Request,
-              isEdit: type === this.tabType.Draft,
-              isView: type === this.tabType.History,
-              id:
-                type === this.tabType.History || type === this.tabType.Draft
-                  ? reqId
-                  : null
-            }
-          })
-          .afterClosed()
+  getTabId(tab: TabType) {
+    switch (+tab) {
+      case TabType.Request:
+        this.getRequestList()
         break
-
-      case this.dialogType.Surety:
-        dialog$ = this.demandSuretyDrawerService
-          .open({
-            data: {
-              isCreation: type === this.tabType.Request,
-              isEdit: type === this.tabType.Draft,
-              isView: type === this.tabType.History,
-              id:
-                type === this.tabType.History || type === this.tabType.Draft
-                  ? reqId
-                  : null
-            }
-          })
-          .afterClosed()
+      case TabType.Draft:
+        this.getDraftList()
         break
-      case this.dialogType.Profile:
-        dialog$ = this.demandEditingDrawerService
-          .open({
-            data: {
-              isCreation: type === this.tabType.Request,
-              isEdit: type === this.tabType.Draft,
-              isView: type === this.tabType.History,
-              id:
-                type === this.tabType.History || type === this.tabType.Draft
-                  ? reqId
-                  : null
-            }
-          })
-          .afterClosed()
+      case TabType.History:
+        this.getHistoryList()
         break
-
-      //Done
-      case this.dialogType.Limit:
-        dialog$ = this.demandLimitDrawerService
-          .open(
-            {
-              data: {
-                isCreation: type === this.tabType.Request,
-                isEdit: type === this.tabType.Draft,
-                isView: type === this.tabType.History,
-                id:
-                  type === this.tabType.History || type === this.tabType.Draft
-                    ? reqId
-                    : null
-              }
-            }
-          )
-          .afterClosed()
+      default:
         break
-
-      case this.dialogType.Debitor:
-        dialog$ = this.demandDebtorDrawerService
-          .open({
-            data: {
-              isCreation: type === this.tabType.Request,
-              isEdit: type === this.tabType.Draft,
-              isView: type === this.tabType.History,
-              id:
-                type === this.tabType.History || type === this.tabType.Draft
-                  ? reqId
-                  : null
-            }
-          })
-          .afterClosed()
-        break
-
-      case this.dialogType.Verify:
-        dialog$ = this.demandVerificationDrawerService
-          .open({
-            data: {
-              isCreation: type === this.tabType.Request,
-              isEdit: type === this.tabType.Draft,
-              isView: type === this.tabType.History,
-              id:
-                type === this.tabType.History || type === this.tabType.Draft
-                  ? reqId
-                  : null
-            }
-          })
-          .afterClosed()
-        break
-
-      //Done
-      case this.dialogType.Free:
-        dialog$ = this.demandDrawerService
-          .open({
-            data: {
-              isCreation: type === this.tabType.Request,
-              isEdit: type === this.tabType.Draft,
-              isView: type === this.tabType.History,
-              id:
-                type === this.tabType.History || type === this.tabType.Draft
-                  ? reqId
-                  : null
-            }
-          })
-          .afterClosed()
     }
-
-    dialog$.subscribe()
   }
+
+  openDrawers(id: number, reqId: number, type?: TabType): void {
+    const dialogService = this.getDialogService(id);
+  
+    if (!dialogService) {
+      console.warn(`No dialog service found for id: ${id}`);
+      return;
+    }
+  
+    const dialogData = {
+      prepareTypeId: this.demandsPrepareEnum[this.dialogType[id]],
+      isCreation: type === this.tabType.Request,
+      isEdit: type === this.tabType.Draft,
+      isView: type === this.tabType.History,
+      id:
+        type === this.tabType.History || type === this.tabType.Draft ? reqId : null,
+    };
+  
+    dialogService.open({ data: dialogData }).afterClosed()?.subscribe();
+  }
+  
+  private getDialogService(id: number) {
+    switch (id) {
+      case this.dialogType.DigitalSignature:
+        return this.demandSignatureDrawerService;
+      case this.dialogType.Guarantee:
+        return this.demandSuretyDrawerService;
+      case this.dialogType.ProfileChange:
+        return this.demandEditingDrawerService;
+      case this.dialogType.Limit:
+        return this.demandLimitDrawerService;
+      case this.dialogType.NewDebtor:
+        return this.demandDebtorDrawerService;
+      case this.dialogType.VerificationChannel:
+        return this.demandVerificationDrawerService;
+      case this.dialogType.Question:
+        return this.demandDrawerService;
+      default:
+        return null;
+    }
+  }  
 
   sortDemandByStatus(status: string): void {
     if (status === 'All') {
@@ -469,9 +432,4 @@ export class DemandNewHomeComponent implements OnInit {
     this.dialog.open(DemandPageHistoryModalComponent, dialogConfig)
   }
 
-  private getAllRequestesList(): void {
-    this.getRequestList()
-    this.getDraftList()
-    this.getHistoryList()
-  }
 }

@@ -1,28 +1,29 @@
 <div class="autocomplete">
-
 	<mib-input>
 		<input
+			*ngIf="!extra"
 			required
 			style="padding-right: 40px"
 			#input
 			mibInput
 			[formControl]="control"
-			(focus)="showDropdown = true"
+			(focus)="showDropdown = true; focus.emit()"
 			(blur)="onBlur()"
 		/>
 		<input
-			[style.display]="extra ? 'block' : 'none'"
+			*ngIf="extra"
 			required
 			style="padding-right: 40px"
 			#input
 			size="{{ isDesktop ? 'xl' : 'l' }}"
 			mibInput
-			styleType="floating"
+			[styleType]="styleType"
 			[formControl]="control"
 			(focus)="showDropdown = true"
 			(blur)="onBlur()"
 		/>
-		<ng-container mibLabel>{{label ? label : 'Ваш контрагент'}}</ng-container>
+		<ng-container mibLabel>{{ label ? label : 'Ваш контрагент' }}</ng-container>
+		<mib-icon *ngIf="searchIcon" mibLeftIcon class="stroke" name="fi_search"></mib-icon>
 		<mib-icon
 			class="stroke cursor-pointer"
 			mibRightIcon
@@ -31,7 +32,7 @@
 			(click)="clearInput()"
 		></mib-icon>
 	</mib-input>
-	<div *ngIf="loading">Loading...</div>
+	<div *ngIf="loading">Загрузка...</div>
 	<div class="list">
 		<ul class="flex flex_column" *ngIf="showDropdown">
 			<li
@@ -40,11 +41,11 @@
 				(click)="toggleSelection(option)"
 			>
 				{{ option.value }}
-				<span class="text text_s c-bti-tertiary">
+				<span class="text text_s c-bti-tertiary" *ngIf="!inlineStyle">
 					ИНН: {{ option.data.inn }}
 				</span>
 			</li>
-			<li *ngIf="noData">No data found</li>
+			<li *ngIf="noData">Нет данных</li>
 		</ul>
 	</div>
 </div>

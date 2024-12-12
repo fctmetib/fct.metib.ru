@@ -1,0 +1,33 @@
+<form class="send-messages" [formGroup]="form" (ngSubmit)="onSendMessage()">
+  <div class="send-messages__documents">
+    <mib-attached-document
+      *ngIf="document"
+      [fileForRead]="document"
+      [remove]="true"
+      (deleteFile)="deleteFile()"
+    ></mib-attached-document>
+  </div>
+  <mib-spacing type="xm"></mib-spacing>
+  <div class="flex gap-8 w-100">
+    <mib-input class="w-100">
+      <input
+        (change)="onChangeFile()"
+        type="file"
+        [multiple]="multiple"
+        [accept]="accept.join(',')"
+        #loader
+        style="display: none"
+      />
+      <p mibRightIcon class="text text_m c-bti-quaternary flex flex_align-center cursor-pointer" (click)="openFileManager()">
+        <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.8666 9.20835L9.20825 16.8667C8.27005 17.8049 6.99757 18.332 5.67075 18.332C4.34393 18.332 3.07145 17.8049 2.13325 16.8667C1.19505 15.9285 0.667969 14.656 0.667969 13.3292C0.667969 12.0024 1.19505 10.7299 2.13325 9.79168L9.79158 2.13335C10.4171 1.50788 11.2654 1.15649 12.1499 1.15649C13.0345 1.15649 13.8828 1.50788 14.5082 2.13335C15.1337 2.75882 15.4851 3.60713 15.4851 4.49168C15.4851 5.37623 15.1337 6.22455 14.5082 6.85002L6.84158 14.5083C6.52885 14.8211 6.10469 14.9968 5.66242 14.9968C5.22014 14.9968 4.79598 14.8211 4.48325 14.5083C4.17051 14.1956 3.99482 13.7715 3.99482 13.3292C3.99482 12.8869 4.17051 12.4627 4.48325 12.15L11.5582 5.08335" stroke="#42484D" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </p>
+      <input type="text" mibInput formControlName="Comment" />
+      <ng-container mibLabel>Введите сообщение</ng-container>
+    </mib-input>
+    <mib-button [disabled]="disabled || form.invalid" (click)="onSendMessage()">
+      <mib-icon btn-icon class="stroke" name="fi_send"></mib-icon>
+    </mib-button>
+  </div>
+</form>

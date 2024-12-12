@@ -19,6 +19,14 @@ import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {InformationModule} from 'src/app/shared/ui-kit/information/information.module'
 import {DemandService} from '../../services/demand.service'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import { DlFileCellModule } from '../../../../../shared/ui-kit/dl-file-cell/dl-file-cell.module';
+import { MibDragAndDropModule } from '../../../../../shared/ui-kit/drag-and-drop/mib-drag-and-drop.module';
+import { DemandDebtorDrawerStaticService } from './demand-debtor-drawer-static.service';
+import { BadgeModule } from '../../../../../shared/ui-kit/badge/badge.module';
+import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
+import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
+import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
+import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
 
 @NgModule({
   declarations: [DemandDebtorDrawerComponent],
@@ -40,9 +48,16 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
     IconModule,
     InformationModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    DlFileCellModule,
+    MibDragAndDropModule,
+    BadgeModule,
+    AttachedDocumentModule,
+    MessageItemModule,
+    SkeletonModule,
+    SendMessagesModule
   ],
-  providers: [DemandDebtorDrawerService, DemandService]
+  providers: [DemandDebtorDrawerService, DemandDebtorDrawerStaticService, DemandService]
 })
 export class DemandDebtorDrawerModule {
 }

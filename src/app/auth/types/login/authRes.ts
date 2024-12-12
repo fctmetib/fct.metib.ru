@@ -1,15 +1,19 @@
 export interface AuthRes {
-  Code: string;
-  CustomerID: number;
-  Date: Date;
-  DebtorID: number;
-  Expire: Date;
-  IP: string;
-  Login: string;
-  ManagerID: number;
-  Name: string;
-  OrganizationID: any;
-  Roles: string[];
-  StaffID: number;
   UserID: number;
+  StaffID: number;
+  ManagerID: number;
+  OrganizationID: number;
+  CustomerID: number;
+  DebtorID: number;
+  DebtorAgencyID: number;
+  IP: string;
+  Environment: string;
+  Login: string;
+  Name: string;
+  Avatar: string;
+  Code: string;
+  Date: Date;
+  Expire: Date;
+  Roles: string[];
+  Pemissions: string[];
 }

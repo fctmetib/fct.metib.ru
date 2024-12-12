@@ -1,0 +1,4 @@
+<mib-report-drawer-layout [loading]="reportLoading$ | async" (onClose)="onClose()" (onReport)="onReport()" [formGroup]="form">
+  <ng-container report-drawer-title>Обработка Платежей</ng-container>
+  <mib-report-period-debtor-form [formControl]="periodDebtorControl"></mib-report-period-debtor-form>
+</mib-report-drawer-layout>

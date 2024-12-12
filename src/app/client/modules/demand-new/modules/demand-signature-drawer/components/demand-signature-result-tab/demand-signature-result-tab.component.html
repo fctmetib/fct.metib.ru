@@ -1,0 +1,22 @@
+<h5>Комментарий к запросу</h5>
+<mib-spacing type="xs2"></mib-spacing>
+<div class="text text_m" *ngIf="viewingData?.Result?.Comment;else commentPlaceholder">
+  {{viewingData?.Result?.Comment}}
+</div>
+<ng-template #commentPlaceholder>
+  <div class="text text_s">Комментариев не оставлено...</div>
+</ng-template>
+<mib-spacing type="xs"></mib-spacing>
+<h6 class="text text_m text_medium">Отчет по запросу</h6>
+<ng-container *ngIf="viewingData?.Data?.Files?.length; else emptyReportsFiles">
+  <ng-container *ngFor="let file of viewingData?.Data?.Files">
+    <mib-attached-document
+      *ngIf="file.Size"
+      [fileForRead]="{FileName: file.FileName, Size: file.Size, DemandFileID: file.DemandFileID}"
+      [download]="true"
+    ></mib-attached-document>
+  </ng-container>
+</ng-container>
+<ng-template #emptyReportsFiles>
+  <div class="text text_s">Прикреплённых отчётов нет...</div>
+</ng-template>

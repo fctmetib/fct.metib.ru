@@ -19,7 +19,7 @@
 			</div>
 			<div class="flex flex_align-center gap-4">
 				<p class="text text_s c-bti-secondary">{{ text }}</p>
-				<mib-link *ngIf="showPicker" size="s">{{ actionText }}</mib-link>
+				<mib-link [disabled]="disabled" *ngIf="showPicker" size="s">{{ actionText }}</mib-link>
 			</div>
 		</ng-container>
 		<ng-template #fileOver>

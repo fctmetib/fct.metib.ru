@@ -7,7 +7,7 @@
 	<div class="flex">
 		<div class="mobile-input flex flex_grow">
 			<mib-input>
-				<input mibInput />
+				<input [formControl]="searchControl" mibInput />
 				<ng-container mibLabel>Поиск по покупателям</ng-container>
 				<mib-icon mibLeftIcon class="stroke" name="fi_search"></mib-icon>
 			</mib-input>
@@ -40,7 +40,7 @@
 			<mib-table-head-cell>Договор поставки</mib-table-head-cell>
 			<mib-table-head-cell>Сумма поставки</mib-table-head-cell>
 			<mib-table-head-cell>Дата платежа</mib-table-head-cell>
-			<mib-table-head-cell>Сумма просрочки</mib-table-head-cell>
+			<mib-table-head-cell>Сумма просрочки клиента</mib-table-head-cell>
 			<mib-table-head-cell>Дата доп</mib-table-head-cell>
 			<ng-template #mobile>
 				<mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
@@ -50,7 +50,6 @@
 					[disabled]="loading$ | async"
 					(press)="prev()"
 					size="s"
-					table-row-button
 					type="ghost-secondary"
 				>
 					<mib-icon class="stroke" btn-icon name="fi_chevron-left"></mib-icon>
@@ -59,7 +58,6 @@
 					[disabled]="loading$ | async"
 					(press)="next()"
 					size="s"
-					table-row-button
 					type="ghost-secondary"
 				>
 					<mib-icon class="stroke" btn-icon name="fi_chevron-right"></mib-icon>
@@ -77,17 +75,17 @@
 		</ng-container>
 		<ng-template #table>
 			<!-- *ngFor="let i of [1]; let last = last" -->
+<!--      (dblclick)="contractDrawer(item.ShipmentID)"-->
 			<mib-table-row
-				*ngFor="let item of mData; let last = last"
-				(dblclick)="contractDrawer(item.ID)"
-				[underlined]="!last"
-			>
+        *ngFor="let item of mDataVisible; let last = last"
+        [underlined]="!last"
+      >
 				<mib-table-cell>
-					<ng-container table-cell-title>{{ item.Customer }}</ng-container>
+					<ng-container table-cell-title>{{ item.CustomerTitle }}</ng-container>
 				</mib-table-cell>
 				<ng-container *ngIf="isDesktop; else mobileCell">
 					<mib-table-cell>
-						<ng-container table-cell-title>{{ item.Doc }}</ng-container>
+						<ng-container table-cell-title>{{ item.ShipmentFullTitle }}</ng-container>
 					</mib-table-cell>
 				</ng-container>
 				<mib-table-cell>
@@ -96,10 +94,10 @@
 					}}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
-					<ng-container table-cell-title>{{ item.Number }}</ng-container>
+					<ng-container table-cell-title>{{ item.ContractDeliveryNumber }}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
-					<ng-container table-cell-title>{{ datas * 2 | rub }}</ng-container>
+					<ng-container table-cell-title>{{ item.ShipmentSumm | rub }}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
 					<ng-container table-cell-title>{{
@@ -107,7 +105,7 @@
 					}}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
-					<span class="c-mc-active" table-cell-title>{{ datas | rub }}</span>
+					<span class="c-mc-active" table-cell-title>{{ item.DutyCustomer | rub }}</span>
 				</mib-table-cell>
 				<mib-table-cell>
 					<span table-cell-title>{{ todayIs | date : 'dd.MM.YYYY' }}</span>
@@ -123,14 +121,13 @@
 					<mib-button
 						(click)="openInvoicePageModal(mData); $event.stopPropagation()"
 						size="s"
-						table-row-button
 						type="ghost-secondary"
 					>
 						<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
 					</mib-button>
 				</ng-template>
 			</mib-table-row>
-			<mib-table-row>
+			<mib-table-row [showCheckbox]="false">
 				<mib-table-cell></mib-table-cell>
 				<mib-table-cell></mib-table-cell>
 				<mib-table-cell></mib-table-cell>
@@ -140,14 +137,14 @@
 				<ng-container *ngIf="isDesktop; else mSumm">
 					<mib-table-cell>
 						<span table-cell-title>
-							{{ datas * 3 | rub }}
+							{{ dutyCustomerSum | rub }}
 						</span>
 					</mib-table-cell>
 				</ng-container>
 				<ng-template #mSumm>
 					<mib-table-cell [ngClass]="{displaySumm: showTotal}">
 						<span table-cell-title>{{
-							showTotal ? (datas * 3 | rub) : ''
+							showTotal ? (dutyCustomerSum | rub) : ''
 						}}</span>
 					</mib-table-cell>
 				</ng-template>
@@ -156,19 +153,21 @@
 		</ng-template>
 		<mib-table-footer [showRemove]="true" [lined]="!(loading$ | async)">
 			<div class="desktop-exp flex flex_align-center flex_grow">
-				<mib-button size="m" type="ghost-primary">
-					Экспорт в exel
-					<mib-icon btn-left-icon class="stroke" name="fi_download"></mib-icon>
-				</mib-button>
+<!--				<mib-button size="m" type="ghost-primary">-->
+<!--					Экспорт в exel-->
+<!--					<mib-icon btn-left-icon class="stroke" name="fi_download"></mib-icon>-->
+<!--				</mib-button>-->
 			</div>
 			<!-- <ng-container table-footer-action>Создать заявку (123)</ng-container> -->
 			<!-- (pageChange)="onPageChange($event)"
       [totalCount]="dutiesCount?.TotalItems ?? 0"-->
-			<mib-paginator
-				[totalCount]="12"
-				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-				[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
-			></mib-paginator>
+      <mib-paginator
+        *ngIf="mData.length || !(loading$ | async)"
+        (pageChange)="onPageChange($event)"
+        [totalCount]="mData.length"
+        [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+        [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+      ></mib-paginator>
 			<div
 				class="balancer flex flex_align-center flex_justify-end flex_grow"
 			></div>
@@ -194,6 +193,4 @@
 			</div> -->
 		</mib-table-footer>
 	</mib-table>
-	<!-- table end -->
-	<!-- <mib-spacing type="xl2"></mib-spacing> -->
 </div>

@@ -1,0 +1,32 @@
+<mib-spacing type="xs2"></mib-spacing>
+<div class="attached-document text flex flex_align-center">
+  <div class="attached-document__item w-100">
+    <div class="attached-document__wrapper flex flex_align-center gap-8">
+      <svg class="attached-document__svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="24" height="24" fill="#F3F4F6"/>
+        <path d="M12.668 5.33331H8.0013C7.64768 5.33331 7.30854 5.47379 7.05849 5.72384C6.80844 5.97389 6.66797 6.31302 6.66797 6.66665V17.3333C6.66797 17.6869 6.80844 18.0261 7.05849 18.2761C7.30854 18.5262 7.64768 18.6666 8.0013 18.6666H16.0013C16.3549 18.6666 16.6941 18.5262 16.9441 18.2761C17.1942 18.0261 17.3346 17.6869 17.3346 17.3333V9.99998M12.668 5.33331L17.3346 9.99998M12.668 5.33331V9.99998H17.3346" stroke="#42484D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="attached-document__name text_m">{{fileForRead?.FileName || 'Название файла'}}</div>
+      <div class="attached-document__size text_m">{{(fileForRead?.Size / 1024 / 1000 | number : '1.2-2') || 0}}мб</div>
+    </div>
+  </div>
+  <div class="attached-document__group-btns flex flex_align-center gap-8" *ngIf="fileForRead?.DemandFileID">
+    <ng-container *ngIf="!(isDownloading$ | async);else loader">
+      <button class="attached-document__btn" *ngIf="download" (click)="downloadFile()">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 18V20.6667C22 21.0203 21.8595 21.3594 21.6095 21.6095C21.3594 21.8595 21.0203 22 20.6667 22H11.3333C10.9797 22 10.6406 21.8595 10.3905 21.6095C10.1405 21.3594 10 21.0203 10 20.6667V18M12.6667 14.6667L16 18M16 18L19.3333 14.6667M16 18V10" stroke="#42484D" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!(isDeleteFile$ | async);else loader">
+      <button class="attached-document__btn flex flex_align-center" *ngIf="remove" (click)="deleteDemandFileById(file?.DemandFileID)">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 12L12 20M12 12L20 20" stroke="#42484D" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </ng-container>
+    <ng-template #loader>
+      <mib-loader-spinner></mib-loader-spinner>
+    </ng-template>
+  </div>
+</div>

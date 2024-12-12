@@ -1,9 +1,10 @@
 export interface PassportInterface {
   Number: string;
-  Date: any;
-  Expire?: Date;
+  Date: Date;
+  Expire: null;
   IssuerTitle: string;
   IssuerCode: string;
   IsForeign: boolean;
-  Nationality: string;
+  Nationality: null;
+  FileBlobId: number;
 }

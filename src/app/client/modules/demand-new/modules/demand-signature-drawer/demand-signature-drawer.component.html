@@ -1,6 +1,7 @@
+<mib-blur-loader *ngIf="loading$ | async"></mib-blur-loader>
 <mib-drawer>
   <mib-drawer-header
-    showProgressBar="true"
+    [showProgressBar]="!isChangeByView"
     (onClose)="dialogRef.close()"
     drawer-header
     [maxPage]="maxPage"
@@ -8,68 +9,118 @@
   >
   </mib-drawer-header>
   <mib-drawer-container>
-    <p class="text text_m c-bti-secondary">Запрос на ЭПЦ</p>
-    <h3>halo data : {{ data | json }}</h3>
-    <div [ngSwitch]="pageCount">
-      <!-- первый скрин -->
-      <div *ngSwitchCase="pageCount === 1">
-        <mib-spacing type="xs2"></mib-spacing>
-        <h4>Основная информация</h4>
-        <mib-spacing type="xs"></mib-spacing>
-        <p class="text text_m c-bti-secondary">Тип организации</p>
-        <mib-tab-group type="filled">
-          <mib-navbar size="m">
-            <mib-navbar-point value="1" type="filled" class="flex_grow">От юридических лиц</mib-navbar-point>
-            <mib-navbar-point value="2" type="filled" class="flex_grow">От ИП</mib-navbar-point>
-          </mib-navbar>
-          <!-- первый таб -->
-          <mib-tab-item value="1" class="first-step">
-            <mib-demand-signature-first-step [orgDataForm]="orgDataForm"
-                                             [options]=dataByINN></mib-demand-signature-first-step>
-          </mib-tab-item>
-          <!-- второй таб -->
-          <mib-tab-item value="2">
-            <mib-demand-signature-first-step></mib-demand-signature-first-step>
-          </mib-tab-item>
-        </mib-tab-group>
+    <ng-container *ngIf="isView && date.status; else edit">
+      <h4>Запрос №{{ data.data.id }}</h4>
+      <mib-spacing type="xs"></mib-spacing>
+      <p class="text text_m c-bti-secondary">
+        Запрос создан: {{ date.create | date: 'dd.MM.yyyy' }}, запрос
+        отредактирован: {{ date.update | date: 'dd.MM.yyyy' }}
+      </p>
+      <mib-spacing type="xs"></mib-spacing>
+      <div class="flex flex_align-center gap-12">
+        <mib-badge
+          type="filled-secondary"
+          [extended]="true"
+          size="l"
+        >Запрос на ЭЦП
+        </mib-badge
+        >
+        <mib-badge
+          type="filled-primary"
+          [extended]="true"
+          size="l"
+        >{{ date.status }}
+        </mib-badge
+        >
       </div>
-      <!-- второй скрин -->
-      <div *ngSwitchCase="2">
-        <mib-spacing type="xs2"></mib-spacing>
-        <h4>Основная информация</h4>
-        <mib-spacing type="xs"></mib-spacing>
-        <p class="text text_m c-bti-secondary">Тип организации</p>
-        <mib-tab-group type="filled">
-          <mib-navbar size="m">
-            <mib-navbar-point value="1" type="filled" class="flex_grow">От юридического лиц</mib-navbar-point>
-            <mib-navbar-point value="2" type="filled" class="flex_grow">От ИП</mib-navbar-point>
-          </mib-navbar>
-          <!-- первый таб второго скрина -->
-          <mib-tab-item value="1">
-            <mib-demand-signature-second-step [orgDataForm]="orgDataForm"></mib-demand-signature-second-step>
-          </mib-tab-item>
-          <!-- второй таб второго скрина -->
-          <mib-tab-item value="2">
-            <mib-demand-signature-second-step [orgDataForm]="orgDataForm"></mib-demand-signature-second-step>
-          </mib-tab-item>
-        </mib-tab-group>
+    </ng-container>
+    <ng-template #edit>
+      <h4>Запрос на ЭЦП</h4>
+      <mib-spacing type="xs"></mib-spacing>
+    </ng-template>
+    <div *ngIf="isChangeByView; else editing">
+      <mib-spacing type="xs"></mib-spacing>
+      <mib-tab-group>
+        <mib-navbar class="container container_large">
+          <mib-navbar-point (press)="tabIndex = $event" value="1">События</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="2">Информация</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="3">Документы</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="4">Результат</mib-navbar-point>
+        </mib-navbar>
         <mib-spacing type="m"></mib-spacing>
-      </div>
-      <!-- третий скрин -->
-      <div *ngSwitchCase="3">
-        <mib-demand-signature-third-step [personalDataForm]="personalDataForm"></mib-demand-signature-third-step>
-      </div>
-      <!-- четвертый скрин -->
-      <div *ngSwitchCase="4">
-        <mib-demand-signature-fourth-step></mib-demand-signature-fourth-step>
-      </div>
-      <div *ngSwitchDefault>
-        <h4>default switch</h4>
-      </div>
+        <mib-tab-item value="1">
+          <!--События-->
+          <mib-demand-signature-events-tab
+            [messages]="viewingData?.Messages"
+            [loading$]="loading$"
+          ></mib-demand-signature-events-tab>
+        </mib-tab-item>
+        <mib-tab-item value="2">
+          <!--Информация-->
+          <mib-demand-signature-info-tab
+            [data]="viewingData?.Data"
+          ></mib-demand-signature-info-tab>
+        </mib-tab-item>
+        <mib-tab-item value="3">
+          <!--Документы-->
+          <mib-demand-signature-docs-tab
+            [filesWithTypes]="filesWithTypes"
+            (deleteFile)="deleteFile()"
+          ></mib-demand-signature-docs-tab>
+        </mib-tab-item>
+        <mib-tab-item value="4">
+          <!--Результат-->
+          <mib-demand-signature-result-tab
+            [viewingData]="viewingData"
+          ></mib-demand-signature-result-tab>
+        </mib-tab-item>
+      </mib-tab-group>
+      <mib-spacing type="xs"></mib-spacing>
     </div>
+    <ng-template #editing>
+      <div [ngSwitch]="pageCount">
+        <!-- первый скрин -->
+        <div *ngSwitchCase="1">
+          <mib-spacing type="xs2"></mib-spacing>
+          <h4>Основная информация</h4>
+          <mib-spacing type="xs"></mib-spacing>
+          <mib-demand-signature-second-step
+            [orgDataForm]="orgDataForm"
+            [options]=dataByINN
+            (apply)="nextPage(false)"
+          ></mib-demand-signature-second-step>
+          <mib-spacing type="m"></mib-spacing>
+        </div>
+        <!-- второй скрин -->
+        <div *ngSwitchCase="2">
+          <mib-demand-signature-third-step
+            [docFormData]="personalDataForm"
+            (changeDoc)="addDocuments($event)"
+            [personalDataForm]="personalDataForm"
+          ></mib-demand-signature-third-step>
+        </div>
+        <!-- третий скрин -->
+        <div *ngSwitchCase="3">
+          <mib-demand-signature-fourth-step
+            [docFormData]="personalDataForm"
+            (changeDoc)="addDocuments($event)"
+          ></mib-demand-signature-fourth-step>
+        </div>
+        <div *ngSwitchDefault>
+          <h4>default switch</h4>
+        </div>
+      </div>
+    </ng-template>
   </mib-drawer-container>
+  <mib-drawer-footer drawer-footer *ngIf="(isChangeByView && tabIndex === '1')">
+    <mib-send-messages
+      [disabled]="(isSubmitting$ | async)"
+      [form]="messageForm"
+      (sendMessage)="sendMessage()"
+    ></mib-send-messages>
+  </mib-drawer-footer>
   <!-- дровер футер -->
-  <mib-drawer-footer drawer-footer>
+  <mib-drawer-footer drawer-footer *ngIf="!isChangeByView">
     <div class="flex w-100 flex_justify-between">
       <div class="flex">
         <mib-button
@@ -83,13 +134,24 @@
       </div>
       <div class="flex">
         <mib-button
+          *ngIf="isEdit;else isOther"
           [ngStyle]="{display: pageCount === maxPage ? 'none' : 'block'}"
           (click)="nextPage()"
-          [disabled]="!formIsValid()"
+          [disabled]="!isEdit && !formIsValid()"
           size="m"
           type="filled-primary"
         >Продолжить
         </mib-button>
+        <ng-template #isOther>
+          <mib-button
+            [ngStyle]="{display: pageCount === maxPage ? 'none' : 'block'}"
+            (click)="nextPage()"
+            [disabled]="!formIsValid()"
+            size="m"
+            type="filled-primary"
+          >Продолжить
+          </mib-button>
+        </ng-template>
         <mib-button
           [ngStyle]="{display: pageCount === maxPage ? 'block' : 'none'}"
           (click)="submitData()"

@@ -1,4 +1,4 @@
-<div #cell [title]="cell.innerText" class="table-cell flex flex_align-center gap-8" [ngClass]="classes">
+<div #cell [title]="cell.innerText" class="table-cell flex flex_column" [ngClass]="classes">
   <ng-template #content>
     <ng-content></ng-content>
   </ng-template>
@@ -13,53 +13,66 @@
   </ng-template>
 
   <ng-container [ngSwitch]="type">
-    <ng-container *ngSwitchCase="'main'">
+
+    <div class="table-cell-container flex gap-8">
       <mib-checkbox
-        (click)="handleCheckboxClick(); $event.stopPropagation()"
+        (click)="$event.stopPropagation()"
         [formControl]="control"
         align=""
         [id]="checkboxId"
-        *ngIf="showCheckbox"
+        *ngIf="checkboxVisible"
       ></mib-checkbox>
-      <div class="flex flex_column">
-        <label (click)="showCheckbox && toggle(); $event.stopPropagation()">
-          <ng-container *ngTemplateOutlet="title"></ng-container>
-        </label>
-        <p *ngIf="contracted" class="text text_s c-bti-tertiary">
-          <ng-container *ngTemplateOutlet="description"></ng-container>
-        </p>
-      </div>
-    </ng-container>
 
-    <ng-container *ngSwitchCase="'text'">
-      <label>
-        <ng-container *ngTemplateOutlet="title"></ng-container>
-      </label>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'editable'">
-      <ng-container *ngTemplateOutlet="content"></ng-container>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'blank'">
-      <ng-container *ngTemplateOutlet="content"></ng-container>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'person'">
-      <div class="flex gap-8 flex_align-center">
-        <ng-container *ngTemplateOutlet="person"></ng-container>
+      <ng-container *ngSwitchCase="'main'">
         <div class="flex flex_column">
-          <label [for]="checkboxId"
-          >
-            <ng-container *ngTemplateOutlet="title"></ng-container
-            >
+          <label (click)="checkboxVisible && toggleCheckbox(); $event.stopPropagation()">
+            <ng-container *ngTemplateOutlet="title"></ng-container>
           </label>
           <p *ngIf="contracted" class="text text_s c-bti-tertiary">
             <ng-container *ngTemplateOutlet="description"></ng-container>
           </p>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'text'">
+        <label>
+          <ng-container *ngTemplateOutlet="title"></ng-container>
+        </label>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'editable'">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'blank'">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'numbers'">
+        <div class="text-right w-100">
+          <label class="flex_align-self-start">
+            <ng-container *ngTemplateOutlet="title"></ng-container>
+          </label>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'person'">
+        <div class="flex gap-8 flex_align-center">
+          <ng-container *ngTemplateOutlet="person"></ng-container>
+          <div class="flex flex_column">
+            <label [for]="checkboxId"
+            >
+              <ng-container *ngTemplateOutlet="title"></ng-container
+              >
+            </label>
+            <p *ngIf="contracted" class="text text_s c-bti-tertiary">
+              <ng-container *ngTemplateOutlet="description"></ng-container>
+            </p>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
 
   </ng-container>
 </div>

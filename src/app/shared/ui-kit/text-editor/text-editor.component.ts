@@ -1,5 +1,6 @@
-import { Component, ElementRef, forwardRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, forwardRef, inject, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { WINDOW } from '../../tokens/window.token';
 
 @Component({
   selector: 'mib-text-editor',
@@ -16,47 +17,49 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class TextEditorComponent implements ControlValueAccessor {
     @ViewChild('editorContent', { static: true }) editorContent: ElementRef<HTMLDivElement>;
     content: string = '';
-  
+
+    private window = inject(WINDOW)
+
     onChange = (content: string) => {};
     onTouched = () => {};
-  
+
     writeValue(content: string): void {
       this.content = content;
       if (this.editorContent) {
         this.editorContent.nativeElement.innerHTML = this.content || '';
       }
     }
-  
+
     registerOnChange(fn: any): void {
       this.onChange = fn;
     }
-  
+
     registerOnTouched(fn: any): void {
       this.onTouched = fn;
     }
-  
+
     format(command: string, value?: string) {
       document.execCommand(command, false, value);
       this.updateContent();
     }
-  
+
     formatLink() {
-        let url = window.prompt('Enter URL:');
-        
+        let url = this.window?.prompt('Enter URL:');
+
         if (url && !/^https?:\/\//i.test(url)) {
           url = 'http://' + url;
         }
-        
+
         if (url) {
           this.format('createLink', url);
         }
       }
-      
-  
+
+
     onInput(event: Event) {
       this.updateContent();
     }
-  
+
     updateContent() {
       const element = this.editorContent.nativeElement;
       this.content = element.innerHTML;

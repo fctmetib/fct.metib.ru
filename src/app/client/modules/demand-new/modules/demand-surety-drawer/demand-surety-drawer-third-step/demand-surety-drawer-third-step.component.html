@@ -8,7 +8,9 @@
     <div class="flex flex_align-center gap-12">
       <mib-autocomplete
         [options]="options"
+        [searchIcon]="true"
         formControlName="Bank"
+        label="Банк"
         class="flex_grow">
       </mib-autocomplete>
     </div>
@@ -35,10 +37,10 @@
         <ng-container mibLabel>Дата открытия</ng-container>
       </mib-input>
     </div>
-    <mib-textarea>
-      <ng-container mibLabel>Комментарий к запросу</ng-container>
-      <textarea [maxLength]="100" autosize mibTextarea formControlName="Comment"></textarea>
-    </mib-textarea>
+<!--    <mib-textarea>-->
+<!--      <ng-container mibLabel>Комментарий к запросу</ng-container>-->
+<!--      <textarea [maxLength]="100" autosize mibTextarea formControlName="Comment"></textarea>-->
+<!--    </mib-textarea>-->
   </div>
   <mib-spacing type="s"></mib-spacing>
 </form>

@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core'
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {Properties} from 'csstype'
-import {BehaviorSubject, Subscription} from 'rxjs'
+import { BehaviorSubject, debounceTime, finalize, Subscription, tap } from 'rxjs';
 import {ToolsService} from 'src/app/shared/services/tools.service'
 import {TableComponent} from 'src/app/shared/ui-kit/table/table.component'
 import {NewDelaysDrawerService} from '../../modules/new-delays-drawer/new-delays-drawer.service'
@@ -9,6 +9,11 @@ import {RubPipe} from 'src/app/shared/pipes/rub/rub.pipe'
 import {DatePipe} from '@angular/common'
 import {MatDialog} from '@angular/material/dialog'
 import {NewDelaysPageModalComponent} from 'src/app/shared/modules/modals/new-delays-page-modal/new-delays-page-modal.component'
+import {
+  IDataByAggregate,
+  ReportService
+} from '../../../../../shared/services/common/report.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'mib-new-delays',
@@ -18,70 +23,30 @@ import {NewDelaysPageModalComponent} from 'src/app/shared/modules/modals/new-del
 export class NewDelaysComponent implements OnInit, OnDestroy {
 	@ViewChild(TableComponent) table: TableComponent
 
-	public loading$ = new BehaviorSubject<boolean>(false)
+	loading$ = new BehaviorSubject<boolean>(false)
 
-	public skeletonWithoutUnderline: Properties = {
+	skeletonWithoutUnderline: Properties = {
 		height: '48px',
 		width: '100%'
 	}
-	public skeleton: Properties = {
+	skeleton: Properties = {
 		...this.skeletonWithoutUnderline,
 		borderBottom: '1px solid var(--wgr-tertiary)'
 	}
 
-	public PAGINATOR_ITEMS_PER_PAGE = 16
-	public PAGINATOR_PAGE_TO_SHOW = 5
+  public PAGINATOR_ITEMS_PER_PAGE = 10
+  public PAGINATOR_PAGE_TO_SHOW = 5
+  public currentPage$ = new BehaviorSubject<number>(1)
 
-	public currentPage$ = new BehaviorSubject<number>(1)
+	todayIs: Date = new Date()
+  mData: IDataByAggregate[] = []
+  mFilteredData: IDataByAggregate[] = []
+  mDataVisible: IDataByAggregate[] = []
+  dutyCustomerSum = 0;
 
-	public datas: number = 123000
-	public ids = {a: '213/324a-22'}
-	public todayIs: Date = new Date()
-	public mData = [
-		{
-			ID: 143523,
-			Amount: 14369629,
-			Customer: 'Магнит',
-			Date: '2024-06-06T00:00:00',
-			Number: '1321',
-			Doc: '213/324a-22',
-			Payer: {
-				INN: '2540167061',
-				Date: '2024-07-09T00:00:00',
-				Title: 'Общество с ограниченной ответственностью "РИТЕЙЛ"'
-			}
-		},
-		{
-			ID: 23423,
-			Amount: 30389307,
-			Customer: 'Магнит',
-			Date: '2024-06-14T00:00:00',
-			Doc: '213/324a-23',
-			Number: '1322',
-			Payer: {
-				INN: '2540167061',
-				Date: '2024-03-06T00:00:00',
-				Title: 'Общество с ограниченной ответственностью "РИТЕЙЛ"'
-			}
-		},
-		{
-			ID: 33456,
-			Amount: 34507,
-			Customer: 'Магнит',
-			Date: '2024-06-06T00:00:00',
-			Doc: '213/324a-24',
-			Number: '1323',
-			Payer: {
-				INN: '2540167061',
-				Date: '2024-07-06T00:00:00',
-				Title: 'Общество с ограниченной ответственностью "РИТЕЙЛ"'
-			}
-		}
-	]
-
-	public isDesktop: boolean = false
+	isDesktop: boolean = false
 	private subscriptions = new Subscription()
-	public currentIndex: number = 0
+	currentIndex: number = 0
 	headers = [
 		'Накладная',
 		'Дата накладной',
@@ -92,7 +57,7 @@ export class NewDelaysComponent implements OnInit, OnDestroy {
 		'Дата доп'
 	]
 
-	public dataMap = {
+	dataMap = {
 		0: 'Doc',
 		1: 'Date',
 		2: {Payer: 'Date'},
@@ -102,22 +67,78 @@ export class NewDelaysComponent implements OnInit, OnDestroy {
 		6: {Payer: 'Title'}
 	}
 
-	public showTotal: boolean = false
+	showTotal: boolean = false
+  searchControl = new FormControl('');
 
-	constructor(
-		public toolsService: ToolsService,
-		private newDelaysDrawerService: NewDelaysDrawerService,
-		public breakpointService: BreakpointObserverService,
-		private rubPipe: RubPipe,
-		private datePipe: DatePipe,
-		private dialog: MatDialog
-	) {}
+  toolsService = inject(ToolsService)
+  breakpointService = inject(BreakpointObserverService)
+  private reportService = inject(ReportService)
+  private newDelaysDrawerService = inject(NewDelaysDrawerService)
+  private rubPipe = inject(RubPipe)
+  private datePipe = inject(DatePipe)
+  private dialog = inject(MatDialog)
 
 	ngOnInit(): void {
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
+
+    this.loading$.next(true)
+
+    this.reportService.debtorDelay({}).pipe(
+      tap(data => {
+        this.mData = this.mFilteredData = data;
+        this.filterData(); // Фильтруем изначально (если есть значения)
+        this.onPageChange(this.currentPage$.value);
+      }),
+      finalize(() => {
+        this.loading$.next(false)
+      })
+    ).subscribe();
+
+    this.searchControl.valueChanges.pipe(
+      debounceTime(400),
+      tap(() => {
+        this.filterData();
+        this.onPageChange(1); // При поиске показываем первую страницу
+      })
+    ).subscribe();
 	}
+
+  filterData() {
+    const searchValue = this.searchControl.value?.toLowerCase() || '';
+
+    // Фильтрация данных
+    this.mFilteredData = this.mData.filter(item => item.CustomerTitle?.toLowerCase().includes(searchValue)
+    );
+  }
+
+  changePage(page: number) {
+    this.currentPage$.next(page);
+
+    const startIndex = (page - 1) * this.PAGINATOR_ITEMS_PER_PAGE;
+    const endIndex = startIndex + this.PAGINATOR_ITEMS_PER_PAGE;
+
+    this.table.deselect();
+
+    // Берём видимые данные после фильтрации
+    this.mDataVisible = this.mFilteredData.slice(
+      startIndex,
+      endIndex
+    );
+  }
+
+  onPageChange(page: number) {
+    this.changePage(page);
+    this.calculateVisibleDuty()
+  }
+
+  calculateVisibleDuty() {
+    this.dutyCustomerSum = 0
+    for (let iDataByAggregate of this.mDataVisible) {
+      this.dutyCustomerSum+=iDataByAggregate.DutyCustomer
+    }
+  }
 
 	contractDrawer(deliveryID: number) {
 		this.newDelaysDrawerService

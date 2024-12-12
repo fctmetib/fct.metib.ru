@@ -1,0 +1,7 @@
+<mib-report-drawer-layout [loading]="reportLoading$ | async" (onClose)="onClose()" (onReport)="onReport()" [formGroup]="form">
+  <ng-container report-drawer-title>Агрегатный сводный отчёт</ng-container>
+  <mib-information [showHeader]="true" type="information">
+    <ng-container information-header>Информация</ng-container>
+    <ng-container information-text>Для отчета используются данные, актуальные на данный момент</ng-container>
+  </mib-information>
+</mib-report-drawer-layout>

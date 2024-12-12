@@ -14,6 +14,15 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 import {DemandService} from '../../services/demand.service'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import { DlFileCellModule } from '../../../../../shared/ui-kit/dl-file-cell/dl-file-cell.module';
+import { BadgeModule } from 'src/app/shared/ui-kit/badge/badge.module'
+import { BlurLoaderModule } from 'src/app/shared/ui-kit/blur-loader/blur-loader.module'
+import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
+import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
+import { NavbarModule } from '../../../../../shared/ui-kit/navbar/navbar.module';
+import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
+import { TabModule } from '../../../../../shared/ui-kit/tab/tab.module';
+import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
 
 @NgModule({
   declarations: [DemandEditingDrawerComponent],
@@ -30,7 +39,16 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
     DropdownPointModule,
     FileCellModule,
     ReactiveFormsModule,
-    FormsModule
+    BadgeModule,
+    FormsModule,
+    DlFileCellModule,
+    BlurLoaderModule,
+    AttachedDocumentModule,
+    MessageItemModule,
+    NavbarModule,
+    SkeletonModule,
+    TabModule,
+    SendMessagesModule
   ],
   providers: [DemandEditingDrawerService, DemandService]
 })

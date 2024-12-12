@@ -10,7 +10,7 @@ export class ClientService {
   constructor(private http: HttpClient) {}
 
   getClientFactoringById(organizationID: number): Observable<Customer> {
-    const url = `${environment.apiUrl}/client/${organizationID}/factoring`;
+    const url = `${environment.apiUrl}/v1/client/${organizationID}/factoring`;
     return this.http.get<Customer>(url);
   }
 

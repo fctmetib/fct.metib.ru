@@ -29,36 +29,53 @@ import {CheckboxModule} from '../../../../../shared/ui-kit/checkbox/checkbox.mod
 import { DemandSuretyDrawerThirdStepComponent } from './demand-surety-drawer-third-step/demand-surety-drawer-third-step.component';
 import { DemandSuretyDrawerFourthStepComponent } from './demand-surety-drawer-fourth-step/demand-surety-drawer-fourth-step.component';
 import { DemandSuretyDrawerFifthStepComponent } from './demand-surety-drawer-fifth-step/demand-surety-drawer-fifth-step.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from '../../../../../shared/ui-kit/auto-complete/auto-complete.module';
+import { DlFileCellModule } from '../../../../../shared/ui-kit/dl-file-cell/dl-file-cell.module';
+import { NgxMaskModule } from 'ngx-mask';
+import { DemandSuretyDrawerStaticService } from './demand-surety-drawer-static.service';
+import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-loader.module';
+import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
+import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
+import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
 
 @NgModule({
   declarations: [DemandSuretyDrawerComponent, DemandSuretyDrawerSecondStepComponent, DemandSuretyDrawerThirdStepComponent, DemandSuretyDrawerFourthStepComponent, DemandSuretyDrawerFifthStepComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		SpacingModule,
-		TabModule,
-		InformationModule,
-		NavbarModule,
-		ButtonModule,
-		InputModule,
-		LabelModule,
-		RightIconModule,
-		IconModule,
-		SelectModule,
-		DropdownPointModule,
-		LeftIconModule,
-		TextareaModule,
-		AutosizeModule,
-		LinkModule,
-		BadgeModule,
-		ContractedFormsModule,
-		MibDragAndDropModule,
-		ReactiveFormsModule,
-		FormsModule,
-		DemandSignatureDrawerModule,
-		CheckboxModule
-	],
-  providers: [DemandSuretyDrawerService, DemandService]
+  imports: [
+    CommonModule,
+    DrawerModule,
+    SpacingModule,
+    TabModule,
+    InformationModule,
+    NavbarModule,
+    ButtonModule,
+    InputModule,
+    LabelModule,
+    RightIconModule,
+    IconModule,
+    SelectModule,
+    DropdownPointModule,
+    LeftIconModule,
+    TextareaModule,
+    AutosizeModule,
+    LinkModule,
+    BadgeModule,
+    ContractedFormsModule,
+    MibDragAndDropModule,
+    ReactiveFormsModule,
+    FormsModule,
+    DemandSignatureDrawerModule,
+    CheckboxModule,
+    DropdownModule,
+    AutoCompleteModule,
+    DlFileCellModule,
+    NgxMaskModule,
+    BlurLoaderModule,
+    AttachedDocumentModule,
+    MessageItemModule,
+    SkeletonModule
+  ],
+  providers: [DemandSuretyDrawerService, DemandService, DemandSuretyDrawerStaticService]
 })
 export class DemandSuretyDrawerModule {
 }

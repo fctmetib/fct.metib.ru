@@ -51,6 +51,13 @@ import {DropdownPointModule} from '../../../shared/ui-kit/dropdown-point/dropdow
 import {DatesService} from '../../../shared/services/dates.service'
 import {PasteModalModule} from '../../../shared/modules/modals/paste-modal/paste-modal.module'
 import {RequestsPageModalModule} from 'src/app/shared/modules/modals/requests-page-modal/requests-page-modal.module'
+import { RubModule } from '../../../shared/pipes/rub/rub.module';
+import {
+	HeadCellFilterActionsDirective
+} from '../../../shared/ui-kit/table/components/table-head-cell/directives/head-cell-filter-action/head-cell-filter-actions.directive';
+import {
+	TableColumnsSelectComponent
+} from '../../../shared/ui-kit/table/components/table-columns-displayer/table-columns-select.component';
 
 @NgModule({
 	declarations: [
@@ -102,7 +109,10 @@ import {RequestsPageModalModule} from 'src/app/shared/modules/modals/requests-pa
 		DropdownModule,
 		DropdownPointModule,
 		PasteModalModule,
-		RequestsPageModalModule
+		RequestsPageModalModule,
+		RubModule,
+		HeadCellFilterActionsDirective,
+		TableColumnsSelectComponent
 	],
 	providers: [
 		DialogService,

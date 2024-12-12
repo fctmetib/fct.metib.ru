@@ -2,7 +2,7 @@
 	class="navbar-point flex flex_center w-100"
 	[ngClass]="classes"
 	[disabled]="disabled"
-	(click)="press.emit($event)"
+	(click)="press.emit(value)"
 	[class.navbar-point_loading]="loading"
 >
 	<div class="navbar-point_icon-wrapper navbar-point_left-icon-wrapper">

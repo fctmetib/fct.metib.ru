@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core'
 import {Subscription} from 'rxjs'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import { SeoService } from 'src/app/shared/services/seo.service'
 
 @Component({
 	selector: 'contacts',
@@ -12,7 +13,10 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
 	private subscriptions = new Subscription()
 
-	constructor(public breakpointService: BreakpointObserverService) {}
+	constructor(
+		public breakpointService: BreakpointObserverService,
+		private seoService: SeoService
+	) {}
 
 	datas = [
 		{
@@ -38,16 +42,10 @@ export class ContactsComponent implements OnInit, OnDestroy {
 		{
 			salesDep: [
 				{
-					img: '',
-					name: 'Капитанский Павел',
-					position: 'Специалист',
-					email: 'pkapitanskiy@metib.ru'
-				},
-				{
-					img: './assets/images/staff/big/dkobyakov-b.jpg',
-					name: 'Кобяков Даниил',
-					position: 'Специалист',
-					email: 'dkobyakov@metib.ru'
+					img: './assets/images/staff/big/nazrin.jpg',
+					name: 'Гаджиева Назрин',
+					position: 'Начальник отдела',
+					email: 'ngezalova@metib.ru'
 				},
 				{
 					img: './assets/images/staff/big/dnovikova-b.jpg',
@@ -86,12 +84,6 @@ export class ContactsComponent implements OnInit, OnDestroy {
 					name: 'Евтушенко Ирина',
 					position: 'Старший экономист',
 					email: 'ievtushenko@metib.ru'
-				},
-				{
-					img: './assets/images/staff/big/dladnaya-b.jpg',
-					name: 'Ладная Дарья',
-					position: 'Главный экономист',
-					email: 'dladnaya@metib.ru'
 				},
 				{
 					img: './assets/images/staff/big/chai-b.jpg',
@@ -150,7 +142,13 @@ export class ContactsComponent implements OnInit, OnDestroy {
 					position:
 						'Главный специалист',
 					email: 'ekovyazina@metib.ru'
-				}
+				},
+				{
+					img: './assets/images/staff/big/fursova.jpg',
+					name: 'Фурсова Светлана',
+					position: 'Специалист',
+					email: 'sfursova@metib.ru'
+				},
 			]
 		}
 	]
@@ -159,6 +157,17 @@ export class ContactsComponent implements OnInit, OnDestroy {
 		this.subscriptions = this.breakpointService
 			.isDesktop()
 			.subscribe(b => (this.isDesktop = b))
+
+								
+		this.seoService.updateMetaTags({
+			title:
+				'Контакты Металлинвестбанк факторинг',
+			description:
+				'Контакты Металлинвестбанк факторинг адрес, телефон Москва, Санкт-Петербург',
+			image: 'https://factoring.metallinvestbank.ru/ogimagemain.jpg',
+			ogDescription:
+				'Контакты Металлинвестбанк факторинг адрес, телефон Москва, Санкт-Петербург'
+		})
 	}
 
 	ngOnDestroy(): void {

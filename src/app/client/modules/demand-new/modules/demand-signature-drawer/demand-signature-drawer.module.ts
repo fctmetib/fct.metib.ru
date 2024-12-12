@@ -30,6 +30,23 @@ import {
 import {
   DemandSignatureFourthStepComponent
 } from './components/demand-signature-fourth-step/demand-signature-fourth-step.component'
+import { DemandSignatureDrawerStaticService } from './demand-signature-drawer-static.service';
+import { DlFileCellModule } from '../../../../../shared/ui-kit/dl-file-cell/dl-file-cell.module';
+import { LeftIconModule } from '../../../../../shared/directives/left-icon/left-icon.module';
+import { BadgeModule } from '../../../../../shared/ui-kit/badge/badge.module';
+import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
+import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
+import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
+import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
+import { DemandSignatureEventsTabComponent } from './components/demand-signature-events-tab/demand-signature-events-tab.component';
+import { AccordionItemModule } from '../../../../../shared/ui-kit/accordion-item/accordion-item.module';
+import {
+  AccordionWithShadowModule
+} from '../../../../../shared/ui-kit/accordion-with-shadow/accordion-with-shadow.module';
+import { DemandSignatureInfoTabComponent } from './components/demand-signature-info-tab/demand-signature-info-tab.component';
+import { DemandSignatureDocsTabComponent } from './components/demand-signature-docs-tab/demand-signature-docs-tab.component';
+import { DemandSignatureResultTabComponent } from './components/demand-signature-result-tab/demand-signature-result-tab.component';
+import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-loader.module';
 
 @NgModule({
   declarations: [
@@ -37,7 +54,11 @@ import {
     DemandSignatureFirstStepComponent,
     DemandSignatureSecondStepComponent,
     DemandSignatureThirdStepComponent,
-    DemandSignatureFourthStepComponent
+    DemandSignatureFourthStepComponent,
+    DemandSignatureEventsTabComponent,
+    DemandSignatureInfoTabComponent,
+    DemandSignatureDocsTabComponent,
+    DemandSignatureResultTabComponent
   ],
   imports: [
     CommonModule,
@@ -57,9 +78,19 @@ import {
     MibDragAndDropModule,
     FileCellModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DlFileCellModule,
+    LeftIconModule,
+    BadgeModule,
+    AttachedDocumentModule,
+    MessageItemModule,
+    SkeletonModule,
+    SendMessagesModule,
+    AccordionItemModule,
+    AccordionWithShadowModule,
+    BlurLoaderModule
   ],
-  providers: [DemandSignatureDrawerService],
+  providers: [DemandSignatureDrawerService, DemandSignatureDrawerStaticService],
   exports: [DemandSignatureFirstStepComponent]
 })
 export class DemandSignatureDrawerModule {

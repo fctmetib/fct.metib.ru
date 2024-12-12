@@ -1,14 +1,12 @@
 import {
-	AfterViewInit,
-	Component,
-	ElementRef,
-	EventEmitter,
-	Input,
-	Optional,
-	Output,
-	TemplateRef,
-	ViewChild
-} from '@angular/core'
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter, inject,
+  Input,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {SelectComponent} from '../select/select.component'
 import {
 	DropdownPointSize,
@@ -17,6 +15,7 @@ import {
 import {FormControl} from '@angular/forms'
 import {DropdownService} from '../dropdown/services/dropdown.service'
 import {AutoCompleteComponent} from '../auto-complete/auto-complete.component'
+import { TableHeadCellComponent } from '../table/components/table-head-cell/table-head-cell.component';
 
 @Component({
 	selector: 'mib-dropdown-point',
@@ -39,27 +38,31 @@ export class DropdownPointComponent implements AfterViewInit {
 	@Input() type: DropdownPointType = 'outline'
 	@Output() press = new EventEmitter()
 
-	public viewMounted: boolean = false
-	public control: FormControl = new FormControl<boolean>(false)
-	public _showCheckbox: boolean = false
+	viewMounted: boolean = false
+	control = new FormControl<boolean>(false)
+	_showCheckbox: boolean = false
 
-	constructor(
-		private dropdownService: DropdownService,
-		@Optional() public selectComponent?: SelectComponent,
-		@Optional() public autoCompleteComponent?: AutoCompleteComponent
-	) {}
+  private dropdownService = inject(DropdownService)
+  selectComponent = inject(SelectComponent, {optional: true})
+  autoCompleteComponent = inject(AutoCompleteComponent, {optional: true})
+  tableHeadCellComponent = inject(TableHeadCellComponent, {optional: true})
+
+  get filterDropdown() {
+    return this.tableHeadCellComponent?.filterActionComponent?.filterDropdown
+  }
 
 	get isVisible() {
 		if (this.autoCompleteComponent) {
 			return this.autoCompleteComponent.getVisibleState(this.value)
-		}
+		} else if (this.filterDropdown) {
+      return this.value.toLowerCase().includes(this.filterDropdown.searchControl.value.toLowerCase())
+    }
 		return true
 	}
 
 	get selected() {
-		return (this.selectComponent || this.autoCompleteComponent)?.matchOption(
-			this.value
-		)
+    const component = this.selectComponent || this.autoCompleteComponent || this.filterDropdown
+		return component?.matchOption(this.value)
 	}
 
 	select($event: Event): void {
@@ -69,7 +72,8 @@ export class DropdownPointComponent implements AfterViewInit {
 		if (this._showCheckbox) this.control.setValue(!this.control.value)
 		this.selectComponent?.selectOption(this)
 		this.autoCompleteComponent?.selectOption(this)
-		if (!this.selectComponent && !this.autoCompleteComponent) {
+    this.filterDropdown?.selectOption(this.value)
+		if (!this.selectComponent && !this.autoCompleteComponent && !this.filterDropdown) {
 			this.dropdownService.closeMenu()
 		}
 	}

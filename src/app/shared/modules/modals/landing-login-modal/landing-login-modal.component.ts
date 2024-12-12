@@ -1,5 +1,5 @@
 import {isPlatformBrowser} from '@angular/common'
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core'
+import { Component, inject, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms'
 import {MatDialogRef} from '@angular/material/dialog'
 import {ActivatedRoute, Params} from '@angular/router'
@@ -8,6 +8,7 @@ import {AuthService} from 'src/app/auth/services/auth.service'
 import {LoginRequestInterface} from 'src/app/auth/types/login/loginRequest.interface'
 import {CommonService} from 'src/app/shared/services/common/common.service'
 import {InputSize} from 'src/app/shared/ui-kit/input/interfaces/input.interface'
+import { WINDOW } from '../../../tokens/window.token';
 
 @Component({
 	selector: 'mib-landing-login-modal',
@@ -38,6 +39,8 @@ export class LandingLoginModalComponent implements OnInit {
 		private readonly authService: AuthService,
 		@Inject(PLATFORM_ID) private platformId: Object
 	) {}
+
+  private window = inject(WINDOW)
 
 	public ngOnInit(): void {
 		this.initializeForm()
@@ -104,14 +107,14 @@ export class LandingLoginModalComponent implements OnInit {
 
 	openExternalSite() {
 		if (isPlatformBrowser(this.platformId)) {
-			window.open('https://fct.metallinvestbank.ru/reset-password', '_blank')
+			this.window?.open('https://fct.metallinvestbank.ru/reset-password', '_blank')
 			this.dialogRef.close()
 		}
 	}
 
 	openExternalRegister() {
 		if (isPlatformBrowser(this.platformId)) {
-			window.open('https://fct.metallinvestbank.ru/register', '_blank')
+			this.window?.open('https://fct.metallinvestbank.ru/register', '_blank')
 			this.dialogRef.close()
 		}
 	}

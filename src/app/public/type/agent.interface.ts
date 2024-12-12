@@ -26,6 +26,7 @@ export interface AgentOpfInterface {
 
 export interface AgentNameInterface {
   short: string;
+  short_with_opf?: string;
   full: string;
 }
 

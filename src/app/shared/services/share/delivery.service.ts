@@ -4,7 +4,7 @@ import {
 } from '../../types/delivery/delivery.interface'
 import {environment} from 'src/environments/environment'
 
-import {Observable, of} from 'rxjs'
+import {map, Observable, of} from 'rxjs'
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {ClientAccountInterface} from '../../types/client/client-account.interface'
@@ -84,7 +84,7 @@ export class DeliveryService {
 	 * @returns Возвращает список договоров с статистикой
 	 */
 	getDeliveriesByIdWithStats(id: number): Observable<DeliveryInterface[]> {
-		let url = `${environment.apiUrl}/delivery/${id}?includeStatistics=true`
+		let url = `${environment.apiUrl}/v1/deliveries/${id}?includeStatistics=true`
 		return this.http.get<DeliveryInterface[]>(url)
 	}
 
@@ -105,12 +105,12 @@ export class DeliveryService {
 	 * @returns Возвращает список договоров с статистикой
 	 */
 	getDeliveriesWithStats(): Observable<DeliveryInterface[]> {
-		let url = `${environment.apiUrl}/delivery?includeStatistics=false`
+		let url = `${environment.apiUrl}/v1/deliveries?includeStatistics=false`
 		return this.http.get<DeliveryInterface[]>(url)
 	}
 
 	getDeliveryAccounts(id: string): Observable<ClientAccountInterface[]> {
-		let url = `${environment.apiUrl}/delivery/${id}/accounts`
+		let url = `${environment.apiUrl}/v1/deliveries/${id}/accounts`
 		return this.http.get<ClientAccountInterface[]>(url)
 	}
 
@@ -119,9 +119,25 @@ export class DeliveryService {
 	 * @param id delivery
 	 * @returns Возвращает реквизиты, по контракту
 	 */
-	getRequisitesById(id: number): Observable<string> {
+	getRequisitesById(id: number): Observable<any> {
 		return this.http.get<string>(
-			`${environment.apiUrl}/delivery/${id}/requisites`
-		)
+			`${environment.apiUrl}/v1/deliveries/${id}/requisites`, 
+			{ responseType: 'text' as 'json' }
+		).pipe(
+			map(response => {
+				try {
+					return JSON.parse(response);
+				} catch {
+					return response;
+				}
+			})
+		);
 	}
+	
+
+  getDeliveriesV2() {
+    return this.http.get<DeliveryInterface[]>(
+      `${environment.apiUrl}/v1/deliveries`
+    )
+  }
 }

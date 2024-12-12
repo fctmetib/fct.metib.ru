@@ -22,44 +22,6 @@ import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoi
 	templateUrl: 'news.component.html'
 })
 export class NewsComponent implements OnInit, OnDestroy {
-	datas = [
-		{
-			id: 1,
-			img: './assets/images/news/news-1.jpg',
-			title: 'С Наступающим Новым 2024 годом!',
-			date: '10 декабря 2023',
-			link: '/news/1'
-		},
-		{
-			id: 2,
-			img: './assets/images/news/news-2.jpg',
-			title: 'ПАО АКБ "Металлинвестбанк" посетил выставки',
-			date: '12 декабря 2023',
-			link: '/news/2'
-		},
-		{
-			id: 3,
-			img: './assets/images/news/news-3.jpg',
-			title: 'Прямое финансирование Китайского Экспорта',
-			date: '14 декабря 2023',
-			link: '/news/3'
-		},
-		{
-			id: 4,
-			img: './assets/images/news/news-4.jpg',
-			title: 'ПАО АКБ «Металлинвестбанк» договорился о работе с ТС Вимос',
-			date: '15 декабря 2023',
-			link: '/news/4'
-		},
-		{
-			id: 5,
-			img: './assets/images/news/news-5.jpg',
-			title: 'ПАО АКБ «Металлинвестбанк» на Выставке «Кредит-Expo»',
-			date: '18 декабря 2023',
-			link: '/news/5'
-		}
-	]
-
 	public defaultSkeleton: Properties = {
 		width: '100%',
 		borderRadius: '8px',
@@ -79,7 +41,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 	}
 
 	public loading$ = new BehaviorSubject<boolean>(false)
-	public newsNumberCount: number = 5
+	public newsNumberCount: number = 10
 	public getAdvancedNews: AdvancedNewsInterface[]
 
 	public isDesktop: boolean = false

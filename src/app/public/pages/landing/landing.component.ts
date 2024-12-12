@@ -35,6 +35,7 @@ import {GetAgentRequestService} from '../../service/get-agent-request.service'
 import {LandingAgreementModalService} from 'src/app/shared/modules/modals/landing-agreement-modal/landing-agreement-modal.service'
 import {isPlatformBrowser} from '@angular/common'
 import {ActivatedRoute} from '@angular/router'
+import {SeoService} from 'src/app/shared/services/seo.service'
 
 @Component({
 	selector: 'mib-landing',
@@ -218,7 +219,8 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		private requestLandingService: RequestLandingService,
 		private toaster: ToasterService,
 		private getAgentRequestService: GetAgentRequestService,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private seoService: SeoService
 	) {}
 
 	ngOnInit(): void {
@@ -256,6 +258,16 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 			console.warn('No data received from LandingNewsResolver')
 			this.getAdvancedNews = []
 		}
+
+		this.seoService.updateMetaTags({
+			title:
+				'Факторинг Металлинвестбанк услуги банковского факторинга в России',
+			description:
+				'Услуги банковского факторинга для поставщиков. Факторинг с регрессом, факторинг без регресса. Международный факторинг.',
+			image: 'https://factoring.metallinvestbank.ru/ogimagemain.jpg',
+			ogDescription:
+				'Услуги банковского факторинга для поставщиков. Факторинг с регрессом, факторинг без регресса. Международный факторинг.'
+		})
 	}
 
 	fetchOptions(query: string) {
@@ -364,16 +376,16 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		const rawPhoneNumber = this.form.value.Phone
 		const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber)
 		const formData = {
-			From: this.form.value.FormName,
-			Name: this.form.value.Name,
-			Phone: formattedPhoneNumber,
-			Email: this.form.value.Email,
-			INN: this.form.value.INN,
-			Organization: this.form.value.Organization,
-			Comment: `${this.form.value.Comment}\nИспользует факторинг: ${
+			from: this.form.value.FormName,
+			name: this.form.value.Name,
+			phone: formattedPhoneNumber,
+			email: this.form.value.Email,
+			inn: this.form.value.INN,
+			organization: this.form.value.Organization,
+			comment: `${this.form.value.Comment}\nИспользует факторинг: ${
 				this.form.value.UseFactoring ? 'Да' : 'Нет'
 			}`,
-			Agree: this.form.value.Agree
+			agree: this.form.value.Agree
 		}
 
 		this.requestLandingService

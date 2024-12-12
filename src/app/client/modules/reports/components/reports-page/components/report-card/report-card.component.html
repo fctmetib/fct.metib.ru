@@ -1,0 +1,14 @@
+<div class="flex">
+  <div class="flex flex_column gap-4 flex_grow">
+    <h5>{{title}}</h5>
+    <p class="text text_m c-bti-secondary">{{description}}</p>
+  </div>
+  <mib-button
+    size="m"
+    type="ghost-primary"
+    (press)="report()"
+  >
+    Сформировать отчет
+    <mib-icon class="stroke" btn-right-icon name="fi_chevron-right"></mib-icon>
+  </mib-button>
+</div>

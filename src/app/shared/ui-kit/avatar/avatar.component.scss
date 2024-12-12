@@ -1,5 +1,9 @@
 @import 'src/styles/helpers/icon_tools';
 
+:host {
+  display: block;
+}
+
 @mixin avatar-hover {
 	cursor: pointer;
 	&::before {

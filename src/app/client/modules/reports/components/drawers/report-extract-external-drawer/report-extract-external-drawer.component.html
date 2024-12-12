@@ -1,0 +1,53 @@
+<mib-report-drawer-layout
+  [loading]="reportLoading$ | async"
+  (onClose)="onClose()"
+  (onReport)="onReport()"
+  [formGroup]="form"
+>
+  <ng-container report-drawer-title>Выписка по счёту</ng-container>
+
+  <div class="flex flex_column gap-12">
+    <div class="flex gap-12" formGroupName="period">
+      <mib-input class="flex_grow">
+        <input
+          mibInput
+          type="date"
+          size="m"
+          formControlName="DateFrom"
+          styleType="outline"
+        />
+        <ng-container mibLabel>Дата начала периода</ng-container>
+      </mib-input>
+      <mib-input class="flex_grow">
+        <input
+          mibInput
+          type="date"
+          size="m"
+          formControlName="DateTo"
+          styleType="outline"
+        />
+        <ng-container mibLabel>Дата окончания периода</ng-container>
+      </mib-input>
+    </div>
+    <mib-input class="flex_grow">
+      <input
+        mibInput
+        size="m"
+        formControlName="OrderNumber"
+        styleType="outline"
+      />
+      <ng-container mibLabel>Номер Распоряжения</ng-container>
+    </mib-input>
+    <mib-input class="flex_grow">
+      <input
+        mibInput
+        size="m"
+        formControlName="RequestNumber"
+        styleType="outline"
+      />
+      <ng-container mibLabel>Номер Заявки</ng-container>
+    </mib-input>
+  </div>
+
+
+</mib-report-drawer-layout>
