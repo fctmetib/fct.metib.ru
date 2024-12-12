@@ -93,11 +93,11 @@ export class RefIconService {
   }
 
   private getBaseUrl(): string {
-	  // TODO: Изменить на динамичный вид, второй параметр null
-	const baseUrl = this.transferState.get(BASE_URL_KEY, "https://factoring.metallinvestbank.ru");
-	if (baseUrl) {
-	  return baseUrl;
-	}
+	// TODO: Изменить на динамичный вид, второй параметр null
+	// const baseUrl = this.transferState.get(BASE_URL_KEY, "https://factoring.metallinvestbank.ru");
+	// if (baseUrl) {
+	//   return baseUrl;
+	// }
   
 	if (!this.isServer() && typeof window !== 'undefined') {
 	  return window.location.origin;
