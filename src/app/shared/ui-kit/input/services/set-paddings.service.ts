@@ -12,7 +12,7 @@ export interface InputIconsPaddings {
   newPaddingLeft: string
 }
 
-export const setPaddings = ({leftEl, rightEl, element}: SetInputIconsPaddings, r2: Renderer2, callback?: (data: InputIconsPaddings) => void) => {
+export const setPaddings = ({ leftEl, rightEl, element }: SetInputIconsPaddings, r2: Renderer2, window: Window, callback?: (data: InputIconsPaddings) => void) => {
   const leftWidth = leftEl.clientWidth
   const rightWidth = rightEl.clientWidth
 
