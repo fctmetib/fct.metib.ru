@@ -30,7 +30,7 @@ export function app(): express.Express {
   }));
 
   server.get('*', (req, res) => {
-    const baseUrl = `${req.protocol}://${req.get('host')}`;
+    const baseUrl = 'https://factoring.metallinvestbank.ru' // `${req.protocol}://${req.get('host')}`;
     res.render(indexHtml, {
       req,
       res,
