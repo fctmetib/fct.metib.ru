@@ -68,24 +68,29 @@ export class RefIconService {
   private async loadAllIcons(): Promise<void> {
 	try {
 	  const isDevMode = !this.isServer();
+	  console.log('Dev mode:', isDevMode);
+  
 	  if (isDevMode) {
 		const iconsDir = '/assets/icons/ui-kit-icons/';
 		const iconNames = this.iconsService.icons;
-  
+
 		for (const iconName of iconNames) {
 		  const iconUrl = `${iconsDir}${iconName}.svg`;
 		  const svgContent = await this.http.get(iconUrl, { responseType: 'text' }).toPromise();
 		  this.icons[iconName] = svgContent;
 		}
+		console.log('Client. Icons:', this.icons);
 	  } else {
 		const url = `${this.getBaseUrl()}/assets/icons/icons.json`;
 
 		const allIcons = await this.http.get<{ [key: string]: string }>(url).toPromise();
+		console.log('Server. Icons:', allIcons);
 		this.icons = allIcons || {};
 	  }
   
 	  if (this.isServer()) {
 		this.transferState.set(ICONS_KEY, this.icons);
+		console.log('ICONS_KEY:', this.transferState.get(ICONS_KEY, null));
 	  }
 	} catch (error) {
 	  console.error('Failed to load icons:', error);
