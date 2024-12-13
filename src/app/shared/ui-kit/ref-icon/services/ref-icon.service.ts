@@ -113,7 +113,7 @@ export class RefIconService {
 	  if (this.isServer()) {
 		console.log('Setting icons to transferState...');
 		this.transferState.set(ICONS_KEY, this.icons);
-		console.log('ICONS_KEY stored:', this.transferState.get(ICONS_KEY, null));
+		console.log('ICONS_KEY stored:', this.transferState.get(ICONS_KEY, null)["vk"]);
 	  }
   
 	} catch (error) {
