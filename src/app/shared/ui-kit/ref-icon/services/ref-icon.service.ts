@@ -73,31 +73,53 @@ export class RefIconService {
 	  if (isDevMode) {
 		const iconsDir = '/assets/icons/ui-kit-icons/';
 		const iconNames = this.iconsService.icons;
-
+		console.log('Client mode: iconsDir:', iconsDir, 'iconNames:', iconNames);
+  
 		for (const iconName of iconNames) {
 		  const iconUrl = `${iconsDir}${iconName}.svg`;
+		  console.log('Fetching icon:', iconUrl);
 		  const svgContent = await this.http.get(iconUrl, { responseType: 'text' }).toPromise();
+		  console.log(`Icon fetched: ${iconName}`, svgContent ? 'OK' : 'EMPTY');
 		  this.icons[iconName] = svgContent;
 		}
-		console.log('Client. Icons:', this.icons);
+		console.log('Client. Icons loaded:', Object.keys(this.icons));
 	  } else {
 		const url = `${this.getBaseUrl()}/assets/icons/icons.json`;
+		console.log('Server mode: Fetching icons from:', url);
 
-		const allIcons = await this.http.get<{ [key: string]: string }>(url).toPromise().catch(e => {
-			console.log("server error", e)
-		});
-		console.log('Server. Icons:', allIcons["vk"]);
+		let response;
+		try {
+		  response = await this.http.get<{ [key: string]: string }>(url).toPromise();
+		  console.log('Server response:', response);
+		} catch (e) {
+		  console.log('Error fetching icons on server:', e);
+		}
+
+		if (!response) {
+		  console.log('No response from icons.json, allIcons is undefined');
+		} else {
+		  console.log('Server. Icons keys:', Object.keys(response));
+		}
+  
+		const allIcons = response;
+		if (allIcons && allIcons["vk"]) {
+		  console.log('Server. Icons:', allIcons["vk"]);
+		} else {
+		  console.log('Server. No vk icon in response');
+		}
 		this.icons = allIcons || {};
 	  }
   
 	  if (this.isServer()) {
+		console.log('Setting icons to transferState...');
 		this.transferState.set(ICONS_KEY, this.icons);
-		console.log('ICONS_KEY:', this.transferState.get(ICONS_KEY, null)["vk"]);
+		console.log('ICONS_KEY stored:', this.transferState.get(ICONS_KEY, null));
 	  }
+  
 	} catch (error) {
 	  console.error('Failed to load icons:', error);
 	}
-  }
+  }  
 
   private getBaseUrl(): string {
 	// TODO: Изменить на динамичный вид, второй параметр null
