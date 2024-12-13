@@ -84,13 +84,13 @@ export class RefIconService {
 		const url = `${this.getBaseUrl()}/assets/icons/icons.json`;
 
 		const allIcons = await this.http.get<{ [key: string]: string }>(url).toPromise();
-		console.log('Server. Icons:', allIcons);
+		console.log('Server. Icons:', allIcons["vk"]);
 		this.icons = allIcons || {};
 	  }
   
 	  if (this.isServer()) {
 		this.transferState.set(ICONS_KEY, this.icons);
-		console.log('ICONS_KEY:', this.transferState.get(ICONS_KEY, null));
+		console.log('ICONS_KEY:', this.transferState.get(ICONS_KEY, null)["vk"]);
 	  }
 	} catch (error) {
 	  console.error('Failed to load icons:', error);
