@@ -252,7 +252,9 @@
 					</div>
 				</div>
 				<mib-spacing type="xs"></mib-spacing>
-				<div class="flex flex_row gap-8">
+				<div 
+					class="flex gap-8"
+					[ngClass]="{flex_row: isDesktop, flex_column: !isDesktop}">
 					<mib-button
 						title="Установить «Фактор – Клиент»"
 						[class.w-100]="!isDesktop"
@@ -267,12 +269,12 @@
 						></mib-icon>
 					</mib-button>
 					<mib-button
-						title="Загрузить «Фактор-Клиент» для Агентского факторинга"
+						title="Установить «Фактор – Клиент» Агентский"
 						[class.w-100]="!isDesktop"
 						(press)="downloadFile('installFactorClientTest')"
 						type="filled-primary"
 					>
-						Загрузить «Фактор-Клиент» для Агентского факторинга
+						Установить «Фактор – Клиент» Агентский
 						<mib-icon
 							btn-left-icon
 							class="stroke"
