@@ -83,7 +83,9 @@ export class RefIconService {
 	  } else {
 		const url = `${this.getBaseUrl()}/assets/icons/icons.json`;
 
-		const allIcons = await this.http.get<{ [key: string]: string }>(url).toPromise();
+		const allIcons = await this.http.get<{ [key: string]: string }>(url).toPromise().catch(e => {
+			console.log("server error", e)
+		});
 		console.log('Server. Icons:', allIcons["vk"]);
 		this.icons = allIcons || {};
 	  }
