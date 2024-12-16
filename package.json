@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "prestart": "node generate-icons-json.js",
     "build": "ng build --prod",
+    "prebuild": "node generate-icons-json.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -12,8 +14,10 @@
     "dev:ssr": "ng run metallinvestbank-web:serve-ssr",
     "serve:ssr": "node dist/metallinvestbank-web/server/main.js",
     "start:dev": "ng serve --configuration development",
+    "prestart:dev": "node generate-icons-json.js",
     "build:dev": "ng build --configuration development",
-    "build:ssr": "ng build && node generate-icons-json.js && ng run metallinvestbank-web:server",
+    "build:ssr": "ng run metallinvestbank-web:server",
+    "prebuild:ssr": "node generate-icons-json.js",
     "prerender": "ng run metallinvestbank-web:prerender"
   },
   "private": true,
