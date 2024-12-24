@@ -14,7 +14,7 @@ $text-selectors: 'label';
       justify-content: start;
     }
   }
-  &:last-child {
+  &:last-of-type {
     padding-right: var(--table-right-padding);
   }
 

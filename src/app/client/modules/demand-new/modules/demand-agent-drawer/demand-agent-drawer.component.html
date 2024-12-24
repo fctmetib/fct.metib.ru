@@ -377,17 +377,6 @@
                       </span>
                     </div>
                     <div class="flex">
-                      <!--                    <mib-button-->
-                      <!--                      size="s"-->
-                      <!--                      (press)="accountEdit()"-->
-                      <!--                      type="ghost-secondary"-->
-                      <!--                    >-->
-                      <!--                      <mib-icon-->
-                      <!--                        btn-icon-->
-                      <!--                        class="stroke"-->
-                      <!--                        name="fi_edit-3"-->
-                      <!--                      ></mib-icon>-->
-                      <!--                    </mib-button>-->
                       <mib-button
                         size="s"
                         (press)="removeRealty(i)"
@@ -447,8 +436,6 @@
           <mib-spacing type="s"></mib-spacing>
           <!-- contracted-form Недвижимость предприятия end -->
           <!-- contracted-form Долговые обязательства start-->
-
-
           <div class="flex flex_column">
             <div class="flex flex_column">
               <p class="headline">Долговые обязательства</p>
@@ -541,6 +528,16 @@
             </mib-link>
           </div>
           <!-- contracted-form Долговые обязательства end -->
+
+          <mib-autocomplete>
+
+          </mib-autocomplete>
+
+          <mib-input>
+            <input mibInput formControlName>
+            <ng-container mibLabel>Предполагаемый лимит финансирования</ng-container>
+          </mib-input>
+
           <mib-spacing type="m"></mib-spacing>
         </div>
         <!-- пятый скрин -->
