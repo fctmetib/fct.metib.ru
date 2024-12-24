@@ -129,6 +129,10 @@ export class DemandFactoringDrawerComponent implements OnInit {
     return this.form.get('factoringCredits') as FormArray;
   }
 
+  get factoringEDIProviders(): FormArray {
+    return this.form.get('factoringEDIProviders') as FormArray;
+  }
+
   ngOnInit() {
 
     this.typesOfOwner = this.mibCommon.getTypesOfOwner();
@@ -290,6 +294,14 @@ export class DemandFactoringDrawerComponent implements OnInit {
         factoringPlacesContractSum: credit.Summ,
         factoringPlacesBalanceReport: credit.ReportingRest,
         factoringPlacesBalanceCurrent: credit.CurrentRest,
+      });
+    });
+
+    // Маппинг FactoringEDIProviders с использованием addEDI
+    factoring.EDI?.forEach((edi) => {
+      this.addEDI({
+        factoringEDIProvidersDebitor: edi.Company,
+        factoringEDIProvidersProvider: edi.EDIProvider,
       });
     });
   }
@@ -848,6 +860,27 @@ export class DemandFactoringDrawerComponent implements OnInit {
     ).subscribe();
 
     this.factoringCredits.push(creditGroup);
+  }
+
+  addEDI(data?: any): void {
+    const ediGroup = this._formGenerator.generateEDIFormArray(data);
+    const index = this.factoringEDIProviders.length; // Индекс нового элемента
+
+    ediGroup.get('factoringEDIProvidersDebitor').valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => this.getAgentRequestService.getAgentData(value)),
+      tap(options => {
+        this.dataByDebitorINN[index] = options.suggestions || [];
+      }),
+      untilDestroyed(this)
+    ).subscribe()
+    this.factoringEDIProviders.push(ediGroup);
+  }
+
+  removeEDI(index: number): void {
+    this.factoringEDIProviders.removeAt(index);
+    delete this.dataByDebitorINN[index];
   }
 
   removeCredit(index: number): void {
