@@ -103,11 +103,14 @@ export class FormsPresetsService {
       DateShipment: [null, validators],
       // DatePayment: [null, validators], //
       Summ: [null, validators],
+      SummRequired: [null, validators],
       // SummToFactor: [null, validators], //
     }))
     fg.patchValue(data as any)
     fg.markAllAsTouched()
     return fg
   }
+
+
 
 }

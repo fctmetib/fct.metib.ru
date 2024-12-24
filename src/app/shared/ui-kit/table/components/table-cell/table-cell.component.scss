@@ -55,7 +55,9 @@ $text-selectors: 'label';
   }
 	#{$text-selectors} {
 		@include body-text;
-		@include text-overflow(1);
+    white-space: nowrap; /* Запрещает перенос строк */
+    overflow: hidden; /* Обрезает лишний текст */
+    text-overflow: ellipsis; /* Добавляет троеточие в конце */
     display: block;
 	}
 

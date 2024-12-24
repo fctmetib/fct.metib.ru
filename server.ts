@@ -2,7 +2,7 @@ import 'zone.js/node';
 
 import { APP_BASE_HREF } from '@angular/common';
 import { ngExpressEngine } from '@nguniversal/express-engine';
-import * as express from 'express';
+import express from 'express';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
@@ -30,7 +30,7 @@ export function app(): express.Express {
   }));
 
   server.get('*', (req, res) => {
-    const baseUrl = `${req.protocol}://${req.get('host')}`;
+    const baseUrl = 'https://factoring.metallinvestbank.ru' // `${req.protocol}://${req.get('host')}`;
     res.render(indexHtml, {
       req,
       res,

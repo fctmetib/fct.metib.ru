@@ -1,19 +1,19 @@
 import {
-	AfterContentInit,
-	AfterViewInit,
-	ChangeDetectorRef,
-	Component,
-	ContentChild,
-	ContentChildren,
-	ElementRef,
-	forwardRef,
-	Injector,
-	Input,
-	Optional,
-	QueryList,
-	Renderer2,
-	ViewChild
-} from '@angular/core'
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ContentChildren,
+  ElementRef, EventEmitter,
+  forwardRef, inject,
+  Injector,
+  Input,
+  Optional, Output,
+  QueryList,
+  Renderer2,
+  ViewChild
+} from '@angular/core';
 import {MibInputDirective} from '../input/directives/mib-input.directive'
 import {DropdownPointComponent} from '../dropdown-point/dropdown-point.component'
 import {DropdownService} from '../dropdown/services/dropdown.service'
@@ -66,10 +66,14 @@ import {AutoUnsubscribeService} from '../../services/auto-unsubscribe.service'
 		}
 	]
 })
-export class AutoCompleteComponent
-	implements AfterContentInit, AfterViewInit, ControlValueAccessor
-{
-	@ViewChild('menu') menu: DropdownComponent
+export class AutoCompleteComponent implements AfterContentInit, AfterViewInit, ControlValueAccessor {
+
+  @Input() controlDisplayedOptions = true;
+
+  @Output() singleOptionSelected = new EventEmitter<any>(); // Для одиночного выбора
+  @Output() multiOptionsSelected = new EventEmitter<any[]>(); // Для мульти-выбора
+
+  @ViewChild('menu') menu: DropdownComponent
 	@ViewChild(DropdownDirective, {read: ElementRef}) dropdownElement: ElementRef
 	@ContentChild(MibInputDirective) inputDirective!: MibInputDirective
 	@ContentChildren(forwardRef(() => DropdownPointComponent))
@@ -79,18 +83,16 @@ export class AutoCompleteComponent
 
 	multi = false
 
+	filteredOptions: DropdownPointComponent[] = []
+	selectedOption: DropdownPointComponent | null = null
+	selectedOptions: DropdownPointComponent[] = []
 	private control?: AbstractControl
-	public filteredOptions: DropdownPointComponent[] = []
-	public selectedOption: DropdownPointComponent | null = null
-	public selectedOptions: DropdownPointComponent[] = []
 	private innerValue$ = new BehaviorSubject<any>(null)
 
-	constructor(
-		private injector: Injector,
-		private au: AutoUnsubscribeService,
-		private cdr: ChangeDetectorRef,
-		private dropdownService: DropdownService
-	) {}
+  private injector = inject(Injector)
+  private au = inject(AutoUnsubscribeService)
+  private cdr = inject(ChangeDetectorRef)
+  private dropdownService = inject(DropdownService)
 
 	private _filter(value: string): DropdownPointComponent[] {
 		let filterValue = value.toLowerCase()
@@ -100,12 +102,13 @@ export class AutoCompleteComponent
 	}
 
 	getVisibleState(value: any) {
-		if (!this.options?.length) {
+		if (!this.options?.length || !this.controlDisplayedOptions) {
 			return true
 		} else {
 			return this.filteredOptions.some(option => option.value === value)
 		}
 	}
+
 	private onChange: (value: any) => void = () => {}
 
 	private onTouched: () => void = () => {}
@@ -124,59 +127,69 @@ export class AutoCompleteComponent
 
 	ngAfterContentInit() {}
 
-	ngAfterViewInit() {
-		this.filteredOptions = this._filter('')
-		this.options.changes
-			.pipe(
-				tap(() => {
-					this.filteredOptions = this._filter(
-						this.inputDirective.elementRef.nativeElement.value
-					)
-				}),
-				switchMap(() => {
-					this.control = this.injector.get(NgControl, null).control
-					if (this.control) {
-						return this.control.valueChanges.pipe(
-							tap(value => {
-								this.inputDirective.updateStatus(this.control, true)
-								this.updateSelectedOption(value)
-							})
-						)
-					}
-				}),
-				takeUntil(this.au.destroyer)
-			)
-			.subscribe()
-		if (this.inputDirective && this.inputDirective.elementRef) {
-			fromEvent(this.inputDirective.elementRef.nativeElement, 'input')
-				.pipe(
-					map((event: Event) => (event.target as HTMLInputElement).value),
-					map(value => {
-						if (!value) {
-							this.filteredOptions = this._filter('')
-							this.selectOption(null)
-						}
-						return value
-					}),
-					map(value => this._filter(value)),
-					takeUntil(this.au.destroyer)
-				)
-				.subscribe(filtered => {
-					this.filteredOptions = filtered
-				})
-			fromEvent(this.inputDirective.elementRef.nativeElement, 'blur')
-				.pipe(
-					tap(value => {
-						this.inputDirective.updateStatus(this.control)
-						;(
-							this.inputDirective.elementRef.nativeElement as HTMLInputElement
-						).value = this.selectedOption?.text ?? ''
-					}),
-					takeUntil(this.au.destroyer)
-				)
-				.subscribe()
-		}
-	}
+  ngAfterViewInit() {
+    this.filteredOptions = this._filter('');
+
+    // Получаем контрол, связанный с формой
+    this.control = this.injector.get(NgControl, null)?.control;
+
+    this.options.changes
+      .pipe(
+        startWith(this.options),
+        tap(() => {
+          // Фильтруем опции при изменении их списка
+          this.filteredOptions = this._filter(
+            this.inputDirective.elementRef.nativeElement.value
+          );
+        }),
+        switchMap(() => {
+          if (this.control) {
+            // Слушаем изменения значения формы
+            return this.control.valueChanges.pipe(
+              startWith(this.control.value),
+              tap(value => {
+                this.inputDirective.updateStatus(this.control, true);
+                this.updateSelectedOption(value);
+              })
+            );
+          }
+          return [];
+        }),
+        takeUntil(this.au.destroyer)
+      )
+      .subscribe();
+
+    if (this.inputDirective && this.inputDirective.elementRef) {
+      // Слушаем изменения ввода пользователя
+      fromEvent(this.inputDirective.elementRef.nativeElement, 'input')
+        .pipe(
+          map((event: Event) => (event.target as HTMLInputElement).value),
+          tap(value => {
+            if (!value) {
+              this.filteredOptions = this._filter('');
+              this.selectOption(null);
+            }
+          }),
+          map(value => this._filter(value)),
+          takeUntil(this.au.destroyer)
+        )
+        .subscribe(filtered => {
+          this.filteredOptions = filtered;
+        });
+
+      // Обновляем текстовое поле при потере фокуса
+      fromEvent(this.inputDirective.elementRef.nativeElement, 'blur')
+        .pipe(
+          tap(() => {
+            this.inputDirective.updateStatus(this.control);
+            const input = this.inputDirective.elementRef.nativeElement as HTMLInputElement;
+            input.value = this.selectedOption?.text ?? input.value;
+          }),
+          takeUntil(this.au.destroyer)
+        )
+        .subscribe();
+    }
+  }
 
 	matchOption(value: any): boolean {
 		if (this.multi) {
@@ -195,52 +208,57 @@ export class AutoCompleteComponent
 				option.control.setValue(boolean)
 				return boolean
 			})
+      this.multiOptionsSelected.emit(this.selectedOptions.map(opt => opt.value));
 		} else {
-			this.selectedOption =
-				this.options.find(option => option.value === value) || null
+			this.selectedOption = this.options.find(option => option.value === value) || null
 			if (this.inputDirective) {
 				this.inputDirective.elementRef.nativeElement.value =
 					this.selectedOption?.text ?? ''
 				this.cdr.detectChanges()
 			}
+      this.singleOptionSelected.emit(this.selectedOption?.value || null);
 		}
 		this.filteredOptions = this._filter(this.selectedOption?.text ?? '')
 	}
 
-	selectOption(option: DropdownPointComponent | null): void {
-		if (option) {
-			if (this.multi) {
-				const index = this.selectedOptions.findIndex(
-					opt => opt.value === option.value
-				)
+  selectOption(option: DropdownPointComponent | null): void {
+    if (option) {
+      if (this.multi) {
+        const index = this.selectedOptions.findIndex(
+          opt => opt.value === option.value
+        );
 
-				if (index === -1 && option.control.value) {
-					// Если опция не выбрана и чекбокс активен, добавляем её в массив
-					this.selectedOptions.push(option)
-				} else if (index > -1 && !option.control.value) {
-					// Если опция уже выбрана и чекбокс неактивен, удаляем её из массива
-					this.selectedOptions.splice(index, 1)
-				}
+        if (index === -1 && option.control.value) {
+          // Если опция не выбрана и чекбокс активен, добавляем её в массив
+          this.selectedOptions.push(option);
+        } else if (index > -1 && !option.control.value) {
+          // Если опция уже выбрана и чекбокс неактивен, удаляем её из массива
+          this.selectedOptions.splice(index, 1);
+        }
 
-				this.innerValue$.next(this.selectedOptions.map(opt => opt.value))
-				this.onChange(this.innerValue$.value)
-			} else {
-				this.selectedOption = option
-				this.innerValue$.next(option.value)
-				this.onChange(this.innerValue$.value)
-				this.close()
-			}
-		} else {
-			this.selectedOption = null
-			this.innerValue$.next(null)
-			this.onChange(null)
-		}
-		if (this.inputDirective) {
-			this.inputDirective.elementRef.nativeElement.value = option?.text ?? ''
-			this.cdr.detectChanges()
-		}
-		this.onTouched()
-	}
+        this.innerValue$.next(this.selectedOptions.map(opt => opt.value));
+        this.onChange(this.innerValue$.value);
+        this.multiOptionsSelected.emit(this.innerValue$.value); // Генерация события
+      } else {
+        this.selectedOption = option;
+        this.innerValue$.next(option.value);
+        this.onChange(this.innerValue$.value);
+        this.singleOptionSelected.emit(this.innerValue$.value); // Генерация события
+        this.close();
+      }
+    } else {
+      this.selectedOption = null;
+      this.innerValue$.next(null);
+      this.onChange(null);
+      this.singleOptionSelected.emit(null); // Генерация события
+    }
+    if (this.inputDirective) {
+      this.inputDirective.elementRef.nativeElement.value = option?.text ?? '';
+      this.cdr.detectChanges();
+    }
+    this.onTouched();
+  }
+
 	close(): void {
 		this.dropdownService.closeMenu()
 	}

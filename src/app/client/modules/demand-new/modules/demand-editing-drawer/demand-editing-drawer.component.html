@@ -92,9 +92,9 @@
 							<mib-dl-file-cell
 								[attr.index]="i"
 								[showRemove]="true"
-								(onDload)="downloadCurrentFile()"
-								(onRemove)="removeDocument(i)"
-								[fileName]="document.get('Title')?.value"
+								(onDload)="downloadCurrentFile(document)"
+								(onRemove)="deleteDocument(i)"
+								[fileName]="document.get('FileName')?.value"
 							></mib-dl-file-cell>
 							<mib-spacing type="xs2"></mib-spacing>
 						</div>
@@ -242,7 +242,7 @@
 			</ng-container>
 		</ng-container>
 	</mib-drawer-container>
-  <mib-drawer-footer drawer-footer *ngIf="DemandStatus.view === status">
+  <mib-drawer-footer drawer-footer *ngIf="DemandStatus.view === status && tabIndex === '1'">
     <mib-send-messages
       [disabled]="(isSubmitting$ | async)"
       [form]="messageForm"

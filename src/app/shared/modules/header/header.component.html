@@ -157,7 +157,11 @@
 								<p class="text name text_m text_medium c-bti-primary">
 									{{ name }}
 								</p>
-								<p class="text text_s label c-bti-tertiary">Пользователь</p>
+								<p class="text text_s label c-bti-tertiary">
+<!--                  <ng-container *ngIf="isUser">Новый пользователь</ng-container>-->
+<!--                  <ng-container *ngIf="!isUser">Пользователь</ng-container>-->
+                  <ng-container>Пользователь</ng-container>
+                </p>
 							</div>
 							<mib-button size="m" type="ghost-secondary">
 								<mib-icon

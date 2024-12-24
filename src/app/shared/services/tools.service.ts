@@ -246,3 +246,27 @@ export class ToolsService {
   }
 
 }
+
+export function deepMerge(target, source) {
+  // Проверяем, является ли значение объектом
+  function isObject(obj) {
+    return obj && typeof obj === 'object' && !Array.isArray(obj);
+  }
+
+  // Проходим по всем ключам из source
+  for (const key of Object.keys(source)) {
+    if (isObject(source[key])) {
+      // Если ключ в target не объект, создаём его как объект
+      if (!isObject(target[key])) {
+        target[key] = {};
+      }
+      // Рекурсивно объединяем объекты
+      deepMerge(target[key], source[key]);
+    } else if (source[key] !== undefined) {
+      // Заменяем значение из source, если оно не undefined
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}

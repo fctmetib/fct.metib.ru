@@ -88,7 +88,7 @@ export class DeliveryService {
 		return this.http.get<DeliveryInterface[]>(url)
 	}
 
-	getDeliveriesRef(debtorID: number): Observable<DeliveryRef[]> {
+	getDeliveriesRefs(debtorID: number): Observable<DeliveryRef[]> {
 		return this.http.get<DeliveryRef[]>(
 			`${environment.apiUrl}/v1/deliveries/refs`,
 			{
@@ -99,7 +99,14 @@ export class DeliveryService {
 		)
 	}
 
-	/**
+  getDeliveriesRefsAgency(): Observable<DeliveryRef[]> {
+    return this.http.get<DeliveryRef[]>(
+      `${environment.apiUrl}/v1/deliveries/refs/agency`,
+    )
+  }
+
+
+  /**
 	 * Получает список договоров с статистикой из АПИ
 	 * @param none
 	 * @returns Возвращает список договоров с статистикой
@@ -121,7 +128,7 @@ export class DeliveryService {
 	 */
 	getRequisitesById(id: number): Observable<any> {
 		return this.http.get<string>(
-			`${environment.apiUrl}/v1/deliveries/${id}/requisites`, 
+			`${environment.apiUrl}/v1/deliveries/${id}/requisites`,
 			{ responseType: 'text' as 'json' }
 		).pipe(
 			map(response => {
@@ -133,7 +140,7 @@ export class DeliveryService {
 			})
 		);
 	}
-	
+
 
   getDeliveriesV2() {
     return this.http.get<DeliveryInterface[]>(

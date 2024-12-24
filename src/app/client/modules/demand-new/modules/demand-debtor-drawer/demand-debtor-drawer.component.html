@@ -1,3 +1,5 @@
+<mib-blur-loader *ngIf="loading$ | async"></mib-blur-loader>
+
 <mib-drawer [formGroup]="form">
   <mib-drawer-header (onClose)="dialogRef.close()" drawer-header></mib-drawer-header>
   <mib-drawer-container>
@@ -36,9 +38,9 @@
       <mib-tab-group>
         <mib-navbar class="container container_large">
           <mib-navbar-point (press)="tabIndex = $event" value="1">События</mib-navbar-point>
-          <mib-navbar-point (press)="tabIndex = $event" value="2">Информация</mib-navbar-point>
-          <mib-navbar-point (press)="tabIndex = $event" value="3">Документы</mib-navbar-point>
-          <mib-navbar-point (press)="tabIndex = $event" value="4">Результат</mib-navbar-point>
+          <!-- <mib-navbar-point (press)="tabIndex = $event" value="2">Информация</mib-navbar-point> -->
+          <!-- <mib-navbar-point (press)="tabIndex = $event" value="3">Документы</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="4">Результат</mib-navbar-point> -->
         </mib-navbar>
         <mib-spacing type="m"></mib-spacing>
         <mib-tab-item value="1">
@@ -202,9 +204,9 @@
             [attr.index]="i"
             [showRemove]="true"
             [showDownload]="false"
-            (onDload)="downloadCurrentFile()"
-            (onRemove)="removeDocument(i)"
-            [fileName]="document.get('Title')?.value"
+            (onDload)="downloadCurrentFile(document)"
+            (onRemove)="deleteDocument(i)"
+            [fileName]="document.get('FileName')?.value"
           ></mib-dl-file-cell>
           <mib-spacing type="xs2"></mib-spacing>
         </div>

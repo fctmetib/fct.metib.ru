@@ -22,7 +22,7 @@ export class UserVerifyGuard implements CanActivate, CanActivateChild {
 		if (this.auth.isUserVerified()) {
 			return of(true)
 		} else {
-			this.router.navigate(['/client/not-verify'])
+			this.router.navigate(['/client/demand'])
 			return of(false)
 		}
 	}

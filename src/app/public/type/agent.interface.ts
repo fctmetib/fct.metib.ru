@@ -21,6 +21,7 @@ export interface AgentDataInterface {
 }
 
 export interface AgentOpfInterface {
+  type: string;
   short: string;
 }
 

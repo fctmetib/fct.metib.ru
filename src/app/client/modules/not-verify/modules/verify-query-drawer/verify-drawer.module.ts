@@ -17,6 +17,7 @@ import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown
 import {CheckboxModule} from 'src/app/shared/ui-kit/checkbox/checkbox.module'
 import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
 import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [VerifyQueryDrawerComponent],
@@ -36,7 +37,8 @@ import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 		DropdownPointModule,
 		CheckboxModule,
 		MibDragAndDropModule,
-		FileCellModule
+		FileCellModule,
+		ReactiveFormsModule
 	],
 	providers: [VerifyDrawerService]
 })

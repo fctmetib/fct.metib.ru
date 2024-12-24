@@ -13,7 +13,7 @@ import {TableComponent} from '../../table.component'
 import {AnimationService} from '../../../../animations/animations.service'
 import {ToolsService} from '../../../../services/tools.service'
 import { startWith } from 'rxjs/operators';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 export const TABLE_ROW_ANIMATION_CONFIG = {
@@ -64,4 +64,11 @@ export class TableRowComponent implements OnInit {
 	get state() {
 		return Boolean(this.cell?.state)
 	}
+
+  get checkboxChanges(): Observable<boolean> | undefined  {
+    if (this.cell) {
+      return this.cell.control.valueChanges
+    }
+    return undefined
+  }
 }

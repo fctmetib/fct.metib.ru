@@ -504,7 +504,7 @@
         >Продолжить
         </mib-button>
         <mib-button
-          [disabled]="(isSubmitting$ | async)"
+          [loading]="isSubmitting$ | async"
           [ngStyle]="{display: progress === maxPage ? 'block' : 'none'}"
           (press)="submitData()"
           size="m"

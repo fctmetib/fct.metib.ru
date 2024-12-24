@@ -1,4 +1,7 @@
+
+
 <mib-blur-loader *ngIf="loading$ | async"></mib-blur-loader>
+
 <mib-drawer>
   <mib-drawer-header
     [showProgressBar]="!isChangeByView"
@@ -35,8 +38,7 @@
       </div>
     </ng-container>
     <ng-template #edit>
-      <h4>Запрос на ЭЦП</h4>
-      <mib-spacing type="xs"></mib-spacing>
+      <p class="text text_m c-bti-secondary">Запрос на ЭЦП</p>
     </ng-template>
     <div *ngIf="isChangeByView; else editing">
       <mib-spacing type="xs"></mib-spacing>

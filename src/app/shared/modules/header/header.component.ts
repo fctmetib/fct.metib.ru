@@ -31,6 +31,7 @@ import {DropdownService} from '../../ui-kit/dropdown/services/dropdown.service'
 import {BreakpointObserverService} from '../../services/common/breakpoint-observer.service'
 import {isPlatformBrowser} from '@angular/common'
 import { WINDOW } from '../../tokens/window.token';
+import { SystemUserService } from '../../services/system-user.service';
 
 @Component({
 	selector: 'mib-header',
@@ -46,38 +47,47 @@ export class HeaderComponent implements OnInit {
 
 	@ViewChild('header') el: ElementRef<HTMLDivElement>
 
+  authService = inject(AuthService)
+  breakpointService = inject(BreakpointObserverService)
+  private clientService = inject(ClientService)
+  private systemUserService = inject(SystemUserService)
+  private platformId: Object = inject(PLATFORM_ID)
+  private window = inject(WINDOW)
+
 	items: MenuItem[]
 	baseAvatarUrl = 'https://api-factoring.metib.ru/api/avatar/'
 	baseAvatarProfileUrl = `${environment.apiUrl}/avatar/`
 
-	public userLoading$ = new BehaviorSubject<boolean>(false)
-	public factoringLoading$ = new BehaviorSubject<boolean>(false)
+	userLoading$ = new BehaviorSubject<boolean>(false)
+	factoringLoading$ = new BehaviorSubject<boolean>(false)
 
-	public currentUserFactoring$ = new BehaviorSubject<UserFactoring>(null)
-	public currentUser$ = new BehaviorSubject<UserGeneral>(null)
-	public factoring$ = new BehaviorSubject<Customer>(null)
+	currentUserFactoring$ = new BehaviorSubject<UserFactoring>(null)
+	currentUser$ = new BehaviorSubject<UserGeneral>(null)
+	factoring$ = new BehaviorSubject<Customer>(null)
 
 	currentUserAdmin$ = new BehaviorSubject<UserGeneral>(null)
 
-	public isVerified$ = new BehaviorSubject<boolean>(false)
+	isVerified$ = new BehaviorSubject<boolean>(false)
 
-	public isAdmin: boolean = false
-	public skeleton: Properties = {
+	skeleton: Properties = {
 		borderRadius: '8px'
 	}
 
-	public isDesktop$: Observable<boolean>
+	isDesktop$: Observable<boolean>
+  systemUser = this.systemUserService?.getCookieUser()
 
-	constructor(
-		public authService: AuthService,
-		private toolsService: ToolsService,
-		private clientService: ClientService,
-		public dropdownService: DropdownService,
-		public breakpointService: BreakpointObserverService,
-		@Inject(PLATFORM_ID) private platformId: Object
-	) {}
-
-  private window = inject(WINDOW)
+  get isCustomer() {
+    return this.systemUser?.Roles?.includes('Customer')
+  }
+  get isUser() {
+    return this.systemUser?.Roles?.includes('User')
+  }
+  get isAdmin() {
+    return this.systemUser?.Roles?.includes('Admin')
+  }
+  get isStaff() {
+    return this.systemUser?.Roles?.includes('Staff')
+  }
 
 	get classes() {
 		return {
@@ -155,7 +165,6 @@ export class HeaderComponent implements OnInit {
 			)
 			.subscribe()
 
-		this.isAdmin = this.authService.isUserAdmin()
 		this.authService.currentUserAdmin$
 			.pipe(
 				filter(Boolean),

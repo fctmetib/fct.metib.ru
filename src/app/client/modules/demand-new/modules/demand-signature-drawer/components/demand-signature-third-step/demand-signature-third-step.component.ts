@@ -58,18 +58,8 @@ export class DemandSignatureThirdStepComponent implements OnInit {
 
     this.commonService.getCountries().subscribe(countries => {
       this.countries = countries;
-
-      const selectedCountry = this.countries.find(country => country.Title);
-      if (selectedCountry) {
-        this.personalDataForm.patchValue({
-          Nationality: selectedCountry.Title // Устанавливаем Title или другой нужный атрибут
-        });
-      }
-
       this.cdr.markForCheck()
     });
-    console.log(this.countries);
-
 
   }
 
@@ -80,17 +70,15 @@ export class DemandSignatureThirdStepComponent implements OnInit {
     console.log(this.form);
   }
 
-  public onDocumentLoad({ file, url }: FileDnd) {
-    const document: DocumentReq = {
+  onDocumentLoad({file, url}: FileDnd): void {
+    this.demandService.uploadDraftFile({
       Description: `description ${file.name}`,
       DocumentTypeID: 40,
       Title: file.name,
       OwnerTypeID: 20,
       Data: extractBase64(url),
       File: file
-    };
-
-    this.demandService.uploadDraftFile(file, 'documentsScan', this.requestId).pipe(
+    }, 'documentsScan', this.requestId).pipe(
       tap(fileMode => {
         this.addDocument(fileMode);
       }),

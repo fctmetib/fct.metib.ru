@@ -2,10 +2,10 @@ import { Component, inject, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FileDnd } from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
 import { DocumentReq } from '../../../requests/interfaces/request.interface';
-import { extractBase64 } from 'src/app/shared/services/tools.service';
+import { downloadBase64File, extractBase64 } from 'src/app/shared/services/tools.service';
 import { ToasterService } from 'src/app/shared/services/common/toaster.service';
 import { DrawerData } from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DemandService } from '../../services/demand.service';
 import { DestroyService } from '../../../../../shared/services/common/destroy.service';
 import { finalize, takeUntil } from 'rxjs/operators';
@@ -31,10 +31,10 @@ import {
 } from '../../../../../shared/modules/modals/request-create-success-modal/request-create-success-modal.service';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { DemandStatus } from '../../types/demand-status';
-import { FileReadOptions } from '../demand-drawer/interfaces/demand-drawer.interface';
 import { DemandInterface } from '../../types/demand.interface';
 import { Properties } from 'csstype';
 import { DemandDrawerService } from '../demand-drawer/demand-drawer.service';
+import { FileMode } from '../../../../../shared/types/file/file-model.interface';
 
 @Component({
   selector: 'mib-demand-editing-drawer',
@@ -49,13 +49,11 @@ export class DemandEditingDrawerComponent implements OnInit {
   DemandStatus = DemandStatus;
   public status: DemandStatus = DemandStatus.edit;
   public filesWithTypes: any[] = [];
-  public readFiles: FileReadOptions[];
   public viewingData: DemandInterface<any>;
 
   public loading$ = new BehaviorSubject<boolean>(false);
   public isSubmitting$ = new BehaviorSubject<boolean>(false);
 
-  private uploadedFiles: Set<string> = new Set();
   private titleInfo = {create: null, update: null, status: null}
 
   public tabIndex = '1'
@@ -83,7 +81,6 @@ export class DemandEditingDrawerComponent implements OnInit {
     private commonService: CommonService,
     private demandDrawerService: DemandDrawerService
   ) {
-    if (data.data?.isEdit) this.getByID(data.data?.id, true);
   }
 
   ngOnInit() {
@@ -109,32 +106,30 @@ export class DemandEditingDrawerComponent implements OnInit {
       this.initDraft();
       // Запрашиваем метод prepare для предзаполнения инпутов
       this.prepareDemandByTypes(modalData.prepareTypeId);
-      // Включаем авто сохранение первого/второго таба
-      this.enableAutoSaveDraft();
     }
 
     // Если создание и есть черновик
-    if (modalData?.isCreation && modalData?.id) {
+    if (modalData?.isCreation || modalData?.isEdit) {
       // Включаем авто сохранение первого/второго таба
       this.enableAutoSaveDraft();
     }
   }
 
   public addSingleChoiceGender() {
-    this.form.get('Profile')['controls'].Male?.valueChanges.pipe(
+    this.form.get('Profile.Male')?.valueChanges.pipe(
       filter(Boolean),
       takeUntil(this.au.destroyer)
     ).subscribe(() => {
-      this.form.get('Profile')['controls'].IsMale.setValue('true');
-      this.form.get('Profile')['controls'].Female.setValue(false);
+      this.form.get('Profile.IsMale').setValue(true);
+      this.form.get('Profile.Female').setValue(false);
     });
 
-    this.form.get('Profile')['controls'].Female?.valueChanges.pipe(
+    this.form.get('Profile.Female')?.valueChanges.pipe(
       filter(Boolean),
       takeUntil(this.au.destroyer)
     ).subscribe(() => {
-      this.form.get('Profile')['controls'].IsMale.setValue('false');
-      this.form.get('Profile')['controls'].Male.setValue(false);
+      this.form.get('Profile.IsMale').setValue(false);
+      this.form.get('Profile.Male').setValue(false);
     });
   }
 
@@ -147,15 +142,49 @@ export class DemandEditingDrawerComponent implements OnInit {
   }
 
   onDocumentLoad({ file, url }: FileDnd) {
-    const document: DocumentReq = {
+    this.uploadDocumentToDraft({
       Description: `description ${file.name}`,
-      DocumentTypeID: 40,
+      DocumentTypeID: 40, // TODO: Узнать, статичен ли тип файла. Найти енам с "ключ/значение"
       Title: file.name,
-      OwnerTypeID: 20,
+      OwnerTypeID: 20, // TODO: Скорее всего, нужно тянуть id из объекта пользователя
       Data: extractBase64(url),
       File: file
-    };
-    this.addDocument(document);
+    }).pipe(
+      tap(doc => {
+        this.shiftDocumentControl(doc);
+      })
+    ).subscribe();
+  }
+
+  createDocumentControl(data: FileMode) {
+    const control = this.fb.group({
+      ID: [null],
+      Identifier: [null],
+      Code: [null],
+      FileName: [null],
+      Size: [null],
+      DemandFileID: [null]
+    });
+    control.patchValue(data);
+    return control;
+  }
+
+  addDocumentControl(data: FileMode) {
+    this.documents.push(this.createDocumentControl(data));
+  }
+
+  shiftDocumentControl(data: FileMode) {
+    this.documents.insert(0, this.createDocumentControl(data));
+  }
+
+  uploadDocumentToDraft(req: DocumentReq): Observable<FileMode> {
+
+    return this.demandService.uploadDraftFile(req.File, 'test', this.requestId).pipe(
+      catchError((err, caught) => {
+        console.error(`Ошибка загрузки файла ${req.Title}:`, err);
+        return of(err);
+      })
+    );
   }
 
   private initMessageForm() {
@@ -166,7 +195,6 @@ export class DemandEditingDrawerComponent implements OnInit {
   }
 
   private initForm() {
-    console.log(this.data.data?.id);
     this.form = this.fb.group({
       UserID: [null],
       Avatar: [null],
@@ -194,19 +222,6 @@ export class DemandEditingDrawerComponent implements OnInit {
       Type: ['ProfileChange'],
       Files: this.fb.array([])
     });
-  }
-
-  private addDocument(doc: DocumentReq) {
-    const control: FormGroup = this.fb.group({
-      Description: [''],
-      DocumentTypeID: [''],
-      Title: [''],
-      OwnerTypeID: [''],
-      Data: [''],
-      File: ['']
-    });
-    control.patchValue(doc);
-    this.documents.push(control);
   }
 
   private openRequestFailureModal(d): void {
@@ -239,9 +254,17 @@ export class DemandEditingDrawerComponent implements OnInit {
     return this.form.get('Files') as FormArray;
   }
 
-  removeDocument(i: number) {
-    this.documents.removeAt(i);
+
+  deleteDocument(i: number) {
+    const { DemandFileID } = this.documents.at(i).getRawValue() as FileMode;
+
+    this.demandService.deleteDemandFileById(DemandFileID).pipe(
+      tap(() => {
+        this.documents.removeAt(i);
+      })
+    ).subscribe();
   }
+
 
   private getByID(id: number, isDraft: boolean): void {
     this.loading$.next(true);
@@ -250,10 +273,8 @@ export class DemandEditingDrawerComponent implements OnInit {
         .getDemandDraftById(id) : this.demandService.getDemandById(id);
     req$.pipe(
       tap(res => {
-        this.loading$.next(false);
         const data = isDraft ? res.DemandData : res.Data;
         if (this.isView) {
-          this.readFiles = res?.Files?.map(file => ({ FileName: file.FileName, Size: file.Size }));
           this.viewingData = res;
           this.fileTypeConversion(res?.Files);
         }
@@ -261,6 +282,12 @@ export class DemandEditingDrawerComponent implements OnInit {
           this.titleInfo = { create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status) };
         } else {
           this.patchData(data);
+
+          const files = data?.Files || []
+
+          for (let file of files) {
+            this.addDocumentControl(file)
+          }
         }
       }),
       finalize(() => this.loading$.next(false))
@@ -269,7 +296,11 @@ export class DemandEditingDrawerComponent implements OnInit {
   }
 
   private prepareDemandByTypes(type: DemandsPrepareEnum) {
+    this.loading$.next(true)
     this.demandService.prepareDemandByTypes(type)
+      .pipe(
+        finalize(() => this.loading$.next(false)),
+      )
       .subscribe(res => {
           console.log('prepareDemandByTypes=>', res);
           this.patchData(res);
@@ -278,13 +309,25 @@ export class DemandEditingDrawerComponent implements OnInit {
   }
 
   private patchData(data: any) {
-    this.form.patchValue({
-      UserID: data.UserID
-    });
+    this.form.patchValue(data);
+    this.form.patchValue({Profile: {Male: data.Profile.IsMale, Female: !data.Profile.IsMale}})
   }
 
-  downloadCurrentFile(): void {
+  downloadCurrentFile(document: AbstractControl): void {
+    //
+    const { DemandFileID, FileName } = document.getRawValue() as FileMode;
 
+    this.demandService
+      .downloadFile(DemandFileID).pipe(
+      tap(data => {
+        downloadBase64File(data, FileName);
+      }),
+      catchError(error => {
+        console.error(`Ошибка при скачивании файла "${FileName}":`, error);
+        return of(null);
+      })
+    )
+      .subscribe();
   }
 
   private initDraft(): void {
@@ -318,7 +361,7 @@ export class DemandEditingDrawerComponent implements OnInit {
         if (!draftResult) {
           return throwError(() => new Error('Ошибка сохранения черновика'));
         }
-        return this.uploadDraftFiles();
+        return of(draftResult);
       })
     );
   }
@@ -354,28 +397,6 @@ export class DemandEditingDrawerComponent implements OnInit {
       Type: 'ProfileChange',
       Files: null
     };
-  }
-
-  private uploadDraftFiles(): Observable<any> {
-    const uploadObservables = this.documents.controls
-      .map((control: FormGroup) => {
-        const file = control.get('File').value;
-        const fileName = file?.name;
-
-        if (file && fileName && !this.uploadedFiles.has(fileName)) {
-          return this.demandService.uploadDraftFile(file, 'test', this.requestId).pipe(
-            tap(() => this.uploadedFiles.add(fileName)),
-            catchError(error => {
-              console.error(`Ошибка загрузки файла ${fileName}:`, error);
-              return of(null);
-            })
-          );
-        }
-
-        return of(null);
-      });
-
-    return forkJoin(uploadObservables.filter(obs => obs !== of(null)));
   }
 
   private enableAutoSaveDraft(): void {

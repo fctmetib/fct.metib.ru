@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Inject, inject, Input, OnInit, Output } from '@angular/core';
 import {FileDnd} from '../../../../../../../shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
 import {DocumentReq} from '../../../../../requests/interfaces/request.interface'
-import {extractBase64} from '../../../../../../../shared/services/tools.service'
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { downloadBase64File, extractBase64 } from '../../../../../../../shared/services/tools.service';
+import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { DemandService } from '../../../../services/demand.service';
 import { catchError, finalize, map, Observable, of, switchMap, tap } from 'rxjs';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -38,16 +38,15 @@ export class DemandSignatureFourthStepComponent implements OnInit {
     this.initForms()
   }
 
-  public onDocumentLoad({file, url}: FileDnd) {
-    const document: DocumentReq = {
+  onDocumentLoad({file, url}: FileDnd): void {
+    this.demandService.uploadDraftFile({
       Description: `description ${file.name}`,
       DocumentTypeID: 40,
       Title: file.name,
       OwnerTypeID: 20,
       Data: extractBase64(url),
-      File: file,
-    }
-    this.demandService.uploadDraftFile(file, 'completedAppScan', this.requestId).pipe(
+      File: file
+    }, 'completedAppScan', this.requestId).pipe(
       tap(fileMode => {
         this.addDocument(fileMode);
       }),
@@ -91,20 +90,20 @@ export class DemandSignatureFourthStepComponent implements OnInit {
     ).subscribe();
   }
 
-  downloadCurrentFile(): void {
-    console.log('HALO DOWNLOAD FILE >>>', this.form.get('documents'))
-    // this.isDownloading$.next(true)
-    // this.documentsService
-    // 	.getDocumentContent(this.documents.DocumentID)
-    // 	.pipe(
-    // 		tap(data => {
-    // 			downloadBase64File(data, DocTitle)
-    // 		}),
-    // 		finalize(() => {
-    // 			this.isDownloading$.next(false)
-    // 		})
-    // 	)
-    // 	.subscribe()
+  downloadCurrentFile(document: AbstractControl): void {
+    const { DemandFileID, FileName } = document.getRawValue() as FileMode;
+
+    this.demandService
+      .downloadFile(DemandFileID).pipe(
+      tap(data => {
+        downloadBase64File(data, FileName);
+      }),
+      catchError(error => {
+        console.error(`Ошибка при скачивании файла "${FileName}":`, error);
+        return of(null);
+      })
+    )
+      .subscribe();
   }
 
   private getByID() {
@@ -115,9 +114,23 @@ export class DemandSignatureFourthStepComponent implements OnInit {
     )
   }
 
+
   public downloadFile() {
     this.getByID().pipe(
-      switchMap(data => this.demandService.getDemandDocumentByType(data, 'DigitalSignatureRequest'))
-    ).subscribe()
+      switchMap(data => this.demandService.getDemandDocumentByType(data, 'DigitalSignatureRequest')),
+      tap(response => {
+        // Создаем ссылку для скачивания файла
+        const url = window.URL.createObjectURL(response);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'DigitalSignatureRequest.docx'; // Название файла
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }),
+      catchError(error => {
+        console.error('Ошибка скачивания файла:', error);
+        return of(error);
+      })
+    ).subscribe();
   }
 }

@@ -14,7 +14,7 @@ import { TableCellSize } from './components/table-cell/interfaces/table-cell.int
 import { TableRowComponent } from './components/table-row/table-row.component';
 import { TableHeadCellComponent } from './components/table-head-cell/table-head-cell.component';
 import { BehaviorSubject, EMPTY, filter, forkJoin, Subject, switchMap, tap } from 'rxjs';
-import { startWith } from 'rxjs/operators';
+import { startWith, takeUntil } from 'rxjs/operators';
 import { TableCellComponent } from './components/table-cell/table-cell.component';
 import { TableSelectionEvent } from './interfaces/table.interface';
 import { TableHeadComponent } from './components/table-head/table-head.component';
@@ -25,7 +25,7 @@ import { TableCellBaseComponent } from './components/table-cell-base/table-cell-
 @Component({
   selector: 'mib-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+  styleUrls: ['./table.component.scss']
 })
 export class TableComponent<T = any> implements AfterViewInit, OnDestroy {
   @ContentChildren(forwardRef(() => TableRowComponent))
@@ -37,7 +37,7 @@ export class TableComponent<T = any> implements AfterViewInit, OnDestroy {
   @ContentChildren(forwardRef(() => TableCellComponent), { descendants: true })
   cells: QueryList<TableCellComponent>;
 
-  @ContentChild(TableHeadComponent) tableHead: TableHeadComponent
+  @ContentChild(TableHeadComponent) tableHead: TableHeadComponent;
 
   @Input() showCheckbox: boolean = true;
 
@@ -51,20 +51,20 @@ export class TableComponent<T = any> implements AfterViewInit, OnDestroy {
 
   @Input()
   set data(data: T[]) {
-    this.rendererData = [...data]
+    this.rendererData = [...data];
     this._data$.next([...data]);
   }
 
   get data() {
-    return this._data$.value
+    return this._data$.value;
   }
 
   get data$() {
-    return this._data$.asObservable()
+    return this._data$.asObservable();
   }
 
   set rendererData(data: T[]) {
-    this._rendererData =  data
+    this._rendererData = data;
   }
 
   get rendererData() {
@@ -76,34 +76,38 @@ export class TableComponent<T = any> implements AfterViewInit, OnDestroy {
   private _data$ = new BehaviorSubject<T[]>([]);
   private _rendererData: T[] = [];
   private unsubscribe$ = new Subject<void>();
-  public _isLoading: boolean = false;
-  public _size: TableCellSize = 'm';
+  _isLoading: boolean = false;
+  _size: TableCellSize = 'm';
+  rowsControlChangesDestroyer$ = new Subject<void>();
 
   lastCheckedIndex: number | null = null;
   shiftKeyHeldDown = false;
 
-  private cdr = inject(ChangeDetectorRef)
+  private cdr = inject(ChangeDetectorRef);
 
   get selectedRows() {
     return (this.rows?.toArray() ?? []).filter(row => row.state && row?.cell?.isCheckboxDisplayed);
   }
 
   ngAfterViewInit() {
+
     if (this.showCheckbox) {
       this.headCells.changes.pipe(
         startWith(this.headCells),
         tap(() => {
-          this.selectHeadCellToDisplayCheckbox()
+          this.selectHeadCellToDisplayCheckbox();
         }),
         untilDestroyed(this)
-      ).subscribe()
+      ).subscribe();
       this.rows.changes.pipe(
         startWith(this.rows),
         tap(() => {
-          this.selectRowCellToDisplayCheckbox()
+          this.selectRowCellToDisplayCheckbox();
+          this.rowsControlChangesDestroyer$.next()
         }),
+        switchMap(() => this.subscribeRowCellControlChanges()),
         untilDestroyed(this)
-      ).subscribe()
+      ).subscribe();
     }
 
     this.trackHeadCellChanges();
@@ -137,23 +141,23 @@ export class TableComponent<T = any> implements AfterViewInit, OnDestroy {
         cell.isCheckboxDisplayed = false;
       } else if (cell.isVisible) {
         cell.isCheckboxDisplayed = true;
-        isCellSelected = true
+        isCellSelected = true;
       }
     }
   }
 
   selectColumnToDisplayCheckbox() {
-    this.selectHeadCellToDisplayCheckbox()
-    this.selectRowCellToDisplayCheckbox()
+    this.selectHeadCellToDisplayCheckbox();
+    this.selectRowCellToDisplayCheckbox();
   }
 
   selectHeadCellToDisplayCheckbox() {
-    this.selectCellToDisplayCheckbox(this.headCells)
+    this.selectCellToDisplayCheckbox(this.headCells);
   }
 
   selectRowCellToDisplayCheckbox() {
     for (let row of this.rows) {
-      this.selectCellToDisplayCheckbox(row.cells)
+      this.selectCellToDisplayCheckbox(row.cells);
     }
   }
 
@@ -171,9 +175,9 @@ export class TableComponent<T = any> implements AfterViewInit, OnDestroy {
         startWith(headCell.control.value),
         filter(() => headCell.isCheckboxDisplayed),
         switchMap(value => this.trackRowChanges(value, index))
-      )
-    })
-    return forkJoin(observables)
+      );
+    });
+    return forkJoin(observables);
   }
 
   private trackRowChanges(value: any, index: number) {
@@ -227,5 +231,15 @@ export class TableComponent<T = any> implements AfterViewInit, OnDestroy {
       selectedCount: 0,
       selectedIds: []
     });
+  }
+
+  private subscribeRowCellControlChanges() {
+    const observables = this.rows.filter(row => Boolean(row.checkboxChanges)).map((row) => row.checkboxChanges.pipe(
+      tap(() => {
+        this.emit();
+      }),
+      takeUntil(this.rowsControlChangesDestroyer$)
+    ));
+    return forkJoin(observables);
   }
 }

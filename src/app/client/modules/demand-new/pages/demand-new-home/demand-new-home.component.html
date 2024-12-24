@@ -19,16 +19,18 @@
     <mib-tab-item [value]="String(tabType.Request)">
       <mib-spacing type="s"></mib-spacing>
       <div class="mobile-col flex flex_wrap gap-16">
-        <mib-request-card
-          (click)="openDrawers(request.id,null, tabType.Request)"
-          *ngFor="let request of requestLists"
-          [requestTitle]="request.title"
-          [requestText]="request.description"
-        ></mib-request-card>
+        <ng-container *ngFor="let request of requestLists">
+          <mib-request-card
+            *ngIf="isRequestCardVisible(request)"
+            (click)="openDrawers(request.id,null, tabType.Request)"
+            [requestTitle]="request.title"
+            [requestText]="request.description"
+          ></mib-request-card>
+        </ng-container>
       </div>
       <mib-spacing type="s"></mib-spacing>
       <div class="mobile-btn flex">
-        <mib-button (press)="openDrawers(dialogType.Question, null, tabType.Request)" type="filled-primary"
+        <mib-button (press)="openDrawers(dialogType.Factoring, null, tabType.Request)" type="filled-primary"
         >Запрос на свободную тему
         </mib-button
         >
@@ -36,7 +38,7 @@
       <mib-spacing class="mobile-sp" type="xl2"></mib-spacing>
     </mib-tab-item>
     <mib-tab-item [value]="String(tabType.Draft)">
-      <mib-spacing type="m"></mib-spacing>
+      <!-- <mib-spacing type="m"></mib-spacing>
       <div class="draft-controls flex flex_justify-between">
         <mib-input>
           <input
@@ -58,7 +60,7 @@
             text="Заполнено на 50%"
           ></mib-dropdown-point>
         </mib-select>
-      </div>
+      </div> -->
       <mib-spacing type="xs"></mib-spacing>
       <mib-table>
         <mib-table-head>
@@ -67,7 +69,7 @@
           </mib-table-head-cell>
           <mib-table-head-cell>Тип запроса</mib-table-head-cell>
           <mib-table-head-cell>Дата редактирования</mib-table-head-cell>
-          <mib-table-head-cell>Прогресс заполнения</mib-table-head-cell>
+          <!-- <mib-table-head-cell>Прогресс заполнения</mib-table-head-cell> -->
         </mib-table-head>
         <ng-container *ngIf="loading$ | async; else table">
           <mib-skeleton
@@ -102,7 +104,7 @@
               <mib-table-cell>
                 <ng-container table-cell-title>{{ draft.DateModify | date: 'dd.MM.yyyy' }}</ng-container>
               </mib-table-cell>
-              <mib-table-cell>
+              <!-- <mib-table-cell>
                 <ng-container table-cell-title
                 >
                   <mib-badge
@@ -114,7 +116,7 @@
                   >
                 </ng-container
                 >
-              </mib-table-cell>
+              </mib-table-cell> -->
               <mib-button
                 (press)="newDraftDrawer(draft?.ID, +dialogType[draft.Type], TabType.Draft)"
                 table-row-button
@@ -151,7 +153,7 @@
     <mib-tab-item [value]="String(tabType.History)">
       <mib-spacing type="m"></mib-spacing>
       <div class="history-controls gap-16 flex flex_justify-between">
-        <mib-input>
+        <!-- <mib-input>
           <input
             mibInput
             type="text"
@@ -160,40 +162,40 @@
           />
           <ng-container mibLabel>Поиск по запросам</ng-container>
           <mib-icon class="stroke path" mibLeftIcon name="fi_search"></mib-icon>
-        </mib-input>
+        </mib-input> -->
         <mib-select placeholder="Выберите статус запроса" type="outline">
           <mib-dropdown-point
             (press)="sortDemandByStatus('All')"
-            [value]="selectedStatus == 'All'"
-            text="Все зпросы"
+            [value]="'All'"
+            text="Все запросы"
           ></mib-dropdown-point>
           <mib-dropdown-point
             (press)="sortDemandByStatus('Created')"
-            [value]="selectedStatus == 'Created'"
+            [value]="'Created'"
             text="Создан"
           ></mib-dropdown-point>
           <mib-dropdown-point
-            [value]="selectedStatus == 'Completed'"
+            [value]="'Completed'"
             text="Завершен"
             (press)="sortDemandByStatus('Completed')"
           ></mib-dropdown-point>
           <mib-dropdown-point
-            [value]="selectedStatus == 'Processing'"
+            [value]="'Processing'"
             text="В процессе"
             (press)="sortDemandByStatus('Processing')"
           ></mib-dropdown-point>
           <mib-dropdown-point
-            [value]="selectedStatus == 'Rejected'"
+            [value]="'Rejected'"
             text="Отклонено"
             (press)="sortDemandByStatus('Rejected')"
           ></mib-dropdown-point>
           <mib-dropdown-point
-            [value]="selectedStatus == 'Draft'"
+            [value]="'Draft'"
             text="Черновик"
             (press)="sortDemandByStatus('Draft')"
           ></mib-dropdown-point>
           <mib-dropdown-point
-            [value]="selectedStatus == 'Canceled'"
+            [value]="'Canceled'"
             text="Отменен"
             (press)="sortDemandByStatus('Canceled')"
           ></mib-dropdown-point>
@@ -217,7 +219,6 @@
               [disabled]="loading$ | async"
               (press)="prev()"
               size="s"
-              table-row-button
               type="ghost-secondary"
             >
               <mib-icon
@@ -230,7 +231,6 @@
               [disabled]="loading$ | async"
               (press)="next()"
               size="s"
-              table-row-button
               type="ghost-secondary"
             >
               <mib-icon
@@ -256,7 +256,6 @@
               [@slideAnimation]="historyAnimationStates[history.id]"
               *ngFor="
 								let history of historyLists;
-								else: emptyTable;
 								let last = last
 							"
               [underlined]="!last"
@@ -388,7 +387,6 @@
               <ng-container table-row-button *ngIf="isDesktop; else mobile">
                 <mib-button
                   [mibDropdownTrigger]="demanRowMenu"
-                  table-row-button
                   size="s"
                   type="ghost-secondary"
                 >
@@ -413,7 +411,6 @@
 										openDemandPageModal(history); $event.stopPropagation()
 									"
                   size="s"
-                  table-row-button
                   type="ghost-secondary"
                 >
                   <mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>

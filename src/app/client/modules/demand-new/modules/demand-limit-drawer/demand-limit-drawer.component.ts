@@ -1,22 +1,20 @@
-import { Component, EventEmitter, inject, Inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FileDnd } from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
-import { DocumentReq, DocumentType } from '../../../requests/interfaces/request.interface';
+import { DocumentReq } from '../../../requests/interfaces/request.interface';
 import { downloadBase64File, extractBase64 } from 'src/app/shared/services/tools.service';
-import { ToasterService } from 'src/app/shared/services/common/toaster.service';
 import { DrawerData } from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InputSize } from '../../../../../shared/ui-kit/input/interfaces/input.interface';
 import { ButtonSize } from '../../../../../shared/ui-kit/button/interfaces/button.interface';
 import { DemandService } from '../../services/demand.service';
 import { DestroyService } from '../../../../../shared/services/common/destroy.service';
-import { takeUntil } from 'rxjs/operators';
 import {
   BehaviorSubject,
   catchError,
   debounceTime,
   distinctUntilChanged,
-  filter, finalize, forkJoin,
+  filter, finalize,
   Observable, of,
   pairwise,
   startWith,
@@ -32,8 +30,10 @@ import {
 } from '../../../../../shared/modules/modals/request-create-success-modal/request-create-success-modal.service';
 import { DemandsPrepareEnum } from '../../pages/demand-new-home/demand-new-home.component';
 import { FileMode } from '../../../../../shared/types/file/file-model.interface';
-import { DocumentsService } from '../../../documents/services/documents.service';
-import { DemandDataBaseInterface } from '../../types/demand-data-base.interface';
+import { DemandStatus } from '../../types/demand-status';
+import { DemandDrawerService } from '../demand-drawer/demand-drawer.service';
+import { Properties } from 'csstype';
+import { DemandInterface } from '../../types/demand.interface';
 
 
 export type DocumentsType =
@@ -56,30 +56,47 @@ export class DemandLimitDrawerComponent implements OnInit {
   groupDocuments: FormGroup;
   size: InputSize | ButtonSize = 'm';
   limitRequestType = 'Limit';
+  tabIndex = '1'
+  public viewingData: DemandInterface<any>;
 
-  private toaster = inject(ToasterService);
+  DemandStatus = DemandStatus;
+  public status: DemandStatus = DemandStatus.edit;
+  public skeleton: Properties = {
+    borderRadius: '8px',
+    height: '95px',
+    width: '100%'
+  }
+
+  identify(index, item) {
+    return item.DemandMessageID
+  }
+
+  private titleInfo = {create: null, update: null, status: null}
+
   private fb = inject(FormBuilder);
   private demandService = inject(DemandService);
   private requestFailureModalService = inject(RequestFailureModalService);
   private requestCreateSuccessModalService = inject(RequestCreateSuccessModalService);
-  private documentsService = inject(DocumentsService);
+  private demandDrawerService = inject(DemandDrawerService);
   dialogRef = inject<MatDialogRef<DemandLimitDrawerComponent>>(MatDialogRef);
   data = inject<DrawerData>(MAT_DIALOG_DATA);
+  messageForm: FormGroup;
+
+  get date(): {create: string, update: string, status: string} {
+    return this.titleInfo
+  }
 
   ngOnInit() {
     const modalData = this.data.data;
     this.initForm();
+    this.initMessageForm()
     this.initGroupDocuments();
 
     const demandId = modalData?.id;
     if (demandId) this.getAndPatchDemandById(demandId);
 
-    if (modalData?.isEdit) {
-      this.enableAutoSaveDraft(this.form);
-    }
-
-    if (modalData?.isView) {
-      this.form.disable();
+    if (modalData?.isView || modalData?.isEdit) {
+      modalData?.isView ? this.status = DemandStatus.view : null;
     }
 
     // Если создание и нет черновика
@@ -93,7 +110,7 @@ export class DemandLimitDrawerComponent implements OnInit {
     }
 
     // Если создание и есть черновик
-    if (modalData?.isCreation && modalData?.id) {
+    if (modalData?.isCreation || modalData?.isEdit) {
       // Включаем авто сохранение первого/второго таба
       this.enableAutoSaveDraft(this.form);
     }
@@ -101,10 +118,12 @@ export class DemandLimitDrawerComponent implements OnInit {
 
   private getAndPatchDemandById(id: number): void {
     this.loading$.next(true);
+
     const req$ = this.data.data?.isEdit ? this.demandService.getDemandDraftById(id) : this.demandService.getDemandById(id);
 
     req$.pipe(
       tap(res => {
+        this.viewingData = res;
 
         const demandData = res?.DemandData || res?.Data;
         const files = res?.Files || demandData?.Files;
@@ -115,17 +134,44 @@ export class DemandLimitDrawerComponent implements OnInit {
           }
         }
 
-        this.form.patchValue({
-          Limit: demandData?.Limit,
-          Comment: demandData?.Comment,
-          Files: demandData?.Files
-        }, { emitEvent: false });
-
-        console.log(this.form.getRawValue());
+        if (!this.data.data?.isEdit) {
+          this.titleInfo = { create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status) };
+        } else {
+          this.form.patchValue({
+            Limit: demandData?.Limit,
+            Comment: demandData?.Comment,
+            Files: demandData?.Files
+          }, { emitEvent: false });
+        }
 
       }),
       finalize(() => this.loading$.next(false))
     ).subscribe();
+  }
+
+  private getStatus(status: string): string {
+    let result: string = '';
+    switch (status) {
+      case 'Created':
+        result = 'Создан';
+        break;
+      case 'Completed':
+        result = 'Завершен';
+        break;
+      case 'Processing':
+        result = 'В процессе';
+        break;
+      case 'Rejected':
+        result = 'Отклонено';
+        break;
+      case 'Draft':
+        result = 'Черновик';
+        break;
+      case 'Canceled':
+        result = 'Отменен';
+        break;
+    }
+    return result;
   }
 
   get requestId(): number {
@@ -149,8 +195,20 @@ export class DemandLimitDrawerComponent implements OnInit {
     });
   }
 
+
+  private initMessageForm() {
+    this.messageForm = this.fb.group({
+      FileCode: [''],
+      Comment: ['', Validators.required],
+    })
+  }
+
   private prepareDemandByTypes(type: DemandsPrepareEnum) {
+    this.loading$.next(true)
     this.demandService.prepareDemandByTypes(type)
+      .pipe(
+        finalize(() => this.loading$.next(false)),
+      )
       .subscribe(res => {
           console.log('prepareDemandByTypes=>', res);
           this.patchData(res);
@@ -284,6 +342,23 @@ export class DemandLimitDrawerComponent implements OnInit {
       });
   }
 
+  sendMessage() {
+    this.isSubmitting$.next(true)
+    this.demandService.sendDemandsMessage(this.messageForm.value, this.data.data.id)
+      .subscribe({
+        complete: () => {
+          const modalData = this.data.data
+          this.getAndPatchDemandById(modalData.id)
+          this.resetMessageModal()
+          this.isSubmitting$.next(false)
+        },
+        error: () => {
+          this.dialogRef.close()
+          this.openRequestFailureModal(this.requestId)
+        }
+      })
+  }
+
   downloadCurrentFile(document: AbstractControl): void {
     //
     const { DemandFileID, FileName } = document.getRawValue() as FileMode;
@@ -324,11 +399,21 @@ export class DemandLimitDrawerComponent implements OnInit {
     // 	.subscribe()
   }
 
+  deleteFile() {
+    const modalData = this.data.data
+    this.getAndPatchDemandById(modalData.id)
+  }
+
+  private resetMessageModal() {
+    this.initMessageForm()
+    this.demandDrawerService.updateDocumentsState(undefined)
+  }
+
   private hasFormChanged(prev: any, curr: any): boolean {
     return JSON.stringify(prev) !== JSON.stringify(curr);
   }
 
-  private saveDraft(form: any) {
+  private saveDraft() {
     const payload = this.createDraftPayload();
 
     return this.demandService.updateDraft(this.requestId, payload).pipe(
@@ -336,6 +421,7 @@ export class DemandLimitDrawerComponent implements OnInit {
         if (!draftResult) {
           return throwError(() => new Error('Ошибка сохранения черновика'));
         }
+        return of(draftResult);
       })
     );
   }
@@ -365,7 +451,7 @@ export class DemandLimitDrawerComponent implements OnInit {
         startWith(form.value), // Начальное значение формы
         pairwise(), // Получаем текущее и предыдущее значения формы
         filter(([prev, curr]) => this.hasFormChanged(prev, curr)), // Проверка изменений формы
-        switchMap(([prev, curr]) => this.saveDraft(curr)) // Сохранение черновика
+        switchMap(([prev, curr]) => this.saveDraft()) // Сохранение черновика
       )
       .subscribe({
         next: result => this.onSaveDraftSuccess(result), // Успешная обработка черновика

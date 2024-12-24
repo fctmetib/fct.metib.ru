@@ -3,6 +3,9 @@ export interface IQueryList {
 	title: string
 	description: string
 	quantity: number
+  isUserVerified?: boolean
+  visibleWithRoles?: string[]
+  visibleWithoutRoles?: string[]
 }
 
 export interface IDraftList {

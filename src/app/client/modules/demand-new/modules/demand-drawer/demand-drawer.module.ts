@@ -27,6 +27,7 @@ import {NavbarModule} from '../../../../../shared/ui-kit/navbar/navbar.module'
 import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
 import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
 import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
+import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-loader.module';
 
 @NgModule({
 	declarations: [DemandDrawerComponent],
@@ -56,7 +57,8 @@ import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-do
     NavbarModule,
     MessageItemModule,
     SendMessagesModule,
-    AttachedDocumentModule
+    AttachedDocumentModule,
+    BlurLoaderModule
   ],
 	providers: [DemandDrawerService]
 })

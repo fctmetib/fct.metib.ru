@@ -9,7 +9,9 @@ import {RequestRes} from '../../interfaces/request.interface'
 import {tap} from 'rxjs'
 import {ShipmentDrawerService} from './services/shipment-drawer.service'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'mib-delivery-agreement-drawer',
 	templateUrl: './shipment-drawer.component.html',
@@ -50,11 +52,20 @@ export class ShipmentDrawerComponent implements OnInit {
 	}
 
 	private watchForms() {
+
+    this.form.get('Summ').valueChanges.pipe(
+      tap(summ => {
+        this.form.get('SummRequired').setValue(summ)
+      }),
+      untilDestroyed(this),
+    ).subscribe()
+
 		this.WaybillNumber.valueChanges
 			.pipe(
 				tap(value => {
 					this.InvoiceNumber.setValue(value)
-				})
+				}),
+        untilDestroyed(this)
 			)
 			.subscribe()
 
@@ -62,7 +73,8 @@ export class ShipmentDrawerComponent implements OnInit {
 			.pipe(
 				tap(value => {
 					this.InvoiceDate.setValue(value)
-				})
+				}),
+        untilDestroyed(this)
 			)
 			.subscribe()
 
@@ -70,7 +82,8 @@ export class ShipmentDrawerComponent implements OnInit {
 			.pipe(
 				tap(form => {
 					console.log('form', form)
-				})
+				}),
+        untilDestroyed(this)
 			)
 			.subscribe()
 	}

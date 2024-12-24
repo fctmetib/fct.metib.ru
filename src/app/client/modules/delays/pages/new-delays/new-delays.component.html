@@ -85,12 +85,12 @@
 				</mib-table-cell>
 				<ng-container *ngIf="isDesktop; else mobileCell">
 					<mib-table-cell>
-						<ng-container table-cell-title>{{ item.ShipmentFullTitle }}</ng-container>
+						<ng-container table-cell-title>{{ item.RequestNumber }}</ng-container>
 					</mib-table-cell>
 				</ng-container>
 				<mib-table-cell>
 					<ng-container table-cell-title>{{
-						todayIs | date : 'dd.MM.YYYY'
+						item.DateShipment | date : 'dd.MM.YYYY'
 					}}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
@@ -101,14 +101,14 @@
 				</mib-table-cell>
 				<mib-table-cell>
 					<ng-container table-cell-title>{{
-						todayIs | date : 'dd.MM.YYYY'
+						item.DatePayment | date : 'dd.MM.YYYY'
 					}}</ng-container>
 				</mib-table-cell>
 				<mib-table-cell>
-					<span class="c-mc-active" table-cell-title>{{ item.DutyCustomer | rub }}</span>
+					<span class="c-ac-active" table-cell-title>{{ item.DutyCustomer | rub }}</span>
 				</mib-table-cell>
 				<mib-table-cell>
-					<span table-cell-title>{{ todayIs | date : 'dd.MM.YYYY' }}</span>
+					<span table-cell-title>{{ item.DateAddon | date : 'dd.MM.YYYY' }}</span>
 				</mib-table-cell>
 				<ng-template #mobileCell>
 					<mib-table-cell>
@@ -136,14 +136,14 @@
 				<mib-table-cell></mib-table-cell>
 				<ng-container *ngIf="isDesktop; else mSumm">
 					<mib-table-cell>
-						<span table-cell-title>
+						<span class="c-ac-active" table-cell-title>
 							{{ dutyCustomerSum | rub }}
 						</span>
 					</mib-table-cell>
 				</ng-container>
 				<ng-template #mSumm>
 					<mib-table-cell [ngClass]="{displaySumm: showTotal}">
-						<span table-cell-title>{{
+						<span class="c-ac-active" table-cell-title>{{
 							showTotal ? (dutyCustomerSum | rub) : ''
 						}}</span>
 					</mib-table-cell>

@@ -1,17 +1,17 @@
 import { Component, ElementRef, Inject, OnInit, QueryList, ViewChildren } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms'
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {ButtonSize} from 'src/app/shared/ui-kit/button/interfaces/button.interface'
 import {InputSize} from 'src/app/shared/ui-kit/input/interfaces/input.interface'
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
-import {extractBase64} from 'src/app/shared/services/tools.service'
+import { downloadBase64File, extractBase64 } from 'src/app/shared/services/tools.service';
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
 import {
   BehaviorSubject,
   catchError,
   debounceTime,
-  distinctUntilChanged,
+  distinctUntilChanged, EMPTY,
   filter,
   forkJoin,
   Observable,
@@ -21,7 +21,7 @@ import {
   switchMap,
   tap,
   throwError
-} from 'rxjs'
+} from 'rxjs';
 import {DemandService} from '../../services/demand.service'
 import {
   RequestFailureModalService
@@ -34,6 +34,8 @@ import { DemandInterface } from '../../types/demand.interface';
 import { FileReadOptions } from './interfaces/demand-drawer.interface';
 import { DemandDrawerService } from './demand-drawer.service';
 import { Properties } from 'csstype';
+import { FileMode } from '../../../../../shared/types/file/file-model.interface';
+import { DocumentsType } from '../demand-limit-drawer/demand-limit-drawer.component';
 
 @Component({
   selector: 'mib-demand-drawer',
@@ -54,8 +56,6 @@ export class DemandDrawerComponent implements OnInit {
   public tabIndex = '1'
   public viewingData: DemandInterface<{ Subject: string; Question: string; Files: [] }>
   public readFiles: FileReadOptions[]
-
-  private uploadedFiles: Set<string> = new Set();
 
   constructor(
     private fb: FormBuilder,
@@ -118,19 +118,45 @@ export class DemandDrawerComponent implements OnInit {
     }
   }
 
+  createDocumentControl(data: FileMode) {
+    const control = this.fb.group({
+      ID: [null],
+      Identifier: [null],
+      Code: [null],
+      FileName: [null],
+      Size: [null],
+      DemandFileID: [null]
+    });
+    control.patchValue(data);
+    return control;
+  }
+
+  shiftDocumentControlByType(data: FileMode) {
+    this.documents.insert(0, this.createDocumentControl(data));
+  }
+
   onDocumentLoad({file, url}: FileDnd): void {
-    const document: DocumentReq = {
-      // TODO: ДОБАВИТЬ ИНПУТ С "type='number'" В ФОРМУ
-      Number: null,
-      Title: file.name,
+    this.uploadDocumentToDraft({
       Description: `description ${file.name}`,
       DocumentTypeID: 40,
-      OwnerTypeID: 6,
+      Title: file.name,
+      OwnerTypeID: 20,
       Data: extractBase64(url),
       File: file
-    }
+    }).pipe(
+      tap(doc => {
+        this.shiftDocumentControlByType(doc);
+      })
+    ).subscribe();
+  }
 
-    this.addDocument(document)
+  uploadDocumentToDraft(req: DocumentReq): Observable<FileMode> {
+    return this.demandService.uploadDraftFile(req.File, 'test', this.requestId).pipe(
+      catchError((err, caught) => {
+        console.error(`Ошибка загрузки файла ${req.Title}:`, err);
+        return of(err);
+      })
+    );
   }
 
   public skeleton: Properties = {
@@ -161,20 +187,20 @@ export class DemandDrawerComponent implements OnInit {
     this.demandDrawerService.updateDocumentsState(undefined)
   }
 
-  downloadCurrentFile(): void {
-    console.log('HALO DOWNLOAD FILE >>>', this.documents)
-    // this.isDownloading$.next(true)
-    // this.documentsService
-    // 	.getDocumentContent(this.documents.DocumentID)
-    // 	.pipe(
-    // 		tap(data => {
-    // 			downloadBase64File(data, DocTitle)
-    // 		}),
-    // 		finalize(() => {
-    // 			this.isDownloading$.next(false)
-    // 		})
-    // 	)
-    // 	.subscribe()
+  downloadCurrentFile(document: AbstractControl): void {
+    const { DemandFileID, FileName } = document.getRawValue() as FileMode;
+
+    this.demandService
+      .downloadFile(DemandFileID).pipe(
+      tap(data => {
+        downloadBase64File(data, FileName);
+      }),
+      catchError(error => {
+        console.error(`Ошибка при скачивании файла "${FileName}":`, error);
+        return of(null);
+      })
+    )
+      .subscribe();
   }
 
   onSubmit(): void {
@@ -208,19 +234,24 @@ export class DemandDrawerComponent implements OnInit {
     })
   }
 
-  removeDocument(idx: number): void {
-    this.documents.removeAt(idx)
+  deleteDocument(i: number) {
+    const { DemandFileID } = this.documents.at(i).getRawValue() as FileMode;
+
+    this.demandService.deleteDemandFileById(DemandFileID).pipe(
+      tap(() => {
+        this.documents.removeAt(i);
+      })
+    ).subscribe();
   }
 
   private addDocument(data: DocumentReq): void {
     const control: FormGroup = this.fb.group({
-      Number: [null],
-      Title: [null],
-      Description: [null],
-      DocumentTypeID: [null],
-      OwnerTypeID: [null],
-      Data: [null],
-      File: [null]
+      ID: [null],
+      Identifier: [null],
+      Code: [null],
+      FileName: [null],
+      Size: [null],
+      DemandFileID: [null]
     })
     control.patchValue(data)
     this.documents.push(control)
@@ -255,8 +286,7 @@ export class DemandDrawerComponent implements OnInit {
         if (!draftResult) {
           return throwError(() => new Error('Ошибка сохранения черновика'));
         }
-
-        return this.uploadDraftFiles();
+        return of(draftResult)
       })
     );
   }
@@ -267,28 +297,6 @@ export class DemandDrawerComponent implements OnInit {
       Question: formData.requestText,
       Type: this.freeRequestType
     };
-  }
-
-  private uploadDraftFiles(): Observable<any> {
-    const uploadObservables = this.documents.controls
-      .map((control: FormGroup) => {
-        const file = control.get('File').value;
-        const fileName = file?.name;
-
-        if (file && fileName && !this.uploadedFiles.has(fileName)) {
-          return this.demandService.uploadDraftFile(file, 'test', this.requestId).pipe(
-            tap(() => this.uploadedFiles.add(fileName)),
-            catchError(error => {
-              console.error(`Ошибка загрузки файла ${fileName}:`, error);
-              return of(null);
-            })
-          );
-        }
-
-        return of(null);
-      });
-
-    return forkJoin(uploadObservables.filter(obs => obs !== of(null)));
   }
 
   private onSaveDraftSuccess(result: any): void {
@@ -332,6 +340,10 @@ export class DemandDrawerComponent implements OnInit {
             requestText: data?.Question,
             Documents: data?.Files
           })
+          const files = data?.Files || []
+          for (let file of files) {
+            this.addDocument(file)
+          }
         }
 
 

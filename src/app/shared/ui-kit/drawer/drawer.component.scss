@@ -21,6 +21,8 @@
 @mixin drawer-content {
 	overflow-y: auto;
 	// overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 }
 
 .drawer {

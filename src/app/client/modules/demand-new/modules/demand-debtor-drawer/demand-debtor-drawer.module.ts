@@ -27,36 +27,38 @@ import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-do
 import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
 import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
 import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
+import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-loader.module';
 
 @NgModule({
   declarations: [DemandDebtorDrawerComponent],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    SpacingModule,
-    TabModule,
-    NavbarModule,
-    ButtonModule,
-    SelectModule,
-    DropdownPointModule,
-    CheckboxModule,
-    InputModule,
-    LabelModule,
-    LeftIconModule,
-    LinkModule,
-    FileCellModule,
-    IconModule,
-    InformationModule,
-    ReactiveFormsModule,
-    FormsModule,
-    DlFileCellModule,
-    MibDragAndDropModule,
-    BadgeModule,
-    AttachedDocumentModule,
-    MessageItemModule,
-    SkeletonModule,
-    SendMessagesModule
-  ],
+	imports: [
+		CommonModule,
+		DrawerModule,
+		SpacingModule,
+		TabModule,
+		NavbarModule,
+		ButtonModule,
+		SelectModule,
+		DropdownPointModule,
+		CheckboxModule,
+		InputModule,
+		LabelModule,
+		LeftIconModule,
+		LinkModule,
+		FileCellModule,
+		IconModule,
+		InformationModule,
+		ReactiveFormsModule,
+		FormsModule,
+		DlFileCellModule,
+		MibDragAndDropModule,
+		BadgeModule,
+		AttachedDocumentModule,
+		MessageItemModule,
+		SkeletonModule,
+		SendMessagesModule,
+		BlurLoaderModule
+	],
   providers: [DemandDebtorDrawerService, DemandDebtorDrawerStaticService, DemandService]
 })
 export class DemandDebtorDrawerModule {

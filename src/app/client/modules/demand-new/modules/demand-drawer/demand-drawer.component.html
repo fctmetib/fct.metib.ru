@@ -1,3 +1,5 @@
+<mib-blur-loader *ngIf="loading$ | async"></mib-blur-loader>
+
 <mib-drawer>
   <mib-drawer-header
     showEdits="true"
@@ -41,7 +43,7 @@
           <mib-navbar-point (press)="tabIndex = $event" value="1">События</mib-navbar-point>
           <mib-navbar-point (press)="tabIndex = $event" value="2">Информация</mib-navbar-point>
           <mib-navbar-point (press)="tabIndex = $event" value="3">Документы</mib-navbar-point>
-          <mib-navbar-point (press)="tabIndex = $event" value="4">Результат</mib-navbar-point>
+          <!-- <mib-navbar-point (press)="tabIndex = $event" value="4">Результат</mib-navbar-point> -->
         </mib-navbar>
         <mib-spacing type="m"></mib-spacing>
         <mib-tab-item value="1">
@@ -153,9 +155,9 @@
             <mib-dl-file-cell
               [attr.index]="idx"
               [showRemove]="true"
-              (onDload)="downloadCurrentFile()"
-              (onRemove)="removeDocument(idx)"
-              [fileName]="document.get('Title').value"
+              (onDload)="downloadCurrentFile(document)"
+              (onRemove)="deleteDocument(idx)"
+              [fileName]="document.get('FileName').value"
             ></mib-dl-file-cell>
             <mib-spacing type="xs2"></mib-spacing>
           </div>

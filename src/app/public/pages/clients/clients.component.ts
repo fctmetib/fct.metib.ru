@@ -104,6 +104,10 @@ export class ClientsComponent implements OnInit, OnDestroy {
 				link.download = 'installFactorClient';
 				link.href = 'assets/_files/FactorClient_Portable.zip';
 				break;
+			case 'installFactorClientTest':
+				link.download = 'FactorClientNew';
+				link.href = 'assets/_files/FactorClientNew.zip';
+				break;
 			default:
 				return;
 		}

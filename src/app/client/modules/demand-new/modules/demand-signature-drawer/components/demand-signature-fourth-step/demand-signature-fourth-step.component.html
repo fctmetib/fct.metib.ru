@@ -40,7 +40,7 @@
     <mib-dl-file-cell
       [attr.index]="idx"
       [showRemove]="true"
-      (onDload)="downloadCurrentFile()"
+      (onDload)="downloadCurrentFile(document)"
       (onRemove)="removeDocument(idx)"
       [fileName]="document.get('FileName').value"
     ></mib-dl-file-cell>

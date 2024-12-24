@@ -75,7 +75,7 @@ export class ContractsDrawerComponent implements OnInit {
 
 	getCurrentContract() {
 		this.loading$.next(true);
-	
+
 		this.deliveryService.getRequisitesById(this.deliveryId).pipe(
 			tap(requisites => {
 				this.requisites = requisites; // Сохраняем реквизиты
@@ -117,7 +117,7 @@ export class ContractsDrawerComponent implements OnInit {
 
 	copyDetails() {
 		// this.toaster.show('failure', 'В разработке!', '', true, false, 2500)
-		this.wordDownloadService.downloadDocWithText(
+		this.wordDownloadService.downloadDocWithTextFormatted(
 			this.requisites,
 			`${this.toolsService.concatArray([
 				this.delivery.Debtor.Title,

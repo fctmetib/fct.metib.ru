@@ -4,7 +4,9 @@ import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {DemandFactoringDrawerComponent} from './demand-factoring-drawer.component'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DemandFactoringDrawerService {
 	constructor(private dialog: MatDialog) {}
 

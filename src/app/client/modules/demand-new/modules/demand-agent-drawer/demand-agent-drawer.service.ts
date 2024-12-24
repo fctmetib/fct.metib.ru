@@ -4,7 +4,9 @@ import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
 import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
 import {DemandAgentDrawerComponent} from './demand-agent-drawer.component'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DemandAgentDrawerService {
 	constructor(private dialog: MatDialog) {}
 

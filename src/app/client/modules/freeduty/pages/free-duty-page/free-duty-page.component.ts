@@ -100,6 +100,10 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 		10: 'RefNum'
 	}
 
+  trackById(index: number, item: Duty): any {
+    return item.ID;
+  }
+
 	constructor(
 		private au: AutoUnsubscribeService,
 		private freeDutyService: FreeDutyService,

@@ -209,11 +209,7 @@ export class AuthService {
   }
 
   private fetchUserGeneral(userID: number): Observable<UserGeneral> {
-    return this.http.get<UserGeneral>(`${environment.apiUrl}/v1/users`, {
-      params: {
-        userID
-      }
-    });
+    return this.http.get<UserGeneral>(`${environment.apiUrl}/v1/users/${userID}`);
   }
 
   private processUserResponse(currentUserResponse: UserGeneral): void {

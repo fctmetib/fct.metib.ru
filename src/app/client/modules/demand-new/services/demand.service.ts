@@ -15,7 +15,9 @@ import {DebtorInterface} from '../types/debtor-interface'
 import { DemandsPrepareEnum } from '../pages/demand-new-home/demand-new-home.component';
 import { FileMode } from '../../../../shared/types/file/file-model.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DemandService {
 	constructor(private http: HttpClient) {}
 
@@ -190,17 +192,14 @@ export class DemandService {
 		return this.http.post<any>(url, data)
 	}
 
-	getDemandDocumentByType(
-		data: any,
-    type: string
-	) {
-		const url = `${environment.apiUrl}/v1/demands/document/DigitalSignatureRequest`
-		return this.http.post<any>(url, JSON.stringify(data), {
-      params: {
-        documentType: type
-      }
-    })
-	}
+  getDemandDocumentByType(data: any, type: string) {
+    const url = `${environment.apiUrl}/v1/demands/document/DigitalSignatureRequest`;
+    return this.http.post(url, data, {
+      params: { documentType: type },
+      responseType: 'blob', // Указываем, что ответ - это файл (BLOB)
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 
 	getDebtors(): Observable<DebtorInterface[]> {
 		const url = `${environment.apiUrl}/public/debtors`

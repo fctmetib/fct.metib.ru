@@ -11,7 +11,7 @@ import { ToasterService } from 'src/app/shared/services/common/toaster.service';
 import { ContractedFormsEnum } from 'src/app/shared/ui-kit/contracted-forms/interfaces/contracted-forms.interface';
 import { FileDnd } from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
 import { DocumentReq } from '../../../requests/interfaces/request.interface';
-import { extractBase64 } from 'src/app/shared/services/tools.service';
+import { deepMerge, extractBase64 } from 'src/app/shared/services/tools.service';
 import { DrawerData } from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DestroyService } from '../../../../../shared/services/common/destroy.service';
@@ -30,6 +30,175 @@ import { DemandsPrepareEnum } from '../../pages/demand-new-home/demand-new-home.
 import { FileMode } from '../../../../../shared/types/file/file-model.interface';
 import { DemandInterface } from '../../types/demand.interface';
 import { Properties } from 'csstype';
+import { DeepPartial } from 'chart.js/types/utils';
+
+export interface SuretyPrepareData {
+  Factoring: Factoring;
+  Anket: Anket;
+  Type: string;
+  Files: File[];
+}
+
+export interface Anket {
+  Organization: Organization;
+  Resident: Resident;
+  Capital: Capital;
+  Activity: null;
+  Licenses: any[];
+  Signer: Signer;
+  Objectives: Objectives;
+  Shareholders: any[];
+  Ratings: any[];
+  ContactPerson: any;
+  Managerinresponse: any;
+  DateUntil: null;
+}
+
+export interface Capital {
+  CurrencyCode: string;
+  DateBegin: string;
+  Total: number;
+  Payed: number;
+}
+
+export interface Objectives {
+  FinancialObjective: number;
+  FinancialObjectiveOther: string;
+  BankRelationObjective: number;
+  BankRelationObjectiveOther: string;
+  TransactionsCount: string;
+  TransactionsSumm: string;
+  TransactionsContracts: string;
+}
+
+export interface Organization {
+  Type: number;
+  LegalForm: string;
+  FullTitle: string;
+  ShortTitle: string;
+  ForeignTitle: string;
+  Phone: string;
+  Email: string;
+  Website: string;
+  LegalAddress: Address;
+  PostAddress: Address;
+  FactAddress: Address;
+  Requisites: Requisites;
+  Settings: any;
+  FactAddressEquals: boolean;
+  PostAddressEquals: boolean;
+}
+
+export interface Address {
+  PostCode: string;
+  Country: string;
+  RegionTitle: string;
+  RegionCode: number;
+  District: string;
+  City: string;
+  Locality: string;
+  Street: string;
+  House: string;
+  Appartment: string;
+}
+
+export interface Requisites {
+  LegalForm: string;
+  INN: string;
+  KPP: string;
+  OGRN: string;
+  OKPO: string;
+  OKATO: string;
+  OKVED: string;
+  OKOGU: null;
+  Signer: Signer;
+  AccountManager: string;
+  BankAccount: BankAccount;
+  RegistrationDate: string | null;
+  SalesManagerID: number;
+  RegistrationRegionID: number;
+}
+
+export interface BankAccount {
+  Bank: string;
+  COR: string;
+  BIK: string;
+  Number: string;
+}
+
+export interface Signer {
+  FIO: null | string;
+  Position: null | string;
+  Reason: null | string;
+  Person: Person | null;
+  Passport: Passport | null;
+  RegistrationAddress: Address | null;
+}
+
+export interface Passport {
+  Number: string;
+  Date: string;
+  Expire: string;
+  IssuerTitle: string;
+  IssuerCode: string;
+  Nationality: string;
+  FileBlobId: any;
+  IsForeign: boolean;
+}
+
+export interface Person {
+  NameFirst: string;
+  NameLast: string;
+  NameSecond: string;
+  Gender: number;
+  Phone: string;
+  Email: string;
+  SNILS: string;
+  INN: null;
+  BirthDate: string;
+  BirthCountryCode: null;
+  BirthPlace: string;
+  Address: null;
+}
+
+export interface Resident {
+  Country: string;
+  ForeignCode: string;
+  IsResident: boolean;
+}
+
+export interface Factoring {
+  EDI: any[];
+  Products: string;
+  Trademarks: string;
+  Suppliers: string;
+  Buyers: string;
+  StaffAmount: number;
+  LimitWanted: number;
+  Properties: any[];
+  Obligations: any[];
+  Account: Account;
+  AddonAccounts: any[];
+  FactoringAim: number;
+}
+
+export interface Account {
+  Date: string;
+  Expire: null;
+  Comment: string;
+  Bank: string;
+  COR: string;
+  Number: string;
+}
+
+export interface File {
+  ID: number;
+  Identifier: string;
+  Code: string;
+  FileName: string;
+  Size: number;
+}
+
 
 @Component({
   selector: 'mib-demand-surety-drawer',
@@ -39,9 +208,9 @@ import { Properties } from 'csstype';
 })
 export class DemandSuretyDrawerComponent implements OnInit {
   isSubmitting$ = new BehaviorSubject<boolean>(false);
-  public loading$ = new BehaviorSubject<boolean>(false)
+  public loading$ = new BehaviorSubject<boolean>(false);
   progres$ = new BehaviorSubject<number>(1);
-  guaranteeType = 'Guarantee'
+  guaranteeType = 'Guarantee';
   progress: number = 1;
   maxPage: number = 4;
   pageCount: number = 1;
@@ -53,10 +222,10 @@ export class DemandSuretyDrawerComponent implements OnInit {
   dataByCreditorINN = [];
   dataByDebitorINN = [];
   bankDataByName = [];
+  bankData: BankInfo;
   bankAdditionalDataByName = [];
   addressDataByName = [];
   alreadySubscribedFourthPageForm = false;
-  bankData: BankInfo;
   orgDataForm: FormGroup;
   bankForm: FormGroup;
   mainDataForm: FormGroup;
@@ -64,13 +233,13 @@ export class DemandSuretyDrawerComponent implements OnInit {
   fourthPageForm: FormGroup;
   documents: FormGroup;
   groupDocuments: FormGroup;
+
+  preparedData?: SuretyPrepareData
+
   private viewChange = false;
-  public tabIndex = '1'
-  public viewingData: DemandInterface<{ Subject: string; Question: string; Files: [] }>
-  private titleInfo = {create: null, update: null, status: null}
-
-
-  private uploadedFiles: Set<string> = new Set();
+  public tabIndex = '1';
+  public viewingData: DemandInterface<{ Subject: string; Question: string; Files: [] }>;
+  private titleInfo = { create: null, update: null, status: null };
 
   constructor(
     private demandService: DemandService,
@@ -98,7 +267,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const modalData = this.data.data
+    const modalData = this.data.data;
 
     if (modalData?.isEdit || modalData?.isCreation) {
       this.initOrgDataForm();
@@ -110,67 +279,71 @@ export class DemandSuretyDrawerComponent implements OnInit {
     }
     // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
     if (modalData?.isEdit || modalData?.isView) {
-      this.getByID(modalData.id, modalData.isEdit)
+      this.getByID(modalData.id, modalData.isEdit);
     }
 
     // Если создание и нет черновика
     if (modalData?.isCreation && !modalData?.id) {
       // инициализируем черновик
-      this.initDraft()
-      // Запрашиваем метод prepare для предзаполнения инпутов
-      this.prepareDemandByTypes(modalData.prepareTypeId);
+      this.initDraft().pipe(
+        // Запрашиваем метод prepare для предзаполнения инпутов
+        switchMap(() => this.prepareDemandByTypes(modalData.prepareTypeId)),
+        // Прям перезаписываем
+        switchMap(() => this.saveDraft())
+      ).subscribe();
       // Включаем авто сохранение первого/второго таба
-      this.enableAutoSaveDraft(this.orgDataForm)
+      this.enableAutoSaveDraft(this.orgDataForm);
     }
 
     // Если создание и есть черновик
     if (modalData?.isCreation && modalData?.id) {
       // Включаем авто сохранение первого/второго таба
-      this.enableAutoSaveDraft(this.orgDataForm)
+      this.enableAutoSaveDraft(this.orgDataForm);
     }
 
   }
 
   get isView(): boolean {
-    return this.data.data.isView
+    return this.data.data.isView;
   }
 
   get requestId(): number {
-    return this.data.data.id
+    return this.data.data.id;
   }
 
   set requestId(val: number) {
-    this.data.data.id = val
+    this.data.data.id = val;
   }
 
   get files(): FormArray<any> {
-    return this.documents.get('Documents') as FormArray
+    return this.documents.get('Documents') as FormArray;
   }
 
   private getByID(id: number, isDraft: boolean): void {
-    this.loading$.next(true)
+    this.loading$.next(true);
     const req$ = isDraft ?
       this.demandService
-        .getDemandDraftById(id) : this.demandService.getDemandById(id)
+        .getDemandDraftById(id) : this.demandService.getDemandById(id);
     req$.pipe(
       tap(res => {
-        const data = isDraft ? res.DemandData : res.Data
+        const data = isDraft ? res.DemandData : res.Data;
+        this.preparedData = data;
         //this.formDataForChangeOnView = res.Data
         if (this.isView) {
           // this.readFiles = res?.Files?.map(file => ({FileName: file.FileName, Size: file.Size}))
-          // this.viewingData = res
+          this.viewingData = res
           // this.fileTypeConversion(res?.Files)
         }
         if (!isDraft) {
-          this.titleInfo = {create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status)}
+          this.titleInfo = { create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status) };
         } else {
           //this.nextPage()
-          this.patchData(data)
+          this.patchData(data);
         }
       }),
       finalize(() => this.loading$.next(false))
     )
-      .subscribe()
+      .subscribe();
   }
 
   initOrgDataForm(): void {
@@ -194,7 +367,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
       Bik: null,
       KorrespondentAccount: null,
       Bill: null,
-      RegistrationDate: null,
+      RegistrationDate: null
       //Comment: null
     });
 
@@ -292,9 +465,9 @@ export class DemandSuretyDrawerComponent implements OnInit {
       distinctUntilChanged(),
       takeUntil(this.destroy$)
     )
-    .subscribe(res => {
-      this.contractAmountValue = res;
-    })
+      .subscribe(res => {
+        this.contractAmountValue = res;
+      });
   }
 
   onDocumentLoad({ file, url }: FileDnd): void {
@@ -317,16 +490,16 @@ export class DemandSuretyDrawerComponent implements OnInit {
     }
 
     if (this.pageCount === 2) {
-      this.enableAutoSaveDraft(this.bankForm)
+      this.enableAutoSaveDraft(this.bankForm);
     }
 
     if (this.pageCount === 3) {
-      this.enableAutoSaveDraft(this.mainDataForm)
+      this.enableAutoSaveDraft(this.mainDataForm);
     }
 
     if (this.pageCount === 4) {
       // подписка на загрузку документов
-      this.enableAutoSaveDraft(this.groupDocuments)
+      this.enableAutoSaveDraft(this.groupDocuments);
     }
   }
 
@@ -340,29 +513,29 @@ export class DemandSuretyDrawerComponent implements OnInit {
   }
 
   private openRequestFailureModal(d): void {
-    this.requestFailureModalService.open(d)
+    this.requestFailureModalService.open(d);
   }
 
   private openRequestSuccessModal(): void {
-    this.requestCreateSuccessModalService.open()
+    this.requestCreateSuccessModalService.open();
   }
 
   submitData(): void {
-    this.isSubmitting$.next(true)
+    this.isSubmitting$.next(true);
     const resObj = {
-      draftId: this.requestId,
-    }
+      draftId: this.requestId
+    };
     this.demandService.createDemand(resObj)
       .subscribe({
         complete: () => {
-          this.dialogRef.close()
-          this.openRequestSuccessModal()
+          this.dialogRef.close();
+          this.openRequestSuccessModal();
         },
         error: () => {
-          this.dialogRef.close()
-          this.openRequestFailureModal(this.requestId)
+          this.dialogRef.close();
+          this.openRequestFailureModal(this.requestId);
         }
-      })
+      });
 
     // this.dialogRef.close()
   }
@@ -383,9 +556,9 @@ export class DemandSuretyDrawerComponent implements OnInit {
     control.push(this.createAdditionalAccountForm());
     this.getAdditionalBankData(control.length - 1);
     this.bankAdditionalDataByName = [];
-    this.watchForChangesFormArray(control)
+    this.watchForChangesFormArray(control);
     if (control.length === 1) {
-      this.enableAutoSaveDraft(this.form)
+      this.enableAutoSaveDraft(this.form);
     }
   }
 
@@ -394,9 +567,9 @@ export class DemandSuretyDrawerComponent implements OnInit {
       control.valueChanges.pipe(
         debounceTime(500),
         takeUntil(this.destroy$),
-        map(value => ({ rowIndex: index, control: control, data: value }))),
+        map(value => ({ rowIndex: index, control: control, data: value })))
     )).subscribe(changes => {
-      this.enableAutoSaveDraft(formArray)
+      this.enableAutoSaveDraft(formArray);
     });
   }
 
@@ -441,8 +614,8 @@ export class DemandSuretyDrawerComponent implements OnInit {
     }));
     this.getFullAddressData(control.length - 1);
     this.addressDataByName = [];
-    this.watchForChangesFormArray(control)
-    this.checkAlreadySubscribedFourthPageForm()
+    this.watchForChangesFormArray(control);
+    this.checkAlreadySubscribedFourthPageForm();
   }
 
   saveDebentures(idx: number): void {
@@ -471,10 +644,10 @@ export class DemandSuretyDrawerComponent implements OnInit {
       balanceEnd: null,
       balanceToday: null
     }));
-    this.checkAlreadySubscribedFourthPageForm()
+    this.checkAlreadySubscribedFourthPageForm();
     this.getDataByCreditorINN(control.length - 1);
     this.getDataContractAmount(control.length - 1);
-    this.watchForChangesFormArray(control)
+    this.watchForChangesFormArray(control);
     this.dataByCreditorINN = [];
   }
 
@@ -489,8 +662,8 @@ export class DemandSuretyDrawerComponent implements OnInit {
 
   private checkAlreadySubscribedFourthPageForm() {
     if (!this.alreadySubscribedFourthPageForm) {
-      this.alreadySubscribedFourthPageForm = true
-      this.enableAutoSaveDraft(this.fourthPageForm)
+      this.alreadySubscribedFourthPageForm = true;
+      this.enableAutoSaveDraft(this.fourthPageForm);
     }
   }
 
@@ -500,9 +673,9 @@ export class DemandSuretyDrawerComponent implements OnInit {
       debitor: null,
       provider: null
     }));
-    this.checkAlreadySubscribedFourthPageForm()
+    this.checkAlreadySubscribedFourthPageForm();
     this.getDataByDebitorINN(control.length - 1);
-    this.watchForChangesFormArray(control)
+    this.watchForChangesFormArray(control);
     this.dataByDebitorINN = [];
   }
 
@@ -587,18 +760,18 @@ export class DemandSuretyDrawerComponent implements OnInit {
   }
 
   private get houses(): FormArray {
-    return this.fourthPageForm.get('houses') as FormArray
+    return this.fourthPageForm.get('houses') as FormArray;
   }
 
   private get debt(): FormArray {
-    return this.fourthPageForm.get('debt') as FormArray
+    return this.fourthPageForm.get('debt') as FormArray;
   }
 
   private get docs(): FormArray {
-    return this.fourthPageForm.get('docs') as FormArray
+    return this.fourthPageForm.get('docs') as FormArray;
   }
 
-  private initGroupDocuments(){
+  private initGroupDocuments() {
     this.groupDocuments = this.fb.group({
       charter: this.fb.array([]),
       ceoPassport: this.fb.array([]),
@@ -606,12 +779,12 @@ export class DemandSuretyDrawerComponent implements OnInit {
       appointmentOrder: this.fb.array([]),
       balanceSheet: this.fb.array([]),
       turnoverBalanceSheet: this.fb.array([]),
-      foundersPassports: this.fb.array([]),
-    })
+      foundersPassports: this.fb.array([])
+    });
   }
 
   private get additionalAccountForm(): FormArray {
-    return this.form.get('additionalAccountForm') as FormArray
+    return this.form.get('additionalAccountForm') as FormArray;
   }
 
   private createAdditionalAccountForm(): FormGroup {
@@ -629,30 +802,28 @@ export class DemandSuretyDrawerComponent implements OnInit {
     return this.demandSrv.getDemandDraftById(id);
   }
 
-  private initDraft(): void {
-    const payload = this.demandSuretyDrawerStaticService.payload
+  private initDraft() {
+    const payload = this.demandSuretyDrawerStaticService.payload;
 
-    this.demandService.createNewDraft(payload)
+    return this.demandService.createNewDraft(payload)
       .pipe(
         tap(id => {
-          this.requestId = id
+          this.requestId = id;
         })
-      )
-      .subscribe()
+      );
   }
 
   private prepareDemandByTypes(type: DemandsPrepareEnum) {
-    this.loading$.next(true)
-    this.demandService.prepareDemandByTypes(type)
+    this.loading$.next(true);
+    return this.demandService.prepareDemandByTypes(type)
       .pipe(
         tap(res => {
           console.log('prepareDemandByTypes=>', res);
-          this.loading$.next(false)
-          this.patchData(res)
+          this.preparedData = res;
+          this.patchData(res);
         }),
         finalize(() => this.loading$.next(false))
-      )
-      .subscribe()
+      );
   }
 
   createDocumentControl(data: FileMode) {
@@ -668,20 +839,20 @@ export class DemandSuretyDrawerComponent implements OnInit {
     return control;
   }
 
-  private patchData(data: any) {
-    const anket = data.Anket.Organization
-    const factoringAccount = data.Factoring.Account
-    const factoring = data.Factoring
-    const factoringAddonAccounts = data.Factoring.AddonAccounts
-    const factoringProperties = data.Factoring.Properties
-    const factoringObligations = data.Factoring.Obligations
-    const factoringEDI = data.Factoring.EDI
-    const files = data.Files as FileMode[]
+  private patchData(data: SuretyPrepareData) {
+    const anket = data.Anket.Organization;
+    const factoringAccount = data.Factoring.Account;
+    const factoring = data.Factoring;
+    const factoringAddonAccounts = data.Factoring.AddonAccounts;
+    const factoringProperties = data.Factoring.Properties;
+    const factoringObligations = data.Factoring.Obligations;
+    const factoringEDI = data.Factoring.EDI;
+    const files = (data.Files || []) as FileMode[];
 
     for (let file of files) {
-      const docs = this.groupDocuments.get(file.Identifier) as FormArray
-      const control = this.createDocumentControl(file)
-      docs.push(control);
+      const docs = this.groupDocuments.get(file.Identifier) as FormArray;
+      const control = this.createDocumentControl(file);
+      docs?.push(control);
     }
 
     console.log(this.groupDocuments.getRawValue());
@@ -694,22 +865,22 @@ export class DemandSuretyDrawerComponent implements OnInit {
       Phone: anket.Phone,
       Email: anket.Email,
       Url: anket.Website
-    })
+    });
     this.bankForm.patchValue({
       Bank: anket.Requisites.BankAccount.Bank,
       Bik: anket.Requisites.BankAccount.BIK,
       KorrespondentAccount: anket.Requisites.BankAccount.COR,
       Bill: anket.Requisites.BankAccount.Number,
-      RegistrationDate: anket.Requisites.RegistrationDate?.split('T')[0],
+      RegistrationDate: anket.Requisites.RegistrationDate ? anket.Requisites.RegistrationDate .split('T')[0] : null
       //Comment: anket.Requisites.
-    })
+    });
     this.mainDataForm.patchValue({
       typeProducts: factoring.Products,
       trademarks: factoring.Trademarks,
       suppliers: factoring.Suppliers,
       limit: factoring.LimitWanted,
       countEmpl: factoring.StaffAmount
-    })
+    });
 
     factoringAddonAccounts.forEach(item => {
       if (item.Bank || item.Number || item.Date || item.Expire || item.Comment) {
@@ -719,18 +890,18 @@ export class DemandSuretyDrawerComponent implements OnInit {
           createDate: item.Date,
           closeDate: item.Expire,
           reason: item.Comment
-        }))
+        }));
       }
-    })
+    });
 
     factoringProperties.forEach(item => {
       if (item.Address.City || item.Type) {
         this.houses.push(this.fb.group({
           fullAddress: item.Address.City,
           owner: item.Type
-        }))
+        }));
       }
-    })
+    });
 
     factoringObligations.forEach(item => {
       if (item.Creditor || item.Type || item.Date || item.Summ || item.ReportingRest || item.CurrentRest) {
@@ -741,17 +912,17 @@ export class DemandSuretyDrawerComponent implements OnInit {
           contractAmount: item.Summ,
           balanceEnd: item.ReportingRest,
           balanceToday: item.CurrentRest
-        }))
+        }));
       }
-    })
+    });
     factoringEDI.forEach(item => {
       if (item.Company || item.EDIProvider) {
         this.docs.push(this.fb.group({
           debitor: item.Company,
           provider: item.EDIProvider
-        }))
+        }));
       }
-    })
+    });
   }
 
   private onSaveDraftSuccess(result: any): void {
@@ -773,12 +944,12 @@ export class DemandSuretyDrawerComponent implements OnInit {
         if (!draftResult) {
           return throwError(() => new Error('Ошибка сохранения черновика'));
         }
-        return of(draftResult)
+        return of(draftResult);
       })
     );
   }
 
-  private createDraftPayload(): any {
+  private createDraftPayload(): DeepPartial<SuretyPrepareData> {
     const anket = this.orgDataForm.value;
     const account = this.bankForm.value;
     const products = this.mainDataForm.value;
@@ -790,7 +961,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
         Bank: item.bank, // Банк
         COR: null, // Корреспондентский счет
         Number: item.bill
-      }
+      };
     });
     const fourStep = this.fourthPageForm.value;
     const properties = fourStep.houses.map(item => {
@@ -808,8 +979,8 @@ export class DemandSuretyDrawerComponent implements OnInit {
           House: null,
           Appartment: null
         }
-      }
-    })
+      };
+    });
     const obligations = fourStep.debt.map(item => {
       return {
         Creditor: item.creditor, // Кредитор
@@ -818,16 +989,16 @@ export class DemandSuretyDrawerComponent implements OnInit {
         Summ: item.contractAmount, // Сумма договора
         ReportingRest: item.balanceEnd, // Остаток на дату отчетности
         CurrentRest: item.balanceToday // Остаток на текущую дату
-      }
-    })
+      };
+    });
     const edi = fourStep.docs.map(item => {
       return {
         Company: item.debitor, // Дебитор
         EDIProvider: item.provider // EDI-провайдер
-      }
-    })
+      };
+    });
 
-    return {
+    const payload = {
       Factoring: { // Запрос на поручительство (Заявка на факторинг)
         EDI: edi,
         // 4 - шаг
@@ -840,12 +1011,12 @@ export class DemandSuretyDrawerComponent implements OnInit {
         Properties: properties,
         Obligations: obligations,
         Account: {
-          Date: null,
-          Expire: null, // Дата закрытия
-          Comment: null, // Комментарий к запросу
-          Bank: null,
-          COR: null,
-          Number: null
+          // Date: null,
+          // Expire: null, // Дата закрытия
+          // Comment: null, // Комментарий к запросу
+          // Bank: null,
+          // COR: null,
+          // Number: null
         },
         AddonAccounts: addonAccounts,
         FactoringAim: 0 // Цели факторинга??
@@ -854,69 +1025,69 @@ export class DemandSuretyDrawerComponent implements OnInit {
       Anket: {
         Organization: { // Организация
           Type: anket.Type,
-          LegalForm: null,
-          FullTitle: null,
+          // LegalForm: null,
+          // FullTitle: null,
           ShortTitle: anket.ShortTitle,
-          ForeignTitle: null,
+          // ForeignTitle: null,
           Phone: anket.Phone,
           Email: anket.Email,
           Website: anket.Url,
-          LegalAddress: { // Юридический адрес
-            PostCode: null,
-            Country: null,
-            RegionTitle: null,
-            RegionCode: null,
-            District: null,
-            City: null,
-            Locality: null,
-            Street: null,
-            House: null,
-            Appartment: null
-          },
-          PostAddress: { // Почтовый адрес
-            PostCode: null,
-            Country: null,
-            RegionTitle: null,
-            RegionCode: null,
-            District: null,
-            City: null,
-            Locality: null,
-            Street: null,
-            House: null,
-            Appartment: null
-          },
-          FactAddressEquals: null,
-          PostAddressEquals: null,
-          FactAddress: {
-            PostCode: null,
-            Country: null,
-            RegionTitle: null,
-            RegionCode: null,
-            District: null,
-            City: null,
-            Locality: null,
-            Street: null,
-            House: null,
-            Appartment: null
-          },
+          // LegalAddress: { // Юридический адрес
+          //   PostCode: null,
+          //   Country: null,
+          //   RegionTitle: null,
+          //   RegionCode: null,
+          //   District: null,
+          //   City: null,
+          //   Locality: null,
+          //   Street: null,
+          //   House: null,
+          //   Appartment: null
+          // },
+          // PostAddress: { // Почтовый адрес
+          //   PostCode: null,
+          //   Country: null,
+          //   RegionTitle: null,
+          //   RegionCode: null,
+          //   District: null,
+          //   City: null,
+          //   Locality: null,
+          //   Street: null,
+          //   House: null,
+          //   Appartment: null
+          // },
+          // FactAddressEquals: false,
+          // PostAddressEquals: false,
+          // FactAddress: {
+          //   PostCode: null,
+          //   Country: null,
+          //   RegionTitle: null,
+          //   RegionCode: null,
+          //   District: null,
+          //   City: null,
+          //   Locality: null,
+          //   Street: null,
+          //   House: null,
+          //   Appartment: null
+          // },
           Requisites: { // Реквизиты организации
-            LegalForm: null,
+            // LegalForm: null,
             INN: anket.INN,
-            KPP: null,
-            OGRN: null,
-            OKPO: null,
-            OKATO: null,
-            OKVED: null,
-            OKOGU: null,
-            Signer: {
-              FIO: null,
-              Position: null,
-              Reason: null,
-              Person: null,
-              Passport: null,
-              RegistrationAddress: null
-            },
-            AccountManager: "",
+            // KPP: null,
+            // OGRN: null,
+            // OKPO: null,
+            // OKATO: null,
+            // OKVED: null,
+            // OKOGU: null,
+            // Signer: {
+            //   FIO: null,
+            //   Position: null,
+            //   Reason: null,
+            //   Person: null,
+            //   Passport: null,
+            //   RegistrationAddress: null
+            // },
+            // AccountManager: '',
             // 3 - шаг
             // Банковские реквизиты
             BankAccount: { // Основной счёт
@@ -926,8 +1097,8 @@ export class DemandSuretyDrawerComponent implements OnInit {
               Number: account.Bill // Номер счета
             },
             RegistrationDate: account.RegistrationDate, // Дата открытия
-            SalesManagerID: null,
-            RegistrationRegionID: null
+            // SalesManagerID: null,
+            // RegistrationRegionID: null
           },
           Settings: {
             BorderHour: 16,
@@ -936,116 +1107,122 @@ export class DemandSuretyDrawerComponent implements OnInit {
             SystemNameType: 1
           }
         },
-        Resident: { // Признак резидента РФ
-          IsResident: null,
-          Country: null,
-          ForeignCode: null
-        },
-        Capital: { // Уставный капитал
-          CurrencyCode: null, // Код валюты
-          DateBegin: null, // Дата
-          Total: null, // Общая сумма
-          Payed: null // Оплаченная сумма
-        },
-        Activity: null, // Активности
-        Licenses: [ // Лицензии и членство
-          {}
-        ],
-        Signer: { // Подписант
-          FIO: null,
-          Position: null,
-          Reason: null,
-          Person: { // Данные физ. лица
-            NameFirst: null,
-            NameLast: null,
-            NameSecond: null,
-            Gender: null,
-            Phone: null,
-            Email: null,
-            SNILS: null,
-            INN: null,
-            BirthDate: null,
-            BirthCountryCode: null,
-            BirthPlace: null,
-            Address: null
-          },
-          Passport: { // Паспорт
-            Number: null,
-            Date: null,
-            Expire: null,
-            IssuerTitle: null,
-            IssuerCode: null,
-            IsForeign: false,
-            Nationality: null
-          },
-          RegistrationAddress: { // Адрес регистрации
-            PostCode: null,
-            Country: null,
-            RegionTitle: null,
-            RegionCode: null,
-            District: null,
-            City: null,
-            Locality: null,
-            Street: null,
-            House: null,
-            Appartment: null
-          }
-        },
-        Objectives: {
-          FinancialObjective: null,
-          FinancialObjectiveOther: null,
-          BankRelationObjective: null,
-          BankRelationObjectiveOther: null,
-          TransactionsCount: null,
-          TransactionsSumm: null,
-          TransactionsContracts: null
-        },
-        Shareholders: [ // Учредители
-          {
-            Person: null,
-            Passport: null,
-            Address: null,
-            Type: null,
-            INN: null,
-            SharePercent: null
-          }
-        ],
-        Ratings: [ // Рейтинг
-          {}
-        ],
-        ContactPerson: { // Контактное лицо
-          NameFirst: null,
-          NameLast: null,
-          NameSecond: null,
-          Gender: null,
-          Phone: null,
-          Email: null,
-          SNILS: null,
-          INN: null,
-          BirthDate: null,
-          BirthCountryCode: null,
-          BirthPlace: null,
-          Address: null
-        },
-        Managerinresponse: { // Контакт менеджер
-          NameFirst: null,
-          NameLast: null,
-          NameSecond: null,
-          Gender: null,
-          Phone: null,
-          Email: null,
-          SNILS: null,
-          INN: null,
-          BirthDate: null,
-          BirthCountryCode: null,
-          BirthPlace: null,
-          Address: null
-        },
-        DateUntil: null
-      },
-      Type: this.guaranteeType, // Тип данных запрос
-      Files: null // Список файлов
-    };
+        // Resident: { // Признак резидента РФ
+        //   IsResident: null,
+        //   Country: null,
+        //   ForeignCode: null
+        // },
+        // Capital: { // Уставный капитал
+        //   CurrencyCode: null, // Код валюты
+        //   DateBegin: null, // Дата
+        //   Total: null, // Общая сумма
+        //   Payed: null // Оплаченная сумма
+        // },
+        // Activity: null, // Активности
+        // Licenses: [ // Лицензии и членство
+        //   {}
+        // ],
+        //   Signer: { // Подписант
+        //     FIO: null,
+        //     Position: null,
+        //     Reason: null,
+        //     Person: { // Данные физ. лица
+        //       NameFirst: null,
+        //       NameLast: null,
+        //       NameSecond: null,
+        //       Gender: null,
+        //       Phone: null,
+        //       Email: null,
+        //       SNILS: null,
+        //       INN: null,
+        //       BirthDate: null,
+        //       BirthCountryCode: null,
+        //       BirthPlace: null,
+        //       Address: null
+        //     },
+        //     Passport: { // Паспорт
+        //       Number: null,
+        //       Date: null,
+        //       Expire: null,
+        //       IssuerTitle: null,
+        //       IssuerCode: null,
+        //       IsForeign: false,
+        //       Nationality: null,
+        //       FileBlobId: null,
+        //     },
+        //     RegistrationAddress: { // Адрес регистрации
+        //       PostCode: null,
+        //       Country: null,
+        //       RegionTitle: null,
+        //       RegionCode: null,
+        //       District: null,
+        //       City: null,
+        //       Locality: null,
+        //       Street: null,
+        //       House: null,
+        //       Appartment: null
+        //     }
+        //   },
+        //   Objectives: {
+        //     FinancialObjective: null,
+        //     FinancialObjectiveOther: null,
+        //     BankRelationObjective: null,
+        //     BankRelationObjectiveOther: null,
+        //     TransactionsCount: null,
+        //     TransactionsSumm: null,
+        //     TransactionsContracts: null
+        //   },
+        //   Shareholders: [ // Учредители
+        //     {
+        //       Person: null,
+        //       Passport: null,
+        //       Address: null,
+        //       Type: null,
+        //       INN: null,
+        //       SharePercent: null
+        //     }
+        //   ],
+        //   Ratings: [ // Рейтинг
+        //     {}
+        //   ],
+        //   ContactPerson: { // Контактное лицо
+        //     NameFirst: null,
+        //     NameLast: null,
+        //     NameSecond: null,
+        //     Gender: null,
+        //     Phone: null,
+        //     Email: null,
+        //     SNILS: null,
+        //     INN: null,
+        //     BirthDate: null,
+        //     BirthCountryCode: null,
+        //     BirthPlace: null,
+        //     Address: null
+        //   },
+        //   Managerinresponse: { // Контакт менеджер
+        //     NameFirst: null,
+        //     NameLast: null,
+        //     NameSecond: null,
+        //     Gender: null,
+        //     Phone: null,
+        //     Email: null,
+        //     SNILS: null,
+        //     INN: null,
+        //     BirthDate: null,
+        //     BirthCountryCode: null,
+        //     BirthPlace: null,
+        //     Address: null
+        //   },
+        //   DateUntil: null
+        // },
+        // Type: this.guaranteeType, // Тип данных запрос
+        // Files: null // Список файлов
+      }
+    }
+
+    const data = deepMerge(JSON.parse(JSON.stringify(this.preparedData)), payload)
+
+    return data
   }
 
   private enableAutoSaveDraft(form: FormGroup | AbstractControl): void {
@@ -1068,56 +1245,56 @@ export class DemandSuretyDrawerComponent implements OnInit {
   // Просмотр запроса на поручительство
 
   get isChangeByView(): boolean {
-    return this.isView
+    return this.isView;
   }
 
   get height() {
-    return `55vh`
+    return `55vh`;
   }
 
   identify(index, item) {
-    return item.DemandMessageID
+    return item.DemandMessageID;
   }
 
   public skeleton: Properties = {
     borderRadius: '8px',
     height: '95px',
     width: '100%'
-  }
+  };
 
   private getStatus(status: string): string {
-    let result: string = ''
+    let result: string = '';
     switch (status) {
       case 'Created':
-        result = 'Создан'
-        break
+        result = 'Создан';
+        break;
       case 'Completed':
-        result = 'Завершен'
-        break
+        result = 'Завершен';
+        break;
       case 'Processing':
-        result = 'В процессе'
-        break
+        result = 'В процессе';
+        break;
       case 'Rejected':
-        result = 'Отклонено'
-        break
+        result = 'Отклонено';
+        break;
       case 'Draft':
-        result = 'Черновик'
-        break
+        result = 'Черновик';
+        break;
       case 'Canceled':
-        result = 'Отменен'
-        break
+        result = 'Отменен';
+        break;
     }
-    return result
+    return result;
   }
 
 
   deleteFile() {
-    const modalData = this.data.data
-    this.getByID(modalData.id, modalData.isEdit)
+    const modalData = this.data.data;
+    this.getByID(modalData.id, modalData.isEdit);
   }
 
-  get date(): {create: string, update: string, status: string} {
+  get date(): { create: string, update: string, status: string } {
     console.log(this.titleInfo);
-    return this.titleInfo
+    return this.titleInfo;
   }
 }

@@ -8,7 +8,7 @@ import {
   distinctUntilChanged,
   filter,
   finalize,
-  forkJoin,
+  forkJoin, map,
   Observable,
   of, pairwise, startWith,
   switchMap,
@@ -73,7 +73,6 @@ export class DemandSignatureDrawerComponent implements OnInit {
     private au: AutoUnsubscribeService,
     @Inject(MAT_DIALOG_DATA) public data: DrawerData
   ) {
-    console.log(data.data.id);
   }
 
   ngOnInit() {
@@ -95,12 +94,12 @@ export class DemandSignatureDrawerComponent implements OnInit {
       this.initDraft();
       // Запрашиваем метод prepare для предзаполнения инпутов
       this.prepareDemandByTypes(modalData.prepareTypeId);
-      // Включаем авто сохранение первого/второго таба
-      this.enableAutoSaveDraft(this.orgDataForm);
+
     }
 
     // Если создание и есть черновик
-    if (modalData?.isCreation && modalData?.id) {
+    if (modalData?.isCreation || modalData?.isEdit) {
+      this.getDataByINN().pipe(tap((data) => this.setDataToOrgForm(data?.data))).subscribe();
       // Включаем авто сохранение первого/второго таба
       this.enableAutoSaveDraft(this.orgDataForm);
     }
@@ -128,8 +127,6 @@ export class DemandSignatureDrawerComponent implements OnInit {
       FactAddress: [null, Validators.required],
       FactAddressEquals: [null]
     });
-
-    this.getDataByINN().pipe(tap(() => this.setDataToOrgForm(this.orgData.data))).subscribe();
   }
 
   public getDataByINN() {
@@ -138,12 +135,13 @@ export class DemandSignatureDrawerComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       switchMap(value => this.getAgentRequestService.getAgentData(value)),
-      tap((options) => {
+      map((options) => {
         this.dataByINN = options.suggestions || [];
         this.orgData = this.dataByINN.find((option) => this.orgDataForm.get('INN').value === option?.data?.inn);
+        return this.orgData;
       }),
       takeUntil(this.au.destroyer)
-    )
+    );
   }
 
   public initPersonalDataForm() {
@@ -198,27 +196,23 @@ export class DemandSignatureDrawerComponent implements OnInit {
   private getByID(id: number, isDraft: boolean): void {
     this.loading$.next(true);
     const req$ = isDraft ?
-      this.demandService
-        .getDemandDraftById(id) : this.demandService.getDemandById(id);
-    req$.pipe(
-      tap(res => {
-        this.loading$.next(false);
-        const data = isDraft ? res.DemandData : res.Data;
-        if (this.isView) {
-          this.readFiles = res?.Files?.map(file => ({ FileName: file.FileName, Size: file.Size }));
-          this.viewingData = res;
-          this.fileTypeConversion(res?.Files);
-        }
-        if (!isDraft) {
-          this.titleInfo = { create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status) };
-        } else {
-          this.patchData(data);
-        }
-
-
-      }),
-      finalize(() => this.loading$.next(false))
-    )
+      this.demandService.getDemandDraftById(id) : this.demandService.getDemandById(id);
+      req$.pipe(
+        tap(res => {
+          const data = isDraft ? res.DemandData : res.Data;
+          if (this.isView) {
+            this.readFiles = res?.Files?.map(file => ({ FileName: file.FileName, Size: file.Size }));
+            this.viewingData = res;
+            this.fileTypeConversion(res?.Files);
+          }
+          if (!isDraft) {
+            this.titleInfo = { create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status) };
+          } else {
+            this.patchData(data);
+          }
+        }),
+        finalize(() => this.loading$.next(false))
+      )
       .subscribe();
   }
 
@@ -254,14 +248,14 @@ export class DemandSignatureDrawerComponent implements OnInit {
       Role: data.PersonPosition,
       Phone: person?.Phone,
       Email: person?.Email,
-      Nationality: passport?.Nationality,
+      Nationality: person?.Address,
       PassportDate: passport?.Date.split('T')[0],
       PassportSeriesAndNumber: passport?.Number.split(' ').join(' '),
       IssuerCode: passport?.IssuerCode,
-      IssuerTitle: passport?.IssuerTitle,
+      IssuerTitle: passport?.IssuerTitle
     });
 
-    const docs = this.personalDataForm.get('AllDocuments')
+    const docs = this.personalDataForm.get('AllDocuments');
 
     for (let x of (data?.Files ?? [])) {
       if (x.Identifier === 'documentsScan') {
@@ -271,10 +265,10 @@ export class DemandSignatureDrawerComponent implements OnInit {
           Code: [null],
           FileName: [null],
           Size: [null],
-          DemandFileID: [null],
+          DemandFileID: [null]
         });
         control.patchValue(x);
-        (docs.get('documentsScan') as FormArray).push(control)
+        (docs.get('documentsScan') as FormArray).push(control);
       } else if (x.Identifier === 'completedAppScan') {
         const control: FormGroup = this.fb.group({
           ID: [null],
@@ -282,12 +276,14 @@ export class DemandSignatureDrawerComponent implements OnInit {
           Code: [null],
           FileName: [null],
           Size: [null],
-          DemandFileID: [null],
+          DemandFileID: [null]
         });
         control.patchValue(x);
-        (docs.get('completedAppScan') as FormArray).push(control)
+        (docs.get('completedAppScan') as FormArray).push(control);
       }
     }
+
+    console.log(this.orgDataForm.getRawValue());
   }
 
   private getFullAddress(address: AddressInterface): string {
@@ -382,26 +378,48 @@ export class DemandSignatureDrawerComponent implements OnInit {
           && (this.personalDataForm.get('Male')?.value
             || this.personalDataForm.get('Female')?.value);
       case 3:
-        return this.documents[this.docType]?.valid;
+        return this.documents['completedAppScan']?.valid;
       default:
         return false;
     }
   }
 
-  setDataToOrgForm(data: AgentDataInterface) {
+ mapShortToCode(short) {
+    const opfMapping = {
+      "ООО": 1,
+      "ЗАО": 2,
+      "ПАО": 3,
+      "ОАО": 4,
+      "НАО": 5,
+      "АО": 6,
+    };
 
-    this.orgDataForm.patchValue({
-      Type: data.opf?.short,
+    return opfMapping[short] || null;
+  }
+
+  setDataToOrgForm(data?: AgentDataInterface) {
+
+    if (!data) return
+
+    let obj = {
+      Type: this.mapShortToCode(data.opf?.short),
       ShortTitle: data.name?.short_with_opf,
       FullTitle: data.name?.full,
       KPP: data.kpp,
       OGRN: data.ogrn,
       OKPO: data.okpo,
-      Phone: data.phones?.length ? data.phones[0].value : null,
-      Email: data.emails?.length ? data.emails[0].value : null,
       LegalAddress: data.address?.value,
       FactAddress: data.address?.value
-    });
+    }
+
+    if (!this.orgDataForm.get('Phone').value) {
+      obj = Object.assign(obj, { Phone: data.phones?.length ? data.phones[0]?.value : null })
+    }
+    if (!this.orgDataForm.get('Email').value) {
+      obj = Object.assign(obj, { Email: data.emails?.length ? data.emails[0]?.value : null })
+    }
+
+    this.orgDataForm.patchValue(obj);
   }
 
   get requestId(): number {
@@ -445,7 +463,10 @@ export class DemandSignatureDrawerComponent implements OnInit {
   }
 
   private prepareDemandByTypes(type: DemandsPrepareEnum) {
-    this.demandService.prepareDemandByTypes(type)
+    this.loading$.next(true)
+    this.demandService.prepareDemandByTypes(type).pipe(
+      finalize(() => this.loading$.next(false)),
+    )
       .subscribe(res => {
           this.patchData(res);
         }
@@ -612,7 +633,7 @@ export class DemandSignatureDrawerComponent implements OnInit {
         IsForeign: false,
         Nationality: person?.Nationality
       },
-      PersonPosition: null,
+      PersonPosition: person.Role,
       PersonalAgreement: true,
       identificationPointGuid: null,
       SkipIsDoneCheck: null,

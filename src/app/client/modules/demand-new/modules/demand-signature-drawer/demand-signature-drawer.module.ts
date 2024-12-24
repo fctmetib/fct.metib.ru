@@ -90,7 +90,7 @@ import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-
     AccordionWithShadowModule,
     BlurLoaderModule
   ],
-  providers: [DemandSignatureDrawerService, DemandSignatureDrawerStaticService],
+  providers: [],
   exports: [DemandSignatureFirstStepComponent]
 })
 export class DemandSignatureDrawerModule {

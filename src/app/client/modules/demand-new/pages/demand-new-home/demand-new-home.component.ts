@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import { Component, inject, OnInit } from '@angular/core';
 import {
   BehaviorSubject,
   finalize,
@@ -8,7 +8,7 @@ import {
 import {
   IQueryList
 } from '../mock-data-service/data.models'
-import {DataService} from '../mock-data-service/data.srrvice'
+import {DataService} from '../mock-data-service/data.service'
 import {AnimationService} from 'src/app/shared/animations/animations.service'
 import {Properties} from 'csstype'
 import {DemandDrawerService} from '../../modules/demand-drawer/demand-drawer.service'
@@ -30,6 +30,8 @@ import {
   DemandPageHistoryModalComponent
 } from 'src/app/shared/modules/modals/demand-page-history-modal/demand-page-history-modal.component'
 import {DestroyService} from 'src/app/shared/services/common/destroy.service'
+import { AuthService } from '../../../../../auth/services/auth.service';
+import { SystemUserService } from '../../../../../shared/services/system-user.service';
 
 const ANIMATION_CONFIG = {
   translateDistance: '-3%',
@@ -45,12 +47,16 @@ export enum DialogType {
   Limit,
   NewDebtor,
   VerificationChannel,
-  Question,
+  Factoring,
+  AgencyFactoring,
 }
 
 export enum DemandsPrepareEnum {
+  Eds = 0, // ЭЦП
   Question = 1, // Произвольный вопрос
   DigitalSignature = 2, // ЭЦП
+  Factoring = 3,
+  AgencyFactoring = 10,
   Limit = 4, // Увеличение лимита
   NewDebtor = 5, // Новый дебитор
   ProfileChange = 7, // Редактирование профиля
@@ -120,24 +126,26 @@ export class DemandNewHomeComponent implements OnInit {
   }
   protected readonly String = String;
 
-  constructor(
-    private requestList: DataService,
-    private demandDrawerService: DemandDrawerService,
-    private demandSignatureDrawerService: DemandSignatureDrawerService,
-    private demandSuretyDrawerService: DemandSuretyDrawerService,
-    private demandEditingDrawerService: DemandEditingDrawerService,
-    private demandLimitDrawerService: DemandLimitDrawerService,
-    private demandDebtorDrawerService: DemandDebtorDrawerService,
-    private demandVerificationDrawerService: DemandVerificationDrawerService,
-    private demandFactoringDrawerService: DemandFactoringDrawerService,
-    private demandAgentDrawerService: DemandAgentDrawerService,
-    public breakpointService: BreakpointObserverService,
-    private demandService: DemandService,
-    private datePipe: DatePipe,
-    private dialog: MatDialog,
-    private destroy$: DestroyService
-  ) {
-  }
+  private authService = inject(AuthService)
+  private requestList = inject(DataService)
+  private demandDrawerService = inject(DemandDrawerService)
+  private demandSignatureDrawerService =  inject(DemandSignatureDrawerService)
+  private demandSuretyDrawerService = inject(DemandSuretyDrawerService)
+  private demandEditingDrawerService =  inject(DemandEditingDrawerService)
+  private demandLimitDrawerService =  inject(DemandLimitDrawerService)
+  private demandDebtorDrawerService = inject(DemandDebtorDrawerService)
+  private demandVerificationDrawerService = inject(DemandVerificationDrawerService)
+  private demandFactoringDrawerService =  inject(DemandFactoringDrawerService)
+  private demandAgentDrawerService =  inject(DemandAgentDrawerService)
+  public breakpointService =  inject(BreakpointObserverService)
+  private demandService = inject(DemandService)
+  private datePipe =  inject(DatePipe)
+  private dialog =  inject(MatDialog)
+  private destroy$ =  inject(DestroyService)
+  private systemUserService = inject(SystemUserService)
+
+  isUserVerified: boolean = this.authService.isUserVerified()
+  systemUser = this.systemUserService.getCookieUser()
 
   ngOnInit(): void {
     this.getRequestList()
@@ -162,8 +170,6 @@ export class DemandNewHomeComponent implements OnInit {
       .subscribe({
         next: val => {
           this.requestLists = val
-
-          console.log('requestLists==', val);
         }
       })
   }
@@ -232,6 +238,7 @@ export class DemandNewHomeComponent implements OnInit {
         break
       case 'Factoring':
         result = 'Факторинг'
+        resultNum = this.dialogType.Factoring
         break
       case 'DigitalSignature':
         result = 'Запрос на ЭЦП'
@@ -243,7 +250,7 @@ export class DemandNewHomeComponent implements OnInit {
         break
       case 'Question':
         result = 'Свободная тема'
-        resultNum = this.dialogType.Question
+        resultNum = this.dialogType.Factoring
         break
       case 'Limit':
         result = 'Запрос на Лимит'
@@ -255,11 +262,11 @@ export class DemandNewHomeComponent implements OnInit {
         break
       case 'AgencyFactoring': //??
         result = 'Агентский Факторинг'
-        resultNum = this.dialogType.Question
+        resultNum = this.dialogType.Factoring
         break
       default:
         result = 'Свободная тема'
-        resultNum = this.dialogType.Question
+        resultNum = this.dialogType.Factoring
         break
     }
     return {result, resultNum}
@@ -279,9 +286,6 @@ export class DemandNewHomeComponent implements OnInit {
         break
       case 'Rejected':
         result = 'Отклонено'
-        break
-      case 'Draft':
-        result = 'Черновик'
         break
       case 'Canceled':
         result = 'Отменен'
@@ -323,26 +327,32 @@ export class DemandNewHomeComponent implements OnInit {
     }
   }
 
-  openDrawers(id: number, reqId: number, type?: TabType): void {
-    const dialogService = this.getDialogService(id);
-  
+  openDrawers(dialogueId: number, reqId: number, type?: TabType): void {
+
+    console.log(dialogueId);
+
+    const dialogService = this.getDialogService(dialogueId);
+
     if (!dialogService) {
-      console.warn(`No dialog service found for id: ${id}`);
+      console.warn(`No dialog service found for id: ${dialogueId}`);
       return;
     }
-  
+
+    console.log(this.dialogType[dialogueId]);
+    console.log(this.demandsPrepareEnum);
+
     const dialogData = {
-      prepareTypeId: this.demandsPrepareEnum[this.dialogType[id]],
+      prepareTypeId: this.demandsPrepareEnum[this.dialogType[dialogueId]],
       isCreation: type === this.tabType.Request,
       isEdit: type === this.tabType.Draft,
       isView: type === this.tabType.History,
       id:
         type === this.tabType.History || type === this.tabType.Draft ? reqId : null,
     };
-  
+
     dialogService.open({ data: dialogData }).afterClosed()?.subscribe();
   }
-  
+
   private getDialogService(id: number) {
     switch (id) {
       case this.dialogType.DigitalSignature:
@@ -357,12 +367,14 @@ export class DemandNewHomeComponent implements OnInit {
         return this.demandDebtorDrawerService;
       case this.dialogType.VerificationChannel:
         return this.demandVerificationDrawerService;
-      case this.dialogType.Question:
-        return this.demandDrawerService;
+      case this.dialogType.Factoring:
+        return this.demandFactoringDrawerService;
+      case this.dialogType.AgencyFactoring:
+        return this.demandAgentDrawerService;
       default:
         return null;
     }
-  }  
+  }
 
   sortDemandByStatus(status: string): void {
     if (status === 'All') {
@@ -418,8 +430,8 @@ export class DemandNewHomeComponent implements OnInit {
     return result[this.currentIndex]
   }
 
-  newDraftDrawer(id: number, type: number, typeTab?: TabType): void {
-    this.openDrawers(type, id, typeTab)
+  newDraftDrawer(requestId: number, dialogueId: number, typeTab?: TabType): void {
+    this.openDrawers(dialogueId, requestId, typeTab)
   }
 
   openDemandPageModal(d): void {
@@ -432,4 +444,23 @@ export class DemandNewHomeComponent implements OnInit {
     this.dialog.open(DemandPageHistoryModalComponent, dialogConfig)
   }
 
+  isRequestCardVisible(request: IQueryList): boolean {
+    return true
+  }
+
+  // isRequestCardVisible(request: IQueryList): boolean {
+  //   const userRoles = this.systemUser.Roles || [];
+  //
+  //   // Условие на isUserVerified (если указано, проверяем)
+  //   const isVerified = request.isUserVerified === undefined || request.isUserVerified === this.isUserVerified;
+  //
+  //   // Условие на видимость с ролями
+  //   const hasRequiredRoles = !request.visibleWithRoles || request.visibleWithRoles.some((role) => userRoles.includes(role));
+  //
+  //   // Условие на видимость без ролей
+  //   const hasExcludedRoles = request.visibleWithoutRoles?.some((role) => userRoles.includes(role)) || false;
+  //
+  //   // Финальная проверка (все условия должны быть выполнены)
+  //   return isVerified && hasRequiredRoles && !hasExcludedRoles;
+  // }
 }

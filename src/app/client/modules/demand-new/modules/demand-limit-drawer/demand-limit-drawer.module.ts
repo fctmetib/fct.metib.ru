@@ -19,6 +19,16 @@ import { DlFileCellModule } from '../../../../../shared/ui-kit/dl-file-cell/dl-f
 import { NgxMaskModule } from 'ngx-mask';
 import { RightIconModule } from '../../../../../shared/directives/right-icon/right-icon.module';
 import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-loader.module';
+import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
+import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
+import { BadgeModule } from '../../../../../shared/ui-kit/badge/badge.module';
+import { CheckboxModule } from '../../../../../shared/ui-kit/checkbox/checkbox.module';
+import { DropdownPointModule } from '../../../../../shared/ui-kit/dropdown-point/dropdown-point.module';
+import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
+import { NavbarModule } from '../../../../../shared/ui-kit/navbar/navbar.module';
+import { SelectModule } from '../../../../../shared/ui-kit/select/select.module';
+import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
+import { TabModule } from '../../../../../shared/ui-kit/tab/tab.module';
 
 @NgModule({
   declarations: [DemandLimitDrawerComponent],
@@ -35,7 +45,7 @@ import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-
     MibDragAndDropModule,
     ButtonModule,
     ReactiveFormsModule, FormsModule,
-    RubModule, DlFileCellModule, NgxMaskModule, RightIconModule, BlurLoaderModule
+    RubModule, DlFileCellModule, NgxMaskModule, RightIconModule, BlurLoaderModule, SendMessagesModule, AttachedDocumentModule, BadgeModule, CheckboxModule, DropdownPointModule, MessageItemModule, NavbarModule, SelectModule, SkeletonModule, TabModule
   ],
   providers: [DemandLimitDrawerService, DemandService]
 })

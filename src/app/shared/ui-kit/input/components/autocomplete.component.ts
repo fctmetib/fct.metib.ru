@@ -52,9 +52,17 @@ export class AutocompleteComponent
 
   private subscriptions = new Subscription()
 
-  @ViewChild('input', {static: true}) input: ElementRef
+  @ViewChild('input') inputDefault: ElementRef
+  @ViewChild('inputExtra') inputExtra: ElementRef
 
   constructor(private breakpointService: BreakpointObserverService) {
+  }
+
+  get input() {
+    if (this.extra) {
+      return this.inputExtra
+    }
+    return this.inputDefault
   }
 
   ngOnInit(): void {
@@ -64,6 +72,7 @@ export class AutocompleteComponent
   }
 
   writeValue(value: any): void {
+    this.showOptions()
     this.control.setValue(value, {emitEvent: false})
   }
 

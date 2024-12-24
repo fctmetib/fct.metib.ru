@@ -38,7 +38,6 @@ export class NewDelaysComponent implements OnInit, OnDestroy {
   public PAGINATOR_PAGE_TO_SHOW = 5
   public currentPage$ = new BehaviorSubject<number>(1)
 
-	todayIs: Date = new Date()
   mData: IDataByAggregate[] = []
   mFilteredData: IDataByAggregate[] = []
   mDataVisible: IDataByAggregate[] = []

@@ -55,6 +55,7 @@ import {
 } from '../../../../../shared/services/clipboard-parser.service'
 import {Properties} from 'csstype'
 import {Delivery} from 'src/app/shared/types/delivery/delivery'
+import { DeliveryRef } from '../../../../../shared/types/delivery/delivery.interface';
 
 @Component({
 	selector: 'mib-verify-request-drawer',
@@ -73,8 +74,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 	public RequestTypeEnum = RequestTypeEnum
 
 	public size: InputSize | ButtonSize = 'm'
-	public deliveryDocs = []
-	public deliveries: DeliveryAgreement[] = []
+	public deliveryDocs: DeliveryRef[] = []
 
 	public headersMap: ClipboardParserHeaders<ShipmentReq> = [
 		['Накладная', 'WaybillNumber', String],
@@ -164,12 +164,10 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 		}
 
 		this.deliveryServiceDocs
-			.getAllDeliveriesContracts({getAll: true, includeStatistics: false})
+			.getDeliveriesRefsAgency()
 			.pipe(
 				tap(data => {
-					this.deliveryDocs = data.map(el => {
-						return {ID: el.ID, Title: el.Number}
-					})
+					this.deliveryDocs = data
 				}),
 				finalize(() => {
 					this.loading$.next(false)
@@ -293,13 +291,20 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 			ReadOnly: [false, [Validators.required]],
 			IsCorrected: [false, [Validators.required]],
 			Delivery: this.fb.group({
-				CurrencyCode: [null, [Validators.required]],
-				Title: [null, [Validators.required]],
-				CustomerID: [null, [Validators.required]],
-				Customer: [null, [Validators.required]],
-				DebtorID: [null, [Validators.required]],
-				Debtor: [null, [Validators.required]],
-				ID: [null, [Validators.required]]
+        CurrencyCode: [null, Validators.required],
+        ContractID: [null, Validators.required],
+        ID: [null, Validators.required],
+        Title: [null, Validators.required],
+        CustomerID: [null, Validators.required],
+        Customer: [null],
+        DebtorID: [null, Validators.required],
+        Debtor: [null, Validators.required],
+        CounterpartyTitle: [null, Validators.required],
+        ContractTypeID: [null, Validators.required],
+        ContractTypeTitle: [null, Validators.required],
+        ContrAgentRequisites: [null, Validators.required],
+        StartTime: [null, Validators.required],
+        EndTime: [null, Validators.required],
 			}),
 			Documents: this.fb.array([], [Validators.required]),
 			Shipments: this.fb.array([], [Validators.required])
@@ -310,9 +315,9 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 		this.deliveryIdControl.valueChanges
 			.pipe(
 				tap(deliveryId => {
-					const delivery = this.deliveries.find(x => x.ID === deliveryId)
+					const delivery = this.deliveryDocs.find(x => x.ID === deliveryId)
 					if (delivery) {
-						this.delivery.setValue(delivery)
+						this.delivery.patchValue(delivery)
 					} else {
 						this.delivery.reset()
 						this.freeLimitControl.setValue(0)

@@ -160,69 +160,68 @@
         ></mib-skeleton>
       </ng-container>
       <ng-template #table>
-        <ng-container *ngIf="tableComponent.rendererData.length > 0; else emptyTable">
-          <mib-table-row
-            [rowStatus]="duty.Statistics.Comment"
-            [rowId]="duty.ID"
-            *ngFor="let duty of tableComponent.rendererData; let last = last"
-            [underlined]="!last"
-          >
-            <mib-table-cell [type]="freeOnly ? 'main' : 'text'">
-              <ng-container table-cell-title>{{ duty.ID }}</ng-container>
+        <mib-table-row
+          [rowStatus]="duty.Statistics.Comment"
+          [rowId]="duty.ID"
+          *ngFor="let duty of tableComponent.rendererData; trackBy: trackById; let last = last"
+          [underlined]="!last"
+        >
+          <mib-table-cell [type]="freeOnly ? 'main' : 'text'">
+            <ng-container table-cell-title>{{ duty.ID }}</ng-container>
+          </mib-table-cell>
+          <ng-container *ngIf="isDesktop; else mobileCell">
+            <mib-table-cell>
+              <ng-container table-cell-title>{{
+                  duty.Contract.Number
+                }}
+              </ng-container>
             </mib-table-cell>
-            <ng-container *ngIf="isDesktop; else mobileCell">
-              <mib-table-cell>
-                <ng-container table-cell-title>{{
-                    duty.Contract.Number
-                  }}
-                </ng-container>
-              </mib-table-cell>
+          </ng-container>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+                duty.Contract.Counterparty
+              }}
             </ng-container>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                  duty.Contract.Counterparty
-                }}
-              </ng-container>
-            </mib-table-cell>
-            <mib-table-cell type="numbers">
-              <ng-container table-cell-title>{{
-                  duty.Contract.ID
-                }}
-              </ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                  duty.Date | date : 'dd.MM.YYYY'
-                }}
-              </ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                  duty.DateContract | date : 'dd.MM.YYYY'
-                }}
-              </ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{ duty.Number }}</ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                  duty.DateInvoice | date : 'dd.MM.YYYY'
-                }}
-              </ng-container>
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{
-                  duty.Statistics.Comment
-                }}
-              </ng-container>
-            </mib-table-cell>
-            <!-- <mib-table-cell>
-              <ng-container table-cell-title>{{
-                duty.DatePayment | date : 'dd.MM.YYYY'
-              }}</ng-container>
-            </mib-table-cell> -->
-            <mib-table-cell type="numbers">
+          </mib-table-cell>
+          <mib-table-cell type="numbers">
+            <ng-container table-cell-title>{{
+                duty.Contract.ID
+              }}
+            </ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+                duty.Date | date : 'dd.MM.YYYY'
+              }}
+            </ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+                duty.DateContract | date : 'dd.MM.YYYY'
+              }}
+            </ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{ duty.Number }}</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+                duty.DateInvoice | date : 'dd.MM.YYYY'
+              }}
+            </ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+                duty.Statistics.Comment
+              }}
+            </ng-container>
+          </mib-table-cell>
+          <!-- <mib-table-cell>
+            <ng-container table-cell-title>{{
+              duty.DatePayment | date : 'dd.MM.YYYY'
+            }}</ng-container>
+          </mib-table-cell> -->
+          <mib-table-cell type="numbers">
 							<span
                 [ngClass]="{
 									'c-mc-active': !duty.Statistics.PaymentExpire,
@@ -232,8 +231,8 @@
               >
 								{{ duty.Summ | rub }}</span
               >
-            </mib-table-cell>
-            <mib-table-cell type="numbers">
+          </mib-table-cell>
+          <mib-table-cell type="numbers">
 							<span
                 [ngClass]="{
 									'c-mc-active': !duty.Statistics.PaymentExpire,
@@ -243,43 +242,42 @@
               >
 								{{ duty.Rest | rub }}</span
               >
-            </mib-table-cell>
-            <mib-table-cell>
-              <ng-container table-cell-title>{{ duty.RefNum }}</ng-container>
-            </mib-table-cell>
-            <ng-template #mobileCell>
-              <mib-table-head-cell>{{
-                  getVisibleCell(duty)
-                }}
-              </mib-table-head-cell>
-            </ng-template>
-            <ng-container table-row-button *ngIf="isDesktop; else mobile">
-              <mib-button size="s" type="ghost-secondary">
-                <mib-icon
-                  class="stroke"
-                  btn-icon
-                  name="fi_more-vertical"
-                ></mib-icon>
-              </mib-button>
-            </ng-container>
-            <ng-template #mobile>
-              <mib-button
-                (click)="openInvoicePageModal(duty); $event.stopPropagation()"
-                size="s"
-                type="ghost-secondary"
-              >
-                <mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
-              </mib-button>
-            </ng-template>
-          </mib-table-row>
-        </ng-container>
-        <ng-template #emptyTable>
-          <mib-table-row>
-            <p class="text text_m w-100 flex_align-self-center text-center">
-              нет данных
-            </p>
-          </mib-table-row>
-        </ng-template>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{ duty.RefNum }}</ng-container>
+          </mib-table-cell>
+          <ng-template #mobileCell>
+            <mib-table-head-cell>{{
+                getVisibleCell(duty)
+              }}
+            </mib-table-head-cell>
+          </ng-template>
+          <ng-container table-row-button *ngIf="isDesktop; else mobile">
+            <mib-button size="s" type="ghost-secondary">
+              <mib-icon
+                class="stroke"
+                btn-icon
+                name="fi_more-vertical"
+              ></mib-icon>
+            </mib-button>
+          </ng-container>
+          <ng-template #mobile>
+            <mib-button
+              (click)="openInvoicePageModal(duty); $event.stopPropagation()"
+              size="s"
+              type="ghost-secondary"
+            >
+              <mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+            </mib-button>
+          </ng-template>
+        </mib-table-row>
+        <mib-table-row
+          *ngIf="tableComponent.rendererData.length === 0"
+        >
+          <p class="text text_m w-100 flex_align-self-center text-center">
+            нет данных
+          </p>
+        </mib-table-row>
       </ng-template>
       <mib-table-footer
         [showRemove]="false"
