@@ -18,7 +18,7 @@
     "prestart:dev": "node generate-icons-json.js",
     "build:dev": "ng build --configuration development",
     "build:ssr": "ng run metallinvestbank-web:server",
-    "prebuild:ssr": "node generate-icons-json.js",
+    "prebuild:ssr": "ng build && node generate-icons-json.js",
     "prerender": "ng run metallinvestbank-web:prerender"
   },
   "private": true,
