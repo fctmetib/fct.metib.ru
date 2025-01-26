@@ -226,11 +226,16 @@ export class TableComponent<T = any> implements AfterViewInit, OnDestroy {
     });
   }
 
+  getMainHeadCell() {
+    return this.headCells.find(cell => cell.isCheckboxDisplayed);
+  }
+
   deselect() {
-    this.selectionChange.emit({
-      selectedCount: 0,
-      selectedIds: []
-    });
+    this.getMainHeadCell().control.setValue(false);
+    // this.selectionChange.emit({
+    //   selectedCount: 0,
+    //   selectedIds: []
+    // });
   }
 
   private subscribeRowCellControlChanges() {

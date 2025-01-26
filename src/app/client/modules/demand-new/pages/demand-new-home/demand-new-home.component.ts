@@ -41,6 +41,7 @@ const ANIMATION_CONFIG = {
 }
 
 export enum DialogType {
+  Question,
   DigitalSignature = 1,
   Guarantee, //поручительство
   ProfileChange,
@@ -262,7 +263,7 @@ export class DemandNewHomeComponent implements OnInit {
         break
       case 'AgencyFactoring': //??
         result = 'Агентский Факторинг'
-        resultNum = this.dialogType.Factoring
+        resultNum = this.dialogType.AgencyFactoring
         break
       default:
         result = 'Свободная тема'
@@ -355,6 +356,8 @@ export class DemandNewHomeComponent implements OnInit {
 
   private getDialogService(id: number) {
     switch (id) {
+      case this.dialogType.Question:
+        return this.demandDrawerService;
       case this.dialogType.DigitalSignature:
         return this.demandSignatureDrawerService;
       case this.dialogType.Guarantee:

@@ -4,7 +4,7 @@ import {DocumentReq} from '../../../../../requests/interfaces/request.interface'
 import { downloadBase64File, extractBase64 } from '../../../../../../../shared/services/tools.service';
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { DemandService } from '../../../../services/demand.service';
-import { catchError, finalize, map, Observable, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, catchError, finalize, map, Observable, of, switchMap, tap } from 'rxjs';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DrawerData } from '../../../../../../../shared/ui-kit/drawer/interfaces/drawer.interface';
 import { DemandSignatureDrawerInterface } from '../../interfaces/demand-signature-drawer.interface';
@@ -23,16 +23,16 @@ export class DemandSignatureFourthStepComponent implements OnInit {
   form: FormGroup
   private docType = 'completedAppScan'
 
-  constructor(
-    private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: DrawerData
-  ) {
-  }
+  data: DrawerData = inject(MAT_DIALOG_DATA)
+  private fb = inject(FormBuilder)
+  private demandService = inject(DemandService)
+
+  documentReqLoading$ = new BehaviorSubject(false)
 
   get requestId(): number {
     return this.data.data.id
   }
-  private demandService = inject(DemandService)
+
 
   ngOnInit() {
     this.initForms()
@@ -116,6 +116,7 @@ export class DemandSignatureFourthStepComponent implements OnInit {
 
 
   public downloadFile() {
+    this.documentReqLoading$.next(true)
     this.getByID().pipe(
       switchMap(data => this.demandService.getDemandDocumentByType(data, 'DigitalSignatureRequest')),
       tap(response => {
@@ -130,6 +131,9 @@ export class DemandSignatureFourthStepComponent implements OnInit {
       catchError(error => {
         console.error('Ошибка скачивания файла:', error);
         return of(error);
+      }),
+      finalize(() => {
+        this.documentReqLoading$.next(false)
       })
     ).subscribe();
   }

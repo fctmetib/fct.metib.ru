@@ -1,10 +1,11 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostBinding,
   HostListener, inject,
   Inject,
-  Input,
+  Input, OnDestroy, OnInit,
   PLATFORM_ID
 } from '@angular/core';
 import {DropdownService} from './services/dropdown.service'
@@ -45,8 +46,15 @@ export const dropdownAnimation = (duration: number) => {
     dropdownAnimation(ANIMATION_DURATION)
 	]
 })
-export class DropdownComponent {
-	@HostBinding('style') style: Properties = {}
+export class DropdownComponent implements OnInit, OnDestroy {
+	@HostBinding('style')
+  get style() {
+    return this._style
+  }
+  set style(value: Properties) {
+    this._style = value;
+    console.log('DropdownComponent styles', this._style);
+  }
 	@HostBinding('@dropdownAnimation')
 	@HostBinding('class.dropdown-open')
 	isVisible = false
@@ -55,6 +63,7 @@ export class DropdownComponent {
 
 	private lastTrigger: HTMLElement | null = null
 	private timeoutId: any = null
+  private _style: Properties = {}
 	id: string = null
 
   menuService = inject(DropdownService)
@@ -63,6 +72,7 @@ export class DropdownComponent {
   private scrollService = inject(ScrollService)
   private platformId = inject<Object>(PLATFORM_ID)
   private window = inject(WINDOW)
+  private cdr = inject(ChangeDetectorRef)
 
 	ngOnInit() {
 		this.id = this.toolsService.generateId()
@@ -101,11 +111,15 @@ export class DropdownComponent {
 		this.isVisible = !this.isVisible
 		this.lastTrigger = trigger // Сохраняем последний триггер
 
+    console.log('isvisible', this.isVisible);
+
 		if (this.isVisible && isPlatformBrowser(this.platformId)) {
 			this.scrollService.blockScroll()
 			requestAnimationFrame(() => this.positionMenu(trigger))
+      console.log('positioned');
 		} else {
 			this.close()
+      console.log('closed');
 		}
 	}
 
@@ -124,14 +138,18 @@ export class DropdownComponent {
 		// Установка нового таймера
 		this.timeoutId = setTimeout(() => {
 			if (!this.isVisible) {
-				this.style = {}
-			}
+        this.style = {}
+        this.cdr.detectChanges()
+      }
 			this.timeoutId = null
 		}, ANIMATION_DURATION)
 	}
 
 	positionMenu(trigger: HTMLElement) {
 		// Проверяем, что код выполняется в браузере
+
+    console.log('positionMenu', trigger);
+
 		if (isPlatformBrowser(this.platformId)) {
 			const triggerRect =
 				this.reference?.getBoundingClientRect() ??
@@ -146,9 +164,9 @@ export class DropdownComponent {
 			const menuHeight = menuRect.height + parseInt(menuStyles.marginTop)
 			this.isAbove = bottomSpaceAvailable < menuHeight
 
-			topStyle = this.isAbove
-				? `${triggerRect.top - menuRect.height}px`
-				: `${triggerRect.bottom}px`
+			// topStyle = this.isAbove
+			// 	? `${triggerRect.top - menuRect.height}px`
+			// 	: `${triggerRect.bottom}px`
 
 			// Ширина меню: если ширина меню больше ширины триггера, используем ширину меню
 			widthStyle =
@@ -160,27 +178,29 @@ export class DropdownComponent {
 			const spaceRight = (this.window?.innerWidth) ?? 0 - triggerRect.right
 			const spaceLeft = triggerRect.left
 
-			if (menuRect.width > triggerRect.width) {
-				if (spaceRight < menuRect.width && spaceLeft > menuRect.width) {
-					// Если справа недостаточно места, но слева достаточно, смещаем влево
-					leftStyle = `${
-						triggerRect.left + triggerRect.width - menuRect.width
-					}px`
-				} else {
-					// Иначе выравниваем по левому краю триггера
-					leftStyle = `${triggerRect.left}px`
-				}
-			} else {
-				// Если ширина меню меньше или равна ширине триггера, выравниваем по левому краю триггера
-				leftStyle = `${triggerRect.left}px`
-			}
+			// if (menuRect.width > triggerRect.width) {
+			// 	if (spaceRight < menuRect.width && spaceLeft > menuRect.width) {
+			// 		// Если справа недостаточно места, но слева достаточно, смещаем влево
+			// 		leftStyle = `${
+			// 			triggerRect.left + triggerRect.width - menuRect.width
+			// 		}px`
+			// 	} else {
+			// 		// Иначе выравниваем по левому краю триггера
+			// 		leftStyle = `${triggerRect.left}px`
+			// 	}
+			// } else {
+			// 	// Если ширина меню меньше или равна ширине триггера, выравниваем по левому краю триггера
+			// 	leftStyle = `${triggerRect.left}px`
+			// }
 
 			// Обновление стилей
-			this.style = {
-				top: topStyle,
-				left: leftStyle,
-				width: widthStyle
-			}
+			// this.style = {
+			// 	top: topStyle,
+			// 	left: leftStyle,
+			// 	width: widthStyle
+			// }
+      this.elRef.nativeElement.style.width = widthStyle
+      this.cdr.detectChanges()
 		}
 	}
 }

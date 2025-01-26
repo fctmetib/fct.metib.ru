@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, OnInit} from '@angular/core'
+import {Component, HostListener, inject, Inject, OnInit} from '@angular/core'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface'
 import {RequestDrawerService} from './request-drawer.service'
@@ -16,6 +16,7 @@ import {InputSize} from '../../../../../shared/ui-kit/input/interfaces/input.int
 import {ButtonSize} from '../../../../../shared/ui-kit/button/interfaces/button.interface'
 import {
 	DeliveryAgreement,
+	SelectedDeliveryInterface,
 	ShipmentReq
 } from '../shipment-drawer/interfaces/shipment.interface'
 import {ShipmentDrawerService} from '../shipment-drawer/services/shipment-drawer.service'
@@ -56,6 +57,7 @@ import {
 import {Properties} from 'csstype'
 import {Delivery} from 'src/app/shared/types/delivery/delivery'
 import { DeliveryRef } from '../../../../../shared/types/delivery/delivery.interface';
+import { SystemUserService } from 'src/app/shared/services/system-user.service'
 
 @Component({
 	selector: 'mib-verify-request-drawer',
@@ -90,6 +92,8 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 		width: '100%'
 	}
 
+	private systemUserService = inject(SystemUserService)
+
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: DrawerData<RequestRes>,
 		private fb: FormBuilder,
@@ -105,10 +109,12 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 		private datesService: DatesService,
 		private toolsService: ToolsService,
 		private pasteModalService: PasteModalService,
-		private clipboardParserService: ClipboardParserService
+		private clipboardParserService: ClipboardParserService,
 	) {
 		super(data)
 	}
+
+	public systemUser = this.systemUserService.getCookieUser()
 
 	public deliveryIdControl = new FormControl(null, [Validators.required])
 	public freeLimitControl = new FormControl(0)
@@ -133,7 +139,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 		return this.authService.currentUser$.value.userGeneral
 	}
 
-	get delivery(): FormControl<DeliveryAgreement> {
+	get delivery(): FormControl<SelectedDeliveryInterface> {
 		return this.form.get('Delivery') as FormControl
 	}
 
@@ -164,7 +170,7 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 		}
 
 		this.deliveryServiceDocs
-			.getDeliveriesRefsAgency()
+			.getDeliveriesRefs(this.systemUser.DebtorID)
 			.pipe(
 				tap(data => {
 					this.deliveryDocs = data
@@ -195,28 +201,12 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 
 	addDocument(data: Partial<DocumentRes>) {
 		const control: FormGroup = this.fb.group({
-			// Number: [null],
-			Title: [null], //
-			// Location: [null],
-			Description: [null], //
-			// DocumentStatusID: [null],
-			// DocumentStatus: [null],
-			DocumentTypeID: [null], //
-			// DocumentType: [null],
-			// DocumentTypeTitle: [null],
-			// Available: [null],
-			// Removed: [null],
-			// ActiveOrganizationID: [null],
-			// ActiveOrganization: [null],
-			// CreatedTime: [null],
-			// AuthorOrganizationID: [null],
-			// AuthorOrganization: [null],
-			// CreatorLastName: [null],
-			// CreatorFirstName: [null],
-			// DocumentID: [null],
-			OwnerTypeID: [null], //
-			OwnerID: [null], //
-			Data: [null] //
+			Title: [null],
+			Description: [null],
+			DocumentTypeID: [null], 
+			OwnerTypeID: [null],
+			OwnerID: [null],
+			Data: [null]
 		})
 		control.patchValue(data)
 		this.documents.push(control)
@@ -291,20 +281,8 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 			ReadOnly: [false, [Validators.required]],
 			IsCorrected: [false, [Validators.required]],
 			Delivery: this.fb.group({
-        CurrencyCode: [null, Validators.required],
-        ContractID: [null, Validators.required],
-        ID: [null, Validators.required],
-        Title: [null, Validators.required],
-        CustomerID: [null, Validators.required],
-        Customer: [null],
-        DebtorID: [null, Validators.required],
-        Debtor: [null, Validators.required],
-        CounterpartyTitle: [null, Validators.required],
-        ContractTypeID: [null, Validators.required],
-        ContractTypeTitle: [null, Validators.required],
-        ContrAgentRequisites: [null, Validators.required],
-        StartTime: [null, Validators.required],
-        EndTime: [null, Validators.required],
+				ID: [null, Validators.required],
+				ContractTypeID: [null, Validators.required],
 			}),
 			Documents: this.fb.array([], [Validators.required]),
 			Shipments: this.fb.array([], [Validators.required])
@@ -317,7 +295,10 @@ export class RequestDrawerComponent extends Drawer implements OnInit {
 				tap(deliveryId => {
 					const delivery = this.deliveryDocs.find(x => x.ID === deliveryId)
 					if (delivery) {
-						this.delivery.patchValue(delivery)
+						this.delivery.patchValue({
+							ContractTypeID: delivery.ContractTypeID,
+							ID: delivery.ID
+						})
 					} else {
 						this.delivery.reset()
 						this.freeLimitControl.setValue(0)

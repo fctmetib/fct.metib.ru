@@ -174,7 +174,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
         tap(res => {
           console.log('prepareDemandByTypes=>', res);
           this.preparedData = res;
-          this.patchData(res);
+          this.mapDataToForm(res);
         }),
         finalize(() => this.loading$.next(false))
       );

@@ -15,7 +15,9 @@
     <span class="text text_m c-bti-tertiary"> 2,37мб </span>
   </div>
   <div class="flex">
-    <mib-button type="ghost-primary" (press)="downloadFile()">
+    <mib-button
+      [loading]="!!(documentReqLoading$ | async)"
+      type="ghost-primary" (press)="downloadFile()">
       <mib-icon
         mibLeftIcon
         class="stroke"

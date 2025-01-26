@@ -176,7 +176,7 @@ export class DemandAgentDrawerComponent implements OnInit {
         tap(res => {
           console.log('prepareDemandByTypes=>', res);
           this.preparedData = res;
-          this.patchData(res);
+          this.mapDataToForm(res);
         }),
         finalize(() => this.loading$.next(false))
       );
@@ -214,13 +214,6 @@ export class DemandAgentDrawerComponent implements OnInit {
             };
           } else {
             this.mapDataToForm(data);
-
-            const files = data?.Files || [];
-            for (let file of files) {
-              const docs = this.groupDocuments.get(file.Identifier) as FormArray;
-              const control = this.createDocumentControl(file);
-              docs?.push(control);
-            }
           }
         }),
         finalize(() => this.loading$.next(false))
@@ -232,6 +225,13 @@ export class DemandAgentDrawerComponent implements OnInit {
     if (!data) {
       console.error('Нет данных для маппинга');
       return;
+    }
+
+    const files = data?.Files || [];
+    for (let file of files) {
+      const docs = this.groupDocuments.get(file.Identifier) as FormArray;
+      const control = this.createDocumentControl(file);
+      docs?.push(control);
     }
 
     const organization = data.Anket?.Organization || {};

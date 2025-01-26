@@ -356,6 +356,21 @@
         <!-- четвертый скрин -->
         <div *ngSwitchCase="4" [formGroup]="form">
           <!-- contracted-form Недвижимость предприятия start-->
+
+<!--todo: В старом сайте эти поля есть, но никуда не привязаны-->
+<!--          <div class="flex flex_column gap-12">-->
+<!--            <mib-input>-->
+<!--              <input mibInput formControlName="factoringSuppliers">-->
+<!--              <ng-container mibLabel>Ваш контрагент</ng-container>-->
+<!--            </mib-input>-->
+<!--            <mib-input>-->
+<!--              <input mibInput formControlName="factoringLimit">-->
+<!--              <ng-container mibLabel>Предполагаемый лимит финансирования</ng-container>-->
+<!--            </mib-input>-->
+<!--          </div>-->
+
+<!--          <mib-spacing type="xs"></mib-spacing>-->
+
           <div class="flex flex_column">
             <div class="flex flex_column">
               <p class="headline">Недвижимость предприятия</p>
@@ -457,12 +472,12 @@
                     <!-- Условный рендеринг -->
                     <ng-container
                       *ngIf="credit.get('factoringPlacesBalanceCurrent').value && credit.get('factoringPlacesBalanceReport').value; else placeholder">
-      <span class="text text_m c-bti-primary">
-        {{ credit.get('factoringPlacesBalanceCurrent').value | currency:'₽' }}
-      </span> /
-                      <span class="text text_m c-bti-tertiary">
-        {{ credit.get('factoringPlacesBalanceReport').value | currency:'₽' }}
-      </span>
+                      <span class="text text_m c-bti-primary">
+                        {{ credit.get('factoringPlacesBalanceCurrent').value | currency:'₽' }}
+                      </span> /
+                                      <span class="text text_m c-bti-tertiary">
+                        {{ credit.get('factoringPlacesBalanceReport').value | currency:'₽' }}
+                      </span>
                     </ng-container>
                     <!-- Заглушка -->
                     <ng-template #placeholder>
@@ -528,15 +543,6 @@
             </mib-link>
           </div>
           <!-- contracted-form Долговые обязательства end -->
-
-          <mib-autocomplete>
-
-          </mib-autocomplete>
-
-          <mib-input>
-            <input mibInput formControlName>
-            <ng-container mibLabel>Предполагаемый лимит финансирования</ng-container>
-          </mib-input>
 
           <mib-spacing type="m"></mib-spacing>
         </div>

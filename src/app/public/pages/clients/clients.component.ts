@@ -76,7 +76,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
 	
 		if (
 			!isAuthenticated &&
-			(name === 'instruction' || name === 'installFactorClient' || name === 'reglament')
+			(name === 'instruction' || name === 'installFactorClient' || name === 'reglament' || name === 'installFactorClientTest')
 		) {
 			this.landingLoginModalService.open().afterClosed().subscribe(result => {
 				if (result) {
