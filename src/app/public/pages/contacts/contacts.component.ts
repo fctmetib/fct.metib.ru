@@ -52,7 +52,25 @@ export class ContactsComponent implements OnInit, OnDestroy {
 					name: 'Новикова Дарья',
 					position: 'Специалист',
 					email: 'dnovikova@metib.ru'
-				}
+				},
+				{
+					img: './assets/images/staff/big/kapitanskiy.jpg',
+					name: 'Капитанский Павел',
+					position: 'Главный специалист',
+					email: 'pkapitanskiy@metib.ru'
+				},
+				{
+					img: './assets/images/staff/big/machkasov.jpg',
+					name: 'Мачкасов Владимир',
+					position: 'Специалист',
+					email: 'vmachkasov@metib.ru'
+				},
+				{
+					img: './assets/images/staff/big/scherbakova.jpg',
+					name: 'Щербакова Ангелина',
+					position: 'Специалист',
+					email: 'ascherbakova@metib.ru'
+				},
 			]
 		},
 		{
@@ -82,26 +100,20 @@ export class ContactsComponent implements OnInit, OnDestroy {
 				{
 					img: './assets/images/staff/big/ievtushenko-b.jpg',
 					name: 'Евтушенко Ирина',
-					position: 'Старший экономист',
+					position: 'Главный экономист',
 					email: 'ievtushenko@metib.ru'
 				},
 				{
 					img: './assets/images/staff/big/chai-b.jpg',
 					name: 'Макушкина Антонина',
-					position: 'Ведущий экономист',
+					position: 'Главный экономист',
 					email: 'chai@metib.ru'
 				},
 				{
 					img: './assets/images/staff/big/ymanelyuk-b.jpg',
 					name: 'Манелюк Юлия',
-					position: 'Старший экономист',
+					position: 'Ведущий экономист',
 					email: 'ymanelyuk@metib.ru'
-				},
-				{
-					img: './assets/images/staff/big/emelnikova-b.jpg',
-					name: 'Мельникова Екатерина',
-					position: 'Экономист',
-					email: 'emelnikova@metib.ru'
 				},
 				{
 					img: './assets/images/staff/big/smovsesyan-b.jpg',
