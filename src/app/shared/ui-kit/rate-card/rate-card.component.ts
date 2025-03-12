@@ -47,6 +47,7 @@ export class RateCardComponent implements OnInit, OnDestroy {
 	@Input() features: string[]
 	@Input() extras: {title: string; tariff: string}[]
 	@Output() onRate = new EventEmitter()
+	@Input() badge?: string;
 
 	extended: boolean = false
 

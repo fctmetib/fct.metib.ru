@@ -128,9 +128,9 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 	}
 
 	onSubmit() {
-		this.isSubmitting$.next(true)
+		if (this.isSubmitting$.value) return;
 
-		if (this.form.invalid) return
+		this.isSubmitting$.next(true);
 
 		const rawPhoneNumber = this.form.value.Phone
 		const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber)
@@ -170,7 +170,7 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 			)
 			.subscribe()
 
-		this.dialogRef.close()
+		// this.dialogRef.close()
 	}
 
 	ngOnDestroy(): void {

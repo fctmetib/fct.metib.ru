@@ -66,7 +66,7 @@ export class CommonService {
   }
 
   getCaptcha(): Observable<{ image: any; code: string }> {
-    const url = environment.apiUrl + '/captcha';
+    const url = environment.apiUrl + '/v1/captcha';
     return this.http.get(url, {
       observe: 'response',
       responseType: 'arraybuffer',
@@ -78,7 +78,7 @@ export class CommonService {
         const image = this.sanitizer.bypassSecurityTrustUrl(`data:image/jpg;base64, ` + base64String);
 
         // Извлекаем код из заголовков ответа
-        const contentDisposition = resp.headers.get('Content-Disposition');
+        const contentDisposition = resp.headers.get('x-captcha-code');
         let code = '';
         if (contentDisposition) {
           const fileName = contentDisposition.split('=').pop();

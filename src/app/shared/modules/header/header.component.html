@@ -148,7 +148,7 @@
 					<ng-template #userTemplate>
 						<div
 							[mibDropdownTrigger]="userPanel"
-							class="manager user flex gap-12"
+							class="manager user flex gap-12 relative"
 						>
 							<mib-avatar [showArrow]="false" [showImage]="false">{{
 								nameInitials
@@ -172,24 +172,24 @@
 									"
 								></mib-icon>
 							</mib-button>
+              <mib-dropdown #userPanel>
+                <mib-spacing dropdown-spacing type="s"></mib-spacing>
+                <mib-dropdown-point (press)="logout()" text="Сменить аккаунт">
+                  <mib-icon
+                    dropdown-point-left-icon
+                    class="stroke"
+                    name="fi_refresh-ccw"
+                  ></mib-icon>
+                </mib-dropdown-point>
+                <mib-dropdown-point (press)="logout()" text="Выйти">
+                  <mib-icon
+                    dropdown-point-left-icon
+                    class="stroke"
+                    name="fi_log-out"
+                  ></mib-icon>
+                </mib-dropdown-point>
+              </mib-dropdown>
 						</div>
-						<mib-dropdown #userPanel>
-							<mib-spacing dropdown-spacing type="s"></mib-spacing>
-							<mib-dropdown-point (press)="logout()" text="Сменить аккаунт">
-								<mib-icon
-									dropdown-point-left-icon
-									class="stroke"
-									name="fi_refresh-ccw"
-								></mib-icon>
-							</mib-dropdown-point>
-							<mib-dropdown-point (press)="logout()" text="Выйти">
-								<mib-icon
-									dropdown-point-left-icon
-									class="stroke"
-									name="fi_log-out"
-								></mib-icon>
-							</mib-dropdown-point>
-						</mib-dropdown>
 					</ng-template>
 				</ng-container>
 				<ng-template #unsignedTemplate>

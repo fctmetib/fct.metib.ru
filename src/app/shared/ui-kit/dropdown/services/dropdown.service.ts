@@ -12,7 +12,6 @@ export class DropdownService {
 
   toggleMenu(menu: DropdownComponent, trigger: HTMLElement) {
     this.isMenuOpen = this.currentMenu?.id !== menu?.id || !this.isMenuOpen;
-    console.log('mibDropdownTrigger click', this.isMenuOpen);
 
     if (this.isMenuOpen) {
       if (this.currentMenu && this.currentMenu?.id !== menu?.id) {

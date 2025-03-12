@@ -1,6 +1,6 @@
 import {
   AfterContentInit,
-  AfterViewInit,
+  AfterViewInit, ChangeDetectorRef,
   Component, ContentChild,
   ContentChildren,
   ElementRef, EventEmitter,
@@ -45,7 +45,16 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   @Input() type: SelectType = 'filled-secondary';
   @Output() onSelect = new EventEmitter();
   @Output() onMultiSelectLast = new EventEmitter()
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
 
+  set disabled(value: boolean) {
+    this._disabled = value;
+  }
+
+  private _disabled: boolean = false
   private innerValue: any;
   private viewMounted: boolean = false;
 
@@ -58,6 +67,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     private dropdownService: DropdownService
   ) {
   }
+  private cdr = inject(ChangeDetectorRef)
 
   private window = inject(WINDOW)
 
@@ -76,6 +86,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
       'select_right-iconly': this.rightIcon?.nativeElement?.children?.length,
       'select_left-iconly': this.leftIcon?.nativeElement?.children?.length,
       'select-transition': this.viewMounted,
+      'select_disabled': this.disabled,
     }
   }
 
@@ -155,6 +166,11 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
 
   close(): void {
     this.dropdownService.closeMenu()
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.cdr.detectChanges();
   }
 
   selectOption(option: DropdownPointComponent): void {

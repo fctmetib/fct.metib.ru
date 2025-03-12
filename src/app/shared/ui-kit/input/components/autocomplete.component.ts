@@ -44,6 +44,16 @@ export class AutocompleteComponent
   @Output() valueChanged = new EventEmitter<string>()
   @Output() focus = new EventEmitter<any>()
   @Output() confirm = new EventEmitter<any>()
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  set disabled(value: boolean) {
+    this._disabled = value;
+  }
+
+  private _disabled: boolean = false
   control = new FormControl()
   showDropdown = false
   noData = false
@@ -72,7 +82,6 @@ export class AutocompleteComponent
   }
 
   writeValue(value: any): void {
-    this.showOptions()
     this.control.setValue(value, {emitEvent: false})
   }
 
@@ -88,7 +97,13 @@ export class AutocompleteComponent
   }
 
   setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.control.disable() : this.control.enable()
+    this.disabled = isDisabled
+    if (this.disabled) {
+      this.control.disable()
+      this.showDropdown = false
+    } else {
+      this.control.enable()
+    }
   }
 
   toggleSelection(option: any) {

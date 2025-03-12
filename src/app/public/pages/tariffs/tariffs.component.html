@@ -28,7 +28,7 @@
 						[description]="item?.content"
 						[features]="item?.list"
 						[extras]="item?.extra"
-						[badge]="item?.badge"
+            [badge]="item?.badge || ''"
 						(onRate)="openLandingRequestModal('Рассчитать')"
 					></mib-rate-card>
 				</ng-container>

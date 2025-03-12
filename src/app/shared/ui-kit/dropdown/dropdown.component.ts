@@ -53,7 +53,6 @@ export class DropdownComponent implements OnInit, OnDestroy {
   }
   set style(value: Properties) {
     this._style = value;
-    console.log('DropdownComponent styles', this._style);
   }
 	@HostBinding('@dropdownAnimation')
 	@HostBinding('class.dropdown-open')
@@ -111,15 +110,11 @@ export class DropdownComponent implements OnInit, OnDestroy {
 		this.isVisible = !this.isVisible
 		this.lastTrigger = trigger // Сохраняем последний триггер
 
-    console.log('isvisible', this.isVisible);
-
 		if (this.isVisible && isPlatformBrowser(this.platformId)) {
 			this.scrollService.blockScroll()
 			requestAnimationFrame(() => this.positionMenu(trigger))
-      console.log('positioned');
 		} else {
 			this.close()
-      console.log('closed');
 		}
 	}
 
@@ -148,8 +143,6 @@ export class DropdownComponent implements OnInit, OnDestroy {
 	positionMenu(trigger: HTMLElement) {
 		// Проверяем, что код выполняется в браузере
 
-    console.log('positionMenu', trigger);
-
 		if (isPlatformBrowser(this.platformId)) {
 			const triggerRect =
 				this.reference?.getBoundingClientRect() ??
@@ -164,9 +157,9 @@ export class DropdownComponent implements OnInit, OnDestroy {
 			const menuHeight = menuRect.height + parseInt(menuStyles.marginTop)
 			this.isAbove = bottomSpaceAvailable < menuHeight
 
-			// topStyle = this.isAbove
-			// 	? `${triggerRect.top - menuRect.height}px`
-			// 	: `${triggerRect.bottom}px`
+			topStyle = this.isAbove
+				? `${triggerRect.top - menuRect.height}px`
+				: `${triggerRect.bottom}px`
 
 			// Ширина меню: если ширина меню больше ширины триггера, используем ширину меню
 			widthStyle =
@@ -178,27 +171,27 @@ export class DropdownComponent implements OnInit, OnDestroy {
 			const spaceRight = (this.window?.innerWidth) ?? 0 - triggerRect.right
 			const spaceLeft = triggerRect.left
 
-			// if (menuRect.width > triggerRect.width) {
-			// 	if (spaceRight < menuRect.width && spaceLeft > menuRect.width) {
-			// 		// Если справа недостаточно места, но слева достаточно, смещаем влево
-			// 		leftStyle = `${
-			// 			triggerRect.left + triggerRect.width - menuRect.width
-			// 		}px`
-			// 	} else {
-			// 		// Иначе выравниваем по левому краю триггера
-			// 		leftStyle = `${triggerRect.left}px`
-			// 	}
-			// } else {
-			// 	// Если ширина меню меньше или равна ширине триггера, выравниваем по левому краю триггера
-			// 	leftStyle = `${triggerRect.left}px`
-			// }
+			if (menuRect.width > triggerRect.width) {
+				if (spaceRight < menuRect.width && spaceLeft > menuRect.width) {
+					// Если справа недостаточно места, но слева достаточно, смещаем влево
+					leftStyle = `${
+						triggerRect.left + triggerRect.width - menuRect.width
+					}px`
+				} else {
+					// Иначе выравниваем по левому краю триггера
+					leftStyle = `${triggerRect.left}px`
+				}
+			} else {
+				// Если ширина меню меньше или равна ширине триггера, выравниваем по левому краю триггера
+				leftStyle = `${triggerRect.left}px`
+			}
 
 			// Обновление стилей
-			// this.style = {
-			// 	top: topStyle,
-			// 	left: leftStyle,
-			// 	width: widthStyle
-			// }
+			this.style = {
+				top: topStyle,
+				left: leftStyle,
+				width: widthStyle
+			}
       this.elRef.nativeElement.style.width = widthStyle
       this.cdr.detectChanges()
 		}

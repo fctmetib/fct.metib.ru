@@ -7,7 +7,7 @@ import {DropdownService} from '../services/dropdown.service';
 })
 export class DropdownDirective {
 
-  @Input('mibDropdownTrigger') menu: DropdownComponent;
+  @Input('mibDropdownTrigger') menu: DropdownComponent | null;
 
   constructor(
     private elRef: ElementRef,
@@ -17,6 +17,8 @@ export class DropdownDirective {
   @HostListener('click', ['$event'])
   onClick($event: any) {
     $event.stopPropagation()
-    this.menuService.toggleMenu(this.menu, this.elRef.nativeElement);
+    if (this.menu) {
+      this.menuService.toggleMenu(this.menu, this.elRef.nativeElement);
+    }
   }
 }

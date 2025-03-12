@@ -28,7 +28,7 @@
 			class="stroke cursor-pointer"
 			mibRightIcon
 			name="fi_x"
-			*ngIf="control.value"
+			*ngIf="control.value && !disabled"
 			(click)="clearInput()"
 		></mib-icon>
 	</mib-input>
