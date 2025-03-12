@@ -38,9 +38,9 @@
       <mib-tab-group>
         <mib-navbar class="container container_large">
           <mib-navbar-point (press)="tabIndex = $event" value="1">События</mib-navbar-point>
-          <!-- <mib-navbar-point (press)="tabIndex = $event" value="2">Информация</mib-navbar-point> -->
-          <!-- <mib-navbar-point (press)="tabIndex = $event" value="3">Документы</mib-navbar-point>
-          <mib-navbar-point (press)="tabIndex = $event" value="4">Результат</mib-navbar-point> -->
+          <mib-navbar-point (press)="tabIndex = $event" value="2">Информация</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="3">Документы</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="4">Результат</mib-navbar-point>
         </mib-navbar>
         <mib-spacing type="m"></mib-spacing>
         <mib-tab-item value="1">
@@ -72,9 +72,7 @@
 
         </mib-tab-item>
         <mib-tab-item value="2">
-          <h5>{{ viewingData?.Data?.Subject }}</h5>
-          <mib-spacing type="xs2"></mib-spacing>
-          <div class="text text_m">{{ viewingData?.Data?.Question }}</div>
+          <ng-container *ngTemplateOutlet="editing"></ng-container>
         </mib-tab-item>
         <mib-tab-item value="3">
           <h5>Прикреплённые документы</h5>
@@ -202,8 +200,8 @@
         <div *ngFor="let document of documents?.controls; let i = index">
           <mib-dl-file-cell
             [attr.index]="i"
-            [showRemove]="true"
-            [showDownload]="false"
+            [showRemove]="!isView"
+            [showDownload]="isView"
             (onDload)="downloadCurrentFile(document)"
             (onRemove)="deleteDocument(i)"
             [fileName]="document.get('FileName')?.value"
@@ -212,10 +210,13 @@
         </div>
         <mib-spacing type="xs2"></mib-spacing>
       </ng-template>
-      <mib-dnd
-        [multiple]="true"
-        (onChange)="onDocumentLoad($event)"
-        [accept]="[
+      <ng-container
+        *ngIf="!isView"
+      >
+        <mib-dnd
+          [multiple]="true"
+          (onChange)="onDocumentLoad($event)"
+          [accept]="[
 					'application/pdf',
 					'application/msword',
 					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -224,18 +225,20 @@
 					'image/jpeg',
 					'image/png'
 				]"
-        headline="Прикрепите документ"
-      ></mib-dnd>
-      <mib-spacing type="xs2"></mib-spacing>
-      <div>
-        <p class="text text_xs c-bti-tertiary">
-          Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG,
-          PNG
-        </p>
-        <p class="text text_xs c-bti-tertiary">
-          Размер каждого документа не должен превышать 10 МБ
-        </p>
-      </div>
+          headline="Прикрепите документ"
+        ></mib-dnd>
+        <mib-spacing type="xs2"></mib-spacing>
+        <div>
+          <p class="text text_xs c-bti-tertiary">
+            Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG,
+            PNG
+          </p>
+          <p class="text text_xs c-bti-tertiary">
+            Размер каждого документа не должен превышать 10 МБ
+          </p>
+        </div>
+      </ng-container>
+
 
     </ng-template>
 

@@ -1,7 +1,666 @@
+<ng-template #editForm>
+  <!-- первый скрин -->
+  <div>
+    <h4>Основная информация</h4>
+    <form [formGroup]="form">
+      <mib-spacing type="xs"></mib-spacing>
+      <div class="flex flex_column gap-12">
+        <mib-autocomplete
+          [options]="dataByINN"
+          [innType]="true"
+          label="Введите ИНН организации"
+          formControlName="organizationINN"
+          class="flex_grow">
+        </mib-autocomplete>
+        <mib-select formControlName="organizationType" placeholder="Организация">
+          <mib-dropdown-point
+            [value]="1"
+            text="ООО"
+          ></mib-dropdown-point>
+          <mib-dropdown-point
+            [value]="2"
+            text="ЗАО"
+          ></mib-dropdown-point>
+          <mib-dropdown-point
+            [value]="3"
+            text="ПАО"
+          ></mib-dropdown-point>
+          <mib-dropdown-point
+            [value]="4"
+            text="ОАО"
+          ></mib-dropdown-point>
+          <mib-dropdown-point
+            [value]="5"
+            text="НАО"
+          ></mib-dropdown-point>
+          <mib-dropdown-point
+            [value]="6"
+            text="АО"
+          ></mib-dropdown-point>
+        </mib-select>
+        <mib-input class="flex_grow">
+          <input mibInput formControlName="organizationShortName" />
+          <ng-container mibLabel>Краткое наименование организации</ng-container>
+        </mib-input>
+        <div class="flex gap-12">
+          <mib-input class="flex_grow">
+            <input formControlName="organizationPhone" mibInput />
+            <ng-container mibLabel>Номер телефона</ng-container>
+          </mib-input>
+          <mib-input class="flex_grow">
+            <input formControlName="organizationEmail" mibInput />
+            <ng-container mibLabel>Электронная почта</ng-container>
+          </mib-input>
+        </div>
+        <mib-input class="flex_grow">
+          <input mibInput formControlName="organizationWEB" />
+          <ng-container mibLabel>Адрес сайта</ng-container>
+        </mib-input>
+      </div>
+    </form>
+
+  </div>
+  <!-- второй скрин -->
+  <div>
+    <form [formGroup]="form">
+      <h4>Банковские реквизиты</h4>
+      <mib-spacing type="xs"></mib-spacing>
+      <p class="headline">Основной счёт</p>
+      <mib-spacing type="xs"></mib-spacing>
+      <div class="flex flex_column gap-12">
+        <div class="flex flex_align-center gap-12">
+          <mib-autocomplete
+            [options]="bankDataByName"
+            [searchIcon]="true"
+            formControlName="bankName"
+            label="Банк"
+            class="flex_grow">
+          </mib-autocomplete>
+        </div>
+        <div class="flex gap-12 w-100">
+          <mib-input class="flex_grow">
+            <input mibInput formControlName="bankBik" />
+            <ng-container mibLabel>БИК банка</ng-container>
+          </mib-input>
+          <mib-input class="flex_grow">
+            <input mibInput formControlName="bankCorrespondentAccount" />
+            <ng-container mibLabel>Корр. счёт банка</ng-container>
+          </mib-input>
+        </div>
+      </div>
+      <mib-spacing type="xs"></mib-spacing>
+      <div class="flex flex_column gap-12">
+        <div class="flex gap-12">
+          <mib-input class="flex_grow">
+            <input mibInput formControlName="bankOwnerAccount" />
+            <ng-container mibLabel>Номер счёта</ng-container>
+          </mib-input>
+          <mib-input class="flex_grow">
+            <input type="date" mibInput formControlName="bankAccountOpenDate" />
+            <ng-container mibLabel>Дата открытия</ng-container>
+          </mib-input>
+        </div>
+        <mib-textarea>
+          <ng-container mibLabel>Комментарий к запросу</ng-container>
+          <textarea [maxLength]="100" autosize mibTextarea formControlName="bankComment"></textarea>
+        </mib-textarea>
+      </div>
+      <mib-spacing type="s"></mib-spacing>
+    </form>
+    <mib-spacing type="xs2"></mib-spacing>
+    <form [formGroup]="form">
+      <div class="flex flex_column">
+        <p class="headline">Дополнительный счёт</p>
+        <mib-spacing type="xs2"></mib-spacing>
+        <p class="text text_s c-bti-secondary">
+          Вы также можете указать дополнительные счета для отслеживания
+          расходов по проектам, счета для онлайн-продаж, счета для
+          определенных клиентов и т. д.
+        </p>
+      </div>
+      <mib-spacing type="xs"></mib-spacing>
+      <div class="flex flex_column gap-8" formArrayName="otherBanks">
+        <div class="form" *ngFor="let form of otherBanks.controls; let i = index" [formGroupName]="i">
+          <div class="flex flex_column">
+            <div class="flex">
+              <div class="flex w-100 flex_align-center">
+                <div class="flex gap-6 flex_grow">
+                  <mib-badge type="filled-secondary" [extended]="true" size="m"
+                  >Дополнительный
+                  </mib-badge
+                  >
+                </div>
+                <div class="flex">
+                  <mib-button
+                    size="s"
+                    (press)="deleteAccount(i)"
+                    type="ghost-secondary"
+                  >
+                    <mib-icon
+                      btn-icon
+                      class="stroke"
+                      name="fi_trash"
+                    ></mib-icon>
+                  </mib-button>
+                </div>
+              </div>
+            </div>
+            <mib-spacing type="xs2"></mib-spacing>
+            <div class="flex flex_column">
+              <div class="flex gap-12 flex_column">
+                <div class="flex gap-12">
+                  <mib-autocomplete
+                    [options]="bankAdditionalDataByName[i]"
+                    [searchIcon]="true"
+                    formControlName="otherBankName"
+                    label="Банк"
+                    class="flex_grow">
+                  </mib-autocomplete>
+                  <mib-input class="flex_grow">
+                    <input mibInput formControlName="otherBankOwnerAccount" />
+                    <ng-container mibLabel>Номер счёта</ng-container>
+                  </mib-input>
+                </div>
+                <div class="flex gap-12">
+                  <mib-input class="flex_grow">
+                    <input type="date" mibInput formControlName="otherBankAccountOpenDate" />
+                    <ng-container mibLabel>Дата открытия</ng-container>
+                  </mib-input>
+                  <mib-input class="flex_grow">
+                    <input type="date" mibInput formControlName="otherBankAccountCloseDate" />
+                    <ng-container mibLabel>Дата закрытия</ng-container>
+                  </mib-input>
+                </div>
+                <mib-input>
+                  <input mibInput formControlName="otherBankTarget" />
+                  <ng-container mibLabel>Цель открытия</ng-container>
+                </mib-input>
+              </div>
+              <mib-spacing type="xs"></mib-spacing>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+<!--    <mib-spacing type="xs2"></mib-spacing>-->
+<!--    <mib-link (click)="addAccount()" size="m" type="ghost-primary"-->
+<!--    >Добавить счёт-->
+<!--      <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>-->
+<!--    </mib-link>-->
+  </div>
+  <!-- третий скрин -->
+  <form [formGroup]="form">
+    <h4>Приложение к анкете</h4>
+    <mib-spacing type="xs"></mib-spacing>
+    <p class="headline">Основные данные</p>
+    <mib-spacing type="xs"></mib-spacing>
+    <div class="flex flex_column gap-12">
+      <mib-input>
+        <input mibInput formControlName="factoringProducts" />
+        <ng-container mibLabel>Виды реализуемой продукции</ng-container>
+      </mib-input>
+      <div class="flex flex_column">
+        <mib-input>
+          <input mibInput formControlName="factoringTradeMarks" />
+          <ng-container mibLabel>Торговые марки</ng-container>
+        </mib-input>
+        <div class="flex gap-4 flex_align-center pt-4 description">
+          <mib-icon class="stroke" name="fi_info"></mib-icon>
+          <span class="text text_m c-bti-tertiary">
+                Товарные знаки, под которыми осуществляется продажа продукции
+              </span>
+        </div>
+      </div>
+      <mib-input>
+        <input mibInput formControlName="factoringShipments" />
+        <ng-container mibLabel>Основные поставщики</ng-container>
+      </mib-input>
+      <div class="flex gap-12">
+        <mib-input class="flex_grow">
+          <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+          <input mask="separator" mibInput formControlName="factoringFinanceLimit" />
+          <ng-container mibLabel>Лимит финансирования</ng-container>
+        </mib-input>
+        <mib-input class="flex_grow">
+          <input mibInput formControlName="factoringWorkers" />
+          <ng-container mibLabel>Кол-во сотрудников</ng-container>
+        </mib-input>
+      </div>
+    </div>
+    <mib-spacing type="s"></mib-spacing>
+  </form>
+  <!-- четвертый скрин -->
+  <div [formGroup]="form">
+    <!-- contracted-form Недвижимость предприятия start-->
+    <div class="flex flex_column">
+      <div class="flex flex_column">
+        <p class="headline">Недвижимость предприятия</p>
+        <mib-spacing type="xs2"></mib-spacing>
+        <p class="text text_s c-bti-secondary">
+          По каждому пункту указать, на каких основаниях и на каких условиях
+          Предприятие владеет тем или иным объектом недвижимости
+        </p>
+        <mib-spacing type="xs"></mib-spacing>
+      </div>
+      <ng-container formArrayName="factoringPlaces">
+        <div *ngFor="let item of factoringPlaces.controls; let i = index;" class="form flex_column"
+             [formGroupName]="i">
+          <div class="flex">
+            <div class="flex w-100 flex_align-center">
+              <div class="flex gap-6 flex_grow">
+                      <span class="text text_m c-bti-primary">
+                        {{ item.get('displayAddress').value }}
+                      </span>
+              </div>
+              <div class="flex">
+                <!--                    <mib-button-->
+                <!--                      size="s"-->
+                <!--                      (press)="accountEdit()"-->
+                <!--                      type="ghost-secondary"-->
+                <!--                    >-->
+                <!--                      <mib-icon-->
+                <!--                        btn-icon-->
+                <!--                        class="stroke"-->
+                <!--                        name="fi_edit-3"-->
+                <!--                      ></mib-icon>-->
+                <!--                    </mib-button>-->
+                <mib-button
+                  size="s"
+                  (press)="removeRealty(i)"
+                  type="ghost-secondary"
+                >
+                  <mib-icon
+                    btn-icon
+                    class="stroke"
+                    name="fi_trash"
+                  ></mib-icon>
+                </mib-button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex_column">
+            <mib-spacing type="xs2"></mib-spacing>
+            <div class="flex gap-12 flex_column">
+              <mib-auto-complete
+                [controlDisplayedOptions]="false"
+                formControlName="displayAddress">
+                <mib-input autocomplete-input>
+                  <input mibInput formControlName="autocompleteInputAddress" />
+                  <ng-container mibLabel>Полный адрес объекта</ng-container>
+                </mib-input>
+
+                <mib-dropdown-point
+                  *ngFor="let option of realtyAddressOptions[i]"
+                  (press)="onRealtyAddress(option, i)"
+                  [value]="option.value"
+                  [text]="option.value"
+                >
+                </mib-dropdown-point>
+              </mib-auto-complete>
+              <mib-select
+                class="w-100"
+                type="filled-secondary"
+                placeholder="Форма владения"
+                formControlName="factoringPlacesLegalForm"
+              >
+                <mib-dropdown-point
+                  *ngFor="let type of typesOfOwner"
+                  [value]="type.value"
+                  [text]="type.title"
+                ></mib-dropdown-point>
+              </mib-select>
+            </div>
+            <mib-spacing type="xs2"></mib-spacing>
+          </div>
+        </div>
+        <mib-spacing type="xs"></mib-spacing>
+      </ng-container>
+    </div>
+<!--    <mib-link (click)="addRealty()" size="m" type="ghost-primary"-->
+<!--    >Добавить недвижимость-->
+<!--      <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>-->
+<!--    </mib-link>-->
+<!--    <mib-spacing type="s"></mib-spacing>-->
+    <!-- contracted-form Недвижимость предприятия end -->
+    <!-- contracted-form Долговые обязательства start-->
+
+
+    <div class="flex flex_column">
+      <div class="flex flex_column">
+        <p class="headline">Долговые обязательства</p>
+        <mib-spacing type="xs2"></mib-spacing>
+        <p class="text text_s c-bti-secondary">
+          Кредитная история и текущая кредиторская задолженность, включая ссуды из других источников, включая
+          государственные учреждения
+        </p>
+        <mib-spacing type="xs"></mib-spacing>
+      </div>
+      <div class="flex flex_column gap-12" formArrayName="factoringCredits">
+        <div
+          *ngFor="let credit of factoringCredits.controls; let i = index"
+          [formGroupName]="i"
+          class="form flex_column"
+        >
+          <div class="flex w-100 flex_align-center">
+            <div class="flex gap-6 flex_grow">
+              <!-- Условный рендеринг -->
+              <ng-container
+                *ngIf="credit.get('factoringPlacesBalanceCurrent').value && credit.get('factoringPlacesBalanceReport').value; else placeholder">
+      <span class="text text_m c-bti-primary">
+        {{ credit.get('factoringPlacesBalanceCurrent').value | currency:'₽' }}
+      </span> /
+                <span class="text text_m c-bti-tertiary">
+        {{ credit.get('factoringPlacesBalanceReport').value | currency:'₽' }}
+      </span>
+              </ng-container>
+              <!-- Заглушка -->
+              <ng-template #placeholder>
+                <span class="text text_m c-bti-quaternary">Данные отсутствуют</span>
+              </ng-template>
+            </div>
+            <div class="flex">
+              <mib-button
+                size="s"
+                (press)="removeCredit(i)"
+                type="ghost-secondary"
+              >
+                <mib-icon
+                  btn-icon
+                  class="stroke"
+                  name="fi_trash"
+                ></mib-icon>
+              </mib-button>
+            </div>
+          </div>
+          <div class="flex flex_column">
+            <div class="flex flex_column gap-12">
+              <mib-autocomplete
+                [options]="dataByCreditorINN[i]"
+                [searchIcon]="true"
+                formControlName="factoringCreditsCreditor"
+                label="Кредитор"
+                class="flex_grow">
+              </mib-autocomplete>
+              <div class="flex gap-12">
+                <mib-input class="flex_grow">
+                  <input mibInput type="number" formControlName="factoringPlacesContractSum" />
+                  <ng-container mibLabel>Сумма договора</ng-container>
+                </mib-input>
+                <mib-input class="flex_grow">
+                  <input mibInput formControlName="factoringPlacesTypeDuty" />
+                  <ng-container mibLabel>Тип обязательства</ng-container>
+                </mib-input>
+              </div>
+              <mib-input>
+                <input type="date" mibInput formControlName="factoringPlacesDateClose" />
+                <ng-container mibLabel>Дата погашения</ng-container>
+              </mib-input>
+              <div class="flex gap-12">
+                <mib-input class="flex_grow">
+                  <input mibInput type="number" formControlName="factoringPlacesBalanceReport" />
+                  <ng-container mibLabel>Остаток на дату отчётности</ng-container>
+                </mib-input>
+                <mib-input class="flex_grow">
+                  <input mibInput type="number" formControlName="factoringPlacesBalanceCurrent" />
+                  <ng-container mibLabel>Остаток на текущую дату</ng-container>
+                </mib-input>
+              </div>
+            </div>
+            <mib-spacing type="xs2"></mib-spacing>
+          </div>
+        </div>
+      </div>
+<!--      <mib-spacing type="xs"></mib-spacing>-->
+<!--      <mib-link (click)="addCredit()" size="m" type="ghost-primary">-->
+<!--        Добавить задолженность-->
+<!--        <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>-->
+<!--      </mib-link>-->
+    </div>
+    <mib-spacing type="s"></mib-spacing>
+    <!-- contracted-form Долговые обязательства end -->
+    <!-- contracted-form Электронный документооборот start-->
+
+
+    <div class="flex flex_column">
+      <div class="flex flex_column">
+        <p class="headline">Электронный документооборот</p>
+        <mib-spacing type="xs2"></mib-spacing>
+        <p class="text text_s c-bti-secondary">
+          Информация о взаимодействии с EDI-провайдерами.
+        </p>
+        <mib-spacing type="xs"></mib-spacing>
+      </div>
+      <div class="flex flex_column gap-12" formArrayName="factoringEDIProviders">
+        <div
+          *ngFor="let edi of factoringEDIProviders.controls; let i = index"
+          [formGroupName]="i"
+          class="form flex_column"
+        >
+          <div class="flex w-100 flex_align-center">
+            <div class="flex gap-6 flex_grow">
+									<span class="text text_m c-bti-primary"
+                  >{{ edi.get('factoringEDIProvidersDebitor').value }}</span
+                  >
+            </div>
+            <div class="flex">
+              <mib-button
+                size="s"
+                (press)="removeEDI(i)"
+                type="ghost-secondary"
+              >
+                <mib-icon
+                  btn-icon
+                  class="stroke"
+                  name="fi_trash"
+                ></mib-icon>
+              </mib-button>
+            </div>
+          </div>
+          <div class="flex flex_column gap-12">
+            <mib-autocomplete
+              [options]="dataByDebitorINN[i]"
+              (focus)="dataByDebitorINN[i] = []"
+              label="Дебитор"
+              formControlName="factoringEDIProvidersDebitor"
+              class="flex_grow">
+            </mib-autocomplete>
+            <mib-input>
+              <input mibInput formControlName="factoringEDIProvidersProvider" />
+              <ng-container mibLabel>EDI-провайдер</ng-container>
+            </mib-input>
+          </div>
+          <mib-spacing type="xs2"></mib-spacing>
+        </div>
+      </div>
+<!--      <mib-spacing type="xs"></mib-spacing>-->
+<!--      <mib-link (click)="addEDI()" size="m" type="ghost-primary">-->
+<!--        Добавить взаимодействие-->
+<!--        <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>-->
+<!--      </mib-link>-->
+    </div>
+
+
+    <!-- contracted-form Электронный документооборот end -->
+    <mib-spacing type="m"></mib-spacing>
+  </div>
+  <!-- пятый скрин -->
+  <div>
+    <mib-spacing type="xs2"></mib-spacing>
+    <h4>Необходимые документы</h4>
+    <mib-spacing type="xs2"></mib-spacing>
+    <div class="flex flex_column" [formGroup]="form">
+      <p class="headline">Необходимые документы</p>
+      <p class="text text_s pt-4 c-bti-secondary">
+        Кредитная история и текущая кредиторская задолженность, в т. ч.
+        ссуды из других источников, включая государственные учреждения
+      </p>
+      <mib-spacing type="xs"></mib-spacing>
+      <mib-information type="information">
+        <ng-container information-text
+        >Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX,
+          JPEG, PNG. Размер каждого документа не должен превышать 10 МБ
+        </ng-container>
+      </mib-information>
+      <mib-spacing type="xs"></mib-spacing>
+      <div class="flex flex_column gap-8">
+        <p class="text text_m c-bti-primary">Устав со всеми изменениями</p>
+        <ng-container
+          *ngIf="!groupDocuments.get('charter')['controls']?.length; else charterTemplate"
+        ></ng-container>
+        <ng-template #charterTemplate>
+          <p class="text text_m text_medium">Прикрепленные документы!</p>
+          <mib-dl-file-cell
+            *ngFor="let document of groupDocuments.get('charter')['controls']; let idx = index"
+            [attr.index]="idx"
+            [showRemove]="!data.data?.isView"
+            [showDownload]="true"
+            (onDload)="downloadCurrentFile(document)"
+            (onRemove)="deleteDocument(idx,'charter')"
+            [fileName]="document.get('FileName').value"
+          ></mib-dl-file-cell>
+          <mib-spacing type="xs2"></mib-spacing>
+        </ng-template>
+      </div>
+      <mib-spacing type="m"></mib-spacing>
+      <div class="flex flex_column gap-8">
+
+        <p class="text text_m c-bti-primary">
+          Паспорт генерального директора (все страницы)
+        </p>
+        <ng-container
+          *ngIf="!groupDocuments.get('ceoPassport')['controls']?.length; else ceoPassportTemplate"
+        ></ng-container>
+        <ng-template #ceoPassportTemplate>
+          <p class="text text_m text_medium">Прикрепленные документы</p>
+          <mib-dl-file-cell
+            *ngFor="let document of groupDocuments.get('ceoPassport')['controls']; let idx = index"
+            [attr.index]="idx"
+            [showRemove]="!data.data?.isView"
+            [showDownload]="true"
+            (onDload)="downloadCurrentFile(document)"
+            (onRemove)="deleteDocument(idx,'ceoPassport')"
+            [fileName]="document.get('FileName').value"
+          ></mib-dl-file-cell>
+          <mib-spacing type="xs2"></mib-spacing>
+        </ng-template>
+      </div>
+      <mib-spacing type="m"></mib-spacing>
+      <div class="flex flex_column gap-8">
+        <p class="text text_m c-bti-primary">
+          Протокол/решение об учреждении организации
+        </p>
+        <ng-container
+          *ngIf="!groupDocuments.get('foundingDecision')['controls']?.length; else foundingDecisionTemplate"
+        ></ng-container>
+        <ng-template #foundingDecisionTemplate>
+          <p class="text text_m text_medium">Прикрепленные документы</p>
+          <mib-dl-file-cell
+            *ngFor="let document of groupDocuments.get('foundingDecision')['controls']; let idx = index"
+            [attr.index]="idx"
+            [showRemove]="!data.data?.isView"
+            [showDownload]="true"
+            (onDload)="downloadCurrentFile(document)"
+            (onRemove)="deleteDocument(idx,'foundingDecision')"
+            [fileName]="document.get('FileName').value"
+          ></mib-dl-file-cell>
+          <mib-spacing type="xs2"></mib-spacing>
+        </ng-template>
+      </div>
+      <mib-spacing type="m"></mib-spacing>
+      <div class="flex flex_column gap-8">
+        <p class="text text_m c-bti-primary">
+          Приказ о назначении генерального директора
+        </p>
+        <ng-container
+          *ngIf="!groupDocuments.get('appointmentOrder')['controls']?.length; else appointmentOrderTemplate"
+        ></ng-container>
+        <ng-template #appointmentOrderTemplate>
+          <p class="text text_m text_medium">Прикрепленные документы</p>
+          <mib-dl-file-cell
+            *ngFor="let document of groupDocuments.get('appointmentOrder')['controls']; let idx = index"
+            [attr.index]="idx"
+            [showRemove]="!data.data?.isView"
+            [showDownload]="true"
+            (onDload)="downloadCurrentFile(document)"
+            (onRemove)="deleteDocument(idx,'appointmentOrder')"
+            [fileName]="document.get('FileName').value"
+          ></mib-dl-file-cell>
+          <mib-spacing type="xs2"></mib-spacing>
+        </ng-template>
+      </div>
+      <mib-spacing type="m"></mib-spacing>
+      <div class="flex flex_column gap-8">
+        <p class="text text_m c-bti-primary">Бухгалтерский Баланс</p>
+        <ng-container
+          *ngIf="!groupDocuments.get('balanceSheet')['controls']?.length; else balanceSheetTemplate"
+        ></ng-container>
+        <ng-template #balanceSheetTemplate>
+          <p class="text text_m text_medium">Прикрепленные документы</p>
+          <mib-dl-file-cell
+            *ngFor="let document of groupDocuments.get('balanceSheet')['controls']; let idx = index"
+            [attr.index]="idx"
+            [showRemove]="!data.data?.isView"
+            [showDownload]="true"
+            (onDload)="downloadCurrentFile(document)"
+            (onRemove)="deleteDocument(idx,'balanceSheet')"
+            [fileName]="document.get('FileName').value"
+          ></mib-dl-file-cell>
+          <mib-spacing type="xs2"></mib-spacing>
+        </ng-template>
+      </div>
+      <mib-spacing type="m"></mib-spacing>
+      <div class="flex flex_column gap-8">
+        <p class="text text_m c-bti-primary">
+          ОСВ (оборотно-сальдовая ведомость)
+        </p>
+        <ng-container
+          *ngIf="!groupDocuments.get('turnoverBalanceSheet')['controls']?.length; else turnoverBalanceSheetTemplate"
+        ></ng-container>
+        <ng-template #turnoverBalanceSheetTemplate>
+          <p class="text text_m text_medium">Прикрепленные документы</p>
+          <mib-dl-file-cell
+            *ngFor="let document of groupDocuments.get('turnoverBalanceSheet')['controls']; let idx = index"
+            [attr.index]="idx"
+            [showRemove]="!data.data?.isView"
+            [showDownload]="true"
+            (onDload)="downloadCurrentFile(document)"
+            (onRemove)="deleteDocument(idx,'turnoverBalanceSheet')"
+            [fileName]="document.get('FileName').value"
+          ></mib-dl-file-cell>
+          <mib-spacing type="xs2"></mib-spacing>
+        </ng-template>
+      </div>
+      <mib-spacing type="m"></mib-spacing>
+      <div class="flex flex_column gap-8">
+        <p class="text text_m c-bti-primary">Паспорта учредителей</p>
+        <ng-container
+          *ngIf="!groupDocuments.get('foundersPassports')['controls']?.length; else foundersPassportsTemplate"
+        ></ng-container>
+        <ng-template #foundersPassportsTemplate>
+          <p class="text text_m text_medium">Прикрепленные документы</p>
+          <mib-dl-file-cell
+            *ngFor="let document of groupDocuments.get('foundersPassports')['controls'] let idx = index"
+            [attr.index]="idx"
+            [showRemove]="!data.data?.isView"
+            [showDownload]="true"
+            (onDload)="downloadCurrentFile(document)"
+            (onRemove)="deleteDocument(idx,'foundersPassports')"
+            [fileName]="document.get('FileName').value"
+          ></mib-dl-file-cell>
+
+          <mib-spacing type="xs2"></mib-spacing>
+        </ng-template>
+      </div>
+      <mib-spacing type="xs2"></mib-spacing>
+    </div>
+    <mib-spacing type="m"></mib-spacing>
+  </div>
+</ng-template>
+
 <mib-blur-loader *ngIf="loading$ | async"></mib-blur-loader>
 <mib-drawer>
   <mib-drawer-header
-    showProgressBar="true"
+    [showProgressBar]="!isView"
     (onClose)="dialogRef.close()"
     drawer-header
     [maxPage]="maxPage"
@@ -71,9 +730,7 @@
           </div>
         </mib-tab-item>
         <mib-tab-item value="2">
-          <h5>{{ viewingData?.Data?.Subject }}</h5>
-          <mib-spacing type="xs2"></mib-spacing>
-          <div class="text text_m">{{ viewingData?.Data?.Question }}</div>
+          <ng-container *ngTemplateOutlet="editForm"></ng-container>
         </mib-tab-item>
         <mib-tab-item value="3">
           <h5>Прикреплённые документы</h5>
@@ -507,7 +1164,7 @@
                     </mib-autocomplete>
                     <div class="flex gap-12">
                       <mib-input class="flex_grow">
-                        <input mibInput formControlName="factoringPlacesContractSum" />
+                        <input mibInput type="number" formControlName="factoringPlacesContractSum" />
                         <ng-container mibLabel>Сумма договора</ng-container>
                       </mib-input>
                       <mib-input class="flex_grow">
@@ -521,11 +1178,11 @@
                     </mib-input>
                     <div class="flex gap-12">
                       <mib-input class="flex_grow">
-                        <input mibInput formControlName="factoringPlacesBalanceReport" />
+                        <input mibInput type="number" formControlName="factoringPlacesBalanceReport" />
                         <ng-container mibLabel>Остаток на дату отчётности</ng-container>
                       </mib-input>
                       <mib-input class="flex_grow">
-                        <input mibInput formControlName="factoringPlacesBalanceCurrent" />
+                        <input mibInput type="number" formControlName="factoringPlacesBalanceCurrent" />
                         <ng-container mibLabel>Остаток на текущую дату</ng-container>
                       </mib-input>
                     </div>

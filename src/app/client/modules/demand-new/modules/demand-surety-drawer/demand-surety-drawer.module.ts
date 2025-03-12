@@ -38,6 +38,8 @@ import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-
 import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
 import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
 import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
+import { DynamicDataComponent } from '../../../reports/components/dynamic-data/dynamic-data.component';
+import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
 
 @NgModule({
   declarations: [DemandSuretyDrawerComponent, DemandSuretyDrawerSecondStepComponent, DemandSuretyDrawerThirdStepComponent, DemandSuretyDrawerFourthStepComponent, DemandSuretyDrawerFifthStepComponent],
@@ -73,7 +75,9 @@ import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.m
     BlurLoaderModule,
     AttachedDocumentModule,
     MessageItemModule,
-    SkeletonModule
+    SkeletonModule,
+    DynamicDataComponent,
+    SendMessagesModule
   ],
   providers: [DemandSuretyDrawerService, DemandService, DemandSuretyDrawerStaticService]
 })

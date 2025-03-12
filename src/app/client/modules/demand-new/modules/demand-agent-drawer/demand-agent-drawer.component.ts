@@ -138,11 +138,13 @@ export class DemandAgentDrawerComponent implements OnInit {
     this.typesOfOwner = this.mibCommon.getTypesOfOwner();
 
     const modalData = this.data.data;
-    console.log(modalData);
 
-    if (modalData?.isEdit || modalData?.isCreation) {
-      this.form = this._formGenerator.generateAgentFactoringForm();
+    this.form = this._formGenerator.generateAgentFactoringForm();
+
+    if (this.isView) {
+      this.form.disable();
     }
+
     // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
     if (modalData?.isEdit || modalData?.isView) {
       this.getByID(modalData.id, modalData.isEdit);
@@ -212,9 +214,8 @@ export class DemandAgentDrawerComponent implements OnInit {
               update: res.DateModify,
               status: this.demandService.getStatus(res.Status)
             };
-          } else {
-            this.mapDataToForm(data);
           }
+          this.mapDataToForm(data)
         }),
         finalize(() => this.loading$.next(false))
       )
@@ -231,11 +232,14 @@ export class DemandAgentDrawerComponent implements OnInit {
     for (let file of files) {
       const docs = this.groupDocuments.get(file.Identifier) as FormArray;
       const control = this.createDocumentControl(file);
+      if (this.isView) {
+        control.disable();
+      }
       docs?.push(control);
     }
 
     const organization = data.Anket?.Organization || {};
-    const factoring = data.Factoring || {};
+    const factoring = data.AgencyFactoring || {};
 
     // Заполнение основных полей
     this.form.patchValue({
@@ -498,10 +502,10 @@ export class DemandAgentDrawerComponent implements OnInit {
           ? Number(place.factoringPlacesAddress.RegionCode)
           : null,
         RegionTitle: place.factoringPlacesAddress?.RegionTitle || null,
-        Street: place.factoringPlacesAddress?.Street || null,
+        Street: place.factoringPlacesAddress?.Street || null
       },
       Comment: null,
-      Type: place.factoringPlacesLegalForm || null,
+      Type: place.factoringPlacesLegalForm || null
     })) || [];
 
     const listObligations = form.factoringCredits?.map((credit: any) => ({
@@ -510,7 +514,7 @@ export class DemandAgentDrawerComponent implements OnInit {
       Date: credit.factoringPlacesDateClose ? new Date(credit.factoringPlacesDateClose) : null,
       ReportingRest: credit.factoringPlacesBalanceReport || 0,
       Summ: credit.factoringPlacesContractSum || 0,
-      Type: credit.factoringPlacesTypeDuty || null,
+      Type: credit.factoringPlacesTypeDuty || null
     })) || [];
 
     const listAddonAccounts = form.otherBanks?.map((bank: any) => ({
@@ -520,12 +524,12 @@ export class DemandAgentDrawerComponent implements OnInit {
       Comment: bank.otherBankTarget || null,
       Date: bank.otherBankAccountOpenDate ? new Date(bank.otherBankAccountOpenDate) : null,
       Expire: bank.otherBankAccountCloseDate ? new Date(bank.otherBankAccountCloseDate) : null,
-      Number: bank.otherBankOwnerAccount || null,
+      Number: bank.otherBankOwnerAccount || null
     })) || [];
 
     const listEDI = form.factoringEDIProviders?.map((edi: any) => ({
       Company: edi.factoringEDIProvidersDebitor || null,
-      EDIProvider: edi.factoringEDIProvidersProvider || null,
+      EDIProvider: edi.factoringEDIProvidersProvider || null
     })) || [];
 
     return {
@@ -535,12 +539,12 @@ export class DemandAgentDrawerComponent implements OnInit {
           Date: new Date(),
           InitDate: new Date(),
           Number: null,
-          Place: null,
+          Place: null
         },
         Resident: {
           Country: 'РФ',
           ForeignCode: null,
-          IsResident: true,
+          IsResident: true
         },
         Shareholders: [],
         Signer: {
@@ -554,7 +558,7 @@ export class DemandAgentDrawerComponent implements OnInit {
             PostCode: null,
             RegionCode: 0,
             RegionTitle: null,
-            Street: null,
+            Street: null
           },
           Passport: {
             Date: new Date(),
@@ -563,7 +567,7 @@ export class DemandAgentDrawerComponent implements OnInit {
             IssuerCode: null,
             IssuerTitle: null,
             Nationality: null,
-            Number: null,
+            Number: null
           },
           Person: {
             BirthDate: new Date(),
@@ -573,13 +577,13 @@ export class DemandAgentDrawerComponent implements OnInit {
             Name: {
               First: null,
               Last: null,
-              Second: null,
+              Second: null
             },
             NameFirst: null,
             NameLast: null,
             NameSecond: null,
             Phone: null,
-            SNILS: null,
+            SNILS: null
           },
           PositionDate: new Date(),
           PositionTitle: null,
@@ -593,8 +597,8 @@ export class DemandAgentDrawerComponent implements OnInit {
             PostCode: null,
             RegionCode: 0,
             RegionTitle: null,
-            Street: null,
-          },
+            Street: null
+          }
         },
         Activities: [],
         Capital: {
@@ -667,7 +671,7 @@ export class DemandAgentDrawerComponent implements OnInit {
           ForeignTitle: null,
         },
       },
-      Factoring: {
+      AgencyFactoring: {
         Account: {
           BIK: form.bankBik || null,
           Bank: form.bankName || null,
@@ -742,6 +746,10 @@ export class DemandAgentDrawerComponent implements OnInit {
     // Генерация формы с возможным патчингом данных
     const control = this._formGenerator.generateBankForm(bankData);
     controls.push(control);
+
+    if (this.isView) {
+      control.disable();
+    }
 
     // Подписка на изменения значения имени банка
     const index = controls.length - 1; // Индекс нового элемента

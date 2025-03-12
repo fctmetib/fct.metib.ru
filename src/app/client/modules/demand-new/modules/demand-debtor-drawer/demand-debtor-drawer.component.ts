@@ -38,6 +38,22 @@ import { DemandInterface } from '../../types/demand.interface';
 import { DemandDrawerService } from '../demand-drawer/demand-drawer.service';
 import { Properties } from 'csstype';
 import { FileMode } from '../../../../../shared/types/file/file-model.interface';
+import { DataField } from '../../../reports/components/dynamic-data/dynamic-data.component';
+
+export const DemandDebtorDataConfig: DataField[] = [
+  { label: 'ИНН', key: 'INN', type: 'text' },
+  { label: 'Краткое наименование', key: 'ShortTitle', type: 'text' },
+  { label: 'Полное наименование', key: 'FullTitle', type: 'text' },
+  { label: 'КПП', key: 'KPP', type: 'text' },
+  { label: 'ОГРН', key: 'OGRN', type: 'text' },
+  { label: 'ОКПО', key: 'OKPO', type: 'text' },
+  { label: 'Телефон', key: 'Phone', type: 'phone' },
+  { label: 'Email', key: 'Email', type: 'text' },
+  { label: 'Юридический адрес', key: 'LegalAddress', type: 'text' },
+  { label: 'Фактический адрес совпадает', key: 'FactAddressEquals', type: 'boolean' },
+  { label: 'Фактический адрес', key: 'FactAddress', type: 'text' },
+  { label: 'Дополнительный ИНН (NN)', key: 'NN', type: 'text' },
+];
 
 @Component({
   selector: 'mib-demand-debtor-drawer',
@@ -62,6 +78,7 @@ export class DemandDebtorDrawerComponent implements OnInit {
     height: '95px',
     width: '100%'
   };
+  DemandDebtorDataConfig: DataField[] = DemandDebtorDataConfig;
 
   get date(): { create: Date, update: Date, status: string } {
     return this.titleInfo;
@@ -96,6 +113,9 @@ export class DemandDebtorDrawerComponent implements OnInit {
   ngOnInit() {
     const modalData = this.data.data;
     this.initForm();
+    if (this.isView) {
+      this.form.disable()
+    }
 
     // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
     if (modalData?.isEdit || modalData?.isView) {
@@ -186,16 +206,14 @@ export class DemandDebtorDrawerComponent implements OnInit {
             update: res.DateModify,
             status: this.demandService.getStatus(res.Status)
           };
-        } else {
-          //this.nextPage()
-          this.patchData(data);
+        }
 
-          const files = data?.Files || [];
+        this.patchData(data);
 
-          for (let file of files) {
-            this.addDocument(file);
-          }
+        const files = data?.Files || [];
 
+        for (let file of files) {
+          this.addDocument(file);
         }
 
 
@@ -393,6 +411,7 @@ export class DemandDebtorDrawerComponent implements OnInit {
 
   private createDraftPayload(): any {
     const inn = this.form.get('INN').value;
+    console.log(this.form.getRawValue());
     return {
       ...this.form.getRawValue(),
       INN: inn,

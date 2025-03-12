@@ -34,6 +34,7 @@
       <mib-spacing type="xs2"></mib-spacing>
     </ng-template>
     <mib-dnd
+      *ngIf="!form.disabled"
       [multiple]="true"
       (onChange)="onDocumentLoad($event, 'charter')"
       [accept]="[
@@ -71,6 +72,7 @@
       <mib-spacing type="xs2"></mib-spacing>
     </ng-template>
     <mib-dnd
+      *ngIf="!form.disabled"
       [multiple]="true"
       (onChange)="onDocumentLoad($event, 'ceoPassport')"
       [accept]="[
@@ -107,6 +109,7 @@
       <mib-spacing type="xs2"></mib-spacing>
     </ng-template>
     <mib-dnd
+      *ngIf="!form.disabled"
       [multiple]="true"
       (onChange)="onDocumentLoad($event, 'foundingDecision')"
       [accept]="[
@@ -143,6 +146,7 @@
       <mib-spacing type="xs2"></mib-spacing>
     </ng-template>
     <mib-dnd
+      *ngIf="!form.disabled"
       [multiple]="true"
       (onChange)="onDocumentLoad($event, 'appointmentOrder')"
       [accept]="[
@@ -177,6 +181,7 @@
       <mib-spacing type="xs2"></mib-spacing>
     </ng-template>
     <mib-dnd
+      *ngIf="!form.disabled"
       [multiple]="true"
       (onChange)="onDocumentLoad($event, 'balanceSheet')"
       [accept]="[
@@ -213,6 +218,7 @@
       <mib-spacing type="xs2"></mib-spacing>
     </ng-template>
     <mib-dnd
+      *ngIf="!form.disabled"
       [multiple]="true"
       (onChange)="onDocumentLoad($event, 'turnoverBalanceSheet')"
       [accept]="[
@@ -248,6 +254,7 @@
       <mib-spacing type="xs2"></mib-spacing>
     </ng-template>
     <mib-dnd
+      *ngIf="!form.disabled"
       [multiple]="true"
       (onChange)="onDocumentLoad($event, 'foundersPassports')"
       [accept]="[

@@ -124,16 +124,22 @@ export class RegisterPageComponent {
 				Password: [null, passwordValidators],
 				ConfirmPassword: [null, passwordValidators],
 				Profile: this.fb.group({
-					First: [null, [Validators.required]],
-					Last: [null, [Validators.required]],
+					Name: this.fb.group({
+            First: [null, [Validators.required]],
+            Last: [null, [Validators.required]],
+          }),
 					Email: [null, [Validators.required, Validators.email]],
 					IsMale: [true, [Validators.required]],
 					Login: [null, [Validators.required, Validators.minLength(6)]],
 					Phone: [null, [Validators.required]]
 				}),
 				Captcha: this.fb.group({
-					Text: [null, [Validators.required]],
-					Code: [null, [Validators.required]]
+          Text: [null
+            , [Validators.required]
+          ],
+          Code: [null
+            , [Validators.required]
+          ]
 				})
 			},
 			{
@@ -158,7 +164,9 @@ export class RegisterPageComponent {
 		this.commonService.getCaptcha().pipe(
       tap(({image, code}) => {
         this.image = image
+        console.log("captchaCode",this.captchaCode.value);
         this.captchaCode.setValue(code)
+        console.log("captchaCode",this.captchaCode.value);
       }),
       finalize(() => {
         this.isCaptchaLoading$.next(false)
@@ -177,7 +185,7 @@ export class RegisterPageComponent {
 			.register(request)
 			.pipe(
 				tap(result => {
-					this.confirmationCode.setValue(result.ConfirmationCode)
+					this.confirmationCode.setValue(result)
 				}),
 				catchError(error => {
 					this.backendErrors$.next(error)

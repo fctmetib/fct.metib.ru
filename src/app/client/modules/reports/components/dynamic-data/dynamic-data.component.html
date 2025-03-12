@@ -1,0 +1,26 @@
+<div class="flex flex_column gap-4">
+  <ng-container *ngFor="let field of config">
+    <!-- Отображение простых полей -->
+    <div
+      *ngIf="field.type !== 'array'"
+      class="flex flex_justify-between gap-8"
+    >
+      <span class="text text_m">{{ field.label }}:</span>
+      <span class="text text_m">{{ formatValue(getNestedValue(data, field.key), field) }}</span>
+    </div>
+
+    <!-- Отображение массивов -->
+    <ng-container *ngIf="field.type === 'array'">
+      <div class="flex flex_justify-between gap-8">
+        <span class="text text_m">{{ field.label }}:</span>
+        <span class="text text_m"></span>
+      </div>
+      <div class="nested-fields" *ngFor="let item of getArrayItems(data, field)">
+        <mib-dynamic-data
+          [config]="field.nestedFields || []"
+          [data]="item"
+        ></mib-dynamic-data>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

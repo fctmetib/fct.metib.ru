@@ -35,6 +35,7 @@ import {
 } from './components/drawers/report-agregate-drawer/report-aggregate-drawer.component';
 import { TableModule } from '../../../shared/ui-kit/table/table.module';
 import { PaginatorModule } from '../../../shared/ui-kit/paginator/paginator.module';
+import { DynamicDataComponent } from './components/dynamic-data/dynamic-data.component';
 
 @NgModule({
 	imports: [
@@ -69,7 +70,7 @@ import { PaginatorModule } from '../../../shared/ui-kit/paginator/paginator.modu
   declarations: [
     ReportsPageComponent,
     ReportViewPageComponent,
-    ReportInitDialogComponent
+    ReportInitDialogComponent,
   ],
   providers: [ReportService, DialogService, DeliveryService, MessageService]
 })

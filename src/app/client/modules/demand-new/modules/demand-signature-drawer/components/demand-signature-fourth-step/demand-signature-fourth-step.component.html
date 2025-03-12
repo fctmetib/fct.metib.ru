@@ -1,14 +1,16 @@
 <mib-spacing type="xs2"></mib-spacing>
 <h4>Распечатайте заявку</h4>
 <mib-spacing type="xs"></mib-spacing>
-<mib-information type="alert">
-  <ng-container information-text
-  >Внимание: перед отправкой необходимо установить заявку и
-    распечатать ее на принтере. Распечатка обязательно понадобится при
-    сверке документов при получении сертификата
-  </ng-container>
-</mib-information>
-<mib-spacing type="xs"></mib-spacing>
+<ng-container *ngIf="!form.disabled">
+  <mib-information type="alert">
+    <ng-container information-text
+    >Внимание: перед отправкой необходимо установить заявку и
+      распечатать ее на принтере. Распечатка обязательно понадобится при
+      сверке документов при получении сертификата
+    </ng-container>
+  </mib-information>
+  <mib-spacing type="xs"></mib-spacing>
+</ng-container>
 <div class="flex flex_align-center document">
   <div class="flex flex_grow gap-4">
     <span class="text text_m c-bti-primary"> Название документа </span>
@@ -28,14 +30,16 @@
   </div>
 </div>
 <mib-spacing type="m"></mib-spacing>
-<p class="text text_m c-bti-secondary">
-  После установки заявке, распечатайте ее на принтере и отсканируйте,
-  после чего прикрепите ее в разделе ниже.
-</p>
-<mib-spacing type="s"></mib-spacing>
-<p class="text text_m c-bti-primary">
-  Прикрепите скан заполненной заявки
-</p>
+<ng-container *ngIf="!form.disabled">
+  <p class="text text_m c-bti-secondary">
+    После установки заявке, распечатайте ее на принтере и отсканируйте,
+    после чего прикрепите ее в разделе ниже.
+  </p>
+  <mib-spacing type="s"></mib-spacing>
+  <p class="text text_m c-bti-primary">
+    Прикрепите скан заполненной заявки
+  </p>
+</ng-container>
 <ng-container *ngIf="documents?.controls?.length;">
   <p class="text text_m text_medium">Прикрепленные документы</p>
   <div *ngFor="let document of documents.controls; let idx = index">
@@ -50,7 +54,7 @@
   <mib-spacing type="xs2"></mib-spacing>
 </ng-container>
 <mib-spacing type="xs2"></mib-spacing>
-<div class="flex flex_column gap-12" [formGroup]="form">
+<div *ngIf="!form.disabled"  class="flex flex_column gap-12" [formGroup]="form">
   <mib-dnd
     (onChange)="onDocumentLoad($event)"
     [accept]="[

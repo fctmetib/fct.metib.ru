@@ -115,7 +115,7 @@
       </div>
       <mib-spacing type="xs2"></mib-spacing>
     </ng-container>
-    <div class="flex flex_column gap-12" [formGroup]="form">
+    <div *ngIf="!form.disabled" class="flex flex_column gap-12" [formGroup]="form">
       <mib-dnd
         (onChange)="onDocumentLoad($event)"
         [accept]="[

@@ -1,4 +1,4 @@
-import { Component, inject, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FileDnd } from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface';
 import { DocumentReq } from '../../../requests/interfaces/request.interface';
@@ -14,7 +14,7 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
-  filter, forkJoin,
+  filter,
   Observable, of,
   pairwise,
   startWith,
@@ -35,6 +35,24 @@ import { DemandInterface } from '../../types/demand.interface';
 import { Properties } from 'csstype';
 import { DemandDrawerService } from '../demand-drawer/demand-drawer.service';
 import { FileMode } from '../../../../../shared/types/file/file-model.interface';
+import { DataField } from '../../../reports/components/dynamic-data/dynamic-data.component';
+
+export const DemandEditingDataConfig: DataField[] = [
+  { label: 'Серия и номер паспорта', key: 'Passport.Number', type: 'text' },
+  { label: 'Дата выдачи паспорта', key: 'Passport.Date', type: 'date' },
+  { label: 'Срок действия паспорта', key: 'Passport.Expire', type: 'date' },
+  { label: 'Кем выдан', key: 'Passport.IssuerTitle', type: 'text' },
+  { label: 'Код подразделения', key: 'Passport.IssuerCode', type: 'text' },
+  { label: 'Заграничный паспорт', key: 'Passport.IsForeign', type: 'boolean' },
+  { label: 'Гражданство', key: 'Passport.Nationality', type: 'text' },
+  { label: 'Имя', key: 'Profile.Name.First', type: 'text' },
+  { label: 'Фамилия', key: 'Profile.Name.Last', type: 'text' },
+  { label: 'Пол (мужской)', key: 'UserProfile.IsMale', type: 'boolean' },
+  { label: 'Телефон', key: 'Profile.Phone', type: 'phone' },
+  { label: 'Email', key: 'Profile.Email', type: 'text' },
+  { label: 'Логин', key: 'Profile.Login', type: 'text' },
+  { label: 'Код файла паспорта', key: 'PassportFileCode', type: 'text' }
+];
 
 @Component({
   selector: 'mib-demand-editing-drawer',
@@ -54,18 +72,19 @@ export class DemandEditingDrawerComponent implements OnInit {
   public loading$ = new BehaviorSubject<boolean>(false);
   public isSubmitting$ = new BehaviorSubject<boolean>(false);
 
-  private titleInfo = {create: null, update: null, status: null}
+  private titleInfo = { create: null, update: null, status: null };
 
-  public tabIndex = '1'
+  public tabIndex = '1';
   public skeleton: Properties = {
     borderRadius: '8px',
     height: '95px',
     width: '100%'
-  }
+  };
   messageForm: FormGroup;
+  DemandEditingDataConfig: DataField[] = DemandEditingDataConfig;
 
   identify(index, item) {
-    return item.DemandMessageID
+    return item.DemandMessageID;
   }
 
   constructor(
@@ -91,13 +110,17 @@ export class DemandEditingDrawerComponent implements OnInit {
     });
 
     this.initForm();
-    this.initMessageForm()
+    this.initMessageForm();
     this.addSingleChoiceGender();
 
+    if (this.isView) {
+      this.form.disable();
+    }
+
     if (modalData?.isView || modalData?.isEdit) {
-      console.log("IS VIEW? ", modalData)
+      console.log('IS VIEW? ', modalData);
       modalData?.isView ? this.status = DemandStatus.view : null;
-      this.getByID(modalData?.id, modalData?.isEdit)
+      this.getByID(modalData?.id, modalData?.isEdit);
     }
 
     // Если создание и нет черновика
@@ -116,25 +139,25 @@ export class DemandEditingDrawerComponent implements OnInit {
   }
 
   public addSingleChoiceGender() {
-    this.form.get('Profile.Male')?.valueChanges.pipe(
+    this.form.get('UserProfile.Male')?.valueChanges.pipe(
       filter(Boolean),
       takeUntil(this.au.destroyer)
     ).subscribe(() => {
-      this.form.get('Profile.IsMale').setValue(true);
-      this.form.get('Profile.Female').setValue(false);
+      this.form.get('UserProfile.IsMale').setValue(true);
+      this.form.get('UserProfile.Female').setValue(false);
     });
 
-    this.form.get('Profile.Female')?.valueChanges.pipe(
+    this.form.get('UserProfile.Female')?.valueChanges.pipe(
       filter(Boolean),
       takeUntil(this.au.destroyer)
     ).subscribe(() => {
-      this.form.get('Profile.IsMale').setValue(false);
-      this.form.get('Profile.Male').setValue(false);
+      this.form.get('UserProfile.IsMale').setValue(false);
+      this.form.get('UserProfile.Male').setValue(false);
     });
   }
 
-  get date(): {create: string, update: string, status: string} {
-    return this.titleInfo
+  get date(): { create: string, update: string, status: string } {
+    return this.titleInfo;
   }
 
   get isView(): boolean {
@@ -165,6 +188,9 @@ export class DemandEditingDrawerComponent implements OnInit {
       Size: [null],
       DemandFileID: [null]
     });
+    if (this.isView) {
+      control.disable();
+    }
     control.patchValue(data);
     return control;
   }
@@ -190,8 +216,8 @@ export class DemandEditingDrawerComponent implements OnInit {
   private initMessageForm() {
     this.messageForm = this.fb.group({
       FileCode: [''],
-      Comment: ['', Validators.required],
-    })
+      Comment: ['', Validators.required]
+    });
   }
 
   private initForm() {
@@ -199,7 +225,7 @@ export class DemandEditingDrawerComponent implements OnInit {
       UserID: [null],
       Avatar: [null],
       Passport: this.fb.group({
-        PassportSeriesAndNumber: [null, Validators.required],
+        Number: [null, Validators.required],
         Expire: [null],
         Date: [null, Validators.required],
         IssuerTitle: [null, Validators.required],
@@ -207,7 +233,7 @@ export class DemandEditingDrawerComponent implements OnInit {
         IsForeign: [false],
         Nationality: [null]
       }),
-      Profile: this.fb.group({
+      UserProfile: this.fb.group({
         Name: this.fb.group({
           First: [null, Validators.required],
           Last: [null, Validators.required]
@@ -216,12 +242,17 @@ export class DemandEditingDrawerComponent implements OnInit {
         Male: [false],
         Female: [false],
         Phone: [null, Validators.required],
-        Email: [null, Validators.required],
+        Email: [null, Validators.required]
       }),
       PassportFileCode: [null],
       Type: ['ProfileChange'],
       Files: this.fb.array([])
     });
+    // this.form.valueChanges.pipe(
+    //   tap(data => {
+    //     console.log(this.form);
+    //   })
+    // ).subscribe();
   }
 
   private openRequestFailureModal(d): void {
@@ -274,21 +305,22 @@ export class DemandEditingDrawerComponent implements OnInit {
     req$.pipe(
       tap(res => {
         const data = isDraft ? res.DemandData : res.Data;
+        this.titleInfo = { create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status) };
+
         if (this.isView) {
           this.viewingData = res;
           this.fileTypeConversion(res?.Files);
         }
-        if (!isDraft) {
-          this.titleInfo = { create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status) };
-        } else {
-          this.patchData(data);
+        console.log('[getByID]: isDraft', isDraft);
+        console.log('[getByID]: data', data);
+        this.patchData(data);
 
-          const files = data?.Files || []
+        const files = data?.Files || res?.Files || [];
 
-          for (let file of files) {
-            this.addDocumentControl(file)
-          }
+        for (let file of files) {
+          this.addDocumentControl(file);
         }
+
       }),
       finalize(() => this.loading$.next(false))
     )
@@ -296,10 +328,10 @@ export class DemandEditingDrawerComponent implements OnInit {
   }
 
   private prepareDemandByTypes(type: DemandsPrepareEnum) {
-    this.loading$.next(true)
+    this.loading$.next(true);
     this.demandService.prepareDemandByTypes(type)
       .pipe(
-        finalize(() => this.loading$.next(false)),
+        finalize(() => this.loading$.next(false))
       )
       .subscribe(res => {
           console.log('prepareDemandByTypes=>', res);
@@ -310,7 +342,9 @@ export class DemandEditingDrawerComponent implements OnInit {
 
   private patchData(data: any) {
     this.form.patchValue(data);
-    this.form.patchValue({Profile: {Male: data.Profile.IsMale, Female: !data.Profile.IsMale}})
+    if (data.UserProfile) {
+      this.form.patchValue({ UserProfile: { Male: data.UserProfile.IsMale, Female: !data.UserProfile.IsMale } });
+    }
   }
 
   downloadCurrentFile(document: AbstractControl): void {
@@ -370,12 +404,12 @@ export class DemandEditingDrawerComponent implements OnInit {
   private createDraftPayload(): any {
     const userID = this.form.get('UserID').value;
     const passport = this.form.get('Passport').value;
-    const profile = this.form.get('Profile').value;
+    const profile = this.form.get('UserProfile').value;
     return {
       UserID: userID,
       Avatar: null,
       Passport: {
-        PassportSeriesAndNumber: passport.PassportSeriesAndNumber,
+        Number: passport.Number,
         Date: passport.Date,
         Expire: passport.Expire,
         IssuerTitle: passport.IssuerTitle,
@@ -383,7 +417,7 @@ export class DemandEditingDrawerComponent implements OnInit {
         IsForeign: passport.IsForeign,
         Nationality: passport.Nationality
       },
-      Profile: {
+      UserProfile: {
         Name: {
           First: profile.Name.First,
           Last: profile.Name.Last
@@ -447,6 +481,7 @@ export class DemandEditingDrawerComponent implements OnInit {
   }
 
   private getStatus(status: string): string {
+    console.log(status);
     let result: string = '';
     switch (status) {
       case 'Created':
@@ -472,29 +507,29 @@ export class DemandEditingDrawerComponent implements OnInit {
   }
 
   deleteFile() {
-    const modalData = this.data.data
-    this.getByID(modalData.id, modalData.isEdit)
+    const modalData = this.data.data;
+    this.getByID(modalData.id, modalData.isEdit);
   }
 
   private resetMessageModal() {
-    this.initMessageForm()
-    this.demandDrawerService.updateDocumentsState(undefined)
+    this.initMessageForm();
+    this.demandDrawerService.updateDocumentsState(undefined);
   }
 
   sendMessage() {
-    this.isSubmitting$.next(true)
+    this.isSubmitting$.next(true);
     this.demandService.sendDemandsMessage(this.messageForm.value, this.data.data.id)
       .subscribe({
         complete: () => {
-          const modalData = this.data.data
-          this.getByID(modalData.id, modalData.isEdit)
-          this.resetMessageModal()
-          this.isSubmitting$.next(false)
+          const modalData = this.data.data;
+          this.getByID(modalData.id, modalData.isEdit);
+          this.resetMessageModal();
+          this.isSubmitting$.next(false);
         },
         error: () => {
-          this.dialogRef.close()
-          this.openRequestFailureModal(this.requestId)
+          this.dialogRef.close();
+          this.openRequestFailureModal(this.requestId);
         }
-      })
+      });
   }
 }

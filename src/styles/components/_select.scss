@@ -19,7 +19,9 @@ $text-selectors: '&, span';
 		}
 	}
 
-	cursor: pointer;
+  &:not(&_disabled) {
+    cursor: pointer;
+  }
 
 	#{$text-selectors} {
 		@include body-text;

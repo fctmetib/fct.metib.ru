@@ -22,7 +22,7 @@ import {UserGeneral} from 'src/app/shared/types/userGeneral';
 import {LoginRequestInterface} from 'src/app/auth/types/login/loginRequest.interface';
 import {AuthRes} from 'src/app/auth/types/login/authRes';
 import {RegisterConfirmReq} from '../types/register/registerConfirmReq';
-import {RegisterReponseInterface} from '../types/register/registerResponse.interface';
+import {RegisterResponseInterface} from '../types/register/registerResponse.interface';
 import {RequestStoreService} from 'src/app/shared/services/store/request.store.service';
 import {FreedutyStoreService} from 'src/app/shared/services/store/freeduty.store.service';
 import {isPlatformBrowser} from '@angular/common';
@@ -54,13 +54,13 @@ export class AuthService {
 
   register(
     data: RegisterReq
-  ): Observable<RegisterReponseInterface> {
-    const url = environment.apiUrl + '/user/registration/init';
-    return this.http.post<RegisterReponseInterface>(url, data);
+  ): Observable<RegisterResponseInterface> {
+    const url = environment.apiUrl + '/v1/users/registration';
+    return this.http.post<RegisterResponseInterface>(url, data);
   }
 
   registerConfirm(data: RegisterConfirmReq): Observable<any> {
-    const url = environment.apiUrl + '/user/registration/confirm';
+    const url = environment.apiUrl + '/v1/users/registration/confirm';
     return this.http.post<any>(url, data);
   }
 
@@ -241,7 +241,7 @@ export class AuthService {
    * @param data
    */
   resetPassword(data: ResetPasswordReq): Observable<ResetPasswordRes> {
-    const url = environment.apiUrl + '/user/password/forget';
+    const url = environment.apiUrl + '/v1/users/password/forget';
     return this.http.post<ResetPasswordRes>(url, data);
   }
 

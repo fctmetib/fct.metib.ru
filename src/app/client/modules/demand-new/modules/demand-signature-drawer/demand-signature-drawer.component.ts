@@ -78,14 +78,15 @@ export class DemandSignatureDrawerComponent implements OnInit {
   ngOnInit() {
     const modalData = this.data.data;
 
-    if (modalData?.isEdit || modalData?.isCreation) {
-      this.initOrgDataForm();
-      this.initPersonalDataForm();
-    }
+    this.initOrgDataForm();
+    this.initPersonalDataForm();
+    this.initMessageForm();
+
+    this.getDataByINN().pipe(tap((data) => this.setDataToOrgForm(data?.data))).subscribe();
+
     // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
     if (modalData?.isEdit || modalData?.isView) {
       this.getByID(modalData.id, modalData.isEdit);
-      this.initMessageForm();
     }
 
     // Если создание и нет черновика
@@ -99,7 +100,6 @@ export class DemandSignatureDrawerComponent implements OnInit {
 
     // Если создание и есть черновик
     if (modalData?.isCreation || modalData?.isEdit) {
-      this.getDataByINN().pipe(tap((data) => this.setDataToOrgForm(data?.data))).subscribe();
       // Включаем авто сохранение первого/второго таба
       this.enableAutoSaveDraft(this.orgDataForm);
     }
@@ -127,6 +127,9 @@ export class DemandSignatureDrawerComponent implements OnInit {
       FactAddress: [null, Validators.required],
       FactAddressEquals: [null]
     });
+    if(this.isView) {
+      this.orgDataForm.disable();
+    }
   }
 
   public getDataByINN() {
@@ -169,6 +172,10 @@ export class DemandSignatureDrawerComponent implements OnInit {
       })
     });
 
+    if(this.isView) {
+      this.personalDataForm.disable();
+    }
+
     this.addSingleChoiceGender();
   }
 
@@ -203,13 +210,12 @@ export class DemandSignatureDrawerComponent implements OnInit {
           if (this.isView) {
             this.readFiles = res?.Files?.map(file => ({ FileName: file.FileName, Size: file.Size }));
             this.viewingData = res;
-            this.fileTypeConversion(res?.Files);
+            const files = data?.Files || res?.Files || []
+            this.fileTypeConversion(files);
           }
-          if (!isDraft) {
-            this.titleInfo = { create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status) };
-          } else {
-            this.patchData(data);
-          }
+          this.titleInfo = { create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status) };
+          this.patchData(data);
+
         }),
         finalize(() => this.loading$.next(false))
       )
@@ -267,6 +273,9 @@ export class DemandSignatureDrawerComponent implements OnInit {
           Size: [null],
           DemandFileID: [null]
         });
+        if (this.isView) {
+          control.disable()
+        }
         control.patchValue(x);
         (docs.get('documentsScan') as FormArray).push(control);
       } else if (x.Identifier === 'completedAppScan') {
@@ -278,12 +287,14 @@ export class DemandSignatureDrawerComponent implements OnInit {
           Size: [null],
           DemandFileID: [null]
         });
+        if (this.isView) {
+          control.disable()
+        }
         control.patchValue(x);
         (docs.get('completedAppScan') as FormArray).push(control);
       }
     }
 
-    console.log(this.orgDataForm.getRawValue());
   }
 
   private getFullAddress(address: AddressInterface): string {

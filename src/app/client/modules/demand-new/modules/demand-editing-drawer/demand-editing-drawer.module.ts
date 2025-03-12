@@ -23,33 +23,35 @@ import { NavbarModule } from '../../../../../shared/ui-kit/navbar/navbar.module'
 import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
 import { TabModule } from '../../../../../shared/ui-kit/tab/tab.module';
 import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
+import { DynamicDataComponent } from '../../../reports/components/dynamic-data/dynamic-data.component';
 
 @NgModule({
   declarations: [DemandEditingDrawerComponent],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    SpacingModule,
-    ButtonModule,
-    InputModule,
-    LabelModule,
-    CheckboxModule,
-    MibDragAndDropModule,
-    SelectModule,
-    DropdownPointModule,
-    FileCellModule,
-    ReactiveFormsModule,
-    BadgeModule,
-    FormsModule,
-    DlFileCellModule,
-    BlurLoaderModule,
-    AttachedDocumentModule,
-    MessageItemModule,
-    NavbarModule,
-    SkeletonModule,
-    TabModule,
-    SendMessagesModule
-  ],
+	imports: [
+		CommonModule,
+		DrawerModule,
+		SpacingModule,
+		ButtonModule,
+		InputModule,
+		LabelModule,
+		CheckboxModule,
+		MibDragAndDropModule,
+		SelectModule,
+		DropdownPointModule,
+		FileCellModule,
+		ReactiveFormsModule,
+		BadgeModule,
+		FormsModule,
+		DlFileCellModule,
+		BlurLoaderModule,
+		AttachedDocumentModule,
+		MessageItemModule,
+		NavbarModule,
+		SkeletonModule,
+		TabModule,
+		SendMessagesModule,
+		DynamicDataComponent
+	],
   providers: [DemandEditingDrawerService, DemandService]
 })
 export class DemandEditingDrawerModule {

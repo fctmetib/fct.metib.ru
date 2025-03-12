@@ -35,8 +35,9 @@ import {
 } from '../../../../../shared/modules/modals/request-create-success-modal/request-create-success-modal.service';
 import { DemandDrawerService } from '../demand-drawer/demand-drawer.service';
 import { Properties } from 'csstype';
+import { DataField } from '../../../reports/components/dynamic-data/dynamic-data.component';
 
-type DocumentsType  =
+type DocumentsType =
   'charter'
   | 'ceoPassport'
   | 'foundingDecision'
@@ -44,6 +45,94 @@ type DocumentsType  =
   | 'balanceSheet'
   | 'turnoverBalanceSheet'
   | 'foundersPassports'
+
+export const DemandDebtorDataConfig: DataField[] = [
+  // Registration
+  { label: 'Дата регистрации', key: 'Anket.Registration.Date', type: 'date' },
+  { label: 'Дата инициации', key: 'Anket.Registration.InitDate', type: 'date' },
+
+  // Resident
+  { label: 'Страна резидентства', key: 'Anket.Resident.Country', type: 'text' },
+  { label: 'Является резидентом', key: 'Anket.Resident.IsResident', type: 'boolean' },
+
+  // Organization
+  { label: 'Тип организации', key: 'Anket.Organization.Type', type: 'text' },
+  { label: 'Организационно-правовая форма', key: 'Anket.Organization.LegalForm', type: 'text' },
+  { label: 'Краткое наименование', key: 'Anket.Organization.ShortTitle', type: 'text' },
+  { label: 'ИНН', key: 'Anket.Organization.Requisites.INN', type: 'text' },
+  { label: 'Телефон', key: 'Anket.Organization.Phone', type: 'phone' },
+  { label: 'Email', key: 'Anket.Organization.Email', type: 'text' },
+  { label: 'Сайт', key: 'Anket.Organization.Website', type: 'text' },
+  { label: 'Фактический адрес (город)', key: 'Anket.Organization.FactAddress.City', type: 'text' },
+  { label: 'Фактический адрес совпадает', key: 'Anket.Organization.FactAddressEquals', type: 'boolean' },
+  { label: 'Юридический адрес (город)', key: 'Anket.Organization.LegalAddress.City', type: 'text' },
+
+  // Factoring
+  { label: 'БИК банка', key: 'Factoring.Account.BIK', type: 'text' },
+  { label: 'Название банка', key: 'Factoring.Account.Bank', type: 'text' },
+  { label: 'Корреспондентский счет', key: 'Factoring.Account.COR', type: 'text' },
+  { label: 'Дата открытия счета', key: 'Factoring.Account.Date', type: 'date' },
+  { label: 'Номер счета', key: 'Factoring.Account.Number', type: 'text' },
+  { label: 'Лимит финансирования', key: 'Factoring.LimitWanted', type: 'number' },
+  { label: 'Количество сотрудников', key: 'Factoring.StaffAmount', type: 'number' },
+
+// Obligations
+  {
+    label: 'Обязательства',
+    key: 'Factoring.Obligations',
+    type: 'array',
+    nestedFields: [
+      { label: 'Кредитор', key: 'Creditor', type: 'text' },
+      { label: 'Сумма', key: 'Summ', type: 'number' },
+      { label: 'Дата закрытия', key: 'Date', type: 'date' },
+      { label: 'Тип обязательства', key: 'Type', type: 'text' }
+    ]
+  },
+
+  // Properties
+  {
+    label: 'Адреса объектов недвижимости',
+    key: 'Factoring.Properties',
+    type: 'array',
+    nestedFields: [
+      {
+        label: 'Адрес',
+        key: 'Address',
+        type: 'object',
+        nestedFields: [
+          { label: 'Город', key: 'City', type: 'text' },
+          { label: 'Улица', key: 'Street', type: 'text' },
+          { label: 'Дом', key: 'House', type: 'text' }
+        ]
+      },
+      { label: 'Тип объекта', key: 'Type', type: 'text' }
+    ]
+  },
+
+  // AddonAccounts
+  {
+    label: 'Дополнительные счета',
+    key: 'Factoring.AddonAccounts',
+    type: 'array',
+    nestedFields: [
+      { label: 'Банк', key: 'Bank', type: 'text' },
+      { label: 'Номер счета', key: 'Number', type: 'text' },
+      { label: 'Дата открытия', key: 'Date', type: 'date' },
+      { label: 'Дата закрытия', key: 'Expire', type: 'date' }
+    ]
+  },
+
+  // EDI
+  {
+    label: 'Провайдеры ЭДО',
+    key: 'Factoring.EDI',
+    type: 'array',
+    nestedFields: [
+      { label: 'Компания', key: 'Company', type: 'text' },
+      { label: 'Провайдер', key: 'EDIProvider', type: 'text' }
+    ]
+  }
+];
 
 @UntilDestroy(this)
 @Component({
@@ -53,14 +142,16 @@ type DocumentsType  =
 })
 export class DemandFactoringDrawerComponent implements OnInit {
 
-  private mibCommon = new MIBCommon()
+  private mibCommon = new MIBCommon();
   private fb = inject(FormBuilder);
   private getAgentRequestService = inject(GetAgentRequestService);
   private _formGenerator = new FormGenerator(this.fb);
   private demandService = inject(DemandService);
   private requestFailureModalService = inject(RequestFailureModalService);
-  private requestCreateSuccessModalService = inject(RequestCreateSuccessModalService)
+  private requestCreateSuccessModalService = inject(RequestCreateSuccessModalService);
   private titleInfo = { create: null, update: null, status: null };
+
+  DemandDebtorDataConfig: DataField[] = DemandDebtorDataConfig;
 
   isSubmitting$ = new BehaviorSubject<boolean>(false);
   progress$ = new BehaviorSubject<number>(1);
@@ -70,7 +161,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
   form: FormGroup;
   dataByINN = [];
   orgData: AgentSuggestionsInterface;
-  typesOfOwner: DemandSelectboxInterface[] = []
+  typesOfOwner: DemandSelectboxInterface[] = [];
   realtyAddressOptions: { [key: number]: BankInfo[] } = {};
   dataByDebitorINN: { [key: number]: AgentSuggestionsInterface[] } = {};
   dataByCreditorINN: { [key: number]: AgentSuggestionsInterface[] } = {};
@@ -83,7 +174,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
   dialogRef: MatDialogRef<DemandFactoringDrawerComponent> = inject(MatDialogRef);
   messageForm: FormGroup;
   loading$ = new BehaviorSubject<boolean>(false);
-  preparedData?: SuretyPrepareData
+  preparedData?: SuretyPrepareData;
   viewingData: DemandInterface<{ Subject: string; Question: string; Files: [] }>;
   groupDocuments = this.fb.group({
     charter: this.fb.array([]),
@@ -138,10 +229,12 @@ export class DemandFactoringDrawerComponent implements OnInit {
     this.typesOfOwner = this.mibCommon.getTypesOfOwner();
 
     const modalData = this.data.data;
+    this.form = this._formGenerator.generateFactoringForm();
 
-    if (modalData?.isEdit || modalData?.isCreation) {
-      this.form = this._formGenerator.generateFactoringForm();
+    if (this.isView) {
+      this.form.disable()
     }
+
     // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
     if (modalData?.isEdit || modalData?.isView) {
       this.getByID(modalData.id, modalData.isEdit);
@@ -210,15 +303,15 @@ export class DemandFactoringDrawerComponent implements OnInit {
               update: res.DateModify,
               status: this.demandService.getStatus(res.Status)
             };
-          } else {
-            this.mapDataToForm(data);
+          }
 
-            const files = data?.Files || [];
-            for (let file of files) {
-              const docs = this.groupDocuments.get(file.Identifier) as FormArray;
-              const control = this.createDocumentControl(file);
-              docs?.push(control);
-            }
+          this.mapDataToForm(data);
+
+          const files = data?.Files || [];
+          for (let file of files) {
+            const docs = this.groupDocuments.get(file.Identifier) as FormArray;
+            const control = this.createDocumentControl(file);
+            docs?.push(control);
           }
         }),
         finalize(() => this.loading$.next(false))
@@ -259,8 +352,8 @@ export class DemandFactoringDrawerComponent implements OnInit {
       factoringShipments: factoring.Suppliers || '',
       factoringFinanceLimit: factoring.LimitWanted || null,
       factoringClients: factoring.Buyers || '',
-      factoringWorkers: factoring.StaffAmount || 0,
-    }, {emitEvent: false});
+      factoringWorkers: factoring.StaffAmount || 0
+    }, { emitEvent: false });
 
     // Маппинг OtherBanks с использованием addAccount
     factoring.AddonAccounts?.forEach((bank) => {
@@ -269,7 +362,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
         otherBankAccountCloseDate: bank.Expire,
         otherBankName: bank.Bank,
         otherBankOwnerAccount: bank.Number,
-        otherBankTarget: bank.Comment,
+        otherBankTarget: bank.Comment
       });
     });
 
@@ -281,7 +374,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
       this.addRealty({
         displayAddress,
         factoringPlacesAddress: address,
-        factoringPlacesLegalForm: place.Type,
+        factoringPlacesLegalForm: place.Type
       });
     });
 
@@ -293,7 +386,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
         factoringPlacesDateClose: credit.Date,
         factoringPlacesContractSum: credit.Summ,
         factoringPlacesBalanceReport: credit.ReportingRest,
-        factoringPlacesBalanceCurrent: credit.CurrentRest,
+        factoringPlacesBalanceCurrent: credit.CurrentRest
       });
     });
 
@@ -301,7 +394,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
     factoring.EDI?.forEach((edi) => {
       this.addEDI({
         factoringEDIProvidersDebitor: edi.Company,
-        factoringEDIProvidersProvider: edi.EDIProvider,
+        factoringEDIProvidersProvider: edi.EDIProvider
       });
     });
   }
@@ -322,7 +415,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
       address.City ? addPrefixIfAbsent(address.City, 'г') : '', // Например, "г Новый Уренгой"
       address.Street || '', // Например, "пр-кт Мира"
       address.House ? addPrefixIfAbsent(address.House, 'д') : '', // Например, "д 10"
-      address.Appartment ? addPrefixIfAbsent(address.Appartment, 'кв') : '', // Например, "кв 12"
+      address.Appartment ? addPrefixIfAbsent(address.Appartment, 'кв') : '' // Например, "кв 12"
     ];
 
     // Фильтруем пустые значения и соединяем через запятую
@@ -393,7 +486,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
           : '',
         // otherBankName: data?.name?.short || '',
         otherBankOwnerAccount: data?.correspondent_account || '',
-        otherBankTarget: data?.address?.value || '',
+        otherBankTarget: data?.address?.value || ''
       });
     }
   }
@@ -496,10 +589,10 @@ export class DemandFactoringDrawerComponent implements OnInit {
           ? Number(place.factoringPlacesAddress.RegionCode)
           : null,
         RegionTitle: place.factoringPlacesAddress?.RegionTitle || null,
-        Street: place.factoringPlacesAddress?.Street || null,
+        Street: place.factoringPlacesAddress?.Street || null
       },
       Comment: null,
-      Type: place.factoringPlacesLegalForm || null,
+      Type: place.factoringPlacesLegalForm || null
     })) || [];
 
     const listObligations = form.factoringCredits?.map((credit: any) => ({
@@ -508,7 +601,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
       Date: credit.factoringPlacesDateClose ? new Date(credit.factoringPlacesDateClose) : null,
       ReportingRest: credit.factoringPlacesBalanceReport || 0,
       Summ: credit.factoringPlacesContractSum || 0,
-      Type: credit.factoringPlacesTypeDuty || null,
+      Type: credit.factoringPlacesTypeDuty || null
     })) || [];
 
     const listAddonAccounts = form.otherBanks?.map((bank: any) => ({
@@ -518,12 +611,12 @@ export class DemandFactoringDrawerComponent implements OnInit {
       Comment: bank.otherBankTarget || null,
       Date: bank.otherBankAccountOpenDate ? new Date(bank.otherBankAccountOpenDate) : null,
       Expire: bank.otherBankAccountCloseDate ? new Date(bank.otherBankAccountCloseDate) : null,
-      Number: bank.otherBankOwnerAccount || null,
+      Number: bank.otherBankOwnerAccount || null
     })) || [];
 
     const listEDI = form.factoringEDIProviders?.map((edi: any) => ({
       Company: edi.factoringEDIProvidersDebitor || null,
-      EDIProvider: edi.factoringEDIProvidersProvider || null,
+      EDIProvider: edi.factoringEDIProvidersProvider || null
     })) || [];
 
     return {
@@ -533,12 +626,12 @@ export class DemandFactoringDrawerComponent implements OnInit {
           Date: new Date(),
           InitDate: new Date(),
           Number: null,
-          Place: null,
+          Place: null
         },
         Resident: {
           Country: 'РФ',
           ForeignCode: null,
-          IsResident: true,
+          IsResident: true
         },
         Shareholders: [],
         Signer: {
@@ -552,7 +645,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
             PostCode: null,
             RegionCode: 0,
             RegionTitle: null,
-            Street: null,
+            Street: null
           },
           Passport: {
             Date: new Date(),
@@ -561,7 +654,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
             IssuerCode: null,
             IssuerTitle: null,
             Nationality: null,
-            Number: null,
+            Number: null
           },
           Person: {
             BirthDate: new Date(),
@@ -571,13 +664,13 @@ export class DemandFactoringDrawerComponent implements OnInit {
             Name: {
               First: null,
               Last: null,
-              Second: null,
+              Second: null
             },
             NameFirst: null,
             NameLast: null,
             NameSecond: null,
             Phone: null,
-            SNILS: null,
+            SNILS: null
           },
           PositionDate: new Date(),
           PositionTitle: null,
@@ -591,13 +684,13 @@ export class DemandFactoringDrawerComponent implements OnInit {
             PostCode: null,
             RegionCode: 0,
             RegionTitle: null,
-            Street: null,
-          },
+            Street: null
+          }
         },
         Activities: [],
         Capital: {
           Total: 0,
-          Payed: 0,
+          Payed: 0
         },
         Licenses: [],
         Objectives: {
@@ -741,6 +834,10 @@ export class DemandFactoringDrawerComponent implements OnInit {
     const control = this._formGenerator.generateBankForm(bankData);
     controls.push(control);
 
+    if (this.isView) {
+      control.disable();
+    }
+
     // Подписка на изменения значения имени банка
     const index = controls.length - 1; // Индекс нового элемента
     control.get('otherBankName').valueChanges.pipe(
@@ -779,6 +876,10 @@ export class DemandFactoringDrawerComponent implements OnInit {
     const control = this._formGenerator.generateFactoringPlaceForm(factoringPlaceData);
     factoringPlaces.push(control);
 
+    if (this.isView) {
+      control.disable();
+    }
+
     const index = factoringPlaces.length - 1; // Индекс добавленной формы
     const autocompleteControl = control.get('autocompleteInputAddress');
 
@@ -800,7 +901,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
     }
 
     // получаем опции на дефолтное выбранное значение
-    autocompleteControl.updateValueAndValidity()
+    autocompleteControl.updateValueAndValidity();
   }
 
   onRealtyAddress(event: any, idx: number) {
@@ -828,7 +929,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
       Locality: suggestion.settlement_with_type || '',
       Street: suggestion.street_with_type || '',
       House: suggestion.house || '',
-      Appartment: suggestion.flat || '',
+      Appartment: suggestion.flat || ''
     };
 
     factoringPlaces.at(idx).patchValue({ factoringPlacesAddress: addressPatch });
@@ -836,13 +937,17 @@ export class DemandFactoringDrawerComponent implements OnInit {
   }
 
   removeRealty(i: number) {
-    this.factoringPlaces.removeAt(i)
-    delete this.realtyAddressOptions[i]
+    this.factoringPlaces.removeAt(i);
+    delete this.realtyAddressOptions[i];
   }
 
   addCredit(data?: any): void {
     const creditGroup = this._formGenerator.generateFactorCreditGroup(data);
     const index = this.factoringCredits.length; // Индекс нового элемента
+
+    if (this.isView) {
+      creditGroup.disable();
+    }
 
     creditGroup.get('factoringCreditsCreditor').valueChanges.pipe(
       debounceTime(300), // Задержка для минимизации запросов
@@ -866,6 +971,10 @@ export class DemandFactoringDrawerComponent implements OnInit {
     const ediGroup = this._formGenerator.generateEDIFormArray(data);
     const index = this.factoringEDIProviders.length; // Индекс нового элемента
 
+    if (this.isView) {
+      ediGroup.disable();
+    }
+
     ediGroup.get('factoringEDIProvidersDebitor').valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -874,7 +983,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
         this.dataByDebitorINN[index] = options.suggestions || [];
       }),
       untilDestroyed(this)
-    ).subscribe()
+    ).subscribe();
     this.factoringEDIProviders.push(ediGroup);
   }
 
@@ -916,7 +1025,7 @@ export class DemandFactoringDrawerComponent implements OnInit {
     ).subscribe();
   }
 
-  onDocumentLoad({file, url}: FileDnd, type: DocumentsType): void {
+  onDocumentLoad({ file, url }: FileDnd, type: DocumentsType): void {
     this.uploadDocumentToDraft({
       Description: `description ${file.name}`,
       DocumentTypeID: 40,
@@ -991,25 +1100,25 @@ export class DemandFactoringDrawerComponent implements OnInit {
   }
 
   sendMessage() {
-    this.isSubmitting$.next(true)
+    this.isSubmitting$.next(true);
     this.demandService.sendDemandsMessage(this.messageForm.value, this.data.data.id)
       .subscribe({
         complete: () => {
-          const modalData = this.data.data
-          this.getByID(modalData.id, modalData.isEdit)
-          this.resetMessageModal()
-          this.isSubmitting$.next(false)
+          const modalData = this.data.data;
+          this.getByID(modalData.id, modalData.isEdit);
+          this.resetMessageModal();
+          this.isSubmitting$.next(false);
         },
         error: () => {
-          this.dialogRef.close()
-          this.openRequestFailureModal(this.requestId)
+          this.dialogRef.close();
+          this.openRequestFailureModal(this.requestId);
         }
-      })
+      });
   }
 
   private resetMessageModal() {
-    this.initMessageForm()
-    this.demandDrawerService.updateDocumentsState(undefined)
+    this.initMessageForm();
+    this.demandDrawerService.updateDocumentsState(undefined);
   }
 
   deleteFile() {

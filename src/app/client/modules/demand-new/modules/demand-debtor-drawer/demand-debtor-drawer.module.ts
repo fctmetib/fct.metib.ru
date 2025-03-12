@@ -28,6 +28,7 @@ import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/mes
 import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
 import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
 import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-loader.module';
+import { DynamicDataComponent } from '../../../reports/components/dynamic-data/dynamic-data.component';
 
 @NgModule({
   declarations: [DemandDebtorDrawerComponent],
@@ -57,7 +58,8 @@ import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-
 		MessageItemModule,
 		SkeletonModule,
 		SendMessagesModule,
-		BlurLoaderModule
+		BlurLoaderModule,
+		DynamicDataComponent
 	],
   providers: [DemandDebtorDrawerService, DemandDebtorDrawerStaticService, DemandService]
 })

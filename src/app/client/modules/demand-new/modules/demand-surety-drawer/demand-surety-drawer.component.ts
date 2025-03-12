@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
-  BehaviorSubject, catchError,
+  BehaviorSubject,
   debounceTime,
   distinctUntilChanged,
-  filter, finalize, forkJoin, map, merge, Observable, of, pairwise, startWith,
+  filter, finalize, map, merge, Observable, of, pairwise, startWith,
   switchMap, tap, throwError
 } from 'rxjs';
 import { ToasterService } from 'src/app/shared/services/common/toaster.service';
@@ -31,6 +31,9 @@ import { FileMode } from '../../../../../shared/types/file/file-model.interface'
 import { DemandInterface } from '../../types/demand.interface';
 import { Properties } from 'csstype';
 import { DeepPartial } from 'chart.js/types/utils';
+import { DataField } from '../../../reports/components/dynamic-data/dynamic-data.component';
+import { DemandStatus } from '../../types/demand-status';
+import { DemandDrawerService } from '../demand-drawer/demand-drawer.service';
 
 export interface SuretyPrepareData {
   Factoring: Factoring;
@@ -199,6 +202,31 @@ export interface File {
   Size: number;
 }
 
+export const DemandSuretyDataConfig: DataField[] = [
+  { label: 'Виды реализуемой продукции', key: 'Factoring.Products', type: 'text' },
+  { label: 'Торговые марки', key: 'Factoring.Trademarks', type: 'text' },
+  { label: 'Основные поставщики', key: 'Factoring.Suppliers', type: 'text' },
+  { label: 'Количество сотрудников', key: 'Factoring.StaffAmount', type: 'number' },
+  { label: 'Лимит финансирования', key: 'Factoring.LimitWanted', type: 'currency' },
+  { label: 'Цели факторинга', key: 'Factoring.FactoringAim', type: 'number' },
+  { label: 'Доп. счета', key: 'Factoring.AddonAccounts', type: 'text' },
+
+  { label: 'Тип организации', key: 'Anket.Organization.Type', type: 'text' },
+  { label: 'Короткое название', key: 'Anket.Organization.ShortTitle', type: 'text' },
+  { label: 'Телефон', key: 'Anket.Organization.Phone', type: 'phone' },
+  { label: 'Email', key: 'Anket.Organization.Email', type: 'text' },
+  { label: 'Веб-сайт', key: 'Anket.Organization.Website', type: 'text' },
+  { label: 'ИНН', key: 'Anket.Organization.Requisites.INN', type: 'text' },
+  { label: 'Банк', key: 'Anket.Organization.Requisites.BankAccount.Bank', type: 'text' },
+  { label: 'Корреспондентский счет', key: 'Anket.Organization.Requisites.BankAccount.COR', type: 'text' },
+  { label: 'БИК', key: 'Anket.Organization.Requisites.BankAccount.BIK', type: 'text' },
+  { label: 'Номер счета', key: 'Anket.Organization.Requisites.BankAccount.Number', type: 'text' },
+  { label: 'Дата открытия', key: 'Anket.Organization.Requisites.RegistrationDate', type: 'date' },
+  // { label: 'Граничный час', key: 'Anket.Organization.Settings.BorderHour', type: 'number' },
+  // { label: 'Агрегированная выгрузка', key: 'Anket.Organization.Settings.AgregateUnload', type: 'boolean' },
+  // { label: 'Тип системы', key: 'Anket.Organization.Settings.SystemNameType', type: 'number' }
+];
+
 
 @Component({
   selector: 'mib-demand-surety-drawer',
@@ -207,6 +235,8 @@ export interface File {
   providers: [DestroyService]
 })
 export class DemandSuretyDrawerComponent implements OnInit {
+  protected readonly DemandStatus = DemandStatus;
+  public status: DemandStatus = DemandStatus.edit;
   isSubmitting$ = new BehaviorSubject<boolean>(false);
   public loading$ = new BehaviorSubject<boolean>(false);
   progres$ = new BehaviorSubject<number>(1);
@@ -215,6 +245,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
   maxPage: number = 4;
   pageCount: number = 1;
   ContractedFormsEnum = ContractedFormsEnum;
+  messageForm: FormGroup;
   requisites: string = '';
   contractAmountValue: number = null;
   orgData: AgentSuggestionsInterface;
@@ -252,6 +283,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
     private requestCreateSuccessModalService: RequestCreateSuccessModalService,
     public dialogRef: MatDialogRef<DemandSuretyDrawerComponent>,
     private fb: FormBuilder,
+    private demandDrawerService: DemandDrawerService,
     @Inject(MAT_DIALOG_DATA) public data: DrawerData
   ) {
     const info = data?.data;
@@ -268,17 +300,31 @@ export class DemandSuretyDrawerComponent implements OnInit {
 
   ngOnInit(): void {
     const modalData = this.data.data;
+    this.initForm();
+    this.initOrgDataForm();
+    this.initBankForm();
+    this.initMainDataForm();
+    this.initForthPageForm();
+    this.initGroupDocuments();
+    this.initMessageForm();
+
+    if (this.isView) {
+      this.form?.disable();
+      this.orgDataForm?.disable()
+      this.bankForm?.disable()
+      this.mainDataForm?.disable()
+      this.form?.disable()
+      this.fourthPageForm?.disable()
+      this.documents?.disable()
+      this.groupDocuments?.disable()
+    }
 
     if (modalData?.isEdit || modalData?.isCreation) {
-      this.initOrgDataForm();
-      this.initBankForm();
-      this.initForm();
-      this.initMainDataForm();
-      this.initForthPageForm();
-      this.initGroupDocuments();
+
     }
     // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
     if (modalData?.isEdit || modalData?.isView) {
+      modalData?.isView ? this.status = DemandStatus.view : null;
       this.getByID(modalData.id, modalData.isEdit);
     }
 
@@ -319,6 +365,28 @@ export class DemandSuretyDrawerComponent implements OnInit {
     return this.documents.get('Documents') as FormArray;
   }
 
+  private resetMessageModal() {
+    this.initMessageForm();
+    this.demandDrawerService.updateDocumentsState(undefined);
+  }
+
+  sendMessage() {
+    this.isSubmitting$.next(true);
+    this.demandService.sendDemandsMessage(this.messageForm.value, this.data.data.id)
+      .subscribe({
+        complete: () => {
+          const modalData = this.data.data;
+          this.getByID(modalData.id, modalData.isEdit);
+          this.resetMessageModal();
+          this.isSubmitting$.next(false);
+        },
+        error: () => {
+          this.dialogRef.close();
+          this.openRequestFailureModal(this.requestId);
+        }
+      });
+  }
+
   private getByID(id: number, isDraft: boolean): void {
     this.loading$.next(true);
     const req$ = isDraft ?
@@ -334,16 +402,31 @@ export class DemandSuretyDrawerComponent implements OnInit {
           this.viewingData = res
           // this.fileTypeConversion(res?.Files)
         }
+
+        const files = (res?.Files || data?.Files || []) as FileMode[];
+
+        for (let file of files) {
+          const docs = this.groupDocuments.get(file.Identifier) as FormArray;
+          const control = this.createDocumentControl(file);
+          docs?.push(control);
+        }
+
+        this.patchData(data);
+
         if (!isDraft) {
           this.titleInfo = { create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status) };
-        } else {
-          //this.nextPage()
-          this.patchData(data);
         }
       }),
       finalize(() => this.loading$.next(false))
     )
       .subscribe();
+  }
+
+  private initMessageForm() {
+    this.messageForm = this.fb.group({
+      FileCode: [''],
+      Comment: ['', Validators.required]
+    });
   }
 
   initOrgDataForm(): void {
@@ -553,6 +636,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
 
   addAccount(): void {
     let control = this.additionalAccountForm;
+    if (this.isView) control.disable()
     control.push(this.createAdditionalAccountForm());
     this.getAdditionalBankData(control.length - 1);
     this.bankAdditionalDataByName = [];
@@ -608,6 +692,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
 
   addRealty(): void {
     let control = this.houses;
+    if (this.isView) control.disable()
     control.push(this.fb.group({
       fullAddress: null,
       owner: true
@@ -636,6 +721,8 @@ export class DemandSuretyDrawerComponent implements OnInit {
 
   addDebentures(): void {
     let control = this.debt;
+    if (this.isView) control.disable()
+
     control.push(this.fb.group({
       creditor: null,
       contractAmount: null,
@@ -669,6 +756,8 @@ export class DemandSuretyDrawerComponent implements OnInit {
 
   addEdms(): void {
     let control = this.docs;
+    if (this.isView) control.disable()
+
     control.push(this.fb.group({
       debitor: null,
       provider: null
@@ -835,6 +924,9 @@ export class DemandSuretyDrawerComponent implements OnInit {
       Size: [null],
       DemandFileID: [null]
     });
+    if (this.isView) {
+      control.disable()
+    }
     control.patchValue(data);
     return control;
   }
@@ -847,13 +939,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
     const factoringProperties = data.Factoring.Properties;
     const factoringObligations = data.Factoring.Obligations;
     const factoringEDI = data.Factoring.EDI;
-    const files = (data.Files || []) as FileMode[];
 
-    for (let file of files) {
-      const docs = this.groupDocuments.get(file.Identifier) as FormArray;
-      const control = this.createDocumentControl(file);
-      docs?.push(control);
-    }
 
     console.log(this.groupDocuments.getRawValue());
 
@@ -884,43 +970,51 @@ export class DemandSuretyDrawerComponent implements OnInit {
 
     factoringAddonAccounts.forEach(item => {
       if (item.Bank || item.Number || item.Date || item.Expire || item.Comment) {
-        this.additionalAccountForm.push(this.fb.group({
+        const group = this.fb.group({
           bank: item.Bank,
           bill: item.Number,
           createDate: item.Date,
           closeDate: item.Expire,
           reason: item.Comment
-        }));
+        })
+        if (this.isView) group.disable()
+        this.additionalAccountForm.push(group);
       }
     });
 
     factoringProperties.forEach(item => {
       if (item.Address.City || item.Type) {
-        this.houses.push(this.fb.group({
+        const group = this.fb.group({
           fullAddress: item.Address.City,
           owner: item.Type
-        }));
+        })
+        if (this.isView) group.disable()
+        this.houses.push(group);
       }
     });
 
     factoringObligations.forEach(item => {
       if (item.Creditor || item.Type || item.Date || item.Summ || item.ReportingRest || item.CurrentRest) {
-        this.debt.push(this.fb.group({
+        const group = this.fb.group({
           creditor: item.Creditor,
           commitmentType: item.Type,
           dateEnd: item.Date,
           contractAmount: item.Summ,
           balanceEnd: item.ReportingRest,
           balanceToday: item.CurrentRest
-        }));
+        })
+        if (this.isView) group.disable()
+        this.debt.push(group);
       }
     });
     factoringEDI.forEach(item => {
       if (item.Company || item.EDIProvider) {
-        this.docs.push(this.fb.group({
+        const group = this.fb.group({
           debitor: item.Company,
           provider: item.EDIProvider
-        }));
+        })
+        if (this.isView) group.disable()
+        this.docs.push(group);
       }
     });
   }
@@ -1261,6 +1355,7 @@ export class DemandSuretyDrawerComponent implements OnInit {
     height: '95px',
     width: '100%'
   };
+  DemandSuretyDataConfig: DataField[] = DemandSuretyDataConfig;
 
   private getStatus(status: string): string {
     let result: string = '';
@@ -1294,7 +1389,6 @@ export class DemandSuretyDrawerComponent implements OnInit {
   }
 
   get date(): { create: string, update: string, status: string } {
-    console.log(this.titleInfo);
     return this.titleInfo;
   }
 }

@@ -1,4 +1,32 @@
-
+<ng-template #editForm>
+  <!-- первый скрин -->
+  <div>
+    <mib-spacing type="xs2"></mib-spacing>
+    <h4>Основная информация</h4>
+    <mib-spacing type="xs"></mib-spacing>
+    <mib-demand-signature-second-step
+      [orgDataForm]="orgDataForm"
+      [options]=dataByINN
+      (apply)="nextPage(false)"
+    ></mib-demand-signature-second-step>
+    <mib-spacing type="m"></mib-spacing>
+  </div>
+  <!-- второй скрин -->
+  <div>
+    <mib-demand-signature-third-step
+      [docFormData]="personalDataForm"
+      (changeDoc)="addDocuments($event)"
+      [personalDataForm]="personalDataForm"
+    ></mib-demand-signature-third-step>
+  </div>
+  <!-- третий скрин -->
+  <div >
+    <mib-demand-signature-fourth-step
+      [docFormData]="personalDataForm"
+      (changeDoc)="addDocuments($event)"
+    ></mib-demand-signature-fourth-step>
+  </div>
+</ng-template>
 
 <mib-blur-loader *ngIf="loading$ | async"></mib-blur-loader>
 
@@ -59,9 +87,10 @@
         </mib-tab-item>
         <mib-tab-item value="2">
           <!--Информация-->
-          <mib-demand-signature-info-tab
-            [data]="viewingData?.Data"
-          ></mib-demand-signature-info-tab>
+<!--          <mib-demand-signature-info-tab-->
+<!--            [data]="viewingData?.Data"-->
+<!--          ></mib-demand-signature-info-tab>-->
+          <ng-container *ngTemplateOutlet="editForm"></ng-container>
         </mib-tab-item>
         <mib-tab-item value="3">
           <!--Документы-->

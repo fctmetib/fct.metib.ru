@@ -1,3 +1,1 @@
-export interface RegisterReponseInterface {
-  ConfirmationCode: string;
-}
+export type RegisterResponseInterface = string

@@ -1,109 +1,105 @@
-<mib-blur-loader *ngIf="loading$ | async"></mib-blur-loader>
-<mib-drawer>
-	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header> </mib-drawer-header>
-	<mib-drawer-container>
-		<ng-container [ngSwitch]="status">
-			<ng-container *ngSwitchCase="DemandStatus.edit">
-				<ng-container [formGroup]="form">
-					<h4>Запрос на редактирования профиля</h4>
-					<mib-spacing type="xs"></mib-spacing>
-					<p class="headline">Персональные данные</p>
-					<mib-spacing type="xs2"></mib-spacing>
-					<div class="flex flex_column gap-12" formGroupName="Profile">
-						<div class="flex gap-12" formGroupName="Name">
-							<mib-input class="flex_grow">
-								<input mibInput formControlName="Last" />
-								<ng-container mibLabel>Фамилия</ng-container>
-							</mib-input>
-							<mib-input class="flex_grow">
-								<input mibInput formControlName="First" />
-								<ng-container mibLabel>Имя</ng-container>
-							</mib-input>
-						</div>
-						<div class="flex flex_column">
-							<p class="text text_s c-bti-tertiary">Пол</p>
-							<div class="flex pt-4">
-								<mib-checkbox formControlName="Male" class="gap-8 flex_grow">
-									<span class="text text_m">Мужской</span>
-								</mib-checkbox>
-								<mib-checkbox formControlName="Female" class="gap-8 flex_grow">
-									<span class="text text_m">Женский</span>
-								</mib-checkbox>
-							</div>
-						</div>
-					</div>
-					<mib-spacing type="s"></mib-spacing>
-					<p class="headline">Контактные данные</p>
-					<mib-spacing type="xs2"></mib-spacing>
-					<div class="flex gap-12" formGroupName="Profile">
-						<mib-input class="flex_grow">
-							<input mibInput formControlName="Phone" />
-							<ng-container mibLabel>Мобильный телефон</ng-container>
-						</mib-input>
-						<mib-input class="flex_grow">
-							<input mibInput formControlName="Email" />
-							<ng-container mibLabel>Электронная почта</ng-container>
-						</mib-input>
-					</div>
-					<mib-spacing type="s"></mib-spacing>
-					<div class="flex flex_column gap-12" formGroupName="Passport">
-						<p class="headline">Персональные данные</p>
-						<div class="flex">
-							<mib-select
-								class="w-100"
-								type="outline"
-								placeholder="Выберите гражданство"
-								formControlName="Nationality"
-							>
-								<mib-dropdown-point
-									*ngFor="let country of countries"
-									[value]="country.Title"
-									[text]="country.Title"
-								></mib-dropdown-point>
-							</mib-select>
-						</div>
-						<div class="flex gap-12">
-							<mib-input class="flex_grow">
-								<input mibInput formControlName="PassportSeriesAndNumber" />
-								<ng-container mibLabel>Серия и номер</ng-container>
-							</mib-input>
-							<mib-input class="flex_grow">
-								<input type="date" mibInput formControlName="Date" />
-								<ng-container mibLabel>Дата выдачи</ng-container>
-							</mib-input>
-						</div>
-						<mib-input>
-							<input mibInput formControlName="IssuerCode" />
-							<ng-container mibLabel>Код подразделения</ng-container>
-						</mib-input>
-						<mib-input>
-							<input mibInput formControlName="IssuerTitle" />
-							<ng-container mibLabel>Кем выдан паспорт</ng-container>
-						</mib-input>
-					</div>
-					<mib-spacing type="xs"></mib-spacing>
-					<p class="headline">Прикрепите скан-копию паспорта в поле ниже</p>
-					<mib-spacing type="xs2"></mib-spacing>
-					<ng-container *ngIf="!documents.controls?.length; else docsTemplate"></ng-container>
-					<ng-template #docsTemplate>
-						<p class="text text_m text_medium">Прикрепленные документы</p>
-						<mib-spacing type="xs2"></mib-spacing>
-						<div *ngFor="let document of documents?.controls; let i = index">
-							<mib-dl-file-cell
-								[attr.index]="i"
-								[showRemove]="true"
-								(onDload)="downloadCurrentFile(document)"
-								(onRemove)="deleteDocument(i)"
-								[fileName]="document.get('FileName')?.value"
-							></mib-dl-file-cell>
-							<mib-spacing type="xs2"></mib-spacing>
-						</div>
-						<mib-spacing type="xs2"></mib-spacing>
-					</ng-template>
-					<mib-dnd
-						[multiple]="true"
-						(onChange)="onDocumentLoad($event)"
-						[accept]="[
+<ng-template #editeForm>
+  <ng-container [formGroup]="form">
+    <p class="headline">Персональные данные</p>
+    <mib-spacing type="xs2"></mib-spacing>
+    <div class="flex flex_column gap-12" formGroupName="UserProfile">
+      <div class="flex gap-12" formGroupName="Name">
+        <mib-input class="flex_grow">
+          <input mibInput formControlName="Last" />
+          <ng-container mibLabel>Фамилия</ng-container>
+        </mib-input>
+        <mib-input class="flex_grow">
+          <input mibInput formControlName="First" />
+          <ng-container mibLabel>Имя</ng-container>
+        </mib-input>
+      </div>
+      <div class="flex flex_column">
+        <p class="text text_s c-bti-tertiary">Пол</p>
+        <div class="flex pt-4">
+          <mib-checkbox formControlName="Male" class="gap-8 flex_grow">
+            <span class="text text_m">Мужской</span>
+          </mib-checkbox>
+          <mib-checkbox formControlName="Female" class="gap-8 flex_grow">
+            <span class="text text_m">Женский</span>
+          </mib-checkbox>
+        </div>
+      </div>
+    </div>
+    <mib-spacing type="s"></mib-spacing>
+    <p class="headline">Контактные данные</p>
+    <mib-spacing type="xs2"></mib-spacing>
+    <div class="flex gap-12" formGroupName="UserProfile">
+      <mib-input class="flex_grow">
+        <input mibInput formControlName="Phone" />
+        <ng-container mibLabel>Мобильный телефон</ng-container>
+      </mib-input>
+      <mib-input class="flex_grow">
+        <input mibInput formControlName="Email" />
+        <ng-container mibLabel>Электронная почта</ng-container>
+      </mib-input>
+    </div>
+    <mib-spacing type="s"></mib-spacing>
+    <div class="flex flex_column gap-12" formGroupName="Passport">
+      <p class="headline">Персональные данные</p>
+      <div class="flex">
+        <mib-select
+          class="w-100"
+          type="outline"
+          placeholder="Выберите гражданство"
+          formControlName="Nationality"
+        >
+          <mib-dropdown-point
+            *ngFor="let country of countries"
+            [value]="country.Title"
+            [text]="country.Title"
+          ></mib-dropdown-point>
+        </mib-select>
+      </div>
+      <div class="flex gap-12">
+        <mib-input class="flex_grow">
+          <input mibInput formControlName="Number" />
+          <ng-container mibLabel>Серия и номер</ng-container>
+        </mib-input>
+        <mib-input class="flex_grow">
+          <input type="date" mibInput formControlName="Date" />
+          <ng-container mibLabel>Дата выдачи</ng-container>
+        </mib-input>
+      </div>
+      <mib-input>
+        <input mibInput formControlName="IssuerCode" />
+        <ng-container mibLabel>Код подразделения</ng-container>
+      </mib-input>
+      <mib-input>
+        <input mibInput formControlName="IssuerTitle" />
+        <ng-container mibLabel>Кем выдан паспорт</ng-container>
+      </mib-input>
+    </div>
+    <mib-spacing type="xs"></mib-spacing>
+    <p class="headline">Прикрепите скан-копию паспорта в поле ниже</p>
+    <mib-spacing type="xs2"></mib-spacing>
+    <ng-container *ngIf="!documents.controls?.length; else docsTemplate"></ng-container>
+    <ng-template #docsTemplate>
+      <p class="text text_m text_medium">Прикрепленные документы</p>
+      <mib-spacing type="xs2"></mib-spacing>
+      <div *ngFor="let document of documents?.controls; let i = index">
+        <mib-dl-file-cell
+          [attr.index]="i"
+          [showRemove]="!form.disabled"
+          (onDload)="downloadCurrentFile(document)"
+          (onRemove)="deleteDocument(i)"
+          [fileName]="document.get('FileName')?.value"
+        ></mib-dl-file-cell>
+        <mib-spacing type="xs2"></mib-spacing>
+      </div>
+      <mib-spacing type="xs2"></mib-spacing>
+    </ng-template>
+    <ng-container
+      *ngIf="!form.disabled"
+    >
+      <mib-dnd
+        [multiple]="true"
+        (onChange)="onDocumentLoad($event)"
+        [accept]="[
 							'application/pdf',
 							'application/msword',
 							'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -112,19 +108,32 @@
 							'image/jpeg',
 							'image/png'
 						]"
-						headline="Прикрепите документ"
-					></mib-dnd>
-					<mib-spacing type="xs2"></mib-spacing>
-					<div>
-						<p class="text text_xs c-bti-tertiary">
-							Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
-						</p>
-						<p class="text text_xs c-bti-tertiary">
-							Размер каждого документа не должен превышать 10 МБ
-						</p>
-					</div>
-					<mib-spacing type="m"></mib-spacing>
-				</ng-container>
+        headline="Прикрепите документ"
+      ></mib-dnd>
+      <mib-spacing type="xs2"></mib-spacing>
+      <div>
+        <p class="text text_xs c-bti-tertiary">
+          Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
+        </p>
+        <p class="text text_xs c-bti-tertiary">
+          Размер каждого документа не должен превышать 10 МБ
+        </p>
+      </div>
+    </ng-container>
+    <mib-spacing type="m"></mib-spacing>
+  </ng-container>
+</ng-template>
+
+
+<mib-blur-loader *ngIf="loading$ | async"></mib-blur-loader>
+<mib-drawer>
+	<mib-drawer-header (onClose)="dialogRef.close()" drawer-header> </mib-drawer-header>
+	<mib-drawer-container>
+		<ng-container [ngSwitch]="status">
+			<ng-container *ngSwitchCase="DemandStatus.edit">
+        <h4>Запрос на редактирования профиля</h4>
+        <mib-spacing type="xs"></mib-spacing>
+				<ng-container *ngTemplateOutlet="editeForm"></ng-container>
 			</ng-container>
 
 			<ng-container *ngSwitchCase="DemandStatus.view">
@@ -191,7 +200,8 @@
           <mib-tab-item value="2">
             <h5>{{ viewingData?.Data?.Subject }}</h5>
             <mib-spacing type="xs2"></mib-spacing>
-            <div class="text text_m">{{ viewingData?.Data?.Question }}</div>
+<!--            <mib-dynamic-data [data]="viewingData?.Data" [config]="DemandEditingDataConfig"></mib-dynamic-data>-->
+            <ng-container *ngTemplateOutlet="editeForm"></ng-container>
           </mib-tab-item>
           <mib-tab-item value="3">
             <h5>Прикреплённые документы</h5>

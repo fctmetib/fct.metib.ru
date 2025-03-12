@@ -6,7 +6,7 @@ import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
 import {DemandDrawerRef} from './interfaces/demand-drawer.interface'
 import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class DemandDrawerService {
   private clearDocumentState$: BehaviorSubject<any> = new BehaviorSubject<any>(undefined)
   public getDocumentState: Observable<any> = this.clearDocumentState$.asObservable()

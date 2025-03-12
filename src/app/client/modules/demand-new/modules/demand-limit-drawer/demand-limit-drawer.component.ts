@@ -34,12 +34,19 @@ import { DemandStatus } from '../../types/demand-status';
 import { DemandDrawerService } from '../demand-drawer/demand-drawer.service';
 import { Properties } from 'csstype';
 import { DemandInterface } from '../../types/demand.interface';
+import { DataField } from '../../../reports/components/dynamic-data/dynamic-data.component';
 
 
 export type DocumentsType =
   'statement'
   | 'reporting'
   | 'informationLetter'
+
+
+export const DemandLimitDataConfig: DataField[] = [
+  { label: 'Лимит', key: 'Limit', type: 'currency' },
+  { label: 'Комментарий', key: 'Comment', type: 'text' },
+]
 
 @Component({
   selector: 'mib-demand-limit-drawer',
@@ -81,6 +88,7 @@ export class DemandLimitDrawerComponent implements OnInit {
   dialogRef = inject<MatDialogRef<DemandLimitDrawerComponent>>(MatDialogRef);
   data = inject<DrawerData>(MAT_DIALOG_DATA);
   messageForm: FormGroup;
+  DemandLimitDataConfig: DataField[] = DemandLimitDataConfig;
 
   get date(): {create: string, update: string, status: string} {
     return this.titleInfo
@@ -91,6 +99,11 @@ export class DemandLimitDrawerComponent implements OnInit {
     this.initForm();
     this.initMessageForm()
     this.initGroupDocuments();
+
+    if (this.isView) {
+      this.form.disable();
+      this.groupDocuments.disable();
+    }
 
     const demandId = modalData?.id;
     if (demandId) this.getAndPatchDemandById(demandId);
@@ -134,16 +147,15 @@ export class DemandLimitDrawerComponent implements OnInit {
           }
         }
 
+        this.form.patchValue({
+          Limit: demandData?.Limit,
+          Comment: demandData?.Comment,
+          Files: demandData?.Files
+        }, { emitEvent: false });
+
         if (!this.data.data?.isEdit) {
           this.titleInfo = { create: res.DateCreated, update: res.DateModify, status: this.getStatus(res.Status) };
-        } else {
-          this.form.patchValue({
-            Limit: demandData?.Limit,
-            Comment: demandData?.Comment,
-            Files: demandData?.Files
-          }, { emitEvent: false });
         }
-
       }),
       finalize(() => this.loading$.next(false))
     ).subscribe();

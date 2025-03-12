@@ -1,7 +1,342 @@
+<ng-template #editViewForm>
+  <mib-demand-surety-drawer-second-step
+    [options]="dataByINN"
+    (apply)="setDataToOrgForm()"
+    [orgDataForm]="orgDataForm"
+  ></mib-demand-surety-drawer-second-step>
+  <mib-spacing type="m"></mib-spacing>
+  <mib-demand-surety-drawer-third-step [options]="bankDataByName" [bankForm]="bankForm"
+  ></mib-demand-surety-drawer-third-step>
+  <mib-spacing type="xs2"></mib-spacing>
+  <form [formGroup]="form">
+    <div class="flex flex_column">
+      <p class="headline">Дополнительный счёт</p>
+      <mib-spacing type="xs2"></mib-spacing>
+      <p class="text text_s c-bti-secondary">
+        Вы также можете указать дополнительные счета для отслеживания
+        расходов по проектам, счета для онлайн-продаж, счета для
+        определенных клиентов и т. д.
+      </p>
+    </div>
+    <mib-spacing type="xs"></mib-spacing>
+    <div formArrayName="additionalAccountForm">
+      <div class="form"
+           *ngFor="let form of form.get('additionalAccountForm')['controls']; let i = index" [formGroupName]="i">
+        <div class="flex flex_column">
+          <div class="flex">
+            <div class="flex w-100 flex_align-center">
+              <div class="flex gap-6 flex_grow">
+                <mib-badge type="filled-secondary" [extended]="true" size="m"
+                >Дополнительный
+                </mib-badge
+                >
+              </div>
+              <div class="flex">
+                <mib-button
+                  size="s"
+                  *ngIf="!form.disabled"
+                  [disabled]="form.disabled"
+                  (press)="deleteAccount(i)"
+                  type="ghost-secondary"
+                >
+                  <mib-icon
+                    btn-icon
+                    class="stroke"
+                    name="fi_trash"
+                  ></mib-icon>
+                </mib-button>
+              </div>
+            </div>
+          </div>
+          <mib-spacing type="xs2"></mib-spacing>
+          <div class="flex flex_column">
+            <div class="flex gap-12 flex_column">
+              <div class="flex gap-12">
+                <mib-autocomplete
+                  [options]="bankAdditionalDataByName"
+                  (focus)="bankAdditionalDataByName = []"
+                  [searchIcon]="true"
+                  formControlName="bank"
+                  label="Банк"
+                  class="flex_grow">
+                </mib-autocomplete>
+                <mib-input class="flex_grow">
+                  <input mibInput formControlName="bill" />
+                  <ng-container mibLabel>Номер счёта</ng-container>
+                </mib-input>
+              </div>
+              <div class="flex gap-12">
+                <mib-input class="flex_grow">
+                  <input type="date" mibInput formControlName="createDate" />
+                  <ng-container mibLabel>Дата открытия</ng-container>
+                </mib-input>
+                <mib-input class="flex_grow">
+                  <input type="date" mibInput formControlName="closeDate" />
+                  <ng-container mibLabel>Дата закрытия</ng-container>
+                </mib-input>
+              </div>
+              <mib-input>
+                <input mibInput formControlName="reason" />
+                <ng-container mibLabel>Цель открытия</ng-container>
+              </mib-input>
+            </div>
+            <mib-spacing type="xs"></mib-spacing>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- contracted-form.component(edit-end) -->
+  <mib-link
+    [disabled]="form.disabled"
+    (click)="addAccount()" size="m" type="ghost-primary"
+  >Добавить счёт
+    <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>
+  </mib-link>
+  <mib-spacing type="m"></mib-spacing>
+  <mib-demand-surety-drawer-fourth-step [mainDataForm]="mainDataForm"></mib-demand-surety-drawer-fourth-step>
+  <!-- contracted-form Недвижимость предприятия start-->
+  <form [formGroup]="fourthPageForm">
+    <div class="flex flex_column">
+      <div class="flex flex_column">
+        <p class="headline">Недвижимость предприятия</p>
+        <mib-spacing type="xs2"></mib-spacing>
+        <p class="text text_s c-bti-secondary">
+          По каждому пункту указать, на каких основаниях и на каких условиях
+          Предприятие владеет тем или иным объектом недвижимости
+        </p>
+        <mib-spacing type="xs"></mib-spacing>
+      </div>
+      <div formArrayName="houses">
+        <div class="form flex_column"
+             *ngFor="let form of fourthPageForm.get('houses')['controls']; let i = index" [formGroupName]="i">
+          <div class="flex flex_column">
+            <div class="flex">
+              <div class="flex w-100 flex_align-center flex_justify-end">
+                <div class="flex ml-a">
+                  <mib-button
+                    size="s"
+                    *ngIf="!form.disabled"
+
+                    [disabled]="form.disabled"
+                    (press)="deleteHouse(i)"
+                    type="ghost-secondary"
+                  >
+                    <mib-icon
+                      btn-icon
+                      class="stroke"
+                      name="fi_trash"
+                    ></mib-icon>
+                  </mib-button>
+                </div>
+              </div>
+            </div>
+            <mib-spacing type="xs2"></mib-spacing>
+            <div class="flex flex_column">
+              <div class="flex gap-12 flex_column">
+                <mib-autocomplete
+                  [options]="addressDataByName"
+                  (focus)="addressDataByName = []"
+                  [inlineStyle]="true"
+                  label="Полный адрес объекта"
+                  formControlName="fullAddress"
+                  class="flex_grow">
+                </mib-autocomplete>
+
+                <mib-select
+                  class="w-100"
+                  type="filled-secondary"
+                  placeholder="Аренда"
+                  formControlName="owner"
+                >
+                  <mib-dropdown-point
+                    value="Own"
+                    text="Собственность"
+                  ></mib-dropdown-point>
+                  <mib-dropdown-point
+                    value="Lease"
+                    text="Аренда"
+                  ></mib-dropdown-point>
+                </mib-select>
+              </div>
+              <mib-spacing type="xs"></mib-spacing>
+            </div>
+          </div>
+          <mib-spacing type="xs2"></mib-spacing>
+        </div>
+      </div>
+    </div>
+    <mib-link
+      [disabled]="form.disabled"
+      (click)="addRealty()" size="m" type="ghost-primary"
+    >Добавить недвижимость
+      <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>
+    </mib-link>
+    <mib-spacing type="s"></mib-spacing>
+    <div class="flex flex_column">
+      <div class="flex flex_column">
+        <p class="headline">Долговые обязательства</p>
+        <mib-spacing type="xs2"></mib-spacing>
+        <p class="text text_s c-bti-secondary">
+          Кредитная история и текущая кредиторская задолженность, в т. ч.
+          ссуды из других источников, включая государственные учреждения
+        </p>
+        <mib-spacing type="xs"></mib-spacing>
+      </div>
+      <div formArrayName="debt">
+        <div class="form flex_column"
+             *ngFor="let form of fourthPageForm.get('debt')['controls']; let i = index" [formGroupName]="i">
+          <div class="flex flex_column">
+            <div class="flex">
+              <div class="flex w-100 flex_align-center flex_justify-end">
+                <div class="flex">
+                  <mib-button
+                    size="s"
+                    *ngIf="!form.disabled"
+
+                    [disabled]="form.disabled"
+                    (press)="deleteDebt(i)"
+                    type="ghost-secondary"
+                  >
+                    <mib-icon
+                      btn-icon
+                      class="stroke"
+                      name="fi_trash"
+                    ></mib-icon>
+                  </mib-button>
+                </div>
+              </div>
+            </div>
+            <mib-spacing type="xs2"></mib-spacing>
+            <div class="flex flex_column gap-12">
+              <mib-autocomplete
+                [options]="dataByCreditorINN"
+                (focus)="dataByCreditorINN = []"
+                label="Кредитор"
+                formControlName="creditor"
+                class="flex_grow">
+              </mib-autocomplete>
+              <div class="flex gap-12">
+                <mib-input class="flex_grow">
+                  <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+                  <input mask="separator" mibInput formControlName="contractAmount" />
+                  <ng-container mibLabel>Сумма договора</ng-container>
+                </mib-input>
+                <mib-input class="flex_grow">
+                  <input mibInput formControlName="commitmentType" />
+                  <ng-container mibLabel>Тип обязательства</ng-container>
+                </mib-input>
+              </div>
+              <mib-input>
+                <input type="date" mibInput formControlName="dateEnd" />
+                <ng-container mibLabel>Дата погашения</ng-container>
+              </mib-input>
+              <div class="flex gap-12">
+                <mib-input class="flex_grow">
+                  <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+                  <input mask="separator" mibInput type="number" formControlName="balanceEnd" />
+                  <ng-container mibLabel
+                  >Остаток на дату отчётности
+                  </ng-container
+                  >
+                </mib-input>
+                <mib-input class="flex_grow">
+                  <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+                  <input mask="separator" mibInput type="number" formControlName="balanceToday" />
+                  <ng-container mibLabel
+                  >Остаток на текущую дату
+                  </ng-container
+                  >
+                </mib-input>
+              </div>
+            </div>
+          </div>
+          <mib-spacing type="xs2"></mib-spacing>
+        </div>
+      </div>
+    </div>
+    <mib-link
+      [disabled]="form.disabled"
+      (click)="addDebentures()" size="m" type="ghost-primary"
+    >Добавить задолженность
+      <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>
+    </mib-link>
+    <mib-spacing type="s"></mib-spacing>
+    <!-- contracted-form Долговые обязательства end -->
+    <!-- contracted-form Электронный документооборот start-->
+    <div class="flex flex_column">
+      <div class="flex flex_column">
+        <p class="headline">Электронный документооборот</p>
+        <mib-spacing type="xs2"></mib-spacing>
+        <p class="text text_s c-bti-secondary">
+          Взаимодействие с EDI-провайдерами по электронному документообороту
+        </p>
+        <mib-spacing type="xs"></mib-spacing>
+      </div>
+      <div formArrayName="docs">
+        <div class="form flex_column"
+             *ngFor="let form of fourthPageForm.get('docs')['controls']; let i = index" [formGroupName]="i">
+          <div class="flex flex_column">
+            <div class="flex">
+              <div class="flex w-100 flex_align-center flex_justify-end">
+                <div class="flex">
+                  <mib-button
+                    size="s"
+                    *ngIf="!form.disabled"
+
+                    [disabled]="form.disabled"
+                    (press)="deleteEdm(i)"
+                    type="ghost-secondary"
+                  >
+                    <mib-icon
+                      btn-icon
+                      class="stroke"
+                      name="fi_trash"
+                    ></mib-icon>
+                  </mib-button>
+                </div>
+              </div>
+            </div>
+            <mib-spacing type="xs2"></mib-spacing>
+            <div class="flex flex_column gap-12">
+              <mib-autocomplete
+                [options]="dataByDebitorINN"
+                (focus)="dataByDebitorINN = []"
+                label="Дебитор"
+                formControlName="debitor"
+                class="flex_grow">
+              </mib-autocomplete>
+              <mib-input>
+                <input mibInput formControlName="provider" />
+                <ng-container mibLabel>EDI-провайдер</ng-container>
+              </mib-input>
+            </div>
+          </div>
+          <mib-spacing type="xs2"></mib-spacing>
+        </div>
+      </div>
+    </div>
+    <mib-link
+      [disabled]="form.disabled"
+      (click)="addEdms()" size="m" type="ghost-primary"
+    >Добавить взаимодействие
+      <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>
+    </mib-link>
+    <!-- contracted-form Электронный документооборот end -->
+    <mib-spacing type="m"></mib-spacing>
+  </form>
+
+  <mib-demand-surety-drawer-fifth-step
+    [formGroup]="groupDocuments"
+    (changeDoc)="addDocuments($event)"
+  ></mib-demand-surety-drawer-fifth-step>
+</ng-template>
+
+
 <mib-blur-loader *ngIf="loading$ | async"></mib-blur-loader>
 <mib-drawer>
   <mib-drawer-header
-    showProgressBar="true"
+    [showProgressBar]="!isView"
     (onClose)="dialogRef.close()"
     drawer-header
     [maxPage]="maxPage"
@@ -74,9 +409,9 @@
 
         </mib-tab-item>
         <mib-tab-item value="2">
-          <h5>{{viewingData?.Data?.Subject}}</h5>
+          <h5>{{ viewingData?.Data?.Subject }}</h5>
           <mib-spacing type="xs2"></mib-spacing>
-          <div class="text text_m">{{viewingData?.Data?.Question}}</div>
+          <ng-container *ngTemplateOutlet="editViewForm"></ng-container>
         </mib-tab-item>
         <mib-tab-item value="3">
           <h5>Прикреплённые документы</h5>
@@ -99,7 +434,7 @@
           <h5>Комментарий к запросу</h5>
           <mib-spacing type="xs2"></mib-spacing>
           <div class="text text_m" *ngIf="viewingData?.Result?.Comment;else commentPlaceholder">
-            {{viewingData?.Result?.Comment}}
+            {{ viewingData?.Result?.Comment }}
           </div>
           <ng-template #commentPlaceholder>
             <div class="text text_s">Комментариев не оставлено...</div>
@@ -147,7 +482,6 @@
             </mib-tab-item>
           </mib-tab-group> -->
 
-
           <mib-demand-surety-drawer-second-step
             [options]="dataByINN"
             (apply)="setDataToOrgForm()"
@@ -155,7 +489,6 @@
           ></mib-demand-surety-drawer-second-step>
           <mib-spacing type="m"></mib-spacing>
         </div>
-
 
         <!-- второй скрин -->
         <div *ngSwitchCase="2">
@@ -175,7 +508,8 @@
             <mib-spacing type="xs"></mib-spacing>
             <div formArrayName="additionalAccountForm">
               <div class="form"
-                   *ngFor="let form of form.get('additionalAccountForm')['controls']; let i = index" [formGroupName]="i">
+                   *ngFor="let form of form.get('additionalAccountForm')['controls']; let i = index"
+                   [formGroupName]="i">
                 <div class="flex flex_column">
                   <div class="flex">
                     <div class="flex w-100 flex_align-center">
@@ -188,6 +522,7 @@
                       <div class="flex">
                         <mib-button
                           size="s"
+                          *ngIf="!form.disabled"
                           (press)="deleteAccount(i)"
                           type="ghost-secondary"
                         >
@@ -241,7 +576,9 @@
 
 
           <!-- contracted-form.component(edit-end) -->
-          <mib-link (click)="addAccount()" size="m" type="ghost-primary"
+          <mib-link
+            [disabled]="form.disabled"
+            (click)="addAccount()" size="m" type="ghost-primary"
           >Добавить счёт
             <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>
           </mib-link>
@@ -272,6 +609,7 @@
                         <div class="flex ml-a">
                           <mib-button
                             size="s"
+                            *ngIf="!form.disabled"
                             (press)="deleteHouse(i)"
                             type="ghost-secondary"
                           >
@@ -319,7 +657,9 @@
                 </div>
               </div>
             </div>
-            <mib-link (click)="addRealty()" size="m" type="ghost-primary"
+            <mib-link
+              [disabled]="form.disabled"
+              (click)="addRealty()" size="m" type="ghost-primary"
             >Добавить недвижимость
               <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>
             </mib-link>
@@ -343,6 +683,8 @@
                         <div class="flex">
                           <mib-button
                             size="s"
+                            *ngIf="!form.disabled"
+
                             (press)="deleteDebt(i)"
                             type="ghost-secondary"
                           >
@@ -360,7 +702,7 @@
                       <mib-autocomplete
                         [options]="dataByCreditorINN"
                         (focus)="dataByCreditorINN = []"
-                        label = "Кредитор"
+                        label="Кредитор"
                         formControlName="creditor"
                         class="flex_grow">
                       </mib-autocomplete>
@@ -382,7 +724,7 @@
                       <div class="flex gap-12">
                         <mib-input class="flex_grow">
                           <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
-                          <input mask="separator" mibInput formControlName="balanceEnd" />
+                          <input mask="separator" mibInput type="number" formControlName="balanceEnd" />
                           <ng-container mibLabel
                           >Остаток на дату отчётности
                           </ng-container
@@ -390,7 +732,7 @@
                         </mib-input>
                         <mib-input class="flex_grow">
                           <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
-                          <input mask="separator" mibInput formControlName="balanceToday" />
+                          <input mask="separator" mibInput type="number" formControlName="balanceToday" />
                           <ng-container mibLabel
                           >Остаток на текущую дату
                           </ng-container
@@ -403,7 +745,9 @@
                 </div>
               </div>
             </div>
-            <mib-link (click)="addDebentures()" size="m" type="ghost-primary"
+            <mib-link
+              [disabled]="form.disabled"
+              (click)="addDebentures()" size="m" type="ghost-primary"
             >Добавить задолженность
               <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>
             </mib-link>
@@ -428,6 +772,8 @@
                         <div class="flex">
                           <mib-button
                             size="s"
+                            *ngIf="!form.disabled"
+
                             (press)="deleteEdm(i)"
                             type="ghost-secondary"
                           >
@@ -445,7 +791,7 @@
                       <mib-autocomplete
                         [options]="dataByDebitorINN"
                         (focus)="dataByDebitorINN = []"
-                        label = "Дебитор"
+                        label="Дебитор"
                         formControlName="debitor"
                         class="flex_grow">
                       </mib-autocomplete>
@@ -459,7 +805,9 @@
                 </div>
               </div>
             </div>
-            <mib-link (click)="addEdms()" size="m" type="ghost-primary"
+            <mib-link
+              [disabled]="form.disabled"
+              (click)="addEdms()" size="m" type="ghost-primary"
             >Добавить взаимодействие
               <mib-icon mibLeftIcon class="stroke" name="fi_plus"></mib-icon>
             </mib-link>
@@ -482,8 +830,15 @@
       </div>
     </ng-template>
   </mib-drawer-container>
+  <mib-drawer-footer drawer-footer *ngIf="DemandStatus.view === status && tabIndex === '1'">
+    <mib-send-messages
+      [disabled]="(isSubmitting$ | async)"
+      [form]="messageForm"
+      (sendMessage)="sendMessage()"
+    ></mib-send-messages>
+  </mib-drawer-footer>
   <!-- дровер футер -->
-  <mib-drawer-footer drawer-footer>
+  <mib-drawer-footer drawer-footer *ngIf="DemandStatus.edit === status">
     <div class="flex w-100 flex_justify-between">
       <div class="flex">
         <mib-button

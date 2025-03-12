@@ -29,24 +29,25 @@ import { NavbarModule } from '../../../../../shared/ui-kit/navbar/navbar.module'
 import { SelectModule } from '../../../../../shared/ui-kit/select/select.module';
 import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
 import { TabModule } from '../../../../../shared/ui-kit/tab/tab.module';
+import { DynamicDataComponent } from '../../../reports/components/dynamic-data/dynamic-data.component';
 
 @NgModule({
   declarations: [DemandLimitDrawerComponent],
-  imports: [
-    CommonModule,
-    DrawerModule,
-    SpacingModule,
-    CashPanelModule,
-    InputModule,
-    LabelModule,
-    TextareaModule,
-    AutosizeModule,
-    InformationModule,
-    MibDragAndDropModule,
-    ButtonModule,
-    ReactiveFormsModule, FormsModule,
-    RubModule, DlFileCellModule, NgxMaskModule, RightIconModule, BlurLoaderModule, SendMessagesModule, AttachedDocumentModule, BadgeModule, CheckboxModule, DropdownPointModule, MessageItemModule, NavbarModule, SelectModule, SkeletonModule, TabModule
-  ],
+	imports: [
+		CommonModule,
+		DrawerModule,
+		SpacingModule,
+		CashPanelModule,
+		InputModule,
+		LabelModule,
+		TextareaModule,
+		AutosizeModule,
+		InformationModule,
+		MibDragAndDropModule,
+		ButtonModule,
+		ReactiveFormsModule, FormsModule,
+		RubModule, DlFileCellModule, NgxMaskModule, RightIconModule, BlurLoaderModule, SendMessagesModule, AttachedDocumentModule, BadgeModule, CheckboxModule, DropdownPointModule, MessageItemModule, NavbarModule, SelectModule, SkeletonModule, TabModule, DynamicDataComponent
+	],
   providers: [DemandLimitDrawerService, DemandService]
 })
 export class DemandLimitDrawerModule {
