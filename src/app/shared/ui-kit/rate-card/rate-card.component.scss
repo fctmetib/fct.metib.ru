@@ -7,10 +7,14 @@
 }
 
 .rate {
-	padding: 0 38px;
-	max-width: 364px;
-	position: relative;
-	overflow: visible;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+  padding: 0 38px;
+  max-width: 364px;
+  position: relative;
+  overflow: visible;
   border: 2px solid transparent;
 
   & .badge {
