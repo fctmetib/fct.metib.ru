@@ -11,18 +11,24 @@
 	max-width: 364px;
 	position: relative;
 	overflow: visible;
+  border: 2px solid transparent;
 
-	& .badge {
-		background-color: var(--mc-default);
-		color: white;
-		font-size: 14px;
-		padding: 4px 14px;
-		border-radius: 99px;
-		position: absolute;
-		top: -10px;
-		left: 29px;
-		z-index: 20;
-	}
+  & .badge {
+    background-color: var(--mc-default);
+    color: white;
+    font-size: 14px;
+    padding: 4px 14px;
+    border-radius: 99px;
+    position: absolute;
+    top: -10px;
+    left: 29px;
+    z-index: 20;
+  }
+
+  &:has(.badge) {
+    border: 2px solid  var(--mc-default);
+    border-radius: 12px;
+  }
 
 	& .rate-header {
 		min-height: 168px;

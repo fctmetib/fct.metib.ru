@@ -23,19 +23,27 @@
 		<div class="flex">
 			<div class="card flex gap-22">
 				<ng-container *ngFor="let item of rates" class="flex">
-					<mib-rate-card
-						[title]="item?.title"
-						[description]="item?.content"
-						[features]="item?.list"
-						[extras]="item?.extra"
+          <mib-rate-card
+            [title]="item?.title"
+            [description]="item?.content"
+            [features]="item?.list"
+            [extras]="item?.extra"
             [badge]="item?.badge || ''"
 						(onRate)="openLandingRequestModal('Рассчитать')"
 					></mib-rate-card>
 				</ng-container>
 			</div>
 		</div>
+    <mib-spacing type="m"></mib-spacing>
+    <div>
+      <p class="tariffs-sub text text_m c-bti-secondary">
+        * в тариф входит 7 бесплатных дней
+        <br />
+        ** необходимо предоставлять скан-копии оригиналов
+      </p>
+    </div>
 	</div>
-	<mib-spacing type="s"></mib-spacing>
+<!--	<mib-spacing type="s"></mib-spacing>-->
 	<mib-spacing type="{{ isDesktop ? 'xl2' : 'm' }}"></mib-spacing>
 	<div class="container flex banner flex_justify-center">
 		<div class="banner-wrap flex w-100 flex_align-center">
