@@ -10,7 +10,8 @@ export class DlFileCellComponent {
 	@Input() size: DlFileCellSize = 'm'
 	@Input() fileSize = ''
 	@Input() fileName = ''
-	@Input() showRemove: boolean = false
+  @Input() showRemove: boolean = false
+  @Input() showDownload: boolean = true
 	@Output() onDload = new EventEmitter()
 	@Output() onRemove = new EventEmitter()
 

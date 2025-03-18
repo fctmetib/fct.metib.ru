@@ -1,18 +1,20 @@
 <div class="container container_large">
-	<mib-spacing type="m"></mib-spacing>
-	<h3>Свободная задолженность</h3>
-	<mib-spacing type="m"></mib-spacing>
+  <mib-spacing type="m"></mib-spacing>
+  <h3>Свободная задолженность</h3>
+  <mib-spacing type="m"></mib-spacing>
 </div>
 <mib-tab-group>
-	<mib-navbar class="container container_large">
-		<mib-navbar-point size="m" (press)="selectTab(true)" value="1"
-			>Свободные</mib-navbar-point
-		>
-		<mib-navbar-point (press)="selectTab(false)" value="2"
-			>Все задолженности</mib-navbar-point
-		>
-	</mib-navbar>
-	<!-- <div class="container container_large">
+  <mib-navbar class="container container_large">
+    <mib-navbar-point size="m" (press)="selectTab(true)" value="1"
+    >Свободные
+    </mib-navbar-point
+    >
+    <mib-navbar-point (press)="selectTab(false)" value="2"
+    >Все задолженности
+    </mib-navbar-point
+    >
+  </mib-navbar>
+  <!-- <div class="container container_large">
     <mib-spacing type="m"></mib-spacing>
     <mib-auto-complete [style.max-width]="360+'px'">
       <mib-input autocomplete-input>
@@ -22,658 +24,278 @@
       <mib-dropdown-point *ngFor="let i of filtered | async" [value]="i.value" [text]="i.text"></mib-dropdown-point>
     </mib-auto-complete>
   </div> -->
-	<div class="container container_large">
-		<mib-spacing type="m"></mib-spacing>
-		<div class="flex flex_justify-between">
-			<div class="mobile-col flex gap-16">
-				<div class="flex flex_align-center gap-4">
-					<input
-						[formControl]="dateFrom"
-						styleType="outline"
-						type="date"
-						mibInput
-					/>
-					<p class="text text_m c-bti-tertiary">-</p>
-					<input
-						[formControl]="dateTo"
-						styleType="outline"
-						type="date"
-						mibInput
-					/>
-				</div>
-				<mib-button
-					[disabled]="!dutiesSelection.selectedCount"
-					(press)="openDrawer()"
-					type="filled-primary"
-					>Создать заявку ({{ dutiesSelection.selectedCount }})
-				</mib-button>
-			</div>
-		</div>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-table
-			[isLoading]="loading$ | async"
-			(selectionChange)="onSelectionChanged($event)"
-		>
-			<mib-table-head>
-				<mib-table-head-cell
-					[sortable]="true"
-					[showCheckbox]="freeOnly"
-					(onSort)="onSort($event, 'ID')"
-					>ИД
-				</mib-table-head-cell>
-				<ng-container *ngIf="isDesktop; else mobile">
-					<mib-table-head-cell
-						[sortable]="true"
-						(onSort)="onSort($event, 'Contract.Id')"
-						>Контракт</mib-table-head-cell
-					>
-				</ng-container>
-				<mib-table-head-cell
-					[sortable]="true"
-					(onSort)="onSort($event, 'Contract.Counterparty')"
-					>Дебитор</mib-table-head-cell
-				>
-				<mib-table-head-cell
-					[sortable]="true"
-					(onSort)="onSort($event, 'Number')"
-					>№ поставки</mib-table-head-cell
-				>
-				<mib-table-head-cell
-					[sortable]="true"
-					(onSort)="onSortByDates($event, 'Date')"
-					>Дата отгрузки</mib-table-head-cell
-				>
-				<mib-table-head-cell
-					[sortable]="true"
-					(onSort)="onSortByDates($event, 'DateContract')"
-					>Дата поставки</mib-table-head-cell
-				>
-				<mib-table-head-cell
-					[sortable]="true"
-					(onSort)="onSort($event, 'NumberInvoice')"
-					>С/ф №</mib-table-head-cell
-				>
-				<mib-table-head-cell
-					[sortable]="true"
-					(onSort)="onSortByDates($event, 'DateInvoice')"
-					>С/ф дата</mib-table-head-cell
-				>
-				<mib-table-head-cell>Статус</mib-table-head-cell>
-				<!-- <mib-table-head-cell
-					[sortable]="true"
-					(onSort)="onSortByDates($event, 'DatePayment')"
-					>Дата Платежа</mib-table-head-cell
-				> -->
-				<mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Summ')"
-					>Сумма поставки</mib-table-head-cell
-				>
-				<mib-table-head-cell [sortable]="true" (onSort)="onSort($event, 'Rest')"
-					>Остаток задолженности</mib-table-head-cell
-				>
-				<mib-table-head-cell>Внешняя ссылка</mib-table-head-cell>
-				<ng-template #mobile>
-					<mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
-				</ng-template>
-				<ng-container table-head-button *ngIf="!isDesktop">
-					<mib-button
-						[disabled]="loading$ | async"
-						(press)="prev()"
-						size="s"
-						table-row-button
-						type="ghost-secondary"
-					>
-						<mib-icon class="stroke" btn-icon name="fi_chevron-left"></mib-icon>
-					</mib-button>
-					<mib-button
-						[disabled]="loading$ | async"
-						(press)="next()"
-						size="s"
-						table-row-button
-						type="ghost-secondary"
-					>
-						<mib-icon
-							class="stroke"
-							btn-icon
-							name="fi_chevron-right"
-						></mib-icon>
-					</mib-button>
-				</ng-container>
-			</mib-table-head>
-			<ng-container *ngIf="loading$ | async; else table">
-				<mib-skeleton
-					[styles]="last ? skeletonWithoutUnderline : skeleton"
-					*ngFor="
+  <div class="container container_large">
+    <mib-spacing type="m"></mib-spacing>
+    <div class="flex flex_justify-between">
+      <div class="mobile-col flex gap-16">
+        <div class="flex flex_align-center gap-4">
+          <input
+            [formControl]="dateFrom"
+            styleType="outline"
+            type="date"
+            mibInput
+          />
+          <p class="text text_m c-bti-tertiary">-</p>
+          <input
+            [formControl]="dateTo"
+            styleType="outline"
+            type="date"
+            mibInput
+          />
+        </div>
+        <mib-button
+          [disabled]="!dutiesSelection.selectedCount"
+          (press)="openDrawer()"
+          type="filled-primary"
+        >Создать заявку ({{ dutiesSelection.selectedCount }})
+        </mib-button>
+      </div>
+    </div>
+    <mib-spacing type="xs"></mib-spacing>
+    <mib-table
+      #tableComponent
+      [data]="duties$ | async"
+      [isLoading]="loading$ | async"
+      (selectionChange)="onSelectionChanged($event)"
+      [showCheckbox]="freeOnly"
+    >
+      <mib-table-head>
+        <mib-table-head-cell
+          sortType="numerical"
+          field="ID"
+        >ИД
+        </mib-table-head-cell>
+        <ng-container *ngIf="isDesktop; else mobile">
+          <mib-table-head-cell
+            sortType="numerical"
+            field="Contract.Id"
+          >Контракт
+          </mib-table-head-cell
+          >
+        </ng-container>
+        <mib-table-head-cell
+          sortType="alphabetical"
+          field="Contract.Counterparty"
+        >Дебитор
+        </mib-table-head-cell
+        >
+        <mib-table-head-cell
+          sortType="numerical"
+          field="Number"
+        >№ поставки
+        </mib-table-head-cell
+        >
+        <mib-table-head-cell
+          sortType="date"
+          field="Date"
+        >Дата отгрузки
+        </mib-table-head-cell
+        >
+        <mib-table-head-cell
+          sortType="date"
+          field="DateContract"
+        >Дата поставки
+        </mib-table-head-cell
+        >
+        <mib-table-head-cell
+          sortType="numerical"
+          field="NumberInvoice"
+        >С/ф №
+        </mib-table-head-cell
+        >
+        <mib-table-head-cell
+          sortType="date"
+          field="DateInvoice"
+        >С/ф дата
+        </mib-table-head-cell
+        >
+        <mib-table-head-cell>Статус</mib-table-head-cell>
+        <!-- <mib-table-head-cell
+          [sortable]="true"
+          (onSort)="onSortByDates($event, 'DatePayment')"
+          >Дата Платежа</mib-table-head-cell
+        > -->
+        <mib-table-head-cell sortType="numerical" field="Summ"
+        >Сумма поставки
+        </mib-table-head-cell
+        >
+        <mib-table-head-cell sortType="numerical" field="Rest"
+        >Остаток задолженности
+        </mib-table-head-cell
+        >
+        <mib-table-head-cell>Внешняя ссылка</mib-table-head-cell>
+        <ng-template #mobile>
+          <mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
+        </ng-template>
+        <ng-container table-head-button *ngIf="!isDesktop">
+          <mib-button
+            [disabled]="loading$ | async"
+            (press)="prev()"
+            size="s"
+            type="ghost-secondary"
+          >
+            <mib-icon class="stroke" btn-icon name="fi_chevron-left"></mib-icon>
+          </mib-button>
+          <mib-button
+            [disabled]="loading$ | async"
+            (press)="next()"
+            size="s"
+            type="ghost-secondary"
+          >
+            <mib-icon
+              class="stroke"
+              btn-icon
+              name="fi_chevron-right"
+            ></mib-icon>
+          </mib-button>
+        </ng-container>
+      </mib-table-head>
+      <ng-container *ngIf="loading$ | async; else table">
+        <mib-skeleton
+          [styles]="last ? skeletonWithoutUnderline : skeleton"
+          *ngFor="
 						let i of toolsService.createEmptyArray(PAGINATOR_ITEMS_PER_PAGE);
 						let last = last
 					"
-				></mib-skeleton>
-			</ng-container>
-			<ng-template #table>
-				<ng-container *ngIf="(duties$ | async).length > 0; else emptyTable">
-					<mib-table-row
-						[rowStatus]="duty.Statistics.Comment"
-						[rowId]="duty.ID"
-						*ngFor="let duty of duties$ | async; let last = last"
-						[underlined]="!last"
-					>
-						<mib-table-cell type="main">
-							<ng-container table-cell-title>{{ duty.ID }}</ng-container>
-						</mib-table-cell>
-						<ng-container *ngIf="isDesktop; else mobileCell">
-							<mib-table-cell>
-								<ng-container table-cell-title>{{
-									duty.Contract.Number
-								}}</ng-container>
-							</mib-table-cell>
-						</ng-container>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								duty.Contract.Counterparty
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								duty.Contract.ID
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								duty.Date | date : 'dd.MM.YYYY'
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								duty.DateContract | date : 'dd.MM.YYYY'
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{ duty.Number }}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								duty.DateInvoice | date : 'dd.MM.YYYY'
-							}}</ng-container>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{
-								duty.Statistics.Comment
-							}}</ng-container>
-						</mib-table-cell>
-						<!-- <mib-table-cell>
-							<ng-container table-cell-title>{{
-								duty.DatePayment | date : 'dd.MM.YYYY'
-							}}</ng-container>
-						</mib-table-cell> -->
-						<mib-table-cell>
+        ></mib-skeleton>
+      </ng-container>
+      <ng-template #table>
+        <mib-table-row
+          [rowStatus]="duty.Statistics.Comment"
+          [rowId]="duty.ID"
+          *ngFor="let duty of tableComponent.rendererData; trackBy: trackById; let last = last"
+          [underlined]="!last"
+        >
+          <mib-table-cell [type]="freeOnly ? 'main' : 'text'">
+            <ng-container table-cell-title>{{ duty.ID }}</ng-container>
+          </mib-table-cell>
+          <ng-container *ngIf="isDesktop; else mobileCell">
+            <mib-table-cell>
+              <ng-container table-cell-title>{{
+                  duty.Contract.Number
+                }}
+              </ng-container>
+            </mib-table-cell>
+          </ng-container>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+                duty.Contract.Counterparty
+              }}
+            </ng-container>
+          </mib-table-cell>
+          <mib-table-cell type="numbers">
+            <ng-container table-cell-title>{{
+                duty.Contract.ID
+              }}
+            </ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+                duty.Date | date : 'dd.MM.YYYY'
+              }}
+            </ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+                duty.DateContract | date : 'dd.MM.YYYY'
+              }}
+            </ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{ duty.Number }}</ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+                duty.DateInvoice | date : 'dd.MM.YYYY'
+              }}
+            </ng-container>
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{
+                duty.Statistics.Comment
+              }}
+            </ng-container>
+          </mib-table-cell>
+          <!-- <mib-table-cell>
+            <ng-container table-cell-title>{{
+              duty.DatePayment | date : 'dd.MM.YYYY'
+            }}</ng-container>
+          </mib-table-cell> -->
+          <mib-table-cell type="numbers">
 							<span
-								[ngClass]="{
+                [ngClass]="{
 									'c-mc-active': !duty.Statistics.PaymentExpire,
 									'c-ac-active': duty.Statistics.PaymentExpire
 								}"
-								table-cell-title
-							>
+                table-cell-title
+              >
 								{{ duty.Summ | rub }}</span
-							>
-						</mib-table-cell>
-						<mib-table-cell>
+              >
+          </mib-table-cell>
+          <mib-table-cell type="numbers">
 							<span
-								[ngClass]="{
+                [ngClass]="{
 									'c-mc-active': !duty.Statistics.PaymentExpire,
 									'c-ac-active': duty.Statistics.PaymentExpire
 								}"
-								table-cell-title
-							>
+                table-cell-title
+              >
 								{{ duty.Rest | rub }}</span
-							>
-						</mib-table-cell>
-						<mib-table-cell>
-							<ng-container table-cell-title>{{ duty.RefNum }}</ng-container>
-						</mib-table-cell>
-						<ng-template #mobileCell>
-							<mib-table-head-cell>{{
-								getVisibleCell(duty)
-							}}</mib-table-head-cell>
-						</ng-template>
-						<ng-container table-row-button *ngIf="isDesktop; else mobile">
-							<mib-button table-row-button size="s" type="ghost-secondary">
-								<mib-icon
-									class="stroke"
-									btn-icon
-									name="fi_more-vertical"
-								></mib-icon>
-							</mib-button>
-						</ng-container>
-						<ng-template #mobile>
-							<mib-button
-								(click)="openInvoicePageModal(duty); $event.stopPropagation()"
-								size="s"
-								table-row-button
-								type="ghost-secondary"
-							>
-								<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
-							</mib-button>
-						</ng-template>
-					</mib-table-row>
-				</ng-container>
-				<ng-template #emptyTable>
-					<mib-table-row>
-						<p class="text text_m w-100 flex_align-self-center text-center">
-							нет данных
-						</p>
-					</mib-table-row>
-				</ng-template>
-			</ng-template>
-			<mib-table-footer
-				[showRemove]="false"
-				(onAction)="openDrawer()"
-				[lined]="!(loading$ | async)"
-			>
-				<ng-container table-footer-action
-					>Создать заявку ({{ dutiesSelection.selectedCount }})</ng-container
-				>
-				<mib-paginator
-					*ngIf="dutiesCount?.TotalItems"
-					(pageChange)="onPageChange($event)"
-					[totalCount]="dutiesCount?.TotalItems ?? 0"
-					[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
-					[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
-				></mib-paginator>
-			</mib-table-footer>
-		</mib-table>
-	</div>
+              >
+          </mib-table-cell>
+          <mib-table-cell>
+            <ng-container table-cell-title>{{ duty.RefNum }}</ng-container>
+          </mib-table-cell>
+          <ng-template #mobileCell>
+            <mib-table-head-cell>{{
+                getVisibleCell(duty)
+              }}
+            </mib-table-head-cell>
+          </ng-template>
+          <ng-container table-row-button *ngIf="isDesktop; else mobile">
+            <mib-button size="s" type="ghost-secondary">
+              <mib-icon
+                class="stroke"
+                btn-icon
+                name="fi_more-vertical"
+              ></mib-icon>
+            </mib-button>
+          </ng-container>
+          <ng-template #mobile>
+            <mib-button
+              (click)="openInvoicePageModal(duty); $event.stopPropagation()"
+              size="s"
+              type="ghost-secondary"
+            >
+              <mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+            </mib-button>
+          </ng-template>
+        </mib-table-row>
+        <mib-table-row
+          *ngIf="tableComponent.rendererData.length === 0"
+        >
+          <p class="text text_m w-100 flex_align-self-center text-center">
+            нет данных
+          </p>
+        </mib-table-row>
+      </ng-template>
+      <mib-table-footer
+        [showRemove]="false"
+        (onAction)="openDrawer()"
+        [lined]="!(loading$ | async)"
+      >
+        <ng-container table-footer-action
+        >Создать заявку ({{ dutiesSelection.selectedCount }})
+        </ng-container
+        >
+        <mib-paginator
+          *ngIf="dutiesCount?.TotalItems"
+          (pageChange)="onPageChange($event)"
+          [totalCount]="dutiesCount?.TotalItems ?? 0"
+          [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+          [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+        ></mib-paginator>
+      </mib-table-footer>
+    </mib-table>
+  </div>
 </mib-tab-group>
-
-<!--<div class="card-content" id="step1">-->
-<!--  <p-toolbar styleClass="p-mb-4">-->
-<!--    <ng-template pTemplate="left">-->
-<!--      <div class="button-content p-mr-2" (click)="openDateModal()">-->
-<!--        {{filterForm.value.dateFrom | date: 'dd.MM.yyyy'}} - {{filterForm.value.dateTo | date: 'dd.MM.yyyy'}}-->
-<!--      </div>-->
-<!--      <button type="button" pButton label="Показать всё" class="basic p-mr-2" (click)="showAll()"></button>-->
-<!--      <button type="button" pButton label="Обновить данные" class="basic p-mr-2" (click)="applyFilters()"></button>-->
-<!--      <button type="button" pButton label="Создать заявку ({{selectedItems.length}})" class="basic"-->
-<!--        (click)="openCreateRequestModal()"></button>-->
-<!--    </ng-template>-->
-<!--  </p-toolbar>-->
-<!--  <p-table [value]="(freeduty$ | async)" [rows]="10" [showCurrentPageReport]="true" selectionMode="multiple"-->
-<!--    [scrollable]="true" [rowsPerPageOptions]="[10,25,50]" [(selection)]="selectedItems" dataKey="ID"-->
-<!--    styleClass="p-datatable-customers mib-table" [paginator]="true" [metaKeySelection]="true"-->
-<!--    currentPageReportTemplate="Показано: от {first} до {last} из {totalRecords}">-->
-<!--    <ng-template pTemplate="colgroup" let-columns>-->
-<!--      <colgroup>-->
-<!--        <col style="width:3rem">-->
-<!--        <col style="width:180px">-->
-<!--        <col style="width:180px">-->
-<!--        <col style="width:180px">-->
-<!--        <col style="width:180px">-->
-<!--        <col style="width:180px">-->
-<!--        <col style="width:180px">-->
-<!--        <col style="width:180px">-->
-<!--        <col style="width:180px">-->
-<!--      </colgroup>-->
-<!--    </ng-template>-->
-<!--    <ng-template pTemplate="header">-->
-<!--      <tr>-->
-<!--        <th style="width: 3rem">-->
-<!--          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>-->
-<!--        </th>-->
-<!--        <th>-->
-<!--          <div class="m-th" tooltipPosition="bottom" pTooltip="ID задолженности">-->
-<!--            <div>ID задолженности</div>-->
-<!--          </div>-->
-<!--        </th>-->
-<!--        <th>-->
-<!--          <div class="m-th">-->
-<!--            <div>Накладная №</div>-->
-<!--          </div>-->
-<!--        </th>-->
-<!--        <th>-->
-<!--          <div class="m-th" tooltipPosition="bottom" pTooltip="Дата накладной">-->
-<!--            <div>Дата накладной</div>-->
-<!--          </div>-->
-<!--        </th>-->
-<!--        <th>-->
-<!--          <div class="m-th">-->
-<!--            <div>Дата платежа</div>-->
-<!--          </div>-->
-<!--        </th>-->
-<!--        <th>-->
-<!--          <div class="m-th" tooltipPosition="bottom" pTooltip="Сумма остатка задолженности">-->
-<!--            <div>Сумма остатка задолж.</div>-->
-<!--          </div>-->
-<!--        </th>-->
-<!--        <th>-->
-<!--          <div class="m-th">-->
-<!--            <div>Договор</div>-->
-<!--          </div>-->
-<!--        </th>-->
-<!--        <th>-->
-<!--          <div class="m-th">-->
-<!--            <div>Дебитор</div>-->
-<!--          </div>-->
-<!--        </th>-->
-<!--        <th>-->
-<!--          <div class="m-th">-->
-<!--            <div>Комментарий</div>-->
-<!--          </div>-->
-<!--        </th>-->
-<!--      </tr>-->
-<!--    </ng-template>-->
-<!--    <ng-template pTemplate="body" let-item>-->
-<!--      <tr-->
-<!--        [ngClass]="{'warn': item.Statistics.PaymentExpire === true, 'success': item.Statistics.ShipmentID}">-->
-<!--        <td>-->
-<!--          <p-tableCheckbox [value]="item"></p-tableCheckbox>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--          <div class="m-td">-->
-<!--            <div>-->
-<!--              {{item.ID}}-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--          <div class="m-td">-->
-<!--            <div>{{item.Number}}</div>-->
-<!--          </div>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--          <div class="m-td">-->
-<!--            <div>{{item.DateDuty | date: 'dd.MM.yyyy'}}</div>-->
-<!--          </div>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--          <div class="m-td">-->
-<!--            <div>{{item.DatePayment | date: 'dd.MM.yyyy'}}</div>-->
-<!--          </div>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--          <div class="m-td currency" tooltipPosition="bottom" pTooltip="{{item.Summ | currency: 'RUB'}}">-->
-<!--            <div>{{item.Summ | currency: 'RUB'}}</div>-->
-<!--          </div>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--          <div class="m-td" tooltipPosition="bottom" pTooltip="{{item.Contract.Title}}">-->
-<!--            <div>{{item.Contract.Title}}</div>-->
-<!--          </div>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--          <div class="m-td" tooltipPosition="bottom" pTooltip="{{item.Contract.Client}}">-->
-<!--            <div>{{item.Contract.Client}}</div>-->
-<!--          </div>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--          <div class="m-td">-->
-<!--            <div>{{item.Statistics.Comment}}</div>-->
-<!--          </div>-->
-<!--        </td>-->
-<!--      </tr>-->
-<!--    </ng-template>-->
-<!--    <ng-template pTemplate="footer">-->
-<!--      <tr>-->
-<!--        <td colspan="5" class="p-text-right"></td>-->
-<!--        <td>{{getFreedutySum((freeduty$ | async)) | currency:'RUB':'symbol' }}</td>-->
-<!--      </tr>-->
-<!--    </ng-template>-->
-<!--    <ng-template pTemplate="emptymessage">-->
-<!--      <ng-container *ngIf="(loading$ | async); else skeletonRequestsTemplate">-->
-<!--        <tr>-->
-<!--          <td colspan="8">Нет данных.</td>-->
-<!--        </tr>-->
-<!--      </ng-container>-->
-<!--      <ng-template #skeletonRequestsTemplate>-->
-<!--        <tr *ngFor="let item of [{}, {}, {}, {}, {}]">-->
-<!--          <td>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>-->
-<!--                <p-skeleton width="10rem"></p-skeleton>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>-->
-<!--                <p-skeleton width="10rem"></p-skeleton>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>-->
-<!--                <p-skeleton width="10rem"></p-skeleton>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>-->
-<!--                <p-skeleton width="10rem"></p-skeleton>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>-->
-<!--                <p-skeleton width="10rem"></p-skeleton>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>-->
-<!--                <p-skeleton width="10rem"></p-skeleton>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>-->
-<!--                <p-skeleton width="10rem"></p-skeleton>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>-->
-<!--                <p-skeleton width="10rem"></p-skeleton>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--    </ng-template>-->
-<!--  </p-table>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Filter Form &ndash;&gt;-->
-<!--<p-dialog [style]="{width: '450px'}" [(visible)]="filterDialog" [draggable]="false" [resizable]="false"-->
-<!--  header="Укажите период" [modal]="true" styleClass="p-fluid">-->
-<!--  <ng-template pTemplate="content">-->
-<!--    <form [formGroup]="filterForm" (ngSubmit)="saveFilter()">-->
-<!--      <div class="p-field">-->
-<!--        <label for="dateFrom">Дата с: </label>-->
-<!--        <input id="dateFrom" type="date" pInputText placeholder="Дата с" formControlName="dateFrom">-->
-<!--      </div>-->
-<!--      <div class="p-field">-->
-<!--        <label for="dateTo">Дата по: </label>-->
-<!--        <input id="dateTo" type="date" pInputText placeholder="Дата по" formControlName="dateTo">-->
-<!--      </div>-->
-<!--      <div class="modal-actions">-->
-<!--        <button pButton pRipple label="Применить" class="p-button-text save" type="submit"></button>-->
-<!--        <button pButton pRipple label="Отменить" class="p-button-text cancel" (click)="closeDateModal()"></button>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </ng-template>-->
-<!--</p-dialog>-->
-<!--&lt;!&ndash; Request Form &ndash;&gt;-->
-<!-- <p-dialog [style]="{width: '950px'}" [(visible)]="requestsDialog" header="Создать заявку" [modal]="true"-->
-<!--  [draggable]="false" [resizable]="false" styleClass="p-fluid">-->
-<!--  <ng-template pTemplate="content">-->
-<!--    <p-table [value]="selectedItemsSorted" dataKey="contract">-->
-<!--      <ng-template pTemplate="header">-->
-<!--        <tr>-->
-<!--          <th style="width: 3rem"></th>-->
-<!--          <th class="header-width">-->
-<!--            <div class="m-th">-->
-<!--              <div>Договор / Заявка / Накладная</div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th class="header-width">-->
-<!--            <div class="m-th">-->
-<!--              <div>ID задолженности</div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th class="header-width">-->
-<!--            <div class="m-th">-->
-<!--              <div>Дата задолженности</div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--          <th class="header-width">-->
-<!--            <div class="m-th">-->
-<!--              <div>Сумма</div>-->
-<!--            </div>-->
-<!--          </th>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--      <ng-template pTemplate="body" let-item let-expanded="expanded">-->
-<!--        <tr>-->
-<!--          <td>-->
-<!--            <button type="button" pButton pRipple [pRowToggler]="item"-->
-<!--              class="p-button-text p-button-rounded p-button-plain"-->
-<!--              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>-->
-<!--                {{item.contract}}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div>-->
-<!--              <div class="m-td">-->
-<!--                Итог - Контракт: {{item.summ | currency:'RUB'}}-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--      <ng-template pTemplate="rowexpansion" let-item>-->
-<!--        <tr>-->
-<!--          <td colspan="7" class="inner">-->
-<!--            <div>-->
-<!--              <p-table [value]="item.categories" dataKey="categoryName">-->
-<!--                <ng-template pTemplate="header">-->
-<!--        <tr class="empty">-->
-<!--          <th style="width: 3rem"></th>-->
-<!--          <th class="header-width"></th>-->
-<!--          <th class="header-width"></th>-->
-<!--          <th class="header-width"></th>-->
-<!--          <th class="header-width"></th>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--      <ng-template pTemplate="body" let-category let-expandedCategory="expanded">-->
-<!--        <tr>-->
-<!--          <td>-->
-<!--            <button type="button" pButton pRipple [pRowToggler]="category"-->
-<!--              class="p-button-text p-button-rounded p-button-plain"-->
-<!--              [icon]="expandedCategory ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>{{category.categoryName}}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td currency">-->
-<!--              <div>{{category.summ | currency:'RUB'}}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--      <ng-template pTemplate="rowexpansion" let-category>-->
-<!--        <tr>-->
-<!--          <td colspan="7" class="inner">-->
-<!--            <div>-->
-<!--              <p-table [value]="category.requests" dataKey="id">-->
-<!--                <ng-template pTemplate="header">-->
-<!--        <tr class="empty">-->
-<!--          <th style="width: 3rem"></th>-->
-<!--          <th class="header-width"></th>-->
-<!--          <th class="header-width"></th>-->
-<!--          <th class="header-width"></th>-->
-<!--          <th class="header-width"></th>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--      <ng-template pTemplate="body" let-request>-->
-<!--        <tr>-->
-<!--          <td></td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>{{request.id}}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>{{request.number}}</div>-->
-
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td">-->
-<!--              <div>{{request.date | date:'MM.dd.yyyy'}}</div>-->
-
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div class="m-td currency">-->
-<!--              <div>{{request.summ | currency:'RUB'}}</div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--      <ng-template pTemplate="emptymessage">-->
-<!--        <tr>-->
-<!--          <td colspan="6">Нет данных.</td>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--    </p-table>-->
-<!--    </div>-->
-<!--    </td>-->
-<!--    </tr>-->
-<!--  </ng-template>-->
-
-<!--  <ng-template pTemplate="emptymessage">-->
-<!--    <tr>-->
-<!--      <td colspan="6">Нет данных.</td>-->
-<!--    </tr>-->
-<!--  </ng-template>-->
-<!--  </p-table>-->
-<!--  </div>-->
-<!--  </td>-->
-<!--  </tr>-->
-<!--  </ng-template>-->
-<!--  </p-table>-->
-<!--  </ng-template>-->
-<!--  <ng-template pTemplate="footer">-->
-<!--    <button pButton pRipple label="Создать Заявку" class="p-button-text" type="button" class="btn-mib-submit w-100"-->
-<!--      (click)="createRequests()"></button>-->
-<!--  </ng-template>-->
-<!--</p-dialog>-->

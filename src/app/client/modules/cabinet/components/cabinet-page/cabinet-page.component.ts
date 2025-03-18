@@ -1,5 +1,5 @@
 import {StatisticsInterface} from '../../types/common/statistics.interface'
-import {ReportCardInterface} from '../../types/common/report-card.interface'
+import {IReportCard} from '../../types/common/i-report.card'
 import {AuthService} from '../../../../../auth/services/auth.service'
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core'
 import {MIBCommon} from 'src/app/shared/classes/common/mid-common.class'
@@ -16,7 +16,7 @@ import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoi
 })
 export class CabinetPageComponent implements OnInit, OnDestroy {
 	public statistics: StatisticsInterface
-	public reportCards: ReportCardInterface[] = []
+	public reportCards: IReportCard[] = []
 
 	public loading$ = new BehaviorSubject<boolean>(false)
 

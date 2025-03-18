@@ -22,6 +22,16 @@ import {BadgeModule} from 'src/app/shared/ui-kit/badge/badge.module'
 import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/contracted-forms.module'
 import {RightIconModule} from 'src/app/shared/directives/right-icon/right-icon.module'
 import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskModule } from 'ngx-mask';
+import { AutoCompleteModule } from '../../../../../shared/ui-kit/auto-complete/auto-complete.module';
+import { DlFileCellModule } from '../../../../../shared/ui-kit/dl-file-cell/dl-file-cell.module';
+import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-loader.module';
+import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
+import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
+import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
+import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
+import { DynamicDataComponent } from '../../../reports/components/dynamic-data/dynamic-data.component';
 
 @NgModule({
 	declarations: [DemandFactoringDrawerComponent],
@@ -46,7 +56,18 @@ import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag
 		BadgeModule,
 		ContractedFormsModule,
 		RightIconModule,
-		MibDragAndDropModule
+		MibDragAndDropModule,
+		FormsModule,
+		ReactiveFormsModule,
+		NgxMaskModule,
+		AutoCompleteModule,
+		DlFileCellModule,
+		BlurLoaderModule,
+		AttachedDocumentModule,
+		MessageItemModule,
+		SkeletonModule,
+		SendMessagesModule,
+		DynamicDataComponent
 	],
 	providers: [DemandFactoringDrawerService]
 })

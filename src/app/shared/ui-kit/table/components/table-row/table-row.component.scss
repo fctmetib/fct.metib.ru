@@ -1,11 +1,8 @@
 .table-row {
-	min-height: 48px;
+	//min-height: 48px;
 	position: relative;
 	height: 100%;
-	padding: var(--table-paddings);
 	display: flex;
-	background: var(--wgr-primary);
-	border-bottom: var(--collapse);
 
 	// &_underlined {
 	// 	box-shadow: inset 0 -1px 0 0 var(--wgr-secondary);
@@ -28,4 +25,6 @@
 	@media (max-width: 576px) {
 		border-bottom: 1px solid var(--wgr-secondary);
 	}
+
+
 }

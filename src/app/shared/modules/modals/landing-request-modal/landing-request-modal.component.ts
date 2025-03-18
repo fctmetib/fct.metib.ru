@@ -4,7 +4,8 @@ import {
 	Component,
 	Inject,
 	OnDestroy,
-	OnInit
+	OnInit,
+	PLATFORM_ID
 } from '@angular/core'
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
@@ -25,6 +26,7 @@ import {RequestLandingInterface} from 'src/app/public/type/request-landing.inter
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {LandingAgreementModalService} from '../landing-agreement-modal/landing-agreement-modal.service'
+import { isPlatformBrowser } from '@angular/common'
 
 @Component({
 	selector: 'mib-landing-request-modal',
@@ -38,6 +40,7 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 	public backendErrors$ = new BehaviorSubject<string>(null)
 	public options = []
 	public loading = false
+	public isBrowser: boolean
 
 	public isDesktop: boolean = false
 
@@ -51,11 +54,13 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 		public landingAgreementModalService: LandingAgreementModalService,
 		private getAgentRequestService: GetAgentRequestService,
 		public dialogRef: MatDialogRef<LandingRequestModalComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: string
+		@Inject(MAT_DIALOG_DATA) public data: string,
+		@Inject(PLATFORM_ID) private platformId: Object,
 	) {}
 
 	ngOnInit(): void {
 		this.initForms()
+		this.isBrowser = isPlatformBrowser(this.platformId)
 
 		this.subscriptions = this.breakpointService
 			.isDesktop()
@@ -123,9 +128,9 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 	}
 
 	onSubmit() {
-		this.isSubmitting$.next(true)
+		if (this.isSubmitting$.value) return;
 
-		if (this.form.invalid) return
+		this.isSubmitting$.next(true);
 
 		const rawPhoneNumber = this.form.value.Phone
 		const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber)
@@ -165,7 +170,7 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 			)
 			.subscribe()
 
-		this.dialogRef.close()
+		// this.dialogRef.close()
 	}
 
 	ngOnDestroy(): void {

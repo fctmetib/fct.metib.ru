@@ -1,0 +1,12 @@
+<mib-modal>
+	<div class="close-btn flex">
+		<mib-button size="s" (press)="dialogRef.close()" type="ghost-secondary">
+			<mib-icon btn-icon class="stroke" name="fi_x"></mib-icon>
+		</mib-button>
+	</div>
+	<mib-mobile-table-popup [title]="'Запрос'">
+		{{ data | json }}
+	</mib-mobile-table-popup>
+
+	<span class="success-copied text text_tv" *ngIf="copied">Скопированно!</span>
+</mib-modal>

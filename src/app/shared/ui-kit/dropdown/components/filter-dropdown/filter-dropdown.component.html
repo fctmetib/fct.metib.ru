@@ -1,0 +1,20 @@
+<ng-content select="[dropdown-spacing]"></ng-content>
+<div class="dropdown flex flex_column">
+  <div class="dropdown-header flex gap-8">
+    <mib-input class="w-100">
+      <mib-icon class="stroke" mibLeftIcon name="fi_search"></mib-icon>
+      <input [formControl]="searchControl" styleType="filled-secondary" mibInput />
+      <ng-container mibLabel>Найти...</ng-container>
+      <mib-icon *ngIf="searchControl.value" mibRightIcon (click)="clearInput(); $event.stopPropagation()" class="stroke" name="fi_x"></mib-icon>
+    </mib-input>
+  </div>
+  <div class="dropdown-content scroll-y flex_grow">
+    <ng-content></ng-content>
+  </div>
+  <div class="dropdown-footer flex flex_justify-between flex_align-center">
+    <mib-link *ngIf="!isValuesExists" (press)="dropdownService.closeMenu()" size="s" [showUnderline]="true">Отмена
+    </mib-link>
+    <mib-link *ngIf="isValuesExists" (press)="cancel()" size="s" [showUnderline]="true">Сбросить</mib-link>
+    <mib-button (press)="apply()" class="apply-btn" [class.apply-btn_visible]="isValuesExists">Применить</mib-button>
+  </div>
+</div>

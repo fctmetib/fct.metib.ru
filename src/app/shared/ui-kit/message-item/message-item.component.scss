@@ -1,0 +1,16 @@
+@import 'src/styles/helpers/icon_tools';
+@import 'src/styles/_colors.vars';
+
+.message-item {
+  padding: 16px 0;
+  border-bottom: 1px solid #E8EAED;
+
+  mib-avatar {
+    width: 24px;
+    max-width: 24px;
+    min-width: 24px;
+    height: 24px;
+    max-height: 24px;
+    min-height: 24px;
+  }
+}

@@ -1,0 +1,30 @@
+:host {
+  &:not(:last-child) {
+    .attached-document {
+      padding-bottom: 8px;
+      border-bottom: 1px solid #E8EAED;
+    }
+  }
+}
+
+.attached-document {
+  &__name {
+    line-height: 36px;
+  }
+
+  &__svg {
+    border-radius: 8px;
+  }
+
+  &__size, &__date {
+    color: var(--bgr-tertiary-lighten);
+  }
+
+  &__group-btns {
+    margin-left: auto;
+  }
+
+  &__btn {
+    cursor: pointer;
+  }
+}

@@ -64,8 +64,8 @@ const BASE_URL_KEY = makeStateKey<string>('BASE_URL')
 			useFactory: (transferState: TransferState, platformId: Object) => {
 				if (isPlatformServer(platformId)) {
 					return (
-						transferState.get<string>(BASE_URL_KEY, 'https://factoring.metallinvestbank.ru') ||
-						'https://factoring.metallinvestbank.ru'
+						transferState.get<string>(BASE_URL_KEY, 'https://factoring.metallinvestbank.ru/') ||
+						'https://factoring.metallinvestbank.ru/'
 					)
 				} else {
 					return window.location.origin

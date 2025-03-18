@@ -5,30 +5,30 @@
 			required
 			style="padding-right: 40px"
 			#input
-			size="{{ isDesktop ? 'xl' : 'l' }}"
 			mibInput
 			[formControl]="control"
-			(focus)="showDropdown = true"
+			(focus)="showDropdown = true; focus.emit()"
 			(blur)="onBlur()"
 		/>
 		<input
 			*ngIf="extra"
 			required
 			style="padding-right: 40px"
-			#input
+			#inputExtra
 			size="{{ isDesktop ? 'xl' : 'l' }}"
 			mibInput
-			styleType="floating"
+			[styleType]="styleType"
 			[formControl]="control"
 			(focus)="showDropdown = true"
 			(blur)="onBlur()"
 		/>
-		<ng-container mibLabel>Ваш контрагент</ng-container>
+		<ng-container mibLabel>{{ label ? label : 'Ваш контрагент' }}</ng-container>
+		<mib-icon *ngIf="searchIcon" mibLeftIcon class="stroke" name="fi_search"></mib-icon>
 		<mib-icon
 			class="stroke cursor-pointer"
 			mibRightIcon
 			name="fi_x"
-			*ngIf="control.value"
+			*ngIf="control.value && !disabled"
 			(click)="clearInput()"
 		></mib-icon>
 	</mib-input>
@@ -41,7 +41,7 @@
 				(click)="toggleSelection(option)"
 			>
 				{{ option.value }}
-				<span class="text text_s c-bti-tertiary">
+				<span class="text text_s c-bti-tertiary" *ngIf="!inlineStyle">
 					ИНН: {{ option.data.inn }}
 				</span>
 			</li>

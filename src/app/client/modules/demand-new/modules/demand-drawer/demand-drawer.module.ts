@@ -19,29 +19,47 @@ import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {DropdownPointModule} from 'src/app/shared/ui-kit/dropdown-point/dropdown-point.module'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
+import {RequestFailureModalModule} from 'src/app/shared/modules/modals/request-failure-modal/request-failure-modal.module'
+import {DlFileCellModule} from 'src/app/shared/ui-kit/dl-file-cell/dl-file-cell.module'
+import {BadgeModule} from '../../../../../shared/ui-kit/badge/badge.module'
+import {TabModule} from '../../../../../shared/ui-kit/tab/tab.module'
+import {NavbarModule} from '../../../../../shared/ui-kit/navbar/navbar.module'
+import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
+import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
+import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
+import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-loader.module';
 
 @NgModule({
 	declarations: [DemandDrawerComponent],
-	imports: [
-		CommonModule,
-		DrawerModule,
-		MatDialogModule,
-		SpacingModule,
-		ButtonModule,
-		IconModule,
-		MibDragAndDropModule,
-		InputModule,
-		TextareaModule,
-		AutosizeModule,
-		LabelModule,
-		SkeletonModule,
-		ReactiveFormsModule,
-		InformationModule,
-		TableModule,
-		DropdownPointModule,
-		DropdownModule,
-		FileCellModule
-	],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    MatDialogModule,
+    SpacingModule,
+    ButtonModule,
+    IconModule,
+    MibDragAndDropModule,
+    InputModule,
+    TextareaModule,
+    AutosizeModule,
+    LabelModule,
+    SkeletonModule,
+    ReactiveFormsModule,
+    InformationModule,
+    TableModule,
+    DropdownPointModule,
+    DropdownModule,
+    FileCellModule,
+    RequestFailureModalModule,
+    DlFileCellModule,
+    BadgeModule,
+    TabModule,
+    NavbarModule,
+    MessageItemModule,
+    SendMessagesModule,
+    AttachedDocumentModule,
+    BlurLoaderModule
+  ],
 	providers: [DemandDrawerService]
 })
 export class DemandDrawerModule {}

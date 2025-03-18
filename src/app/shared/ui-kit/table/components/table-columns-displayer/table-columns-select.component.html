@@ -1,0 +1,15 @@
+<mib-select
+  [formControl]="control"
+  [placeholder]="placeholder"
+  style="width: 280px;"
+  type="outline"
+  [multi]="true"
+  (onMultiSelectLast)="onSelect($event)"
+>
+  <mib-dropdown-point
+    *ngFor="let column of columns"
+    [showCheckbox]="true"
+    [text]="'' + column.label"
+    [value]="column.id"
+  ></mib-dropdown-point>
+</mib-select>

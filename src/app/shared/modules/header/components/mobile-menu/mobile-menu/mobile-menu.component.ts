@@ -1,17 +1,18 @@
 import {isPlatformBrowser} from '@angular/common'
 import {
-	AfterContentInit,
-	ChangeDetectorRef,
-	Component,
-	ElementRef,
-	HostListener,
-	Inject,
-	Input,
-	OnInit,
-	PLATFORM_ID,
-	ViewChild
-} from '@angular/core'
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener, inject,
+  Inject,
+  Input,
+  OnInit,
+  PLATFORM_ID,
+  ViewChild
+} from '@angular/core';
 import {AuthService} from 'src/app/auth/services/auth.service'
+import { WINDOW } from '../../../../../tokens/window.token';
 
 @Component({
 	selector: 'mib-mobile-menu',
@@ -88,6 +89,8 @@ export class MobileMenuComponent implements OnInit, AfterContentInit {
 		@Inject(PLATFORM_ID) private platformId: Object
 	) {}
 
+  private window = inject(WINDOW)
+
 	ngAfterContentInit(): void {
 		if (isPlatformBrowser(this.platformId)) {
 			this.checkIfScrollable()
@@ -128,7 +131,7 @@ export class MobileMenuComponent implements OnInit, AfterContentInit {
 	checkIfScrollable() {
 		if (isPlatformBrowser(this.platformId) && this.mobileMenu) {
 			const menuHeight = this.mobileMenu.nativeElement.scrollHeight
-			const viewHeight = window.innerHeight
+			const viewHeight = this.window?.innerHeight ?? 0
 			this.isScrollable = menuHeight > viewHeight
 		}
 	}

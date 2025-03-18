@@ -1,107 +1,46 @@
-<p-toast></p-toast>
-<p-contextMenu #cm [model]="items"></p-contextMenu>
+<!--АКШЕНЫ-->
+<!--<span class="p-input-icon-left mr-20">-->
+<!--        <i class="pi pi-search"></i>-->
+<!--        <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" [(ngModel)]="search"-->
+<!--               (input)="dt.filterGlobal($event.target.value, 'contains')" pInputText />-->
+<!--      </span>-->
+<!--<p-multiSelect [options]="reportConfig?.columns" [(ngModel)]="selectedColumns" optionLabel="title"-->
+<!--               selectedItemsLabel="Выбрано колонок - {0}" class="mr-20" [style]="{minWidth: '200px'}"-->
+<!--               placeholder="Выберите колонки">-->
+<!--</p-multiSelect>-->
+<!--<div class="mib-button-icon excel-icon can-click" (click)="exportExcel()" pTooltip="Экспорт файла Excel">-->
+<!--  <img src="assets/icons/mib-excel.png" alt="">-->
+<!--</div>-->
 
-<div class="card-content" id="step1">
-  <div class="header lg">
-    <div class="title">
-      <h2>Отчет {{reportConfig?.title}}</h2>
-      <div class="subheader">
-        Просмотр отчета
-      </div>
+<div class="container container_large">
+
+  <mib-spacing type="m"></mib-spacing>
+  <h3>{{tableData.tableName}}</h3>
+  <mib-spacing type="m"></mib-spacing>
+
+  <mib-table>
+    <div class="scroll-x">
+      <mib-table-head>
+        <mib-table-head-cell *ngFor="let label of tableData.labels">{{ label }}</mib-table-head-cell>
+      </mib-table-head>
+      <mib-table-row *ngFor="let rowCells of visibleRows">
+        <mib-table-cell *ngFor="let cell of rowCells">
+          <ng-container table-cell-title>
+            {{ cell }}
+          </ng-container>
+        </mib-table-cell>
+      </mib-table-row>
     </div>
-    <div class="actions">
-      <span class="p-input-icon-left mr-20">
-        <i class="pi pi-search"></i>
-        <input type="text" class="p-inputtext-lg mib-input-icon" placeholder="Поиск" [(ngModel)]="search"
-          (input)="dt.filterGlobal($event.target.value, 'contains')" pInputText />
-      </span>
-      <p-multiSelect [options]="reportConfig?.columns" [(ngModel)]="selectedColumns" optionLabel="title"
-        selectedItemsLabel="Выбрано колонок - {0}" class="mr-20" [style]="{minWidth: '200px'}"
-        placeholder="Выберите колонки">
-      </p-multiSelect>
-      <div class="mib-button-icon excel-icon can-click" (click)="exportExcel()" pTooltip="Экспорт файла Excel">
-        <img src="assets/icons/mib-excel.png" alt="">
-      </div>
-    </div>
-  </div>
-  <div class="content">
-    <p-table #dt [columns]="reportConfig?.columns" [value]="reportData" [showCurrentPageReport]="true"
-      [scrollable]="true" [(contextMenuSelection)]="selectedRow" [contextMenu]="cm"
-      styleClass="p-datatable-customers mib-table" [rows]="25" (onPage)="paginate($event)"
-      [rowsPerPageOptions]="[25,50]" [paginator]="true"
-      [filterDelay]="0" [globalFilterFields]="filteredColumns">
-      <ng-template pTemplate="colgroup" let-columns>
-        <colgroup>
-          <ng-container *ngFor="let col of columns">
-            <col *ngIf="col.visible" style="width:270px">
-          </ng-container>
-        </colgroup>
-      </ng-template>
-      <ng-template pTemplate="header" let-columns>
-        <tr>
-          <ng-container *ngFor="let col of columns">
-            <th *ngIf="col.visible">
-              <div class="m-th" pTooltip="{{col.title}}">
-                <div>{{col.title}}</div>
-              </div>
-            </th>
-          </ng-container>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr [pContextMenuRow]="rowData">
-          <ng-container *ngFor="let col of columns; index as i">
-            <td *ngIf="col.visible">
-              <div [ngSwitch]="col.type">
-                <div class="m-td" *ngSwitchCase="'number'"
-                  pTooltip="{{rowData[col.name] | currency:'RUB':'symbol-narrow'}}"
-                  style="justify-self: flex-start; flex-direction: row-reverse;" id="{{i}}">
-                  {{rowData[col.name] | currency:'RUB':'symbol-narrow'}}
-                </div>
-                <div class="m-td" *ngSwitchCase="'date'" pTooltip="{{rowData[col.name] | date:'MM.dd.yyyy'}}"
-                  id="{{i}}">
-                  {{rowData[col.name] | date:'MM.dd.yyyy'}}
-                </div>
-                <div class="m-td" *ngSwitchDefault pTooltip="{{rowData[col.name]}}" id="{{i}}">
-                  <div>
-                    {{rowData[col.name]}}
-                  </div>
-                </div>
-              </div>
-            </td>
-          </ng-container>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="footer">
-        <tr>
-          <td [colSpan]="getColSpanIndex()"></td>
-          <td style="text-align: right;" *ngIf="(selectedDisplay$ | async)">
-            <div *ngIf="sumCurrentPage || sumAllPages">
-              {{ sumCurrentPage ? 'Сумма на этой странице: ' : 'Сумма по всем страницам: '}}
-              {{ (sumCurrentPage ? sumCurrentPage : sumAllPages) | currency:'RUB':'symbol' }}
-            </div>
-          </td>
-          <td *ngIf="allPagesCount">Количество строк, на этой сранице: {{allPagesCount}}</td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage">
-        <ng-container *ngIf="!isLoading; else skeletonRequestsTemplate">
-          <tr>
-            <td colspan="8">Нет данных.</td>
-          </tr>
-        </ng-container>
-        <ng-template #skeletonRequestsTemplate>
-          <tr *ngFor="let i of [{}, {}, {}, {}, {}]">
-            <ng-container *ngFor="let col of reportConfig?.columns">
-              <td *ngIf="col.visible">
-                <div class="m-td">
-                  <p-skeleton width="10rem"></p-skeleton>
-                </div>
-              </td>
-            </ng-container>
-          </tr>
-        </ng-template>
-      </ng-template>
-    </p-table>
-  </div>
+    <mib-table-footer *ngIf="reportViewPageService.isTableDataExist()">
+      <mib-paginator
+        (pageChange)="onPageChange($event)"
+        [totalCount]="tableData.rows.length"
+        [pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
+        [itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
+      ></mib-paginator>
+    </mib-table-footer>
+    <mib-table-footer *ngIf="!reportViewPageService.isTableDataExist()">
+      <p class="text text_l">В таблице нет данных</p>
+    </mib-table-footer>
+  </mib-table>
 </div>

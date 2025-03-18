@@ -1,0 +1,6 @@
+<mib-icon [mibDropdownTrigger]="dropdown" class="stroke" name="fi_filter"></mib-icon>
+<div *ngIf="isApplied" class="badge"></div>
+
+<mib-filter-dropdown (onCancel)="onCancel()" (onApply)="onApply($event)" #dropdown>
+  <ng-content></ng-content>
+</mib-filter-dropdown>

@@ -3,7 +3,7 @@
 :root {
 	/* white-gradation */
 	--wgr-primary: #fff;
-	--wgr-secondary: #f2f4f7;
+	--wgr-secondary: #F3F4F6;
 	--wgr-tertiary: #e7eaee;
 	--wgr-quaternary: #c8cbd0;
 
@@ -12,6 +12,7 @@
 	--bgr-secondary: #0a0d10;
 	--bgr-tertiary: #151a1e;
 	--bgr-quaternary: #2f3337;
+	--bgr-tertiary-lighten: #42484D;
 
 	/* white-text-icons */
 	--wti-primary: #fff;
@@ -24,6 +25,12 @@
 	--bti-secondary: #24292e;
 	--bti-tertiary: #4b5258;
 	--bti-quaternary: #62666a;
+
+  /* overlay-white */
+  --w-overlay-primary: #EEF1F6CC;
+  --w-overlay-secondary: #EEF1F699;
+  --w-overlay-tertiary: #EEF1F666;
+  --w-overlay-quaternary: #EEF1F633;
 
 	/* overlay-primary */
 	--overlay-primary: rgba(9, 13, 17, 0.8);
@@ -103,5 +110,5 @@
 	--bg-vk: #e5f1ff;
 
 	/* table */
-	--collapse: 1px solid var(--wti-secondary);
+	--collapse: 1px solid var(--wgr-secondary);
 }

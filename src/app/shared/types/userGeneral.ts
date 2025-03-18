@@ -1,10 +1,10 @@
-import {PassportInterface} from './user/passport.interface';
-import {Profile} from './user/profile';
+import { PassportInterface } from './user/passport.interface';
+import { Profile } from './user/profile';
 
 export interface UserGeneral {
-  Passport: PassportInterface
+  UserID: number;
   Profile: Profile;
-  PassportFileCode: string;
-  Avatar: string;
-  ID: number;
+  Passport: PassportInterface;
 }
+
+

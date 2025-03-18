@@ -1,0 +1,36 @@
+<mib-report-drawer-layout [loading]="reportLoading$ | async" (onClose)="onClose()" (onReport)="onReport()" [formGroup]="form">
+  <ng-container report-drawer-title>Просрочки Покупателей</ng-container>
+  <div class="flex flex_column gap-12">
+    <mib-input class="flex_grow">
+      <input
+        mibInput
+        type="date"
+        size="m"
+        formControlName="Date"
+        styleType="outline"
+      />
+      <ng-container mibLabel>На Дату</ng-container>
+    </mib-input>
+    <mib-input class="flex_grow">
+      <input
+        mibInput
+        type="number"
+        size="m"
+        formControlName="Delay"
+        styleType="outline"
+      />
+      <ng-container mibLabel>Количество дней просрочки</ng-container>
+    </mib-input>
+    <mib-select formControlName="DebtorID" placeholder="Выберите дебитора" size="m">
+      <mib-dropdown-point
+        [value]="0"
+        text="Все"
+      ></mib-dropdown-point>
+      <mib-dropdown-point
+        *ngFor="let debtor of debtors"
+        [value]="debtor.ID"
+        [text]="debtor.Title"
+      ></mib-dropdown-point>
+    </mib-select>
+  </div>
+</mib-report-drawer-layout>

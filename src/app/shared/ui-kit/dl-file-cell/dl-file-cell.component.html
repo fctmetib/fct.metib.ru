@@ -14,8 +14,9 @@
 	</div>
 	<div class="flex btn-block">
 		<mib-button
+      *ngIf="showDownload"
 			(press)="onDload.emit()"
-			title="Загрузить"
+			title="Скачать"
 			size="s"
 			type="ghost-secondary"
 		>

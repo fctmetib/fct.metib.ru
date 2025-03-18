@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core'
 import {MatDialog, MatDialogRef} from '@angular/material/dialog'
-import {modalConfig} from 'src/app/shared/ui-kit/modal/modal.tools'
 import {RequestFailureModalComponent} from './request-failure-modal.component'
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class RequestFailureModalService {
 	constructor(private dialog: MatDialog) {}
 
-	open(): MatDialogRef<RequestFailureModalComponent> {
-		return this.dialog.open(RequestFailureModalComponent, modalConfig(1168))
+	open(d?: undefined): MatDialogRef<RequestFailureModalComponent> {
+		const modalConfig = {
+			width: '432px',
+			data: {d}
+		}
+		return this.dialog.open(RequestFailureModalComponent, modalConfig)
 	}
 }

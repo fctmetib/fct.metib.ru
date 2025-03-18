@@ -1,7 +1,15 @@
-<div class="table-head-cell flex flex_align-center gap-8" [title]="label.innerText">
-  <mib-checkbox [formControl]="control" align="" [id]="checkboxId" *ngIf="showCheckbox"></mib-checkbox>
-  <div class="content flex gap-4">
-    <label [class.cursor-pointer]="sortable || showCheckbox" [class.user-select-none]="selectedAsSortable || showCheckbox" #label [for]="sortable ? '' : checkboxId" (click)="toggle()"><ng-content></ng-content></label>
-    <mib-icon *ngIf="selectedAsSortable" class="stroke cursor-pointer" [name]="selected ? 'fi_chevron-up' : 'fi_chevron-down'"></mib-icon>
+<div class="table-head-cell flex flex_align-center" [title]="label.innerText">
+  <div class="flex gap-8 flex_grow overflow-hidden">
+    <mib-checkbox [formControl]="control" align="" [id]="checkboxId" *ngIf="isCheckboxDisplayed"></mib-checkbox>
+    <label #label [for]="checkboxId">
+      <ng-content></ng-content>
+    </label>
   </div>
+  <div class="actions flex gap-4">
+    <mib-sort-table-action *ngIf="isSortable" class="action"></mib-sort-table-action>
+    <mib-filter-table-action *ngIf="isFilterable" class="action">
+      <ng-content select="[mibHeadCellFilterActions]"></ng-content>
+    </mib-filter-table-action>
+  </div>
+
 </div>

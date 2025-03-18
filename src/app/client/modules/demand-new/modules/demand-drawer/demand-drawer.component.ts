@@ -1,243 +1,397 @@
-import {Component, Inject, OnInit} from '@angular/core'
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms'
+import { Component, ElementRef, Inject, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {ButtonSize} from 'src/app/shared/ui-kit/button/interfaces/button.interface'
 import {InputSize} from 'src/app/shared/ui-kit/input/interfaces/input.interface'
 import {DrawerData} from '../../../../../shared/ui-kit/drawer/interfaces/drawer.interface'
 import {FileDnd} from 'src/app/shared/ui-kit/drag-and-drop/interfaces/drop-box.interface'
-import {extractBase64} from 'src/app/shared/services/tools.service'
+import { downloadBase64File, extractBase64 } from 'src/app/shared/services/tools.service';
 import {DocumentReq} from '../../../requests/interfaces/request.interface'
-import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {
-	BehaviorSubject,
-	catchError,
-	debounceTime,
-	distinctUntilChanged,
-	filter,
-	forkJoin,
-	of,
-	pairwise,
-	startWith,
-	switchMap,
-	tap
-} from 'rxjs'
+  BehaviorSubject,
+  catchError,
+  debounceTime,
+  distinctUntilChanged, EMPTY,
+  filter,
+  forkJoin,
+  Observable,
+  of,
+  pairwise,
+  startWith,
+  switchMap,
+  tap,
+  throwError
+} from 'rxjs';
 import {DemandService} from '../../services/demand.service'
+import {
+  RequestFailureModalService
+} from 'src/app/shared/modules/modals/request-failure-modal/request-failure-modal.service'
+import {
+  RequestCreateSuccessModalService
+} from 'src/app/shared/modules/modals/request-create-success-modal/request-create-success-modal.service'
+import {DocumentsService} from '../../../documents/services/documents.service'
+import { DemandInterface } from '../../types/demand.interface';
+import { FileReadOptions } from './interfaces/demand-drawer.interface';
+import { DemandDrawerService } from './demand-drawer.service';
+import { Properties } from 'csstype';
+import { FileMode } from '../../../../../shared/types/file/file-model.interface';
+import { DocumentsType } from '../demand-limit-drawer/demand-limit-drawer.component';
 
 @Component({
-	selector: 'mib-demand-drawer',
-	templateUrl: './demand-drawer.component.html',
-	styleUrls: ['./demand-drawer.component.scss']
+  selector: 'mib-demand-drawer',
+  templateUrl: './demand-drawer.component.html',
+  styleUrls: ['./demand-drawer.component.scss']
 })
 export class DemandDrawerComponent implements OnInit {
-	public form: FormGroup
+  @ViewChildren('messagesContent') messagesContent: QueryList<ElementRef>
+  form: FormGroup
+  messageForm: FormGroup
+  isSubmitting$ = new BehaviorSubject<boolean>(false)
+  loading$ = new BehaviorSubject<boolean>(false)
+  size: InputSize | ButtonSize = 'm'
+  freeRequestType = 'Question'
+  private titleInfo = {create: null, update: null, status: null}
+  private viewChange = false
+  private formDataForChangeOnView = null
+  public tabIndex = '1'
+  public viewingData: DemandInterface<{ Subject: string; Question: string; Files: [] }>
+  public readFiles: FileReadOptions[]
 
-	public isSubmitting$ = new BehaviorSubject<boolean>(false)
-	public loading$ = new BehaviorSubject<boolean>(false)
+  constructor(
+    private fb: FormBuilder,
+    private demandService: DemandService,
+    private demandDrawerService: DemandDrawerService,
+    private requestFailureModalService: RequestFailureModalService,
+    private requestCreateSuccessModalService: RequestCreateSuccessModalService,
+    public dialogRef: MatDialogRef<DemandDrawerComponent>,
+    private documentsService: DocumentsService,
+    @Inject(MAT_DIALOG_DATA) public data: DrawerData
+  ) {
+  }
 
-	public nextID: number = 0
+  get requestId(): number {
+    return this.data.data.id
+  }
 
-	public size: InputSize | ButtonSize = 'm'
+  set requestId(val: number) {
+    this.data.data.id = val
+  }
 
-	freeRequestType = 'Question'
-	initialData: any = null
-	isDraft: boolean = false
-	isViewDemand: boolean = false
-	isDemandRequest: boolean = false
+  get documents(): FormArray<any> {
+    return this.form.get('Documents') as FormArray
+  }
 
-	DraftId = null
+  get date(): {create: string, update: string, status: string} {
+    return this.titleInfo
+  }
 
-	constructor(
-		private fb: FormBuilder,
-		private toaster: ToasterService,
-		private demandService: DemandService,
-		public dialogRef: MatDialogRef<DemandDrawerComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: DrawerData
-	) {}
+  get isView(): boolean {
+    return this.data.data.isView
+  }
 
-	get documents() {
-		return this.form.get('Documents') as FormArray
-	}
+  get isChangeByView(): boolean {
+    return this.isView && !this.viewChange
+  }
 
-	ngOnInit(): void {
-		this.initForms()
+  ngOnInit(): void {
+    const modalData = this.data.data
+    if (modalData?.isEdit || modalData?.isCreation) this.initForms()
+    // Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
+    if (modalData?.isEdit || modalData?.isView) {
+      this.getByID(modalData.id, modalData.isEdit)
+      this.initMessageForm()
+      if (modalData?.isEdit) this.enableAutoSaveDraft()
+    }
 
-		const modalData = this.data.data
+    // Если создание и нет черновика
+    if (modalData?.isCreation && !modalData?.id) {
+      // инициализируем черновик
+      this.initDraft()
+      // Включаем авто сохранение
+      this.enableAutoSaveDraft()
+    }
 
-		// Если редактирование ИЛИ просмотр, тогда тянем данные с АПИ
-		if (modalData.isEdit || modalData.isView) {
-			this.getByID()
-		}
+    // Если создание и есть черновик
+    if (modalData?.isCreation && modalData?.id) {
+      // Включаем авто сохранение
+      this.enableAutoSaveDraft()
+    }
+  }
 
-		// Если создание и нет черновика
-		if (modalData.isCreation && !modalData.DraftId) {
-			// инициализируем черновик
-			this.initDraft()
+  createDocumentControl(data: FileMode) {
+    const control = this.fb.group({
+      ID: [null],
+      Identifier: [null],
+      Code: [null],
+      FileName: [null],
+      Size: [null],
+      DemandFileID: [null]
+    });
+    control.patchValue(data);
+    return control;
+  }
 
-			// Включаем авто сохранение
-			this.enableAutoSaveDraft()
-		}
+  shiftDocumentControlByType(data: FileMode) {
+    this.documents.insert(0, this.createDocumentControl(data));
+  }
 
-		// Если создание и есть черновик
-		if (modalData.isCreation && modalData.DraftId) {
-			this.DraftId = modalData.DraftId
-			// получаем черновик по DraftId
-			// this.getCurrentDraft();
+  onDocumentLoad({file, url}: FileDnd): void {
+    this.uploadDocumentToDraft({
+      Description: `description ${file.name}`,
+      DocumentTypeID: 40,
+      Title: file.name,
+      OwnerTypeID: 20,
+      Data: extractBase64(url),
+      File: file
+    }).pipe(
+      tap(doc => {
+        this.shiftDocumentControlByType(doc);
+      })
+    ).subscribe();
+  }
 
-			// Включаем авто сохранение
-			this.enableAutoSaveDraft()
-		}
-	}
+  uploadDocumentToDraft(req: DocumentReq): Observable<FileMode> {
+    return this.demandService.uploadDraftFile(req.File, 'test', this.requestId).pipe(
+      catchError((err, caught) => {
+        console.error(`Ошибка загрузки файла ${req.Title}:`, err);
+        return of(err);
+      })
+    );
+  }
 
-	getByID() {
-		this.demandService
-			.getDemandDraftById(1593)
-			.pipe(
-				tap(data => {
-					console.log('getByIDdata :>> ', data)
-				})
-			)
-			.subscribe()
-	}
+  public skeleton: Properties = {
+    borderRadius: '8px',
+    height: '95px',
+    width: '100%'
+  }
 
-	enableAutoSaveDraft() {
-		this.form.valueChanges
-			.pipe(
-				filter(() => !!this.DraftId),
-				debounceTime(300), // Ждем 300 мс после окончания ввода
-				distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
-				startWith(this.form.value), // Начальное значение формы
-				pairwise(), // Получаем текущее и предыдущее значения формы
-				filter(([prev, curr]) => JSON.stringify(prev) !== JSON.stringify(curr)),
-				switchMap(([prev, curr]) => {
-					const payload = {
-						Subject: curr.requestTitle,
-						Question: curr.requestText,
-						Type: this.freeRequestType,
-						Files: []
-					}
-					return this.demandService.updateDraft(this.DraftId, payload)
-				})
-			)
-			.subscribe(result => {
-				// Обрабатываем результат запроса
-				console.log('Результат API:', result)
-			})
-	}
+  sendMessage() {
+    this.isSubmitting$.next(true)
+    this.demandService.sendDemandsMessage(this.messageForm.value, this.data.data.id)
+      .subscribe({
+        complete: () => {
+          const modalData = this.data.data
+          this.getByID(modalData.id, modalData.isEdit)
+          this.resetMessageModal()
+          this.isSubmitting$.next(false)
+        },
+        error: () => {
+          this.dialogRef.close()
+          this.openRequestFailureModal(this.requestId)
+        }
+      })
+  }
 
-	initDraft() {
-		const payload = {
-			Subject: '',
-			Question: '',
-			Type: this.freeRequestType,
-			Files: []
-		}
+  private resetMessageModal() {
+    this.initMessageForm()
+    this.demandDrawerService.updateDocumentsState(undefined)
+  }
 
-		this.demandService
-			.createNewDraft(payload)
-			.pipe(
-				tap(id => {
-					console.log('create autosave id :>> ', id)
-					this.DraftId = id
-				})
-			)
-			.subscribe()
-	}
+  downloadCurrentFile(document: AbstractControl): void {
+    const { DemandFileID, FileName } = document.getRawValue() as FileMode;
 
-	initForms() {
-		this.form = this.fb.group({
-			requestTitle: [null, [Validators.required]],
-			requestText: [null, [Validators.required]],
-			Documents: this.fb.array([])
-		})
-	}
+    this.demandService
+      .downloadFile(DemandFileID).pipe(
+      tap(data => {
+        downloadBase64File(data, FileName);
+      }),
+      catchError(error => {
+        console.error(`Ошибка при скачивании файла "${FileName}":`, error);
+        return of(null);
+      })
+    )
+      .subscribe();
+  }
 
-	addDocument(data: DocumentReq) {
-		const control: FormGroup = this.fb.group({
-			Number: [null],
-			Title: [null],
-			Description: [null],
-			DocumentTypeID: [null],
-			OwnerTypeID: [null],
-			Data: [null],
-			File: [null],
-		})
-		control.patchValue(data)
-		this.documents.push(control)
-	}
+  onSubmit(): void {
+    this.isSubmitting$.next(true)
+    const resObj = {
+      draftId: this.requestId,
+    }
+    this.demandService.createDemand(resObj)
+      .subscribe({
+        complete: () => {
+          this.dialogRef.close()
+          this.openRequestSuccessModal()
+        },
+        error: () => {
+          this.dialogRef.close()
+          this.openRequestFailureModal(this.requestId)
+        }
+      })
+  }
 
-	removeDocument(idx: number) {
-		this.documents.removeAt(idx)
-	}
+  editDocument(): void {
+    this.viewChange = true
+    this.initForms(true)
+    this.enableAutoSaveDraft()
+  }
 
-	onDocumentLoad({file, url}: FileDnd) {
-		const document: DocumentReq = {
-			// TODO: ДОБАВИТЬ ИНПУТ С "type='number'" В ФОРМУ
-			Number: null,
-			Title: file.name,
-			Description: `description ${file.name}`,
-			DocumentTypeID: 40,
-			OwnerTypeID: 6,
-			Data: extractBase64(url),
-			File: file
-		}
+  private initMessageForm() {
+    this.messageForm = this.fb.group({
+      FileCode: [''],
+      Comment: ['', Validators.required],
+    })
+  }
 
-		this.addDocument(document)
-	}
+  deleteDocument(i: number) {
+    const { DemandFileID } = this.documents.at(i).getRawValue() as FileMode;
 
-	onSubmit() {
-		const res = this.form.getRawValue()
-		const resObj = {
-			DraftId: this.DraftId.toString(),
-			DemandData: {
-				Subject: res.requestTitle,
-				Question: res.requestText,
-				Type: this.freeRequestType
-			}
-		}
+    this.demandService.deleteDemandFileById(DemandFileID).pipe(
+      tap(() => {
+        this.documents.removeAt(i);
+      })
+    ).subscribe();
+  }
 
-		this.demandService
-			.createDemand(resObj)
-			.pipe(
-				switchMap(createdDemandID => {
-					if (!createdDemandID) {
-						throw new Error('Создание запроса не удалось')
-					}
+  private addDocument(data: DocumentReq): void {
+    const control: FormGroup = this.fb.group({
+      ID: [null],
+      Identifier: [null],
+      Code: [null],
+      FileName: [null],
+      Size: [null],
+      DemandFileID: [null]
+    })
+    control.patchValue(data)
+    this.documents.push(control)
+  }
 
-					const uploadObservables = this.documents.controls.map(
-						(control: FormGroup) => {
-							const file = control.get('File').value
+  private enableAutoSaveDraft(): void {
+    this.form.valueChanges
+      .pipe(
+        filter(() => !!this.requestId), // Предпочтительно использовать requestId напрямую
+        debounceTime(500), // Ждем 500 мс после окончания ввода
+        distinctUntilChanged(), // Запрос будет отправлен только если данные изменились
+        startWith(this.form.value), // Начальное значение формы
+        pairwise(), // Получаем текущее и предыдущее значения формы
+        filter(([prev, curr]) => this.hasFormChanged(prev, curr)), // Проверка изменений формы
+        switchMap(([prev, curr]) => this.saveDraft(curr)) // Сохранение черновика
+      )
+      .subscribe({
+        next: result => this.onSaveDraftSuccess(result), // Успешная обработка черновика
+        error: error => this.onSaveDraftError(error) // Обработка ошибок
+      });
+  }
 
-							return this.demandService.uploadFile(
-								file,
-								"test",
-								createdDemandID
-							)
-						}
-					)
+  private hasFormChanged(prev: any, curr: any): boolean {
+    return JSON.stringify(prev) !== JSON.stringify(curr);
+  }
 
-					// Ожидание завершения всех запросов на загрузку файлов
-					return forkJoin(uploadObservables)
-				}),
-				catchError(error => {
-					console.error('An error occurred >>>:', error)
-					return of(null)
-				}),
-				tap(result => {
-					console.log('Second request successful:', result)
-					this.dialogRef.close()
-				})
-			)
-			.subscribe()
-	}
+  private saveDraft(formData: any): Observable<any> {
+    const payload = this.createDraftPayload(formData);
 
-	public editDocument() {
-		this.toaster.show(
-			'failure',
-			'Функционал в разработке!',
-			'',
-			true,
-			false,
-			3000
-		)
-	}
+    return this.demandService.updateDraft(this.requestId, payload).pipe(
+      switchMap((draftResult) => {
+        if (!draftResult) {
+          return throwError(() => new Error('Ошибка сохранения черновика'));
+        }
+        return of(draftResult)
+      })
+    );
+  }
+
+  private createDraftPayload(formData: any): any {
+    return {
+      Subject: formData.requestTitle,
+      Question: formData.requestText,
+      Type: this.freeRequestType
+    };
+  }
+
+  private onSaveDraftSuccess(result: any): void {
+    console.log('Черновик и файлы успешно сохранены:', result);
+  }
+
+  private onSaveDraftError(error: any): void {
+    console.error('Ошибка при сохранении черновика или файлов:', error);
+  }
+
+  get height() {
+    return `55vh`
+  }
+
+  private getByID(id: number, isDraft: boolean): void {
+    this.loading$.next(true)
+    const req$ = isDraft ?
+      this.demandService
+        .getDemandDraftById(id) : this.demandService.getDemandById(id)
+    req$.pipe(
+      tap(res => {
+        this.loading$.next(false)
+        const data = isDraft ? res.DemandData : res.Data
+        this.formDataForChangeOnView = res.Data
+        if (this.isView) {
+          this.readFiles = res?.Files?.map(file => ({FileName: file.FileName, Size: file.Size}))
+          this.viewingData = res
+          setTimeout(() => {
+            this.messagesContent.forEach(message => {
+              if ((+message.nativeElement.id) + 1 === res?.Messages?.length) {
+                message.nativeElement.scrollIntoView({block: 'center', behavior: 'auto'})
+              }
+            })
+          },0)
+        }
+        if (!isDraft) {
+          this.titleInfo = {create: res.DateCreated, update: res.DateModify, status: this.demandService.getStatus(res.Status)}
+        } else {
+          this.form.patchValue({
+            requestTitle: data?.Subject,
+            requestText: data?.Question,
+            Documents: data?.Files
+          })
+          const files = data?.Files || []
+          for (let file of files) {
+            this.addDocument(file)
+          }
+        }
+
+
+      })
+    )
+      .subscribe()
+  }
+
+  deleteFile() {
+    const modalData = this.data.data
+    this.getByID(modalData.id, modalData.isEdit)
+  }
+
+  identify(index, item) {
+    return item.DemandMessageID
+  }
+
+  private initDraft(): void {
+    const payload = {
+      Subject: '',
+      Question: '',
+      Type: this.freeRequestType,
+      Files: []
+    }
+
+    this.demandService
+      .createNewDraft(payload)
+      .pipe(
+        tap(id => {
+          this.requestId = id
+        })
+      )
+      .subscribe()
+  }
+
+  private initForms(isEdit = false): void {
+    this.form = this.fb.group({
+      requestTitle: [isEdit ? this.formDataForChangeOnView?.Subject : null, [Validators.required]],
+      requestText: [isEdit ? this.formDataForChangeOnView?.Question : null, [Validators.required]],
+      Documents: isEdit ? this.formDataForChangeOnView?.Files : this.fb.array([])
+    })
+  }
+
+  private openRequestFailureModal(d): void {
+    this.requestFailureModalService.open(d)
+  }
+
+  private openRequestSuccessModal(): void {
+    this.requestCreateSuccessModalService.open()
+  }
 }

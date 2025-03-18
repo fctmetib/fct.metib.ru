@@ -3,6 +3,8 @@ import {DemandAnketInterface} from './demand-anket.interface'
 import {DemandFactoringInterface} from './demand-factoring.interface'
 
 export interface DemandDataBaseInterface {
+  Limit: number
+  Comment: string
 	Type: string
 	Files: FileMode[]
 	Anket?: DemandAnketInterface

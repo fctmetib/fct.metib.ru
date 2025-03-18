@@ -11,6 +11,7 @@ export interface DemandInterface<T> {
   Status: string;
   User: string;
   Manager: ManagerReferenceInterface;
+  DemandData: DemandDataBaseInterface
   DateCreated: Date;
   DateModify: Date;
   DateStatus: Date;

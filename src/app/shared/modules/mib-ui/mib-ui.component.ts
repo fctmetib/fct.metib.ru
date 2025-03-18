@@ -109,10 +109,8 @@ export class MibUiComponent implements OnInit {
 		// ---------------------
 	}
 
-	check() {
-	}
-	check2() {
-	}
+	check() {}
+	check2() {}
 
 	showSuccessToaster() {
 		this.toaster.show(
@@ -147,8 +145,7 @@ export class MibUiComponent implements OnInit {
 		)
 	}
 
-	lookIt() {
-	}
+	lookIt() {}
 
 	openNewShipmentModal() {
 		this.newShipmentModalService.open()
@@ -166,11 +163,9 @@ export class MibUiComponent implements OnInit {
 		this.requestFailureModalService.open()
 	}
 
-	onSelectPerson(event: any) {
-	}
+	onSelectPerson(event: any) {}
 
-	onSubmit() {
-	}
+	onSubmit() {}
 
 	openModal(): void {
 		this.dialog.open(TestModalOutsideComponent, {

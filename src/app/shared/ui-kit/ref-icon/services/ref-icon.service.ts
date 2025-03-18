@@ -46,15 +46,13 @@ export class RefIconService {
   private async loadAllIcons(): Promise<void> {
 	try {
 	  const isDevMode = !this.isServer();
-	  console.log('Dev mode:', isDevMode);
-  
+
 	  this.icons = iconsJson;
 	  this.transferState.set(ICONS_KEY, this.icons);
-	  console.log('ICONS', this.icons["vk"]);
 	} catch (error) {
 	  console.error('Failed to load icons:', error);
 	}
-  }  
+  }
 
   private isServer(): boolean {
     return isPlatformServer(this.platformId);

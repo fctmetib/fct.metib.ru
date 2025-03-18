@@ -3,7 +3,7 @@ import { CounterpartyReferenceInterface } from './../../../../../shared/types/co
 import { MibArray } from './../../../../../shared/classes/arrays/mib-array.class';
 import { Component, OnDestroy } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ControlConfigReportInterface } from '../../types/common/control-config.interface';
+import { IControlConfigReport } from '../../types/common/control-config.interface';
 import {
   FormBuilder,
   FormControl,
@@ -26,7 +26,7 @@ export class ReportInitDialogComponent implements OnDestroy {
   private inputsCount: number;
   private currentData: any;
 
-  public controlConfig: ControlConfigReportInterface;
+  public controlConfig: IControlConfigReport;
   public deliveryList: DeliveryInterface[] = [];
   public uniqDebtors: CounterpartyReferenceInterface[] = [];
   public isEmpty: boolean;

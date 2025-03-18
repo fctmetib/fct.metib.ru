@@ -1,111 +1,144 @@
 import {
-	Component,
-	ElementRef,
-	EventEmitter,
-	forwardRef,
-	Input,
-	OnDestroy,
-	OnInit,
-	Output,
-	ViewChild
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
 } from '@angular/core'
 import {
-	ControlValueAccessor,
-	FormControl,
-	NG_VALUE_ACCESSOR,
-	Validator
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  Validator
 } from '@angular/forms'
 import {Subscription} from 'rxjs'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
+import { InputType } from '../interfaces/input.interface';
 
 @Component({
-	selector: 'mib-autocomplete',
-	templateUrl: './autocomplete.component.html',
-	styleUrls: ['./autocomplete.component.scss'],
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => AutocompleteComponent),
-			multi: true
-		}
-	]
+  selector: 'mib-autocomplete',
+  templateUrl: './autocomplete.component.html',
+  styleUrls: ['./autocomplete.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AutocompleteComponent),
+      multi: true
+    }
+  ]
 })
 export class AutocompleteComponent
-	implements OnInit, ControlValueAccessor, Validator, OnDestroy
-{
-	@Input() options: any[] = []
-	@Input() loading: boolean = false
-	@Input() extra: boolean = false
-	@Output() valueChanged = new EventEmitter<string>()
-	control = new FormControl()
-	showDropdown = false
-	noData = false
+  implements OnInit, ControlValueAccessor, Validator, OnDestroy {
+  @Input() options: any[] = []
+  @Input() loading: boolean = false
+  @Input() extra: boolean = false
+  @Input() innType: boolean = false
+  @Input() searchIcon: boolean = false
+  @Input() inlineStyle: boolean = false
+  @Input() styleType: InputType = 'floating'
+  @Input() label: string
+  @Output() valueChanged = new EventEmitter<string>()
+  @Output() focus = new EventEmitter<any>()
+  @Output() confirm = new EventEmitter<any>()
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
 
-	public isDesktop: boolean = false
+  set disabled(value: boolean) {
+    this._disabled = value;
+  }
 
-	private subscriptions = new Subscription()
+  private _disabled: boolean = false
+  control = new FormControl()
+  showDropdown = false
+  noData = false
 
-	@ViewChild('input', {static: true}) input: ElementRef
+  public isDesktop: boolean = false
 
-	constructor(private breakpointService: BreakpointObserverService) {}
+  private subscriptions = new Subscription()
 
-	ngOnInit(): void {
-		this.subscriptions = this.breakpointService
-			.isDesktop()
-			.subscribe(b => (this.isDesktop = b))
-	}
+  @ViewChild('input') inputDefault: ElementRef
+  @ViewChild('inputExtra') inputExtra: ElementRef
 
-	writeValue(value: any): void {
-		this.control.setValue(value, {emitEvent: false})
-	}
+  constructor(private breakpointService: BreakpointObserverService) {
+  }
 
-	registerOnChange(fn: any): void {
-		this.control.valueChanges.subscribe(value => {
-			fn(value)
-			this.valueChanged.emit(value)
-		})
-	}
+  get input() {
+    if (this.extra) {
+      return this.inputExtra
+    }
+    return this.inputDefault
+  }
 
-	registerOnTouched(fn: any): void {
-		// Not used
-	}
+  ngOnInit(): void {
+    this.subscriptions = this.breakpointService
+      .isDesktop()
+      .subscribe(b => (this.isDesktop = b))
+  }
 
-	setDisabledState(isDisabled: boolean): void {
-		isDisabled ? this.control.disable() : this.control.enable()
-	}
+  writeValue(value: any): void {
+    this.control.setValue(value, {emitEvent: false})
+  }
 
-	toggleSelection(option: any) {
-		this.control.setValue(option.value, {emitEvent: true})
-		this.showDropdown = false
-	}
+  registerOnChange(fn: any): void {
+    this.control.valueChanges.subscribe(value => {
+      fn(value)
+      this.valueChanged.emit(value)
+    })
+  }
 
-	onBlur() {
-		setTimeout(() => {
-			this.showDropdown = false
-		}, 200)
-	}
+  registerOnTouched(fn: any): void {
+    // Not used
+  }
 
-	validate() {
-		return this.control.valid ? null : {invalid: true}
-	}
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled
+    if (this.disabled) {
+      this.control.disable()
+      this.showDropdown = false
+    } else {
+      this.control.enable()
+    }
+  }
 
-	showOptions() {
-		this.showDropdown = true
-	}
+  toggleSelection(option: any) {
+    this.control.setValue(this.innType ? option?.data?.inn : option.value, {emitEvent: true})
+    this.showDropdown = false
+    this.confirm.emit()
+  }
 
-	hideOptions() {
-		setTimeout(() => {
-			this.showDropdown = false
-		}, 200)
-	}
+  onBlur() {
+    setTimeout(() => {
+      this.showDropdown = false
+    }, 200)
+  }
 
-	clearInput() {
-		this.showDropdown = false
-		this.control.setValue('')
-		this.input.nativeElement.focus()
-	}
+  validate() {
+    return this.control.valid ? null : {invalid: true}
+  }
 
-	ngOnDestroy(): void {
-		this.subscriptions.unsubscribe()
-	}
+  showOptions() {
+    this.showDropdown = true
+  }
+
+  hideOptions() {
+    setTimeout(() => {
+      this.showDropdown = false
+    }, 200)
+  }
+
+  clearInput() {
+    this.showDropdown = false
+    this.control.setValue('')
+    this.input.nativeElement.focus()
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
+  }
 }

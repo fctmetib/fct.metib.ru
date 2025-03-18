@@ -22,12 +22,10 @@ import {UserGeneral} from 'src/app/shared/types/userGeneral';
 import {LoginRequestInterface} from 'src/app/auth/types/login/loginRequest.interface';
 import {AuthRes} from 'src/app/auth/types/login/authRes';
 import {RegisterConfirmReq} from '../types/register/registerConfirmReq';
-import {RegisterReponseInterface} from '../types/register/registerResponse.interface';
-import {ReauthRequestInterface} from '../types/login/reauthRequest.interface';
+import {RegisterResponseInterface} from '../types/register/registerResponse.interface';
 import {RequestStoreService} from 'src/app/shared/services/store/request.store.service';
 import {FreedutyStoreService} from 'src/app/shared/services/store/freeduty.store.service';
 import {isPlatformBrowser} from '@angular/common';
-import {UserFactoring} from 'src/app/shared/types/userFactoring';
 import {CurrentUser} from 'src/app/shared/types/currentUser';
 import {ToolsService} from '../../shared/services/tools.service';
 
@@ -56,18 +54,18 @@ export class AuthService {
 
   register(
     data: RegisterReq
-  ): Observable<RegisterReponseInterface> {
-    const url = environment.apiUrl + '/user/registration/init';
-    return this.http.post<RegisterReponseInterface>(url, data);
+  ): Observable<RegisterResponseInterface> {
+    const url = environment.apiUrl + '/v1/users/registration';
+    return this.http.post<RegisterResponseInterface>(url, data);
   }
 
   registerConfirm(data: RegisterConfirmReq): Observable<any> {
-    const url = environment.apiUrl + '/user/registration/confirm';
+    const url = environment.apiUrl + '/v1/users/registration/confirm';
     return this.http.post<any>(url, data);
   }
 
-  reauth(user: ReauthRequestInterface): Observable<any> {
-    const url = environment.apiUrl + `/user/reauth/${user.userId}`;
+  reauth(): Observable<any> {
+    const url = environment.apiUrl + `/v1/reauth`;
     return this.http.post<AuthRes>(url, null).pipe(
       tap((response: AuthRes) => {
         // second user
@@ -76,16 +74,7 @@ export class AuthService {
         // second base token
         let token = response.Code;
         this.cookieService.put('_bt', token)
-
-        let currentUserFactoring: UserFactoring = response;
-        this.currentUser$.next({
-          userFactoring: currentUserFactoring,
-          userGeneral: null
-        });
-
-        this.router.navigateByUrl('/client/cabinet');
       }),
-      switchMap(() => this.initCurrentUser()),
       catchError((errorResponse: HttpErrorResponse) => {
         return of({errors: errorResponse.error});
       })
@@ -93,7 +82,7 @@ export class AuthService {
   }
 
   login(data: LoginRequestInterface): Observable<any> {
-    const url = environment.apiUrl + '/user/login';
+    const url = environment.apiUrl + '/v1/login';
     return this.http.post<AuthRes>(url, data).pipe(
       tap((response: AuthRes) => {
         console.log('login res', response);
@@ -108,6 +97,7 @@ export class AuthService {
 
           this.router.navigateByUrl('/admin/cabinet');
         } else {
+
           // current user
           this.cookieService.put('_cu', JSON.stringify(response));
 
@@ -118,7 +108,34 @@ export class AuthService {
           this.router.navigateByUrl('/client/cabinet');
         }
       }),
-      switchMap(() => this.initCurrentUser()),
+      switchMap((authRes) => {
+        return this.initCurrentUser()
+        // this.processUserResponse({
+        //   Passport: {
+        //     Number: '123456789', // Мок данных
+        //     Date: new Date(), // Мок данных
+        //     Expire: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // Мок данных на 1 год вперёд
+        //     IssuerTitle: 'Passport Authority', // Мок данных
+        //     IssuerCode: 'PA123', // Мок данных
+        //     IsForeign: false, // Мок данных
+        //     Nationality: 'CountryName', // Мок данных
+        //   },
+        //   Profile: {
+        //     Name: {
+        //       First: authRes.Name, // Имя из AuthRes
+        //       Last: 'Doe' // Мок данных
+        //     },
+        //     IsMale: true, // Мок данных
+        //     Phone: '123-456-7890', // Мок данных
+        //     Email: 'user@example.com', // Мок данных
+        //     Login: authRes.Login // Логин из AuthRes
+        //   },
+        //   PassportFileCode: 'PF12345', // Мок данных
+        //   Avatar: authRes.Avatar, // Аватар из AuthRes
+        //   ID: authRes.UserID // ID из AuthRes
+        // })
+        // return of(authRes)
+      }),
       catchError((errorResponse: HttpErrorResponse) => {
         return of({errors: errorResponse.error});
       })
@@ -154,64 +171,77 @@ export class AuthService {
   }
 
   initCurrentUser(): Observable<UserGeneral> {
-    let adminCookie = this.cookieService.get('_cu_admin');
-    let userCookie = this.cookieService.get('_cu');
-    let user: AuthRes;
-    if (userCookie) {
-      user = this.toolsService.safeJson(userCookie);
-    } else if (adminCookie) {
-      user = this.toolsService.safeJson(adminCookie);
-    }
+    const user = this.getUserFromCookies();
 
-    let userId;
-
-    if (user) {
-      const token = user.Code;
-      userId = +user.UserID;
-
-      if (!token || !userId) {
-        return of();
-      }
-    } else {
+    if (!user) {
       return of();
     }
 
-    return this.http.get<UserGeneral>(environment.apiUrl + `/user/${userId}`).pipe(
-      tap((currentUserResponse: UserGeneral) => {
-        let userCookie = this.cookieService.get('_cu');
-        let currentUserFactoring: AuthRes;
-        if (userCookie) {
-          currentUserFactoring = this.toolsService.safeJson(userCookie);
-          let currentUser: CurrentUser = {
-            userGeneral: currentUserResponse,
-            userFactoring: currentUserFactoring,
-          };
-          this.currentUser$.next(currentUser);
-        }
+    const userId = this.getUserId(user);
+    if (!userId) {
+      return of();
+    }
 
-        let userAdminCookie = this.cookieService.get('_cu_admin');
-        let currentAdminFactoring: AuthRes;
-        if (userAdminCookie) {
-          currentAdminFactoring = this.toolsService.safeJson(userAdminCookie);
-          let currentUser: CurrentUser = {
-            userGeneral: currentUserResponse,
-            userFactoring: currentAdminFactoring,
-          };
-          this.currentUserAdmin$.next(currentUser);
-        }
-      }),
-      catchError((error) => {
-        return of(error);
-      })
+    return this.fetchUserGeneral(userId).pipe(
+      tap(currentUserResponse => this.processUserResponse(currentUserResponse)),
+      catchError(error => of(error))
     );
   }
+
+  private getUserFromCookies(): AuthRes | null {
+    const adminCookie = this.cookieService.get('_cu_admin');
+    const userCookie = this.cookieService.get('_cu');
+
+    if (userCookie) {
+      return this.toolsService.safeJson(userCookie);
+    } else if (adminCookie) {
+      return this.toolsService.safeJson(adminCookie);
+    }
+
+    return null;
+  }
+
+  private getUserId(user: AuthRes): number | null {
+    const token = user.Code;
+    const userId = +user.UserID;
+
+    return (token && userId) ? userId : null;
+  }
+
+  private fetchUserGeneral(userID: number): Observable<UserGeneral> {
+    return this.http.get<UserGeneral>(`${environment.apiUrl}/v1/users/${userID}`);
+  }
+
+  private processUserResponse(currentUserResponse: UserGeneral): void {
+    const userCookie = this.cookieService.get('_cu');
+    const userAdminCookie = this.cookieService.get('_cu_admin');
+
+    if (userCookie) {
+      const currentUserFactoring = this.toolsService.safeJson(userCookie);
+      const currentUser: CurrentUser = {
+        userGeneral: currentUserResponse,
+        userFactoring: currentUserFactoring,
+      };
+      this.currentUser$.next(currentUser);
+    }
+
+    if (userAdminCookie) {
+      const currentAdminFactoring = this.toolsService.safeJson(userAdminCookie);
+      const currentUser: CurrentUser = {
+        userGeneral: currentUserResponse,
+        userFactoring: currentAdminFactoring,
+      };
+      this.currentUserAdmin$.next(currentUser);
+    }
+  }
+
 
   /**
    * Called first
    * @param data
    */
   resetPassword(data: ResetPasswordReq): Observable<ResetPasswordRes> {
-    const url = environment.apiUrl + '/user/password/forget';
+    const url = environment.apiUrl + '/v1/users/password/forget';
     return this.http.post<ResetPasswordRes>(url, data);
   }
 

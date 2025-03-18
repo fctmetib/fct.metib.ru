@@ -1,0 +1,20 @@
+<div
+	[class.extended]="extended"
+	[ngClass]="classes"
+	class="flex flex_column accordion"
+>
+	<div
+		(click)="extended = !extended"
+		class="flex w-100 flex_column header cursor-pointer"
+	>
+		<div class="flex flex_align-center w-100 gap-8">
+			<div class="frame-l flex flex_grow">
+				<ng-content select="[question]"></ng-content>
+			</div>
+			<mib-icon btn-icon class="stroke" name="fi_chevron-down"></mib-icon>
+		</div>
+	</div>
+	<div [@slideInOut]="extended ? 'in' : 'out'" class="flex flex_column">
+		<ng-content select="[answer]"></ng-content>
+	</div>
+</div>

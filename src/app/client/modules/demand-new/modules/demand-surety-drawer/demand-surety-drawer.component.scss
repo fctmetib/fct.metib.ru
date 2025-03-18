@@ -2,14 +2,19 @@
 @import 'src/styles/_colors.vars.scss';
 
 .form {
-	padding: 8px 16px;
-	border-radius: var(--main-border-radius);
-	box-shadow: var(--normal-shadow);
+  padding: 8px 16px;
+  border-radius: var(--main-border-radius);
+  box-shadow: var(--normal-shadow);
+  margin: 10px 0px;
 }
 
 .description {
-	mib-icon {
-		@include icon-width(16px);
-		@include icon-color(var(--bti-tertiary));
-	}
+  mib-icon {
+    @include icon-width(16px);
+    @include icon-color(var(--bti-tertiary));
+  }
+}
+
+mib-tab-item.first-step {
+  min-height: 450px;
 }

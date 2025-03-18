@@ -1,6 +1,7 @@
 @import 'src/styles/_typography.vars.scss';
 
 :host {
+  position: relative;
 	display: block;
 	min-width: 72px;
 

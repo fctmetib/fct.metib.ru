@@ -19,14 +19,37 @@
 	<mib-spacing type="xs"></mib-spacing>
 	<mib-table (selectionChange)="selectionChange($event)">
 		<mib-table-head>
-			<mib-table-head-cell [sortable]="true" [showCheckbox]="true"
+			<mib-table-head-cell
 				>№
 			</mib-table-head-cell>
-			<mib-table-head-cell>Имя файла</mib-table-head-cell>
+			<ng-container *ngIf="isDesktop; else mobile">
+				<mib-table-head-cell>Имя файла</mib-table-head-cell>
+			</ng-container>
 			<mib-table-head-cell>Описание</mib-table-head-cell>
 			<mib-table-head-cell>Тип документа</mib-table-head-cell>
 			<mib-table-head-cell>Дата создания</mib-table-head-cell>
 			<mib-table-head-cell>Прикрепил</mib-table-head-cell>
+			<ng-template #mobile>
+				<mib-table-head-cell>{{ getVisibleHeader() }}</mib-table-head-cell>
+			</ng-template>
+			<ng-container table-head-button *ngIf="!isDesktop">
+				<mib-button
+					[disabled]="loading$ | async"
+					(press)="prev()"
+					size="s"
+					type="ghost-secondary"
+				>
+					<mib-icon class="stroke" btn-icon name="fi_chevron-left"></mib-icon>
+				</mib-button>
+				<mib-button
+					[disabled]="loading$ | async"
+					(press)="next()"
+					size="s"
+					type="ghost-secondary"
+				>
+					<mib-icon class="stroke" btn-icon name="fi_chevron-right"></mib-icon>
+				</mib-button>
+			</ng-container>
 		</mib-table-head>
 		<ng-container *ngIf="loading$ | async; else table">
 			<mib-skeleton
@@ -38,61 +61,101 @@
 			></mib-skeleton>
 		</ng-container>
 		<ng-template #table>
-			<mib-table-row (dblclick)="agentDocumentViewsDrawer()">
-				<mib-table-cell type="main">
-					<ng-container table-cell-title>qwe1</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe2</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qew3</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe4</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qew5</ng-container>
-				</mib-table-cell>
-				<mib-table-cell>
-					<ng-container table-cell-title>qwe10</ng-container>
-				</mib-table-cell>
-				<ng-container table-row-button *ngIf="isDesktop; else mobile">
-					<mib-button
-						[mibDropdownTrigger]="newDocumentRowMenu"
-						table-row-button
-						size="s"
-						type="ghost-secondary"
-					>
-						<mib-icon
-							class="stroke"
-							btn-icon
-							name="fi_more-vertical"
-						></mib-icon>
-					</mib-button>
-					<mib-dropdown #newDocumentRowMenu>
-						<mib-dropdown-point
-							(press)="agentDocumentViewsDrawer()"
-							text="Открыть"
-						></mib-dropdown-point>
-					</mib-dropdown>
-				</ng-container>
-				<ng-template #mobile>
-					<mib-button
-						(click)="openDocumentsPageModal(); $event.stopPropagation()"
-						size="s"
-						table-row-button
-						type="ghost-secondary"
-					>
-						<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
-					</mib-button>
-				</ng-template>
-			</mib-table-row>
+			<ng-container *ngIf="mData.length > 0; else emptyTable">
+				<mib-table-row
+					(dblclick)="agentDocumentViewsDrawer()"
+					*ngFor="let doc of mData; let last = last"
+					[underlined]="!last"
+				>
+					<mib-table-cell type="main">
+						<ng-container table-cell-title>{{ doc?.Number }}</ng-container>
+					</mib-table-cell>
+					<ng-container *ngIf="isDesktop; else mobileCell">
+						<mib-table-cell>
+							<ng-container table-cell-title>{{ doc?.Title }}</ng-container>
+						</mib-table-cell>
+					</ng-container>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{ doc?.Description }}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							doc?.DocumentType === 'CustomerRequestGuaranty'
+								? 'Договор поручительства'
+								: 'Документ'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell>
+						<ng-container table-cell-title>{{
+							doc?.CreatedTime | date : 'dd.MM.YYYY'
+						}}</ng-container>
+					</mib-table-cell>
+					<mib-table-cell type="person" [special]="true">
+						<ng-container table-cell-title>
+							<div class="flex flex_align-center gap-8">
+								<!-- *ngIf="doc?.CreatorAvatarUrl" -->
+								<mib-avatar
+									type="round"
+									[showArrow]="false"
+									[src]="
+										doc?.Creator?.avatarUrl || 'assets/images/woman-avatar.jpg'
+									"
+									[showImage]="true"
+								></mib-avatar>
+								<span class="text-clamp">
+									{{ doc?.CreatorLastName }}
+									{{ doc?.CreatorFirstName }}
+								</span>
+							</div>
+						</ng-container>
+					</mib-table-cell>
+					<ng-template #mobileCell>
+						<mib-table-head-cell>{{ getVisibleCell(doc) }}</mib-table-head-cell>
+					</ng-template>
+					<ng-container table-row-button *ngIf="isDesktop; else mobile">
+						<mib-button
+							[mibDropdownTrigger]="newDocumentRowMenu"
+							table-row-button
+							size="s"
+							type="ghost-secondary"
+						>
+							<mib-icon
+								class="stroke"
+								btn-icon
+								name="fi_more-vertical"
+							></mib-icon>
+						</mib-button>
+						<mib-dropdown #newDocumentRowMenu>
+							<mib-dropdown-point
+								(press)="agentDocumentViewsDrawer()"
+								text="Открыть"
+							></mib-dropdown-point>
+						</mib-dropdown>
+					</ng-container>
+					<ng-template #mobile>
+						<mib-button
+							(click)="openDocumentsPageModal(doc); $event.stopPropagation()"
+							size="s"
+							type="ghost-secondary"
+						>
+							<mib-icon class="stroke" btn-icon name="fi_eye"></mib-icon>
+						</mib-button>
+					</ng-template>
+				</mib-table-row>
+			</ng-container>
+			<ng-template #emptyTable>
+				<mib-table-row #emptyTable>
+					<p class="text text_m w-100 flex_align-self-center text-center">
+						нет данных
+					</p>
+				</mib-table-row>
+			</ng-template>
 		</ng-template>
 		<mib-table-footer [lined]="!(loading$ | async)">
 			<mib-paginator
+				*ngIf="mData.length || !(loading$ | async)"
 				(pageChange)="onPageChange($event)"
-				[totalCount]="5"
+				[totalCount]="mData.length"
 				[pagesToShow]="PAGINATOR_PAGE_TO_SHOW"
 				[itemsPerPage]="PAGINATOR_ITEMS_PER_PAGE"
 			></mib-paginator>

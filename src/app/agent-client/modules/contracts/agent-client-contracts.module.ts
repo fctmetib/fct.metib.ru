@@ -20,6 +20,8 @@ import {TableModule} from 'src/app/shared/ui-kit/table/table.module'
 import {SkeletonModule} from 'src/app/shared/ui-kit/skeleton/skeleton.module'
 import {DropdownModule} from 'src/app/shared/ui-kit/dropdown/dropdown.module'
 import {AgentContractsDrawerModule} from './modules/agent-contracts-drawer/agent-contracts-drawer.module'
+import {RubModule} from 'src/app/shared/pipes/rub/rub.module'
+import {ContractsAgentPageModalModule} from 'src/app/shared/modules/modals/contracts-agent-page-modal/contracts-agent-page-modal.module'
 
 @NgModule({
 	declarations: [ContractsPageComponent],
@@ -42,7 +44,9 @@ import {AgentContractsDrawerModule} from './modules/agent-contracts-drawer/agent
 		TableModule,
 		SkeletonModule,
 		DropdownModule,
-		AgentContractsDrawerModule
+		AgentContractsDrawerModule,
+		RubModule,
+		ContractsAgentPageModalModule
 	]
 })
 export class AgentClientContractsModule {}

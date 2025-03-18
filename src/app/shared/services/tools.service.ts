@@ -156,10 +156,10 @@ export class ToolsService {
   }
 
   public tokenExpired(token: string): boolean {
-    if (token) {
-      const expiry = (JSON.parse(window.atob(token.split('.')[1]))).exp;
-      return (Math.floor((new Date).getTime() / 1000)) >= expiry;
-    }
+    // if (token) {
+    //   const expiry = (JSON.parse(window.atob(token.split('.')[1]))).exp;
+    //   return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+    // }
     return false
   }
 
@@ -245,4 +245,28 @@ export class ToolsService {
     return new Array(length).fill(null);
   }
 
+}
+
+export function deepMerge(target, source) {
+  // Проверяем, является ли значение объектом
+  function isObject(obj) {
+    return obj && typeof obj === 'object' && !Array.isArray(obj);
+  }
+
+  // Проходим по всем ключам из source
+  for (const key of Object.keys(source)) {
+    if (isObject(source[key])) {
+      // Если ключ в target не объект, создаём его как объект
+      if (!isObject(target[key])) {
+        target[key] = {};
+      }
+      // Рекурсивно объединяем объекты
+      deepMerge(target[key], source[key]);
+    } else if (source[key] !== undefined) {
+      // Заменяем значение из source, если оно не undefined
+      target[key] = source[key];
+    }
+  }
+
+  return target;
 }

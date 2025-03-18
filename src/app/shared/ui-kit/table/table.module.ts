@@ -14,6 +14,8 @@ import {TableQuickActionIslandComponent} from './components/table-quick-action-i
 import {ButtonModule} from '../button/button.module'
 import {MatTooltipModule} from '@angular/material/tooltip'
 import {ElementInViewModule} from '../../directives/element-in-view/element-in-view.module'
+import { SortTableActionComponent } from './components/sort-table-action/sort-table-action.component';
+import { FilterTableActionComponent } from './components/filter-table-action/filter-table-action.component';
 
 @NgModule({
 	declarations: [
@@ -33,15 +35,17 @@ import {ElementInViewModule} from '../../directives/element-in-view/element-in-v
 		TableCellComponent,
 		TableFooterComponent
 	],
-	imports: [
-		CommonModule,
-		CheckboxModule,
-		ReactiveFormsModule,
-		IconModule,
-		ClickOnElementModule,
-		ButtonModule,
-		MatTooltipModule,
-		ElementInViewModule
-	]
+  imports: [
+    CommonModule,
+    CheckboxModule,
+    ReactiveFormsModule,
+    IconModule,
+    ClickOnElementModule,
+    ButtonModule,
+    MatTooltipModule,
+    ElementInViewModule,
+    SortTableActionComponent,
+    FilterTableActionComponent
+  ]
 })
 export class TableModule {}

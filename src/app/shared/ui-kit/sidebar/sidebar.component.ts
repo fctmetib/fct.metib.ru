@@ -53,7 +53,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
 	]
 	menuVerify = [
 		{
-			links: [{name: 'Запросы', link: '/client/not-verify'}]
+			links: [
+        // {name: 'Запросы', link: '/client/not-verify'}
+        {name: 'Запросы', link: '/client/demand'}
+      ]
 		}
 	]
 	menuAgentUser = [

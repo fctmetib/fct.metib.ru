@@ -46,6 +46,13 @@
 	top: 188px;
 }
 
+.custom-contracts-agent {
+	@include absolute();
+	@include border();
+	max-height: calc(100vh - 65%);
+	top: 404px;
+}
+
 .custom-dialog-mib-ui {
 	@include absolute();
 	@include border();
@@ -67,7 +74,8 @@
 	top: 400px;
 }
 
-.documents-dialog-factoring {
+.documents-dialog-factoring,
+.documents-dialog-agent {
 	@include absolute();
 	@include border();
 	max-height: calc(100vh - 48%);

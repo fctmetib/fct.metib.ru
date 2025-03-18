@@ -2,6 +2,7 @@
   opacity: 1;
   pointer-events: visible;
   position: static;
+  flex-grow: 1;
   &.hidden {
     opacity: 0;
     pointer-events: none;

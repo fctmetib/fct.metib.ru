@@ -53,14 +53,19 @@
 				/>
 				<ng-container mibLabel>ИНН Вашей компании</ng-container>
 			</mib-input>
-			<mib-autocomplete formControlName="Organization" [options]="options">
+			<mib-autocomplete
+        formControlName="Organization"
+        [options]="options"
+        [extra]="true"
+        styleType="filled-secondary"
+      >
 			</mib-autocomplete>
 			<mib-textarea size="{{ isDesktop ? 'xl' : 'l' }}">
 				<ng-container mibLabel>Ваш комментарий</ng-container>
 				<textarea
 					formControlName="Comment"
 					[maxLength]="100"
-					autosize
+					[attr.autosize]="isBrowser ? '' : null"
 					mibTextarea
 				></textarea>
 			</mib-textarea>

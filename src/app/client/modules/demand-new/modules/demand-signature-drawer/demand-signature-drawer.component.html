@@ -1,422 +1,198 @@
+<ng-template #editForm>
+  <!-- первый скрин -->
+  <div>
+    <mib-spacing type="xs2"></mib-spacing>
+    <h4>Основная информация</h4>
+    <mib-spacing type="xs"></mib-spacing>
+    <mib-demand-signature-second-step
+      [orgDataForm]="orgDataForm"
+      [options]=dataByINN
+      (apply)="nextPage(false)"
+    ></mib-demand-signature-second-step>
+    <mib-spacing type="m"></mib-spacing>
+  </div>
+  <!-- второй скрин -->
+  <div>
+    <mib-demand-signature-third-step
+      [docFormData]="personalDataForm"
+      (changeDoc)="addDocuments($event)"
+      [personalDataForm]="personalDataForm"
+    ></mib-demand-signature-third-step>
+  </div>
+  <!-- третий скрин -->
+  <div >
+    <mib-demand-signature-fourth-step
+      [docFormData]="personalDataForm"
+      (changeDoc)="addDocuments($event)"
+    ></mib-demand-signature-fourth-step>
+  </div>
+</ng-template>
+
+<mib-blur-loader *ngIf="loading$ | async"></mib-blur-loader>
+
 <mib-drawer>
-	<mib-drawer-header
-		showProgressBar="true"
-		(onClose)="dialogRef.close()"
-		drawer-header
-		[maxPage]="maxPage"
-		[progress]="progress"
-	>
-	</mib-drawer-header>
-	<mib-drawer-container>
-		<p class="text text_m c-bti-secondary">Запрос на ЭПЦ</p>
-		<div [ngSwitch]="progress">
-			<!-- первый скрин -->
-			<div *ngSwitchCase="progress === 1">
-				<mib-spacing type="xs2"></mib-spacing>
-				<h4>Основная информация</h4>
-				<mib-spacing type="xs"></mib-spacing>
-				<p class="text text_m c-bti-secondary">Тип организации</p>
-				<mib-tab-group type="filled">
-					<mib-navbar size="m">
-						<mib-navbar-point value="1" type="filled" class="flex_grow"
-							>От юридического лиц</mib-navbar-point
-						>
-						<mib-navbar-point value="2" type="filled" class="flex_grow"
-							>От ИП</mib-navbar-point
-						>
-					</mib-navbar>
-					<!-- первый таб -->
-					<mib-tab-item value="1">
-						<mib-spacing type="xs"></mib-spacing>
-						<mib-information type="information">
-							<ng-container information-text
-								>Инфо: Введите ИНН организации и остальные данные заполнятся
-								автоматически
-							</ng-container>
-						</mib-information>
-						<mib-spacing type="xs"></mib-spacing>
-						<div class="flex flex_align-center gap-12">
-							<mib-input class="flex_grow">
-								<input mibInput />
-								<ng-container mibLabel>Введите ИНН организации</ng-container>
-							</mib-input>
-							<mib-button (click)="confirmIds()" type="filled-primary"
-								>Подтвердить</mib-button
-							>
-						</div>
-						<mib-spacing type="m"></mib-spacing>
-					</mib-tab-item>
-					<!-- второй таб -->
-					<mib-tab-item value="2">
-						<mib-spacing type="xs"></mib-spacing>
-						<mib-information type="information">
-							<ng-container information-text
-								>Инфо: Введите ИНН организации и остальные данные заполнятся
-								автоматически
-							</ng-container>
-						</mib-information>
-						<mib-spacing type="xs"></mib-spacing>
-						<div class="flex flex_align-center gap-12">
-							<mib-input class="flex_grow">
-								<input disabled mibInput />
-								<ng-container mibLabel>Введите ИНН организации</ng-container>
-							</mib-input>
-							<mib-button [disabled]="true" type="filled-primary"
-								>Подтвердить</mib-button
-							>
-						</div>
-						<mib-spacing type="m"></mib-spacing>
-					</mib-tab-item>
-				</mib-tab-group>
-			</div>
-			<!-- второй скрин -->
-			<div *ngSwitchCase="2">
-				<mib-spacing type="xs2"></mib-spacing>
-				<h4>Основная информация</h4>
-				<mib-spacing type="xs"></mib-spacing>
-				<p class="text text_m c-bti-secondary">Тип организации</p>
-				<mib-tab-group type="filled">
-					<mib-navbar size="m">
-						<mib-navbar-point value="1" type="filled" class="flex_grow"
-							>От юридического лиц</mib-navbar-point
-						>
-						<mib-navbar-point value="2" type="filled" class="flex_grow"
-							>От ИП</mib-navbar-point
-						>
-					</mib-navbar>
-					<!-- первый таб второго скрина -->
-					<mib-tab-item value="1">
-						<mib-spacing type="xs"></mib-spacing>
-						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel>ИНН организации</ng-container>
-							<mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>
-						</mib-input>
-						<mib-spacing type="s"></mib-spacing>
-						<div class="flex flex_column gap-12">
-							<div class="flex gap-12 w-100">
-								<mib-select class="w-27" placeholder="Организация">
-									<mib-dropdown-point
-										[value]="true"
-										text="ООО"
-									></mib-dropdown-point>
-									<mib-dropdown-point
-										[value]="false"
-										text="ЗАО"
-									></mib-dropdown-point>
-									<mib-dropdown-point
-										[value]="false"
-										text="ОАО"
-									></mib-dropdown-point>
-									<mib-dropdown-point
-										[value]="false"
-										text="ПАО"
-									></mib-dropdown-point>
-								</mib-select>
-								<mib-input class="flex_grow">
-									<input mibInput />
-									<ng-container mibLabel
-										>Краткое наименование организации</ng-container
-									>
-								</mib-input>
-							</div>
-							<mib-input class="flex_grow">
-								<input mibInput />
-								<ng-container mibLabel
-									>Полное наименование организации</ng-container
-								>
-							</mib-input>
-							<div class="flex gap-12">
-								<mib-input class="flex_grow">
-									<input mibInput />
-									<ng-container mibLabel>ИНН</ng-container>
-								</mib-input>
-								<mib-input class="flex_grow">
-									<input mibInput />
-									<ng-container mibLabel>КПП</ng-container>
-								</mib-input>
-								<mib-input class="flex_grow">
-									<input mibInput />
-									<ng-container mibLabel>ОГРН</ng-container>
-								</mib-input>
-							</div>
-							<mib-input class="flex_grow">
-								<input mibInput />
-								<ng-container mibLabel>ОКПО</ng-container>
-							</mib-input>
-							<div class="flex gap-12">
-								<mib-input class="flex_grow">
-									<input mibInput />
-									<ng-container mibLabel>Номер телефона</ng-container>
-								</mib-input>
-								<mib-input class="flex_grow">
-									<input mibInput />
-									<ng-container mibLabel>Электронная почта</ng-container>
-								</mib-input>
-							</div>
-							<mib-input class="flex_grow">
-								<input mibInput />
-								<ng-container mibLabel>Юридический адрес</ng-container>
-							</mib-input>
-							<mib-checkbox class="gap-8">
-								<span class="text text_m"
-									>Фактический адрес совпадает с юридическим</span
-								>
-							</mib-checkbox>
-							<mib-input class="flex_grow">
-								<input mibInput />
-								<ng-container mibLabel>Фактический адрес</ng-container>
-							</mib-input>
-						</div>
-					</mib-tab-item>
-					<!-- второй таб второго скрина -->
-					<mib-tab-item value="2">
-						<mib-spacing type="xs"></mib-spacing>
-						<mib-information type="information">
-							<ng-container information-text
-								>Инфо: Введите ИНН организации и остальные данные заполнятся
-								автоматически
-							</ng-container>
-						</mib-information>
-						<mib-spacing type="xs"></mib-spacing>
-						<div class="flex flex_align-center gap-12">
-							<mib-input class="flex_grow">
-								<input disabled mibInput />
-								<ng-container mibLabel>Введите ИНН организации</ng-container>
-							</mib-input>
-							<mib-button [disabled]="true" type="filled-primary"
-								>Подтвердить</mib-button
-							>
-						</div>
-						<mib-spacing type="m"></mib-spacing>
-					</mib-tab-item>
-				</mib-tab-group>
-				<mib-spacing type="m"></mib-spacing>
-			</div>
-			<!-- третий скрин -->
-			<div *ngSwitchCase="3">
-				<mib-spacing type="xs2"></mib-spacing>
-				<h4>Данные о владельце сертификата</h4>
-				<mib-spacing type="xs"></mib-spacing>
-				<div class="flex flex_column gap-12">
-					<div class="flex gap-12">
-						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel>Фамилия</ng-container>
-						</mib-input>
-						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel>Имя</ng-container>
-						</mib-input>
-						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel>Отчество</ng-container>
-						</mib-input>
-					</div>
-					<div class="flex flex_column">
-						<p class="text text_s c-bti-tertiary">Пол</p>
-						<div class="flex pt-4">
-							<mib-checkbox class="gap-8 flex_grow">
-								<span class="text text_m">Мужской</span>
-							</mib-checkbox>
-							<mib-checkbox class="gap-8 flex_grow">
-								<span class="text text_m">Женский</span>
-							</mib-checkbox>
-						</div>
-					</div>
-					<mib-input>
-						<input mibInput />
-						<ng-container mibLabel>ИНН</ng-container>
-					</mib-input>
-					<mib-input>
-						<input mibInput />
-						<ng-container mibLabel>СНИЛС</ng-container>
-					</mib-input>
-					<mib-input>
-						<input type="date" mibInput />
-						<ng-container mibLabel>Дата рождения</ng-container>
-					</mib-input>
-					<mib-input>
-						<input mibInput />
-						<ng-container mibLabel>Место рождения</ng-container>
-					</mib-input>
-					<mib-input>
-						<input mibInput />
-						<ng-container mibLabel>Должность в компании</ng-container>
-					</mib-input>
-				</div>
-				<mib-spacing type="s"></mib-spacing>
-				<div class="flex flex_column gap-8">
-					<p class="headline">Контактные данные</p>
-					<div class="flex gap-12">
-						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel>Мобильный телефон</ng-container>
-						</mib-input>
-						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel>Электронная почта</ng-container>
-						</mib-input>
-					</div>
-				</div>
-				<mib-spacing type="s"></mib-spacing>
-				<div class="flex flex_column gap-12">
-					<p class="headline">Паспортные данные</p>
-					<div class="flex">
-						<mib-select
-							class="w-100"
-							type="outline"
-							placeholder="Гражданство РФ"
-						>
-							<mib-dropdown-point
-								[value]="true"
-								text="Гражданство РБ"
-							></mib-dropdown-point>
-						</mib-select>
-					</div>
-					<div class="flex gap-12">
-						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel>Серия</ng-container>
-						</mib-input>
-						<mib-input class="flex_grow">
-							<input mibInput />
-							<ng-container mibLabel>Номер</ng-container>
-						</mib-input>
-						<mib-input class="flex_grow">
-							<input type="date" mibInput />
-							<ng-container mibLabel>Дата выдачи</ng-container>
-						</mib-input>
-					</div>
-					<mib-input>
-						<input mibInput />
-						<ng-container mibLabel>Код подразделения</ng-container>
-					</mib-input>
-					<mib-input>
-						<input mibInput />
-						<ng-container mibLabel>Кем выдан паспорт</ng-container>
-					</mib-input>
-				</div>
-				<mib-spacing type="xs"></mib-spacing>
-				<div class="flex flex_column gap-12">
-					<p class="headline">Прикрепите скан-копию паспорта в поле ниже</p>
-					<mib-dnd
-						(onChange)="onDocumentLoad($event)"
-						[accept]="[
-							'application/pdf',
-							'application/msword',
-							'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-							'application/vnd.ms-excel',
-							'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-							'image/jpeg',
-							'image/png'
-						]"
-						headline="Прикрепите документ"
-					></mib-dnd>
-					<p class="text text_xs c-bti-tertiary">
-						Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG,
-						PNG
-					</p>
-				</div>
-			</div>
-			<!-- четвертый скрин -->
-			<div *ngSwitchCase="4">
-				<mib-spacing type="xs2"></mib-spacing>
-				<h4>Распечатайте заявку</h4>
-				<mib-spacing type="xs"></mib-spacing>
-				<mib-information type="alert">
-					<ng-container information-text
-						>Внимание: перед отправкой необходимо установить заявку и
-						распечатать ее на принтере. Распечатка обязательно понадобится при
-						сверке документов при получении сертификата
-					</ng-container>
-				</mib-information>
-				<mib-spacing type="xs"></mib-spacing>
-				<div class="flex flex_align-center document">
-					<div class="flex flex_grow gap-4">
-						<span class="text text_m c-bti-primary"> Название документа </span>
-						<span class="text text_m c-bti-tertiary"> 2,37мб </span>
-					</div>
-					<div class="flex">
-						<mib-button type="ghost-primary" (press)="downloadFile()">
-							<mib-icon
-								mibLeftIcon
-								class="stroke"
-								name="fi_download"
-							></mib-icon>
-							<span>Скачать заявку</span>
-						</mib-button>
-					</div>
-				</div>
-				<mib-spacing type="m"></mib-spacing>
-				<p class="text text_m c-bti-secondary">
-					После установки заявке, распечатайте ее на принтере и отсканируйте,
-					после чего прикрепите ее в разделе ниже.
-				</p>
-				<mib-spacing type="s"></mib-spacing>
-				<p class="text text_m c-bti-primary">
-					Прикрепите скан заполненной заявки
-				</p>
-				<mib-spacing type="xs2"></mib-spacing>
-				<div class="flex flex_column gap-12">
-					<mib-dnd
-						(onChange)="onDocumentLoad($event)"
-						[accept]="[
-							'application/pdf',
-							'application/msword',
-							'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-							'application/vnd.ms-excel',
-							'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-							'image/jpeg',
-							'image/png'
-						]"
-						headline="Прикрепите документ"
-					></mib-dnd>
-					<div>
-						<p class="text text_xs c-bti-tertiary">
-							Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX,
-							JPEG, PNG
-						</p>
-						<p class="text text_xs c-bti-tertiary">
-							Размер каждого документа не должен превышать 10 МБ
-						</p>
-					</div>
-				</div>
-				<mib-spacing type="m"></mib-spacing>
-			</div>
-			<div *ngSwitchDefault>
-				<h4>default switch</h4>
-			</div>
-		</div>
-	</mib-drawer-container>
-	<!-- дровер футер -->
-	<mib-drawer-footer drawer-footer>
-		<div class="flex w-100 flex_justify-between">
-			<div class="flex">
-				<mib-button
-					[ngStyle]="{display: progress <= 1 ? 'none' : 'block'}"
-					(click)="prevPage()"
-					size="m"
-					type="filled-secondary"
-					>Назад</mib-button
-				>
-			</div>
-			<div class="flex">
-				<mib-button
-					[ngStyle]="{display: progress === maxPage ? 'none' : 'block'}"
-					(click)="nextPage()"
-					size="m"
-					type="filled-primary"
-					>Продолжить
-				</mib-button>
-				<mib-button
-					[ngStyle]="{display: progress === maxPage ? 'block' : 'none'}"
-					(click)="submitData()"
-					size="m"
-					type="filled-primary"
-					>Отправить</mib-button
-				>
-			</div>
-		</div>
-	</mib-drawer-footer>
+  <mib-drawer-header
+    [showProgressBar]="!isChangeByView"
+    (onClose)="dialogRef.close()"
+    drawer-header
+    [maxPage]="maxPage"
+    [progress]="pageCount"
+  >
+  </mib-drawer-header>
+  <mib-drawer-container>
+    <ng-container *ngIf="isView && date.status; else edit">
+      <h4>Запрос №{{ data.data.id }}</h4>
+      <mib-spacing type="xs"></mib-spacing>
+      <p class="text text_m c-bti-secondary">
+        Запрос создан: {{ date.create | date: 'dd.MM.yyyy' }}, запрос
+        отредактирован: {{ date.update | date: 'dd.MM.yyyy' }}
+      </p>
+      <mib-spacing type="xs"></mib-spacing>
+      <div class="flex flex_align-center gap-12">
+        <mib-badge
+          type="filled-secondary"
+          [extended]="true"
+          size="l"
+        >Запрос на ЭЦП
+        </mib-badge
+        >
+        <mib-badge
+          type="filled-primary"
+          [extended]="true"
+          size="l"
+        >{{ date.status }}
+        </mib-badge
+        >
+      </div>
+    </ng-container>
+    <ng-template #edit>
+      <p class="text text_m c-bti-secondary">Запрос на ЭЦП</p>
+    </ng-template>
+    <div *ngIf="isChangeByView; else editing">
+      <mib-spacing type="xs"></mib-spacing>
+      <mib-tab-group>
+        <mib-navbar class="container container_large">
+          <mib-navbar-point (press)="tabIndex = $event" value="1">События</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="2">Информация</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="3">Документы</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="4">Результат</mib-navbar-point>
+        </mib-navbar>
+        <mib-spacing type="m"></mib-spacing>
+        <mib-tab-item value="1">
+          <!--События-->
+          <mib-demand-signature-events-tab
+            [messages]="viewingData?.Messages"
+            [loading$]="loading$"
+          ></mib-demand-signature-events-tab>
+        </mib-tab-item>
+        <mib-tab-item value="2">
+          <!--Информация-->
+<!--          <mib-demand-signature-info-tab-->
+<!--            [data]="viewingData?.Data"-->
+<!--          ></mib-demand-signature-info-tab>-->
+          <ng-container *ngTemplateOutlet="editForm"></ng-container>
+        </mib-tab-item>
+        <mib-tab-item value="3">
+          <!--Документы-->
+          <mib-demand-signature-docs-tab
+            [filesWithTypes]="filesWithTypes"
+            (deleteFile)="deleteFile()"
+          ></mib-demand-signature-docs-tab>
+        </mib-tab-item>
+        <mib-tab-item value="4">
+          <!--Результат-->
+          <mib-demand-signature-result-tab
+            [viewingData]="viewingData"
+          ></mib-demand-signature-result-tab>
+        </mib-tab-item>
+      </mib-tab-group>
+      <mib-spacing type="xs"></mib-spacing>
+    </div>
+    <ng-template #editing>
+      <div [ngSwitch]="pageCount">
+        <!-- первый скрин -->
+        <div *ngSwitchCase="1">
+          <mib-spacing type="xs2"></mib-spacing>
+          <h4>Основная информация</h4>
+          <mib-spacing type="xs"></mib-spacing>
+          <mib-demand-signature-second-step
+            [orgDataForm]="orgDataForm"
+            [options]=dataByINN
+            (apply)="nextPage(false)"
+          ></mib-demand-signature-second-step>
+          <mib-spacing type="m"></mib-spacing>
+        </div>
+        <!-- второй скрин -->
+        <div *ngSwitchCase="2">
+          <mib-demand-signature-third-step
+            [docFormData]="personalDataForm"
+            (changeDoc)="addDocuments($event)"
+            [personalDataForm]="personalDataForm"
+          ></mib-demand-signature-third-step>
+        </div>
+        <!-- третий скрин -->
+        <div *ngSwitchCase="3">
+          <mib-demand-signature-fourth-step
+            [docFormData]="personalDataForm"
+            (changeDoc)="addDocuments($event)"
+          ></mib-demand-signature-fourth-step>
+        </div>
+        <div *ngSwitchDefault>
+          <h4>default switch</h4>
+        </div>
+      </div>
+    </ng-template>
+  </mib-drawer-container>
+  <mib-drawer-footer drawer-footer *ngIf="(isChangeByView && tabIndex === '1')">
+    <mib-send-messages
+      [disabled]="(isSubmitting$ | async)"
+      [form]="messageForm"
+      (sendMessage)="sendMessage()"
+    ></mib-send-messages>
+  </mib-drawer-footer>
+  <!-- дровер футер -->
+  <mib-drawer-footer drawer-footer *ngIf="!isChangeByView">
+    <div class="flex w-100 flex_justify-between">
+      <div class="flex">
+        <mib-button
+          [ngStyle]="{display: pageCount <= 1 ? 'none' : 'block'}"
+          (click)="prevPage()"
+          size="m"
+          type="filled-secondary"
+        >Назад
+        </mib-button
+        >
+      </div>
+      <div class="flex">
+        <mib-button
+          *ngIf="isEdit;else isOther"
+          [ngStyle]="{display: pageCount === maxPage ? 'none' : 'block'}"
+          (click)="nextPage()"
+          [disabled]="!isEdit && !formIsValid()"
+          size="m"
+          type="filled-primary"
+        >Продолжить
+        </mib-button>
+        <ng-template #isOther>
+          <mib-button
+            [ngStyle]="{display: pageCount === maxPage ? 'none' : 'block'}"
+            (click)="nextPage()"
+            [disabled]="!formIsValid()"
+            size="m"
+            type="filled-primary"
+          >Продолжить
+          </mib-button>
+        </ng-template>
+        <mib-button
+          [ngStyle]="{display: pageCount === maxPage ? 'block' : 'none'}"
+          (click)="submitData()"
+          [disabled]="!formIsValid()"
+          size="m"
+          type="filled-primary"
+        >Отправить
+        </mib-button
+        >
+      </div>
+    </div>
+  </mib-drawer-footer>
 </mib-drawer>

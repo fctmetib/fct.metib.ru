@@ -1,17 +1,15 @@
-<div class="card-content" id="step1">
-  <div class="p-grid reports-page">
-    <div class="p-col report-item" *ngFor="let reportCard of reportCards">
-      <div class="card-report can-click" (click)="show(reportCard.title, reportCard.type, reportCard.config)" >
-        <div class="header">
-          <div class="text">
-            {{reportCard.title}}
-          </div>
-          <div class="icon arrow_right"></div>
-        </div>
-        <div class="content">
-          {{reportCard.description}}
-        </div>
-      </div>
-    </div>
+<div class="container container_large">
+  <mib-spacing type="m"></mib-spacing>
+  <h3>Отчеты</h3>
+  <mib-spacing type="m"></mib-spacing>
+  <div class="flex flex_column">
+    <mib-report-card
+      *ngFor="let reportCard of reportCards; let last = last"
+      (onReport)="openReportDrawer(reportCard)"
+      [title]="reportCard.title"
+      [description]="reportCard.description"
+      [underlined]="!last"
+    >
+    </mib-report-card>
   </div>
 </div>

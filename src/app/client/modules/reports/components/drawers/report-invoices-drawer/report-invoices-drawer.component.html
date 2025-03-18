@@ -1,0 +1,25 @@
+<mib-report-drawer-layout [loading]="reportLoading$ | async" (onClose)="onClose()" (onReport)="onReport()" [formGroup]="form">
+  <ng-container report-drawer-title>Счета-фактуры</ng-container>
+  <div class="flex gap-12" formGroupName="period">
+    <mib-input class="flex_grow">
+      <input
+        mibInput
+        type="date"
+        size="m"
+        formControlName="DateFrom"
+        styleType="outline"
+      />
+      <ng-container mibLabel>Дата начала периода</ng-container>
+    </mib-input>
+    <mib-input class="flex_grow">
+      <input
+        mibInput
+        type="date"
+        size="m"
+        formControlName="DateTo"
+        styleType="outline"
+      />
+      <ng-container mibLabel>Дата окончания периода</ng-container>
+    </mib-input>
+  </div>
+</mib-report-drawer-layout>

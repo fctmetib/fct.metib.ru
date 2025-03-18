@@ -1,11 +1,11 @@
 import {
-	AfterViewInit,
-	Component,
-	EventEmitter,
-	Input,
-	Optional,
-	Output
-} from '@angular/core'
+  AfterViewInit,
+  Component,
+  EventEmitter, inject,
+  Input,
+  Optional,
+  Output
+} from '@angular/core';
 import {TagSize, TagStatus, TagType} from './interfaces/tag.interface'
 import {TagsGroupComponent} from '../tags-group/tags-group.component'
 
@@ -23,7 +23,7 @@ export class TagComponent implements AfterViewInit {
 	@Input() default?: boolean = false
 	@Input() value?: string = ''
 
-	constructor(@Optional() public group?: TagsGroupComponent) {}
+  group = inject(TagsGroupComponent, {optional: true})
 
 	ngAfterViewInit() {
 		if (this.disabled) this.status = 'disabled'

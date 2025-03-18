@@ -1,9 +1,9 @@
-<label class="flex flex_align-center checkbox w-100" [ngClass]="class">
+<label class="flex flex_align-center checkbox w-100" [ngClass]="classes">
 	<input
 		[id]="id"
 		type="checkbox"
 		[checked]="value"
-		(click)="onCheckboxChange($event)"
+		(click)="!disabled && onCheckboxChange($event)"
 		class="checkbox-input"
 	/>
 	<span

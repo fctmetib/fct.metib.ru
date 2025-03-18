@@ -80,12 +80,12 @@ export class FactoringCalculatorComponent implements OnInit {
 
 		let effectiveRate: number
 
-		if (monthlyTurnover <= 10000000) {
-			effectiveRate = 25.15
-		} else if (monthlyTurnover >= 10000000 && monthlyTurnover <= 49999999) {
-			effectiveRate = 22.5
+		if (monthlyTurnover >= 50000000) {
+			effectiveRate = 25.85;
+    } else if (monthlyTurnover >= 10000000) {
+			effectiveRate = 27.85;
 		} else {
-			effectiveRate = 21
+			effectiveRate = 30.65;
 		}
 
 		const dailyRate = effectiveRate / 365

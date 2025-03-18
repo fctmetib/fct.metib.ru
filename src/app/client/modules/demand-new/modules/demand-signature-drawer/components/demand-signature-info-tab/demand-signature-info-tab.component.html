@@ -1,0 +1,58 @@
+<h5>Информация об организации</h5>
+<mib-spacing type="xs2"></mib-spacing>
+<div class="text text_m">Краткое наименование: {{data?.Organization?.ShortTitle || '-'}}</div>
+<div class="text text_m">Полное наименование: {{data?.Organization?.FullTitle || '-'}}</div>
+<mib-spacing type="xs2"></mib-spacing>
+<div class="text text_m">ИНН: {{data?.Organization?.Requisites?.INN || '-'}}</div>
+<div class="text text_m">КПП: {{data?.Organization?.Requisites?.KPP || '-'}}</div>
+<div class="text text_m">ОКПО: {{data?.Organization?.Requisites?.OKPO || '-'}}</div>
+<div class="text text_m">ОГРН: {{data?.Organization?.Requisites?.OGRN || '-'}}</div>
+<mib-spacing type="xs2"></mib-spacing>
+<div class="text text_m">Номер телефона: {{data?.Organization?.Phone || '-'}}</div>
+<div class="text text_m">E-mail: {{data?.Organization?.Email || '-'}}</div>
+<mib-spacing type="xs2"></mib-spacing>
+<div class="text text_m">Юридический адрес: {{ factAddress || '-' }}</div>
+<div class="text text_m">Фактический адрес: {{ legalAddress || '-' }}</div>
+<mib-spacing type="xs"></mib-spacing>
+<h5>Информация о владельце сертификата</h5>
+<mib-spacing type="xs2"></mib-spacing>
+<div class="flex gap-8">
+  <div class="text text_m">
+    ФИО: {{data?.Person?.NameLast || ''}} {{data?.Person?.NameFirst || ''}} {{data?.Person?.NameSecond || ''}}
+  </div>
+  <mib-badge
+    *ngIf="data?.PersonPosition"
+    type="filled-secondary"
+    [extended]="true"
+    size="m"
+  >{{data?.PersonPosition}}</mib-badge>
+</div>
+<div class="text text_m">Дата рождения: {{(data?.Person?.BirthDate| date: 'dd.MM.YYYY') || '-'}}</div>
+<div class="text text_m clamp-text">Место рождения: {{data?.Person?.BirthPlace}}</div>
+<mib-spacing type="xs2"></mib-spacing>
+<div class="text text_m">СНИЛС: {{data?.Person?.SNILS || '-'}}</div>
+<div class="text text_m">ИНН: {{data?.Person?.INN || '-'}}</div>
+<mib-spacing type="xs2"></mib-spacing>
+<div class="text text_m">Номер телефона: {{data?.Person?.Phone || '-'}}</div>
+<div class="text text_m">E-mail: {{data?.Person?.Email || '-'}}</div>
+<mib-spacing type="xs"></mib-spacing>
+<h6 class="text text_m text_medium">Прикрепленные документы</h6>
+<mib-spacing type="xs2"></mib-spacing>
+<mib-accordion-with-shadow *ngIf="data?.Passport">
+  <ng-container question>
+    <h6 class="text text_m text_medium">Паспорт РФ</h6>
+  </ng-container>
+  <ng-container answer>
+
+    <mib-spacing type="xs2"></mib-spacing>
+    <div class="text text_m">Выдан: {{data?.Passport?.IssuerTitle}}</div>
+    <div class="text text_m">Дата выдачи: {{(data?.Passport?.Date | date: 'dd.MM.YYYY') || '-'}}</div>
+    <div class="text text_m">Код подразделения: {{data?.Passport?.IssuerTitle}}</div>
+    <div class="text text_m">Серия и номер: {{data?.Passport?.Number}}</div>
+    <mib-spacing type="xs2"></mib-spacing>
+    <div>
+      <mib-attached-document [download]="true"></mib-attached-document>
+    </div>
+  </ng-container>
+
+</mib-accordion-with-shadow>

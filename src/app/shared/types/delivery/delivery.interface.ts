@@ -17,10 +17,17 @@ export interface DeliveryInterface {
 
 export interface DeliveryRef {
   CurrencyCode: string;
+  ContractID: number;
+  ID: number;
   Title: string;
   CustomerID: number;
   Customer: string;
   DebtorID: number;
   Debtor: string;
-  ID: number;
+  CounterpartyTitle: string;
+  ContractTypeID: number;
+  ContractTypeTitle: string;
+  ContrAgentRequisites: string;
+  StartTime: string;
+  EndTime: string;
 }

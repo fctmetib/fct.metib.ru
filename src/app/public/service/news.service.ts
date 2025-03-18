@@ -15,18 +15,19 @@ export class NewsService {
 	) {}
 
 	public getAllNews() {
-		const url = `${environment.apiUrl}/news/`
+		const url = `${environment.apiUrl}/v1/news/`
 		return this.http.get<NewsInterface[]>(url)
 	}
 
 	public getNews(newsCount: number): Observable<NewsInterface[]> {
-		const url = `${environment.apiUrl}/news/top/${newsCount}`
+		const url = `${environment.apiUrl}/v1/news/top/${newsCount}`
 		return this.http.get<NewsInterface[]>(url)
 	}
 
-	getNewsImage(newsId: number): Observable<string> {
-		const url = `${environment.apiUrl}/news/${newsId}/image`
+	// https://api-factoring-test02.metib.ru/api/v{version}/news/123/image
 
+	public getNewsImage(newsId: number): Observable<string> {
+		const url = `${environment.apiUrl}/v1/news/${newsId}/image`
 		if (isPlatformServer(this.platformId)) {
 			return this.http.get(url, {responseType: 'arraybuffer'}).pipe(
 				map(arrayBuffer => {
@@ -61,17 +62,17 @@ export class NewsService {
 	}
 
 	public getNewsById(newsId: string): Observable<NewsInterface> {
-		const url = `${environment.apiUrl}/news/${newsId}`
+		const url = `${environment.apiUrl}/v1/news/${newsId}`
 		return this.http.get<NewsInterface>(url)
 	}
 
 	public getNewsList(): Observable<NewsInterface[]> {
-		const url = `${environment.apiUrl}/news`
+		const url = `${environment.apiUrl}/v1/news`
 		return this.http.get<NewsInterface[]>(url)
 	}
 
 	addNewsItem(data: NewsInterface): Observable<NewsInterface> {
-		let url = `${environment.apiUrl}/news`
+		let url = `${environment.apiUrl}/v1/news`
 		return this.http.post<NewsInterface>(url, data)
 	}
 
@@ -79,7 +80,7 @@ export class NewsService {
 		var formdata = new FormData()
 		formdata.append('', file)
 
-		let url = `${environment.apiFileUploadUrl}news/${newsId}/image`
+		let url = `${environment.apiFileUploadUrl}/v1/news/${newsId}/image`
 		return this.http.post<string>(url, formdata)
 	}
 
@@ -87,12 +88,12 @@ export class NewsService {
 		data: NewsInterface,
 		newsId: string
 	): Observable<NewsInterface> {
-		let url = `${environment.apiUrl}/news/${newsId}`
+		let url = `${environment.apiUrl}/v1/news/${newsId}`
 		return this.http.put<NewsInterface>(url, data)
 	}
 
 	removeNewsItem(newsId: number): Observable<any> {
-		let url = `${environment.apiUrl}/news/${newsId}`
+		let url = `${environment.apiUrl}/v1/news/${newsId}`
 		return this.http.delete<any>(url)
 	}
 }

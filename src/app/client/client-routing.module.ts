@@ -71,14 +71,6 @@ const routes = [
 						title: 'Факторинг | Отчеты'
 					},
 					{
-						path: 'demand',
-						loadChildren: () =>
-							import('../client/modules/demand-new/demand-new.module').then(
-								m => m.DemandNewModule
-							),
-						title: 'Факторинг | Запросы'
-					},
-					{
 						path: 'delays',
 						loadChildren: () =>
 							import('./modules/delays/delays.module').then(
@@ -86,15 +78,23 @@ const routes = [
 							),
 						title: 'Факторинг | Просрочки'
 					}
-				]
+				],
 			},
-			{
-				path: 'not-verify',
-				loadChildren: () =>
-					import('../client/modules/not-verify/not-verify.module').then(
-						m => m.NotVerifyModule
-					)
-			}
+      {
+        path: 'demand',
+        loadChildren: () =>
+          import('../client/modules/demand-new/demand-new.module').then(
+            m => m.DemandNewModule
+          ),
+        title: 'Факторинг | Запросы'
+      },
+			// {
+			// 	path: 'not-verify',
+			// 	loadChildren: () =>
+			// 		import('../client/modules/not-verify/not-verify.module').then(
+			// 			m => m.NotVerifyModule
+			// 		)
+			// }
 		]
 	}
 ]

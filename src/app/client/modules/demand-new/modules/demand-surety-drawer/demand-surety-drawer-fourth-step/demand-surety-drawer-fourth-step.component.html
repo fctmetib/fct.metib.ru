@@ -1,0 +1,41 @@
+<form [formGroup]="mainDataForm">
+  <mib-spacing type="xs2"></mib-spacing>
+  <h4>Приложение к анкете</h4>
+  <mib-spacing type="xs"></mib-spacing>
+  <p class="headline">Основные данные</p>
+  <mib-spacing type="xs"></mib-spacing>
+  <div class="flex flex_column gap-12">
+    <mib-input>
+      <input mibInput formControlName="typeProducts" />
+      <ng-container mibLabel>Виды реализуемой продукции</ng-container>
+    </mib-input>
+    <div class="flex flex_column">
+      <mib-input>
+        <input mibInput formControlName="trademarks" />
+        <ng-container mibLabel>Торговые марки</ng-container>
+      </mib-input>
+      <div class="flex gap-4 flex_align-center pt-4 description">
+        <mib-icon class="stroke" name="fi_info"></mib-icon>
+        <span class="text text_m c-bti-tertiary">
+          Товарные знаки, под которыми осуществляется продажа продукции
+        </span>
+      </div>
+    </div>
+    <mib-input>
+      <input mibInput formControlName="suppliers" />
+      <ng-container mibLabel>Основные поставщики</ng-container>
+    </mib-input>
+    <div class="flex gap-12">
+      <mib-input class="flex_grow">
+        <p mibRightIcon class="text text_m c-bti-quaternary">₽</p>
+        <input mask="separator" mibInput formControlName="limit" />
+        <ng-container mibLabel>Лимит финансирования</ng-container>
+      </mib-input>
+      <mib-input class="flex_grow">
+        <input mibInput formControlName="countEmpl" />
+        <ng-container mibLabel>Кол-во сотрудников</ng-container>
+      </mib-input>
+    </div>
+  </div>
+  <mib-spacing type="s"></mib-spacing>
+</form>

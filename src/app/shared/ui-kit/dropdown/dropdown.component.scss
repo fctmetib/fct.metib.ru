@@ -1,21 +1,33 @@
+@import "src/styles/helpers/icon_tools";
+
 :host {
   margin-top: 8px;
   position: fixed;
   opacity: 0;
   pointer-events: none;
   z-index: 1000;
+
   &.dropdown-open {
     pointer-events: visible;
   }
 }
-:host, .dropdown, .content {
+
+:host, .dropdown, .dropdown-content {
   max-height: 260px;
 }
+
+:host-context(.dropdown-absolute) {
+  position: absolute;
+}
+
 .dropdown {
   border-radius: 8px;
   box-shadow: var(--shadow-big);
   overflow: hidden;
   background: var(--wgr-primary);
-  padding: 4px 0;
   transition: var(--transition);
+
+  &-content {
+    padding: 4px 0;
+  }
 }

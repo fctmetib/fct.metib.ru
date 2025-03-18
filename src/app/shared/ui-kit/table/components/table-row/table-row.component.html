@@ -5,7 +5,9 @@
 	[class.table-row_underlined]="underlined"
 	[class.table-row_has-button]="wrapper.children.length"
 >
-	<ng-content></ng-content>
+	<div class="cells flex flex_align-stretch w-100">
+    <ng-content></ng-content>
+  </div>
 	<div class="table-row_button-wrapper flex flex_align-center" #wrapper>
 		<ng-content select="[table-row-button]"></ng-content>
 	</div>

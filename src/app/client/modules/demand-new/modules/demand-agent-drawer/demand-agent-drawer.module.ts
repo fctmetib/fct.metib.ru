@@ -23,6 +23,15 @@ import {ContractedFormsModule} from 'src/app/shared/ui-kit/contracted-forms/cont
 import {RightIconModule} from 'src/app/shared/directives/right-icon/right-icon.module'
 import {MibDragAndDropModule} from 'src/app/shared/ui-kit/drag-and-drop/mib-drag-and-drop.module'
 import {TagModule} from 'src/app/shared/ui-kit/tag/tag.module'
+import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
+import { AutoCompleteModule } from '../../../../../shared/ui-kit/auto-complete/auto-complete.module';
+import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-loader.module';
+import { DlFileCellModule } from '../../../../../shared/ui-kit/dl-file-cell/dl-file-cell.module';
+import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
+import { NgxMaskModule } from 'ngx-mask';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
+import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
 
 @NgModule({
 	declarations: [DemandAgentDrawerComponent],
@@ -48,7 +57,16 @@ import {TagModule} from 'src/app/shared/ui-kit/tag/tag.module'
 		ContractedFormsModule,
 		RightIconModule,
 		MibDragAndDropModule,
-		TagModule
+		TagModule,
+		AttachedDocumentModule,
+		AutoCompleteModule,
+		BlurLoaderModule,
+		DlFileCellModule,
+		MessageItemModule,
+		NgxMaskModule,
+		ReactiveFormsModule,
+		SendMessagesModule,
+		SkeletonModule
 	],
 	providers: [DemandAgentDrawerService]
 })

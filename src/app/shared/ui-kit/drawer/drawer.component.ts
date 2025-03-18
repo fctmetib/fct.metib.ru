@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import {drawerAnimation} from "./drawer.animations";
 
 @Component({
@@ -10,7 +10,7 @@ import {drawerAnimation} from "./drawer.animations";
   ]
 })
 export class DrawerComponent {
-
+  @Input() autoHeight = false
   @ViewChild('header') header?: ElementRef<HTMLDivElement>
   @ViewChild('footer') footer?: ElementRef<HTMLDivElement>
 

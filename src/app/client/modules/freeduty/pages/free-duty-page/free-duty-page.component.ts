@@ -100,6 +100,10 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 		10: 'RefNum'
 	}
 
+  trackById(index: number, item: Duty): any {
+    return item.ID;
+  }
+
 	constructor(
 		private au: AutoUnsubscribeService,
 		private freeDutyService: FreeDutyService,
@@ -155,15 +159,15 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 					setOptionalDate(this.dateFrom.value, 'dateFrom')
 					setOptionalDate(this.dateTo.value, 'dateTo')
 
-					return zip(
-						this.freeDutyService
-							.getFreeDuties(req)
-							.pipe(tap(duties => this.duties$.next(duties))),
-						this.freeDutyService
-							.getFreeDutyCount(req)
-							.pipe(tap(data => (this.dutiesCount = data)))
-							.pipe(finalize(() => this.loading$.next(false)))
-					)
+					return this.freeDutyService
+            .getFreeDuties(req)
+            .pipe(
+              tap(duties => this.duties$.next(duties)),
+              switchMap(() => this.freeDutyService
+                .getFreeDutyCount(req)
+                .pipe(tap(data => (this.dutiesCount = data)))
+                .pipe(finalize(() => this.loading$.next(false))))
+            )
 				}),
 				takeUntil(this.au.destroyer)
 			)
@@ -207,18 +211,6 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 	onPageChange(page: number) {
 		this.currentPage$.next(page)
 		this.table.deselect()
-	}
-
-	public onSort(ascending: boolean, key: string) {
-		this.duties$.next(
-			this.tableDataService.sortData(this.duties$.value, ascending, key)
-		)
-	}
-
-	public onSortByDates(ascending: boolean, key: string) {
-		this.duties$.next(
-			this.tableDataService.sortDataByDate(this.duties$.value, ascending, key)
-		)
 	}
 
 	private watchForms() {

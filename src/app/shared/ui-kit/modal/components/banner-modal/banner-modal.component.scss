@@ -14,7 +14,7 @@
 		padding: 12px;
 		border-radius: 64px;
 		z-index: 2;
-		@include icon-color(--wgr-primary);
+		@include icon-color(state(wgr-primary));
 	}
 	&.modal_success {
 		border: 1px solid var(--success-quaternary);

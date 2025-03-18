@@ -1,0 +1,12 @@
+<mib-report-drawer-layout [loading]="reportLoading$ | async" (onClose)="onClose()" (onReport)="onReport()" [formGroup]="form">
+  <ng-container report-drawer-title>Реестр Распоряжения</ng-container>
+  <mib-input class="flex_grow">
+    <input
+      mibInput
+      size="m"
+      formControlName="OrderID"
+      styleType="outline"
+    />
+    <ng-container mibLabel>Номер Распоряжения</ng-container>
+  </mib-input>
+</mib-report-drawer-layout>

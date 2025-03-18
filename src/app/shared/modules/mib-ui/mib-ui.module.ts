@@ -31,6 +31,7 @@ import {TestAutocompleteModule} from '../../ui-kit/test-autocomplete/test-autoco
 import {RightIconModule} from '../../directives/right-icon/right-icon.module'
 import {MatDialogModule} from '@angular/material/dialog'
 import {DlFileCellModule} from '../../ui-kit/dl-file-cell/dl-file-cell.module'
+import {RequestFailureModalService} from '../modals/request-failure-modal/request-failure-modal.service'
 
 @NgModule({
 	imports: [

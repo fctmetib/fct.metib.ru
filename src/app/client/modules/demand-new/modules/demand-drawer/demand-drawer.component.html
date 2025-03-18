@@ -1,93 +1,173 @@
-<mib-drawer [formGroup]="form">
-	<mib-drawer-header
-		showEdits="true"
-		(onClose)="dialogRef.close()"
-		(onEdit)="editDocument()"
-		drawer-header
-	>
-	</mib-drawer-header>
-	<mib-drawer-container>
-		<h4>Запрос на свободную тему</h4>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-input>
-			<ng-container mibLabel>Тема обращения</ng-container>
-			<input id="requestTitle" formControlName="requestTitle" mibInput />
-		</mib-input>
-		<mib-spacing type="xs"></mib-spacing>
-		<mib-textarea>
-			<ng-container mibLabel>Текст обращения</ng-container>
-			<!-- (blur)="saveData()" -->
-			<textarea
-				id="requestText"
-				formControlName="requestText"
-				[maxLength]="100"
-				autosize
-				mibTextarea
-			></textarea>
-		</mib-textarea>
-		<mib-spacing type="s"></mib-spacing>
-		<p
-			class="text text_m text_medium"
-			*ngIf="!documents.controls.length; else copiesTemplate"
-		>
-			При необходимости прикрепите документы в поле ниже
-		</p>
-		<mib-spacing type="xs2"></mib-spacing>
-		<ng-template #copiesTemplate>
-			<mib-table>
-				<mib-table-head>
-					<mib-table-head-cell>№</mib-table-head-cell>
-					<mib-table-head-cell>Имя файла</mib-table-head-cell>
-					<mib-table-head-cell>Описание</mib-table-head-cell>
-					<mib-table-head-cell>Тип документа</mib-table-head-cell>
-				</mib-table-head>
-				<mib-table-row
-					*ngFor="let document of documents.controls; let idx = index"
-				>
-					<mib-table-cell>
-						<ng-container table-cell-title>{{ idx + 1 }}</ng-container>
-					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title>{{
-							document.get('Title').value
-						}}</ng-container>
-					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title>{{
-							document.get('Description').value
-						}}</ng-container>
-					</mib-table-cell>
-					<mib-table-cell>
-						<ng-container table-cell-title>{{
-							document.get('DocumentTypeID').value
-						}}</ng-container>
-					</mib-table-cell>
-					<mib-button
-						table-row-button
-						[mibDropdownTrigger]="documentMenu"
-						size="s"
-						type="ghost-secondary"
-					>
-						<mib-icon
-							class="stroke"
-							btn-icon
-							name="fi_more-vertical"
-						></mib-icon>
-					</mib-button>
-					<mib-dropdown #documentMenu>
-						<mib-dropdown-point
-							(press)="removeDocument(idx)"
-							text="Удалить"
-						></mib-dropdown-point>
-					</mib-dropdown>
-				</mib-table-row>
-			</mib-table>
-		</ng-template>
-		<div class="flex flex_column gap-12">
-			<mib-dnd
-				[multiple]="true"
-				(onChange)="onDocumentLoad($event)"
-				[accept]="[
+<mib-blur-loader *ngIf="loading$ | async"></mib-blur-loader>
+
+<mib-drawer>
+  <mib-drawer-header
+    showEdits="true"
+    (onClose)="dialogRef.close()"
+    (onEdit)="editDocument()"
+    drawer-header
+  >
+  </mib-drawer-header>
+  <mib-drawer-container>
+    <ng-container *ngIf="isView && date.status; else edit">
+      <h4>Запрос №{{ data.data.id }}</h4>
+      <mib-spacing type="xs"></mib-spacing>
+      <p class="text text_m c-bti-secondary">Запрос создан: {{ date.create | date: 'dd.MM.yyyy' }}, запрос
+        отредактирован: {{ date.update | date: 'dd.MM.yyyy' }}</p>
+      <mib-spacing type="xs"></mib-spacing>
+      <div class="flex flex_align-center gap-12">
+        <mib-badge
+          type="filled-secondary"
+          [extended]="true"
+          size="l"
+        >Свободная тема
+        </mib-badge
+        >
+        <mib-badge
+          type="filled-primary"
+          [extended]="true"
+          size="l"
+        >{{ date.status }}
+        </mib-badge
+        >
+      </div>
+    </ng-container>
+    <ng-template #edit>
+      <h4>Запрос на свободную тему</h4>
+      <mib-spacing type="xs"></mib-spacing>
+    </ng-template>
+    <div *ngIf="isChangeByView; else editing">
+      <mib-spacing type="xs"></mib-spacing>
+      <mib-tab-group>
+        <mib-navbar class="container container_large">
+          <mib-navbar-point (press)="tabIndex = $event" value="1">События</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="2">Информация</mib-navbar-point>
+          <mib-navbar-point (press)="tabIndex = $event" value="3">Документы</mib-navbar-point>
+          <!-- <mib-navbar-point (press)="tabIndex = $event" value="4">Результат</mib-navbar-point> -->
+        </mib-navbar>
+        <mib-spacing type="m"></mib-spacing>
+        <mib-tab-item value="1">
+          <div class="scroll-y" [style.height]="height">
+            <ng-template #messagesTemplate>
+              <div
+                #messagesContent
+                [id]="i"
+                *ngFor="let message of viewingData?.Messages;trackBy:identify; let i = index"
+              >
+                <mib-message-item [message]="message"></mib-message-item>
+              </div>
+            </ng-template>
+
+            <ng-container *ngIf="loading$ | async; else messagesTemplate">
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+              <mib-spacing type="xs2"></mib-spacing>
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+              <mib-spacing type="xs2"></mib-spacing>
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+              <mib-spacing type="xs2"></mib-spacing>
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+              <mib-spacing type="xs2"></mib-spacing>
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+              <mib-spacing type="xs2"></mib-spacing>
+              <mib-skeleton [styles]="skeleton"></mib-skeleton>
+            </ng-container>
+          </div>
+
+        </mib-tab-item>
+        <mib-tab-item value="2">
+          <h5>{{viewingData?.Data?.Subject}}</h5>
+          <mib-spacing type="xs2"></mib-spacing>
+          <div class="text text_m">{{viewingData?.Data?.Question}}</div>
+        </mib-tab-item>
+        <mib-tab-item value="3">
+          <h5>Прикреплённые документы</h5>
+          <mib-spacing type="xs2"></mib-spacing>
+          <ng-container *ngIf="viewingData?.Files?.length; else emptyFiles">
+            <mib-attached-document
+              *ngFor="let document of viewingData?.Files"
+              [fileForRead]="{FileName: document.FileName, Size: document.Size, DemandFileID: document.DemandFileID}"
+              [file]="document"
+              [download]="true"
+              [remove]="true"
+              (deleteFile)="deleteFile()"
+            ></mib-attached-document>
+          </ng-container>
+          <ng-template #emptyFiles>
+            <div class="text text_s">Прикреплённых файлов нет...</div>
+          </ng-template>
+        </mib-tab-item>
+        <mib-tab-item value="4">
+          <h5>Комментарий к запросу</h5>
+          <mib-spacing type="xs2"></mib-spacing>
+          <div class="text text_m" *ngIf="viewingData?.Result?.Comment;else commentPlaceholder">
+            {{viewingData?.Result?.Comment}}
+          </div>
+          <ng-template #commentPlaceholder>
+            <div class="text text_s">Комментариев не оставлено...</div>
+          </ng-template>
+          <mib-spacing type="xs"></mib-spacing>
+          <h6 class="text text_m text_medium">Отчет по запросу</h6>
+          <ng-container *ngIf="viewingData?.Data?.Files?.length; else emptyReportsFiles">
+            <mib-attached-document
+              *ngFor="let document of viewingData?.Data.Files"
+              [download]="true"
+              [remove]="true"
+            ></mib-attached-document>
+          </ng-container>
+          <ng-template #emptyReportsFiles>
+            <div class="text text_s">Прикреплённых отчётов нет...</div>
+          </ng-template>
+        </mib-tab-item>
+      </mib-tab-group>
+      <mib-spacing type="xs"></mib-spacing>
+    </div>
+    <ng-template #editing>
+      <div [formGroup]="form">
+        <mib-spacing type="xs"></mib-spacing>
+        <mib-input>
+          <ng-container mibLabel>Тема обращения</ng-container>
+          <input id="requestTitle" formControlName="requestTitle" mibInput />
+        </mib-input>
+        <mib-spacing type="xs"></mib-spacing>
+        <mib-textarea>
+          <ng-container mibLabel>Текст обращения</ng-container>
+          <!-- (blur)="saveData()" -->
+          <textarea
+            id="requestText"
+            formControlName="requestText"
+            [maxLength]="100"
+            autosize
+            mibTextarea
+          ></textarea>
+        </mib-textarea>
+        <mib-spacing type="s"></mib-spacing>
+        <ng-container
+          *ngIf="!documents?.controls?.length; else copiesTemplate"
+        ></ng-container>
+        <p class="text text_m text_medium">
+          При необходимости прикрепите документы в поле ниже
+        </p>
+        <mib-spacing type="xs2"></mib-spacing>
+        <ng-template #copiesTemplate>
+          <p class="text text_m text_medium">Прикрепленные документы</p>
+          <mib-spacing type="xs2"></mib-spacing>
+          <div *ngFor="let document of documents.controls; let idx = index">
+            <mib-dl-file-cell
+              [attr.index]="idx"
+              [showRemove]="true"
+              (onDload)="downloadCurrentFile(document)"
+              (onRemove)="deleteDocument(idx)"
+              [fileName]="document.get('FileName').value"
+            ></mib-dl-file-cell>
+            <mib-spacing type="xs2"></mib-spacing>
+          </div>
+          <mib-spacing type="s"></mib-spacing>
+        </ng-template>
+        <div class="flex flex_column gap-12">
+          <mib-dnd
+            [multiple]="true"
+            (onChange)="onDocumentLoad($event)"
+            [accept]="[
 					'application/pdf',
 					'application/msword',
 					'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -96,25 +176,34 @@
 					'image/jpeg',
 					'image/png'
 				]"
-				headline="Прикрепите документ"
-			></mib-dnd>
-			<p class="text text_xs c-bti-tertiary">
-				Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
-			</p>
-			<p class="text text_xs c-bti-tertiary">
-				Размер каждого документа не должен превышать 10 МБ
-			</p>
-		</div>
-		<mib-spacing type="m"></mib-spacing>
-	</mib-drawer-container>
-	<mib-drawer-footer drawer-footer>
-		<mib-button
-			[disabled]="form.invalid || (loading$ | async) || (isSubmitting$ | async)"
-			(press)="onSubmit()"
-			[disabled]="true"
-			[size]="size"
-			type="filled-primary"
-			>Отправить запрос
-		</mib-button>
-	</mib-drawer-footer>
+            headline="Прикрепите документ"
+          ></mib-dnd>
+          <p class="text text_xs c-bti-tertiary">
+            Допустимые форматы для документов: PDF, DOC, DOCX, XLS, XLSX, JPEG, PNG
+          </p>
+          <p class="text text_xs c-bti-tertiary">
+            Размер каждого документа не должен превышать 10 МБ
+          </p>
+        </div>
+        <mib-spacing type="m"></mib-spacing>
+      </div>
+    </ng-template>
+  </mib-drawer-container>
+  <mib-drawer-footer drawer-footer *ngIf="(isChangeByView && tabIndex === '1')">
+    <mib-send-messages
+      [disabled]="(isSubmitting$ | async)"
+      [form]="messageForm"
+      (sendMessage)="sendMessage()"
+    ></mib-send-messages>
+  </mib-drawer-footer>
+  <mib-drawer-footer drawer-footer *ngIf="!isChangeByView">
+    <mib-button
+      [disabled]="form?.invalid || (loading$ | async) || (isSubmitting$ | async)"
+      (press)="onSubmit()"
+      [size]="size"
+      type="filled-primary"
+      *ngIf="!isChangeByView"
+    >Отправить запрос
+    </mib-button>
+  </mib-drawer-footer>
 </mib-drawer>

@@ -37,26 +37,28 @@
 		background-color: var(--wgr-primary);
 	}
 
-	&:hover {
-		border: 1px solid var(--wgr-quaternary);
-	}
+  &.checked {
+    background: var(--mc-default);
+    border-color: transparent;
+  }
 
-	&:active {
-		background-color: var(--wgr-tertiary);
-	}
+	:host-context(.checkbox_disabled) {
+    &:hover {
+      border: 1px solid var(--wgr-quaternary);
+    }
 
-	&.checked {
-		background: var(--mc-default);
-		border-color: transparent;
-	}
+    &:active {
+      background-color: var(--wgr-tertiary);
+    }
 
-	&.checked:hover {
-		background-color: var(--mc-hover);
-	}
+    &.checked:hover {
+      background-color: var(--mc-hover);
+    }
 
-	&.checked:active {
-		background-color: var(--mc-active);
-	}
+    &.checked:active {
+      background-color: var(--mc-active);
+    }
+  }
 }
 
 @mixin checkbox-icon {
@@ -70,7 +72,10 @@
 
 .checkbox {
 	position: relative;
-	cursor: pointer;
+
+	&:not(&_disabled) {
+    cursor: pointer;
+  }
 
 	.text {
 		user-select: none;

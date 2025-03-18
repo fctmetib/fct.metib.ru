@@ -1,0 +1,53 @@
+<form [formGroup]="orgDataForm">
+  <mib-spacing type="xs"></mib-spacing>
+<!--  <mib-input class="flex_grow">-->
+<!--    <input formControlName = "INN" mibInput />-->
+<!--    <ng-container mibLabel>ИНН организации</ng-container>-->
+<!--    <mib-icon class="stroke" mibRightIcon name="fi_edit"></mib-icon>-->
+<!--  </mib-input>-->
+<!--  <mib-spacing type="s"></mib-spacing>-->
+  <div class="flex flex_column gap-12">
+    <div class="flex gap-12 w-100">
+<!--      <mib-select class="w-27" placeholder="Организация"> &lt;!&ndash;what formControlName ?&ndash;&gt;-->
+<!--        <mib-dropdown-point-->
+<!--          [value]="true"-->
+<!--          text="ООО"-->
+<!--        ></mib-dropdown-point>-->
+<!--        <mib-dropdown-point-->
+<!--          [value]="false"-->
+<!--          text="ЗАО"-->
+<!--        ></mib-dropdown-point>-->
+<!--        <mib-dropdown-point-->
+<!--          [value]="false"-->
+<!--          text="ОАО"-->
+<!--        ></mib-dropdown-point>-->
+<!--        <mib-dropdown-point-->
+<!--          [value]="false"-->
+<!--          text="ПАО"-->
+<!--        ></mib-dropdown-point>-->
+<!--      </mib-select>-->
+      <mib-autocomplete
+        (confirm)="confirmIds()"
+        [options]="options"
+        [innType]="true"
+        label = "Введите ИНН организации"
+        formControlName="INN"
+        class="flex_grow">
+      </mib-autocomplete>
+    </div>
+    <div class="flex gap-12">
+      <mib-input class="flex_grow">
+        <input formControlName = "Phone" mibInput />
+        <ng-container mibLabel>Номер телефона</ng-container>
+      </mib-input>
+      <mib-input class="flex_grow">
+        <input formControlName = "Email" mibInput />
+        <ng-container mibLabel>Электронная почта</ng-container>
+      </mib-input>
+    </div>
+    <mib-input class="flex_grow">
+      <input formControlName = "Url" mibInput />
+      <ng-container mibLabel>Адрес сайта</ng-container>
+    </mib-input>
+  </div>
+</form>

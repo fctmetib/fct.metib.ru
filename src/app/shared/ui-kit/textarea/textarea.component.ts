@@ -8,17 +8,17 @@ import {
   Input, QueryList,
   Renderer2,
   ViewChild
-} from '@angular/core';
-import {MibTextareaDirective} from './directives/mib-textarea.directive';
-import {fromEvent, tap} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {AutoUnsubscribeService} from '../../services/auto-unsubscribe.service';
-import {InputCustom, InputSize, InputType} from '../input/interfaces/input.interface';
-import {InputBaseWrapperComponent} from '../input/components/input-base-wrapper/input-base-wrapper.component';
-import {ToolsService} from '../../services/tools.service';
-import {LeftIconDirective} from '../../directives/left-icon/left-icon.directive';
-import {RightIconDirective} from '../../directives/right-icon/right-icon.directive';
-import {LabelDirective} from '../../directives/label.directive';
+} from '@angular/core'
+import {MibTextareaDirective} from './directives/mib-textarea.directive'
+import {fromEvent, tap} from 'rxjs'
+import {takeUntil} from 'rxjs/operators'
+import {AutoUnsubscribeService} from '../../services/auto-unsubscribe.service'
+import {InputCustom, InputSize, InputType} from '../input/interfaces/input.interface'
+import {InputBaseWrapperComponent} from '../input/components/input-base-wrapper/input-base-wrapper.component'
+import {ToolsService} from '../../services/tools.service'
+import {LeftIconDirective} from '../../directives/left-icon/left-icon.directive'
+import {RightIconDirective} from '../../directives/right-icon/right-icon.directive'
+import {LabelDirective} from '../../directives/label.directive'
 
 @Component({
   selector: 'mib-textarea',
@@ -52,7 +52,7 @@ export class TextareaComponent implements AfterViewInit {
     private cdr: ChangeDetectorRef,
     private au: AutoUnsubscribeService,
     private r2: Renderer2,
-    private toolsService: ToolsService,
+    private toolsService: ToolsService
   ) {
   }
 
@@ -61,7 +61,7 @@ export class TextareaComponent implements AfterViewInit {
     return {
       ...classes,
       [`input_${this.size}`]: true,
-      [`input_type-${this.styleType}`]: true,
+      [`input_type-${this.styleType}`]: true
     }
   }
 
@@ -71,25 +71,39 @@ export class TextareaComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     if (this.textareaDirective) {
-      const {maxLength, textLength} = this.textareaElement
-      this.maxLength = maxLength
-      this.textLength = textLength
-      fromEvent(this.textareaElement, 'input').pipe(
-        tap(event => {
-          const target = event.target as HTMLTextAreaElement
-          this.maxLength = target.maxLength
-          this.textLength = target.textLength
-          this.cdr.detectChanges()
-        }),
-        takeUntil(this.au.destroyer)
-      ).subscribe()
+      const { maxLength } = this.textareaElement;
+      this.maxLength = maxLength;
+      this.textLength = (this.textareaElement.value || '').length;
+
+      fromEvent(this.textareaElement, 'input')
+        .pipe(
+          tap(event => {
+            const target = event.target as HTMLTextAreaElement;
+            this.maxLength = target.maxLength;
+            this.textLength = target.textLength;
+            this.cdr.detectChanges();
+          }),
+          takeUntil(this.au.destroyer)
+        )
+        .subscribe();
+
+      if (this.textareaDirective.ngControl) {
+        this.textareaDirective.ngControl.valueChanges
+          .pipe(
+            tap(value => {
+              this.textLength = (value || '').length;
+              this.cdr.detectChanges();
+            }),
+            takeUntil(this.au.destroyer)
+          )
+          .subscribe();
+      }
 
       this.toolsService.parseClassesObject(this.classes, className => {
         this.r2.addClass(this.base.box.nativeElement, className);
-      })
-
+      });
     } else {
-      throw new Error('mib-textarea should contains <input mibTextarea/>!')
+      throw new Error('mib-textarea should contain <textarea mibTextarea></textarea>!');
     }
   }
 

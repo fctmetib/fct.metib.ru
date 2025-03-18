@@ -1,0 +1,58 @@
+<form [formGroup]="orgDataForm">
+  <mib-spacing type="xs"></mib-spacing>
+  <div class="flex flex_column gap-12">
+    <mib-autocomplete
+      (confirm)="confirmIds()"
+      [options]="options"
+      [innType]="true"
+      label="Введите ИНН организации"
+      formControlName="INN"
+      class="flex_grow">
+    </mib-autocomplete>
+    <div class="flex gap-12 w-100">
+      <mib-input class="flex_grow">
+        <input mibInput formControlName="ShortTitle" />
+        <ng-container mibLabel>Краткое наименование организации</ng-container>
+      </mib-input>
+    </div>
+    <mib-input class="flex_grow">
+      <input mibInput formControlName="FullTitle" />
+      <ng-container mibLabel>Полное наименование организации</ng-container>
+    </mib-input>
+    <div class="flex gap-12">
+      <mib-input class="flex_grow">
+        <input mibInput formControlName="OGRN" />
+        <ng-container mibLabel>ОГРН</ng-container>
+      </mib-input>
+      <mib-input class="flex_grow">
+        <input formControlName="KPP" mibInput />
+        <ng-container mibLabel>КПП</ng-container>
+      </mib-input>
+    </div>
+    <mib-input class="flex_grow">
+      <input formControlName="OKPO" mibInput />
+      <ng-container mibLabel>ОКПО</ng-container>
+    </mib-input>
+    <div class="flex gap-12">
+      <mib-input class="flex_grow">
+        <input formControlName="Phone" mibInput />
+        <ng-container mibLabel>Номер телефона</ng-container>
+      </mib-input>
+      <mib-input class="flex_grow">
+        <input formControlName="Email" mibInput />
+        <ng-container mibLabel>Электронная почта</ng-container>
+      </mib-input>
+    </div>
+    <mib-input class="flex_grow">
+      <input mibInput formControlName="LegalAddress" />
+      <ng-container mibLabel>Юридический адрес</ng-container>
+    </mib-input>
+    <mib-checkbox class="gap-8" formControlName="FactAddressEquals">
+      <span class="text text_m">Фактический адрес совпадает с юридическим</span>
+    </mib-checkbox>
+    <mib-input class="flex_grow">
+      <input formControlName="FactAddress" mibInput />
+      <ng-container mibLabel>Фактический адрес</ng-container>
+    </mib-input>
+  </div>
+</form>

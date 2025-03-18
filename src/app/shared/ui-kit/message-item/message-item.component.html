@@ -1,0 +1,26 @@
+<div class="message-item text text_m">
+  <div class="message-item__wrapper">
+    <div class="message-item__header flex flex_align-center gap-8">
+      <h5 class="message-item__name flex flex_align-center text_m gap-8">
+        <mib-avatar
+          *ngIf="message.User.AvatarImage"
+          [showImage]="true"
+          [showArrow]="false"
+          type="round"
+          [src]="message.User.AvatarImage"
+        ></mib-avatar>
+        {{message.User.Name.Last}}
+        {{message.User.Name.First}}
+      </h5>
+      <div class="message-item__date text">{{message.Date | date: 'dd.MM.YYYY'}}</div>
+    </div>
+    <mib-spacing type="xs2"></mib-spacing>
+    <div class="message-item__body">
+      <div class="message-item__documents">
+        <mib-attached-document *ngIf="false" [download]="true"></mib-attached-document>
+      </div>
+      <mib-spacing type="xs2"></mib-spacing>
+      <p class="message-item__text text_m">{{message.Comment}}</p>
+    </div>
+  </div>
+</div>

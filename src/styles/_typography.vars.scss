@@ -109,7 +109,8 @@
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	white-space: normal;
-	word-break: break-all;
+  text-overflow: ellipsis;
+	//word-break: break-all;
 
 	&.expanded {
 		-webkit-line-clamp: initial;

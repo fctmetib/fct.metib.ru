@@ -5,7 +5,7 @@
 	<mib-spacing customSpace="4"></mib-spacing>
 </ng-container>
 <div
-	[mibDropdownTrigger]="dropdown"
+	[mibDropdownTrigger]="disabled ? null : dropdown"
 	#select
 	class="select flex flex_align-center"
 	[ngClass]="classes"
@@ -28,7 +28,7 @@
 	<ng-content></ng-content>
 	<mib-dropdown-point
 		[value]="null"
-		*ngIf="!options.length"
+		*ngIf="!options?.length"
 		[text]="placeholder"
 	>
 		<!--    <mib-icon dropdown-point-right-icon class="stroke" name="fi_frown"></mib-icon>-->

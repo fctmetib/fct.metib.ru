@@ -1,0 +1,44 @@
+@import "../../dropdown.component";
+
+:host {
+  min-width: 280px;
+}
+
+.dropdown {
+  min-height: 312px;
+  &-header {
+    padding: 12px 16px;
+    border: 1px solid var(--wgr-secondary);;
+    background-color: var(--w-overlay-tertiary);
+  }
+
+  &-footer {
+    padding: 8px 16px 12px 16px;
+    background-color: var(--w-overlay-tertiary);
+    .apply-btn {
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      &_visible {
+        pointer-events: visible;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}
+
+.close-btn {
+  align-self: start;
+  //margin-top: 7px;
+  cursor: pointer;
+  background-color: var(--wgr-secondary);
+  padding: 3px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  mib-icon {
+    @include icon-size(16px);
+    @include icon-color(--bti-secondary);
+  }
+}

@@ -1,0 +1,16 @@
+@import "src/styles/helpers/icon_tools";
+
+mib-icon {
+  @include icon-color(var(--wti-quaternary));
+  @include icon-size(18px);
+}
+
+:host {
+  transition: var(--transition);
+  cursor: pointer;
+  &:hover, &.selected {
+    mib-icon {
+      @include icon-color(var(--bti-quaternary));
+    }
+  }
+}

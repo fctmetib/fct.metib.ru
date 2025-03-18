@@ -4,8 +4,8 @@
 		<mib-spacing type="s"></mib-spacing>
 		<div class="flex flex_column gap-xs">
 			<ng-container formGroupName="Profile">
-				<div class="flex gap-8">
-					<mib-input>
+				<div class="flex gap-8" formGroupName="Name">
+					<mib-input class="flex_grow">
 						<input
 							mibInput
 							formControlName="First"
@@ -14,7 +14,7 @@
 						/>
 						<ng-container mibLabel>Имя</ng-container>
 					</mib-input>
-					<mib-input>
+					<mib-input class="flex_grow">
 						<input
 							mibInput
 							formControlName="Last"
@@ -166,7 +166,6 @@
 			>Есть аккаунт?</mib-button
 		>
 		<mib-button
-			*ngIf="confirmationCode.invalid"
 			[disabled]="form.invalid"
 			[loading]="!!(isSubmitting$ | async)"
 			size="l"

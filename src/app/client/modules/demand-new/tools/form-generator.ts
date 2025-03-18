@@ -123,6 +123,7 @@ export class FormGenerator {
       organizationWEB: [''],
 
       bankBik: ['', [Validators.required]],
+      bankINN: ['', [Validators.required]],
       bankCorrespondentAccount: ['', [Validators.required]],
       bankName: ['', [Validators.required]],
       bankAccountOpenDate: ['', [Validators.required]],
@@ -143,6 +144,47 @@ export class FormGenerator {
     });
 
     return form;
+  }
+
+
+  public generateAgentFactoringForm(): FormGroup {
+    return this.fb.group({
+      organizationType: [0, [Validators.required]],
+      organizationLegalForm: [''],
+      organizationShortName: ['', [Validators.required]],
+      organizationINN: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(12),
+        ],
+      ],
+      organizationPhone: ['', [Validators.required]],
+      organizationEmail: ['', [Validators.required, Validators.email]],
+      organizationWEB: [''],
+
+      bankBik: ['', [Validators.required]],
+      bankINN: ['', [Validators.required]],
+      bankCorrespondentAccount: ['', [Validators.required]],
+      bankName: ['', [Validators.required]],
+      bankAccountOpenDate: ['', [Validators.required]],
+      bankOwnerAccount: ['', [Validators.required]],
+      bankComment: [''],
+
+      factoringProducts: ['', [Validators.required]],
+      factoringTradeMarks: ['', [Validators.required]],
+      factoringShipments: ['', [Validators.required]],
+      factoringFinanceLimit: [null, [Validators.required]],
+      factoringClients: ['', [Validators.required]],
+      factoringWorkers: [0, [Validators.required]],
+
+      otherBanks: this.fb.array([]),
+      factoringPlaces: this.fb.array([]),
+      factoringCredits: this.fb.array([]),
+      factoringSuppliers: ['', [Validators.required]],
+      factoringLimit: [0, [Validators.required]],
+    });
   }
 
   public generateEDIFormGroup(): FormGroup {
@@ -190,48 +232,6 @@ export class FormGenerator {
       factoringCredits: this.fb.array([]),
 
       factoringEDIProviders: this.fb.array([]),
-    });
-  }
-
-  public generateAgentFactoringForm(): FormGroup {
-    return this.fb.group({
-      organizationType: [0, [Validators.required]],
-      organizationLegalForm: [''],
-      organizationShortName: ['', [Validators.required]],
-      organizationINN: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(12),
-        ],
-      ],
-      organizationPhone: ['', [Validators.required]],
-      organizationEmail: ['', [Validators.required, Validators.email]],
-      organizationWEB: [''],
-
-      bankBik: ['', [Validators.required]],
-      bankCorrespondentAccount: ['', [Validators.required]],
-      bankName: ['', [Validators.required]],
-      bankAccountOpenDate: ['', [Validators.required]],
-      bankOwnerAccount: ['', [Validators.required]],
-      bankComment: [''],
-
-      otherBanks: this.fb.array([]),
-
-      factoringProducts: ['', [Validators.required]],
-      factoringTradeMarks: ['', [Validators.required]],
-      factoringShipments: ['', [Validators.required]],
-      factoringFinanceLimit: [null, [Validators.required]],
-      factoringClients: ['', [Validators.required]],
-      factoringWorkers: [0, [Validators.required]],
-
-      factoringPlaces: this.fb.array([]),
-
-      factoringCredits: this.fb.array([]),
-
-      factoringSuppliers: ['', [Validators.required]],
-      factoringLimit: [0, [Validators.required]],
     });
   }
 
@@ -297,44 +297,45 @@ export class FormGenerator {
     });
   }
 
-  public generateFactoringPlaceForm(factoringPlace?): FormGroup {
+  public generateFactoringPlaceForm(data?): FormGroup {
     return this.fb.group({
-      displayAddress: [{ value: '', disabled: true }],
+      autocompleteInputAddress: [data?.displayAddress],
+      displayAddress: [data?.displayAddress],
       factoringPlacesAddress: {
-        PostCode: factoringPlace
-          ? factoringPlace?.factoringPlacesAddress?.PostCode
+        PostCode: data
+          ? data?.factoringPlacesAddress?.PostCode
           : '',
-        Country: factoringPlace
-          ? factoringPlace?.Address?.Country
+        Country: data
+          ? data?.Address?.Country
           : 'Российская Федерация',
-        RegionCode: factoringPlace
-          ? factoringPlace?.factoringPlacesAddress?.RegionCode
+        RegionCode: data
+          ? data?.factoringPlacesAddress?.RegionCode
           : 77,
-        RegionTitle: factoringPlace
-          ? factoringPlace?.factoringPlacesAddress?.RegionTitle
+        RegionTitle: data
+          ? data?.factoringPlacesAddress?.RegionTitle
           : '',
-        City: factoringPlace
-          ? factoringPlace?.factoringPlacesAddress?.City
+        City: data
+          ? data?.factoringPlacesAddress?.City
           : 'Москва',
-        District: factoringPlace
-          ? factoringPlace?.factoringPlacesAddress?.District
+        District: data
+          ? data?.factoringPlacesAddress?.District
           : '',
-        Locality: factoringPlace
-          ? factoringPlace?.factoringPlacesAddress?.Locality
+        Locality: data
+          ? data?.factoringPlacesAddress?.Locality
           : '',
-        Street: factoringPlace
-          ? factoringPlace?.factoringPlacesAddress?.Street
+        Street: data
+          ? data?.factoringPlacesAddress?.Street
           : '',
-        House: factoringPlace
-          ? factoringPlace?.factoringPlacesAddress?.House
+        House: data
+          ? data?.factoringPlacesAddress?.House
           : '',
-        Appartment: factoringPlace
-          ? factoringPlace?.factoringPlacesAddress?.Appartment
+        Appartment: data
+          ? data?.factoringPlacesAddress?.Appartment
           : '',
       },
       factoringPlacesLegalForm: [
-        factoringPlace?.factoringPlacesLegalForm
-          ? factoringPlace?.factoringPlacesLegalForm
+        data?.factoringPlacesLegalForm
+          ? data?.factoringPlacesLegalForm
           : '',
         [Validators.required],
       ],

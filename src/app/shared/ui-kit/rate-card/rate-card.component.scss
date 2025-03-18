@@ -3,15 +3,39 @@
 :host {
 	background-color: var(--wgr-secondary);
 	border-radius: 12px;
-	overflow: hidden;
+	position: relative;
 }
 
 .rate {
-	padding: 0 38px;
-	max-width: 364px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+  padding: 0 38px;
+  max-width: 364px;
+  position: relative;
+  overflow: visible;
+  border: 2px solid transparent;
+
+  & .badge {
+    background-color: var(--mc-default);
+    color: white;
+    font-size: 14px;
+    padding: 4px 14px;
+    border-radius: 99px;
+    position: absolute;
+    top: -10px;
+    left: 29px;
+    z-index: 20;
+  }
+
+  &:has(.badge) {
+    border: 2px solid  var(--mc-default);
+    border-radius: 12px;
+  }
 
 	& .rate-header {
-		min-height: 164px;
+		min-height: 168px;
 	}
 
 	& .rate-feature {
@@ -58,6 +82,12 @@
 
 		& .mobile-s {
 			display: block;
+		}
+
+		& .badge {
+			top: -8px;
+			left: 8px;
+			padding: 2px 12px;
 		}
 	}
 }

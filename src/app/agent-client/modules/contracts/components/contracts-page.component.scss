@@ -1,4 +1,31 @@
 mib-select {
-	max-width: 280px;
-	width: 100%;
+	width: 280px;
+}
+
+@media (max-width: 576px) {
+	.container {
+		padding: 0;
+
+		& h3 {
+			padding: 0 16px;
+		}
+
+		& mib-spacing[type='m'] {
+			height: 24px;
+			display: block;
+		}
+
+		& > div {
+			display: block;
+			width: 100%;
+			padding: 0 16px;
+		}
+	}
+
+	.mobile-col {
+		flex-direction: column;
+		& input {
+			padding: 7px;
+		}
+	}
 }

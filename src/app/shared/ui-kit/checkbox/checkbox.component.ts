@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation, forwardRef} from '@angular/core'
+import { Component, Input, ViewEncapsulation, forwardRef, inject, ChangeDetectorRef } from '@angular/core';
 import {MibCheckboxSize} from './interfaces/checkbox.interface'
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {animate, style, transition, trigger} from '@angular/animations'
@@ -16,7 +16,7 @@ import {animate, style, transition, trigger} from '@angular/animations'
 			provide: NG_VALUE_ACCESSOR,
 			useExisting: forwardRef(() => CheckboxComponent),
 			multi: true
-		}
+		},
 	],
 	animations: [
 		trigger('checkboxAnimation', [
@@ -46,13 +46,30 @@ import {animate, style, transition, trigger} from '@angular/animations'
 	]
 })
 export class CheckboxComponent implements ControlValueAccessor {
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  set disabled(value: boolean) {
+    this._disabled = value;
+  }
 	@Input() size: MibCheckboxSize = 'm'
 	@Input() class: string = ''
 	@Input() align: string = 'flex_align-self-start'
 	@Input() id: string = ''
 	@Input() styled: boolean = false
 
+  private _disabled: boolean = false
 	public value: boolean = false
+  private cdr = inject(ChangeDetectorRef)
+
+  get classes() {
+    return {
+      [this.class]: true,
+      ['checkbox_disabled']: this.disabled,
+    }
+  }
 
 	ngAfterViewInit() {}
 
@@ -62,6 +79,7 @@ export class CheckboxComponent implements ControlValueAccessor {
 	writeValue(value: boolean): void {
 		this.value = value
 		this.onChange(this.value)
+    this.cdr.detectChanges()
 	}
 
 	registerOnChange(fn: any): void {
@@ -72,7 +90,12 @@ export class CheckboxComponent implements ControlValueAccessor {
 		this.onTouch = fn
 	}
 
-	onCheckboxChange(event: Event): void {
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.cdr.detectChanges();
+  }
+
+  onCheckboxChange(event: MouseEvent): void {
 		event.preventDefault()
 		event.stopPropagation()
 		this.value = !this.value

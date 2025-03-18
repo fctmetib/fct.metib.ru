@@ -10,7 +10,7 @@
 			*ngIf="loading$ | async; else news"
 		></mib-skeleton>
 		<ng-template #news>
-			<mib-input class="flex_grow">
+			<mib-input>
 				<input formControlName="formNewsDate" type="date" mibInput />
 				<ng-container mibLabel>Укажите дату публикации</ng-container>
 			</mib-input>
@@ -76,7 +76,7 @@
 				(press)="!newsID ? createNews() : updateNews(newsID)"
 				size="m"
 				type="filled-primary"
-				>Создать новость</mib-button
+				>{{ newsID ? 'Редактировать новость' : 'Создать новость' }}</mib-button
 			>
 			<mib-button
 				[disabled]="(loading$ | async) || (isSubmitting$ | async)"

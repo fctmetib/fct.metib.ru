@@ -17,9 +17,21 @@ import {LinkModule} from 'src/app/shared/ui-kit/link/link.module'
 import {FileCellModule} from 'src/app/shared/ui-kit/file-cell/file-cell.module'
 import {IconModule} from 'src/app/shared/ui-kit/ref-icon/icon.module'
 import {InformationModule} from 'src/app/shared/ui-kit/information/information.module'
+import {DemandService} from '../../services/demand.service'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import { DlFileCellModule } from '../../../../../shared/ui-kit/dl-file-cell/dl-file-cell.module';
+import { MibDragAndDropModule } from '../../../../../shared/ui-kit/drag-and-drop/mib-drag-and-drop.module';
+import { DemandDebtorDrawerStaticService } from './demand-debtor-drawer-static.service';
+import { BadgeModule } from '../../../../../shared/ui-kit/badge/badge.module';
+import { AttachedDocumentModule } from '../../../../../shared/ui-kit/attached-document/attached-document.module';
+import { MessageItemModule } from '../../../../../shared/ui-kit/message-item/message-item.module';
+import { SkeletonModule } from '../../../../../shared/ui-kit/skeleton/skeleton.module';
+import { SendMessagesModule } from '../../../../../shared/ui-kit/send-messages/send-messages.module';
+import { BlurLoaderModule } from '../../../../../shared/ui-kit/blur-loader/blur-loader.module';
+import { DynamicDataComponent } from '../../../reports/components/dynamic-data/dynamic-data.component';
 
 @NgModule({
-	declarations: [DemandDebtorDrawerComponent],
+  declarations: [DemandDebtorDrawerComponent],
 	imports: [
 		CommonModule,
 		DrawerModule,
@@ -36,8 +48,20 @@ import {InformationModule} from 'src/app/shared/ui-kit/information/information.m
 		LinkModule,
 		FileCellModule,
 		IconModule,
-		InformationModule
+		InformationModule,
+		ReactiveFormsModule,
+		FormsModule,
+		DlFileCellModule,
+		MibDragAndDropModule,
+		BadgeModule,
+		AttachedDocumentModule,
+		MessageItemModule,
+		SkeletonModule,
+		SendMessagesModule,
+		BlurLoaderModule,
+		DynamicDataComponent
 	],
-	providers: [DemandDebtorDrawerService]
+  providers: [DemandDebtorDrawerService, DemandDebtorDrawerStaticService, DemandService]
 })
-export class DemandDebtorDrawerModule {}
+export class DemandDebtorDrawerModule {
+}

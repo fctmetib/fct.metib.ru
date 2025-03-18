@@ -31,3 +31,8 @@ export interface DeliveryAgreementReq {
 export interface DeliveryAgreement extends DeliveryAgreementReq {
   ID: number;
 }
+
+export interface SelectedDeliveryInterface {
+  ID: number;
+  ContractTypeID: number;
+}

@@ -4,16 +4,16 @@ import {DrawerData} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interfa
 import {drawerConfig} from 'src/app/shared/ui-kit/drawer/drawer.tools'
 import {DemandSignatureDrawerComponent} from './demand-signature-drawer.component'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DemandSignatureDrawerService {
 	constructor(private dialog: MatDialog) {}
 
 	open(
 		data?: DrawerData<any>
 	): MatDialogRef<DemandSignatureDrawerComponent, number[]> {
-		const config: DrawerData = {
-			state: 'view'
-		}
+		const config: DrawerData = {}
 		return this.dialog.open(
 			DemandSignatureDrawerComponent,
 			drawerConfig(data?.maxWidth, Object.assign(config, data))

@@ -11,11 +11,21 @@
 	<mib-spacing type="m"></mib-spacing>
 	<mib-modal-footer>
 		<ng-container>
-			<mib-button class="flex_grow" size="m" type="filled-primary">
+			<!-- <mib-button
+				(press)="onDraft.emit()"
+				class="flex_grow"
+				size="m"
+				type="filled-primary"
+			>
 				Перейти к запросу
-			</mib-button>
-			<mib-button class="flex_grow" size="m" type="filled-secondary">
-				На главную
+			</mib-button> -->
+			<mib-button
+				(press)="onClose.emit(); dialogRef.close()"
+				class="flex_grow"
+				size="m"
+				type="filled-secondary"
+			>
+				Закрыть
 			</mib-button>
 		</ng-container>
 	</mib-modal-footer>

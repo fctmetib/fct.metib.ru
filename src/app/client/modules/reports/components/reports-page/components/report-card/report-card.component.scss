@@ -1,0 +1,7 @@
+:host {
+  display: block;
+  padding: 16px 0;
+  &.underlined {
+    border-bottom: 1px solid var(--wgr-tertiary);
+  }
+}

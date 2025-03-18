@@ -17,6 +17,7 @@ import {RequestFailureModalService} from './request-failure-modal.service'
 		SpacingModule,
 		InputModule,
 		IconModule
-	]
+	],
+	providers: [RequestFailureModalService]
 })
 export class RequestFailureModalModule {}

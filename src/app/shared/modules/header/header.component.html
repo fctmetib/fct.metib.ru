@@ -2,23 +2,41 @@
 	<div *ngIf="showExtension" class="extension">
 		<div class="container flex flex_justify-between flex_align-center">
 			<div class="flex gap-16">
-				<a class="text text_s c-bti-quaternary" (click)="openExternalSiteByURL('https://metallinvestbank.ru/')"
+				<a
+					class="text text_s c-bti-quaternary"
+					(click)="openExternalSiteByURL('https://metallinvestbank.ru/')"
 					>Частным клиентам</a
 				>
-				<a class="text text_s c-bti-quaternary" (click)="openExternalSiteByURL('https://metib.online/')"
+				<a
+					class="text text_s c-bti-quaternary"
+					(click)="openExternalSiteByURL('https://metib.online/')"
 					>Корпоративным клиентам</a
 				>
-				<a class="text text_s c-bti-quaternary" (click)="openExternalSiteByURL('https://metib.online/leasing/')">Лизинг</a>
+				<a
+					class="text text_s c-bti-quaternary"
+					(click)="openExternalSiteByURL('https://metib.online/leasing/')"
+					>Лизинг</a
+				>
 				<a
 					routerLinkActive="active"
 					class="text text_s c-bti-quaternary"
 					[routerLink]="['/']"
 					>Факторинг</a
 				>
-				<a class="text text_s c-bti-quaternary"  (click)="openExternalSiteByURL('https://metallinvestbank.ru/finance/')"
+				<a
+					class="text text_s c-bti-quaternary"
+					(click)="
+						openExternalSiteByURL('https://metallinvestbank.ru/finance/')
+					"
 					>Финансовым институтам</a
 				>
-				<a class="text text_s c-bti-quaternary"  (click)="openExternalSiteByURL('https://metallinvestbank.ru/islamic-banking/')"
+				<a
+					class="text text_s c-bti-quaternary"
+					(click)="
+						openExternalSiteByURL(
+							'https://metallinvestbank.ru/islamic-banking/'
+						)
+					"
 					>Исламский банкинг</a
 				>
 			</div>
@@ -130,7 +148,7 @@
 					<ng-template #userTemplate>
 						<div
 							[mibDropdownTrigger]="userPanel"
-							class="manager user flex gap-12"
+							class="manager user flex gap-12 relative"
 						>
 							<mib-avatar [showArrow]="false" [showImage]="false">{{
 								nameInitials
@@ -139,7 +157,11 @@
 								<p class="text name text_m text_medium c-bti-primary">
 									{{ name }}
 								</p>
-								<p class="text text_s label c-bti-tertiary">Пользователь</p>
+								<p class="text text_s label c-bti-tertiary">
+<!--                  <ng-container *ngIf="isUser">Новый пользователь</ng-container>-->
+<!--                  <ng-container *ngIf="!isUser">Пользователь</ng-container>-->
+                  <ng-container>Пользователь</ng-container>
+                </p>
 							</div>
 							<mib-button size="m" type="ghost-secondary">
 								<mib-icon
@@ -150,24 +172,24 @@
 									"
 								></mib-icon>
 							</mib-button>
+              <mib-dropdown #userPanel>
+                <mib-spacing dropdown-spacing type="s"></mib-spacing>
+                <mib-dropdown-point (press)="logout()" text="Сменить аккаунт">
+                  <mib-icon
+                    dropdown-point-left-icon
+                    class="stroke"
+                    name="fi_refresh-ccw"
+                  ></mib-icon>
+                </mib-dropdown-point>
+                <mib-dropdown-point (press)="logout()" text="Выйти">
+                  <mib-icon
+                    dropdown-point-left-icon
+                    class="stroke"
+                    name="fi_log-out"
+                  ></mib-icon>
+                </mib-dropdown-point>
+              </mib-dropdown>
 						</div>
-						<mib-dropdown #userPanel>
-							<mib-spacing dropdown-spacing type="s"></mib-spacing>
-							<mib-dropdown-point (press)="logout()" text="Сменить аккаунт">
-								<mib-icon
-									dropdown-point-left-icon
-									class="stroke"
-									name="fi_refresh-ccw"
-								></mib-icon>
-							</mib-dropdown-point>
-							<mib-dropdown-point (press)="logout()" text="Выйти">
-								<mib-icon
-									dropdown-point-left-icon
-									class="stroke"
-									name="fi_log-out"
-								></mib-icon>
-							</mib-dropdown-point>
-						</mib-dropdown>
 					</ng-template>
 				</ng-container>
 				<ng-template #unsignedTemplate>

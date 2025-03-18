@@ -10,6 +10,7 @@ import {AutoUnsubscribeService} from '../../services/auto-unsubscribe.service'
 import {ReactiveFormsModule} from '@angular/forms'
 import {LabelModule} from '../../directives/label/label.module'
 import {RightIconModule} from '../../directives/right-icon/right-icon.module'
+import { LeftIconModule } from '../../directives/left-icon/left-icon.module';
 
 @NgModule({
 	declarations: [
@@ -24,7 +25,8 @@ import {RightIconModule} from '../../directives/right-icon/right-icon.module'
 		IconModule,
 		ReactiveFormsModule,
 		LabelModule,
-		RightIconModule
+		RightIconModule,
+		LeftIconModule
 	],
 	providers: [AutoUnsubscribeService],
 	exports: [

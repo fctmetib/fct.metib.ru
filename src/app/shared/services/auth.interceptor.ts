@@ -1,4 +1,3 @@
-import { AuthRes } from '../../auth/types/login/authRes';
 import { CookieService } from 'ngx-cookie';
 import { Injectable } from '@angular/core';
 import {
