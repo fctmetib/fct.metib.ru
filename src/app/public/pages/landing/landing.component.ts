@@ -36,7 +36,7 @@ import {LandingAgreementModalService} from 'src/app/shared/modules/modals/landin
 import {isPlatformBrowser} from '@angular/common'
 import {ActivatedRoute} from '@angular/router'
 import {SeoService} from 'src/app/shared/services/seo.service'
-import {take} from "rxjs/operators";
+import {take} from 'rxjs/operators'
 
 @Component({
 	selector: 'mib-landing',
@@ -51,7 +51,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	public backendErrors$ = new BehaviorSubject<string>(null)
 	public options = []
 	public loading = false
-  private submittedINNs = new Set<string>();
+	private submittedINNs = new Set<string>()
 
 	maxPage: number = 3
 	progress: number = 2
@@ -288,14 +288,9 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 	}
 
-  openLandingRequestModal(data: string) {
-    this.form.patchValue({
-      FormName: data
-    });
-
-    this.landingRequestModalService.open(data);
-  }
-
+	openLandingRequestModal(data: string) {
+		this.landingRequestModalService.open(data)
+	}
 
 	openAgreementModal() {
 		this.landingAgreementModalService.open()
@@ -375,64 +370,62 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		return `+${country} (${area}) ${local}-${middle}-${last}`
 	}
 
-  onSubmit() {
-    const formType = this.form.value.FormName;
+	onSubmit() {
+		const formType = this.form.value.FormName
 
-    if (this.isSubmitting$.value) return;
+		if (this.isSubmitting$.value) return
 
-    if (this.form.invalid) {
-      this.isSubmitting$.next(false);
-      return;
-    }
+		if (this.form.invalid) {
+			this.isSubmitting$.next(false)
+			return
+		}
 
-    this.isSubmitting$.next(true);
+		this.isSubmitting$.next(true)
 
-    const rawPhoneNumber = this.form.value.Phone;
-    const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber);
+		const rawPhoneNumber = this.form.value.Phone
+		const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber)
 
-    const formData = {
-      from: formType,
-      name: this.form.value.Name,
-      phone: formattedPhoneNumber,
-      email: this.form.value.Email,
-      inn: this.form.value.INN,
-      organization: this.form.value.Organization,
-      comment: `${this.form.value.Comment}\nИспользует факторинг: ${
-        this.form.value.UseFactoring ? 'Да' : 'Нет'
-      }`,
-      agree: this.form.value.Agree
-    };
+		const formData = {
+			from: formType,
+			name: this.form.value.Name,
+			phone: formattedPhoneNumber,
+			email: this.form.value.Email,
+			inn: this.form.value.INN,
+			organization: this.form.value.Organization,
+			comment: `${this.form.value.Comment}\nИспользует факторинг: ${
+				this.form.value.UseFactoring ? 'Да' : 'Нет'
+			}`,
+			agree: this.form.value.Agree
+		}
 
-
-    this.requestLandingService
-      .sendRequestData(formData)
-      .pipe(
-        take(1),
-        tap(() => {
-          this.toaster.show(
-            'success',
-            `Запрос отправлен (${formType})`,
-            '',
-            true,
-            false,
-            2500
-          );
-          this.form.reset();
-          this.form.markAsPristine();
-          this.form.markAsUntouched();
-        }),
-        catchError(error => {
-          this.backendErrors$.next(error);
-          this.toaster.show('failure', 'Ошибка сервера!', '', true, false, 2500);
-          return of(error);
-        }),
-        finalize(() => {
-          this.isSubmitting$.next(false);
-        })
-      )
-      .subscribe();
-  }
-
+		this.requestLandingService
+			.sendRequestData(formData)
+			.pipe(
+				take(1),
+				tap(() => {
+					this.toaster.show(
+						'success',
+						`Запрос отправлен (${formType})`,
+						'',
+						true,
+						false,
+						2500
+					)
+					this.form.reset()
+					this.form.markAsPristine()
+					this.form.markAsUntouched()
+				}),
+				catchError(error => {
+					this.backendErrors$.next(error)
+					this.toaster.show('failure', 'Ошибка сервера!', '', true, false, 2500)
+					return of(error)
+				}),
+				finalize(() => {
+					this.isSubmitting$.next(false)
+				})
+			)
+			.subscribe()
+	}
 
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe()
