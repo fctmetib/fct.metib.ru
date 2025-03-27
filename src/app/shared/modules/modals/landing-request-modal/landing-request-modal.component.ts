@@ -7,7 +7,14 @@ import {
 	OnInit,
 	PLATFORM_ID
 } from '@angular/core'
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
+import {
+	AbstractControl,
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	ValidationErrors,
+	Validators
+} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {
 	BehaviorSubject,
@@ -26,7 +33,7 @@ import {RequestLandingInterface} from 'src/app/public/type/request-landing.inter
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import {LandingAgreementModalService} from '../landing-agreement-modal/landing-agreement-modal.service'
-import { isPlatformBrowser } from '@angular/common'
+import {isPlatformBrowser} from '@angular/common'
 
 @Component({
 	selector: 'mib-landing-request-modal',
@@ -55,7 +62,7 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 		private getAgentRequestService: GetAgentRequestService,
 		public dialogRef: MatDialogRef<LandingRequestModalComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: string,
-		@Inject(PLATFORM_ID) private platformId: Object,
+		@Inject(PLATFORM_ID) private platformId: Object
 	) {}
 
 	ngOnInit(): void {
@@ -90,15 +97,17 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 		return this.getAgentRequestService.getAgentData(query)
 	}
 
+	phoneDigitsValidator(control: AbstractControl): ValidationErrors | null {
+		const digitsOnly = (control.value || '').replace(/\D/g, '')
+		return digitsOnly.length === 11 ? null : {phoneInvalid: true}
+	}
+
 	private initForms() {
 		this.form = this.fb.group({
 			FormName: 'Сайт | Модальное окно',
 			Organization: ['', [Validators.required]],
 			Name: ['', [Validators.required, Validators.minLength(2)]],
-			Phone: [
-				'',
-				[Validators.required, Validators.pattern(/^\+?[0-9]{7,15}$/)]
-			],
+			Phone: ['', [Validators.required, this.phoneDigitsValidator]],
 			Email: ['', [Validators.required, Validators.email]],
 			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
 			Comment: [''],
@@ -128,9 +137,9 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 	}
 
 	onSubmit() {
-		if (this.isSubmitting$.value) return;
+		if (this.isSubmitting$.value) return
 
-		this.isSubmitting$.next(true);
+		this.isSubmitting$.next(true)
 
 		const rawPhoneNumber = this.form.value.Phone
 		const formattedPhoneNumber = this.formatPhoneNumber(rawPhoneNumber)
@@ -141,10 +150,12 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 			email: this.form.value.Email,
 			inn: this.form.value.INN,
 			organization: this.form.value.Organization,
-			comment: `${this.form.value.Comment}\nИспользует факторинг: ${this.form.value.UseFactoring ? "Да" : "Нет"}`,
+			comment: `${this.form.value.Comment}\nИспользует факторинг: ${
+				this.form.value.UseFactoring ? 'Да' : 'Нет'
+			}`,
 			agree: this.form.value.Agree
 		}
-		
+
 		this.requestLandingService
 			.sendRequestData(formData)
 			.pipe(
