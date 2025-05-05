@@ -7,7 +7,7 @@ import {
 	OnInit,
 	PLATFORM_ID
 } from '@angular/core'
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms'
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import {
 	BehaviorSubject,
@@ -90,15 +90,17 @@ export class LandingRequestModalComponent implements OnInit, OnDestroy {
 		return this.getAgentRequestService.getAgentData(query)
 	}
 
+	phoneDigitsValidator(control: AbstractControl): ValidationErrors | null {
+		const digitsOnly = (control.value || '').replace(/\D/g, '')
+		return digitsOnly.length === 11 ? null : {phoneInvalid: true}
+	}
+
 	private initForms() {
 		this.form = this.fb.group({
 			FormName: 'Сайт | Модальное окно',
 			Organization: ['', [Validators.required]],
 			Name: ['', [Validators.required, Validators.minLength(2)]],
-			Phone: [
-				'',
-				[Validators.required, Validators.pattern(/^\+?[0-9]{7,15}$/)]
-			],
+			Phone: ['', [Validators.required, this.phoneDigitsValidator]],
 			Email: ['', [Validators.required, Validators.email]],
 			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
 			Comment: [''],

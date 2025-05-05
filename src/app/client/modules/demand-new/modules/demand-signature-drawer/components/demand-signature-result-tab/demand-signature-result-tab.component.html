@@ -8,10 +8,11 @@
 </ng-template>
 <mib-spacing type="xs"></mib-spacing>
 <h6 class="text text_m text_medium">Отчет по запросу</h6>
-<ng-container *ngIf="viewingData?.Data?.Files?.length; else emptyReportsFiles">
-  <ng-container *ngFor="let file of viewingData?.Data?.Files">
+<ng-container *ngIf="viewingData?.Files?.length; else emptyReportsFiles">
+  <ng-container *ngFor="let file of viewingData?.Files">
     <mib-attached-document
       *ngIf="file.Size"
+      [file]="file"
       [fileForRead]="{FileName: file.FileName, Size: file.Size, DemandFileID: file.DemandFileID}"
       [download]="true"
     ></mib-attached-document>

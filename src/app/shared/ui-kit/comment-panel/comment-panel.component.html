@@ -5,8 +5,8 @@
         <mib-avatar *ngIf="showAvatar" [showImage]="true" [showArrow]="false" type="round"
                     [src]="isRobot ? robotAvatar : userAvatar"></mib-avatar>
         <div class="flex gap-4">
-          <p class="text name text_m text_medium c-bti-primary">{{isRobot ? 'Robot' : data.Author}}</p>
-          <p class="text name text_m c-bti-primary">{{ data.Date | date : 'dd.MM.YYYY' }}</p>
+          <p class="text name text_m text_medium c-bti-primary">{{isRobot ? 'Robot' : data?.Author}}</p>
+          <p class="text name text_m c-bti-primary">{{ data?.Date | date : 'dd.MM.YYYY' }}</p>
         </div>
       </div>
       <div *ngIf="showActions" class="flex gap-4">
@@ -21,9 +21,9 @@
     <mib-spacing type="xs2"></mib-spacing>
   </div>
   <div class="body flex flex_column">
-    <p *ngIf="data.PublicTitle as title" class="text text_m text_medium c-bti-secondary">{{ title }}</p>
+    <p *ngIf="data?.PublicTitle as title" class="text text_m text_medium c-bti-secondary">{{ title }}</p>
     <ng-container *ngIf="isTextExtended">
-      <p *ngFor="let event of data.StateEvents" class="text text_m c-bti-secondary">{{ event.Comment }}</p>
+      <p *ngFor="let event of data?.StateEvents" class="text text_m c-bti-secondary">{{ event?.Comment }}</p>
     </ng-container>
   </div>
   <ng-container *ngIf="data?.StateEvents?.length">

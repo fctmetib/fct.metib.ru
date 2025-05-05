@@ -206,4 +206,8 @@ export class RequestsService {
   sign(requestIDs: number[], loading$: BehaviorSubject<boolean>) {
     return this.signPinModalService.sign(this.send(requestIDs), loading$)
   }
+
+  return(requestIDs: number[]) {
+    return this.http.post<number[]>(`${environment.apiUrl}/v1/requests/return`, requestIDs)
+  }
 }

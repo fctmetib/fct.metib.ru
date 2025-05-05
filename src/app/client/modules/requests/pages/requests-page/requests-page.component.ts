@@ -1,36 +1,40 @@
 import {
-	BehaviorSubject,
-	zip,
-	finalize,
-	filter,
-	tap,
-	switchMap,
-	merge,
-	forkJoin,
-	Subscription
-} from 'rxjs'
-import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core'
-import {RequestsService} from '../../services/requests.service'
-import {Properties} from 'csstype'
-import {RequestDrawerService} from '../../modules/request-drawer/request-drawer.service'
-import {DrawerStateEnum} from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface'
-import {RequestBrowserDrawerService} from '../../modules/request-browser-drawer/request-browser-drawer.service'
-import {FormControl} from '@angular/forms'
-import {ToolsService} from '../../../../../shared/services/tools.service'
-import {takeUntil} from 'rxjs/operators'
-import {AutoUnsubscribeService} from '../../../../../shared/services/auto-unsubscribe.service'
-import {TableRowAnimationService} from '../../../../../shared/ui-kit/table/services/table-row-animation.service'
-import {TableSelectionEvent} from '../../../../../shared/ui-kit/table/interfaces/table.interface'
-import {TableComponent} from '../../../../../shared/ui-kit/table/table.component'
-import {RequestRes} from '../../interfaces/request.interface'
-import {SignService} from '../../../../../shared/services/share/sign.service'
-import {SignPinModalService} from '../../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service'
-import {DatesService} from '../../../../../shared/services/dates.service'
-import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
-import {RubPipe} from 'src/app/shared/pipes/rub/rub.pipe'
-import {DatePipe} from '@angular/common'
-import {MatDialog} from '@angular/material/dialog'
-import {RequestsPageModalComponent} from 'src/app/shared/modules/modals/requests-page-modal/requests-page-modal.component'
+  BehaviorSubject, catchError,
+  filter,
+  finalize,
+  forkJoin,
+  merge,
+  Observable, of,
+  Subscription,
+  switchMap,
+  tap,
+  zip
+} from 'rxjs';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { RequestsService } from '../../services/requests.service';
+import { Properties } from 'csstype';
+import { RequestDrawerService } from '../../modules/request-drawer/request-drawer.service';
+import { DrawerStateEnum } from 'src/app/shared/ui-kit/drawer/interfaces/drawer.interface';
+import { RequestBrowserDrawerService } from '../../modules/request-browser-drawer/request-browser-drawer.service';
+import { FormControl } from '@angular/forms';
+import { ToolsService } from '../../../../../shared/services/tools.service';
+import { takeUntil } from 'rxjs/operators';
+import { AutoUnsubscribeService } from '../../../../../shared/services/auto-unsubscribe.service';
+import { TableRowAnimationService } from '../../../../../shared/ui-kit/table/services/table-row-animation.service';
+import { TableSelectionEvent } from '../../../../../shared/ui-kit/table/interfaces/table.interface';
+import { TableComponent } from '../../../../../shared/ui-kit/table/table.component';
+import { RequestRes, RequestStatusEnum } from '../../interfaces/request.interface';
+import { SignService } from '../../../../../shared/services/share/sign.service';
+import { SignPinModalService } from '../../../../../shared/modules/modals/sign-pin-modal/sign-pin-modal.service';
+import { DatesService } from '../../../../../shared/services/dates.service';
+import { BreakpointObserverService } from 'src/app/shared/services/common/breakpoint-observer.service';
+import { RubPipe } from 'src/app/shared/pipes/rub/rub.pipe';
+import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  RequestsPageModalComponent
+} from 'src/app/shared/modules/modals/requests-page-modal/requests-page-modal.component';
+import { ToasterService } from '../../../../../shared/services/common/toaster.service';
 
 @Component({
 	selector: 'app-requests-page',
@@ -41,8 +45,9 @@ import {RequestsPageModalComponent} from 'src/app/shared/modules/modals/requests
 export class RequestsPageComponent implements OnInit, OnDestroy {
 	@ViewChild(TableComponent) table: TableComponent
 
-	public isSigningPreparing$ = new BehaviorSubject<boolean>(false)
+  public isTableOperationLoading$ = new BehaviorSubject<boolean>(false)
 	public loading$ = new BehaviorSubject<boolean>(false)
+  protected readonly RequestStatusEnum = RequestStatusEnum;
 
 	public skeletonWithoutUnderline: Properties = {
 		height: '48px',
@@ -92,6 +97,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 		7: 'Summ'
 	}
 
+  tableActionOperation: RequestStatusEnum | null = null
+
 	constructor(
 		public toolsService: ToolsService,
 		private datesService: DatesService,
@@ -105,7 +112,8 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 		public breakpointService: BreakpointObserverService,
 		private rubPipe: RubPipe,
 		private datePipe: DatePipe,
-		private dialog: MatDialog
+		private dialog: MatDialog,
+    private toaster: ToasterService
 	) {}
 
 	get selectedRequests() {
@@ -204,7 +212,9 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 	private watchForms() {
 		merge(this.dateFrom.valueChanges, this.dateTo.valueChanges)
 			.pipe(
-				switchMap(() => this.loadRequestsData()),
+				switchMap(() => this.loadRequestsData().pipe(
+          catchError(() => of(null)),
+        )),
 				tap(() => {
 					this.onPageChange(1)
 				}),
@@ -219,6 +229,15 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 
 	selectionChange(event: TableSelectionEvent) {
 		this.requestsSelection = event
+    const isSignActionCondition = this.selectedRequests.every(request => request.Status === RequestStatusEnum.Created)
+    const isReturnActionCondition = this.selectedRequests.every(request => request.Status === RequestStatusEnum.Sent)
+    if (isSignActionCondition) {
+      this.tableActionOperation = RequestStatusEnum.Created
+    } else if (isReturnActionCondition) {
+      this.tableActionOperation = RequestStatusEnum.Sent
+    } else {
+      this.tableActionOperation = null
+    }
 	}
 
 	deleteRequests(ids: number[]) {
@@ -236,17 +255,28 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 			.subscribe()
 	}
 
+  tableOperation<T>(callback: (requestIds: number[]) => Observable<T>) {
+    const requestIDs = this.table.selectedRows.map(req => req.rowId)
+    this.isTableOperationLoading$.next(true)
+    callback(requestIDs).pipe(
+      switchMap(() => this.loadRequestsData()),
+      finalize(() => this.isTableOperationLoading$.next(false))
+    ).subscribe()
+  }
+
 	requestSign(): void {
-		const requestIDs = this.table.selectedRows.map(req => req.rowId)
-		this.isSigningPreparing$.next(true)
-		this.requestsService
-			.sign(requestIDs, this.isSigningPreparing$)
-			.pipe(
-				switchMap(() => this.loadRequestsData()),
-				finalize(() => this.isSigningPreparing$.next(false))
-			)
-			.subscribe()
+    this.tableOperation(requestIds => this.requestsService.sign(requestIds, this.isTableOperationLoading$).pipe(
+      catchError((err) => {
+        console.log(err);
+        this.toaster.show('failure', err?.title)
+        return of(err)
+      })
+    ))
 	}
+
+  requestReturn() {
+    this.tableOperation(requestIds => this.requestsService.return(requestIds))
+  }
 
 	prev() {
 		if (this.currentIndex > 0) {
@@ -307,4 +337,14 @@ export class RequestsPageComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.subscriptions.unsubscribe()
 	}
+
+  onTableAction() {
+    switch (this.tableActionOperation) {
+      case RequestStatusEnum.Created:
+        this.requestSign()
+        break
+      case RequestStatusEnum.Sent:
+        this.requestReturn()
+    }
+  }
 }

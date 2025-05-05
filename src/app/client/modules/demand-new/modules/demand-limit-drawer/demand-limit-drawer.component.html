@@ -369,11 +369,14 @@
             </ng-template>
             <mib-spacing type="xs"></mib-spacing>
             <h6 class="text text_m text_medium">Отчет по запросу</h6>
-            <ng-container *ngIf="viewingData?.Data?.Files?.length; else emptyReportsFiles">
+            <ng-container *ngIf="viewingData?.Files?.length; else emptyReportsFiles">
               <mib-attached-document
-                *ngFor="let document of viewingData?.Data.Files"
+                *ngFor="let document of viewingData?.Files"
+                [fileForRead]="{FileName: document.FileName, Size: document.Size, DemandFileID: document.DemandFileID}"
+                [file]="document"
                 [download]="true"
                 [remove]="true"
+                (deleteFile)="deleteFile()"
               ></mib-attached-document>
             </ng-container>
             <ng-template #emptyReportsFiles>

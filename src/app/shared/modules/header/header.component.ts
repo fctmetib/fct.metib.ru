@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ToolsService } from '../../services/tools.service';
-import { BehaviorSubject, Observable, filter, finalize, switchMap, takeUntil, tap } from 'rxjs';
+import { BehaviorSubject, Observable, filter, finalize, switchMap, takeUntil, tap, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserFactoring } from '../../types/userFactoring';
 import { UserGeneral } from '../../types/userGeneral';
@@ -25,6 +25,7 @@ import { BreakpointObserverService } from '../../services/common/breakpoint-obse
 import { isPlatformBrowser } from '@angular/common';
 import { WINDOW } from '../../tokens/window.token';
 import { SystemUserService } from '../../services/system-user.service';
+import { Manager, ManagersService } from '../../services/managers.service';
 
 @Component({
 	selector: 'mib-header',
@@ -43,6 +44,7 @@ export class HeaderComponent implements OnInit {
 	authService = inject(AuthService);
 	breakpointService = inject(BreakpointObserverService);
 	private clientService = inject(ClientService);
+  private managersService = inject(ManagersService)
 	private systemUserService = inject(SystemUserService);
 	private platformId: Object = inject(PLATFORM_ID);
 	private window = inject(WINDOW);
@@ -56,7 +58,7 @@ export class HeaderComponent implements OnInit {
 
 	currentUserFactoring$ = new BehaviorSubject<UserFactoring>(null);
 	currentUser$ = new BehaviorSubject<UserGeneral>(null);
-	factoring$ = new BehaviorSubject<Customer>(null);
+	manager$ = new BehaviorSubject<Manager>(null);
 
 	currentUserAdmin$ = new BehaviorSubject<UserGeneral>(null);
 
@@ -102,15 +104,15 @@ export class HeaderComponent implements OnInit {
 	}
 
 	get manager() {
-		return this.factoring$.value?.Manager;
+		return this.manager$.value
 	}
 
 	get managerAvatar() {
-		return this.baseAvatarUrl + this.factoring$.value?.Manager?.Avatar;
+		return this.baseAvatarUrl + this.manager$.value?.AvatarCode;
 	}
 
 	get managerInitials() {
-		return this.getInitials(this.manager?.Name ?? 'О');
+		return this.getInitials(this.manager?.Manager ?? 'О');
 	}
 
 	get name() {
@@ -141,19 +143,24 @@ export class HeaderComponent implements OnInit {
 			.pipe(
 				filter(Boolean),
 				tap(currentUser => {
-					console.log(currentUser);
+					console.log('HEADER',currentUser);
 					this.currentUser$.next(currentUser.userGeneral);
 					this.currentUserFactoring$.next(currentUser.userFactoring);
 					this.userLoading$.next(false);
 				}),
-				switchMap(currentUser =>
-					this.clientService
-						.getClientFactoringById(+currentUser.userFactoring.OrganizationID)
-						.pipe(takeUntil(this.isVerified$))
-						.pipe(finalize(() => this.factoringLoading$.next(false)))
+				switchMap(() =>
+					this.managersService
+						.getManager()
+						.pipe(
+              tap(factoring => {
+                console.log('getclientfactoring', factoring);
+                console.log('isverified', this.isVerified$.value);
+              }),
+              finalize(() => this.factoringLoading$.next(false)),
+            )
 				),
-				tap(clientFactoring => {
-					this.factoring$.next(clientFactoring);
+				tap(manager => {
+					this.manager$.next(manager);
 				})
 			)
 			.subscribe();

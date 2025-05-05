@@ -6,7 +6,7 @@ import {FormsPresetsService} from '../../../../../shared/services/forms-presets.
 import {Shipment} from './interfaces/shipment.interface'
 import {ToolsService} from '../../../../../shared/services/tools.service'
 import {RequestRes} from '../../interfaces/request.interface'
-import {tap} from 'rxjs'
+import { debounceTime, tap } from 'rxjs';
 import {ShipmentDrawerService} from './services/shipment-drawer.service'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -54,16 +54,18 @@ export class ShipmentDrawerComponent implements OnInit {
 	private watchForms() {
 
     this.form.get('Summ').valueChanges.pipe(
+      debounceTime(400),
       tap(summ => {
-        this.form.get('SummRequired').setValue(summ)
+        this.form.get('SummRequired').setValue(summ, {emitEvent: false})
       }),
       untilDestroyed(this),
     ).subscribe()
 
 		this.WaybillNumber.valueChanges
 			.pipe(
+        debounceTime(400),
 				tap(value => {
-					this.InvoiceNumber.setValue(value)
+					this.InvoiceNumber.setValue(value, {emitEvent: false})
 				}),
         untilDestroyed(this)
 			)
@@ -71,17 +73,9 @@ export class ShipmentDrawerComponent implements OnInit {
 
 		this.WaybillDate.valueChanges
 			.pipe(
+        debounceTime(400),
 				tap(value => {
-					this.InvoiceDate.setValue(value)
-				}),
-        untilDestroyed(this)
-			)
-			.subscribe()
-
-		this.form.valueChanges
-			.pipe(
-				tap(form => {
-					console.log('form', form)
+					this.InvoiceDate.setValue(value, {emitEvent: false})
 				}),
         untilDestroyed(this)
 			)

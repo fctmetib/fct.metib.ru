@@ -4,7 +4,12 @@ import {
   Shipment
 } from '../modules/shipment-drawer/interfaces/shipment.interface'
 
-export enum RequestStatusEnum {}
+export enum RequestStatusEnum {
+  Created = 'Создана',
+  Sent = 'Отправлена',
+  Completed = 'Исполнена'
+  //...
+}
 
 export enum RequestTypeEnum {
   NON_FINANCING = 'NonFinancing',

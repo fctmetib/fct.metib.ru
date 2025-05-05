@@ -1,7 +1,7 @@
 import { environment } from 'src/environments/environment';
 
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import {
   ReportViewTableConfig
@@ -36,7 +36,7 @@ export interface IDataByAggregate {
   ProductCodeTitle: string;
 }
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ReportService {
 
   public reportData$ = new BehaviorSubject<any>(null);
@@ -48,6 +48,39 @@ export class ReportService {
   getReport(data: any): Observable<any> {
     const url = `${environment.apiUrl}/report`;
     return this.http.post<any>(url, data);
+  }
+
+  downloadDocumentSignaturesForm(documentID: number) {
+    const url = `${environment.apiUrl}/v1/reports/documentSignaturesForm/${documentID}`;
+    return this.http.get(url, {
+      responseType: 'arraybuffer'
+    }).pipe(
+      map((buffer) => {
+        let binary = '';
+        const bytes = new Uint8Array(buffer);
+        const len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        return btoa(binary);
+      })
+    )
+  }
+
+  downloadDocumentSignaturesFormAsFile(documentID: number) {
+    const url = `${environment.apiUrl}/v1/reports/documentSignaturesForm/${documentID}?asFile=true`;
+    return this.http.get(url, {
+      responseType: 'blob'
+    }).pipe(
+      tap(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Уведомление_об_ЭП.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      })
+    )
   }
 
   aggregate(req: ClientAggregateShipmentReportArgs) {

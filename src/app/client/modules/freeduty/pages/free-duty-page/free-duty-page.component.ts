@@ -64,6 +64,7 @@ export class FreeDutyPageComponent implements OnInit, OnDestroy {
 		selectedCount: 0,
 		selectedIds: []
 	}
+  is
 
 	public freeOnly: boolean = true
 	public dateFrom = new FormControl<string>('')

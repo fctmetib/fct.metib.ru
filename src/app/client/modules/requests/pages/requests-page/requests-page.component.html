@@ -183,13 +183,16 @@
       </ng-template>
     </ng-template>
     <mib-table-footer
-      [showIsland]="true"
-      [actionLoading]="isSigningPreparing$ | async"
+      [showIsland]="!!tableActionOperation"
+      [showRemove]="tableActionOperation === RequestStatusEnum.Created"
+      [actionLoading]="isTableOperationLoading$ | async"
       (onDelete)="deleteRequests($event)"
-      (onAction)="requestSign()"
+      (onAction)="onTableAction()"
       [lined]="!(loading$ | async)"
     >
-      <ng-container table-footer-action>Подписать</ng-container>
+      <ng-container *ngIf="tableActionOperation === RequestStatusEnum.Created" table-footer-action>Подписать</ng-container>
+      <ng-container *ngIf="tableActionOperation === RequestStatusEnum.Sent" table-footer-action>Вернуть</ng-container>
+
       <mib-paginator
         *ngIf="requests.length || !(loading$ | async)"
         (pageChange)="onPageChange($event)"

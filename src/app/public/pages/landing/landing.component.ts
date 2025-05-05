@@ -28,7 +28,7 @@ import {AdvancedNewsInterface, NewsInterface} from '../../type/news.interface'
 import {Properties} from 'csstype'
 import {BreakpointObserverService} from 'src/app/shared/services/common/breakpoint-observer.service'
 import {LandingRequestModalService} from 'src/app/shared/modules/modals/landing-request-modal/landing-request-modal.service'
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms'
 import {RequestLandingInterface} from '../../type/request-landing.interface'
 import {RequestLandingService} from '../../service/request-landing.service'
 import {GetAgentRequestService} from '../../service/get-agent-request.service'
@@ -289,10 +289,6 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
   openLandingRequestModal(data: string) {
-    this.form.patchValue({
-      FormName: data
-    });
-
     this.landingRequestModalService.open(data);
   }
 
@@ -342,14 +338,16 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.currentProductsTab = $num
 	}
 
+	phoneDigitsValidator(control: AbstractControl): ValidationErrors | null {
+		const digitsOnly = (control.value || '').replace(/\D/g, '')
+		return digitsOnly.length === 11 ? null : {phoneInvalid: true}
+	}
+
 	initForm() {
 		this.form = this.fb.group({
 			FormName: 'Сайт  | Форма на главной странице, внизу',
 			Name: ['', [Validators.required, Validators.minLength(2)]],
-			Phone: [
-				'',
-				[Validators.required, Validators.pattern(/^\+?[0-9]{7,15}$/)]
-			],
+			Phone: ['', [Validators.required, this.phoneDigitsValidator]],
 			Organization: ['', [Validators.required]],
 			INN: ['', [Validators.required, Validators.pattern(/^[0-9]{10,12}$/)]],
 			Email: ['', [Validators.required, Validators.email]],

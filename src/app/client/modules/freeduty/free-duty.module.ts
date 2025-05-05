@@ -35,6 +35,7 @@ import {AutoCompleteModule} from '../../../shared/ui-kit/auto-complete/auto-comp
 import {DatesService} from 'src/app/shared/services/dates.service'
 import {ToasterModule} from 'src/app/shared/ui-kit/toaster/toaster.module'
 import {FreeDutyPageModalModule} from 'src/app/shared/modules/modals/free-duty-page-modal/free-duty-page-modal.module'
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
 	declarations: [FreeDutyPageComponent],
@@ -71,7 +72,8 @@ import {FreeDutyPageModalModule} from 'src/app/shared/modules/modals/free-duty-p
 		DropdownPointModule,
 		AutoCompleteModule,
 		ToasterModule,
-		FreeDutyPageModalModule
+		FreeDutyPageModalModule,
+		MatTooltipModule
 	],
 	providers: [
 		DialogService,

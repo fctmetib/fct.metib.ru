@@ -78,7 +78,7 @@
 								[mibDropdownTrigger]="managerPanel"
 								class="manager flex gap-12"
 							>
-								<ng-container *ngIf="manager?.Avatar; else showInitials">
+								<ng-container *ngIf="managerAvatar; else showInitials">
 									<mib-avatar
 										[showArrow]="false"
 										[src]="managerAvatar"
@@ -93,14 +93,14 @@
 								<div class="flex flex_column">
 									<div class="flex">
 										<p class="text name text_m text_medium c-bti-primary">
-											{{ manager?.Name ?? 'Отсутствует' }} 
+											{{ manager?.Manager ?? 'Отсутствует' }} 
 										</p>
-										<p
-											class="text text_m text_medium c-bti-tertiary"
-											*ngIf="manager?.Extension as value"
-										>
-											({{ value }})
-										</p>
+<!--										<p-->
+<!--											class="text text_m text_medium c-bti-tertiary"-->
+<!--											*ngIf="manager?.Extension as value"-->
+<!--										>-->
+<!--											({{ value }})-->
+<!--										</p>-->
 									</div>
 									<p class="text text_s label c-bti-tertiary">Ваш менеджер</p>
 								</div>
@@ -119,8 +119,8 @@
 							<mib-dropdown #managerPanel>
 								<mib-spacing dropdown-spacing type="s"></mib-spacing>
 								<mib-dropdown-point
-									[text]="manager?.Email ?? 'Почта отсутствует'"
-									[cdkCopyToClipboard]="manager?.Email"
+									[text]="manager?.EMail ?? 'Почта отсутствует'"
+									[cdkCopyToClipboard]="manager?.EMail"
 								>
 									<mib-icon
 										dropdown-point-right-icon

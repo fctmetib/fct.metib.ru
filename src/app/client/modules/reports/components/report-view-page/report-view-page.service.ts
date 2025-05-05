@@ -41,6 +41,7 @@ export class ReportViewPageService {
   }
 
   private getFormattedRowValue(cellType: ReportViewTableCellType, value: any): string {
+    if (!value) return "-"
     switch (cellType) {
       case 'currency':
         return this.rubPipe.transform(value)

@@ -62,7 +62,6 @@ export class FilterTableActionComponent implements OnInit {
   filterData(values: string[]) {
     (this.filterCallback = () => {
       this.table.rendererData = this.table.data.filter(el => values.includes(el[this.tableHeadCell.field]))
-      console.log('pizdec?', this.isApplied, this.table.rendererData);
     })()
   }
 

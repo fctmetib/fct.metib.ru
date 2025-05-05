@@ -3,7 +3,7 @@
   <h3>Свободная задолженность</h3>
   <mib-spacing type="m"></mib-spacing>
 </div>
-<mib-tab-group>
+<mib-tab-group #tabGroupComponent>
   <mib-navbar class="container container_large">
     <mib-navbar-point size="m" (press)="selectTab(true)" value="1"
     >Свободные
@@ -44,7 +44,8 @@
           />
         </div>
         <mib-button
-          [disabled]="!dutiesSelection.selectedCount"
+          [matTooltip]="tabGroupComponent.tabValue === '2' ? 'Заявку можно создать только из свободных задолженностей' : ''"
+          [disabled]="!dutiesSelection.selectedCount || tabGroupComponent.tabValue === '2'"
           (press)="openDrawer()"
           type="filled-primary"
         >Создать заявку ({{ dutiesSelection.selectedCount }})

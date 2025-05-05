@@ -62,7 +62,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 						// })
 					}
 					this.showError(errorMessage)
-					return throwError(() => new Error(errorMessage))
+					return throwError(() => error.error)
 				}
 
 				return of(null)

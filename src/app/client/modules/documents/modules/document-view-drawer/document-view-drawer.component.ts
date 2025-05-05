@@ -22,6 +22,7 @@ import {
 	DocumentSign
 } from '../../../requests/interfaces/request.interface'
 import {ToasterService} from 'src/app/shared/services/common/toaster.service'
+import { ReportService } from '../../../../../shared/services/common/report.service';
 
 @Component({
 	selector: 'mib-new-documents-views-drawer',
@@ -31,7 +32,8 @@ import {ToasterService} from 'src/app/shared/services/common/toaster.service'
 export class DocumentViewDrawerComponent implements OnInit {
 	public loading$ = new BehaviorSubject<boolean>(false)
 	public isSigning$ = new BehaviorSubject<boolean>(false)
-	public isDownloading$ = new BehaviorSubject<boolean>(false)
+  public isDownloading$ = new BehaviorSubject<boolean>(false)
+  public isDownloadingSignatureForm$ = new BehaviorSubject<boolean>(false)
 	public isDownloadZip$ = new BehaviorSubject<boolean>(false)
 
 	public skeletonWithoutUnderline: Properties = {
@@ -64,7 +66,8 @@ export class DocumentViewDrawerComponent implements OnInit {
 		public toolsService: ToolsService,
 		public dialogRef: MatDialogRef<DocumentViewDrawerComponent>,
 		private documentsService: DocumentsService,
-		private toaster: ToasterService
+		private toaster: ToasterService,
+    public reportService: ReportService,
 	) {}
 
 	ngOnInit(): void {
@@ -132,22 +135,37 @@ export class DocumentViewDrawerComponent implements OnInit {
 			.subscribe()
 	}
 
-	downloadFile() {
-		this.isDownloading$.next(true)
-		this.documentsService
-			.getDocumentContent(this.documentId)
+	downloadSignaturesForm() {
+		this.isDownloadingSignatureForm$.next(true)
+		this.reportService
+			.downloadDocumentSignaturesFormAsFile(this.documentId)
 			.pipe(
 				tap(data => {
-					downloadBase64File(data, this.document.Title)
-				}),
+          // downloadBase64File(data, 'Уведомление_об_ЭП.pdf')
+        }),
 				finalize(() => {
-					this.isDownloading$.next(false)
+					this.isDownloadingSignatureForm$.next(false)
 				})
 			)
 			.subscribe()
 	}
 
-	downloadZip() {
+  downloadFile() {
+    this.isDownloading$.next(true)
+    this.documentsService
+      .getDocumentContent(this.documentId)
+      .pipe(
+        tap(data => {
+          downloadBase64File(data, this.document.Title)
+        }),
+        finalize(() => {
+          this.isDownloading$.next(false)
+        })
+      )
+      .subscribe()
+  }
+
+  downloadZip() {
 		this.isDownloadZip$.next(true)
 		this.documentsService
 			.getDocumentZip(this.documentId)
