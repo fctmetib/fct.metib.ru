@@ -34,6 +34,8 @@ export class ContractedFormsComponent {
 	constructor(private downloadService: WordDownloadService) {}
 
 	downloadRequisites() {
-		this.downloadService.downloadDataAsHTML(this.downloadableData)
+    if (this.downloadableData) {
+      this.downloadService.downloadDataAsHTML(this.downloadableData)
+    }
 	}
 }

@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core'
 import {Properties} from 'csstype'
 import {
-	BehaviorSubject,
-	Subscription,
-	finalize,
-	merge,
-	switchMap,
-	tap
-} from 'rxjs'
+  BehaviorSubject,
+  Subscription,
+  finalize,
+  merge,
+  switchMap,
+  tap, catchError, of
+} from 'rxjs';
 import {InvoicesReq, InvoicesService} from '../../services/invoices.service'
 import {ClientInvoice} from '../../interfaces/client.invoice'
 import {InvoiceDrawerService} from '../../modules/invoice-drawer/invoice-drawer.service'
@@ -106,15 +106,21 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 		this.loadInvoicesData().subscribe()
 	}
 
+  getPreparedInvoicesReq(): InvoicesReq {
+    const req: InvoicesReq = {}
+
+    const setOptionalDate = (date: string, key: string) => {
+      if (date) req[key] = new Date(date).toISOString()
+    }
+
+    setOptionalDate(this.dateFrom.value, 'dateFrom')
+    setOptionalDate(this.dateTo.value, 'dateTo')
+
+    return req
+  }
+
 	loadInvoicesData() {
-		const req: InvoicesReq = {}
-
-		const setOptionalDate = (date: string, key: string) => {
-			if (date) req[key] = new Date(date).toISOString()
-		}
-
-		setOptionalDate(this.dateFrom.value, 'dateFrom')
-		setOptionalDate(this.dateTo.value, 'dateTo')
+    const req = this.getPreparedInvoicesReq();
 
 		this.loading$.next(true)
 		return this.invoicesService.getInvoices(req).pipe(
@@ -127,7 +133,9 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 
 	openDrawer(invoiceId: number) {
 		this.invoiceDrawerService.open({
-			data: {invoiceId: invoiceId}
+			data: {
+        invoiceId: invoiceId,
+      }
 		})
 	}
 
@@ -185,7 +193,9 @@ export class InvoicesPageComponent implements OnInit, OnDestroy {
 	private watchForms() {
 		merge(this.dateFrom.valueChanges, this.dateTo.valueChanges)
 			.pipe(
-				switchMap(() => this.loadInvoicesData()),
+				switchMap(() => this.loadInvoicesData().pipe(
+          catchError((error) => of([]))
+        )),
 				tap(() => {
 					this.onPageChange(1)
 				}),

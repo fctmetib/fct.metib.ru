@@ -26,16 +26,16 @@
 	<div class="dropdown flex flex_column" *ngIf="extended" [ngSwitch]="type">
 		<ng-container *ngSwitchCase="ContractedFormsEnum.BankDetails">
 			<p class="text text_m c-bti-secondary">
-				Организация: {{ data.paymentParticipant?.Title }}
+				Организация: {{ data?.paymentParticipant?.Title }}
 			</p>
 			<p class="text text_m c-bti-secondary">
-				Номер счёта: {{ data.paymentParticipant?.Account }}
+				Номер счёта: {{ data?.paymentParticipant?.Account }}
 			</p>
 			<p class="text text_m c-bti-secondary">
-				Инн: {{ data.paymentParticipant?.INN }}
+				Инн: {{ data?.paymentParticipant?.INN }}
 			</p>
 			<p class="text text_m c-bti-secondary">
-				Бик: {{ data.paymentParticipant?.BIC }}
+				Бик: {{ data?.paymentParticipant?.BIC }}
 			</p>
 			<ng-container *ngIf="description">
 				<mib-spacing type="xs2"></mib-spacing>

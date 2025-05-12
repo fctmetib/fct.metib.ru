@@ -78,7 +78,7 @@
 								[mibDropdownTrigger]="managerPanel"
 								class="manager flex gap-12"
 							>
-								<ng-container *ngIf="managerAvatar; else showInitials">
+								<ng-container *ngIf="manager?.AvatarCode; else showInitials">
 									<mib-avatar
 										[showArrow]="false"
 										[src]="managerAvatar"
