@@ -22,7 +22,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 		private messageService: MessageService,
 		private auth: AuthService,
 		private router: Router,
-		private toaster: ToasterService,
 		@Inject(PLATFORM_ID) private platformId: Object
 	) {}
 
@@ -31,42 +30,24 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 		next: HttpHandler
 	): Observable<HttpEvent<any>> {
 		return next.handle(request).pipe(
-			catchError((error: HttpErrorResponse) => {
-				let errorMessage = ''
-				if (isPlatformBrowser(this.platformId)) {
-					if (error.error instanceof ErrorEvent) {
-						// client-side error
-						console.warn('ErrorInterceptor. Client-side error')
-						errorMessage = error.error.message
-					} else {
-						// server-side error
-						console.warn(
-							`ErrorInterceptor. Error Code: ${error.status}\nMessage: ${error.message}`
-						)
-						errorMessage = `${error.error}`
-					}
-					if (error.status === 401) {
-						this.toaster.show(
-							'failure',
-							'Пароль или логин введен неверно!',
-							'',
-							true,
-							false,
-							3000
-						)
-						// this.auth.logout()
-						// this.router.navigate(['/auth/login'], {
-						// 	queryParams: {
-						// 		sessionFailed: true
-						// 	}
-						// })
-					}
-					this.showError(errorMessage)
-					return throwError(() => error.error)
-				}
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
 
-				return of(null)
-			})
+        if (isPlatformBrowser(this.platformId)) {
+          if (error.error instanceof ErrorEvent) {
+            console.warn('ErrorInterceptor. Client-side error');
+            errorMessage = error.error.message;
+          } else {
+            console.warn(`ErrorInterceptor. Error Code: ${error.status}\nMessage: ${error.message}`);
+            errorMessage = `${error.error}`;
+          }
+
+          this.showError(errorMessage);
+
+          return throwError(() => error);
+        }
+        return throwError(() => error);
+      })
 		)
 	}
 

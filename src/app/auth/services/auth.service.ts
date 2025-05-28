@@ -135,9 +135,6 @@ export class AuthService {
         //   ID: authRes.UserID // ID из AuthRes
         // })
         // return of(authRes)
-      }),
-      catchError((errorResponse: HttpErrorResponse) => {
-        return of({errors: errorResponse.error});
       })
     );
   }

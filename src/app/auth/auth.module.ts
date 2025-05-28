@@ -86,7 +86,7 @@ import {LabelModule} from '../shared/directives/label/label.module'
 			provide: HTTP_INTERCEPTORS,
 			useClass: AuthInterceptor,
 			multi: true
-		}
+		},
 	]
 })
 export class AuthModule {}

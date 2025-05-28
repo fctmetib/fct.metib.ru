@@ -1,11 +1,12 @@
 import { ActivatedRoute, Params } from '@angular/router'
-import { BehaviorSubject, Observable, finalize, tap } from 'rxjs'
+import { BehaviorSubject, Observable, finalize, tap, catchError, of } from 'rxjs';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { CommonService } from '../../../shared/services/common/common.service'
 import { LoginRequestInterface } from '../../types/login/loginRequest.interface'
 import { AuthService } from '../../services/auth.service'
 import { InputSize } from 'src/app/shared/ui-kit/input/interfaces/input.interface'
+import { ToasterService } from '../../../shared/services/common/toaster.service';
 
 @Component({
 	selector: 'app-login-page',
@@ -32,6 +33,7 @@ export class LoginPageComponent implements OnInit {
 
 	constructor(
 		private readonly commonService: CommonService,
+    private readonly toaster: ToasterService,
 		private readonly route: ActivatedRoute,
 		private readonly authService: AuthService
 	) {}
@@ -91,10 +93,28 @@ export class LoginPageComponent implements OnInit {
 		this.authService
 			.login(request)
 			.pipe(
+        catchError((err) => {
+          this.toaster.show(
+            'failure',
+            err["error"]["title"] || "Пароль или логин указан неверно!",
+            '',
+            true,
+            false,
+            3000
+          )
+          return of(err)
+        }),
 				finalize(() => {
 					this.isSubmitting$.next(false)
 				})
 			)
 			.subscribe()
 	}
+
+  onEnterKeydown($event: any) {
+    $event.stopPropagation()
+    $event.preventDefault()
+    if (this.isSubmitting$.value || this.form.invalid) return
+    this.onSubmit()
+  }
 }

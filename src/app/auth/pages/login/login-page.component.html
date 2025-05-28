@@ -23,6 +23,7 @@
 			styleType="filled-secondary"
 			formControlName="password"
 			placeholder="Введите пароль"
+      (keydown.enter)="onEnterKeydown($event)"
 		/>
 		<ng-container mibLabel>Введите пароль</ng-container>
 		<!-- input-right-icon -->
